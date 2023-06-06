@@ -5,6 +5,7 @@ using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using TMPro;
+using Tutorial._06._QueriesAndUtilities;
 using UnityEngine;
 
 public class Canvas : AbstractMikroController<KillGame> {
@@ -32,6 +33,8 @@ public class Canvas : AbstractMikroController<KillGame> {
 		this.Delay(1f, () => { 
 			achievementPanel.SetActive(false); //disable it after 1 second
 		});
+
+		
 	}
 
 	private void OnKillCountChanged(OnKillCountChanged e) {

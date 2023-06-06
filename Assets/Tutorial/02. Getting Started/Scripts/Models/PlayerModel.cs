@@ -9,9 +9,18 @@ public struct OnKillCountChanged { //or class, but better to use struct for perf
 
 public interface IPlayerModel : IModel {
     void AddKillCount(int count);
+    
+    int KillCount { get; }
 }
 public class PlayerModel : AbstractModel, IPlayerModel {
     protected int killCount = 0;
+
+    public int KillCount {
+        get {
+            return killCount;
+        }
+    }
+
     protected override void OnInit() {
         
     }
@@ -20,4 +29,6 @@ public class PlayerModel : AbstractModel, IPlayerModel {
         this.killCount += count;
         this.SendEvent<OnKillCountChanged>(new OnKillCountChanged(){KillCount = killCount});
     }
+
+    
 }
