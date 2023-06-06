@@ -17,7 +17,6 @@ public class AchievementSystem : AbstractSystem, IAchievementSystem {
 	
 	protected override void OnInit() {
 		this.RegisterEvent<OnKillCountChanged>(OnKillCountChanged);
-	a
 	}
 
 	private void OnKillCountChanged(OnKillCountChanged e) {

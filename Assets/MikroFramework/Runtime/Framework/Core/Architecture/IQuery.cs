@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MikroFramework
 {
-    public interface IQuery<T> : IBelongToArchitecture, ICanSetArchitecture, ICanGetModel,
+    public interface IQuery<T> : IBelongToArchitecture, ICanSetArchitecture, ICanGetModel, 
         ICanGetSystem, ICanGetUtility {
         T Do();
     }
