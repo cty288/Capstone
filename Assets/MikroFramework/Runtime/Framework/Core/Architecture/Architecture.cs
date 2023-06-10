@@ -73,7 +73,7 @@ namespace MikroFramework.Architecture
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
-        public void RegisterModel<T>(T model) where T : IModel {
+        public virtual void RegisterModel<T>(T model) where T : IModel {
             model.SetArchitecture(this);
             container.RegisterInstance<T>(model);
             
@@ -94,7 +94,7 @@ namespace MikroFramework.Architecture
             container.RegisterInstance<T>(instance);
         }
 
-        public void RegisterSystem<T>(T system) where T:ISystem {
+        public virtual void RegisterSystem<T>(T system) where T:ISystem {
             system.SetArchitecture(this);
             container.RegisterInstance<T>(system);
 
