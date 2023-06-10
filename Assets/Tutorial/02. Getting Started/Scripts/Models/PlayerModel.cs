@@ -12,7 +12,9 @@ public interface IPlayerModel : IModel {
     
     int KillCount { get; }
 }
-public class PlayerModel : AbstractModel, IPlayerModel {
+
+////before doc 07, this should inherit AbstractModel<KillGame>
+public class PlayerModel : AbstractSavableModel, IPlayerModel {
     protected int killCount = 0;
 
     public int KillCount {
