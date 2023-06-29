@@ -204,8 +204,9 @@ namespace MikroFramework.ResKit {
                                 //get file's "real name" (e.g.: AssetName: xxx/yyy, realName: yyy)
                                 string realName = abmd5Base.AssetName.Substring(abmd5Base.AssetName.LastIndexOf('/') + 1);
 
-                                if (files[j].Name == realName)
-                                {
+                                string t = files[j].FullName.Substring(hotUpdateFolder.Length);
+                                t = t.Replace(@"\", "/");
+                                if (t == abmd5Base.AssetName){
                                     AssetBundleData assetBundleData = new AssetBundleData()
                                     {
                                         Name = abmd5Base.AssetName,

@@ -27,20 +27,23 @@ namespace MikroFramework.Managers
         /// Start the complete hot update process, called by LaunchInReleasedMode() by default
         /// </summary>
         protected void StartHotUpdate() {
+           
+            
             InitializeHotUpdateManager();
             EnableUpdateDownloadSpeed();
         }
-        private void InitializeHotUpdateManager() {
+        protected virtual void InitializeHotUpdateManager() {
+           
             HotUpdateManager.Singleton.Init(() => {
                 OnHotUpdateManagerInitialized();
                 CheckNewVersionRes();
             }, OnHotUpdateError);
         }
 
-        private void CheckNewVersionRes() {
+        protected virtual void CheckNewVersionRes() {
             HotUpdateManager.Singleton.HasNewVersionRes((needUpdate, resVersion) => {
                 OnHotUpdateVersionChecked(needUpdate,resVersion);
-
+                
                 if (needUpdate) {
                     UpdateResources();
                 }
@@ -53,7 +56,7 @@ namespace MikroFramework.Managers
 
         private bool downloading = false;
 
-        private void UpdateResources() {
+        protected virtual void UpdateResources() {
             downloading = true;
             HotUpdateManager.Singleton.UpdateRes(() => {
                 downloading = false;
@@ -62,7 +65,7 @@ namespace MikroFramework.Managers
             },OnHotUpdateError);
         }
 
-        private void ValidateResourceCompleteness() {
+        protected virtual void ValidateResourceCompleteness() {
             downloading = true;
             HotUpdateManager.Singleton.ValidateHotUpdateCompleteness(results => {
                 downloading = false;
@@ -71,9 +74,10 @@ namespace MikroFramework.Managers
             },OnHotUpdateError);
         }
 
-        private void DeleteRedundantFiles() {
+        protected virtual void DeleteRedundantFiles() {
             HotUpdateManager.Singleton.DeleteRedundantFiles(() => {
                 resLoader = new ResLoader();
+                //HotUpdateManager.Singleton.Init(());
                 OnRedundantFilesDeleted();
                 OnHotUpdateComplete();
             },OnHotUpdateError);
@@ -110,7 +114,7 @@ namespace MikroFramework.Managers
         /// Callback function invoked when the hot-update manager is initialized
         /// </summary>
         protected virtual void OnHotUpdateManagerInitialized() {
-
+            
         }
 
         /// <summary>
