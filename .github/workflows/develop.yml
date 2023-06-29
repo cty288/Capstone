@@ -60,6 +60,7 @@ jobs:
           path: build
 
   buildForWindowsBasedPlatforms:
+    needs: [buildAndTestForLinuxBasedPlatforms]
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: windows-2019
     strategy:
@@ -71,7 +72,7 @@ jobs:
           - 2021.3.25f1
         targetPlatform:
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - StandaloneWindows # Build a Windows 32-bit standalone.
+         # - StandaloneWindows # Build a Windows 32-bit standalone.
 
     steps:
       - uses: actions/checkout@v2
@@ -105,6 +106,7 @@ jobs:
           path: build
 
   buildForMacOSBasedPlatforms:
+    needs: [buildAndTestForLinuxBasedPlatforms,buildForWindowsBasedPlatforms]
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: macos-latest
     strategy:
