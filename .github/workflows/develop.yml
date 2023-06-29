@@ -53,7 +53,7 @@ jobs:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
-          customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
+          customParameters: '-executeMethod BuildGame.BuildGameWorkflow'
       - uses: actions/upload-artifact@v2
         with:
           name: Build
@@ -99,7 +99,7 @@ jobs:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
-          customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
+          customParameters: '-executeMethod BuildGame.BuildGameWorkflow'
       - uses: actions/upload-artifact@v2
         with:
           name: Build
@@ -146,6 +146,7 @@ jobs:
           projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
+          customParameters: '-executeMethod BuildGame.BuildGameWorkflow'
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
 
       - uses: actions/upload-artifact@v2
