@@ -56,13 +56,13 @@ jobs:
     
       - uses: actions/upload-artifact@v2
         with:
-          name: Build
+          name: Build_Linux
           path: build
 
   buildForWindowsBasedPlatforms:
     needs: [buildAndTestForLinuxBasedPlatforms]
     name: Build for ${{ matrix.targetPlatform }}
-    runs-on: windows-2022
+    runs-on: windows-2021
     strategy:
       fail-fast: false
       matrix:
@@ -102,7 +102,7 @@ jobs:
         
       - uses: actions/upload-artifact@v2
         with:
-          name: Build
+          name: Build_Win
           path: build
 
   buildForMacOSBasedPlatforms:
@@ -149,5 +149,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: Build
+          name: Build_Mac
           path: build
