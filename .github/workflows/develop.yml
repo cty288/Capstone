@@ -106,7 +106,7 @@ jobs:
           path: build
 
   buildForMacOSBasedPlatforms:
-    needs: [buildAndTestForLinuxBasedPlatforms,buildForWindowsBasedPlatforms]
+    needs: [buildAndTestForLinuxBasedPlatforms]
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: macos-latest
     strategy:
