@@ -6,6 +6,7 @@ jobs:
   buildAndTestForLinuxBasedPlatforms:
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
