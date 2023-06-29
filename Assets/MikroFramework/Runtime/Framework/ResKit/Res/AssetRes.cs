@@ -30,6 +30,7 @@ namespace MikroFramework.ResKit
 
             if (String.IsNullOrEmpty(ownerBundleName)) {
                 ResSearchKeys resSearchKeys = ResSearchKeys.Allocate(assetName,resType);
+                bool test = ResData.Singleton;
                 ownerBundleName = ResData.Singleton.GetAssetData(resSearchKeys)
                     .OwnerBundleName;
 

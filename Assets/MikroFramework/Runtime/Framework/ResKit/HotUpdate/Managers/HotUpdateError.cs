@@ -10,6 +10,7 @@ namespace MikroFramework.ResKit
         LocalResVersionNotExist,
         DownloadRemoteABFailed,
         DownloadRemoeResVersionFailed,
-        DeleteRedundentFilesFailed
+        DeleteRedundentFilesFailed,
+        Unknown
     }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using MikroFramework.Serializer;
 using MikroFramework.Utilities;
 using UnityEditor;
@@ -50,7 +51,7 @@ namespace MikroFramework.ResKit
 
             EditorUtility.OpenInFolder(outputPath);
 
-
+            
             WriteVersionConfig(outputPath);
             
         }
@@ -60,7 +61,7 @@ namespace MikroFramework.ResKit
             bool latestSimulationMode = ResManager.SimulationMode;
             ResManager.SimulationMode = true;
             ResData.Singleton.Init(null,(e)=>{});
-
+            
             string versionConfigFilePath = outPutPath + "ResVersion.json";
 
             if (File.Exists(versionConfigFilePath))
