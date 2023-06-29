@@ -147,7 +147,6 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-executeMethod BuildGame.BuildGameWorkflow'
-          customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
 
       - uses: actions/upload-artifact@v2
         with:
