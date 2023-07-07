@@ -108,5 +108,10 @@ namespace MikroFramework.BindableProperty
         {
             this.onValueChanged2 -= onValueChanged;
         }
+
+        public void UnRegisterAll() {
+            this.onValueChanged = obj => { };
+            this.onValueChanged2 = (obj, obj2) => { };
+        }
     }
 }
