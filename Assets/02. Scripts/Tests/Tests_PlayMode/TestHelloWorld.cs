@@ -6,7 +6,8 @@ using UnityEngine.TestTools;
 
 public class TestHelloWorld {
     [UnityTest]
-    public IEnumerator TestHelloWorldWithEnumeratorPasses() {
+    public IEnumerator TestHelloWorldWithEnumeratorPasses()
+    {
         yield return null;
         Assert.Pass();
     }
