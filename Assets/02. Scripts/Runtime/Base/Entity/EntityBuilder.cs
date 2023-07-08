@@ -8,11 +8,17 @@ using UnityEngine;
 public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new()
 {
     protected T entity = null;
-
+    
+    protected Action<T> onEntityCreated = null;
     public EntityBuilder() {
        
     }
     
+    public EntityBuilder<T> RegisterOnEntityCreated(Action<T> onCreated) {
+        this.onEntityCreated += onCreated;
+        return this;
+    }
+
     protected void CheckEntity() {
         if (entity == null) {
             entity = SafeObjectPool<T>.Singleton.Allocate();
@@ -48,12 +54,13 @@ public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new
         this.entity = null;
         ent.OnAllocate();
         ent.Initialize();
+        onEntityCreated?.Invoke(ent);
         RecycleToCache();
         return ent;
     }
 
     public void OnRecycled() {
-        
+        onEntityCreated = null;
     }
 
     public bool IsRecycled { get; set; }

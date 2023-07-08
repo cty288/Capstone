@@ -55,5 +55,39 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			Debug.Log($"UUID: {entity.UUID}");
 			Assert.AreEqual(200, entity.GetProperty<Danger>().RealValue);
 		}
+
+		[Test]
+		public void TestEntityModelCreate() {
+			IEntityModel model = MainGame.Interface.GetModel<IEntityModel>();
+			
+			string id = model.GetBuilder<BasicEntity>().SetProperty(PropertyName.rarity, 2)
+				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build()
+				.UUID;
+
+			BasicEntity entity = model.GetEntity<BasicEntity>(id);
+			
+			Assert.IsNotNull(entity);
+			Assert.AreEqual(200, entity.GetProperty<Danger>().RealValue);
+		}
+
+		[Test]
+		public void TestEntityPool() {
+			IEntityModel model = MainGame.Interface.GetModel<IEntityModel>();
+
+
+			IEntity ent1 = model.GetBuilder<BasicEntity>().SetProperty(PropertyName.rarity, 2)
+				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build();
+			string id1 = ent1.UUID;
+
+			model.RemoveEntity(id1);
+			
+			IEntity ent2 = model.GetBuilder<BasicEntity>().SetProperty(PropertyName.rarity, 3)
+				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build();
+			string id2 = ent2.UUID;
+			
+			Assert.AreEqual(ent1, ent2);
+			Assert.AreNotEqual(id1, id2);
+			Assert.AreEqual(300, model.GetEntity<BasicEntity>(id2).GetProperty<Danger>().RealValue);
+		}
 	}
 }

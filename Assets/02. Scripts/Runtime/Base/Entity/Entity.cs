@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Event;
 using MikroFramework.Pool;
 using UnityEngine;
 
@@ -36,6 +37,8 @@ public interface IEntity: IPoolable {
 	
 	public void SetPropertyModifier<T>(PropertyName name, IPropertyDependencyModifier<T> modifier);
 }
+
+
 
 
 public abstract class Entity :  IEntity  {

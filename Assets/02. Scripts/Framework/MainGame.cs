@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class MainGame : SavableArchitecture<MainGame> {
 	protected override void Init() {
-		
+		this.RegisterModel<IEntityModel>(new EntityModel());
 	}
-
-
 
 }
