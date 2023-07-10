@@ -7,4 +7,7 @@ public enum PropertyName {
 	danger,
 	resource,
 	resource_list,
+	test_resource_dict,
+	test_silver_resource,
+	test_gold_resource
 }

@@ -66,6 +66,39 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				
 			}
 		}
+		
+		public class TestResourceDictEnemy : Entity {
+			public override string EntityName { get; protected set; } = "TestDictEnemy";
+			protected override IPropertyBase[] OnGetOriginalProperties() {
+				return new IPropertyBase[] {
+					new Rarity(), 
+					new TestResourceDictProperty() {
+						BaseValue = new Dictionary<PropertyName, TestResourceProperty>() {
+							{
+								PropertyName.test_gold_resource,
+								new TestResourceProperty(new GoldPropertyModifier())
+									{BaseValue = new TestResourceInfo("Gold", 1)}
+							}, {
+								PropertyName.test_silver_resource,
+								new TestResourceProperty() {BaseValue = new TestResourceInfo("Silver", 2)}
+							},
+						}
+					}
+				};
+			}
+			
+			
+
+			public override void OnDoRecycle() {
+				SafeObjectPool<TestResourceDictEnemy>.Singleton.Recycle(this);
+			}
+
+			public override void OnRecycle() {
+				
+			}
+		}
+		
+		
 
 		internal class MyNewDangerModifier : PropertyDependencyModifier<int> {
 			public override int OnModify(int propertyValue) {
@@ -143,7 +176,16 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				return PropertyName.resource_list;
 			}
 		}
-		
+
+		internal class TestResourceDictProperty : PropertyDictionary<TestResourceProperty> {
+			protected override IPropertyDependencyModifier<Dictionary<PropertyName, TestResourceProperty>> GetDefautModifier() {
+				return null;
+			}
+
+			protected override PropertyName GetPropertyName() {
+				return PropertyName.test_resource_dict;
+			}
+		}
 		//============================Start of Tests================================
 
 		[Test]
@@ -246,6 +288,19 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			var table = ent1.GetProperty<TestResourceTableProperty>().RealValues;
 			Assert.AreEqual(201, table[0].RealValues[0].RealValue.Value.Rarity);
 			Assert.AreEqual(210, table[1].RealValues[0].RealValue.Value.Rarity);
+		}
+
+		[Test]
+		public void TestDictProperty() {
+			IEntityModel model = MainGame.Interface.GetModel<IEntityModel>();
+			
+			IEntity ent1 = model.
+				GetBuilder<TestResourceDictEnemy>().
+				SetProperty(PropertyName.rarity, 2)
+				.Build();
+
+			var table = ent1.GetProperty<TestResourceDictProperty>().RealValues;
+			Assert.AreEqual(201, table[PropertyName.test_gold_resource].RealValue.Value.Rarity);
 		}
 
 	}

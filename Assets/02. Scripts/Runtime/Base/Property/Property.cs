@@ -68,7 +68,8 @@ public abstract class Property<T> : IProperty<T> {
 	public virtual void OnRecycled() {
 		initializedBefore = false;
 		RealValue.UnRegisterAll();
-		
+		RealValue.Value = default;
+		InitialValue = default;
 	}
 
 	public IPropertyBase SetModifier<ValueType>(IPropertyDependencyModifier<ValueType> modifier) {
