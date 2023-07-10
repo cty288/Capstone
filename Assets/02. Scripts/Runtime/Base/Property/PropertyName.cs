@@ -4,5 +4,7 @@ using UnityEngine;
 
 public enum PropertyName {
 	rarity,
-	danger
+	danger,
+	resource,
+	resource_list,
 }

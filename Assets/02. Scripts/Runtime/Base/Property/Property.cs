@@ -45,14 +45,7 @@ public interface IProperty<T> : IPropertyBase{
 	object IPropertyBase.GetBaseValue() => BaseValue;
     object IPropertyBase.GetInitialValue() => InitialValue;
     object IPropertyBase.GetRealValue() => RealValue.Value;
-    void IPropertyBase.SetBaseValue(object value) {
-	    if (value is T v) {
-		    BaseValue = v;
-	    }
-	    else {
-		    throw new Exception("Value type mismatch for property " + PropertyName);
-	    }
-    }
+    
 }
 
 public abstract class Property<T> : IProperty<T> {
@@ -60,20 +53,22 @@ public abstract class Property<T> : IProperty<T> {
 	private bool initializedBefore = false;
 	public PropertyName PropertyName => GetPropertyName();
 
+
 	[field: ES3Serializable]
-	public T BaseValue { get; set; }
+	public T BaseValue { get; set; } = default;
 	[field: ES3Serializable]
-	public T InitialValue { get; set; }
+	public T InitialValue { get; set; } = default;
 	
 	[field: ES3Serializable]
-	public BindableProperty<T> RealValue { get; } = new BindableProperty<T>();
+	public virtual BindableProperty<T> RealValue { get; } = new BindableProperty<T>();
 	
 	[field: ES3Serializable]
 	protected IPropertyDependencyModifier<T> modifier;
 
-	public void OnRecycled() {
+	public virtual void OnRecycled() {
 		initializedBefore = false;
 		RealValue.UnRegisterAll();
+		
 	}
 
 	public IPropertyBase SetModifier<ValueType>(IPropertyDependencyModifier<ValueType> modifier) {
@@ -105,36 +100,33 @@ public abstract class Property<T> : IProperty<T> {
 
 	public abstract PropertyName[] GetDependentProperties();
 
-	public void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
+	public virtual void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
 		T targetValue;
 		bool canClone = false;
-		if (typeof(T).IsClass && typeof(ICloneable).IsAssignableFrom(typeof(T))) {
-			targetValue = (T) ((ICloneable) BaseValue).Clone();
-			canClone = true;
-		}
-		else {
-			// T is either a value type or doesn't implement ICloneable
-			// Perform assignment
-			targetValue = BaseValue;
-		}
-		
-
+		targetValue = OnClone(BaseValue);
 		if (modifier != null) {
 			targetValue = modifier.Modify(targetValue, dependencies, parentEntityName, PropertyName);
 		}
-		
-
 		InitialValue = targetValue;
-		if (canClone) {
-			RealValue.Value = (T) ((ICloneable) InitialValue).Clone();
-		}
-		else {
-			RealValue.Value = InitialValue;
-		}
+		RealValue.Value = OnClone(InitialValue);
 		initializedBefore = true;
 	}
-
 	
+	protected virtual T OnClone(T value) {
+		if (typeof(T).IsClass && typeof(ICloneable).IsAssignableFrom(typeof(T))) {
+			return (T) ((ICloneable) value).Clone();
+		}
+		return value;
+	}
+	
+	public virtual void SetBaseValue(object value) {
+		if (value is T v) {
+			BaseValue = v;
+		}
+		else {
+			throw new Exception("Value type mismatch for property " + PropertyName);
+		}
+	}
 
 }
 
