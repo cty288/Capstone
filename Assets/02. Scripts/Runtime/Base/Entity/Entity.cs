@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Event;
+using MikroFramework.IOC;
 using MikroFramework.Pool;
 using UnityEngine;
 
@@ -50,7 +51,7 @@ public abstract class Entity :  IEntity  {
 	
 	private static Dictionary<Type, PropertyName> cachedPropertyNames = new Dictionary<Type, PropertyName>();
 
-	protected abstract IPropertyBase[] OnGetOriginalProperties();
+	//protected abstract IPropertyBase[] OnGetOriginalProperties();
 	
 	[field: ES3Serializable]
 	public string UUID { get; protected set; }
@@ -59,13 +60,22 @@ public abstract class Entity :  IEntity  {
 	private bool initialized = false;
 
 	public Entity() {
-		foreach (var property in OnGetOriginalProperties()) {
-			this._properties.Add(property.PropertyName, property);
-			if (!cachedPropertyNames.ContainsKey(property.GetType())) {
-				cachedPropertyNames.Add(property.GetType(), property.PropertyName);
-			}
-		}
+		OnRegisterProperties();
 	}
+	
+	protected void RegisterProperty<T>(T property) where T : IPropertyBase {
+		if (this._properties.ContainsKey(property.PropertyName)) {
+			Debug.LogError($"Property {property.PropertyName.ToString()} already exists in entity {EntityName}");
+			return;
+		}
+		this._properties.Add(property.PropertyName, property);
+		Type type = typeof(T);
+		cachedPropertyNames.TryAdd(type, property.PropertyName);
+		Type concreteType = property.GetType();
+		cachedPropertyNames.TryAdd(concreteType, property.PropertyName);
+	}
+
+	protected abstract void OnRegisterProperties();
 	
 
 	public void OnAllocate() {

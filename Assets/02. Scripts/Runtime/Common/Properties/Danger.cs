@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 
 namespace _02._Scripts.Runtime.Common.Properties {
-	public class Danger: Property<int> {
+	public interface IDangerProperty : IProperty<int>{}
+	public class Danger: Property<int>, IDangerProperty {
 		
 		protected override IPropertyDependencyModifier<int> GetDefautModifier() {
-			return new DangerModifier();
+			return new DangerDefaultModifier();
 		}
 
 		protected override PropertyName GetPropertyName() {
@@ -18,7 +19,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 		
 	}
 	
-	public class DangerModifier : PropertyDependencyModifier<int> {
+	public class DangerDefaultModifier : PropertyDependencyModifier<int> {
 		public override int OnModify(int propertyValue) {
 			return GetDependency<Rarity>().InitialValue * 5;
 		}

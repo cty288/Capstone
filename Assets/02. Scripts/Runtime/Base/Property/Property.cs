@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Common.Properties;
 using MikroFramework.BindableProperty;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public interface IPropertyBase {
 
 	public IPropertyBase SetModifier<T>(IPropertyDependencyModifier<T> modifier);
 }
+
 
 public interface IProperty<T> : IPropertyBase{
 	
@@ -39,12 +41,15 @@ public interface IProperty<T> : IPropertyBase{
 	/// </summary>
 	public new BindableProperty<T> RealValue { get; }
 
+	public void SetBaseValue(T value);
 	
 	//Dictionary<PropertyName, List<IPropertyModifier<T>>> DependentPropertiesAndModifiers { get; set; }
 
 	object IPropertyBase.GetBaseValue() => BaseValue;
     object IPropertyBase.GetInitialValue() => InitialValue;
     object IPropertyBase.GetRealValue() => RealValue.Value;
+    
+    void IPropertyBase.SetBaseValue(object value) => SetBaseValue((T)value);
     
 }
 
@@ -61,7 +66,11 @@ public abstract class Property<T> : IProperty<T> {
 	
 	[field: ES3Serializable]
 	public virtual BindableProperty<T> RealValue { get; } = new BindableProperty<T>();
-	
+
+	public virtual void SetBaseValue(T value) {
+		BaseValue = value;
+	}
+
 	[field: ES3Serializable]
 	protected IPropertyDependencyModifier<T> modifier;
 
@@ -70,6 +79,7 @@ public abstract class Property<T> : IProperty<T> {
 		RealValue.UnRegisterAll();
 		RealValue.Value = default;
 		InitialValue = default;
+		
 	}
 
 	public IPropertyBase SetModifier<ValueType>(IPropertyDependencyModifier<ValueType> modifier) {
@@ -98,6 +108,8 @@ public abstract class Property<T> : IProperty<T> {
 	public Property() {
 		modifier = GetDefautModifier();
 	}
+	
+	
 
 	public abstract PropertyName[] GetDependentProperties();
 
@@ -117,16 +129,13 @@ public abstract class Property<T> : IProperty<T> {
 		if (typeof(T).IsClass && typeof(ICloneable).IsAssignableFrom(typeof(T))) {
 			return (T) ((ICloneable) value).Clone();
 		}
+		
 		return value;
 	}
 	
-	public virtual void SetBaseValue(object value) {
-		if (value is T v) {
-			BaseValue = v;
-		}
-		else {
-			throw new Exception("Value type mismatch for property " + PropertyName);
-		}
+	//override operator 
+	public static implicit operator T(Property<T> property) {
+		return property.RealValue.Value;
 	}
 
 }

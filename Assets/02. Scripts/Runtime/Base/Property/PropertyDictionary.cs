@@ -6,7 +6,13 @@ using MikroFramework.BindableProperty;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Base.Property {
-	public abstract class PropertyDictionary<T> : Property<Dictionary<PropertyName, T>>, IProperty<Dictionary<PropertyName, T>> where T: IPropertyBase {
+	public interface IDictionaryProperty<T> : IProperty<Dictionary<PropertyName, T>> {
+		BindableDictionary<PropertyName, T> RealValues { get; }
+	}
+	public abstract class PropertyDictionary<T> : Property<Dictionary<PropertyName, T>>, IDictionaryProperty<T> where T: IPropertyBase {
+		/// <summary>
+		/// Use RealValues instead to invoke events
+		/// </summary>
 		public override BindableProperty<Dictionary<PropertyName, T>> RealValue => RealValues;
 
 		[field: ES3Serializable]
@@ -21,13 +27,9 @@ namespace _02._Scripts.Runtime.Base.Property {
 			BaseValue = baseValues.ToDictionary(p => p.PropertyName);
 		}
 
-		public override void SetBaseValue(object value) {
-			if (value is Dictionary<PropertyName, T> dict) {
-				BaseValue = dict;
-			}
-			else {
-				Debug.LogError("The value is not a list of " + typeof(T).Name);
-			}
+		
+		public override void SetBaseValue(Dictionary<PropertyName, T> value) {
+			BaseValue = value;
 		}
 		
 		

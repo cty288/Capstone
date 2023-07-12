@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Pool;
-using NHibernate.Tuple;
 using UnityEngine;
 
 public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new()

@@ -12,10 +12,11 @@ namespace _02._Scripts.Tests.Tests_Editor {
 	public class TestBasicEntityProperty {
 		internal class BasicEntity : Entity {
 			public override string EntityName { get; protected set; } = "TestEntity";
-			protected override IPropertyBase[] OnGetOriginalProperties() {
-				return new IPropertyBase[] {new Rarity(), new Danger()};
+			protected override void OnRegisterProperties() {
+				RegisterProperty<IRarityProperty>(new Rarity());
+				RegisterProperty<IDangerProperty>(new Danger());
 			}
-
+			
 
 			public override void OnDoRecycle() {
 				SafeObjectPool<BasicEntity>.Singleton.Recycle(this);
@@ -28,14 +29,15 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		public class TestEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestEnemy";
-			protected override IPropertyBase[] OnGetOriginalProperties() {
-				return new IPropertyBase[] {new Rarity(), new TestResourceList() {
+			protected override void OnRegisterProperties() {
+				RegisterProperty(new Rarity());
+				RegisterProperty(new TestResourceList() {
 					BaseValue = new List<TestResourceProperty>() {
 						new TestResourceProperty(new GoldPropertyModifier()){BaseValue = new TestResourceInfo("Gold", 1)},
 						new TestResourceProperty(){BaseValue = new TestResourceInfo("Silver", 2)},
 						new TestResourceProperty(){BaseValue = new TestResourceInfo("Bronze", 3)},
 					}
-				}};
+				});
 			}
 
 			public override void OnDoRecycle() {
@@ -49,14 +51,16 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		
 		public class TestResourceTableEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestEnemy";
-			protected override IPropertyBase[] OnGetOriginalProperties() {
-				return new IPropertyBase[] {new Rarity(), new TestResourceTableProperty() {
+			protected override void OnRegisterProperties() {
+				RegisterProperty(new Rarity());
+				RegisterProperty(new TestResourceTableProperty() {
 					BaseValue = new List<TestResourceList>() {
 						new TestResourceList(new TestResourceProperty(new GoldPropertyModifier()){BaseValue = new TestResourceInfo("Gold", 1)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Silver", 2)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Bronze", 3)}),
 						new TestResourceList(new TestResourceProperty(new GoldPropertyModifier()){BaseValue = new TestResourceInfo("Gold", 10)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Silver", 20)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Bronze", 30)}),
 					}
-				}};
+				});
 			}
+			
 
 			public override void OnDoRecycle() {
 				SafeObjectPool<TestResourceTableEnemy>.Singleton.Recycle(this);
@@ -69,22 +73,20 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		
 		public class TestResourceDictEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestDictEnemy";
-			protected override IPropertyBase[] OnGetOriginalProperties() {
-				return new IPropertyBase[] {
-					new Rarity(), 
-					new TestResourceDictProperty() {
-						BaseValue = new Dictionary<PropertyName, TestResourceProperty>() {
-							{
-								PropertyName.test_gold_resource,
-								new TestResourceProperty(new GoldPropertyModifier())
-									{BaseValue = new TestResourceInfo("Gold", 1)}
-							}, {
-								PropertyName.test_silver_resource,
-								new TestResourceProperty() {BaseValue = new TestResourceInfo("Silver", 2)}
-							},
-						}
+			protected override void OnRegisterProperties() {
+				RegisterProperty(new Rarity());
+				RegisterProperty(new TestResourceDictProperty() {
+					BaseValue = new Dictionary<PropertyName, TestResourceProperty>() {
+						{
+							PropertyName.test_gold_resource,
+							new TestResourceProperty(new GoldPropertyModifier())
+								{BaseValue = new TestResourceInfo("Gold", 1)}
+						}, {
+							PropertyName.test_silver_resource,
+							new TestResourceProperty() {BaseValue = new TestResourceInfo("Silver", 2)}
+						},
 					}
-				};
+				});
 			}
 			
 			
@@ -211,12 +213,12 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				Build();
 
 			Debug.Log($"UUID: {entity.UUID}");
-			Assert.AreEqual(200, entity.GetProperty<Danger>().RealValue);
+			Assert.AreEqual(200, entity.GetProperty<IDangerProperty>().RealValue);
 		}
 
 		[Test]
 		public void TestEntityModelCreate() {
-			IEntityModel model = MainGame.Interface.GetModel<IEntityModel>();
+			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			string id = model.GetBuilder<BasicEntity>().SetProperty(PropertyName.rarity, 2)
 				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build()
@@ -230,7 +232,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestEntityPool() {
-			IEntityModel model = MainGame.Interface.GetModel<IEntityModel>();
+			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 
 
 			IEntity ent1 = model.GetBuilder<BasicEntity>().SetProperty(PropertyName.rarity, 2)
@@ -250,7 +252,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestResourceListProperty() {
-			IEntityModel model = MainGame.Interface.GetModel<IEntityModel>();
+			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			IEntity ent1 = model.
 				GetBuilder<TestEnemy>().
@@ -278,7 +280,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestComplexListProperty() {
-			IEntityModel model = MainGame.Interface.GetModel<IEntityModel>();
+			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			IEntity ent1 = model.
 				GetBuilder<TestResourceTableEnemy>().
@@ -292,7 +294,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestDictProperty() {
-			IEntityModel model = MainGame.Interface.GetModel<IEntityModel>();
+			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			IEntity ent1 = model.
 				GetBuilder<TestResourceDictEnemy>().

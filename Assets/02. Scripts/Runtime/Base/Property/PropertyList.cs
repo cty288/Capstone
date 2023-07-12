@@ -6,7 +6,14 @@ using MikroFramework.BindableProperty;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Base.Property {
-	public abstract class PropertyList<T> : Property<List<T>>, IProperty<List<T>> where T: IPropertyBase {
+	/// <summary>
+	/// Use ListProperty instead if your values are not properties. If your values are properties, use this class
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public abstract class PropertyList<T> : Property<List<T>>, IListProperty<T> where T: IPropertyBase {
+		/// <summary>
+		/// Use RealValues instead to invoke events
+		/// </summary>
 		public override BindableProperty<List<T>> RealValue => RealValues;
 
 		[field: ES3Serializable]
@@ -20,13 +27,8 @@ namespace _02._Scripts.Runtime.Base.Property {
 			BaseValue = baseValues.ToList();
 		}
 
-		public override void SetBaseValue(object value) {
-			if (value is List<T> list) {
-				BaseValue = list;
-			}
-			else {
-				Debug.LogError("The value is not a list of " + typeof(T).Name);
-			}
+		public override void SetBaseValue(List<T> value) {
+			BaseValue = value;
 		}
 		
 		

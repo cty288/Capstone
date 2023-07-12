@@ -5,6 +5,10 @@ using UnityEngine;
 public enum PropertyName {
 	rarity,
 	danger,
+	taste,
+	vigiliance,
+	attack_range,
+	health,
 	resource,
 	resource_list,
 	test_resource_dict,
