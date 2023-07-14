@@ -7,6 +7,7 @@ using MikroFramework.Pool;
 using UnityEngine;
 
 public interface IEntity: IPoolable {
+	
 	public string EntityName { get; }
 
 	/// <summary>
@@ -52,7 +53,7 @@ public abstract class Entity :  IEntity  {
 	private static Dictionary<Type, PropertyName> cachedPropertyNames = new Dictionary<Type, PropertyName>();
 
 	//protected abstract IPropertyBase[] OnGetOriginalProperties();
-	
+	[field: SerializeField]
 	[field: ES3Serializable]
 	public string UUID { get; protected set; }
 

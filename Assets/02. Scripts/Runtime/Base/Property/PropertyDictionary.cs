@@ -64,9 +64,12 @@ namespace _02._Scripts.Runtime.Base.Property {
 		/// <returns></returns>
 		protected override Dictionary<PropertyName, T> OnClone(Dictionary<PropertyName, T> value) {
 			Dictionary<PropertyName, T> clone = new Dictionary<PropertyName, T>();
-			foreach (var property in value) {
-				clone.Add(property.Key, property.Value);
+			if (value != null) {
+				foreach (var property in value) {
+					clone.Add(property.Key, property.Value);
+				}
 			}
+			
 			return clone;
 		}
 

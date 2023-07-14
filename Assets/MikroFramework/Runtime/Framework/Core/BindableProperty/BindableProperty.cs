@@ -8,9 +8,30 @@ using UnityEngine;
 
 namespace MikroFramework.BindableProperty
 {
+    public interface IBindableProperty {
+        public object ObjectValue { get; set; }
+
+        public IUnRegister RegisterValueChaned(Action<object> onValueChanged);
+
+        IUnRegister RegisterValueChaned(Action<object, object> onValueChanged);
+        
+        IUnRegister RegisterWithInit(Action<object> onValueChanged);
+
+        IUnRegister RegisterWithInit(Action<object, object> onValueChanged);
+
+        public void UnRegisterAll();
+    }
     [Serializable]
-    public class BindableProperty<T>
+    public class BindableProperty<T> : IBindableProperty
     {
+        object IBindableProperty.ObjectValue
+        {
+            get => Value;
+            set => Value = (T) value;
+        }
+        
+
+        
         public BindableProperty(T defaultValue = default) {
             this.value = defaultValue;
         }
@@ -113,5 +134,29 @@ namespace MikroFramework.BindableProperty
             this.onValueChanged = obj => { };
             this.onValueChanged2 = (obj, obj2) => { };
         }
+        
+        public object ObjectValue {
+            get => value;
+            set => Value = (T) value;
+        }
+        
+        public IUnRegister RegisterValueChaned(Action<object> onValueChanged) {
+            return RegisterOnValueChaned((v) => { onValueChanged(v); });
+        }
+        
+        public IUnRegister RegisterValueChaned(Action<object, object> onValueChanged) {
+            return RegisterOnValueChaned((v, w) => { onValueChanged(v, w); });
+        }
+
+        
+        public IUnRegister RegisterWithInit(Action<object> onValueChanged) {
+            return RegisterWithInitValue((v) => { onValueChanged(v); });
+        }
+        
+        public IUnRegister RegisterWithInit(Action<object, object> onValueChanged) {
+            return RegisterWithInitValue((v, w) => { onValueChanged(v, w); });
+        }
+        
+        
     }
 }

@@ -1,18 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
 using UnityEngine;
 
-public class SharedProperty : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+[Serializable]
+public class SharedEntity : SharedVariable<IEntity> {
+  
 }

@@ -11,7 +11,7 @@ public interface IPropertyBase {
 	public object GetBaseValue();
 	public void SetBaseValue(object value);
 	public object GetInitialValue();
-	public object GetRealValue();
+	public IBindableProperty GetRealValue();
 	public PropertyName[] GetDependentProperties();
 	
 	void Initialize(IPropertyBase[] dependencies, string parentEntityName);
@@ -47,8 +47,8 @@ public interface IProperty<T> : IPropertyBase{
 
 	object IPropertyBase.GetBaseValue() => BaseValue;
     object IPropertyBase.GetInitialValue() => InitialValue;
-    object IPropertyBase.GetRealValue() => RealValue.Value;
-    
+
+    IBindableProperty IPropertyBase.GetRealValue() => RealValue;  
     void IPropertyBase.SetBaseValue(object value) => SetBaseValue((T)value);
     
 }

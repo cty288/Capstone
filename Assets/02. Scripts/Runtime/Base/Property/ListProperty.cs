@@ -46,15 +46,16 @@ namespace _02._Scripts.Runtime.Base.Property {
 		protected override List<T> OnClone(List<T> value) {
 			List<T> clone = new List<T>();
 
-			foreach (var item in value) {
-				if (item is ICloneable cloneable) {
-					clone.Add((T)cloneable.Clone());
-				}
-				else {
-					clone.Add(item);
+			if (value != null) {
+				foreach (var item in value) {
+					if (item is ICloneable cloneable) {
+						clone.Add((T)cloneable.Clone());
+					}
+					else {
+						clone.Add(item);
+					}
 				}
 			}
-
 			return clone;
 		}
 
