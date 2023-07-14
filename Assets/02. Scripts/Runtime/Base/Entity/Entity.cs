@@ -24,6 +24,8 @@ public interface IEntity: IPoolable {
 	/// <returns></returns>
 
 	public T GetProperty<T>() where T : class, IPropertyBase;
+	
+	public IPropertyBase GetProperty (Type type);
 
 	public bool HasProperty (PropertyName name);
 	
@@ -129,10 +131,16 @@ public abstract class Entity :  IEntity  {
 		if (cachedPropertyNames.TryGetValue(typeof(T), out PropertyName propertyName)) {
 			return (T) GetProperty(propertyName);
 		}
-
 		return null;
 	}
-	
+
+	public IPropertyBase GetProperty(Type type) {
+		if (cachedPropertyNames.TryGetValue(type, out PropertyName propertyName)) {
+			return GetProperty(propertyName);
+		}
+		return null;
+	}
+
 
 	public bool HasProperty(PropertyName name) {
 		return _properties.ContainsKey(name);

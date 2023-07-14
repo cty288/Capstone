@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
+using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -38,15 +40,23 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 				return;
 			}
 			BindedEntity = entityModel.GetEntity<T>(ID);
-			OnBindEntityProperty();
+			OnBindProperty();
 		}
 
 		#region Property Binding
+
+		protected void OnBindProperty() {
+			OnBindEntityProperty();
+			BindPropertyAttributes();
+		}
+
+		
 
 		protected abstract void OnBindEntityProperty();
 		
 		/// <summary>
 		/// Automatically bind propertyName property to the real value of IPropertyType of th entity
+		/// This is not recommended though it's convenient, because it will cost more performance
 		/// </summary>
 		/// <param name="propertyName"></param>
 		/// <typeparam name="IPropertyType"></typeparam>
@@ -150,6 +160,33 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 			}
 		}
 		
+		private void BindPropertyAttributes() {
+			foreach (var prop in GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
+				if (prop.GetCustomAttributes(typeof(BindablePropertyAttribute), false).FirstOrDefault() is BindablePropertyAttribute attribute) {
+
+					var bindedProperty = BindedEntity.GetProperty(attribute.PropertyName).GetRealValue();
+					
+					if (attribute.GetterMethodName != null) 
+					{
+						//Bind(prop.Name, bindedProperty, attribute.GetterMethodName);
+						
+						var method = GetType().GetMethod(attribute.GetterMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
+						if (method != null)
+						{
+							var func = (Func<object, object>)Delegate.CreateDelegate(typeof(Func<object, object>), this, method);
+							Bind(prop.Name, bindedProperty, func);
+						}
+						else 
+						{
+							Debug.LogError($"Getter method {attribute.GetterMethodName} not found!");
+						}
+					}
+					else {
+						Bind(prop.Name, bindedProperty, property => property);
+					}
+				}
+			}
+		}
 		#endregion
 		
 	}
