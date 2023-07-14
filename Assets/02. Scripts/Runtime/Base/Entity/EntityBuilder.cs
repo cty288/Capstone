@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new()
 {
-    protected T entity = null;
+    protected virtual T Entity { get; set; } = null;
     
     protected Action<T> onEntityCreated = null;
     public EntityBuilder() {
@@ -19,8 +19,8 @@ public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new
     }
 
     protected void CheckEntity() {
-        if (entity == null) {
-            entity = SafeObjectPool<T>.Singleton.Allocate();
+        if (Entity == null) {
+            Entity = SafeObjectPool<T>.Singleton.Allocate();
         }
     }
 
@@ -37,20 +37,20 @@ public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new
     /// <returns></returns>
     public EntityBuilder<T> SetProperty<ValueType>(PropertyName propertyName, ValueType value, IPropertyDependencyModifier<ValueType> modifier = null) {
         CheckEntity();
-        entity.SetPropertyBaseValue(propertyName, value, modifier);
+        Entity.SetPropertyBaseValue(propertyName, value, modifier);
         return this;
     }
     
     public EntityBuilder<T> SetModifier<ValueType>(PropertyName propertyName, IPropertyDependencyModifier<ValueType> modifier) {
         CheckEntity();
-        entity.SetPropertyModifier(propertyName, modifier);
+        Entity.SetPropertyModifier(propertyName, modifier);
         return this;
     }
 
     public T Build() {
         CheckEntity();
-        T ent = this.entity;
-        this.entity = null;
+        T ent = this.Entity;
+        this.Entity = null;
         ent.OnAllocate();
         ent.Initialize();
         onEntityCreated?.Invoke(ent);
