@@ -25,7 +25,7 @@ public class TestEnemy {
         IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 
 
-        TestBasicEnemy ent1 = model.GetBuilder<TestBasicEnemy>().SetProperty(PropertyName.rarity, 2)
+        TestBasicEnemy ent1 = model.GetBuilder<TestBasicEnemy>(2)
             .SetModifier(PropertyName.danger, new TestBasicEntityProperty.MyNewDangerModifier()).
             SetProperty(PropertyName.health, new HealthInfo(100,100)).
             SetProperty(PropertyName.taste, new List<TasteType>() {TasteType.Type1, TasteType.Type2}).
@@ -34,18 +34,36 @@ public class TestEnemy {
         Build();
         
         Assert.AreEqual(200, ent1.GetProperty<IDangerProperty>().RealValue.Value);
-        Assert.GreaterOrEqual(100f, ent1.GetProperty<IHealthProperty>().RealValue.Value.CurrentHealth);
+        Assert.GreaterOrEqual(1000f, ent1.GetProperty<IHealthProperty>().RealValue.Value.CurrentHealth);
         Assert.AreEqual(TasteType.Type1, ent1.GetProperty<ITasteProperty>().RealValues[0]);
-        Assert.AreEqual(100.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
-        Assert.AreEqual(200.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
+        Assert.AreEqual(1000.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
+        Assert.AreEqual(2000.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
         
         //another convenient way
         Assert.AreEqual(200, ent1.GetDanger().Value);
-        Assert.GreaterOrEqual(100f, ent1.GetHealth().Value.CurrentHealth);
+        Assert.GreaterOrEqual(1000f, ent1.GetHealth().Value.CurrentHealth);
         Assert.AreEqual(TasteType.Type1, ent1.GetTaste()[0]);
-        Assert.AreEqual(100.0f, ent1.GetVigiliance().Value);
-        Assert.AreEqual(200.0f, ent1.GetAttackRange().Value);
+        Assert.AreEqual(1000.0f, ent1.GetVigiliance().Value);
+        Assert.AreEqual(2000.0f, ent1.GetAttackRange().Value);
         
         Debug.Log($"Danger: {ent1.GetProperty<IDangerProperty>().RealValue}");
+    }
+    
+    [Test]
+    public void TestBasicEnemyBuilder() {
+        IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+
+
+        TestBasicEnemy ent1 = model.GetEnemyBuilder<TestBasicEnemy>(2)
+            .SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+            .SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
+            .Build();
+
+        Assert.AreEqual(200, ent1.GetProperty<IDangerProperty>().RealValue.Value);
+        Assert.GreaterOrEqual(1000f, ent1.GetProperty<IHealthProperty>().RealValue.Value.CurrentHealth);
+        Assert.AreEqual(TasteType.Type1, ent1.GetProperty<ITasteProperty>().RealValues[0]);
+        Assert.AreEqual(1000.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
+        Assert.AreEqual(2000.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
+        
     }
 }

@@ -2,21 +2,19 @@
 
 namespace _02._Scripts.Runtime.Base.Entity {
 	public interface IEntityBuilderFactory {
-		EntityBuilder<T> GetBuilder<T>() where T : class, IEntity, new();
+		EntityBuilder<T> GetBuilder<T>(int rarity) where T : class, IEntity, new();
+		
 	}
 	
 	public class EntityBuilderFactory : IEntityBuilderFactory {
 
-		public EntityBuilder<T> GetBuilder<T>() where T : class, IEntity, new() {
-			//if T is child of IEnemyEntity, return EnemyBuilder<T>
-			//else return BasicEntityBuilder<T>
-			
-			/*if (typeof(T).IsSubclassOf(typeof(IEnemyEntity))) {
-				return EnemyBuilder<T>.Allocate();
-			}*/
-			
-
-			return BasicEntityBuilder<T>.Allocate();
+		public EntityBuilder<T> GetBuilder<T>(int rarity) where T : class, IEntity, new() {
+			if (typeof(IEnemyEntity).IsAssignableFrom(typeof(T))) {
+				return EnemyBuilder<T>.Allocate(rarity);
+			}
+			return BasicEntityBuilder<T>.Allocate(rarity);
 		}
+		
+		
 	}
 }

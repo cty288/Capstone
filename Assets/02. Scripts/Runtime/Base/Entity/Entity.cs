@@ -93,8 +93,9 @@ public abstract class Entity :  IEntity  {
 		IPropertyBase property = GetProperty(name);
 		if (property != null) {
 			property.SetBaseValue(value);
-			property.SetModifier(modifier);
-
+			if (modifier != null) {
+				property.SetModifier(modifier);
+			}
 		}else {
 			Debug.LogError($"Property {name.ToString()} not found in entity {EntityName}");
 		}

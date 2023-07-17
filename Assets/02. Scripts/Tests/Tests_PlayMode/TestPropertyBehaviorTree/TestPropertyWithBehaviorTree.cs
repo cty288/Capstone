@@ -35,8 +35,8 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
     public int CustomProperty { get; set; }
     protected override void Awake() {
         base.Awake();
-        var entity = entityModel.GetBuilder<TestEntity>().SetProperty(PropertyName.health, new HealthInfo(100, 100))
-            .SetProperty(PropertyName.rarity, 1).SetProperty(PropertyName.danger, 100)
+        var entity = entityModel.GetBuilder<TestEntity>(1).SetProperty(PropertyName.health, new HealthInfo(100, 100))
+            .SetProperty(PropertyName.danger, 100)
             .SetProperty(PropertyName.test, 1000).
             Build();
         Init(entity.UUID, entity);

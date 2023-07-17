@@ -17,7 +17,10 @@ public interface IEntityModel: IModel {
 	/// <param name="addToModelOnceBuilt">Once the entity is built, add it to the model</param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	public EntityBuilder<T> GetBuilder<T>(bool addToModelOnceBuilt = true) where T : class, IEntity, new();
+	public EntityBuilder<T> GetBuilder<T>(int rarity, bool addToModelOnceBuilt = true) where T : class, IEntity, new();
+
+	EnemyBuilder<T> GetEnemyBuilder<T>(int rarity, bool addToModelOnceBuilt = true)
+		where T : class, IEnemyEntity, new();
 
 	//public EnemyBuilder<T> GetEnemyBuilder<T>(bool addToModelOnceBuilt = true) where T : class, IEnemyEntity, new();
 
@@ -37,8 +40,8 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 		entityBuilderFactory = new EntityBuilderFactory();
 	}
 
-	public EntityBuilder<T> GetBuilder<T>(bool addToModelOnceBuilt = true) where T : class, IEntity, new() {
-		EntityBuilder<T> builder = entityBuilderFactory.GetBuilder<T>();
+	public EntityBuilder<T> GetBuilder<T>(int rarity, bool addToModelOnceBuilt = true) where T : class, IEntity, new() {
+		EntityBuilder<T> builder = entityBuilderFactory.GetBuilder<T>(rarity);
 		if (addToModelOnceBuilt) {
 			builder.RegisterOnEntityCreated(OnEntityBuilt);
 		}
@@ -46,14 +49,14 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 		return builder;
 	}
 
-	/*public EnemyBuilder<T> GetEnemyBuilder<T>(bool addToModelOnceBuilt = true) where T : class, IEnemyEntity, new() {
-		EnemyBuilder<T> builder = entityBuilderFactory.GetEnemyBuilder<T>();
+	public EnemyBuilder<T> GetEnemyBuilder<T>(int rarity, bool addToModelOnceBuilt = true) where T : class, IEnemyEntity, new() {
+		EnemyBuilder<T> builder = entityBuilderFactory.GetBuilder<T>(rarity) as EnemyBuilder<T>;
 		if (addToModelOnceBuilt) {
 			builder.RegisterOnEntityCreated(OnEntityBuilt);
 		}
 
 		return builder;
-	}*/
+	}
 
 	private void OnEntityBuilt<T>(T entity) where T : class, IEntity, new() {
 		entities.Add(entity.UUID, entity);

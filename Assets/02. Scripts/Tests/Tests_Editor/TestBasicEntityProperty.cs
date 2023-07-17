@@ -194,8 +194,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		public void TestBasicEntity() {
 			EntityPropertyDependencyCache.ClearCache();
 			BasicEntity entity = BasicEntityBuilder<BasicEntity>.
-				Allocate().
-				SetProperty(PropertyName.rarity, 2).
+				Allocate(2).
 				Build();
 
 			Debug.Log($"UUID: {entity.UUID}");
@@ -207,8 +206,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			EntityPropertyDependencyCache.ClearCache();
 			
 			BasicEntity entity = BasicEntityBuilder<BasicEntity>.
-				Allocate().
-				SetProperty(PropertyName.rarity, 2).
+				Allocate(2).
 				SetModifier(PropertyName.danger, new MyNewDangerModifier()).
 				Build();
 
@@ -220,7 +218,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		public void TestEntityModelCreate() {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
-			string id = model.GetBuilder<BasicEntity>().SetProperty(PropertyName.rarity, 2)
+			string id = model.GetBuilder<BasicEntity>(2)
 				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build()
 				.UUID;
 
@@ -235,13 +233,13 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 
 
-			IEntity ent1 = model.GetBuilder<BasicEntity>().SetProperty(PropertyName.rarity, 2)
+			IEntity ent1 = model.GetBuilder<BasicEntity>(2).SetProperty(PropertyName.rarity, 2)
 				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build();
 			string id1 = ent1.UUID;
 
 			model.RemoveEntity(id1);
 			
-			IEntity ent2 = model.GetBuilder<BasicEntity>().SetProperty(PropertyName.rarity, 3)
+			IEntity ent2 = model.GetBuilder<BasicEntity>(3).SetProperty(PropertyName.rarity, 3)
 				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build();
 			string id2 = ent2.UUID;
 			
@@ -255,8 +253,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			IEntity ent1 = model.
-				GetBuilder<TestEnemy>().
-				SetProperty(PropertyName.rarity, 2)
+				GetBuilder<TestEnemy>(2)
 				.Build();
 
 			Assert.AreEqual(201, ent1.GetProperty<TestResourceList>().RealValues[0].RealValue.Value.Rarity);
@@ -283,8 +280,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			IEntity ent1 = model.
-				GetBuilder<TestResourceTableEnemy>().
-				SetProperty(PropertyName.rarity, 2)
+				GetBuilder<TestResourceTableEnemy>(2)
 				.Build();
 
 			var table = ent1.GetProperty<TestResourceTableProperty>().RealValues;
@@ -297,8 +293,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			IEntity ent1 = model.
-				GetBuilder<TestResourceDictEnemy>().
-				SetProperty(PropertyName.rarity, 2)
+				GetBuilder<TestResourceDictEnemy>(2)
 				.Build();
 
 			var table = ent1.GetProperty<TestResourceDictProperty>().RealValues;

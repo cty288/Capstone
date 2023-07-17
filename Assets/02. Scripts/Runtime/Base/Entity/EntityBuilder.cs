@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.Pool;
 using UnityEngine;
 
+
 public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new()
 {
     protected virtual T Entity { get; set; } = null;
