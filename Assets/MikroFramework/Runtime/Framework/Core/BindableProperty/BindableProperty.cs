@@ -11,14 +11,17 @@ namespace MikroFramework.BindableProperty
     public interface IBindableProperty {
         public object ObjectValue { get; set; }
 
-        public IUnRegister RegisterValueChaned(Action<object> onValueChanged);
+        public IUnRegister RegisterOnObjectValueChaned(Action<object> onValueChanged);
 
-        IUnRegister RegisterValueChaned(Action<object, object> onValueChanged);
+        IUnRegister RegisterOnObjectValueChaned(Action<object, object> onValueChanged);
         
-        IUnRegister RegisterWithInit(Action<object> onValueChanged);
+        IUnRegister RegisterWithInitObject(Action<object> onValueChanged);
 
-        IUnRegister RegisterWithInit(Action<object, object> onValueChanged);
+        IUnRegister RegisterWithInitObject(Action<object, object> onValueChanged);
 
+        void UnRegisterOnObjectValueChanged(Action<object> onValueChanged);
+        
+        void UnRegisterOnObjectValueChanged(Action<object, object> onValueChanged);
         public void UnRegisterAll();
     }
     [Serializable]
@@ -130,6 +133,8 @@ namespace MikroFramework.BindableProperty
             this.onValueChanged2 -= onValueChanged;
         }
 
+
+
         public void UnRegisterAll() {
             this.onValueChanged = obj => { };
             this.onValueChanged2 = (obj, obj2) => { };
@@ -140,23 +145,45 @@ namespace MikroFramework.BindableProperty
             set => Value = (T) value;
         }
         
-        public IUnRegister RegisterValueChaned(Action<object> onValueChanged) {
+        public IUnRegister RegisterOnObjectValueChaned(Action<object> onValueChanged) {
             return RegisterOnValueChaned((v) => { onValueChanged(v); });
         }
         
-        public IUnRegister RegisterValueChaned(Action<object, object> onValueChanged) {
+        public IUnRegister RegisterOnObjectValueChaned(Action<object, object> onValueChanged) {
             return RegisterOnValueChaned((v, w) => { onValueChanged(v, w); });
         }
 
-        
-        public IUnRegister RegisterWithInit(Action<object> onValueChanged) {
-            return RegisterWithInitValue((v) => { onValueChanged(v); });
+        private Dictionary<Action<object>, Action<T>> actionDict = new Dictionary<Action<object>, Action<T>>();
+        private Dictionary<Action<object, object>, Action<T, T>> actionDict2 = new Dictionary<Action<object, object>, Action<T, T>>();
+
+        public IUnRegister RegisterWithInitObject(Action<object> onValueChanged) {
+            Action<T> action = (v) => { onValueChanged(v); };
+            actionDict.Add(onValueChanged, action);
+            return RegisterWithInitValue(action);
         }
         
-        public IUnRegister RegisterWithInit(Action<object, object> onValueChanged) {
-            return RegisterWithInitValue((v, w) => { onValueChanged(v, w); });
+        public IUnRegister RegisterWithInitObject(Action<object, object> onValueChanged) {
+            Action<T, T> action = (v, w) => { onValueChanged(v, w); };
+            actionDict2.Add(onValueChanged, action);
+            return RegisterWithInitValue(action);
+        }
+
+        public void UnRegisterOnObjectValueChanged(Action<object> onValueChanged) {
+            if (actionDict.ContainsKey(onValueChanged)) {
+                Action<T> action = actionDict[onValueChanged];
+                UnRegisterOnValueChanged(action);
+                actionDict.Remove(onValueChanged);
+                action = null;
+            }
         }
         
-        
+        public void UnRegisterOnObjectValueChanged(Action<object, object> onValueChanged) {
+            if (actionDict2.ContainsKey(onValueChanged)) {
+                Action<T, T> action = actionDict2[onValueChanged];
+                UnRegisterOnValueChanged(action);
+                actionDict2.Remove(onValueChanged);
+                action = null;
+            }
+        }
     }
 }
