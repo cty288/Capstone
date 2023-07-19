@@ -11,14 +11,37 @@ using UnityEngine;
 /// To reference an entity, use the entity's id
 /// </summary>
 public interface IEntityModel: IModel {
+	
 	/// <summary>
 	/// Get the general builder for the entity type
 	/// </summary>
+	/// <param name="rarity"></param>
 	/// <param name="addToModelOnceBuilt">Once the entity is built, add it to the model</param>
+	/// <typeparam name="TBuilder">The type of the builder you want to use
+	/// You need to make sure that builder is okay to build the target entity</typeparam>
+	/// <typeparam name="TEntity"></typeparam>
+	/// <returns></returns>
+	public TBuilder GetBuilder<TBuilder, TEntity>(int rarity, bool addToModelOnceBuilt = true)
+		where TBuilder : EntityBuilder<TBuilder, TEntity>
+		where TEntity : class, IEntity, new();
+	
+	/// <summary>
+	/// Get the BasicEntityBuilder for the entity type
+	/// </summary>
+	/// <param name="rarity"></param>
+	/// <param name="addToModelOnceBuilt"></param>
+	/// <typeparam name="TEntity"></typeparam>
+	/// <returns></returns>
+	public BasicEntityBuilder<TEntity> GetBuilder<TEntity>(int rarity, bool addToModelOnceBuilt = true)
+		where TEntity : class, IEntity, new();
+
+	/// <summary>
+	/// Get the enemy builder for the entity type
+	/// </summary>
+	/// <param name="rarity"></param>
+	/// <param name="addToModelOnceBuilt"></param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
-	public EntityBuilder<T> GetBuilder<T>(int rarity, bool addToModelOnceBuilt = true) where T : class, IEntity, new();
-
 	EnemyBuilder<T> GetEnemyBuilder<T>(int rarity, bool addToModelOnceBuilt = true)
 		where T : class, IEnemyEntity, new();
 
@@ -39,9 +62,19 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 		base.OnInit();
 		entityBuilderFactory = new EntityBuilderFactory();
 	}
+	
+	public TBuilder GetBuilder<TBuilder, TEntity>(int rarity, bool addToModelOnceBuilt = true) where TBuilder : EntityBuilder<TBuilder, TEntity> where TEntity : class, IEntity, new() {
+		TBuilder builder = entityBuilderFactory.GetBuilder<TBuilder, TEntity>(rarity);
+		if (addToModelOnceBuilt) {
+			builder.RegisterOnEntityCreated(OnEntityBuilt);
+		}
 
-	public EntityBuilder<T> GetBuilder<T>(int rarity, bool addToModelOnceBuilt = true) where T : class, IEntity, new() {
-		EntityBuilder<T> builder = entityBuilderFactory.GetBuilder<T>(rarity);
+		return builder;
+	}
+
+	public BasicEntityBuilder<TEntity> GetBuilder<TEntity>(int rarity, bool addToModelOnceBuilt = true) where TEntity : class, IEntity, new() {
+		BasicEntityBuilder<TEntity> builder = entityBuilderFactory.GetBuilder<BasicEntityBuilder<TEntity>, TEntity>(rarity);
+		
 		if (addToModelOnceBuilt) {
 			builder.RegisterOnEntityCreated(OnEntityBuilt);
 		}
@@ -50,7 +83,8 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 	}
 
 	public EnemyBuilder<T> GetEnemyBuilder<T>(int rarity, bool addToModelOnceBuilt = true) where T : class, IEnemyEntity, new() {
-		EnemyBuilder<T> builder = entityBuilderFactory.GetBuilder<T>(rarity) as EnemyBuilder<T>;
+		EnemyBuilder<T> builder = entityBuilderFactory.GetBuilder<EnemyBuilder<T>, T>(rarity);
+		
 		if (addToModelOnceBuilt) {
 			builder.RegisterOnEntityCreated(OnEntityBuilt);
 		}

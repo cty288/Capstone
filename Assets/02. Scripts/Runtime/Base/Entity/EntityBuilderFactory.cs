@@ -1,20 +1,28 @@
 ﻿using _02._Scripts.Runtime.Common.Entities.Enemies;
+using UnityEngine;
 
 namespace _02._Scripts.Runtime.Base.Entity {
 	public interface IEntityBuilderFactory {
-		EntityBuilder<T> GetBuilder<T>(int rarity) where T : class, IEntity, new();
+		TBuilder GetBuilder<TBuilder, TEntity>(int rarity)
+			where TBuilder : EntityBuilder<TBuilder, TEntity>
+			where TEntity : class, IEntity, new();
 		
 	}
 	
 	public class EntityBuilderFactory : IEntityBuilderFactory {
-
-		public EntityBuilder<T> GetBuilder<T>(int rarity) where T : class, IEntity, new() {
-			if (typeof(IEnemyEntity).IsAssignableFrom(typeof(T))) {
-				return EnemyBuilder<T>.Allocate(rarity);
+		
+		public TBuilder GetBuilder<TBuilder, TEntity>(int rarity) 
+			where TBuilder : EntityBuilder<TBuilder, TEntity> 
+			where TEntity : class, IEntity, new() {
+			
+			if(typeof(TBuilder) == typeof(EnemyBuilder<TEntity>)){
+				if (!typeof(IEnemyEntity).IsAssignableFrom(typeof(TEntity))) {
+					throw new UnityException("EnemyBuilder can only be used to build IEnemyEntity");
+				}
+				return EnemyBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
-			return BasicEntityBuilder<T>.Allocate(rarity);
+			
+			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;
 		}
-		
-		
 	}
 }

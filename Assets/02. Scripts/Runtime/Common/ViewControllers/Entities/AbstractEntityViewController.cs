@@ -40,13 +40,18 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 
 		protected virtual void Start() {
 			if (string.IsNullOrEmpty(ID)) {
-				Debug.LogError("ID for enemy is null or empty! Do not instantiate enemy view controller directly! " +
-				               "Use EntityBuilderFactory instead!");
-				return;
+				//Debug.LogError("ID for enemy is null or empty! Do not instantiate enemy view controller directly! " +
+				//               "Use EntityBuilderFactory instead!");
+				//return;
+				//first time init
+				IEntity entity = OnInitEntity();
+				Init(entity.UUID, entity);
 			}
 			BindedEntity = entityModel.GetEntity<T>(ID);
 			OnBindProperty();
 		}
+
+		protected abstract IEntity OnInitEntity();
 
 		#region Property Binding
 

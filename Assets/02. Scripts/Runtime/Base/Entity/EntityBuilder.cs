@@ -5,29 +5,30 @@ using MikroFramework.Pool;
 using UnityEngine;
 
 
-public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new()
-{
-    protected virtual T Entity { get; set; } = null;
+public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable 
+    where TEntity : class, IEntity, new() 
+    where TBuilder : EntityBuilder<TBuilder, TEntity>{
+    protected virtual TEntity Entity { get; set; } = null;
     
-    protected Action<T> onEntityCreated = null;
+    protected Action<TEntity> onEntityCreated = null;
     public EntityBuilder() {
        
     }
     
-    public EntityBuilder<T> RegisterOnEntityCreated(Action<T> onCreated) {
+    public TBuilder RegisterOnEntityCreated(Action<TEntity> onCreated) {
         this.onEntityCreated += onCreated;
-        return this;
+        return (TBuilder) this;
     }
 
     protected void CheckEntity() {
         if (Entity == null) {
-            Entity = SafeObjectPool<T>.Singleton.Allocate();
+            Entity = SafeObjectPool<TEntity>.Singleton.Allocate();
         }
     }
 
-    public EntityBuilder<T> FromConfig() {
+    public TBuilder FromConfig() {
         CheckEntity();
-        return this;
+        return (TBuilder) this;
     }
 
     /// <summary>
@@ -36,21 +37,21 @@ public abstract class EntityBuilder<T> : IPoolable where T : class, IEntity, new
     /// <param name="propertyName"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public EntityBuilder<T> SetProperty<ValueType>(PropertyName propertyName, ValueType value, IPropertyDependencyModifier<ValueType> modifier = null) {
+    public TBuilder SetProperty<ValueType>(PropertyName propertyName, ValueType value, IPropertyDependencyModifier<ValueType> modifier = null) {
         CheckEntity();
         Entity.SetPropertyBaseValue(propertyName, value, modifier);
-        return this;
+        return (TBuilder) this;
     }
     
-    public EntityBuilder<T> SetModifier<ValueType>(PropertyName propertyName, IPropertyDependencyModifier<ValueType> modifier) {
+    public TBuilder SetModifier<ValueType>(PropertyName propertyName, IPropertyDependencyModifier<ValueType> modifier) {
         CheckEntity();
         Entity.SetPropertyModifier(propertyName, modifier);
-        return this;
+        return (TBuilder) this;
     }
 
-    public T Build() {
+    public TEntity Build() {
         CheckEntity();
-        T ent = this.Entity;
+        TEntity ent = this.Entity;
         this.Entity = null;
         ent.OnAllocate();
         ent.Initialize();

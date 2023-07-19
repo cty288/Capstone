@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Common.Entities.Enemies;
 using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
 using BehaviorDesigner.Runtime;
@@ -34,24 +35,20 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
     [BindableProperty(PropertyName.test, null, nameof(OnTestPropertyChange))]
     public int CustomProperty { get; }
 
-   
-    
-    protected override void Awake() {
-        base.Awake();
-        
-        var entity = entityModel.GetEnemyBuilder<TestEntity>(1).
-            SetProperty(PropertyName.health, new HealthInfo(100, 100))
-            .SetProperty(PropertyName.danger, 100)
-            .SetProperty(PropertyName.test, 1000).
-            SetProperty(PropertyName.vigiliance, 10f).
-            Build();
-        Init(entity.UUID, entity);
-    }
 
     protected override void OnBindEntityProperty() {
         base.OnBindEntityProperty();
         //Bind("CustomProperty", BindedEntity.GetProperty<CustomProperty>().RealValue);
         //Debug.Log("CustomProperty: " + CustomProperty);
+    }
+
+    protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<TestEntity> builder) {
+        return builder.
+            SetProperty(PropertyName.health, new HealthInfo(100, 100))
+            .SetProperty(PropertyName.danger, 100)
+            .SetProperty(PropertyName.test, 1000).
+            SetProperty(PropertyName.vigiliance, 10f).
+            Build();
     }
 
     private void Update() {

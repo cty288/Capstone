@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Common.Entities.Enemies;
 using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Runtime.Common.ViewControllers.Entities;
 using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
@@ -21,14 +22,22 @@ public abstract class AbstractEnemyViewController<T> : AbstractEntityViewControl
 	
 	public float AttackRange { get;}
 	
+	
+	
 	protected override void OnBindEntityProperty() {
 		Bind("Danger", BindedEntity.GetDanger());
 		Bind<int, HealthInfo>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
 		Bind<int, HealthInfo>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
 		Bind("Vigiliance", BindedEntity.GetVigiliance());
 		Bind("AttackRange", BindedEntity.GetAttackRange());
-		
 	}
+
+	protected override IEntity OnInitEntity() {
+		EnemyBuilder<T> builder = entityModel.GetEnemyBuilder<T>(1).FromConfig();
+		return OnInitEnemyEntity(builder);
+	}
+
+	protected abstract IEnemyEntity OnInitEnemyEntity(EnemyBuilder<T> builder);
 
 	protected object GetMaxHealth(object info) {
 		return ((HealthInfo) info).MaxHealth;

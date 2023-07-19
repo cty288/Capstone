@@ -1,7 +1,7 @@
 ﻿using MikroFramework.Pool;
 
 namespace _02._Scripts.Runtime.Base.Entity {
-	public class BasicEntityBuilder<T> : EntityBuilder<T>  where T : class, IEntity, new() {
+	public class BasicEntityBuilder<T> : EntityBuilder<BasicEntityBuilder<T>, T>  where T : class, IEntity, new() {
 		public override void RecycleToCache() {
 			SafeObjectPool<BasicEntityBuilder<T>>.Singleton.Recycle(this);
 		}

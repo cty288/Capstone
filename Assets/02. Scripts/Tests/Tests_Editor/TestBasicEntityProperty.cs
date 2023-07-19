@@ -218,7 +218,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		public void TestEntityModelCreate() {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
-			string id = model.GetBuilder<BasicEntity>(2)
+			string id = model.GetBuilder<BasicEntityBuilder<BasicEntity>, BasicEntity>(2)
 				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build()
 				.UUID;
 

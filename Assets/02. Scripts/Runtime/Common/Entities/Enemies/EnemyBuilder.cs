@@ -5,7 +5,7 @@ using _02._Scripts.Runtime.Common.Properties;
 using MikroFramework.Pool;
 
 namespace _02._Scripts.Runtime.Common.Entities.Enemies {
-	public class EnemyBuilder<T> : EntityBuilder<T> where T : class, IEntity, new() {
+	public class EnemyBuilder<T> : EntityBuilder<EnemyBuilder<T>, T> where T : class, IEntity, new() {
 		
 		public EnemyBuilder() {
 			CheckEntity();
