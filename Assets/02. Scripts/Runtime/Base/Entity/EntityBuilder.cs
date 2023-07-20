@@ -28,6 +28,7 @@ public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable
 
     public TBuilder FromConfig() {
         CheckEntity();
+        Entity.LoadPropertyBaseValueFromConfig();
         return (TBuilder) this;
     }
 

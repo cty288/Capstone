@@ -3,7 +3,10 @@
 namespace _02._Scripts.Runtime.Common.Properties {
 	public interface IVigilianceProperty : IProperty<float>{}
 	public class Vigiliance: Property<float>, IVigilianceProperty {
-		
+		public override float OnSetBaseValueFromConfig(dynamic value) {
+			return value;
+		}
+
 		protected override IPropertyDependencyModifier<float> GetDefautModifier() {
 			return new VigilianceDefaultModifier();
 		}

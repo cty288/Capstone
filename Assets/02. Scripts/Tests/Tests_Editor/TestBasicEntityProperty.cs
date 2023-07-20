@@ -4,7 +4,9 @@ using _02._Scripts.Runtime.Base.Entity;
 using _02._Scripts.Runtime.Base.Property;
 using _02._Scripts.Runtime.Common.Properties;
 using MikroFramework.Pool;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using Polyglot;
 using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
 
@@ -135,6 +137,11 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			public TestResourceProperty(IPropertyDependencyModifier<TestResourceInfo> modifier) : base() {
 				this.modifier = modifier;
 			}
+
+			public override TestResourceInfo OnSetBaseValueFromConfig(dynamic value) {
+				return new TestResourceInfo(value.name, value.rarity);
+			}
+
 			protected override IPropertyDependencyModifier<TestResourceInfo> GetDefautModifier() {
 				return null;
 			}
@@ -159,7 +166,11 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			public TestResourceList(params TestResourceProperty[] baseValues) : base(baseValues) {
 				
 			}
-			
+
+			public override List<TestResourceProperty> OnSetBaseValueFromConfig(dynamic value) {
+				return null;
+			}
+
 			protected override IPropertyDependencyModifier<List<TestResourceProperty>> GetDefautModifier() {
 				return null;
 			}
@@ -170,6 +181,10 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		}
 
 		internal class TestResourceTableProperty : PropertyList<TestResourceList> {
+			public override List<TestResourceList> OnSetBaseValueFromConfig(dynamic value) {
+				return null;
+			}
+
 			protected override IPropertyDependencyModifier<List<TestResourceList>> GetDefautModifier() {
 				return null;
 			}
@@ -180,6 +195,10 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		}
 
 		internal class TestResourceDictProperty : PropertyDictionary<TestResourceProperty> {
+			public override Dictionary<PropertyName, TestResourceProperty> OnSetBaseValueFromConfig(dynamic value) {
+				return null;
+			}
+
 			protected override IPropertyDependencyModifier<Dictionary<PropertyName, TestResourceProperty>> GetDefautModifier() {
 				return null;
 			}
@@ -295,10 +314,10 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntity ent1 = model.
 				GetBuilder<TestResourceDictEnemy>(2)
 				.Build();
-
+			  
 			var table = ent1.GetProperty<TestResourceDictProperty>().RealValues;
 			Assert.AreEqual(201, table[PropertyName.test_gold_resource].RealValue.Value.Rarity);
 		}
 
-	}
+	} 
 }

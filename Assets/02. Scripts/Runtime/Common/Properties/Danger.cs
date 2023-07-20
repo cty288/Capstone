@@ -3,7 +3,10 @@
 namespace _02._Scripts.Runtime.Common.Properties {
 	public interface IDangerProperty : IProperty<int>{}
 	public class Danger: Property<int>, IDangerProperty {
-		
+		public override int OnSetBaseValueFromConfig(dynamic value) {
+			return value;
+		}
+
 		protected override IPropertyDependencyModifier<int> GetDefautModifier() {
 			return new DangerDefaultModifier();
 		}
@@ -21,7 +24,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 	
 	public class DangerDefaultModifier : PropertyDependencyModifier<int> {
 		public override int OnModify(int propertyValue) {
-			return GetDependency<Rarity>().InitialValue * 5;
+			return propertyValue * GetDependency<Rarity>().InitialValue * 5;
 		}
 	}
 }

@@ -3,7 +3,10 @@
 namespace _02._Scripts.Runtime.Common.Properties {
 	public interface IAttackRangeProperty : IProperty<float>{}
 	public class AttackRange: Property<float>, IAttackRangeProperty {
-		
+		public override float OnSetBaseValueFromConfig(dynamic value) {
+			return value;
+		}
+
 		protected override IPropertyDependencyModifier<float> GetDefautModifier() {
 			return new VigilianceDefaultModifier();
 		}

@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Common.Properties;
+using _02._Scripts.Runtime.Utilities.ConfigSheet;
 using MikroFramework.BindableProperty;
+using MikroFramework.Serializer;
 using UnityEngine;
 
 public interface IPropertyBase {
@@ -19,6 +21,8 @@ public interface IPropertyBase {
 	public void OnRecycled();
 
 	public IPropertyBase SetModifier<T>(IPropertyDependencyModifier<T> modifier);
+	
+	void OnLoadFromConfig(string entityName);
 }
 
 
@@ -50,7 +54,8 @@ public interface IProperty<T> : IPropertyBase{
 
     IBindableProperty IPropertyBase.GetRealValue() => RealValue;  
     void IPropertyBase.SetBaseValue(object value) => SetBaseValue((T)value);
-    
+
+   
 }
 
 public abstract class Property<T> : IProperty<T> {
@@ -66,10 +71,21 @@ public abstract class Property<T> : IProperty<T> {
 	
 	[field: ES3Serializable]
 	public virtual BindableProperty<T> RealValue { get; } = new BindableProperty<T>();
+	
+	protected ConfigTable configTable;
 
 	public virtual void SetBaseValue(T value) {
 		BaseValue = value;
 	}
+
+	public void OnLoadFromConfig(string entityName) {
+		dynamic data = configTable.Get(entityName, PropertyName.ToString());
+		if (data != null) {
+			SetBaseValue(OnSetBaseValueFromConfig(data));
+		}
+	}
+	
+	public abstract T OnSetBaseValueFromConfig(dynamic value);
 
 	[field: ES3Serializable]
 	protected IPropertyDependencyModifier<T> modifier;
@@ -107,6 +123,7 @@ public abstract class Property<T> : IProperty<T> {
 	/// </summary>
 	public Property() {
 		modifier = GetDefautModifier();
+		configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 	}
 	
 	

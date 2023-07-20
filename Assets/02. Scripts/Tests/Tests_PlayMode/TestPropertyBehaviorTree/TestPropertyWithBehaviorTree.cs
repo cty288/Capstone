@@ -23,6 +23,10 @@ public class TestEntity : EnemyEntity<TestEntity> {
 }
 
 public class CustomProperty : IndependentProperty<int> {
+    public override int OnSetBaseValueFromConfig(dynamic value) {
+        return value;
+    }
+
     protected override PropertyName GetPropertyName() {
         return PropertyName.test;
     }
@@ -44,10 +48,10 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
 
     protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<TestEntity> builder) {
         return builder.
-            SetProperty(PropertyName.health, new HealthInfo(100, 100))
-            .SetProperty(PropertyName.danger, 100)
-            .SetProperty(PropertyName.test, 1000).
-            SetProperty(PropertyName.vigiliance, 10f).
+           // SetProperty(PropertyName.health, new HealthInfo(100, 100))
+           // .SetProperty(PropertyName.danger, 100)
+            SetProperty(PropertyName.test, 1000).
+            //SetProperty(PropertyName.vigiliance, 10f).
             Build();
     }
 

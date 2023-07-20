@@ -13,6 +13,10 @@ namespace _02._Scripts.Runtime.Common.Properties {
 	
 	public interface ITasteProperty : IListProperty<TasteType> {}
 	public class Taste : IndependentListProperty<TasteType>, ITasteProperty {
+		public override List<TasteType> OnSetBaseValueFromConfig(dynamic value) {
+			return value.ToObject<List<TasteType>>();
+		}
+
 		protected override PropertyName GetPropertyName() {
 			return PropertyName.taste;
 		}

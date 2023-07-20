@@ -40,6 +40,8 @@ public interface IEntity: IPoolable {
 	public void SetPropertyBaseValue<T>(PropertyName name, T value, IPropertyDependencyModifier<T> modifier = null);
 	
 	public void SetPropertyModifier<T>(PropertyName name, IPropertyDependencyModifier<T> modifier);
+
+	public void LoadPropertyBaseValueFromConfig();
 }
 
 
@@ -112,6 +114,13 @@ public abstract class Entity :  IEntity  {
 		}else {
 			Debug.LogError($"Property {name.ToString()} not found in entity {EntityName}");
 		}
+	}
+
+	public void LoadPropertyBaseValueFromConfig() {
+		foreach (IPropertyBase property in _properties.Values) {
+			property.OnLoadFromConfig(EntityName);
+		}
+		
 	}
 
 

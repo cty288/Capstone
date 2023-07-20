@@ -30,7 +30,7 @@ public abstract class EnemyEntity<T> : Entity, IEnemyEntity where T : EnemyEntit
 		RegisterProperty<IAttackRangeProperty>(new AttackRange());
 		OnEnemyRegisterProperties();
 	}
-
+ 
 	public BindableProperty<int> GetDanger() {
 		return GetProperty<IDangerProperty>().RealValue;
 	}
