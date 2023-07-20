@@ -16,7 +16,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		
 		
 		[field: ES3Serializable]
-		[field: SerializeField]
+		//[field: SerializeField]
 		public string ID { get; private set; }
 		IEntity IEntityViewController.Entity => BindedEntity;
 	
@@ -27,7 +27,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		private Dictionary<PropertyInfo, FieldInfo> propertyFields = new Dictionary<PropertyInfo, FieldInfo>();
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 
-		private Type type;
+		//private Type type;
 		public void Init(string id, IEntity entity) {
 			ID = id;
 			BindedEntity = entity as T;
@@ -35,7 +35,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		
 		protected virtual void Awake() {
 			entityModel = this.GetModel<IEntityModel>();
-			type = typeof(T);
+			//type = typeof(T);
 		}
 
 		protected virtual void Start() {

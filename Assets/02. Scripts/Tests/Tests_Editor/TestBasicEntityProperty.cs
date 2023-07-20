@@ -214,6 +214,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			EntityPropertyDependencyCache.ClearCache();
 			BasicEntity entity = BasicEntityBuilder<BasicEntity>.
 				Allocate(2).
+				SetProperty(PropertyName.danger, 1).
 				Build();
 
 			Debug.Log($"UUID: {entity.UUID}");

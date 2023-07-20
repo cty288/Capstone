@@ -12,7 +12,7 @@ public abstract class AbstractEnemyViewController<T> : AbstractEntityViewControl
 	where T : class, IEnemyEntity, new() {
 	IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;
 	
-	public int Danger {  get;  set; }
+	public int Danger {  get; }
 	//[BindableProperty(PropertyName.health, nameof(GetMaxHealth))]
 	public int MaxHealth { get; }
 	//[BindableProperty(PropertyName.health, nameof(GetCurrentHealth))]
