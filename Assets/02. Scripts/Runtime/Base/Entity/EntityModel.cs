@@ -58,6 +58,9 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 	[field: ES3Serializable]
 	private Dictionary<string, IEntity> entities = new Dictionary<string, IEntity>();
 
+	[field: ES3Serializable]
+	private int test = 5;
+
 	protected override void OnInit() {
 		base.OnInit();
 		entityBuilderFactory = new EntityBuilderFactory();
@@ -71,6 +74,17 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 
 		return builder;
 	}
+
+	/*public override void OnSave() {
+		base.OnSave();
+		 ES3.Save("entities", entities, "entities", new ES3Settings(){format = ES3.Format.JSON, prettyPrint = true});
+	}
+
+	public override void OnLoad() {
+		base.OnLoad();
+		test++;
+		entities = ES3.Load<Dictionary<string, IEntity>>("entities", "entities", new Dictionary<string, IEntity>());
+	}*/
 
 	public BasicEntityBuilder<TEntity> GetBuilder<TEntity>(int rarity, bool addToModelOnceBuilt = true) where TEntity : class, IEntity, new() {
 		BasicEntityBuilder<TEntity> builder = entityBuilderFactory.GetBuilder<BasicEntityBuilder<TEntity>, TEntity>(rarity);

@@ -11,8 +11,9 @@ public abstract class SavableArchitecture<T> : Architecture<T> where T: Architec
 	protected const bool IsSave = true;
 	
 	public void RegisterModel<T>(T defaultModel) where T: class, IModel{
-		if (typeof(T).IsSubclassOf(typeof(AbstractSavableModel)) && IsSave) {
-			T model = ES3.Load<AbstractSavableModel>("Model_" + typeof(T).Name, "models.es3", defaultModel as AbstractSavableModel) as T;
+		if (defaultModel.GetType().IsSubclassOf(typeof(AbstractSavableModel)) && IsSave) {
+			T model = ES3.Load("Model_" + defaultModel.GetType().Name, "models.es3", defaultModel as AbstractSavableModel) as T;
+			
 			base.RegisterModel<T>(model);
 			(model as AbstractSavableModel)?.OnLoad();
 			savableModels.Add(model as AbstractSavableModel);
@@ -25,9 +26,9 @@ public abstract class SavableArchitecture<T> : Architecture<T> where T: Architec
 	public void RegisterSystem<T>(T defaultSystem) where T:class, ISystem{
 		
         
-		if (typeof(T).IsSubclassOf(typeof(AbstractSavableSystem)) && IsSave) {
+		if (defaultSystem.GetType().IsSubclassOf(typeof(AbstractSavableSystem)) && IsSave) {
             
-			T system = ES3.Load<AbstractSavableSystem>("System_" + typeof(T).Name, "systems.es3", defaultSystem as AbstractSavableSystem) as T;
+			T system = ES3.Load<AbstractSavableSystem>("System_" + defaultSystem.GetType().Name, "systems.es3", defaultSystem as AbstractSavableSystem) as T;
 			base.RegisterSystem<T>(system);
 			(system as AbstractSavableSystem)?.OnLoad();
 			savableSystems.Add(system as AbstractSavableSystem);

@@ -92,10 +92,10 @@ namespace ES3Internal
                     es3Type = new ES3HashSetType(type);
                 else if (genericType == typeof(Unity.Collections.NativeArray<>))
                     es3Type = new ES3NativeArrayType(type);
-                else if (throwException)
-                    throw new NotSupportedException("Generic type \"" + type.ToString() + "\" is not supported by Easy Save.");
+               // else if (throwException)
+                    //throw new NotSupportedException("Generic type \"" + type.ToString() + "\" is not supported by Easy Save.");
                 else
-                    return null;
+	                es3Type = new ES3ReflectedObjectType(type);
 			}
 			else if(ES3Reflection.IsPrimitive(type)) // ERROR: We should not have to create an ES3Type for a primitive.
 			{

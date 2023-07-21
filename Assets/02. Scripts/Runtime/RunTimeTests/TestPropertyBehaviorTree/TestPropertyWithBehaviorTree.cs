@@ -73,6 +73,11 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
         if (Input.GetKeyDown(KeyCode.D)) {
             Destroy(this.gameObject);
         }
+
+        if (Input.GetKeyDown(KeyCode.S)) {
+            ES3AutoSaveMgr.Current.Save();
+            ((MainGame) MainGame.Interface).SaveGame();
+        }
     }
     
     protected void OnTestPropertyChange(int oldValue, int newValue){

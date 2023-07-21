@@ -17,7 +17,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		
 		[field: ES3Serializable]
 		//[field: SerializeField]
-		public string ID { get; private set; }
+		public string ID { get; set; }
 		IEntity IEntityViewController.Entity => BindedEntity;
 	
 		protected IEntityModel entityModel;

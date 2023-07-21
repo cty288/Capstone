@@ -37,6 +37,13 @@ namespace MikroFramework.BindableProperty
         
         public BindableProperty(T defaultValue = default) {
             this.value = defaultValue;
+            actionDict = new Dictionary<Action<object>, Action<T>>();
+            actionDict2 = new Dictionary<Action<object, object>, Action<T, T>>();
+        }
+        
+        public BindableProperty() {
+            actionDict = new Dictionary<Action<object>, Action<T>>();
+            actionDict2 = new Dictionary<Action<object, object>, Action<T, T>>();
         }
 
         [ES3Serializable]
@@ -153,7 +160,11 @@ namespace MikroFramework.BindableProperty
             return RegisterOnValueChaned((v, w) => { onValueChanged(v, w); });
         }
 
+        [NonSerialized]
+        [ES3NonSerializable]
         private Dictionary<Action<object>, Action<T>> actionDict = new Dictionary<Action<object>, Action<T>>();
+        [NonSerialized]
+        [ES3NonSerializable]
         private Dictionary<Action<object, object>, Action<T, T>> actionDict2 = new Dictionary<Action<object, object>, Action<T, T>>();
 
         public IUnRegister RegisterWithInitObject(Action<object> onValueChanged) {
