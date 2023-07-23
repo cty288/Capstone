@@ -6,37 +6,53 @@ using MikroFramework.BindableProperty;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Base.Property {
-	public interface IDictionaryProperty<T> : IProperty<Dictionary<PropertyName, T>> {
-		BindableDictionary<PropertyName, T> RealValues { get; }
+	public interface IDictionaryProperty<TKey,T> : IProperty<Dictionary<TKey, T>> {
+		BindableDictionary<TKey, T> RealValues { get; }
+
+		public TKey GetKey(T value);
+
+		public void AddToRealValue(T property, IEntity parentEntity);
+		
+		public void RemoveFromRealValue(TKey key);
 	}
-	public abstract class PropertyDictionary<T> : Property<Dictionary<PropertyName, T>>, IDictionaryProperty<T> where T: IPropertyBase {
+	public abstract class PropertyDictionary<TKey,T> : Property<Dictionary<TKey, T>>, IDictionaryProperty<TKey,T> where T: IPropertyBase {
 		/// <summary>
 		/// Use RealValues instead to invoke events
 		/// </summary>
-		public override BindableProperty<Dictionary<PropertyName, T>> RealValue => RealValues;
+		public override BindableProperty<Dictionary<TKey, T>> RealValue => RealValues;
 
 		[field: ES3Serializable]
-		public BindableDictionary<PropertyName, T> RealValues { get; private set; } =
-			new BindableDictionary<PropertyName, T>();
+		public BindableDictionary<TKey, T> RealValues { get; private set; } =
+			new BindableDictionary<TKey, T>();
+
+		public abstract TKey GetKey(T value);
+
 
 		public PropertyDictionary() : base() {
 			
 		}
 		
 		public PropertyDictionary(params T[] baseValues) : this() {
-			BaseValue = baseValues.ToDictionary(p => p.PropertyName);
+			if (baseValues != null) {
+				BaseValue = baseValues.ToDictionary(GetKey);
+			}
+		
 		}
 
 		
-		public override void SetBaseValue(Dictionary<PropertyName, T> value) {
+		public override void SetBaseValue(Dictionary<TKey, T> value) {
 			BaseValue = value;
 		}
 		
 		
 		public override void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
-			foreach (var property in BaseValue) {
-				property.Value.Initialize(dependencies, parentEntityName);
+			if (BaseValue != null) {
+				foreach (var property in BaseValue) {
+					property.Value.Initialize(dependencies, parentEntityName);
+				}
+
 			}
+
 			
 			base.Initialize(dependencies, parentEntityName);
 		}
@@ -54,7 +70,11 @@ namespace _02._Scripts.Runtime.Base.Property {
 			}
 
 			property.Initialize(dependencyProperties, parentEntity.EntityName);
-			RealValues.AddAndInvoke(property.PropertyName, property);
+			RealValues.AddAndInvoke(GetKey(property), property);
+		}
+
+		public void RemoveFromRealValue(TKey key) {
+			RealValues.RemoveAndInvoke(key);
 		}
 
 		/// <summary>
@@ -62,8 +82,8 @@ namespace _02._Scripts.Runtime.Base.Property {
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		protected override Dictionary<PropertyName, T> OnClone(Dictionary<PropertyName, T> value) {
-			Dictionary<PropertyName, T> clone = new Dictionary<PropertyName, T>();
+		protected override Dictionary<TKey, T> OnClone(Dictionary<TKey, T> value) {
+			Dictionary<TKey, T> clone = new Dictionary<TKey, T>();
 			if (value != null) {
 				foreach (var property in value) {
 					clone.Add(property.Key, property.Value);
@@ -75,17 +95,23 @@ namespace _02._Scripts.Runtime.Base.Property {
 
 		public override PropertyName[] GetDependentProperties() {
 			List<PropertyName> dependentProperties = new List<PropertyName>();
-			foreach (var property in BaseValue) {
-				dependentProperties.AddRange(property.Value.GetDependentProperties());
+			if (BaseValue != null) {
+				foreach (var property in BaseValue) {
+					dependentProperties.AddRange(property.Value.GetDependentProperties());
+				}
 			}
+			
 
 			return dependentProperties.ToArray();
 		}
 
 		public override void OnRecycled() {
-			foreach (var property in BaseValue) {
-				property.Value.OnRecycled();
+			if (BaseValue != null) {
+				foreach (var property in BaseValue) {
+					property.Value.OnRecycled();
+				}
 			}
+			
 			base.OnRecycled();
 		}
 	}

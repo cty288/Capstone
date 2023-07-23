@@ -22,7 +22,7 @@ public interface IPropertyBase {
 
 	public IPropertyBase SetModifier<T>(IPropertyDependencyModifier<T> modifier);
 	
-	void OnLoadFromConfig(string entityName);
+	void LoadFromConfig(dynamic value);
 }
 
 
@@ -72,16 +72,15 @@ public abstract class Property<T> : IProperty<T> {
 	[field: ES3Serializable]
 	public virtual BindableProperty<T> RealValue { get; } = new BindableProperty<T>();
 	
-	protected ConfigTable configTable;
+	
 
 	public virtual void SetBaseValue(T value) {
 		BaseValue = value;
 	}
 
-	public void OnLoadFromConfig(string entityName) {
-		dynamic data = configTable.Get(entityName, PropertyName.ToString());
-		if (data != null) {
-			SetBaseValue(OnSetBaseValueFromConfig(data));
+	public void LoadFromConfig(dynamic value) {
+		if (value != null) {
+			SetBaseValue(OnSetBaseValueFromConfig(value));
 		}
 	}
 	
@@ -123,7 +122,7 @@ public abstract class Property<T> : IProperty<T> {
 	/// </summary>
 	public Property() {
 		modifier = GetDefautModifier();
-		configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
+		
 	}
 	
 	

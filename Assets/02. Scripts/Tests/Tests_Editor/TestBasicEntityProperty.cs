@@ -194,7 +194,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			}
 		}
 
-		internal class TestResourceDictProperty : PropertyDictionary<TestResourceProperty> {
+		internal class TestResourceDictProperty : PropertyDictionary<PropertyName,TestResourceProperty> {
 			public override Dictionary<PropertyName, TestResourceProperty> OnSetBaseValueFromConfig(dynamic value) {
 				return null;
 			}
@@ -205,6 +205,10 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 			protected override PropertyName GetPropertyName() {
 				return PropertyName.test_resource_dict;
+			}
+
+			public override PropertyName GetKey(TestResourceProperty value) {
+				return value.PropertyName;
 			}
 		}
 		//============================Start of Tests================================

@@ -1,6 +1,25 @@
-EntityName / Property Names,health,vigiliance,taste,danger,attack_range
+EntityName / Property Names,health,vigiliance,taste,danger,attack_range,custom_properties
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}",float,"List, values separated by ,",int,float
-BEGIN,,,,,
-TTT,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]",456,789
+{""maxHealth"": 100, ""currentHealth"": 100}",float,"List, values separated by ,",int,float,"Dict<string, BehaviorData>
+
+BehaviorData Structure:
+json
+{""name"": ""XXX"", 
+.... (any related json string)}"
+BEGIN,,,,,,
+TTT,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]",456,789,"{
+  ""attack1"": {
+    ""speed"": 100,
+    ""info"": {
+       ""test"": 2.5 
+     },
+    ""damage"": 900
+  },
+  ""attack2"": {
+    ""damage"": 4
+  },
+  ""attack3"": {
+    ""damage"": 50
+  }
+}"

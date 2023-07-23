@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Utilities.ConfigSheet;
 using MikroFramework.Event;
 using MikroFramework.IOC;
 using MikroFramework.Pool;
@@ -64,7 +65,9 @@ public abstract class Entity :  IEntity  {
 	[field: ES3Serializable]
 	private bool initialized = false;
 
+	protected ConfigTable configTable;
 	public Entity() {
+		configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 		OnRegisterProperties();
 	}
 	
@@ -118,7 +121,10 @@ public abstract class Entity :  IEntity  {
 
 	public void LoadPropertyBaseValueFromConfig() {
 		foreach (IPropertyBase property in _properties.Values) {
-			property.OnLoadFromConfig(EntityName);
+			dynamic value = configTable.Get(EntityName, property.PropertyName.ToString());
+			if (value != null) {
+				property.LoadFromConfig(value);
+			}
 		}
 		
 	}

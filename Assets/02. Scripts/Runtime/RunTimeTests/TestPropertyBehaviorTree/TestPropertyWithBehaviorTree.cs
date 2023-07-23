@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Common.Entities.Enemies;
 using _02._Scripts.Runtime.Common.Properties;
+using _02._Scripts.Runtime.Common.Properties.CustomsBase;
 using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
 using BehaviorDesigner.Runtime;
 using MikroFramework.BindableProperty;
@@ -19,6 +20,10 @@ public class TestEntity : EnemyEntity<TestEntity> {
 
     protected override void OnEnemyRegisterProperties() {
         RegisterProperty(new CustomProperty());
+    }
+
+    protected override ICustomProperty[] OnRegisterCustomProperties() {
+        return null;
     }
 }
 
