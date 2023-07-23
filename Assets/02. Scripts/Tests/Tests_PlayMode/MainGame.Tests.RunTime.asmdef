@@ -6,14 +6,18 @@
         "UnityEditor.TestRunner",
         "MikroFramework",
         "BehaviorDesigner",
-        "BehaviorDesigner.Movement"
+        "BehaviorDesigner.Movement",
+        "MainGame",
+        "Polyglot.Scripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": true,
     "precompiledReferences": [
-        "nunit.framework.dll"
+        "nunit.framework.dll",
+        "BehaviorDesigner.Runtime.dll",
+        "Newtonsoft.Json.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [
