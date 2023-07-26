@@ -7,7 +7,7 @@ using MikroFramework.Event;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
+namespace _02._Scripts.Runtime.Common.Properties{
 	
 	class CustomPropertyDataUnRegister : IUnRegister
 	{
@@ -50,7 +50,7 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 	}
 
 	public interface ICustomProperty : IDictionaryProperty<string, ICustomDataProperty> {
-		public string CustomPropertyName { get; }
+		public string GetCustomPropertyName();
 		public string OnGetDescription();
 
 		public ICustomDataProperty GetCustomDataProperty(string customDataName);
@@ -70,6 +70,8 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 		public void UnRegisterOnCustomDataChanged(Action<ICustomProperty> onCustomDataChanged);
 
 		PropertyName IPropertyBase.PropertyName => PropertyName.custom_property;
+
+		public Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value);
 	}
 	
 	public abstract class AbstractCustomProperty : PropertyDictionary<string, ICustomDataProperty>, ICustomProperty {
@@ -82,7 +84,7 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 		
 		private Action<ICustomProperty> onCustomDataChanged;
 
-		public abstract string CustomPropertyName { get; }
+		public abstract string GetCustomPropertyName();
 		public abstract string OnGetDescription();
 
 
@@ -101,15 +103,15 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 		
 		public abstract ICustomDataProperty[] GetCustomDataProperties();
 		
-		public override Dictionary<string, ICustomDataProperty> OnSetBaseValueFromConfig(dynamic value) {
+		public virtual Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value) {
 			IEnumerable<string> keys = (value as JObject)?.Properties().Select(p => p.Name);
 			if (keys != null)
 				foreach (string key in keys) {
 					if (BaseValue.TryGetValue(key, out ICustomDataProperty val)) {
-						val.LoadFromConfig(value[key]);
+						val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));
 					}
 					else {
-						Debug.LogError("CustomDataProperty " + key + " not found in Custom " + CustomPropertyName);
+						Debug.LogError("CustomDataProperty " + key + " not found in Custom " + GetCustomPropertyName());
 					}
 				}
 
@@ -130,24 +132,24 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 		
 		public dynamic GetCustomDataValue(string customDataName) {
 			if (!RealValues.Value.ContainsKey(customDataName)) {
-				Debug.LogError("CustomDataProperty " + customDataName + " not found in Custom " + CustomPropertyName);
+				Debug.LogError("CustomDataProperty " + customDataName + " not found in Custom " +  GetCustomPropertyName());
 				return null;
 			}
-			return RealValues[customDataName].GetRealValue().ObjectValue;
+			return RealValues[customDataName].GetRealValue().Value;
 		}
 
 		public T GetCustomDataValue<T>(string CustomDataName) {
 			if (!RealValues.Value.ContainsKey(CustomDataName)) {
-				Debug.LogError("CustomDataProperty " + CustomDataName + " not found in Custom " + CustomPropertyName);
+				Debug.LogError("CustomDataProperty " + CustomDataName + " not found in Custom " +  GetCustomPropertyName());
 				return default;
 			}
 
-			return (T) RealValues[CustomDataName].GetRealValue().ObjectValue;
+			return (T) RealValues[CustomDataName].GetRealValue().Value;
 		}
 		
 		public ICustomDataProperty GetCustomDataProperty(string customDataName) {
 			if (!RealValues.Value.ContainsKey(customDataName)) {
-				Debug.LogError("CustomDataProperty " + customDataName + " not found in Custom " + CustomPropertyName);
+				Debug.LogError("CustomDataProperty " + customDataName + " not found in Custom " +  GetCustomPropertyName());
 				return null;
 			}
 			return RealValues[customDataName];
@@ -155,7 +157,7 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 
 		public ICustomDataProperty<T> GetCustomDataProperty<T>(string customDataName) {
 			if (!RealValues.Value.ContainsKey(customDataName)) {
-				Debug.LogError("CustomDataProperty " + customDataName + " not found in Custom " + CustomPropertyName);
+				Debug.LogError("CustomDataProperty " + customDataName + " not found in Custom " +  GetCustomPropertyName());
 				return null;
 			}
 			return (ICustomDataProperty<T>) RealValues[customDataName];
@@ -216,14 +218,14 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 
 
 	/// <summary>
-	/// If you don't want to create a new class for each Custom, you can use this class to create a Custom property.
+	/// If you don't want to create a new class for each Custom Property, you can use this class to create a Custom property.
 	/// However, this class is data only, which means you can't set any modifiers for any Custom data. Also, data is only loaded from config file.
 	/// Moreover, all Custom data in the config file will be automatically loaded into this class, with type of dynamic.
 	/// To customize the description of this Custom, you need to assign a data only Custom description getter
 	/// </summary>
 	public class DataOnlyCustomProperty : AbstractCustomProperty {
-		[field: ES3Serializable]
-		public override string CustomPropertyName { get; }
+		[ES3Serializable] 
+		protected string customPropertyName;
 		
 		[field: ES3Serializable]
 		protected IDataOnlyDescriptionGetter DescriptionGetter { get; }
@@ -231,10 +233,14 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 		public DataOnlyCustomProperty(): base(){}
 		
 		public DataOnlyCustomProperty(string CustomName, IDataOnlyDescriptionGetter descriptionGetter = null) : base() {
-			CustomPropertyName = CustomName;
+			this.customPropertyName = CustomName;
 			DescriptionGetter = descriptionGetter;
 		}
-		
+
+		public override string GetCustomPropertyName() {
+			return customPropertyName;
+		}
+
 		public override string OnGetDescription() {
 			if (DescriptionGetter != null) {
 				return DescriptionGetter.GetDescription(this);
@@ -247,26 +253,30 @@ namespace _02._Scripts.Runtime.Common.Properties.CustomsBase {
 			return null;
 		}
 
-		public override Dictionary<string, ICustomDataProperty> OnSetBaseValueFromConfig(dynamic value) {
+		public override Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value) {
 			BaseValue.Clear();
 			IEnumerable<string> keys = (value as JObject)?.Properties().Select(p => p.Name);
 			if (keys != null)
 				foreach (string key in keys) {
 					if (BaseValue.TryGetValue(key, out ICustomDataProperty val)) {
-						val.LoadFromConfig(value[key]);
+						val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));
 					}
 					else {
 						BaseValue.Add(key, new CustomDataProperty<dynamic>(key));
-						BaseValue[key].LoadFromConfig(value[key]);
+						ICustomDataProperty bv = this.BaseValue[key];
+						bv.SetBaseValue(bv.OnGetBaseValueFromConfig(value[key]));
 					}
 				}
 
 			return BaseValue;
 		}
+
+		public override void OnRecycled() {
+			base.OnRecycled();
+			BaseValue.Clear();
+		}
 	}
 
-	public interface IDataOnlyDescriptionGetter {
-		public string GetDescription(ICustomProperty customProperty);
-	}
+
 
 }

@@ -34,6 +34,7 @@ public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable
 
     /// <summary>
     /// Override the property's base value and its modifier
+    /// If the entity has multiple properties with the same name, every property will be overriden
     /// </summary>
     /// <param name="propertyName"></param>
     /// <param name="value"></param>
@@ -44,6 +45,14 @@ public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable
         return (TBuilder) this;
     }
     
+    /// <summary>
+    /// Override the property's modifier
+    /// If the entity has multiple properties with the same name, every property will be overriden
+    /// </summary>
+    /// <param name="propertyName"></param>
+    /// <param name="modifier"></param>
+    /// <typeparam name="ValueType"></typeparam>
+    /// <returns></returns>
     public TBuilder SetModifier<ValueType>(PropertyName propertyName, IPropertyDependencyModifier<ValueType> modifier) {
         CheckEntity();
         Entity.SetPropertyModifier(propertyName, modifier);

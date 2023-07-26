@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Common.Properties;
-using _02._Scripts.Runtime.Common.Properties.CustomsBase;
-using _02._Scripts.Runtime.Common.Properties.CustomsBase;
 using _02._Scripts.Runtime.Common.Properties.SkillsBase;
 using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Event;

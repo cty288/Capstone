@@ -32,28 +32,33 @@ namespace _02._Scripts.Runtime.Base.Property {
 		}
 		
 		
-		public override void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
-			foreach (var property in BaseValue) {
-				property.Initialize(dependencies, parentEntityName);
-			}
-			
-			base.Initialize(dependencies, parentEntityName);
-		}
 		
 		public void AddToRealValue(T property, IEntity parentEntity) {
-			PropertyName[] dependencies = property.GetDependentProperties();
-			IPropertyBase[] dependencyProperties = new IPropertyBase[dependencies.Length];
-			for (int i = 0; i < dependencies.Length; i++) {
-				var p = parentEntity.GetProperty(dependencies[i]);
-				if (p == null) {
-					Debug.LogError("Property " + dependencies[i] + " not found in entity " + parentEntity.EntityName);
-					return;
+
+			parentEntity.RegisterTempProperty(property, fullName + "[" + RealValues.Count() + "]");
+			
+			
+			RealValues.AddAndInvoke(property);
+		}
+
+		protected override IPropertyBase[] GetChildProperties() {
+			if(BaseValue is {Count: > 0}) {
+				List<IPropertyBase> properties = new List<IPropertyBase>();
+				foreach (var property in BaseValue) {
+					properties.AddRange(property.GetSubProperties());
 				}
-				dependencyProperties[i] = p;
+				return properties.ToArray();
 			}
 
-			property.Initialize(dependencyProperties, parentEntity.EntityName);
-			RealValues.AddAndInvoke(property);
+			return null;
+		}
+
+		protected override void OnSetChildFullName() {
+			if (BaseValue != null) {
+				for (int i = 0; i < BaseValue.Count; i++) {
+					BaseValue[i].OnSetFullName(fullName + "[" + i + "]");
+				}
+			}
 		}
 
 		/// <summary>
@@ -68,15 +73,32 @@ namespace _02._Scripts.Runtime.Base.Property {
 			}
 			return clone;
 		}
+		
 
-		public override PropertyName[] GetDependentProperties() {
-			return BaseValue.SelectMany(p => p.GetDependentProperties()).Distinct().ToArray();
+		public override PropertyNameInfo[] GetDependentProperties() {
+			List<PropertyNameInfo> dependentProperties = new List<PropertyNameInfo>();
+			if (BaseValue != null) {
+				foreach (var property in BaseValue) {
+					PropertyNameInfo[] dependentPropertyNames = property.GetDependentProperties();
+					if (dependentPropertyNames != null) {
+						dependentProperties.AddRange(dependentPropertyNames);
+					}
+					
+				}
+			}
+			
+
+			return dependentProperties.ToArray();
+			
 		}
 
 		public override void OnRecycled() {
-			foreach (var property in BaseValue) {
-				property.OnRecycled();
+			if (BaseValue!=null) {
+				foreach (var property in BaseValue) {
+					property.OnRecycled();
+				}
 			}
+			
 			base.OnRecycled();
 		}
 	}

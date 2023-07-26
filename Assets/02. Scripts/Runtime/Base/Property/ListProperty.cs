@@ -74,10 +74,20 @@ public abstract class IndependentListProperty<T> : ListProperty<T> {
 		return null;
 	}
 
-	public override PropertyName[] GetDependentProperties() {
+	public override PropertyNameInfo[] GetDependentProperties() {
 		return null;
 	}
 
 	protected IndependentListProperty():base(){}
+}
+
+public abstract class IndependentLoadFromConfigListProperty<T> : IndependentListProperty<T>, ILoadFromConfigProperty {
+	public void LoadFromConfig(dynamic value) {
+		if (value != null) {
+			SetBaseValue(OnSetBaseValueFromConfig(value));
+		}
+	}
 	
+	public abstract List<T> OnSetBaseValueFromConfig(dynamic value);
+	protected IndependentLoadFromConfigListProperty():base(){}
 }

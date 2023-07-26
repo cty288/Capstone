@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using _02._Scripts.Runtime.Base.Property;
+using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Runtime.Utilities.ConfigSheet;
 using MikroFramework.Event;
 using MikroFramework.IOC;
@@ -10,27 +13,76 @@ using UnityEngine;
 public interface IEntity: IPoolable {
 	
 	public string EntityName { get; }
-
+	/// <summary>
+	/// Register a property to the entity. This must be called before the entity is initialized
+	/// To register a property after the entity is initialized, use RegisterTempProperty
+	/// </summary>
+	/// <param name="property"></param>
+	/// <param name="force"></param>
+	/// <typeparam name="T"></typeparam>
+	public void RegisterInitialProperty<T>(T property) where T : IPropertyBase;
+	
+	/// <summary>
+	/// Register a property to the entity. The property will be removed once the entity is recycled
+	/// </summary>
+	/// <param name="property"></param>
+	/// <param name="overriddenName"></param>
+	/// <typeparam name="T"></typeparam>
+	public void RegisterTempProperty<T>(T property, string overriddenName, bool alsoInitialize = true) where T : IPropertyBase ;
+	
 	/// <summary>
 	/// Get a property by name, return null if not found
+	/// This will not retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+	/// To retrieve nested properties, use the one that takes full name instead
 	/// </summary>
 	/// <param name="name"></param>
 	/// <returns></returns>
-	public IPropertyBase GetProperty (PropertyName name);
+	public IPropertyBase GetProperty(PropertyName name);
 	
 	/// <summary>
-	/// Return a property if you know its type, return null if not found (recommended)
+	/// Get a property by full name, return null if not found
+	/// This can retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+	/// e.g. GetProperty("custom_properties.attack.damage")
+	/// </summary>
+	/// <param name="name"></param>
+	/// <returns></returns>
+	public IPropertyBase GetProperty(PropertyNameInfo name);
+	
+	/// <summary>
+	/// Return a property if you know its type, return null if not found
+	/// This will not retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+	/// To retrieve nested properties, use the one that takes full name instead
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <returns></returns>
 
 	public T GetProperty<T>() where T : class, IPropertyBase;
 	
-	public IPropertyBase GetProperty (Type type);
-
-	public bool HasProperty (PropertyName name);
+	/// <summary>
+	/// Get a property by full name, return null if not found
+	/// This can retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+	/// This will auto convert the property to the given type
+	/// </summary>
+	/// <param name="name"></param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	public T GetProperty<T>(PropertyNameInfo name) where T : class, IPropertyBase;
 	
-	public bool TryGetProperty (PropertyName name, out IPropertyBase property);
+
+	/// <summary>
+	/// Return a property if you know its type, return null if not found
+	/// This will not retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+	/// To retrieve nested properties, use the one that takes full name instead
+	/// </summary>
+	/// <param name="type"></param>
+	/// <returns></returns>
+	public IPropertyBase GetProperty (Type type);
+	
+	public bool HasProperty(PropertyNameInfo nameInfo);
+	
+	public bool TryGetProperty (PropertyNameInfo nameInfo, out IPropertyBase property);
+	
+
 
 	public void Initialize();
 	
@@ -38,7 +90,23 @@ public interface IEntity: IPoolable {
 
 	public void OnAllocate();
 	
+	
+	/// <summary>
+	/// Set the base value of all properties with the given name
+	/// </summary>
+	/// <param name="name"></param>
+	/// <param name="value"></param>
+	/// <param name="modifier"></param>
+	/// <typeparam name="T"></typeparam>
+	
 	public void SetPropertyBaseValue<T>(PropertyName name, T value, IPropertyDependencyModifier<T> modifier = null);
+	
+	/// <summary>
+	/// Set the modifier of all properties with the given name
+	/// </summary>
+	/// <param name="name"></param>
+	/// <param name="modifier"></param>
+	/// <typeparam name="T"></typeparam>
 	
 	public void SetPropertyModifier<T>(PropertyName name, IPropertyDependencyModifier<T> modifier);
 
@@ -52,11 +120,15 @@ public abstract class Entity :  IEntity  {
 	public abstract string EntityName { get; protected set; }
 
 	[field: ES3Serializable]
-	private Dictionary<PropertyName, IPropertyBase> _properties { get; } =
-		new Dictionary<PropertyName, IPropertyBase>();
-	
-	private static Dictionary<Type, PropertyName> cachedPropertyNames = new Dictionary<Type, PropertyName>();
+	private Dictionary<string, IPropertyBase> _properties { get; } =
+		new Dictionary<string, IPropertyBase>();
 
+
+	[field: ES3Serializable] private HashSet<string> tempPropertyNames = new HashSet<string>();
+
+	private static Dictionary<Type, string> cachedPropertyNames = new Dictionary<Type, string>();
+
+	
 	//protected abstract IPropertyBase[] OnGetOriginalProperties();
 	[field: SerializeField]
 	[field: ES3Serializable]
@@ -71,16 +143,72 @@ public abstract class Entity :  IEntity  {
 		OnRegisterProperties();
 	}
 	
-	protected void RegisterProperty<T>(T property) where T : IPropertyBase {
-		if (this._properties.ContainsKey(property.PropertyName)) {
-			Debug.LogError($"Property {property.PropertyName.ToString()} already exists in entity {EntityName}");
+	public void RegisterInitialProperty<T>(T property) where T : IPropertyBase {
+		
+		if (property is ICustomProperty) {
+			Debug.LogError(
+				$"Property {property.PropertyName.ToString()} is a custom property! Please add to your custom properties list! instead of registering it to the entity directly!");
 			return;
 		}
-		this._properties.Add(property.PropertyName, property);
-		Type type = typeof(T);
-		cachedPropertyNames.TryAdd(type, property.PropertyName);
-		Type concreteType = property.GetType();
-		cachedPropertyNames.TryAdd(concreteType, property.PropertyName);
+
+		if (initialized){
+			Debug.LogError("Cannot register property after entity is initialized");
+			return;
+		}
+
+		string name = property.PropertyName.ToString();
+		property.OnSetFullName(name);
+		IPropertyBase[] properties = property.GetSubProperties();
+		if (properties != null) {
+			foreach (IPropertyBase subProperty in properties) {
+				string subPropertyName = subProperty.GetFullName();
+				if (this._properties.ContainsKey(subPropertyName)) {
+					throw new Exception($"Property {subPropertyName} already exists in entity {EntityName}!");
+				}else {
+					this._properties[subPropertyName] = subProperty;
+				}
+			}
+		}
+
+
+		if (!property.GetFullName().Contains('.')) {
+			Type type = typeof(T);
+			cachedPropertyNames.TryAdd(type, property.GetFullName());
+			Type concreteType = property.GetType();
+			cachedPropertyNames.TryAdd(concreteType, property.GetFullName());
+		}
+	
+	}
+	
+	public void RegisterTempProperty<T>(T property, string overriddenName, bool alsoInitialize = true) where T : IPropertyBase{
+		
+		
+		string name = String.IsNullOrEmpty(overriddenName) ? property.PropertyName.ToString() : overriddenName;
+		property.OnSetFullName(name);
+		IPropertyBase[] properties = property.GetSubProperties();
+		if (properties != null) {
+			foreach (IPropertyBase subProperty in properties) {
+				string subPropertyName = subProperty.GetFullName();
+				if (this._properties.ContainsKey(subPropertyName)) {
+					throw new Exception($"Property {subPropertyName} already exists in entity {EntityName}!");
+				}else {
+					this._properties[subPropertyName] = subProperty;
+					tempPropertyNames.Add(subPropertyName);
+				}
+			}
+		}
+
+
+		if (!property.GetFullName().Contains('.')) {
+			Type type = typeof(T);
+			cachedPropertyNames.TryAdd(type, property.GetFullName());
+			Type concreteType = property.GetType();
+			cachedPropertyNames.TryAdd(concreteType, property.GetFullName());
+		}
+
+		if (alsoInitialize) {
+			InitProperty(property);
+		}
 	}
 
 	protected abstract void OnRegisterProperties();
@@ -121,70 +249,78 @@ public abstract class Entity :  IEntity  {
 
 	public void LoadPropertyBaseValueFromConfig() {
 		foreach (IPropertyBase property in _properties.Values) {
-			dynamic value = configTable.Get(EntityName, property.PropertyName.ToString());
-			if (value != null) {
-				property.LoadFromConfig(value);
+			if(property is ILoadFromConfigProperty loadFromConfigProperty) {
+				dynamic value = configTable.Get(EntityName, loadFromConfigProperty.PropertyName.ToString());
+				if (value != null) {
+					loadFromConfigProperty.LoadFromConfig(value);
+				}
 			}
 		}
 		
 	}
-
-
-	/// <summary>
-	/// Get a property by name, return null if not found
-	/// </summary>
-	/// <param name="name"></param>
-	/// <returns></returns>
+	
 	public IPropertyBase GetProperty(PropertyName name) {
-		if (_properties.ContainsKey(name)) {
-			return _properties[name];
+		if (_properties.TryGetValue(name.ToString(), out var property)) {
+			return property;
 		}
 
+		return null;
+	}
+
+	public IPropertyBase GetProperty(PropertyNameInfo name) {
+		if (_properties.TryGetValue(name.GetFullName(), out var property)) {
+			return property;
+		}
 		return null;
 	}
 
 	public T GetProperty<T>() where T : class, IPropertyBase {
-		if (cachedPropertyNames.TryGetValue(typeof(T), out PropertyName propertyName)) {
-			return (T) GetProperty(propertyName);
+		if (cachedPropertyNames.TryGetValue(typeof(T), out string propertyName)) {
+			return (T) GetProperty(new PropertyNameInfo(propertyName));
 		}
 		return null;
 	}
+
+	public T GetProperty<T>(PropertyNameInfo name) where T : class, IPropertyBase {
+		if (_properties.TryGetValue(name.GetFullName(), out var property)) {
+			return property as T;
+		}
+		return null;
+	}
+
 
 	public IPropertyBase GetProperty(Type type) {
-		if (cachedPropertyNames.TryGetValue(type, out PropertyName propertyName)) {
-			return GetProperty(propertyName);
+		if (cachedPropertyNames.TryGetValue(type, out string propertyName)) {
+			return GetProperty(new PropertyNameInfo(propertyName));
 		}
 		return null;
 	}
 
-
-	public bool HasProperty(PropertyName name) {
-		return _properties.ContainsKey(name);
+	public bool HasProperty(PropertyNameInfo nameInfo) {
+		return _properties.ContainsKey(nameInfo.GetFullName());
 	}
 
-	public bool TryGetProperty(PropertyName name, out IPropertyBase property) {
-		return _properties.TryGetValue(name, out property);
+	public bool TryGetProperty(PropertyNameInfo nameInfo, out IPropertyBase property) {
+		if (_properties.TryGetValue(nameInfo.GetFullName(), out var p)) {
+			property = p;
+			return true;
+		}
+		property = null;
+		return false;
 	}
+	
+	
 
+	
 	public void Initialize() {
 		if (initialized) {
 			return;
 		}
-		List<PropertyName> order = EntityPropertyDependencyCache.GetInitializationOrder(EntityName, _properties);
-		foreach (PropertyName propertyName in order) {
+
+		List<string> order = EntityPropertyDependencyCache.GetInitializationOrder(EntityName, _properties);
+		foreach (string propertyName in order) {
 			if (_properties.TryGetValue(propertyName, out IPropertyBase property)) {
-				PropertyName[] dependencies = property.GetDependentProperties();
-				if (dependencies != null) {
-					IPropertyBase[] dependentProperties = new IPropertyBase[dependencies.Length];
-					for (int i = 0; i < dependencies.Length; i++) {
-						dependentProperties[i] = _properties[dependencies[i]];
-					}
-					property.Initialize(dependentProperties, EntityName);
-				}
-				else {
-					property.Initialize(null, EntityName);
-				}
-				
+				InitProperty(property);
 			}
 			else {
 				Debug.LogError($"Property with name {propertyName} not found in entity {EntityName}");
@@ -193,12 +329,32 @@ public abstract class Entity :  IEntity  {
 		initialized = true;
 	}
 
+	protected void InitProperty(IPropertyBase property) {
+		PropertyNameInfo[] dependencies = property.GetDependentProperties();
+		if (dependencies != null) {
+			IPropertyBase[] dependentProperties = new IPropertyBase[dependencies.Length];
+			for (int i = 0; i < dependencies.Length; i++) {
+				dependentProperties[i] = _properties[dependencies[i].GetFullName()];
+			}
+			property.Initialize(dependentProperties, EntityName);
+		}
+		else {
+			property.Initialize(null, EntityName);
+		}
+	}
+
 
 
 	public void OnRecycled() {
 		foreach (IPropertyBase property in _properties.Values) {
 			property.OnRecycled();
 		}
+		
+		foreach (string propertyName in tempPropertyNames) {
+			_properties.Remove(propertyName);
+		}
+		
+		tempPropertyNames.Clear();
 		initialized = false;
 		OnRecycle();
 	}

@@ -170,7 +170,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 					}
 				};
 				bindableProperty.RegisterWithInitObject(cb).UnRegisterWhenGameObjectDestroyed(gameObject);
-				propertyBindings.Add(bindedProperty, () => getter((BindablePropertyType) bindableProperty.ObjectValue));
+				propertyBindings.Add(bindedProperty, () => getter((BindablePropertyType) bindableProperty.Value));
 
 			}
 		}

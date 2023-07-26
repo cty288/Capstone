@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Common.Entities.Enemies;
 using _02._Scripts.Runtime.Common.Properties;
-using _02._Scripts.Runtime.Common.Properties.CustomsBase;
 using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
 using BehaviorDesigner.Runtime;
 using MikroFramework.BindableProperty;
@@ -19,7 +18,7 @@ public class TestEntity : EnemyEntity<TestEntity> {
     }
 
     protected override void OnEnemyRegisterProperties() {
-        RegisterProperty(new CustomProperty());
+        RegisterInitialProperty(new CustomProperty());
     }
 
     protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -28,8 +27,8 @@ public class TestEntity : EnemyEntity<TestEntity> {
 }
 
 public class CustomProperty : IndependentProperty<int> {
-    public override int OnSetBaseValueFromConfig(dynamic value) {
-        return value;
+    protected override IPropertyBase[] GetChildProperties() {
+        return null;
     }
 
     protected override PropertyName GetPropertyName() {
@@ -41,7 +40,8 @@ public class CustomProperty : IndependentProperty<int> {
 public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEntity> {
     //in the future, I will make it more easier to use by using [Bind] attribute
     
-    [BindableProperty(PropertyName.test, null, nameof(OnTestPropertyChange))]
+    //[BindableProperty(PropertyName.test)]
+    [BindableProperty("test", null, nameof(OnTestPropertyChange))]
     public int CustomProperty { get; }
 
 

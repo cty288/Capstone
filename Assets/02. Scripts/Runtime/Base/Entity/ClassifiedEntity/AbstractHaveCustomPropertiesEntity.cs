@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Common.Properties;
-using _02._Scripts.Runtime.Common.Properties.CustomsBase;
 using _02._Scripts.Runtime.Common.Properties.SkillsBase;
 using MikroFramework.Event;
 
 namespace _02._Scripts.Runtime.Base.Entity.ClassifiedEntity {
 	public abstract class AbstractHaveCustomPropertiesEntity: global::Entity, IHaveCustomProperties {
 		
-		public AbstractHaveCustomPropertiesEntity(): base(){}
 		
 		protected override void OnRegisterProperties() {
-			ICustomProperty[] properties = OnRegisterCustomProperties();
-			RegisterProperty<ICustomProperties>(new CustomProperties(properties));
+			//ICustomProperty[] properties = OnRegisterCustomProperties();
+			//RegisterInitialProperty<ICustomProperties>(new CustomProperties(properties));
 			OnEntityRegisterProperties();
 		}
 

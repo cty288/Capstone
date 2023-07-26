@@ -5,10 +5,15 @@ using Newtonsoft.Json.Linq;
 namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 	public interface ICustomDataProperty : IPropertyBase {
 		public string CustomDataName { get; }
+		public dynamic OnGetBaseValueFromConfig(dynamic value);
 	}
 	
 	public interface ICustomDataProperty<T> : ICustomDataProperty, IProperty<T> {
-		
+		dynamic ICustomDataProperty.OnGetBaseValueFromConfig(dynamic value) {
+			return OnGetBaseValueFromConfig(value);
+		}
+
+		public T OnGetBaseValueFromConfig(dynamic value);
 	}
 	
 	public class CustomDataProperty<T> : Property<T>, ICustomDataProperty, ICustomDataProperty<T> {
@@ -16,17 +21,18 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 		public string CustomDataName { get; private set; }
 
 		[field: ES3Serializable]
-		protected PropertyName[] dependencies;
+		protected PropertyNameInfo[] dependencies;
 		
+		private CustomDataProperty(): base(){}
+
 		public CustomDataProperty(string customDataName, IPropertyDependencyModifier<T> modifier = null, 
-			params PropertyName[] dependencies) : base() {
+			params PropertyNameInfo[] dependencies) : base() {
 			CustomDataName = customDataName;
 			SetModifier(modifier);
 			this.dependencies = dependencies;
-			
 		}
 
-		public override T OnSetBaseValueFromConfig(dynamic value) {
+		public T OnGetBaseValueFromConfig(dynamic value) {
 			if (value is JValue v) {
 				return (T) v.Value;
 			}
@@ -39,6 +45,10 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 			return JsonConvert.DeserializeObject<T>(value.ToString());
 		}
 
+		protected override IPropertyBase[] GetChildProperties() {
+			throw new NotImplementedException();
+		}
+
 		protected override IPropertyDependencyModifier<T> GetDefautModifier() {
 			return null;
 		}
@@ -47,7 +57,7 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 			return PropertyName.custom_property_data;
 		}
 
-		public override PropertyName[] GetDependentProperties() {
+		public override PropertyNameInfo[] GetDependentProperties() {
 			return dependencies;
 		}
 

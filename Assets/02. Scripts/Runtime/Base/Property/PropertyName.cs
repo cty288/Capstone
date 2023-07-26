@@ -17,5 +17,8 @@ public enum PropertyName {
 	test_resource_dict,
 	test_silver_resource,
 	test_gold_resource,
-	test
+	test,
+	test_interest,
+	test_interest_list,
+	test_interest_dict
 }

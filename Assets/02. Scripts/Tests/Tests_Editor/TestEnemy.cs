@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Common.Properties;
-using _02._Scripts.Runtime.Common.Properties.CustomsBase;
 using _02._Scripts.Tests.Tests_Editor;
 using NUnit.Framework;
 using UnityEngine;

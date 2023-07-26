@@ -1,12 +1,31 @@
 ﻿using System;
 using _02._Scripts.Runtime.Common.Properties;
-using _02._Scripts.Runtime.Common.Properties.CustomsBase;
 using NUnit.Framework;
 using UnityEngine;
 
 namespace _02._Scripts.Tests.Tests_Editor {
 	public class TestCustomProperty {
 		internal class TestBasicEnemyWithCustomProperties1 : EnemyEntity<TestBasicEnemyWithCustomProperties1> {
+			public override string EntityName { get; protected set; } = "TTT";
+
+			public override void OnRecycle() {
+            
+			}
+
+			protected override void OnEnemyRegisterProperties() {
+            
+			}
+
+			protected override ICustomProperty[] OnRegisterCustomProperties() {
+				return new [] {
+					new DataOnlyCustomProperty("attack1"),
+					new DataOnlyCustomProperty("attack2"),
+					new DataOnlyCustomProperty("attack3")
+				};
+			}
+		}
+		
+		internal class TestBasicEnemyWithCustomProperties2 : EnemyEntity<TestBasicEnemyWithCustomProperties2> {
 			public override string EntityName { get; protected set; } = "TTT";
 
 			public override void OnRecycle() {
@@ -64,9 +83,9 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 			Assert.AreEqual(3, ent1.GetCustomProperties().Values.Count);
 			Assert.AreEqual(2.5, (double) ent1.GetCustomProperty("attack1").GetCustomDataValue("info").test);
-			Assert.AreEqual(100,  ent1.GetCustomDataProperty("attack1", "speed").GetRealValue().ObjectValue);
+			Assert.AreEqual(100,  ent1.GetCustomDataProperty("attack1", "speed").GetRealValue().Value);
 			Assert.AreEqual(100,
-				ent1.GetCustomDataProperty<object>("attack1", "speed").GetRealValue().ObjectValue);
+				ent1.GetCustomDataProperty<object>("attack1", "speed").GetRealValue().Value);
 			Assert.AreEqual(50, (int) ent1.GetCustomDataValue("attack3", "damage"));
 			Assert.AreEqual(2.5, (double) ent1.GetCustomDataValue<dynamic>("attack1", "info").test);
 

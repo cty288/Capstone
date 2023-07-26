@@ -21,12 +21,12 @@ public interface IEnemyEntity : IEntity, IHaveCustomProperties {
 
 public abstract class EnemyEntity<T> : AbstractHaveCustomPropertiesEntity, IEnemyEntity where T : EnemyEntity<T>, new() {
 	protected override void OnEntityRegisterProperties() {
-		RegisterProperty(new Rarity());
-		RegisterProperty<IDangerProperty>(new Danger());
-		RegisterProperty<IHealthProperty>(new Health());
-		RegisterProperty<ITasteProperty>(new Taste());
-		RegisterProperty<IVigilianceProperty>(new Vigiliance());
-		RegisterProperty<IAttackRangeProperty>(new AttackRange());
+		RegisterInitialProperty(new Rarity());
+		RegisterInitialProperty<IDangerProperty>(new Danger());
+		RegisterInitialProperty<IHealthProperty>(new Health());
+		RegisterInitialProperty<ITasteProperty>(new Taste());
+		RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
+		RegisterInitialProperty<IAttackRangeProperty>(new AttackRange());
 		OnEnemyRegisterProperties();
 	}
 	

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Base.Property;
-using _02._Scripts.Runtime.Common.Properties.CustomsBase;
+using _02._Scripts.Runtime.Common.Properties;
 using MikroFramework.Event;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.Common.Properties {
 	
-	public interface ICustomProperties : IDictionaryProperty<string, ICustomProperty> {
+	public interface ICustomProperties : IDictionaryProperty<string, ICustomProperty>, ILoadFromConfigProperty {
 		public ICustomProperty GetCustomProperty(string key);
 		
 	}
@@ -19,7 +19,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 	/// Structure: CustomsProperty -> CustomProperty[] -> CustomDataProperty[]
 	/// </summary>
 
-	public class CustomProperties :  PropertyDictionary<string,ICustomProperty>, ICustomProperties {
+	public class CustomProperties :  PropertyDictionaryLoadFromConfig<string,ICustomProperty>, ICustomProperties {
 		
 		private JObject _configData;
 		
@@ -43,7 +43,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 			IEnumerable<string> keys = _configData.Properties().Select(p => p.Name);
 			foreach (string key in keys) {
 				if (BaseValue.TryGetValue(key, out ICustomProperty val)) {
-					val.LoadFromConfig(value[key]);
+					val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));
 				}
 			}
 
@@ -59,28 +59,9 @@ namespace _02._Scripts.Runtime.Common.Properties {
 		}
 
 		public override string GetKey(ICustomProperty value) {
-			return value.CustomPropertyName;
+			return value.GetCustomPropertyName();
 		}
-
-		public void AddCustomToRealValue(ICustomProperty custom, IEntity parentEntity, bool loadFromConfig) {
-			if (loadFromConfig) {
-				if (_configData == null) {
-					Debug.LogError("Config data not set!");
-					return;
-				}
-				if (!_configData.ContainsKey(custom.CustomPropertyName)) {
-					Debug.LogError("Custom " + custom.CustomPropertyName + " not found in config!");
-					return;
-				}
-				custom.LoadFromConfig(_configData[custom.CustomPropertyName]);
-			}
-
-			AddToRealValue(custom, parentEntity);
-		}
-
-		public void RemoveCustomFromRealValue(string key) {
-			RemoveFromRealValue(key);
-		}
+		
 
 		public ICustomProperty GetCustomProperty(string key) {
 			if (RealValues.Value.TryGetValue(key, out ICustomProperty Custom)) {

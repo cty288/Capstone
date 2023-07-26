@@ -43,33 +43,19 @@ namespace _02._Scripts.Runtime.Base.Property {
 		public override void SetBaseValue(Dictionary<TKey, T> value) {
 			BaseValue = value;
 		}
-		
-		
-		public override void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
-			if (BaseValue != null) {
-				foreach (var property in BaseValue) {
-					property.Value.Initialize(dependencies, parentEntityName);
-				}
 
+		protected override void OnSetChildFullName() {
+			if (BaseValue == null) {
+				return;
 			}
-
-			
-			base.Initialize(dependencies, parentEntityName);
+			foreach (KeyValuePair<TKey,T> keyValuePair in BaseValue) {
+				keyValuePair.Value.OnSetFullName(fullName + "." + keyValuePair.Key);
+			}
 		}
-		
-		public void AddToRealValue(T property, IEntity parentEntity) {
-			PropertyName[] dependencies = property.GetDependentProperties();
-			IPropertyBase[] dependencyProperties = new IPropertyBase[dependencies.Length];
-			for (int i = 0; i < dependencies.Length; i++) {
-				var p = parentEntity.GetProperty(dependencies[i]);
-				if (p == null) {
-					Debug.LogError("Property " + dependencies[i] + " not found in entity " + parentEntity.EntityName);
-					return;
-				}
-				dependencyProperties[i] = p;
-			}
 
-			property.Initialize(dependencyProperties, parentEntity.EntityName);
+
+		public void AddToRealValue(T property, IEntity parentEntity) {
+			parentEntity.RegisterTempProperty(property, fullName + "." + GetKey(property));
 			RealValues.AddAndInvoke(GetKey(property), property);
 		}
 
@@ -93,11 +79,26 @@ namespace _02._Scripts.Runtime.Base.Property {
 			return clone;
 		}
 
-		public override PropertyName[] GetDependentProperties() {
-			List<PropertyName> dependentProperties = new List<PropertyName>();
+		protected override IPropertyBase[] GetChildProperties() {
+			if (BaseValue != null) {
+				List<IPropertyBase> childProperties = new List<IPropertyBase>();
+				foreach (T baseVal in BaseValue.Values) {
+					childProperties.AddRange(baseVal.GetSubProperties());
+				}
+				return childProperties.ToArray();
+			}
+			return null;
+		}
+
+		public override PropertyNameInfo[] GetDependentProperties() {
+			List<PropertyNameInfo> dependentProperties = new List<PropertyNameInfo>();
 			if (BaseValue != null) {
 				foreach (var property in BaseValue) {
-					dependentProperties.AddRange(property.Value.GetDependentProperties());
+					PropertyNameInfo[] dependentPropertyNames = property.Value.GetDependentProperties();
+					if (dependentPropertyNames != null) {
+						dependentProperties.AddRange(dependentPropertyNames);
+					}
+					
 				}
 			}
 			
@@ -113,6 +114,21 @@ namespace _02._Scripts.Runtime.Base.Property {
 			}
 			
 			base.OnRecycled();
+		}
+	}
+	
+	
+	public abstract class PropertyDictionaryLoadFromConfig<TKey,T> : PropertyDictionary<TKey,T>, ILoadFromConfigProperty where T: IPropertyBase {
+		public void LoadFromConfig(dynamic value) {
+			if (value != null) {
+				SetBaseValue(OnSetBaseValueFromConfig(value));
+			}
+		}
+	
+		public abstract Dictionary<TKey, T> OnSetBaseValueFromConfig(dynamic value);
+	
+		public PropertyDictionaryLoadFromConfig() : base() {
+		
 		}
 	}
 }
