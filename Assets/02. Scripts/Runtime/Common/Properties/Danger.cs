@@ -6,9 +6,6 @@ namespace _02._Scripts.Runtime.Common.Properties {
 		
 	}
 	public class Danger: AbstractLoadFromConfigProperty<int>, IDangerProperty {
-		protected override IPropertyBase[] GetChildProperties() {
-			return null;
-		}
 
 		public override int OnSetBaseValueFromConfig(dynamic value) {
 			return value;

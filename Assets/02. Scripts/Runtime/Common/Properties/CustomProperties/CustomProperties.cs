@@ -41,6 +41,9 @@ namespace _02._Scripts.Runtime.Common.Properties {
 			//get all keys of value
 			_configData = value;
 			IEnumerable<string> keys = _configData.Properties().Select(p => p.Name);
+			if (BaseValue == null) {
+				return null;
+			}
 			foreach (string key in keys) {
 				if (BaseValue.TryGetValue(key, out ICustomProperty val)) {
 					val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));

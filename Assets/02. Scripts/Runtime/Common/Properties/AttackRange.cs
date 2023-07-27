@@ -4,10 +4,6 @@ using _02._Scripts.Runtime.Base.Property;
 namespace _02._Scripts.Runtime.Common.Properties {
 	public interface IAttackRangeProperty : IProperty<float>, ILoadFromConfigProperty{}
 	public class AttackRange: AbstractLoadFromConfigProperty<float>, IAttackRangeProperty {
-		protected override IPropertyBase[] GetChildProperties() {
-			return null;
-		}
-
 		public override float OnSetBaseValueFromConfig(dynamic value) {
 			return value;
 		}

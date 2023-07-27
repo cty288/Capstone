@@ -256,7 +256,7 @@ namespace _02._Scripts.Runtime.Common.Properties{
 		public override Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value) {
 			BaseValue.Clear();
 			IEnumerable<string> keys = (value as JObject)?.Properties().Select(p => p.Name);
-			if (keys != null)
+			if (keys != null) {
 				foreach (string key in keys) {
 					if (BaseValue.TryGetValue(key, out ICustomDataProperty val)) {
 						val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));
@@ -265,9 +265,11 @@ namespace _02._Scripts.Runtime.Common.Properties{
 						BaseValue.Add(key, new CustomDataProperty<dynamic>(key));
 						ICustomDataProperty bv = this.BaseValue[key];
 						bv.SetBaseValue(bv.OnGetBaseValueFromConfig(value[key]));
+						requestRegisterProperty?.Invoke(bv.GetType(), bv, GetFullName()+"."+key, false, false);
 					}
 				}
-
+			}
+			
 			return BaseValue;
 		}
 

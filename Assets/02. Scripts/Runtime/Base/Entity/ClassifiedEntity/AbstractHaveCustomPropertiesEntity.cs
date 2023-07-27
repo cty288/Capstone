@@ -9,8 +9,8 @@ namespace _02._Scripts.Runtime.Base.Entity.ClassifiedEntity {
 		
 		
 		protected override void OnRegisterProperties() {
-			//ICustomProperty[] properties = OnRegisterCustomProperties();
-			//RegisterInitialProperty<ICustomProperties>(new CustomProperties(properties));
+			ICustomProperty[] properties = OnRegisterCustomProperties();
+			RegisterInitialProperty<ICustomProperties>(new CustomProperties(properties));
 			OnEntityRegisterProperties();
 		}
 

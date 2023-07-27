@@ -34,7 +34,10 @@ public abstract class PropertyDependencyModifier<T> : IPropertyDependencyModifie
                 dependenciesInType[propertyBase.GetType()] = propertyBase;
             }
         }
-        return OnModify(propertyValue);
+        T result = OnModify(propertyValue);
+        dependenciesInType.Clear();
+        dependenciesInFullname.Clear();
+        return result;
     }
     
 	

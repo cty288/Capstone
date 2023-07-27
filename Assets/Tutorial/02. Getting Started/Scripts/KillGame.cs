@@ -14,4 +14,6 @@ public class KillGame : SavableArchitecture<KillGame> {
 		RegisterExtensibleUtility<StupidCalculator>(new StupidCalculator());
 		
 	}
+
+	protected override string saveFileSuffix { get; } = "kill_game";
 }

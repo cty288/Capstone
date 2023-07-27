@@ -138,11 +138,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			public TestResourceProperty(IPropertyDependencyModifier<TestResourceInfo> modifier) : base() {
 				this.modifier = modifier;
 			}
-
-
-			protected override IPropertyBase[] GetChildProperties() {
-				return null;
-			}
+			
 
 			protected override IPropertyDependencyModifier<TestResourceInfo> GetDefautModifier() {
 				return null;
@@ -206,10 +202,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 
 		public abstract class TestInterestProperty : Property<int> {
-			protected override IPropertyBase[] GetChildProperties() {
-				return null;
-			}
-			
+
 			protected override PropertyName GetPropertyName() {
 				return PropertyName.test_interest;
 			} 
@@ -408,7 +401,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			ent1.GetProperty<TestResourceList>().RealValues.RegisterOnAdd(OnAdd);
 			ent1.GetProperty<TestResourceList>().AddToRealValue(new TestResourceProperty(new GoldPropertyModifier()) {
 				BaseValue = new TestResourceInfo("Diamond", 100)
-			}, ent1);
+			});
 
 			Assert.AreEqual(300, ent1.GetProperty<TestResourceList>().RealValues[3].RealValue.Value.Rarity);
 			
@@ -482,7 +475,9 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				for (int j = 0; j < 50; j++) {
 					ent1.GetProperty<TestResourceList>().AddToRealValue(new TestResourceProperty(new GoldPropertyModifier()) {
 						BaseValue = new TestResourceInfo("Diamond", 100)
-					}, ent1);
+					});
+					Assert.AreEqual(300, (int) ent1.GetProperty(new PropertyNameInfo($"resource_list[{j+3}]")).
+						GetRealValue().Value.Rarity);
 				}
 
 				Assert.AreEqual(300, (int) ent1.GetProperty(new PropertyNameInfo("resource_list[3]")).GetRealValue().Value.Rarity);

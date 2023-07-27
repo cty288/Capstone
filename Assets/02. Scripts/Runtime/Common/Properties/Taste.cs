@@ -15,10 +15,6 @@ namespace _02._Scripts.Runtime.Common.Properties {
 		
 	}
 	public class Taste : IndependentLoadFromConfigListProperty<TasteType>, ITasteProperty {
-		protected override IPropertyBase[] GetChildProperties() {
-			return null;
-		}
-
 		public override List<TasteType> OnSetBaseValueFromConfig(dynamic value) {
 			return value.ToObject<List<TasteType>>();
 		}

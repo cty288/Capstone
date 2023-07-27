@@ -6,9 +6,6 @@ namespace _02._Scripts.Runtime.Common.Properties {
 		
 	}
 	public class Vigiliance: AbstractLoadFromConfigProperty<float>, IVigilianceProperty {
-		protected override IPropertyBase[] GetChildProperties() {
-			return null;
-		}
 
 		public override float OnSetBaseValueFromConfig(dynamic value) {
 			return value;

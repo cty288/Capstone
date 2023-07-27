@@ -8,6 +8,7 @@ using _02._Scripts.Runtime.Utilities.ConfigSheet;
 using MikroFramework.BindableProperty;
 using MikroFramework.Serializer;
 using UnityEngine;
+using Action = BehaviorDesigner.Runtime.Tasks.Action;
 
 
 public struct PropertyNameInfo {
@@ -72,13 +73,33 @@ public interface IPropertyBase {
 
 	public IPropertyBase SetModifier<T>(IPropertyDependencyModifier<T> modifier);
 	
-	public IPropertyBase[] GetSubProperties();
+	//public IPropertyBase[] GetSubProperties();
 }
 
 
 
 public interface ILoadFromConfigProperty: IPropertyBase {
 	void LoadFromConfig(dynamic value);
+
+
+}
+
+public interface IHaveSubProperties : IPropertyBase{
+	
+	void OnSetChildFullName() {
+		IPropertyBase[] childProperties = GetChildProperties();
+		if(childProperties != null && childProperties.Length > 0) {
+			for (int i = 0; i < childProperties.Length; i++) {
+				childProperties[i].OnSetFullName(GetFullName() + "." + childProperties[i].PropertyName);
+			}
+		}
+	}
+	
+	public IPropertyBase[] GetChildProperties();
+	
+	public void RegisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty);
+
+	public void UnregisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty);
 }
 
 public interface IProperty<T> : IPropertyBase{
@@ -139,32 +160,17 @@ public abstract class Property<T> : IProperty<T> {
 	
 	public void OnSetFullName(string fullName) {
 		this.fullName = fullName;
-		OnSetChildFullName();
-	}
-
-
-	protected virtual void OnSetChildFullName() {
-		IPropertyBase[] childProperties = GetChildProperties();
-		if(childProperties != null && childProperties.Length > 0) {
-			for (int i = 0; i < childProperties.Length; i++) {
-				childProperties[i].OnSetFullName(fullName + "." + childProperties[i].PropertyName);
-			}
+		if(this is IHaveSubProperties subProperties) {
+			subProperties.OnSetChildFullName();
 		}
 	}
+
+	
 
 	public string GetFullName() {
 		return fullName;
 	}
-
-	public virtual IPropertyBase[] GetSubProperties() {
-		IPropertyBase[] childProperties = GetChildProperties();
-		if(childProperties != null && childProperties.Length > 0) {
-			return new IPropertyBase[] {this}.Concat(childProperties).ToArray();
-		}
-		return new IPropertyBase[] {this};
-	}
-
-	protected abstract IPropertyBase[] GetChildProperties();
+	
 
 
 
@@ -239,12 +245,15 @@ public abstract class Property<T> : IProperty<T> {
 
 
 public abstract class AbstractLoadFromConfigProperty<T> : Property<T>, ILoadFromConfigProperty {
+	
+	
 	public void LoadFromConfig(dynamic value) {
 		if (value != null) {
 			SetBaseValue(OnSetBaseValueFromConfig(value));
 		}
 	}
 	
+
 	public abstract T OnSetBaseValueFromConfig(dynamic value);
 	
 	public AbstractLoadFromConfigProperty() : base() {
@@ -279,6 +288,7 @@ public abstract class IndependentLoadFromConfigProperty<T> : IndependentProperty
 			SetBaseValue(OnSetBaseValueFromConfig(value));
 		}
 	}
+
 	
 	public abstract T OnSetBaseValueFromConfig(dynamic value);
 }

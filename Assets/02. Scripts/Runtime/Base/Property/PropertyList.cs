@@ -10,7 +10,7 @@ namespace _02._Scripts.Runtime.Base.Property {
 	/// Use ListProperty instead if your values are not properties. If your values are properties, use this class
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public abstract class PropertyList<T> : Property<List<T>>, IListProperty<T> where T: IPropertyBase {
+	public abstract class PropertyList<T> : Property<List<T>>, IListProperty<T>, IHaveSubProperties  where T: IPropertyBase {
 		/// <summary>
 		/// Use RealValues instead to invoke events
 		/// </summary>
@@ -31,34 +31,47 @@ namespace _02._Scripts.Runtime.Base.Property {
 			BaseValue = value;
 		}
 		
-		
-		
-		public void AddToRealValue(T property, IEntity parentEntity) {
+		protected Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty;
+		public void RegisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty) {
+			this.requestRegisterProperty += requestRegisterProperty;
+		}
 
-			parentEntity.RegisterTempProperty(property, fullName + "[" + RealValues.Count() + "]");
-			
+		public void UnregisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty) {
+			this.requestRegisterProperty -= requestRegisterProperty;
+		}
+		
+		public void AddToRealValue(T property) {
+			//parentEntity.RegisterTempProperty(property, fullName + "[" + RealValues.Count() + "]");
+			requestRegisterProperty?.Invoke(typeof(T), property, fullName + "[" + RealValues.Count() + "]", true, true);
 			
 			RealValues.AddAndInvoke(property);
 		}
 
-		protected override IPropertyBase[] GetChildProperties() {
-			if(BaseValue is {Count: > 0}) {
-				List<IPropertyBase> properties = new List<IPropertyBase>();
-				foreach (var property in BaseValue) {
-					properties.AddRange(property.GetSubProperties());
-				}
-				return properties.ToArray();
-			}
 
-			return null;
-		}
 
-		protected override void OnSetChildFullName() {
+		public void OnSetChildFullName() {
 			if (BaseValue != null) {
 				for (int i = 0; i < BaseValue.Count; i++) {
 					BaseValue[i].OnSetFullName(fullName + "[" + i + "]");
 				}
 			}
+		}
+
+		public IPropertyBase[] GetChildProperties() {
+			if (BaseValue is {Count: > 0}) {
+				List<IPropertyBase> childProperties = new List<IPropertyBase>();
+				foreach (T baseVal in BaseValue) {
+					childProperties.Add(baseVal);
+					if(baseVal is IHaveSubProperties haveSubProperties) {
+						IPropertyBase[] subProperties = haveSubProperties.GetChildProperties();
+						if (subProperties != null) {
+							childProperties.AddRange(subProperties);
+						}
+					}
+				}
+				return childProperties.ToArray();
+			}
+			return null;
 		}
 
 		/// <summary>

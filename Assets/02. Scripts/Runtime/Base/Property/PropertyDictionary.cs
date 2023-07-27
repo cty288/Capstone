@@ -6,12 +6,12 @@ using MikroFramework.BindableProperty;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Base.Property {
-	public interface IDictionaryProperty<TKey,T> : IProperty<Dictionary<TKey, T>> {
+	public interface IDictionaryProperty<TKey,T> : IProperty<Dictionary<TKey, T>>, IHaveSubProperties {
 		BindableDictionary<TKey, T> RealValues { get; }
 
 		public TKey GetKey(T value);
 
-		public void AddToRealValue(T property, IEntity parentEntity);
+		public void AddToRealValue(T property);
 		
 		public void RemoveFromRealValue(TKey key);
 	}
@@ -44,7 +44,7 @@ namespace _02._Scripts.Runtime.Base.Property {
 			BaseValue = value;
 		}
 
-		protected override void OnSetChildFullName() {
+		public void OnSetChildFullName() {
 			if (BaseValue == null) {
 				return;
 			}
@@ -54,8 +54,9 @@ namespace _02._Scripts.Runtime.Base.Property {
 		}
 
 
-		public void AddToRealValue(T property, IEntity parentEntity) {
-			parentEntity.RegisterTempProperty(property, fullName + "." + GetKey(property));
+		public void AddToRealValue(T property) {
+			//parentEntity.RegisterTempProperty(property, fullName + "." + GetKey(property));
+			requestRegisterProperty?.Invoke(typeof(T), property, fullName + "." + GetKey(property), true, true);
 			RealValues.AddAndInvoke(GetKey(property), property);
 		}
 
@@ -79,15 +80,30 @@ namespace _02._Scripts.Runtime.Base.Property {
 			return clone;
 		}
 
-		protected override IPropertyBase[] GetChildProperties() {
+		public IPropertyBase[] GetChildProperties() {
 			if (BaseValue != null) {
 				List<IPropertyBase> childProperties = new List<IPropertyBase>();
 				foreach (T baseVal in BaseValue.Values) {
-					childProperties.AddRange(baseVal.GetSubProperties());
+					childProperties.Add(baseVal);
+					if(baseVal is IHaveSubProperties haveSubProperties) {
+						IPropertyBase[] subProperties = haveSubProperties.GetChildProperties();
+						if (subProperties != null) {
+							childProperties.AddRange(subProperties);
+						}
+					}
 				}
 				return childProperties.ToArray();
 			}
 			return null;
+		}
+		
+		protected Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty;
+		public void RegisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty) {
+			this.requestRegisterProperty += requestRegisterProperty;
+		}
+
+		public void UnregisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty) {
+			this.requestRegisterProperty -= requestRegisterProperty;
 		}
 
 		public override PropertyNameInfo[] GetDependentProperties() {
@@ -119,6 +135,7 @@ namespace _02._Scripts.Runtime.Base.Property {
 	
 	
 	public abstract class PropertyDictionaryLoadFromConfig<TKey,T> : PropertyDictionary<TKey,T>, ILoadFromConfigProperty where T: IPropertyBase {
+		
 		public void LoadFromConfig(dynamic value) {
 			if (value != null) {
 				SetBaseValue(OnSetBaseValueFromConfig(value));
@@ -130,5 +147,6 @@ namespace _02._Scripts.Runtime.Base.Property {
 		public PropertyDictionaryLoadFromConfig() : base() {
 		
 		}
+		
 	}
 }

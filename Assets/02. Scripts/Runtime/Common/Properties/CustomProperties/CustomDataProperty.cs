@@ -23,7 +23,7 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 		[field: ES3Serializable]
 		protected PropertyNameInfo[] dependencies;
 		
-		private CustomDataProperty(): base(){}
+		public CustomDataProperty(): base(){}
 
 		public CustomDataProperty(string customDataName, IPropertyDependencyModifier<T> modifier = null, 
 			params PropertyNameInfo[] dependencies) : base() {
@@ -45,10 +45,7 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 			return JsonConvert.DeserializeObject<T>(value.ToString());
 		}
 
-		protected override IPropertyBase[] GetChildProperties() {
-			throw new NotImplementedException();
-		}
-
+		
 		protected override IPropertyDependencyModifier<T> GetDefautModifier() {
 			return null;
 		}

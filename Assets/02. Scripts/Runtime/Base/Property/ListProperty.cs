@@ -58,7 +58,6 @@ namespace _02._Scripts.Runtime.Base.Property {
 			}
 			return clone;
 		}
-
 	}
 }
 
@@ -82,6 +81,7 @@ public abstract class IndependentListProperty<T> : ListProperty<T> {
 }
 
 public abstract class IndependentLoadFromConfigListProperty<T> : IndependentListProperty<T>, ILoadFromConfigProperty {
+	
 	public void LoadFromConfig(dynamic value) {
 		if (value != null) {
 			SetBaseValue(OnSetBaseValueFromConfig(value));
@@ -90,4 +90,5 @@ public abstract class IndependentLoadFromConfigListProperty<T> : IndependentList
 	
 	public abstract List<T> OnSetBaseValueFromConfig(dynamic value);
 	protected IndependentLoadFromConfigListProperty():base(){}
+
 }

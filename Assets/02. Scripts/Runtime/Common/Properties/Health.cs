@@ -35,11 +35,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 			return RealValue.Value.MaxHealth;
 		}
 
-
-		protected override IPropertyBase[] GetChildProperties() {
-			return null;
-		}
-
+		
 		public override HealthInfo OnSetBaseValueFromConfig(dynamic value) {
 			return new HealthInfo((int)value.maxHealth, (int)value.currentHealth);
 		}

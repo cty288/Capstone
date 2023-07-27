@@ -22,14 +22,11 @@ public class TestEntity : EnemyEntity<TestEntity> {
     }
 
     protected override ICustomProperty[] OnRegisterCustomProperties() {
-        return null;
+        return new[] {new DataOnlyCustomProperty("attack1"), new DataOnlyCustomProperty("attack2")};
     }
 }
 
 public class CustomProperty : IndependentProperty<int> {
-    protected override IPropertyBase[] GetChildProperties() {
-        return null;
-    }
 
     protected override PropertyName GetPropertyName() {
         return PropertyName.test;

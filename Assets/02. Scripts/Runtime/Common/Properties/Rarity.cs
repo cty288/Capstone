@@ -8,9 +8,6 @@ namespace _02._Scripts.Runtime.Common.Properties {
 	}
 	
 	public class Rarity : IndependentLoadFromConfigProperty<int>, IRarityProperty {
-		protected override IPropertyBase[] GetChildProperties() {
-			return null;
-		}
 
 		public override int OnSetBaseValueFromConfig(dynamic value) {
 			return value;
