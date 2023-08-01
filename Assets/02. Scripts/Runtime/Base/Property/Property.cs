@@ -100,6 +100,8 @@ public interface IHaveSubProperties : IPropertyBase{
 	public void RegisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty);
 
 	public void UnregisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty);
+
+	public void OnLoadFromSavedData();
 }
 
 public interface IProperty<T> : IPropertyBase{
@@ -108,13 +110,13 @@ public interface IProperty<T> : IPropertyBase{
 	/// <summary>
 	/// Base Value is the initial configured base value of a specific property
 	/// </summary>
-	public new T BaseValue { get; set; }
+	public T BaseValue { get; set; }
 	
 	/// <summary>
 	/// Initial Value is the initial real value of this property when the bind entity is initialized. It
 	/// is dependent on the base value and the modifiers. Not changed during the game
 	/// </summary>
-	public new T InitialValue { get; set; }
+	public T InitialValue { get; set; }
 	
 	/// <summary>
 	/// Real Value initialized to InitialValue. Is changed during the game
@@ -145,9 +147,9 @@ public abstract class Property<T> : IProperty<T> {
 
 
 	[field: ES3Serializable]
-	public T BaseValue { get; set; } = default;
+	public virtual  T BaseValue { get; set; } = default;
 	[field: ES3Serializable]
-	public T InitialValue { get; set; } = default;
+	public virtual  T InitialValue { get; set; } = default;
 	
 	[field: ES3Serializable]
 	public virtual BindableProperty<T> RealValue { get; } = new BindableProperty<T>();

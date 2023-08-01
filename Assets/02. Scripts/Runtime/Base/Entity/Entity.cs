@@ -99,7 +99,7 @@ public interface IEntity: IPoolable {
 	/// <param name="modifier"></param>
 	/// <typeparam name="T"></typeparam>
 	
-	public void SetPropertyBaseValue<T>(PropertyName name, T value, IPropertyDependencyModifier<T> modifier = null);
+	public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value, IPropertyDependencyModifier<T> modifier = null);
 	
 	/// <summary>
 	/// Set the modifier of all properties with the given name
@@ -108,7 +108,7 @@ public interface IEntity: IPoolable {
 	/// <param name="modifier"></param>
 	/// <typeparam name="T"></typeparam>
 	
-	public void SetPropertyModifier<T>(PropertyName name, IPropertyDependencyModifier<T> modifier);
+	public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier);
 
 	public void LoadPropertyBaseValueFromConfig();
 }
@@ -119,6 +119,7 @@ public interface IEntity: IPoolable {
 public abstract class Entity :  IEntity  {
 	public abstract string EntityName { get; protected set; }
 	
+	[ES3NonSerializable]
 	private Dictionary<string, IPropertyBase> _allProperties { get; } =
 		new Dictionary<string, IPropertyBase>();
 
@@ -156,7 +157,9 @@ public abstract class Entity :  IEntity  {
 			IPropertyBase property = rootProperty.Value;
 			_allProperties.Add(property.GetFullName(), property);
 			if(property is IHaveSubProperties subProperties) {
+				subProperties.OnLoadFromSavedData();
 				IPropertyBase[] properties = subProperties.GetChildProperties();
+				
 				if (properties != null) {
 					foreach (IPropertyBase subProperty in properties) {
 						_allProperties.Add(subProperty.GetFullName(), subProperty);
@@ -172,6 +175,8 @@ public abstract class Entity :  IEntity  {
 			}
 		}
 	}
+
+
 	
 	public void RegisterInitialProperty<T>(T property) where T : IPropertyBase {
 		if (property is ICustomProperty) {
@@ -254,7 +259,7 @@ public abstract class Entity :  IEntity  {
 		this.UUID = System.Guid.NewGuid().ToString();
 	}
 
-	public void SetPropertyBaseValue<T>(PropertyName name, T value, IPropertyDependencyModifier<T> modifier = null) {
+	public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value, IPropertyDependencyModifier<T> modifier = null) {
 		if (initialized) {
 			Debug.LogError("Cannot set property value after entity is initialized");
 			return;
@@ -270,7 +275,7 @@ public abstract class Entity :  IEntity  {
 		}
 	}
 
-	public void SetPropertyModifier<T>(PropertyName name, IPropertyDependencyModifier<T> modifier) {
+	public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier) {
 		if (initialized) {
 			Debug.LogError("Cannot set property value after entity is initialized");
 			return;
@@ -288,7 +293,7 @@ public abstract class Entity :  IEntity  {
 		while (i < _allProperties.Count) {
 			IPropertyBase property = _allProperties.ElementAt(i).Value;
 			if(property is ILoadFromConfigProperty loadFromConfigProperty) {
-				dynamic value = configTable.Get(EntityName, loadFromConfigProperty.PropertyName.ToString());
+				dynamic value = configTable.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
 				if (value != null) {
 					loadFromConfigProperty.LoadFromConfig(value);
 				}

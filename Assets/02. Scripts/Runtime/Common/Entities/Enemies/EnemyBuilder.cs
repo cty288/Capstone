@@ -11,47 +11,47 @@ namespace _02._Scripts.Runtime.Common.Entities.Enemies {
 			CheckEntity();
 		}
 		public EnemyBuilder<T> SetDanger(int danger, IPropertyDependencyModifier<int> modifier = null) {
-			SetProperty<int>(PropertyName.danger, danger, modifier);
+			SetProperty<int>(new PropertyNameInfo(PropertyName.danger), danger, modifier);
 			return this;
 		}
 		
 		public EnemyBuilder<T> SetDangerModifier(IPropertyDependencyModifier<int> modifier = null) {
-			SetModifier(PropertyName.danger, modifier);
+			SetModifier(new PropertyNameInfo(PropertyName.danger), modifier);
 			return this;
 		}
 		
 		public EnemyBuilder<T> SetHealth(HealthInfo healthInfo, IPropertyDependencyModifier<HealthInfo> modifier = null) {
-			SetProperty<HealthInfo>(PropertyName.health, healthInfo, modifier);
+			SetProperty<HealthInfo>(new PropertyNameInfo(PropertyName.health), healthInfo, modifier);
 			return this;
 		}
 		
 		public EnemyBuilder<T> SetHealthModifier(IPropertyDependencyModifier<HealthInfo> modifier = null) {
-			SetModifier(PropertyName.health, modifier);
+			SetModifier(new PropertyNameInfo(PropertyName.health), modifier);
 			return this;
 		}
 
 		public EnemyBuilder<T> SetTaste(params TasteType[] tasteTypes) {
-			SetProperty<List<TasteType>>(PropertyName.taste, tasteTypes.ToList());
+			SetProperty<List<TasteType>>(new PropertyNameInfo(PropertyName.taste), tasteTypes.ToList());
 			return this;
 		}
 		
 		public EnemyBuilder<T> SetVigiliance(float vigiliance, IPropertyDependencyModifier<float> modifier = null) {
-			SetProperty<float>(PropertyName.vigiliance, vigiliance, modifier);
+			SetProperty<float>(new PropertyNameInfo(PropertyName.vigiliance), vigiliance, modifier);
 			return this;
 		}
 		
 		public EnemyBuilder<T> SetVigilianceModifier(IPropertyDependencyModifier<float> modifier = null) {
-			SetModifier(PropertyName.vigiliance, modifier);
+			SetModifier(new PropertyNameInfo(PropertyName.vigiliance), modifier);
 			return this;
 		}
 		
 		public EnemyBuilder<T> SetAttackRange(float attackRange, IPropertyDependencyModifier<float> modifier = null) {
-			SetProperty<float>(PropertyName.attack_range, attackRange, modifier);
+			SetProperty<float>(new PropertyNameInfo(PropertyName.attack_range), attackRange, modifier);
 			return this;
 		}
 		
 		public EnemyBuilder<T> SetAttackRangeModifier(IPropertyDependencyModifier<float> modifier = null) {
-			SetModifier(PropertyName.attack_range, modifier);
+			SetModifier(new PropertyNameInfo(PropertyName.attack_range), modifier);
 			return this;
 		}
 
@@ -82,7 +82,7 @@ namespace _02._Scripts.Runtime.Common.Entities.Enemies {
 		
 		public static EnemyBuilder<T> Allocate(int rarity) {
 			EnemyBuilder<T> target = SafeObjectPool<EnemyBuilder<T>>.Singleton.Allocate();
-			target.SetProperty<int>(PropertyName.rarity, rarity);
+			target.SetProperty<int>(new PropertyNameInfo(PropertyName.rarity), rarity);
 			return target;
 		}
 	}

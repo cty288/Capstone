@@ -5,8 +5,6 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies {
 	public class BindablePropertyAttribute : Attribute
 	{
 		public PropertyNameInfo PropertyName { get; private set; }
-
-		public PropertyNameInfo PropertyNamew;
 		public string GetterMethodName { get; set; } 
 
 		public string OnChanged{ get; set; }
@@ -43,5 +41,25 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies {
 			OnChanged = onChangedMethodName;
 		}
 		
+	}
+	
+	
+	[AttributeUsage(AttributeTargets.Property)]
+	public class BindableCustomDataPropertyAttribute : BindablePropertyAttribute {
+		public string CustomDataName { get; private set; }
+		public BindableCustomDataPropertyAttribute(string customPropertyName, string customPropertyDataName) : 
+		base($"custom_properties.{customPropertyName}.{customPropertyDataName}"){
+			
+		}
+		
+		public BindableCustomDataPropertyAttribute(string customPropertyName, string customPropertyDataName, string getterMethodName) : 
+			base($"custom_properties.{customPropertyName}.{customPropertyDataName}", getterMethodName){
+			
+		}
+		
+		public BindableCustomDataPropertyAttribute(string customPropertyName, string customPropertyDataName, string getterMethodName, string onChangedMethodName) : 
+			base($"custom_properties.{customPropertyName}.{customPropertyDataName}", getterMethodName, onChangedMethodName){
+			
+		}
 	}
 }

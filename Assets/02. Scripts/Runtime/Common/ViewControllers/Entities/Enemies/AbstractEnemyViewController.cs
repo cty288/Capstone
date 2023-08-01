@@ -25,9 +25,10 @@ public abstract class AbstractEnemyViewController<T> : AbstractEntityViewControl
 	
 	
 	protected override void OnBindEntityProperty() {
+		
 		Bind("Danger", BindedEntity.GetDanger());
-		Bind<int, HealthInfo>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
-		Bind<int, HealthInfo>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
+		Bind<HealthInfo, int>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
+		Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
 		Bind("Vigiliance", BindedEntity.GetVigiliance());
 		Bind("AttackRange", BindedEntity.GetAttackRange());
 	}
@@ -39,11 +40,11 @@ public abstract class AbstractEnemyViewController<T> : AbstractEntityViewControl
 
 	protected abstract IEnemyEntity OnInitEnemyEntity(EnemyBuilder<T> builder);
 
-	protected object GetMaxHealth(object info) {
-		return ((HealthInfo) info).MaxHealth;
+	protected dynamic GetMaxHealth(dynamic info) {
+		return info.MaxHealth;
 	}
 	
-	protected object GetCurrentHealth(object info) {
-		return ((HealthInfo) info).CurrentHealth;
+	protected dynamic GetCurrentHealth(dynamic info) {
+		return info.CurrentHealth;
 	}
 }

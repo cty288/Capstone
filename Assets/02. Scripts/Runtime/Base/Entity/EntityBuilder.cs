@@ -39,7 +39,7 @@ public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable
     /// <param name="propertyName"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public TBuilder SetProperty<ValueType>(PropertyName propertyName, ValueType value, IPropertyDependencyModifier<ValueType> modifier = null) {
+    public TBuilder SetProperty<ValueType>(PropertyNameInfo propertyName, ValueType value, IPropertyDependencyModifier<ValueType> modifier = null) {
         CheckEntity();
         Entity.SetPropertyBaseValue(propertyName, value, modifier);
         return (TBuilder) this;
@@ -53,7 +53,7 @@ public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable
     /// <param name="modifier"></param>
     /// <typeparam name="ValueType"></typeparam>
     /// <returns></returns>
-    public TBuilder SetModifier<ValueType>(PropertyName propertyName, IPropertyDependencyModifier<ValueType> modifier) {
+    public TBuilder SetModifier<ValueType>(PropertyNameInfo propertyName, IPropertyDependencyModifier<ValueType> modifier) {
         CheckEntity();
         Entity.SetPropertyModifier(propertyName, modifier);
         return (TBuilder) this;

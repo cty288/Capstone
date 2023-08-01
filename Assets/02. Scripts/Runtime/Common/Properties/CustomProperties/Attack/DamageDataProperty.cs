@@ -5,8 +5,8 @@ namespace _02._Scripts.Runtime.Common.Properties {
 		
 	}
 	
-	public class DamageDataProperty<T>: CustomDataProperty<T>, IDamageDataProperty {
-		public DamageDataProperty(string name = "damage", IPropertyDependencyModifier<T> modifier = null, params PropertyNameInfo[] dependencies) : base(name, modifier, dependencies) {
+	public class DamageDataProperty: CustomDataProperty<int>, IDamageDataProperty {
+		public DamageDataProperty(string name = "damage", IPropertyDependencyModifier<int> modifier = null, params PropertyNameInfo[] dependencies) : base(name, modifier, dependencies) {
 			
 		}
 	}

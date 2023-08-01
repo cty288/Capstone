@@ -23,7 +23,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		protected IEntityModel entityModel;
 		protected T BindedEntity { get; private set; }
 		
-		private Dictionary<PropertyInfo, Func<object>> propertyBindings = new Dictionary<PropertyInfo, Func<object>>();
+		private Dictionary<PropertyInfo, Func<dynamic>> propertyBindings = new Dictionary<PropertyInfo, Func<dynamic>>();
 		private Dictionary<PropertyInfo, FieldInfo> propertyFields = new Dictionary<PropertyInfo, FieldInfo>();
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 
@@ -49,6 +49,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 			}
 			BindedEntity = entityModel.GetEntity<T>(ID);
 			OnBindProperty();
+			OnEntityStart();
 		}
 
 		protected abstract IEntity OnInitEntity();
@@ -59,7 +60,10 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 			CheckProperties();
 			OnBindEntityProperty();
 			BindPropertyAttributes();
+			
 		}
+
+		protected abstract void OnEntityStart();
 
 		private void CheckProperties() {
 			PropertyInfo[] allProperties = GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -87,15 +91,15 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		/// </summary>
 		/// <param name="propertyName"></param>
 		/// <typeparam name="IPropertyType"></typeparam>
-		protected void Bind<IPropertyType>(string propertyName, 
-			Action<object, object> callback = null) where IPropertyType: class, IPropertyBase {
+		protected void Bind<IPropertyType>(string bindedPropertyName, 
+			Action<dynamic, dynamic> callback = null) where IPropertyType: class, IPropertyBase {
 			var property = BindedEntity.GetProperty<IPropertyType>();
 			if(property == null) {
 				Debug.LogError("Property not found");
 				return;
 			}
 			IBindableProperty bindableProperty = property.GetRealValue();
-			Bind(propertyName, bindableProperty, property => property, callback);
+			Bind(bindedPropertyName, bindableProperty, property => property, callback);
 		}
 		
 		/// <summary>
@@ -115,10 +119,10 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		/// <param name="bindedPropertyName"></param>
 		/// <param name="bindableProperty"></param>
 		/// <param name="getter">your custom getter, should return something with the same type as the target</param>
-		/// <typeparam name="T">type of the target property</typeparam>
-		/// <typeparam name="BindablePropertyType"></typeparam>
-		protected void Bind<T, BindablePropertyType>(string bindedPropertyName, BindableProperty<BindablePropertyType> bindableProperty, 
-			Func<BindablePropertyType, T> getter, Action<T, T> callback = null) {
+		/// <typeparam name="TargetType">type of the target property</typeparam>
+		/// <typeparam name="BindedDataType">Type of the value of the source property</typeparam>
+		protected void Bind<BindedDataType, TargetType>(string bindedPropertyName, BindableProperty<BindedDataType> bindableProperty, 
+			Func<BindedDataType, TargetType> getter, Action<TargetType, TargetType> callback = null) {
 
 			PropertyInfo bindedProperty = GetType().GetProperty(bindedPropertyName,
 				BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -129,7 +133,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 			}
 			
 			//check if their types are the same
-			if(bindedProperty.PropertyType != typeof(T)) {
+			if(bindedProperty.PropertyType != typeof(TargetType)) {
 				Debug.LogError($"Property type not match for {bindedProperty}");
 				return;
 			}
@@ -137,7 +141,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 			UpdateBinding(bindableProperty, bindedProperty, getter, callback);
 		}
 		
-		private void Bind<T>(string bindedPropertyName, IBindableProperty bindableProperty, Func<object, T> getter,
+		private void Bind<T>(string bindedPropertyName, IBindableProperty bindableProperty, Func<dynamic, T> getter,
 			Action<T, T> callback) {
 			PropertyInfo bindedProperty = GetType().GetProperty(bindedPropertyName,
 				BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -157,13 +161,13 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 			
 			
 			if(bindableProperty != null) {
-				Action<object, object> cb = null;
+				Action<dynamic, dynamic> cb = null;
 				cb = (oldValue, newValue) => {
 					if (this) {
-						SetReadOnlyProperty(bindedProperty, getter((BindablePropertyType) newValue));
+						SetReadOnlyProperty(bindedProperty, getter(newValue));
 						//bindedProperty.SetValue(this, getter((BindablePropertyType) newValue), null);
-						callback?.Invoke(getter((BindablePropertyType) oldValue),
-							getter((BindablePropertyType) newValue));
+						callback?.Invoke(getter(oldValue),
+							getter(newValue));
 					}
 					else {
 						bindableProperty.UnRegisterOnObjectValueChanged(cb);
@@ -214,14 +218,14 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 					
 					//get type of the property
 					Type propertyType = prop.PropertyType;
-					Action<object,object> onChangedAction = null;
+					Action<dynamic,dynamic> onChangedAction = null;
 					if (attribute.OnChanged != null) {
 						var method = GetType().GetMethod(attribute.OnChanged,
 							BindingFlags.NonPublic | BindingFlags.Instance);
 						
 						Delegate func = Delegate.CreateDelegate(typeof(Action<,>).MakeGenericType(propertyType, propertyType),
 							this, method);
-						onChangedAction = (object oldValue, object newValue) => func.DynamicInvoke(oldValue, newValue);
+						onChangedAction = ( oldValue,  newValue) => func.DynamicInvoke(oldValue, newValue);
 
 					}
 					
@@ -231,10 +235,10 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 						
 						var method = GetType().GetMethod(attribute.GetterMethodName, BindingFlags.NonPublic | BindingFlags.Instance);
 						if (method != null) {
-							var func = (Func<object, object>)Delegate.CreateDelegate(typeof(Func<object, object>), this, method);
+							var func = (Func<dynamic, dynamic>)Delegate.CreateDelegate(typeof(Func<dynamic, dynamic>), this, method);
 							//func return type should be the same as the property type
-							//Delegate func =  Delegate.CreateDelegate(typeof(Func<,>).MakeGenericType(typeof(object), propertyType), this, method);
-							//Func<object, object> func2 = (object obj) => func.DynamicInvoke(obj);
+							//var func = (Func<dynamic, dynamic>) Delegate.CreateDelegate(typeof(Func<,>).MakeGenericType(bindedProperty.Value.GetType(), method.ReturnType), this, method);
+							
 
 							Bind(prop.Name, bindedProperty, func, onChangedAction);
 						}
@@ -242,6 +246,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 						{
 							Debug.LogError($"Getter method {attribute.GetterMethodName} not found!");
 						}
+						
 					}
 					else {
 						Bind(prop.Name, bindedProperty, property => property, onChangedAction);
@@ -250,7 +255,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 			}
 		}
 
-		private void SetReadOnlyProperty(PropertyInfo propertyInfo, object value) {
+		private void SetReadOnlyProperty(PropertyInfo propertyInfo, dynamic value) {
 			if (propertyFields.TryGetValue(propertyInfo, out FieldInfo field)) {
 				field.SetValue(this, value);
 			}

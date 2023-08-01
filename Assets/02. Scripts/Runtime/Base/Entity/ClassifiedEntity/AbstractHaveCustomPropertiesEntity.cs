@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Runtime.Common.Properties.SkillsBase;
+using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 
 namespace _02._Scripts.Runtime.Base.Entity.ClassifiedEntity {
@@ -19,33 +20,40 @@ namespace _02._Scripts.Runtime.Base.Entity.ClassifiedEntity {
 		
 
 		public Dictionary<string, ICustomProperty> GetCustomProperties() {
-			return GetProperty<ICustomProperties>().RealValues.Value;
+			return GetProperty<ICustomProperties>().RealValues?.Value;
 		}
 
-		public ICustomProperty GetCustomProperty(string key) {
+		private ICustomProperty GetCustomProperty(string key) {
 			return GetProperty<ICustomProperties>().GetCustomProperty(key);
 		}
 
-		public ICustomDataProperty GetCustomDataProperty(string customPropertyName, string dataName) {
+		private ICustomDataProperty GetCustomDataProperty(string customPropertyName, string dataName) {
 			return GetCustomProperty(customPropertyName)?.GetCustomDataProperty(dataName);
 		}
 
-		public ICustomDataProperty<T> GetCustomDataProperty<T>(string customPropertyName, string dataName) {
+		private ICustomDataProperty<T> GetCustomDataProperty<T>(string customPropertyName, string dataName) {
 			return GetCustomProperty(customPropertyName)?.GetCustomDataProperty<T>(dataName);
 		}
 
-		public dynamic GetCustomDataValue(string customPropertyName, string dataName) {
+		public IBindableProperty GetCustomDataValue(string customPropertyName, string dataName) {
 			return GetCustomProperty(customPropertyName)?.GetCustomDataValue(dataName);
 		}
 
-		public T GetCustomDataValue<T>(string customPropertyName, string dataName) {
+		/// <summary>
+		/// If your custom property is DataOnlyProperty, use dynamic for T
+		/// </summary>
+		/// <param name="customPropertyName"></param>
+		/// <param name="dataName"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public BindableProperty<T> GetCustomDataValue<T>(string customPropertyName, string dataName) {
 			if (!HasCustomProperty(customPropertyName)) {
 				return default;
 			}
 			return GetCustomProperty(customPropertyName).GetCustomDataValue<T>(dataName);
 		}
 
-		public IUnRegister RegisterOnCustomDataChanged(string customPropertyName, string dataName, Action<ICustomDataProperty, object, object> onCustomDataChanged) {
+		public IUnRegister RegisterOnCustomDataChanged(string customPropertyName, string dataName, Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged) {
 			return GetCustomProperty(customPropertyName)?.RegisterOnCustomDataChanged(dataName, onCustomDataChanged);
 		}
 
@@ -53,7 +61,7 @@ namespace _02._Scripts.Runtime.Base.Entity.ClassifiedEntity {
 			return GetCustomProperty(customPropertyName)?.RegisterOnCustomDataChanged(onCustomDataChanged);
 		}
 
-		public void UnRegisterOnCustomDataChanged(string customPropertyName, string dataName, Action<ICustomDataProperty, object, object> onCustomDataChanged) {
+		public void UnRegisterOnCustomDataChanged(string customPropertyName, string dataName, Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged) {
 			GetCustomProperty(customPropertyName)?.UnRegisterOnCustomDataChanged(dataName, onCustomDataChanged);
 		}
 
@@ -64,5 +72,8 @@ namespace _02._Scripts.Runtime.Base.Entity.ClassifiedEntity {
 		public bool HasCustomProperty(string propertyName) {
 			return GetProperty<ICustomProperties>().RealValues.Value.ContainsKey(propertyName);
 		}
+		
+		
+		//TODO: add set
 	}
 }

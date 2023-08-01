@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+using MikroFramework.BindableProperty;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
+using Object = System.Object;
 
 namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 	public interface ICustomDataProperty : IPropertyBase {
@@ -9,11 +15,15 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 	}
 	
 	public interface ICustomDataProperty<T> : ICustomDataProperty, IProperty<T> {
+		
 		dynamic ICustomDataProperty.OnGetBaseValueFromConfig(dynamic value) {
 			return OnGetBaseValueFromConfig(value);
 		}
 
 		public T OnGetBaseValueFromConfig(dynamic value);
+		
+		//a == b
+		
 	}
 	
 	public class CustomDataProperty<T> : Property<T>, ICustomDataProperty, ICustomDataProperty<T> {
@@ -24,7 +34,7 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 		protected PropertyNameInfo[] dependencies;
 		
 		public CustomDataProperty(): base(){}
-
+		
 		public CustomDataProperty(string customDataName, IPropertyDependencyModifier<T> modifier = null, 
 			params PropertyNameInfo[] dependencies) : base() {
 			CustomDataName = customDataName;
@@ -32,16 +42,49 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 			this.dependencies = dependencies;
 		}
 
-		public T OnGetBaseValueFromConfig(dynamic value) {
-			if (value is JValue v) {
-				return (T) v.Value;
+		protected dynamic ConvertJTokenToBaseValue(JToken token)
+		{
+			if (token is JValue v)
+			{
+				if (v.Value is long)
+				{
+					return Convert.ToInt32(v.Value);
+				}
+
+				if (v.Value is double)
+				{
+					return Convert.ToSingle(v.Value);
+				}
+				return v.Value;
+			}
+			else if (token is JObject o)
+			{
+				var result = new ExpandoObject() as IDictionary<string, Object>;
+				foreach (var property in o.Properties())
+				{
+					result[property.Name] = ConvertJTokenToBaseValue(property.Value);
+				}
+				return result;
+			}
+			else if (token is JArray a)
+			{
+				var result = new List<object>();
+				foreach (var item in a.Children())
+				{
+					result.Add(ConvertJTokenToBaseValue(item));
+				}
+				return result;
 			}
 
+			throw new ArgumentException($"Unsupported token type: {token.GetType().Name}");
+		}
+
+		public T OnGetBaseValueFromConfig(dynamic value) {
 			if (typeof(T) == typeof(object)) {
-				//return JsonConvert.DeserializeObject<dynamic>(value.ToString());
-				return value;
+				if (value is JToken token) {
+					return (T) ConvertJTokenToBaseValue(token);
+				}
 			}
-			
 			return JsonConvert.DeserializeObject<T>(value.ToString());
 		}
 

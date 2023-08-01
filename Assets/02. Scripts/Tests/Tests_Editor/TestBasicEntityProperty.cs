@@ -107,13 +107,13 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		internal class MyNewDangerModifier : PropertyDependencyModifier<int> {
 			public override int OnModify(int propertyValue) {
-				return GetDependency<Rarity>().InitialValue * 100;
+				return GetDependency<Rarity>().RealValue * 100;
 			}
 		}
 		
 		internal class GoldPropertyModifier : PropertyDependencyModifier<TestResourceInfo> {
 			public override TestResourceInfo OnModify(TestResourceInfo propertyValue) {
-				propertyValue.Rarity += GetDependency<Rarity>().InitialValue * 100;
+				propertyValue.Rarity += GetDependency<Rarity>().RealValue * 100;
 				return propertyValue;
 			}
 		}
@@ -332,7 +332,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			EntityPropertyDependencyCache.ClearCache();
 			BasicEntity entity = BasicEntityBuilder<BasicEntity>.
 				Allocate(2).
-				SetProperty(PropertyName.danger, 1).
+				SetProperty(new PropertyNameInfo(PropertyName.danger), 1).
 				Build();
 
 			Debug.Log($"UUID: {entity.UUID}");
@@ -345,7 +345,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			
 			BasicEntity entity = BasicEntityBuilder<BasicEntity>.
 				Allocate(2).
-				SetModifier(PropertyName.danger, new MyNewDangerModifier()).
+				SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).
 				Build();
 
 			Debug.Log($"UUID: {entity.UUID}");
@@ -357,7 +357,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			string id = model.GetBuilder<BasicEntityBuilder<BasicEntity>, BasicEntity>(2)
-				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build()
+				.SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).Build()
 				.UUID;
 
 			BasicEntity entity = model.GetEntity<BasicEntity>(id);
@@ -371,14 +371,14 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 
 
-			IEntity ent1 = model.GetBuilder<BasicEntity>(2).SetProperty(PropertyName.rarity, 2)
-				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build();
+			IEntity ent1 = model.GetBuilder<BasicEntity>(2).SetProperty(new PropertyNameInfo(PropertyName.rarity), 2)
+				.SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).Build();
 			string id1 = ent1.UUID;
 
 			model.RemoveEntity(id1);
 			
-			IEntity ent2 = model.GetBuilder<BasicEntity>(3).SetProperty(PropertyName.rarity, 3)
-				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build();
+			IEntity ent2 = model.GetBuilder<BasicEntity>(3).SetProperty(new PropertyNameInfo(PropertyName.rarity), 3)
+				.SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).Build();
 			string id2 = ent2.UUID;
 			
 			Assert.AreEqual(ent1, ent2);
@@ -467,7 +467,6 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				ent1 = model.
 					GetBuilder<TestEnemy>(2)
 					.Build();
-			
 
 				bool addTriggered = false;
 				ent1.GetProperty<TestResourceList>().RealValues.RegisterOnAdd(OnAdd);

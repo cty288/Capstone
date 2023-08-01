@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Base.Property;
 using _02._Scripts.Runtime.Common.Properties.SkillsBase;
+using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -13,12 +14,12 @@ namespace _02._Scripts.Runtime.Common.Properties{
 	{
 		public ICustomProperty CustomProperty { get; set; }
 
-		public Action<ICustomDataProperty, object, object> OnCustomDataChanged { get; set; }
+		public Action<ICustomDataProperty, dynamic, dynamic> OnCustomDataChanged { get; set; }
 		
 		public string CustomDataName { get; set; }
 
 		public CustomPropertyDataUnRegister(ICustomProperty customProperty, string customDataName, 
-			Action<ICustomDataProperty, object, object> onCustomDataChanged)
+			Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged)
 		{
 			this.CustomProperty = customProperty;
 			this.OnCustomDataChanged = onCustomDataChanged;
@@ -57,15 +58,15 @@ namespace _02._Scripts.Runtime.Common.Properties{
 
 		public ICustomDataProperty<T> GetCustomDataProperty<T>(string customDataName);
 		
-		public dynamic GetCustomDataValue(string customDataName);
+		public IBindableProperty GetCustomDataValue(string customDataName);
 
-		public T GetCustomDataValue<T>(string CustomDataName);
+		public BindableProperty<T> GetCustomDataValue<T>(string CustomDataName);
 		
-		public IUnRegister RegisterOnCustomDataChanged(string CustomDataName, Action<ICustomDataProperty, object, object> onCustomDataChanged);
+		public IUnRegister RegisterOnCustomDataChanged(string CustomDataName, Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged);
 
 		public IUnRegister RegisterOnCustomDataChanged(Action<ICustomProperty> onCustomDataChanged);
 		
-		public void UnRegisterOnCustomDataChanged(string CustomDataName, Action<ICustomDataProperty, object, object> onCustomDataChanged);
+		public void UnRegisterOnCustomDataChanged(string CustomDataName, Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged);
 
 		public void UnRegisterOnCustomDataChanged(Action<ICustomProperty> onCustomDataChanged);
 
@@ -76,11 +77,11 @@ namespace _02._Scripts.Runtime.Common.Properties{
 	
 	public abstract class AbstractCustomProperty : PropertyDictionary<string, ICustomDataProperty>, ICustomProperty {
 		
-		private Dictionary<ICustomDataProperty, Action<object, object>> onCustomDataChangedInternalCallbacks =
-			new Dictionary<ICustomDataProperty, Action<object, object>>();
+		private Dictionary<ICustomDataProperty, Action<dynamic, dynamic>> onCustomDataChangedInternalCallbacks =
+			new Dictionary<ICustomDataProperty, Action<dynamic, dynamic>>();
 		
-		private Dictionary<string, Action<ICustomDataProperty,object,object>> onCustomDataChangedCallbacks =
-			new Dictionary<string, Action<ICustomDataProperty, object, object>>();
+		private Dictionary<string, Action<ICustomDataProperty,dynamic,dynamic>> onCustomDataChangedCallbacks =
+			new Dictionary<string, Action<ICustomDataProperty, dynamic, dynamic>>();
 		
 		private Action<ICustomProperty> onCustomDataChanged;
 
@@ -130,21 +131,21 @@ namespace _02._Scripts.Runtime.Common.Properties{
 			return value.CustomDataName;
 		}
 		
-		public dynamic GetCustomDataValue(string customDataName) {
+		public IBindableProperty GetCustomDataValue(string customDataName) {
 			if (!RealValues.Value.ContainsKey(customDataName)) {
 				Debug.LogError("CustomDataProperty " + customDataName + " not found in Custom " +  GetCustomPropertyName());
 				return null;
 			}
-			return RealValues[customDataName].GetRealValue().Value;
+			return RealValues[customDataName].GetRealValue();
 		}
 
-		public T GetCustomDataValue<T>(string CustomDataName) {
+		public BindableProperty<T> GetCustomDataValue<T>(string CustomDataName) {
 			if (!RealValues.Value.ContainsKey(CustomDataName)) {
 				Debug.LogError("CustomDataProperty " + CustomDataName + " not found in Custom " +  GetCustomPropertyName());
 				return default;
 			}
 
-			return (T) RealValues[CustomDataName].GetRealValue().Value;
+			return RealValues[CustomDataName].GetRealValue() as BindableProperty<T>;
 		}
 		
 		public ICustomDataProperty GetCustomDataProperty(string customDataName) {
@@ -164,7 +165,7 @@ namespace _02._Scripts.Runtime.Common.Properties{
 		}
 
 		public IUnRegister RegisterOnCustomDataChanged(string CustomDataName, 
-			Action<ICustomDataProperty, object, object> onCustomDataChanged) {
+			Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged) {
 			if (onCustomDataChangedCallbacks.ContainsKey(CustomDataName)) {
 				onCustomDataChangedCallbacks[CustomDataName] += onCustomDataChanged;
 			}
@@ -179,7 +180,7 @@ namespace _02._Scripts.Runtime.Common.Properties{
 			return new CustomPropertyUnRegister(this, this.onCustomDataChanged);
 		}
 
-		public void UnRegisterOnCustomDataChanged(string CustomDataName, Action<ICustomDataProperty, object, object> onCustomDataChanged) {
+		public void UnRegisterOnCustomDataChanged(string CustomDataName, Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged) {
 			if (onCustomDataChangedCallbacks.ContainsKey(CustomDataName)) {
 				onCustomDataChangedCallbacks[CustomDataName] -= onCustomDataChanged;
 			}
@@ -191,16 +192,17 @@ namespace _02._Scripts.Runtime.Common.Properties{
 
 		public override void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
 			base.Initialize(dependencies, parentEntityName);
+			
+			//TODO: for loaded from saved, this need to be changed
 			foreach (ICustomDataProperty CustomData in RealValues.Value.Values) {
-				Action<object, object> onCustomValueChanged = (oldValue, newValue) =>
-					OnCustomDataValueChanged(CustomData, oldValue, newValue);
+				void OnCustomValueChanged(dynamic oldValue, dynamic newValue) => OnCustomDataValueChanged(CustomData, oldValue, newValue);
 
-				CustomData.GetRealValue().RegisterWithInitObject(onCustomValueChanged);
-				onCustomDataChangedInternalCallbacks.Add(CustomData, onCustomValueChanged);
+				CustomData.GetRealValue().RegisterWithInitObject((Action<dynamic, dynamic>) OnCustomValueChanged);
+				onCustomDataChangedInternalCallbacks.Add(CustomData, OnCustomValueChanged);
 			}
 		}
 
-		private void OnCustomDataValueChanged(ICustomDataProperty customData, object oldValue, object newValue) {
+		private void OnCustomDataValueChanged(ICustomDataProperty customData, dynamic oldValue, dynamic newValue) {
 			if (onCustomDataChangedCallbacks.TryGetValue(customData.CustomDataName, out var callback)) {
 				callback.Invoke(customData, oldValue, newValue);
 			}

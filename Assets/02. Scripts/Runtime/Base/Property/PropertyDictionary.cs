@@ -16,14 +16,25 @@ namespace _02._Scripts.Runtime.Base.Property {
 		public void RemoveFromRealValue(TKey key);
 	}
 	public abstract class PropertyDictionary<TKey,T> : Property<Dictionary<TKey, T>>, IDictionaryProperty<TKey,T> where T: IPropertyBase {
+
+		[ES3Serializable]
+		private Dictionary<T, SerializedChildPropertyInfo> _childProperties =
+			new Dictionary<T, SerializedChildPropertyInfo>();
+
+		[field: ES3NonSerializable]
+		public override Dictionary<TKey, T> BaseValue { get; set; } = new Dictionary<TKey, T>();
+
 		/// <summary>
 		/// Use RealValues instead to invoke events
 		/// </summary>
 		public override BindableProperty<Dictionary<TKey, T>> RealValue => RealValues;
 
-		[field: ES3Serializable]
+		[field: ES3NonSerializable]
 		public BindableDictionary<TKey, T> RealValues { get; private set; } =
-			new BindableDictionary<TKey, T>();
+			new BindableDictionary<TKey, T>(new Dictionary<TKey, T>());
+
+		[field: ES3NonSerializable]
+		public override Dictionary<TKey, T> InitialValue { get; set; } = new Dictionary<TKey, T>();
 
 		public abstract TKey GetKey(T value);
 
@@ -38,7 +49,29 @@ namespace _02._Scripts.Runtime.Base.Property {
 			}
 		
 		}
-
+		public void OnLoadFromSavedData() {
+			BaseValue.Clear();
+			InitialValue.Clear();
+			RealValues.Value.Clear();
+			
+			foreach (KeyValuePair<T,SerializedChildPropertyInfo> childProperty in _childProperties) {
+				SerializedChildPropertyInfo info = childProperty.Value;
+				TKey key = GetKey(childProperty.Key);
+				
+				if (info.IsInBase) {
+					BaseValue.Add(key, childProperty.Key);
+					InitialValue.Add(key, childProperty.Key);
+				}
+				
+				if(info.IsInReal) {
+					RealValues.Value.Add(key, childProperty.Key);
+				}
+				
+				if(childProperty.Key is IHaveSubProperties subProperty) {
+					subProperty.OnLoadFromSavedData();
+				}
+			}
+		}
 		
 		public override void SetBaseValue(Dictionary<TKey, T> value) {
 			BaseValue = value;
@@ -58,10 +91,19 @@ namespace _02._Scripts.Runtime.Base.Property {
 			//parentEntity.RegisterTempProperty(property, fullName + "." + GetKey(property));
 			requestRegisterProperty?.Invoke(typeof(T), property, fullName + "." + GetKey(property), true, true);
 			RealValues.AddAndInvoke(GetKey(property), property);
+			_childProperties.Add(property, new SerializedChildPropertyInfo(false, true));
 		}
 
 		public void RemoveFromRealValue(TKey key) {
-			RealValues.RemoveAndInvoke(key);
+			if(RealValues.Value.ContainsKey(key)) {
+				T property = RealValues.Value[key];
+				RealValues.RemoveAndInvoke(key);
+				SerializedChildPropertyInfo childPropertyInfo = _childProperties[property];
+				if (childPropertyInfo != null) {
+					childPropertyInfo.IsInReal = false;
+				}
+			}
+			
 		}
 
 		/// <summary>
@@ -78,6 +120,13 @@ namespace _02._Scripts.Runtime.Base.Property {
 			}
 			
 			return clone;
+		}
+
+		public override void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
+			base.Initialize(dependencies, parentEntityName);
+			foreach (KeyValuePair<TKey,T> keyValuePair in BaseValue) {
+				_childProperties.Add(keyValuePair.Value, new SerializedChildPropertyInfo(true, true));
+			}
 		}
 
 		public IPropertyBase[] GetChildProperties() {
@@ -106,6 +155,8 @@ namespace _02._Scripts.Runtime.Base.Property {
 			this.requestRegisterProperty -= requestRegisterProperty;
 		}
 
+
+
 		public override PropertyNameInfo[] GetDependentProperties() {
 			List<PropertyNameInfo> dependentProperties = new List<PropertyNameInfo>();
 			if (BaseValue != null) {
@@ -128,7 +179,7 @@ namespace _02._Scripts.Runtime.Base.Property {
 					property.Value.OnRecycled();
 				}
 			}
-			
+			_childProperties.Clear();
 			base.OnRecycled();
 		}
 	}
