@@ -48,7 +48,7 @@ namespace MikroFramework.BindableProperty
 
         [ES3Serializable]
         [SerializeField]
-        private T value = default(T);
+        private T? value = default(T);
 
         public T Value
         {
@@ -97,7 +97,7 @@ namespace MikroFramework.BindableProperty
 
         public IUnRegister RegisterWithInitValue(Action<T,T> onValueChanged)
         {
-            onValueChanged?.Invoke(default, value);
+            onValueChanged?.Invoke(value, value);
             return RegisterOnValueChaned(onValueChanged);
         }
 

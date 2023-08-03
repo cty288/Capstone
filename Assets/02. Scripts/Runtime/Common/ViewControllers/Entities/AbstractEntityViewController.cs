@@ -18,6 +18,9 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		[field: ES3Serializable]
 		//[field: SerializeField]
 		public string ID { get; set; }
+
+		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = true;
+		
 		IEntity IEntityViewController.Entity => BindedEntity;
 	
 		protected IEntityModel entityModel;
@@ -141,7 +144,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 			UpdateBinding(bindableProperty, bindedProperty, getter, callback);
 		}
 		
-		private void Bind<T>(string bindedPropertyName, IBindableProperty bindableProperty, Func<dynamic, T> getter,
+		protected void Bind<T>(string bindedPropertyName, IBindableProperty bindableProperty, Func<dynamic, T> getter,
 			Action<T, T> callback) {
 			PropertyInfo bindedProperty = GetType().GetProperty(bindedPropertyName,
 				BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -156,7 +159,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 
 		
 		//for IBindableProperty
-		private void UpdateBinding<T, BindablePropertyType>(IBindableProperty bindableProperty, 
+		protected void UpdateBinding<T, BindablePropertyType>(IBindableProperty bindableProperty, 
 			PropertyInfo bindedProperty, Func<BindablePropertyType, T> getter,  Action<T, T> callback) {
 			
 			
@@ -276,6 +279,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		protected virtual void OnDestroy() {
 			propertyBindings.Clear();
 			propertyFields.Clear();
+			entityModel.RemoveEntity(ID);
 		}
 	}
 }

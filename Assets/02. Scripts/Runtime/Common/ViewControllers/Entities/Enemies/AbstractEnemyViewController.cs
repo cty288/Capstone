@@ -8,7 +8,7 @@ using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
 using MikroFramework.Architecture;
 using UnityEngine;
 
-public abstract class AbstractEnemyViewController<T> : AbstractEntityViewController<T>, IEnemyViewController 
+public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropertyEntityViewController<T>, IEnemyViewController 
 	where T : class, IEnemyEntity, new() {
 	IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;
 	
@@ -31,6 +31,7 @@ public abstract class AbstractEnemyViewController<T> : AbstractEntityViewControl
 		Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
 		Bind("Vigiliance", BindedEntity.GetVigiliance());
 		Bind("AttackRange", BindedEntity.GetAttackRange());
+		
 	}
 
 	protected override IEntity OnInitEntity() {

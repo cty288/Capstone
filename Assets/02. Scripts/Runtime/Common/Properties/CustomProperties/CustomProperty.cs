@@ -75,7 +75,7 @@ namespace _02._Scripts.Runtime.Common.Properties{
 		public Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value);
 	}
 	
-	public abstract class AbstractCustomProperty : PropertyDictionary<string, ICustomDataProperty>, ICustomProperty {
+	public class CustomProperty : PropertyDictionary<string, ICustomDataProperty>, ICustomProperty {
 		
 		private Dictionary<ICustomDataProperty, Action<dynamic, dynamic>> onCustomDataChangedInternalCallbacks =
 			new Dictionary<ICustomDataProperty, Action<dynamic, dynamic>>();
@@ -85,24 +85,32 @@ namespace _02._Scripts.Runtime.Common.Properties{
 		
 		private Action<ICustomProperty> onCustomDataChanged;
 
-		public abstract string GetCustomPropertyName();
-		public abstract string OnGetDescription();
+		[ES3Serializable] protected string propertyName;
+		[ES3Serializable] protected IDescriptionGetter descriptionGetter;
 
 
-
-		public AbstractCustomProperty() : base() {
-			
-			ICustomDataProperty[] CustomDataProperties = GetCustomDataProperties();
-			if (CustomDataProperties!=null) {
-				BaseValue = GetCustomDataProperties().ToDictionary(GetKey);
+		public CustomProperty() : base(){}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="propertyName">The name of the property. This should be the same as the one on the config file</param>
+		/// <param name="descriptionGetter">In order to serialize the description, you need to use a descriptionGetter object to do the description stuff</param>
+		/// <param name="customProperties">Manually specify which properties are included, as well as their dependencies and modifiers</param>
+		public CustomProperty(string propertyName, IDescriptionGetter descriptionGetter,
+			params ICustomDataProperty[] customProperties) : base() {
+			if (customProperties!=null) {
+				BaseValue = customProperties.ToDictionary(GetKey);
 			}
 			else {
 				BaseValue = new Dictionary<string, ICustomDataProperty>();
 			}
+			this.propertyName = propertyName;
+			this.descriptionGetter = descriptionGetter;
 			
 		}
 		
-		public abstract ICustomDataProperty[] GetCustomDataProperties();
+		//public abstract ICustomDataProperty[] GetCustomDataProperties();
 		
 		public virtual Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value) {
 			IEnumerable<string> keys = (value as JObject)?.Properties().Select(p => p.Name);
@@ -147,7 +155,15 @@ namespace _02._Scripts.Runtime.Common.Properties{
 
 			return RealValues[CustomDataName].GetRealValue() as BindableProperty<T>;
 		}
-		
+
+		public string GetCustomPropertyName() {
+			return propertyName;
+		}
+
+		public string OnGetDescription() {
+			return descriptionGetter.GetDescription(this);
+		}
+
 		public ICustomDataProperty GetCustomDataProperty(string customDataName) {
 			if (!RealValues.Value.ContainsKey(customDataName)) {
 				Debug.LogError("CustomDataProperty " + customDataName + " not found in Custom " +  GetCustomPropertyName());
@@ -192,8 +208,16 @@ namespace _02._Scripts.Runtime.Common.Properties{
 
 		public override void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
 			base.Initialize(dependencies, parentEntityName);
+			RegisterCustomDataValueChangedEvents();
 			
-			//TODO: for loaded from saved, this need to be changed
+		}
+
+		public void OnLoadFromSavedData() {
+			base.OnLoadFromSavedData();
+			RegisterCustomDataValueChangedEvents();
+		}
+
+		private void RegisterCustomDataValueChangedEvents() {
 			foreach (ICustomDataProperty CustomData in RealValues.Value.Values) {
 				void OnCustomValueChanged(dynamic oldValue, dynamic newValue) => OnCustomDataValueChanged(CustomData, oldValue, newValue);
 
@@ -220,41 +244,22 @@ namespace _02._Scripts.Runtime.Common.Properties{
 
 
 	/// <summary>
-	/// If you don't want to create a new class for each Custom Property, you can use this class to create a Custom property.
+	/// If you don't want to manually specify custom property data, you can use this class to create a Custom property.
 	/// However, this class is data only, which means you can't set any modifiers for any Custom data. Also, data is only loaded from config file.
 	/// Moreover, all Custom data in the config file will be automatically loaded into this class, with type of dynamic.
-	/// To customize the description of this Custom, you need to assign a data only Custom description getter
+	/// To customize the description of this Custom, you need to assign a data only Custom description getter.
+	/// This is particularly useful if ALL of its data is primitive type, and you don't want to manually specify them.
+	/// If any of its data is complex type, the complex data will be a dynamic object (ExpandoObject). So it's better to use CustomProperty instead.
 	/// </summary>
-	public class DataOnlyCustomProperty : AbstractCustomProperty {
-		[ES3Serializable] 
-		protected string customPropertyName;
-		
-		[field: ES3Serializable]
-		protected IDataOnlyDescriptionGetter DescriptionGetter { get; }
+	public class DataOnlyCustomProperty : CustomProperty {
 		
 		public DataOnlyCustomProperty(): base(){}
 		
-		public DataOnlyCustomProperty(string CustomName, IDataOnlyDescriptionGetter descriptionGetter = null) : base() {
-			this.customPropertyName = CustomName;
-			DescriptionGetter = descriptionGetter;
+		public DataOnlyCustomProperty(string CustomName, IDescriptionGetter descriptionGetter = null) : base(CustomName, descriptionGetter) {
+			
 		}
 
-		public override string GetCustomPropertyName() {
-			return customPropertyName;
-		}
-
-		public override string OnGetDescription() {
-			if (DescriptionGetter != null) {
-				return DescriptionGetter.GetDescription(this);
-			}
-
-			return "";
-		}
-
-		public override ICustomDataProperty[] GetCustomDataProperties() {
-			return null;
-		}
-
+		
 		public override Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value) {
 			BaseValue.Clear();
 			IEnumerable<string> keys = (value as JObject)?.Properties().Select(p => p.Name);

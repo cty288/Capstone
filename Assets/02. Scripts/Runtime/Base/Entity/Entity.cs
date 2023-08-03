@@ -131,7 +131,8 @@ public abstract class Entity :  IEntity  {
 	private Dictionary<string, IPropertyBase> rootProperties { get; } =
 		new Dictionary<string, IPropertyBase>();
 
-	[field: ES3Serializable] private HashSet<string> tempPropertyNames = new HashSet<string>();
+	[field: ES3Serializable] 
+	private HashSet<string> tempPropertyNames = new HashSet<string>();
 
 	private static Dictionary<Type, string> cachedPropertyNames = new Dictionary<Type, string>();
 

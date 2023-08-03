@@ -27,7 +27,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		}
 		
 
-		internal class Attack2Property : AbstractCustomProperty {
+		/*internal class Attack2Property : CustomProperty {
 			public override string GetCustomPropertyName() {
 				return "attack2";
 			}
@@ -41,7 +41,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 					new DamageDataProperty("damage", new Attack2Modifier(), new PropertyNameInfo("custom_properties.attack1.speed"), new PropertyNameInfo(PropertyName.rarity)),
 				};
 			}
-		}
+		}*/
 
 		internal class Attack2Modifier : PropertyDependencyModifier<int> {
 			public override int OnModify(int propertyValue) {
@@ -61,7 +61,15 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			}
 
 			protected override ICustomProperty[] OnRegisterCustomProperties() {
-				return new ICustomProperty[] {new DataOnlyCustomProperty("attack1"), new Attack2Property(), new DataOnlyCustomProperty("attack3")};
+				return new ICustomProperty[] {
+					new DataOnlyCustomProperty("attack1"),
+					new CustomProperty("attack2", 
+						null,
+						new CustomDataProperty<int>("damage", new Attack2Modifier(),
+							new PropertyNameInfo("custom_properties.attack1.speed"),
+							new PropertyNameInfo(PropertyName.rarity))),
+					new CustomProperty("attack3", null, new CustomDataProperty<int>("damage"))
+				};
 			}
 		}
 

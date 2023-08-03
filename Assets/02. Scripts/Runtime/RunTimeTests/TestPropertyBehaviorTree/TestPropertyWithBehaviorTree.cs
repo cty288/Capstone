@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Runtime.Common.Properties.SkillsBase;
 using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
 using BehaviorDesigner.Runtime;
+using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using UnityEngine;
 
@@ -34,7 +35,7 @@ public class NewProperty : IndependentProperty<int> {
     }
 }
 
-public class TestInfo {
+public struct TestInfo {
     public float test;
     
     public TestInfo(float test) {
@@ -55,13 +56,23 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
         nameof(OnAttack1DamageChanged))]
     public int Attack1Damage { get; }
     
+    public int Attack1Damage2 { get; }
+    
     [BindableCustomDataProperty("attack1", "info", nameof(GetAttack1Test),
         nameof(OnAttack1TestChanged))]
     
     public float Attack1Test { get; }
+    
+    
+    public float Attack1Test2 { get; }
 
     protected override void OnEntityStart() {
         BindedEntity.RegisterOnCustomDataChanged("attack1", "damage", OnRegisteredCustomAttack1DamageChanged);
+
+        BindCustomData<int>("Attack1Damage2", "attack1", "damage", OnAttack1DamageChanged2);
+        
+        BindCustomData<dynamic, float>
+            ("Attack1Test2", "attack1", "info", GetAttack1Test2, OnAttack1TestChanged2);
     }
 
 
@@ -114,20 +125,30 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
     }
 
     protected void OnAttack1DamageChanged(int oldValue, int newValue) {
-        Debug.Log($"Attack 1 Damage Changed to: {newValue}");
+        Debug.Log($"[Bind Attribute] Attack 1 Damage Changed to: {newValue}");
+    }
+    
+    protected void OnAttack1DamageChanged2(int oldValue, int newValue) {
+        Debug.Log($"[Bind Function] Attack 1 Damage Changed from {oldValue} to: {newValue}");
     }
     
     protected dynamic GetAttack1Test(dynamic input) {
-        if (input == null) {
-            return null;
-        }
         return input.test;
     }
     protected void OnAttack1TestChanged(float oldValue, float newValue) {
-        Debug.Log($"Attack 1 Test Changed to: {newValue}");
+        Debug.Log($"[Bind Attribute] Attack 1 Test Changed to: {newValue}");
     }
     
     private void OnRegisteredCustomAttack1DamageChanged(ICustomDataProperty property, dynamic oldValue, dynamic newValue) {
         Debug.Log($"Attack 1 Damage Changed to (By OnRegisteredCustomAttack1DamageChanged) : {newValue}");
     }
+    
+    protected float GetAttack1Test2(dynamic input) {
+        return input.test;
+    }
+    
+    protected void OnAttack1TestChanged2(float oldValue, float newValue) {
+        Debug.Log($"[Bind Function] Attack 1 Test Changed to: {newValue}");
+    }
+
 }
