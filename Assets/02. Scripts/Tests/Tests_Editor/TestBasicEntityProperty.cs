@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.Base.Entity;
 using _02._Scripts.Runtime.Base.Property;
 using _02._Scripts.Runtime.Common.Properties;
@@ -15,8 +16,8 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		internal class BasicEntity : Entity {
 			public override string EntityName { get; protected set; } = "TestEntity";
 			protected override void OnRegisterProperties() {
-				RegisterProperty<IRarityProperty>(new Rarity());
-				RegisterProperty<IDangerProperty>(new Danger());
+				RegisterInitialProperty<IRarityProperty>(new Rarity());
+				RegisterInitialProperty<IDangerProperty>(new Danger());
 			}
 			
 
@@ -32,8 +33,8 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		public class TestEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestEnemy";
 			protected override void OnRegisterProperties() {
-				RegisterProperty(new Rarity());
-				RegisterProperty(new TestResourceList() {
+				RegisterInitialProperty(new Rarity());
+				RegisterInitialProperty(new TestResourceList() {
 					BaseValue = new List<TestResourceProperty>() {
 						new TestResourceProperty(new GoldPropertyModifier()){BaseValue = new TestResourceInfo("Gold", 1)},
 						new TestResourceProperty(){BaseValue = new TestResourceInfo("Silver", 2)},
@@ -54,8 +55,8 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		public class TestResourceTableEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestEnemy";
 			protected override void OnRegisterProperties() {
-				RegisterProperty(new Rarity());
-				RegisterProperty(new TestResourceTableProperty() {
+				RegisterInitialProperty(new Rarity());
+				RegisterInitialProperty(new TestResourceTableProperty() {
 					BaseValue = new List<TestResourceList>() {
 						new TestResourceList(new TestResourceProperty(new GoldPropertyModifier()){BaseValue = new TestResourceInfo("Gold", 1)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Silver", 2)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Bronze", 3)}),
 						new TestResourceList(new TestResourceProperty(new GoldPropertyModifier()){BaseValue = new TestResourceInfo("Gold", 10)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Silver", 20)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Bronze", 30)}),
@@ -76,8 +77,8 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		public class TestResourceDictEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestDictEnemy";
 			protected override void OnRegisterProperties() {
-				RegisterProperty(new Rarity());
-				RegisterProperty(new TestResourceDictProperty() {
+				RegisterInitialProperty(new Rarity());
+				RegisterInitialProperty(new TestResourceDictProperty() {
 					BaseValue = new Dictionary<PropertyName, TestResourceProperty>() {
 						{
 							PropertyName.test_gold_resource,
@@ -106,13 +107,13 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		internal class MyNewDangerModifier : PropertyDependencyModifier<int> {
 			public override int OnModify(int propertyValue) {
-				return GetDependency<Rarity>().InitialValue * 100;
+				return GetDependency<Rarity>().RealValue * 100;
 			}
 		}
 		
 		internal class GoldPropertyModifier : PropertyDependencyModifier<TestResourceInfo> {
 			public override TestResourceInfo OnModify(TestResourceInfo propertyValue) {
-				propertyValue.Rarity += GetDependency<Rarity>().InitialValue * 100;
+				propertyValue.Rarity += GetDependency<Rarity>().RealValue * 100;
 				return propertyValue;
 			}
 		}
@@ -137,10 +138,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			public TestResourceProperty(IPropertyDependencyModifier<TestResourceInfo> modifier) : base() {
 				this.modifier = modifier;
 			}
-
-			public override TestResourceInfo OnSetBaseValueFromConfig(dynamic value) {
-				return new TestResourceInfo(value.name, value.rarity);
-			}
+			
 
 			protected override IPropertyDependencyModifier<TestResourceInfo> GetDefautModifier() {
 				return null;
@@ -150,8 +148,8 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				return PropertyName.resource;
 			}
 
-			public override PropertyName[] GetDependentProperties() {
-				return new[] {PropertyName.rarity};
+			public override PropertyNameInfo[] GetDependentProperties() {
+				return new[] {new PropertyNameInfo(PropertyName.rarity)};
 			}
 		}
 		
@@ -166,10 +164,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			public TestResourceList(params TestResourceProperty[] baseValues) : base(baseValues) {
 				
 			}
-
-			public override List<TestResourceProperty> OnSetBaseValueFromConfig(dynamic value) {
-				return null;
-			}
+			
 
 			protected override IPropertyDependencyModifier<List<TestResourceProperty>> GetDefautModifier() {
 				return null;
@@ -181,10 +176,6 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		}
 
 		internal class TestResourceTableProperty : PropertyList<TestResourceList> {
-			public override List<TestResourceList> OnSetBaseValueFromConfig(dynamic value) {
-				return null;
-			}
-
 			protected override IPropertyDependencyModifier<List<TestResourceList>> GetDefautModifier() {
 				return null;
 			}
@@ -194,10 +185,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			}
 		}
 
-		internal class TestResourceDictProperty : PropertyDictionary<TestResourceProperty> {
-			public override Dictionary<PropertyName, TestResourceProperty> OnSetBaseValueFromConfig(dynamic value) {
-				return null;
-			}
+		internal class TestResourceDictProperty : PropertyDictionary<PropertyName,TestResourceProperty> {
 
 			protected override IPropertyDependencyModifier<Dictionary<PropertyName, TestResourceProperty>> GetDefautModifier() {
 				return null;
@@ -205,6 +193,136 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 			protected override PropertyName GetPropertyName() {
 				return PropertyName.test_resource_dict;
+			}
+
+			public override PropertyName GetKey(TestResourceProperty value) {
+				return value.PropertyName;
+			}
+		}
+
+
+		public abstract class TestInterestProperty : Property<int> {
+
+			protected override PropertyName GetPropertyName() {
+				return PropertyName.test_interest;
+			} 
+		}
+		
+		public class TestPlayCommputerPropertyModifier : PropertyDependencyModifier<int> {
+			public override int OnModify(int propertyValue) {
+				return propertyValue + GetDependency<Rarity>().RealValue +
+				       GetDependency<TestStudyInterestProperty>(new PropertyNameInfo("test_interest_dict.study[1]"))
+					       .RealValue;
+			}
+		}
+		
+		public class TestPlayChessPropertyModifier : PropertyDependencyModifier<int> {
+			public override int OnModify(int propertyValue) {
+				return propertyValue + GetDependency<Rarity>().RealValue +
+				       GetDependency<TestPlayComputerInterestProperty>(new PropertyNameInfo("test_interest_dict.play[0]"))
+					       .RealValue;
+			}
+		}
+
+		public class TestPlayComputerInterestProperty : TestInterestProperty {
+			protected override IPropertyDependencyModifier<int> GetDefautModifier() {
+				return new TestPlayCommputerPropertyModifier();
+			}
+
+			public override PropertyNameInfo[] GetDependentProperties() {
+				return new[]
+					{new PropertyNameInfo(PropertyName.rarity), new PropertyNameInfo("test_interest_dict.study[1]")};
+			}
+		}
+		
+		public class TestPlayChineseInterestProperty : TestInterestProperty {
+			protected override IPropertyDependencyModifier<int> GetDefautModifier() {
+				return new TestPlayChessPropertyModifier();
+			}
+
+			public override PropertyNameInfo[] GetDependentProperties() {
+				return new[]
+					{new PropertyNameInfo(PropertyName.rarity), new PropertyNameInfo("test_interest_dict.play[0]")};
+			}
+		}
+		
+		public class TestStudyInterestProperty : TestInterestProperty {
+			
+			public TestStudyInterestProperty(int baseValue) : base(){
+				BaseValue = baseValue;
+			}
+			
+			protected override IPropertyDependencyModifier<int> GetDefautModifier() {
+				return null;
+			}
+
+			public override PropertyNameInfo[] GetDependentProperties() {
+				return null;
+			}
+		}
+
+		internal class TestInterestListProperty : PropertyList<TestInterestProperty> {
+			
+			public string InterestType;
+			
+			public TestInterestListProperty(string interestType) : base() {
+				this.InterestType = interestType;
+			}
+			
+			
+			
+			protected override IPropertyDependencyModifier<List<TestInterestProperty>> GetDefautModifier() {
+				return null;
+			}
+
+			protected override PropertyName GetPropertyName() {
+				return PropertyName.test_interest_list;
+			}
+		}
+		internal class TestInterestDictProperty : PropertyDictionary<string, TestInterestListProperty> {
+
+			public TestInterestDictProperty(params TestInterestListProperty[] baseValues) : base(baseValues) {
+				
+			}
+			protected override IPropertyDependencyModifier<Dictionary<string, TestInterestListProperty>> GetDefautModifier() {
+				return null;
+			}
+
+			protected override PropertyName GetPropertyName() {
+				return PropertyName.test_interest_dict;
+			}
+
+			public override string GetKey(TestInterestListProperty value) {
+				return value.InterestType;
+			}
+		}
+
+
+		internal class TestInterestEntity : Entity {
+			public override string EntityName { get; protected set; } = "TestInterestEntity";
+			protected override void OnRegisterProperties() {
+				RegisterInitialProperty(new Rarity());
+				RegisterInitialProperty(new TestInterestDictProperty(
+					new TestInterestListProperty("study") {
+						BaseValue = new List<TestInterestProperty>()
+							{new TestStudyInterestProperty(10), 
+								new TestStudyInterestProperty(20)}
+					},
+					new TestInterestListProperty("play") {
+						BaseValue = new List<TestInterestProperty>() {
+							new TestPlayComputerInterestProperty() {BaseValue = 5},
+							new TestPlayChineseInterestProperty() {BaseValue = 10}
+						}
+					}
+				));
+			}
+
+			public override void OnDoRecycle() {
+				SafeObjectPool<TestInterestEntity>.Singleton.Recycle(this);
+			}
+
+			public override void OnRecycle() {
+				
 			}
 		}
 		//============================Start of Tests================================
@@ -214,7 +332,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			EntityPropertyDependencyCache.ClearCache();
 			BasicEntity entity = BasicEntityBuilder<BasicEntity>.
 				Allocate(2).
-				SetProperty(PropertyName.danger, 1).
+				SetProperty(new PropertyNameInfo(PropertyName.danger), 1).
 				Build();
 
 			Debug.Log($"UUID: {entity.UUID}");
@@ -227,7 +345,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			
 			BasicEntity entity = BasicEntityBuilder<BasicEntity>.
 				Allocate(2).
-				SetModifier(PropertyName.danger, new MyNewDangerModifier()).
+				SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).
 				Build();
 
 			Debug.Log($"UUID: {entity.UUID}");
@@ -239,7 +357,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			string id = model.GetBuilder<BasicEntityBuilder<BasicEntity>, BasicEntity>(2)
-				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build()
+				.SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).Build()
 				.UUID;
 
 			BasicEntity entity = model.GetEntity<BasicEntity>(id);
@@ -253,14 +371,14 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 
 
-			IEntity ent1 = model.GetBuilder<BasicEntity>(2).SetProperty(PropertyName.rarity, 2)
-				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build();
+			IEntity ent1 = model.GetBuilder<BasicEntity>(2).SetProperty(new PropertyNameInfo(PropertyName.rarity), 2)
+				.SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).Build();
 			string id1 = ent1.UUID;
 
 			model.RemoveEntity(id1);
 			
-			IEntity ent2 = model.GetBuilder<BasicEntity>(3).SetProperty(PropertyName.rarity, 3)
-				.SetModifier(PropertyName.danger, new MyNewDangerModifier()).Build();
+			IEntity ent2 = model.GetBuilder<BasicEntity>(3).SetProperty(new PropertyNameInfo(PropertyName.rarity), 3)
+				.SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).Build();
 			string id2 = ent2.UUID;
 			
 			Assert.AreEqual(ent1, ent2);
@@ -270,6 +388,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestResourceListProperty() {
+			EntityPropertyDependencyCache.ClearCache();
 			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
 			
 			IEntity ent1 = model.
@@ -282,7 +401,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			ent1.GetProperty<TestResourceList>().RealValues.RegisterOnAdd(OnAdd);
 			ent1.GetProperty<TestResourceList>().AddToRealValue(new TestResourceProperty(new GoldPropertyModifier()) {
 				BaseValue = new TestResourceInfo("Diamond", 100)
-			}, ent1);
+			});
 
 			Assert.AreEqual(300, ent1.GetProperty<TestResourceList>().RealValues[3].RealValue.Value.Rarity);
 			
@@ -290,6 +409,8 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				addTriggered = true;
 				ent1.GetProperty<TestResourceList>().RealValues.UnRegisterOnAdd(OnAdd);
 			}
+			
+			Assert.AreEqual(300, (int) ent1.GetProperty(new PropertyNameInfo("resource_list[3]")).GetRealValue().Value.Rarity);
 			
 
 			Assert.IsTrue(addTriggered);
@@ -318,6 +439,75 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			  
 			var table = ent1.GetProperty<TestResourceDictProperty>().RealValues;
 			Assert.AreEqual(201, table[PropertyName.test_gold_resource].RealValue.Value.Rarity);
+		}
+		
+		[Test]
+		public void TestGetNestedProperties() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			
+			IEntity ent1 = model.
+				GetBuilder<TestResourceTableEnemy>(2)
+				.Build();
+
+			//var table = ent1.GetProperty<TestResourceTableProperty>().RealValues;
+			Assert.AreEqual(201, (int) ent1.GetProperty(new PropertyNameInfo("resource_list[0][0]")).GetRealValue().Value.Rarity);
+			Assert.AreEqual(210,
+				(int) ent1.GetProperty<TestResourceProperty>(new PropertyNameInfo("resource_list[1][0]")).RealValue
+					.Value.Rarity);
+		}
+
+		[Test]
+		public void TestEntityRecycle() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			IEntity ent1 = null;
+
+			for (int i = 0; i < 100; i++) {
+				ent1 = model.
+					GetBuilder<TestEnemy>(2)
+					.Build();
+
+				bool addTriggered = false;
+				ent1.GetProperty<TestResourceList>().RealValues.RegisterOnAdd(OnAdd);
+
+				for (int j = 0; j < 50; j++) {
+					ent1.GetProperty<TestResourceList>().AddToRealValue(new TestResourceProperty(new GoldPropertyModifier()) {
+						BaseValue = new TestResourceInfo("Diamond", 100)
+					});
+					Assert.AreEqual(300, (int) ent1.GetProperty(new PropertyNameInfo($"resource_list[{j+3}]")).
+						GetRealValue().Value.Rarity);
+				}
+
+				Assert.AreEqual(300, (int) ent1.GetProperty(new PropertyNameInfo("resource_list[3]")).GetRealValue().Value.Rarity);
+				Assert.AreEqual(53, ent1.GetProperty<TestResourceList>().RealValues.Value.Count());
+			
+			
+				void OnAdd(TestResourceProperty obj) {
+					addTriggered = true;
+					ent1.GetProperty<TestResourceList>().RealValues.UnRegisterOnAdd(OnAdd);
+				}
+
+				model.RemoveEntity(ent1.UUID);
+
+				Assert.IsNull(ent1.GetProperty<TestResourceList>().RealValues.Value);
+			}
+
+		}
+		
+		[Test]
+		public void TestNestedDependencies() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			
+			TestInterestEntity ent1 = model.
+				GetBuilder<TestInterestEntity>(5)
+				.Build();
+
+			//var table = ent1.GetProperty<TestResourceTableProperty>().RealValues;
+			Assert.AreEqual(30, (int) ent1.GetProperty(new PropertyNameInfo("test_interest_dict.play[0]")).GetRealValue().Value);
+			Assert.AreEqual(45,
+				(int) ent1.GetProperty(new PropertyNameInfo("test_interest_dict.play[1]")).GetRealValue().Value);
 		}
 
 	} 

@@ -8,7 +8,7 @@ using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
 using MikroFramework.Architecture;
 using UnityEngine;
 
-public abstract class AbstractEnemyViewController<T> : AbstractEntityViewController<T>, IEnemyViewController 
+public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropertyEntityViewController<T>, IEnemyViewController 
 	where T : class, IEnemyEntity, new() {
 	IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;
 	
@@ -25,11 +25,13 @@ public abstract class AbstractEnemyViewController<T> : AbstractEntityViewControl
 	
 	
 	protected override void OnBindEntityProperty() {
+		
 		Bind("Danger", BindedEntity.GetDanger());
-		Bind<int, HealthInfo>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
-		Bind<int, HealthInfo>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
+		Bind<HealthInfo, int>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
+		Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
 		Bind("Vigiliance", BindedEntity.GetVigiliance());
 		Bind("AttackRange", BindedEntity.GetAttackRange());
+		
 	}
 
 	protected override IEntity OnInitEntity() {
@@ -39,11 +41,11 @@ public abstract class AbstractEnemyViewController<T> : AbstractEntityViewControl
 
 	protected abstract IEnemyEntity OnInitEnemyEntity(EnemyBuilder<T> builder);
 
-	protected object GetMaxHealth(object info) {
-		return ((HealthInfo) info).MaxHealth;
+	protected dynamic GetMaxHealth(dynamic info) {
+		return info.MaxHealth;
 	}
 	
-	protected object GetCurrentHealth(object info) {
-		return ((HealthInfo) info).CurrentHealth;
+	protected dynamic GetCurrentHealth(dynamic info) {
+		return info.CurrentHealth;
 	}
 }

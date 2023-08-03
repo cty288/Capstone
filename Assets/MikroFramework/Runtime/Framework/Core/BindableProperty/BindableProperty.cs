@@ -9,7 +9,7 @@ using UnityEngine;
 namespace MikroFramework.BindableProperty
 {
     public interface IBindableProperty {
-        public object ObjectValue { get; set; }
+        public dynamic Value { get; set; }
 
         public IUnRegister RegisterOnObjectValueChaned(Action<object> onValueChanged);
 
@@ -27,7 +27,7 @@ namespace MikroFramework.BindableProperty
     [Serializable]
     public class BindableProperty<T> : IBindableProperty
     {
-        object IBindableProperty.ObjectValue
+        object IBindableProperty.Value
         {
             get => Value;
             set => Value = (T) value;
@@ -48,7 +48,7 @@ namespace MikroFramework.BindableProperty
 
         [ES3Serializable]
         [SerializeField]
-        private T value = default(T);
+        private T? value = default(T);
 
         public T Value
         {
@@ -97,7 +97,7 @@ namespace MikroFramework.BindableProperty
 
         public IUnRegister RegisterWithInitValue(Action<T,T> onValueChanged)
         {
-            onValueChanged?.Invoke(default, value);
+            onValueChanged?.Invoke(value, value);
             return RegisterOnValueChaned(onValueChanged);
         }
 
@@ -153,11 +153,15 @@ namespace MikroFramework.BindableProperty
         }
         
         public IUnRegister RegisterOnObjectValueChaned(Action<object> onValueChanged) {
-            return RegisterOnValueChaned((v) => { onValueChanged(v); });
+            Action<T> action = (v) => { onValueChanged(v); };
+            actionDict.Add(onValueChanged, action);
+            return RegisterOnValueChaned(action);
         }
         
         public IUnRegister RegisterOnObjectValueChaned(Action<object, object> onValueChanged) {
-            return RegisterOnValueChaned((v, w) => { onValueChanged(v, w); });
+            Action<T, T> action = (v, w) => { onValueChanged(v, w); };
+            actionDict2.Add(onValueChanged, action);
+            return RegisterOnValueChaned(action);
         }
 
         [NonSerialized]

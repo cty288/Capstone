@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using _02._Scripts.Runtime.Base.Entity.ClassifiedEntity;
 using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Runtime.Utilities;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using UnityEngine;
 
-public interface IEnemyEntity : IEntity {
+public interface IEnemyEntity : IEntity, IHaveCustomProperties {
 	public BindableProperty<int> GetDanger();
 	public BindableProperty<HealthInfo> GetHealth();
 	public BindableList<TasteType> GetTaste();
@@ -18,19 +19,17 @@ public interface IEnemyEntity : IEntity {
 	public int GetRarity();
 }
 
-public abstract class EnemyEntity<T> : Entity, IEnemyEntity where T : EnemyEntity<T>, new() {
-
-	
-	protected override void OnRegisterProperties() {
-		RegisterProperty(new Rarity());
-		RegisterProperty<IDangerProperty>(new Danger());
-		RegisterProperty<IHealthProperty>(new Health());
-		RegisterProperty<ITasteProperty>(new Taste());
-		RegisterProperty<IVigilianceProperty>(new Vigiliance());
-		RegisterProperty<IAttackRangeProperty>(new AttackRange());
+public abstract class EnemyEntity<T> : AbstractHaveCustomPropertiesEntity, IEnemyEntity where T : EnemyEntity<T>, new() {
+	protected override void OnEntityRegisterProperties() {
+		RegisterInitialProperty(new Rarity());
+		RegisterInitialProperty<IDangerProperty>(new Danger());
+		RegisterInitialProperty<IHealthProperty>(new Health());
+		RegisterInitialProperty<ITasteProperty>(new Taste());
+		RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
+		RegisterInitialProperty<IAttackRangeProperty>(new AttackRange());
 		OnEnemyRegisterProperties();
 	}
- 
+	
 	public BindableProperty<int> GetDanger() {
 		return GetProperty<IDangerProperty>().RealValue;
 	}

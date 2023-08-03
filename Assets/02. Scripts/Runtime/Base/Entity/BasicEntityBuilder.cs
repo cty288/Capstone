@@ -8,7 +8,7 @@ namespace _02._Scripts.Runtime.Base.Entity {
 		
 		public static BasicEntityBuilder<T> Allocate(int rarity) {
 			BasicEntityBuilder<T> target = SafeObjectPool<BasicEntityBuilder<T>>.Singleton.Allocate();
-			target.SetProperty<int>(PropertyName.rarity, rarity);
+			target.SetProperty<int>(new PropertyNameInfo(PropertyName.rarity), rarity);
 			return target;
 		}
 	}

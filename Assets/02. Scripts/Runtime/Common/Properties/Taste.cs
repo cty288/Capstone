@@ -10,9 +10,11 @@ namespace _02._Scripts.Runtime.Common.Properties {
 		Type2,
 		Type3
 	}
-	
-	public interface ITasteProperty : IListProperty<TasteType> {}
-	public class Taste : IndependentListProperty<TasteType>, ITasteProperty {
+
+	public interface ITasteProperty : IListProperty<TasteType>, ILoadFromConfigProperty {
+		
+	}
+	public class Taste : IndependentLoadFromConfigListProperty<TasteType>, ITasteProperty {
 		public override List<TasteType> OnSetBaseValueFromConfig(dynamic value) {
 			return value.ToObject<List<TasteType>>();
 		}

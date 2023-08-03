@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Base.Property;
 
 namespace _02._Scripts.Runtime.Common.Properties {
-	public interface IVigilianceProperty : IProperty<float>{}
-	public class Vigiliance: Property<float>, IVigilianceProperty {
+	public interface IVigilianceProperty : IProperty<float>, ILoadFromConfigProperty {
+		
+	}
+	public class Vigiliance: AbstractLoadFromConfigProperty<float>, IVigilianceProperty {
+
 		public override float OnSetBaseValueFromConfig(dynamic value) {
 			return value;
 		}
@@ -15,8 +19,8 @@ namespace _02._Scripts.Runtime.Common.Properties {
 			return PropertyName.vigiliance;
 		}
 
-		public override PropertyName[] GetDependentProperties() {
-			return new[] {PropertyName.rarity};
+		public override PropertyNameInfo[] GetDependentProperties() {
+			return new[] {new PropertyNameInfo(PropertyName.rarity)};
 		}
 		
 		
@@ -24,7 +28,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 	
 	public class VigilianceDefaultModifier : PropertyDependencyModifier<float> {
 		public override float OnModify(float propertyValue) {
-			return propertyValue * GetDependency<Rarity>().InitialValue * 5;
+			return propertyValue * GetDependency<Rarity>(new PropertyNameInfo(PropertyName.rarity)).InitialValue * 5;
 		}
 	}
 }

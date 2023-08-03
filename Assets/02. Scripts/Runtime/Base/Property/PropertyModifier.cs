@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IPropertyDependencyModifier<T>{ 
-    public T Modify(T propertyValue, IPropertyBase[] dep, string parentEntityName, PropertyName propertyName);
+    public T Modify(T propertyValue, IPropertyBase[] dep, string parentEntityName, string propertyName);
 } 
 
 /// <summary>
@@ -15,17 +15,29 @@ public abstract class PropertyDependencyModifier<T> : IPropertyDependencyModifie
    
     private string parentEntityName;
     
-    private PropertyName propertyName;
+    private string propertyName;
 
-    private Dictionary<Type, IPropertyBase> dependencies = new Dictionary<Type, IPropertyBase>();
-    
-    public T Modify(T propertyValue, IPropertyBase[] dep, string parentEntityName, PropertyName propertyName) {
+    private Dictionary<string, IPropertyBase> dependenciesInFullname = new Dictionary<string, IPropertyBase>();
+
+    protected Dictionary<Type, IPropertyBase> dependenciesInType = new Dictionary<Type, IPropertyBase>();
+
+    public T Modify(T propertyValue, IPropertyBase[] dep, string parentEntityName, string propertyName) {
         this.parentEntityName = parentEntityName;
         this.propertyName = propertyName;
         foreach (IPropertyBase propertyBase in dep) {
-            dependencies[propertyBase.GetType()] = propertyBase;
+            dependenciesInFullname[propertyBase.GetFullName()] = propertyBase;
+            if(dependenciesInType.ContainsKey(propertyBase.GetType())) {
+                Debug.LogWarning($"Property {propertyBase.GetFullName()} of entity {parentEntityName} has duplicate dependency of type {propertyBase.GetType()}. " +
+                                 $"Please use the GetDependency overload that explicitly specify the dependency name to avoid ambiguity.");
+            }
+            else {
+                dependenciesInType[propertyBase.GetType()] = propertyBase;
+            }
         }
-        return OnModify(propertyValue);
+        T result = OnModify(propertyValue);
+        dependenciesInType.Clear();
+        dependenciesInFullname.Clear();
+        return result;
     }
     
 	
@@ -40,12 +52,37 @@ public abstract class PropertyDependencyModifier<T> : IPropertyDependencyModifie
         return default(T);
     }
     
-    protected T GetDependency<T>() where T: IPropertyBase {
-        if (dependencies.TryGetValue(typeof(T), out IPropertyBase propertyBase)) {
+    protected T GetDependency<T>(PropertyNameInfo nameInfo) where T: IPropertyBase {
+        if (dependenciesInFullname.TryGetValue(nameInfo.GetFullName(), out IPropertyBase propertyBase)) {
+            return (T) propertyBase;
+        }
+        throw new Exception($"Property {propertyName.ToString()} of entity {parentEntityName} does not have dependency of name {nameInfo.GetFullName()}");
+    }
+    
+    protected IPropertyBase GetDependency(PropertyNameInfo nameInfo) {
+        if (dependenciesInFullname.TryGetValue(nameInfo.GetFullName(), out IPropertyBase propertyBase)) {
+            return propertyBase;
+        }
+
+        throw new Exception(
+            $"Property {propertyName.ToString()} of entity {parentEntityName} does not have dependency of name {nameInfo.GetFullName()}");
+    }
+    
+    
+    /// <summary>
+    /// Only use this when you are sure that there is only one dependency of this type
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public T GetDependency<T>() where T: IPropertyBase {
+        if (dependenciesInType.TryGetValue(typeof(T), out IPropertyBase propertyBase)) {
             return (T) propertyBase;
         }
         throw new Exception($"Property {propertyName.ToString()} of entity {parentEntityName} does not have dependency of type {typeof(T)}");
     }
+    
+    
 
     public abstract T OnModify(T propertyValue);
 

@@ -9,4 +9,5 @@ public class MainGame : SavableArchitecture<MainGame> {
 		
 	}
 
+	protected override string saveFileSuffix { get; } = "main";
 }

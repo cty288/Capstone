@@ -10,12 +10,14 @@ public abstract class SavableArchitecture<T> : Architecture<T> where T: Architec
 
 	protected const bool IsSave = true;
 	
+	protected abstract string saveFileSuffix { get; }
+	
 	public void RegisterModel<T>(T defaultModel) where T: class, IModel{
 		if (defaultModel.GetType().IsSubclassOf(typeof(AbstractSavableModel)) && IsSave) {
-			T model = ES3.Load("Model_" + defaultModel.GetType().Name, "models.es3", defaultModel as AbstractSavableModel) as T;
+			T model = ES3.Load("Model_" + defaultModel.GetType().Name, $"models_{saveFileSuffix}.es3", defaultModel as AbstractSavableModel) as T;
 			
 			base.RegisterModel<T>(model);
-			(model as AbstractSavableModel)?.OnLoad();
+			(model as AbstractSavableModel)?.OnLoad(saveFileSuffix);
 			savableModels.Add(model as AbstractSavableModel);
 		}
 		else {
@@ -28,9 +30,9 @@ public abstract class SavableArchitecture<T> : Architecture<T> where T: Architec
         
 		if (defaultSystem.GetType().IsSubclassOf(typeof(AbstractSavableSystem)) && IsSave) {
             
-			T system = ES3.Load<AbstractSavableSystem>("System_" + defaultSystem.GetType().Name, "systems.es3", defaultSystem as AbstractSavableSystem) as T;
+			T system = ES3.Load<AbstractSavableSystem>("System_" + defaultSystem.GetType().Name, $"systems_{saveFileSuffix}.es3", defaultSystem as AbstractSavableSystem) as T;
 			base.RegisterSystem<T>(system);
-			(system as AbstractSavableSystem)?.OnLoad();
+			(system as AbstractSavableSystem)?.OnLoad(saveFileSuffix);
 			savableSystems.Add(system as AbstractSavableSystem);
 		}
 		else {
@@ -45,17 +47,17 @@ public abstract class SavableArchitecture<T> : Architecture<T> where T: Architec
 			return;
 		}
 		foreach (AbstractSavableModel savableModel in savableModels) {
-			savableModel.Save();
+			savableModel.Save(saveFileSuffix);
 		}
 		foreach (AbstractSavableSystem savableSystem in savableSystems) {
-			savableSystem.Save();
+			savableSystem.Save(saveFileSuffix);
 		}
 		ES3AutoSaveMgr.Current.Save();
 	}
     
-	public static void ClearSave() {
-		ES3.DeleteFile("models.es3");
-		ES3.DeleteFile("systems.es3");
+	public void ClearSave() {
+		ES3.DeleteFile($"models_{saveFileSuffix}.es3");
+		ES3.DeleteFile($"systems_{saveFileSuffix}.es3");
 		ES3.DeleteFile("SaveFile.es3");
 	}
 }

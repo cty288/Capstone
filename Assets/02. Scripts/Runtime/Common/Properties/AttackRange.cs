@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Base.Property;
 
 namespace _02._Scripts.Runtime.Common.Properties {
-	public interface IAttackRangeProperty : IProperty<float>{}
-	public class AttackRange: Property<float>, IAttackRangeProperty {
+	public interface IAttackRangeProperty : IProperty<float>, ILoadFromConfigProperty{}
+	public class AttackRange: AbstractLoadFromConfigProperty<float>, IAttackRangeProperty {
 		public override float OnSetBaseValueFromConfig(dynamic value) {
 			return value;
 		}
@@ -15,8 +16,8 @@ namespace _02._Scripts.Runtime.Common.Properties {
 			return PropertyName.attack_range;
 		}
 
-		public override PropertyName[] GetDependentProperties() {
-			return new[] {PropertyName.rarity};
+		public override PropertyNameInfo[] GetDependentProperties() {
+			return new[] {new PropertyNameInfo(PropertyName.rarity)};
 		}
 		
 		
@@ -24,7 +25,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 	
 	public class AttackRangeDefaultModifier : PropertyDependencyModifier<float> {
 		public override float OnModify(float propertyValue) {
-			return propertyValue * GetDependency<Rarity>().InitialValue * 5;
+			return propertyValue * GetDependency<Rarity>(new PropertyNameInfo(PropertyName.rarity)).RealValue * 5;
 		}
 	}
 }

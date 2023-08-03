@@ -17,6 +17,10 @@ public class TestEnemy {
         protected override void OnEnemyRegisterProperties() {
             
         }
+
+        protected override ICustomProperty[] OnRegisterCustomProperties() {
+            return null;
+        }
     }
     
     //===============================Start writing your tests here===============================
@@ -26,11 +30,11 @@ public class TestEnemy {
 
 
         TestBasicEnemy ent1 = model.GetBuilder<TestBasicEnemy>(2)
-            .SetModifier(PropertyName.danger, new TestBasicEntityProperty.MyNewDangerModifier()).
-            SetProperty(PropertyName.health, new HealthInfo(100,100)).
-            SetProperty(PropertyName.taste, new List<TasteType>() {TasteType.Type1, TasteType.Type2}).
-            SetProperty(PropertyName.vigiliance, 100.0f). 
-            SetProperty(PropertyName.attack_range, 200.0f).
+            .SetModifier(new PropertyNameInfo(PropertyName.danger), new TestBasicEntityProperty.MyNewDangerModifier()).
+            SetProperty(new PropertyNameInfo(PropertyName.health), new HealthInfo(100,100)).
+            SetProperty(new PropertyNameInfo(PropertyName.taste), new List<TasteType>() {TasteType.Type1, TasteType.Type2}).
+            SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100.0f). 
+            SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200.0f).
         Build();
         
         Assert.AreEqual(200, ent1.GetProperty<IDangerProperty>().RealValue.Value);

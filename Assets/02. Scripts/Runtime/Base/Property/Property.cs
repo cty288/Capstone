@@ -2,19 +2,70 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Base.Property;
 using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Runtime.Utilities.ConfigSheet;
 using MikroFramework.BindableProperty;
 using MikroFramework.Serializer;
 using UnityEngine;
+using Action = BehaviorDesigner.Runtime.Tasks.Action;
+
+
+public struct PropertyNameInfo {
+	private string FullName;
+	
+	/// <summary>
+	/// Use this constructor when the dependency is a sub property of some other properties (i.e. custom properties)
+	/// </summary>
+	/// <param name="fullName"></param>
+	public PropertyNameInfo(string fullName) {
+		FullName = fullName;
+	}
+
+	
+	/// <summary>
+	/// Use this constructor when the dependency is a property of the entity, not a sub property of some other properties
+	/// </summary>
+	/// <param name="propertyName"></param>
+	public PropertyNameInfo(PropertyName propertyName) {
+		FullName = propertyName.ToString();
+	}
+	
+	/// <summary>
+	/// Use this constructor to get the fullname of a property if you have the property
+	/// </summary>
+	/// <param name="property"></param>
+	public PropertyNameInfo(IPropertyBase property) {
+		FullName = property.GetFullName();
+	}
+	
+	/// <summary>
+	/// Use this constructor to get the fullname of a property if you have the property name and the parent name
+	/// Do not include property name in the parent name
+	/// </summary>
+	/// <param name="property"></param>
+	/// <param name="parentName"></param>
+	public PropertyNameInfo(PropertyName propertyName, string parentName) {
+		FullName = parentName + "." + propertyName.ToString();
+	}
+	
+	public string GetFullName() {
+		return FullName;
+	}
+}
 
 public interface IPropertyBase {
 	public PropertyName PropertyName { get; }
+	
+	public void OnSetFullName(string fullName);
+	
+	public string GetFullName();
+	
 	public object GetBaseValue();
 	public void SetBaseValue(object value);
 	public object GetInitialValue();
 	public IBindableProperty GetRealValue();
-	public PropertyName[] GetDependentProperties();
+	public PropertyNameInfo[] GetDependentProperties();
 	
 	void Initialize(IPropertyBase[] dependencies, string parentEntityName);
 	
@@ -22,9 +73,36 @@ public interface IPropertyBase {
 
 	public IPropertyBase SetModifier<T>(IPropertyDependencyModifier<T> modifier);
 	
-	void OnLoadFromConfig(string entityName);
+	//public IPropertyBase[] GetSubProperties();
 }
 
+
+
+public interface ILoadFromConfigProperty: IPropertyBase {
+	void LoadFromConfig(dynamic value);
+
+
+}
+
+public interface IHaveSubProperties : IPropertyBase{
+	
+	void OnSetChildFullName() {
+		IPropertyBase[] childProperties = GetChildProperties();
+		if(childProperties != null && childProperties.Length > 0) {
+			for (int i = 0; i < childProperties.Length; i++) {
+				childProperties[i].OnSetFullName(GetFullName() + "." + childProperties[i].PropertyName);
+			}
+		}
+	}
+	
+	public IPropertyBase[] GetChildProperties();
+	
+	public void RegisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty);
+
+	public void UnregisterRequestRegisterProperty(Action<Type, IPropertyBase, string, bool, bool> requestRegisterProperty);
+
+	public void OnLoadFromSavedData();
+}
 
 public interface IProperty<T> : IPropertyBase{
 	
@@ -32,13 +110,13 @@ public interface IProperty<T> : IPropertyBase{
 	/// <summary>
 	/// Base Value is the initial configured base value of a specific property
 	/// </summary>
-	public new T BaseValue { get; set; }
+	public T BaseValue { get; set; }
 	
 	/// <summary>
 	/// Initial Value is the initial real value of this property when the bind entity is initialized. It
 	/// is dependent on the base value and the modifiers. Not changed during the game
 	/// </summary>
-	public new T InitialValue { get; set; }
+	public T InitialValue { get; set; }
 	
 	/// <summary>
 	/// Real Value initialized to InitialValue. Is changed during the game
@@ -62,30 +140,41 @@ public abstract class Property<T> : IProperty<T> {
 	[ES3Serializable]
 	private bool initializedBefore = false;
 	public PropertyName PropertyName => GetPropertyName();
+	
+
+	[field: ES3Serializable] 
+	protected string fullName;
 
 
 	[field: ES3Serializable]
-	public T BaseValue { get; set; } = default;
+	public virtual  T BaseValue { get; set; } = default;
 	[field: ES3Serializable]
-	public T InitialValue { get; set; } = default;
+	public virtual  T InitialValue { get; set; } = default;
 	
 	[field: ES3Serializable]
 	public virtual BindableProperty<T> RealValue { get; } = new BindableProperty<T>();
 	
-	protected ConfigTable configTable;
+	
 
 	public virtual void SetBaseValue(T value) {
 		BaseValue = value;
 	}
-
-	public void OnLoadFromConfig(string entityName) {
-		dynamic data = configTable.Get(entityName, PropertyName.ToString());
-		if (data != null) {
-			SetBaseValue(OnSetBaseValueFromConfig(data));
+	
+	public void OnSetFullName(string fullName) {
+		this.fullName = fullName;
+		if(this is IHaveSubProperties subProperties) {
+			subProperties.OnSetChildFullName();
 		}
 	}
+
 	
-	public abstract T OnSetBaseValueFromConfig(dynamic value);
+
+	public string GetFullName() {
+		return fullName;
+	}
+	
+
+
 
 	[field: ES3Serializable]
 	protected IPropertyDependencyModifier<T> modifier;
@@ -123,19 +212,18 @@ public abstract class Property<T> : IProperty<T> {
 	/// </summary>
 	public Property() {
 		modifier = GetDefautModifier();
-		configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 	}
 	
 	
 
-	public abstract PropertyName[] GetDependentProperties();
+	public abstract PropertyNameInfo[] GetDependentProperties();
 
 	public virtual void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
 		T targetValue;
 		bool canClone = false;
 		targetValue = OnClone(BaseValue);
 		if (modifier != null) {
-			targetValue = modifier.Modify(targetValue, dependencies, parentEntityName, PropertyName);
+			targetValue = modifier.Modify(targetValue, dependencies, parentEntityName, fullName);
 		}
 		InitialValue = targetValue;
 		RealValue.Value = OnClone(InitialValue);
@@ -157,6 +245,25 @@ public abstract class Property<T> : IProperty<T> {
 
 }
 
+
+public abstract class AbstractLoadFromConfigProperty<T> : Property<T>, ILoadFromConfigProperty {
+	
+	
+	public void LoadFromConfig(dynamic value) {
+		if (value != null) {
+			SetBaseValue(OnSetBaseValueFromConfig(value));
+		}
+	}
+	
+
+	public abstract T OnSetBaseValueFromConfig(dynamic value);
+	
+	public AbstractLoadFromConfigProperty() : base() {
+		
+	}
+}
+
+
 /// <summary>
 /// Independent Properties are properties without any dependencies
 /// </summary>
@@ -168,11 +275,23 @@ public abstract class IndependentProperty<T> : Property<T> {
 		return null;
 	}
 
-	public override PropertyName[] GetDependentProperties() {
+	public override PropertyNameInfo[] GetDependentProperties() {
 		return null;
 	}
 
 	protected IndependentProperty():base(){}
 	
+}
+
+public abstract class IndependentLoadFromConfigProperty<T> : IndependentProperty<T>, ILoadFromConfigProperty {
+	protected IndependentLoadFromConfigProperty():base(){}
+	public void LoadFromConfig(dynamic value) {
+		if (value != null) {
+			SetBaseValue(OnSetBaseValueFromConfig(value));
+		}
+	}
+
+	
+	public abstract T OnSetBaseValueFromConfig(dynamic value);
 }
 

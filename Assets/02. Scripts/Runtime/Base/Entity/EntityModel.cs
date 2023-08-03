@@ -64,6 +64,9 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 	protected override void OnInit() {
 		base.OnInit();
 		entityBuilderFactory = new EntityBuilderFactory();
+		foreach (IEntity entity in entities.Values) {
+			entity.OnLoadFromSave();
+		}
 	}
 	
 	public TBuilder GetBuilder<TBuilder, TEntity>(int rarity, bool addToModelOnceBuilt = true) where TBuilder : EntityBuilder<TBuilder, TEntity> where TEntity : class, IEntity, new() {

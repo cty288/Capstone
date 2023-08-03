@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Base.Property;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
 
@@ -24,15 +25,17 @@ namespace _02._Scripts.Runtime.Common.Properties {
 		}
 
 	}
-	
-	public interface IHealthProperty : IProperty<HealthInfo>{}
-	public class Health: Property<HealthInfo>, IHealthProperty {
+
+	public interface IHealthProperty : IProperty<HealthInfo>, ILoadFromConfigProperty {
+		
+	}
+	public class Health: AbstractLoadFromConfigProperty<HealthInfo>, IHealthProperty {
 		
 		public int GetMaxHealth() {
 			return RealValue.Value.MaxHealth;
 		}
 
-
+		
 		public override HealthInfo OnSetBaseValueFromConfig(dynamic value) {
 			return new HealthInfo((int)value.maxHealth, (int)value.currentHealth);
 		}
@@ -45,8 +48,8 @@ namespace _02._Scripts.Runtime.Common.Properties {
 			return PropertyName.health;
 		}
 
-		public override PropertyName[] GetDependentProperties() {
-			return new[] {PropertyName.rarity};
+		public override PropertyNameInfo[] GetDependentProperties() {
+			return new[] {new PropertyNameInfo(PropertyName.rarity)};
 		}
 		
 		
@@ -54,7 +57,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 	
 	public class HealthDefaultModifier : PropertyDependencyModifier<HealthInfo> {
 		public override HealthInfo OnModify(HealthInfo propertyValue) {
-			int rarityMultiplier = GetDependency<Rarity>().InitialValue * 5;
+			int rarityMultiplier = GetDependency<Rarity>(new PropertyNameInfo(PropertyName.rarity)).InitialValue * 5;
 			propertyValue = new HealthInfo(propertyValue.MaxHealth * rarityMultiplier, propertyValue.CurrentHealth * rarityMultiplier);
 			return propertyValue;
 		}
