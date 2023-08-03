@@ -58,8 +58,6 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 	[field: ES3Serializable]
 	private Dictionary<string, IEntity> entities = new Dictionary<string, IEntity>();
 
-	[field: ES3Serializable]
-	private int test = 5;
 
 	protected override void OnInit() {
 		base.OnInit();

@@ -71,8 +71,8 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		private void CheckProperties() {
 			PropertyInfo[] allProperties = GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			foreach (PropertyInfo property in allProperties) {
-				if (property.GetCustomAttributes(typeof(BindablePropertyAttribute), false).FirstOrDefault() is
-				    BindablePropertyAttribute attribute) {
+				if (property.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is
+				    BindAttribute attribute) {
 					if (property.CanWrite) {
 						//the property must be read only
 						Debug.LogError("Property " + property.Name + $" on {gameObject.name} is not read only! " +
@@ -215,7 +215,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		
 		private void BindPropertyAttributes() {
 			foreach (var prop in properties) {
-				if (prop.GetCustomAttributes(typeof(BindablePropertyAttribute), false).FirstOrDefault() is BindablePropertyAttribute attribute) {
+				if (prop.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is BindAttribute attribute) {
 					
 					IBindableProperty bindedProperty = BindedEntity.GetProperty(attribute.PropertyName).GetRealValue();
 					

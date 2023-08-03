@@ -47,18 +47,18 @@ public struct TestInfo {
 public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEntity> {
     //in the future, I will make it more easier to use by using [Bind] attribute
     
-    //[BindableProperty(PropertyName.test)]
-    [BindableProperty("test", null, nameof(OnTestPropertyChange))]
+    //[Bind(PropertyName.test)]
+    [Bind("test", null, nameof(OnTestPropertyChange))]
     public int CustomProperty { get; }
 
 
-    [BindableCustomDataProperty("attack1", "damage", null,
+    [BindCustomData("attack1", "damage", null,
         nameof(OnAttack1DamageChanged))]
     public int Attack1Damage { get; }
     
     public int Attack1Damage2 { get; }
     
-    [BindableCustomDataProperty("attack1", "info", nameof(GetAttack1Test),
+    [BindCustomData("attack1", "info", nameof(GetAttack1Test),
         nameof(OnAttack1TestChanged))]
     
     public float Attack1Test { get; }
