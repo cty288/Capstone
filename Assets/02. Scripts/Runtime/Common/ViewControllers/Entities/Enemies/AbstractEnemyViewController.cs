@@ -8,7 +8,7 @@ using _02._Scripts.Runtime.Common.ViewControllers.Entities.Enemies;
 using MikroFramework.Architecture;
 using UnityEngine;
 
-public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropertyEntityViewController<T>, IEnemyViewController 
+public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropertyEntityViewController<T, IEnemyEntityModel>, IEnemyViewController 
 	where T : class, IEnemyEntity, new() {
 	IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;
 	
@@ -21,9 +21,14 @@ public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropert
 	public float Vigiliance { get; }
 	
 	public float AttackRange { get;}
-	
-	
-	
+
+	protected IEnemyEntityModel enemyEntityModel;
+
+	protected override void Awake() {
+		base.Awake();
+		enemyEntityModel = this.GetModel<IEnemyEntityModel>();
+	}
+
 	protected override void OnBindEntityProperty() {
 		
 		Bind("Danger", BindedEntity.GetDanger());
@@ -35,7 +40,7 @@ public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropert
 	}
 
 	protected override IEntity OnInitEntity() {
-		EnemyBuilder<T> builder = entityModel.GetEnemyBuilder<T>(1).FromConfig();
+		EnemyBuilder<T> builder = enemyEntityModel.GetEnemyBuilder<T>(1).FromConfig();
 		return OnInitEnemyEntity(builder);
 	}
 

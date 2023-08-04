@@ -6,8 +6,10 @@ using MikroFramework.BindableProperty;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
-	public abstract class AbstractHaveCustomPropertyEntityViewController<T>: AbstractEntityViewController<T> 
-		where T : class, IHaveCustomProperties, new(){
+	public abstract class AbstractHaveCustomPropertyEntityViewController<T, TEntityModel>: AbstractEntityViewController<T, TEntityModel> 
+		where T : class, IHaveCustomProperties, new()
+		where TEntityModel: class, IEntityModel
+	{
 		
 		protected void BindCustomData<T>(string bindedPropertyName, string customPropertyName, string customDataName,
 			Action<T, T?> callback = null) {

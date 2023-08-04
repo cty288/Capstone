@@ -5,12 +5,26 @@ using _02._Scripts.Runtime.Common.Entities.Enemies;
 using MikroFramework.Architecture;
 using UnityEngine;
 
+public interface IEntityModel : IModel {
+	
+	public IEntity GetEntity(string id);
+	
+	public bool RemoveEntity(string id);
+	
+	public int EntityCount { get; }
+}
 
-/// <summary>
-/// This is the only place where all entities are saved, no reference to any entity is allowed outside this class
-/// To reference an entity, use the entity's id
-/// </summary>
-public interface IEntityModel: IModel {
+public interface IEntityModel<T>: IEntityModel where T: IEntity{
+	IEntity IEntityModel.GetEntity(string id) {
+		return GetEntity(id);
+	}
+
+	public new T GetEntity(string id);
+}
+
+public interface ICommonEntityModel : IEntityModel<IEntity> {
+	
+	public T GetEntity<T>(string id) where T : class, IEntity;
 	
 	/// <summary>
 	/// Get the general builder for the entity type
@@ -34,91 +48,30 @@ public interface IEntityModel: IModel {
 	/// <returns></returns>
 	public BasicEntityBuilder<TEntity> GetBuilder<TEntity>(int rarity, bool addToModelOnceBuilt = true)
 		where TEntity : class, IEntity, new();
-
-	/// <summary>
-	/// Get the enemy builder for the entity type
-	/// </summary>
-	/// <param name="rarity"></param>
-	/// <param name="addToModelOnceBuilt"></param>
-	/// <typeparam name="T"></typeparam>
-	/// <returns></returns>
-	EnemyBuilder<T> GetEnemyBuilder<T>(int rarity, bool addToModelOnceBuilt = true)
-		where T : class, IEnemyEntity, new();
-
-	//public EnemyBuilder<T> GetEnemyBuilder<T>(bool addToModelOnceBuilt = true) where T : class, IEnemyEntity, new();
-
-	public T GetEntity<T>(string id) where T : class, IEntity, new();
-	
-	public bool RemoveEntity(string id);
-	
-	public int EntityCount { get; }
 }
-public class EntityModel : AbstractSavableModel, IEntityModel {
-	private IEntityBuilderFactory entityBuilderFactory;
+public abstract class EntityModel<T> : AbstractSavableModel, IEntityModel<T> where T : IEntity {
+	protected IEntityBuilderFactory entityBuilderFactory;
 	[field: ES3Serializable]
-	private Dictionary<string, IEntity> entities = new Dictionary<string, IEntity>();
+	protected Dictionary<string, T> entities = new Dictionary<string, T>();
 
 
 	protected override void OnInit() {
 		base.OnInit();
 		entityBuilderFactory = new EntityBuilderFactory();
-		foreach (IEntity entity in entities.Values) {
+		foreach (T entity in entities.Values) {
 			entity.OnLoadFromSave();
 		}
 	}
 	
-	public TBuilder GetBuilder<TBuilder, TEntity>(int rarity, bool addToModelOnceBuilt = true) where TBuilder : EntityBuilder<TBuilder, TEntity> where TEntity : class, IEntity, new() {
-		TBuilder builder = entityBuilderFactory.GetBuilder<TBuilder, TEntity>(rarity);
-		if (addToModelOnceBuilt) {
-			builder.RegisterOnEntityCreated(OnEntityBuilt);
-		}
-
-		return builder;
-	}
-
-	/*public override void OnSave() {
-		base.OnSave();
-		 ES3.Save("entities", entities, "entities", new ES3Settings(){format = ES3.Format.JSON, prettyPrint = true});
-	}
-
-	public override void OnLoad() {
-		base.OnLoad();
-		test++;
-		entities = ES3.Load<Dictionary<string, IEntity>>("entities", "entities", new Dictionary<string, IEntity>());
-	}*/
-
-	public BasicEntityBuilder<TEntity> GetBuilder<TEntity>(int rarity, bool addToModelOnceBuilt = true) where TEntity : class, IEntity, new() {
-		BasicEntityBuilder<TEntity> builder = entityBuilderFactory.GetBuilder<BasicEntityBuilder<TEntity>, TEntity>(rarity);
-		
-		if (addToModelOnceBuilt) {
-			builder.RegisterOnEntityCreated(OnEntityBuilt);
-		}
-
-		return builder;
-	}
-
-	public EnemyBuilder<T> GetEnemyBuilder<T>(int rarity, bool addToModelOnceBuilt = true) where T : class, IEnemyEntity, new() {
-		EnemyBuilder<T> builder = entityBuilderFactory.GetBuilder<EnemyBuilder<T>, T>(rarity);
-		
-		if (addToModelOnceBuilt) {
-			builder.RegisterOnEntityCreated(OnEntityBuilt);
-		}
-
-		return builder;
-	}
-
-	private void OnEntityBuilt<T>(T entity) where T : class, IEntity, new() {
+	protected void OnEntityBuilt(T entity){
 		entities.Add(entity.UUID, entity);
 	}
 
-	public T GetEntity<T>(string id) where T : class, IEntity, new() {
+	public T GetEntity(string id){
 		if (entities.TryGetValue(id, out var entity)) {
-			if (entity is T t) {
-				return t;
-			}
-			Debug.LogError($"Entity {id} is not of type {typeof(T)}");
+			return entity;
 		}
-		return null;
+		return default;
 	}
 
 	public bool RemoveEntity(string id) {
@@ -133,3 +86,35 @@ public class EntityModel : AbstractSavableModel, IEntityModel {
 
 	public int EntityCount => entities.Count;
 }
+
+
+public class CommonEntityModel : EntityModel<IEntity>, ICommonEntityModel {
+	public T GetEntity<T>(string id) where T : class, IEntity {
+		if (entities.TryGetValue(id, out var entity)) {
+			return entity as T;
+		}
+		return default;
+	}
+
+	public TBuilder GetBuilder<TBuilder, TEntity>(int rarity, bool addToModelOnceBuilt = true) where TBuilder : EntityBuilder<TBuilder, TEntity> 
+		where TEntity : class, IEntity, new() {
+		TBuilder builder = entityBuilderFactory.GetBuilder<TBuilder, TEntity>(rarity);
+		if (addToModelOnceBuilt) {
+			builder.RegisterOnEntityCreated(OnEntityBuilt);
+		}
+
+		return builder;
+	}
+	
+
+	public BasicEntityBuilder<TEntity> GetBuilder<TEntity>(int rarity, bool addToModelOnceBuilt = true) where TEntity : class, IEntity, new() {
+		BasicEntityBuilder<TEntity> builder = entityBuilderFactory.GetBuilder<BasicEntityBuilder<TEntity>, TEntity>(rarity);
+		
+		if (addToModelOnceBuilt) {
+			builder.RegisterOnEntityCreated(OnEntityBuilt);
+		}
+
+		return builder;
+	}
+}
+

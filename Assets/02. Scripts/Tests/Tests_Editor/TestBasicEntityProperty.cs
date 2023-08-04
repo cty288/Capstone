@@ -354,7 +354,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestEntityModelCreate() {
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 			
 			string id = model.GetBuilder<BasicEntityBuilder<BasicEntity>, BasicEntity>(2)
 				.SetModifier(new PropertyNameInfo(PropertyName.danger), new MyNewDangerModifier()).Build()
@@ -368,7 +368,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestEntityPool() {
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 
 
 			IEntity ent1 = model.GetBuilder<BasicEntity>(2).SetProperty(new PropertyNameInfo(PropertyName.rarity), 2)
@@ -389,7 +389,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		[Test]
 		public void TestResourceListProperty() {
 			EntityPropertyDependencyCache.ClearCache();
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 			
 			IEntity ent1 = model.
 				GetBuilder<TestEnemy>(2)
@@ -418,7 +418,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestComplexListProperty() {
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 			
 			IEntity ent1 = model.
 				GetBuilder<TestResourceTableEnemy>(2)
@@ -431,7 +431,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 		[Test]
 		public void TestDictProperty() {
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 			
 			IEntity ent1 = model.
 				GetBuilder<TestResourceDictEnemy>(2)
@@ -444,7 +444,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		[Test]
 		public void TestGetNestedProperties() {
 			EntityPropertyDependencyCache.ClearCache();
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 			
 			IEntity ent1 = model.
 				GetBuilder<TestResourceTableEnemy>(2)
@@ -460,7 +460,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		[Test]
 		public void TestEntityRecycle() {
 			EntityPropertyDependencyCache.ClearCache();
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 			IEntity ent1 = null;
 
 			for (int i = 0; i < 100; i++) {
@@ -498,7 +498,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		[Test]
 		public void TestNestedDependencies() {
 			EntityPropertyDependencyCache.ClearCache();
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 			
 			TestInterestEntity ent1 = model.
 				GetBuilder<TestInterestEntity>(5)

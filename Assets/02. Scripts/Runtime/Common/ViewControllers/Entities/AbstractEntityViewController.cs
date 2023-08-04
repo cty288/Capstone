@@ -10,8 +10,9 @@ using MikroFramework.Event;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
-	public abstract class AbstractEntityViewController<T> : AbstractMikroController<MainGame>, IEntityViewController 
-		where T : class, IEntity, new() {
+	public abstract class AbstractEntityViewController<T, TEntityModel> : AbstractMikroController<MainGame>, IEntityViewController 
+		where T : class, IEntity, new() 
+		where TEntityModel : class, IEntityModel {
 
 		
 		
@@ -22,8 +23,9 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = true;
 		
 		IEntity IEntityViewController.Entity => BindedEntity;
-	
-		protected IEntityModel entityModel;
+
+		protected TEntityModel entityModel;
+		
 		protected T BindedEntity { get; private set; }
 		
 		private Dictionary<PropertyInfo, Func<dynamic>> propertyBindings = new Dictionary<PropertyInfo, Func<dynamic>>();
@@ -37,7 +39,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		}
 		
 		protected virtual void Awake() {
-			entityModel = this.GetModel<IEntityModel>();
+			entityModel = this.GetModel<TEntityModel>();
 			//type = typeof(T);
 		}
 
@@ -50,7 +52,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 				IEntity entity = OnInitEntity();
 				Init(entity.UUID, entity);
 			}
-			BindedEntity = entityModel.GetEntity<T>(ID);
+			BindedEntity = entityModel.GetEntity(ID) as T;
 			OnBindProperty();
 			OnEntityStart();
 		}

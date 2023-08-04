@@ -1,4 +1,5 @@
 ﻿using System;
+using _02._Scripts.Runtime.Common.Entities.Enemies;
 using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Runtime.Common.Properties.SkillsBase;
 using NUnit.Framework;
@@ -86,7 +87,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		
 		[Test]
 		public void TestBasicCustomProperties() {
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
 
 
 			//get the time interval in milliseconds
@@ -134,7 +135,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 		[Test]
 		public void TestEnemyWithCustomPropertiesAndSaveLoad() {
 			EntityPropertyDependencyCache.ClearCache();
-			IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
 
 			
 			

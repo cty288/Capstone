@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Common.Entities.Enemies;
 using _02._Scripts.Runtime.Common.Properties;
 using _02._Scripts.Tests.Tests_Editor;
 using NUnit.Framework;
@@ -26,7 +27,7 @@ public class TestEnemy {
     //===============================Start writing your tests here===============================
     [Test]
     public void TestBasicEnemyProperties() {
-        IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+        ICommonEntityModel model = MainGame_Test.Interface.GetModel<ICommonEntityModel>();
 
 
         TestBasicEnemy ent1 = model.GetBuilder<TestBasicEnemy>(2)
@@ -55,7 +56,7 @@ public class TestEnemy {
     
     [Test]
     public void TestBasicEnemyBuilder() {
-        IEntityModel model = MainGame_Test.Interface.GetModel<IEntityModel>();
+        IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
 
 
         TestBasicEnemy ent1 = model.GetEnemyBuilder<TestBasicEnemy>(2)
