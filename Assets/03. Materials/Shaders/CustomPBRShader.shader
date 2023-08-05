@@ -43,6 +43,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
         HLSLINCLUDE
         
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            // includes Input.hlsl which includes InputData.hlsl
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseMap_ST;
@@ -138,47 +139,76 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             //
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            // includes SurfaceData.hlsl
 
-            TEXTURE2D(_BaseMap);
-			SAMPLER(sampler_BaseMap);
+            // For reference, remove later.
+            /*
+             struct SurfaceData {
+                half3 albedo;
+                half3 specular;
+                half  metallic;
+                half  smoothness;
+                half3 normalTS;
+                half3 emission;
+                half  occlusion;
+                half  alpha;
+	            
+	            // And added in v10 :
+                half  clearCoatMask;
+                half  clearCoatSmoothness;
+              };
+             */
+
+            /*
+             struct InputData {
+                float3  positionWS;
+                half3   normalWS;
+                half3   viewDirectionWS;
+                float4  shadowCoord;
+                half    fogCoord;
+                half3   vertexLighting;
+                half3   bakedGI;
+                float2  normalizedScreenSpaceUV;
+                half4   shadowMask;
+             };
+            */
 
             // ------------------
-            // TODO: Structs
+            // Structs
             // ------------------
 
             struct Attributes
             {
                 float4 positionOS   : POSITION;
-                //float3 normalOS     : NORMAL;
-                //float4 tangentOS    : TANGENT;
+                float3 normalOS     : NORMAL;
+                float4 tangentOS    : TANGENT;
                 float2 uv     : TEXCOORD0;
-                //float2 lightmapUV   : TEXCOORD1;
+                float2 lightmapUV   : TEXCOORD1;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct Varyings
             {
                     float2 uv                       : TEXCOORD0;
-                    //DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 1);
+                    DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 1);
+            	
+                    float3 positionWS               : TEXCOORD2;
+                    float3 normalWS                 : TEXCOORD3;
+            	
+            	#if defined(_NORMALMAP)
+                    float4 tangentWS                : TEXCOORD4;    // xyz: tangent, w: sign
+            	 #endif
 
-                #if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
-                    //float3 positionWS               : TEXCOORD2;
-                #endif
-
-                    //float3 normalWS                 : TEXCOORD3;
-                #if defined(REQUIRES_WORLD_SPACE_TANGENT_INTERPOLATOR)
-                    //float4 tangentWS                : TEXCOORD4;    // xyz: tangent, w: sign
-                #endif
-                    //float3 viewDirWS                : TEXCOORD5;
-
-                    //half4 fogFactorAndVertexLight   : TEXCOORD6; // x: fogFactor, yzw: vertex light
+            		float3 viewDirWS                : TEXCOORD5;
+                    half4 fogFactorAndVertexLight   : TEXCOORD6; // x: fogFactor, yzw: vertex light
 
                 #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-                    //float4 shadowCoord              : TEXCOORD7;
+                    float4 shadowCoord              : TEXCOORD7;
                 #endif
 
-                #if defined(REQUIRES_TANGENT_SPACE_VIEW_DIR_INTERPOLATOR)
-                    //float3 viewDirTS                : TEXCOORD8;
+                #if defined(_NORMALMAP)
+                    float3 viewDirTS                : TEXCOORD8;
                 #endif
 
                     float4 positionCS               : SV_POSITION;
@@ -194,25 +224,64 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             {
                 Varyings OUT;
 
-                VertexPositionInputs posIn = GetVertexPositionInputs(IN.positionOS.xyz);
-                OUT.positionCS = posIn.positionCS;
+                VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
+				#ifdef _NORMALMAP
+					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz, IN.tangentOS);
+				#else
+					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz);
+				#endif
 
-                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
+				OUT.positionCS = positionInputs.positionCS;
+				OUT.positionWS = positionInputs.positionWS;
 
-                return OUT;
+				half3 viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
+				half3 vertexLight = VertexLighting(positionInputs.positionWS, normalInputs.normalWS);
+				half fogFactor = ComputeFogFactor(positionInputs.positionCS.z);
+				
+				#ifdef _NORMALMAP
+					OUT.normalWS = half4(normalInputs.normalWS, viewDirWS.x);
+					OUT.tangentWS = half4(normalInputs.tangentWS, viewDirWS.y);
+				#else
+					OUT.normalWS = NormalizeNormalPerVertex(normalInputs.normalWS);
+					//OUT.viewDirWS = viewDirWS;
+				#endif
+
+				OUTPUT_LIGHTMAP_UV(IN.lightmapUV, unity_LightmapST, OUT.lightmapUV);
+				OUTPUT_SH(OUT.normalWS.xyz, OUT.vertexSH);
+
+				#ifdef _ADDITIONAL_LIGHTS_VERTEX
+					OUT.fogFactorAndVertexLight = half4(fogFactor, vertexLight);
+				#else
+					OUT.fogFactorAndVertexLight = half4(fogFactor, 0, 0, 0);
+				#endif
+
+				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+					OUT.shadowCoord = GetShadowCoord(positionInputs);
+				#endif
+
+				OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
+				return OUT;
             }
 
             // ------------------
             // TODO: Fragment
             // ------------------
 
+            #include "Inputs.hlsl"
+
             half4 LitPassFragment(Varyings IN) : SV_TARGET
             {
-                half4 color = _BaseColor;
+                SurfaceData surfaceData;
+	            InitializeSurfaceData(IN, surfaceData);
 
-                half4 baseMap = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
+                InputData inputData;
+	            InitializeInputData(IN, surfaceData.normalTS, inputData);
+                
+                half4 color = UniversalFragmentPBR(inputData, surfaceData);
 
-                return color * baseMap;
+                color.rgb = MixFog(color.rgb, inputData.fogCoord);
+
+                return color;
             }
 
             
@@ -263,6 +332,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
         
         /*
         //REMOVE IF YOU MAKE A SUBSHADER FOR AN OLDER VERSION OF OPENGL
+        //SHOULD BASICALLY COPY FORWARD LIGHTING ALMOST LINE FOR LINE
         //Deferred Lighting Pass (Enable in URP Asset)
         Pass
         {
@@ -281,6 +351,11 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             ENDHLSL
         }*/
         
+        
+        // -------------------------------------------------
+        // Literally just URP
+        // -------------------------------------------------
+
         //Depth Buffer
         Pass
         {
