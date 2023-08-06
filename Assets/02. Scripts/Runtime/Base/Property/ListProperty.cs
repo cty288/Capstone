@@ -72,8 +72,9 @@ public abstract class IndependentListProperty<T> : ListProperty<T> {
 	protected override IPropertyDependencyModifier<List<T>> GetDefautModifier() {
 		return null;
 	}
+	
 
-	public override PropertyNameInfo[] GetDependentProperties() {
+	public override PropertyNameInfo[] GetDefaultDependentProperties() {
 		return null;
 	}
 

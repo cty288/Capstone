@@ -147,8 +147,8 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			protected override PropertyName GetPropertyName() {
 				return PropertyName.resource;
 			}
-
-			public override PropertyNameInfo[] GetDependentProperties() {
+			
+			public override PropertyNameInfo[] GetDefaultDependentProperties() {
 				return new[] {new PropertyNameInfo(PropertyName.rarity)};
 			}
 		}
@@ -229,7 +229,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				return new TestPlayCommputerPropertyModifier();
 			}
 
-			public override PropertyNameInfo[] GetDependentProperties() {
+			public override PropertyNameInfo[] GetDefaultDependentProperties() {
 				return new[]
 					{new PropertyNameInfo(PropertyName.rarity), new PropertyNameInfo("test_interest_dict.study[1]")};
 			}
@@ -240,7 +240,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				return new TestPlayChessPropertyModifier();
 			}
 
-			public override PropertyNameInfo[] GetDependentProperties() {
+			public override PropertyNameInfo[] GetDefaultDependentProperties() {
 				return new[]
 					{new PropertyNameInfo(PropertyName.rarity), new PropertyNameInfo("test_interest_dict.play[0]")};
 			}
@@ -256,7 +256,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				return null;
 			}
 
-			public override PropertyNameInfo[] GetDependentProperties() {
+			public override PropertyNameInfo[] GetDefaultDependentProperties() {
 				return null;
 			}
 		}

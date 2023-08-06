@@ -7,17 +7,17 @@ using UnityEngine;
 
 public static class EntityPropertyDependencyCache
 {
-    private static Dictionary<string, List<string>> initializationOrderCache = new Dictionary<string, List<string>>();
+    //private static Dictionary<string, List<string>> initializationOrderCache = new Dictionary<string, List<string>>();
 
     public static void ClearCache() {
-        initializationOrderCache.Clear();
+        //initializationOrderCache.Clear();
     }
 
     public static List<string> GetInitializationOrder(string EntityName,
         Dictionary<string, IPropertyBase> Properties) {
-        if (initializationOrderCache.TryGetValue(EntityName, out var cachedOrder)) {
+        /*if (initializationOrderCache.TryGetValue(EntityName, out var cachedOrder)) {
             return cachedOrder;
-        }
+        }*/
 
         var dependencies = new Dictionary<string, string[]>();
         
@@ -30,7 +30,7 @@ public static class EntityPropertyDependencyCache
         }
 
         var order = TopologicalSort(dependencies);
-        initializationOrderCache[EntityName] = order;
+       // initializationOrderCache[EntityName] = order;
         return order;
     }
 

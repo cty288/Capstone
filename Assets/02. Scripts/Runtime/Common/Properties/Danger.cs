@@ -19,7 +19,7 @@ namespace _02._Scripts.Runtime.Common.Properties {
 			return PropertyName.danger;
 		}
 
-		public override PropertyNameInfo[] GetDependentProperties() {
+		public override PropertyNameInfo[] GetDefaultDependentProperties() {
 			return new[] {new PropertyNameInfo(PropertyName.rarity)};
 		}
 		

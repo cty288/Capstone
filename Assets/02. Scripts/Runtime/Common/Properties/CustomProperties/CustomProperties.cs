@@ -61,6 +61,10 @@ namespace _02._Scripts.Runtime.Common.Properties {
 			return PropertyName.custom_properties;
 		}
 
+		public override PropertyNameInfo[] GetDefaultDependentProperties() {
+			return null;
+		}
+
 		public override string GetKey(ICustomProperty value) {
 			return value.GetCustomPropertyName();
 		}

@@ -9,6 +9,7 @@ using UnityEngine;
 public class TestEnemy {
 
     internal class TestBasicEnemy : EnemyEntity<TestBasicEnemy> {
+        [field: ES3Serializable]
         public override string EntityName { get; protected set; } = "TestEnemy2";
 
         public override void OnRecycle() {
@@ -16,7 +17,7 @@ public class TestEnemy {
         }
 
         protected override void OnEnemyRegisterProperties() {
-            
+            //RegisterInitialProperty(new Vigiliance());
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties() {

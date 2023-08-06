@@ -157,7 +157,7 @@ namespace _02._Scripts.Runtime.Base.Property {
 
 
 
-		public override PropertyNameInfo[] GetDependentProperties() {
+		public override PropertyNameInfo[] GetDefaultDependentProperties() {
 			List<PropertyNameInfo> dependentProperties = new List<PropertyNameInfo>();
 			if (BaseValue != null) {
 				foreach (var property in BaseValue) {

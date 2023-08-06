@@ -13,9 +13,10 @@ public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropert
 	IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;
 	
 	public int Danger {  get; }
-	//[BindableProperty(PropertyName.health, nameof(GetMaxHealth))]
+	
 	public int MaxHealth { get; }
-	//[BindableProperty(PropertyName.health, nameof(GetCurrentHealth))]
+	
+	//[Bind(PropertyName.health, nameof(GetCurrentHealth), nameof(OnCurrentHealthChanged))]
 	public int CurrentHealth { get; }
 	
 	public float Vigiliance { get; }
@@ -33,14 +34,16 @@ public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropert
 		
 		Bind("Danger", BindedEntity.GetDanger());
 		Bind<HealthInfo, int>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
-		Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
+		
+		Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth, OnCurrentHealthChanged);
+		
 		Bind("Vigiliance", BindedEntity.GetVigiliance());
 		Bind("AttackRange", BindedEntity.GetAttackRange());
 		
 	}
 
 	protected override IEntity OnInitEntity() {
-		EnemyBuilder<T> builder = enemyEntityModel.GetEnemyBuilder<T>(1).FromConfig();
+		EnemyBuilder<T> builder = enemyEntityModel.GetEnemyBuilder<T>(1);
 		return OnInitEnemyEntity(builder);
 	}
 
@@ -52,5 +55,9 @@ public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropert
 	
 	protected dynamic GetCurrentHealth(dynamic info) {
 		return info.CurrentHealth;
+	}
+	
+	protected void OnCurrentHealthChanged(int oldValue, int newValue) {
+		Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
 	}
 }

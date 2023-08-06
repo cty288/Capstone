@@ -58,6 +58,18 @@ public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable
         Entity.SetPropertyModifier(propertyName, modifier);
         return (TBuilder) this;
     }
+    
+    /// <summary>
+    /// Set dependencies for a property
+    /// </summary>
+    /// <param name="propertyName"></param>
+    /// <param name="dependencies"></param>
+    /// <returns></returns>
+    public TBuilder SetDependencies(PropertyNameInfo propertyName, PropertyNameInfo[] dependencies) {
+        CheckEntity();
+        Entity.GetProperty(propertyName).SetDependentProperties(dependencies);
+        return (TBuilder) this;
+    }
 
     public TEntity Build() {
         CheckEntity();

@@ -14,7 +14,11 @@ using UnityEngine;
 
 public class TestEntity : EnemyEntity<TestEntity> {
     [field: SerializeField]
-    public override string EntityName { get; protected set; } = "TTT";
+    public override string EntityName { get; protected set; } = "TestEnemy2";
+    
+    [field: ES3Serializable]
+    public int MyPersistentButNotInherentData { get; set; } = 100;
+    
     public override void OnRecycle() {
         
     }
@@ -45,11 +49,16 @@ public struct TestInfo {
 
 
 public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEntity> {
-    //in the future, I will make it more easier to use by using [Bind] attribute
+    
+    [SerializeField]
+    protected bool isVariant = false;
+
+    [SerializeField] protected int overrideHealth = 0;
     
     //[Bind(PropertyName.test)]
-    [Bind("test", null, nameof(OnTestPropertyChange))]
-    public int CustomProperty { get; }
+    
+    //[Bind("test", null, nameof(OnTestPropertyChange))]
+    public int TestProperty { get; }
 
 
     [BindCustomData("attack1", "damage", null,
@@ -67,28 +76,46 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
     public float Attack1Test2 { get; }
 
     protected override void OnEntityStart() {
+        Bind("TestProperty", BindedEntity.GetProperty<NewProperty>().RealValue);
+        
         BindedEntity.RegisterOnCustomDataChanged("attack1", "damage", OnRegisteredCustomAttack1DamageChanged);
 
         BindCustomData<int>("Attack1Damage2", "attack1", "damage", OnAttack1DamageChanged2);
         
         BindCustomData<dynamic, float>
             ("Attack1Test2", "attack1", "info", GetAttack1Test2, OnAttack1TestChanged2);
+
+        
     }
 
 
 
 
     protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<TestEntity> builder) {
-        return builder.
-           // SetProperty(PropertyName.health, new HealthInfo(100, 100))
-           // .SetProperty(PropertyName.danger, 100)
-            SetProperty(new PropertyNameInfo(PropertyName.test), 1000).
-            //SetProperty(PropertyName.vigiliance, 10f).
-            Build();
+        if (!isVariant) {
+            return builder.
+                FromConfig().
+                SetProperty(new PropertyNameInfo(PropertyName.test), 1000).
+                Build();
+        }
+        else {
+            return builder.
+                FromConfig().
+                SetProperty(new PropertyNameInfo(PropertyName.health), new HealthInfo(overrideHealth, overrideHealth)).
+                SetProperty(new PropertyNameInfo(PropertyName.test), 1000).
+                Build();
+        }
+
     }
 
     private void Update() {
+        
+        
+        
         if (Input.GetKeyDown(KeyCode.A)) {
+            
+            Debug.Log(BindedEntity.MyPersistentButNotInherentData);
+            
             BindableProperty<HealthInfo> health = BindedEntity.GetHealth();
             health.Value += 1;
         
@@ -121,7 +148,7 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
     }
     
     protected void OnTestPropertyChange(int oldValue, int newValue){
-        Debug.Log("NewProperty Changed: " + newValue);
+        Debug.Log("TestProperty Changed: " + newValue);
     }
 
     protected void OnAttack1DamageChanged(int oldValue, int newValue) {

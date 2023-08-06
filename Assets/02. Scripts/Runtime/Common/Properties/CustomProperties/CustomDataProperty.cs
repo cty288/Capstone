@@ -31,15 +31,15 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 		public string CustomDataName { get; private set; }
 
 		[field: ES3Serializable]
-		protected PropertyNameInfo[] dependencies;
+		protected PropertyNameInfo[] defaultDependencies;
 		
 		public CustomDataProperty(): base(){}
 		
 		public CustomDataProperty(string customDataName, IPropertyDependencyModifier<T> modifier = null, 
-			params PropertyNameInfo[] dependencies) : base() {
+			params PropertyNameInfo[] defaultDependencies) : base() {
 			CustomDataName = customDataName;
 			SetModifier(modifier);
-			this.dependencies = dependencies;
+			this.defaultDependencies = defaultDependencies;
 		}
 
 		protected dynamic ConvertJTokenToBaseValue(JToken token)
@@ -97,8 +97,8 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 			return PropertyName.custom_property_data;
 		}
 
-		public override PropertyNameInfo[] GetDependentProperties() {
-			return dependencies;
+		public override PropertyNameInfo[] GetDefaultDependentProperties() {
+			return defaultDependencies;
 		}
 
 		

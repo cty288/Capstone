@@ -135,6 +135,10 @@ namespace _02._Scripts.Runtime.Common.Properties{
 			return PropertyName.custom_property;
 		}
 
+		public override PropertyNameInfo[] GetDefaultDependentProperties() {
+			return null;
+		}
+
 		public override string GetKey(ICustomDataProperty value) {
 			return value.CustomDataName;
 		}
@@ -245,7 +249,8 @@ namespace _02._Scripts.Runtime.Common.Properties{
 
 	/// <summary>
 	/// If you don't want to manually specify custom property data, you can use this class to create a Custom property.
-	/// However, this class is data only, which means you can't set any modifiers for any Custom data. Also, data is only loaded from config file.
+	/// However, this class is data only, which means you can't set any default modifiers for any Custom data (although you can use the builder to override, but the generic type of your modifier MUST BE dynamic in this case!!).
+	/// Also, data is only loaded from config file.
 	/// Moreover, all Custom data in the config file will be automatically loaded into this class, with type of dynamic.
 	/// To customize the description of this Custom, you need to assign a data only Custom description getter.
 	/// This is particularly useful if ALL of its data is primitive type, and you don't want to manually specify them.
@@ -272,7 +277,7 @@ namespace _02._Scripts.Runtime.Common.Properties{
 						BaseValue.Add(key, new CustomDataProperty<dynamic>(key));
 						ICustomDataProperty bv = this.BaseValue[key];
 						bv.SetBaseValue(bv.OnGetBaseValueFromConfig(value[key]));
-						requestRegisterProperty?.Invoke(bv.GetType(), bv, GetFullName()+"."+key, false, false);
+						requestRegisterProperty?.Invoke(bv.GetType(), bv, GetFullName()+"."+key, true, false);
 					}
 				}
 			}

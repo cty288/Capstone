@@ -67,11 +67,14 @@ public interface IPropertyBase {
 	public IBindableProperty GetRealValue();
 	public PropertyNameInfo[] GetDependentProperties();
 	
+	public void SetDependentProperties(params PropertyNameInfo[] dependentProperties);
+	
 	void Initialize(IPropertyBase[] dependencies, string parentEntityName);
 	
 	public void OnRecycled();
 
 	public IPropertyBase SetModifier<T>(IPropertyDependencyModifier<T> modifier);
+	
 	
 	//public IPropertyBase[] GetSubProperties();
 }
@@ -154,6 +157,9 @@ public abstract class Property<T> : IProperty<T> {
 	[field: ES3Serializable]
 	public virtual BindableProperty<T> RealValue { get; } = new BindableProperty<T>();
 	
+	[field: ES3Serializable]
+	protected PropertyNameInfo[] overrideDependentProperties;
+	
 	
 
 	public virtual void SetBaseValue(T value) {
@@ -184,7 +190,7 @@ public abstract class Property<T> : IProperty<T> {
 		RealValue.UnRegisterAll();
 		RealValue.Value = default;
 		InitialValue = default;
-		
+		overrideDependentProperties = null;
 	}
 
 	public IPropertyBase SetModifier<ValueType>(IPropertyDependencyModifier<ValueType> modifier) {
@@ -213,10 +219,22 @@ public abstract class Property<T> : IProperty<T> {
 	public Property() {
 		modifier = GetDefautModifier();
 	}
-	
-	
 
-	public abstract PropertyNameInfo[] GetDependentProperties();
+
+	public abstract PropertyNameInfo[] GetDefaultDependentProperties();
+
+
+	public virtual PropertyNameInfo[] GetDependentProperties() {
+		if (overrideDependentProperties == null) {
+			return GetDefaultDependentProperties();;
+		}
+
+		return overrideDependentProperties;
+	}
+
+	public void SetDependentProperties(params PropertyNameInfo[] dependentProperties) {
+		this.overrideDependentProperties = dependentProperties;
+	}
 
 	public virtual void Initialize(IPropertyBase[] dependencies, string parentEntityName) {
 		T targetValue;
@@ -275,7 +293,7 @@ public abstract class IndependentProperty<T> : Property<T> {
 		return null;
 	}
 
-	public override PropertyNameInfo[] GetDependentProperties() {
+	public override PropertyNameInfo[] GetDefaultDependentProperties() {
 		return null;
 	}
 

@@ -81,7 +81,21 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			}
 		}
 
+
+		public class TTT2DangerModifier : PropertyDependencyModifier<int> {
+			public override int OnModify(int propertyValue) {
+				return GetDependency(new PropertyNameInfo("custom_properties.attack1.damage")).GetRealValue().Value +
+				       GetDependency(new PropertyNameInfo(PropertyName.rarity)).GetRealValue().Value;
+			}
+		}
 		
+		public class TTT2Attack1SpeedModifier : PropertyDependencyModifier<dynamic> {
+			public override dynamic OnModify(dynamic propertyValue) {
+				return propertyValue + GetDependency(new PropertyNameInfo("custom_properties.attack1.damage")).GetRealValue().Value +
+				       GetDependency(new PropertyNameInfo(PropertyName.rarity)).GetRealValue().Value;
+			}
+		}
+
 		//================================================================
 		
 		
@@ -181,6 +195,47 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			
 			Assert.AreEqual(ent1.GetProperty<ICustomProperties>().BaseValue["attack1"].BaseValue["info"].GetRealValue().GetHashCode(),
 				ent1.GetCustomDataValue("attack1", "info").GetHashCode());
+			ES3.DeleteKey("test_save_ent1", "test_save");
+		}
+		
+		
+		[Test]
+		public void TestOverrideDependencies() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+
+
+			TestEntity ent1 = model.GetEnemyBuilder<TestEntity>(10)
+				.FromConfig()
+				.SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+				.SetDependencies(new PropertyNameInfo(PropertyName.danger), new[] {
+					new PropertyNameInfo(PropertyName.rarity),
+					new PropertyNameInfo("custom_properties.attack1.damage")
+				})
+				.SetDangerModifier(new TTT2DangerModifier())
+				.SetDependencies(new PropertyNameInfo("custom_properties.attack1.speed"),
+					new[] {
+						new PropertyNameInfo("custom_properties.attack1.damage"),
+						new PropertyNameInfo(PropertyName.rarity)
+					})
+				.SetModifier(new PropertyNameInfo("custom_properties.attack1.speed"), new TTT2Attack1SpeedModifier())
+				.Build();
+
+			Assert.AreEqual(910,
+				ent1.GetProperty<IDangerProperty>(new PropertyNameInfo(PropertyName.danger)).RealValue.Value);
+
+			Assert.AreEqual(1010, (int) ent1.GetCustomDataValue("attack1", "speed").Value);
+
+			ES3.Save("test_save_ent1", ent1, "test_save");
+			model.RemoveEntity(ent1.UUID);
+			
+
+			ent1 = ES3.Load<TestEntity>("test_save_ent1", "test_save");
+			ent1.OnLoadFromSave();
+			
+			Assert.AreEqual(910,
+				ent1.GetProperty<IDangerProperty>(new PropertyNameInfo(PropertyName.danger)).RealValue.Value);
 			ES3.DeleteKey("test_save_ent1", "test_save");
 		}
 	}
