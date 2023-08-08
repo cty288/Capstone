@@ -57,7 +57,9 @@ namespace _02._Scripts.Runtime.Common.Properties {
 	
 	public class HealthDefaultModifier : PropertyDependencyModifier<HealthInfo> {
 		public override HealthInfo OnModify(HealthInfo propertyValue) {
-			int rarityMultiplier = GetDependency<Rarity>(new PropertyNameInfo(PropertyName.rarity)).InitialValue * 5;
+			int rarityMultiplier = GetDependency(new PropertyNameInfo(PropertyName.rarity)).GetInitialValue() *
+			                       GetModifierParameterFromConfig<int>("health_rarity_multiplier", 5);
+			
 			propertyValue = new HealthInfo(propertyValue.MaxHealth * rarityMultiplier, propertyValue.CurrentHealth * rarityMultiplier);
 			return propertyValue;
 		}

@@ -96,11 +96,11 @@ namespace _02._Scripts.Runtime.Common.Properties{
 		/// </summary>
 		/// <param name="propertyName">The name of the property. This should be the same as the one on the config file</param>
 		/// <param name="descriptionGetter">In order to serialize the description, you need to use a descriptionGetter object to do the description stuff</param>
-		/// <param name="customProperties">Manually specify which properties are included, as well as their dependencies and modifiers</param>
+		/// <param name="data">Manually specify which data are included, as well as their dependencies and modifiers</param>
 		public CustomProperty(string propertyName, IDescriptionGetter descriptionGetter,
-			params ICustomDataProperty[] customProperties) : base() {
-			if (customProperties!=null) {
-				BaseValue = customProperties.ToDictionary(GetKey);
+			params ICustomDataProperty[] data) : base() {
+			if (data!=null) {
+				BaseValue = data.ToDictionary(GetKey);
 			}
 			else {
 				BaseValue = new Dictionary<string, ICustomDataProperty>();
@@ -256,11 +256,11 @@ namespace _02._Scripts.Runtime.Common.Properties{
 	/// This is particularly useful if ALL of its data is primitive type, and you don't want to manually specify them.
 	/// If any of its data is complex type, the complex data will be a dynamic object (ExpandoObject). So it's better to use CustomProperty instead.
 	/// </summary>
-	public class DataOnlyCustomProperty : CustomProperty {
+	public class AutoConfigCustomProperty : CustomProperty {
 		
-		public DataOnlyCustomProperty(): base(){}
+		public AutoConfigCustomProperty(): base(){}
 		
-		public DataOnlyCustomProperty(string CustomName, IDescriptionGetter descriptionGetter = null) : base(CustomName, descriptionGetter) {
+		public AutoConfigCustomProperty(string CustomName, IDescriptionGetter descriptionGetter = null) : base(CustomName, descriptionGetter) {
 			
 		}
 

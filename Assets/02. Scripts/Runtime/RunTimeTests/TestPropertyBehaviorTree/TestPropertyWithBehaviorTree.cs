@@ -28,7 +28,7 @@ public class TestEntity : EnemyEntity<TestEntity> {
     }
 
     protected override ICustomProperty[] OnRegisterCustomProperties() {
-        return new[] {new DataOnlyCustomProperty("attack1"), new DataOnlyCustomProperty("attack2")};
+        return new[] {new AutoConfigCustomProperty("attack1"), new AutoConfigCustomProperty("attack2")};
     }
 }
 
@@ -82,10 +82,10 @@ public class TestPropertyWithBehaviorTree : AbstractEnemyViewController<TestEnti
 
         BindCustomData<int>("Attack1Damage2", "attack1", "damage", OnAttack1DamageChanged2);
         
-        BindCustomData<dynamic, float>
+        BindCustomData
             ("Attack1Test2", "attack1", "info", GetAttack1Test2, OnAttack1TestChanged2);
 
-        
+        BindedEntity.GetCustomDataValue<int>("attack1", "speed");
     }
 
 

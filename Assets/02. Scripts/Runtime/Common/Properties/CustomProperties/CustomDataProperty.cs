@@ -35,8 +35,7 @@ namespace _02._Scripts.Runtime.Common.Properties.SkillsBase {
 		
 		public CustomDataProperty(): base(){}
 		
-		public CustomDataProperty(string customDataName, IPropertyDependencyModifier<T> modifier = null, 
-			params PropertyNameInfo[] defaultDependencies) : base() {
+		public CustomDataProperty(string customDataName, IPropertyDependencyModifier<T> modifier = null, PropertyNameInfo[] defaultDependencies = null) : base() {
 			CustomDataName = customDataName;
 			SetModifier(modifier);
 			this.defaultDependencies = defaultDependencies;

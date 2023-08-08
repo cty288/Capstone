@@ -47,9 +47,12 @@ public abstract class PropertyDependencyModifier<T> : IPropertyDependencyModifie
     /// <param name="paramName"></param>
     /// <typeparam name="T">The type of the parameter to parse to</typeparam>
     /// <returns></returns>
-    protected T GetParameter<T>(IPropertyBase dependency, string paramName) {
-        string key = $"modifier_{parentEntityName}_{propertyName.ToString()}_{dependency.PropertyName.ToString()}_{paramName}";
-        return default(T);
+    protected T GetModifierParameterFromConfig<T>(string paramName, T defaultValue) {
+        string key = $"modifier_{parentEntityName}_{paramName}";
+
+        Debug.LogWarning(
+            $"Could not find modifier parameter '{paramName}' for entity {parentEntityName} in config file. Using default value {defaultValue}!");
+        return defaultValue;
     }
     
     protected T GetDependency<T>(PropertyNameInfo nameInfo) where T: IPropertyBase {
@@ -86,5 +89,12 @@ public abstract class PropertyDependencyModifier<T> : IPropertyDependencyModifie
 
     public abstract T OnModify(T propertyValue);
 
+}
+
+
+public class EmptyModifier<T> : PropertyDependencyModifier<T> {
+    public override T OnModify(T propertyValue) {
+        return propertyValue;
+    }
 }
 

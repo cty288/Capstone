@@ -20,9 +20,9 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 			protected override ICustomProperty[] OnRegisterCustomProperties() {
 				return new [] {
-					new DataOnlyCustomProperty("attack1"),
-					new DataOnlyCustomProperty("attack2"),
-					new DataOnlyCustomProperty("attack3")
+					new AutoConfigCustomProperty("attack1"),
+					new AutoConfigCustomProperty("attack2"),
+					new AutoConfigCustomProperty("attack3")
 				};
 			}
 		}
@@ -63,12 +63,15 @@ namespace _02._Scripts.Tests.Tests_Editor {
 
 			protected override ICustomProperty[] OnRegisterCustomProperties() {
 				return new ICustomProperty[] {
-					new DataOnlyCustomProperty("attack1"),
-					new CustomProperty("attack2", 
-						null,
+					new AutoConfigCustomProperty("attack1"),
+					
+					new CustomProperty("attack2", null,
 						new CustomDataProperty<int>("damage", new Attack2Modifier(),
-							new PropertyNameInfo("custom_properties.attack1.speed"),
-							new PropertyNameInfo(PropertyName.rarity))),
+							new[] {
+								new PropertyNameInfo("custom_properties.attack1.speed"),
+								new PropertyNameInfo(PropertyName.rarity)
+							})),
+					
 					new CustomProperty("attack3", null, new CustomDataProperty<int>("damage"))
 				};
 			}
@@ -204,8 +207,8 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			EntityPropertyDependencyCache.ClearCache();
 			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
 
-
-
+			
+			
 			TestEntity ent1 = model.GetEnemyBuilder<TestEntity>(10)
 				.FromConfig()
 				.SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
@@ -237,6 +240,14 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			Assert.AreEqual(910,
 				ent1.GetProperty<IDangerProperty>(new PropertyNameInfo(PropertyName.danger)).RealValue.Value);
 			ES3.DeleteKey("test_save_ent1", "test_save");
+			
+			TestEntity ent2 = model.GetEnemyBuilder<TestEntity>(10)
+				.FromConfig()
+				.SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+				.SetDangerModifier(new EmptyModifier<int>())
+				.Build();
+
+			Assert.AreEqual(0, ent2.GetDanger().Value);
 		}
 	}
 }

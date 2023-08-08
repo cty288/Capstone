@@ -61,9 +61,9 @@ public interface IPropertyBase {
 	
 	public string GetFullName();
 	
-	public object GetBaseValue();
+	public dynamic GetBaseValue();
 	public void SetBaseValue(object value);
-	public object GetInitialValue();
+	public dynamic GetInitialValue();
 	public IBindableProperty GetRealValue();
 	public PropertyNameInfo[] GetDependentProperties();
 	

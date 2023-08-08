@@ -91,7 +91,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		protected abstract void OnBindEntityProperty();
 		
 		/// <summary>
-		/// Automatically bind propertyName property to the real value of IPropertyType of th entity
+		/// Automatically bind propertyName property to the real value of IPropertyType of th entity. This will not bind to nested properties
 		/// This is not recommended though it's convenient, because it will cost more performance
 		/// </summary>
 		/// <param name="propertyName"></param>

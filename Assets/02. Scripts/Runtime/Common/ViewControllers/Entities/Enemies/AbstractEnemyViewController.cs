@@ -35,7 +35,7 @@ public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropert
 		Bind("Danger", BindedEntity.GetDanger());
 		Bind<HealthInfo, int>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
 		
-		Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth, OnCurrentHealthChanged);
+		Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
 		
 		Bind("Vigiliance", BindedEntity.GetVigiliance());
 		Bind("AttackRange", BindedEntity.GetAttackRange());

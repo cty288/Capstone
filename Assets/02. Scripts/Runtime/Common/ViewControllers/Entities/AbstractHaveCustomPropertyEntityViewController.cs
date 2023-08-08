@@ -23,8 +23,8 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 		}
 
 
-		protected void BindCustomData<BindedDataType, TargetType>(string bindedPropertyName, string customPropertyName, string customDataName,
-			Func<BindedDataType, TargetType> getter, Action<TargetType, TargetType> callback = null) {
+		protected void BindCustomData<TargetType>(string bindedPropertyName, string customPropertyName, string customDataName,
+			Func<dynamic, TargetType> getter, Action<TargetType, TargetType> callback = null) {
 			IBindableProperty dataProperty = BindedEntity.GetCustomDataValue(customPropertyName, customDataName);
 			if(dataProperty == null) {
 				throw new Exception(
@@ -45,7 +45,7 @@ namespace _02._Scripts.Runtime.Common.ViewControllers.Entities {
 				return;
 			}
 			
-			UpdateBinding(dataProperty, bindedProperty, getter, callback);
+			UpdateBinding<TargetType,dynamic>(dataProperty, bindedProperty, getter, callback);
 		}
 	}
 }
