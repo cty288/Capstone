@@ -29,9 +29,12 @@ jobs:
       run: |
         dotnet --info
         ls
+        ls Assets/
 
     - name: Build docs
-      run: docfx docfx_project/docfx.json
+      run: |
+        docfx docfx_project/docfx.json
+        ls
       continue-on-error: true
 
     
