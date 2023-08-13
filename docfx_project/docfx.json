@@ -5,14 +5,15 @@
             {
                 "src": "..",
                 "files": [
-                    "Assets/02. Scripts/*.**"
+                    "Assets/**/*.cs"
                 ],
                 "exclude": [
                     "Assets/Plugins/**",
                     "Assets/02. Scripts/Editor/**",
                     "Assets/02. Scripts/Tests/**",
                     "Assets/02. Scripts/*.meta",
-                    "Assets/02. Scripts/*.asmdef"
+                    "Assets/02. Scripts/*.asmdef",
+                    "**/*.meta"
                 ]
             } 
         ],
