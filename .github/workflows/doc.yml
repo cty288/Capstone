@@ -20,8 +20,7 @@ jobs:
         run: "& choco install docfx -y"
       # Run a build
       - name: Build docs
-        run: "& docfx ./docfx.json"
-        working-directory: ./docfx_project
+        run: "& docfx docfx_project/docfx.json"
       # Check out gh-pages branch to the 'docs' subdirectory
       - name: Checkout docs
         uses: actions/checkout@v2
