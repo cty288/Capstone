@@ -7,45 +7,28 @@ on:
     - doc-fx
 
 jobs:
-  build:
-    name: Build
-    runs-on: windows-latest
+  deploy:
+    runs-on: ubuntu-latest
+
     steps:
-      # Check out the branch that triggered this workflow to the 'source' subdirectory
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      
-      - name: install DocFX
-        run: "& choco install docfx -y"
-      # Run a build
-      - name: Build docs
-        run: "& docfx docfx_project/docfx.json"
-      # Check out gh-pages branch to the 'docs' subdirectory
-      - name: Checkout docs
-        uses: actions/checkout@v2
-        with:
-          ref: gh-pages
-          path: docs
-      # Sync the site
-      - name: Clear docs repo
-        run: Get-ChildItem -Force -Exclude .git | ForEach-Object { Remove-Item -Recurse -Verbose -Force $_ }
-        working-directory: ./docs
-      - name: Sync new content
-        run: Copy-Item -Recurse -Verbose -Force "$env:GITHUB_WORKSPACE/docfx_project/_site/*" "$env:GITHUB_WORKSPACE/docs"
-    
-        # update docs
-      - name: Commit to gh-pages and push
-        run: |
-          $ErrorActionPreference = "Continue"
-          git add -A
-          git diff HEAD --exit-code
-          if ($LASTEXITCODE -eq 0) {
-            Write-Host "No changes to commit!"
-          } else {
-            git config --global user.name "github-actions-docfx[bot]"
-            git config --global user.email "weihanli@outlook.com"
-            git commit -m "Updated docs from commit $env:GITHUB_SHA on $env:GITHUB_REF"
-            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-            git push origin gh-pages
-          }
-        working-directory: ./docs
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.x' 
+
+    - name: Install DocFX
+      run: dotnet tool install --global docfx
+
+    - name: Build docs
+      run: | 
+            cd docfx_project 
+            docfx build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: _site
