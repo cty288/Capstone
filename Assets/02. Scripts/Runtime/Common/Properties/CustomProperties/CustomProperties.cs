@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.Common.Properties {
 	
-	public interface ICustomProperties : IDictionaryProperty<string, ICustomProperty>, ILoadFromConfigProperty {
+	public interface ICustomProperties : IPropertyDictionary<string, ICustomProperty>, ILoadFromConfigProperty {
 		public ICustomProperty GetCustomProperty(string key);
 		
 	}

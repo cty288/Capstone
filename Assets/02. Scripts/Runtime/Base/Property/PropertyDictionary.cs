@@ -6,8 +6,7 @@ using MikroFramework.BindableProperty;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Base.Property {
-	public interface IDictionaryProperty<TKey,T> : IProperty<Dictionary<TKey, T>>, IHaveSubProperties {
-		BindableDictionary<TKey, T> RealValues { get; }
+	public interface IPropertyDictionary<TKey,T> : IDictionaryProperty<TKey, T>, IProperty<Dictionary<TKey, T>>, IHaveSubProperties {
 
 		public TKey GetKey(T value);
 
@@ -15,7 +14,7 @@ namespace _02._Scripts.Runtime.Base.Property {
 		
 		public void RemoveFromRealValue(TKey key);
 	}
-	public abstract class PropertyDictionary<TKey,T> : Property<Dictionary<TKey, T>>, IDictionaryProperty<TKey,T> where T: IPropertyBase {
+	public abstract class PropertyDictionary<TKey,T> : Property<Dictionary<TKey, T>>, IPropertyDictionary<TKey,T> where T: IPropertyBase {
 
 		[ES3Serializable]
 		private Dictionary<T, SerializedChildPropertyInfo> _childProperties =

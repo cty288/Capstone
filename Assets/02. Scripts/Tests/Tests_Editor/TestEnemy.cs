@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Common.Entities.Enemies;
 using _02._Scripts.Runtime.Common.Properties;
+using _02._Scripts.Runtime.Common.Properties.TagProperty;
 using _02._Scripts.Tests.Tests_Editor;
 using NUnit.Framework;
 using UnityEngine;
@@ -71,5 +72,29 @@ public class TestEnemy {
         Assert.AreEqual(1000.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
         Assert.AreEqual(2000.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
         
+    }
+    
+    [Test]
+    public void TestEnemyTags() {
+        IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+
+        TestBasicEnemy ent1 = model.GetEnemyBuilder<TestBasicEnemy>(2)
+            .FromConfig()
+            .Build();
+
+        ITagProperty tagProperty = ent1.GetTagProperty();
+        Assert.AreEqual(2, tagProperty.GetTags().Length);
+        Assert.IsTrue(tagProperty.HasTag(TagName.Test_Ice));
+        Assert.IsFalse(tagProperty.HasTag(TagName.Test_Wood));
+        
+        Assert.AreEqual(3, tagProperty.GetTagLevel(TagName.Test_Flame));
+        
+        int flameLevel = 0;
+        tagProperty.HasTag(TagName.Test_Flame, out flameLevel);
+        Assert.AreEqual(3, flameLevel);
+        
+        Assert.IsTrue(tagProperty.HasTagOverLevel(TagName.Test_Flame, 2));
+       
     }
 }

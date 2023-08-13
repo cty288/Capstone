@@ -162,7 +162,6 @@ namespace _02._Scripts.Tests.Tests_Editor {
 				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 				.Build();
 			Assert.AreEqual(3, ent1.GetCustomProperties().Values.Count);
-			
 			//Assert.AreEqual(1004, (int) ent1.GetCustomDataProperty("attack2","damage").GetRealValue().Value);
 			ent1.RegisterOnCustomDataChanged("attack1", "damage", OnAttack1DamageChanged);
 			//ent1.custom
