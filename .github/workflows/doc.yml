@@ -32,7 +32,7 @@ jobs:
         working-directory: ./docs
       - name: Sync new content
         run: Copy-Item -Recurse -Verbose -Force "$env:GITHUB_WORKSPACE/docfx_project/_site/*" "$env:GITHUB_WORKSPACE/docs"
-        working-directory: ./docs
+    
         # update docs
       - name: Commit to gh-pages and push
         run: |
