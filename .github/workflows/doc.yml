@@ -6,19 +6,31 @@ on:
     - develop
     - doc-fx
 jobs:
-  publish-docs:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      
-    - name: Build Documentation
-      uses: nikeee/docfx-action@v1.0.0
-      with:
-        args: docfx_project/docfx.json
+  generate-docs:
 
-    - name: Deploy to GitHub Pages
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET 6.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Setup DocFX
+      uses: crazy-max/ghaction-chocolatey@v1
+      with:
+        args: install docfx
+
+    - name: DocFX Build
+      working-directory: docs
+      run: docfx .\docfx.json
+      continue-on-error: false
+
+    - name: Publish
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
+        publish_dir: docs/_site
+        force_orphan: true
