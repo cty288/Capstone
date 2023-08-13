@@ -6,13 +6,41 @@ using Newtonsoft.Json.Linq;
 
 namespace _02._Scripts.Runtime.Common.Properties.TagProperty {
 	public interface ITagProperty : IProperty<Dictionary<TagName,int>>, ILoadFromConfigProperty {
+		/// <summary>
+		/// Get all tags of this entity
+		/// </summary>
+		/// <returns></returns>
 		public Tag[] GetTags();
 		
+		/// <summary>
+		/// Check if this entity has a tag
+		/// </summary>
+		/// <param name="tagName"></param>
+		/// <returns></returns>
 		public bool HasTag(TagName tagName);
 		
+		/// <summary>
+		/// Check if this entity has a tag and get its level if it has
+		/// </summary>
+		/// <param name="tagName"></param>
+		/// <param name="level"></param>
+		/// <returns></returns>
 		public bool HasTag(TagName tagName, out int level);
 		
+		/// <summary>
+		/// Get the level of a tag. If the entity doesn't have this tag, an exception will be thrown
+		/// </summary>
+		/// <param name="tagName"></param>
+		/// <returns></returns>
+		
 		public int GetTagLevel(TagName tagName);
+		
+		/// <summary>
+		/// Check if this entity has a tag with a level greater than or equal to the given level. If the entity doesn't have this tag, it will always return false
+		/// </summary>
+		/// <param name="tagName"></param>
+		/// <param name="level"></param>
+		/// <returns></returns>
 		
 		public bool HasTagOverLevel(TagName tagName, int level);
 	}
@@ -70,8 +98,8 @@ namespace _02._Scripts.Runtime.Common.Properties.TagProperty {
 		}
 
 		public bool HasTagOverLevel(TagName tagName, int level) {
-			if (GetTagLevel(tagName) >= level) {
-				return true;
+			if (HasTag(tagName, out int lv)) {
+				return lv >= level;
 			}
 			else {
 				return false;
