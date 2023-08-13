@@ -23,10 +23,8 @@ jobs:
       run: dotnet tool install --global docfx
 
     - name: Build docs
-      run: | 
-            cd docfx_project 
-            docfx build
-
+      run: docfx docfx_project/docfx.json
+    
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
