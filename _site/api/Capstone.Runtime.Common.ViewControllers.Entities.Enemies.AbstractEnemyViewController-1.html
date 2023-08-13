@@ -1,0 +1,1061 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class AbstractEnemyViewController&lt;T&gt;
+ | Capstone documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class AbstractEnemyViewController&lt;T&gt;
+ | Capstone documentation ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1">
+
+
+
+  <h1 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1" class="text-break">Class AbstractEnemyViewController&lt;T&gt;
+</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.html">Object</a></div>
+    <div class="level2"><a class="xref" href="https://docs.unity3d.com/ScriptReference/Component.html">Component</a></div>
+    <div class="level3"><a class="xref" href="https://docs.unity3d.com/ScriptReference/Behaviour.html">Behaviour</a></div>
+    <div class="level4"><a class="xref" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehaviour</a></div>
+    <div class="level5"><span class="xref">AbstractMikroController</span>&lt;<a class="xref" href="Framework.MainGame.html">MainGame</a>&gt;</div>
+    <div class="level6"><a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html">AbstractEntityViewController</a>&lt;T, <a class="xref" href="Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel.html">IEnemyEntityModel</a>&gt;</div>
+    <div class="level7"><a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractHaveCustomPropertyEntityViewController-2.html">AbstractHaveCustomPropertyEntityViewController</a>&lt;T, <a class="xref" href="Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel.html">IEnemyEntityModel</a>&gt;</div>
+    <div class="level8"><span class="xref">AbstractEnemyViewController&lt;T&gt;</span></div>
+      <div class="level9"><a class="xref" href="Runtime.RunTimeTests.TestPropertyBehaviorTree.TestPropertyWithBehaviorTree.html">TestPropertyWithBehaviorTree</a></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.IEnemyViewController.html">IEnemyViewController</a></div>
+    <div><a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.IEntityViewController.html">IEntityViewController</a></div>
+    <div><span class="xref">IController</span></div>
+    <div><span class="xref">ICanSendCommand</span></div>
+    <div><span class="xref">ICanGetSystem</span></div>
+    <div><span class="xref">ICanGetModel</span></div>
+    <div><span class="xref">ICanRegisterEvent</span></div>
+    <div><span class="xref">ICanSendQuery</span></div>
+    <div><span class="xref">ICanGetUtility</span></div>
+    <div><span class="xref">IBelongToArchitecture</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractHaveCustomPropertyEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractHaveCustomPropertyEntityViewController_2_BindCustomData__1_System_String_System_String_System_String_System_Action___0___0__">AbstractHaveCustomPropertyEntityViewController&lt;T, IEnemyEntityModel&gt;.BindCustomData&lt;T&gt;(string, string, string, Action&lt;T, T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractHaveCustomPropertyEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractHaveCustomPropertyEntityViewController_2_BindCustomData__1_System_String_System_String_System_String_System_Func_System_Object___0__System_Action___0___0__">AbstractHaveCustomPropertyEntityViewController&lt;T, IEnemyEntityModel&gt;.BindCustomData&lt;TargetType&gt;(string, string, string, Func&lt;dynamic, TargetType&gt;, Action&lt;TargetType, TargetType&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_ID">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.ID</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_autoRemoveEntityWhenDestroyed">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.autoRemoveEntityWhenDestroyed</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_entityModel">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.entityModel</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_BindedEntity">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.BindedEntity</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_properties">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.properties</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_Init_System_String_Capstone_Runtime_Base_Entity_IEntity_">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.Init(string, IEntity)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_Awake">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.Awake()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_Start">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.Start()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_OnInitEntity">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.OnInitEntity()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_OnBindProperty">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.OnBindProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_OnEntityStart">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.OnEntityStart()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_OnBindEntityProperty">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.OnBindEntityProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_Bind__1_System_String_System_Action_System_Object_System_Object__">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.Bind&lt;IPropertyType&gt;(string, Action&lt;dynamic, dynamic&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_Bind__1_System_String_MikroFramework_BindableProperty_BindableProperty___0__System_Action___0___0__">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.Bind&lt;T&gt;(string, BindableProperty&lt;T&gt;, Action&lt;T, T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_Bind__2_System_String_MikroFramework_BindableProperty_BindableProperty___0__System_Func___0___1__System_Action___1___1__">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.Bind&lt;BindedDataType, TargetType&gt;(string, BindableProperty&lt;BindedDataType&gt;, Func&lt;BindedDataType, TargetType&gt;, Action&lt;TargetType, TargetType&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_Bind__1_System_String_MikroFramework_BindableProperty_IBindableProperty_System_Func_System_Object___0__System_Action___0___0__">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.Bind&lt;T&gt;(string, IBindableProperty, Func&lt;dynamic, T&gt;, Action&lt;T, T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_UpdateBinding__2_MikroFramework_BindableProperty_IBindableProperty_System_Reflection_PropertyInfo_System_Func___1___0__System_Action___0___0__">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.UpdateBinding&lt;T, BindablePropertyType&gt;(IBindableProperty, PropertyInfo, Func&lt;BindablePropertyType, T&gt;, Action&lt;T, T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_ForceUpdatePropertyBindings">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.ForceUpdatePropertyBindings()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController-2.html#Capstone_Runtime_Common_ViewControllers_Entities_AbstractEntityViewController_2_OnDestroy">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.OnDestroy()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.IsInvoking.html">MonoBehaviour.IsInvoking()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.CancelInvoke.html">MonoBehaviour.CancelInvoke()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.Invoke(string, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.InvokeRepeating(string, float, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.CancelInvoke(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.IsInvoking(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StartCoroutine(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StartCoroutine(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StartCoroutine(IEnumerator)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StartCoroutine_Auto(IEnumerator)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StopCoroutine(IEnumerator)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.StopCoroutine.html">MonoBehaviour.StopCoroutine(Coroutine)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StopCoroutine(string)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.StopAllCoroutines()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">MonoBehaviour.print(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour-useGUILayout.html">MonoBehaviour.useGUILayout</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.runInEditMode</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Behaviour-enabled.html">Behaviour.enabled</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Behaviour-isActiveAndEnabled.html">Behaviour.isActiveAndEnabled</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponent(Type)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponent&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.TryGetComponent(Type, out Component)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Component.TryGetComponent.html">Component.TryGetComponent&lt;T&gt;(out T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.GetComponent(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInChildren(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInChildren(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentInChildren&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentInChildren&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInChildren(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInChildren(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInChildren&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInChildren&lt;T&gt;(bool, List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Component.GetComponentsInChildren.html">Component.GetComponentsInChildren&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">Component.GetComponentsInChildren&lt;T&gt;(List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInParent(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInParent(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentInParent&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Component.GetComponentInParent.html">Component.GetComponentInParent&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInParent(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInParent(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInParent&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInParent&lt;T&gt;(bool, List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Component.GetComponentsInParent.html">Component.GetComponentsInParent&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponents(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponents(Type, List&lt;Component&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">Component.GetComponents&lt;T&gt;(List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponents&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.CompareTag(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <span class="xref">Component.transform</span>
+    </div>
+    <div>
+      <span class="xref">Component.gameObject</span>
+    </div>
+    <div>
+      <span class="xref">Component.tag</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.GetInstanceID.html">Object.GetInstanceID()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.GetHashCode.html">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object.Equals(object)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object, Vector3, Quaternion)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.Instantiate.html">Object.Instantiate(Object, Vector3, Quaternion, Transform)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object, Transform)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.Instantiate(Object, Transform, bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.Instantiate.html">Object.Instantiate&lt;T&gt;(T, Vector3, Quaternion)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T, Vector3, Quaternion, Transform)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.Instantiate.html">Object.Instantiate&lt;T&gt;(T, Transform)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.Instantiate&lt;T&gt;(T, Transform, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Object.Destroy(Object, float)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Destroy(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.DestroyImmediate(Object, bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.DestroyImmediate(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfType(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsByType(Type, FindObjectsSortMode)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsByType(Type, FindObjectsInactive, FindObjectsSortMode)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.DontDestroyOnLoad.html">Object.DontDestroyOnLoad(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Object.DestroyObject(Object, float)</a>
+    </div>
+    <div>
+      <span class="xref">Object.DestroyObject(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindSceneObjectsOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfTypeIncludingAssets(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.FindObjectsOfType.html">Object.FindObjectsOfType&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.FindObjectsByType.html">Object.FindObjectsByType&lt;T&gt;(FindObjectsSortMode)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.FindObjectsOfType&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.FindObjectsByType.html">Object.FindObjectsByType&lt;T&gt;(FindObjectsInactive, FindObjectsSortMode)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.FindObjectOfType.html">Object.FindObjectOfType&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.FindObjectOfType&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.FindFirstObjectByType.html">Object.FindFirstObjectByType&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.FindAnyObjectByType.html">Object.FindAnyObjectByType&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.FindFirstObjectByType.html">Object.FindFirstObjectByType&lt;T&gt;(FindObjectsInactive)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object.FindAnyObjectByType.html">Object.FindAnyObjectByType&lt;T&gt;(FindObjectsInactive)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfTypeAll(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindFirstObjectByType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindAnyObjectByType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectOfType(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindFirstObjectByType(Type, FindObjectsInactive)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindAnyObjectByType(Type, FindObjectsInactive)</a>
+    </div>
+    <div>
+      <span class="xref">Object.ToString()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.unity3d.com/ScriptReference/Object-name.html">Object.name</a>
+    </div>
+    <div>
+      <span class="xref">Object.hideFlags</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Capstone.html">Capstone</a>.<a class="xref" href="Capstone.Runtime.html">Runtime</a>.<a class="xref" href="Capstone.Runtime.Common.html">Common</a>.<a class="xref" href="Capstone.Runtime.Common.ViewControllers.html">ViewControllers</a>.<a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.html">Entities</a>.<a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.html">Enemies</a></h6>
+  <h6><strong>Assembly</strong>: MainGame.dll</h6>
+  <h5 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class AbstractEnemyViewController&lt;T&gt; : AbstractHaveCustomPropertyEntityViewController&lt;T, IEnemyEntityModel&gt;, IEnemyViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture where T : class, IEnemyEntity, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_enemyEntityModel.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.enemyEntityModel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L23">View Source</a>
+  </span>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_enemyEntityModel" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.enemyEntityModel">enemyEntityModel</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IEnemyEntityModel enemyEntityModel</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel.html">IEnemyEntityModel</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_AttackRange.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.AttackRange%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L21">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_AttackRange_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.AttackRange*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_AttackRange" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.AttackRange">AttackRange</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float AttackRange { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_CurrentHealth.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.CurrentHealth%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L17">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_CurrentHealth_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.CurrentHealth*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_CurrentHealth" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.CurrentHealth">CurrentHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int CurrentHealth { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Danger.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.Danger%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L12">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Danger_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.Danger*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Danger" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.Danger">Danger</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Danger { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_MaxHealth.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.MaxHealth%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L14">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_MaxHealth_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.MaxHealth*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_MaxHealth" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.MaxHealth">MaxHealth</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaxHealth { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Vigiliance.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.Vigiliance%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L19">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Vigiliance_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.Vigiliance*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Vigiliance" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.Vigiliance">Vigiliance</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Vigiliance { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Awake.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.Awake%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L25">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Awake_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.Awake*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_Awake" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.Awake">Awake()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Awake()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController{-0,Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel}.html#Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController{`0,Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel}.Awake">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.Awake()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_GetCurrentHealth_System_Object_.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.GetCurrentHealth(System.Object)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L53">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_GetCurrentHealth_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.GetCurrentHealth*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_GetCurrentHealth_System_Object_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.GetCurrentHealth(System.Object)">GetCurrentHealth(dynamic)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected dynamic GetCurrentHealth(dynamic info)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">dynamic</span></td>
+        <td><span class="parametername">info</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">dynamic</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_GetMaxHealth_System_Object_.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.GetMaxHealth(System.Object)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L49">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_GetMaxHealth_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.GetMaxHealth*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_GetMaxHealth_System_Object_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.GetMaxHealth(System.Object)">GetMaxHealth(dynamic)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected dynamic GetMaxHealth(dynamic info)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">dynamic</span></td>
+        <td><span class="parametername">info</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">dynamic</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnBindEntityProperty.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.OnBindEntityProperty%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L30">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnBindEntityProperty_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.OnBindEntityProperty*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnBindEntityProperty" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.OnBindEntityProperty">OnBindEntityProperty()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnBindEntityProperty()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController{-0,Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel}.html#Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController{`0,Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel}.OnBindEntityProperty">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.OnBindEntityProperty()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnCurrentHealthChanged_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.OnCurrentHealthChanged(System.Int32%2CSystem.Int32)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L57">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnCurrentHealthChanged_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.OnCurrentHealthChanged*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnCurrentHealthChanged_System_Int32_System_Int32_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.OnCurrentHealthChanged(System.Int32,System.Int32)">OnCurrentHealthChanged(int, int)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void OnCurrentHealthChanged(int oldValue, int newValue)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">oldValue</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">newValue</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnInitEnemyEntity_Capstone_Runtime_Common_Entities_Enemies_EnemyBuilder__0__.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.OnInitEnemyEntity(Capstone.Runtime.Common.Entities.Enemies.EnemyBuilder%7B%600%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L47">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnInitEnemyEntity_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.OnInitEnemyEntity*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnInitEnemyEntity_Capstone_Runtime_Common_Entities_Enemies_EnemyBuilder__0__" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.OnInitEnemyEntity(Capstone.Runtime.Common.Entities.Enemies.EnemyBuilder{`0})">OnInitEnemyEntity(EnemyBuilder&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract IEnemyEntity OnInitEnemyEntity(EnemyBuilder&lt;T&gt; builder)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Capstone.Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td><span class="parametername">builder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Capstone.Runtime.Common.Entities.Enemies.IEnemyEntity.html">IEnemyEntity</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnInitEntity.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601.OnInitEntity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L42">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnInitEntity_" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.OnInitEntity*"></a>
+  <h4 id="Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1_OnInitEntity" data-uid="Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController`1.OnInitEntity">OnInitEntity()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override IEntity OnInitEntity()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Capstone.Runtime.Base.Entity.IEntity.html">IEntity</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController{-0,Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel}.html#Capstone.Runtime.Common.ViewControllers.Entities.AbstractEntityViewController{`0,Capstone.Runtime.Common.Entities.Enemies.IEnemyEntityModel}.OnInitEntity">AbstractEntityViewController&lt;T, IEnemyEntityModel&gt;.OnInitEntity()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.IEnemyViewController.html">IEnemyViewController</a>
+  </div>
+  <div>
+      <a class="xref" href="Capstone.Runtime.Common.ViewControllers.Entities.IEntityViewController.html">IEntityViewController</a>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.Architecture.IController</span>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.Architecture.ICanSendCommand</span>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.Architecture.ICanGetSystem</span>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.Architecture.ICanGetModel</span>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.Architecture.ICanRegisterEvent</span>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.ICanSendQuery</span>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.Architecture.ICanGetUtility</span>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.Architecture.IBelongToArchitecture</span>
+  </div>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Common_ViewControllers_Entities_Enemies_AbstractEnemyViewController_1.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Common.ViewControllers.Entities.Enemies.AbstractEnemyViewController%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/ViewControllers/Entities/Enemies/AbstractEnemyViewController.cs/#L8" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+        Capstone documentation
+        
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

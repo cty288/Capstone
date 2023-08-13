@@ -1,0 +1,796 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PropertyList&lt;T&gt;
+ | Capstone documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PropertyList&lt;T&gt;
+ | Capstone documentation ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Capstone.Runtime.Base.Property.PropertyList`1">
+
+
+
+  <h1 id="Capstone_Runtime_Base_Property_PropertyList_1" data-uid="Capstone.Runtime.Base.Property.PropertyList`1" class="text-break">Class PropertyList&lt;T&gt;
+</h1>
+  <div class="markdown level0 summary"><p>Use ListProperty instead if your values are not properties. If your values are properties, use this class</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html">Property</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;&gt;</div>
+    <div class="level2"><span class="xref">PropertyList&lt;T&gt;</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Capstone.Runtime.Base.Property.IListProperty-1.html">IListProperty</a>&lt;T&gt;</div>
+    <div><a class="xref" href="Capstone.Runtime.Base.Property.IProperty-1.html">IProperty</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;&gt;</div>
+    <div><a class="xref" href="Capstone.Runtime.Base.Property.IHaveSubProperties.html">IHaveSubProperties</a></div>
+    <div><a class="xref" href="Capstone.Runtime.Base.Property.IPropertyBase.html">IPropertyBase</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_PropertyName">Property&lt;List&lt;T&gt;&gt;.PropertyName</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_fullName">Property&lt;List&lt;T&gt;&gt;.fullName</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_overrideDependentProperties">Property&lt;List&lt;T&gt;&gt;.overrideDependentProperties</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_OnSetFullName_System_String_">Property&lt;List&lt;T&gt;&gt;.OnSetFullName(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_GetFullName">Property&lt;List&lt;T&gt;&gt;.GetFullName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_modifier">Property&lt;List&lt;T&gt;&gt;.modifier</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_SetModifier__1_Capstone_Runtime_Base_Property_IPropertyDependencyModifier___0__">Property&lt;List&lt;T&gt;&gt;.SetModifier&lt;ValueType&gt;(IPropertyDependencyModifier&lt;ValueType&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_GetDefautModifier">Property&lt;List&lt;T&gt;&gt;.GetDefautModifier()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_GetPropertyName">Property&lt;List&lt;T&gt;&gt;.GetPropertyName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_GetDependentProperties">Property&lt;List&lt;T&gt;&gt;.GetDependentProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.Property-1.html#Capstone_Runtime_Base_Property_Property_1_SetDependentProperties_Capstone_Runtime_Base_Property_PropertyNameInfo___">Property&lt;List&lt;T&gt;&gt;.SetDependentProperties(params PropertyNameInfo[])</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Capstone.html">Capstone</a>.<a class="xref" href="Capstone.Runtime.html">Runtime</a>.<a class="xref" href="Capstone.Runtime.Base.html">Base</a>.<a class="xref" href="Capstone.Runtime.Base.Property.html">Property</a></h6>
+  <h6><strong>Assembly</strong>: MainGame.dll</h6>
+  <h5 id="Capstone_Runtime_Base_Property_PropertyList_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class PropertyList&lt;T&gt; : Property&lt;List&lt;T&gt;&gt;, IListProperty&lt;T&gt;, IProperty&lt;List&lt;T&gt;&gt;, IHaveSubProperties, IPropertyBase where T : IPropertyBase</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1__ctor.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L33">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1__ctor_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.#ctor*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1__ctor" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.#ctor">PropertyList()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PropertyList()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1__ctor__0___.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.%23ctor(%600%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L37">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1__ctor_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.#ctor*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1__ctor__0___" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.#ctor(`0[])">PropertyList(params T[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PropertyList(params T[] baseValues)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T[]</td>
+        <td><span class="parametername">baseValues</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_requestRegisterProperty.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.requestRegisterProperty%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L45">View Source</a>
+  </span>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_requestRegisterProperty" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.requestRegisterProperty">requestRegisterProperty</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Action&lt;Type, IPropertyBase, string, bool, bool&gt; requestRegisterProperty</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-5">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="Capstone.Runtime.Base.Property.IPropertyBase.html">IPropertyBase</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_BaseValue.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.BaseValue%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L18">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_BaseValue_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.BaseValue*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_BaseValue" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.BaseValue">BaseValue</h4>
+  <div class="markdown level1 summary"><p>Base Value is the initial configured base value of a specific property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override List&lt;T&gt; BaseValue { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{-0}}.html#Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{`0}}.BaseValue">Property&lt;List&lt;T&gt;&gt;.BaseValue</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_InitialValue.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.InitialValue%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L30">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_InitialValue_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.InitialValue*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_InitialValue" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.InitialValue">InitialValue</h4>
+  <div class="markdown level1 summary"><p>Initial Value is the initial real value of this property when the bind entity is initialized. It
+is dependent on the base value and the modifiers. Not changed during the game</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override List&lt;T&gt; InitialValue { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{-0}}.html#Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{`0}}.InitialValue">Property&lt;List&lt;T&gt;&gt;.InitialValue</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_RealValue.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.RealValue%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L24">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_RealValue_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.RealValue*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_RealValue" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.RealValue">RealValue</h4>
+  <div class="markdown level1 summary"><p>Use RealValues instead to invoke events</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override BindableProperty&lt;List&lt;T&gt;&gt; RealValue { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BindableProperty</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{-0}}.html#Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{`0}}.RealValue">Property&lt;List&lt;T&gt;&gt;.RealValue</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_RealValues.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.RealValues%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L26">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_RealValues_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.RealValues*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_RealValues" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.RealValues">RealValues</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableList&lt;T&gt; RealValues { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Capstone.Runtime.Utilities.BindableList-1.html">BindableList</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_AddToRealValue__0_.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.AddToRealValue(%600)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L77">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_AddToRealValue_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.AddToRealValue*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_AddToRealValue__0_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.AddToRealValue(`0)">AddToRealValue(T)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddToRealValue(T property)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">property</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_GetChildProperties.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.GetChildProperties%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L96">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_GetChildProperties_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.GetChildProperties*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_GetChildProperties" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.GetChildProperties">GetChildProperties()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IPropertyBase[] GetChildProperties()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Capstone.Runtime.Base.Property.IPropertyBase.html">IPropertyBase</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_GetDefaultDependentProperties.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.GetDefaultDependentProperties%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L133">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_GetDefaultDependentProperties_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.GetDefaultDependentProperties*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_GetDefaultDependentProperties" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.GetDefaultDependentProperties">GetDefaultDependentProperties()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override PropertyNameInfo[] GetDefaultDependentProperties()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Capstone.Runtime.Base.Property.PropertyNameInfo.html">PropertyNameInfo</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{-0}}.html#Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{`0}}.GetDefaultDependentProperties">Property&lt;List&lt;T&gt;&gt;.GetDefaultDependentProperties()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_Initialize_Capstone_Runtime_Base_Property_IPropertyBase___System_String_.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.Initialize(Capstone.Runtime.Base.Property.IPropertyBase%5B%5D%2CSystem.String)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L126">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_Initialize_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.Initialize*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_Initialize_Capstone_Runtime_Base_Property_IPropertyBase___System_String_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.Initialize(Capstone.Runtime.Base.Property.IPropertyBase[],System.String)">Initialize(IPropertyBase[], string)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Initialize(IPropertyBase[] dependencies, string parentEntityName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Capstone.Runtime.Base.Property.IPropertyBase.html">IPropertyBase</a>[]</td>
+        <td><span class="parametername">dependencies</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></td>
+        <td><span class="parametername">parentEntityName</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{-0}}.html#Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{`0}}.Initialize(Capstone.Runtime.Base.Property.IPropertyBase[],System.String)">Property&lt;List&lt;T&gt;&gt;.Initialize(IPropertyBase[], string)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_OnClone_System_Collections_Generic_List__0__.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.OnClone(System.Collections.Generic.List%7B%600%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L118">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_OnClone_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.OnClone*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_OnClone_System_Collections_Generic_List__0__" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.OnClone(System.Collections.Generic.List{`0})">OnClone(List&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Shallow clone of the list</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override List&lt;T&gt; OnClone(List&lt;T&gt; value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{-0}}.html#Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{`0}}.OnClone(System.Collections.Generic.List{`0})">Property&lt;List&lt;T&gt;&gt;.OnClone(List&lt;T&gt;)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_OnLoadFromSavedData.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.OnLoadFromSavedData%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L54">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_OnLoadFromSavedData_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.OnLoadFromSavedData*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_OnLoadFromSavedData" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.OnLoadFromSavedData">OnLoadFromSavedData()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnLoadFromSavedData()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_OnRecycled.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.OnRecycled%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L150">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_OnRecycled_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.OnRecycled*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_OnRecycled" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.OnRecycled">OnRecycled()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnRecycled()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{-0}}.html#Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{`0}}.OnRecycled">Property&lt;List&lt;T&gt;&gt;.OnRecycled()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_OnSetChildFullName.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.OnSetChildFullName%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L88">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_OnSetChildFullName_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.OnSetChildFullName*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_OnSetChildFullName" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.OnSetChildFullName">OnSetChildFullName()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSetChildFullName()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_RegisterRequestRegisterProperty_System_Action_System_Type_Capstone_Runtime_Base_Property_IPropertyBase_System_String_System_Boolean_System_Boolean__.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.RegisterRequestRegisterProperty(System.Action%7BSystem.Type%2CCapstone.Runtime.Base.Property.IPropertyBase%2CSystem.String%2CSystem.Boolean%2CSystem.Boolean%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L46">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_RegisterRequestRegisterProperty_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.RegisterRequestRegisterProperty*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_RegisterRequestRegisterProperty_System_Action_System_Type_Capstone_Runtime_Base_Property_IPropertyBase_System_String_System_Boolean_System_Boolean__" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.RegisterRequestRegisterProperty(System.Action{System.Type,Capstone.Runtime.Base.Property.IPropertyBase,System.String,System.Boolean,System.Boolean})">RegisterRequestRegisterProperty(Action&lt;Type, IPropertyBase, string, bool, bool&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterRequestRegisterProperty(Action&lt;Type, IPropertyBase, string, bool, bool&gt; requestRegisterProperty)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-5">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="Capstone.Runtime.Base.Property.IPropertyBase.html">IPropertyBase</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><span class="parametername">requestRegisterProperty</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_SetBaseValue_System_Collections_Generic_List__0__.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.SetBaseValue(System.Collections.Generic.List%7B%600%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L41">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_SetBaseValue_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.SetBaseValue*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_SetBaseValue_System_Collections_Generic_List__0__" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.SetBaseValue(System.Collections.Generic.List{`0})">SetBaseValue(List&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void SetBaseValue(List&lt;T&gt; value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{-0}}.html#Capstone.Runtime.Base.Property.Property{System.Collections.Generic.List{`0}}.SetBaseValue(System.Collections.Generic.List{`0})">Property&lt;List&lt;T&gt;&gt;.SetBaseValue(List&lt;T&gt;)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1_UnregisterRequestRegisterProperty_System_Action_System_Type_Capstone_Runtime_Base_Property_IPropertyBase_System_String_System_Boolean_System_Boolean__.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601.UnregisterRequestRegisterProperty(System.Action%7BSystem.Type%2CCapstone.Runtime.Base.Property.IPropertyBase%2CSystem.String%2CSystem.Boolean%2CSystem.Boolean%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L50">View Source</a>
+  </span>
+  <a id="Capstone_Runtime_Base_Property_PropertyList_1_UnregisterRequestRegisterProperty_" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.UnregisterRequestRegisterProperty*"></a>
+  <h4 id="Capstone_Runtime_Base_Property_PropertyList_1_UnregisterRequestRegisterProperty_System_Action_System_Type_Capstone_Runtime_Base_Property_IPropertyBase_System_String_System_Boolean_System_Boolean__" data-uid="Capstone.Runtime.Base.Property.PropertyList`1.UnregisterRequestRegisterProperty(System.Action{System.Type,Capstone.Runtime.Base.Property.IPropertyBase,System.String,System.Boolean,System.Boolean})">UnregisterRequestRegisterProperty(Action&lt;Type, IPropertyBase, string, bool, bool&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnregisterRequestRegisterProperty(Action&lt;Type, IPropertyBase, string, bool, bool&gt; requestRegisterProperty)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-5">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="Capstone.Runtime.Base.Property.IPropertyBase.html">IPropertyBase</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</td>
+        <td><span class="parametername">requestRegisterProperty</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.IListProperty-1.html">IListProperty&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.IProperty-1.html">IProperty&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.IHaveSubProperties.html">IHaveSubProperties</a>
+  </div>
+  <div>
+      <a class="xref" href="Capstone.Runtime.Base.Property.IPropertyBase.html">IPropertyBase</a>
+  </div>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Capstone_Runtime_Base_Property_PropertyList_1.md&amp;value=---%0Auid%3A%20Capstone.Runtime.Base.Property.PropertyList%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Base/Property/PropertyList.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+        Capstone documentation
+        
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

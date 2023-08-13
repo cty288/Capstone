@@ -1,0 +1,673 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EntityBuilder&lt;TBuilder, TEntity&gt;
+ | Capstone documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EntityBuilder&lt;TBuilder, TEntity&gt;
+ | Capstone documentation ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2">
+
+
+
+  <h1 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2" class="text-break">Class EntityBuilder&lt;TBuilder, TEntity&gt;
+</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><span class="xref">EntityBuilder&lt;TBuilder, TEntity&gt;</span></div>
+      <div class="level2"><a class="xref" href="Runtime.DataFramework.Entities.Builders.BasicEntityBuilder-1.html">BasicEntityBuilder&lt;T&gt;</a></div>
+      <div class="level2"><a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder&lt;T&gt;</a></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IPoolable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Entities.html">Entities</a>.<a class="xref" href="Runtime.DataFramework.Entities.Builders.html">Builders</a></h6>
+  <h6><strong>Assembly</strong>: MainGame.dll</h6>
+  <h5 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class EntityBuilder&lt;TBuilder, TEntity&gt; : IPoolable where TBuilder : EntityBuilder&lt;TBuilder, TEntity&gt; where TEntity : class, IEntity, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TBuilder</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TEntity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2__ctor.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L12">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2__ctor_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.#ctor*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2__ctor" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.#ctor">EntityBuilder()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EntityBuilder()</code></pre>
+  </div>
+  <h3 id="fields">Fields
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_onEntityCreated.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.onEntityCreated%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L11">View Source</a>
+  </span>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_onEntityCreated" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.onEntityCreated">onEntityCreated</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Action&lt;TEntity&gt; onEntityCreated</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;TEntity&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_Entity.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.Entity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L9">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_Entity_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.Entity*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_Entity" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.Entity">Entity</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual TEntity Entity { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEntity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_IsRecycled.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.IsRecycled%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L87">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_IsRecycled_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.IsRecycled*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_IsRecycled" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.IsRecycled">IsRecycled</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsRecycled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_Build.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.Build%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L72">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_Build_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.Build*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_Build" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.Build">Build()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TEntity Build()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TEntity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_CheckEntity.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.CheckEntity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L21">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_CheckEntity_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.CheckEntity*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_CheckEntity" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.CheckEntity">CheckEntity()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void CheckEntity()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_FromConfig.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.FromConfig%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L27">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_FromConfig_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.FromConfig*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_FromConfig" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.FromConfig">FromConfig()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TBuilder FromConfig()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_OnRecycled.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.OnRecycled%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L83">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_OnRecycled_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.OnRecycled*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_OnRecycled" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.OnRecycled">OnRecycled()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnRecycled()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_RecycleToCache.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.RecycleToCache%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L88">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_RecycleToCache_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.RecycleToCache*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_RecycleToCache" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.RecycleToCache">RecycleToCache()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void RecycleToCache()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_RegisterOnEntityCreated_System_Action__1__.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.RegisterOnEntityCreated(System.Action%7B%601%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L16">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_RegisterOnEntityCreated_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.RegisterOnEntityCreated*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_RegisterOnEntityCreated_System_Action__1__" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.RegisterOnEntityCreated(System.Action{`1})">RegisterOnEntityCreated(Action&lt;TEntity&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TBuilder RegisterOnEntityCreated(Action&lt;TEntity&gt; onCreated)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;TEntity&gt;</td>
+        <td><span class="parametername">onCreated</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetDependencies_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_PropertyNameInfo___.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.SetDependencies(Runtime.DataFramework.Properties.PropertyNameInfo%2CRuntime.DataFramework.Properties.PropertyNameInfo%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L66">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetDependencies_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.SetDependencies*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetDependencies_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_PropertyNameInfo___" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.SetDependencies(Runtime.DataFramework.Properties.PropertyNameInfo,Runtime.DataFramework.Properties.PropertyNameInfo[])">SetDependencies(PropertyNameInfo, PropertyNameInfo[])</h4>
+  <div class="markdown level1 summary"><p>Set dependencies for a property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TBuilder SetDependencies(PropertyNameInfo propertyName, PropertyNameInfo[] dependencies)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></td>
+        <td><span class="parametername">propertyName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a>[]</td>
+        <td><span class="parametername">dependencies</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetModifier__1_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.SetModifier%60%601(Runtime.DataFramework.Properties.PropertyNameInfo%2CRuntime.DataFramework.Properties.IPropertyDependencyModifier%7B%60%600%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L54">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetModifier_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.SetModifier*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetModifier__1_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.SetModifier``1(Runtime.DataFramework.Properties.PropertyNameInfo,Runtime.DataFramework.Properties.IPropertyDependencyModifier{``0})">SetModifier&lt;ValueType&gt;(PropertyNameInfo, IPropertyDependencyModifier&lt;ValueType&gt;)</h4>
+  <div class="markdown level1 summary"><p>Override the property's modifier
+If the entity has multiple properties with the same name, every property will be overriden</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TBuilder SetModifier&lt;ValueType&gt;(PropertyNameInfo propertyName, IPropertyDependencyModifier&lt;ValueType&gt; modifier)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></td>
+        <td><span class="parametername">propertyName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;ValueType&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">ValueType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetProperty__1_Runtime_DataFramework_Properties_PropertyNameInfo___0_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602.SetProperty%60%601(Runtime.DataFramework.Properties.PropertyNameInfo%2C%60%600%2CRuntime.DataFramework.Properties.IPropertyDependencyModifier%7B%60%600%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L40">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetProperty_" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.SetProperty*"></a>
+  <h4 id="Runtime_DataFramework_Entities_Builders_EntityBuilder_2_SetProperty__1_Runtime_DataFramework_Properties_PropertyNameInfo___0_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__" data-uid="Runtime.DataFramework.Entities.Builders.EntityBuilder`2.SetProperty``1(Runtime.DataFramework.Properties.PropertyNameInfo,``0,Runtime.DataFramework.Properties.IPropertyDependencyModifier{``0})">SetProperty&lt;ValueType&gt;(PropertyNameInfo, ValueType, IPropertyDependencyModifier&lt;ValueType&gt;)</h4>
+  <div class="markdown level1 summary"><p>Override the property's base value and its modifier
+If the entity has multiple properties with the same name, every property will be overriden</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TBuilder SetProperty&lt;ValueType&gt;(PropertyNameInfo propertyName, ValueType value, IPropertyDependencyModifier&lt;ValueType&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></td>
+        <td><span class="parametername">propertyName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">ValueType</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;ValueType&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TBuilder</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">ValueType</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">MikroFramework.Pool.IPoolable</span>
+  </div>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_Builders_EntityBuilder_2.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Builders.EntityBuilder%602%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Builders/EntityBuilder.cs/#L6" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+        Capstone documentation
+        
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

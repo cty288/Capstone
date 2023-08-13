@@ -1,0 +1,585 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EnemyEntity&lt;T&gt;
+ | Capstone documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EnemyEntity&lt;T&gt;
+ | Capstone documentation ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1">
+
+
+
+  <h1 id="Runtime_DataFramework_Entities_EnemyEntity_1" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1" class="text-break">Class EnemyEntity&lt;T&gt;
+</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><a class="xref" href="Runtime.DataFramework.Entities.Entity.html">Entity</a></div>
+    <div class="level2"><a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html">AbstractHaveCustomPropertiesEntity</a></div>
+    <div class="level3"><span class="xref">EnemyEntity&lt;T&gt;</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Runtime.DataFramework.Entities.IEnemyEntity.html">IEnemyEntity</a></div>
+    <div><a class="xref" href="Runtime.DataFramework.Entities.IHaveCustomProperties.html">IHaveCustomProperties</a></div>
+    <div><a class="xref" href="Runtime.DataFramework.Entities.IHaveTags.html">IHaveTags</a></div>
+    <div><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></div>
+    <div><span class="xref">IPoolable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_OnRegisterProperties">AbstractHaveCustomPropertiesEntity.OnRegisterProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_OnRegisterCustomProperties">AbstractHaveCustomPropertiesEntity.OnRegisterCustomProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_GetCustomProperties">AbstractHaveCustomPropertiesEntity.GetCustomProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_GetCustomDataValue_System_String_System_String_">AbstractHaveCustomPropertiesEntity.GetCustomDataValue(string, string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_GetCustomDataValue__1_System_String_System_String_">AbstractHaveCustomPropertiesEntity.GetCustomDataValue&lt;T&gt;(string, string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_RegisterOnCustomDataChanged_System_String_System_String_System_Action_Runtime_DataFramework_Properties_ICustomDataProperty_System_Object_System_Object__">AbstractHaveCustomPropertiesEntity.RegisterOnCustomDataChanged(string, string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_RegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_ICustomProperty__">AbstractHaveCustomPropertiesEntity.RegisterOnCustomDataChanged(string, Action&lt;ICustomProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_UnRegisterOnCustomDataChanged_System_String_System_String_System_Action_Runtime_DataFramework_Properties_ICustomDataProperty_System_Object_System_Object__">AbstractHaveCustomPropertiesEntity.UnRegisterOnCustomDataChanged(string, string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_UnRegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_ICustomProperty__">AbstractHaveCustomPropertiesEntity.UnRegisterOnCustomDataChanged(string, Action&lt;ICustomProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_HasCustomProperty_System_String_">AbstractHaveCustomPropertiesEntity.HasCustomProperty(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_EntityName">Entity.EntityName</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_UUID">Entity.UUID</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_configTable">Entity.configTable</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnLoadFromSave">Entity.OnLoadFromSave()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterInitialProperty__1___0_">Entity.RegisterInitialProperty&lt;T&gt;(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterTempProperty__1___0_System_String_System_Boolean_System_Boolean_">Entity.RegisterTempProperty&lt;T&gt;(T, string, bool, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnAllocate">Entity.OnAllocate()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_SetPropertyBaseValue__1_Runtime_DataFramework_Properties_PropertyNameInfo___0_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__">Entity.SetPropertyBaseValue&lt;T&gt;(PropertyNameInfo, T, IPropertyDependencyModifier&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_SetPropertyModifier__1_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__">Entity.SetPropertyModifier&lt;T&gt;(PropertyNameInfo, IPropertyDependencyModifier&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig">Entity.LoadPropertyBaseValueFromConfig()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyName_">Entity.GetProperty(PropertyName)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyNameInfo_">Entity.GetProperty(PropertyNameInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty__1">Entity.GetProperty&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty__1_Runtime_DataFramework_Properties_PropertyNameInfo_">Entity.GetProperty&lt;T&gt;(PropertyNameInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_System_Type_">Entity.GetProperty(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_HasProperty_Runtime_DataFramework_Properties_PropertyNameInfo_">Entity.HasProperty(PropertyNameInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_TryGetProperty_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyBase__">Entity.TryGetProperty(PropertyNameInfo, out IPropertyBase)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_Initialize">Entity.Initialize()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_InitProperty_Runtime_DataFramework_Properties_IPropertyBase_">Entity.InitProperty(IPropertyBase)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnRecycled">Entity.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_IsRecycled">Entity.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RecycleToCache">Entity.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnRecycle">Entity.OnRecycle()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Entities.html">Entities</a></h6>
+  <h6><strong>Assembly</strong>: MainGame.dll</h6>
+  <h5 id="Runtime_DataFramework_Entities_EnemyEntity_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class EnemyEntity&lt;T&gt; : AbstractHaveCustomPropertiesEntity, IEnemyEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable where T : EnemyEntity&lt;T&gt;, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_GetAttackRange.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.GetAttackRange%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L46">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_GetAttackRange_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetAttackRange*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_GetAttackRange" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetAttackRange">GetAttackRange()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;float&gt; GetAttackRange()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BindableProperty</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_GetDanger.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.GetDanger%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L30">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_GetDanger_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetDanger*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_GetDanger" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetDanger">GetDanger()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;int&gt; GetDanger()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BindableProperty</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_GetHealth.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.GetHealth%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L34">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_GetHealth_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetHealth*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_GetHealth" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetHealth">GetHealth()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;HealthInfo&gt; GetHealth()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BindableProperty</span>&lt;<a class="xref" href="Runtime.DataFramework.Properties.HealthInfo.html">HealthInfo</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_GetRarity.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.GetRarity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L50">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_GetRarity_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetRarity*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_GetRarity" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetRarity">GetRarity()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetRarity()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_GetTagProperty.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.GetTagProperty%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L61">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_GetTagProperty_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetTagProperty*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_GetTagProperty" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetTagProperty">GetTagProperty()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ITagProperty GetTagProperty()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.DataFramework.Properties.ITagProperty.html">ITagProperty</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_GetTaste.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.GetTaste%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L38">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_GetTaste_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetTaste*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_GetTaste" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetTaste">GetTaste()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableList&lt;TasteType&gt; GetTaste()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Utilities.BindableList-1.html">BindableList</a>&lt;<a class="xref" href="Runtime.DataFramework.Properties.TasteType.html">TasteType</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_GetVigiliance.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.GetVigiliance%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L42">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_GetVigiliance_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetVigiliance*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_GetVigiliance" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.GetVigiliance">GetVigiliance()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;float&gt; GetVigiliance()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">BindableProperty</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_OnDoRecycle.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.OnDoRecycle%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L57">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_OnDoRecycle_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.OnDoRecycle*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_OnDoRecycle" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.OnDoRecycle">OnDoRecycle()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnDoRecycle()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnDoRecycle">Entity.OnDoRecycle()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_OnEnemyRegisterProperties.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.OnEnemyRegisterProperties%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L55">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_OnEnemyRegisterProperties_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.OnEnemyRegisterProperties*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_OnEnemyRegisterProperties" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.OnEnemyRegisterProperties">OnEnemyRegisterProperties()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract void OnEnemyRegisterProperties()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1_OnEntityRegisterProperties.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601.OnEntityRegisterProperties%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L19">View Source</a>
+  </span>
+  <a id="Runtime_DataFramework_Entities_EnemyEntity_1_OnEntityRegisterProperties_" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.OnEntityRegisterProperties*"></a>
+  <h4 id="Runtime_DataFramework_Entities_EnemyEntity_1_OnEntityRegisterProperties" data-uid="Runtime.DataFramework.Entities.EnemyEntity`1.OnEntityRegisterProperties">OnEntityRegisterProperties()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnEntityRegisterProperties()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Runtime.DataFramework.Entities.AbstractHaveCustomPropertiesEntity.html#Runtime_DataFramework_Entities_AbstractHaveCustomPropertiesEntity_OnEntityRegisterProperties">AbstractHaveCustomPropertiesEntity.OnEntityRegisterProperties()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.IEnemyEntity.html">IEnemyEntity</a>
+  </div>
+  <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.IHaveCustomProperties.html">IHaveCustomProperties</a>
+  </div>
+  <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.IHaveTags.html">IHaveTags</a>
+  </div>
+  <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a>
+  </div>
+  <div>
+      <span class="xref">MikroFramework.Pool.IPoolable</span>
+  </div>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_DataFramework_Entities_EnemyEntity_1.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EnemyEntity%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+        Capstone documentation
+        
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

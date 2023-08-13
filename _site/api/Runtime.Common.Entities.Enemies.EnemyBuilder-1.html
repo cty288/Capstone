@@ -1,0 +1,899 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EnemyBuilder&lt;T&gt;
+ | Capstone documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EnemyBuilder&lt;T&gt;
+ | Capstone documentation ">
+    <meta name="generator" content="docfx ">
+  
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  
+  
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1">
+
+
+
+  <h1 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1" class="text-break">Class EnemyBuilder&lt;T&gt;
+</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+    <div class="level1"><a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html">EntityBuilder</a>&lt;<a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;, T&gt;</div>
+    <div class="level2"><span class="xref">EnemyBuilder&lt;T&gt;</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IPoolable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_Entity">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.Entity</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_onEntityCreated">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.onEntityCreated</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_RegisterOnEntityCreated_System_Action__1__">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.RegisterOnEntityCreated(Action&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_CheckEntity">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.CheckEntity()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_FromConfig">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.FromConfig()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_SetProperty__1_Runtime_Base_Property_PropertyNameInfo___0_Runtime_Base_Property_IPropertyDependencyModifier___0__">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.SetProperty&lt;ValueType&gt;(PropertyNameInfo, ValueType, IPropertyDependencyModifier&lt;ValueType&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_SetModifier__1_Runtime_Base_Property_PropertyNameInfo_Runtime_Base_Property_IPropertyDependencyModifier___0__">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.SetModifier&lt;ValueType&gt;(PropertyNameInfo, IPropertyDependencyModifier&lt;ValueType&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_SetDependencies_Runtime_Base_Property_PropertyNameInfo_Runtime_Base_Property_PropertyNameInfo___">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.SetDependencies(PropertyNameInfo, PropertyNameInfo[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_Build">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.Build()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_OnRecycled">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_IsRecycled">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Base.Entity.EntityBuilder-2.html#Runtime_Base_Entity_EntityBuilder_2_RecycleToCache">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Common.html">Common</a>.<a class="xref" href="Runtime.Common.Entities.html">Entities</a>.<a class="xref" href="Runtime.Common.Entities.Enemies.html">Enemies</a></h6>
+  <h6><strong>Assembly</strong>: MainGame.dll</h6>
+  <h5 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class EnemyBuilder&lt;T&gt; : EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;, IPoolable where T : class, IEntity, new()</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1__ctor.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.%23ctor%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L11">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1__ctor_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.#ctor*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1__ctor" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.#ctor">EnemyBuilder()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder()</code></pre>
+  </div>
+  <h3 id="methods">Methods
+</h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_Allocate_System_Int32_.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.Allocate(System.Int32)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L84">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_Allocate_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.Allocate*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_Allocate_System_Int32_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.Allocate(System.Int32)">Allocate(int)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static EnemyBuilder&lt;T&gt; Allocate(int rarity)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">rarity</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_RecycleToCache.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.RecycleToCache%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L80">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_RecycleToCache_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.RecycleToCache*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_RecycleToCache" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.RecycleToCache">RecycleToCache()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void RecycleToCache()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Runtime.Base.Entity.EntityBuilder{Runtime.Common.Entities.Enemies.EnemyBuilder-1,-0}.html#Runtime.Base.Entity.EntityBuilder{Runtime.Common.Entities.Enemies.EnemyBuilder`1,`0}.RecycleToCache">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.RecycleToCache()</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAllBasics_System_Int32_Runtime_Common_Properties_HealthInfo_System_Single_System_Single_Runtime_Common_Properties_TasteType___.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetAllBasics(System.Int32%2CRuntime.Common.Properties.HealthInfo%2CSystem.Single%2CSystem.Single%2CRuntime.Common.Properties.TasteType%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L61">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAllBasics_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetAllBasics*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAllBasics_System_Int32_Runtime_Common_Properties_HealthInfo_System_Single_System_Single_Runtime_Common_Properties_TasteType___" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetAllBasics(System.Int32,Runtime.Common.Properties.HealthInfo,System.Single,System.Single,Runtime.Common.Properties.TasteType[])">SetAllBasics(int, HealthInfo, float, float, params TasteType[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAllBasics(int danger, HealthInfo healthInfo, float vigiliance, float attackRange, params TasteType[] tasteTypes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">danger</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Properties.HealthInfo.html">HealthInfo</a></td>
+        <td><span class="parametername">healthInfo</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></td>
+        <td><span class="parametername">vigiliance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></td>
+        <td><span class="parametername">attackRange</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Properties.TasteType.html">TasteType</a>[]</td>
+        <td><span class="parametername">tasteTypes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAllBasicsModifiers_Runtime_Base_Property_IPropertyDependencyModifier_System_Int32__Runtime_Base_Property_IPropertyDependencyModifier_Runtime_Common_Properties_HealthInfo__Runtime_Base_Property_IPropertyDependencyModifier_System_Single__Runtime_Base_Property_IPropertyDependencyModifier_System_Single__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetAllBasicsModifiers(Runtime.Base.Property.IPropertyDependencyModifier%7BSystem.Int32%7D%2CRuntime.Base.Property.IPropertyDependencyModifier%7BRuntime.Common.Properties.HealthInfo%7D%2CRuntime.Base.Property.IPropertyDependencyModifier%7BSystem.Single%7D%2CRuntime.Base.Property.IPropertyDependencyModifier%7BSystem.Single%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L71">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAllBasicsModifiers_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetAllBasicsModifiers*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAllBasicsModifiers_Runtime_Base_Property_IPropertyDependencyModifier_System_Int32__Runtime_Base_Property_IPropertyDependencyModifier_Runtime_Common_Properties_HealthInfo__Runtime_Base_Property_IPropertyDependencyModifier_System_Single__Runtime_Base_Property_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetAllBasicsModifiers(Runtime.Base.Property.IPropertyDependencyModifier{System.Int32},Runtime.Base.Property.IPropertyDependencyModifier{Runtime.Common.Properties.HealthInfo},Runtime.Base.Property.IPropertyDependencyModifier{System.Single},Runtime.Base.Property.IPropertyDependencyModifier{System.Single})">SetAllBasicsModifiers(IPropertyDependencyModifier&lt;int&gt;, IPropertyDependencyModifier&lt;HealthInfo&gt;, IPropertyDependencyModifier&lt;float&gt;, IPropertyDependencyModifier&lt;float&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAllBasicsModifiers(IPropertyDependencyModifier&lt;int&gt; dangerModifier, IPropertyDependencyModifier&lt;HealthInfo&gt; healthInfoModifier, IPropertyDependencyModifier&lt;float&gt; vigilianceModifier, IPropertyDependencyModifier&lt;float&gt; attackRangeModifier)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td><span class="parametername">dangerModifier</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="Runtime.Common.Properties.HealthInfo.html">HealthInfo</a>&gt;</td>
+        <td><span class="parametername">healthInfoModifier</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
+        <td><span class="parametername">vigilianceModifier</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
+        <td><span class="parametername">attackRangeModifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAttackRange_System_Single_Runtime_Base_Property_IPropertyDependencyModifier_System_Single__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetAttackRange(System.Single%2CRuntime.Base.Property.IPropertyDependencyModifier%7BSystem.Single%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L49">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAttackRange_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetAttackRange*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAttackRange_System_Single_Runtime_Base_Property_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetAttackRange(System.Single,Runtime.Base.Property.IPropertyDependencyModifier{System.Single})">SetAttackRange(float, IPropertyDependencyModifier&lt;float&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAttackRange(float attackRange, IPropertyDependencyModifier&lt;float&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></td>
+        <td><span class="parametername">attackRange</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAttackRangeModifier_Runtime_Base_Property_IPropertyDependencyModifier_System_Single__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetAttackRangeModifier(Runtime.Base.Property.IPropertyDependencyModifier%7BSystem.Single%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L54">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAttackRangeModifier_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetAttackRangeModifier*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetAttackRangeModifier_Runtime_Base_Property_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetAttackRangeModifier(Runtime.Base.Property.IPropertyDependencyModifier{System.Single})">SetAttackRangeModifier(IPropertyDependencyModifier&lt;float&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAttackRangeModifier(IPropertyDependencyModifier&lt;float&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetDanger_System_Int32_Runtime_Base_Property_IPropertyDependencyModifier_System_Int32__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetDanger(System.Int32%2CRuntime.Base.Property.IPropertyDependencyModifier%7BSystem.Int32%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L14">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetDanger_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetDanger*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetDanger_System_Int32_Runtime_Base_Property_IPropertyDependencyModifier_System_Int32__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetDanger(System.Int32,Runtime.Base.Property.IPropertyDependencyModifier{System.Int32})">SetDanger(int, IPropertyDependencyModifier&lt;int&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetDanger(int danger, IPropertyDependencyModifier&lt;int&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></td>
+        <td><span class="parametername">danger</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetDangerModifier_Runtime_Base_Property_IPropertyDependencyModifier_System_Int32__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetDangerModifier(Runtime.Base.Property.IPropertyDependencyModifier%7BSystem.Int32%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L19">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetDangerModifier_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetDangerModifier*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetDangerModifier_Runtime_Base_Property_IPropertyDependencyModifier_System_Int32__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetDangerModifier(Runtime.Base.Property.IPropertyDependencyModifier{System.Int32})">SetDangerModifier(IPropertyDependencyModifier&lt;int&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetDangerModifier(IPropertyDependencyModifier&lt;int&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetHealth_Runtime_Common_Properties_HealthInfo_Runtime_Base_Property_IPropertyDependencyModifier_Runtime_Common_Properties_HealthInfo__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetHealth(Runtime.Common.Properties.HealthInfo%2CRuntime.Base.Property.IPropertyDependencyModifier%7BRuntime.Common.Properties.HealthInfo%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L24">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetHealth_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetHealth*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetHealth_Runtime_Common_Properties_HealthInfo_Runtime_Base_Property_IPropertyDependencyModifier_Runtime_Common_Properties_HealthInfo__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetHealth(Runtime.Common.Properties.HealthInfo,Runtime.Base.Property.IPropertyDependencyModifier{Runtime.Common.Properties.HealthInfo})">SetHealth(HealthInfo, IPropertyDependencyModifier&lt;HealthInfo&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetHealth(HealthInfo healthInfo, IPropertyDependencyModifier&lt;HealthInfo&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Properties.HealthInfo.html">HealthInfo</a></td>
+        <td><span class="parametername">healthInfo</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="Runtime.Common.Properties.HealthInfo.html">HealthInfo</a>&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetHealthModifier_Runtime_Base_Property_IPropertyDependencyModifier_Runtime_Common_Properties_HealthInfo__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetHealthModifier(Runtime.Base.Property.IPropertyDependencyModifier%7BRuntime.Common.Properties.HealthInfo%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L29">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetHealthModifier_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetHealthModifier*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetHealthModifier_Runtime_Base_Property_IPropertyDependencyModifier_Runtime_Common_Properties_HealthInfo__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetHealthModifier(Runtime.Base.Property.IPropertyDependencyModifier{Runtime.Common.Properties.HealthInfo})">SetHealthModifier(IPropertyDependencyModifier&lt;HealthInfo&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetHealthModifier(IPropertyDependencyModifier&lt;HealthInfo&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="Runtime.Common.Properties.HealthInfo.html">HealthInfo</a>&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetTaste_Runtime_Common_Properties_TasteType___.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetTaste(Runtime.Common.Properties.TasteType%5B%5D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L34">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetTaste_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetTaste*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetTaste_Runtime_Common_Properties_TasteType___" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetTaste(Runtime.Common.Properties.TasteType[])">SetTaste(params TasteType[])</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetTaste(params TasteType[] tasteTypes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Properties.TasteType.html">TasteType</a>[]</td>
+        <td><span class="parametername">tasteTypes</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetVigiliance_System_Single_Runtime_Base_Property_IPropertyDependencyModifier_System_Single__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetVigiliance(System.Single%2CRuntime.Base.Property.IPropertyDependencyModifier%7BSystem.Single%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L39">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetVigiliance_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetVigiliance*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetVigiliance_System_Single_Runtime_Base_Property_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetVigiliance(System.Single,Runtime.Base.Property.IPropertyDependencyModifier{System.Single})">SetVigiliance(float, IPropertyDependencyModifier&lt;float&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetVigiliance(float vigiliance, IPropertyDependencyModifier&lt;float&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></td>
+        <td><span class="parametername">vigiliance</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetVigilianceModifier_Runtime_Base_Property_IPropertyDependencyModifier_System_Single__.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601.SetVigilianceModifier(Runtime.Base.Property.IPropertyDependencyModifier%7BSystem.Single%7D)%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L44">View Source</a>
+  </span>
+  <a id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetVigilianceModifier_" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetVigilianceModifier*"></a>
+  <h4 id="Runtime_Common_Entities_Enemies_EnemyBuilder_1_SetVigilianceModifier_Runtime_Base_Property_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.Common.Entities.Enemies.EnemyBuilder`1.SetVigilianceModifier(Runtime.Base.Property.IPropertyDependencyModifier{System.Single})">SetVigilianceModifier(IPropertyDependencyModifier&lt;float&gt;)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="declaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetVigilianceModifier(IPropertyDependencyModifier&lt;float&gt; modifier = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Base.Property.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</td>
+        <td><span class="parametername">modifier</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Runtime.Common.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">MikroFramework.Pool.IPoolable</span>
+  </div>
+
+</article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/new/doc-fx/apiSpec/new?filename=Runtime_Common_Entities_Enemies_EnemyBuilder_1.md&amp;value=---%0Auid%3A%20Runtime.Common.Entities.Enemies.EnemyBuilder%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/cty288/Capstone/blob/doc-fx/Assets/02. Scripts/Runtime/Common/Entities/Enemies/EnemyBuilder.cs/#L9" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="toggle-mode">
+                <div class="icon">
+                  <i aria-hidden="true">☀</i>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="switch-style">
+                  <span class="slider round"></span>
+                </label>
+                <div class="icon">
+                  <i aria-hidden="true">☾</i>
+                </div>
+              </div>
+
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <h5>In This Article</h5>
+              <div></div>
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <div class="pull-left">
+        Capstone documentation
+        
+            </div>
+            <div class="toggle-mode pull-right visible-sm visible-xs">
+              <div class="icon">
+                <i aria-hidden="true">☀</i>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="switch-style-m">
+                <span class="slider round"></span>
+              </label>
+              <div class="icon">
+                <i aria-hidden="true">☾</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="../styles/toggle-theme.js"></script>
+      </footer>    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

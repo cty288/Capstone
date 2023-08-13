@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _02._Scripts.Runtime.Base.Entity;
-using _02._Scripts.Runtime.Base.Property;
-using _02._Scripts.Runtime.Common.Properties;
+using Framework;
 using MikroFramework.Pool;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using Polyglot;
+using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.Builders;
+using Runtime.DataFramework.Properties;
 using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
-namespace _02._Scripts.Tests.Tests_Editor {
+namespace Tests.Tests_Editor {
 	public class TestBasicEntityProperty {
 		internal class BasicEntity : Entity {
 			public override string EntityName { get; protected set; } = "TestEntity";
@@ -185,7 +185,7 @@ namespace _02._Scripts.Tests.Tests_Editor {
 			}
 		}
 
-		internal class TestResourceDictProperty : PropertyDictionary<PropertyName,TestResourceProperty> {
+		internal class TestResourceDictProperty : PropertyDictionary<Runtime.DataFramework.Properties.PropertyName,TestResourceProperty> {
 
 			protected override IPropertyDependencyModifier<Dictionary<PropertyName, TestResourceProperty>> GetDefautModifier() {
 				return null;
