@@ -14,8 +14,7 @@ jobs:
       # Check out the branch that triggered this workflow to the 'source' subdirectory
       - name: Checkout Code
         uses: actions/checkout@v2
-        with:
-          path: docfx_project
+      
       - name: install DocFX
         run: "& choco install docfx -y"
       # Run a build
