@@ -28,7 +28,7 @@ jobs:
     - name: Debug information
       run: |
         dotnet --info
-        cat docfx_project/
+        ls
 
     - name: Build docs
       run: docfx docfx_project/docfx.json
