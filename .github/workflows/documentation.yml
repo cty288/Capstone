@@ -3,7 +3,8 @@ name: Example documentation
 on:
   push:
     branches:
-      - main
+      - develop
+      - doc-fx
 
 jobs:
   # Build the documentation
