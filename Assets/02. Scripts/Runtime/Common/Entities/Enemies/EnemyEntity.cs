@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using _02._Scripts.Runtime.Base.Entity.ClassifiedEntity;
 using _02._Scripts.Runtime.Common.Properties;
+using _02._Scripts.Runtime.Common.Properties.TagProperty;
 using _02._Scripts.Runtime.Utilities;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
@@ -19,7 +20,7 @@ public interface IEnemyEntity : IEntity, IHaveCustomProperties {
 	public int GetRarity();
 }
 
-public abstract class EnemyEntity<T> : AbstractHaveCustomPropertiesEntity, IEnemyEntity where T : EnemyEntity<T>, new() {
+public abstract class EnemyEntity<T> : AbstractHaveCustomPropertiesEntity, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
 	protected override void OnEntityRegisterProperties() {
 		RegisterInitialProperty(new Rarity());
 		RegisterInitialProperty<IDangerProperty>(new Danger());
@@ -27,6 +28,7 @@ public abstract class EnemyEntity<T> : AbstractHaveCustomPropertiesEntity, IEnem
 		RegisterInitialProperty<ITasteProperty>(new Taste());
 		RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
 		RegisterInitialProperty<IAttackRangeProperty>(new AttackRange());
+		RegisterInitialProperty<ITagProperty>(new TagProperty());
 		OnEnemyRegisterProperties();
 	}
 	
@@ -59,5 +61,9 @@ public abstract class EnemyEntity<T> : AbstractHaveCustomPropertiesEntity, IEnem
 
 	public override void OnDoRecycle() {
 		SafeObjectPool<T>.Singleton.Recycle(this as T);
+	}
+
+	public ITagProperty GetTagProperty() {
+		return GetProperty<ITagProperty>();
 	}
 }

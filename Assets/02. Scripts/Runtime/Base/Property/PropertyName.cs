@@ -12,6 +12,7 @@ public enum PropertyName {
 	custom_property,
 	custom_property_data,
 	health,
+	tags,
 	resource,
 	resource_list,
 	test_resource_dict,

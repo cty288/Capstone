@@ -50,7 +50,7 @@ namespace _02._Scripts.Runtime.Common.Properties{
 		}
 	}
 
-	public interface ICustomProperty : IDictionaryProperty<string, ICustomDataProperty> {
+	public interface ICustomProperty : IPropertyDictionary<string, ICustomDataProperty> {
 		public string GetCustomPropertyName();
 		public string OnGetDescription();
 

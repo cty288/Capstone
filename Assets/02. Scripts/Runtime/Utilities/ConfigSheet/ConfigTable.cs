@@ -76,7 +76,7 @@ namespace _02._Scripts.Runtime.Utilities.ConfigSheet {
                 Dictionary<string, dynamic> rowDict = new Dictionary<string, dynamic>();
                 for (int i = 0; i < row.Count; i++) {
 	                dynamic value = JsonConvert.DeserializeObject<dynamic>(row[i]);
-	                if(value.Equals("")|| value == null) {
+	                if(value is null || value.Equals("")) {
 		                continue;
 	                }
 	                if (value is double) {
