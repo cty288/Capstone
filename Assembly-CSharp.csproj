@@ -1189,14 +1189,6 @@
       <Project>{3b87792d-97d5-dea8-8a66-48b0dc753994}</Project>
       <Name>Unity.Mathematics.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="BehaviorDesigner.csproj">
-      <Project>{893f2383-f440-05da-b8a0-b6c22254b258}</Project>
-      <Name>BehaviorDesigner</Name>
-    </ProjectReference>
-    <ProjectReference Include="BehaviorDesigner.Movement.csproj">
-      <Project>{15b787ca-d264-c2cb-b28b-8d33fe59781b}</Project>
-      <Name>BehaviorDesigner.Movement</Name>
-    </ProjectReference>
     <ProjectReference Include="Polyglot.Scripts.csproj">
       <Project>{593d9bfd-6b2a-97c5-7dfe-7489616c10b1}</Project>
       <Name>Polyglot.Scripts</Name>
@@ -1220,6 +1212,14 @@
     <ProjectReference Include="EasySave3Editor.csproj">
       <Project>{8f1343fc-353a-4022-0ba2-5337c4ac626d}</Project>
       <Name>EasySave3Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="BehaviorDesigner.Movement.csproj">
+      <Project>{15b787ca-d264-c2cb-b28b-8d33fe59781b}</Project>
+      <Name>BehaviorDesigner.Movement</Name>
+    </ProjectReference>
+    <ProjectReference Include="BehaviorDesigner.csproj">
+      <Project>{893f2383-f440-05da-b8a0-b6c22254b258}</Project>
+      <Name>BehaviorDesigner</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

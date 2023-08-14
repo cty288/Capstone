@@ -734,14 +734,6 @@
       <Project>{f62f6032-258f-9521-b615-ea1e0a6de57d}</Project>
       <Name>MainGame.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="BehaviorDesigner.Player.csproj">
-      <Project>{b2d2de6c-6772-ba75-d90d-85f39aa5d047}</Project>
-      <Name>BehaviorDesigner.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="BehaviorDesigner.Movement.Player.csproj">
-      <Project>{8e8ece51-8272-eb94-1ec2-7a1f9aadc4bf}</Project>
-      <Name>BehaviorDesigner.Movement.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Polyglot.Scripts.Player.csproj">
       <Project>{5b58a0f3-54c6-66ed-0a9b-6dd2504556a0}</Project>
       <Name>Polyglot.Scripts.Player</Name>
@@ -753,6 +745,14 @@
     <ProjectReference Include="Unity.VisualScripting.State.Player.csproj">
       <Project>{40e4d51f-a343-531f-4393-ed1ba4dadd84}</Project>
       <Name>Unity.VisualScripting.State.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="BehaviorDesigner.Movement.Player.csproj">
+      <Project>{8e8ece51-8272-eb94-1ec2-7a1f9aadc4bf}</Project>
+      <Name>BehaviorDesigner.Movement.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="BehaviorDesigner.Player.csproj">
+      <Project>{b2d2de6c-6772-ba75-d90d-85f39aa5d047}</Project>
+      <Name>BehaviorDesigner.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
