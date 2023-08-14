@@ -1,11 +1,14 @@
 ﻿using System;
-using _02._Scripts.Runtime.Common.Entities.Enemies;
-using _02._Scripts.Runtime.Common.Properties;
-using _02._Scripts.Runtime.Common.Properties.SkillsBase;
+using Framework;
 using NUnit.Framework;
+using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.Enemies;
+using Runtime.DataFramework.Properties;
+using Runtime.DataFramework.Properties.CustomProperties;
 using UnityEngine;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
-namespace _02._Scripts.Tests.Tests_Editor {
+namespace Tests.Tests_Editor {
 	public class TestCustomProperty {
 		internal class TestBasicEnemyWithCustomProperties1 : EnemyEntity<TestBasicEnemyWithCustomProperties1> {
 			public override string EntityName { get; protected set; } = "TTT";

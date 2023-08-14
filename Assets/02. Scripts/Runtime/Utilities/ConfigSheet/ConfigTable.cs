@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Polyglot;
 using UnityEngine;
 
-namespace _02._Scripts.Runtime.Utilities.ConfigSheet {
+namespace Runtime.Utilities.ConfigSheet {
 	public class ConfigTable {
 		private string docID;
 		private string sheetID;

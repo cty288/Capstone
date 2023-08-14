@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 
-namespace _02._Scripts.Runtime.Utilities {
+namespace Runtime.Utilities {
 	
 	public class BindableDictExtensionUnregisterOnRemove<TKey, TValue> : IUnRegister
 	{
