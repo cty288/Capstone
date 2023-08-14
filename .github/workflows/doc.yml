@@ -9,7 +9,7 @@ on:
        #if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
 
     
-
+ 
 jobs:
  buildDoc:
     name: Build Doc
@@ -46,11 +46,11 @@ jobs:
         continue-on-error: true
 
     
-  #   - name: Deploy to GitHub Pages
-  #     uses: peaceiris/actions-gh-pages@v3
-  #     with:
-  #       github_token: ${{ secrets.GITHUB_TOKEN }}
-  #       publish_dir: docfx_project/_site
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docfx_project/_site
         
 
 
