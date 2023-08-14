@@ -65,11 +65,11 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
 
-      - name: Setup .NET
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.x' 
+     # - name: Setup .NET
+        #if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+       # uses: actions/setup-dotnet@v1
+        #with:
+        #  dotnet-version: '6.x' 
   
       - name: Install DocFX
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
@@ -82,14 +82,6 @@ jobs:
           dotnet --info
           ls
           ls Assets/
-
-      - name: Build Project 1
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        run: dotnet build  MainGame.csproj
-
-      - name: Build Project 2
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        run: dotnet build  MikroFramework.csproj
         
       - name: Build docs
         run: |
