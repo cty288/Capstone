@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IHotUpdateManager
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IHotUpdateManager
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=MikroFramework_ResKit_IHotUpdateManager.md&amp;value=---%0Auid%3A%20MikroFramework.ResKit.IHotUpdateManager%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MikroFramework.ResKit.IHotUpdateManager">
+
+
+
+  <h1 id="MikroFramework_ResKit_IHotUpdateManager" data-uid="MikroFramework.ResKit.IHotUpdateManager" class="text-break">
+    Interface IHotUpdateManager
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MikroFramework.html">MikroFramework</a>.<a class="xref" href="MikroFramework.ResKit.html">ResKit</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MikroFramework.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IHotUpdateManager : ISingleton</code></pre>
+  </div>
+
+
+
+
+
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.ISingleton.html#MikroFramework_Singletons_ISingleton_OnSingletonInit">ISingleton.OnSingletonInit()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MikroFramework_ResKit_IHotUpdateManager_DeleteRedundantFiles_" data-uid="MikroFramework.ResKit.IHotUpdateManager.DeleteRedundantFiles*"></a>
+
+  <h3 id="MikroFramework_ResKit_IHotUpdateManager_DeleteRedundantFiles_System_Action_System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.IHotUpdateManager.DeleteRedundantFiles(System.Action,System.Action{MikroFramework.ResKit.HotUpdateError})">
+  DeleteRedundantFiles(Action, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void DeleteRedundantFiles(Action onFinished, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onFinished</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_IHotUpdateManager_GetNativeResVersion_" data-uid="MikroFramework.ResKit.IHotUpdateManager.GetNativeResVersion*"></a>
+
+  <h3 id="MikroFramework_ResKit_IHotUpdateManager_GetNativeResVersion_System_Action_MikroFramework_ResKit_ResVersion__System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.IHotUpdateManager.GetNativeResVersion(System.Action{MikroFramework.ResKit.ResVersion},System.Action{MikroFramework.ResKit.HotUpdateError})">
+  GetNativeResVersion(Action&lt;ResVersion&gt;, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetNativeResVersion(Action&lt;ResVersion&gt; getNativeResVersion, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>getNativeResVersion</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.ResVersion.html">ResVersion</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_IHotUpdateManager_GetRemoteResVersion_" data-uid="MikroFramework.ResKit.IHotUpdateManager.GetRemoteResVersion*"></a>
+
+  <h3 id="MikroFramework_ResKit_IHotUpdateManager_GetRemoteResVersion_System_Action_MikroFramework_ResKit_ResVersion__System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.IHotUpdateManager.GetRemoteResVersion(System.Action{MikroFramework.ResKit.ResVersion},System.Action{MikroFramework.ResKit.HotUpdateError})">
+  GetRemoteResVersion(Action&lt;ResVersion&gt;, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void GetRemoteResVersion(Action&lt;ResVersion&gt; onRemoteResVersionGet, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onRemoteResVersionGet</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.ResVersion.html">ResVersion</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_IHotUpdateManager_HasNewVersionRes_" data-uid="MikroFramework.ResKit.IHotUpdateManager.HasNewVersionRes*"></a>
+
+  <h3 id="MikroFramework_ResKit_IHotUpdateManager_HasNewVersionRes_System_Action_System_Boolean_MikroFramework_ResKit_ResVersion__System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.IHotUpdateManager.HasNewVersionRes(System.Action{System.Boolean,MikroFramework.ResKit.ResVersion},System.Action{MikroFramework.ResKit.HotUpdateError})">
+  HasNewVersionRes(Action&lt;bool, ResVersion&gt;, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void HasNewVersionRes(Action&lt;bool, ResVersion&gt; onResult, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onResult</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="MikroFramework.ResKit.ResVersion.html">ResVersion</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_IHotUpdateManager_Init_" data-uid="MikroFramework.ResKit.IHotUpdateManager.Init*"></a>
+
+  <h3 id="MikroFramework_ResKit_IHotUpdateManager_Init_System_Action_System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.IHotUpdateManager.Init(System.Action,System.Action{MikroFramework.ResKit.HotUpdateError})">
+  Init(Action, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Init(Action onInitFinished, Action&lt;HotUpdateError&gt; onInitFailed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onInitFinished</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>onInitFailed</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_IHotUpdateManager_UpdateRes_" data-uid="MikroFramework.ResKit.IHotUpdateManager.UpdateRes*"></a>
+
+  <h3 id="MikroFramework_ResKit_IHotUpdateManager_UpdateRes_System_Action_System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.IHotUpdateManager.UpdateRes(System.Action,System.Action{MikroFramework.ResKit.HotUpdateError})">
+  UpdateRes(Action, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void UpdateRes(Action onUpdateDone, Action&lt;HotUpdateError&gt; onUpdateFailed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onUpdateDone</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>onUpdateFailed</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_IHotUpdateManager_ValidateHotUpdateCompleteness_" data-uid="MikroFramework.ResKit.IHotUpdateManager.ValidateHotUpdateCompleteness*"></a>
+
+  <h3 id="MikroFramework_ResKit_IHotUpdateManager_ValidateHotUpdateCompleteness_System_Action_System_Collections_Generic_List_MikroFramework_ResKit_ABMD5Base___System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.IHotUpdateManager.ValidateHotUpdateCompleteness(System.Action{System.Collections.Generic.List{MikroFramework.ResKit.ABMD5Base}},System.Action{MikroFramework.ResKit.HotUpdateError})">
+  ValidateHotUpdateCompleteness(Action&lt;List&lt;ABMD5Base&gt;&gt;, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ValidateHotUpdateCompleteness(Action&lt;List&lt;ABMD5Base&gt;&gt; onFinished, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onFinished</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="MikroFramework.ResKit.ABMD5Base.html">ABMD5Base</a>&gt;&gt;</dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_IHotUpdateManager_ValidateHotUpdateState_" data-uid="MikroFramework.ResKit.IHotUpdateManager.ValidateHotUpdateState*"></a>
+
+  <h3 id="MikroFramework_ResKit_IHotUpdateManager_ValidateHotUpdateState_System_Action_System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.IHotUpdateManager.ValidateHotUpdateState(System.Action,System.Action{MikroFramework.ResKit.HotUpdateError})">
+  ValidateHotUpdateState(Action, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ValidateHotUpdateState(Action onCheckFinished, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onCheckFinished</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/IHotUpdateManager.cs/#L10" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

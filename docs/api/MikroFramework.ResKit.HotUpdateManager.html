@@ -1,0 +1,1023 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class HotUpdateManager
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class HotUpdateManager
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=MikroFramework_ResKit_HotUpdateManager.md&amp;value=---%0Auid%3A%20MikroFramework.ResKit.HotUpdateManager%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MikroFramework.ResKit.HotUpdateManager">
+
+
+
+  <h1 id="MikroFramework_ResKit_HotUpdateManager" data-uid="MikroFramework.ResKit.HotUpdateManager" class="text-break">
+    Class HotUpdateManager
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MikroFramework.html">MikroFramework</a>.<a class="xref" href="MikroFramework.ResKit.html">ResKit</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MikroFramework.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[MonoSingletonPath(&quot;[FrameworkPersistent]/[ResKit]/HotUpdate/HotUpdateManager&quot;)]
+public class HotUpdateManager : ManagerBehavior, IManager, IHotUpdateManager, ISingleton</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">Object</span></div>
+      <div><span class="xref">Component</span></div>
+      <div><span class="xref">Behaviour</span></div>
+      <div><span class="xref">MonoBehaviour</span></div>
+      <div><a class="xref" href="MikroFramework.MikroBehavior.html">MikroBehavior</a></div>
+      <div><a class="xref" href="MikroFramework.Managers.ManagerBehavior.html">ManagerBehavior</a></div>
+      <div><span class="xref">HotUpdateManager</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="MikroFramework.Managers.IManager.html">IManager</a></div>
+      <div><a class="xref" href="MikroFramework.ResKit.IHotUpdateManager.html">IHotUpdateManager</a></div>
+      <div><a class="xref" href="MikroFramework.Singletons.ISingleton.html">ISingleton</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="MikroFramework.Managers.ManagerBehavior.html#MikroFramework_Managers_ManagerBehavior_OnBeforeDestroy">ManagerBehavior.OnBeforeDestroy()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_AddListener_MikroFramework_Event_EventType_System_Action_MikroFramework_Event_MikroMessage__">MikroBehavior.AddListener(EventType, Action&lt;MikroMessage&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_RemoveListener_MikroFramework_Event_EventType_System_Action_MikroFramework_Event_MikroMessage__">MikroBehavior.RemoveListener(EventType, Action&lt;MikroMessage&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_RemoveListener_MikroFramework_Event_EventType_">MikroBehavior.RemoveListener(EventType)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_Broadcast_MikroFramework_Event_EventType_MikroFramework_Event_MikroMessage_">MikroBehavior.Broadcast(EventType, MikroMessage)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_Delay_System_Single_System_Action_">MikroBehavior.Delay(float, Action)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_Delay_System_Single_MikroFramework_Event_EventType_MikroFramework_Event_MikroMessage_">MikroBehavior.Delay(float, EventType, MikroMessage)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.IsInvoking()</span>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.CancelInvoke()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.Invoke(string, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.InvokeRepeating(string, float, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.CancelInvoke(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.IsInvoking(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StartCoroutine(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StartCoroutine(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StartCoroutine(IEnumerator)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StartCoroutine_Auto(IEnumerator)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StopCoroutine(IEnumerator)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.StopCoroutine(Coroutine)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StopCoroutine(string)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.StopAllCoroutines()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">MonoBehaviour.print(object)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.useGUILayout</span>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.runInEditMode</span>
+    </div>
+    <div>
+      <span class="xref">Behaviour.enabled</span>
+    </div>
+    <div>
+      <span class="xref">Behaviour.isActiveAndEnabled</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponent(Type)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponent&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.TryGetComponent(Type, out Component)</a>
+    </div>
+    <div>
+      <span class="xref">Component.TryGetComponent&lt;T&gt;(out T)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.GetComponent(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInChildren(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInChildren(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentInChildren&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentInChildren&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInChildren(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInChildren(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInChildren&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInChildren&lt;T&gt;(bool, List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentsInChildren&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">Component.GetComponentsInChildren&lt;T&gt;(List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInParent(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInParent(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentInParent&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentInParent&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInParent(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInParent(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInParent&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInParent&lt;T&gt;(bool, List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentsInParent&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponents(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponents(Type, List&lt;Component&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">Component.GetComponents&lt;T&gt;(List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponents&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.CompareTag(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <span class="xref">Component.transform</span>
+    </div>
+    <div>
+      <span class="xref">Component.gameObject</span>
+    </div>
+    <div>
+      <span class="xref">Component.tag</span>
+    </div>
+    <div>
+      <span class="xref">Object.GetInstanceID()</span>
+    </div>
+    <div>
+      <span class="xref">Object.GetHashCode()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object.Equals(object)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object, Vector3, Quaternion)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object, Vector3, Quaternion, Transform)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object, Transform)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.Instantiate(Object, Transform, bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T, Vector3, Quaternion)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T, Vector3, Quaternion, Transform)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T, Transform)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.Instantiate&lt;T&gt;(T, Transform, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Object.Destroy(Object, float)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Destroy(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.DestroyImmediate(Object, bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.DestroyImmediate(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfType(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsByType(Type, FindObjectsSortMode)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsByType(Type, FindObjectsInactive, FindObjectsSortMode)</a>
+    </div>
+    <div>
+      <span class="xref">Object.DontDestroyOnLoad(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Object.DestroyObject(Object, float)</a>
+    </div>
+    <div>
+      <span class="xref">Object.DestroyObject(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindSceneObjectsOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfTypeIncludingAssets(Type)</a>
+    </div>
+    <div>
+      <span class="xref">Object.FindObjectsOfType&lt;T&gt;()</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindObjectsByType&lt;T&gt;(FindObjectsSortMode)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.FindObjectsOfType&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.FindObjectsByType&lt;T&gt;(FindObjectsInactive, FindObjectsSortMode)</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindObjectOfType&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.FindObjectOfType&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.FindFirstObjectByType&lt;T&gt;()</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindAnyObjectByType&lt;T&gt;()</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindFirstObjectByType&lt;T&gt;(FindObjectsInactive)</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindAnyObjectByType&lt;T&gt;(FindObjectsInactive)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfTypeAll(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindFirstObjectByType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindAnyObjectByType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectOfType(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindFirstObjectByType(Type, FindObjectsInactive)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindAnyObjectByType(Type, FindObjectsInactive)</a>
+    </div>
+    <div>
+      <span class="xref">Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">Object.name</span>
+    </div>
+    <div>
+      <span class="xref">Object.hideFlags</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MonoActionExecutor.html#MikroFramework_ActionKit_MonoActionExecutor_Execute_UnityEngine_MonoBehaviour_MikroFramework_ActionKit_MikroAction_">MonoActionExecutor.Execute(MonoBehaviour, MikroAction)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MonoBehaviorActionExtensions.html#MikroFramework_ActionKit_MonoBehaviorActionExtensions_Repeat_UnityEngine_MonoBehaviour_System_Int32_">MonoBehaviorActionExtensions.Repeat(MonoBehaviour, int)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MonoBehaviorActionExtensions.html#MikroFramework_ActionKit_MonoBehaviorActionExtensions_Sequence_UnityEngine_MonoBehaviour_">MonoBehaviorActionExtensions.Sequence(MonoBehaviour)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MonoBehaviorActionExtensions.html#MikroFramework_ActionKit_MonoBehaviorActionExtensions_Spawn_UnityEngine_MonoBehaviour_">MonoBehaviorActionExtensions.Spawn(MonoBehaviour)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.DelayActionExtensions.html#MikroFramework_DelayActionExtensions_Delay_UnityEngine_MonoBehaviour_System_Single_System_Action_">DelayActionExtensions.Delay(MonoBehaviour, float, Action)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Extensions.GameObjectExtension.html#MikroFramework_Extensions_GameObjectExtension_Hide_UnityEngine_MonoBehaviour_">GameObjectExtension.Hide(MonoBehaviour)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Extensions.GameObjectExtension.html#MikroFramework_Extensions_GameObjectExtension_Show_UnityEngine_MonoBehaviour_">GameObjectExtension.Show(MonoBehaviour)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Extensions.TransformExtension.html#MikroFramework_Extensions_TransformExtension_Identity_UnityEngine_MonoBehaviour_">TransformExtension.Identity(MonoBehaviour)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_Downloader_" data-uid="MikroFramework.ResKit.HotUpdateManager.Downloader*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_Downloader" data-uid="MikroFramework.ResKit.HotUpdateManager.Downloader">
+  Downloader
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The downloader of the current hot-update manager</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IHotUpdateDownloader Downloader { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.ResKit.IHotUpdateDownloader.html">IHotUpdateDownloader</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_Singleton_" data-uid="MikroFramework.ResKit.HotUpdateManager.Singleton*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_Singleton" data-uid="MikroFramework.ResKit.HotUpdateManager.Singleton">
+  Singleton
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static HotUpdateManager Singleton { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.ResKit.HotUpdateManager.html">HotUpdateManager</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_State_" data-uid="MikroFramework.ResKit.HotUpdateManager.State*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_State" data-uid="MikroFramework.ResKit.HotUpdateManager.State">
+  State
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The hot-update state of the current game</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public HotUpdateState State { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.ResKit.HotUpdateState.html">HotUpdateState</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_DeleteRedundantFiles_" data-uid="MikroFramework.ResKit.HotUpdateManager.DeleteRedundantFiles*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_DeleteRedundantFiles_System_Action_System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.HotUpdateManager.DeleteRedundantFiles(System.Action,System.Action{MikroFramework.ResKit.HotUpdateError})">
+  DeleteRedundantFiles(Action, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L284"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delete redundant AB files on the hot-update folder. Make sure to call it after hot-update
+It will not delete those on the local folder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DeleteRedundantFiles(Action onFinished, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onFinished</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_DisableUpdateDownloadSpeed_" data-uid="MikroFramework.ResKit.HotUpdateManager.DisableUpdateDownloadSpeed*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_DisableUpdateDownloadSpeed" data-uid="MikroFramework.ResKit.HotUpdateManager.DisableUpdateDownloadSpeed">
+  DisableUpdateDownloadSpeed()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L368"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Disable the hot-update manager to update real-time download speed</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DisableUpdateDownloadSpeed()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_EnableUpdateDownloadSpeed_" data-uid="MikroFramework.ResKit.HotUpdateManager.EnableUpdateDownloadSpeed*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_EnableUpdateDownloadSpeed_System_Single_" data-uid="MikroFramework.ResKit.HotUpdateManager.EnableUpdateDownloadSpeed(System.Single)">
+  EnableUpdateDownloadSpeed(float)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L361"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Enable the hot-update manager to update real-time download speed (this may cost extra memory).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EnableUpdateDownloadSpeed(float updateInterval = 1)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>updateInterval</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd><p>Update time interval (seconds)</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_Exists_" data-uid="MikroFramework.ResKit.HotUpdateManager.Exists*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_Exists" data-uid="MikroFramework.ResKit.HotUpdateManager.Exists">
+  Exists()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns whether the HotUpdateManager exists</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool Exists()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_GetNativeResVersion_" data-uid="MikroFramework.ResKit.HotUpdateManager.GetNativeResVersion*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_GetNativeResVersion_System_Action_MikroFramework_ResKit_ResVersion__System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.HotUpdateManager.GetNativeResVersion(System.Action{MikroFramework.ResKit.ResVersion},System.Action{MikroFramework.ResKit.HotUpdateError})">
+  GetNativeResVersion(Action&lt;ResVersion&gt;, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the ResVersion of the current game on the local computer</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetNativeResVersion(Action&lt;ResVersion&gt; getNativeResVersion, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>getNativeResVersion</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.ResVersion.html">ResVersion</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_GetRemoteResVersion_" data-uid="MikroFramework.ResKit.HotUpdateManager.GetRemoteResVersion*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_GetRemoteResVersion_System_Action_MikroFramework_ResKit_ResVersion__System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.HotUpdateManager.GetRemoteResVersion(System.Action{MikroFramework.ResKit.ResVersion},System.Action{MikroFramework.ResKit.HotUpdateError})">
+  GetRemoteResVersion(Action&lt;ResVersion&gt;, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Download ResVersion file from the remote server</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void GetRemoteResVersion(Action&lt;ResVersion&gt; onRemoteResVersionGet, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onRemoteResVersionGet</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.ResVersion.html">ResVersion</a>&gt;</dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_HasNewVersionRes_" data-uid="MikroFramework.ResKit.HotUpdateManager.HasNewVersionRes*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_HasNewVersionRes_System_Action_System_Boolean_MikroFramework_ResKit_ResVersion__System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.HotUpdateManager.HasNewVersionRes(System.Action{System.Boolean,MikroFramework.ResKit.ResVersion},System.Action{MikroFramework.ResKit.HotUpdateError})">
+  HasNewVersionRes(Action&lt;bool, ResVersion&gt;, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get if there's a new version on the remote server</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void HasNewVersionRes(Action&lt;bool, ResVersion&gt; onResult, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onResult</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>, <a class="xref" href="MikroFramework.ResKit.ResVersion.html">ResVersion</a>&gt;</dt>
+    <dd><p>returned result (including the native ResVersion file)</p>
+</dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_Init_" data-uid="MikroFramework.ResKit.HotUpdateManager.Init*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_Init_System_Action_System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.HotUpdateManager.Init(System.Action,System.Action{MikroFramework.ResKit.HotUpdateError})">
+  Init(Action, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Init the HotUpdateManager (recommend to use before using any other APIs), and ValidareHotUpdateState</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Init(Action onInitFinished, Action&lt;HotUpdateError&gt; onInitFailed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onInitFinished</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>onInitFailed</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_UpdateRes_" data-uid="MikroFramework.ResKit.HotUpdateManager.UpdateRes*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_UpdateRes_System_Action_System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.HotUpdateManager.UpdateRes(System.Action,System.Action{MikroFramework.ResKit.HotUpdateError})">
+  UpdateRes(Action, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Download new resources from the remote server, and replace the local resource</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UpdateRes(Action onUpdateDone, Action&lt;HotUpdateError&gt; onUpdateFailed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onUpdateDone</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>onUpdateFailed</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_ValidateHotUpdateCompleteness_" data-uid="MikroFramework.ResKit.HotUpdateManager.ValidateHotUpdateCompleteness*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_ValidateHotUpdateCompleteness_System_Action_System_Collections_Generic_List_MikroFramework_ResKit_ABMD5Base___System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.HotUpdateManager.ValidateHotUpdateCompleteness(System.Action{System.Collections.Generic.List{MikroFramework.ResKit.ABMD5Base}},System.Action{MikroFramework.ResKit.HotUpdateError})">
+  ValidateHotUpdateCompleteness(Action&lt;List&lt;ABMD5Base&gt;&gt;, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L213"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check the completeness of hot updated files on both local and hot-update folder. Download them
+if they are incomplete
+return a list of abs that are updated if validate success (return null if nothing to update)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ValidateHotUpdateCompleteness(Action&lt;List&lt;ABMD5Base&gt;&gt; onFinished, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onFinished</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="MikroFramework.ResKit.ABMD5Base.html">ABMD5Base</a>&gt;&gt;</dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResKit_HotUpdateManager_ValidateHotUpdateState_" data-uid="MikroFramework.ResKit.HotUpdateManager.ValidateHotUpdateState*"></a>
+
+  <h3 id="MikroFramework_ResKit_HotUpdateManager_ValidateHotUpdateState_System_Action_System_Action_MikroFramework_ResKit_HotUpdateError__" data-uid="MikroFramework.ResKit.HotUpdateManager.ValidateHotUpdateState(System.Action,System.Action{MikroFramework.ResKit.HotUpdateError})">
+  ValidateHotUpdateState(Action, Action&lt;HotUpdateError&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check and update the current hot-update state of the game</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ValidateHotUpdateState(Action onCheckFinished, Action&lt;HotUpdateError&gt; onError)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onCheckFinished</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+    <dt><code>onError</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MikroFramework.ResKit.HotUpdateError.html">HotUpdateError</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Managers/HotUpdateManager.cs/#L37" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

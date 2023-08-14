@@ -1,7 +1,6 @@
 ﻿using MikroFramework.Singletons;
-using UnityEngine;
 
-namespace _02._Scripts.Runtime.Utilities.ConfigSheet {
+namespace Runtime.Utilities.ConfigSheet {
 	public class ConfigDatas : MikroSingleton<ConfigDatas> {
 		private ConfigDatas(){}
 

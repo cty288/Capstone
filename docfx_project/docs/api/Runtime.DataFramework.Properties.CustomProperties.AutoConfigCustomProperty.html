@@ -1,0 +1,485 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class AutoConfigCustomProperty
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class AutoConfigCustomProperty
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty">
+
+
+
+  <h1 id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty" class="text-break">
+    Class AutoConfigCustomProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/CustomProperties/CustomProperty.cs/#L257"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Properties.html">Properties</a>.<a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.html">CustomProperties</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>If you don't want to manually specify custom property data, you can use this class to create a Custom property.
+However, this class is data only, which means you can't set any default modifiers for any Custom data (although you can use the builder to override, but the generic type of your modifier MUST BE dynamic in this case!!).
+Also, data is only loaded from config file.
+Moreover, all Custom data in the config file will be automatically loaded into this class, with type of dynamic.
+To customize the description of this Custom, you need to assign a data only Custom description getter.
+This is particularly useful if ALL of its data is primitive type, and you don't want to manually specify them.
+If any of its data is complex type, the complex data will be a dynamic object (ExpandoObject). So it's better to use CustomProperty instead.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class AutoConfigCustomProperty : CustomProperty, ICustomProperty, IPropertyDictionary&lt;string, ICustomDataProperty&gt;, IDictionaryProperty&lt;string, ICustomDataProperty&gt;, IProperty&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;, IHaveSubProperties, IPropertyBase</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.Property-1.html">Property</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty.html">ICustomDataProperty</a>&gt;&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html">PropertyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty.html">ICustomDataProperty</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html">CustomProperty</a></div>
+      <div><span class="xref">AutoConfigCustomProperty</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomProperty.html">ICustomProperty</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.IPropertyDictionary-2.html">IPropertyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty.html">ICustomDataProperty</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.IDictionaryProperty-2.html">IDictionaryProperty</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty.html">ICustomDataProperty</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html">IProperty</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty.html">ICustomDataProperty</a>&gt;&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.IHaveSubProperties.html">IHaveSubProperties</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.IPropertyBase.html">IPropertyBase</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_propertyName">CustomProperty.propertyName</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_descriptionGetter">CustomProperty.descriptionGetter</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetDefautModifier">CustomProperty.GetDefautModifier()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetPropertyName">CustomProperty.GetPropertyName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetDefaultDependentProperties">CustomProperty.GetDefaultDependentProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetKey_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_">CustomProperty.GetKey(ICustomDataProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetCustomDataValue_System_String_">CustomProperty.GetCustomDataValue(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetCustomDataValue__1_System_String_">CustomProperty.GetCustomDataValue&lt;T&gt;(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetCustomPropertyName">CustomProperty.GetCustomPropertyName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_OnGetDescription">CustomProperty.OnGetDescription()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetCustomDataProperty_System_String_">CustomProperty.GetCustomDataProperty(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_GetCustomDataProperty__1_System_String_">CustomProperty.GetCustomDataProperty&lt;T&gt;(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_RegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_System_Object_System_Object__">CustomProperty.RegisterOnCustomDataChanged(string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_RegisterOnCustomDataChanged_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__">CustomProperty.RegisterOnCustomDataChanged(Action&lt;ICustomProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_UnRegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_System_Object_System_Object__">CustomProperty.UnRegisterOnCustomDataChanged(string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_UnRegisterOnCustomDataChanged_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__">CustomProperty.UnRegisterOnCustomDataChanged(Action&lt;ICustomProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_Initialize_Runtime_DataFramework_Properties_IPropertyBase___System_String_">CustomProperty.Initialize(IPropertyBase[], string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty_OnLoadFromSavedData">CustomProperty.OnLoadFromSavedData()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_BaseValue">PropertyDictionary&lt;string, ICustomDataProperty&gt;.BaseValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_RealValue">PropertyDictionary&lt;string, ICustomDataProperty&gt;.RealValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_RealValues">PropertyDictionary&lt;string, ICustomDataProperty&gt;.RealValues</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_InitialValue">PropertyDictionary&lt;string, ICustomDataProperty&gt;.InitialValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_GetKey__1_">PropertyDictionary&lt;string, ICustomDataProperty&gt;.GetKey(ICustomDataProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_OnLoadFromSavedData">PropertyDictionary&lt;string, ICustomDataProperty&gt;.OnLoadFromSavedData()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_SetBaseValue_System_Collections_Generic_Dictionary__0__1__">PropertyDictionary&lt;string, ICustomDataProperty&gt;.SetBaseValue(Dictionary&lt;string, ICustomDataProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_OnSetChildFullName">PropertyDictionary&lt;string, ICustomDataProperty&gt;.OnSetChildFullName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_AddToRealValue__1_">PropertyDictionary&lt;string, ICustomDataProperty&gt;.AddToRealValue(ICustomDataProperty)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_RemoveFromRealValue__0_">PropertyDictionary&lt;string, ICustomDataProperty&gt;.RemoveFromRealValue(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_OnClone_System_Collections_Generic_Dictionary__0__1__">PropertyDictionary&lt;string, ICustomDataProperty&gt;.OnClone(Dictionary&lt;string, ICustomDataProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_Initialize_Runtime_DataFramework_Properties_IPropertyBase___System_String_">PropertyDictionary&lt;string, ICustomDataProperty&gt;.Initialize(IPropertyBase[], string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_GetChildProperties">PropertyDictionary&lt;string, ICustomDataProperty&gt;.GetChildProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_requestRegisterProperty">PropertyDictionary&lt;string, ICustomDataProperty&gt;.requestRegisterProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_RegisterRequestRegisterProperty_System_Action_System_Type_Runtime_DataFramework_Properties_IPropertyBase_System_String_System_Boolean_System_Boolean__">PropertyDictionary&lt;string, ICustomDataProperty&gt;.RegisterRequestRegisterProperty(Action&lt;Type, IPropertyBase, string, bool, bool&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_UnregisterRequestRegisterProperty_System_Action_System_Type_Runtime_DataFramework_Properties_IPropertyBase_System_String_System_Boolean_System_Boolean__">PropertyDictionary&lt;string, ICustomDataProperty&gt;.UnregisterRequestRegisterProperty(Action&lt;Type, IPropertyBase, string, bool, bool&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_GetDefaultDependentProperties">PropertyDictionary&lt;string, ICustomDataProperty&gt;.GetDefaultDependentProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.PropertyDictionary-2.html#Runtime_DataFramework_Properties_PropertyDictionary_2_OnRecycled">PropertyDictionary&lt;string, ICustomDataProperty&gt;.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_PropertyName">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.PropertyName</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_fullName">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.fullName</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_BaseValue">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.BaseValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_InitialValue">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.InitialValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_RealValue">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.RealValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_overrideDependentProperties">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.overrideDependentProperties</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetBaseValue__0_">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.SetBaseValue(Dictionary&lt;string, ICustomDataProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnSetFullName_System_String_">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.OnSetFullName(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetFullName">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.GetFullName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_modifier">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.modifier</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnRecycled">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetModifier__1_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.SetModifier&lt;ValueType&gt;(IPropertyDependencyModifier&lt;ValueType&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetDefautModifier">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.GetDefautModifier()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetPropertyName">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.GetPropertyName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetDefaultDependentProperties">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.GetDefaultDependentProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetDependentProperties">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.GetDependentProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetDependentProperties_Runtime_DataFramework_Properties_PropertyNameInfo___">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.SetDependentProperties(params PropertyNameInfo[])</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_Initialize_Runtime_DataFramework_Properties_IPropertyBase___System_String_">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.Initialize(IPropertyBase[], string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnClone__0_">Property&lt;Dictionary&lt;string, ICustomDataProperty&gt;&gt;.OnClone(Dictionary&lt;string, ICustomDataProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty__ctor_" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor*"></a>
+
+  <h3 id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty__ctor" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor">
+  AutoConfigCustomProperty()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/CustomProperties/CustomProperty.cs/#L259"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AutoConfigCustomProperty()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty__ctor_" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor*"></a>
+
+  <h3 id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty__ctor_System_String_Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter)">
+  AutoConfigCustomProperty(string, IDescriptionGetter)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/CustomProperties/CustomProperty.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AutoConfigCustomProperty(string CustomName, IDescriptionGetter descriptionGetter = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>CustomName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>descriptionGetter</code> <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter.html">IDescriptionGetter</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty_OnGetBaseValueFromConfig_" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.OnGetBaseValueFromConfig*"></a>
+
+  <h3 id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty_OnGetBaseValueFromConfig_System_Object_" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.OnGetBaseValueFromConfig(System.Object)">
+  OnGetBaseValueFromConfig(dynamic)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/CustomProperties/CustomProperty.cs/#L266"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Dictionary&lt;string, ICustomDataProperty&gt; OnGetBaseValueFromConfig(dynamic value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">dynamic</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty.html">ICustomDataProperty</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty_OnRecycled_" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.OnRecycled*"></a>
+
+  <h3 id="Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty_OnRecycled" data-uid="Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.OnRecycled">
+  OnRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/CustomProperties/CustomProperty.cs/#L286"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnRecycled()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/CustomProperties/CustomProperty.cs/#L257" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
