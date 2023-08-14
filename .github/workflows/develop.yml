@@ -65,35 +65,4 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
 
-      - name: Setup .NET
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '4.x' 
-  
-      - name: Install DocFX
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        run: |
-          mkdir ~/docfx_install
-          cd ~/docfx_install
-          dotnet tool install --global docfx
-      - name: Debug information
-        run: |
-          dotnet --info
-          ls
-          ls Assets/
-        
-      - name: Build docs
-        run: |
-          docfx docfx_project/docfx.json
-          ls
-        continue-on-error: true
-  
       
-      - name: Deploy to GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docfx_project/_site
-    
