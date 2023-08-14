@@ -1140,6 +1140,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.38, z: 0.27}
   m_Center: {x: 0, y: 0.24, z: 0}
+--- !u!1 &1298327858 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3493241377681090435, guid: d808818389e67a940ac2b47a4fba4ccf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1540613496}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1308815434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,7 +1581,7 @@ PrefabInstance:
     - target: {fileID: 5324266518941998409, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
       propertyPath: layer.m_Bits
-      value: 128
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5324266518941998409, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
@@ -2821,18 +2827,24 @@ MonoBehaviour:
     m_Style: 1
     m_Time: 2
     m_CustomCurve:
-      serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
   m_CustomBlends: {fileID: 0}
+  m_OutputCamera: {fileID: 2014121138}
+  m_TargetOverride: {fileID: 0}
   m_CameraCutEvent:
     m_PersistentCalls:
       m_Calls: []
+    m_CallsDirty: 1
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+    m_CallsDirty: 1
+  m_LastFrameUpdated: 119
+  mNextFrameId: 1
+  mActiveCameraPreviousFrameGameObject: {fileID: 1298327858}
 --- !u!1 &2023724840
 GameObject:
   m_ObjectHideFlags: 0

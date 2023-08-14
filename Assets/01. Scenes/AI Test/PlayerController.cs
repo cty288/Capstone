@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour, IHitResponder, IHurtResponder
 
     [SerializeField] private int m_damage = 10;
     public int Damage => m_damage;
-
+ 
     private List<GameObject> hitObjects = new List<GameObject>();
 
 
