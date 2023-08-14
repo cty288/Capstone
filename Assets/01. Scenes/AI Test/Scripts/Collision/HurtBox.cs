@@ -28,7 +28,7 @@ public class HurtBox : MonoBehaviour, IHurtbox
     public bool CheckHit(HitData data)
     {
         if (m_hurtResponder == null)
-            Debug.Log("responder is null");
+            Debug.Log("hurt responder is null");
 
         return true;
     }

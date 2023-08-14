@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour, IHitResponder
 
     public void HitResponse(HitData data)
     {
-        // Debug.Log("Bullet Hit Response");
+        Debug.Log("Bullet Hit Response: " + data.HitPoint);
         Instantiate(explosionPrefab, data.HitPoint, Quaternion.identity);
         Destroy(gameObject);
     }

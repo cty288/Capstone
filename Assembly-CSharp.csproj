@@ -934,14 +934,6 @@
       <Project>{8f1343fc-353a-4022-0ba2-5337c4ac626d}</Project>
       <Name>EasySave3Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="BehaviorDesigner.Movement.csproj">
-      <Project>{15b787ca-d264-c2cb-b28b-8d33fe59781b}</Project>
-      <Name>BehaviorDesigner.Movement</Name>
-    </ProjectReference>
-    <ProjectReference Include="BehaviorDesigner.csproj">
-      <Project>{893f2383-f440-05da-b8a0-b6c22254b258}</Project>
-      <Name>BehaviorDesigner</Name>
-    </ProjectReference>
     <ProjectReference Include="com.unity.cinemachine.editor.csproj">
       <Project>{a419449f-af4b-a560-ab4f-7ad76474d6fc}</Project>
       <Name>com.unity.cinemachine.editor</Name>
@@ -953,6 +945,14 @@
     <ProjectReference Include="Unity.InputSystem.csproj">
       <Project>{f12cb4fc-8f20-b9f0-5e9c-57ecd677a831}</Project>
       <Name>Unity.InputSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="BehaviorDesigner.Movement.csproj">
+      <Project>{15b787ca-d264-c2cb-b28b-8d33fe59781b}</Project>
+      <Name>BehaviorDesigner.Movement</Name>
+    </ProjectReference>
+    <ProjectReference Include="BehaviorDesigner.csproj">
+      <Project>{893f2383-f440-05da-b8a0-b6c22254b258}</Project>
+      <Name>BehaviorDesigner</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

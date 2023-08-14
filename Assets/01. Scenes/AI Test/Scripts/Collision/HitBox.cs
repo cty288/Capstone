@@ -33,11 +33,11 @@ public class HitBox : MonoBehaviour, IHitDetector
         RaycastHit[] hits = Physics.BoxCastAll(start, halfExtents, direction, orientation, distance, layerMask);
         foreach (RaycastHit hit in hits)
         {
-            // Debug.Log("raycasthit: " + hit);
+            // Debug.Log("raycasthit: " + hit.point);
             hurtbox = hit.collider.GetComponent<IHurtbox>();
             if (hurtbox != null)
             {
-                hitData = new HitData(m_hitResponder, hurtbox, hit, this);
+                hitData = new HitData().SetHitBoxData(m_hitResponder, hurtbox, hit, this, center);
             }
 
             if (hitData.Validate())

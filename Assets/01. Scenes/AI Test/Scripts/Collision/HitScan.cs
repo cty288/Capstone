@@ -29,7 +29,7 @@ public class HitScan : IHitDetector
             IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
             if (hurtbox != null)
             {
-                hitData = new HitData(m_hitResponder, hurtbox, hit, this);
+                hitData = new HitData().SetHitScanData(m_hitResponder, hurtbox, hit, this);
             }
 
             if (hitData.Validate())

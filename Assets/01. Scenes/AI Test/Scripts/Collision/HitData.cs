@@ -10,15 +10,26 @@ public class HitData
     public IHurtbox Hurtbox;
     public IHitDetector HitDetector;
 
-    public HitData() { }
+    // public HitData() { }
 
-    public HitData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector)
+    public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector)
     {
         Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultipler);
         HitPoint = hit.point;
         HitNormal = hit.normal;
         Hurtbox = hurtbox;
         HitDetector = hitDetector;
+        return this;
+    }
+
+    public HitData SetHitBoxData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector, Vector3 hitBoxCenter)
+    {
+        Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultipler);
+        HitPoint = hit.point == Vector3.zero ? hitBoxCenter : hit.point;
+        HitNormal = hit.normal;
+        Hurtbox = hurtbox;
+        HitDetector = hitDetector;
+        return this;
     }
 
     public bool Validate()
