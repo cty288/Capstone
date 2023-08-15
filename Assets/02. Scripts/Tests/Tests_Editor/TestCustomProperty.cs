@@ -28,6 +28,8 @@ namespace Tests.Tests_Editor {
 					new AutoConfigCustomProperty("attack3")
 				};
 			}
+
+
 		}
 		
 

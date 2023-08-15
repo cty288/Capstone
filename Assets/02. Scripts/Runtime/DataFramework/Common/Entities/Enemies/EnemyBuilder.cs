@@ -2,10 +2,11 @@
 using System.Linq;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.Builders;
+using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
 
 namespace Runtime.DataFramework.Entities.Enemies {
-	public class EnemyBuilder<T> : EntityBuilder<EnemyBuilder<T>, T> where T : class, IEntity, new() {
+	public class EnemyBuilder<T> : CreatureBuilder<EnemyBuilder<T>, T> where T : class, IEntity, new() {
 		
 		public EnemyBuilder() {
 			CheckEntity();
@@ -20,17 +21,10 @@ namespace Runtime.DataFramework.Entities.Enemies {
 			return this;
 		}
 		
-		public EnemyBuilder<T> SetHealth(HealthInfo healthInfo, IPropertyDependencyModifier<HealthInfo> modifier = null) {
-			SetProperty<HealthInfo>(new PropertyNameInfo(PropertyName.health), healthInfo, modifier);
-			return this;
-		}
 		
-		public EnemyBuilder<T> SetHealthModifier(IPropertyDependencyModifier<HealthInfo> modifier = null) {
-			SetModifier(new PropertyNameInfo(PropertyName.health), modifier);
-			return this;
-		}
 
 		public EnemyBuilder<T> SetTaste(params TasteType[] tasteTypes) {
+			
 			SetProperty<List<TasteType>>(new PropertyNameInfo(PropertyName.taste), tasteTypes.ToList());
 			return this;
 		}

@@ -46,6 +46,11 @@ namespace Runtime.DataFramework.ViewControllers {
 		}
 
 		protected virtual void Start() {
+			OnStart();
+			OnEntityStart();
+		}
+
+		protected virtual void OnStart() {
 			if (string.IsNullOrEmpty(ID)) {
 				//Debug.LogError("ID for enemy is null or empty! Do not instantiate enemy view controller directly! " +
 				//               "Use EntityBuilderFactory instead!");
@@ -56,7 +61,6 @@ namespace Runtime.DataFramework.ViewControllers {
 			}
 			BindedEntity = entityModel.GetEntity(ID) as T;
 			OnBindProperty();
-			OnEntityStart();
 		}
 
 		protected abstract IEntity OnInitEntity();

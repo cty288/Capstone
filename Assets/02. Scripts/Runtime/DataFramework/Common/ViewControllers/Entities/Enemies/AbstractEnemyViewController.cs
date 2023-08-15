@@ -5,7 +5,7 @@ using Runtime.DataFramework.Properties;
 using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Enemies {
-	public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropertyEntityViewController<T, IEnemyEntityModel>, IEnemyViewController 
+	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T, IEnemyEntityModel>, IEnemyViewController 
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;
 	
@@ -24,6 +24,7 @@ namespace Runtime.DataFramework.ViewControllers.Enemies {
 
 		protected override void Awake() {
 			base.Awake();
+			
 			enemyEntityModel = this.GetModel<IEnemyEntityModel>();
 		}
 

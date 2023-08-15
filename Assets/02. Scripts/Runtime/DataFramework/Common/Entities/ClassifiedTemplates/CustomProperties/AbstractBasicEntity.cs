@@ -2,19 +2,36 @@
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.DataFramework.Properties.TagProperty;
 
 namespace Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties {
-	public abstract class AbstractHaveCustomPropertiesEntity: global::Runtime.DataFramework.Entities.Entity, IHaveCustomProperties {
+	
+	/// <summary>
+	/// Basically all entities inherit from this class. Auto register the custom properties, rarity, and tags
+	/// </summary>
+	public abstract class AbstractBasicEntity: global::Runtime.DataFramework.Entities.Entity, IHaveCustomProperties, IHaveTags {
 		
 		
 		protected override void OnRegisterProperties() {
 			ICustomProperty[] properties = OnRegisterCustomProperties();
+			RegisterInitialProperty(new Rarity());
+			RegisterInitialProperty<ITagProperty>(new TagProperty());
 			RegisterInitialProperty<ICustomProperties>(new Properties.CustomProperties.CustomProperties(properties));
-			OnEntityRegisterProperties();
+			OnEntityRegisterAdditionalProperties();
 		}
 
-		protected abstract void OnEntityRegisterProperties();
+		/// <summary>
+		/// A place to register additional properties, normally empty. Recommended to register custom properties instead.
+		/// </summary>
+		protected abstract void OnEntityRegisterAdditionalProperties();
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		protected abstract ICustomProperty[] OnRegisterCustomProperties();
 		
 
@@ -73,6 +90,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties {
 		}
 		
 		
-		//TODO: add set
+		public ITagProperty GetTagProperty() {
+			return GetProperty<ITagProperty>();
+		}
 	}
 }

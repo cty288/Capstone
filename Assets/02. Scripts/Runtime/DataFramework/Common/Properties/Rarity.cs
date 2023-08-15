@@ -1,4 +1,5 @@
 ﻿namespace Runtime.DataFramework.Properties {
+	
 	public interface IRarityProperty : IProperty<int>, ILoadFromConfigProperty {
 	
 	}
@@ -10,6 +11,7 @@
 		}
 
 		protected override PropertyName GetPropertyName() {
+			
 			return PropertyName.rarity;
 		}
 	}

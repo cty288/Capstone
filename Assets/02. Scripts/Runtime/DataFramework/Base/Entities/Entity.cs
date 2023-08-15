@@ -147,6 +147,7 @@ namespace Runtime.DataFramework.Entities {
 		protected ConfigTable configTable;
 		public Entity() {
 			configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
+			
 			OnRegisterProperties();
 		}
 		public void OnLoadFromSave() {
