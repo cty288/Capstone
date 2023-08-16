@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Interface IHaveTags
+      <title>Interface IBelongToFaction
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Interface IHaveTags
+      <meta name="title" content="Interface IBelongToFaction
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_Entities_ClassifiedTemplates_Tags_IHaveTags.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags">
+        <article data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction">
 
 
 
-  <h1 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Tags_IHaveTags" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags" class="text-break">
-    Interface IHaveTags
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Tags/IHaveTags.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction" class="text-break">
+    Interface IBelongToFaction
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Faction/IBelongToFaction.cs/#L7"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Entities.html">Entities</a>.<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.html">ClassifiedTemplates</a>.<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.html">Tags</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Entities.html">Entities</a>.<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.html">ClassifiedTemplates</a>.<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.html">Faction</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IHaveTags : IEntity, IPoolable</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IBelongToFaction : IEntity, IPoolable</code></pre>
   </div>
 
 
@@ -174,28 +174,70 @@
 
 
 
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_CurrentFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.CurrentFaction*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_CurrentFaction" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.CurrentFaction">
+  CurrentFaction
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Faction/IBelongToFaction.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">BindableProperty&lt;Faction&gt; CurrentFaction { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.Faction.html">Faction</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
 
 
-  <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Tags_IHaveTags_GetTagProperty_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags.GetTagProperty*"></a>
+  <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_IsSameFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.IsSameFaction*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Tags_IHaveTags_GetTagProperty" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags.GetTagProperty">
-  GetTagProperty()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Tags/IHaveTags.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_IsSameFaction_Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.IsSameFaction(Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction)">
+  IsSameFaction(IBelongToFaction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Faction/IBelongToFaction.cs/#L19"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Detect if the other entity is in the same faction</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">ITagProperty GetTagProperty()</code></pre>
+    <pre><code class="lang-csharp hljs">bool IsSameFaction(IBelongToFaction other)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.html">IBelongToFaction</a></dt>
+    <dd></dd>
+  </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Properties.TagProperty.ITagProperty.html">ITagProperty</a></dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
   </dl>
 
@@ -213,7 +255,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Tags/IHaveTags.cs/#L13" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Faction/IBelongToFaction.cs/#L7" class="edit-link">Edit this page</a>
         </div>
 
         

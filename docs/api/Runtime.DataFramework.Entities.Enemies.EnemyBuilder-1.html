@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1" class="text-break">
     Class EnemyBuilder&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class EnemyBuilder&lt;T&gt; : EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;, IPoolable where T : class, IEntity, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public class EnemyBuilder&lt;T&gt; : CreatureBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;, IPoolable where T : class, IEntity, new()</code></pre>
   </div>
 
 
@@ -111,6 +111,7 @@
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Builders.EntityBuilder-2.html">EntityBuilder</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;, T&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.CreatureBuilder-2.html">CreatureBuilder</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;, T&gt;</div>
       <div><span class="xref">EnemyBuilder&lt;T&gt;</span></div>
     </dd>
   </dl>
@@ -126,6 +127,15 @@
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Creatures.CreatureBuilder-2.html#Runtime_DataFramework_Entities_Creatures_CreatureBuilder_2_SetHealth_Runtime_DataFramework_Properties_HealthInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier_Runtime_DataFramework_Properties_HealthInfo__">CreatureBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.SetHealth(HealthInfo, IPropertyDependencyModifier&lt;HealthInfo&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Creatures.CreatureBuilder-2.html#Runtime_DataFramework_Entities_Creatures_CreatureBuilder_2_SetHealthModifier_Runtime_DataFramework_Properties_IPropertyDependencyModifier_Runtime_DataFramework_Properties_HealthInfo__">CreatureBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.SetHealthModifier(IPropertyDependencyModifier&lt;HealthInfo&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Creatures.CreatureBuilder-2.html#Runtime_DataFramework_Entities_Creatures_CreatureBuilder_2_SetInvincible_System_Boolean_">CreatureBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.SetInvincible(bool)</a>
+    </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Builders.EntityBuilder-2.html#Runtime_DataFramework_Entities_Builders_EntityBuilder_2_Entity">EntityBuilder&lt;EnemyBuilder&lt;T&gt;, T&gt;.Entity</a>
     </div>
@@ -198,7 +208,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1__ctor" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.#ctor">
   EnemyBuilder()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -228,7 +238,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_Allocate_System_Int32_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.Allocate(System.Int32)">
   Allocate(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -264,7 +274,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_RecycleToCache" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.RecycleToCache">
   RecycleToCache()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L50"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -288,16 +298,16 @@
 
   <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAllBasics_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAllBasics*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAllBasics_System_Int32_Runtime_DataFramework_Properties_HealthInfo_System_Single_System_Single_Runtime_DataFramework_Properties_TasteType___" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAllBasics(System.Int32,Runtime.DataFramework.Properties.HealthInfo,System.Single,System.Single,Runtime.DataFramework.Properties.TasteType[])">
-  SetAllBasics(int, HealthInfo, float, float, params TasteType[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAllBasics_System_Int32_Runtime_DataFramework_Properties_HealthInfo_Runtime_DataFramework_Properties_TasteType___" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAllBasics(System.Int32,Runtime.DataFramework.Properties.HealthInfo,Runtime.DataFramework.Properties.TasteType[])">
+  SetAllBasics(int, HealthInfo, params TasteType[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAllBasics(int danger, HealthInfo healthInfo, float vigiliance, float attackRange, params TasteType[] tasteTypes)</code></pre>
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAllBasics(int danger, HealthInfo healthInfo, params TasteType[] tasteTypes)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -305,10 +315,6 @@
     <dt><code>danger</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
     <dd></dd>
     <dt><code>healthInfo</code> <a class="xref" href="Runtime.DataFramework.Properties.HealthInfo.html">HealthInfo</a></dt>
-    <dd></dd>
-    <dt><code>vigiliance</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
-    <dd></dd>
-    <dt><code>attackRange</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
     <dd></dd>
     <dt><code>tasteTypes</code> <a class="xref" href="Runtime.DataFramework.Properties.TasteType.html">TasteType</a>[]</dt>
     <dd></dd>
@@ -332,16 +338,16 @@
 
   <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAllBasicsModifiers_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAllBasicsModifiers*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAllBasicsModifiers_Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Int32__Runtime_DataFramework_Properties_IPropertyDependencyModifier_Runtime_DataFramework_Properties_HealthInfo__Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Single__Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAllBasicsModifiers(Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Int32},Runtime.DataFramework.Properties.IPropertyDependencyModifier{Runtime.DataFramework.Properties.HealthInfo},Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Single},Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Single})">
-  SetAllBasicsModifiers(IPropertyDependencyModifier&lt;int&gt;, IPropertyDependencyModifier&lt;HealthInfo&gt;, IPropertyDependencyModifier&lt;float&gt;, IPropertyDependencyModifier&lt;float&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAllBasicsModifiers_Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Int32__Runtime_DataFramework_Properties_IPropertyDependencyModifier_Runtime_DataFramework_Properties_HealthInfo__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAllBasicsModifiers(Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Int32},Runtime.DataFramework.Properties.IPropertyDependencyModifier{Runtime.DataFramework.Properties.HealthInfo})">
+  SetAllBasicsModifiers(IPropertyDependencyModifier&lt;int&gt;, IPropertyDependencyModifier&lt;HealthInfo&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L44"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAllBasicsModifiers(IPropertyDependencyModifier&lt;int&gt; dangerModifier, IPropertyDependencyModifier&lt;HealthInfo&gt; healthInfoModifier, IPropertyDependencyModifier&lt;float&gt; vigilianceModifier, IPropertyDependencyModifier&lt;float&gt; attackRangeModifier)</code></pre>
+    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAllBasicsModifiers(IPropertyDependencyModifier&lt;int&gt; dangerModifier, IPropertyDependencyModifier&lt;HealthInfo&gt; healthInfoModifier)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -349,84 +355,6 @@
     <dt><code>dangerModifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</dt>
     <dd></dd>
     <dt><code>healthInfoModifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="Runtime.DataFramework.Properties.HealthInfo.html">HealthInfo</a>&gt;</dt>
-    <dd></dd>
-    <dt><code>vigilianceModifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</dt>
-    <dd></dd>
-    <dt><code>attackRangeModifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAttackRange_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAttackRange*"></a>
-
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAttackRange_System_Single_Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAttackRange(System.Single,Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Single})">
-  SetAttackRange(float, IPropertyDependencyModifier&lt;float&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L48"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAttackRange(float attackRange, IPropertyDependencyModifier&lt;float&gt; modifier = null)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>attackRange</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
-    <dd></dd>
-    <dt><code>modifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAttackRangeModifier_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAttackRangeModifier*"></a>
-
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetAttackRangeModifier_Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetAttackRangeModifier(Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Single})">
-  SetAttackRangeModifier(IPropertyDependencyModifier&lt;float&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L53"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetAttackRangeModifier(IPropertyDependencyModifier&lt;float&gt; modifier = null)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>modifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -450,7 +378,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetDanger_System_Int32_Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Int32__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetDanger(System.Int32,Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Int32})">
   SetDanger(int, IPropertyDependencyModifier&lt;int&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L14"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -488,7 +416,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetDangerModifier_Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Int32__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetDangerModifier(Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Int32})">
   SetDangerModifier(IPropertyDependencyModifier&lt;int&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L19"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -520,85 +448,11 @@
 
 
 
-  <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetHealth_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetHealth*"></a>
-
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetHealth_Runtime_DataFramework_Properties_HealthInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier_Runtime_DataFramework_Properties_HealthInfo__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetHealth(Runtime.DataFramework.Properties.HealthInfo,Runtime.DataFramework.Properties.IPropertyDependencyModifier{Runtime.DataFramework.Properties.HealthInfo})">
-  SetHealth(HealthInfo, IPropertyDependencyModifier&lt;HealthInfo&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L23"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetHealth(HealthInfo healthInfo, IPropertyDependencyModifier&lt;HealthInfo&gt; modifier = null)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>healthInfo</code> <a class="xref" href="Runtime.DataFramework.Properties.HealthInfo.html">HealthInfo</a></dt>
-    <dd></dd>
-    <dt><code>modifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="Runtime.DataFramework.Properties.HealthInfo.html">HealthInfo</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetHealthModifier_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetHealthModifier*"></a>
-
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetHealthModifier_Runtime_DataFramework_Properties_IPropertyDependencyModifier_Runtime_DataFramework_Properties_HealthInfo__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetHealthModifier(Runtime.DataFramework.Properties.IPropertyDependencyModifier{Runtime.DataFramework.Properties.HealthInfo})">
-  SetHealthModifier(IPropertyDependencyModifier&lt;HealthInfo&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L28"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetHealthModifier(IPropertyDependencyModifier&lt;HealthInfo&gt; modifier = null)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>modifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="Runtime.DataFramework.Properties.HealthInfo.html">HealthInfo</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
   <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetTaste_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetTaste*"></a>
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetTaste_Runtime_DataFramework_Properties_TasteType___" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetTaste(Runtime.DataFramework.Properties.TasteType[])">
   SetTaste(params TasteType[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -630,85 +484,11 @@
 
 
 
-  <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetVigiliance_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetVigiliance*"></a>
-
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetVigiliance_System_Single_Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetVigiliance(System.Single,Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Single})">
-  SetVigiliance(float, IPropertyDependencyModifier&lt;float&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L38"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetVigiliance(float vigiliance, IPropertyDependencyModifier&lt;float&gt; modifier = null)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>vigiliance</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
-    <dd></dd>
-    <dt><code>modifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetVigilianceModifier_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetVigilianceModifier*"></a>
-
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyBuilder_1_SetVigilianceModifier_Runtime_DataFramework_Properties_IPropertyDependencyModifier_System_Single__" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyBuilder`1.SetVigilianceModifier(Runtime.DataFramework.Properties.IPropertyDependencyModifier{System.Single})">
-  SetVigilianceModifier(IPropertyDependencyModifier&lt;float&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L43"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EnemyBuilder&lt;T&gt; SetVigilianceModifier(IPropertyDependencyModifier&lt;float&gt; modifier = null)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>modifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyBuilder-1.html">EnemyBuilder</a>&lt;T&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L8" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyBuilder.cs/#L9" class="edit-link">Edit this page</a>
         </div>
 
         

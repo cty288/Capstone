@@ -120,7 +120,7 @@
   <dl class="typelist derived">
     <dt>Derived</dt>
     <dd>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractHaveCustomPropertiesEntity.html">AbstractHaveCustomPropertiesEntity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
     </dd>
   </dl>
 
@@ -258,7 +258,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Entity_IsRecycled" data-uid="Runtime.DataFramework.Entities.Entity.IsRecycled">
   IsRecycled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L411"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L415"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -320,11 +320,42 @@
 </h2>
 
 
+  <a id="Runtime_DataFramework_Entities_Entity_GetConfigTable_" data-uid="Runtime.DataFramework.Entities.Entity.GetConfigTable*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetConfigTable" data-uid="Runtime.DataFramework.Entities.Entity.GetConfigTable">
+  GetConfigTable()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract ConfigTable GetConfigTable()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Utilities.ConfigSheet.ConfigTable.html">ConfigTable</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_DataFramework_Entities_Entity_GetProperty_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty*"></a>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyName_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty(Runtime.DataFramework.Properties.PropertyName)">
   GetProperty(PropertyName)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L306"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L310"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get a property by name, return null if not found
@@ -363,7 +394,7 @@ To retrieve nested properties, use the one that takes full name instead</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyNameInfo_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty(Runtime.DataFramework.Properties.PropertyNameInfo)">
   GetProperty(PropertyNameInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L314"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L318"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get a property by full name, return null if not found
@@ -402,7 +433,7 @@ e.g. GetProperty(&quot;custom_properties.attack.damage&quot;)</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty_System_Type_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty(System.Type)">
   GetProperty(Type)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L336"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L340"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Return a property if you know its type, return null if not found
@@ -441,7 +472,7 @@ To retrieve nested properties, use the one that takes full name instead</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty__1" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty``1">
   GetProperty&lt;T&gt;()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L321"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L325"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Return a property if you know its type, return null if not found
@@ -480,7 +511,7 @@ To retrieve nested properties, use the one that takes full name instead</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty__1_Runtime_DataFramework_Properties_PropertyNameInfo_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty``1(Runtime.DataFramework.Properties.PropertyNameInfo)">
   GetProperty&lt;T&gt;(PropertyNameInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L328"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L332"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get a property by full name, return null if not found
@@ -524,7 +555,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_HasProperty_Runtime_DataFramework_Properties_PropertyNameInfo_" data-uid="Runtime.DataFramework.Entities.Entity.HasProperty(Runtime.DataFramework.Properties.PropertyNameInfo)">
   HasProperty(PropertyNameInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L343"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L347"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -560,7 +591,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_InitProperty_Runtime_DataFramework_Properties_IPropertyBase_" data-uid="Runtime.DataFramework.Entities.Entity.InitProperty(Runtime.DataFramework.Properties.IPropertyBase)">
   InitProperty(IPropertyBase)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L376"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L380"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -591,7 +622,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_Initialize" data-uid="Runtime.DataFramework.Entities.Entity.Initialize">
   Initialize()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L359"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L363"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -617,7 +648,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig" data-uid="Runtime.DataFramework.Entities.Entity.LoadPropertyBaseValueFromConfig">
   LoadPropertyBaseValueFromConfig()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L295"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -643,7 +674,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_OnAllocate" data-uid="Runtime.DataFramework.Entities.Entity.OnAllocate">
   OnAllocate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L258"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L262"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -669,7 +700,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_OnDoRecycle" data-uid="Runtime.DataFramework.Entities.Entity.OnDoRecycle">
   OnDoRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L417"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L421"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -695,7 +726,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_OnLoadFromSave" data-uid="Runtime.DataFramework.Entities.Entity.OnLoadFromSave">
   OnLoadFromSave()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L156"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -721,7 +752,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_OnRecycle" data-uid="Runtime.DataFramework.Entities.Entity.OnRecycle">
   OnRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L419"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L423"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -747,7 +778,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_OnRecycled" data-uid="Runtime.DataFramework.Entities.Entity.OnRecycled">
   OnRecycled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L392"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L396"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -773,7 +804,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_OnRegisterProperties" data-uid="Runtime.DataFramework.Entities.Entity.OnRegisterProperties">
   OnRegisterProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L255"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L259"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -799,7 +830,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_RecycleToCache" data-uid="Runtime.DataFramework.Entities.Entity.RecycleToCache">
   RecycleToCache()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L413"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L417"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -825,7 +856,7 @@ This will auto convert the property to the given type</p>
 
   <h3 id="Runtime_DataFramework_Entities_Entity_RegisterInitialProperty__1___0_" data-uid="Runtime.DataFramework.Entities.Entity.RegisterInitialProperty``1(``0)">
   RegisterInitialProperty&lt;T&gt;(T)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L185"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Register a property to the entity. This must be called before the entity is initialized
@@ -863,7 +894,7 @@ To register a property after the entity is initialized, use RegisterTempProperty
 
   <h3 id="Runtime_DataFramework_Entities_Entity_RegisterTempProperty__1___0_System_String_System_Boolean_System_Boolean_" data-uid="Runtime.DataFramework.Entities.Entity.RegisterTempProperty``1(``0,System.String,System.Boolean,System.Boolean)">
   RegisterTempProperty&lt;T&gt;(T, string, bool, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L201"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Register a property to the entity. The property will be removed once the entity is recycled</p>
@@ -906,7 +937,7 @@ To register a property after the entity is initialized, use RegisterTempProperty
 
   <h3 id="Runtime_DataFramework_Entities_Entity_SetPropertyBaseValue__1_Runtime_DataFramework_Properties_PropertyNameInfo___0_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__" data-uid="Runtime.DataFramework.Entities.Entity.SetPropertyBaseValue``1(Runtime.DataFramework.Properties.PropertyNameInfo,``0,Runtime.DataFramework.Properties.IPropertyDependencyModifier{``0})">
   SetPropertyBaseValue&lt;T&gt;(PropertyNameInfo, T, IPropertyDependencyModifier&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L262"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L266"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Set the base value of all properties with the given name</p>
@@ -947,7 +978,7 @@ To register a property after the entity is initialized, use RegisterTempProperty
 
   <h3 id="Runtime_DataFramework_Entities_Entity_SetPropertyModifier__1_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__" data-uid="Runtime.DataFramework.Entities.Entity.SetPropertyModifier``1(Runtime.DataFramework.Properties.PropertyNameInfo,Runtime.DataFramework.Properties.IPropertyDependencyModifier{``0})">
   SetPropertyModifier&lt;T&gt;(PropertyNameInfo, IPropertyDependencyModifier&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L282"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Set the modifier of all properties with the given name</p>
@@ -986,7 +1017,7 @@ To register a property after the entity is initialized, use RegisterTempProperty
 
   <h3 id="Runtime_DataFramework_Entities_Entity_TryGetProperty_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyBase__" data-uid="Runtime.DataFramework.Entities.Entity.TryGetProperty(Runtime.DataFramework.Properties.PropertyNameInfo,Runtime.DataFramework.Properties.IPropertyBase@)">
   TryGetProperty(PropertyNameInfo, out IPropertyBase)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L347"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L351"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

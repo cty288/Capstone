@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Namespace Runtime.DataFramework.ViewControllers
+      <title>Namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Namespace Runtime.DataFramework.ViewControllers
+      <meta name="title" content="Namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -77,52 +77,51 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.DataFramework.ViewControllers">
+        <article data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable">
 
-  <h1 id="Runtime_DataFramework_ViewControllers" data-uid="Runtime.DataFramework.ViewControllers" class="text-break">Namespace Runtime.DataFramework.ViewControllers
+  <h1 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable" class="text-break">Namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable
 </h1>
   <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="markdown level0 remarks"></div>
 
-    <h3 id="namespaces">
-Namespaces
-</h3>
-    <dl class="jumplist">
-      <dt><a class="xref" href="Runtime.DataFramework.ViewControllers.Enemies.html">Runtime.DataFramework.ViewControllers.Enemies</a></dt>
-      <dd></dd>
-    </dl>
     <h3 id="classes">
 Classes
 </h3>
     <dl class="jumplist">
-      <dt><a class="xref" href="Runtime.DataFramework.ViewControllers.AbstractBasicEntityViewController-2.html">AbstractBasicEntityViewController&lt;T, TEntityModel&gt;</a></dt>
+      <dt><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html">DamagableEntity</a></dt>
+      <dd><p>Health is auto registered</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.OnHealUnRegister.html">OnHealUnRegister</a></dt>
       <dd></dd>
     </dl>
     <dl class="jumplist">
-      <dt><a class="xref" href="Runtime.DataFramework.ViewControllers.AbstractCreatureViewController-2.html">AbstractCreatureViewController&lt;T, TEntityModel&gt;</a></dt>
-      <dd><p>An abstract view controller for creature entity (like player, enemy, etc.)</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="Runtime.DataFramework.ViewControllers.AbstractDamagableViewController-2.html">AbstractDamagableViewController&lt;T, TEntityModel&gt;</a></dt>
-      <dd><p>An abstract view controller for entities that can take damage (have health)</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="Runtime.DataFramework.ViewControllers.AbstractEntityViewController-2.html">AbstractEntityViewController&lt;T, TEntityModel&gt;</a></dt>
+      <dt><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.OnTakeDamageUnRegister.html">OnTakeDamageUnRegister</a></dt>
       <dd></dd>
     </dl>
     <h3 id="interfaces">
 Interfaces
 </h3>
     <dl class="jumplist">
-      <dt><a class="xref" href="Runtime.DataFramework.ViewControllers.IEnemyViewController.html">IEnemyViewController</a></dt>
+      <dt><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.html">IDamagable</a></dt>
       <dd></dd>
     </dl>
+    <h3 id="delegates">
+Delegates
+</h3>
     <dl class="jumplist">
-      <dt><a class="xref" href="Runtime.DataFramework.ViewControllers.IEntityViewController.html">IEntityViewController</a></dt>
-      <dd></dd>
+      <dt><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.OnHeal.html">OnHeal</a></dt>
+      <dd><p>Delegate for healing <br>
+Note that heal amount is the valid heal amount, meaning that if the real heal amount + current health &gt; max health, the valid heal amount will be max health - current health; else the valid heal amount will be the real heal amount</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.OnTakeDamage.html">OnTakeDamage</a></dt>
+      <dd><p>Delegate for taking damage <br>
+Note that damage is the valid damage, meaning that if the real damage &gt; current health, the valid damage will be current health; else the valid damage will be the real damage</p>
+</dd>
     </dl>
 
 
