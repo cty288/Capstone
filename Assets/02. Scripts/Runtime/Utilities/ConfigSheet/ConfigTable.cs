@@ -33,6 +33,9 @@ namespace Runtime.Utilities.ConfigSheet {
 
 		private Dictionary<string, Dictionary<string, dynamic>> data =
 			new Dictionary<string, Dictionary<string, dynamic>>();
+		
+		
+		
 		private void OnLoadFinished(string text) {
 			List<List<string>> rows;
             text = text.Replace("\r\n", "\n");
