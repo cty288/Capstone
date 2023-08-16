@@ -1,4 +1,4 @@
-﻿namespace Runtime.DataFramework.Properties {
+﻿namespace Runtime.DataFramework.Properties.TestOnly {
 	public interface IVigilianceProperty : IProperty<float>, ILoadFromConfigProperty {
 		
 	}

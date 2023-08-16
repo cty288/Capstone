@@ -1,4 +1,4 @@
-﻿namespace Runtime.DataFramework.Properties {
+﻿namespace Runtime.DataFramework.Properties.TestOnly {
 	public interface IAttackRangeProperty : IProperty<float>, ILoadFromConfigProperty{}
 	public class TestAttackRange: AbstractLoadFromConfigProperty<float>, IAttackRangeProperty {
 		public override float OnSetBaseValueFromConfig(dynamic value) {
