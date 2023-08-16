@@ -5,7 +5,7 @@ using Runtime.DataFramework.Properties;
 using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Enemies {
-	public abstract class AbstractEnemyViewController<T> : AbstractHaveCustomPropertyEntityViewController<T, IEnemyEntityModel>, IEnemyViewController 
+	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T, IEnemyEntityModel>, IEnemyViewController 
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;
 	
@@ -15,15 +15,13 @@ namespace Runtime.DataFramework.ViewControllers.Enemies {
 	
 		//[Bind(PropertyName.health, nameof(GetCurrentHealth), nameof(OnCurrentHealthChanged))]
 		public int CurrentHealth { get; }
-	
-		public float Vigiliance { get; }
-	
-		public float AttackRange { get;}
+		
 
 		protected IEnemyEntityModel enemyEntityModel;
 
 		protected override void Awake() {
 			base.Awake();
+			
 			enemyEntityModel = this.GetModel<IEnemyEntityModel>();
 		}
 
@@ -31,12 +29,7 @@ namespace Runtime.DataFramework.ViewControllers.Enemies {
 		
 			Bind("Danger", BindedEntity.GetDanger());
 			Bind<HealthInfo, int>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
-		
 			Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
-		
-			Bind("Vigiliance", BindedEntity.GetVigiliance());
-			Bind("AttackRange", BindedEntity.GetAttackRange());
-		
 		}
 
 		protected override IEntity OnInitEntity() {

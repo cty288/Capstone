@@ -2,10 +2,14 @@ using System.Collections.Generic;
 using Framework;
 using NUnit.Framework;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.Builders;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
+using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.Properties.TagProperty;
+using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
@@ -19,13 +23,46 @@ namespace Tests.Tests_Editor {
             public override void OnRecycle() {
             
             }
-
+            protected override ConfigTable GetConfigTable() {
+                return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+            }
             protected override void OnEnemyRegisterProperties() {
-                //RegisterInitialProperty(new Vigiliance());
+                RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+                RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
             }
 
             protected override ICustomProperty[] OnRegisterCustomProperties() {
                 return null;
+            }
+        }
+        
+        internal class TestFriendlyEntity : AbstractCreature {
+            [field: ES3Serializable]
+            public override string EntityName { get; protected set; } = "TestEnemy2";
+
+            protected override ConfigTable GetConfigTable() {
+                return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+            }
+
+            public override void OnDoRecycle() {
+                
+            }
+
+            public override void OnRecycle() {
+            
+            }
+            
+            protected override void OnEntityRegisterAdditionalProperties() {
+                RegisterInitialProperty(new TestVigiliance());
+                RegisterInitialProperty(new TestAttackRange());
+            }
+
+            protected override ICustomProperty[] OnRegisterCustomProperties() {
+                return null;
+            }
+
+            protected override Faction GetDefaultFaction() {
+                return Faction.Friendly;
             }
         }
     
@@ -53,8 +90,8 @@ namespace Tests.Tests_Editor {
             Assert.AreEqual(200, ent1.GetDanger().Value);
             Assert.GreaterOrEqual(1000f, ent1.GetHealth().Value.CurrentHealth);
             Assert.AreEqual(TasteType.Type1, ent1.GetTaste()[0]);
-            Assert.AreEqual(1000.0f, ent1.GetVigiliance().Value);
-            Assert.AreEqual(2000.0f, ent1.GetAttackRange().Value);
+            //Assert.AreEqual(1000.0f, ent1.GetVigiliance().Value);
+            //Assert.AreEqual(2000.0f, ent1.GetAttackRange().Value);
         
             Debug.Log($"Danger: {ent1.GetProperty<IDangerProperty>().RealValue}");
         }
@@ -65,7 +102,9 @@ namespace Tests.Tests_Editor {
 
 
             TestBasicEnemy ent1 = model.GetEnemyBuilder<TestBasicEnemy>(2)
-                .SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+                .SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+                .SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f, null)
+                .SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f, null)
                 .SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
                 .Build();
 
@@ -85,6 +124,8 @@ namespace Tests.Tests_Editor {
             TestBasicEnemy ent1 = model.GetEnemyBuilder<TestBasicEnemy>(2)
                 .FromConfig()
                 .Build();
+            
+            
 
             ITagProperty tagProperty = ent1.GetTagProperty();
             Assert.AreEqual(2, tagProperty.GetTags().Length);
@@ -100,5 +141,56 @@ namespace Tests.Tests_Editor {
             Assert.IsTrue(tagProperty.HasTagOverLevel(TagName.Test_Flame, 2));
        
         }
+        
+        
+            
+        [Test]
+        public void TestCreature() {
+            IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+
+            TestBasicEnemy ent1 = model.GetEnemyBuilder<TestBasicEnemy>(2)
+                .FromConfig()
+                .Build();
+
+            TestFriendlyEntity ent2 = new EntityBuilderFactory()
+                .GetBuilder<EnemyBuilder<TestFriendlyEntity>, TestFriendlyEntity>(1)
+                .SetHealth(new HealthInfo(200,200))
+                .Build();
+
+
+            Assert.IsTrue(ent1 is ICreature);
+            
+            Assert.AreEqual(200, ent2.GetCurrentHealth());
+            Assert.AreEqual(999, ent1.GetCurrentHealth());
+
+
+            ent1.RegisterOnTakeDamage(OnEnt1TakeDamage);
+            ent1.TakeDamage(200, ent2);
+            
+            void OnEnt1TakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+                Assert.AreEqual(200, damage);
+                Assert.AreEqual(799, currenthealth);
+                Assert.AreEqual(ent2, damagedealer);
+                ent1.UnRegisterOnTakeDamage(OnEnt1TakeDamage);
+            }
+            
+            Assert.AreEqual(799, ent1.GetCurrentHealth());
+            
+            //when invincible, damage taken will be 0
+            ent1.IsInvincible.Value = true;
+            ent1.TakeDamage(200, ent2);
+            Assert.AreEqual(799, ent1.GetCurrentHealth());
+            
+            //when the damage dealer has the same faction, damage will not be taken
+            ent1.TakeDamage(100, ent1);
+            Assert.AreEqual(799, ent1.GetCurrentHealth());
+            
+            
+            ent1.Heal(10000, ent2);
+            Assert.AreEqual(999, ent1.GetCurrentHealth());
+        }
+
+
     }
 }

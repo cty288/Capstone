@@ -3,11 +3,12 @@ using System.Reflection;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers {
-	public abstract class AbstractHaveCustomPropertyEntityViewController<T, TEntityModel>: AbstractEntityViewController<T, TEntityModel> 
-		where T : class, IHaveCustomProperties, new()
+	public abstract class AbstractBasicEntityViewController<T, TEntityModel>: AbstractEntityViewController<T, TEntityModel> 
+		where T : class, IHaveCustomProperties, IHaveTags, new()
 		where TEntityModel: class, IEntityModel
 	{
 		

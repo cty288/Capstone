@@ -21,22 +21,37 @@
 
 	}
 
+	/// <summary>
+	/// Health property. Contains current and max health. <br/>
+	/// Depends on <see cref="Rarity"/> property. <br/>
+	/// </summary>
 	public interface IHealthProperty : IProperty<HealthInfo>, ILoadFromConfigProperty {
+		public int GetMaxHealth();
 		
+		public int GetCurrentHealth();
 	}
+	
+	/// <summary>
+	/// Health property. Contains current and max health. <br/>
+	/// Depends on <see cref="Rarity"/> property. <br/>
+	/// </summary>
 	public class Health: AbstractLoadFromConfigProperty<HealthInfo>, IHealthProperty {
 		
 		public int GetMaxHealth() {
 			return RealValue.Value.MaxHealth;
 		}
 
-		
+		public int GetCurrentHealth() {
+			return RealValue.Value.CurrentHealth;
+		}
+
+
 		public override HealthInfo OnSetBaseValueFromConfig(dynamic value) {
 			return new HealthInfo((int)value.maxHealth, (int)value.currentHealth);
 		}
 
 		protected override IPropertyDependencyModifier<HealthInfo> GetDefautModifier() {
-			return new HealthDefaultModifier();
+			return null;
 		}
 
 		protected override PropertyName GetPropertyName() {
@@ -49,14 +64,5 @@
 		
 		
 	}
-	
-	public class HealthDefaultModifier : PropertyDependencyModifier<HealthInfo> {
-		public override HealthInfo OnModify(HealthInfo propertyValue) {
-			int rarityMultiplier = GetDependency(new PropertyNameInfo(PropertyName.rarity)).GetInitialValue() *
-			                       GetModifierParameterFromConfig<int>("health_rarity_multiplier", 5);
-			
-			propertyValue = new HealthInfo(propertyValue.MaxHealth * rarityMultiplier, propertyValue.CurrentHealth * rarityMultiplier);
-			return propertyValue;
-		}
-	}
+
 }
