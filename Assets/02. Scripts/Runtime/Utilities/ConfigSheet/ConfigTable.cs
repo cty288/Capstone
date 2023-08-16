@@ -77,8 +77,20 @@ namespace Runtime.Utilities.ConfigSheet {
                 row.RemoveAt(0);
                 Dictionary<string, dynamic> rowDict = new Dictionary<string, dynamic>();
                 for (int i = 0; i < row.Count; i++) {
-	                dynamic value = JsonConvert.DeserializeObject<dynamic>(row[i]);
-	                if(value is null || value.Equals("")) {
+	                string rawVal = row[i];
+	                if(String.IsNullOrEmpty(rawVal)) {
+		                continue;
+	                }
+ 
+	                dynamic value;
+	                try {
+		                value = JsonConvert.DeserializeObject<dynamic>(row[i]);
+	                }
+	                catch (Exception e) {
+		                value = rawVal; //fallback to raw value (string)
+	                }
+	                
+	                if(value is null) {
 		                continue;
 	                }
 	                if (value is double) {
@@ -102,6 +114,16 @@ namespace Runtime.Utilities.ConfigSheet {
 			}
 
 			return null;
+		}
+		
+		public T Get<T>(string entityName, string key) {
+			if (data.ContainsKey(entityName)) {
+				if (data[entityName].ContainsKey(key)) {
+					return data[entityName][key];
+				}
+			}
+
+			return default(T);
 		}
 		
 		private static bool IsLineBreak(string currentString) {
