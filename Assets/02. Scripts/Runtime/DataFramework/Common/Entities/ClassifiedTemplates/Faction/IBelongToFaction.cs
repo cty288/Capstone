@@ -4,7 +4,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Faction {
 
 
 	
-	public interface IBelongToFaction : IEntity {
+	public interface IBelongToFaction {
 		/// <summary>
 		/// Faction can be changed during runtime
 		/// </summary>
