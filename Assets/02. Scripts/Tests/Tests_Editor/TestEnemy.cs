@@ -9,6 +9,7 @@ using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.Properties.TagProperty;
+using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -86,7 +87,7 @@ namespace Tests.Tests_Editor {
             Assert.AreEqual(1000.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
             Assert.AreEqual(2000.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
         
-            //another convenient way
+            //another convenient ways
             Assert.AreEqual(200, ent1.GetDanger().Value);
             Assert.GreaterOrEqual(1000f, ent1.GetHealth().Value.CurrentHealth);
             Assert.AreEqual(TasteType.Type1, ent1.GetTaste()[0]);
