@@ -1,5 +1,7 @@
-namespace Runtime.DataFramework.Properties {
-	public enum PropertyName {
+namespace Runtime.DataFramework.Properties
+{
+	public enum PropertyName
+	{
 		rarity,
 		danger,
 		taste,
@@ -18,6 +20,8 @@ namespace Runtime.DataFramework.Properties {
 		test,
 		test_interest,
 		test_interest_list,
-		test_interest_dict
+		test_interest_dict,
+		//weapon properties test
+		base_damage,
 	}
 }
