@@ -17,6 +17,6 @@ namespace Runtime.Utilities.ConfigSheet {
 			
 			enemyEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"1757713118", "data_enemies_test");
-		}
+		} 
 	}
 }
