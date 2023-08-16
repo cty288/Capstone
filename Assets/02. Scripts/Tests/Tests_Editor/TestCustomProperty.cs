@@ -5,6 +5,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
@@ -17,8 +18,13 @@ namespace Tests.Tests_Editor {
             
 			}
 
+			protected override ConfigTable GetConfigTable() {
+				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+			}
+
 			protected override void OnEnemyRegisterProperties() {
-            
+				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
 
 			protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -61,9 +67,13 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
         
 			}
-
+			protected override ConfigTable GetConfigTable() {
+				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+			}
 			protected override void OnEnemyRegisterProperties() {
 				RegisterInitialProperty(new TestCustomProperty2());
+				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
 
 			protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -117,7 +127,9 @@ namespace Tests.Tests_Editor {
 			DateTime startTime = DateTime.Now;
 			TestBasicEnemyWithCustomProperties1 ent1 = model.GetEnemyBuilder<TestBasicEnemyWithCustomProperties1>(2)
 				.FromConfig()
-				.SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f, null)
+				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f, null)
 				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 				.Build();
 			DateTime endTime = DateTime.Now;
@@ -129,7 +141,9 @@ namespace Tests.Tests_Editor {
 			for (int i = 0; i < 100; i++) {
 				ents[i] = model.GetEnemyBuilder<TestBasicEnemyWithCustomProperties1>(2)
 					.FromConfig()
-					.SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+					.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+					.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f, null)
+					.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f, null)
 					.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 					.Build();
 			}
@@ -163,7 +177,9 @@ namespace Tests.Tests_Editor {
 			
 			TestEntity ent1 = model.GetEnemyBuilder<TestEntity>(10)
 				.FromConfig()
-				.SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f, null)
+				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f, null)
 				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 				.Build();
 			Assert.AreEqual(3, ent1.GetCustomProperties().Values.Count);
@@ -215,7 +231,9 @@ namespace Tests.Tests_Editor {
 			
 			TestEntity ent1 = model.GetEnemyBuilder<TestEntity>(10)
 				.FromConfig()
-				.SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f, null)
+				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f, null)
 				.SetDependencies(new PropertyNameInfo(PropertyName.danger), new[] {
 					new PropertyNameInfo(PropertyName.rarity),
 					new PropertyNameInfo("custom_properties.attack1.damage")
@@ -247,7 +265,9 @@ namespace Tests.Tests_Editor {
 			
 			TestEntity ent2 = model.GetEnemyBuilder<TestEntity>(10)
 				.FromConfig()
-				.SetAllBasics(0, new HealthInfo(100, 100), 100, 200, TasteType.Type1, TasteType.Type2)
+				.SetAllBasics(0, new HealthInfo(100, 100),  TasteType.Type1, TasteType.Type2)
+				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f, null)
+				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f, null)
 				.SetDangerModifier(new EmptyModifier<int>())
 				.Build();
 

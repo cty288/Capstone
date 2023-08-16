@@ -2,7 +2,7 @@
 	public interface IVigilianceProperty : IProperty<float>, ILoadFromConfigProperty {
 		
 	}
-	public class Vigiliance: AbstractLoadFromConfigProperty<float>, IVigilianceProperty {
+	public class TestVigiliance: AbstractLoadFromConfigProperty<float>, IVigilianceProperty {
 
 		public override float OnSetBaseValueFromConfig(dynamic value) {
 			return value;

@@ -7,6 +7,8 @@ using NUnit.Framework;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
 using Runtime.DataFramework.Properties;
+using Runtime.DataFramework.Properties.TestOnly;
+using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -14,13 +16,16 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Tests.Tests_Editor {
 	public class TestBasicEntityProperty {
 		internal class BasicEntity : Entity {
+			
 			public override string EntityName { get; protected set; } = "TestEntity";
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty<IRarityProperty>(new Rarity());
-				RegisterInitialProperty<IDangerProperty>(new Danger());
+				RegisterInitialProperty<IDangerProperty>(new TestDanger());
 			}
 			
-
+			protected override ConfigTable GetConfigTable() {
+				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+			}
 			public override void OnDoRecycle() {
 				SafeObjectPool<BasicEntity>.Singleton.Recycle(this);
 			}
@@ -32,6 +37,10 @@ namespace Tests.Tests_Editor {
 
 		public class TestEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestEnemy";
+			protected override ConfigTable GetConfigTable() {
+				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+			}
+
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty(new Rarity());
 				RegisterInitialProperty(new TestResourceList() {
@@ -54,6 +63,10 @@ namespace Tests.Tests_Editor {
 		
 		public class TestResourceTableEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestEnemy";
+			protected override ConfigTable GetConfigTable() {
+				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+			}
+
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty(new Rarity());
 				RegisterInitialProperty(new TestResourceTableProperty() {
@@ -76,6 +89,10 @@ namespace Tests.Tests_Editor {
 		
 		public class TestResourceDictEnemy : Entity {
 			public override string EntityName { get; protected set; } = "TestDictEnemy";
+			
+			protected override ConfigTable GetConfigTable() {
+				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+			}
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty(new Rarity());
 				RegisterInitialProperty(new TestResourceDictProperty() {
@@ -299,6 +316,10 @@ namespace Tests.Tests_Editor {
 
 
 		internal class TestInterestEntity : Entity {
+			
+			protected override ConfigTable GetConfigTable() {
+				return null;
+			}
 			public override string EntityName { get; protected set; } = "TestInterestEntity";
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty(new Rarity());
@@ -336,7 +357,7 @@ namespace Tests.Tests_Editor {
 				Build();
 
 			Debug.Log($"UUID: {entity.UUID}");
-			Assert.AreEqual(10, entity.GetProperty<Danger>().RealValue);
+			Assert.AreEqual(10, entity.GetProperty<TestDanger>().RealValue);
 		}
 		
 		[Test]
@@ -363,7 +384,7 @@ namespace Tests.Tests_Editor {
 			BasicEntity entity = model.GetEntity<BasicEntity>(id);
 			
 			Assert.IsNotNull(entity);
-			Assert.AreEqual(200, entity.GetProperty<Danger>().RealValue);
+			Assert.AreEqual(200, entity.GetProperty<TestDanger>().RealValue);
 		}
 
 		[Test]
@@ -383,7 +404,7 @@ namespace Tests.Tests_Editor {
 			
 			Assert.AreEqual(ent1, ent2);
 			Assert.AreNotEqual(id1, id2);
-			Assert.AreEqual(300, model.GetEntity<BasicEntity>(id2).GetProperty<Danger>().RealValue);
+			Assert.AreEqual(300, model.GetEntity<BasicEntity>(id2).GetProperty<TestDanger>().RealValue);
 		}
 
 		[Test]

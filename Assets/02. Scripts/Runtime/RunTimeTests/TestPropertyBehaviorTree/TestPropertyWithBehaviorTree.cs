@@ -7,6 +7,7 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.ViewControllers;
 using Runtime.DataFramework.ViewControllers.Enemies;
+using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
@@ -21,7 +22,9 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         public override void OnRecycle() {
         
         }
-
+        protected override ConfigTable GetConfigTable() {
+            return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+        }
         protected override void OnEnemyRegisterProperties() {
             RegisterInitialProperty(new NewProperty());
         }
@@ -118,11 +121,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             if (Input.GetKeyDown(KeyCode.A)) {
             
                 Debug.Log(BindedEntity.MyPersistentButNotInherentData);
-
                 
-        
-                BindableProperty<float> vigiliance = BindedEntity.GetVigiliance();
-                vigiliance.Value += 1;
         
                 BindableProperty<int> danger = BindedEntity.GetDanger();
                 danger.Value += 1;

@@ -146,10 +146,13 @@ namespace Runtime.DataFramework.Entities {
 
 		protected ConfigTable configTable;
 		public Entity() {
-			configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
-			
+			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
+			configTable = GetConfigTable();
 			OnRegisterProperties();
 		}
+
+		protected abstract ConfigTable GetConfigTable();
+
 		public void OnLoadFromSave() {
 			_allProperties.Clear();
 		
@@ -294,7 +297,7 @@ namespace Runtime.DataFramework.Entities {
 			while (i < _allProperties.Count) {
 				IPropertyBase property = _allProperties.ElementAt(i).Value;
 				if(property is ILoadFromConfigProperty loadFromConfigProperty) {
-					dynamic value = configTable.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
+					dynamic value = configTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
 					if (value != null) {
 						loadFromConfigProperty.LoadFromConfig(value);
 					}

@@ -15,10 +15,7 @@ namespace Runtime.DataFramework.ViewControllers.Enemies {
 	
 		//[Bind(PropertyName.health, nameof(GetCurrentHealth), nameof(OnCurrentHealthChanged))]
 		public int CurrentHealth { get; }
-	
-		public float Vigiliance { get; }
-	
-		public float AttackRange { get;}
+		
 
 		protected IEnemyEntityModel enemyEntityModel;
 
@@ -32,12 +29,7 @@ namespace Runtime.DataFramework.ViewControllers.Enemies {
 		
 			Bind("Danger", BindedEntity.GetDanger());
 			Bind<HealthInfo, int>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
-		
 			Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
-		
-			Bind("Vigiliance", BindedEntity.GetVigiliance());
-			Bind("AttackRange", BindedEntity.GetAttackRange());
-		
 		}
 
 		protected override IEntity OnInitEntity() {

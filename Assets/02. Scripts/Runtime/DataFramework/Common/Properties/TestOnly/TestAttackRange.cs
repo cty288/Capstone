@@ -1,6 +1,6 @@
 ﻿namespace Runtime.DataFramework.Properties {
 	public interface IAttackRangeProperty : IProperty<float>, ILoadFromConfigProperty{}
-	public class AttackRange: AbstractLoadFromConfigProperty<float>, IAttackRangeProperty {
+	public class TestAttackRange: AbstractLoadFromConfigProperty<float>, IAttackRangeProperty {
 		public override float OnSetBaseValueFromConfig(dynamic value) {
 			return value;
 		}

@@ -29,45 +29,22 @@ namespace Runtime.DataFramework.Entities.Enemies {
 			return this;
 		}
 		
-		public EnemyBuilder<T> SetVigiliance(float vigiliance, IPropertyDependencyModifier<float> modifier = null) {
-			SetProperty<float>(new PropertyNameInfo(PropertyName.vigiliance), vigiliance, modifier);
-			return this;
-		}
-		
-		public EnemyBuilder<T> SetVigilianceModifier(IPropertyDependencyModifier<float> modifier = null) {
-			SetModifier(new PropertyNameInfo(PropertyName.vigiliance), modifier);
-			return this;
-		}
-		
-		public EnemyBuilder<T> SetAttackRange(float attackRange, IPropertyDependencyModifier<float> modifier = null) {
-			SetProperty<float>(new PropertyNameInfo(PropertyName.attack_range), attackRange, modifier);
-			return this;
-		}
-		
-		public EnemyBuilder<T> SetAttackRangeModifier(IPropertyDependencyModifier<float> modifier = null) {
-			SetModifier(new PropertyNameInfo(PropertyName.attack_range), modifier);
-			return this;
-		}
+
 
 
 		
-		public EnemyBuilder<T> SetAllBasics(int danger, HealthInfo healthInfo, float vigiliance, float attackRange,
+		public EnemyBuilder<T> SetAllBasics(int danger, HealthInfo healthInfo,
 			params TasteType[] tasteTypes) {
 			SetDanger(danger);
 			SetHealth(healthInfo);
-			SetVigiliance(vigiliance);
-			SetAttackRange(attackRange);
 			SetTaste(tasteTypes);
 			return this;
 		}
 
 		public EnemyBuilder<T> SetAllBasicsModifiers(IPropertyDependencyModifier<int> dangerModifier, 
-			IPropertyDependencyModifier<HealthInfo> healthInfoModifier, IPropertyDependencyModifier<float> vigilianceModifier, 
-			IPropertyDependencyModifier<float> attackRangeModifier) {
+			IPropertyDependencyModifier<HealthInfo> healthInfoModifier) {
 			SetDangerModifier(dangerModifier);
 			SetHealthModifier(healthInfoModifier);
-			SetVigilianceModifier(vigilianceModifier);
-			SetAttackRangeModifier(attackRangeModifier);
 			return this;
 		}
 		public override void RecycleToCache() {

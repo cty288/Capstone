@@ -7,15 +7,16 @@ using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.Utilities;
+using Runtime.Utilities.ConfigSheet;
 
 namespace Runtime.DataFramework.Entities.Enemies {
 	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
 		public BindableList<TasteType> GetTaste();
-		public BindableProperty<float> GetVigiliance();
+		//public BindableProperty<float> GetVigiliance();
 
-		public BindableProperty<float> GetAttackRange();
+		//public BindableProperty<float> GetAttackRange();
 	
 		public int GetRarity();
 	}
@@ -25,8 +26,8 @@ namespace Runtime.DataFramework.Entities.Enemies {
 			
 			RegisterInitialProperty<IDangerProperty>(new Danger());
 			RegisterInitialProperty<ITasteProperty>(new Taste());
-			RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
-			RegisterInitialProperty<IAttackRangeProperty>(new AttackRange());
+			//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+			//RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			
 			OnEnemyRegisterProperties();
 		}
@@ -47,12 +48,8 @@ namespace Runtime.DataFramework.Entities.Enemies {
 			return GetProperty<ITasteProperty>().RealValues;
 		}
 
-		public BindableProperty<float> GetVigiliance() {
-			return GetProperty<IVigilianceProperty>().RealValue;
-		}
-
-		public BindableProperty<float> GetAttackRange() {
-			return GetProperty<IAttackRangeProperty>().RealValue;
+		protected override ConfigTable GetConfigTable() {
+			return ConfigDatas.Singleton.EnemyEntityConfigTable;
 		}
 
 		public int GetRarity() {
