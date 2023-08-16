@@ -38,6 +38,7 @@
   <ItemGroup>
      <Compile Include="Assets\Tutorial\02. Getting Started\Scripts\ViewControllers\Player.cs" />
      <Compile Include="Assets\01. Scenes\AI Test\Scripts\Collision\Test_HitResponder.cs" />
+     <Compile Include="Assets\01. Scenes\AI Test\Scripts\Tasks\CycleMovement.cs" />
      <Compile Include="Assets\Tutorial\06. QueriesAndUtilities\KillCountQuery.cs" />
      <Compile Include="Assets\01. Scenes\AI Test\MovementPrototyping\StarterAssets\FirstPersonController\Scripts\FirstPersonController.cs" />
      <Compile Include="Assets\01. Scenes\AI Test\Scripts\Base Class\AbstractProjectile.cs" />
@@ -68,6 +69,7 @@
      <Compile Include="Assets\01. Scenes\AI Test\Scripts\Collision\HurtBox.cs" />
      <Compile Include="Assets\01. Scenes\AI Test\Scripts\AnimationSMB_Event.cs" />
      <Compile Include="Assets\01. Scenes\AI Test\Scripts\Base Class\EnemyConditional.cs" />
+     <Compile Include="Assets\01. Scenes\AI Test\Scripts\Tasks\MoveTowardsWithLimit.cs" />
      <Compile Include="Assets\01. Scenes\AI Test\MovementPrototyping\StarterAssets\Mobile\Scripts\CanvasInputs\UICanvasControllerInput.cs" />
      <Compile Include="Assets\Tutorial\02. Getting Started\Scripts\Models\PlayerModel.cs" />
      <Compile Include="Assets\Tutorial\02. Getting Started\Scripts\KillGame.cs" />
@@ -834,10 +836,6 @@
       <Project>{82ce4c65-c3bd-802d-004c-c53084781849}</Project>
       <Name>UnityEditor.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
-      <Project>{f5e8360c-ed97-449a-1736-00cc67e69792}</Project>
-      <Name>Unity.PlasticSCM.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Rider.Editor.csproj">
       <Project>{a7137acd-a641-eabd-8432-8d6ac5baaf59}</Project>
       <Name>Unity.Rider.Editor</Name>
@@ -849,6 +847,10 @@
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{ea9bbabb-aa84-4c09-fe3d-d95fa783cd2f}</Project>
       <Name>UnityEngine.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
+      <Project>{f5e8360c-ed97-449a-1736-00cc67e69792}</Project>
+      <Name>Unity.PlasticSCM.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="DOTween.Modules.csproj">
       <Project>{5fe11fa6-a429-0918-9933-44ecb7130bae}</Project>
@@ -910,6 +912,14 @@
       <Project>{3b87792d-97d5-dea8-8a66-48b0dc753994}</Project>
       <Name>Unity.Mathematics.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="BehaviorDesigner.csproj">
+      <Project>{893f2383-f440-05da-b8a0-b6c22254b258}</Project>
+      <Name>BehaviorDesigner</Name>
+    </ProjectReference>
+    <ProjectReference Include="BehaviorDesigner.Movement.csproj">
+      <Project>{15b787ca-d264-c2cb-b28b-8d33fe59781b}</Project>
+      <Name>BehaviorDesigner.Movement</Name>
+    </ProjectReference>
     <ProjectReference Include="Polyglot.Scripts.csproj">
       <Project>{593d9bfd-6b2a-97c5-7dfe-7489616c10b1}</Project>
       <Name>Polyglot.Scripts</Name>
@@ -934,25 +944,17 @@
       <Project>{8f1343fc-353a-4022-0ba2-5337c4ac626d}</Project>
       <Name>EasySave3Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
-      <Project>{a419449f-af4b-a560-ab4f-7ad76474d6fc}</Project>
-      <Name>com.unity.cinemachine.editor</Name>
+    <ProjectReference Include="Unity.InputSystem.csproj">
+      <Project>{f12cb4fc-8f20-b9f0-5e9c-57ecd677a831}</Project>
+      <Name>Unity.InputSystem</Name>
     </ProjectReference>
     <ProjectReference Include="Cinemachine.csproj">
       <Project>{86a5e292-8cb4-780a-76b6-037503c5f4c4}</Project>
       <Name>Cinemachine</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.InputSystem.csproj">
-      <Project>{f12cb4fc-8f20-b9f0-5e9c-57ecd677a831}</Project>
-      <Name>Unity.InputSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="BehaviorDesigner.Movement.csproj">
-      <Project>{15b787ca-d264-c2cb-b28b-8d33fe59781b}</Project>
-      <Name>BehaviorDesigner.Movement</Name>
-    </ProjectReference>
-    <ProjectReference Include="BehaviorDesigner.csproj">
-      <Project>{893f2383-f440-05da-b8a0-b6c22254b258}</Project>
-      <Name>BehaviorDesigner</Name>
+    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
+      <Project>{a419449f-af4b-a560-ab4f-7ad76474d6fc}</Project>
+      <Name>com.unity.cinemachine.editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
