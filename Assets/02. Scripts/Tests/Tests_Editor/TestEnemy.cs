@@ -21,6 +21,9 @@ namespace Tests.Tests_Editor {
             [field: ES3Serializable]
             public override string EntityName { get; protected set; } = "TestEnemy2";
 
+            protected override string OnGetDescription(string defaultLocalizationKey) {
+                return null;
+            }
             public override void OnRecycle() {
             
             }
@@ -45,6 +48,9 @@ namespace Tests.Tests_Editor {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
 
+            protected override string OnGetDescription(string defaultLocalizationKey) {
+                return null;
+            }
             public override void OnDoRecycle() {
                 
             }

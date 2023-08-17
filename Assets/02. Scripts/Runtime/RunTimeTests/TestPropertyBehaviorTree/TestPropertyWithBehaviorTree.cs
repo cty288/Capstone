@@ -22,6 +22,11 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         public override void OnRecycle() {
         
         }
+
+        protected override string OnGetDescription(string defaultLocalizationKey) {
+            return null;
+        }
+
         protected override ConfigTable GetConfigTable() {
             return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
         }
