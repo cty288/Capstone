@@ -4,6 +4,7 @@ using System.Linq;
 using Framework;
 using MikroFramework.Pool;
 using NUnit.Framework;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
 using Runtime.DataFramework.Properties;
@@ -30,6 +31,9 @@ namespace Tests.Tests_Editor {
 				SafeObjectPool<BasicEntity>.Singleton.Recycle(this);
 			}
 
+			protected override string OnGetDescription(string defaultLocalizationKey) {
+				return Localization.GetFormat(defaultLocalizationKey, GetProperty<IDangerProperty>().RealValue.Value);
+			}
 			public override void OnRecycle() {
 					
 			}
@@ -52,6 +56,9 @@ namespace Tests.Tests_Editor {
 				});
 			}
 
+			protected override string OnGetDescription(string defaultLocalizationKey) {
+				return null;
+			}
 			public override void OnDoRecycle() {
 				SafeObjectPool<TestEnemy>.Singleton.Recycle(this);
 			}
@@ -76,7 +83,10 @@ namespace Tests.Tests_Editor {
 					}
 				});
 			}
-			
+
+			protected override string OnGetDescription(string defaultLocalizationKey) {
+				return null;
+			}
 
 			public override void OnDoRecycle() {
 				SafeObjectPool<TestResourceTableEnemy>.Singleton.Recycle(this);
@@ -108,7 +118,10 @@ namespace Tests.Tests_Editor {
 					}
 				});
 			}
-			
+
+			protected override string OnGetDescription(string defaultLocalizationKey) {
+				return null;
+			}
 			
 
 			public override void OnDoRecycle() {
@@ -338,6 +351,9 @@ namespace Tests.Tests_Editor {
 				));
 			}
 
+			protected override string OnGetDescription(string defaultLocalizationKey) {
+				return null;
+			}
 			public override void OnDoRecycle() {
 				SafeObjectPool<TestInterestEntity>.Singleton.Recycle(this);
 			}
@@ -358,6 +374,19 @@ namespace Tests.Tests_Editor {
 
 			Debug.Log($"UUID: {entity.UUID}");
 			Assert.AreEqual(10, entity.GetProperty<TestDanger>().RealValue);
+		}
+		
+		[Test]
+		public void TestEntityDesc() {
+			EntityPropertyDependencyCache.ClearCache();
+			BasicEntity entity = BasicEntityBuilder<BasicEntity>.
+				Allocate(2).
+				SetProperty(new PropertyNameInfo(PropertyName.danger), 1).
+				Build();
+
+			string desc = entity.GetDescription();
+			Debug.Log($"UUID: {entity.UUID}");
+			Assert.AreEqual("My danger is 10", desc);
 		}
 		
 		[Test]

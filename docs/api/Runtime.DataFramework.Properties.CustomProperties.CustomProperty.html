@@ -304,8 +304,8 @@
 
   <a id="Runtime_DataFramework_Properties_CustomProperties_CustomProperty__ctor_" data-uid="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.#ctor*"></a>
 
-  <h3 id="Runtime_DataFramework_Properties_CustomProperties_CustomProperty__ctor_System_String_Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty___" data-uid="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter,Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty[])">
-  CustomProperty(string, IDescriptionGetter, params ICustomDataProperty[])
+  <h3 id="Runtime_DataFramework_Properties_CustomProperties_CustomProperty__ctor_System_String_Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty___" data-uid="Runtime.DataFramework.Properties.CustomProperties.CustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter{Runtime.DataFramework.Properties.CustomProperties.ICustomProperty},Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty[])">
+  CustomProperty(string, IDescriptionGetter&lt;ICustomProperty&gt;, params ICustomDataProperty[])
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/CustomProperties/CustomProperty.cs/#L98"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -313,7 +313,7 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public CustomProperty(string propertyName, IDescriptionGetter descriptionGetter, params ICustomDataProperty[] data)</code></pre>
+    <pre><code class="lang-csharp hljs">public CustomProperty(string propertyName, IDescriptionGetter&lt;ICustomProperty&gt; descriptionGetter, params ICustomDataProperty[] data)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -321,7 +321,7 @@
     <dt><code>propertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd><p>The name of the property. This should be the same as the one on the config file</p>
 </dd>
-    <dt><code>descriptionGetter</code> <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter.html">IDescriptionGetter</a></dt>
+    <dt><code>descriptionGetter</code> <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter-1.html">IDescriptionGetter</a>&lt;<a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomProperty.html">ICustomProperty</a>&gt;</dt>
     <dd><p>In order to serialize the description, you need to use a descriptionGetter object to do the description stuff</p>
 </dd>
     <dt><code>data</code> <a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty.html">ICustomDataProperty</a>[]</dt>
@@ -354,7 +354,7 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected IDescriptionGetter descriptionGetter</code></pre>
+    <pre><code class="lang-csharp hljs">protected IDescriptionGetter&lt;ICustomProperty&gt; descriptionGetter</code></pre>
   </div>
 
 
@@ -362,7 +362,7 @@
 
   <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter.html">IDescriptionGetter</a></dt>
+    <dt><a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter-1.html">IDescriptionGetter</a>&lt;<a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomProperty.html">ICustomProperty</a>&gt;</dt>
     <dd></dd>
   </dl>
 

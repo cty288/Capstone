@@ -19582,6 +19582,31 @@ references:
 - uid: Runtime.DataFramework
   name: Runtime.DataFramework
   href: api/Runtime.DataFramework.html
+- uid: Runtime.DataFramework.Description
+  name: Runtime.DataFramework.Description
+  href: api/Runtime.DataFramework.Description.html
+  commentId: N:Runtime.DataFramework.Description
+  fullName: Runtime.DataFramework.Description
+  nameWithType: Runtime.DataFramework.Description
+- uid: Runtime.DataFramework.Description.IHaveDescription
+  name: IHaveDescription
+  href: api/Runtime.DataFramework.Description.IHaveDescription.html
+  commentId: T:Runtime.DataFramework.Description.IHaveDescription
+  fullName: Runtime.DataFramework.Description.IHaveDescription
+  nameWithType: IHaveDescription
+- uid: Runtime.DataFramework.Description.IHaveDescription.GetDescription
+  name: GetDescription()
+  href: api/Runtime.DataFramework.Description.IHaveDescription.html#Runtime_DataFramework_Description_IHaveDescription_GetDescription
+  commentId: M:Runtime.DataFramework.Description.IHaveDescription.GetDescription
+  fullName: Runtime.DataFramework.Description.IHaveDescription.GetDescription()
+  nameWithType: IHaveDescription.GetDescription()
+- uid: Runtime.DataFramework.Description.IHaveDescription.GetDescription*
+  name: GetDescription
+  href: api/Runtime.DataFramework.Description.IHaveDescription.html#Runtime_DataFramework_Description_IHaveDescription_GetDescription_
+  commentId: Overload:Runtime.DataFramework.Description.IHaveDescription.GetDescription
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Description.IHaveDescription.GetDescription
+  nameWithType: IHaveDescription.GetDescription
 - uid: Runtime.DataFramework.Entities
   name: Runtime.DataFramework.Entities
   href: api/Runtime.DataFramework.Entities.html
@@ -21553,6 +21578,19 @@ references:
   isSpec: "True"
   fullName: Runtime.DataFramework.Entities.Entity.GetConfigTable
   nameWithType: Entity.GetConfigTable
+- uid: Runtime.DataFramework.Entities.Entity.GetDescription
+  name: GetDescription()
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDescription
+  commentId: M:Runtime.DataFramework.Entities.Entity.GetDescription
+  fullName: Runtime.DataFramework.Entities.Entity.GetDescription()
+  nameWithType: Entity.GetDescription()
+- uid: Runtime.DataFramework.Entities.Entity.GetDescription*
+  name: GetDescription
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDescription_
+  commentId: Overload:Runtime.DataFramework.Entities.Entity.GetDescription
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.Entity.GetDescription
+  nameWithType: Entity.GetDescription
 - uid: Runtime.DataFramework.Entities.Entity.GetProperty(Runtime.DataFramework.Properties.PropertyName)
   name: GetProperty(PropertyName)
   href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyName_
@@ -21687,6 +21725,22 @@ references:
   isSpec: "True"
   fullName: Runtime.DataFramework.Entities.Entity.OnDoRecycle
   nameWithType: Entity.OnDoRecycle
+- uid: Runtime.DataFramework.Entities.Entity.OnGetDescription(System.String)
+  name: OnGetDescription(string)
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnGetDescription_System_String_
+  commentId: M:Runtime.DataFramework.Entities.Entity.OnGetDescription(System.String)
+  name.vb: OnGetDescription(String)
+  fullName: Runtime.DataFramework.Entities.Entity.OnGetDescription(string)
+  fullName.vb: Runtime.DataFramework.Entities.Entity.OnGetDescription(String)
+  nameWithType: Entity.OnGetDescription(string)
+  nameWithType.vb: Entity.OnGetDescription(String)
+- uid: Runtime.DataFramework.Entities.Entity.OnGetDescription*
+  name: OnGetDescription
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnGetDescription_
+  commentId: Overload:Runtime.DataFramework.Entities.Entity.OnGetDescription
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.Entity.OnGetDescription
+  nameWithType: Entity.OnGetDescription
 - uid: Runtime.DataFramework.Entities.Entity.OnLoadFromSave
   name: OnLoadFromSave()
   href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnLoadFromSave
@@ -22517,15 +22571,15 @@ references:
   fullName.vb: Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.New()
   nameWithType: AutoConfigCustomProperty.AutoConfigCustomProperty()
   nameWithType.vb: AutoConfigCustomProperty.New()
-- uid: Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter)
-  name: AutoConfigCustomProperty(string, IDescriptionGetter)
-  href: api/Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty__ctor_System_String_Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_
-  commentId: M:Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter)
-  name.vb: New(String, IDescriptionGetter)
-  fullName: Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.AutoConfigCustomProperty(string, Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter)
-  fullName.vb: Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.New(String, Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter)
-  nameWithType: AutoConfigCustomProperty.AutoConfigCustomProperty(string, IDescriptionGetter)
-  nameWithType.vb: AutoConfigCustomProperty.New(String, IDescriptionGetter)
+- uid: Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter{Runtime.DataFramework.Properties.CustomProperties.ICustomProperty})
+  name: AutoConfigCustomProperty(string, IDescriptionGetter<ICustomProperty>)
+  href: api/Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty__ctor_System_String_Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__
+  commentId: M:Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter{Runtime.DataFramework.Properties.CustomProperties.ICustomProperty})
+  name.vb: New(String, IDescriptionGetter(Of ICustomProperty))
+  fullName: Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.AutoConfigCustomProperty(string, Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter<Runtime.DataFramework.Properties.CustomProperties.ICustomProperty>)
+  fullName.vb: Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.New(String, Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter(Of Runtime.DataFramework.Properties.CustomProperties.ICustomProperty))
+  nameWithType: AutoConfigCustomProperty.AutoConfigCustomProperty(string, IDescriptionGetter<ICustomProperty>)
+  nameWithType.vb: AutoConfigCustomProperty.New(String, IDescriptionGetter(Of ICustomProperty))
 - uid: Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.#ctor*
   name: AutoConfigCustomProperty
   href: api/Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_AutoConfigCustomProperty__ctor_
@@ -22846,15 +22900,15 @@ references:
   fullName.vb: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.New()
   nameWithType: CustomProperty.CustomProperty()
   nameWithType.vb: CustomProperty.New()
-- uid: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter,Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty[])
-  name: CustomProperty(string, IDescriptionGetter, params ICustomDataProperty[])
-  href: api/Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty__ctor_System_String_Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty___
-  commentId: M:Runtime.DataFramework.Properties.CustomProperties.CustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter,Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty[])
-  name.vb: New(String, IDescriptionGetter, ParamArray ICustomDataProperty())
-  fullName: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.CustomProperty(string, Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter, params Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty[])
-  fullName.vb: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.New(String, Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter, ParamArray Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty())
-  nameWithType: CustomProperty.CustomProperty(string, IDescriptionGetter, params ICustomDataProperty[])
-  nameWithType.vb: CustomProperty.New(String, IDescriptionGetter, ParamArray ICustomDataProperty())
+- uid: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter{Runtime.DataFramework.Properties.CustomProperties.ICustomProperty},Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty[])
+  name: CustomProperty(string, IDescriptionGetter<ICustomProperty>, params ICustomDataProperty[])
+  href: api/Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty__ctor_System_String_Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty___
+  commentId: M:Runtime.DataFramework.Properties.CustomProperties.CustomProperty.#ctor(System.String,Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter{Runtime.DataFramework.Properties.CustomProperties.ICustomProperty},Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty[])
+  name.vb: New(String, IDescriptionGetter(Of ICustomProperty), ParamArray ICustomDataProperty())
+  fullName: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.CustomProperty(string, Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter<Runtime.DataFramework.Properties.CustomProperties.ICustomProperty>, params Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty[])
+  fullName.vb: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.New(String, Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter(Of Runtime.DataFramework.Properties.CustomProperties.ICustomProperty), ParamArray Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty())
+  nameWithType: CustomProperty.CustomProperty(string, IDescriptionGetter<ICustomProperty>, params ICustomDataProperty[])
+  nameWithType.vb: CustomProperty.New(String, IDescriptionGetter(Of ICustomProperty), ParamArray ICustomDataProperty())
 - uid: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.#ctor*
   name: CustomProperty
   href: api/Runtime.DataFramework.Properties.CustomProperties.CustomProperty.html#Runtime_DataFramework_Properties_CustomProperties_CustomProperty__ctor_
@@ -23113,6 +23167,15 @@ references:
   commentId: F:Runtime.DataFramework.Properties.CustomProperties.CustomProperty.propertyName
   fullName: Runtime.DataFramework.Properties.CustomProperties.CustomProperty.propertyName
   nameWithType: CustomProperty.propertyName
+- uid: Runtime.DataFramework.Properties.CustomProperties.DescriptionGetter`1
+  name: DescriptionGetter<T>
+  href: api/Runtime.DataFramework.Properties.CustomProperties.DescriptionGetter-1.html
+  commentId: T:Runtime.DataFramework.Properties.CustomProperties.DescriptionGetter`1
+  name.vb: DescriptionGetter(Of T)
+  fullName: Runtime.DataFramework.Properties.CustomProperties.DescriptionGetter<T>
+  fullName.vb: Runtime.DataFramework.Properties.CustomProperties.DescriptionGetter(Of T)
+  nameWithType: DescriptionGetter<T>
+  nameWithType.vb: DescriptionGetter(Of T)
 - uid: Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty
   name: ICustomDataProperty
   href: api/Runtime.DataFramework.Properties.CustomProperties.ICustomDataProperty.html
@@ -23364,6 +23427,32 @@ references:
   isSpec: "True"
   fullName: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter.GetDescription
   nameWithType: IDescriptionGetter.GetDescription
+- uid: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter`1
+  name: IDescriptionGetter<T>
+  href: api/Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter-1.html
+  commentId: T:Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter`1
+  name.vb: IDescriptionGetter(Of T)
+  fullName: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter<T>
+  fullName.vb: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter(Of T)
+  nameWithType: IDescriptionGetter<T>
+  nameWithType.vb: IDescriptionGetter(Of T)
+- uid: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter`1.GetDescription(`0)
+  name: GetDescription(T)
+  href: api/Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter-1.html#Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_1_GetDescription__0_
+  commentId: M:Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter`1.GetDescription(`0)
+  fullName: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter<T>.GetDescription(T)
+  fullName.vb: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter(Of T).GetDescription(T)
+  nameWithType: IDescriptionGetter<T>.GetDescription(T)
+  nameWithType.vb: IDescriptionGetter(Of T).GetDescription(T)
+- uid: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter`1.GetDescription*
+  name: GetDescription
+  href: api/Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter-1.html#Runtime_DataFramework_Properties_CustomProperties_IDescriptionGetter_1_GetDescription_
+  commentId: Overload:Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter`1.GetDescription
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter<T>.GetDescription
+  fullName.vb: Runtime.DataFramework.Properties.CustomProperties.IDescriptionGetter(Of T).GetDescription
+  nameWithType: IDescriptionGetter<T>.GetDescription
+  nameWithType.vb: IDescriptionGetter(Of T).GetDescription
 - uid: Runtime.DataFramework.Properties.Danger
   name: Danger
   href: api/Runtime.DataFramework.Properties.Danger.html

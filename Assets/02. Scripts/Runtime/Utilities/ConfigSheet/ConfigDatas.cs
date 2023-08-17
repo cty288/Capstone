@@ -1,4 +1,6 @@
 ﻿using MikroFramework.Singletons;
+using Polyglot;
+using UnityEngine;
 
 namespace Runtime.Utilities.ConfigSheet {
 	public class ConfigDatas : MikroSingleton<ConfigDatas> {
@@ -18,5 +20,12 @@ namespace Runtime.Utilities.ConfigSheet {
 			enemyEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"1757713118", "data_enemies_test");
 		} 
+		
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+		private static void OnDownloadCustomSheet()
+		{
+			Debug.Log("Loading Localization Sheet...");
+			LocalizationImporter.DownloadCustomSheet();
+		}
 	}
 }

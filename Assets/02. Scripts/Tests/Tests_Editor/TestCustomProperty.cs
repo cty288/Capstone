@@ -19,6 +19,9 @@ namespace Tests.Tests_Editor {
             
 			}
 
+			protected override string OnGetDescription(string defaultLocalizationKey) {
+				return null;
+			}
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
@@ -77,6 +80,9 @@ namespace Tests.Tests_Editor {
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
 
+			protected override string OnGetDescription(string defaultLocalizationKey) {
+				return null;
+			}
 			protected override ICustomProperty[] OnRegisterCustomProperties() {
 				return new ICustomProperty[] {
 					new AutoConfigCustomProperty("attack1"),
