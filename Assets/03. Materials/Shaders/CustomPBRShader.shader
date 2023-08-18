@@ -24,8 +24,12 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 
         _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
         _SpecGlossMap("Specular", 2D) = "white" {}
+    	
+    	[Toggle(_NORMALMAP)] _NormalMapToggle ("Use Normal Map", Float) = 0
+    	_BumpScale("Bump Scale", Float) = 1.0
+        _BumpMap("Normal Map", 2D) = "bump" {}
         
-        _OcclusionStrength("Strength", Range(0.0, 1.0)) = 1.0
+        _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
         _OcclusionMap("Occlusion", 2D) = "white" {}
 
         [HDR] _EmissionColor("Color", Color) = (0,0,0)
@@ -57,6 +61,10 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
                 float _Metallic;
         
                 float4 _SpecColor;
+
+				float _BumpScale;
+				float4 _BumpMap_ST;
+        
                 float4 _OcclusionStrength;
                 float4 _EmissionColor;
                 
@@ -217,16 +225,20 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             };
 
             // ------------------
-            // TODO: Vertex
+            // Vertex
             // ------------------
 
             Varyings LitPassVertex(Attributes IN)
             {
                 Varyings OUT;
 
+            	UNITY_SETUP_INSTANCE_ID(IN);
+			    UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
+			    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+
                 VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
 				#ifdef _NORMALMAP
-					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz, IN.tangentOS);
+					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS, IN.tangentOS);
 				#else
 					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz);
 				#endif
@@ -239,8 +251,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 				half fogFactor = ComputeFogFactor(positionInputs.positionCS.z);
 				
 				#ifdef _NORMALMAP
-					OUT.normalWS = half4(normalInputs.normalWS, viewDirWS.x);
-					OUT.tangentWS = half4(normalInputs.tangentWS, viewDirWS.y);
+					OUT.normalWS = normalInputs.normalWS;
+            		real sign = IN.tangentOS.w * GetOddNegativeScale();
+					OUT.tangentWS = half4(normalInputs.tangentWS, sign);
 				#else
 					OUT.normalWS = NormalizeNormalPerVertex(normalInputs.normalWS);
 					//OUT.viewDirWS = viewDirWS;
@@ -264,7 +277,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             }
 
             // ------------------
-            // TODO: Fragment
+            // Fragment
             // ------------------
 
             #include "DesertLighting.hlsl"
@@ -276,7 +289,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 
                 InputData inputData;
 	            InitializeInputData(IN, surfaceData.normalTS, inputData);
-                
+
+            	// TODO: Ambient Occlusion Calculations
+            	// TODO: Metallic Specular
                 half4 color = DesertFragmentPBR(inputData, surfaceData);
 
                 color.rgb = MixFog(color.rgb, inputData.fogCoord);
@@ -426,8 +441,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             
             ENDHLSL
         }
-        
-        /*
+
         //Lightmap Baking
         Pass
         {
@@ -438,13 +452,62 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             Cull Back
             
             HLSLPROGRAM
+			#pragma vertex UniversalVertexMeta
+			#pragma fragment UniversalFragmentMeta
 
-            // Excludes render platforms that do not support deferred rendering //
-            #pragma exclude_renderers gles gles3 glcore
-            #pragma target 4.5
-            
-            
-            ENDHLSL
+			#pragma shader_feature_local_fragment _SPECULAR_SETUP
+			#pragma shader_feature_local_fragment _EMISSION
+			#pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
+			#pragma shader_feature_local_fragment _ALPHATEST_ON
+			#pragma shader_feature_local_fragment _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+			//#pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
+
+			#pragma shader_feature_local_fragment _SPECGLOSSMAP
+
+			struct Attributes {
+				float4 positionOS   : POSITION;
+				float3 normalOS     : NORMAL;
+				float2 uv0          : TEXCOORD0;
+				float2 uv1          : TEXCOORD1;
+				float2 uv2          : TEXCOORD2;
+				#ifdef _TANGENT_TO_WORLD
+					float4 tangentOS     : TANGENT;
+				#endif
+				float4 color		: COLOR;
+			};
+
+			struct Varyings {
+				float4 positionCS   : SV_POSITION;
+				float2 uv           : TEXCOORD0;
+				float4 color		: COLOR;
+			};
+
+			#include "Inputs.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
+
+			Varyings UniversalVertexMeta(Attributes input) {
+				Varyings output;
+				output.positionCS = MetaVertexPosition(input.positionOS, input.uv1, input.uv2, unity_LightmapST, unity_DynamicLightmapST);
+				output.uv = TRANSFORM_TEX(input.uv0, _BaseMap);
+				output.color = input.color;
+				return output;
+			}
+
+			half4 UniversalFragmentMeta(Varyings input) : SV_Target {
+				SurfaceData surfaceData;
+				InitializeSurfaceData(input, surfaceData);
+
+				BRDFData brdfData;
+				InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, brdfData);
+
+				MetaInput metaInput;
+				metaInput.Albedo = brdfData.diffuse + brdfData.specular * brdfData.roughness * 0.5;
+				metaInput.Emission = surfaceData.emission;
+
+				return MetaFragment(metaInput);
+			}
+
+			ENDHLSL
         }
 
         //2D Lighting
@@ -461,9 +524,18 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             // Excludes render platforms that do not support deferred rendering //
             #pragma exclude_renderers gles gles3 glcore
             #pragma target 4.5
+
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma shader_feature_local_fragment _ALPHATEST_ON
+            #pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
+
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/Utils/Universal2D.hlsl"
             
             ENDHLSL
-        }*/
+        }
     }
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
 }

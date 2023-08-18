@@ -123,7 +123,7 @@
 
 			        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
 			        {
-			            lightingData.additionalLightsColor += LightingPhysicallyBased(brdfData, brdfDataClearCoat, light,
+			            lightingData.additionalLightsColor += DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat, light,
 			                                                                          inputData.normalWS, inputData.viewDirectionWS,
 			                                                                          surfaceData.clearCoatMask, specularHighlightsOff);
 			        }
@@ -135,7 +135,7 @@
 
 			        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
 			        {
-			            lightingData.additionalLightsColor += LightingPhysicallyBased(brdfData, brdfDataClearCoat, light,
+			            lightingData.additionalLightsColor += DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat, light,
 			                                                                          inputData.normalWS, inputData.viewDirectionWS,
 			                                                                          surfaceData.clearCoatMask, specularHighlightsOff);
 			        }

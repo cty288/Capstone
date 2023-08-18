@@ -55,7 +55,7 @@ void InitializeSurfaceData(Varyings IN, out SurfaceData surfaceData){
 	surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
 	surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
 
-	surfaceData.normalTS = SampleNormal(IN.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap));
+	surfaceData.normalTS = SampleNormal(IN.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
 	surfaceData.emission = SampleEmission(IN.uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
 	surfaceData.occlusion = SampleOcclusion(IN.uv);
 		
@@ -78,7 +78,8 @@ void InitializeInputData(Varyings IN, half3 normalTS, out InputData inputData) {
 	half3 viewDirWS = IN.viewDirWS;
 
     #if defined(_NORMALMAP)
-	inputData.normalWS = TransformTangentToWorld(normalTS,half3x3(IN.tangentWS.xyz, cross(IN.normalWS.xyz, IN.tangentWS.xyz) * IN.tangentWS.w, IN.normalWS.xyz));
+	float3 bitangent = IN.tangentWS.w * cross(IN.normalWS.xyz, IN.tangentWS.xyz);
+	inputData.normalWS = TransformTangentToWorld(normalTS,half3x3(IN.tangentWS.xyz, bitangent.xyz, IN.normalWS.xyz));
     #else
 	inputData.normalWS = IN.normalWS;
     #endif
