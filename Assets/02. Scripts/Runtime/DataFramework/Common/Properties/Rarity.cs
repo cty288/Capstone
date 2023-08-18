@@ -6,9 +6,6 @@
 	
 	public class Rarity : IndependentLoadFromConfigProperty<int>, IRarityProperty {
 
-		public override int OnSetBaseValueFromConfig(dynamic value) {
-			return value;
-		}
 
 		protected override PropertyName GetPropertyName() {
 			

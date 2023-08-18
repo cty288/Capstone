@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.DataFramework.Base.Description;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Description;
@@ -11,7 +12,7 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.DataFramework.Entities {
-	public interface IEntity: IPoolable, IHaveDescription {
+	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName  {
 	
 		public string EntityName { get; }
 		/// <summary>
@@ -306,6 +307,7 @@ namespace Runtime.DataFramework.Entities {
 				}
 				i++;
 			}
+
 		}
 	
 		public IPropertyBase GetProperty(PropertyName name) {
@@ -435,5 +437,15 @@ namespace Runtime.DataFramework.Entities {
 		/// <param name="defaultLocalizationKey">This is always equal to EntityName_desc. Use Localization.Get or Localization.GetFormat to retrieve its description based on the key <br />
 		/// Or you can ignore defaultLocalizationKey can manually implement yours</param>
 		protected abstract string OnGetDescription(string defaultLocalizationKey);
+		
+		
+		public string GetDisplayName() {
+			string displayName = Localization.Get($"{EntityName}_name");
+			if (displayName != Localization.KeyNotFound) {
+				return displayName;
+			}
+
+			return "";
+		}
 	}
 }

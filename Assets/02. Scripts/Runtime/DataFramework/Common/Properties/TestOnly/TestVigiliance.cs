@@ -3,10 +3,7 @@
 		
 	}
 	public class TestVigiliance: AbstractLoadFromConfigProperty<float>, IVigilianceProperty {
-
-		public override float OnSetBaseValueFromConfig(dynamic value) {
-			return value;
-		}
+		
 
 		protected override IPropertyDependencyModifier<float> GetDefautModifier() {
 			return new VigilianceDefaultModifier();

@@ -28,14 +28,14 @@ namespace Runtime.Utilities.ConfigSheet {
 				
 			}
 			OnLoadFinished(result);
-		}
+		} 
 
 
 		private Dictionary<string, Dictionary<string, dynamic>> data =
 			new Dictionary<string, Dictionary<string, dynamic>>();
 		
-		
-		
+		private Dictionary<string, Type> headerTypes = new Dictionary<string, Type>();
+
 		private void OnLoadFinished(string text) {
 			List<List<string>> rows;
             text = text.Replace("\r\n", "\n");
@@ -49,6 +49,16 @@ namespace Runtime.Utilities.ConfigSheet {
 	                //load the header
 	                for (int i = 1; i < row.Count; i++) {
 		                headers[i-1] = row[i];
+	                }
+	                continue;
+                }
+
+                if (rowIndex == 1) {
+	                //types
+	                for (int i = 1; i < row.Count; i++) {
+		                string type = row[i];
+		                string header = headers[i-1];
+		                headerTypes.Add(header, SerializationFactory.Singleton.ParseType(type));
 	                }
 	                continue;
                 }
@@ -81,28 +91,30 @@ namespace Runtime.Utilities.ConfigSheet {
 	                if(String.IsNullOrEmpty(rawVal)) {
 		                continue;
 	                }
- 
+	                // Type.GetType
+	                // Li JsonConvert.DeserializeObject(row[i], dynamic)
+	                if(i >= headers.Length) {
+		                continue;
+	                }
+	                Type targetType = headerTypes[headers[i]];
+
 	                dynamic value;
-	                try {
-		                value = JsonConvert.DeserializeObject<dynamic>(row[i]);
+	                if (targetType == typeof(string)) {
+		                value = rawVal;
 	                }
-	                catch (Exception e) {
-		                value = rawVal; //fallback to raw value (string)
+	                else if (targetType == typeof(object))  {
+		               value = JsonConvert.DeserializeObject<dynamic>(rawVal);
 	                }
-	                
+	                else {
+		                value = JsonConvert.DeserializeObject(rawVal, targetType);
+	                }
+	               
 	                if(value is null) {
 		                continue;
 	                }
-	                if (value is double) {
-		                value = (float) value;
-	                }else if (value is long) {
-		                value = (int) value;
-	                }
 	                rowDict.Add(headers[i], value);
                 }
-
                 data.Add(name, rowDict);
-
             }
 		}
 		

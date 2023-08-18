@@ -9,10 +9,7 @@
 			return RealValue.Value.CurrentHealth;
 		}
 
-
-		public override HealthInfo OnSetBaseValueFromConfig(dynamic value) {
-			return new HealthInfo((int)value.maxHealth, (int)value.currentHealth);
-		}
+		
 
 		protected override IPropertyDependencyModifier<HealthInfo> GetDefautModifier() {
 			return new TestHealthDefaultModifier();

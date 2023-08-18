@@ -66,9 +66,6 @@ namespace Runtime.DataFramework.Properties.TagProperty {
 			return null;
 		}
 
-		public override Dictionary<TagName, int> OnSetBaseValueFromConfig(dynamic value) {
-			return value.ToObject<Dictionary<TagName,int>>();
-		}
 
 		public Tag[] GetTags() {
 			Tag[] tags = new Tag[RealValues.Value.Count];

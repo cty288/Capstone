@@ -18,6 +18,7 @@ namespace Runtime.DataFramework.Properties {
 		test,
 		test_interest,
 		test_interest_list,
-		test_interest_dict
+		test_interest_dict,
+		test_hashset
 	}
 }
