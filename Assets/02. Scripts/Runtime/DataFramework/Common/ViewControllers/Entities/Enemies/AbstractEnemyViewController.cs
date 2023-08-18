@@ -4,7 +4,7 @@ using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 using UnityEngine;
 
-namespace Runtime.DataFramework.ViewControllers.Enemies
+namespace Runtime.DataFramework.ViewControllers.Entities.Enemies
 {
 	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T, IEnemyEntityModel>, IEnemyViewController
 		where T : class, IEnemyEntity, new()

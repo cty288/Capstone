@@ -1,9 +1,6 @@
 ﻿namespace Runtime.DataFramework.Properties.TestOnly {
 	public interface IAttackRangeProperty : IProperty<float>, ILoadFromConfigProperty{}
 	public class TestAttackRange: AbstractLoadFromConfigProperty<float>, IAttackRangeProperty {
-		public override float OnSetBaseValueFromConfig(dynamic value) {
-			return value;
-		}
 
 		protected override IPropertyDependencyModifier<float> GetDefautModifier() {
 			return new VigilianceDefaultModifier();

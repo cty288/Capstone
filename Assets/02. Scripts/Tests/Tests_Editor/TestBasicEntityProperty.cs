@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Framework;
 using MikroFramework.Pool;
 using NUnit.Framework;
 using Polyglot;
@@ -9,6 +8,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.TestOnly;
+using Runtime.Framework;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
@@ -558,6 +558,23 @@ namespace Tests.Tests_Editor {
 			Assert.AreEqual(30, (int) ent1.GetProperty(new PropertyNameInfo("test_interest_dict.play[0]")).GetRealValue().Value);
 			Assert.AreEqual(45,
 				(int) ent1.GetProperty(new PropertyNameInfo("test_interest_dict.play[1]")).GetRealValue().Value);
+		}
+		
+		
+		[Test]
+		
+		public void TestSerializationFactory() {
+			EntityPropertyDependencyCache.ClearCache();
+			Assert.AreEqual(typeof(Dictionary<string, HealthInfo>), SerializationFactory.Singleton.ParseType("Dictionary<string, HealthInfo>"));
+			Assert.AreEqual(typeof(Dictionary<string, HealthInfo>), SerializationFactory.Singleton.ParseType("Dictionary<string, HealthInfo>"));
+			Assert.AreEqual(typeof(Dictionary<string, Dictionary<string, HealthInfo[]>>), SerializationFactory.Singleton.ParseType("Dictionary<string, Dictionary<string, HealthInfo[]>>"));
+			Assert.AreEqual(typeof(List<Dictionary<string, HashSet<HealthInfo[]>>>), SerializationFactory.Singleton.ParseType("List<Dictionary<string, HashSet<HealthInfo[]>>>"));
+			Assert.AreEqual(typeof(Dictionary<string, object>), SerializationFactory.Singleton.ParseType("Dictionary<string, dynamic>")); 
+			Assert.AreEqual(typeof(Dictionary<HealthInfo, List<HashSet<string[]>>>), SerializationFactory.Singleton.ParseType("Dictionary<HealthInfo, List<HashSet<string[]>>>"));
+			Assert.AreEqual(typeof(Dictionary<object, List<Dictionary<string, HealthInfo[]>>>), SerializationFactory.Singleton.ParseType("Dictionary<dynamic, List<Dictionary<string, HealthInfo[]>>>")); 
+			Assert.AreEqual(typeof(HashSet<Dictionary<HealthInfo, HashSet<object[]>>>), SerializationFactory.Singleton.ParseType("HashSet<Dictionary<HealthInfo, HashSet<dynamic[]>>>"));
+			Assert.AreEqual(typeof(List<Dictionary<Dictionary<object, HealthInfo>, List<HashSet<string[]>>>>), SerializationFactory.Singleton.ParseType("List<Dictionary<Dictionary<dynamic, HealthInfo>, List<HashSet<string[]>>>>"));
+			Assert.AreEqual(typeof(Dictionary<string, List<HashSet<Dictionary<HealthInfo, object[]>>>>), SerializationFactory.Singleton.ParseType("Dictionary<string, List<HashSet<Dictionary<HealthInfo, dynamic[]>>>>")); 
 		}
 
 	} 

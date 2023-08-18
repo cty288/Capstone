@@ -81,12 +81,12 @@ namespace Runtime.DataFramework.Properties {
 	public abstract class IndependentLoadFromConfigListProperty<T> : IndependentListProperty<T>, ILoadFromConfigProperty {
 	
 		public void LoadFromConfig(dynamic value) {
-			if (value != null) {
-				SetBaseValue(OnSetBaseValueFromConfig(value));
+			if (value is not null) {
+				SetBaseValue(OnClone(value));
 			}
 		}
 	
-		public abstract List<T> OnSetBaseValueFromConfig(dynamic value);
+		//public abstract List<T> OnSetBaseValueFromConfig(dynamic value);
 		protected IndependentLoadFromConfigListProperty():base(){}
 
 	}

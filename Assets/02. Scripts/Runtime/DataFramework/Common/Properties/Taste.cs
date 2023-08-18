@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Runtime.DataFramework.Properties {
 	public enum TasteType {
@@ -12,9 +11,6 @@ namespace Runtime.DataFramework.Properties {
 		
 	}
 	public class Taste : IndependentLoadFromConfigListProperty<TasteType>, ITasteProperty {
-		public override List<TasteType> OnSetBaseValueFromConfig(dynamic value) {
-			return value.ToObject<List<TasteType>>();
-		}
 
 		protected override PropertyName GetPropertyName() {
 			return PropertyName.taste;

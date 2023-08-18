@@ -23,5 +23,6 @@ namespace Runtime.DataFramework.Properties
 		test_interest_dict,
 		//weapon properties test
 		base_damage,
+		test_hashset
 	}
 }

@@ -1,5 +1,4 @@
 using System;
-
 using Runtime.RunTimeTests.TestPropertyBehaviorTree;
 using UnityEngine;
 

@@ -11,7 +11,7 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.DataFramework.Entities {
-	public interface IEntity: IPoolable, IHaveDescription {
+	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName  {
 	
 		public string EntityName { get; }
 		/// <summary>
@@ -300,12 +300,13 @@ namespace Runtime.DataFramework.Entities {
 				IPropertyBase property = _allProperties.ElementAt(i).Value;
 				if(property is ILoadFromConfigProperty loadFromConfigProperty) {
 					dynamic value = configTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
-					if (value != null) {
+					if (value is not null) {
 						loadFromConfigProperty.LoadFromConfig(value);
 					}
 				}
 				i++;
 			}
+
 		}
 	
 		public IPropertyBase GetProperty(PropertyName name) {
@@ -435,5 +436,15 @@ namespace Runtime.DataFramework.Entities {
 		/// <param name="defaultLocalizationKey">This is always equal to EntityName_desc. Use Localization.Get or Localization.GetFormat to retrieve its description based on the key <br />
 		/// Or you can ignore defaultLocalizationKey can manually implement yours</param>
 		protected abstract string OnGetDescription(string defaultLocalizationKey);
+		
+		
+		public string GetDisplayName() {
+			string displayName = Localization.Get($"{EntityName}_name");
+			if (displayName != Localization.KeyNotFound) {
+				return displayName;
+			}
+
+			return "";
+		}
 	}
 }

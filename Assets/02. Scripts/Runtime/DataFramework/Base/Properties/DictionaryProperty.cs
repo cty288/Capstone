@@ -50,12 +50,12 @@ namespace Runtime.DataFramework.Properties {
 	public abstract class LoadFromConfigDictProperty<TKey, T> : DictionaryProperty<TKey, T>, ILoadFromConfigProperty {
 	
 		public void LoadFromConfig(dynamic value) {
-			if (value != null) {
-				SetBaseValue(OnSetBaseValueFromConfig(value));
+			if (value is not  null) {
+				SetBaseValue(OnClone(value));
 			}
 		}
 	
-		public abstract Dictionary<TKey, T>  OnSetBaseValueFromConfig(dynamic value);
+		//public abstract Dictionary<TKey, T>  OnSetBaseValueFromConfig(dynamic value);
 		
 
 	}

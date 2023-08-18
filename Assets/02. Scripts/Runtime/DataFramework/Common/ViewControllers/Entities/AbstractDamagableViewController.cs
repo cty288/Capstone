@@ -5,7 +5,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 
-namespace Runtime.DataFramework.ViewControllers {
+namespace Runtime.DataFramework.ViewControllers.Entities {
 	
 	/// <summary>
 	/// An abstract view controller for entities that can take damage (have health)

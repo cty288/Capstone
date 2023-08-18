@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Framework;
 using NUnit.Framework;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
@@ -10,6 +9,7 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.DataFramework.Properties.TestOnly;
+using Runtime.Framework;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -30,9 +30,10 @@ namespace Tests.Tests_Editor {
             protected override ConfigTable GetConfigTable() {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
-            protected override void OnEnemyRegisterProperties() {
+            protected override void OnEnemyRegisterAdditionalProperties() {
                 RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
                 RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
+                RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
             }
 
             protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -196,6 +197,46 @@ namespace Tests.Tests_Editor {
             
             ent1.Heal(10000, ent2);
             Assert.AreEqual(999, ent1.GetCurrentHealth());
+        }
+        
+        
+        [Test]
+        public void TestHashset() {
+            IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+
+            TestBasicEnemy ent1 = model.GetEnemyBuilder<TestBasicEnemy>(2)
+                .FromConfig()
+                .Build();
+
+            Assert.IsTrue(ent1.GetProperty<TestHashSetProperty>().RealValues.Contains("Name2"));
+            Assert.IsFalse(ent1.GetProperty<TestHashSetProperty>().RealValues.Contains("Name4"));
+
+            ent1.GetProperty<TestHashSetProperty>().RealValues.RegisterOnAdd(OnEnt1HashsetAdd);
+            ent1.GetProperty<TestHashSetProperty>().RealValues.AddAndInvoke("Name5");
+            
+            void OnEnt1HashsetAdd(string obj) {
+                Assert.AreEqual(4, ent1.GetProperty<TestHashSetProperty>().RealValues.Count);
+                Assert.AreEqual(3, ent1.GetProperty<TestHashSetProperty>().BaseValue.Count);
+            }
+            Assert.AreEqual(4, ent1.GetProperty<TestHashSetProperty>().RealValues.Count);
+            
+            
+            ES3.Save("test_save_hashset_entity", ent1, "test_save");
+            model.RemoveEntity(ent1.UUID);
+            
+            ent1 = ES3.Load<TestBasicEnemy>("test_save_hashset_entity", "test_save");
+            ent1.OnLoadFromSave();
+			
+            Assert.IsNotNull(ent1);
+            
+            Assert.IsTrue(ent1.GetProperty<TestHashSetProperty>().RealValues.Contains("Name2"));
+            
+            Assert.AreEqual(4, ent1.GetProperty<TestHashSetProperty>().RealValues.Count);
+            Assert.AreEqual(3, ent1.GetProperty<TestHashSetProperty>().BaseValue.Count);
+            
+            
+            ES3.DeleteKey("test_save_hashset_entity", "test_save");
         }
 
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Framework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities.Builders;
+using Runtime.Framework;
 
 namespace Runtime.DataFramework.Entities {
 	public interface IEntityModel : IModel {

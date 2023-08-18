@@ -3,7 +3,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Entities.Weapons;
 
-namespace Runtime.DataFramework.ViewControllers
+namespace Runtime.DataFramework.ViewControllers.Entities
 {
     public interface IEntityViewController : IController
     {

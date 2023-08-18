@@ -5,7 +5,6 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
-using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 
@@ -29,7 +28,7 @@ namespace Runtime.DataFramework.Entities.Enemies {
 			//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 			//RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			
-			OnEnemyRegisterProperties();
+			OnEnemyRegisterAdditionalProperties();
 		}
 
 		protected override Faction GetDefaultFaction() {
@@ -57,7 +56,7 @@ namespace Runtime.DataFramework.Entities.Enemies {
 		}
 
 
-		protected abstract void OnEnemyRegisterProperties();
+		protected abstract void OnEnemyRegisterAdditionalProperties();
 
 		public override void OnDoRecycle() {
 			SafeObjectPool<T>.Singleton.Recycle(this as T);

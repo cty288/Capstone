@@ -4,7 +4,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 
-namespace Runtime.DataFramework.ViewControllers {
+namespace Runtime.DataFramework.ViewControllers.Entities {
 	
 	/// <summary>
 	/// An abstract view controller for creature entity (like player, enemy, etc.)

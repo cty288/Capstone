@@ -1,7 +1,5 @@
-﻿using MikroFramework.Pool;
-using Runtime.DataFramework.Entities.Builders;
+﻿using Runtime.DataFramework.Entities.Builders;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
-using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 
 namespace Runtime.DataFramework.Entities.Creatures {

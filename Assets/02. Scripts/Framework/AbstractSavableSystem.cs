@@ -1,6 +1,6 @@
 using MikroFramework.Architecture;
 
-namespace Framework {
+namespace Runtime.Framework {
 	[ES3Serializable]
 	public abstract class AbstractSavableSystem : AbstractSystem{
 		protected override void OnInit() {
