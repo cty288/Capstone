@@ -1,4 +1,5 @@
 ﻿using Runtime.DataFramework.Entities.Enemies;
+using Runtime.DataFramework.Entities.Weapons;
 using UnityEngine;
 
 namespace Runtime.DataFramework.Entities.Builders {
@@ -21,6 +22,8 @@ namespace Runtime.DataFramework.Entities.Builders {
 					                 "If this is not what you want, please use BasicEntityBuilder instead!");
 				}
 				return EnemyBuilder<TEntity>.Allocate(rarity) as TBuilder;
+			}else if (typeof(TBuilder) == typeof(WeaponBuilder<TEntity>)) {
+				return WeaponBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
 			
 			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;

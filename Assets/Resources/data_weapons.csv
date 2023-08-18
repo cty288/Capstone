@@ -1,0 +1,25 @@
+EntityName / Property Names,base_damage,attack_speed,range,magazine_size,reload_time,bullets_per_shot,spread,recoil,charge_time,bullet_speed,custom_properties,tags,,Notes,
+Types,int,int,float,int,float,int,int,float,float,float,dynamic,"Dictionary<TagName,int>",,,
+Notes ->,int,int (shots per second),float,int,float (seconds),int,int (0-100),float,float (seconds),float,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+json","Dict<string,int>, 
+If no levels, use negative numbers to represent",,,
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,,
+BEGIN,,,,,,,,,,,,,,,
+RustyPistol,10,2,50,6,2,1,75,0.01,0,300,,,,,
+TheSanctuary,1,1,25,1,5,1,65,0.4,1,100,"{
+  ""explosion"": {
+    ""damage"": 200,
+    ""distance"": 10
+  },
+  ""shield"" : {
+    ""health"" : 200,
+    ""angle"" : [-60.0, 60.0],
+    ""cooldown"" : 30.0
+  }
+}",,,"(Base Damage = Explosion Damage, Linear decrease 10 distance - 0 damage)","When Reloading, open an angle:(-60, 60) shield to protect the player. 
+
+Shield has a special UI
+
+Shield Armor: 200, when shield destroyed,  use 30s to recover (shield disabled)."

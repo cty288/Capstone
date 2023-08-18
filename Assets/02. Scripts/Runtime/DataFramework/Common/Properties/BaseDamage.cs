@@ -8,8 +8,7 @@ namespace Runtime.DataFramework.Properties
             return value;
         }
 
-        protected override IPropertyDependencyModifier<int> GetDefautModifier()
-        {
+        protected override IPropertyDependencyModifier<int> GetDefautModifier() {
             return new BaseDamageDefaultModifier();
         }
 
@@ -18,9 +17,8 @@ namespace Runtime.DataFramework.Properties
             return PropertyName.base_damage;
         }
 
-        public override PropertyNameInfo[] GetDefaultDependentProperties()
-        {
-            throw new System.NotImplementedException();
+        public override PropertyNameInfo[] GetDefaultDependentProperties() {
+            return new[] {new PropertyNameInfo(PropertyName.rarity)};
         }
     }
 

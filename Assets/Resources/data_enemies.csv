@@ -1,4 +1,5 @@
 EntityName / Property Names,health,taste,danger,custom_properties,tags
+Types,HealthInfo,List<TasteType>,int,dynamic,"Dictionary<TagName,int>"
 Notes ->,"json
 default: 
 {""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,",int,"Dict<string, CustomProperty>
@@ -7,5 +8,5 @@ CustomProperty Structure:
 json
 ","Dict<string,int>, 
 If no levels, use negative numbers to represent"
-online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,
 BEGIN,,,,,

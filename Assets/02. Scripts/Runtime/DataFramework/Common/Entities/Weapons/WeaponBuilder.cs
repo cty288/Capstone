@@ -44,11 +44,11 @@ namespace Runtime.DataFramework.Entities.Weapons
             SafeObjectPool<WeaponBuilder<T>>.Singleton.Recycle(this);
         }
 
-        // public static EnemyBuilder<T> Allocate(int rarity)
-        // {
-        //     EnemyBuilder<T> target = SafeObjectPool<EnemyBuilder<T>>.Singleton.Allocate();
-        //     target.SetProperty<int>(new PropertyNameInfo(PropertyName.rarity), rarity);
-        //     return target;
-        // }
+         public static WeaponBuilder<T> Allocate(int rarity)
+         {
+             WeaponBuilder<T> target = SafeObjectPool<WeaponBuilder<T>>.Singleton.Allocate();
+             target.SetProperty<int>(new PropertyNameInfo(PropertyName.rarity), rarity);
+             return target;
+         }
     }
 }
