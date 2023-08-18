@@ -12,9 +12,6 @@ namespace Runtime.DataFramework.Properties {
 		
 	}
 	public class Taste : IndependentLoadFromConfigListProperty<TasteType>, ITasteProperty {
-		public override List<TasteType> OnSetBaseValueFromConfig(dynamic value) {
-			return value.ToObject<List<TasteType>>();
-		}
 
 		protected override PropertyName GetPropertyName() {
 			return PropertyName.taste;

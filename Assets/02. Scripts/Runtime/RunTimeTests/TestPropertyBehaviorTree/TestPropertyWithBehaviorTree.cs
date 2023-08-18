@@ -30,7 +30,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         protected override ConfigTable GetConfigTable() {
             return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
         }
-        protected override void OnEnemyRegisterProperties() {
+        protected override void OnEnemyRegisterAdditionalProperties() {
             RegisterInitialProperty(new NewProperty());
         }
 

@@ -1,9 +1,6 @@
 ﻿namespace Runtime.DataFramework.Properties.TestOnly {
 	public class TestDanger: AbstractLoadFromConfigProperty<int>, IDangerProperty {
-
-		public override int OnSetBaseValueFromConfig(dynamic value) {
-			return value;
-		}
+		
 
 		protected override IPropertyDependencyModifier<int> GetDefautModifier() {
 			return new TestDangerDefaultModifier();

@@ -29,7 +29,7 @@ namespace Runtime.DataFramework.Entities.Enemies {
 			//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 			//RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			
-			OnEnemyRegisterProperties();
+			OnEnemyRegisterAdditionalProperties();
 		}
 
 		protected override Faction GetDefaultFaction() {
@@ -57,7 +57,7 @@ namespace Runtime.DataFramework.Entities.Enemies {
 		}
 
 
-		protected abstract void OnEnemyRegisterProperties();
+		protected abstract void OnEnemyRegisterAdditionalProperties();
 
 		public override void OnDoRecycle() {
 			SafeObjectPool<T>.Singleton.Recycle(this as T);

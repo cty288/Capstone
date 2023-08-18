@@ -26,7 +26,7 @@ namespace Tests.Tests_Editor {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
 
-			protected override void OnEnemyRegisterProperties() {
+			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
@@ -74,7 +74,7 @@ namespace Tests.Tests_Editor {
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
-			protected override void OnEnemyRegisterProperties() {
+			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty(new TestCustomProperty2());
 				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());

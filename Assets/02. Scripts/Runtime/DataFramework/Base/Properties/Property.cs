@@ -260,13 +260,13 @@ namespace Runtime.DataFramework.Properties {
 	
 	
 		public void LoadFromConfig(dynamic value) {
-			if (value != null) {
-				SetBaseValue(OnSetBaseValueFromConfig(value));
+			if (value is not null) {
+				SetBaseValue(OnClone(value));
 			}
 		}
 	
 
-		public abstract T OnSetBaseValueFromConfig(dynamic value);
+		//public abstract T OnSetBaseValueFromConfig(dynamic value);
 	
 		public AbstractLoadFromConfigProperty() : base() {
 		
@@ -296,12 +296,12 @@ namespace Runtime.DataFramework.Properties {
 	public abstract class IndependentLoadFromConfigProperty<T> : IndependentProperty<T>, ILoadFromConfigProperty {
 		protected IndependentLoadFromConfigProperty():base(){}
 		public void LoadFromConfig(dynamic value) {
-			if (value != null) {
-				SetBaseValue(OnSetBaseValueFromConfig(value));
+			if (value is not null) {
+				SetBaseValue(OnClone(value));
 			}
 		}
 
 	
-		public abstract T OnSetBaseValueFromConfig(dynamic value);
+		//public abstract T OnSetBaseValueFromConfig(dynamic value);
 	}
 }
