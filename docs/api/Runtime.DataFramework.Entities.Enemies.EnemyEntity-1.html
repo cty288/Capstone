@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1" class="text-break">
     Class EnemyEntity&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class EnemyEntity&lt;T&gt; : AbstractCreature, IEnemyEntity, ICreature, IDamagable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription where T : EnemyEntity&lt;T&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class EnemyEntity&lt;T&gt; : AbstractCreature, IEnemyEntity, ICreature, IDamagable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName where T : EnemyEntity&lt;T&gt;, new()</code></pre>
   </div>
 
 
@@ -130,6 +130,7 @@
       <div><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></div>
       <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
     </dd>
   </dl>
 
@@ -279,6 +280,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnGetDescription_System_String_">Entity.OnGetDescription(string)</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDisplayName">Entity.GetDisplayName()</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
@@ -314,7 +318,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_GetConfigTable" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.GetConfigTable">
   GetConfigTable()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L50"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -345,7 +349,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_GetDanger" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.GetDanger">
   GetDanger()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -376,7 +380,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_GetDefaultFaction" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.GetDefaultFaction">
   GetDefaultFaction()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -407,7 +411,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_GetHealth" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.GetHealth">
   GetHealth()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -438,7 +442,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_GetRarity" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.GetRarity">
   GetRarity()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -469,7 +473,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_GetTaste" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.GetTaste">
   GetTaste()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -500,7 +504,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_OnDoRecycle" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.OnDoRecycle">
   OnDoRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L61"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -522,18 +526,18 @@
 
 
 
-  <a id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_OnEnemyRegisterProperties_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.OnEnemyRegisterProperties*"></a>
+  <a id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_OnEnemyRegisterAdditionalProperties_" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.OnEnemyRegisterAdditionalProperties*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_OnEnemyRegisterProperties" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.OnEnemyRegisterProperties">
-  OnEnemyRegisterProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_OnEnemyRegisterAdditionalProperties" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.OnEnemyRegisterAdditionalProperties">
+  OnEnemyRegisterAdditionalProperties()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected abstract void OnEnemyRegisterProperties()</code></pre>
+    <pre><code class="lang-csharp hljs">protected abstract void OnEnemyRegisterAdditionalProperties()</code></pre>
   </div>
 
 
@@ -552,7 +556,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_Enemies_EnemyEntity_1_OnEntityRegisterAdditionalProperties" data-uid="Runtime.DataFramework.Entities.Enemies.EnemyEntity`1.OnEntityRegisterAdditionalProperties">
   OnEntityRegisterAdditionalProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A place to register additional properties, normally empty. Recommended to register custom properties instead.</p>
@@ -579,7 +583,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L24" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Enemies/EnemyEntity.cs/#L23" class="edit-link">Edit this page</a>
         </div>
 
         

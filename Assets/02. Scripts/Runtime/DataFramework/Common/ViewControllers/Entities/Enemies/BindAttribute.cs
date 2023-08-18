@@ -1,7 +1,7 @@
 ﻿using System;
-using DataFramework.Properties;
+using Runtime.DataFramework.Properties;
 
-namespace DataFramework.ViewControllers.Entities.Enemies {
+namespace Runtime.DataFramework.ViewControllers.Entities.Enemies {
 	[AttributeUsage(AttributeTargets.Property)]
 	public class BindAttribute : Attribute
 	{

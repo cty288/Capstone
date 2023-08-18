@@ -1,10 +1,10 @@
-﻿using DataFramework.Entities;
-using DataFramework.Entities.ClassifiedTemplates.CustomProperties;
-using DataFramework.Entities.ClassifiedTemplates.Damagable;
-using DataFramework.Entities.ClassifiedTemplates.Tags;
-using DataFramework.Entities.Creatures;
+﻿using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.DataFramework.Entities.Creatures;
 
-namespace DataFramework.ViewControllers.Entities {
+namespace Runtime.DataFramework.ViewControllers.Entities {
 	
 	/// <summary>
 	/// An abstract view controller for creature entity (like player, enemy, etc.)

@@ -300,7 +300,7 @@ namespace Runtime.DataFramework.Entities {
 				IPropertyBase property = _allProperties.ElementAt(i).Value;
 				if(property is ILoadFromConfigProperty loadFromConfigProperty) {
 					dynamic value = configTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
-					if (value != null) {
+					if (value is not null) {
 						loadFromConfigProperty.LoadFromConfig(value);
 					}
 				}
