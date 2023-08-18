@@ -17,7 +17,8 @@ namespace Runtime.DataFramework.Entities.Builders {
 			
 			if(typeof(TBuilder) == typeof(EnemyBuilder<TEntity>)){
 				if (!typeof(IEnemyEntity).IsAssignableFrom(typeof(TEntity))) {
-					throw new UnityException("EnemyBuilder can only be used to build IEnemyEntity");
+					Debug.LogWarning("EnemyBuilder is designed to be used to ONLY build IEnemyEntity! " +
+					                 "If this is not what you want, please use BasicEntityBuilder instead!");
 				}
 				return EnemyBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}

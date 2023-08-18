@@ -84,7 +84,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		private Action<ICustomProperty> onCustomDataChanged;
 
 		[ES3Serializable] protected string propertyName;
-		[ES3Serializable] protected IDescriptionGetter descriptionGetter;
+		[ES3Serializable] protected IDescriptionGetter<ICustomProperty> descriptionGetter;
 
 
 		public CustomProperty() : base(){}
@@ -95,7 +95,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		/// <param name="propertyName">The name of the property. This should be the same as the one on the config file</param>
 		/// <param name="descriptionGetter">In order to serialize the description, you need to use a descriptionGetter object to do the description stuff</param>
 		/// <param name="data">Manually specify which data are included, as well as their dependencies and modifiers</param>
-		public CustomProperty(string propertyName, IDescriptionGetter descriptionGetter,
+		public CustomProperty(string propertyName, IDescriptionGetter<ICustomProperty> descriptionGetter,
 			params ICustomDataProperty[] data) : base() {
 			if (data!=null) {
 				BaseValue = data.ToDictionary(GetKey);
@@ -258,7 +258,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		
 		public AutoConfigCustomProperty(): base(){}
 		
-		public AutoConfigCustomProperty(string CustomName, IDescriptionGetter descriptionGetter = null) : base(CustomName, descriptionGetter) {
+		public AutoConfigCustomProperty(string CustomName, IDescriptionGetter<ICustomProperty> descriptionGetter = null) : base(CustomName, descriptionGetter) {
 			
 		}
 

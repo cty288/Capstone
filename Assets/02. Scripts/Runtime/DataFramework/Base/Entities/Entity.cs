@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MikroFramework.Pool;
+using Polyglot;
+using Runtime.DataFramework.Description;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Utilities.ConfigSheet;
@@ -9,7 +11,7 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.DataFramework.Entities {
-	public interface IEntity: IPoolable {
+	public interface IEntity: IPoolable, IHaveDescription {
 	
 		public string EntityName { get; }
 		/// <summary>
@@ -146,9 +148,13 @@ namespace Runtime.DataFramework.Entities {
 
 		protected ConfigTable configTable;
 		public Entity() {
-			configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
+			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
+			configTable = GetConfigTable();
 			OnRegisterProperties();
 		}
+
+		protected abstract ConfigTable GetConfigTable();
+
 		public void OnLoadFromSave() {
 			_allProperties.Clear();
 		
@@ -293,14 +299,13 @@ namespace Runtime.DataFramework.Entities {
 			while (i < _allProperties.Count) {
 				IPropertyBase property = _allProperties.ElementAt(i).Value;
 				if(property is ILoadFromConfigProperty loadFromConfigProperty) {
-					dynamic value = configTable.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
+					dynamic value = configTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
 					if (value != null) {
 						loadFromConfigProperty.LoadFromConfig(value);
 					}
 				}
 				i++;
 			}
-
 		}
 	
 		public IPropertyBase GetProperty(PropertyName name) {
@@ -417,5 +422,18 @@ namespace Runtime.DataFramework.Entities {
 		public abstract void OnDoRecycle();
 
 		public abstract void OnRecycle();
+		
+		
+		public string GetDescription() {
+			
+			return OnGetDescription($"{EntityName}_desc");
+		}
+
+		/// <summary>
+		/// Return the description of the entity
+		/// </summary>
+		/// <param name="defaultLocalizationKey">This is always equal to EntityName_desc. Use Localization.Get or Localization.GetFormat to retrieve its description based on the key <br />
+		/// Or you can ignore defaultLocalizationKey can manually implement yours</param>
+		protected abstract string OnGetDescription(string defaultLocalizationKey);
 	}
 }

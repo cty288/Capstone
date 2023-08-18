@@ -1,11 +1,13 @@
 using Framework;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
 using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.ViewControllers;
 using Runtime.DataFramework.ViewControllers.Enemies;
+using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
@@ -21,12 +23,23 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         
         }
 
+        protected override string OnGetDescription(string defaultLocalizationKey) {
+            return null;
+        }
+
+        protected override ConfigTable GetConfigTable() {
+            return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+        }
         protected override void OnEnemyRegisterProperties() {
             RegisterInitialProperty(new NewProperty());
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties() {
             return new[] {new AutoConfigCustomProperty("attack1"), new AutoConfigCustomProperty("attack2")};
+        }
+
+        protected override Faction GetDefaultFaction() {
+            return Faction.Neutral;
         }
     }
 
@@ -113,12 +126,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             if (Input.GetKeyDown(KeyCode.A)) {
             
                 Debug.Log(BindedEntity.MyPersistentButNotInherentData);
-            
-                BindableProperty<HealthInfo> health = BindedEntity.GetHealth();
-                health.Value += 1;
-        
-                BindableProperty<float> vigiliance = BindedEntity.GetVigiliance();
-                vigiliance.Value += 1;
+                
         
                 BindableProperty<int> danger = BindedEntity.GetDanger();
                 danger.Value += 1;
@@ -129,6 +137,14 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
                 BindedEntity.GetCustomDataValue("attack1", "damage").Value += 1;
                 IBindableProperty attack1Prop = BindedEntity.GetCustomDataValue("attack1", "info");
                 attack1Prop.Value = new TestInfo(attack1Prop.Value.test + 1);
+            }
+            
+            if(Input.GetKeyDown(KeyCode.G)) {
+                BindedEntity.TakeDamage(10, null);
+            }
+            
+            if(Input.GetKeyDown(KeyCode.H)) {
+                BindedEntity.Heal(10, null);
             }
 
             if (Input.GetKeyDown(KeyCode.D)) {
@@ -176,5 +192,16 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             Debug.Log($"[Bind Function] Attack 1 Test Changed to: {newValue}");
         }
 
+        protected override void OnEntityDie(IBelongToFaction damagedealer) {
+            Debug.Log("TestEntity Die");
+        }
+
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+            Debug.Log($"TestEntity Take Damage, current health : {currenthealth}");
+        }
+
+        protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
+           Debug.Log("TestEntity Heal, current health : " + currenthealth);
+        }
     }
 }

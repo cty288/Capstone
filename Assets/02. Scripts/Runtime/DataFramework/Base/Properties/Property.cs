@@ -1,5 +1,6 @@
 using System;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Description;
 
 namespace Runtime.DataFramework.Properties {
 	public struct PropertyNameInfo {
@@ -98,7 +99,7 @@ namespace Runtime.DataFramework.Properties {
 		public void OnLoadFromSavedData();
 	}
 
-	public interface IProperty<T> : IPropertyBase{
+	public interface IProperty<T> : IPropertyBase {
 	
 	
 		/// <summary>

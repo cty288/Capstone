@@ -9,7 +9,7 @@
 		}
 
 		protected override IPropertyDependencyModifier<int> GetDefautModifier() {
-			return new DangerDefaultModifier();
+			return null;
 		}
 
 		protected override PropertyName GetPropertyName() {
@@ -21,11 +21,5 @@
 		}
 		
 		
-	}
-	
-	public class DangerDefaultModifier : PropertyDependencyModifier<int> {
-		public override int OnModify(int propertyValue) {
-			return propertyValue * GetDependency<Rarity>(new PropertyNameInfo(PropertyName.rarity)).InitialValue * 5;
-		}
 	}
 }

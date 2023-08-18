@@ -1,35 +1,41 @@
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.Utilities;
+using Runtime.Utilities.ConfigSheet;
 
 namespace Runtime.DataFramework.Entities.Enemies {
-	public interface IEnemyEntity : IEntity, IHaveCustomProperties {
+	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
 		public BindableList<TasteType> GetTaste();
-		public BindableProperty<float> GetVigiliance();
+		//public BindableProperty<float> GetVigiliance();
 
-		public BindableProperty<float> GetAttackRange();
+		//public BindableProperty<float> GetAttackRange();
 	
 		public int GetRarity();
 	}
 
-	public abstract class EnemyEntity<T> : AbstractHaveCustomPropertiesEntity, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
-		protected override void OnEntityRegisterProperties() {
-			RegisterInitialProperty(new Rarity());
+	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
+		protected override void OnEntityRegisterAdditionalProperties() {
+			
 			RegisterInitialProperty<IDangerProperty>(new Danger());
-			RegisterInitialProperty<IHealthProperty>(new Health());
 			RegisterInitialProperty<ITasteProperty>(new Taste());
-			RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
-			RegisterInitialProperty<IAttackRangeProperty>(new AttackRange());
-			RegisterInitialProperty<ITagProperty>(new TagProperty());
+			//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+			//RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
+			
 			OnEnemyRegisterProperties();
 		}
-	
+
+		protected override Faction GetDefaultFaction() {
+			return Faction.Hostile;
+		}
+
 		public BindableProperty<int> GetDanger() {
 			return GetProperty<IDangerProperty>().RealValue;
 		}
@@ -42,12 +48,8 @@ namespace Runtime.DataFramework.Entities.Enemies {
 			return GetProperty<ITasteProperty>().RealValues;
 		}
 
-		public BindableProperty<float> GetVigiliance() {
-			return GetProperty<IVigilianceProperty>().RealValue;
-		}
-
-		public BindableProperty<float> GetAttackRange() {
-			return GetProperty<IAttackRangeProperty>().RealValue;
+		protected override ConfigTable GetConfigTable() {
+			return ConfigDatas.Singleton.EnemyEntityConfigTable;
 		}
 
 		public int GetRarity() {
@@ -61,8 +63,6 @@ namespace Runtime.DataFramework.Entities.Enemies {
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
 		}
 
-		public ITagProperty GetTagProperty() {
-			return GetProperty<ITagProperty>();
-		}
+
 	}
 }
