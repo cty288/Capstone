@@ -4,10 +4,16 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.Utilities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.Enemies;
+using Runtime.DataFramework.Entities;
+using System.Collections.Generic;
+using Runtime.DataFramework.Properties.CustomProperties;
+using MikroFramework.Event;
+using System;
 
-namespace Runtime.DataFramework.Entities
+namespace Runtime.DataFramework.Entities.Weapons
 {
-    public interface IWeaponEntity : IEntity, IHaveCustomProperties
+    public interface IWeaponEntity : IHaveCustomProperties, IHaveTags
     {
         public BindableProperty<int> GetBaseDamage();
         // public BindableProperty<int> GetAttackSpeed();
@@ -21,29 +27,11 @@ namespace Runtime.DataFramework.Entities
         // public BindableProperty<float> GetBulletSpeed();
     }
 
-    public abstract class WeaponEntity<T> : AbstractHaveCustomPropertiesEntity, IWeaponEntity
-    // , IHaveTags 
-    where T : WeaponEntity<T>, new()
+    public abstract class WeaponEntity<T> : AbstractBasicEntity, IWeaponEntity where T : WeaponEntity<T>, new()
     {
-        protected override void OnEntityRegisterProperties()
-        {
-            //TODO: CREATE WEAPON PROPERTIES
-            RegisterInitialProperty(new BaseDamage());
-
-            OnWeaponRegisterProperties();
-        }
-
-        protected abstract void OnWeaponRegisterProperties();
-
         public BindableProperty<int> GetBaseDamage()
         {
-            return GetProperty<BaseDamage>().RealValue;
+            throw new NotImplementedException();
         }
-
-        public override void OnDoRecycle()
-        {
-            SafeObjectPool<T>.Singleton.Recycle(this as T);
-        }
-
     }
 }

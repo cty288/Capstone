@@ -54,7 +54,7 @@ public class BasicGun : MonoBehaviour, IHitResponder
         cam = Camera.main;
         lr = GetComponent<LineRenderer>();
 
-        hitScan = new HitScan(this);
+        hitScan = new HitScan(cam, range, layer, this);
     }
 
     public void Update()

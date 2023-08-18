@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Runtime.DataFramework.ViewControllers.Weapons;
 
 public class HitScan : IHitDetector
 {
-    public BasicGun originWeapon; //TODO: change to weapon class
+    // public BasicGun originWeapon; //TODO: change to weapon class
+    public Camera cam;
+    public float range;
+    public LayerMask layer;
 
     private IHitResponder m_hitResponder;
 
     public IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
 
-    public HitScan(BasicGun weapon)
+    public HitScan(Camera cam, float range, LayerMask layer, IHitResponder weapon)
     {
-        originWeapon = weapon;
+        this.cam = cam;
+        this.range = range;
+        this.layer = layer;
         m_hitResponder = weapon;
     }
 
@@ -22,9 +28,9 @@ public class HitScan : IHitDetector
 
         HitData hitData = null;
 
-        Vector3 origin = originWeapon.cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+        Vector3 origin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
-        if (Physics.Raycast(origin, originWeapon.cam.transform.forward, out hit, originWeapon.range, originWeapon.layer))
+        if (Physics.Raycast(origin, cam.transform.forward, out hit, range, layer))
         {
             IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
             if (hurtbox != null)
