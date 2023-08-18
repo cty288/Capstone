@@ -1,6 +1,5 @@
 using System;
 using MikroFramework.BindableProperty;
-using Runtime.DataFramework.Description;
 
 namespace Runtime.DataFramework.Properties {
 	public struct PropertyNameInfo {

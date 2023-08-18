@@ -1,10 +1,10 @@
+using DataFramework.Entities;
+using DataFramework.Entities.Enemies;
+using DataFramework.Properties;
 using MikroFramework.Architecture;
-using Runtime.DataFramework.Entities;
-using Runtime.DataFramework.Entities.Enemies;
-using Runtime.DataFramework.Properties;
 using UnityEngine;
 
-namespace Runtime.DataFramework.ViewControllers.Enemies {
+namespace DataFramework.ViewControllers.Entities.Enemies {
 	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T, IEnemyEntityModel>, IEnemyViewController 
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;

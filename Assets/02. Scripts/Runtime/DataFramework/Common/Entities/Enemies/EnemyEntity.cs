@@ -5,7 +5,6 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
-using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 

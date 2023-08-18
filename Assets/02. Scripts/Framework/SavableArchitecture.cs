@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MikroFramework.Architecture;
 
-namespace Framework {
+namespace Runtime.Framework {
 	public abstract class SavableArchitecture<T> : Architecture<T> where T: Architecture<T>, new()
 	{
 		protected List<AbstractSavableModel> savableModels = new List<AbstractSavableModel>();

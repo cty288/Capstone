@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using MikroFramework.Singletons;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.TagProperty;
 

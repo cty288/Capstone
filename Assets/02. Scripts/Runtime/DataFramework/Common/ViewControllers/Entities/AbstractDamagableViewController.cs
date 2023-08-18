@@ -1,11 +1,11 @@
-﻿using MikroFramework.Event;
-using Runtime.DataFramework.Entities;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+﻿using DataFramework.Entities;
+using DataFramework.Entities.ClassifiedTemplates.CustomProperties;
+using DataFramework.Entities.ClassifiedTemplates.Damagable;
+using DataFramework.Entities.ClassifiedTemplates.Faction;
+using DataFramework.Entities.ClassifiedTemplates.Tags;
+using MikroFramework.Event;
 
-namespace Runtime.DataFramework.ViewControllers {
+namespace DataFramework.ViewControllers.Entities {
 	
 	/// <summary>
 	/// An abstract view controller for entities that can take damage (have health)

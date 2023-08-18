@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using DataFramework.Entities;
+using DataFramework.Properties;
+using DataFramework.ViewControllers.Entities.Enemies;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
-using Runtime.DataFramework.Entities;
-using Runtime.DataFramework.Properties;
-using Runtime.DataFramework.ViewControllers.Enemies;
 using UnityEngine;
 
-namespace Runtime.DataFramework.ViewControllers {
+namespace DataFramework.ViewControllers.Entities {
 	public abstract class AbstractEntityViewController<T, TEntityModel> : AbstractMikroController<MainGame>, IEntityViewController 
 		where T : class, IEntity, new() 
 		where TEntityModel : class, IEntityModel {

@@ -4,6 +4,7 @@ using System.Linq;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Newtonsoft.Json.Linq;
+using Runtime.DataFramework.Description;
 using UnityEngine;
 
 namespace Runtime.DataFramework.Properties.CustomProperties{

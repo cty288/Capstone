@@ -4,7 +4,6 @@ using MikroFramework.Event;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
 using Runtime.DataFramework.Properties;
-using UnityEngine;
 
 namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	

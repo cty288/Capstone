@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Framework;
 using NUnit.Framework;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
@@ -10,6 +9,7 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.DataFramework.Properties.TestOnly;
+using Runtime.Framework;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;

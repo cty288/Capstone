@@ -1,8 +1,8 @@
+using DataFramework.Entities;
+using DataFramework.Entities.Enemies;
 using MikroFramework.Architecture;
-using Runtime.DataFramework.Entities;
-using Runtime.DataFramework.Entities.Enemies;
 
-namespace Runtime.DataFramework.ViewControllers {
+namespace DataFramework.ViewControllers.Entities {
     public interface IEntityViewController : IController{
         public string ID { get; }
     
