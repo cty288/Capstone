@@ -269,9 +269,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 
             #include "Inputs.hlsl"
 
-            half3 CalculateRadiance(half3 lightDirectionWS, half lightAttenuation, half3 normalWS)
+            half3 CalculateRadiance(half3 lightDirectionWS, half lightAttenuation, half3 normalWS, half remap = -0.1f)
             {
-	            half NdotL = RangeRemap(-0.1f, 1.0f, (dot(normalWS, lightDirectionWS)));
+	            half NdotL = RangeRemap(remap, 1.0f, (dot(normalWS, lightDirectionWS)));
 	            return(lightAttenuation * NdotL);
             }
 
@@ -360,21 +360,24 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             	
 			    if (IsMatchingLightLayer(mainLight.layerMask, meshRenderingLayers))
 			    {
-			        lightingData.mainLightColor = LightingPhysicallyBased(brdfData, brdfDataClearCoat,
+			        lightingData.mainLightColor = CustomLightingPhysicallyBased(brdfData, brdfDataClearCoat,
 			                                                              mainLight,
 			                                                              inputData.normalWS, inputData.viewDirectionWS,
 			                                                              surfaceData.clearCoatMask, specularHighlightsOff);
 			    }
 
-            	half3 radiance = CalculateRadiance(mainLight.direction, mainLight.distanceAttenuation * mainLight.shadowAttenuation, inputData.normalWS);
+            	half3 radiance = CalculateRadiance(mainLight.direction, mainLight.distanceAttenuation * mainLight.shadowAttenuation, inputData.normalWS, 0.0f);
             	
-			    half attenuation = pow(RangeRemap(0.0f, 0.4f, radiance), 1);
+			    half attenuation = RangeRemap(-0.32f, 0.4f, radiance);
             	attenuation = 1 - (abs(attenuation - 0.5f) * 2);
+            	attenuation = pow(attenuation, 3);
             	half3 hsv = RgbToHsv(lightingData.mainLightColor);
             	hsv.y *= 1 + attenuation*0.5f;
             	hsv.z *= 1 + attenuation*0.5f;
+            	radiance = RangeRemap(0.0f, 0.1f, radiance);
+            	hsv.z *= radiance;
             	lightingData.mainLightColor = HsvToRgb(hsv);
-
+            	
             	//return half4(radiance.xxx, 1);
             	//return half4(attenuation.xxx, 1);
             	//return half4(lightingData.mainLightColor, 1);
