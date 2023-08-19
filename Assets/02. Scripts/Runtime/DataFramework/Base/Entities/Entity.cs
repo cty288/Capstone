@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.DataFramework.Base.Description;
+using _02._Scripts.DataFramework.Base.Properties;
+using _02._Scripts.DataFramework.Common.Properties.CustomProperties;
+using _02._Scripts.Utilities.ConfigSheet;
 using MikroFramework.Pool;
 using Polyglot;
-using Runtime.DataFramework.Description;
-using Runtime.DataFramework.Properties;
-using Runtime.DataFramework.Properties.CustomProperties;
-using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
-using PropertyName = Runtime.DataFramework.Properties.PropertyName;
+using PropertyName = _02._Scripts.DataFramework.Base.Properties.PropertyName;
 
-namespace Runtime.DataFramework.Entities {
+namespace _02._Scripts.DataFramework.Base.Entities {
 	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName  {
 	
 		public string EntityName { get; }

@@ -1,10 +1,13 @@
+using Framework;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
-using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
-using Runtime.DataFramework.ViewControllers.Entities.Enemies;
-using Runtime.Framework;
+using Runtime.DataFramework.ViewControllers;
+using Runtime.Enemies.Model;
+using Runtime.Enemies.Model.Builders;
+using Runtime.Enemies.Model.Properties;
+using Runtime.Enemies.ViewControllers.Base;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;

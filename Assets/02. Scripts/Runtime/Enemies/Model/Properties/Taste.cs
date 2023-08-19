@@ -1,6 +1,7 @@
 ﻿using System.Linq;
+using Runtime.DataFramework.Properties;
 
-namespace Runtime.DataFramework.Properties {
+namespace Runtime.Enemies.Model.Properties {
 	public enum TasteType {
 		Type1,
 		Type2,

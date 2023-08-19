@@ -1,4 +1,6 @@
-﻿namespace Runtime.DataFramework.Properties.TestOnly {
+﻿using Runtime.Enemies.Model.Properties;
+
+namespace Runtime.DataFramework.Properties.TestOnly {
 	public interface IAttackRangeProperty : IProperty<float>, ILoadFromConfigProperty{}
 	public class TestAttackRange: AbstractLoadFromConfigProperty<float>, IAttackRangeProperty {
 

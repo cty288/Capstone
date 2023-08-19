@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Runtime.DataFramework.Properties;
+using _02._Scripts.DataFramework.Base.Properties;
 
-namespace Runtime.DataFramework.Entities {
+namespace _02._Scripts.DataFramework.Base.Entities {
     public static class EntityPropertyDependencyCache
     {
         //private static Dictionary<string, List<string>> initializationOrderCache = new Dictionary<string, List<string>>();

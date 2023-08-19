@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using _02._Scripts.DataFramework.Base.Entities.Builders;
 using MikroFramework.Architecture;
-using Runtime.DataFramework.Entities.Builders;
 using Runtime.Framework;
 
-namespace Runtime.DataFramework.Entities {
+namespace _02._Scripts.DataFramework.Base.Entities {
 	public interface IEntityModel : IModel {
 	
 		public IEntity GetEntity(string id);

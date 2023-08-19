@@ -1,4 +1,6 @@
-﻿namespace Runtime.DataFramework.Properties {
+﻿using Runtime.DataFramework.Properties;
+
+namespace Runtime.Enemies.Model.Properties {
 	public struct HealthInfo {
 		public int MaxHealth;
 		public int CurrentHealth;

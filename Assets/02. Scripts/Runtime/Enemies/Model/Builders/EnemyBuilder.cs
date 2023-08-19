@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
+using Runtime.Enemies.Model.Properties;
 
-namespace Runtime.DataFramework.Entities.Enemies {
+namespace Runtime.Enemies.Model.Builders {
 	public class EnemyBuilder<T> : CreatureBuilder<EnemyBuilder<T>, T> where T : class, IEntity, new() {
 		
 		public EnemyBuilder() {

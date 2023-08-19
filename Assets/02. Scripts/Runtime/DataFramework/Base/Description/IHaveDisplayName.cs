@@ -1,4 +1,4 @@
-﻿namespace Runtime.DataFramework.Description {
+﻿namespace _02._Scripts.DataFramework.Base.Description {
 	public interface IHaveDisplayName {
 		
 		/// <summary>

@@ -5,10 +5,11 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
+using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 
-namespace Runtime.DataFramework.Entities.Enemies {
+namespace Runtime.Enemies.Model {
 	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();

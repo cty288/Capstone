@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using MikroFramework.Singletons;
-using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.TagProperty;
+using Runtime.Enemies.Model.Properties;
 
 namespace Runtime.Utilities.ConfigSheet {
 	public class SerializationFactory : MikroSingleton<SerializationFactory>, ISingleton {

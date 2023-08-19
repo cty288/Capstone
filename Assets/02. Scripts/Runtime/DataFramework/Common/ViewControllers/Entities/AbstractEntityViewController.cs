@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
-using Runtime.DataFramework.ViewControllers.Entities.Enemies;
-using Runtime.Framework;
 using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {

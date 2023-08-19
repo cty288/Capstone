@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Framework;
 using MikroFramework.Architecture;
-using Runtime.Framework;
 using Tutorial._06._QueriesAndUtilities;
 using UnityEngine;
 

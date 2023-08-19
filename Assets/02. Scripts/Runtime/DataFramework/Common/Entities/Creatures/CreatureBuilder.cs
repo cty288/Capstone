@@ -1,6 +1,7 @@
 ﻿using Runtime.DataFramework.Entities.Builders;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties;
+using Runtime.Enemies.Model.Properties;
 
 namespace Runtime.DataFramework.Entities.Creatures {
 	public abstract class CreatureBuilder<TBuilder, TEntity> : EntityBuilder<TBuilder, TEntity>

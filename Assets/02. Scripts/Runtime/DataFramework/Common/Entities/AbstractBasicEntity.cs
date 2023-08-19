@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.Properties.TagProperty;
+using Runtime.Enemies.Model.Properties;
 
-namespace Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties {
+namespace Runtime.DataFramework.Entities {
 	
 	/// <summary>
 	/// Basically all entities inherit from this class. Auto register the custom properties, rarity, and tags

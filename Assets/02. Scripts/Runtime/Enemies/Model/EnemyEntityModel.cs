@@ -1,4 +1,7 @@
-﻿namespace Runtime.DataFramework.Entities.Enemies {
+﻿using Runtime.DataFramework.Entities;
+using Runtime.Enemies.Model.Builders;
+
+namespace Runtime.Enemies.Model {
 	/// <summary>
 	/// Model for enemies
 	/// </summary>
