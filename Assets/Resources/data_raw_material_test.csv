@@ -1,0 +1,29 @@
+EntityName / Property Names,rarity,bait_adjectives,max_stack,custom_properties,tags
+Types,int,HashSet<BaitAdjective>,int,dynamic,"Dictionary<TagName,int>"
+Notes ->,,Hashset<string>,,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+json
+","Dict<string,int>, 
+If no levels, use negative numbers to represent"
+,,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,
+BEGIN,,,,,
+TestRaw,5,"[""Test_Adjective_1"", ""Test_Adjective_2""]",20,"{
+  ""attack1"": {
+    ""speed"": 100,
+    ""info"": {
+       ""test"": 2.5 
+     },
+    ""damage"": 900
+  },
+  ""attack2"": {
+    ""damage"": 4
+  },
+  ""attack3"": {
+    ""damage"": 50
+  }
+}","{
+  ""Test_Flame"": 3,
+  ""Test_Ice"": -1
+}"
+TestRaw2,10,,20,,

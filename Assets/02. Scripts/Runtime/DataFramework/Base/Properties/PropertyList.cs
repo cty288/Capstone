@@ -31,7 +31,7 @@ namespace Runtime.DataFramework.Properties {
 		public override List<T> InitialValue { get; set; } = new List<T>();
 
 		public PropertyList() : base() {
-			
+			BaseValue = new List<T>();
 		}
 		
 		public PropertyList(params T[] baseValues) : this() {

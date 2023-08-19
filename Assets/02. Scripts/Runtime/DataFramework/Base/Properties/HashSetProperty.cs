@@ -13,7 +13,7 @@ namespace Runtime.DataFramework.Properties {
 		public override BindableProperty<HashSet<T>> RealValue => RealValues;
 		
 		public HashSetProperty() : base() {
-			
+			BaseValue = new HashSet<T>();
 		}
 		
 	

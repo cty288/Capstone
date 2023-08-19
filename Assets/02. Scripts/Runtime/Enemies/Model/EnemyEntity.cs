@@ -1,7 +1,7 @@
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
@@ -22,6 +22,10 @@ namespace Runtime.Enemies.Model {
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
+		protected IDangerProperty dangerProperty;
+		protected IHealthProperty healthProperty;
+		protected ITasteProperty tasteProperty;
+		
 		protected override void OnEntityRegisterAdditionalProperties() {
 			
 			RegisterInitialProperty<IDangerProperty>(new Danger());
@@ -31,31 +35,36 @@ namespace Runtime.Enemies.Model {
 			
 			OnEnemyRegisterAdditionalProperties();
 		}
+		
+		
+
+		protected override void OnEntityStart() {
+			base.OnEntityStart();
+			dangerProperty = GetProperty<IDangerProperty>();
+			healthProperty = GetProperty<IHealthProperty>();
+			tasteProperty = GetProperty<ITasteProperty>();
+		}
 
 		protected override Faction GetDefaultFaction() {
 			return Faction.Hostile;
 		}
 
 		public BindableProperty<int> GetDanger() {
-			return GetProperty<IDangerProperty>().RealValue;
+			return this.dangerProperty.RealValue;
 		}
 
 		public BindableProperty<HealthInfo> GetHealth() {
-			return GetProperty<IHealthProperty>().RealValue;
+			return this.healthProperty.RealValue;
 		}
 
 		public BindableList<TasteType> GetTaste() {
-			return GetProperty<ITasteProperty>().RealValues;
+			return this.tasteProperty.RealValues;
 		}
 
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.EnemyEntityConfigTable;
 		}
-
-		public int GetRarity() {
-			return GetProperty<IRarityProperty>().RealValue;
-		}
-
+	
 
 		protected abstract void OnEnemyRegisterAdditionalProperties();
 

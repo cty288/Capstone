@@ -59,11 +59,13 @@ namespace Runtime.DataFramework.Entities {
 			entityBuilderFactory = new EntityBuilderFactory();
 			foreach (T entity in entities.Values) {
 				entity.OnLoadFromSave();
+				//entity.OnStart();
 			}
 		}
 	
 		protected void OnEntityBuilt(T entity){
 			entities.Add(entity.UUID, entity);
+			//entity.OnStart();
 		}
 
 		public T GetEntity(string id){

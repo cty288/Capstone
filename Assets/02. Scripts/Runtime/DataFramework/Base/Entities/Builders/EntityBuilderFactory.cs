@@ -1,5 +1,6 @@
 ﻿using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
+using Runtime.GameResources.Model.Builder;
 using UnityEngine;
 
 namespace Runtime.DataFramework.Entities.Builders {
@@ -22,6 +23,8 @@ namespace Runtime.DataFramework.Entities.Builders {
 					                 "If this is not what you want, please use BasicEntityBuilder instead!");
 				}
 				return EnemyBuilder<TEntity>.Allocate(rarity) as TBuilder;
+			}else if (typeof(TBuilder) == typeof(RawMaterialBuilder<TEntity>)) {
+				return RawMaterialBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
 			
 			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;

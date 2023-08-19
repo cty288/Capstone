@@ -14,7 +14,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		protected void BindCustomData<T>(string bindedPropertyName, string customPropertyName, string customDataName,
 			Action<T, T?> callback = null) {
-			IBindableProperty dataProperty = BindedEntity.GetCustomDataValue(customPropertyName, customDataName);
+			IBindableProperty dataProperty = BoundEntity.GetCustomDataValue(customPropertyName, customDataName);
 			if(dataProperty == null) {
 				throw new Exception(
 					$"Custom data property {customDataName} doesn't exist in custom property {customPropertyName}");
@@ -26,7 +26,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		protected void BindCustomData<TargetType>(string bindedPropertyName, string customPropertyName, string customDataName,
 			Func<dynamic, TargetType> getter, Action<TargetType, TargetType> callback = null) {
-			IBindableProperty dataProperty = BindedEntity.GetCustomDataValue(customPropertyName, customDataName);
+			IBindableProperty dataProperty = BoundEntity.GetCustomDataValue(customPropertyName, customDataName);
 			if(dataProperty == null) {
 				throw new Exception(
 					$"Custom data property {customDataName} doesn't exist in custom property {customPropertyName}");

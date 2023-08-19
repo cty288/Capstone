@@ -64,12 +64,14 @@ namespace Runtime.Utilities {
 			onRemove?.Invoke(item);
 		}
 		
-		public void RegisterOnAdd(Action<T> onAdd) {
+		public IUnRegister RegisterOnAdd(Action<T> onAdd) {
 			this.onAdd += onAdd;
+			return new BindableHashsetExtensionUnregisterOnAdd<T>(this, onAdd);
 		}
 		
-		public void RegisterOnRemove(Action<T> onRemove) {
+		public IUnRegister RegisterOnRemove(Action<T> onRemove) {
 			this.onRemove += onRemove;
+			return new BindableHashsetExtensionUnregisterOnRemove<T>(this, onRemove);
 		}
 		
 		public void UnRegisterOnAdd(Action<T> onAdd) {

@@ -112,6 +112,13 @@ namespace Runtime.DataFramework.Entities {
 		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier);
 
 		public void LoadPropertyBaseValueFromConfig();
+
+
+		/// <summary>
+		/// After the entity is built, or loaded from save, this will be called
+		/// </summary>
+		public void OnStart();
+		
 	}
 
 
@@ -180,6 +187,8 @@ namespace Runtime.DataFramework.Entities {
 					s.RegisterRequestRegisterProperty(DoRegisterNonRootProperty);
 				}
 			}
+			
+			OnStart();
 		}
 
 
@@ -308,7 +317,17 @@ namespace Runtime.DataFramework.Entities {
 			}
 
 		}
-	
+
+		public virtual void OnStart() {
+			OnEntityStart();
+		}
+		
+		
+		/// <summary>
+		/// After the entity is built, or loaded from save, this will be called
+		/// </summary>
+		protected abstract void OnEntityStart();
+
 		public IPropertyBase GetProperty(PropertyName name) {
 			if (_allProperties.TryGetValue(name.ToString(), out var property)) {
 				return property;
@@ -438,7 +457,7 @@ namespace Runtime.DataFramework.Entities {
 		protected abstract string OnGetDescription(string defaultLocalizationKey);
 		
 		
-		public string GetDisplayName() {
+		public virtual string GetDisplayName() {
 			string displayName = Localization.Get($"{EntityName}_name");
 			if (displayName != Localization.KeyNotFound) {
 				return displayName;
