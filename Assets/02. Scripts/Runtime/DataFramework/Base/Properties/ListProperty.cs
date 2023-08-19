@@ -23,7 +23,7 @@ namespace Runtime.DataFramework.Properties {
 		public BindableList<T> RealValues { get; private set; } = new BindableList<T>();
 
 		public ListProperty() : base() {
-			
+			BaseValue = new List<T>();
 		}
 		
 		public ListProperty(params T[] baseValues) : this() {

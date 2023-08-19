@@ -24,6 +24,8 @@ namespace MikroFramework.Examples
 
         public void Recycle(GameObject prefab) {
             GameObject.Find(prefab.name).GetComponent<PoolableGameObject>().RecycleToCache();
+            //or
+            //GameObjectPoolManager.Singleton.Recycle(prefab);
         }
 
         private void Update() {

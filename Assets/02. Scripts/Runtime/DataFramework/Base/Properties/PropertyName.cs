@@ -7,6 +7,8 @@ namespace Runtime.DataFramework.Properties
 		taste,
 		vigiliance,
 		attack_range,
+		bait_adjectives,
+		max_stack,
 		custom_properties,
 		custom_property,
 		custom_property_data,

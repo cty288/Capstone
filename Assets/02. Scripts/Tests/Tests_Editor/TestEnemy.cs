@@ -1,15 +1,17 @@
 using System.Collections.Generic;
+using Framework;
 using NUnit.Framework;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
-using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.DataFramework.Properties.TestOnly;
-using Runtime.Framework;
+using Runtime.Enemies.Model;
+using Runtime.Enemies.Model.Builders;
+using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -30,6 +32,9 @@ namespace Tests.Tests_Editor {
             protected override ConfigTable GetConfigTable() {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
+
+
+
             protected override void OnEnemyRegisterAdditionalProperties() {
                 RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
                 RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
@@ -49,6 +54,7 @@ namespace Tests.Tests_Editor {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
 
+ 
             protected override string OnGetDescription(string defaultLocalizationKey) {
                 return null;
             }
@@ -150,7 +156,25 @@ namespace Tests.Tests_Editor {
        
         }
         
-        
+        [Test]
+        public void TestAddEnemyTags() {
+            IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+
+            TestBasicEnemy ent1 = model.GetEnemyBuilder<TestBasicEnemy>(2)
+                .FromConfig()
+                .AddTag(TagName.Test_Thunder, 100)
+                .Build();
+            
+            
+
+            ITagProperty tagProperty = ent1.GetTagProperty();
+            Assert.AreEqual(3, tagProperty.GetTags().Length);
+            Assert.IsTrue(tagProperty.HasTag(TagName.Test_Thunder));
+
+            Assert.AreEqual(100, tagProperty.GetTagLevel(TagName.Test_Thunder));
+
+        }
             
         [Test]
         public void TestCreature() {
@@ -238,6 +262,9 @@ namespace Tests.Tests_Editor {
             
             ES3.DeleteKey("test_save_hashset_entity", "test_save");
         }
+        
+        
+        
 
 
     }

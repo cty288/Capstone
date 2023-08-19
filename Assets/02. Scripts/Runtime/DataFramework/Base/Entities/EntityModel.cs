@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using Framework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities.Builders;
-using Runtime.Framework;
 
 namespace Runtime.DataFramework.Entities {
 	public interface IEntityModel : IModel {
@@ -59,11 +59,13 @@ namespace Runtime.DataFramework.Entities {
 			entityBuilderFactory = new EntityBuilderFactory();
 			foreach (T entity in entities.Values) {
 				entity.OnLoadFromSave();
+				//entity.OnStart();
 			}
 		}
 	
 		protected void OnEntityBuilt(T entity){
 			entities.Add(entity.UUID, entity);
+			//entity.OnStart();
 		}
 
 		public T GetEntity(string id){

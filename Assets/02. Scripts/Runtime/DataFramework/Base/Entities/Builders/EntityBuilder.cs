@@ -1,6 +1,8 @@
 using System;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Properties;
+using Runtime.DataFramework.Properties.TagProperty;
 
 namespace Runtime.DataFramework.Entities.Builders {
     public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable 
@@ -68,6 +70,14 @@ namespace Runtime.DataFramework.Entities.Builders {
             Entity.GetProperty(propertyName).SetDependentProperties(dependencies);
             return (TBuilder) this;
         }
+        
+        public TBuilder AddTag(TagName tag, int level) {
+            CheckEntity();
+            if (Entity.HasProperty(new PropertyNameInfo(PropertyName.tags))) {
+                Entity.GetProperty<ITagProperty>().BaseValue.Add(tag, level);
+            }
+            return (TBuilder) this;
+        }
 
         public TEntity Build() {
             CheckEntity();
@@ -77,6 +87,7 @@ namespace Runtime.DataFramework.Entities.Builders {
             ent.Initialize();
             onEntityCreated?.Invoke(ent);
             RecycleToCache();
+            ent.OnStart();
             return ent;
         }
 

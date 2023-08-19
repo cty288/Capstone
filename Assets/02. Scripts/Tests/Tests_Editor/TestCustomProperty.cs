@@ -1,11 +1,12 @@
 ﻿using System;
+using Framework;
 using NUnit.Framework;
 using Runtime.DataFramework.Entities;
-using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.Properties.TestOnly;
-using Runtime.Framework;
+using Runtime.Enemies.Model;
+using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -25,6 +26,8 @@ namespace Tests.Tests_Editor {
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
+
+	
 
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
@@ -74,6 +77,7 @@ namespace Tests.Tests_Editor {
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
+			
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty(new TestCustomProperty2());
 				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());

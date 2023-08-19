@@ -245,7 +245,7 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
 
   <h3 id="Runtime_Utilities_BindableHashset_1_Count" data-uid="Runtime.Utilities.BindableHashset`1.Count">
   Count
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -311,7 +311,7 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
 
   <h3 id="Runtime_Utilities_BindableHashset_1_ClearAndInvoke" data-uid="Runtime.Utilities.BindableHashset`1.ClearAndInvoke">
   ClearAndInvoke()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L85"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -337,7 +337,7 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
 
   <h3 id="Runtime_Utilities_BindableHashset_1_Contains__0_" data-uid="Runtime.Utilities.BindableHashset`1.Contains(`0)">
   Contains(T)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L92"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -373,7 +373,7 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
 
   <h3 id="Runtime_Utilities_BindableHashset_1_GetEnumerator" data-uid="Runtime.Utilities.BindableHashset`1.GetEnumerator">
   GetEnumerator()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L99"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -411,7 +411,7 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void RegisterOnAdd(Action&lt;T&gt; onAdd)</code></pre>
+    <pre><code class="lang-csharp hljs">public IUnRegister RegisterOnAdd(Action&lt;T&gt; onAdd)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -420,6 +420,11 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
     <dd></dd>
   </dl>
 
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.Event.IUnRegister.html">IUnRegister</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -435,14 +440,14 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
 
   <h3 id="Runtime_Utilities_BindableHashset_1_RegisterOnRemove_System_Action__0__" data-uid="Runtime.Utilities.BindableHashset`1.RegisterOnRemove(System.Action{`0})">
   RegisterOnRemove(Action&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L72"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void RegisterOnRemove(Action&lt;T&gt; onRemove)</code></pre>
+    <pre><code class="lang-csharp hljs">public IUnRegister RegisterOnRemove(Action&lt;T&gt; onRemove)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -451,6 +456,11 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
     <dd></dd>
   </dl>
 
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.Event.IUnRegister.html">IUnRegister</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -497,7 +507,7 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
 
   <h3 id="Runtime_Utilities_BindableHashset_1_UnRegisterOnAdd_System_Action__0__" data-uid="Runtime.Utilities.BindableHashset`1.UnRegisterOnAdd(System.Action{`0})">
   UnRegisterOnAdd(Action&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L77"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -528,7 +538,7 @@ public class BindableHashset&lt;T&gt; : BindableProperty&lt;HashSet&lt;T&gt;&gt;
 
   <h3 id="Runtime_Utilities_BindableHashset_1_UnRegisterOnRemove_System_Action__0__" data-uid="Runtime.Utilities.BindableHashset`1.UnRegisterOnRemove(System.Action{`0})">
   UnRegisterOnRemove(Action&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableHashsetExtension.cs/#L81"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

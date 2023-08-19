@@ -349,6 +349,19 @@ namespace Polyglot
         {
             return Get(key, Instance.selectedLanguage);
         }
+        
+        public static string GetJoin() {
+            var languages = LocalizationImporter.GetLanguages("JOIN");
+            var selected = (int) Instance.selectedLanguage;
+            if (languages.Count > 0 && selected >= 0 && selected < languages.Count) {
+                var currentString = languages[selected];
+                if (string.IsNullOrEmpty(currentString) || LocalizationImporter.IsLineBreak(currentString)) {
+                    return "";
+                }
+                return currentString;
+            }
+            return "";
+        }
 
         public static string Get(string key, Language language)
         {

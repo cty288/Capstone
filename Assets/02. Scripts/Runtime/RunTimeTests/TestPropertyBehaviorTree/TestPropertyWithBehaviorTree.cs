@@ -1,10 +1,13 @@
+using Framework;
 using MikroFramework.BindableProperty;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
-using Runtime.DataFramework.Entities.Enemies;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
-using Runtime.DataFramework.ViewControllers.Entities.Enemies;
-using Runtime.Framework;
+using Runtime.DataFramework.ViewControllers;
+using Runtime.Enemies.Model;
+using Runtime.Enemies.Model.Builders;
+using Runtime.Enemies.Model.Properties;
+using Runtime.Enemies.ViewControllers.Base;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -28,6 +31,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         protected override ConfigTable GetConfigTable() {
             return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
         }
+        
         protected override void OnEnemyRegisterAdditionalProperties() {
             RegisterInitialProperty(new NewProperty());
         }
@@ -85,16 +89,16 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         public float Attack1Test2 { get; }
 
         protected override void OnEntityStart() {
-            Bind("TestProperty", BindedEntity.GetProperty<NewProperty>().RealValue);
+            Bind("TestProperty", BoundEntity.GetProperty<NewProperty>().RealValue);
         
-            BindedEntity.RegisterOnCustomDataChanged("attack1", "damage", OnRegisteredCustomAttack1DamageChanged);
+            BoundEntity.RegisterOnCustomDataChanged("attack1", "damage", OnRegisteredCustomAttack1DamageChanged);
 
             BindCustomData<int>("Attack1Damage2", "attack1", "damage", OnAttack1DamageChanged2);
         
             BindCustomData
                 ("Attack1Test2", "attack1", "info", GetAttack1Test2, OnAttack1TestChanged2);
 
-            BindedEntity.GetCustomDataValue<int>("attack1", "speed");
+            BoundEntity.GetCustomDataValue<int>("attack1", "speed");
         }
 
 
@@ -123,26 +127,26 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         
             if (Input.GetKeyDown(KeyCode.A)) {
             
-                Debug.Log(BindedEntity.MyPersistentButNotInherentData);
+                Debug.Log(BoundEntity.MyPersistentButNotInherentData);
                 
         
-                BindableProperty<int> danger = BindedEntity.GetDanger();
+                BindableProperty<int> danger = BoundEntity.GetDanger();
                 danger.Value += 1;
 
-                BindableProperty<int> test = BindedEntity.GetProperty<NewProperty>().RealValue;
+                BindableProperty<int> test = BoundEntity.GetProperty<NewProperty>().RealValue;
                 test.Value += 10;
 
-                BindedEntity.GetCustomDataValue("attack1", "damage").Value += 1;
-                IBindableProperty attack1Prop = BindedEntity.GetCustomDataValue("attack1", "info");
+                BoundEntity.GetCustomDataValue("attack1", "damage").Value += 1;
+                IBindableProperty attack1Prop = BoundEntity.GetCustomDataValue("attack1", "info");
                 attack1Prop.Value = new TestInfo(attack1Prop.Value.test + 1);
             }
             
             if(Input.GetKeyDown(KeyCode.G)) {
-                BindedEntity.TakeDamage(10, null);
+                BoundEntity.TakeDamage(10, null);
             }
             
             if(Input.GetKeyDown(KeyCode.H)) {
-                BindedEntity.Heal(10, null);
+                BoundEntity.Heal(10, null);
             }
 
             if (Input.GetKeyDown(KeyCode.D)) {

@@ -106,7 +106,7 @@
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Entity.html">Entity</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html">DamagableEntity</a></div>
       <div><span class="xref">AbstractCreature</span></div>
     </dd>
@@ -117,7 +117,7 @@
     <dd>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.ICreature.html">ICreature</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.html">IDamagable</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.html">IBelongToFaction</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.IHaveCustomProperties.html">IHaveCustomProperties</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags.html">IHaveTags</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></div>
@@ -130,7 +130,7 @@
   <dl class="typelist derived">
     <dt>Derived</dt>
     <dd>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.Enemies.EnemyEntity-1.html">EnemyEntity&lt;T&gt;</a></div>
+      <div><a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html">EnemyEntity&lt;T&gt;</a></div>
     </dd>
   </dl>
 
@@ -147,6 +147,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_HealthProperty">DamagableEntity.HealthProperty</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_OnEntityStart">DamagableEntity.OnEntityStart()</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_OnRegisterProperties">DamagableEntity.OnRegisterProperties()</a>
     </div>
     <div>
@@ -159,7 +162,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_GetCurrentHealth">DamagableEntity.GetCurrentHealth()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_">DamagableEntity.TakeDamage(int, IBelongToFaction)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamagableEntity.TakeDamage(int, IBelongToFaction)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_RegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamagableEntity.RegisterOnTakeDamage(OnTakeDamage)</a>
@@ -168,7 +171,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_UnRegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamagableEntity.UnRegisterOnTakeDamage(OnTakeDamage)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_">DamagableEntity.Heal(int, IBelongToFaction)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamagableEntity.Heal(int, IBelongToFaction)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_RegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamagableEntity.RegisterOnHeal(OnHeal)</a>
@@ -177,37 +180,40 @@
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_UnRegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamagableEntity.UnRegisterOnHeal(OnHeal)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_OnEntityRegisterAdditionalProperties">AbstractBasicEntity.OnEntityRegisterAdditionalProperties()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnEntityRegisterAdditionalProperties">AbstractBasicEntity.OnEntityRegisterAdditionalProperties()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_OnRegisterCustomProperties">AbstractBasicEntity.OnRegisterCustomProperties()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnRegisterCustomProperties">AbstractBasicEntity.OnRegisterCustomProperties()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_GetCustomProperties">AbstractBasicEntity.GetCustomProperties()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetCustomProperties">AbstractBasicEntity.GetCustomProperties()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_GetCustomDataValue_System_String_System_String_">AbstractBasicEntity.GetCustomDataValue(string, string)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetCustomDataValue_System_String_System_String_">AbstractBasicEntity.GetCustomDataValue(string, string)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_GetCustomDataValue__1_System_String_System_String_">AbstractBasicEntity.GetCustomDataValue&lt;T&gt;(string, string)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetCustomDataValue__1_System_String_System_String_">AbstractBasicEntity.GetCustomDataValue&lt;T&gt;(string, string)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_RegisterOnCustomDataChanged_System_String_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_System_Object_System_Object__">AbstractBasicEntity.RegisterOnCustomDataChanged(string, string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_RegisterOnCustomDataChanged_System_String_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_System_Object_System_Object__">AbstractBasicEntity.RegisterOnCustomDataChanged(string, string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_RegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__">AbstractBasicEntity.RegisterOnCustomDataChanged(string, Action&lt;ICustomProperty&gt;)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_RegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__">AbstractBasicEntity.RegisterOnCustomDataChanged(string, Action&lt;ICustomProperty&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_UnRegisterOnCustomDataChanged_System_String_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_System_Object_System_Object__">AbstractBasicEntity.UnRegisterOnCustomDataChanged(string, string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_UnRegisterOnCustomDataChanged_System_String_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_System_Object_System_Object__">AbstractBasicEntity.UnRegisterOnCustomDataChanged(string, string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_UnRegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__">AbstractBasicEntity.UnRegisterOnCustomDataChanged(string, Action&lt;ICustomProperty&gt;)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_UnRegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__">AbstractBasicEntity.UnRegisterOnCustomDataChanged(string, Action&lt;ICustomProperty&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_HasCustomProperty_System_String_">AbstractBasicEntity.HasCustomProperty(string)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_HasCustomProperty_System_String_">AbstractBasicEntity.HasCustomProperty(string)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.AbstractBasicEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_CustomProperties_AbstractBasicEntity_GetTagProperty">AbstractBasicEntity.GetTagProperty()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetTagProperty">AbstractBasicEntity.GetTagProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetRarity">AbstractBasicEntity.GetRarity()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_EntityName">Entity.EntityName</a>
@@ -241,6 +247,9 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig">Entity.LoadPropertyBaseValueFromConfig()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart">Entity.OnStart()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyName_">Entity.GetProperty(PropertyName)</a>

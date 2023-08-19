@@ -183,6 +183,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_LoadPropertyBaseValueFromConfig">IEntity.LoadPropertyBaseValueFromConfig()</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_OnStart">IEntity.OnStart()</a>
+    </div>
+    <div>
       <a class="xref" href="MikroFramework.Pool.IPoolable.html#MikroFramework_Pool_IPoolable_OnRecycled">IPoolable.OnRecycled()</a>
     </div>
     <div>
@@ -198,10 +201,10 @@
       <a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html#Runtime_DataFramework_Description_IHaveDisplayName_GetDisplayName">IHaveDisplayName.GetDisplayName()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_CurrentFaction">IBelongToFaction.CurrentFaction</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_CurrentFaction">IBelongToFaction.CurrentFaction</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_IsSameFaction_Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_">IBelongToFaction.IsSameFaction(IBelongToFaction)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_IsSameFaction_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">IBelongToFaction.IsSameFaction(IBelongToFaction)</a>
     </div>
   </dd></dl>
 
@@ -235,7 +238,7 @@
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Properties.IHealthProperty.html">IHealthProperty</a></dt>
+    <dt><a class="xref" href="Runtime.Enemies.Model.Properties.IHealthProperty.html">IHealthProperty</a></dt>
     <dd></dd>
   </dl>
 
@@ -348,7 +351,7 @@
 
   <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_IDamagable_Heal_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.Heal*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_IDamagable_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.Heal(System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction)">
+  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_IDamagable_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.Heal(System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   Heal(int, IBelongToFaction)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/IDamagable.cs/#L102"><i class="bi bi-code-slash"></i></a>
   </h3>
@@ -366,7 +369,7 @@
     <dt><code>healAmount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
     <dd><p>The amount of heal</p>
 </dd>
-    <dt><code>healer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.html">IBelongToFaction</a></dt>
+    <dt><code>healer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></dt>
     <dd><p>Healer</p>
 </dd>
   </dl>
@@ -458,7 +461,7 @@
 
   <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_IDamagable_TakeDamage_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.TakeDamage*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_IDamagable_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Faction_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.TakeDamage(System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction)">
+  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_IDamagable_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.TakeDamage(System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   TakeDamage(int, IBelongToFaction)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/IDamagable.cs/#L80"><i class="bi bi-code-slash"></i></a>
   </h3>
@@ -476,7 +479,7 @@
     <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
     <dd><p>the amount of damage</p>
 </dd>
-    <dt><code>damageDealer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.html">IBelongToFaction</a></dt>
+    <dt><code>damageDealer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></dt>
     <dd><p>the damage dealer entity</p>
 </dd>
   </dl>

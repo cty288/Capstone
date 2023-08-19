@@ -3,5 +3,6 @@
 		Test_Flame,
 		Test_Ice,
 		Test_Wood,
+		Test_Thunder,
 	}
 }

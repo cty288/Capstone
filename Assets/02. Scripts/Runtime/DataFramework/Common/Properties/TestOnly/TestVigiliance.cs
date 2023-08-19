@@ -1,4 +1,6 @@
-﻿namespace Runtime.DataFramework.Properties.TestOnly {
+﻿using Runtime.Enemies.Model.Properties;
+
+namespace Runtime.DataFramework.Properties.TestOnly {
 	public interface IVigilianceProperty : IProperty<float>, ILoadFromConfigProperty {
 		
 	}

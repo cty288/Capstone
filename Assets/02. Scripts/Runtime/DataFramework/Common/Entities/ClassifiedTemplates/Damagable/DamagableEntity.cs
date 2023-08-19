@@ -1,9 +1,8 @@
 ﻿using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
-using Runtime.DataFramework.Properties;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.Enemies.Model.Properties;
 
 namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	
@@ -15,7 +14,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	public abstract class DamagableEntity : AbstractBasicEntity, IDamagable {
 		
 		[field: ES3Serializable]
-		public BindableProperty<Faction.Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction.Faction>();
+		public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>();
 		
 		[field: ES3Serializable]
 		public BindableProperty<bool> IsInvincible { get; } = new BindableProperty<bool>();
@@ -24,12 +23,14 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		
 		private OnHeal onHeal;
 
-		public IHealthProperty HealthProperty => GetProperty<IHealthProperty>();
+		private IHealthProperty healthProperty;
+		public IHealthProperty HealthProperty => healthProperty;
 
-	//	private IHealthProperty healthProperty;
-		
-		
-		//TODO: rebind health
+
+		protected override void OnEntityStart() {
+			base.OnEntityStart();
+			this.healthProperty = GetProperty<IHealthProperty>();
+		}
 
 		public DamagableEntity() : base() {
 			//healthProperty = this.GetProperty<IHealthProperty>();
@@ -41,7 +42,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			RegisterInitialProperty<IHealthProperty>(new Health());
 		}
 
-		protected abstract Faction.Faction GetDefaultFaction();
+		protected abstract Faction GetDefaultFaction();
 
 		public int GetMaxHealth() {
 			return HealthProperty.GetMaxHealth();

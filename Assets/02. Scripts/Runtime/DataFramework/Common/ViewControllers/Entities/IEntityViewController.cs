@@ -2,6 +2,7 @@ using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Enemies;
 using Runtime.DataFramework.Entities.Weapons;
+using Runtime.Enemies.Model;
 
 namespace Runtime.DataFramework.ViewControllers.Entities
 {
