@@ -1,6 +1,4 @@
-﻿using Runtime.DataFramework.Properties;
-
-namespace Runtime.Enemies.Model.Properties {
+﻿namespace Runtime.DataFramework.Properties {
 	
 	public interface IRarityProperty : IProperty<int>, ILoadFromConfigProperty {
 	

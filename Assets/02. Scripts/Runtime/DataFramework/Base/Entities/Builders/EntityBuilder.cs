@@ -1,8 +1,8 @@
 using System;
-using _02._Scripts.DataFramework.Base.Properties;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Properties;
 
-namespace _02._Scripts.DataFramework.Base.Entities.Builders {
+namespace Runtime.DataFramework.Entities.Builders {
     public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable 
         where TEntity : class, IEntity, new() 
         where TBuilder : EntityBuilder<TBuilder, TEntity>{

@@ -1,12 +1,12 @@
-using _02._Scripts.DataFramework.Base.Entities;
-using _02._Scripts.DataFramework.Common.ViewControllers.Entities;
-using _02._Scripts.Enemies.Model;
-using _02._Scripts.Enemies.Model.Builders;
-using _02._Scripts.Enemies.Model.Properties;
 using MikroFramework.Architecture;
+using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.ViewControllers.Entities;
+using Runtime.Enemies.Model;
+using Runtime.Enemies.Model.Builders;
+using Runtime.Enemies.Model.Properties;
 using UnityEngine;
 
-namespace _02._Scripts.Enemies.ViewControllers.Base {
+namespace Runtime.Enemies.ViewControllers.Base {
 	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T, IEnemyEntityModel>, IEnemyViewController 
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;

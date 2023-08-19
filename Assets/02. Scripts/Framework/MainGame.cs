@@ -1,4 +1,5 @@
 using Runtime.DataFramework.Entities;
+using Runtime.Enemies.Model;
 
 namespace Framework {
 	public class MainGame : SavableArchitecture<MainGame> {

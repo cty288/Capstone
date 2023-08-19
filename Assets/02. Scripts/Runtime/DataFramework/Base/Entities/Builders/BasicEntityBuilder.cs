@@ -1,7 +1,7 @@
-﻿using _02._Scripts.DataFramework.Base.Properties;
-using MikroFramework.Pool;
+﻿using MikroFramework.Pool;
+using Runtime.DataFramework.Properties;
 
-namespace _02._Scripts.DataFramework.Base.Entities.Builders {
+namespace Runtime.DataFramework.Entities.Builders {
 	public class BasicEntityBuilder<T> : EntityBuilder<BasicEntityBuilder<T>, T>  where T : class, IEntity, new() {
 		public override void RecycleToCache() {
 			SafeObjectPool<BasicEntityBuilder<T>>.Singleton.Recycle(this);

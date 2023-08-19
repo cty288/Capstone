@@ -1,8 +1,8 @@
-﻿using _02._Scripts.Enemies.Model;
-using _02._Scripts.Enemies.Model.Builders;
+﻿using Runtime.Enemies.Model;
+using Runtime.Enemies.Model.Builders;
 using UnityEngine;
 
-namespace _02._Scripts.DataFramework.Base.Entities.Builders {
+namespace Runtime.DataFramework.Entities.Builders {
 	public interface IEntityBuilderFactory {
 		TBuilder GetBuilder<TBuilder, TEntity>(int rarity)
 			where TBuilder : EntityBuilder<TBuilder, TEntity>

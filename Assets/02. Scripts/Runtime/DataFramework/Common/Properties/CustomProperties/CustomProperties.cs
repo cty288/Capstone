@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using _02._Scripts.DataFramework.Base.Properties;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using PropertyName = _02._Scripts.DataFramework.Base.Properties.PropertyName;
 
-namespace _02._Scripts.DataFramework.Common.Properties.CustomProperties {
+namespace Runtime.DataFramework.Properties.CustomProperties {
 	
 	public interface ICustomProperties : IPropertyDictionary<string, ICustomProperty>, ILoadFromConfigProperty {
 		public ICustomProperty GetCustomProperty(string key);
