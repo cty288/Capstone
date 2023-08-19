@@ -5,7 +5,7 @@ using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities.Weapons;
 using Runtime.DataFramework.Entities;
 
-namespace Runtime.DataFramework.ViewControllers.Weapons
+namespace Runtime.DataFramework.ViewControllers.Entities.Weapons
 {
     public abstract class AbstractWeaponViewController<T> : AbstractBasicEntityViewController<T, IWeaponEntityModel>, IWeaponViewController
                 where T : class, IWeaponEntity, new()

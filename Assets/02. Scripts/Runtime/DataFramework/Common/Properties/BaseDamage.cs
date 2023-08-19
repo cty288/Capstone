@@ -3,11 +3,6 @@ namespace Runtime.DataFramework.Properties
     public interface IBaseDamageProperty : IProperty<int>, ILoadFromConfigProperty { }
     public class BaseDamage : AbstractLoadFromConfigProperty<int>, IBaseDamageProperty
     {
-        public override int OnSetBaseValueFromConfig(dynamic value)
-        {
-            return value;
-        }
-
         protected override IPropertyDependencyModifier<int> GetDefautModifier() {
             return new BaseDamageDefaultModifier();
         }

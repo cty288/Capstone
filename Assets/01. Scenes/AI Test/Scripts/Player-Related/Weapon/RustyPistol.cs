@@ -6,7 +6,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Utilities.ConfigSheet;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Properties;
-using Runtime.DataFramework.ViewControllers.Weapons;
+using Runtime.DataFramework.ViewControllers.Entities.Weapons;
 
 public class RustyPistolEntity : WeaponEntity<RustyPistolEntity>
 {
