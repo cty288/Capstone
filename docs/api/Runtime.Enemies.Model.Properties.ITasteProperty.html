@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Interface IAttackRangeProperty
+      <title>Interface ITasteProperty
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Interface IAttackRangeProperty
+      <meta name="title" content="Interface ITasteProperty
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_Properties_TestOnly_IAttackRangeProperty.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Properties.TestOnly.IAttackRangeProperty%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Enemies_Model_Properties_ITasteProperty.md&amp;value=---%0Auid%3A%20Runtime.Enemies.Model.Properties.ITasteProperty%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.DataFramework.Properties.TestOnly.IAttackRangeProperty">
+        <article data-uid="Runtime.Enemies.Model.Properties.ITasteProperty">
 
 
 
-  <h1 id="Runtime_DataFramework_Properties_TestOnly_IAttackRangeProperty" data-uid="Runtime.DataFramework.Properties.TestOnly.IAttackRangeProperty" class="text-break">
-    Interface IAttackRangeProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/TestOnly/TestAttackRange.cs/#L4"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_Enemies_Model_Properties_ITasteProperty" data-uid="Runtime.Enemies.Model.Properties.ITasteProperty" class="text-break">
+    Interface ITasteProperty
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/Properties/Taste.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Properties.html">Properties</a>.<a class="xref" href="Runtime.DataFramework.Properties.TestOnly.html">TestOnly</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Enemies.html">Enemies</a>.<a class="xref" href="Runtime.Enemies.Model.html">Model</a>.<a class="xref" href="Runtime.Enemies.Model.Properties.html">Properties</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IAttackRangeProperty : IProperty&lt;float&gt;, ILoadFromConfigProperty, IPropertyBase</code></pre>
+    <pre><code class="lang-csharp hljs">public interface ITasteProperty : IListProperty&lt;TasteType&gt;, IProperty&lt;List&lt;TasteType&gt;&gt;, ILoadFromConfigProperty, IPropertyBase</code></pre>
   </div>
 
 
@@ -108,16 +108,19 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_BaseValue">IProperty&lt;float&gt;.BaseValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.IListProperty-1.html#Runtime_DataFramework_Properties_IListProperty_1_RealValues">IListProperty&lt;TasteType&gt;.RealValues</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_InitialValue">IProperty&lt;float&gt;.InitialValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_BaseValue">IProperty&lt;List&lt;TasteType&gt;&gt;.BaseValue</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_RealValue">IProperty&lt;float&gt;.RealValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_InitialValue">IProperty&lt;List&lt;TasteType&gt;&gt;.InitialValue</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_SetBaseValue__0_">IProperty&lt;float&gt;.SetBaseValue(float)</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_RealValue">IProperty&lt;List&lt;TasteType&gt;&gt;.RealValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_SetBaseValue__0_">IProperty&lt;List&lt;TasteType&gt;&gt;.SetBaseValue(List&lt;TasteType&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Properties.ILoadFromConfigProperty.html#Runtime_DataFramework_Properties_ILoadFromConfigProperty_LoadFromConfig_System_Object_">ILoadFromConfigProperty.LoadFromConfig(dynamic)</a>
@@ -169,7 +172,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Properties/TestOnly/TestAttackRange.cs/#L4" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/Properties/Taste.cs/#L11" class="edit-link">Edit this page</a>
         </div>
 
         

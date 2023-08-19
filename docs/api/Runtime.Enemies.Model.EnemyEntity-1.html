@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class AbstractCreature
+      <title>Class EnemyEntity&lt;T&gt;
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class AbstractCreature
+      <meta name="title" content="Class EnemyEntity&lt;T&gt;
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_Entities_Creatures_AbstractCreature.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Creatures.AbstractCreature%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Enemies_Model_EnemyEntity_1.md&amp;value=---%0Auid%3A%20Runtime.Enemies.Model.EnemyEntity%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.DataFramework.Entities.Creatures.AbstractCreature">
+        <article data-uid="Runtime.Enemies.Model.EnemyEntity`1">
 
 
 
-  <h1 id="Runtime_DataFramework_Entities_Creatures_AbstractCreature" data-uid="Runtime.DataFramework.Entities.Creatures.AbstractCreature" class="text-break">
-    Class AbstractCreature
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Creatures/AbstractCreature.cs/#L4"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_Enemies_Model_EnemyEntity_1" data-uid="Runtime.Enemies.Model.EnemyEntity`1" class="text-break">
+    Class EnemyEntity&lt;T&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Entities.html">Entities</a>.<a class="xref" href="Runtime.DataFramework.Entities.Creatures.html">Creatures</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Enemies.html">Enemies</a>.<a class="xref" href="Runtime.Enemies.Model.html">Model</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,11 +95,16 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractCreature : DamagableEntity, ICreature, IDamagable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class EnemyEntity&lt;T&gt; : AbstractCreature, IEnemyEntity, ICreature, IDamagable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName where T : EnemyEntity&lt;T&gt;, new()</code></pre>
   </div>
 
 
 
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
 
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
@@ -108,13 +113,15 @@
       <div><a class="xref" href="Runtime.DataFramework.Entities.Entity.html">Entity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html">DamagableEntity</a></div>
-      <div><span class="xref">AbstractCreature</span></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.AbstractCreature.html">AbstractCreature</a></div>
+      <div><span class="xref">EnemyEntity&lt;T&gt;</span></div>
     </dd>
   </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
+      <div><a class="xref" href="Runtime.Enemies.Model.IEnemyEntity.html">IEnemyEntity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.ICreature.html">ICreature</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.html">IDamagable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.IBelongToFaction.html">IBelongToFaction</a></div>
@@ -127,12 +134,6 @@
     </dd>
   </dl>
 
-  <dl class="typelist derived">
-    <dt>Derived</dt>
-    <dd>
-      <div><a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html">EnemyEntity&lt;T&gt;</a></div>
-    </dd>
-  </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
@@ -148,9 +149,6 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_OnRegisterProperties">DamagableEntity.OnRegisterProperties()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_GetDefaultFaction">DamagableEntity.GetDefaultFaction()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_GetMaxHealth">DamagableEntity.GetMaxHealth()</a>
@@ -175,9 +173,6 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_UnRegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamagableEntity.UnRegisterOnHeal(OnHeal)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnEntityRegisterAdditionalProperties">AbstractBasicEntity.OnEntityRegisterAdditionalProperties()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnRegisterCustomProperties">AbstractBasicEntity.OnRegisterCustomProperties()</a>
@@ -217,9 +212,6 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_configTable">Entity.configTable</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetConfigTable">Entity.GetConfigTable()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnLoadFromSave">Entity.OnLoadFromSave()</a>
@@ -279,9 +271,6 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RecycleToCache">Entity.RecycleToCache()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnDoRecycle">Entity.OnDoRecycle()</a>
-    </div>
-    <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnRecycle">Entity.OnRecycle()</a>
     </div>
     <div>
@@ -321,11 +310,280 @@
 
 
 
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_GetConfigTable_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetConfigTable*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_GetConfigTable" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetConfigTable">
+  GetConfigTable()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override ConfigTable GetConfigTable()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Utilities.ConfigSheet.ConfigTable.html">ConfigTable</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_GetDanger_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetDanger*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_GetDanger" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetDanger">
+  GetDanger()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;int&gt; GetDanger()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_GetDefaultFaction_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetDefaultFaction*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_GetDefaultFaction" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetDefaultFaction">
+  GetDefaultFaction()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Faction GetDefaultFaction()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Faction.Faction.html">Faction</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_GetHealth_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetHealth*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_GetHealth" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetHealth">
+  GetHealth()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;HealthInfo&gt; GetHealth()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.Enemies.Model.Properties.HealthInfo.html">HealthInfo</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_GetRarity_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetRarity*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_GetRarity" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetRarity">
+  GetRarity()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetRarity()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_GetTaste_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetTaste*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_GetTaste" data-uid="Runtime.Enemies.Model.EnemyEntity`1.GetTaste">
+  GetTaste()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableList&lt;TasteType&gt; GetTaste()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Utilities.BindableList-1.html">BindableList</a>&lt;<a class="xref" href="Runtime.Enemies.Model.Properties.TasteType.html">TasteType</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_OnDoRecycle_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnDoRecycle*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_OnDoRecycle" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnDoRecycle">
+  OnDoRecycle()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnDoRecycle()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_OnEnemyRegisterAdditionalProperties_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnEnemyRegisterAdditionalProperties*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_OnEnemyRegisterAdditionalProperties" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnEnemyRegisterAdditionalProperties">
+  OnEnemyRegisterAdditionalProperties()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract void OnEnemyRegisterAdditionalProperties()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Model_EnemyEntity_1_OnEntityRegisterAdditionalProperties_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnEntityRegisterAdditionalProperties*"></a>
+
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_OnEntityRegisterAdditionalProperties" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnEntityRegisterAdditionalProperties">
+  OnEntityRegisterAdditionalProperties()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A place to register additional properties, normally empty. Recommended to register custom properties instead.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnEntityRegisterAdditionalProperties()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/Creatures/AbstractCreature.cs/#L4" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L24" class="edit-link">Edit this page</a>
         </div>
 
         
