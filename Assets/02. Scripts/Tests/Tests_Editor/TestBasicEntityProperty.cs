@@ -24,7 +24,11 @@ namespace Tests.Tests_Editor {
 				RegisterInitialProperty<IRarityProperty>(new Rarity());
 				RegisterInitialProperty<IDangerProperty>(new TestDanger());
 			}
-			
+
+			protected override void OnEntityStart() {
+				
+			}
+
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
@@ -57,6 +61,10 @@ namespace Tests.Tests_Editor {
 				});
 			}
 
+			protected override void OnEntityStart() {
+				
+			}
+
 			protected override string OnGetDescription(string defaultLocalizationKey) {
 				return null;
 			}
@@ -83,6 +91,10 @@ namespace Tests.Tests_Editor {
 						new TestResourceList(new TestResourceProperty(new GoldPropertyModifier()){BaseValue = new TestResourceInfo("Gold", 10)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Silver", 20)}, new TestResourceProperty(){BaseValue = new TestResourceInfo("Bronze", 30)}),
 					}
 				});
+			}
+
+			protected override void OnEntityStart() {
+				
 			}
 
 			protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -118,6 +130,10 @@ namespace Tests.Tests_Editor {
 						},
 					}
 				});
+			}
+
+			protected override void OnEntityStart() {
+				
 			}
 
 			protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -350,6 +366,10 @@ namespace Tests.Tests_Editor {
 						}
 					}
 				));
+			}
+
+			protected override void OnEntityStart() {
+				
 			}
 
 			protected override string OnGetDescription(string defaultLocalizationKey) {

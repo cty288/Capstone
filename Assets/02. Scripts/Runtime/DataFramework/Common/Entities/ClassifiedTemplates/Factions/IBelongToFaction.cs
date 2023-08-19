@@ -1,6 +1,6 @@
 ﻿using MikroFramework.BindableProperty;
 
-namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Faction {
+namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Factions {
 
 
 	

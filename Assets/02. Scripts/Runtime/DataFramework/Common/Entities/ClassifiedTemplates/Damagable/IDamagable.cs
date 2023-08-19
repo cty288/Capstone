@@ -1,7 +1,7 @@
 ﻿using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies.Model.Properties;
 
 namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {

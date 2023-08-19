@@ -23,11 +23,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = true;
 		
-		IEntity IEntityViewController.Entity => BindedEntity;
+		IEntity IEntityViewController.Entity => BoundEntity;
 
 		protected TEntityModel entityModel;
 		
-		protected T BindedEntity { get; private set; }
+		protected T BoundEntity { get; private set; }
 		
 		private Dictionary<PropertyInfo, Func<dynamic>> propertyBindings = new Dictionary<PropertyInfo, Func<dynamic>>();
 		private Dictionary<PropertyInfo, FieldInfo> propertyFields = new Dictionary<PropertyInfo, FieldInfo>();
@@ -36,7 +36,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		//private Type type;
 		public void Init(string id, IEntity entity) {
 			ID = id;
-			BindedEntity = entity as T;
+			BoundEntity = entity as T;
 		}
 		
 		protected virtual void Awake() {
@@ -58,7 +58,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				IEntity entity = OnInitEntity();
 				Init(entity.UUID, entity);
 			}
-			BindedEntity = entityModel.GetEntity(ID) as T;
+			BoundEntity = entityModel.GetEntity(ID) as T;
 			OnBindProperty();
 		}
 
@@ -103,7 +103,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		/// <typeparam name="IPropertyType"></typeparam>
 		protected void Bind<IPropertyType>(string bindedPropertyName, 
 			Action<dynamic, dynamic> callback = null) where IPropertyType: class, IPropertyBase {
-			var property = BindedEntity.GetProperty<IPropertyType>();
+			var property = BoundEntity.GetProperty<IPropertyType>();
 			if(property == null) {
 				Debug.LogError("Property not found");
 				return;
@@ -224,7 +224,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			foreach (var prop in properties) {
 				if (prop.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is BindAttribute attribute) {
 					
-					IBindableProperty bindedProperty = BindedEntity.GetProperty(attribute.PropertyName).GetRealValue();
+					IBindableProperty bindedProperty = BoundEntity.GetProperty(attribute.PropertyName).GetRealValue();
 					
 					//get type of the property
 					Type propertyType = prop.PropertyType;

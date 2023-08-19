@@ -2,7 +2,7 @@
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Faction;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
@@ -17,8 +17,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		where TEntityModel: class, IEntityModel{
 		protected override void OnStart() {
 			base.OnStart();
-			BindedEntity.RegisterOnTakeDamage(OnTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
-			BindedEntity.RegisterOnHeal(OnHeal).UnRegisterWhenGameObjectDestroyed(gameObject);
+			BoundEntity.RegisterOnTakeDamage(OnTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
+			BoundEntity.RegisterOnHeal(OnHeal).UnRegisterWhenGameObjectDestroyed(gameObject);
 		}
 
 		private void OnHeal(int healamount, int currenthealth, IBelongToFaction healer) {

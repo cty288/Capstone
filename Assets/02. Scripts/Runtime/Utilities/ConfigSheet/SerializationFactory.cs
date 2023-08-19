@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MikroFramework.Singletons;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.Enemies.Model.Properties;
+using Runtime.GameResources.Model.Properties.BaitAdjectives;
 
 namespace Runtime.Utilities.ConfigSheet {
 	public class SerializationFactory : MikroSingleton<SerializationFactory>, ISingleton {
@@ -31,6 +32,7 @@ namespace Runtime.Utilities.ConfigSheet {
 			RegisterType("HealthInfo", typeof(HealthInfo));
 			RegisterType("TasteType", typeof(TasteType));
 			RegisterType("TagName", typeof(TagName));
+			RegisterType("BaitAdjective", typeof(BaitAdjective));
 		}
 		
 		

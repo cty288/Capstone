@@ -20,9 +20,11 @@ namespace Runtime.DataFramework.Properties {
 
 		public BindableDictionary<TKey,T> RealValues { get; private set; } =
 			new BindableDictionary<TKey,T>(new Dictionary<TKey,T>());
-		
-		
-		public DictionaryProperty(): base(){}
+
+
+		public DictionaryProperty() : base() {
+			BaseValue = new Dictionary<TKey, T>();
+		}
 		
 		/// <summary>
 		/// Deep clone of the list

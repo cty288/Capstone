@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Runtime.Enemies.ViewControllers.Base {
 	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T, IEnemyEntityModel>, IEnemyViewController 
 		where T : class, IEnemyEntity, new() {
-		IEnemyEntity IEnemyViewController.EnemyEntity => BindedEntity;
+		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
 	
 		public int Danger {  get; }
 	
@@ -19,23 +19,16 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		public int CurrentHealth { get; }
 		
 
-		protected IEnemyEntityModel enemyEntityModel;
-
-		protected override void Awake() {
-			base.Awake();
-			
-			enemyEntityModel = this.GetModel<IEnemyEntityModel>();
-		}
-
+		
 		protected override void OnBindEntityProperty() {
 		
-			Bind("Danger", BindedEntity.GetDanger());
-			Bind<HealthInfo, int>("MaxHealth", BindedEntity.GetHealth(), info => info.MaxHealth);
-			Bind<HealthInfo, int>("CurrentHealth", BindedEntity.GetHealth(), info => info.CurrentHealth);
+			Bind("Danger", BoundEntity.GetDanger());
+			Bind<HealthInfo, int>("MaxHealth", BoundEntity.GetHealth(), info => info.MaxHealth);
+			Bind<HealthInfo, int>("CurrentHealth", BoundEntity.GetHealth(), info => info.CurrentHealth);
 		}
 
 		protected override IEntity OnInitEntity() {
-			EnemyBuilder<T> builder = enemyEntityModel.GetEnemyBuilder<T>(1);
+			EnemyBuilder<T> builder = entityModel.GetEnemyBuilder<T>(1);
 			return OnInitEnemyEntity(builder);
 		}
 

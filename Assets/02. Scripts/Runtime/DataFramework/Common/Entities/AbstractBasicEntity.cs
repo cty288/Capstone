@@ -14,16 +14,31 @@ namespace Runtime.DataFramework.Entities {
 	/// <summary>
 	/// Basically all entities inherit from this class. Auto register the custom properties, rarity, and tags
 	/// </summary>
-	public abstract class AbstractBasicEntity: global::Runtime.DataFramework.Entities.Entity, IHaveCustomProperties, IHaveTags {
+	public abstract class AbstractBasicEntity: Entity, IHaveCustomProperties, IHaveTags {
 		
+		[ES3NonSerializable]
+		private IRarityProperty rarityProperty;
+		
+		[ES3NonSerializable]
+		private ITagProperty tagProperty;
+		
+		[ES3NonSerializable]
+		private ICustomProperties customProperties;
 		
 		protected override void OnRegisterProperties() {
 			ICustomProperty[] properties = OnRegisterCustomProperties();
-			RegisterInitialProperty(new Rarity());
+			RegisterInitialProperty<IRarityProperty>(new Rarity());
 			RegisterInitialProperty<ITagProperty>(new TagProperty());
 			RegisterInitialProperty<ICustomProperties>(new Properties.CustomProperties.CustomProperties(properties));
 			OnEntityRegisterAdditionalProperties();
 		}
+
+		protected override void OnEntityStart() {
+			rarityProperty = GetProperty<IRarityProperty>();
+			tagProperty = GetProperty<ITagProperty>();
+			customProperties = GetProperty<ICustomProperties>();
+		}
+		
 
 		/// <summary>
 		/// A place to register additional properties, normally empty. Recommended to register custom properties instead.
@@ -38,11 +53,11 @@ namespace Runtime.DataFramework.Entities {
 		
 
 		public Dictionary<string, ICustomProperty> GetCustomProperties() {
-			return GetProperty<ICustomProperties>().RealValues?.Value;
+			return customProperties.RealValues?.Value;
 		}
 
 		private ICustomProperty GetCustomProperty(string key) {
-			return GetProperty<ICustomProperties>().GetCustomProperty(key);
+			return customProperties.GetCustomProperty(key);
 		}
 
 		private ICustomDataProperty GetCustomDataProperty(string customPropertyName, string dataName) {
@@ -88,12 +103,16 @@ namespace Runtime.DataFramework.Entities {
 		}
 
 		public bool HasCustomProperty(string propertyName) {
-			return GetProperty<ICustomProperties>().RealValues.Value.ContainsKey(propertyName);
+			return this.customProperties.RealValues.Value.ContainsKey(propertyName);
 		}
 		
 		
 		public ITagProperty GetTagProperty() {
-			return GetProperty<ITagProperty>();
+			return this.tagProperty;
+		}
+		
+		public int GetRarity() {
+			return rarityProperty.RealValue.Value;
 		}
 	}
 }

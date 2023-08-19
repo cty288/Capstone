@@ -38,7 +38,7 @@ namespace Runtime.DataFramework.Properties {
 
 
 		public PropertyDictionary() : base() {
-			
+			BaseValue = new Dictionary<TKey, T>();
 		}
 		
 		public PropertyDictionary(params T[] baseValues) : this() {

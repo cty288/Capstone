@@ -8,9 +8,15 @@ namespace Runtime.Utilities.ConfigSheet {
 
 		private ConfigTable enemyEntityConfigTable;
 		private ConfigTable enemyEntityConfigTable_test;
+		private ConfigTable rawMaterialEntityConfigTable;
+		private ConfigTable rawMaterialEntityConfigTable_test;
 
 		public ConfigTable EnemyEntityConfigTable => enemyEntityConfigTable;
 		public ConfigTable EnemyEntityConfigTable_Test => enemyEntityConfigTable_test;
+		
+		public ConfigTable RawMaterialEntityConfigTable => rawMaterialEntityConfigTable;
+		public ConfigTable RawMaterialEntityConfigTable_Test => rawMaterialEntityConfigTable_test;
+		
 		public override void OnSingletonInit() {
 			base.OnSingletonInit();
 			//Debug.Log("ConfigDatas Singleton Init");
@@ -19,6 +25,12 @@ namespace Runtime.Utilities.ConfigSheet {
 			
 			enemyEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"1757713118", "data_enemies_test");
+			
+			rawMaterialEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+				"1100243990", "data_raw_material");
+			
+			rawMaterialEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+				"1292551269", "data_raw_material_test");
 		} 
 		
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
