@@ -11,7 +11,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	/// <summary>
 	/// Health is auto registered
 	/// </summary>
-	public abstract class DamagableEntity : AbstractBasicEntity, IDamagable {
+	public abstract class DamageableEntity : AbstractBasicEntity, IDamageable {
 		
 		[field: ES3Serializable]
 		public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>();
@@ -32,7 +32,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			this.healthProperty = GetProperty<IHealthProperty>();
 		}
 
-		public DamagableEntity() : base() {
+		public DamageableEntity() : base() {
 			//healthProperty = this.GetProperty<IHealthProperty>();
 			CurrentFaction.Value = GetDefaultFaction();
 		}

@@ -21,39 +21,39 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	
 	
 	public class OnTakeDamageUnRegister : IUnRegister {
-		public IDamagable Damagable { get; set; }
+		public IDamageable Damageable { get; set; }
 
 		public  OnTakeDamage OnEvent { get; set; }
 
-		public OnTakeDamageUnRegister(IDamagable damagable, OnTakeDamage onEvent) {
-			Damagable = damagable;
+		public OnTakeDamageUnRegister(IDamageable damageable, OnTakeDamage onEvent) {
+			Damageable = damageable;
 			OnEvent = onEvent;
 		}
 
 		public void UnRegister() {
-			Damagable.UnRegisterOnTakeDamage(OnEvent);
+			Damageable.UnRegisterOnTakeDamage(OnEvent);
 		}
 
 	}
 	
 	public class OnHealUnRegister : IUnRegister {
-		public IDamagable Damagable { get; set; }
+		public IDamageable Damageable { get; set; }
 
 		public  OnHeal OnEvent { get; set; }
 
-		public OnHealUnRegister(IDamagable damagable, OnHeal onEvent) {
-			Damagable = damagable;
+		public OnHealUnRegister(IDamageable damageable, OnHeal onEvent) {
+			Damageable = damageable;
 			OnEvent = onEvent;
 		}
 
 		public void UnRegister() {
-			Damagable.UnRegisterOnHeal(OnEvent);
+			Damageable.UnRegisterOnHeal(OnEvent);
 		}
 
 	}
 	
 	
-	public interface IDamagable : IHaveCustomProperties, IBelongToFaction {
+	public interface IDamageable : IHaveCustomProperties, IBelongToFaction {
 		
 		/// <summary>
 		/// Get the health property of the entity

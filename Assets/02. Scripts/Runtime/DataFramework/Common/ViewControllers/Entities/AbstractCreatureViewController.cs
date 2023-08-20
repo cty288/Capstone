@@ -12,7 +12,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TEntityModel"></typeparam>
 	public abstract class AbstractCreatureViewController<T, TEntityModel> : AbstractDamagableViewController<T, TEntityModel>
-		where T : class, IHaveCustomProperties, IHaveTags, IDamagable, ICreature, new()
+		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature, new()
 		where TEntityModel: class, IEntityModel {
 		
 	}

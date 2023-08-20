@@ -21,7 +21,7 @@ namespace Runtime.DataFramework.Entities.Creatures {
 
 		public TBuilder SetInvincible(bool isInvincible) {
 			CheckEntity();
-			((IDamagable) Entity).IsInvincible.Value = isInvincible;
+			((IDamageable) Entity).IsInvincible.Value = isInvincible;
 			return (TBuilder) this;
 		}
 		

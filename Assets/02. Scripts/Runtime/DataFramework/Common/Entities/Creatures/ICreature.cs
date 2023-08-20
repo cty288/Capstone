@@ -5,7 +5,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 namespace Runtime.DataFramework.Entities.Creatures {
 	
 	
-	public interface ICreature : IDamagable, IHaveCustomProperties, IHaveTags {
+	public interface ICreature : IDamageable, IHaveCustomProperties, IHaveTags {
 		
 	}
 }
