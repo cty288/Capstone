@@ -1,8 +1,7 @@
-using Runtime.DataFramework.Entities.Enemies;
-using Runtime.DataFramework.Entities.Weapons;
-using Runtime.Enemies.Model;
+﻿using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.GameResources.Model.Builder;
+using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 
 namespace Runtime.DataFramework.Entities.Builders

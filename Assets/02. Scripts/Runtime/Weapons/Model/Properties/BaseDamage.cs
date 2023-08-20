@@ -1,7 +1,9 @@
-namespace Runtime.DataFramework.Properties
+using Runtime.DataFramework.Properties;
+
+namespace Runtime.Weapons.Model.Properties
 {
-    public interface IBaseDamageProperty : IProperty<int>, ILoadFromConfigProperty { }
-    public class BaseDamage : AbstractLoadFromConfigProperty<int>, IBaseDamageProperty
+    public interface IBaseDamage : IProperty<int>, ILoadFromConfigProperty { }
+    public class BaseDamage : AbstractLoadFromConfigProperty<int>, IBaseDamage
     {
         protected override IPropertyDependencyModifier<int> GetDefautModifier() {
             return new BaseDamageDefaultModifier();
@@ -12,8 +14,9 @@ namespace Runtime.DataFramework.Properties
             return PropertyName.base_damage;
         }
 
-        public override PropertyNameInfo[] GetDefaultDependentProperties() {
-            return new[] {new PropertyNameInfo(PropertyName.rarity)};
+        public override PropertyNameInfo[] GetDefaultDependentProperties()
+        {
+            return null;
         }
     }
 

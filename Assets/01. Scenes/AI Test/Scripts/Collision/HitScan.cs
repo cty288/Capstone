@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Runtime.DataFramework.ViewControllers.Entities.Weapons;
 
 public class HitScan : IHitDetector
 {

@@ -32,11 +32,11 @@ namespace MikroFramework.Examples
             playerInfo.State.Value = new PlayerState() {hp = 10, mp = 20};
 
 
-            playerInfo.Age.RegisterOnValueChaned(age => {
+            playerInfo.Age.RegisterOnValueChanged(age => {
                 Debug.Log($"New age: {age}");
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
-            playerInfo.State.RegisterOnValueChaned((state) => {
+            playerInfo.State.RegisterOnValueChanged((state) => {
                 Debug.Log($"State changed! HP:{state.hp}, MP: {state.mp}");
             }).UnRegisterWhenGameObjectDestroyed(this.gameObject);
         }

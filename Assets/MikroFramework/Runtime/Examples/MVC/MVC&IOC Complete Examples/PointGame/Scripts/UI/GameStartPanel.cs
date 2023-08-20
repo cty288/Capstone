@@ -25,8 +25,8 @@ namespace MikroFramework
 
             gameModel.Score.Value = 0;
             gameModel.KillCount.Value = 0;
-            gameModel.Gold.RegisterOnValueChaned(OnGoldValueChanged);
-            gameModel.Life.RegisterOnValueChaned(OnLifeValueChanged);
+            gameModel.Gold.RegisterOnValueChanged(OnGoldValueChanged);
+            gameModel.Life.RegisterOnValueChanged(OnLifeValueChanged);
 
             OnGoldValueChanged(gameModel.Gold.Value);
             OnLifeValueChanged(gameModel.Life.Value);

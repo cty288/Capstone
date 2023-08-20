@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
-using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
 
-namespace Runtime.DataFramework.Entities.Weapons
+namespace Runtime.Weapons.Model.Builders
 {
     public class WeaponBuilder<T> : EntityBuilder<WeaponBuilder<T>, T> where T : class, IEntity, new()
     {

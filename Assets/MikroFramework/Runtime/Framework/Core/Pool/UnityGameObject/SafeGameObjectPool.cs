@@ -70,14 +70,14 @@ namespace MikroFramework.Pool
 
         private void Awake()
         {
-            creatingObjs.RegisterOnValueChaned(value => {
+            creatingObjs.RegisterOnValueChanged(value => {
                 if (value)
                 {
                     StartCoroutine(InitializeObjectsToGame());
                 }
             }).UnRegisterWhenGameObjectDestroyed(this.gameObject);
 
-            destroyingObjs.RegisterOnValueChaned(value => {
+            destroyingObjs.RegisterOnValueChanged(value => {
                 if (value)
                 {
                     StartCoroutine(DestoryObjectsInQueue());
