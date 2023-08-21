@@ -1,14 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.Weapons.Model.Base;
 using UnityEngine;
-using Runtime.DataFramework.Properties.CustomProperties;
-using Runtime.Utilities.ConfigSheet;
-using MikroFramework.Pool;
-using Runtime.DataFramework.Properties.CustomProperties;
-using Runtime.Weapons.Model.Builders;
-using Runtime.Weapons.ViewControllers.Base;
 
-namespace Runtime.Weapons.Model.Base
+namespace Runtime.Weapons
 {
     public class RustyPistolEntity : WeaponEntity<RustyPistolEntity>
     {
