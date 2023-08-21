@@ -2,6 +2,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
 using Runtime.Weapons;
+using Runtime.Weapons.Model.Base;
 
 namespace Framework
 {
@@ -11,7 +12,7 @@ namespace Framework
 		{
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());
-			this.RegisterModel<IWeaponEntityModel>(new WeaponEntityModel());
+			this.RegisterModel<IWeaponModel>(new WeaponModel());
 			this.RegisterModel<IGameResourceModel>(new GameResourceModel());
 		}
 
