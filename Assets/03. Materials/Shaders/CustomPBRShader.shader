@@ -29,6 +29,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
     	_BumpScale("Bump Scale", Float) = 1.0
         _BumpMap("Normal Map", 2D) = "bump" {}
         
+    	[Toggle(_OCCLUSIONMAP)] _AOToggle ("Use AO", Float) = 0
         _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
         _OcclusionMap("Occlusion", 2D) = "white" {}
 
@@ -65,8 +66,11 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 				float _BumpScale;
 				float4 _BumpMap_ST;
         
-                float4 _OcclusionStrength;
+                float _OcclusionStrength;
+				float4 _OcclusionMap_ST;
+        
                 float4 _EmissionColor;
+				float4 _EmissionMap_ST;
                 
     
             CBUFFER_END
@@ -140,47 +144,12 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             // GPU Instancing
             #pragma multi_compile_instancing
             #pragma multi_compile _ DOTS_INSTANCING_ON
-            
 
-            //
-            // TODO: Move below into its own hlsl file(s) later
-            //
             
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
-            // includes SurfaceData.hlsl
-
-            // For reference, remove later.
-            /*
-             struct SurfaceData {
-                half3 albedo;
-                half3 specular;
-                half  metallic;
-                half  smoothness;
-                half3 normalTS;
-                half3 emission;
-                half  occlusion;
-                half  alpha;
-	            
-	            // And added in v10 :
-                half  clearCoatMask;
-                half  clearCoatSmoothness;
-              };
-             */
-
-            /*
-             struct InputData {
-                float3  positionWS;
-                half3   normalWS;
-                half3   viewDirectionWS;
-                float4  shadowCoord;
-                half    fogCoord;
-                half3   vertexLighting;
-                half3   bakedGI;
-                float2  normalizedScreenSpaceUV;
-                half4   shadowMask;
-             };
-            */
 
             // ------------------
             // Structs
@@ -209,7 +178,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             	 #endif
 
             		float3 viewDirWS                : TEXCOORD5;
-                    half4 fogFactorAndVertexLight   : TEXCOORD6; // x: fogFactor, yzw: vertex light
+            	
+					half4 fogFactorAndVertexLight	: TEXCOORD6; // x: fogFactor, yzw: vertex light
 
                 #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
                     float4 shadowCoord              : TEXCOORD7;
@@ -224,86 +194,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
                     UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            // ------------------
-            // Vertex
-            // ------------------
-
-            Varyings LitPassVertex(Attributes IN)
-            {
-                Varyings OUT;
-
-            	UNITY_SETUP_INSTANCE_ID(IN);
-			    UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
-			    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-
-                VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
-				#ifdef _NORMALMAP
-					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS, IN.tangentOS);
-				#else
-					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz);
-				#endif
-
-				OUT.positionCS = positionInputs.positionCS;
-				OUT.positionWS = positionInputs.positionWS;
-
-				half3 viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
-				half3 vertexLight = VertexLighting(positionInputs.positionWS, normalInputs.normalWS);
-				half fogFactor = ComputeFogFactor(positionInputs.positionCS.z);
-				
-				#ifdef _NORMALMAP
-					OUT.normalWS = normalInputs.normalWS;
-            		real sign = IN.tangentOS.w * GetOddNegativeScale();
-					OUT.tangentWS = half4(normalInputs.tangentWS, sign);
-				#else
-					OUT.normalWS = NormalizeNormalPerVertex(normalInputs.normalWS);
-					//OUT.viewDirWS = viewDirWS;
-				#endif
-
-				OUTPUT_LIGHTMAP_UV(IN.lightmapUV, unity_LightmapST, OUT.lightmapUV);
-				OUTPUT_SH(OUT.normalWS.xyz, OUT.vertexSH);
-
-				#ifdef _ADDITIONAL_LIGHTS_VERTEX
-					OUT.fogFactorAndVertexLight = half4(fogFactor, vertexLight);
-				#else
-					OUT.fogFactorAndVertexLight = half4(fogFactor, 0, 0, 0);
-				#endif
-
-				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-					OUT.shadowCoord = GetShadowCoord(positionInputs);
-				#endif
-
-				OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
-				return OUT;
-            }
-
-            // ------------------
-            // Fragment
-            // ------------------
-
-            #include "DesertLighting.hlsl"
-
-            half4 LitPassFragment(Varyings IN) : SV_TARGET
-            {
-                SurfaceData surfaceData;
-	            InitializeSurfaceData(IN, surfaceData);
-
-                InputData inputData;
-	            InitializeInputData(IN, surfaceData.normalTS, inputData);
-
-            	// TODO: Ambient Occlusion Calculations
-            	// TODO: Metallic Specular
-                half4 color = DesertFragmentPBR(inputData, surfaceData);
-
-                color.rgb = MixFog(color.rgb, inputData.fogCoord);
-
-                return color;
-            }
-
-            
-            // These files use the default passes from URP which we don't want.
-             
-            // #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
-            // #include "Packages/com.unity.render-pipelines.universal/Shaders/LitForwardPass.hlsl"
+            #include "Inputs.hlsl"
+            #include "DesertLitForwardPass.hlsl"
             
             ENDHLSL
         }
