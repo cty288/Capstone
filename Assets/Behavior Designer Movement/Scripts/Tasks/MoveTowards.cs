@@ -27,22 +27,12 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("If target is null then use the target position")]
         [UnityEngine.Serialization.FormerlySerializedAs("targetPosition")]
         public SharedVector3 m_TargetPosition;
-        public SharedBool condition;
-        public override void OnStart()
-        {
-            base.OnStart();
-
-              
-            m_TargetPosition = (SharedVector3)GlobalVariables.Instance.GetVariable("InitPosition");
-            
-        }
 
         public override TaskStatus OnUpdate()
         {
             var position = Target();
             // Return a task status of success once we've reached the target
             if (Vector3.Magnitude(transform.position - position) < m_ArriveDistance.Value) {
-                
                 return TaskStatus.Success;
             }
             // We haven't reached the target yet so keep moving towards it
@@ -65,14 +55,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         // Reset the public variables
         public override void OnReset()
         {
-            
             m_ArriveDistance = 0.1f;
             m_LookAtTarget = true;
-        }
-        public override void OnEnd()
-        {
-            base.OnEnd();
-           
         }
     }
 }

@@ -54,7 +54,6 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         /// </summary>
         public override TaskStatus OnUpdate()
         {
-            
             m_ReturnedObject.Value = null;
 
             if ((m_DetectionMode.Value & DetectionMode.Object) != 0 && m_TargetObject.Value != null) {
@@ -121,7 +120,6 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
 
             if (m_ReturnedObject.Value != null) {
-               
                 return TaskStatus.Success;
             }
 
