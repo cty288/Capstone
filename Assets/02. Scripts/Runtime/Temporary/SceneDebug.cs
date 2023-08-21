@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneDebug : MonoBehaviour
+namespace Runtime.Temporary
 {
-    public TestEnity boss;
-    public TestEnity player;
-
-    private void Update()
+    public class SceneDebug : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            boss.TakeDamage(10);
-        }
+        public TestEnity boss;
+        public TestEnity player;
 
-        if (Input.GetKeyDown(KeyCode.P))
+        private void Update()
         {
-            player.TakeDamage(10);
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                boss.TakeDamage(10);
+            }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                player.TakeDamage(10);
+            }
         }
     }
 }

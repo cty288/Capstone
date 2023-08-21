@@ -1,51 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HitScan : IHitDetector
+namespace Runtime.Utilities.Collision
 {
-    // public BasicGun originWeapon; //TODO: change to weapon class
-    public Camera cam;
-    public float range;
-    public LayerMask layer;
-
-    private IHitResponder m_hitResponder;
-
-    public IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
-
-    public HitScan(Camera cam, float range, LayerMask layer, IHitResponder weapon)
+    public class HitScan : IHitDetector
     {
-        this.cam = cam;
-        this.range = range;
-        this.layer = layer;
-        m_hitResponder = weapon;
-    }
+        // public BasicGun originWeapon; //TODO: change to weapon class
+        public Camera cam;
+        public float range;
+        public LayerMask layer;
 
-    public bool CheckHit()
-    {
-        // Debug.Log("checkhit");
+        private IHitResponder m_hitResponder;
 
-        HitData hitData = null;
+        public IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
 
-        Vector3 origin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-        if (Physics.Raycast(origin, cam.transform.forward, out hit, range, layer))
+        public HitScan(Camera cam, float range, LayerMask layer, IHitResponder weapon)
         {
-            IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
-            if (hurtbox != null)
-            {
-                hitData = new HitData().SetHitScanData(m_hitResponder, hurtbox, hit, this);
-            }
-
-            if (hitData.Validate())
-            {
-                // Debug.Log("validate");
-                hitData.HitDetector.HitResponder?.HitResponse(hitData);
-                hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
-                return true;
-            }
+            this.cam = cam;
+            this.range = range;
+            this.layer = layer;
+            m_hitResponder = weapon;
         }
-        return false;
+
+        public bool CheckHit()
+        {
+            // Debug.Log("checkhit");
+
+            HitData hitData = null;
+
+            Vector3 origin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hit;
+            if (Physics.Raycast(origin, cam.transform.forward, out hit, range, layer))
+            {
+                IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
+                if (hurtbox != null)
+                {
+                    hitData = new HitData().SetHitScanData(m_hitResponder, hurtbox, hit, this);
+                }
+
+                if (hitData.Validate())
+                {
+                    // Debug.Log("validate");
+                    hitData.HitDetector.HitResponder?.HitResponse(hitData);
+                    hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
 

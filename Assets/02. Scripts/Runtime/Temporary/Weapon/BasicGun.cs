@@ -1,133 +1,136 @@
 using System.Collections;
-using System.Collections.Generic;
+using Runtime.Utilities.Collision;
 using UnityEngine;
 
-public enum WeaponType
+namespace Runtime.Temporary.Weapon
 {
-    Hitscan,
-    Projectile,
-}
-
-
-[System.Serializable]
-public struct ProjectileStats
-{
-    public int damage;
-    public float speed;
-    public ProjectileStats(int dmg, float spd)
+    public enum WeaponType
     {
-        damage = dmg;
-        speed = spd;
-    }
-}
-
-public class BasicGun : MonoBehaviour, IHitResponder
-{
-    public Camera cam;
-    protected LineRenderer lr;
-    public LayerMask layer;
-    public WeaponType type;
-
-
-    [Header("Stats")]
-    [SerializeField] protected float shootCD;
-    protected float currentCD;
-    [SerializeField] public float range;
-    [SerializeField] private int m_damage = 10;
-
-    [Header("Gun General Settings")]
-    [SerializeField] protected Transform launchPoint;
-
-    [Header("Projectile Settings")]
-    [SerializeField] protected ProjectileStats proj;
-    public GameObject projectile;
-    // private List<HitBox> projectile_hitboxes = new();
-
-    [Header("HitScan Settings")]
-    [SerializeField] private HitScan hitScan;
-    [SerializeField] private GameObject hitParticlePrefab;
-
-    public int Damage => m_damage;
-
-    public void Start()
-    {
-        cam = Camera.main;
-        lr = GetComponent<LineRenderer>();
-
-        hitScan = new HitScan(cam, range, layer, this);
+        Hitscan,
+        Projectile,
     }
 
-    public void Update()
-    {
-        currentCD += Time.deltaTime;
-    }
 
-    public void FixedUpdate()
+    [System.Serializable]
+    public struct ProjectileStats
     {
-        if (Input.GetMouseButton(0))
+        public int damage;
+        public float speed;
+        public ProjectileStats(int dmg, float spd)
         {
-            if (currentCD >= shootCD)
-            {
-                currentCD = 0;
-                Shoot();
-            }
+            damage = dmg;
+            speed = spd;
         }
     }
 
-    public void Shoot()
+    public class BasicGun : MonoBehaviour, IHitResponder
     {
-        if (type == WeaponType.Hitscan)
+        public Camera cam;
+        protected LineRenderer lr;
+        public LayerMask layer;
+        public WeaponType type;
+
+
+        [Header("Stats")]
+        [SerializeField] protected float shootCD;
+        protected float currentCD;
+        [SerializeField] public float range;
+        [SerializeField] private int m_damage = 10;
+
+        [Header("Gun General Settings")]
+        [SerializeField] protected Transform launchPoint;
+
+        [Header("Projectile Settings")]
+        [SerializeField] protected ProjectileStats proj;
+        public GameObject projectile;
+        // private List<HitBox> projectile_hitboxes = new();
+
+        [Header("HitScan Settings")]
+        [SerializeField] private HitScan hitScan;
+        [SerializeField] private GameObject hitParticlePrefab;
+
+        public int Damage => m_damage;
+
+        public void Start()
         {
-            if (!hitScan.CheckHit())
-            {
-                Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                DrawLine(launchPoint.position, ray.GetPoint(range));
-            }
-            StartCoroutine(Hitscan());
+            cam = Camera.main;
+            lr = GetComponent<LineRenderer>();
+
+            hitScan = new HitScan(cam, range, layer, this);
         }
-        else
+
+        public void Update()
         {
-            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            RaycastHit hit;
-            Vector3 destination = Vector3.zero;
-            if (Physics.Raycast(ray, out hit))
+            currentCD += Time.deltaTime;
+        }
+
+        public void FixedUpdate()
+        {
+            if (Input.GetMouseButton(0))
             {
-                destination = hit.point;
+                if (currentCD >= shootCD)
+                {
+                    currentCD = 0;
+                    Shoot();
+                }
+            }
+        }
+
+        public void Shoot()
+        {
+            if (type == WeaponType.Hitscan)
+            {
+                if (!hitScan.CheckHit())
+                {
+                    Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                    DrawLine(launchPoint.position, ray.GetPoint(range));
+                }
+                StartCoroutine(Hitscan());
             }
             else
             {
-                destination = ray.GetPoint(range);
+                Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                RaycastHit hit;
+                Vector3 destination = Vector3.zero;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    destination = hit.point;
+                }
+                else
+                {
+                    destination = ray.GetPoint(range);
+                }
+                GameObject p = Instantiate(projectile);
+                p.transform.rotation = transform.rotation;
+                p.transform.position = launchPoint.position;
+                p.GetComponent<Rigidbody>().velocity = (destination - launchPoint.position).normalized * proj.speed;
             }
-            GameObject p = Instantiate(projectile);
-            p.transform.rotation = transform.rotation;
-            p.transform.position = launchPoint.position;
-            p.GetComponent<Rigidbody>().velocity = (destination - launchPoint.position).normalized * proj.speed;
+
+
+        }
+        IEnumerator Hitscan()
+        {
+            lr.enabled = true;
+            yield return new WaitForSeconds(0.3f);
+            lr.enabled = false;
         }
 
+        public bool CheckHit(HitData data)
+        {
+            if (data.Hurtbox.Owner == gameObject) { return false; }
+            else { return true; }
+        }
 
-    }
-    IEnumerator Hitscan()
-    {
-        lr.enabled = true;
-        yield return new WaitForSeconds(0.3f);
-        lr.enabled = false;
-    }
+        public void HitResponse(HitData data)
+        {
+            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            DrawLine(launchPoint.position, data.HitPoint);
+        }
 
-    public bool CheckHit(HitData data)
-    {
-        if (data.Hurtbox.Owner == gameObject) { return false; }
-        else { return true; }
-    }
-
-    public void HitResponse(HitData data)
-    {
-        Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-        DrawLine(launchPoint.position, data.HitPoint);
-    }
-
-    public void DrawLine(Vector3 start, Vector3 end)
-    {
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
+        public void DrawLine(Vector3 start, Vector3 end)
+        {
+            lr.SetPosition(0, start);
+            lr.SetPosition(1, end);
+        }
     }
 }

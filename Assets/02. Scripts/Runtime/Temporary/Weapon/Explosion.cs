@@ -1,45 +1,48 @@
-using System.Collections;
 using System.Collections.Generic;
+using Runtime.Utilities.Collision;
 using UnityEngine;
 
-public class Explosion : MonoBehaviour, IHitResponder
+namespace Runtime.Temporary.Weapon
 {
-    [SerializeField] private int m_damage = 20;
-    [SerializeField] private ParticleSystem particle;
-
-    [Header("Hitboxes")]
-    [SerializeField] private HitBox hitbox;
-
-    // [Header("Hit Effects")]
-    // [SerializeField] private GameObject hitParticlePrefab;
-
-    private List<GameObject> hitObjects = new List<GameObject>();
-
-    public int Damage => m_damage;
-
-    public void Start()
+    public class Explosion : MonoBehaviour, IHitResponder
     {
-        hitbox.HitResponder = this;
-        hitbox.CheckHit();
-        Destroy(gameObject, particle.main.duration);
-    }
+        [SerializeField] private int m_damage = 20;
+        [SerializeField] private ParticleSystem particle;
 
-    // private void FixedUpdate()
-    // {
-    //     hitbox.CheckHit();
-    // }
+        [Header("Hitboxes")]
+        [SerializeField] private HitBox hitbox;
 
-    public bool CheckHit(HitData data)
-    {
-        if (data.Hurtbox.Owner == gameObject) { return false; }
-        else if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
-        else { return true; }
-    }
+        // [Header("Hit Effects")]
+        // [SerializeField] private GameObject hitParticlePrefab;
 
-    public void HitResponse(HitData data)
-    {
-        // Destroy(gameObject);
-        hitObjects.Add(data.Hurtbox.Owner);
-        Debug.Log("Explosion Hit Response");
+        private List<GameObject> hitObjects = new List<GameObject>();
+
+        public int Damage => m_damage;
+
+        public void Start()
+        {
+            hitbox.HitResponder = this;
+            hitbox.CheckHit();
+            Destroy(gameObject, particle.main.duration);
+        }
+
+        // private void FixedUpdate()
+        // {
+        //     hitbox.CheckHit();
+        // }
+
+        public bool CheckHit(HitData data)
+        {
+            if (data.Hurtbox.Owner == gameObject) { return false; }
+            else if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
+            else { return true; }
+        }
+
+        public void HitResponse(HitData data)
+        {
+            // Destroy(gameObject);
+            hitObjects.Add(data.Hurtbox.Owner);
+            Debug.Log("Explosion Hit Response");
+        }
     }
 }
