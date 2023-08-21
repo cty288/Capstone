@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class EnemyEntity&lt;T&gt; : AbstractCreature, IEnemyEntity, ICreature, IDamagable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName where T : EnemyEntity&lt;T&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class EnemyEntity&lt;T&gt; : AbstractCreature, IEnemyEntity, ICreature, IDamageable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName where T : EnemyEntity&lt;T&gt;, new()</code></pre>
   </div>
 
 
@@ -112,7 +112,7 @@
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Entity.html">Entity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html">DamagableEntity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html">DamageableEntity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.AbstractCreature.html">AbstractCreature</a></div>
       <div><span class="xref">EnemyEntity&lt;T&gt;</span></div>
     </dd>
@@ -123,7 +123,7 @@
     <dd>
       <div><a class="xref" href="Runtime.Enemies.Model.IEnemyEntity.html">IEnemyEntity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.ICreature.html">ICreature</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamagable.html">IDamagable</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable.html">IDamageable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.IHaveCustomProperties.html">IHaveCustomProperties</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags.html">IHaveTags</a></div>
@@ -139,40 +139,40 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_CurrentFaction">DamagableEntity.CurrentFaction</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_CurrentFaction">DamageableEntity.CurrentFaction</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_IsInvincible">DamagableEntity.IsInvincible</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_IsInvincible">DamageableEntity.IsInvincible</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_HealthProperty">DamagableEntity.HealthProperty</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_HealthProperty">DamageableEntity.HealthProperty</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_OnRegisterProperties">DamagableEntity.OnRegisterProperties()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnRegisterProperties">DamageableEntity.OnRegisterProperties()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_GetMaxHealth">DamagableEntity.GetMaxHealth()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetMaxHealth">DamageableEntity.GetMaxHealth()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_GetCurrentHealth">DamagableEntity.GetCurrentHealth()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetCurrentHealth">DamageableEntity.GetCurrentHealth()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamagableEntity.TakeDamage(int, IBelongToFaction)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.TakeDamage(int, IBelongToFaction)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_RegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamagableEntity.RegisterOnTakeDamage(OnTakeDamage)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamageableEntity.RegisterOnTakeDamage(OnTakeDamage)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_UnRegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamagableEntity.UnRegisterOnTakeDamage(OnTakeDamage)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_UnRegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamageableEntity.UnRegisterOnTakeDamage(OnTakeDamage)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamagableEntity.Heal(int, IBelongToFaction)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.Heal(int, IBelongToFaction)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_RegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamagableEntity.RegisterOnHeal(OnHeal)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamageableEntity.RegisterOnHeal(OnHeal)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamagableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamagableEntity_UnRegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamagableEntity.UnRegisterOnHeal(OnHeal)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_UnRegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamageableEntity.UnRegisterOnHeal(OnHeal)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnRegisterCustomProperties">AbstractBasicEntity.OnRegisterCustomProperties()</a>

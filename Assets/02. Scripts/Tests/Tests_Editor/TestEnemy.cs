@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Framework;
 using NUnit.Framework;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -64,6 +65,10 @@ namespace Tests.Tests_Editor {
 
             public override void OnRecycle() {
             
+            }
+
+            public void Test() {
+                //Localization.GetJoin()
             }
             
             protected override void OnEntityRegisterAdditionalProperties() {

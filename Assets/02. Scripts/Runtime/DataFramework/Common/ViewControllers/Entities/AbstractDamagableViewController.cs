@@ -13,7 +13,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TEntityModel"></typeparam>
 	public abstract class AbstractDamagableViewController<T, TEntityModel> : AbstractBasicEntityViewController<T, TEntityModel>
-		where T : class, IHaveCustomProperties, IHaveTags, IDamagable, new()
+		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, new()
 		where TEntityModel: class, IEntityModel{
 		protected override void OnStart() {
 			base.OnStart();
