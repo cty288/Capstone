@@ -37,7 +37,15 @@ namespace Runtime.Utilities.ConfigSheet {
 		private static void OnDownloadCustomSheet()
 		{
 			Debug.Log("Loading Localization Sheet...");
-			LocalizationImporter.DownloadCustomSheet();
+#if UNITY_EDITOR
+			LocalizationInspector.DownloadCustomSheet();
+#else
+			var enumerator = LocalizationImporter.DownloadCustomSheet();
+			while (enumerator.MoveNext()) {
+				
+			}
+#endif
+
 		}
 	}
 }
