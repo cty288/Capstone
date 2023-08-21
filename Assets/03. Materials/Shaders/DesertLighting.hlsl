@@ -1,4 +1,4 @@
-
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
 half3 CalculateRadiance(half3 lightDirectionWS, half lightAttenuation, half3 normalWS, half remap = -0.1f)
 {
@@ -108,14 +108,9 @@ half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData)
     radiance = RangeRemap(0.0f, 0.1f, radiance);
     hsv.z *= radiance;
     lightingData.mainLightColor = HsvToRgb(hsv);
-    
-    //return half4(radiance.xxx, 1);
-    //return half4(attenuation.xxx, 1);
-    //return half4(lightingData.mainLightColor, 1);
-    return half4(lightingData.giColor, 1);
 
     #if defined(_ADDITIONAL_LIGHTS)
-    uint pixelLightCount = GetAdditionalLightsCount();
+    int pixelLightCount = GetAdditionalLightsCount();
 
     #if USE_CLUSTERED_LIGHTING
     for (uint lightIndex = 0; lightIndex < min(_AdditionalLightsDirectionalCount, MAX_VISIBLE_LIGHTS); lightIndex++)
@@ -148,4 +143,37 @@ half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData)
     #endif
 
     return CalculateFinalColor(lightingData, surfaceData.alpha);
+}
+
+half3 DeferredDesertGlobalIllumination(BRDFData brdfData, BRDFData brdfDataClearCoat, float clearCoatMask,
+    half3 bakedGI, half occlusion, float3 positionWS,
+    half3 normalWS, half3 viewDirectionWS)
+{
+    half3 reflectVector = reflect(-viewDirectionWS, normalWS);
+    half NoV = saturate(dot(normalWS, viewDirectionWS));
+    half fresnelTerm = Pow4(1.0 - NoV);
+
+    half3 indirectDiffuse = bakedGI;
+    half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, positionWS, brdfData.perceptualRoughness, 1.0h);
+
+    half3 color = EnvironmentBRDF(brdfData, indirectDiffuse, indirectSpecular, fresnelTerm);
+
+    if (IsOnlyAOLightingFeatureEnabled())
+    {
+        color = half3(1,1,1); // "Base white" for AO debug lighting mode
+    }
+
+    #if defined(_CLEARCOAT) || defined(_CLEARCOATMAP)
+    half3 coatIndirectSpecular = GlossyEnvironmentReflection(reflectVector, positionWS, brdfDataClearCoat.perceptualRoughness, 1.0h);
+    // TODO: "grazing term" causes problems on full roughness
+    half3 coatColor = EnvironmentBRDFClearCoat(brdfDataClearCoat, clearCoatMask, coatIndirectSpecular, fresnelTerm);
+
+    // Blend with base layer using khronos glTF recommended way using NoV
+    // Smooth surface & "ambiguous" lighting
+    // NOTE: fresnelTerm (above) is pow4 instead of pow5, but should be ok as blend weight.
+    half coatFresnel = kDielectricSpec.x + kDielectricSpec.a * fresnelTerm;
+    return (color * (1.0 - coatFresnel * clearCoatMask) + coatColor) * occlusion;
+    #else
+    return color * occlusion;
+    #endif
 }

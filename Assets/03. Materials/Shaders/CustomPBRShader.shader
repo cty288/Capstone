@@ -48,7 +48,10 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
         HLSLINCLUDE
         
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            // includes Input.hlsl which includes InputData.hlsl
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
+
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseMap_ST;
@@ -146,9 +149,6 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma multi_compile _ DOTS_INSTANCING_ON
 
             
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             // ------------------
@@ -199,6 +199,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             
             ENDHLSL
         }
+    	
         
         //Shadow Pass
         Pass
@@ -230,14 +231,13 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 			// (v11+) This is used during shadow map generation to differentiate between directional and punctual (point/spot) light shadows, as they use different formulas to apply Normal Bias
 			#pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
 
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Inputs.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
             
             ENDHLSL
         }
         
-        /*
+
         //REMOVE IF YOU MAKE A SUBSHADER FOR AN OLDER VERSION OF OPENGL
         //SHOULD BASICALLY COPY FORWARD LIGHTING ALMOST LINE FOR LINE
         //Deferred Lighting Pass (Enable in URP Asset)
@@ -254,9 +254,97 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             // Excludes render platforms that do not support deferred rendering //
             #pragma exclude_renderers gles gles3 glcore
             #pragma target 4.5
+
+            // -------------------------------------
+            // Material Keywords
+            #pragma shader_feature_local _NORMALMAP
+            #pragma shader_feature_local_fragment _ALPHATEST_ON
+            //#pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
+            #pragma shader_feature_local_fragment _EMISSION
+            #pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
+            #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            #pragma shader_feature_local_fragment _OCCLUSIONMAP
+            #pragma shader_feature_local _PARALLAXMAP
+            #pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
+
+            #pragma shader_feature_local_fragment _SPECULARHIGHLIGHTS_OFF
+            #pragma shader_feature_local_fragment _ENVIRONMENTREFLECTIONS_OFF
+            #pragma shader_feature_local_fragment _SPECULAR_SETUP
+            #pragma shader_feature_local _RECEIVE_SHADOWS_OFF
+
+            // -------------------------------------
+            // Universal Pipeline keywords
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+            //#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+            //#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
+            #pragma multi_compile _ _SHADOWS_SOFT
+            #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+
+            // -------------------------------------
+            // Unity defined keywords
+            #pragma multi_compile _ DIRLIGHTMAP_COMBINED
+            #pragma multi_compile _ LIGHTMAP_ON
+            #pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
+
+            //--------------------------------------
+            // GPU Instancing
+            #pragma multi_compile_instancing
+            #pragma multi_compile _ DOTS_INSTANCING_ON
+
+            #pragma vertex LitGBufferPassVertex
+            #pragma fragment LitGBufferPassFragment
+            
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+            // ------------------
+            // Structs
+            // ------------------
+
+            struct Attributes
+            {
+                float4 positionOS   : POSITION;
+                float3 normalOS     : NORMAL;
+                float4 tangentOS    : TANGENT;
+                float2 uv     : TEXCOORD0;
+                float2 lightmapUV   : TEXCOORD1;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+            };
+
+            struct Varyings
+            {
+                    float2 uv                       : TEXCOORD0;
+                    DECLARE_LIGHTMAP_OR_SH(lightmapUV, vertexSH, 1);
+            	
+                    float3 positionWS               : TEXCOORD2;
+                    float3 normalWS                 : TEXCOORD3;
+            	
+            	#if defined(_NORMALMAP)
+                    float4 tangentWS                : TEXCOORD4;    // xyz: tangent, w: sign
+            	 #endif
+
+            		float3 viewDirWS                : TEXCOORD5;
+            	
+					float3 vertexLighting	: TEXCOORD6; // x: fogFactor, yzw: vertex light
+
+                #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+                    float4 shadowCoord              : TEXCOORD7;
+                #endif
+
+                #if defined(_NORMALMAP)
+                    float3 viewDirTS                : TEXCOORD8;
+                #endif
+
+                    float4 positionCS               : SV_POSITION;
+                    UNITY_VERTEX_INPUT_INSTANCE_ID
+                    UNITY_VERTEX_OUTPUT_STEREO
+            };
+
+            #include "Inputs.hlsl"
+            #include "DesertLitDeferredPass.hlsl"
             
             ENDHLSL
-        }*/
+        }
         
         
         // -------------------------------------------------
@@ -271,13 +359,12 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             
             ColorMask 0
 			ZWrite On
-			ZTest LEqual
             
             HLSLPROGRAM
 
             // Excludes render platforms that do not support deferred rendering //
-            //#pragma exclude_renderers gles gles3 glcore
-            //#pragma target 4.5
+            #pragma exclude_renderers gles gles3 glcore
+            #pragma target 4.5
 
             #pragma vertex DepthOnlyVertex
 			#pragma fragment DepthOnlyFragment
@@ -290,8 +377,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 			#pragma multi_compile_instancing
 			#pragma multi_compile _ DOTS_INSTANCING_ON
 
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Inputs.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
             
             ENDHLSL
@@ -305,13 +391,12 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             Tags{"LightMode" = "DepthNormals"}
             
             ZWrite On
-            Cull Back
             
             HLSLPROGRAM
 
             // Excludes render platforms that do not support deferred rendering //
-            //#pragma exclude_renderers gles gles3 glcore
-            //#pragma target 4.5
+            #pragma exclude_renderers gles gles3 glcore
+            #pragma target 4.5
 
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
@@ -327,8 +412,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma multi_compile_instancing
             #pragma multi_compile _ DOTS_INSTANCING_ON
 
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Inputs.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthNormalsPass.hlsl"
             
             ENDHLSL
@@ -387,7 +471,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 
 			half4 UniversalFragmentMeta(Varyings input) : SV_Target {
 				SurfaceData surfaceData;
-				InitializeSurfaceData(input, surfaceData);
+				InitializeSurfaceData(input.uv, surfaceData);
 
 				BRDFData brdfData;
 				InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, brdfData);
@@ -422,8 +506,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             #pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
 
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Inputs.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/Utils/Universal2D.hlsl"
             
             ENDHLSL

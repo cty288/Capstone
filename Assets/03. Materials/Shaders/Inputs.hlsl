@@ -1,11 +1,47 @@
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
 
-TEXTURE2D(_MetallicSpecGlossMap);
-SAMPLER(sampler_MetallicSpecGlossMap);
+#ifdef UNITY_DOTS_INSTANCING_ENABLED
+UNITY_DOTS_INSTANCING_START(MaterialPropertyMetadata)
+	UNITY_DOTS_INSTANCED_PROP(float4, _BaseColor)
+	UNITY_DOTS_INSTANCED_PROP(float4, _SpecColor)
+	UNITY_DOTS_INSTANCED_PROP(float4, _EmissionColor)
+	UNITY_DOTS_INSTANCED_PROP(float , _Cutoff)
+	UNITY_DOTS_INSTANCED_PROP(float , _Smoothness)
+	UNITY_DOTS_INSTANCED_PROP(float , _Metallic)
+	UNITY_DOTS_INSTANCED_PROP(float , _BumpScale)
+	UNITY_DOTS_INSTANCED_PROP(float , _Parallax)
+	UNITY_DOTS_INSTANCED_PROP(float , _OcclusionStrength)
+	UNITY_DOTS_INSTANCED_PROP(float , _ClearCoatMask)
+	UNITY_DOTS_INSTANCED_PROP(float , _ClearCoatSmoothness)
+	UNITY_DOTS_INSTANCED_PROP(float , _DetailAlbedoMapScale)
+	UNITY_DOTS_INSTANCED_PROP(float , _DetailNormalMapScale)
+	UNITY_DOTS_INSTANCED_PROP(float , _Surface)
+UNITY_DOTS_INSTANCING_END(MaterialPropertyMetadata)
 
-TEXTURE2D(_OcclusionMap);
-SAMPLER(sampler_OcclusionMap);
+#define _BaseColor              UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float4 , Metadata__BaseColor)
+#define _SpecColor              UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float4 , Metadata__SpecColor)
+#define _EmissionColor          UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float4 , Metadata__EmissionColor)
+#define _Cutoff                 UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__Cutoff)
+#define _Smoothness             UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__Smoothness)
+#define _Metallic               UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__Metallic)
+#define _BumpScale              UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__BumpScale)
+#define _Parallax               UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__Parallax)
+#define _OcclusionStrength      UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__OcclusionStrength)
+#define _ClearCoatMask          UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__ClearCoatMask)
+#define _ClearCoatSmoothness    UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__ClearCoatSmoothness)
+#define _DetailAlbedoMapScale   UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__DetailAlbedoMapScale)
+#define _DetailNormalMapScale   UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__DetailNormalMapScale)
+#define _Surface                UNITY_ACCESS_DOTS_INSTANCED_PROP_FROM_MACRO(float  , Metadata__Surface)
+#endif
+
+TEXTURE2D(_ParallaxMap);        SAMPLER(sampler_ParallaxMap);
+TEXTURE2D(_OcclusionMap);       SAMPLER(sampler_OcclusionMap);
+TEXTURE2D(_DetailMask);         SAMPLER(sampler_DetailMask);
+TEXTURE2D(_DetailAlbedoMap);    SAMPLER(sampler_DetailAlbedoMap);
+TEXTURE2D(_DetailNormalMap);    SAMPLER(sampler_DetailNormalMap);
+TEXTURE2D(_MetallicGlossMap);   SAMPLER(sampler_MetallicGlossMap);
+TEXTURE2D(_SpecGlossMap);       SAMPLER(sampler_SpecGlossMap);
+TEXTURE2D(_ClearCoatMap);       SAMPLER(sampler_ClearCoatMap);
 
 half4 SampleMetallicSpecGloss(float2 uv, half albedoAlpha) {
 	half4 specGloss;
@@ -47,19 +83,19 @@ half SampleOcclusion(float2 uv) {
 	#endif
 }
 
-// SurfaceData & InputData
-void InitializeSurfaceData(Varyings IN, out SurfaceData surfaceData){
+// SurfaceData
+void InitializeSurfaceData(float2 uv, out SurfaceData surfaceData){
     surfaceData = (SurfaceData)0; // avoids "not completely initalized" errors
 
-	half4 albedoAlpha = SampleAlbedoAlpha(IN.uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+	half4 albedoAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
 	surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
 	surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
 
-	surfaceData.normalTS = SampleNormal(IN.uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
-	surfaceData.emission = SampleEmission(IN.uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
-	surfaceData.occlusion = SampleOcclusion(IN.uv);
+	surfaceData.normalTS = SampleNormal(uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
+	surfaceData.emission = SampleEmission(uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
+	surfaceData.occlusion = SampleOcclusion(uv);
 		
-	half4 specGloss = SampleMetallicSpecGloss(IN.uv, albedoAlpha.a);
+	half4 specGloss = SampleMetallicSpecGloss(uv, albedoAlpha.a);
 	#if _SPECULAR_SETUP
 		surfaceData.metallic = 1.0h;
 		surfaceData.specular = specGloss.rgb;
@@ -70,44 +106,3 @@ void InitializeSurfaceData(Varyings IN, out SurfaceData surfaceData){
 	surfaceData.smoothness = specGloss.a;
 }
 
-void InitializeInputData(Varyings IN, half3 normalTS, out InputData inputData) {
-	inputData = (InputData)0;
-
-	inputData.positionWS = IN.positionWS;
-    
-	half3 viewDirWS = IN.viewDirWS;
-
-	#if defined(_NORMALMAP)
-	float3 bitangent = IN.tangentWS.w * cross(IN.normalWS.xyz, IN.tangentWS.xyz);
-	inputData.normalWS = TransformTangentToWorld(normalTS,half3x3(IN.tangentWS.xyz, bitangent.xyz, IN.normalWS.xyz));
-	#else
-	inputData.normalWS = IN.normalWS;
-	#endif
-
-	inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
-	viewDirWS = SafeNormalize(viewDirWS);
-
-	inputData.viewDirectionWS = viewDirWS;
-
-	// I HAVE NO IDEA WHAT THE DEFINITIONS COME FROM
-	#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-	inputData.shadowCoord = IN.shadowCoord;
-	#elif defined(MAIN_LIGHT_CALCULATE_SHADOWS)
-	inputData.shadowCoord = TransformWorldToShadowCoord(inputData.positionWS);
-	#else
-	inputData.shadowCoord = float4(0, 0, 0, 0);
-	#endif
-
-	// Fog
-	#ifdef _ADDITIONAL_LIGHTS_VERTEX
-	inputData.fogCoord = IN.fogFactorAndVertexLight.x;
-	inputData.vertexLighting = IN.fogFactorAndVertexLight.yzw;
-	#else
-	inputData.fogCoord = IN.fogFactorAndVertexLight.x;
-	inputData.vertexLighting = half3(0, 0, 0);
-	#endif
-
-	inputData.bakedGI = SAMPLE_GI(IN.lightmapUV, IN.vertexSH, inputData.normalWS);
-	inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(IN.positionCS);
-	inputData.shadowMask = SAMPLE_SHADOWMASK(IN.lightmapUV);
-}

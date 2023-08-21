@@ -1,7 +1,13 @@
-#ifndef UNIVERSAL_FORWARD_LIT_PASS_INCLUDED
-#define UNIVERSAL_FORWARD_LIT_PASS_INCLUDED
+#ifndef UNIVERSAL_LIT_GBUFFER_PASS_INCLUDED
+#define UNIVERSAL_LIT_GBUFFER_PASS_INCLUDED
 
 #include "DesertLighting.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
 
 void InitializeInputData(Varyings IN, half3 normalTS, out InputData inputData) {
 	inputData = (InputData)0;
@@ -32,13 +38,8 @@ void InitializeInputData(Varyings IN, half3 normalTS, out InputData inputData) {
 	#endif
 
 	// Fog
-	#ifdef _ADDITIONAL_LIGHTS_VERTEX
-	inputData.fogCoord = IN.fogFactorAndVertexLight.x;
-	inputData.vertexLighting = IN.fogFactorAndVertexLight.yzw;
-	#else
-	inputData.fogCoord = IN.fogFactorAndVertexLight.x;
-	inputData.vertexLighting = half3(0, 0, 0);
-	#endif
+	inputData.fogCoord = 0.0f;
+	inputData.vertexLighting = IN.vertexLighting.xyz;;
 
 	inputData.bakedGI = SAMPLE_GI(IN.lightmapUV, IN.vertexSH, inputData.normalWS);
 	inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(IN.positionCS);
@@ -49,7 +50,7 @@ void InitializeInputData(Varyings IN, half3 normalTS, out InputData inputData) {
 // Vertex
 // ------------------
 
-Varyings LitPassVertex(Attributes IN)
+Varyings LitGBufferPassVertex(Attributes IN)
 {
     Varyings OUT;
 
@@ -69,7 +70,6 @@ Varyings LitPassVertex(Attributes IN)
 
 	half3 viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
 	half3 vertexLight = VertexLighting(positionInputs.positionWS, normalInputs.normalWS);
-	half fogFactor = ComputeFogFactor(positionInputs.positionCS.z);
 	
 	#ifdef _NORMALMAP
 		OUT.normalWS = normalInputs.normalWS;
@@ -89,7 +89,7 @@ Varyings LitPassVertex(Attributes IN)
 	OUTPUT_LIGHTMAP_UV(IN.lightmapUV, unity_LightmapST, OUT.lightmapUV);
 	OUTPUT_SH(OUT.normalWS.xyz, OUT.vertexSH);
     
-    OUT.fogFactorAndVertexLight = half4(fogFactor, vertexLight);
+    OUT.vertexLighting = vertexLight;
 
 	#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
 		OUT.shadowCoord = GetShadowCoord(positionInputs);
@@ -103,21 +103,30 @@ Varyings LitPassVertex(Attributes IN)
 // Fragment
 // ------------------
 
-half4 LitPassFragment(Varyings IN) : SV_TARGET
+FragmentOutput LitGBufferPassFragment(Varyings IN) : SV_TARGET
 {
+
+	UNITY_SETUP_INSTANCE_ID(IN);
+	UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
+
+	#ifdef _NORMALMAP
+		half3 viewDirTS = IN.viewDirTS;
+	#else
+		half3 viewDirTS = GetViewDirectionTangentSpace(IN.tangentWS, IN.normalWS, IN.viewDirWS);
+	#endif
+	
     SurfaceData surfaceData;
     InitializeSurfaceData(IN.uv, surfaceData);
 
     InputData inputData;
     InitializeInputData(IN, surfaceData.normalTS, inputData);
 
-    // TODO: Ambient Occlusion Calculations
-    // TODO: Metallic Specular
-    half4 color = DesertFragmentPBR(inputData, surfaceData);
+	BRDFData brdfData;
+	InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, brdfData);
 
-    color.rgb = MixFog(color.rgb, inputData.fogCoord);
+	half3 color = GlobalIllumination(brdfData, inputData.bakedGI, surfaceData.occlusion, inputData.normalWS, inputData.viewDirectionWS);
 
-    return color;
+	return BRDFDataToGbuffer(brdfData, inputData, surfaceData.smoothness, surfaceData.emission + color);
 }
 
 #endif
