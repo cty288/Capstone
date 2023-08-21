@@ -58,7 +58,10 @@ namespace Runtime.Utilities.ConfigSheet {
 	                for (int i = 1; i < row.Count; i++) {
 		                string type = row[i];
 		                string header = headers[i-1];
-		                headerTypes.Add(header, SerializationFactory.Singleton.ParseType(type));
+		                if (!string.IsNullOrEmpty(header) && !headerTypes.ContainsKey(header)) {
+			                headerTypes.Add(header, SerializationFactory.Singleton.ParseType(type));
+		                }
+		               
 	                }
 	                continue;
                 }

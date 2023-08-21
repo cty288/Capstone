@@ -362,6 +362,14 @@ namespace Polyglot
             }
             return "";
         }
+        
+        public static string GetComma() {
+            return Get("COMMA");
+        }
+        
+        public static string GetPeriod() {
+            return Get("PERIOD");
+        }
 
         public static string Get(string key, Language language)
         {
