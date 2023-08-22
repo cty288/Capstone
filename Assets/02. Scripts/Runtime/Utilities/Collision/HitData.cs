@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Runtime.Utilities.Collision
 {
+    /// <summary>
+    /// Stores data about a detected collision.
+    /// </summary>
     public class HitData
     {
         public int Damage;
@@ -10,11 +13,17 @@ namespace Runtime.Utilities.Collision
         public IHurtbox Hurtbox;
         public IHitDetector HitDetector;
 
-        // public HitData() { }
-
+        /// <summary>
+        /// Sets the data of the hit. Used for HitScan.
+        /// </summary>
+        /// <param name="hitResponder"></param>
+        /// <param name="hurtbox"></param>
+        /// <param name="hit"></param>
+        /// <param name="hitDetector"></param>
+        /// <returns>Returns HitData object.</returns>
         public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector)
         {
-            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultipler);
+            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultiplier);
             HitPoint = hit.point;
             HitNormal = hit.normal;
             Hurtbox = hurtbox;
@@ -22,9 +31,18 @@ namespace Runtime.Utilities.Collision
             return this;
         }
 
+        /// <summary>
+        /// Sets the data of the hit. Used for HitBox.
+        /// </summary>
+        /// <param name="hitResponder"></param>
+        /// <param name="hurtbox"></param>
+        /// <param name="hit"></param>
+        /// <param name="hitDetector"></param>
+        /// <param name="hitBoxCenter"></param>
+        /// <returns>Returns HitData object.</returns>
         public HitData SetHitBoxData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector, Vector3 hitBoxCenter)
         {
-            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultipler);
+            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultiplier);
             HitPoint = hit.point == Vector3.zero ? hitBoxCenter : hit.point;
             HitNormal = hit.normal;
             Hurtbox = hurtbox;
@@ -32,6 +50,10 @@ namespace Runtime.Utilities.Collision
             return this;
         }
 
+        /// <summary>
+        /// Checks if the HitData created is valid (doesn't hit itself, responders exist, etc.
+        /// </summary>
+        /// <returns>Returns true if valid HitData.</returns>
         public bool Validate()
         {
             if (Hurtbox != null)
@@ -43,7 +65,9 @@ namespace Runtime.Utilities.Collision
         }
     }
 
-//hitresponder waits for hitdetector to find collision with hurtbox. A hit generates hitData, which propagates back to both responders.
+    /// <summary>
+    /// Place one a GameObject if it will hit other objects.
+    /// </summary>
     public interface IHitResponder
     {
         int Damage { get; }
@@ -51,25 +75,34 @@ namespace Runtime.Utilities.Collision
         public void HitResponse(HitData data);
     }
 
+    /// <summary>
+    /// Used by classes that check for collision: HitBox, HitScan, etc.
+    /// </summary>
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
         public bool CheckHit();
     }
 
+    /// <summary>
+    /// Place one a GameObject if it will BE hit by other objects.
+    /// </summary>
     public interface IHurtResponder
     {
         public bool CheckHurt(HitData data);
         public void HurtResponse(HitData data);
     }
+    
+    /// <summary>
+    /// Hurtbox interface.
+    /// </summary>
     public interface IHurtbox
     {
         public bool Active { get; }
         public GameObject Owner { get; } //TODO: change to entity
         public Transform Transform { get; }
         public IHurtResponder HurtResponder { get; set; }
-        public float DamageMultipler { get; set; }
+        public float DamageMultiplier { get; set; }
         public bool CheckHit(HitData data);
-
     }
 }

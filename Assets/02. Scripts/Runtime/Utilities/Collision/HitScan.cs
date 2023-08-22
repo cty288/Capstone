@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Runtime.Utilities.Collision
 {
+    /// <summary>
+    /// HitScan checks for collision using Raycast.
+    /// </summary>
     public class HitScan : IHitDetector
     {
         // public BasicGun originWeapon; //TODO: change to weapon class
@@ -13,6 +16,13 @@ namespace Runtime.Utilities.Collision
 
         public IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
 
+        /// <summary>
+        /// Constructor for HitScan.
+        /// </summary>
+        /// <param name="cam">Needed for calculating origin and ending of Raycast.</param>
+        /// <param name="range">Range of Raycast.</param>
+        /// <param name="layer"></param>
+        /// <param name="weapon"></param>
         public HitScan(Camera cam, float range, LayerMask layer, IHitResponder weapon)
         {
             this.cam = cam;
@@ -21,10 +31,12 @@ namespace Runtime.Utilities.Collision
             m_hitResponder = weapon;
         }
 
+        /// <summary>
+        /// Called every frame to check for Raycast collision.
+        /// </summary>
+        /// <returns>Returns true if hit detected.</returns>
         public bool CheckHit()
         {
-            // Debug.Log("checkhit");
-
             HitData hitData = null;
 
             Vector3 origin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));

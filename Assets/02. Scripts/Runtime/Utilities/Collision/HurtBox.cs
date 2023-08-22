@@ -17,7 +17,7 @@ namespace Runtime.Utilities.Collision
         public Transform Transform => transform;
 
         public IHurtResponder HurtResponder { get => m_hurtResponder; set => m_hurtResponder = value; }
-        public float DamageMultipler { get => m_damageMultiplier; set => m_damageMultiplier = value; }
+        public float DamageMultiplier { get => m_damageMultiplier; set => m_damageMultiplier = value; }
 
         private void Awake()
         {

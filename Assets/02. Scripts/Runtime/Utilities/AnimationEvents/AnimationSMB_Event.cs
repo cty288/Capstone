@@ -11,8 +11,15 @@ namespace Runtime.Utilities.AnimationEvents
         OnEnd
     }
 
+    /// <summary>
+    /// AnimationSMB_Event can be placed on an animation state in the animator to
+    /// invoke an event at a specific time in an animation clip.
+    /// </summary>
     public class AnimationSMB_Event : StateMachineBehaviour
     {
+        /// <summary>
+        /// This is the data that will be used to invoke an event. Is visible in the inspector.
+        /// </summary>
         [System.Serializable]
         public class AnimationSMB_EventData
         {
@@ -32,6 +39,12 @@ namespace Runtime.Utilities.AnimationEvents
         private bool hasMotionTimeParam; //check if has motionTime parameter
         private AnimationSMBManager animationSMBManager; //reference to manager
 
+        /// <summary>
+        /// Called when the animation state is starts, frame=0.
+        /// </summary>
+        /// <param name="animator"></param>
+        /// <param name="stateInfo"></param>
+        /// <param name="layerIndex"></param>
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             hasMotionTimeParam = HasParameter(animator, motionTime);
@@ -55,6 +68,12 @@ namespace Runtime.Utilities.AnimationEvents
             }
         }
 
+        /// <summary>
+        /// Called on specific frames of the animation. Depends on the frame set in the inspector.
+        /// </summary>
+        /// <param name="animator"></param>
+        /// <param name="stateInfo"></param>
+        /// <param name="layerIndex"></param>
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             normalizedTimeUncapped = stateInfo.normalizedTime;
@@ -88,6 +107,12 @@ namespace Runtime.Utilities.AnimationEvents
             }
         }
 
+        /// <summary>
+        /// Called when the animation state ends, frame=totalFrames.
+        /// </summary>
+        /// <param name="animator"></param>
+        /// <param name="stateInfo"></param>
+        /// <param name="layerIndex"></param>
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             if (animationSMBManager != null)

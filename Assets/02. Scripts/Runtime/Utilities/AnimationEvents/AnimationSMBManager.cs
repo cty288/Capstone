@@ -14,6 +14,10 @@ namespace Runtime.Utilities.AnimationEvents
             m_event.AddListener(OnAnimationEvent);
         }
 
+        /// <summary>
+        /// Called when an event is triggered in the animation. eventName is set in the inspector.
+        /// </summary>
+        /// <param name="eventName"></param>
         private void OnAnimationEvent(string eventName)
         {
             if (m_debug)

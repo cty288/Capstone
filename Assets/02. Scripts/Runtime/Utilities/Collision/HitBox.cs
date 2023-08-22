@@ -2,20 +2,30 @@ using UnityEngine;
 
 namespace Runtime.Utilities.Collision
 {
+    /// <summary>
+    /// Checks for collision using BoxCast. 
+    /// </summary>
+    [RequireComponent(typeof(BoxCollider))]
     public class HitBox : MonoBehaviour, IHitDetector
     {
+        //Related BoxCollider.
         [SerializeField] private BoxCollider m_collider;
+        //LayerMask to check for collision.
         [SerializeField] private LayerMask layerMask;
 
-
         private float thickness = 0.025f;
+        //Entity that's called when a collision is detected.
         private IHitResponder m_hitResponder;
 
         public IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
 
+        /// <summary>
+        /// Called every frame to check for BoxCast collision.
+        /// Creates a HitData object that is sent to the HitResponder and HurtResponder, invoking their responses.
+        /// </summary>
+        /// <returns>Returns true if a hit is detected.</returns>
         public bool CheckHit()
         {
-            // Debug.Log("checkhit");
             Vector3 scaledSize = new Vector3(
                 m_collider.size.x * transform.lossyScale.x,
                 m_collider.size.y * transform.lossyScale.y,
@@ -33,7 +43,6 @@ namespace Runtime.Utilities.Collision
             RaycastHit[] hits = Physics.BoxCastAll(start, halfExtents, direction, orientation, distance, layerMask);
             foreach (RaycastHit hit in hits)
             {
-                // Debug.Log("raycasthit: " + hit.point);
                 hurtbox = hit.collider.GetComponent<IHurtbox>();
                 if (hurtbox != null)
                 {
