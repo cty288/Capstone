@@ -9,11 +9,11 @@ using UnityEngine.Rendering.Universal;
 public class OutlineEffect : VolumeComponent, IPostProcessComponent
 {
     public IntParameter scale = new IntParameter(1);
-    public FloatParameter depthThreshold = new FloatParameter(0.2f);
-    [Range(0, 1)] public FloatParameter normalThreshold = new FloatParameter(0.4f);
-    [Range(0, 1)] public FloatParameter depthNormalThreshold = new FloatParameter(0.5f);
-    public FloatParameter depthNormalThresholdScale = new FloatParameter(7);
-    [Range(0, 1)] public FloatParameter lineAlpha = new FloatParameter(1f);
+    public FloatParameter depthThreshold = new FloatParameter(2.56f);
+    [Range(0, 1)] public FloatParameter normalThreshold = new FloatParameter(0.38f);
+    [Range(0, 1)] public FloatParameter depthNormalThreshold = new FloatParameter(0.77f);
+    public FloatParameter depthNormalThresholdScale = new FloatParameter(7.42f);
+    [Range(0, 1)] public FloatParameter lineAlpha = new FloatParameter(0f);
 
     public bool IsActive()
     {
