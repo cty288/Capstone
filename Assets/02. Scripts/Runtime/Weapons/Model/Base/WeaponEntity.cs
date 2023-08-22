@@ -10,7 +10,7 @@ namespace Runtime.Weapons.Model.Base
 {
     public interface IWeaponEntity : IEntity, IHaveCustomProperties, IHaveTags {
         public IBaseDamage GetBaseDamage();
-        // public BindableProperty<int> GetAttackSpeed();
+        public IAttackSpeed GetAttackSpeed();
         // public BindableProperty<float> GetRange();
         // public BindableProperty<int> GetMagazineSize();
         // public BindableProperty<float> GetReloadTime();
@@ -23,6 +23,7 @@ namespace Runtime.Weapons.Model.Base
     
     public abstract class WeaponEntity<T> :  AbstractBasicEntity, IWeaponEntity where T : WeaponEntity<T>, new() {
         private IBaseDamage baseDamageProperty;
+        private IAttackSpeed attackSpeedProperty;
         
         protected override ConfigTable GetConfigTable() {
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
@@ -44,6 +45,11 @@ namespace Runtime.Weapons.Model.Base
         public IBaseDamage GetBaseDamage()
         {
             return baseDamageProperty;
+        }
+        
+        public IAttackSpeed GetAttackSpeed()
+        {
+            return attackSpeedProperty;
         }
     }
 }
