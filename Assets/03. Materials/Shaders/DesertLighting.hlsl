@@ -1,150 +1,179 @@
-#include "Inputs.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-            half3 CalculateRadiance(half3 lightDirectionWS, half lightAttenuation, half3 normalWS, half remap = -0.1f)
-            {
-	            half NdotL = RangeRemap(remap, 1.0f, (dot(normalWS, lightDirectionWS)));
-	            return(lightAttenuation * NdotL);
-            }
+half3 CalculateRadiance(half3 lightDirectionWS, half lightAttenuation, half3 normalWS, half remap = -0.1f)
+{
+    half NdotL = RangeRemap(remap, 1.0f, (dot(normalWS, lightDirectionWS)));
+    return(lightAttenuation * NdotL);
+}
 
-            half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoat,
-                                                half3 lightColor, half3 lightDirectionWS, half lightAttenuation,
-                                                half3 normalWS, half3 viewDirectionWS,
-                                                half clearCoatMask, bool specularHighlightsOff)
-			{
-				half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS);
-            	radiance *= lightColor;
+half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoat,
+                                    half3 lightColor, half3 lightDirectionWS, half lightAttenuation,
+                                    half3 normalWS, half3 viewDirectionWS,
+                                    half clearCoatMask, bool specularHighlightsOff)
+{
+	half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS);
+    radiance *= lightColor;
 
-				half3 brdf = brdfData.diffuse;
-			#ifndef _SPECULARHIGHLIGHTS_OFF
-			    [branch] if (!specularHighlightsOff)
-			    {
-			        brdf += brdfData.specular * DirectBRDFSpecular(brdfData, normalWS, lightDirectionWS, viewDirectionWS);
+	half3 brdf = brdfData.diffuse;
+#ifndef _SPECULARHIGHLIGHTS_OFF
+    [branch] if (!specularHighlightsOff)
+    {
+        brdf += brdfData.specular * DirectBRDFSpecular(brdfData, normalWS, lightDirectionWS, viewDirectionWS);
 
-			#if defined(_CLEARCOAT) || defined(_CLEARCOATMAP)
-			        // Clear coat evaluates the specular a second timw and has some common terms with the base specular.
-			        // We rely on the compiler to merge these and compute them only once.
-			        half brdfCoat = kDielectricSpec.r * DirectBRDFSpecular(brdfDataClearCoat, normalWS, lightDirectionWS, viewDirectionWS);
+#if defined(_CLEARCOAT) || defined(_CLEARCOATMAP)
+        // Clear coat evaluates the specular a second timw and has some common terms with the base specular.
+        // We rely on the compiler to merge these and compute them only once.
+        half brdfCoat = kDielectricSpec.r * DirectBRDFSpecular(brdfDataClearCoat, normalWS, lightDirectionWS, viewDirectionWS);
 
-			            // Mix clear coat and base layer using khronos glTF recommended formula
-			            // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_materials_clearcoat/README.md
-			            // Use NoV for direct too instead of LoH as an optimization (NoV is light invariant).
-			            half NoV = saturate(dot(normalWS, viewDirectionWS));
-			            // Use slightly simpler fresnelTerm (Pow4 vs Pow5) as a small optimization.
-			            // It is matching fresnel used in the GI/Env, so should produce a consistent clear coat blend (env vs. direct)
-			            half coatFresnel = kDielectricSpec.x + kDielectricSpec.a * Pow4(1.0 - NoV);
+            // Mix clear coat and base layer using khronos glTF recommended formula
+            // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_materials_clearcoat/README.md
+            // Use NoV for direct too instead of LoH as an optimization (NoV is light invariant).
+            half NoV = saturate(dot(normalWS, viewDirectionWS));
+            // Use slightly simpler fresnelTerm (Pow4 vs Pow5) as a small optimization.
+            // It is matching fresnel used in the GI/Env, so should produce a consistent clear coat blend (env vs. direct)
+            half coatFresnel = kDielectricSpec.x + kDielectricSpec.a * Pow4(1.0 - NoV);
 
-			        brdf = brdf * (1.0 - clearCoatMask * coatFresnel) + brdfCoat * clearCoatMask;
-			#endif // _CLEARCOAT
-			    }
-			#endif // _SPECULARHIGHLIGHTS_OFF
+        brdf = brdf * (1.0 - clearCoatMask * coatFresnel) + brdfCoat * clearCoatMask;
+#endif // _CLEARCOAT
+    }
+#endif // _SPECULARHIGHLIGHTS_OFF
 
-			    return brdf * radiance;
-			}
+    return brdf * radiance;
+}
 
-			half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoat, Light light, half3 normalWS, half3 viewDirectionWS, half clearCoatMask, bool specularHighlightsOff)
-			{
-			    return DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat, light.color, light.direction, light.distanceAttenuation * light.shadowAttenuation, normalWS, viewDirectionWS, clearCoatMask, specularHighlightsOff);
-			}
-            
-            // Lighting Calculations
-            half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData)
-			{
-            	// --------------------------------------------------------------------
-            	// Set up copied directly from UniversalFragmentPBR in Lighting.hlsl
-            	// --------------------------------------------------------------------
-			    #if defined(_SPECULARHIGHLIGHTS_OFF)
-			    bool specularHighlightsOff = true;
-			    #else
-			    bool specularHighlightsOff = false;
-			    #endif
-			    BRDFData brdfData;
+half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoat, Light light, half3 normalWS, half3 viewDirectionWS, half clearCoatMask, bool specularHighlightsOff)
+{
+    return DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat, light.color, light.direction, light.distanceAttenuation * light.shadowAttenuation, normalWS, viewDirectionWS, clearCoatMask, specularHighlightsOff);
+}
 
-			    // NOTE: can modify "surfaceData"...
-			    InitializeBRDFData(surfaceData, brdfData);
+// Lighting Calculations
+half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData)
+{
+    // --------------------------------------------------------------------
+    // Set up copied directly from UniversalFragmentPBR in Lighting.hlsl
+    // --------------------------------------------------------------------
+    #if defined(_SPECULARHIGHLIGHTS_OFF)
+    bool specularHighlightsOff = true;
+    #else
+    bool specularHighlightsOff = false;
+    #endif
+    BRDFData brdfData;
 
-			    #if defined(DEBUG_DISPLAY)
-			    half4 debugColor;
+    // NOTE: can modify "surfaceData"...
+    InitializeBRDFData(surfaceData, brdfData);
 
-			    if (CanDebugOverrideOutputColor(inputData, surfaceData, brdfData, debugColor))
-			    {
-			        return debugColor;
-			    }
-			    #endif
+    #if defined(DEBUG_DISPLAY)
+    half4 debugColor;
 
-			    // Clear-coat calculation...
-			    BRDFData brdfDataClearCoat = CreateClearCoatBRDFData(surfaceData, brdfData);
-			    half4 shadowMask = CalculateShadowMask(inputData);
-			    AmbientOcclusionFactor aoFactor = CreateAmbientOcclusionFactor(inputData, surfaceData);
-			    uint meshRenderingLayers = GetMeshRenderingLightLayer();
-			    Light mainLight = GetMainLight(inputData, shadowMask, aoFactor);
+    if (CanDebugOverrideOutputColor(inputData, surfaceData, brdfData, debugColor))
+    {
+        return debugColor;
+    }
+    #endif
 
-			    // NOTE: We don't apply AO to the GI here because it's done in the lighting calculation below...
-			    MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI);
+    // Clear-coat calculation...
+    BRDFData brdfDataClearCoat = CreateClearCoatBRDFData(surfaceData, brdfData);
+    half4 shadowMask = CalculateShadowMask(inputData);
+    AmbientOcclusionFactor aoFactor = CreateAmbientOcclusionFactor(inputData, surfaceData);
+    uint meshRenderingLayers = GetMeshRenderingLightLayer();
+    Light mainLight = GetMainLight(inputData, shadowMask, aoFactor);
 
-			    LightingData lightingData = CreateLightingData(inputData, surfaceData);
+    // NOTE: We don't apply AO to the GI here because it's done in the lighting calculation below...
+    MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI);
 
-			    lightingData.giColor = GlobalIllumination(brdfData, brdfDataClearCoat, surfaceData.clearCoatMask,
-			                                              inputData.bakedGI, aoFactor.indirectAmbientOcclusion, inputData.positionWS,
-			                                              inputData.normalWS, inputData.viewDirectionWS);
+    LightingData lightingData = CreateLightingData(inputData, surfaceData);
 
-            	
-            	
-			    if (IsMatchingLightLayer(mainLight.layerMask, meshRenderingLayers))
-			    {
-			        lightingData.mainLightColor = DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat,
-			                                                              mainLight,
-			                                                              inputData.normalWS, inputData.viewDirectionWS,
-			                                                              surfaceData.clearCoatMask, specularHighlightsOff);
-			    }
+    lightingData.giColor = GlobalIllumination(brdfData, brdfDataClearCoat, surfaceData.clearCoatMask,
+                                              inputData.bakedGI, aoFactor.indirectAmbientOcclusion, inputData.positionWS,
+                                              inputData.normalWS, inputData.viewDirectionWS);
 
-            	half3 radiance = CalculateRadiance(mainLight.direction, mainLight.distanceAttenuation * mainLight.shadowAttenuation, inputData.normalWS, 0.0f);
-            	
-			    half attenuation = RangeRemap(-0.32f, 0.4f, radiance);
-            	attenuation = 1 - (abs(attenuation - 0.5f) * 2);
-            	attenuation = pow(attenuation, 3);
-            	half3 hsv = RgbToHsv(lightingData.mainLightColor);
-            	hsv.y *= 1 + attenuation*0.5f;
-            	hsv.z *= 1 + attenuation*0.5f;
-            	radiance = RangeRemap(0.0f, 0.1f, radiance);
-            	hsv.z *= radiance;
-            	lightingData.mainLightColor = HsvToRgb(hsv);
-            	
-            	//return half4(radiance.xxx, 1);
-            	//return half4(attenuation.xxx, 1);
-            	//return half4(lightingData.mainLightColor, 1);
+    
+    
+    if (IsMatchingLightLayer(mainLight.layerMask, meshRenderingLayers))
+    {
+        lightingData.mainLightColor = DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat,
+                                                              mainLight,
+                                                              inputData.normalWS, inputData.viewDirectionWS,
+                                                              surfaceData.clearCoatMask, specularHighlightsOff);
+    }
 
-			    #if defined(_ADDITIONAL_LIGHTS)
-			    uint pixelLightCount = GetAdditionalLightsCount();
+    half3 radiance = CalculateRadiance(mainLight.direction, mainLight.distanceAttenuation * mainLight.shadowAttenuation, inputData.normalWS, 0.0f);
+    
+    half attenuation = RangeRemap(-0.32f, 0.4f, radiance);
+    attenuation = 1 - (abs(attenuation - 0.5f) * 2);
+    attenuation = pow(attenuation, 3);
+    half3 hsv = RgbToHsv(lightingData.mainLightColor);
+    hsv.y *= 1 + attenuation*0.5f;
+    hsv.z *= 1 + attenuation*0.5f;
+    radiance = RangeRemap(0.0f, 0.1f, radiance);
+    hsv.z *= radiance;
+    lightingData.mainLightColor = HsvToRgb(hsv);
 
-			    #if USE_CLUSTERED_LIGHTING
-			    for (uint lightIndex = 0; lightIndex < min(_AdditionalLightsDirectionalCount, MAX_VISIBLE_LIGHTS); lightIndex++)
-			    {
-			        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+    #if defined(_ADDITIONAL_LIGHTS)
+    int pixelLightCount = GetAdditionalLightsCount();
 
-			        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
-			        {
-			            lightingData.additionalLightsColor += LightingPhysicallyBased(brdfData, brdfDataClearCoat, light,
-			                                                                          inputData.normalWS, inputData.viewDirectionWS,
-			                                                                          surfaceData.clearCoatMask, specularHighlightsOff);
-			        }
-			    }
-			    #endif
+    #if USE_CLUSTERED_LIGHTING
+    for (uint lightIndex = 0; lightIndex < min(_AdditionalLightsDirectionalCount, MAX_VISIBLE_LIGHTS); lightIndex++)
+    {
+        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
 
-			    LIGHT_LOOP_BEGIN(pixelLightCount)
-			        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+        {
+            lightingData.additionalLightsColor += DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat, light,
+                                                                          inputData.normalWS, inputData.viewDirectionWS,
+                                                                          surfaceData.clearCoatMask, specularHighlightsOff);
+        }
+    }
+    #endif
 
-			        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
-			        {
-			            lightingData.additionalLightsColor += LightingPhysicallyBased(brdfData, brdfDataClearCoat, light,
-			                                                                          inputData.normalWS, inputData.viewDirectionWS,
-			                                                                          surfaceData.clearCoatMask, specularHighlightsOff);
-			        }
-			    LIGHT_LOOP_END
-			    #endif
+    LIGHT_LOOP_BEGIN(pixelLightCount)
+        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
 
-			    #if defined(_ADDITIONAL_LIGHTS_VERTEX)
-			    lightingData.vertexLightingColor += inputData.vertexLighting * brdfData.diffuse;
-			    #endif
+        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+        {
+            lightingData.additionalLightsColor += DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat, light,
+                                                                          inputData.normalWS, inputData.viewDirectionWS,
+                                                                          surfaceData.clearCoatMask, specularHighlightsOff);
+        }
+    LIGHT_LOOP_END
+    #endif
 
-			    return CalculateFinalColor(lightingData, surfaceData.alpha);
-			}
+    #if defined(_ADDITIONAL_LIGHTS_VERTEX)
+    lightingData.vertexLightingColor += inputData.vertexLighting * brdfData.diffuse;
+    #endif
+
+    return CalculateFinalColor(lightingData, surfaceData.alpha);
+}
+
+half3 DeferredDesertGlobalIllumination(BRDFData brdfData, BRDFData brdfDataClearCoat, float clearCoatMask,
+    half3 bakedGI, half occlusion, float3 positionWS,
+    half3 normalWS, half3 viewDirectionWS)
+{
+    half3 reflectVector = reflect(-viewDirectionWS, normalWS);
+    half NoV = saturate(dot(normalWS, viewDirectionWS));
+    half fresnelTerm = Pow4(1.0 - NoV);
+
+    half3 indirectDiffuse = bakedGI;
+    half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, positionWS, brdfData.perceptualRoughness, 1.0h);
+
+    half3 color = EnvironmentBRDF(brdfData, indirectDiffuse, indirectSpecular, fresnelTerm);
+
+    if (IsOnlyAOLightingFeatureEnabled())
+    {
+        color = half3(1,1,1); // "Base white" for AO debug lighting mode
+    }
+
+    #if defined(_CLEARCOAT) || defined(_CLEARCOATMAP)
+    half3 coatIndirectSpecular = GlossyEnvironmentReflection(reflectVector, positionWS, brdfDataClearCoat.perceptualRoughness, 1.0h);
+    // TODO: "grazing term" causes problems on full roughness
+    half3 coatColor = EnvironmentBRDFClearCoat(brdfDataClearCoat, clearCoatMask, coatIndirectSpecular, fresnelTerm);
+
+    // Blend with base layer using khronos glTF recommended way using NoV
+    // Smooth surface & "ambiguous" lighting
+    // NOTE: fresnelTerm (above) is pow4 instead of pow5, but should be ok as blend weight.
+    half coatFresnel = kDielectricSpec.x + kDielectricSpec.a * fresnelTerm;
+    return (color * (1.0 - coatFresnel * clearCoatMask) + coatColor) * occlusion;
+    #else
+    return color * occlusion;
+    #endif
+}
