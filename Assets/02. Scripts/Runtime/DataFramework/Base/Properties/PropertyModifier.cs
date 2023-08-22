@@ -24,16 +24,19 @@ namespace Runtime.DataFramework.Properties {
         public T Modify(T propertyValue, IPropertyBase[] dep, string parentEntityName, string propertyName) {
             this.parentEntityName = parentEntityName;
             this.propertyName = propertyName;
-            foreach (IPropertyBase propertyBase in dep) {
-                dependenciesInFullname[propertyBase.GetFullName()] = propertyBase;
-                if(dependenciesInType.ContainsKey(propertyBase.GetType())) {
-                    Debug.LogWarning($"Property {propertyBase.GetFullName()} of entity {parentEntityName} has duplicate dependency of type {propertyBase.GetType()}. " +
-                                     $"Please use the GetDependency overload that explicitly specify the dependency name to avoid ambiguity.");
-                }
-                else {
-                    dependenciesInType[propertyBase.GetType()] = propertyBase;
+            if (dep != null) {
+                foreach (IPropertyBase propertyBase in dep) {
+                    dependenciesInFullname[propertyBase.GetFullName()] = propertyBase;
+                    if(dependenciesInType.ContainsKey(propertyBase.GetType())) {
+                        Debug.LogWarning($"Property {propertyBase.GetFullName()} of entity {parentEntityName} has duplicate dependency of type {propertyBase.GetType()}. " +
+                                         $"Please use the GetDependency overload that explicitly specify the dependency name to avoid ambiguity.");
+                    }
+                    else {
+                        dependenciesInType[propertyBase.GetType()] = propertyBase;
+                    }
                 }
             }
+            
             T result = OnModify(propertyValue);
             dependenciesInType.Clear();
             dependenciesInFullname.Clear();
