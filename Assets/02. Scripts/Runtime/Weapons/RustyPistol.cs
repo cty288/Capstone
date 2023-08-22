@@ -60,8 +60,8 @@ namespace Runtime.Weapons
         
         protected override void Start()
         {
-            base.Start();
-            Debug.Log("RustyPistol attackspeed: " + BoundEntity.GetAttackSpeed().BaseValue);
+            // base.Start();
+            // Debug.Log("RustyPistol attackspeed: " + BoundEntity.GetAttackSpeed().BaseValue);
             // cam = Camera.main;
             // lr = GetComponent<LineRenderer>();
             //
