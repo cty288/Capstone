@@ -14,20 +14,20 @@ Shader "Universal Render Pipeline/Custom/Sand"
         [MainColor] _BaseColor("Color", Color) = (1,1,1,1)
 
         _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
-
+    	
+    	[Toggle(_METALLICSPECGLOSSMAP)] _GlossToggle ("Use Gloss Map(s)", Float) = 1
+    	[Toggle(_SPECULAR_SETUP)] _MetSpecToggle ("Use Metallic/Specular", Float) = 1
         _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
         _GlossMapScale("Smoothness Scale", Range(0.0, 1.0)) = 1.0
-        _SmoothnessTextureChannel("Smoothness texture channel", Float) = 0
 
         _Metallic("Metallic", Range(0.0, 1.0)) = 0.0
         _MetallicGlossMap("Metallic", 2D) = "white" {}
 
         _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
         _SpecGlossMap("Specular", 2D) = "white" {}
-    	
-    	[Toggle(_NORMALMAP)] _NormalMapToggle ("Use Normal Map", Float) = 0
+        
     	_BumpScale("Bump Scale", Float) = 1.0
-        _BumpMap("Normal Map", 2D) = "bump" {}
+        _BumpMap("Sand Map", 2D) = "bump" {}
         
     	[Toggle(_OCCLUSIONMAP)] _AOToggle ("Use AO", Float) = 0
         _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
@@ -51,6 +51,8 @@ Shader "Universal Render Pipeline/Custom/Sand"
         
 
         HLSLINCLUDE
+
+			#define _NORMALMAP
         
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
@@ -212,12 +214,12 @@ Shader "Universal Render Pipeline/Custom/Sand"
 			// Sand Functions
 			// ------------------
 
-            float3 RipplesNormal(float3 normal)
+            float3 RipplesNormal(float2 uv, float3 normal)
             {
 	            return 0;
             }
 
-            float3 SandNormal(float3 normal)
+            float3 SandNormal(float2 uv, float3 normal)
             {
 	            return 0;
             }
@@ -286,8 +288,8 @@ Shader "Universal Render Pipeline/Custom/Sand"
 			    InitializeSurfaceData(IN.uv, surfaceData);
 
 				float3 normal = surfaceData.normalTS;
-				normal = RipplesNormal(normal);
-				normal = SandNormal(normal);
+				normal = RipplesNormal(IN.uv, normal);
+				normal = SandNormal(IN.uv, normal);
 
 			    InputData inputData;
 			    InitializeInputData(IN, surfaceData.normalTS, inputData);
