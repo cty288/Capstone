@@ -97,6 +97,7 @@ half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData)
                                                               surfaceData.clearCoatMask, specularHighlightsOff);
     }
 
+    // Adds a saturated edge to the shadow.
     half3 radiance = CalculateRadiance(mainLight.direction, mainLight.distanceAttenuation * mainLight.shadowAttenuation, inputData.normalWS, 0.0f);
     
     half attenuation = RangeRemap(-0.32f, 0.4f, radiance);
@@ -176,4 +177,19 @@ half3 DeferredDesertGlobalIllumination(BRDFData brdfData, BRDFData brdfDataClear
     #else
     return color * occlusion;
     #endif
+}
+
+float CalculateFresnel(Varyings IN, float fresnelPower, float fresnelCutOffOut, float fresnelCutOffIn)
+{
+    #ifdef _NORMALMAP
+    float fresnel = 1 - saturate(dot(IN.normalWS.xyz, IN.viewDirWS.xyz));
+    #else
+    float fresnel = 1 - saturate(dot(IN.normalWS.xyz, normalize(_WorldSpaceCameraPos.xyz - IN.positionWS.xyz)));
+    #endif
+    fresnel = pow(fresnel, fresnelPower);
+    fresnel = fresnel > fresnelCutOffOut ? fresnel > fresnelCutOffOut + fresnelCutOffIn ? 1 :
+    (fresnel - fresnelCutOffOut) / fresnelCutOffIn
+    : 0;
+
+    return fresnel;
 }
