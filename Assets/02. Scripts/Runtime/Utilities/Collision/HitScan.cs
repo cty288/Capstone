@@ -37,12 +37,14 @@ namespace Runtime.Utilities.Collision
         /// <returns>Returns true if hit detected.</returns>
         public bool CheckHit()
         {
+            Debug.Log("checkhit");
             HitData hitData = null;
 
             Vector3 origin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
             if (Physics.Raycast(origin, cam.transform.forward, out hit, range, layer))
             {
+                Debug.Log("hit");
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
                 if (hurtbox != null)
                 {
@@ -51,7 +53,7 @@ namespace Runtime.Utilities.Collision
 
                 if (hitData.Validate())
                 {
-                    // Debug.Log("validate");
+                    Debug.Log("validate");
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                     return true;
