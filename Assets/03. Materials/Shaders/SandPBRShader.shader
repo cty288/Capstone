@@ -26,7 +26,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
         _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
         _SpecGlossMap("Specular", 2D) = "white" {}
         
-    	_BumpScale("Bump Scale", Float) = 1.0
+    	_BumpScale("Bump Scale", Range(0.0, 0.7)) = 0.3
         _BumpMap("Sand Map", 2D) = "bump" {}
         
     	[Toggle(_OCCLUSIONMAP)] _AOToggle ("Use AO", Float) = 0
@@ -219,11 +219,6 @@ Shader "Universal Render Pipeline/Custom/Sand"
 	            return 0;
             }
 
-            float3 SandNormal(float2 uv, float3 normal)
-            {
-	            return 0;
-            }
-
             // ------------------
 			// Vertex
 			// ------------------
@@ -285,11 +280,10 @@ Shader "Universal Render Pipeline/Custom/Sand"
 			half4 LitPassFragment(Varyings IN) : SV_TARGET
 			{
 				SurfaceData surfaceData;
-			    InitializeSurfaceData(IN.uv, surfaceData);
+			    InitializeSurfaceData(IN.positionWS.xz, surfaceData);
 
-				float3 normal = surfaceData.normalTS;
-				normal = RipplesNormal(IN.uv, normal);
-				normal = SandNormal(IN.uv, normal);
+				float3 normal = surfaceData.normalTS; //Sand is initialized in this first normal check.
+				normal = RipplesNormal(IN.positionWS.xz, normal); // We modify the normal in this function.
 
 			    InputData inputData;
 			    InitializeInputData(IN, surfaceData.normalTS, inputData);
@@ -526,7 +520,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
             #pragma multi_compile _ DOTS_INSTANCING_ON
 
             #include "Inputs.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitDepthNormalsPass.hlsl"
+            #include "SandDepthNormalPass.hlsl"
             
             ENDHLSL
         }
