@@ -5,7 +5,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Model.Builder;
 
 namespace Runtime.GameResources.ViewControllers.Instances {
-	public abstract class AbstractRawMaterialViewController<T> : AbstractResourceViewController<T> 
+	public abstract class AbstractRawMaterialViewController<T> : AbstractResourceViewController<T, IGameResourceModel> 
 		where  T : class, IRawMaterialEntity, new(){
 		
 		protected override IEntity OnInitEntity() {

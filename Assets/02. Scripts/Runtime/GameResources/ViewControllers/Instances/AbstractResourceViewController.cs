@@ -6,8 +6,9 @@ using Runtime.GameResources.Model.Builder;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
 
 namespace Runtime.GameResources.ViewControllers.Instances {
-	public abstract class AbstractResourceViewController<T>: AbstractBasicEntityViewController<T, IGameResourceModel>
-	where  T : class, IResourceEntity, new(){
+	public abstract class AbstractResourceViewController<T, TEntityModel>: AbstractBasicEntityViewController<T, TEntityModel>
+	where  T : class, IResourceEntity, new()
+	where TEntityModel: class, IEntityModel {
 		/*protected override void OnEntityStart() {
 			/*BoundEntity.GetBaitAdjectivesProperty().RealValues.RegisterOnAdd(OnBaitAdjectivesAdd)
 				.UnRegisterWhenGameObjectDestroyed(gameObject);
