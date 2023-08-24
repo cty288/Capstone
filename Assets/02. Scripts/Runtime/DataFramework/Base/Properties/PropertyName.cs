@@ -26,6 +26,14 @@ namespace Runtime.DataFramework.Properties
 		//weapon properties test
 		base_damage,
 		attack_speed,
+		range,
+		ammo_size,
+		reload_speed,
+		bullet_per_shot,
+		spread,
+		recoil,
+		charge_speed,
+		bullet_speed,
 		test_hashset
 	}
 }
