@@ -1,4 +1,5 @@
 using System.Collections;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Temporary.Weapon;
@@ -7,7 +8,6 @@ using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Runtime.Weapons
 {
@@ -36,14 +36,17 @@ namespace Runtime.Weapons
         protected LineRenderer lr;
         public LayerMask layer;
         
-        [Header("Timers")]
+        [Header("Timers & Counters")]
         private float currentCD;
+        private int currentAmmo;
+        private float currentReloadCD;
         
         [Header("Gun General Settings")] [SerializeField]
         protected Transform launchPoint;
         
-        [Header("HitScan Settings")] [SerializeField]
+        [Header("HitDetector Settings")] [SerializeField]
         private HitScan hitScan;
+        private HitDetectorInfo hitDetectorInfo;
         
         [SerializeField] private GameObject hitParticlePrefab;
         
@@ -54,9 +57,16 @@ namespace Runtime.Weapons
         {
             base.Start();
             cam = Camera.main;
-            lr = GetComponent<LineRenderer>();
+            // lr = GetComponent<LineRenderer>();
             
-            hitScan = new HitScan(cam, BoundEntity.GetRange().BaseValue, layer, this);
+            hitScan = new HitScan(this);
+            hitDetectorInfo = new HitDetectorInfo
+            {
+                camera = cam,
+                layer = layer,
+                launchPoint = launchPoint,
+                weapon = BoundEntity
+            };
         }
         
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
@@ -64,31 +74,46 @@ namespace Runtime.Weapons
         }
         
         protected override void OnBindEntityProperty() {}
-        protected override void OnEntityStart() {}
+
+        protected override void OnEntityStart()
+        {
+            currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
+        }
         
         public void Update()
         {
             currentCD += Time.deltaTime;
+            
+            if (currentReloadCD < BoundEntity.GetReloadSpeed().BaseValue)
+            {
+                currentReloadCD += Time.deltaTime;
+            }
+            else
+            {
+                currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
+            }
         }
         
         public void FixedUpdate()
         {
             if (Input.GetMouseButton(0))
             {
-                if (currentCD >= BoundEntity.GetAttackSpeed().BaseValue)
+                if (currentAmmo > 0 && currentCD >= BoundEntity.GetAttackSpeed().BaseValue)
                 {
-                    currentCD = 0;
                     Shoot();
+                    currentCD = 0;
+                    currentAmmo--;
+                    currentReloadCD = 0;
                 }
             }
         }
         
         public void Shoot()
         {
-            if (!hitScan.CheckHit())
+            if (!hitScan.CheckHit(hitDetectorInfo))
             {
-                Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                DrawLine(launchPoint.position, ray.GetPoint(BoundEntity.GetRange().BaseValue));
+                // Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                // DrawLine(launchPoint.position, ray.GetPoint(BoundEntity.GetRange().BaseValue) + offset);
             }
     
             StartCoroutine(Hitscan());
@@ -116,13 +141,8 @@ namespace Runtime.Weapons
         public void HitResponse(HitData data)
         {
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-            DrawLine(launchPoint.position, data.HitPoint);
+            // DrawLine(launchPoint.position, data.HitPoint);
         }
         
-        public void DrawLine(Vector3 start, Vector3 end)
-        {
-            lr.SetPosition(0, start);
-            lr.SetPosition(1, end);
-        }
     }
 }

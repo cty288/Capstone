@@ -1,3 +1,6 @@
+using System.Collections;
+using Runtime.Weapons;
+using Runtime.Weapons.Model.Base;
 using UnityEngine;
 
 namespace Runtime.Utilities.Collision
@@ -7,59 +10,75 @@ namespace Runtime.Utilities.Collision
     /// </summary>
     public class HitScan : IHitDetector
     {
-        // public BasicGun originWeapon; //TODO: change to weapon class
-        public Camera cam;
-        public float range;
-        public LayerMask layer;
+        private IHitResponder hitResponder;
+        public IHitResponder HitResponder { get => hitResponder; set => hitResponder = value; }
 
-        private IHitResponder m_hitResponder;
+        public LineRenderer lr;
 
-        public IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
+        private Vector3 offset = Vector3.zero;
 
-        /// <summary>
-        /// Constructor for HitScan.
-        /// </summary>
-        /// <param name="cam">Needed for calculating origin and ending of Raycast.</param>
-        /// <param name="range">Range of Raycast.</param>
-        /// <param name="layer"></param>
-        /// <param name="weapon"></param>
-        public HitScan(Camera cam, float range, LayerMask layer, IHitResponder weapon)
+        public HitScan(IHitResponder hitResponder)
         {
-            this.cam = cam;
-            this.range = range;
-            this.layer = layer;
-            m_hitResponder = weapon;
+            this.hitResponder = hitResponder;
+            lr = new LineRenderer();
         }
-
+        
         /// <summary>
         /// Called every frame to check for Raycast collision.
         /// </summary>
         /// <returns>Returns true if hit detected.</returns>
-        public bool CheckHit()
+        public bool CheckHit(HitDetectorInfo hitDetectorInfo)
         {
-            Debug.Log("checkhit");
-            HitData hitData = null;
+            // Debug.Log("checkhit");
+            Transform launchPoint = hitDetectorInfo.launchPoint;
+            Camera camera = hitDetectorInfo.camera;
+            LayerMask layer = hitDetectorInfo.layer;
+            IWeaponEntity weapon = hitDetectorInfo.weapon;
+            
+            Vector3 origin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+            offset[0] = Random.Range(-weapon.GetSpread().BaseValue, weapon.GetSpread().BaseValue);
+            offset[1] = Random.Range(-weapon.GetSpread().BaseValue, weapon.GetSpread().BaseValue);
 
-            Vector3 origin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+            HitData hitData = null;
             RaycastHit hit;
-            if (Physics.Raycast(origin, cam.transform.forward, out hit, range, layer))
+            if (Physics.Raycast(origin, camera.transform.forward + offset, out hit, weapon.GetRange().BaseValue, layer))
             {
-                Debug.Log("hit");
+                // Debug.Log("hit");
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
                 if (hurtbox != null)
                 {
-                    hitData = new HitData().SetHitScanData(m_hitResponder, hurtbox, hit, this);
+                    hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this);
                 }
 
                 if (hitData.Validate())
                 {
-                    Debug.Log("validate");
+                    // Debug.Log("validate");
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
+                    
+                    Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                    DrawLine(launchPoint.position, ray.GetPoint(weapon.GetRange().BaseValue) + offset);
+                    
                     return true;
                 }
             }
+            
+            //TODO: IMPLEMENT LINE RENDERER FOR SPREAD
+            // lr.StartCoroutine(Hitscan());
             return false;
+        }
+        
+        private void DrawLine(Vector3 start, Vector3 end)
+        {
+            lr.SetPosition(0, start);
+            lr.SetPosition(1, end);
+        }
+        
+        IEnumerator Hitscan()
+        {
+            lr.enabled = true;
+            yield return new WaitForSeconds(0.3f);
+            lr.enabled = false;
         }
     }
 }

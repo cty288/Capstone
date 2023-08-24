@@ -1,3 +1,4 @@
+using Runtime.Weapons.Model.Base;
 using UnityEngine;
 
 namespace Runtime.Utilities.Collision
@@ -76,12 +77,23 @@ namespace Runtime.Utilities.Collision
     }
 
     /// <summary>
+    /// Struct for storing data for CheckHit() in HitScan.
+    /// </summary>
+    public struct HitDetectorInfo
+    {
+        public Camera camera;
+        public LayerMask layer;
+        public Transform launchPoint;
+        public IWeaponEntity weapon;
+    }
+    
+    /// <summary>
     /// Used by classes that check for collision: HitBox, HitScan, etc.
     /// </summary>
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public bool CheckHit();
+        public bool CheckHit(HitDetectorInfo hitDetectorInfo); //HitDetectorInfo only required for HitScan right now.
     }
 
     /// <summary>

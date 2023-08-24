@@ -2,10 +2,10 @@ using Runtime.DataFramework.Properties;
 
 namespace Runtime.Weapons.Model.Properties
 {
-    public interface ISpread : IProperty<int>, ILoadFromConfigProperty { }
-    public class Spread : AbstractLoadFromConfigProperty<int>, ISpread
+    public interface ISpread : IProperty<float>, ILoadFromConfigProperty { }
+    public class Spread : AbstractLoadFromConfigProperty<float>, ISpread
     {
-        protected override IPropertyDependencyModifier<int> GetDefautModifier() {
+        protected override IPropertyDependencyModifier<float> GetDefautModifier() {
             return new SpreadDefaultModifier();
         }
 
@@ -20,9 +20,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class SpreadDefaultModifier : PropertyDependencyModifier<int>
+    public class SpreadDefaultModifier : PropertyDependencyModifier<float>
     {
-        public override int OnModify(int propertyValue)
+        public override float OnModify(float propertyValue)
         {
             return propertyValue;
         }
