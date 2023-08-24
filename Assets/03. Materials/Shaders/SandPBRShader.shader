@@ -28,6 +28,10 @@ Shader "Universal Render Pipeline/Custom/Sand"
         
     	_BumpScale("Bump Scale", Range(0.0, 0.7)) = 0.3
         _BumpMap("Sand Map", 2D) = "bump" {}
+    	_RippleMap0("Shallow Ripple Map", 2D) = "bump" {}
+    	_RippleMap1("Steep Ripple Map", 2D) = "bump" {}
+    	_RippleStrength("Ripple Strength", Float) = 1
+    	_SteepnessPower("Ripple Steepness Power", Float) = 1
         
     	[Toggle(_OCCLUSIONMAP)] _AOToggle ("Use AO", Float) = 0
         _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
@@ -75,6 +79,10 @@ Shader "Universal Render Pipeline/Custom/Sand"
 
 				float _BumpScale;
 				float4 _BumpMap_ST;
+				float4 _RippleMap0_ST;
+				float4 _RippleMap1_ST;
+				float _RippleStrength;
+				float _SteepnessPower;
         
                 float _OcclusionStrength;
 				float4 _OcclusionMap_ST;
@@ -214,9 +222,19 @@ Shader "Universal Render Pipeline/Custom/Sand"
 			// Sand Functions
 			// ------------------
 
+            TEXTURE2D(_RippleMap0);         SAMPLER(sampler_RippleMap0);
+			TEXTURE2D(_RippleMap1);         SAMPLER(sampler_RippleMap1);
+
             float3 RipplesNormal(float2 uv, float3 normal)
             {
-	            return 0;
+            	float3 ripple0 = SampleNormal(uv * _RippleMap0_ST.xy + _RippleMap0_ST.zw, TEXTURE2D_ARGS(_RippleMap0, sampler_RippleMap0));
+            	float3 ripple1 = SampleNormal(uv * _RippleMap1_ST.xy + _RippleMap1_ST.zw, TEXTURE2D_ARGS(_RippleMap1, sampler_RippleMap1));
+
+            	float steepness = saturate(dot(normal, float3(0, 1, 0)));
+            	steepness = pow(steepness, _SteepnessPower);
+            	float3 combined = normalize(lerp(ripple1, ripple0, steepness));
+            	
+	            return combined;
             }
 
             // ------------------
@@ -282,8 +300,10 @@ Shader "Universal Render Pipeline/Custom/Sand"
 				SurfaceData surfaceData;
 			    InitializeSurfaceData(IN.positionWS.xz, surfaceData);
 
-				float3 normal = surfaceData.normalTS; //Sand is initialized in this first normal check.
+				float3 normal = IN.normalWS; //Sand is initialized in this first normal check.
 				normal = RipplesNormal(IN.positionWS.xz, normal); // We modify the normal in this function.
+
+				surfaceData.normalTS = lerp(surfaceData.normalTS, normal, _RippleStrength);
 
 			    InputData inputData;
 			    InitializeInputData(IN, surfaceData.normalTS, inputData);
