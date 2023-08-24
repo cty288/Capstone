@@ -9,7 +9,7 @@ using Runtime.Weapons.Model.Properties;
 
 namespace Runtime.Weapons.Model.Base
 {
-    public interface IWeaponEntity : IEntity, IHaveCustomProperties, IHaveTags {
+    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
         public IRange GetRange();
