@@ -144,10 +144,11 @@ namespace MikroFramework.Pool
             {
                 createdObj.transform.SetParent(this.transform);
                 createdObj.SetActive(true);
-                createdObj.GetComponent<PoolableGameObject>().Pool = this;
+                PoolableGameObject poolableGameObject = createdObj.GetComponent<PoolableGameObject>();
+                poolableGameObject.Pool = this;
+                poolableGameObject.OnAllocate();
             }
-            else
-            {
+            else {
                 Debug.LogWarning("A Prefab is missing but the SafeGameObjectPool is still trying to access it!");
             }
 

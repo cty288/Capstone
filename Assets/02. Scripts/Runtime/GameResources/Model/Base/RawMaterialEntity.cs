@@ -7,6 +7,7 @@ namespace Runtime.GameResources.Model.Base {
 	}
 	public abstract class RawMaterialEntity<T> : ResourceEntity<T>, IRawMaterialEntity where T : ResourceEntity<T>, new() {
 		protected override ConfigTable GetConfigTable() {
+			
 			return ConfigDatas.Singleton.RawMaterialEntityConfigTable;
 		}
 	}
