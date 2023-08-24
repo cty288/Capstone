@@ -11,8 +11,8 @@ namespace MikroFramework.Examples
         public static int globalId = 0;
 
         public int Id;
-
-        public override void OnInit() {
+        
+        public override void OnAllocate() {
             
         }
 

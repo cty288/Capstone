@@ -40,7 +40,7 @@ namespace Tests.Tests_Editor {
 				return Localization.GetFormat(defaultLocalizationKey, GetProperty<IDangerProperty>().RealValue.Value);
 			}
 			public override void OnRecycle() {
-					
+				
 			}
 		}
 

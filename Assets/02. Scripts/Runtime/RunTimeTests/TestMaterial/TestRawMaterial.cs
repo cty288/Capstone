@@ -32,10 +32,6 @@ namespace Runtime.RunTimeTests.TestMaterial {
 	}
 	
 	public class TestRawMaterial : AbstractRawMaterialViewController<TestBasicRawMaterial> {
-		protected override void OnStart() {
-			
-		}
-
 		private void Update() {
 			if (Input.GetKeyDown(KeyCode.S)) {
 				ES3AutoSaveMgr.Current.Save();
@@ -43,8 +39,12 @@ namespace Runtime.RunTimeTests.TestMaterial {
 			}
 		}
 
-		protected override void OnDisplayNameUpdate(string displayName) {
+		/*protected override void OnDisplayNameUpdate(string displayName) {
 			Debug.Log("display name update: " + displayName);
+		}*/
+
+		protected override void OnEntityStart() {
+			
 		}
 
 		protected override void OnBindEntityProperty() {

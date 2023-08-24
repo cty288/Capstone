@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class MonoMikroSingleton&lt;T&gt;
+      <title>Class CoroutineRunner
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class MonoMikroSingleton&lt;T&gt;
+      <meta name="title" content="Class CoroutineRunner
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=MikroFramework_Singletons_MonoMikroSingleton_1.md&amp;value=---%0Auid%3A%20MikroFramework.Singletons.MonoMikroSingleton%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Global_CoroutineRunner.md&amp;value=---%0Auid%3A%20Global.CoroutineRunner%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,35 +77,29 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="MikroFramework.Singletons.MonoMikroSingleton`1">
+        <article data-uid="Global.CoroutineRunner">
 
 
 
-  <h1 id="MikroFramework_Singletons_MonoMikroSingleton_1" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1" class="text-break">
-    Class MonoMikroSingleton&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Global_CoroutineRunner" data-uid="Global.CoroutineRunner" class="text-break">
+    Class CoroutineRunner
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/CoroutineRunner.cs/#L6"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="MikroFramework.html">MikroFramework</a>.<a class="xref" href="MikroFramework.Singletons.html">Singletons</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>MikroFramework.dll</dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Global.html">Global</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Use MonoMikroSingleton for singletons to inherit MonoBehavior</p>
-</div>
+  <div class="markdown summary"></div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class MonoMikroSingleton&lt;T&gt; : MikroBehavior, ISingleton where T : MonoMikroSingleton&lt;T&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class CoroutineRunner : MonoMikroSingleton&lt;CoroutineRunner&gt;, ISingleton</code></pre>
   </div>
 
 
 
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd></dd>
-  </dl>
 
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
@@ -116,7 +110,8 @@
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
       <div><a class="xref" href="MikroFramework.MikroBehavior.html">MikroBehavior</a></div>
-      <div><span class="xref">MonoMikroSingleton&lt;T&gt;</span></div>
+      <div><a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html">MonoMikroSingleton</a>&lt;<a class="xref" href="CoroutineRunner.html">CoroutineRunner</a>&gt;</div>
+      <div><span class="xref">CoroutineRunner</span></div>
     </dd>
   </dl>
 
@@ -127,23 +122,34 @@
     </dd>
   </dl>
 
-  <dl class="typelist derived">
-    <dt>Derived</dt>
-    <dd>
-      <div><a class="xref" href="Global.CoroutineRunner.html">CoroutineRunner</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.MonoMikroSingletonExample.html">MonoMikroSingletonExample</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.MonoSingletonPathExample.ConfigManager.html">MonoSingletonPathExample.ConfigManager</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.MonoSingletonPathExample.GameManager.html">MonoSingletonPathExample.GameManager</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.MonoSingletonPathExample.ResManager.html">MonoSingletonPathExample.ResManager</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.MonoSingletonPathExample.SoundManager.html">MonoSingletonPathExample.SoundManager</a></div>
-      <div><a class="xref" href="MikroFramework.GameObjectPoolManager.html">GameObjectPoolManager</a></div>
-      <div><a class="xref" href="MikroFramework.Singletons.MonoPersistentMikroSingleton-1.html">MonoPersistentMikroSingleton&lt;T&gt;</a></div>
-    </dd>
-  </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_instance">MonoMikroSingleton&lt;CoroutineRunner&gt;.instance</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_Exists">MonoMikroSingleton&lt;CoroutineRunner&gt;.Exists</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_Singleton">MonoMikroSingleton&lt;CoroutineRunner&gt;.Singleton</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_OnBeforeDestroy">MonoMikroSingleton&lt;CoroutineRunner&gt;.OnBeforeDestroy()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_OnSingletonInit">MonoMikroSingleton&lt;CoroutineRunner&gt;.OnSingletonInit()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_onApplicationQuit">MonoMikroSingleton&lt;CoroutineRunner&gt;.onApplicationQuit</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_IsApplicationQuit">MonoMikroSingleton&lt;CoroutineRunner&gt;.IsApplicationQuit</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_OnApplicationQuit">MonoMikroSingleton&lt;CoroutineRunner&gt;.OnApplicationQuit()</a>
+    </div>
     <div>
       <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_AddListener_MikroFramework_Event_EventType_System_Action_MikroFramework_Event_MikroMessage__">MikroBehavior.AddListener(EventType, Action&lt;MikroMessage&gt;)</a>
     </div>
@@ -536,256 +542,11 @@
 
 
 
-  <h2 class="section" id="fields">Fields
-</h2>
-
-
-
-  <h3 id="MikroFramework_Singletons_MonoMikroSingleton_1_instance" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.instance">
-  instance
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L49"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected static T instance</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">T</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="MikroFramework_Singletons_MonoMikroSingleton_1_onApplicationQuit" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.onApplicationQuit">
-  onApplicationQuit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L81"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected static bool onApplicationQuit</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-  <h2 class="section" id="properties">Properties
-</h2>
-
-
-  <a id="MikroFramework_Singletons_MonoMikroSingleton_1_Exists_" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.Exists*"></a>
-
-  <h3 id="MikroFramework_Singletons_MonoMikroSingleton_1_Exists" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.Exists">
-  Exists
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L53"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Get if the singleton exists in the game</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool Exists { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="MikroFramework_Singletons_MonoMikroSingleton_1_IsApplicationQuit_" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.IsApplicationQuit*"></a>
-
-  <h3 id="MikroFramework_Singletons_MonoMikroSingleton_1_IsApplicationQuit" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.IsApplicationQuit">
-  IsApplicationQuit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L82"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool IsApplicationQuit { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="MikroFramework_Singletons_MonoMikroSingleton_1_Singleton_" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.Singleton*"></a>
-
-  <h3 id="MikroFramework_Singletons_MonoMikroSingleton_1_Singleton" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.Singleton">
-  Singleton
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L61"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static T Singleton { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">T</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <h2 class="section" id="methods">Methods
-</h2>
-
-
-  <a id="MikroFramework_Singletons_MonoMikroSingleton_1_OnApplicationQuit_" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.OnApplicationQuit*"></a>
-
-  <h3 id="MikroFramework_Singletons_MonoMikroSingleton_1_OnApplicationQuit" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.OnApplicationQuit">
-  OnApplicationQuit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L86"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual void OnApplicationQuit()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="MikroFramework_Singletons_MonoMikroSingleton_1_OnBeforeDestroy_" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.OnBeforeDestroy*"></a>
-
-  <h3 id="MikroFramework_Singletons_MonoMikroSingleton_1_OnBeforeDestroy" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.OnBeforeDestroy">
-  OnBeforeDestroy()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L73"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Use this method instead of Destroy()</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnBeforeDestroy()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="MikroFramework_Singletons_MonoMikroSingleton_1_OnSingletonInit_" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.OnSingletonInit*"></a>
-
-  <h3 id="MikroFramework_Singletons_MonoMikroSingleton_1_OnSingletonInit" data-uid="MikroFramework.Singletons.MonoMikroSingleton`1.OnSingletonInit">
-  OnSingletonInit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L77"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnSingletonInit()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Singletons/MonoMikroSingleton.cs/#L46" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/CoroutineRunner.cs/#L6" class="edit-link">Edit this page</a>
         </div>
 
         
