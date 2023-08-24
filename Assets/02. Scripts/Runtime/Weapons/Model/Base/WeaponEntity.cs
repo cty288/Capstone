@@ -3,6 +3,7 @@ using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.GameResources.Model.Base;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
 
@@ -21,7 +22,7 @@ namespace Runtime.Weapons.Model.Base
         // public BindableProperty<float> GetBulletSpeed();
     }
     
-    public abstract class WeaponEntity<T> :  AbstractBasicEntity, IWeaponEntity where T : WeaponEntity<T>, new() {
+    public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity where T : WeaponEntity<T>, new() {
         private IBaseDamage baseDamageProperty;
         private IAttackSpeed attackSpeedProperty;
         

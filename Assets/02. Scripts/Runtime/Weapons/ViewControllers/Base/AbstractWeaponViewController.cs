@@ -1,13 +1,14 @@
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
+using Runtime.GameResources.ViewControllers.Instances;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.Model.Properties;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
-    public abstract class AbstractWeaponViewController<T> : AbstractBasicEntityViewController<T, IWeaponModel>
+    public abstract class AbstractWeaponViewController<T> : AbstractResourceViewController<T, IWeaponModel>
         // , IWeaponViewController
         where T : class, IWeaponEntity, new()
     {
