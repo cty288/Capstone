@@ -14,23 +14,20 @@ using Runtime.Utilities.ConfigSheet;
 namespace Runtime.GameResources.Model.Base {
 	
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
-		public IBaitAdjectives GetBaitAdjectivesProperty();
 		
 		public IMaxStack GetMaxStackProperty();
 	}
 	
 	public abstract class ResourceEntity<T> :  AbstractBasicEntity, IResourceEntity where T : ResourceEntity<T>, new() {
-		
-		private IBaitAdjectives baitAdjectivesProperty;
 		private IMaxStack maxStackProperty;
 		protected override void OnEntityStart() {
 			base.OnEntityStart();
-			baitAdjectivesProperty = GetProperty<IBaitAdjectives>();
+			
 			maxStackProperty = GetProperty<IMaxStack>();
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
-			RegisterInitialProperty<IBaitAdjectives>(new BaitAdjectives());
+			
 			RegisterInitialProperty<IMaxStack>(new MaxStack());
 		}
 
@@ -44,18 +41,15 @@ namespace Runtime.GameResources.Model.Base {
 		/// e.g. "Fresh" + "Dark" + "Mushroom" = "Fresh, Dark Mushroom"
 		/// </summary>
 		/// <returns></returns>
-		public override string GetDisplayName() {
+		/*public override string GetDisplayName() {
 			string selfDisplayName = base.GetDisplayName();
 			string description = baitAdjectivesProperty.GetDescription();
 			if (String.IsNullOrEmpty(description)) {
 				return selfDisplayName;
 			}
 			return description + Localization.GetJoin() + selfDisplayName;
-		}
+		}*/
 
-		public IBaitAdjectives GetBaitAdjectivesProperty() {
-			return baitAdjectivesProperty;
-		}
 
 		public IMaxStack GetMaxStackProperty() {
 			return maxStackProperty;

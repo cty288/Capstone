@@ -67,7 +67,7 @@ namespace Tests.Tests_Editor {
 				.Build();
 			
 			Assert.AreEqual(5, ent.GetRarity());
-			Assert.AreEqual("Dark, Huge Test Raw Material", ent.GetDisplayName());
+			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
 			
@@ -80,7 +80,7 @@ namespace Tests.Tests_Editor {
 			Assert.IsNotNull(ent);
             
 			Assert.AreEqual(5, ent.GetRarity());
-			Assert.AreEqual("Dark, Huge Test Raw Material", ent.GetDisplayName());
+			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
             

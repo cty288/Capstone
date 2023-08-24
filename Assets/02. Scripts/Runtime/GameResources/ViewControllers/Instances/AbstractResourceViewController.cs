@@ -8,18 +8,18 @@ using Runtime.GameResources.Model.Properties.BaitAdjectives;
 namespace Runtime.GameResources.ViewControllers.Instances {
 	public abstract class AbstractResourceViewController<T>: AbstractBasicEntityViewController<T, IGameResourceModel>
 	where  T : class, IResourceEntity, new(){
-		protected override void OnEntityStart() {
-			BoundEntity.GetBaitAdjectivesProperty().RealValues.RegisterOnAdd(OnBaitAdjectivesAdd)
+		/*protected override void OnEntityStart() {
+			/*BoundEntity.GetBaitAdjectivesProperty().RealValues.RegisterOnAdd(OnBaitAdjectivesAdd)
 				.UnRegisterWhenGameObjectDestroyed(gameObject);
 			BoundEntity.GetBaitAdjectivesProperty().RealValues.RegisterOnRemove(OnBaitAdjectivesRemove)
 				.UnRegisterWhenGameObjectDestroyed(gameObject);
-			OnDisplayNameUpdate(BoundEntity.GetDisplayName());
+			OnDisplayNameUpdate(BoundEntity.GetDisplayName());#1# //move to baits
 			OnStart();
-		}
+		}*/
 
-		protected abstract void OnStart();
+		//protected abstract void OnStart();
 		
-		protected virtual void OnBaitAdjectivesRemove(BaitAdjective adj) {
+		/*protected virtual void OnBaitAdjectivesRemove(BaitAdjective adj) {
 			OnDisplayNameUpdate(BoundEntity.GetDisplayName());
 		}
 
@@ -27,7 +27,7 @@ namespace Runtime.GameResources.ViewControllers.Instances {
 			OnDisplayNameUpdate(BoundEntity.GetDisplayName());
 		}
 		
-		protected abstract void OnDisplayNameUpdate(string displayName);
+		protected abstract void OnDisplayNameUpdate(string displayName);*/
 
 		//protected abstract IResourceEntity OnInitEntityInternal();
 	}
