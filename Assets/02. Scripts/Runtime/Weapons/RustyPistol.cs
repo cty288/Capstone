@@ -2,6 +2,7 @@ using System.Collections;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
@@ -57,13 +58,14 @@ namespace Runtime.Weapons
         {
             base.Start();
             cam = Camera.main;
-            // lr = GetComponent<LineRenderer>();
+            lr = GetComponent<LineRenderer>();
             
             hitScan = new HitScan(this);
             hitDetectorInfo = new HitDetectorInfo
             {
                 camera = cam,
                 layer = layer,
+                lineRenderer = lr,
                 launchPoint = launchPoint,
                 weapon = BoundEntity
             };
@@ -110,22 +112,9 @@ namespace Runtime.Weapons
         
         public void Shoot()
         {
-            if (!hitScan.CheckHit(hitDetectorInfo))
-            {
-                // Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                // DrawLine(launchPoint.position, ray.GetPoint(BoundEntity.GetRange().BaseValue) + offset);
-            }
-    
-            StartCoroutine(Hitscan());
+            hitScan.CheckHit(hitDetectorInfo);
         }
         
-        IEnumerator Hitscan()
-        {
-            lr.enabled = true;
-            yield return new WaitForSeconds(0.3f);
-            lr.enabled = false;
-        }
-
         public bool CheckHit(HitData data)
         {
             if (data.Hurtbox.Owner == gameObject)
@@ -141,8 +130,10 @@ namespace Runtime.Weapons
         public void HitResponse(HitData data)
         {
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-            // DrawLine(launchPoint.position, data.HitPoint);
+            
+            //TODO: Change to non-temporary class of player entity.
+            PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+            playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
         }
-        
     }
 }

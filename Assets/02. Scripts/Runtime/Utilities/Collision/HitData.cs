@@ -8,9 +8,11 @@ namespace Runtime.Utilities.Collision
     /// </summary>
     public class HitData
     {
-        public int Damage;
+        public int Damage = 0;
+        public float Recoil = 0f;
         public Vector3 HitPoint;
         public Vector3 HitNormal;
+        public Vector3 HitDirectionNormalized;
         public IHurtbox Hurtbox;
         public IHitDetector HitDetector;
 
@@ -83,6 +85,7 @@ namespace Runtime.Utilities.Collision
     {
         public Camera camera;
         public LayerMask layer;
+        public LineRenderer lineRenderer;
         public Transform launchPoint;
         public IWeaponEntity weapon;
     }

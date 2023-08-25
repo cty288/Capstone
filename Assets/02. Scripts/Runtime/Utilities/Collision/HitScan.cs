@@ -1,6 +1,7 @@
 using System.Collections;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
+using UnityEditor;
 using UnityEngine;
 
 namespace Runtime.Utilities.Collision
@@ -12,15 +13,18 @@ namespace Runtime.Utilities.Collision
     {
         private IHitResponder hitResponder;
         public IHitResponder HitResponder { get => hitResponder; set => hitResponder = value; }
-
-        public LineRenderer lr;
+        
 
         private Vector3 offset = Vector3.zero;
+        private Transform _launchPoint;
+        private Camera _camera;
+        private LineRenderer _lineRenderer;
+        private LayerMask _layer;
+        private IWeaponEntity _weapon;
 
         public HitScan(IHitResponder hitResponder)
         {
             this.hitResponder = hitResponder;
-            lr = new LineRenderer();
         }
         
         /// <summary>
@@ -30,24 +34,30 @@ namespace Runtime.Utilities.Collision
         public bool CheckHit(HitDetectorInfo hitDetectorInfo)
         {
             // Debug.Log("checkhit");
-            Transform launchPoint = hitDetectorInfo.launchPoint;
-            Camera camera = hitDetectorInfo.camera;
-            LayerMask layer = hitDetectorInfo.layer;
-            IWeaponEntity weapon = hitDetectorInfo.weapon;
+            _launchPoint = hitDetectorInfo.launchPoint;
+            _camera = hitDetectorInfo.camera;
+            _lineRenderer = hitDetectorInfo.lineRenderer;
+            _layer = hitDetectorInfo.layer;
+            _weapon = hitDetectorInfo.weapon;
             
-            Vector3 origin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
-            offset[0] = Random.Range(-weapon.GetSpread().BaseValue, weapon.GetSpread().BaseValue);
-            offset[1] = Random.Range(-weapon.GetSpread().BaseValue, weapon.GetSpread().BaseValue);
-
+            Vector3 origin = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+            //TODO: Adjust spread to be less random and less punishing when further away [?].
+            offset[0] = Random.Range(-_weapon.GetSpread().BaseValue, _weapon.GetSpread().BaseValue);
+            offset[1] = Random.Range(-_weapon.GetSpread().BaseValue, _weapon.GetSpread().BaseValue);
+            offset[2] = Random.Range(-_weapon.GetSpread().BaseValue, _weapon.GetSpread().BaseValue);
+            
             HitData hitData = null;
             RaycastHit hit;
-            if (Physics.Raycast(origin, camera.transform.forward + offset, out hit, weapon.GetRange().BaseValue, layer))
+            
+            if (Physics.Raycast(origin, Vector3.Normalize(_camera.transform.forward + offset), out hit, _weapon.GetRange().BaseValue, _layer))
             {
                 // Debug.Log("hit");
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
                 if (hurtbox != null)
                 {
                     hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this);
+                    hitData.Recoil = _weapon.GetRecoil().BaseValue;
+                    hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
                 }
 
                 if (hitData.Validate())
@@ -56,29 +66,30 @@ namespace Runtime.Utilities.Collision
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                     
-                    Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                    DrawLine(launchPoint.position, ray.GetPoint(weapon.GetRange().BaseValue) + offset);
+                    //Draw hitscan line.
+                    SetLine(_launchPoint.position, hitData.HitPoint);
+                    CoroutineRunner.Singleton.StartCoroutine(DrawHitscan());
                     
                     return true;
                 }
             }
             
-            //TODO: IMPLEMENT LINE RENDERER FOR SPREAD
-            // lr.StartCoroutine(Hitscan());
+            SetLine(_launchPoint.position,  Vector3.Normalize(_camera.transform.forward + offset) * _weapon.GetRange().BaseValue);
+            CoroutineRunner.Singleton.StartCoroutine(DrawHitscan());
             return false;
         }
         
-        private void DrawLine(Vector3 start, Vector3 end)
+        private void SetLine(Vector3 start, Vector3 end)
         {
-            lr.SetPosition(0, start);
-            lr.SetPosition(1, end);
+            _lineRenderer.SetPosition(0, start);
+            _lineRenderer.SetPosition(1, end);
         }
         
-        IEnumerator Hitscan()
+        IEnumerator DrawHitscan()
         {
-            lr.enabled = true;
+            _lineRenderer.enabled = true;
             yield return new WaitForSeconds(0.3f);
-            lr.enabled = false;
+            _lineRenderer.enabled = false;
         }
     }
 }

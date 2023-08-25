@@ -30,6 +30,7 @@ namespace Runtime.RunTimeTests.TestCollision
         [SerializeField] private GameObject hitParticlePrefab;
 
         private List<GameObject> hitObjects = new List<GameObject>();
+        private HitDetectorInfo hitDetectorInfo;
 
         public int Damage => m_damage;
 
@@ -44,6 +45,7 @@ namespace Runtime.RunTimeTests.TestCollision
 
             //Collision-related.
             hitbox_RightHand.HitResponder = this;
+            hitDetectorInfo = new HitDetectorInfo();
         }
 
         private void Update()
@@ -57,7 +59,7 @@ namespace Runtime.RunTimeTests.TestCollision
             //Collision-related.
             if (punching)
             {
-                hitbox_RightHand.CheckHit();
+                hitbox_RightHand.CheckHit(hitDetectorInfo);
             }
         }
 

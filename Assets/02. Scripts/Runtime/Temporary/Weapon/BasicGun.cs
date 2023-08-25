@@ -56,7 +56,7 @@ namespace Runtime.Temporary.Weapon
             cam = Camera.main;
             lr = GetComponent<LineRenderer>();
 
-            hitScan = new HitScan(cam, range, layer, this);
+            // hitScan = new HitScan(cam, range, layer, this);
         }
 
         public void Update()
@@ -80,11 +80,11 @@ namespace Runtime.Temporary.Weapon
         {
             if (type == WeaponType.Hitscan)
             {
-                if (!hitScan.CheckHit())
-                {
-                    Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                    DrawLine(launchPoint.position, ray.GetPoint(range));
-                }
+                // if (!hitScan.CheckHit())
+                // {
+                //     Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+                //     DrawLine(launchPoint.position, ray.GetPoint(range));
+                // }
                 StartCoroutine(Hitscan());
             }
             else
@@ -105,9 +105,8 @@ namespace Runtime.Temporary.Weapon
                 p.transform.position = launchPoint.position;
                 p.GetComponent<Rigidbody>().velocity = (destination - launchPoint.position).normalized * proj.speed;
             }
-
-
         }
+        
         IEnumerator Hitscan()
         {
             lr.enabled = true;
