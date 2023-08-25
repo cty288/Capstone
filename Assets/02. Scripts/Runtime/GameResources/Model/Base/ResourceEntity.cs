@@ -27,7 +27,6 @@ namespace Runtime.GameResources.Model.Base {
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
-			
 			RegisterInitialProperty<IMaxStack>(new MaxStack());
 		}
 

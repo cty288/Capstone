@@ -13,7 +13,7 @@ namespace Runtime.RunTimeTests.TestMaterial {
 	
 
 	public class TestBasicRawMaterial : RawMaterialEntity<TestBasicRawMaterial> {
-		public override string EntityName { get; protected set; } = "TestRaw";
+		public override string EntityName { get; set; } = "TestRaw";
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return null;

@@ -7,8 +7,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         public string ID { get; }
     
         public IEntity Entity { get; }
+        
+        public void InitWithID(string id);
     
-        public void Init(string id, IEntity entity);
+        //public void Init(string id, IEntity entity);
     }
 
     public interface IEnemyViewController : IEntityViewController {

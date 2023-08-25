@@ -22,7 +22,7 @@ namespace Tests.Tests_Editor {
 
         internal class TestBasicEnemy : EnemyEntity<TestBasicEnemy> {
             [field: ES3Serializable]
-            public override string EntityName { get; protected set; } = "TestEnemy2";
+            public override string EntityName { get; set; } = "TestEnemy2";
 
             protected override string OnGetDescription(string defaultLocalizationKey) {
                 return null;
@@ -49,7 +49,7 @@ namespace Tests.Tests_Editor {
         
         internal class TestFriendlyEntity : AbstractCreature {
             [field: ES3Serializable]
-            public override string EntityName { get; protected set; } = "TestEnemy2";
+            public override string EntityName { get; set; } = "TestEnemy2";
 
             protected override ConfigTable GetConfigTable() {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
