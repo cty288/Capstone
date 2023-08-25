@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
 using UnityEditor;
@@ -18,7 +19,7 @@ namespace Runtime.Utilities.Collision
         private Vector3 offset = Vector3.zero;
         private Transform _launchPoint;
         private Camera _camera;
-        private LineRenderer _lineRenderer;
+        private List<LineRenderer> _lineRenderers;
         private LayerMask _layer;
         private IWeaponEntity _weapon;
 
@@ -31,15 +32,23 @@ namespace Runtime.Utilities.Collision
         /// Called every frame to check for Raycast collision.
         /// </summary>
         /// <returns>Returns true if hit detected.</returns>
-        public bool CheckHit(HitDetectorInfo hitDetectorInfo)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo)
         {
             // Debug.Log("checkhit");
             _launchPoint = hitDetectorInfo.launchPoint;
             _camera = hitDetectorInfo.camera;
-            _lineRenderer = hitDetectorInfo.lineRenderer;
+            _lineRenderers = hitDetectorInfo.lineRenderers;
             _layer = hitDetectorInfo.layer;
             _weapon = hitDetectorInfo.weapon;
-            
+
+            foreach (LineRenderer lr in _lineRenderers)
+            {
+                ShootRay(lr);
+            }
+        }
+
+        private void ShootRay(LineRenderer lr)
+        {
             Vector3 origin = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
             //TODO: Adjust spread to be less random and less punishing when further away [?].
             offset[0] = Random.Range(-_weapon.GetSpread().BaseValue, _weapon.GetSpread().BaseValue);
@@ -48,8 +57,8 @@ namespace Runtime.Utilities.Collision
             
             HitData hitData = null;
             RaycastHit hit;
-            
-            if (Physics.Raycast(origin, Vector3.Normalize(_camera.transform.forward + offset), out hit, _weapon.GetRange().BaseValue, _layer))
+            if (Physics.Raycast(origin, Vector3.Normalize(_camera.transform.forward + offset), out hit,
+                    _weapon.GetRange().BaseValue, _layer))
             {
                 // Debug.Log("hit");
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
@@ -65,31 +74,31 @@ namespace Runtime.Utilities.Collision
                     // Debug.Log("validate");
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
-                    
+
                     //Draw hitscan line.
-                    SetLine(_launchPoint.position, hitData.HitPoint);
-                    CoroutineRunner.Singleton.StartCoroutine(DrawHitscan());
-                    
-                    return true;
+                    SetLine(lr, _launchPoint.position, hitData.HitPoint);
+                    Debug.Log("hit");
+                    CoroutineRunner.Singleton.StartCoroutine(DrawHitscan(lr));
                 }
             }
-            
-            SetLine(_launchPoint.position,  Vector3.Normalize(_camera.transform.forward + offset) * _weapon.GetRange().BaseValue);
-            CoroutineRunner.Singleton.StartCoroutine(DrawHitscan());
-            return false;
+            else
+            {
+                SetLine(lr, _launchPoint.position, Vector3.Normalize(_camera.transform.forward + offset) * _weapon.GetRange().BaseValue);
+                CoroutineRunner.Singleton.StartCoroutine(DrawHitscan(lr));
+            }
+        }
+
+        private void SetLine(LineRenderer lr, Vector3 start, Vector3 end)
+        {
+            lr.SetPosition(0, start);
+            lr.SetPosition(1, end);
         }
         
-        private void SetLine(Vector3 start, Vector3 end)
+        IEnumerator DrawHitscan(LineRenderer lr)
         {
-            _lineRenderer.SetPosition(0, start);
-            _lineRenderer.SetPosition(1, end);
-        }
-        
-        IEnumerator DrawHitscan()
-        {
-            _lineRenderer.enabled = true;
+            lr.enabled = true;
             yield return new WaitForSeconds(0.3f);
-            _lineRenderer.enabled = false;
+            lr.enabled = false;
         }
     }
 }

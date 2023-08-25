@@ -29,7 +29,7 @@ namespace Runtime.DataFramework.Properties
 		range,
 		ammo_size,
 		reload_speed,
-		bullet_per_shot,
+		bullets_per_shot,
 		spread,
 		recoil,
 		charge_speed,

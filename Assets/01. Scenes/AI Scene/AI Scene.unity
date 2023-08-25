@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoRemoveEntityWhenDestroyed: 1
+  lineRendererPrefab: {fileID: 0}
   layer:
     serializedVersion: 2
     m_Bits: 0
@@ -408,6 +409,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoRemoveEntityWhenDestroyed: 1
+  lineRendererPrefab: {fileID: 3737558337171688241, guid: 674d441af292d8847aa95a0c7fad699a,
+    type: 3}
   layer:
     serializedVersion: 2
     m_Bits: 128
@@ -1165,9 +1168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_collider: {fileID: 908874548}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!65 &908874548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2405,7 +2405,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5324266518941998410, guid: d808818389e67a940ac2b47a4fba4ccf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d808818389e67a940ac2b47a4fba4ccf, type: 3}
 --- !u!1 &1553902655
 GameObject:
@@ -3900,9 +3901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_collider: {fileID: 2107604497}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!65 &2107604497
 BoxCollider:
   m_ObjectHideFlags: 0

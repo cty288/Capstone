@@ -15,7 +15,7 @@ namespace Runtime.Weapons.Model.Base
         public IRange GetRange();
         public IAmmoSize GetAmmoSize();
         public IReloadSpeed GetReloadSpeed();
-        public IBulletPerShot GetBulletPerShot();
+        public IBulletsPerShot GetBulletsPerShot();
         public ISpread GetSpread();
         public IRecoil GetRecoil();
         public IBulletSpeed GetBulletSpeed();
@@ -28,7 +28,7 @@ namespace Runtime.Weapons.Model.Base
         private IRange rangeProperty;
         private IAmmoSize ammoSizeProperty;
         private IReloadSpeed reloadSpeedProperty;
-        private IBulletPerShot bulletPerShotProperty;
+        private IBulletsPerShot bulletsPerShotProperty;
         private ISpread spreadProperty;
         private IRecoil recoilProperty;
         private IBulletSpeed bulletSpeedProperty;
@@ -45,7 +45,7 @@ namespace Runtime.Weapons.Model.Base
             rangeProperty = GetProperty<IRange>();
             ammoSizeProperty = GetProperty<IAmmoSize>();
             reloadSpeedProperty = GetProperty<IReloadSpeed>();
-            bulletPerShotProperty = GetProperty<IBulletPerShot>();
+            bulletsPerShotProperty = GetProperty<IBulletsPerShot>();
             spreadProperty = GetProperty<ISpread>();
             recoilProperty = GetProperty<IRecoil>();
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
@@ -62,7 +62,7 @@ namespace Runtime.Weapons.Model.Base
             RegisterInitialProperty<IRange>(new Range());
             RegisterInitialProperty<IAmmoSize>(new AmmoSize());
             RegisterInitialProperty<IReloadSpeed>(new ReloadSpeed());
-            RegisterInitialProperty<IBulletPerShot>(new BulletPerShot());
+            RegisterInitialProperty<IBulletsPerShot>(new BulletsPerShot());
             RegisterInitialProperty<ISpread>(new Spread());
             RegisterInitialProperty<IRecoil>(new Recoil());
             RegisterInitialProperty<IBulletSpeed>(new BulletSpeed());
@@ -94,9 +94,9 @@ namespace Runtime.Weapons.Model.Base
             return reloadSpeedProperty;
         }
         
-        public IBulletPerShot GetBulletPerShot()
+        public IBulletsPerShot GetBulletsPerShot()
         {
-            return bulletPerShotProperty;
+            return bulletsPerShotProperty;
         }
         
         public ISpread GetSpread()

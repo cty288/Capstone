@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
+using JetBrains.Annotations;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Temporary.Player;
@@ -34,7 +36,8 @@ namespace Runtime.Weapons
     public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
     {
         private Camera cam;
-        protected LineRenderer lr;
+        public GameObject lineRendererPrefab;
+        private List<LineRenderer> lineRenderers;
         public LayerMask layer;
         
         [Header("Timers & Counters")]
@@ -58,14 +61,20 @@ namespace Runtime.Weapons
         {
             base.Start();
             cam = Camera.main;
-            lr = GetComponent<LineRenderer>();
+            
+            lineRenderers = new List<LineRenderer>();
+            for (int i = 0; i < BoundEntity.GetBulletsPerShot().BaseValue; i++)
+            {
+                Debug.Log("adding line renderer");
+                lineRenderers.Add(Instantiate(lineRendererPrefab, transform).GetComponent<LineRenderer>());
+            }
             
             hitScan = new HitScan(this);
             hitDetectorInfo = new HitDetectorInfo
             {
                 camera = cam,
                 layer = layer,
-                lineRenderer = lr,
+                lineRenderers = lineRenderers,
                 launchPoint = launchPoint,
                 weapon = BoundEntity
             };

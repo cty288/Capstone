@@ -23,7 +23,7 @@ namespace Runtime.Utilities.Collision
         /// Creates a HitData object that is sent to the HitResponder and HurtResponder, invoking their responses.
         /// </summary>
         /// <returns>Returns true if a hit is detected.</returns>
-        public bool CheckHit(HitDetectorInfo hitDetectorInfo)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo)
         {
             Vector3 scaledSize = new Vector3(
                 m_collider.size.x * transform.lossyScale.x,
@@ -55,11 +55,6 @@ namespace Runtime.Utilities.Collision
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                 }
             }
-
-            if (hits.Length > 0)
-                return true;
-            else
-                return false;
         }
     }
 }

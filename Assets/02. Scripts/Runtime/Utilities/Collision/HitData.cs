@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Utilities.Collision
 {
@@ -85,7 +87,7 @@ namespace Runtime.Utilities.Collision
     {
         public Camera camera;
         public LayerMask layer;
-        public LineRenderer lineRenderer;
+        public List<LineRenderer> lineRenderers;
         public Transform launchPoint;
         public IWeaponEntity weapon;
     }
@@ -96,7 +98,7 @@ namespace Runtime.Utilities.Collision
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public bool CheckHit(HitDetectorInfo hitDetectorInfo); //HitDetectorInfo only required for HitScan right now.
+        public void CheckHit(HitDetectorInfo hitDetectorInfo); //HitDetectorInfo only required for HitScan right now.
     }
 
     /// <summary>
