@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using Tooltip = BehaviorDesigner.Runtime.Tasks.TooltipAttribute;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
