@@ -7,6 +7,7 @@ namespace Runtime.DataFramework.Properties {
 		attack_range,
 		bait_adjectives,
 		max_stack,
+		stack_size,
 		custom_properties,
 		custom_property,
 		custom_property_data,

@@ -1,10 +1,8 @@
-﻿using MikroFramework;
-using Runtime.DataFramework.Entities;
-using Runtime.Enemies.Model.Builders;
+﻿using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Model.Builder;
 
-namespace Runtime.GameResources.ViewControllers.Instances {
+namespace Runtime.GameResources.ViewControllers {
 	public abstract class AbstractRawMaterialViewController<T> : AbstractResourceViewController<T, IGameResourceModel> 
 		where  T : class, IRawMaterialEntity, new(){
 		

@@ -5,7 +5,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Model.Builder;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
-using Runtime.GameResources.ViewControllers.Instances;
+using Runtime.GameResources.ViewControllers;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 

@@ -103,6 +103,8 @@ namespace Tests.Tests_Editor {
 			Assert.AreEqual("Test Empty", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(0, ent.GetBaitAdjectivesProperty().RealValues.Count);
+			Assert.AreEqual(new Vector2Int(1,3), ent.GetStackSizeProperty().RealValue.Value);
+			
 			
 			ES3.Save("test_save_raw_material_2", ent, "test_save");
 			model.RemoveEntity(ent.UUID);
