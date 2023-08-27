@@ -22,8 +22,8 @@ namespace Runtime.GameResources.ViewControllers.Instances.Instances {
 		protected override void OnBindEntityProperty() {
 			
 		}
-
-		protected override IEntity OnInitEnemyEntity(RawMaterialBuilder<CommonRawMaterialEntity> builder) {
+ 
+		protected override IEntity OnInitResourceEntity(RawMaterialBuilder<CommonRawMaterialEntity> builder) {
 			return builder.OverrideName(entityName).FromConfig().Build();
 		}
 	}

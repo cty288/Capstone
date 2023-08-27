@@ -10,9 +10,9 @@ namespace Runtime.GameResources.ViewControllers.Instances {
 		
 		protected override IEntity OnInitEntity() {
 			RawMaterialBuilder<T> builder = entityModel.GetRawMaterialBuilder<T>();
-			return OnInitEnemyEntity(builder);
+			return OnInitResourceEntity(builder);
 		}
 
-		protected abstract IEntity OnInitEnemyEntity(RawMaterialBuilder<T> builder);
+		protected abstract IEntity OnInitResourceEntity(RawMaterialBuilder<T> builder);
 	}
 }

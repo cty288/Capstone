@@ -38,10 +38,7 @@ namespace Runtime.RunTimeTests.TestMaterial {
 				((MainGame) MainGame.Interface).SaveGame();
 			}
 		}
-
-		/*protected override void OnDisplayNameUpdate(string displayName) {
-			Debug.Log("display name update: " + displayName);
-		}*/
+		
 
 		protected override void OnEntityStart() {
 			
@@ -51,7 +48,7 @@ namespace Runtime.RunTimeTests.TestMaterial {
 			
 		}
 
-		protected override IEntity OnInitEnemyEntity(RawMaterialBuilder<TestBasicRawMaterial> builder) {
+		protected override IEntity OnInitResourceEntity(RawMaterialBuilder<TestBasicRawMaterial> builder) {
 			return builder.FromConfig().AddBaitAdjective(BaitAdjective.Test_Adjective_3).Build();
 		}
 	}
