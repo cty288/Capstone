@@ -110,7 +110,7 @@ half4 DepthNormalsFragment(Varyings input) : SV_TARGET
             ApplyPerPixelDisplacement(viewDirTS, uv);
         #endif
 
-        #if defined(_NORMALMAP) || defined(_DETAIL)
+        /*#if defined(_NORMALMAP) || defined(_DETAIL)
             float sgn = input.tangentWS.w;      // should be either +1 or -1
             float3 bitangent = sgn * cross(input.normalWS.xyz, input.tangentWS.xyz);
             float3 normalTS = SampleNormal(uv * _BumpMap_ST.xy + _BumpMap_ST.zw, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
@@ -124,7 +124,9 @@ half4 DepthNormalsFragment(Varyings input) : SV_TARGET
             float3 normalWS = TransformTangentToWorld(normalTS, half3x3(input.tangentWS.xyz, bitangent.xyz, input.normalWS.xyz));
         #else
             float3 normalWS = input.normalWS;
-        #endif
+        #endif*/
+
+        float3 normalWS = input.normalWS;
 
         return half4(NormalizeNormalPerPixel(normalWS), 0.0);
     #endif
