@@ -10,19 +10,35 @@ If no levels, use negative numbers to represent"
 BEGIN,,,,,
 TestRaw,5,"[""Test_Adjective_1"", ""Test_Adjective_2""]",20,"{
   ""attack1"": {
-    ""speed"": 100,
+    ""speed"": {
+      ""type"": ""int"",
+      ""value"": 100
+    },
     ""info"": {
-       ""test"": 2.5 
-     },
-    ""damage"": 900
+      ""type"": ""dynamic"",
+      ""value"": {
+        ""test"": 2.5
+      }
+    },
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 900
+    }
   },
   ""attack2"": {
-    ""damage"": 4
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 4
+    }
   },
   ""attack3"": {
-    ""damage"": 50
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 50
+    }
   }
-}","{
+}
+","{
   ""Test_Flame"": 3,
   ""Test_Ice"": -1
 }"
