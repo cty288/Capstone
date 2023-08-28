@@ -3,6 +3,7 @@ using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.TagProperty;
+using Runtime.Utilities.ConfigSheet;
 
 namespace Runtime.DataFramework.Entities.Builders {
     public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable 
@@ -25,10 +26,16 @@ namespace Runtime.DataFramework.Entities.Builders {
                 Entity = SafeObjectPool<TEntity>.Singleton.Allocate();
             }
         }
-
-        public TBuilder FromConfig() {
+        
+        public TBuilder OverrideName(string name) {
             CheckEntity();
-            Entity.LoadPropertyBaseValueFromConfig();
+            Entity.EntityName = name;
+            return (TBuilder) this;
+        }
+
+        public TBuilder FromConfig(ConfigTable overrideTable = null) {
+            CheckEntity();
+            Entity.LoadPropertyBaseValueFromConfig(overrideTable);
             return (TBuilder) this;
         }
 

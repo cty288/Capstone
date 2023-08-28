@@ -6,6 +6,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using UnityEngine;
@@ -25,6 +26,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		IEntity IEntityViewController.Entity => BoundEntity;
 
+
 		protected TEntityModel entityModel;
 		
 		protected T BoundEntity { get; private set; }
@@ -32,13 +34,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private Dictionary<PropertyInfo, Func<dynamic>> propertyBindings = new Dictionary<PropertyInfo, Func<dynamic>>();
 		private Dictionary<PropertyInfo, FieldInfo> propertyFields = new Dictionary<PropertyInfo, FieldInfo>();
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
-
-		//private Type type;
-		public void Init(string id, IEntity entity) {
-			ID = id;
-			BoundEntity = entity as T;
-		}
 		
+
 		protected virtual void Awake() {
 			entityModel = this.GetModel<TEntityModel>();
 			//type = typeof(T);
@@ -49,16 +46,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			OnEntityStart();
 		}
 
-		protected virtual void OnStart() {
-			if (string.IsNullOrEmpty(ID)) {
-				//Debug.LogError("ID for enemy is null or empty! Do not instantiate enemy view controller directly! " +
-				//               "Use EntityBuilderFactory instead!");
-				//return;
-				//first time init
-				IEntity entity = OnInitEntity();
-				Init(entity.UUID, entity);
-			}
+		public void InitWithID(string id) {
+			ID = id;
 			BoundEntity = entityModel.GetEntity(ID) as T;
+		}
+		
+		protected virtual void OnStart() {
+			string id = ID;
+			if (string.IsNullOrEmpty(ID)) {
+				IEntity entity = OnInitEntity();
+				id = entity.UUID;
+			}
+			InitWithID(id);
 			OnBindProperty();
 		}
 

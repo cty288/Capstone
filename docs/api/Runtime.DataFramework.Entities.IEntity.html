@@ -144,7 +144,7 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string EntityName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">string EntityName { get; set; }</code></pre>
   </div>
 
 
@@ -463,8 +463,8 @@ This will auto convert the property to the given type</p>
 
   <a id="Runtime_DataFramework_Entities_IEntity_LoadPropertyBaseValueFromConfig_" data-uid="Runtime.DataFramework.Entities.IEntity.LoadPropertyBaseValueFromConfig*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_IEntity_LoadPropertyBaseValueFromConfig" data-uid="Runtime.DataFramework.Entities.IEntity.LoadPropertyBaseValueFromConfig">
-  LoadPropertyBaseValueFromConfig()
+  <h3 id="Runtime_DataFramework_Entities_IEntity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_" data-uid="Runtime.DataFramework.Entities.IEntity.LoadPropertyBaseValueFromConfig(Runtime.Utilities.ConfigSheet.ConfigTable)">
+  LoadPropertyBaseValueFromConfig(ConfigTable)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L114"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -472,9 +472,14 @@ This will auto convert the property to the given type</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void LoadPropertyBaseValueFromConfig()</code></pre>
+    <pre><code class="lang-csharp hljs">void LoadPropertyBaseValueFromConfig(ConfigTable overrideTable = null)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>overrideTable</code> <a class="xref" href="Runtime.Utilities.ConfigSheet.ConfigTable.html">ConfigTable</a></dt>
+    <dd></dd>
+  </dl>
 
 
 

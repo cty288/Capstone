@@ -8,6 +8,8 @@ using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Properties;
 using Runtime.GameResources.Model.Base;
+using Runtime.RawMaterials.Model.Base;
+using Runtime.RawMaterials.Model.Instances;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -16,7 +18,7 @@ namespace Tests.Tests_Editor {
 	
 	internal class TestBasicRawMaterial : RawMaterialEntity<TestBasicRawMaterial> {
 		[field: ES3Serializable]
-		public override string EntityName { get; protected set; } = "TestRaw";
+		public override string EntityName { get; set; } = "TestRaw";
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return null;
@@ -36,7 +38,7 @@ namespace Tests.Tests_Editor {
 	
 	internal class TestEmptyRawMaterial : RawMaterialEntity<TestBasicRawMaterial> {
 		[field: ES3Serializable]
-		public override string EntityName { get; protected set; } = "TestRaw2";
+		public override string EntityName { get; set; } = "TestRaw2";
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return null;
@@ -54,12 +56,14 @@ namespace Tests.Tests_Editor {
 		}
 	}
 	
+	//public class TestResourceAdditionalModel
+	
 	//=======================================================================================
 	
 	public class TestResources {
 		[Test]
 		public void TestBasicRawMaterialProperties() {
-			IGameResourceModel model = MainGame_Test.Interface.GetModel<IGameResourceModel>();
+			IRawMaterialModel model = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
 
 
 			TestBasicRawMaterial ent = model.GetRawMaterialBuilder<TestBasicRawMaterial>()
@@ -91,7 +95,7 @@ namespace Tests.Tests_Editor {
 		
 		[Test]
 		public void TestEmptyRawMaterialProperties() {
-			IGameResourceModel model = MainGame_Test.Interface.GetModel<IGameResourceModel>();
+			IRawMaterialModel model = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
 
 
 			TestEmptyRawMaterial ent = model.GetRawMaterialBuilder<TestEmptyRawMaterial>()
@@ -118,6 +122,39 @@ namespace Tests.Tests_Editor {
             
             
 			ES3.DeleteKey("test_save_raw_material_2", "test_save");
+		}
+		
+		
+		[Test]
+		public void TestCommonRawMaterialEntityData() {
+			IRawMaterialModel model = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
+
+
+			CommonRawMaterialEntity ent = model.GetRawMaterialBuilder<CommonRawMaterialEntity>()
+				.OverrideName("TestRaw")
+				.FromConfig(ConfigDatas.Singleton.RawMaterialEntityConfigTable_Test)
+				.Build();
+			
+			Assert.AreEqual(5, ent.GetRarity());
+			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
+			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
+			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
+			
+			ES3.Save("test_save_raw_material_1", ent, "test_save");
+			model.RemoveEntity(ent.UUID);
+            
+			ent = ES3.Load<CommonRawMaterialEntity>("test_save_raw_material_1", "test_save");
+			ent.OnLoadFromSave();
+			
+			Assert.IsNotNull(ent);
+            
+			Assert.AreEqual(5, ent.GetRarity());
+			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
+			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
+			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
+            
+            
+			ES3.DeleteKey("test_save_raw_material_1", "test_save");
 		}
 	}
 }

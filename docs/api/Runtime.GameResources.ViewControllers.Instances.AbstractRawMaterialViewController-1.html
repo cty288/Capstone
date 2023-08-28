@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_GameResources_ViewControllers_Instances_AbstractRawMaterialViewController_1" data-uid="Runtime.GameResources.ViewControllers.Instances.AbstractRawMaterialViewController`1" class="text-break">
     Class AbstractRawMaterialViewController&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/Instances/AbstractRawMaterialViewController.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/AbstractRawMaterialViewController.cs/#L8"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractRawMaterialViewController&lt;T&gt; : AbstractResourceViewController&lt;T&gt;, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture where T : class, IRawMaterialEntity, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AbstractRawMaterialViewController&lt;T&gt; : AbstractResourceViewController&lt;T, IGameResourceModel&gt;, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture where T : class, IRawMaterialEntity, new()</code></pre>
   </div>
 
 
@@ -117,7 +117,7 @@
       <div><a class="xref" href="MikroFramework.Architecture.AbstractMikroController-1.html">AbstractMikroController</a>&lt;<a class="xref" href="Framework.MainGame.html">MainGame</a>&gt;</div>
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-2.html">AbstractEntityViewController</a>&lt;T, <a class="xref" href="Runtime.GameResources.Model.Base.IGameResourceModel.html">IGameResourceModel</a>&gt;</div>
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-2.html">AbstractBasicEntityViewController</a>&lt;T, <a class="xref" href="Runtime.GameResources.Model.Base.IGameResourceModel.html">IGameResourceModel</a>&gt;</div>
-      <div><a class="xref" href="Runtime.GameResources.ViewControllers.Instances.AbstractResourceViewController-1.html">AbstractResourceViewController</a>&lt;T&gt;</div>
+      <div><a class="xref" href="Runtime.GameResources.ViewControllers.Instances.AbstractResourceViewController-2.html">AbstractResourceViewController</a>&lt;T, <a class="xref" href="Runtime.GameResources.Model.Base.IGameResourceModel.html">IGameResourceModel</a>&gt;</div>
       <div><span class="xref">AbstractRawMaterialViewController&lt;T&gt;</span></div>
     </dd>
   </dl>
@@ -137,25 +137,16 @@
     </dd>
   </dl>
 
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.GameResources.ViewControllers.Instances.Instances.CommonRawMaterialViewController.html">CommonRawMaterialViewController</a></div>
+    </dd>
+  </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
-    <div>
-      <a class="xref" href="Runtime.GameResources.ViewControllers.Instances.AbstractResourceViewController-1.html#Runtime_GameResources_ViewControllers_Instances_AbstractResourceViewController_1_OnEntityStart">AbstractResourceViewController&lt;T&gt;.OnEntityStart()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.ViewControllers.Instances.AbstractResourceViewController-1.html#Runtime_GameResources_ViewControllers_Instances_AbstractResourceViewController_1_OnStart">AbstractResourceViewController&lt;T&gt;.OnStart()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.ViewControllers.Instances.AbstractResourceViewController-1.html#Runtime_GameResources_ViewControllers_Instances_AbstractResourceViewController_1_OnBaitAdjectivesRemove_Runtime_GameResources_Model_Properties_BaitAdjectives_BaitAdjective_">AbstractResourceViewController&lt;T&gt;.OnBaitAdjectivesRemove(BaitAdjective)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.ViewControllers.Instances.AbstractResourceViewController-1.html#Runtime_GameResources_ViewControllers_Instances_AbstractResourceViewController_1_OnBaitAdjectivesAdd_Runtime_GameResources_Model_Properties_BaitAdjectives_BaitAdjective_">AbstractResourceViewController&lt;T&gt;.OnBaitAdjectivesAdd(BaitAdjective)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.ViewControllers.Instances.AbstractResourceViewController-1.html#Runtime_GameResources_ViewControllers_Instances_AbstractResourceViewController_1_OnDisplayNameUpdate_System_String_">AbstractResourceViewController&lt;T&gt;.OnDisplayNameUpdate(string)</a>
-    </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-2.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_2_BindCustomData__1_System_String_System_String_System_String_System_Action___0___0__">AbstractBasicEntityViewController&lt;T, IGameResourceModel&gt;.BindCustomData&lt;T&gt;(string, string, string, Action&lt;T, T&gt;)</a>
     </div>
@@ -178,13 +169,13 @@
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-2.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_2_properties">AbstractEntityViewController&lt;T, IGameResourceModel&gt;.properties</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-2.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_2_Init_System_String_Runtime_DataFramework_Entities_IEntity_">AbstractEntityViewController&lt;T, IGameResourceModel&gt;.Init(string, IEntity)</a>
-    </div>
-    <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-2.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_2_Awake">AbstractEntityViewController&lt;T, IGameResourceModel&gt;.Awake()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-2.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_2_Start">AbstractEntityViewController&lt;T, IGameResourceModel&gt;.Start()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-2.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_2_InitWithID_System_String_">AbstractEntityViewController&lt;T, IGameResourceModel&gt;.InitWithID(string)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-2.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_2_OnStart">AbstractEntityViewController&lt;T, IGameResourceModel&gt;.OnStart()</a>
@@ -600,47 +591,11 @@
 </h2>
 
 
-  <a id="Runtime_GameResources_ViewControllers_Instances_AbstractRawMaterialViewController_1_OnInitEnemyEntity_" data-uid="Runtime.GameResources.ViewControllers.Instances.AbstractRawMaterialViewController`1.OnInitEnemyEntity*"></a>
-
-  <h3 id="Runtime_GameResources_ViewControllers_Instances_AbstractRawMaterialViewController_1_OnInitEnemyEntity_Runtime_GameResources_Model_Builder_RawMaterialBuilder__0__" data-uid="Runtime.GameResources.ViewControllers.Instances.AbstractRawMaterialViewController`1.OnInitEnemyEntity(Runtime.GameResources.Model.Builder.RawMaterialBuilder{`0})">
-  OnInitEnemyEntity(RawMaterialBuilder&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/Instances/AbstractRawMaterialViewController.cs/#L33"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected abstract IEntity OnInitEnemyEntity(RawMaterialBuilder&lt;T&gt; builder)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>builder</code> <a class="xref" href="Runtime.GameResources.Model.Builder.RawMaterialBuilder-1.html">RawMaterialBuilder</a>&lt;T&gt;</dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
   <a id="Runtime_GameResources_ViewControllers_Instances_AbstractRawMaterialViewController_1_OnInitEntity_" data-uid="Runtime.GameResources.ViewControllers.Instances.AbstractRawMaterialViewController`1.OnInitEntity*"></a>
 
   <h3 id="Runtime_GameResources_ViewControllers_Instances_AbstractRawMaterialViewController_1_OnInitEntity" data-uid="Runtime.GameResources.ViewControllers.Instances.AbstractRawMaterialViewController`1.OnInitEntity">
   OnInitEntity()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/Instances/AbstractRawMaterialViewController.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/AbstractRawMaterialViewController.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -667,11 +622,47 @@
 
 
 
+  <a id="Runtime_GameResources_ViewControllers_Instances_AbstractRawMaterialViewController_1_OnInitResourceEntity_" data-uid="Runtime.GameResources.ViewControllers.Instances.AbstractRawMaterialViewController`1.OnInitResourceEntity*"></a>
+
+  <h3 id="Runtime_GameResources_ViewControllers_Instances_AbstractRawMaterialViewController_1_OnInitResourceEntity_Runtime_GameResources_Model_Builder_RawMaterialBuilder__0__" data-uid="Runtime.GameResources.ViewControllers.Instances.AbstractRawMaterialViewController`1.OnInitResourceEntity(Runtime.GameResources.Model.Builder.RawMaterialBuilder{`0})">
+  OnInitResourceEntity(RawMaterialBuilder&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/AbstractRawMaterialViewController.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract IEntity OnInitResourceEntity(RawMaterialBuilder&lt;T&gt; builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="Runtime.GameResources.Model.Builder.RawMaterialBuilder-1.html">RawMaterialBuilder</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/Instances/AbstractRawMaterialViewController.cs/#L10" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/AbstractRawMaterialViewController.cs/#L8" class="edit-link">Edit this page</a>
         </div>
 
         

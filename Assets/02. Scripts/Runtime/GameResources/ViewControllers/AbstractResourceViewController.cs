@@ -5,7 +5,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Model.Builder;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
 
-namespace Runtime.GameResources.ViewControllers.Instances {
+namespace Runtime.GameResources.ViewControllers {
 	public abstract class AbstractResourceViewController<T, TEntityModel>: AbstractBasicEntityViewController<T, TEntityModel>
 	where  T : class, IResourceEntity, new()
 	where TEntityModel: class, IEntityModel {

@@ -13,7 +13,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Runtime.DataFramework.Entities {
 	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName  {
 	
-		public string EntityName { get; }
+		public string EntityName { get; set; }
 		/// <summary>
 		/// Register a property to the entity. This must be called before the entity is initialized
 		/// To register a property after the entity is initialized, use RegisterTempProperty
@@ -111,7 +111,7 @@ namespace Runtime.DataFramework.Entities {
 	
 		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier);
 
-		public void LoadPropertyBaseValueFromConfig();
+		public void LoadPropertyBaseValueFromConfig(ConfigTable overrideTable = null);
 
 
 		/// <summary>
@@ -125,7 +125,7 @@ namespace Runtime.DataFramework.Entities {
 
 
 	public abstract class Entity :  IEntity  {
-		public abstract string EntityName { get; protected set; }
+		public abstract string EntityName { get; set; }
 	
 		[ES3NonSerializable]
 		private Dictionary<string, IPropertyBase> _allProperties { get; } =
@@ -303,12 +303,13 @@ namespace Runtime.DataFramework.Entities {
 			}
 		}
 
-		public void LoadPropertyBaseValueFromConfig() {
+		public void LoadPropertyBaseValueFromConfig(ConfigTable overrideTable = null) {
 			int i = 0;
+			ConfigTable targetTable = overrideTable ?? configTable;
 			while (i < _allProperties.Count) {
 				IPropertyBase property = _allProperties.ElementAt(i).Value;
 				if(property is ILoadFromConfigProperty loadFromConfigProperty) {
-					dynamic value = configTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
+					dynamic value = targetTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
 					if (value is not null) {
 						loadFromConfigProperty.LoadFromConfig(value);
 					}

@@ -14,7 +14,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Tests.Tests_Editor {
 	public class TestCustomProperty {
 		internal class TestBasicEnemyWithCustomProperties1 : EnemyEntity<TestBasicEnemyWithCustomProperties1> {
-			public override string EntityName { get; protected set; } = "TTT";
+			public override string EntityName { get; set; } = "TTT";
 
 			public override void OnRecycle() {
             
@@ -70,7 +70,7 @@ namespace Tests.Tests_Editor {
 		}
 		public class TestEntity : EnemyEntity<TestEntity> {
 			[field: SerializeField]
-			public override string EntityName { get; protected set; } = "TTT2";
+			public override string EntityName { get; set; } = "TTT2";
 			public override void OnRecycle() {
         
 			}

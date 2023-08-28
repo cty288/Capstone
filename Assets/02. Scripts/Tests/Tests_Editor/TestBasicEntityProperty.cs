@@ -19,7 +19,7 @@ namespace Tests.Tests_Editor {
 	public class TestBasicEntityProperty {
 		internal class BasicEntity : Entity {
 			
-			public override string EntityName { get; protected set; } = "TestEntity";
+			public override string EntityName { get; set; } = "TestEntity";
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty<IRarityProperty>(new Rarity());
 				RegisterInitialProperty<IDangerProperty>(new TestDanger());
@@ -45,7 +45,7 @@ namespace Tests.Tests_Editor {
 		}
 
 		public class TestEnemy : Entity {
-			public override string EntityName { get; protected set; } = "TestEnemy";
+			public override string EntityName { get; set; } = "TestEnemy";
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
@@ -78,7 +78,7 @@ namespace Tests.Tests_Editor {
 		}
 		
 		public class TestResourceTableEnemy : Entity {
-			public override string EntityName { get; protected set; } = "TestEnemy";
+			public override string EntityName { get; set; } = "TestEnemy";
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
@@ -111,7 +111,7 @@ namespace Tests.Tests_Editor {
 		}
 		
 		public class TestResourceDictEnemy : Entity {
-			public override string EntityName { get; protected set; } = "TestDictEnemy";
+			public override string EntityName { get; set; } = "TestDictEnemy";
 			
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
@@ -350,7 +350,7 @@ namespace Tests.Tests_Editor {
 			protected override ConfigTable GetConfigTable() {
 				return null;
 			}
-			public override string EntityName { get; protected set; } = "TestInterestEntity";
+			public override string EntityName { get; set; } = "TestInterestEntity";
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty(new Rarity());
 				RegisterInitialProperty(new TestInterestDictProperty(
