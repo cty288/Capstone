@@ -1,7 +1,8 @@
-﻿using Runtime.GameResources.Model.Properties.BaitAdjectives;
+﻿using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.Model.Properties.BaitAdjectives;
 using Runtime.Utilities.ConfigSheet;
 
-namespace Runtime.GameResources.Model.Base {
+namespace Runtime.RawMaterials.Model.Base {
 	
 	public interface IRawMaterialEntity : IResourceEntity {
 		public IBaitAdjectives GetBaitAdjectivesProperty();

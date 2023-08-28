@@ -1,10 +1,9 @@
 ﻿using Runtime.DataFramework.Entities;
-using Runtime.GameResources.Model.Builder;
-using Runtime.GameResources.Model.Instances;
-using Runtime.Utilities.ConfigSheet;
+using Runtime.RawMaterials.Model.Builder;
+using Runtime.RawMaterials.Model.Instances;
 using UnityEngine;
 
-namespace Runtime.GameResources.ViewControllers.Instances.Instances {
+namespace Runtime.RawMaterials.ViewControllers.Instances {
 	
 	/// <summary>
 	/// You can use ths class to quickly create a common raw material VC. <br />

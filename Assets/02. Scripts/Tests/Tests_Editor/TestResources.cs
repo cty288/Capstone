@@ -8,7 +8,8 @@ using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Properties;
 using Runtime.GameResources.Model.Base;
-using Runtime.GameResources.Model.Instances;
+using Runtime.RawMaterials.Model.Base;
+using Runtime.RawMaterials.Model.Instances;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -55,12 +56,14 @@ namespace Tests.Tests_Editor {
 		}
 	}
 	
+	//public class TestResourceAdditionalModel
+	
 	//=======================================================================================
 	
 	public class TestResources {
 		[Test]
 		public void TestBasicRawMaterialProperties() {
-			IGameResourceModel model = MainGame_Test.Interface.GetModel<IGameResourceModel>();
+			IRawMaterialModel model = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
 
 
 			TestBasicRawMaterial ent = model.GetRawMaterialBuilder<TestBasicRawMaterial>()
@@ -92,7 +95,7 @@ namespace Tests.Tests_Editor {
 		
 		[Test]
 		public void TestEmptyRawMaterialProperties() {
-			IGameResourceModel model = MainGame_Test.Interface.GetModel<IGameResourceModel>();
+			IRawMaterialModel model = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
 
 
 			TestEmptyRawMaterial ent = model.GetRawMaterialBuilder<TestEmptyRawMaterial>()
@@ -124,7 +127,7 @@ namespace Tests.Tests_Editor {
 		
 		[Test]
 		public void TestCommonRawMaterialEntityData() {
-			IGameResourceModel model = MainGame_Test.Interface.GetModel<IGameResourceModel>();
+			IRawMaterialModel model = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
 
 
 			CommonRawMaterialEntity ent = model.GetRawMaterialBuilder<CommonRawMaterialEntity>()

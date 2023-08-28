@@ -53,6 +53,8 @@ namespace Runtime.DataFramework.Entities {
 		[field: ES3Serializable]
 		protected Dictionary<string, T> entities = new Dictionary<string, T>();
 
+		
+		
 
 		protected override void OnInit() {
 			base.OnInit();
@@ -63,7 +65,7 @@ namespace Runtime.DataFramework.Entities {
 			}
 		}
 	
-		protected void OnEntityBuilt(T entity){
+		protected virtual void OnEntityBuilt(T entity){
 			entities.Add(entity.UUID, entity);
 			//entity.OnStart();
 		}
@@ -75,7 +77,7 @@ namespace Runtime.DataFramework.Entities {
 			return default;
 		}
 
-		public bool RemoveEntity(string id) {
+		public virtual bool RemoveEntity(string id) {
 			if (entities.ContainsKey(id)) {
 				IEntity entity = entities[id];
 				entity.RecycleToCache();
