@@ -1,7 +1,9 @@
 ﻿using Framework;
 using NUnit.Framework;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources.Model.Base;
 using Runtime.RawMaterials.Model.Base;
+using Runtime.RawMaterials.Model.Instances;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Base;
 
@@ -50,7 +52,7 @@ namespace Tests.Tests_Editor {
 
 			ES3.Save("test_save_weapon_1", ent, "test_save");
 			model.RemoveEntity(ent.UUID);
-            
+           
 			ent = ES3.Load<TestBasicWeapon>("test_save_weapon_1", "test_save");
 			ent.OnLoadFromSave();
 			
@@ -62,6 +64,37 @@ namespace Tests.Tests_Editor {
             
             
 			ES3.DeleteKey("test_save_weapon_1", "test_save");
+		}
+
+		/// <summary>
+		/// Test getting resource entity from different model (e.g. getting weapon from raw material model)
+		/// </summary>
+		[Test]
+		public void TestDifferentResourceModel() {
+			IRawMaterialModel rawMaterialModel = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
+
+
+			CommonRawMaterialEntity ent = rawMaterialModel.GetRawMaterialBuilder<CommonRawMaterialEntity>()
+				.OverrideName("TestRaw")
+				.FromConfig(ConfigDatas.Singleton.RawMaterialEntityConfigTable_Test)
+				.Build();
+
+			string rawMaterialID = ent.UUID;
+			
+			IWeaponModel weaponModel = MainGame_Test.Interface.GetModel<IWeaponModel>();
+			TestBasicWeapon ent2 = weaponModel.GetWeaponBuilder<TestBasicWeapon>()
+				.FromConfig()
+				.Build();
+
+			Assert.IsNotNull(weaponModel.GetAnyResource(rawMaterialID));
+			
+			/*((MainGame_Test.Interface) as MainGame_Test).SaveGame();
+			((MainGame_Test.Interface) as MainGame_Test).Reset();
+			
+			
+			weaponModel = MainGame_Test.Interface.GetModel<IWeaponModel>();
+			Assert.IsNotNull(weaponModel.GetAnyResource(rawMaterialID));*/
+			
 		}
 	}
 }
