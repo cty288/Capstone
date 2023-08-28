@@ -16,7 +16,7 @@ namespace Runtime.Weapons
 {
     public class RustyPistolEntity : WeaponEntity<RustyPistolEntity>
     {
-        [field: SerializeField] public override string EntityName { get; protected set; } = "RustyPistol";
+        [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
         public override void OnRecycle()
         {

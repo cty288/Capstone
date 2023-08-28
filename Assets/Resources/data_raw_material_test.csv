@@ -1,16 +1,14 @@
-EntityName / Property Names,rarity,bait_adjectives,max_stack,stack_size,custom_properties,tags
-Types,int,HashSet<BaitAdjective>,int,Vector2Int,dynamic,"Dictionary<TagName,int>"
-Notes ->,,Hashset<string>,,"Vector2Int 
-
-e.g. {""x"": 3, ""y"": 1} means taking 3x1 space in inventory","Dict<string, CustomProperty>
+EntityName / Property Names,rarity,bait_adjectives,max_stack,custom_properties,tags
+Types,int,HashSet<BaitAdjective>,int,dynamic,"Dictionary<TagName,int>"
+Notes ->,,Hashset<string>,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 json
 ","Dict<string,int>, 
 If no levels, use negative numbers to represent"
-,,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,
-BEGIN,,,,,,
-TestRaw,5,"[""Test_Adjective_1"", ""Test_Adjective_2""]",20,"{""x"": 1, ""y"": 3}","{
+,,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,
+BEGIN,,,,,
+TestRaw,5,"[""Test_Adjective_1"", ""Test_Adjective_2""]",20,"{
   ""attack1"": {
     ""speed"": 100,
     ""info"": {
@@ -28,4 +26,4 @@ TestRaw,5,"[""Test_Adjective_1"", ""Test_Adjective_2""]",20,"{""x"": 1, ""y"": 3
   ""Test_Flame"": 3,
   ""Test_Ice"": -1
 }"
-TestRaw2,10,,20,"{""x"": 1, ""y"": 3}",,
+TestRaw2,10,,20,,

@@ -2,6 +2,7 @@
 using Runtime.Enemies.Model.Builders;
 using Runtime.GameResources.Model.Builder;
 using Runtime.RawMaterials.Model.Builder;
+using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 
 namespace Runtime.DataFramework.Entities.Builders {
@@ -26,6 +27,8 @@ namespace Runtime.DataFramework.Entities.Builders {
 				return EnemyBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}else if (typeof(TBuilder) == typeof(RawMaterialBuilder<TEntity>)) {
 				return RawMaterialBuilder<TEntity>.Allocate(rarity) as TBuilder;
+			}else if (typeof(TBuilder) == typeof(WeaponBuilder<TEntity>)) {
+				return WeaponBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
 			
 			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;

@@ -1,7 +1,7 @@
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
-using Runtime.GameResources.ViewControllers.Instances;
+using Runtime.GameResources.ViewControllers;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.Model.Properties;
