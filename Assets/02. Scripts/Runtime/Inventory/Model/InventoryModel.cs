@@ -117,11 +117,11 @@ namespace Runtime.Inventory.Model {
 			InventorySlot slot = slots[index];
 			
 			if (slot.RemoveItem(uuid)) {
-				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
+				/*this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
 					Quantity = slot.GetQuantity(),
 					SlotIndex = index,
 					TopItemUUID = slot.GetLastItemUUID()
-				});
+				});*/
 				return true;
 			}
 			return false;
@@ -132,11 +132,11 @@ namespace Runtime.Inventory.Model {
 			InventorySlot slot = slots[index];
 			
 			if (slot.RemoveLastItem()) {
-				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
+				/*this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
 					Quantity = slot.GetQuantity(),
 					SlotIndex = index,
 					TopItemUUID = slot.GetLastItemUUID()
-				});
+				});*/
 				return true;
 			}
 			return false;

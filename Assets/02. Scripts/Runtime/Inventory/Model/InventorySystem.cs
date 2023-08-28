@@ -24,13 +24,13 @@ namespace Runtime.Inventory.Model {
 		public bool AddItemAt(IResourceEntity item, int index) {
 			if(inventoryModel.AddItemAt(item, index)) {
 				List<string> uuids = inventoryModel.GetUUIDsByIndex(index);
-				this.get
+				/*this.get
 				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
 					UpdatedSlot = new InventorySlotInfo() {
 						SlotIndex = index,
 						Quantity = 
 					}
-				});
+				});*/
 				return true;
 			}
 			return false;
