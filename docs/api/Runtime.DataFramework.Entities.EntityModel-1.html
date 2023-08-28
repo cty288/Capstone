@@ -134,7 +134,7 @@
     <dd>
       <div><a class="xref" href="Runtime.DataFramework.Entities.CommonEntityModel.html">CommonEntityModel</a></div>
       <div><a class="xref" href="Runtime.Enemies.Model.EnemyEntityModel.html">EnemyEntityModel</a></div>
-      <div><a class="xref" href="Runtime.GameResources.Model.Base.GameResourceModel.html">GameResourceModel</a></div>
+      <div><a class="xref" href="Runtime.GameResources.Model.Base.GameResourceModel-1.html">GameResourceModel&lt;T&gt;</a></div>
     </dd>
   </dl>
 
@@ -250,7 +250,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_EntityModel_1_EntityCount" data-uid="Runtime.DataFramework.Entities.EntityModel`1.EntityCount">
   EntityCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L90"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -285,7 +285,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_EntityModel_1_GetEntity_System_String_" data-uid="Runtime.DataFramework.Entities.EntityModel`1.GetEntity(System.String)">
   GetEntity(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L73"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -321,14 +321,14 @@
 
   <h3 id="Runtime_DataFramework_Entities_EntityModel_1_OnEntityBuilt__0_" data-uid="Runtime.DataFramework.Entities.EntityModel`1.OnEntityBuilt(`0)">
   OnEntityBuilt(T)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L68"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected void OnEntityBuilt(T entity)</code></pre>
+    <pre><code class="lang-csharp hljs">protected virtual void OnEntityBuilt(T entity)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -352,7 +352,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_EntityModel_1_OnInit" data-uid="Runtime.DataFramework.Entities.EntityModel`1.OnInit">
   OnInit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -378,14 +378,14 @@
 
   <h3 id="Runtime_DataFramework_Entities_EntityModel_1_RemoveEntity_System_String_" data-uid="Runtime.DataFramework.Entities.EntityModel`1.RemoveEntity(System.String)">
   RemoveEntity(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L80"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool RemoveEntity(string id)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual bool RemoveEntity(string id)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>

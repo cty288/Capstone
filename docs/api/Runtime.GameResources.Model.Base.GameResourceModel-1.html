@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class CommonEntityModel
+      <title>Class GameResourceModel&lt;T&gt;
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class CommonEntityModel
+      <meta name="title" content="Class GameResourceModel&lt;T&gt;
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_Entities_CommonEntityModel.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.CommonEntityModel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_GameResources_Model_Base_GameResourceModel_1.md&amp;value=---%0Auid%3A%20Runtime.GameResources.Model.Base.GameResourceModel%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.DataFramework.Entities.CommonEntityModel">
+        <article data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1">
 
 
 
-  <h1 id="Runtime_DataFramework_Entities_CommonEntityModel" data-uid="Runtime.DataFramework.Entities.CommonEntityModel" class="text-break">
-    Class CommonEntityModel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_GameResources_Model_Base_GameResourceModel_1" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1" class="text-break">
+    Class GameResourceModel&lt;T&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L21"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Entities.html">Entities</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.GameResources.html">GameResources</a>.<a class="xref" href="Runtime.GameResources.Model.html">Model</a>.<a class="xref" href="Runtime.GameResources.Model.Base.html">Base</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,11 +95,16 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class CommonEntityModel : EntityModel&lt;IEntity&gt;, ICommonEntityModel, IEntityModel&lt;IEntity&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class GameResourceModel&lt;T&gt; : EntityModel&lt;T&gt;, IGameResourceModel&lt;T&gt;, IEntityModel&lt;T&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture where T : IResourceEntity</code></pre>
   </div>
 
 
 
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
 
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
@@ -107,16 +112,16 @@
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.AbstractModel.html">AbstractModel</a></div>
       <div><a class="xref" href="Framework.AbstractSavableModel.html">AbstractSavableModel</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html">EntityModel</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a>&gt;</div>
-      <div><span class="xref">CommonEntityModel</span></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html">EntityModel</a>&lt;T&gt;</div>
+      <div><span class="xref">GameResourceModel&lt;T&gt;</span></div>
     </dd>
   </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.ICommonEntityModel.html">ICommonEntityModel</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.IEntityModel-1.html">IEntityModel</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a>&gt;</div>
+      <div><a class="xref" href="Runtime.GameResources.Model.Base.IGameResourceModel-1.html">IGameResourceModel</a>&lt;T&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.IEntityModel-1.html">IEntityModel</a>&lt;T&gt;</div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.IEntityModel.html">IEntityModel</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IModel.html">IModel</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanSetArchitecture.html">ICanSetArchitecture</a></div>
@@ -126,30 +131,27 @@
     </dd>
   </dl>
 
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialModel.html">RawMaterialModel</a></div>
+    </dd>
+  </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_entityBuilderFactory">EntityModel&lt;IEntity&gt;.entityBuilderFactory</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_entityBuilderFactory">EntityModel&lt;T&gt;.entityBuilderFactory</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_entities">EntityModel&lt;IEntity&gt;.entities</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_entities">EntityModel&lt;T&gt;.entities</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_OnInit">EntityModel&lt;IEntity&gt;.OnInit()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_GetEntity_System_String_">EntityModel&lt;T&gt;.GetEntity(string)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_OnEntityBuilt__0_">EntityModel&lt;IEntity&gt;.OnEntityBuilt(IEntity)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_GetEntity_System_String_">EntityModel&lt;IEntity&gt;.GetEntity(string)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_RemoveEntity_System_String_">EntityModel&lt;IEntity&gt;.RemoveEntity(string)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_EntityCount">EntityModel&lt;IEntity&gt;.EntityCount</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_EntityCount">EntityModel&lt;T&gt;.EntityCount</a>
     </div>
     <div>
       <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_Save_System_String_">AbstractSavableModel.Save(string)</a>
@@ -192,111 +194,19 @@
 </h2>
 
 
-  <a id="Runtime_DataFramework_Entities_CommonEntityModel_GetBuilder_" data-uid="Runtime.DataFramework.Entities.CommonEntityModel.GetBuilder*"></a>
+  <a id="Runtime_GameResources_Model_Base_GameResourceModel_1_GetAnyResource_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.GetAnyResource*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_CommonEntityModel_GetBuilder__1_System_Int32_System_Boolean_" data-uid="Runtime.DataFramework.Entities.CommonEntityModel.GetBuilder``1(System.Int32,System.Boolean)">
-  GetBuilder&lt;TEntity&gt;(int, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_GetAnyResource_System_String_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.GetAnyResource(System.String)">
+  GetAnyResource(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L37"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Get the BasicEntityBuilder for the entity type</p>
+  <div class="markdown level1 summary"><p>Get any resource, as long as it inherits from IResourceEntity</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BasicEntityBuilder&lt;TEntity&gt; GetBuilder&lt;TEntity&gt;(int rarity, bool addToModelOnceBuilt = true) where TEntity : class, IEntity, new()</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>rarity</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-    <dt><code>addToModelOnceBuilt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.Builders.BasicEntityBuilder-1.html">BasicEntityBuilder</a>&lt;TEntity&gt;</dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>TEntity</code></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_DataFramework_Entities_CommonEntityModel_GetBuilder_" data-uid="Runtime.DataFramework.Entities.CommonEntityModel.GetBuilder*"></a>
-
-  <h3 id="Runtime_DataFramework_Entities_CommonEntityModel_GetBuilder__2_System_Int32_System_Boolean_" data-uid="Runtime.DataFramework.Entities.CommonEntityModel.GetBuilder``2(System.Int32,System.Boolean)">
-  GetBuilder&lt;TBuilder, TEntity&gt;(int, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L102"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Get the general builder for the entity type</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TBuilder GetBuilder&lt;TBuilder, TEntity&gt;(int rarity, bool addToModelOnceBuilt = true) where TBuilder : EntityBuilder&lt;TBuilder, TEntity&gt; where TEntity : class, IEntity, new()</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>rarity</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-    <dt><code>addToModelOnceBuilt</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd><p>Once the entity is built, add it to the model</p>
-</dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><span class="xref">TBuilder</span></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>TBuilder</code></dt>
-    <dd><p>The type of the builder you want to use
-You need to make sure that builder is okay to build the target entity</p>
-</dd>
-    <dt><code>TEntity</code></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_DataFramework_Entities_CommonEntityModel_GetEntity_" data-uid="Runtime.DataFramework.Entities.CommonEntityModel.GetEntity*"></a>
-
-  <h3 id="Runtime_DataFramework_Entities_CommonEntityModel_GetEntity__1_System_String_" data-uid="Runtime.DataFramework.Entities.CommonEntityModel.GetEntity``1(System.String)">
-  GetEntity&lt;T&gt;(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L95"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public T GetEntity&lt;T&gt;(string id) where T : class, IEntity</code></pre>
+    <pre><code class="lang-csharp hljs">public IResourceEntity GetAnyResource(string id)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -307,15 +217,103 @@ You need to make sure that builder is okay to build the target entity</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><span class="xref">T</span></dt>
+    <dt><a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
     <dd></dd>
   </dl>
 
-  <h4 class="section">Type Parameters</h4>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnEntityBuilt_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnEntityBuilt*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnEntityBuilt__0_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnEntityBuilt(`0)">
+  OnEntityBuilt(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnEntityBuilt(T entity)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>T</code></dt>
+    <dt><code>entity</code> <span class="xref">T</span></dt>
     <dd></dd>
   </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnInit_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnInit*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnInit" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnInit">
+  OnInit()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnInit()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_GameResources_Model_Base_GameResourceModel_1_RemoveEntity_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.RemoveEntity*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_RemoveEntity_System_String_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.RemoveEntity(System.String)">
+  RemoveEntity(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool RemoveEntity(string id)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
 
 
 
@@ -330,7 +328,7 @@ You need to make sure that builder is okay to build the target entity</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/EntityModel.cs/#L94" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L21" class="edit-link">Edit this page</a>
         </div>
 
         

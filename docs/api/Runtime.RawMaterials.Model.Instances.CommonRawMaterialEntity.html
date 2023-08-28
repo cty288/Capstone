@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class ResourceEntity&lt;T&gt;
+      <title>Class CommonRawMaterialEntity
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class ResourceEntity&lt;T&gt;
+      <meta name="title" content="Class CommonRawMaterialEntity
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_GameResources_Model_Base_ResourceEntity_1.md&amp;value=---%0Auid%3A%20Runtime.GameResources.Model.Base.ResourceEntity%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity.md&amp;value=---%0Auid%3A%20Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1">
+        <article data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity">
 
 
 
-  <h1 id="Runtime_GameResources_Model_Base_ResourceEntity_1" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1" class="text-break">
-    Class ResourceEntity&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity" class="text-break">
+    Class CommonRawMaterialEntity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/RawMaterials/Model/Instances/CommonRawMaterialEntity.cs/#L6"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.GameResources.html">GameResources</a>.<a class="xref" href="Runtime.GameResources.Model.html">Model</a>.<a class="xref" href="Runtime.GameResources.Model.Base.html">Base</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.RawMaterials.html">RawMaterials</a>.<a class="xref" href="Runtime.RawMaterials.Model.html">Model</a>.<a class="xref" href="Runtime.RawMaterials.Model.Instances.html">Instances</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,16 +95,11 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class ResourceEntity&lt;T&gt; : AbstractBasicEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName where T : ResourceEntity&lt;T&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public class CommonRawMaterialEntity : RawMaterialEntity&lt;CommonRawMaterialEntity&gt;, IRawMaterialEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName</code></pre>
   </div>
 
 
 
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd></dd>
-  </dl>
 
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
@@ -112,13 +107,16 @@
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Entity.html">Entity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
-      <div><span class="xref">ResourceEntity&lt;T&gt;</span></div>
+      <div><a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html">ResourceEntity</a>&lt;<a class="xref" href="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.html">CommonRawMaterialEntity</a>&gt;</div>
+      <div><a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html">RawMaterialEntity</a>&lt;<a class="xref" href="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.html">CommonRawMaterialEntity</a>&gt;</div>
+      <div><span class="xref">CommonRawMaterialEntity</span></div>
     </dd>
   </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
+      <div><a class="xref" href="Runtime.RawMaterials.Model.Base.IRawMaterialEntity.html">IRawMaterialEntity</a></div>
       <div><a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.IHaveCustomProperties.html">IHaveCustomProperties</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags.html">IHaveTags</a></div>
@@ -129,21 +127,30 @@
     </dd>
   </dl>
 
-  <dl class="typelist derived">
-    <dt>Derived</dt>
-    <dd>
-      <div><a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html">RawMaterialEntity&lt;T&gt;</a></div>
-    </dd>
-  </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnRegisterProperties">AbstractBasicEntity.OnRegisterProperties()</a>
+      <a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html#Runtime_RawMaterials_Model_Base_RawMaterialEntity_1_OnEntityStart">RawMaterialEntity&lt;CommonRawMaterialEntity&gt;.OnEntityStart()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnRegisterCustomProperties">AbstractBasicEntity.OnRegisterCustomProperties()</a>
+      <a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html#Runtime_RawMaterials_Model_Base_RawMaterialEntity_1_OnEntityRegisterAdditionalProperties">RawMaterialEntity&lt;CommonRawMaterialEntity&gt;.OnEntityRegisterAdditionalProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html#Runtime_RawMaterials_Model_Base_RawMaterialEntity_1_GetConfigTable">RawMaterialEntity&lt;CommonRawMaterialEntity&gt;.GetConfigTable()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html#Runtime_RawMaterials_Model_Base_RawMaterialEntity_1_GetBaitAdjectivesProperty">RawMaterialEntity&lt;CommonRawMaterialEntity&gt;.GetBaitAdjectivesProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html#Runtime_GameResources_Model_Base_ResourceEntity_1_OnDoRecycle">ResourceEntity&lt;CommonRawMaterialEntity&gt;.OnDoRecycle()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html#Runtime_GameResources_Model_Base_ResourceEntity_1_GetMaxStackProperty">ResourceEntity&lt;CommonRawMaterialEntity&gt;.GetMaxStackProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnRegisterProperties">AbstractBasicEntity.OnRegisterProperties()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetCustomProperties">AbstractBasicEntity.GetCustomProperties()</a>
@@ -176,16 +183,10 @@
       <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetRarity">AbstractBasicEntity.GetRarity()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_EntityName">Entity.EntityName</a>
-    </div>
-    <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_UUID">Entity.UUID</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_configTable">Entity.configTable</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetConfigTable">Entity.GetConfigTable()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnLoadFromSave">Entity.OnLoadFromSave()</a>
@@ -248,13 +249,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RecycleToCache">Entity.RecycleToCache()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnRecycle">Entity.OnRecycle()</a>
-    </div>
-    <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDescription">Entity.GetDescription()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnGetDescription_System_String_">Entity.OnGetDescription(string)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDisplayName">Entity.GetDisplayName()</a>
@@ -287,30 +282,101 @@
 
 
 
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity__ctor_" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.#ctor*"></a>
+
+  <h3 id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity__ctor" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.#ctor">
+  CommonRawMaterialEntity()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/RawMaterials/Model/Instances/CommonRawMaterialEntity.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CommonRawMaterialEntity()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity_EntityName_" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.EntityName*"></a>
+
+  <h3 id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity_EntityName" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.EntityName">
+  EntityName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/RawMaterials/Model/Instances/CommonRawMaterialEntity.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string EntityName { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
 
 
-  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetMaxStackProperty_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetMaxStackProperty*"></a>
+  <a id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity_OnGetDescription_" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.OnGetDescription*"></a>
 
-  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetMaxStackProperty" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetMaxStackProperty">
-  GetMaxStackProperty()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity_OnGetDescription_System_String_" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.OnGetDescription(System.String)">
+  OnGetDescription(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/RawMaterials/Model/Instances/CommonRawMaterialEntity.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The display name of the resource entity is the bait adjectives + the name of the resource entity <br>
-e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, Dark Mushroom&quot;</p>
+  <div class="markdown level1 summary"><p>Return the description of the entity</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IMaxStack GetMaxStackProperty()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override string OnGetDescription(string defaultLocalizationKey)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>defaultLocalizationKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>This is always equal to EntityName_desc. Use Localization.Get or Localization.GetFormat to retrieve its description based on the key <br>
+Or you can ignore defaultLocalizationKey can manually implement yours</p>
+</dd>
+  </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Runtime.GameResources.Model.Properties.IMaxStack.html">IMaxStack</a></dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd></dd>
   </dl>
 
@@ -324,18 +390,18 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
 
 
-  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnDoRecycle_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnDoRecycle*"></a>
+  <a id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity_OnRecycle_" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.OnRecycle*"></a>
 
-  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnDoRecycle" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnDoRecycle">
-  OnDoRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity_OnRecycle" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.OnRecycle">
+  OnRecycle()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/RawMaterials/Model/Instances/CommonRawMaterialEntity.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void OnDoRecycle()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void OnRecycle()</code></pre>
   </div>
 
 
@@ -350,49 +416,26 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
 
 
-  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnEntityRegisterAdditionalProperties_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnEntityRegisterAdditionalProperties*"></a>
+  <a id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity_OnRegisterCustomProperties_" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.OnRegisterCustomProperties*"></a>
 
-  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnEntityRegisterAdditionalProperties" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnEntityRegisterAdditionalProperties">
-  OnEntityRegisterAdditionalProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity_OnRegisterCustomProperties" data-uid="Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity.OnRegisterCustomProperties">
+  OnRegisterCustomProperties()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/RawMaterials/Model/Instances/CommonRawMaterialEntity.cs/#L21"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A place to register additional properties, normally empty. Recommended to register custom properties instead.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnEntityRegisterAdditionalProperties()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override ICustomProperty[] OnRegisterCustomProperties()</code></pre>
   </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnEntityStart_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnEntityStart*"></a>
-
-  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnEntityStart" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnEntityStart">
-  OnEntityStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L23"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>After the entity is built, or loaded from save, this will be called</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnEntityStart()</code></pre>
-  </div>
-
-
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomProperty.html">ICustomProperty</a>[]</dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -408,7 +451,7 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L21" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/RawMaterials/Model/Instances/CommonRawMaterialEntity.cs/#L6" class="edit-link">Edit this page</a>
         </div>
 
         

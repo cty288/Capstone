@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Runtime.Utilities.ConfigSheet;
 using Object = System.Object;
 
 namespace Runtime.DataFramework.Properties.CustomProperties {
@@ -76,12 +77,25 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 		}
 
 		public T OnGetBaseValueFromConfig(dynamic value) {
+			string rawVal = value["value"].ToString();
 			if (typeof(T) == typeof(object)) {
-				if (value is JToken token) {
-					return (T) ConvertJTokenToBaseValue(token);
+				string type = value["type"];
+				Type parsedType = SerializationFactory.Singleton.ParseType(type);
+				
+				
+				dynamic result = null;
+				if (parsedType == typeof(string)) {
+					result = rawVal;
 				}
+				else if (parsedType == typeof(object))  {
+					result = (T) ConvertJTokenToBaseValue(value["value"]);
+				}
+				else {
+					result = JsonConvert.DeserializeObject(rawVal, parsedType);
+				}
+				return result;
 			}
-			return JsonConvert.DeserializeObject<T>(value.ToString());
+			return JsonConvert.DeserializeObject<T>(rawVal);
 		}
 
 		
