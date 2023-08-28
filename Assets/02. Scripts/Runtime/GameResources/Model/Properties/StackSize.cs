@@ -2,7 +2,7 @@
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
-namespace Runtime.GameResources.Model.Properties {
+/*namespace Runtime.GameResources.Model.Properties {
 	
 	public interface IStackSize : IProperty<Vector2Int>, ILoadFromConfigProperty {
 		
@@ -22,4 +22,4 @@ namespace Runtime.GameResources.Model.Properties {
 			return null;
 		}
 	}
-}
+}*/

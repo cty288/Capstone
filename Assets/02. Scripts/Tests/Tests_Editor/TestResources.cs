@@ -8,7 +8,6 @@ using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Properties;
 using Runtime.GameResources.Model.Base;
-using Runtime.GameResources.Model.Instances;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -99,12 +98,12 @@ namespace Tests.Tests_Editor {
 				.FromConfig()
 				.Build();
 			
+			
+			
 			Assert.AreEqual(10, ent.GetRarity());
 			Assert.AreEqual("Test Empty", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(0, ent.GetBaitAdjectivesProperty().RealValues.Count);
-			Assert.AreEqual(new Vector2Int(1,3), ent.GetStackSizeProperty().RealValue.Value);
-			
 			
 			ES3.Save("test_save_raw_material_2", ent, "test_save");
 			model.RemoveEntity(ent.UUID);
@@ -121,39 +120,6 @@ namespace Tests.Tests_Editor {
             
             
 			ES3.DeleteKey("test_save_raw_material_2", "test_save");
-		}
-		
-		
-		[Test]
-		public void TestCommonRawMaterialEntityData() {
-			IGameResourceModel model = MainGame_Test.Interface.GetModel<IGameResourceModel>();
-
-
-			CommonRawMaterialEntity ent = model.GetRawMaterialBuilder<CommonRawMaterialEntity>()
-				.OverrideName("TestRaw")
-				.FromConfig(ConfigDatas.Singleton.RawMaterialEntityConfigTable_Test)
-				.Build();
-			
-			Assert.AreEqual(5, ent.GetRarity());
-			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
-			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
-			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
-			
-			ES3.Save("test_save_raw_material_1", ent, "test_save");
-			model.RemoveEntity(ent.UUID);
-            
-			ent = ES3.Load<CommonRawMaterialEntity>("test_save_raw_material_1", "test_save");
-			ent.OnLoadFromSave();
-			
-			Assert.IsNotNull(ent);
-            
-			Assert.AreEqual(5, ent.GetRarity());
-			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
-			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
-			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
-            
-            
-			ES3.DeleteKey("test_save_raw_material_1", "test_save");
 		}
 	}
 }

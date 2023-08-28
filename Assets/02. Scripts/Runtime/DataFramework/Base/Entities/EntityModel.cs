@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities.Builders;
 
@@ -59,12 +60,16 @@ namespace Runtime.DataFramework.Entities {
 			entityBuilderFactory = new EntityBuilderFactory();
 			foreach (T entity in entities.Values) {
 				entity.OnLoadFromSave();
+				GlobalEntities.RegisterEntity(entity, this);
 				//entity.OnStart();
 			}
 		}
+		
+		
 	
 		protected void OnEntityBuilt(T entity){
 			entities.Add(entity.UUID, entity);
+			GlobalEntities.RegisterEntity(entity, this);
 			//entity.OnStart();
 		}
 
@@ -80,6 +85,7 @@ namespace Runtime.DataFramework.Entities {
 				IEntity entity = entities[id];
 				entity.RecycleToCache();
 				entities.Remove(id);
+				GlobalEntities.UnregisterEntity(id);
 				return true;
 			}
 			return false;
