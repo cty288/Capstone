@@ -1,8 +1,8 @@
 ﻿using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
-using Runtime.GameResources.Model.Base;
+using Runtime.RawMaterials.Model.Base;
 
-namespace Runtime.GameResources.Model.Instances {
+namespace Runtime.RawMaterials.Model.Instances {
 	public class CommonRawMaterialEntity : RawMaterialEntity<CommonRawMaterialEntity> {
 		[field: ES3Serializable]
 		public override string EntityName { get; set; }
