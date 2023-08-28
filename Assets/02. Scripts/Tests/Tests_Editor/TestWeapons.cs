@@ -46,7 +46,7 @@ namespace Tests.Tests_Editor {
 				.Build();
 			Assert.AreEqual(10, ent.GetBaseDamage().RealValue.Value);
 			Assert.AreEqual(0.5f, ent.GetAttackSpeed().RealValue.Value);
-			Assert.AreEqual(-60.0f, ent.GetCustomDataValue<dynamic>("shield", "angle").Value[0]);
+			Assert.AreEqual(-60.0f, ent.GetCustomDataValue<float[]>("shield", "angle").Value[0]);
 
 			ES3.Save("test_save_weapon_1", ent, "test_save");
 			model.RemoveEntity(ent.UUID);
@@ -58,7 +58,7 @@ namespace Tests.Tests_Editor {
             
 			Assert.AreEqual(10, ent.GetBaseDamage().RealValue.Value);
 			Assert.AreEqual(0.5f, ent.GetAttackSpeed().RealValue.Value);
-			Assert.AreEqual(-60.0f, ent.GetCustomDataValue<dynamic>("shield", "angle").Value[0]);
+			Assert.AreEqual(-60.0f, ent.GetCustomDataValue<float[]>("shield", "angle").Value[0]);
             
             
 			ES3.DeleteKey("test_save_weapon_1", "test_save");

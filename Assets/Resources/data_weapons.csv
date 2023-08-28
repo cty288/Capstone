@@ -10,12 +10,27 @@ BEGIN,,,,,,,,,,,,,,
 RustyPistol,10,0.5,50,6,1,0.07,2,0,300,1,,,,
 TheSanctuary,1,1,25,1,1,0.06,8,1,100,1,"{
   ""explosion"": {
-    ""damage"": 200,
-    ""distance"": 10
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 200
+    },
+    ""distance"": {
+      ""type"": ""int"",
+      ""value"": 10
+    }
   },
-  ""shield"" : {
-    ""health"" : 200,
-    ""angle"" : [-60.0, 60.0],
-    ""cooldown"" : 30.0
+  ""shield"": {
+    ""health"": {
+      ""type"": ""int"",
+      ""value"": 200
+    },
+    ""angle"": {
+      ""type"": ""float[]"",
+      ""value"": [-60.0, 60.0]
+    },
+    ""cooldown"": {
+      ""type"": ""float"",
+      ""value"": 30.0
+    }
   }
 }",,,
