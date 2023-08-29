@@ -12,22 +12,25 @@ using Runtime.DataFramework.Properties;
 using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
-	public abstract class AbstractEntityViewController<T, TEntityModel> : AbstractMikroController<MainGame>, IEntityViewController 
-		where T : class, IEntity, new() 
-		where TEntityModel : class, IEntityModel {
+	public abstract class AbstractEntityViewController<T> : AbstractMikroController<MainGame>, IEntityViewController 
+		where T : class, IEntity, new() {
 
 		
 		
 		[field: ES3Serializable]
 		//[field: SerializeField]
 		public string ID { get; set; }
-
-		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = true;
+		
+		
+		[Header("Entity Recycle Logic")]
+		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = false;
+		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
+		
 		
 		IEntity IEntityViewController.Entity => BoundEntity;
 
 
-		protected TEntityModel entityModel;
+		private IEntityModel entityModel;
 		
 		protected T BoundEntity { get; private set; }
 		
@@ -35,11 +38,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private Dictionary<PropertyInfo, FieldInfo> propertyFields = new Dictionary<PropertyInfo, FieldInfo>();
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 		
-
-		protected virtual void Awake() {
-			entityModel = this.GetModel<TEntityModel>();
-			//type = typeof(T);
-		}
+		
 
 		protected virtual void Start() {
 			OnStart();
@@ -48,20 +47,33 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public void InitWithID(string id) {
 			ID = id;
-			BoundEntity = entityModel.GetEntity(ID) as T;
+			IEntity ent = null;
+			(ent, entityModel) = GlobalEntities.GetEntityAndModel(ID);
+			if (ent == null) {
+				Debug.LogError("Entity with ID " + ID + " not found");
+				return;
+			}
+			BoundEntity = ent as T;
+			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyed(gameObject);
 		}
-		
+
+		private void OnEntityRecycled(IEntity ent) {
+			if (autoDestroyWhenEntityRemoved) {
+				Destroy(gameObject);
+			}
+		}
+
 		protected virtual void OnStart() {
 			string id = ID;
 			if (string.IsNullOrEmpty(ID)) {
-				IEntity entity = OnInitEntity();
+				IEntity entity = OnBuildNewEntity();
 				id = entity.UUID;
 			}
 			InitWithID(id);
 			OnBindProperty();
 		}
 
-		protected abstract IEntity OnInitEntity();
+		protected abstract IEntity OnBuildNewEntity();
 
 		#region Property Binding
 
@@ -285,7 +297,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected virtual void OnDestroy() {
 			propertyBindings.Clear();
 			propertyFields.Clear();
-			entityModel.RemoveEntity(ID);
+			if (autoRemoveEntityWhenDestroyed) {
+				entityModel.RemoveEntity(ID);
+			}
+			
 		}
 	}
 }

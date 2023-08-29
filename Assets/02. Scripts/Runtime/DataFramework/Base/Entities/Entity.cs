@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MikroFramework.Event;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Description;
@@ -118,7 +119,28 @@ namespace Runtime.DataFramework.Entities {
 		/// After the entity is built, or loaded from save, this will be called
 		/// </summary>
 		public void OnStart();
+
+		public IUnRegister RegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
+
+		public void UnRegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
+	}
+	
+	
+	public class EntityOnRecycledUnRegister : IUnRegister
+	{
+		private Action<IEntity> onEntityRecycled;
+
+		private IEntity entity;
 		
+		public EntityOnRecycledUnRegister(IEntity entity, Action<IEntity> onEntityRecycled) {
+			this.entity = entity;
+			this.onEntityRecycled = onEntityRecycled;
+		}
+
+		public void UnRegister() {
+			entity.UnRegisterOnEntityRecycled(onEntityRecycled);
+			entity = null;
+		}
 	}
 
 
@@ -154,6 +176,8 @@ namespace Runtime.DataFramework.Entities {
 		private bool initialized = false;
 
 		protected ConfigTable configTable;
+
+		protected Action<IEntity> onEntityRecycled;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 			configTable = GetConfigTable();
@@ -322,8 +346,17 @@ namespace Runtime.DataFramework.Entities {
 		public virtual void OnStart() {
 			OnEntityStart();
 		}
-		
-		
+
+		public IUnRegister RegisterOnEntityRecycled(Action<IEntity> onEntityRecycled) {
+			this.onEntityRecycled += onEntityRecycled;
+			return new EntityOnRecycledUnRegister(this, onEntityRecycled);
+		}
+
+		public void UnRegisterOnEntityRecycled(Action<IEntity> onEntityRecycled) {
+			this.onEntityRecycled -= onEntityRecycled;
+		}
+
+
 		/// <summary>
 		/// After the entity is built, or loaded from save, this will be called
 		/// </summary>
@@ -431,12 +464,14 @@ namespace Runtime.DataFramework.Entities {
 		
 			tempPropertyNames.Clear();
 			initialized = false;
+			this.onEntityRecycled = null;
 			OnRecycle();
 		}
 
 		[field: ES3Serializable]
 		public bool IsRecycled { get; set; } = false;
 		public void RecycleToCache() {
+			this.onEntityRecycled?.Invoke(this);
 			OnDoRecycle();
 		}
 

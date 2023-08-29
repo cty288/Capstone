@@ -22575,6 +22575,22 @@ references:
   fullName.vb: Runtime.DataFramework.Entities.Entity.RegisterInitialProperty(Of T)(T)
   nameWithType: Entity.RegisterInitialProperty<T>(T)
   nameWithType.vb: Entity.RegisterInitialProperty(Of T)(T)
+- uid: Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})
+  name: RegisterOnEntityRecycled(Action<IEntity>)
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__
+  commentId: M:Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})
+  name.vb: RegisterOnEntityRecycled(Action(Of IEntity))
+  fullName: Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled(System.Action<Runtime.DataFramework.Entities.IEntity>)
+  fullName.vb: Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled(System.Action(Of Runtime.DataFramework.Entities.IEntity))
+  nameWithType: Entity.RegisterOnEntityRecycled(Action<IEntity>)
+  nameWithType.vb: Entity.RegisterOnEntityRecycled(Action(Of IEntity))
+- uid: Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled*
+  name: RegisterOnEntityRecycled
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_
+  commentId: Overload:Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled
+  nameWithType: Entity.RegisterOnEntityRecycled
 - uid: Runtime.DataFramework.Entities.Entity.RegisterTempProperty*
   name: RegisterTempProperty
   href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterTempProperty_
@@ -22652,12 +22668,34 @@ references:
   isSpec: "True"
   fullName: Runtime.DataFramework.Entities.Entity.UUID
   nameWithType: Entity.UUID
+- uid: Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})
+  name: UnRegisterOnEntityRecycled(Action<IEntity>)
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_UnRegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__
+  commentId: M:Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})
+  name.vb: UnRegisterOnEntityRecycled(Action(Of IEntity))
+  fullName: Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled(System.Action<Runtime.DataFramework.Entities.IEntity>)
+  fullName.vb: Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled(System.Action(Of Runtime.DataFramework.Entities.IEntity))
+  nameWithType: Entity.UnRegisterOnEntityRecycled(Action<IEntity>)
+  nameWithType.vb: Entity.UnRegisterOnEntityRecycled(Action(Of IEntity))
+- uid: Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled*
+  name: UnRegisterOnEntityRecycled
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_UnRegisterOnEntityRecycled_
+  commentId: Overload:Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled
+  nameWithType: Entity.UnRegisterOnEntityRecycled
 - uid: Runtime.DataFramework.Entities.Entity.configTable
   name: configTable
   href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_configTable
   commentId: F:Runtime.DataFramework.Entities.Entity.configTable
   fullName: Runtime.DataFramework.Entities.Entity.configTable
   nameWithType: Entity.configTable
+- uid: Runtime.DataFramework.Entities.Entity.onEntityRecycled
+  name: onEntityRecycled
+  href: api/Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_onEntityRecycled
+  commentId: F:Runtime.DataFramework.Entities.Entity.onEntityRecycled
+  fullName: Runtime.DataFramework.Entities.Entity.onEntityRecycled
+  nameWithType: Entity.onEntityRecycled
 - uid: Runtime.DataFramework.Entities.EntityModel`1
   name: EntityModel<T>
   href: api/Runtime.DataFramework.Entities.EntityModel-1.html
@@ -22770,6 +22808,44 @@ references:
   fullName.vb: Runtime.DataFramework.Entities.EntityModel(Of T).entityBuilderFactory
   nameWithType: EntityModel<T>.entityBuilderFactory
   nameWithType.vb: EntityModel(Of T).entityBuilderFactory
+- uid: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister
+  name: EntityOnRecycledUnRegister
+  href: api/Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.html
+  commentId: T:Runtime.DataFramework.Entities.EntityOnRecycledUnRegister
+  fullName: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister
+  nameWithType: EntityOnRecycledUnRegister
+- uid: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.#ctor(Runtime.DataFramework.Entities.IEntity,System.Action{Runtime.DataFramework.Entities.IEntity})
+  name: EntityOnRecycledUnRegister(IEntity, Action<IEntity>)
+  href: api/Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.html#Runtime_DataFramework_Entities_EntityOnRecycledUnRegister__ctor_Runtime_DataFramework_Entities_IEntity_System_Action_Runtime_DataFramework_Entities_IEntity__
+  commentId: M:Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.#ctor(Runtime.DataFramework.Entities.IEntity,System.Action{Runtime.DataFramework.Entities.IEntity})
+  name.vb: New(IEntity, Action(Of IEntity))
+  fullName: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.EntityOnRecycledUnRegister(Runtime.DataFramework.Entities.IEntity, System.Action<Runtime.DataFramework.Entities.IEntity>)
+  fullName.vb: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.New(Runtime.DataFramework.Entities.IEntity, System.Action(Of Runtime.DataFramework.Entities.IEntity))
+  nameWithType: EntityOnRecycledUnRegister.EntityOnRecycledUnRegister(IEntity, Action<IEntity>)
+  nameWithType.vb: EntityOnRecycledUnRegister.New(IEntity, Action(Of IEntity))
+- uid: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.#ctor*
+  name: EntityOnRecycledUnRegister
+  href: api/Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.html#Runtime_DataFramework_Entities_EntityOnRecycledUnRegister__ctor_
+  commentId: Overload:Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.EntityOnRecycledUnRegister
+  fullName.vb: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.New
+  nameWithType: EntityOnRecycledUnRegister.EntityOnRecycledUnRegister
+  nameWithType.vb: EntityOnRecycledUnRegister.New
+- uid: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.UnRegister
+  name: UnRegister()
+  href: api/Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.html#Runtime_DataFramework_Entities_EntityOnRecycledUnRegister_UnRegister
+  commentId: M:Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.UnRegister
+  fullName: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.UnRegister()
+  nameWithType: EntityOnRecycledUnRegister.UnRegister()
+- uid: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.UnRegister*
+  name: UnRegister
+  href: api/Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.html#Runtime_DataFramework_Entities_EntityOnRecycledUnRegister_UnRegister_
+  commentId: Overload:Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.UnRegister
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.UnRegister
+  nameWithType: EntityOnRecycledUnRegister.UnRegister
 - uid: Runtime.DataFramework.Entities.EntityPropertyDependencyCache
   name: EntityPropertyDependencyCache
   href: api/Runtime.DataFramework.Entities.EntityPropertyDependencyCache.html
@@ -22805,6 +22881,70 @@ references:
   isSpec: "True"
   fullName: Runtime.DataFramework.Entities.EntityPropertyDependencyCache.GetInitializationOrder
   nameWithType: EntityPropertyDependencyCache.GetInitializationOrder
+- uid: Runtime.DataFramework.Entities.GlobalEntities
+  name: GlobalEntities
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html
+  commentId: T:Runtime.DataFramework.Entities.GlobalEntities
+  fullName: Runtime.DataFramework.Entities.GlobalEntities
+  nameWithType: GlobalEntities
+- uid: Runtime.DataFramework.Entities.GlobalEntities.GetEntityAndModel(System.String)
+  name: GetEntityAndModel(string)
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html#Runtime_DataFramework_Entities_GlobalEntities_GetEntityAndModel_System_String_
+  commentId: M:Runtime.DataFramework.Entities.GlobalEntities.GetEntityAndModel(System.String)
+  name.vb: GetEntityAndModel(String)
+  fullName: Runtime.DataFramework.Entities.GlobalEntities.GetEntityAndModel(string)
+  fullName.vb: Runtime.DataFramework.Entities.GlobalEntities.GetEntityAndModel(String)
+  nameWithType: GlobalEntities.GetEntityAndModel(string)
+  nameWithType.vb: GlobalEntities.GetEntityAndModel(String)
+- uid: Runtime.DataFramework.Entities.GlobalEntities.GetEntityAndModel*
+  name: GetEntityAndModel
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html#Runtime_DataFramework_Entities_GlobalEntities_GetEntityAndModel_
+  commentId: Overload:Runtime.DataFramework.Entities.GlobalEntities.GetEntityAndModel
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.GlobalEntities.GetEntityAndModel
+  nameWithType: GlobalEntities.GetEntityAndModel
+- uid: Runtime.DataFramework.Entities.GlobalEntities.RegisterEntity(Runtime.DataFramework.Entities.IEntity,Runtime.DataFramework.Entities.IEntityModel)
+  name: RegisterEntity(IEntity, IEntityModel)
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html#Runtime_DataFramework_Entities_GlobalEntities_RegisterEntity_Runtime_DataFramework_Entities_IEntity_Runtime_DataFramework_Entities_IEntityModel_
+  commentId: M:Runtime.DataFramework.Entities.GlobalEntities.RegisterEntity(Runtime.DataFramework.Entities.IEntity,Runtime.DataFramework.Entities.IEntityModel)
+  fullName: Runtime.DataFramework.Entities.GlobalEntities.RegisterEntity(Runtime.DataFramework.Entities.IEntity, Runtime.DataFramework.Entities.IEntityModel)
+  nameWithType: GlobalEntities.RegisterEntity(IEntity, IEntityModel)
+- uid: Runtime.DataFramework.Entities.GlobalEntities.RegisterEntity*
+  name: RegisterEntity
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html#Runtime_DataFramework_Entities_GlobalEntities_RegisterEntity_
+  commentId: Overload:Runtime.DataFramework.Entities.GlobalEntities.RegisterEntity
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.GlobalEntities.RegisterEntity
+  nameWithType: GlobalEntities.RegisterEntity
+- uid: Runtime.DataFramework.Entities.GlobalEntities.Reset
+  name: Reset()
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html#Runtime_DataFramework_Entities_GlobalEntities_Reset
+  commentId: M:Runtime.DataFramework.Entities.GlobalEntities.Reset
+  fullName: Runtime.DataFramework.Entities.GlobalEntities.Reset()
+  nameWithType: GlobalEntities.Reset()
+- uid: Runtime.DataFramework.Entities.GlobalEntities.Reset*
+  name: Reset
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html#Runtime_DataFramework_Entities_GlobalEntities_Reset_
+  commentId: Overload:Runtime.DataFramework.Entities.GlobalEntities.Reset
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.GlobalEntities.Reset
+  nameWithType: GlobalEntities.Reset
+- uid: Runtime.DataFramework.Entities.GlobalEntities.UnregisterEntity(System.String)
+  name: UnregisterEntity(string)
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html#Runtime_DataFramework_Entities_GlobalEntities_UnregisterEntity_System_String_
+  commentId: M:Runtime.DataFramework.Entities.GlobalEntities.UnregisterEntity(System.String)
+  name.vb: UnregisterEntity(String)
+  fullName: Runtime.DataFramework.Entities.GlobalEntities.UnregisterEntity(string)
+  fullName.vb: Runtime.DataFramework.Entities.GlobalEntities.UnregisterEntity(String)
+  nameWithType: GlobalEntities.UnregisterEntity(string)
+  nameWithType.vb: GlobalEntities.UnregisterEntity(String)
+- uid: Runtime.DataFramework.Entities.GlobalEntities.UnregisterEntity*
+  name: UnregisterEntity
+  href: api/Runtime.DataFramework.Entities.GlobalEntities.html#Runtime_DataFramework_Entities_GlobalEntities_UnregisterEntity_
+  commentId: Overload:Runtime.DataFramework.Entities.GlobalEntities.UnregisterEntity
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.GlobalEntities.UnregisterEntity
+  nameWithType: GlobalEntities.UnregisterEntity
 - uid: Runtime.DataFramework.Entities.ICommonEntityModel
   name: ICommonEntityModel
   href: api/Runtime.DataFramework.Entities.ICommonEntityModel.html
@@ -23008,6 +23148,22 @@ references:
   fullName.vb: Runtime.DataFramework.Entities.IEntity.RegisterInitialProperty(Of T)(T)
   nameWithType: IEntity.RegisterInitialProperty<T>(T)
   nameWithType.vb: IEntity.RegisterInitialProperty(Of T)(T)
+- uid: Runtime.DataFramework.Entities.IEntity.RegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})
+  name: RegisterOnEntityRecycled(Action<IEntity>)
+  href: api/Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__
+  commentId: M:Runtime.DataFramework.Entities.IEntity.RegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})
+  name.vb: RegisterOnEntityRecycled(Action(Of IEntity))
+  fullName: Runtime.DataFramework.Entities.IEntity.RegisterOnEntityRecycled(System.Action<Runtime.DataFramework.Entities.IEntity>)
+  fullName.vb: Runtime.DataFramework.Entities.IEntity.RegisterOnEntityRecycled(System.Action(Of Runtime.DataFramework.Entities.IEntity))
+  nameWithType: IEntity.RegisterOnEntityRecycled(Action<IEntity>)
+  nameWithType.vb: IEntity.RegisterOnEntityRecycled(Action(Of IEntity))
+- uid: Runtime.DataFramework.Entities.IEntity.RegisterOnEntityRecycled*
+  name: RegisterOnEntityRecycled
+  href: api/Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_RegisterOnEntityRecycled_
+  commentId: Overload:Runtime.DataFramework.Entities.IEntity.RegisterOnEntityRecycled
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.IEntity.RegisterOnEntityRecycled
+  nameWithType: IEntity.RegisterOnEntityRecycled
 - uid: Runtime.DataFramework.Entities.IEntity.RegisterTempProperty*
   name: RegisterTempProperty
   href: api/Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_RegisterTempProperty_
@@ -23085,6 +23241,22 @@ references:
   isSpec: "True"
   fullName: Runtime.DataFramework.Entities.IEntity.UUID
   nameWithType: IEntity.UUID
+- uid: Runtime.DataFramework.Entities.IEntity.UnRegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})
+  name: UnRegisterOnEntityRecycled(Action<IEntity>)
+  href: api/Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_UnRegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__
+  commentId: M:Runtime.DataFramework.Entities.IEntity.UnRegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})
+  name.vb: UnRegisterOnEntityRecycled(Action(Of IEntity))
+  fullName: Runtime.DataFramework.Entities.IEntity.UnRegisterOnEntityRecycled(System.Action<Runtime.DataFramework.Entities.IEntity>)
+  fullName.vb: Runtime.DataFramework.Entities.IEntity.UnRegisterOnEntityRecycled(System.Action(Of Runtime.DataFramework.Entities.IEntity))
+  nameWithType: IEntity.UnRegisterOnEntityRecycled(Action<IEntity>)
+  nameWithType.vb: IEntity.UnRegisterOnEntityRecycled(Action(Of IEntity))
+- uid: Runtime.DataFramework.Entities.IEntity.UnRegisterOnEntityRecycled*
+  name: UnRegisterOnEntityRecycled
+  href: api/Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_UnRegisterOnEntityRecycled_
+  commentId: Overload:Runtime.DataFramework.Entities.IEntity.UnRegisterOnEntityRecycled
+  isSpec: "True"
+  fullName: Runtime.DataFramework.Entities.IEntity.UnRegisterOnEntityRecycled
+  nameWithType: IEntity.UnRegisterOnEntityRecycled
 - uid: Runtime.DataFramework.Entities.IEntityModel
   name: IEntityModel
   href: api/Runtime.DataFramework.Entities.IEntityModel.html
@@ -26498,6 +26670,12 @@ references:
   commentId: F:Runtime.DataFramework.Properties.PropertyName.resource_list
   fullName: Runtime.DataFramework.Properties.PropertyName.resource_list
   nameWithType: PropertyName.resource_list
+- uid: Runtime.DataFramework.Properties.PropertyName.stack_size
+  name: stack_size
+  href: api/Runtime.DataFramework.Properties.PropertyName.html#Runtime_DataFramework_Properties_PropertyName_stack_size
+  commentId: F:Runtime.DataFramework.Properties.PropertyName.stack_size
+  fullName: Runtime.DataFramework.Properties.PropertyName.stack_size
+  nameWithType: PropertyName.stack_size
 - uid: Runtime.DataFramework.Properties.PropertyName.tags
   name: tags
   href: api/Runtime.DataFramework.Properties.PropertyName.html#Runtime_DataFramework_Properties_PropertyName_tags
@@ -28905,6 +29083,42 @@ references:
   commentId: N:Runtime.DataFramework.ViewControllers.Entities
   fullName: Runtime.DataFramework.ViewControllers.Entities
   nameWithType: Runtime.DataFramework.ViewControllers.Entities
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`1
+  name: AbstractBasicEntityViewController<T>
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html
+  commentId: T:Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`1
+  name.vb: AbstractBasicEntityViewController(Of T)
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController<T>
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController(Of T)
+  nameWithType: AbstractBasicEntityViewController<T>
+  nameWithType.vb: AbstractBasicEntityViewController(Of T)
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`1.BindCustomData*
+  name: BindCustomData
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_1_BindCustomData_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`1.BindCustomData
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController<T>.BindCustomData
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController(Of T).BindCustomData
+  nameWithType: AbstractBasicEntityViewController<T>.BindCustomData
+  nameWithType.vb: AbstractBasicEntityViewController(Of T).BindCustomData
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`1.BindCustomData``1(System.String,System.String,System.String,System.Action{``0,``0})
+  name: BindCustomData<T>(string, string, string, Action<T, T?>)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_1_BindCustomData__1_System_String_System_String_System_String_System_Action___0___0__
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`1.BindCustomData``1(System.String,System.String,System.String,System.Action{``0,``0})
+  name.vb: BindCustomData(Of T)(String, String, String, Action(Of T, T))
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController<T>.BindCustomData<T>(string, string, string, System.Action<T, T?>)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController(Of T).BindCustomData(Of T)(String, String, String, System.Action(Of T, T))
+  nameWithType: AbstractBasicEntityViewController<T>.BindCustomData<T>(string, string, string, Action<T, T?>)
+  nameWithType.vb: AbstractBasicEntityViewController(Of T).BindCustomData(Of T)(String, String, String, Action(Of T, T))
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`1.BindCustomData``1(System.String,System.String,System.String,System.Func{System.Object,``0},System.Action{``0,``0})
+  name: BindCustomData<TargetType>(string, string, string, Func<dynamic, TargetType>, Action<TargetType, TargetType>)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_1_BindCustomData__1_System_String_System_String_System_String_System_Func_System_Object___0__System_Action___0___0__
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`1.BindCustomData``1(System.String,System.String,System.String,System.Func{System.Object,``0},System.Action{``0,``0})
+  name.vb: BindCustomData(Of TargetType)(String, String, String, Func(Of Object, TargetType), Action(Of TargetType, TargetType))
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController<T>.BindCustomData<TargetType>(string, string, string, System.Func<dynamic, TargetType>, System.Action<TargetType, TargetType>)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController(Of T).BindCustomData(Of TargetType)(String, String, String, System.Func(Of Object, TargetType), System.Action(Of TargetType, TargetType))
+  nameWithType: AbstractBasicEntityViewController<T>.BindCustomData<TargetType>(string, string, string, Func<dynamic, TargetType>, Action<TargetType, TargetType>)
+  nameWithType.vb: AbstractBasicEntityViewController(Of T).BindCustomData(Of TargetType)(String, String, String, Func(Of Object, TargetType), Action(Of TargetType, TargetType))
 - uid: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController`2
   name: AbstractBasicEntityViewController<T, TEntityModel>
   href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-2.html
@@ -28941,6 +29155,15 @@ references:
   fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController(Of T, TEntityModel).BindCustomData(Of TargetType)(String, String, String, System.Func(Of Object, TargetType), System.Action(Of TargetType, TargetType))
   nameWithType: AbstractBasicEntityViewController<T, TEntityModel>.BindCustomData<TargetType>(string, string, string, Func<dynamic, TargetType>, Action<TargetType, TargetType>)
   nameWithType.vb: AbstractBasicEntityViewController(Of T, TEntityModel).BindCustomData(Of TargetType)(String, String, String, Func(Of Object, TargetType), Action(Of TargetType, TargetType))
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController`1
+  name: AbstractCreatureViewController<T>
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController-1.html
+  commentId: T:Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController`1
+  name.vb: AbstractCreatureViewController(Of T)
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController<T>
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController(Of T)
+  nameWithType: AbstractCreatureViewController<T>
+  nameWithType.vb: AbstractCreatureViewController(Of T)
 - uid: Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController`2
   name: AbstractCreatureViewController<T, TEntityModel>
   href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController-2.html
@@ -28950,6 +29173,85 @@ references:
   fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController(Of T, TEntityModel)
   nameWithType: AbstractCreatureViewController<T, TEntityModel>
   nameWithType.vb: AbstractCreatureViewController(Of T, TEntityModel)
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1
+  name: AbstractDamagableViewController<T>
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html
+  commentId: T:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1
+  name.vb: AbstractDamagableViewController(Of T)
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T)
+  nameWithType: AbstractDamagableViewController<T>
+  nameWithType.vb: AbstractDamagableViewController(Of T)
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name: OnEntityDie(IBelongToFaction)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityDie_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T).OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  nameWithType: AbstractDamagableViewController<T>.OnEntityDie(IBelongToFaction)
+  nameWithType.vb: AbstractDamagableViewController(Of T).OnEntityDie(IBelongToFaction)
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityDie*
+  name: OnEntityDie
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityDie_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityDie
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>.OnEntityDie
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T).OnEntityDie
+  nameWithType: AbstractDamagableViewController<T>.OnEntityDie
+  nameWithType.vb: AbstractDamagableViewController(Of T).OnEntityDie
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityHeal(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name: OnEntityHeal(int, int, IBelongToFaction)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityHeal_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityHeal(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name.vb: OnEntityHeal(Integer, Integer, IBelongToFaction)
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>.OnEntityHeal(int, int, Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T).OnEntityHeal(Integer, Integer, Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  nameWithType: AbstractDamagableViewController<T>.OnEntityHeal(int, int, IBelongToFaction)
+  nameWithType.vb: AbstractDamagableViewController(Of T).OnEntityHeal(Integer, Integer, IBelongToFaction)
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityHeal*
+  name: OnEntityHeal
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityHeal_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityHeal
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>.OnEntityHeal
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T).OnEntityHeal
+  nameWithType: AbstractDamagableViewController<T>.OnEntityHeal
+  nameWithType.vb: AbstractDamagableViewController(Of T).OnEntityHeal
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityTakeDamage(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name: OnEntityTakeDamage(int, int, IBelongToFaction)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityTakeDamage_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityTakeDamage(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name.vb: OnEntityTakeDamage(Integer, Integer, IBelongToFaction)
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>.OnEntityTakeDamage(int, int, Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T).OnEntityTakeDamage(Integer, Integer, Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  nameWithType: AbstractDamagableViewController<T>.OnEntityTakeDamage(int, int, IBelongToFaction)
+  nameWithType.vb: AbstractDamagableViewController(Of T).OnEntityTakeDamage(Integer, Integer, IBelongToFaction)
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityTakeDamage*
+  name: OnEntityTakeDamage
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityTakeDamage_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityTakeDamage
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>.OnEntityTakeDamage
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T).OnEntityTakeDamage
+  nameWithType: AbstractDamagableViewController<T>.OnEntityTakeDamage
+  nameWithType.vb: AbstractDamagableViewController(Of T).OnEntityTakeDamage
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnStart
+  name: OnStart()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnStart
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnStart
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>.OnStart()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T).OnStart()
+  nameWithType: AbstractDamagableViewController<T>.OnStart()
+  nameWithType.vb: AbstractDamagableViewController(Of T).OnStart()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnStart*
+  name: OnStart
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnStart_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnStart
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController<T>.OnStart
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T).OnStart
+  nameWithType: AbstractDamagableViewController<T>.OnStart
+  nameWithType.vb: AbstractDamagableViewController(Of T).OnStart
 - uid: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`2
   name: AbstractDamagableViewController<T, TEntityModel>
   href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-2.html
@@ -29029,6 +29331,290 @@ references:
   fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController(Of T, TEntityModel).OnStart
   nameWithType: AbstractDamagableViewController<T, TEntityModel>.OnStart
   nameWithType.vb: AbstractDamagableViewController(Of T, TEntityModel).OnStart
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1
+  name: AbstractEntityViewController<T>
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html
+  commentId: T:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1
+  name.vb: AbstractEntityViewController(Of T)
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T)
+  nameWithType: AbstractEntityViewController<T>
+  nameWithType.vb: AbstractEntityViewController(Of T)
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind*
+  name: Bind
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.Bind
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).Bind
+  nameWithType: AbstractEntityViewController<T>.Bind
+  nameWithType.vb: AbstractEntityViewController(Of T).Bind
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,MikroFramework.BindableProperty.BindableProperty{``0},System.Action{``0,``0})
+  name: Bind<T>(string, BindableProperty<T>, Action<T, T>)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_MikroFramework_BindableProperty_BindableProperty___0__System_Action___0___0__
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,MikroFramework.BindableProperty.BindableProperty{``0},System.Action{``0,``0})
+  name.vb: Bind(Of T)(String, BindableProperty(Of T), Action(Of T, T))
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.Bind<T>(string, MikroFramework.BindableProperty.BindableProperty<T>, System.Action<T, T>)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).Bind(Of T)(String, MikroFramework.BindableProperty.BindableProperty(Of T), System.Action(Of T, T))
+  nameWithType: AbstractEntityViewController<T>.Bind<T>(string, BindableProperty<T>, Action<T, T>)
+  nameWithType.vb: AbstractEntityViewController(Of T).Bind(Of T)(String, BindableProperty(Of T), Action(Of T, T))
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,MikroFramework.BindableProperty.IBindableProperty,System.Func{System.Object,``0},System.Action{``0,``0})
+  name: Bind<T>(string, IBindableProperty, Func<dynamic, T>, Action<T, T>)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_MikroFramework_BindableProperty_IBindableProperty_System_Func_System_Object___0__System_Action___0___0__
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,MikroFramework.BindableProperty.IBindableProperty,System.Func{System.Object,``0},System.Action{``0,``0})
+  name.vb: Bind(Of T)(String, IBindableProperty, Func(Of Object, T), Action(Of T, T))
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.Bind<T>(string, MikroFramework.BindableProperty.IBindableProperty, System.Func<dynamic, T>, System.Action<T, T>)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).Bind(Of T)(String, MikroFramework.BindableProperty.IBindableProperty, System.Func(Of Object, T), System.Action(Of T, T))
+  nameWithType: AbstractEntityViewController<T>.Bind<T>(string, IBindableProperty, Func<dynamic, T>, Action<T, T>)
+  nameWithType.vb: AbstractEntityViewController(Of T).Bind(Of T)(String, IBindableProperty, Func(Of Object, T), Action(Of T, T))
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,System.Action{System.Object,System.Object})
+  name: Bind<IPropertyType>(string, Action<dynamic, dynamic>)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_System_Action_System_Object_System_Object__
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,System.Action{System.Object,System.Object})
+  name.vb: Bind(Of IPropertyType)(String, Action(Of Object, Object))
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.Bind<IPropertyType>(string, System.Action<dynamic, dynamic>)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).Bind(Of IPropertyType)(String, System.Action(Of Object, Object))
+  nameWithType: AbstractEntityViewController<T>.Bind<IPropertyType>(string, Action<dynamic, dynamic>)
+  nameWithType.vb: AbstractEntityViewController(Of T).Bind(Of IPropertyType)(String, Action(Of Object, Object))
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``2(System.String,MikroFramework.BindableProperty.BindableProperty{``0},System.Func{``0,``1},System.Action{``1,``1})
+  name: Bind<BindedDataType, TargetType>(string, BindableProperty<BindedDataType>, Func<BindedDataType, TargetType>, Action<TargetType, TargetType>)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__2_System_String_MikroFramework_BindableProperty_BindableProperty___0__System_Func___0___1__System_Action___1___1__
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``2(System.String,MikroFramework.BindableProperty.BindableProperty{``0},System.Func{``0,``1},System.Action{``1,``1})
+  name.vb: Bind(Of BindedDataType, TargetType)(String, BindableProperty(Of BindedDataType), Func(Of BindedDataType, TargetType), Action(Of TargetType, TargetType))
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.Bind<BindedDataType, TargetType>(string, MikroFramework.BindableProperty.BindableProperty<BindedDataType>, System.Func<BindedDataType, TargetType>, System.Action<TargetType, TargetType>)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).Bind(Of BindedDataType, TargetType)(String, MikroFramework.BindableProperty.BindableProperty(Of BindedDataType), System.Func(Of BindedDataType, TargetType), System.Action(Of TargetType, TargetType))
+  nameWithType: AbstractEntityViewController<T>.Bind<BindedDataType, TargetType>(string, BindableProperty<BindedDataType>, Func<BindedDataType, TargetType>, Action<TargetType, TargetType>)
+  nameWithType.vb: AbstractEntityViewController(Of T).Bind(Of BindedDataType, TargetType)(String, BindableProperty(Of BindedDataType), Func(Of BindedDataType, TargetType), Action(Of TargetType, TargetType))
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.BoundEntity
+  name: BoundEntity
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_BoundEntity
+  commentId: P:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.BoundEntity
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.BoundEntity
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).BoundEntity
+  nameWithType: AbstractEntityViewController<T>.BoundEntity
+  nameWithType.vb: AbstractEntityViewController(Of T).BoundEntity
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.BoundEntity*
+  name: BoundEntity
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_BoundEntity_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.BoundEntity
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.BoundEntity
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).BoundEntity
+  nameWithType: AbstractEntityViewController<T>.BoundEntity
+  nameWithType.vb: AbstractEntityViewController(Of T).BoundEntity
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ForceUpdatePropertyBindings
+  name: ForceUpdatePropertyBindings()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ForceUpdatePropertyBindings
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ForceUpdatePropertyBindings
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.ForceUpdatePropertyBindings()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).ForceUpdatePropertyBindings()
+  nameWithType: AbstractEntityViewController<T>.ForceUpdatePropertyBindings()
+  nameWithType.vb: AbstractEntityViewController(Of T).ForceUpdatePropertyBindings()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ForceUpdatePropertyBindings*
+  name: ForceUpdatePropertyBindings
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ForceUpdatePropertyBindings_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ForceUpdatePropertyBindings
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.ForceUpdatePropertyBindings
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).ForceUpdatePropertyBindings
+  nameWithType: AbstractEntityViewController<T>.ForceUpdatePropertyBindings
+  nameWithType.vb: AbstractEntityViewController(Of T).ForceUpdatePropertyBindings
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ID
+  name: ID
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ID
+  commentId: P:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ID
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.ID
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).ID
+  nameWithType: AbstractEntityViewController<T>.ID
+  nameWithType.vb: AbstractEntityViewController(Of T).ID
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ID*
+  name: ID
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ID_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ID
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.ID
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).ID
+  nameWithType: AbstractEntityViewController<T>.ID
+  nameWithType.vb: AbstractEntityViewController(Of T).ID
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.InitWithID(System.String)
+  name: InitWithID(string)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_InitWithID_System_String_
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.InitWithID(System.String)
+  name.vb: InitWithID(String)
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.InitWithID(string)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).InitWithID(String)
+  nameWithType: AbstractEntityViewController<T>.InitWithID(string)
+  nameWithType.vb: AbstractEntityViewController(Of T).InitWithID(String)
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.InitWithID*
+  name: InitWithID
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_InitWithID_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.InitWithID
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.InitWithID
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).InitWithID
+  nameWithType: AbstractEntityViewController<T>.InitWithID
+  nameWithType.vb: AbstractEntityViewController(Of T).InitWithID
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindEntityProperty
+  name: OnBindEntityProperty()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindEntityProperty
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindEntityProperty
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnBindEntityProperty()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnBindEntityProperty()
+  nameWithType: AbstractEntityViewController<T>.OnBindEntityProperty()
+  nameWithType.vb: AbstractEntityViewController(Of T).OnBindEntityProperty()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindEntityProperty*
+  name: OnBindEntityProperty
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindEntityProperty_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindEntityProperty
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnBindEntityProperty
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnBindEntityProperty
+  nameWithType: AbstractEntityViewController<T>.OnBindEntityProperty
+  nameWithType.vb: AbstractEntityViewController(Of T).OnBindEntityProperty
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindProperty
+  name: OnBindProperty()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindProperty
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindProperty
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnBindProperty()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnBindProperty()
+  nameWithType: AbstractEntityViewController<T>.OnBindProperty()
+  nameWithType.vb: AbstractEntityViewController(Of T).OnBindProperty()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindProperty*
+  name: OnBindProperty
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindProperty_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindProperty
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnBindProperty
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnBindProperty
+  nameWithType: AbstractEntityViewController<T>.OnBindProperty
+  nameWithType.vb: AbstractEntityViewController(Of T).OnBindProperty
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBuildNewEntity
+  name: OnBuildNewEntity()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBuildNewEntity
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBuildNewEntity
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnBuildNewEntity()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnBuildNewEntity()
+  nameWithType: AbstractEntityViewController<T>.OnBuildNewEntity()
+  nameWithType.vb: AbstractEntityViewController(Of T).OnBuildNewEntity()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBuildNewEntity*
+  name: OnBuildNewEntity
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBuildNewEntity_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBuildNewEntity
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnBuildNewEntity
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnBuildNewEntity
+  nameWithType: AbstractEntityViewController<T>.OnBuildNewEntity
+  nameWithType.vb: AbstractEntityViewController(Of T).OnBuildNewEntity
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnDestroy
+  name: OnDestroy()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnDestroy
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnDestroy
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnDestroy()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnDestroy()
+  nameWithType: AbstractEntityViewController<T>.OnDestroy()
+  nameWithType.vb: AbstractEntityViewController(Of T).OnDestroy()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnDestroy*
+  name: OnDestroy
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnDestroy_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnDestroy
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnDestroy
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnDestroy
+  nameWithType: AbstractEntityViewController<T>.OnDestroy
+  nameWithType.vb: AbstractEntityViewController(Of T).OnDestroy
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnEntityStart
+  name: OnEntityStart()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityStart
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnEntityStart
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnEntityStart()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnEntityStart()
+  nameWithType: AbstractEntityViewController<T>.OnEntityStart()
+  nameWithType.vb: AbstractEntityViewController(Of T).OnEntityStart()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnEntityStart*
+  name: OnEntityStart
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityStart_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnEntityStart
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnEntityStart
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnEntityStart
+  nameWithType: AbstractEntityViewController<T>.OnEntityStart
+  nameWithType.vb: AbstractEntityViewController(Of T).OnEntityStart
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnStart
+  name: OnStart()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnStart
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnStart
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnStart()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnStart()
+  nameWithType: AbstractEntityViewController<T>.OnStart()
+  nameWithType.vb: AbstractEntityViewController(Of T).OnStart()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnStart*
+  name: OnStart
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnStart_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnStart
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.OnStart
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).OnStart
+  nameWithType: AbstractEntityViewController<T>.OnStart
+  nameWithType.vb: AbstractEntityViewController(Of T).OnStart
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Start
+  name: Start()
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Start
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Start
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.Start()
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).Start()
+  nameWithType: AbstractEntityViewController<T>.Start()
+  nameWithType.vb: AbstractEntityViewController(Of T).Start()
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Start*
+  name: Start
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Start_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Start
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.Start
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).Start
+  nameWithType: AbstractEntityViewController<T>.Start
+  nameWithType.vb: AbstractEntityViewController(Of T).Start
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.UpdateBinding*
+  name: UpdateBinding
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_UpdateBinding_
+  commentId: Overload:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.UpdateBinding
+  isSpec: "True"
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.UpdateBinding
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).UpdateBinding
+  nameWithType: AbstractEntityViewController<T>.UpdateBinding
+  nameWithType.vb: AbstractEntityViewController(Of T).UpdateBinding
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.UpdateBinding``2(MikroFramework.BindableProperty.IBindableProperty,System.Reflection.PropertyInfo,System.Func{``1,``0},System.Action{``0,``0})
+  name: UpdateBinding<T, BindablePropertyType>(IBindableProperty, PropertyInfo, Func<BindablePropertyType, T>, Action<T, T>)
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_UpdateBinding__2_MikroFramework_BindableProperty_IBindableProperty_System_Reflection_PropertyInfo_System_Func___1___0__System_Action___0___0__
+  commentId: M:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.UpdateBinding``2(MikroFramework.BindableProperty.IBindableProperty,System.Reflection.PropertyInfo,System.Func{``1,``0},System.Action{``0,``0})
+  name.vb: UpdateBinding(Of T, BindablePropertyType)(IBindableProperty, PropertyInfo, Func(Of BindablePropertyType, T), Action(Of T, T))
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.UpdateBinding<T, BindablePropertyType>(MikroFramework.BindableProperty.IBindableProperty, System.Reflection.PropertyInfo, System.Func<BindablePropertyType, T>, System.Action<T, T>)
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).UpdateBinding(Of T, BindablePropertyType)(MikroFramework.BindableProperty.IBindableProperty, System.Reflection.PropertyInfo, System.Func(Of BindablePropertyType, T), System.Action(Of T, T))
+  nameWithType: AbstractEntityViewController<T>.UpdateBinding<T, BindablePropertyType>(IBindableProperty, PropertyInfo, Func<BindablePropertyType, T>, Action<T, T>)
+  nameWithType.vb: AbstractEntityViewController(Of T).UpdateBinding(Of T, BindablePropertyType)(IBindableProperty, PropertyInfo, Func(Of BindablePropertyType, T), Action(Of T, T))
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.autoDestroyWhenEntityRemoved
+  name: autoDestroyWhenEntityRemoved
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoDestroyWhenEntityRemoved
+  commentId: F:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.autoDestroyWhenEntityRemoved
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.autoDestroyWhenEntityRemoved
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).autoDestroyWhenEntityRemoved
+  nameWithType: AbstractEntityViewController<T>.autoDestroyWhenEntityRemoved
+  nameWithType.vb: AbstractEntityViewController(Of T).autoDestroyWhenEntityRemoved
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.autoRemoveEntityWhenDestroyed
+  name: autoRemoveEntityWhenDestroyed
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoRemoveEntityWhenDestroyed
+  commentId: F:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.autoRemoveEntityWhenDestroyed
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.autoRemoveEntityWhenDestroyed
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).autoRemoveEntityWhenDestroyed
+  nameWithType: AbstractEntityViewController<T>.autoRemoveEntityWhenDestroyed
+  nameWithType.vb: AbstractEntityViewController(Of T).autoRemoveEntityWhenDestroyed
+- uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.properties
+  name: properties
+  href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_properties
+  commentId: F:Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.properties
+  fullName: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController<T>.properties
+  fullName.vb: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController(Of T).properties
+  nameWithType: AbstractEntityViewController<T>.properties
+  nameWithType.vb: AbstractEntityViewController(Of T).properties
 - uid: Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`2
   name: AbstractEntityViewController<T, TEntityModel>
   href: api/Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-2.html
@@ -30713,6 +31299,23 @@ references:
   fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnBindEntityProperty
   nameWithType: AbstractEnemyViewController<T>.OnBindEntityProperty
   nameWithType.vb: AbstractEnemyViewController(Of T).OnBindEntityProperty
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnBuildNewEntity
+  name: OnBuildNewEntity()
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnBuildNewEntity
+  commentId: M:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnBuildNewEntity
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnBuildNewEntity()
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnBuildNewEntity()
+  nameWithType: AbstractEnemyViewController<T>.OnBuildNewEntity()
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnBuildNewEntity()
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnBuildNewEntity*
+  name: OnBuildNewEntity
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnBuildNewEntity_
+  commentId: Overload:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnBuildNewEntity
+  isSpec: "True"
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnBuildNewEntity
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnBuildNewEntity
+  nameWithType: AbstractEnemyViewController<T>.OnBuildNewEntity
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnBuildNewEntity
 - uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnCurrentHealthChanged(System.Int32,System.Int32)
   name: OnCurrentHealthChanged(int, int)
   href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnCurrentHealthChanged_System_Int32_System_Int32_
@@ -30749,23 +31352,14 @@ references:
   fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnInitEnemyEntity
   nameWithType: AbstractEnemyViewController<T>.OnInitEnemyEntity
   nameWithType.vb: AbstractEnemyViewController(Of T).OnInitEnemyEntity
-- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnInitEntity
-  name: OnInitEntity()
-  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnInitEntity
-  commentId: M:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnInitEntity
-  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnInitEntity()
-  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnInitEntity()
-  nameWithType: AbstractEnemyViewController<T>.OnInitEntity()
-  nameWithType.vb: AbstractEnemyViewController(Of T).OnInitEntity()
-- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnInitEntity*
-  name: OnInitEntity
-  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnInitEntity_
-  commentId: Overload:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnInitEntity
-  isSpec: "True"
-  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnInitEntity
-  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnInitEntity
-  nameWithType: AbstractEnemyViewController<T>.OnInitEntity
-  nameWithType.vb: AbstractEnemyViewController(Of T).OnInitEntity
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.enemyModel
+  name: enemyModel
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_enemyModel
+  commentId: F:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.enemyModel
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.enemyModel
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).enemyModel
+  nameWithType: AbstractEnemyViewController<T>.enemyModel
+  nameWithType.vb: AbstractEnemyViewController(Of T).enemyModel
 - uid: Runtime.Framework
   name: Runtime.Framework
   href: api/Runtime.Framework.html
@@ -31222,6 +31816,35 @@ references:
   commentId: T:Runtime.GameResources.Model.Base.GlobalGameResourceEntities
   fullName: Runtime.GameResources.Model.Base.GlobalGameResourceEntities
   nameWithType: GlobalGameResourceEntities
+- uid: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource(System.String)
+  name: GetAnyResource(string)
+  href: api/Runtime.GameResources.Model.Base.GlobalGameResourceEntities.html#Runtime_GameResources_Model_Base_GlobalGameResourceEntities_GetAnyResource_System_String_
+  commentId: M:Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource(System.String)
+  name.vb: GetAnyResource(String)
+  fullName: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource(string)
+  fullName.vb: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource(String)
+  nameWithType: GlobalGameResourceEntities.GetAnyResource(string)
+  nameWithType.vb: GlobalGameResourceEntities.GetAnyResource(String)
+- uid: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource*
+  name: GetAnyResource
+  href: api/Runtime.GameResources.Model.Base.GlobalGameResourceEntities.html#Runtime_GameResources_Model_Base_GlobalGameResourceEntities_GetAnyResource_
+  commentId: Overload:Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource
+  isSpec: "True"
+  fullName: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource
+  nameWithType: GlobalGameResourceEntities.GetAnyResource
+- uid: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.Reset
+  name: Reset()
+  href: api/Runtime.GameResources.Model.Base.GlobalGameResourceEntities.html#Runtime_GameResources_Model_Base_GlobalGameResourceEntities_Reset
+  commentId: M:Runtime.GameResources.Model.Base.GlobalGameResourceEntities.Reset
+  fullName: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.Reset()
+  nameWithType: GlobalGameResourceEntities.Reset()
+- uid: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.Reset*
+  name: Reset
+  href: api/Runtime.GameResources.Model.Base.GlobalGameResourceEntities.html#Runtime_GameResources_Model_Base_GlobalGameResourceEntities_Reset_
+  commentId: Overload:Runtime.GameResources.Model.Base.GlobalGameResourceEntities.Reset
+  isSpec: "True"
+  fullName: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.Reset
+  nameWithType: GlobalGameResourceEntities.Reset
 - uid: Runtime.GameResources.Model.Base.GlobalGameResourceEntities.globalResourceOfSameType
   name: globalResourceOfSameType
   href: api/Runtime.GameResources.Model.Base.GlobalGameResourceEntities.html#Runtime_GameResources_Model_Base_GlobalGameResourceEntities_globalResourceOfSameType
@@ -31806,6 +32429,15 @@ references:
   commentId: N:Runtime.GameResources.ViewControllers
   fullName: Runtime.GameResources.ViewControllers
   nameWithType: Runtime.GameResources.ViewControllers
+- uid: Runtime.GameResources.ViewControllers.AbstractResourceViewController`1
+  name: AbstractResourceViewController<T>
+  href: api/Runtime.GameResources.ViewControllers.AbstractResourceViewController-1.html
+  commentId: T:Runtime.GameResources.ViewControllers.AbstractResourceViewController`1
+  name.vb: AbstractResourceViewController(Of T)
+  fullName: Runtime.GameResources.ViewControllers.AbstractResourceViewController<T>
+  fullName.vb: Runtime.GameResources.ViewControllers.AbstractResourceViewController(Of T)
+  nameWithType: AbstractResourceViewController<T>
+  nameWithType.vb: AbstractResourceViewController(Of T)
 - uid: Runtime.GameResources.ViewControllers.AbstractResourceViewController`2
   name: AbstractResourceViewController<T, TEntityModel>
   href: api/Runtime.GameResources.ViewControllers.AbstractResourceViewController-2.html
@@ -32023,6 +32655,899 @@ references:
   isSpec: "True"
   fullName: Runtime.GameResources.ViewControllers.Instances.Instances.CommonRawMaterialViewController.OnInitResourceEntity
   nameWithType: CommonRawMaterialViewController.OnInitResourceEntity
+- uid: Runtime.Inventory.Model
+  name: Runtime.Inventory.Model
+  href: api/Runtime.Inventory.Model.html
+  commentId: N:Runtime.Inventory.Model
+  fullName: Runtime.Inventory.Model
+  nameWithType: Runtime.Inventory.Model
+- uid: Runtime.Inventory.Model.IInventoryModel
+  name: IInventoryModel
+  href: api/Runtime.Inventory.Model.IInventoryModel.html
+  commentId: T:Runtime.Inventory.Model.IInventoryModel
+  fullName: Runtime.Inventory.Model.IInventoryModel
+  nameWithType: IInventoryModel
+- uid: Runtime.Inventory.Model.IInventoryModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name: AddItemAt(IResourceEntity, int)
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_AddItemAt_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name.vb: AddItemAt(IResourceEntity, Integer)
+  fullName: Runtime.Inventory.Model.IInventoryModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity, int)
+  fullName.vb: Runtime.Inventory.Model.IInventoryModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity, Integer)
+  nameWithType: IInventoryModel.AddItemAt(IResourceEntity, int)
+  nameWithType.vb: IInventoryModel.AddItemAt(IResourceEntity, Integer)
+- uid: Runtime.Inventory.Model.IInventoryModel.AddItemAt*
+  name: AddItemAt
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_AddItemAt_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.AddItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.AddItemAt
+  nameWithType: IInventoryModel.AddItemAt
+- uid: Runtime.Inventory.Model.IInventoryModel.AddSlots(System.Int32)
+  name: AddSlots(int)
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_AddSlots_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.AddSlots(System.Int32)
+  name.vb: AddSlots(Integer)
+  fullName: Runtime.Inventory.Model.IInventoryModel.AddSlots(int)
+  fullName.vb: Runtime.Inventory.Model.IInventoryModel.AddSlots(Integer)
+  nameWithType: IInventoryModel.AddSlots(int)
+  nameWithType.vb: IInventoryModel.AddSlots(Integer)
+- uid: Runtime.Inventory.Model.IInventoryModel.AddSlots*
+  name: AddSlots
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_AddSlots_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.AddSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.AddSlots
+  nameWithType: IInventoryModel.AddSlots
+- uid: Runtime.Inventory.Model.IInventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name: CanPlaceItem(IResourceEntity, int)
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name.vb: CanPlaceItem(IResourceEntity, Integer)
+  fullName: Runtime.Inventory.Model.IInventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity, int)
+  fullName.vb: Runtime.Inventory.Model.IInventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity, Integer)
+  nameWithType: IInventoryModel.CanPlaceItem(IResourceEntity, int)
+  nameWithType.vb: IInventoryModel.CanPlaceItem(IResourceEntity, Integer)
+- uid: Runtime.Inventory.Model.IInventoryModel.CanPlaceItem*
+  name: CanPlaceItem
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_CanPlaceItem_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.CanPlaceItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.CanPlaceItem
+  nameWithType: IInventoryModel.CanPlaceItem
+- uid: Runtime.Inventory.Model.IInventoryModel.GetSlotCount
+  name: GetSlotCount()
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_GetSlotCount
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.GetSlotCount
+  fullName: Runtime.Inventory.Model.IInventoryModel.GetSlotCount()
+  nameWithType: IInventoryModel.GetSlotCount()
+- uid: Runtime.Inventory.Model.IInventoryModel.GetSlotCount*
+  name: GetSlotCount
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_GetSlotCount_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.GetSlotCount
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.GetSlotCount
+  nameWithType: IInventoryModel.GetSlotCount
+- uid: Runtime.Inventory.Model.IInventoryModel.GetUUIDsByIndex(System.Int32)
+  name: GetUUIDsByIndex(int)
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_GetUUIDsByIndex_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.GetUUIDsByIndex(System.Int32)
+  name.vb: GetUUIDsByIndex(Integer)
+  fullName: Runtime.Inventory.Model.IInventoryModel.GetUUIDsByIndex(int)
+  fullName.vb: Runtime.Inventory.Model.IInventoryModel.GetUUIDsByIndex(Integer)
+  nameWithType: IInventoryModel.GetUUIDsByIndex(int)
+  nameWithType.vb: IInventoryModel.GetUUIDsByIndex(Integer)
+- uid: Runtime.Inventory.Model.IInventoryModel.GetUUIDsByIndex*
+  name: GetUUIDsByIndex
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_GetUUIDsByIndex_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.GetUUIDsByIndex
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.GetUUIDsByIndex
+  nameWithType: IInventoryModel.GetUUIDsByIndex
+- uid: Runtime.Inventory.Model.IInventoryModel.RemoveItem(System.String,System.Int32@)
+  name: RemoveItem(string, out int)
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_RemoveItem_System_String_System_Int32__
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.RemoveItem(System.String,System.Int32@)
+  name.vb: RemoveItem(String, Integer)
+  fullName: Runtime.Inventory.Model.IInventoryModel.RemoveItem(string, out int)
+  fullName.vb: Runtime.Inventory.Model.IInventoryModel.RemoveItem(String, Integer)
+  nameWithType: IInventoryModel.RemoveItem(string, out int)
+  nameWithType.vb: IInventoryModel.RemoveItem(String, Integer)
+- uid: Runtime.Inventory.Model.IInventoryModel.RemoveItem*
+  name: RemoveItem
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_RemoveItem_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.RemoveItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.RemoveItem
+  nameWithType: IInventoryModel.RemoveItem
+- uid: Runtime.Inventory.Model.IInventoryModel.RemoveItemAt(System.Int32,System.String)
+  name: RemoveItemAt(int, string)
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_RemoveItemAt_System_Int32_System_String_
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.RemoveItemAt(System.Int32,System.String)
+  name.vb: RemoveItemAt(Integer, String)
+  fullName: Runtime.Inventory.Model.IInventoryModel.RemoveItemAt(int, string)
+  fullName.vb: Runtime.Inventory.Model.IInventoryModel.RemoveItemAt(Integer, String)
+  nameWithType: IInventoryModel.RemoveItemAt(int, string)
+  nameWithType.vb: IInventoryModel.RemoveItemAt(Integer, String)
+- uid: Runtime.Inventory.Model.IInventoryModel.RemoveItemAt*
+  name: RemoveItemAt
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_RemoveItemAt_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.RemoveItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.RemoveItemAt
+  nameWithType: IInventoryModel.RemoveItemAt
+- uid: Runtime.Inventory.Model.IInventoryModel.RemoveLastItemAt(System.Int32)
+  name: RemoveLastItemAt(int)
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_RemoveLastItemAt_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.RemoveLastItemAt(System.Int32)
+  name.vb: RemoveLastItemAt(Integer)
+  fullName: Runtime.Inventory.Model.IInventoryModel.RemoveLastItemAt(int)
+  fullName.vb: Runtime.Inventory.Model.IInventoryModel.RemoveLastItemAt(Integer)
+  nameWithType: IInventoryModel.RemoveLastItemAt(int)
+  nameWithType.vb: IInventoryModel.RemoveLastItemAt(Integer)
+- uid: Runtime.Inventory.Model.IInventoryModel.RemoveLastItemAt*
+  name: RemoveLastItemAt
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_RemoveLastItemAt_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.RemoveLastItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.RemoveLastItemAt
+  nameWithType: IInventoryModel.RemoveLastItemAt
+- uid: Runtime.Inventory.Model.IInventoryModel.ResetInventory
+  name: ResetInventory()
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_ResetInventory
+  commentId: M:Runtime.Inventory.Model.IInventoryModel.ResetInventory
+  fullName: Runtime.Inventory.Model.IInventoryModel.ResetInventory()
+  nameWithType: IInventoryModel.ResetInventory()
+- uid: Runtime.Inventory.Model.IInventoryModel.ResetInventory*
+  name: ResetInventory
+  href: api/Runtime.Inventory.Model.IInventoryModel.html#Runtime_Inventory_Model_IInventoryModel_ResetInventory_
+  commentId: Overload:Runtime.Inventory.Model.IInventoryModel.ResetInventory
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventoryModel.ResetInventory
+  nameWithType: IInventoryModel.ResetInventory
+- uid: Runtime.Inventory.Model.IInventorySystem
+  name: IInventorySystem
+  href: api/Runtime.Inventory.Model.IInventorySystem.html
+  commentId: T:Runtime.Inventory.Model.IInventorySystem
+  fullName: Runtime.Inventory.Model.IInventorySystem
+  nameWithType: IInventorySystem
+- uid: Runtime.Inventory.Model.IInventorySystem.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  name: AddItem(IResourceEntity)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_AddItem_Runtime_GameResources_Model_Base_IResourceEntity_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  fullName: Runtime.Inventory.Model.IInventorySystem.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  nameWithType: IInventorySystem.AddItem(IResourceEntity)
+- uid: Runtime.Inventory.Model.IInventorySystem.AddItem*
+  name: AddItem
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_AddItem_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.AddItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.AddItem
+  nameWithType: IInventorySystem.AddItem
+- uid: Runtime.Inventory.Model.IInventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name: AddItemAt(IResourceEntity, int)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_AddItemAt_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name.vb: AddItemAt(IResourceEntity, Integer)
+  fullName: Runtime.Inventory.Model.IInventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity, int)
+  fullName.vb: Runtime.Inventory.Model.IInventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity, Integer)
+  nameWithType: IInventorySystem.AddItemAt(IResourceEntity, int)
+  nameWithType.vb: IInventorySystem.AddItemAt(IResourceEntity, Integer)
+- uid: Runtime.Inventory.Model.IInventorySystem.AddItemAt*
+  name: AddItemAt
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_AddItemAt_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.AddItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.AddItemAt
+  nameWithType: IInventorySystem.AddItemAt
+- uid: Runtime.Inventory.Model.IInventorySystem.AddSlots(System.Int32)
+  name: AddSlots(int)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_AddSlots_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.AddSlots(System.Int32)
+  name.vb: AddSlots(Integer)
+  fullName: Runtime.Inventory.Model.IInventorySystem.AddSlots(int)
+  fullName.vb: Runtime.Inventory.Model.IInventorySystem.AddSlots(Integer)
+  nameWithType: IInventorySystem.AddSlots(int)
+  nameWithType.vb: IInventorySystem.AddSlots(Integer)
+- uid: Runtime.Inventory.Model.IInventorySystem.AddSlots*
+  name: AddSlots
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_AddSlots_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.AddSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.AddSlots
+  nameWithType: IInventorySystem.AddSlots
+- uid: Runtime.Inventory.Model.IInventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name: CanPlaceItem(IResourceEntity, int)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name.vb: CanPlaceItem(IResourceEntity, Integer)
+  fullName: Runtime.Inventory.Model.IInventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity, int)
+  fullName.vb: Runtime.Inventory.Model.IInventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity, Integer)
+  nameWithType: IInventorySystem.CanPlaceItem(IResourceEntity, int)
+  nameWithType.vb: IInventorySystem.CanPlaceItem(IResourceEntity, Integer)
+- uid: Runtime.Inventory.Model.IInventorySystem.CanPlaceItem*
+  name: CanPlaceItem
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_CanPlaceItem_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.CanPlaceItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.CanPlaceItem
+  nameWithType: IInventorySystem.CanPlaceItem
+- uid: Runtime.Inventory.Model.IInventorySystem.GetItemsAt(System.Int32)
+  name: GetItemsAt(int)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_GetItemsAt_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.GetItemsAt(System.Int32)
+  name.vb: GetItemsAt(Integer)
+  fullName: Runtime.Inventory.Model.IInventorySystem.GetItemsAt(int)
+  fullName.vb: Runtime.Inventory.Model.IInventorySystem.GetItemsAt(Integer)
+  nameWithType: IInventorySystem.GetItemsAt(int)
+  nameWithType.vb: IInventorySystem.GetItemsAt(Integer)
+- uid: Runtime.Inventory.Model.IInventorySystem.GetItemsAt*
+  name: GetItemsAt
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_GetItemsAt_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.GetItemsAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.GetItemsAt
+  nameWithType: IInventorySystem.GetItemsAt
+- uid: Runtime.Inventory.Model.IInventorySystem.GetSlotCount
+  name: GetSlotCount()
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_GetSlotCount
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.GetSlotCount
+  fullName: Runtime.Inventory.Model.IInventorySystem.GetSlotCount()
+  nameWithType: IInventorySystem.GetSlotCount()
+- uid: Runtime.Inventory.Model.IInventorySystem.GetSlotCount*
+  name: GetSlotCount
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_GetSlotCount_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.GetSlotCount
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.GetSlotCount
+  nameWithType: IInventorySystem.GetSlotCount
+- uid: Runtime.Inventory.Model.IInventorySystem.GetSlotCurrentItemCount(System.Int32)
+  name: GetSlotCurrentItemCount(int)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_GetSlotCurrentItemCount_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.GetSlotCurrentItemCount(System.Int32)
+  name.vb: GetSlotCurrentItemCount(Integer)
+  fullName: Runtime.Inventory.Model.IInventorySystem.GetSlotCurrentItemCount(int)
+  fullName.vb: Runtime.Inventory.Model.IInventorySystem.GetSlotCurrentItemCount(Integer)
+  nameWithType: IInventorySystem.GetSlotCurrentItemCount(int)
+  nameWithType.vb: IInventorySystem.GetSlotCurrentItemCount(Integer)
+- uid: Runtime.Inventory.Model.IInventorySystem.GetSlotCurrentItemCount*
+  name: GetSlotCurrentItemCount
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_GetSlotCurrentItemCount_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.GetSlotCurrentItemCount
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.GetSlotCurrentItemCount
+  nameWithType: IInventorySystem.GetSlotCurrentItemCount
+- uid: Runtime.Inventory.Model.IInventorySystem.RemoveItem(System.String)
+  name: RemoveItem(string)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_RemoveItem_System_String_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.RemoveItem(System.String)
+  name.vb: RemoveItem(String)
+  fullName: Runtime.Inventory.Model.IInventorySystem.RemoveItem(string)
+  fullName.vb: Runtime.Inventory.Model.IInventorySystem.RemoveItem(String)
+  nameWithType: IInventorySystem.RemoveItem(string)
+  nameWithType.vb: IInventorySystem.RemoveItem(String)
+- uid: Runtime.Inventory.Model.IInventorySystem.RemoveItem*
+  name: RemoveItem
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_RemoveItem_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.RemoveItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.RemoveItem
+  nameWithType: IInventorySystem.RemoveItem
+- uid: Runtime.Inventory.Model.IInventorySystem.RemoveItemAt(System.Int32,System.String)
+  name: RemoveItemAt(int, string)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_RemoveItemAt_System_Int32_System_String_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.RemoveItemAt(System.Int32,System.String)
+  name.vb: RemoveItemAt(Integer, String)
+  fullName: Runtime.Inventory.Model.IInventorySystem.RemoveItemAt(int, string)
+  fullName.vb: Runtime.Inventory.Model.IInventorySystem.RemoveItemAt(Integer, String)
+  nameWithType: IInventorySystem.RemoveItemAt(int, string)
+  nameWithType.vb: IInventorySystem.RemoveItemAt(Integer, String)
+- uid: Runtime.Inventory.Model.IInventorySystem.RemoveItemAt*
+  name: RemoveItemAt
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_RemoveItemAt_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.RemoveItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.RemoveItemAt
+  nameWithType: IInventorySystem.RemoveItemAt
+- uid: Runtime.Inventory.Model.IInventorySystem.RemoveLastItemAt(System.Int32)
+  name: RemoveLastItemAt(int)
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_RemoveLastItemAt_System_Int32_
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.RemoveLastItemAt(System.Int32)
+  name.vb: RemoveLastItemAt(Integer)
+  fullName: Runtime.Inventory.Model.IInventorySystem.RemoveLastItemAt(int)
+  fullName.vb: Runtime.Inventory.Model.IInventorySystem.RemoveLastItemAt(Integer)
+  nameWithType: IInventorySystem.RemoveLastItemAt(int)
+  nameWithType.vb: IInventorySystem.RemoveLastItemAt(Integer)
+- uid: Runtime.Inventory.Model.IInventorySystem.RemoveLastItemAt*
+  name: RemoveLastItemAt
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_RemoveLastItemAt_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.RemoveLastItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.RemoveLastItemAt
+  nameWithType: IInventorySystem.RemoveLastItemAt
+- uid: Runtime.Inventory.Model.IInventorySystem.ResetInventory
+  name: ResetInventory()
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_ResetInventory
+  commentId: M:Runtime.Inventory.Model.IInventorySystem.ResetInventory
+  fullName: Runtime.Inventory.Model.IInventorySystem.ResetInventory()
+  nameWithType: IInventorySystem.ResetInventory()
+- uid: Runtime.Inventory.Model.IInventorySystem.ResetInventory*
+  name: ResetInventory
+  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_ResetInventory_
+  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.ResetInventory
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IInventorySystem.ResetInventory
+  nameWithType: IInventorySystem.ResetInventory
+- uid: Runtime.Inventory.Model.InventoryModel
+  name: InventoryModel
+  href: api/Runtime.Inventory.Model.InventoryModel.html
+  commentId: T:Runtime.Inventory.Model.InventoryModel
+  fullName: Runtime.Inventory.Model.InventoryModel
+  nameWithType: InventoryModel
+- uid: Runtime.Inventory.Model.InventoryModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name: AddItemAt(IResourceEntity, int)
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_AddItemAt_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventoryModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name.vb: AddItemAt(IResourceEntity, Integer)
+  fullName: Runtime.Inventory.Model.InventoryModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity, int)
+  fullName.vb: Runtime.Inventory.Model.InventoryModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity, Integer)
+  nameWithType: InventoryModel.AddItemAt(IResourceEntity, int)
+  nameWithType.vb: InventoryModel.AddItemAt(IResourceEntity, Integer)
+- uid: Runtime.Inventory.Model.InventoryModel.AddItemAt*
+  name: AddItemAt
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_AddItemAt_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.AddItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.AddItemAt
+  nameWithType: InventoryModel.AddItemAt
+- uid: Runtime.Inventory.Model.InventoryModel.AddSlots(System.Int32)
+  name: AddSlots(int)
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_AddSlots_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventoryModel.AddSlots(System.Int32)
+  name.vb: AddSlots(Integer)
+  fullName: Runtime.Inventory.Model.InventoryModel.AddSlots(int)
+  fullName.vb: Runtime.Inventory.Model.InventoryModel.AddSlots(Integer)
+  nameWithType: InventoryModel.AddSlots(int)
+  nameWithType.vb: InventoryModel.AddSlots(Integer)
+- uid: Runtime.Inventory.Model.InventoryModel.AddSlots*
+  name: AddSlots
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_AddSlots_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.AddSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.AddSlots
+  nameWithType: InventoryModel.AddSlots
+- uid: Runtime.Inventory.Model.InventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name: CanPlaceItem(IResourceEntity, int)
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name.vb: CanPlaceItem(IResourceEntity, Integer)
+  fullName: Runtime.Inventory.Model.InventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity, int)
+  fullName.vb: Runtime.Inventory.Model.InventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity, Integer)
+  nameWithType: InventoryModel.CanPlaceItem(IResourceEntity, int)
+  nameWithType.vb: InventoryModel.CanPlaceItem(IResourceEntity, Integer)
+- uid: Runtime.Inventory.Model.InventoryModel.CanPlaceItem*
+  name: CanPlaceItem
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_CanPlaceItem_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.CanPlaceItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.CanPlaceItem
+  nameWithType: InventoryModel.CanPlaceItem
+- uid: Runtime.Inventory.Model.InventoryModel.GetSlotCount
+  name: GetSlotCount()
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_GetSlotCount
+  commentId: M:Runtime.Inventory.Model.InventoryModel.GetSlotCount
+  fullName: Runtime.Inventory.Model.InventoryModel.GetSlotCount()
+  nameWithType: InventoryModel.GetSlotCount()
+- uid: Runtime.Inventory.Model.InventoryModel.GetSlotCount*
+  name: GetSlotCount
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_GetSlotCount_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.GetSlotCount
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.GetSlotCount
+  nameWithType: InventoryModel.GetSlotCount
+- uid: Runtime.Inventory.Model.InventoryModel.GetUUIDsByIndex(System.Int32)
+  name: GetUUIDsByIndex(int)
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_GetUUIDsByIndex_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventoryModel.GetUUIDsByIndex(System.Int32)
+  name.vb: GetUUIDsByIndex(Integer)
+  fullName: Runtime.Inventory.Model.InventoryModel.GetUUIDsByIndex(int)
+  fullName.vb: Runtime.Inventory.Model.InventoryModel.GetUUIDsByIndex(Integer)
+  nameWithType: InventoryModel.GetUUIDsByIndex(int)
+  nameWithType.vb: InventoryModel.GetUUIDsByIndex(Integer)
+- uid: Runtime.Inventory.Model.InventoryModel.GetUUIDsByIndex*
+  name: GetUUIDsByIndex
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_GetUUIDsByIndex_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.GetUUIDsByIndex
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.GetUUIDsByIndex
+  nameWithType: InventoryModel.GetUUIDsByIndex
+- uid: Runtime.Inventory.Model.InventoryModel.InitialSlotCount
+  name: InitialSlotCount
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_InitialSlotCount
+  commentId: F:Runtime.Inventory.Model.InventoryModel.InitialSlotCount
+  fullName: Runtime.Inventory.Model.InventoryModel.InitialSlotCount
+  nameWithType: InventoryModel.InitialSlotCount
+- uid: Runtime.Inventory.Model.InventoryModel.MaxSlotCount
+  name: MaxSlotCount
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_MaxSlotCount
+  commentId: F:Runtime.Inventory.Model.InventoryModel.MaxSlotCount
+  fullName: Runtime.Inventory.Model.InventoryModel.MaxSlotCount
+  nameWithType: InventoryModel.MaxSlotCount
+- uid: Runtime.Inventory.Model.InventoryModel.OnInit
+  name: OnInit()
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_OnInit
+  commentId: M:Runtime.Inventory.Model.InventoryModel.OnInit
+  fullName: Runtime.Inventory.Model.InventoryModel.OnInit()
+  nameWithType: InventoryModel.OnInit()
+- uid: Runtime.Inventory.Model.InventoryModel.OnInit*
+  name: OnInit
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_OnInit_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.OnInit
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.OnInit
+  nameWithType: InventoryModel.OnInit
+- uid: Runtime.Inventory.Model.InventoryModel.RemoveItem(System.String,System.Int32@)
+  name: RemoveItem(string, out int)
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_RemoveItem_System_String_System_Int32__
+  commentId: M:Runtime.Inventory.Model.InventoryModel.RemoveItem(System.String,System.Int32@)
+  name.vb: RemoveItem(String, Integer)
+  fullName: Runtime.Inventory.Model.InventoryModel.RemoveItem(string, out int)
+  fullName.vb: Runtime.Inventory.Model.InventoryModel.RemoveItem(String, Integer)
+  nameWithType: InventoryModel.RemoveItem(string, out int)
+  nameWithType.vb: InventoryModel.RemoveItem(String, Integer)
+- uid: Runtime.Inventory.Model.InventoryModel.RemoveItem*
+  name: RemoveItem
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_RemoveItem_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.RemoveItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.RemoveItem
+  nameWithType: InventoryModel.RemoveItem
+- uid: Runtime.Inventory.Model.InventoryModel.RemoveItemAt(System.Int32,System.String)
+  name: RemoveItemAt(int, string)
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_RemoveItemAt_System_Int32_System_String_
+  commentId: M:Runtime.Inventory.Model.InventoryModel.RemoveItemAt(System.Int32,System.String)
+  name.vb: RemoveItemAt(Integer, String)
+  fullName: Runtime.Inventory.Model.InventoryModel.RemoveItemAt(int, string)
+  fullName.vb: Runtime.Inventory.Model.InventoryModel.RemoveItemAt(Integer, String)
+  nameWithType: InventoryModel.RemoveItemAt(int, string)
+  nameWithType.vb: InventoryModel.RemoveItemAt(Integer, String)
+- uid: Runtime.Inventory.Model.InventoryModel.RemoveItemAt*
+  name: RemoveItemAt
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_RemoveItemAt_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.RemoveItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.RemoveItemAt
+  nameWithType: InventoryModel.RemoveItemAt
+- uid: Runtime.Inventory.Model.InventoryModel.RemoveLastItemAt(System.Int32)
+  name: RemoveLastItemAt(int)
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_RemoveLastItemAt_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventoryModel.RemoveLastItemAt(System.Int32)
+  name.vb: RemoveLastItemAt(Integer)
+  fullName: Runtime.Inventory.Model.InventoryModel.RemoveLastItemAt(int)
+  fullName.vb: Runtime.Inventory.Model.InventoryModel.RemoveLastItemAt(Integer)
+  nameWithType: InventoryModel.RemoveLastItemAt(int)
+  nameWithType.vb: InventoryModel.RemoveLastItemAt(Integer)
+- uid: Runtime.Inventory.Model.InventoryModel.RemoveLastItemAt*
+  name: RemoveLastItemAt
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_RemoveLastItemAt_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.RemoveLastItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.RemoveLastItemAt
+  nameWithType: InventoryModel.RemoveLastItemAt
+- uid: Runtime.Inventory.Model.InventoryModel.ResetInventory
+  name: ResetInventory()
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_ResetInventory
+  commentId: M:Runtime.Inventory.Model.InventoryModel.ResetInventory
+  fullName: Runtime.Inventory.Model.InventoryModel.ResetInventory()
+  nameWithType: InventoryModel.ResetInventory()
+- uid: Runtime.Inventory.Model.InventoryModel.ResetInventory*
+  name: ResetInventory
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_ResetInventory_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.ResetInventory
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.ResetInventory
+  nameWithType: InventoryModel.ResetInventory
+- uid: Runtime.Inventory.Model.InventorySlot
+  name: InventorySlot
+  href: api/Runtime.Inventory.Model.InventorySlot.html
+  commentId: T:Runtime.Inventory.Model.InventorySlot
+  fullName: Runtime.Inventory.Model.InventorySlot
+  nameWithType: InventorySlot
+- uid: Runtime.Inventory.Model.InventorySlot.#ctor
+  name: InventorySlot()
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot__ctor
+  commentId: M:Runtime.Inventory.Model.InventorySlot.#ctor
+  name.vb: New()
+  fullName: Runtime.Inventory.Model.InventorySlot.InventorySlot()
+  fullName.vb: Runtime.Inventory.Model.InventorySlot.New()
+  nameWithType: InventorySlot.InventorySlot()
+  nameWithType.vb: InventorySlot.New()
+- uid: Runtime.Inventory.Model.InventorySlot.#ctor*
+  name: InventorySlot
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot__ctor_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Runtime.Inventory.Model.InventorySlot.InventorySlot
+  fullName.vb: Runtime.Inventory.Model.InventorySlot.New
+  nameWithType: InventorySlot.InventorySlot
+  nameWithType.vb: InventorySlot.New
+- uid: Runtime.Inventory.Model.InventorySlot.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  name: CanPlaceItem(IResourceEntity)
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_
+  commentId: M:Runtime.Inventory.Model.InventorySlot.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  fullName: Runtime.Inventory.Model.InventorySlot.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  nameWithType: InventorySlot.CanPlaceItem(IResourceEntity)
+- uid: Runtime.Inventory.Model.InventorySlot.CanPlaceItem*
+  name: CanPlaceItem
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_CanPlaceItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.CanPlaceItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.CanPlaceItem
+  nameWithType: InventorySlot.CanPlaceItem
+- uid: Runtime.Inventory.Model.InventorySlot.ContainsItem(System.String)
+  name: ContainsItem(string)
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_ContainsItem_System_String_
+  commentId: M:Runtime.Inventory.Model.InventorySlot.ContainsItem(System.String)
+  name.vb: ContainsItem(String)
+  fullName: Runtime.Inventory.Model.InventorySlot.ContainsItem(string)
+  fullName.vb: Runtime.Inventory.Model.InventorySlot.ContainsItem(String)
+  nameWithType: InventorySlot.ContainsItem(string)
+  nameWithType.vb: InventorySlot.ContainsItem(String)
+- uid: Runtime.Inventory.Model.InventorySlot.ContainsItem*
+  name: ContainsItem
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_ContainsItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.ContainsItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.ContainsItem
+  nameWithType: InventorySlot.ContainsItem
+- uid: Runtime.Inventory.Model.InventorySlot.GetLastItemUUID
+  name: GetLastItemUUID()
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetLastItemUUID
+  commentId: M:Runtime.Inventory.Model.InventorySlot.GetLastItemUUID
+  fullName: Runtime.Inventory.Model.InventorySlot.GetLastItemUUID()
+  nameWithType: InventorySlot.GetLastItemUUID()
+- uid: Runtime.Inventory.Model.InventorySlot.GetLastItemUUID*
+  name: GetLastItemUUID
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetLastItemUUID_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.GetLastItemUUID
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.GetLastItemUUID
+  nameWithType: InventorySlot.GetLastItemUUID
+- uid: Runtime.Inventory.Model.InventorySlot.GetQuantity
+  name: GetQuantity()
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetQuantity
+  commentId: M:Runtime.Inventory.Model.InventorySlot.GetQuantity
+  fullName: Runtime.Inventory.Model.InventorySlot.GetQuantity()
+  nameWithType: InventorySlot.GetQuantity()
+- uid: Runtime.Inventory.Model.InventorySlot.GetQuantity*
+  name: GetQuantity
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetQuantity_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.GetQuantity
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.GetQuantity
+  nameWithType: InventorySlot.GetQuantity
+- uid: Runtime.Inventory.Model.InventorySlot.GetUUIDList
+  name: GetUUIDList()
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetUUIDList
+  commentId: M:Runtime.Inventory.Model.InventorySlot.GetUUIDList
+  fullName: Runtime.Inventory.Model.InventorySlot.GetUUIDList()
+  nameWithType: InventorySlot.GetUUIDList()
+- uid: Runtime.Inventory.Model.InventorySlot.GetUUIDList*
+  name: GetUUIDList
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetUUIDList_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.GetUUIDList
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.GetUUIDList
+  nameWithType: InventorySlot.GetUUIDList
+- uid: Runtime.Inventory.Model.InventorySlot.IsEmpty
+  name: IsEmpty()
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_IsEmpty
+  commentId: M:Runtime.Inventory.Model.InventorySlot.IsEmpty
+  fullName: Runtime.Inventory.Model.InventorySlot.IsEmpty()
+  nameWithType: InventorySlot.IsEmpty()
+- uid: Runtime.Inventory.Model.InventorySlot.IsEmpty*
+  name: IsEmpty
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_IsEmpty_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.IsEmpty
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.IsEmpty
+  nameWithType: InventorySlot.IsEmpty
+- uid: Runtime.Inventory.Model.InventorySlot.RemoveItem(System.String)
+  name: RemoveItem(string)
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_RemoveItem_System_String_
+  commentId: M:Runtime.Inventory.Model.InventorySlot.RemoveItem(System.String)
+  name.vb: RemoveItem(String)
+  fullName: Runtime.Inventory.Model.InventorySlot.RemoveItem(string)
+  fullName.vb: Runtime.Inventory.Model.InventorySlot.RemoveItem(String)
+  nameWithType: InventorySlot.RemoveItem(string)
+  nameWithType.vb: InventorySlot.RemoveItem(String)
+- uid: Runtime.Inventory.Model.InventorySlot.RemoveItem*
+  name: RemoveItem
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_RemoveItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.RemoveItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.RemoveItem
+  nameWithType: InventorySlot.RemoveItem
+- uid: Runtime.Inventory.Model.InventorySlot.RemoveLastItem
+  name: RemoveLastItem()
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_RemoveLastItem
+  commentId: M:Runtime.Inventory.Model.InventorySlot.RemoveLastItem
+  fullName: Runtime.Inventory.Model.InventorySlot.RemoveLastItem()
+  nameWithType: InventorySlot.RemoveLastItem()
+- uid: Runtime.Inventory.Model.InventorySlot.RemoveLastItem*
+  name: RemoveLastItem
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_RemoveLastItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.RemoveLastItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.RemoveLastItem
+  nameWithType: InventorySlot.RemoveLastItem
+- uid: Runtime.Inventory.Model.InventorySlot.TryAddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  name: TryAddItem(IResourceEntity)
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_TryAddItem_Runtime_GameResources_Model_Base_IResourceEntity_
+  commentId: M:Runtime.Inventory.Model.InventorySlot.TryAddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  fullName: Runtime.Inventory.Model.InventorySlot.TryAddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  nameWithType: InventorySlot.TryAddItem(IResourceEntity)
+- uid: Runtime.Inventory.Model.InventorySlot.TryAddItem*
+  name: TryAddItem
+  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_TryAddItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlot.TryAddItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlot.TryAddItem
+  nameWithType: InventorySlot.TryAddItem
+- uid: Runtime.Inventory.Model.InventorySlotInfo
+  name: InventorySlotInfo
+  href: api/Runtime.Inventory.Model.InventorySlotInfo.html
+  commentId: T:Runtime.Inventory.Model.InventorySlotInfo
+  fullName: Runtime.Inventory.Model.InventorySlotInfo
+  nameWithType: InventorySlotInfo
+- uid: Runtime.Inventory.Model.InventorySlotInfo.Items
+  name: Items
+  href: api/Runtime.Inventory.Model.InventorySlotInfo.html#Runtime_Inventory_Model_InventorySlotInfo_Items
+  commentId: F:Runtime.Inventory.Model.InventorySlotInfo.Items
+  fullName: Runtime.Inventory.Model.InventorySlotInfo.Items
+  nameWithType: InventorySlotInfo.Items
+- uid: Runtime.Inventory.Model.InventorySlotInfo.SlotIndex
+  name: SlotIndex
+  href: api/Runtime.Inventory.Model.InventorySlotInfo.html#Runtime_Inventory_Model_InventorySlotInfo_SlotIndex
+  commentId: F:Runtime.Inventory.Model.InventorySlotInfo.SlotIndex
+  fullName: Runtime.Inventory.Model.InventorySlotInfo.SlotIndex
+  nameWithType: InventorySlotInfo.SlotIndex
+- uid: Runtime.Inventory.Model.InventorySlotInfo.TopItem
+  name: TopItem
+  href: api/Runtime.Inventory.Model.InventorySlotInfo.html#Runtime_Inventory_Model_InventorySlotInfo_TopItem
+  commentId: P:Runtime.Inventory.Model.InventorySlotInfo.TopItem
+  fullName: Runtime.Inventory.Model.InventorySlotInfo.TopItem
+  nameWithType: InventorySlotInfo.TopItem
+- uid: Runtime.Inventory.Model.InventorySlotInfo.TopItem*
+  name: TopItem
+  href: api/Runtime.Inventory.Model.InventorySlotInfo.html#Runtime_Inventory_Model_InventorySlotInfo_TopItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySlotInfo.TopItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySlotInfo.TopItem
+  nameWithType: InventorySlotInfo.TopItem
+- uid: Runtime.Inventory.Model.InventorySystem
+  name: InventorySystem
+  href: api/Runtime.Inventory.Model.InventorySystem.html
+  commentId: T:Runtime.Inventory.Model.InventorySystem
+  fullName: Runtime.Inventory.Model.InventorySystem
+  nameWithType: InventorySystem
+- uid: Runtime.Inventory.Model.InventorySystem.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  name: AddItem(IResourceEntity)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_AddItem_Runtime_GameResources_Model_Base_IResourceEntity_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  fullName: Runtime.Inventory.Model.InventorySystem.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)
+  nameWithType: InventorySystem.AddItem(IResourceEntity)
+- uid: Runtime.Inventory.Model.InventorySystem.AddItem*
+  name: AddItem
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_AddItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.AddItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.AddItem
+  nameWithType: InventorySystem.AddItem
+- uid: Runtime.Inventory.Model.InventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name: AddItemAt(IResourceEntity, int)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_AddItemAt_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name.vb: AddItemAt(IResourceEntity, Integer)
+  fullName: Runtime.Inventory.Model.InventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity, int)
+  fullName.vb: Runtime.Inventory.Model.InventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity, Integer)
+  nameWithType: InventorySystem.AddItemAt(IResourceEntity, int)
+  nameWithType.vb: InventorySystem.AddItemAt(IResourceEntity, Integer)
+- uid: Runtime.Inventory.Model.InventorySystem.AddItemAt*
+  name: AddItemAt
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_AddItemAt_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.AddItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.AddItemAt
+  nameWithType: InventorySystem.AddItemAt
+- uid: Runtime.Inventory.Model.InventorySystem.AddSlots(System.Int32)
+  name: AddSlots(int)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_AddSlots_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.AddSlots(System.Int32)
+  name.vb: AddSlots(Integer)
+  fullName: Runtime.Inventory.Model.InventorySystem.AddSlots(int)
+  fullName.vb: Runtime.Inventory.Model.InventorySystem.AddSlots(Integer)
+  nameWithType: InventorySystem.AddSlots(int)
+  nameWithType.vb: InventorySystem.AddSlots(Integer)
+- uid: Runtime.Inventory.Model.InventorySystem.AddSlots*
+  name: AddSlots
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_AddSlots_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.AddSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.AddSlots
+  nameWithType: InventorySystem.AddSlots
+- uid: Runtime.Inventory.Model.InventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name: CanPlaceItem(IResourceEntity, int)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)
+  name.vb: CanPlaceItem(IResourceEntity, Integer)
+  fullName: Runtime.Inventory.Model.InventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity, int)
+  fullName.vb: Runtime.Inventory.Model.InventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity, Integer)
+  nameWithType: InventorySystem.CanPlaceItem(IResourceEntity, int)
+  nameWithType.vb: InventorySystem.CanPlaceItem(IResourceEntity, Integer)
+- uid: Runtime.Inventory.Model.InventorySystem.CanPlaceItem*
+  name: CanPlaceItem
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_CanPlaceItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.CanPlaceItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.CanPlaceItem
+  nameWithType: InventorySystem.CanPlaceItem
+- uid: Runtime.Inventory.Model.InventorySystem.GetItemsAt(System.Int32)
+  name: GetItemsAt(int)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_GetItemsAt_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.GetItemsAt(System.Int32)
+  name.vb: GetItemsAt(Integer)
+  fullName: Runtime.Inventory.Model.InventorySystem.GetItemsAt(int)
+  fullName.vb: Runtime.Inventory.Model.InventorySystem.GetItemsAt(Integer)
+  nameWithType: InventorySystem.GetItemsAt(int)
+  nameWithType.vb: InventorySystem.GetItemsAt(Integer)
+- uid: Runtime.Inventory.Model.InventorySystem.GetItemsAt*
+  name: GetItemsAt
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_GetItemsAt_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.GetItemsAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.GetItemsAt
+  nameWithType: InventorySystem.GetItemsAt
+- uid: Runtime.Inventory.Model.InventorySystem.GetSlotCount
+  name: GetSlotCount()
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_GetSlotCount
+  commentId: M:Runtime.Inventory.Model.InventorySystem.GetSlotCount
+  fullName: Runtime.Inventory.Model.InventorySystem.GetSlotCount()
+  nameWithType: InventorySystem.GetSlotCount()
+- uid: Runtime.Inventory.Model.InventorySystem.GetSlotCount*
+  name: GetSlotCount
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_GetSlotCount_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.GetSlotCount
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.GetSlotCount
+  nameWithType: InventorySystem.GetSlotCount
+- uid: Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount(System.Int32)
+  name: GetSlotCurrentItemCount(int)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_GetSlotCurrentItemCount_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount(System.Int32)
+  name.vb: GetSlotCurrentItemCount(Integer)
+  fullName: Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount(int)
+  fullName.vb: Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount(Integer)
+  nameWithType: InventorySystem.GetSlotCurrentItemCount(int)
+  nameWithType.vb: InventorySystem.GetSlotCurrentItemCount(Integer)
+- uid: Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount*
+  name: GetSlotCurrentItemCount
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_GetSlotCurrentItemCount_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount
+  nameWithType: InventorySystem.GetSlotCurrentItemCount
+- uid: Runtime.Inventory.Model.InventorySystem.OnInit
+  name: OnInit()
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_OnInit
+  commentId: M:Runtime.Inventory.Model.InventorySystem.OnInit
+  fullName: Runtime.Inventory.Model.InventorySystem.OnInit()
+  nameWithType: InventorySystem.OnInit()
+- uid: Runtime.Inventory.Model.InventorySystem.OnInit*
+  name: OnInit
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_OnInit_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.OnInit
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.OnInit
+  nameWithType: InventorySystem.OnInit
+- uid: Runtime.Inventory.Model.InventorySystem.RemoveItem(System.String)
+  name: RemoveItem(string)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_RemoveItem_System_String_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.RemoveItem(System.String)
+  name.vb: RemoveItem(String)
+  fullName: Runtime.Inventory.Model.InventorySystem.RemoveItem(string)
+  fullName.vb: Runtime.Inventory.Model.InventorySystem.RemoveItem(String)
+  nameWithType: InventorySystem.RemoveItem(string)
+  nameWithType.vb: InventorySystem.RemoveItem(String)
+- uid: Runtime.Inventory.Model.InventorySystem.RemoveItem*
+  name: RemoveItem
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_RemoveItem_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.RemoveItem
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.RemoveItem
+  nameWithType: InventorySystem.RemoveItem
+- uid: Runtime.Inventory.Model.InventorySystem.RemoveItemAt(System.Int32,System.String)
+  name: RemoveItemAt(int, string)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_RemoveItemAt_System_Int32_System_String_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.RemoveItemAt(System.Int32,System.String)
+  name.vb: RemoveItemAt(Integer, String)
+  fullName: Runtime.Inventory.Model.InventorySystem.RemoveItemAt(int, string)
+  fullName.vb: Runtime.Inventory.Model.InventorySystem.RemoveItemAt(Integer, String)
+  nameWithType: InventorySystem.RemoveItemAt(int, string)
+  nameWithType.vb: InventorySystem.RemoveItemAt(Integer, String)
+- uid: Runtime.Inventory.Model.InventorySystem.RemoveItemAt*
+  name: RemoveItemAt
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_RemoveItemAt_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.RemoveItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.RemoveItemAt
+  nameWithType: InventorySystem.RemoveItemAt
+- uid: Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt(System.Int32)
+  name: RemoveLastItemAt(int)
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_RemoveLastItemAt_System_Int32_
+  commentId: M:Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt(System.Int32)
+  name.vb: RemoveLastItemAt(Integer)
+  fullName: Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt(int)
+  fullName.vb: Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt(Integer)
+  nameWithType: InventorySystem.RemoveLastItemAt(int)
+  nameWithType.vb: InventorySystem.RemoveLastItemAt(Integer)
+- uid: Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt*
+  name: RemoveLastItemAt
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_RemoveLastItemAt_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt
+  nameWithType: InventorySystem.RemoveLastItemAt
+- uid: Runtime.Inventory.Model.InventorySystem.ResetInventory
+  name: ResetInventory()
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_ResetInventory
+  commentId: M:Runtime.Inventory.Model.InventorySystem.ResetInventory
+  fullName: Runtime.Inventory.Model.InventorySystem.ResetInventory()
+  nameWithType: InventorySystem.ResetInventory()
+- uid: Runtime.Inventory.Model.InventorySystem.ResetInventory*
+  name: ResetInventory
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_ResetInventory_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.ResetInventory
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.ResetInventory
+  nameWithType: InventorySystem.ResetInventory
+- uid: Runtime.Inventory.Model.OnInventoryReloadEvent
+  name: OnInventoryReloadEvent
+  href: api/Runtime.Inventory.Model.OnInventoryReloadEvent.html
+  commentId: T:Runtime.Inventory.Model.OnInventoryReloadEvent
+  fullName: Runtime.Inventory.Model.OnInventoryReloadEvent
+  nameWithType: OnInventoryReloadEvent
+- uid: Runtime.Inventory.Model.OnInventoryReloadEvent.InventorySlots
+  name: InventorySlots
+  href: api/Runtime.Inventory.Model.OnInventoryReloadEvent.html#Runtime_Inventory_Model_OnInventoryReloadEvent_InventorySlots
+  commentId: F:Runtime.Inventory.Model.OnInventoryReloadEvent.InventorySlots
+  fullName: Runtime.Inventory.Model.OnInventoryReloadEvent.InventorySlots
+  nameWithType: OnInventoryReloadEvent.InventorySlots
+- uid: Runtime.Inventory.Model.OnInventorySlotAddedEvent
+  name: OnInventorySlotAddedEvent
+  href: api/Runtime.Inventory.Model.OnInventorySlotAddedEvent.html
+  commentId: T:Runtime.Inventory.Model.OnInventorySlotAddedEvent
+  fullName: Runtime.Inventory.Model.OnInventorySlotAddedEvent
+  nameWithType: OnInventorySlotAddedEvent
+- uid: Runtime.Inventory.Model.OnInventorySlotAddedEvent.AddedCount
+  name: AddedCount
+  href: api/Runtime.Inventory.Model.OnInventorySlotAddedEvent.html#Runtime_Inventory_Model_OnInventorySlotAddedEvent_AddedCount
+  commentId: F:Runtime.Inventory.Model.OnInventorySlotAddedEvent.AddedCount
+  fullName: Runtime.Inventory.Model.OnInventorySlotAddedEvent.AddedCount
+  nameWithType: OnInventorySlotAddedEvent.AddedCount
+- uid: Runtime.Inventory.Model.OnInventorySlotUpdateEvent
+  name: OnInventorySlotUpdateEvent
+  href: api/Runtime.Inventory.Model.OnInventorySlotUpdateEvent.html
+  commentId: T:Runtime.Inventory.Model.OnInventorySlotUpdateEvent
+  fullName: Runtime.Inventory.Model.OnInventorySlotUpdateEvent
+  nameWithType: OnInventorySlotUpdateEvent
+- uid: Runtime.Inventory.Model.OnInventorySlotUpdateEvent.UpdatedSlot
+  name: UpdatedSlot
+  href: api/Runtime.Inventory.Model.OnInventorySlotUpdateEvent.html#Runtime_Inventory_Model_OnInventorySlotUpdateEvent_UpdatedSlot
+  commentId: F:Runtime.Inventory.Model.OnInventorySlotUpdateEvent.UpdatedSlot
+  fullName: Runtime.Inventory.Model.OnInventorySlotUpdateEvent.UpdatedSlot
+  nameWithType: OnInventorySlotUpdateEvent.UpdatedSlot
 - uid: Runtime.RawMaterials
   name: Runtime.RawMaterials
   href: api/Runtime.RawMaterials.html
@@ -32326,23 +33851,23 @@ references:
   fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T)
   nameWithType: AbstractRawMaterialViewController<T>
   nameWithType.vb: AbstractRawMaterialViewController(Of T)
-- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitEntity
-  name: OnInitEntity()
-  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnInitEntity
-  commentId: M:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitEntity
-  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.OnInitEntity()
-  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnInitEntity()
-  nameWithType: AbstractRawMaterialViewController<T>.OnInitEntity()
-  nameWithType.vb: AbstractRawMaterialViewController(Of T).OnInitEntity()
-- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitEntity*
-  name: OnInitEntity
-  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnInitEntity_
-  commentId: Overload:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitEntity
+- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnBuildNewEntity
+  name: OnBuildNewEntity()
+  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnBuildNewEntity
+  commentId: M:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnBuildNewEntity
+  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.OnBuildNewEntity()
+  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnBuildNewEntity()
+  nameWithType: AbstractRawMaterialViewController<T>.OnBuildNewEntity()
+  nameWithType.vb: AbstractRawMaterialViewController(Of T).OnBuildNewEntity()
+- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnBuildNewEntity*
+  name: OnBuildNewEntity
+  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnBuildNewEntity_
+  commentId: Overload:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnBuildNewEntity
   isSpec: "True"
-  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.OnInitEntity
-  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnInitEntity
-  nameWithType: AbstractRawMaterialViewController<T>.OnInitEntity
-  nameWithType.vb: AbstractRawMaterialViewController(Of T).OnInitEntity
+  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.OnBuildNewEntity
+  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnBuildNewEntity
+  nameWithType: AbstractRawMaterialViewController<T>.OnBuildNewEntity
+  nameWithType.vb: AbstractRawMaterialViewController(Of T).OnBuildNewEntity
 - uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder{`0})
   name: OnInitResourceEntity(RawMaterialBuilder<T>)
   href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnInitResourceEntity_Runtime_RawMaterials_Model_Builder_RawMaterialBuilder__0__
@@ -32361,6 +33886,14 @@ references:
   fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnInitResourceEntity
   nameWithType: AbstractRawMaterialViewController<T>.OnInitResourceEntity
   nameWithType.vb: AbstractRawMaterialViewController(Of T).OnInitResourceEntity
+- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.rawMaterialModel
+  name: rawMaterialModel
+  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_rawMaterialModel
+  commentId: F:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.rawMaterialModel
+  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.rawMaterialModel
+  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).rawMaterialModel
+  nameWithType: AbstractRawMaterialViewController<T>.rawMaterialModel
+  nameWithType.vb: AbstractRawMaterialViewController(Of T).rawMaterialModel
 - uid: Runtime.RawMaterials.ViewControllers.Instances
   name: Runtime.RawMaterials.ViewControllers.Instances
   href: api/Runtime.RawMaterials.ViewControllers.Instances.html

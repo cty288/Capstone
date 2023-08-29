@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class GlobalGameResourceEntities
+      <title>Class EntityOnRecycledUnRegister
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class GlobalGameResourceEntities
+      <meta name="title" content="Class EntityOnRecycledUnRegister
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_GameResources_Model_Base_GlobalGameResourceEntities.md&amp;value=---%0Auid%3A%20Runtime.GameResources.Model.Base.GlobalGameResourceEntities%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_Entities_EntityOnRecycledUnRegister.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.EntityOnRecycledUnRegister%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.GameResources.Model.Base.GlobalGameResourceEntities">
+        <article data-uid="Runtime.DataFramework.Entities.EntityOnRecycledUnRegister">
 
 
 
-  <h1 id="Runtime_GameResources_Model_Base_GlobalGameResourceEntities" data-uid="Runtime.GameResources.Model.Base.GlobalGameResourceEntities" class="text-break">
-    Class GlobalGameResourceEntities
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_DataFramework_Entities_EntityOnRecycledUnRegister" data-uid="Runtime.DataFramework.Entities.EntityOnRecycledUnRegister" class="text-break">
+    Class EntityOnRecycledUnRegister
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L129"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.GameResources.html">GameResources</a>.<a class="xref" href="Runtime.GameResources.Model.html">Model</a>.<a class="xref" href="Runtime.GameResources.Model.Base.html">Base</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Entities.html">Entities</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static class GlobalGameResourceEntities</code></pre>
+    <pre><code class="lang-csharp hljs">public class EntityOnRecycledUnRegister : IUnRegister</code></pre>
   </div>
 
 
@@ -105,10 +105,16 @@
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><span class="xref">GlobalGameResourceEntities</span></div>
+      <div><span class="xref">EntityOnRecycledUnRegister</span></div>
     </dd>
   </dl>
 
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="MikroFramework.Event.IUnRegister.html">IUnRegister</a></div>
+    </dd>
+  </dl>
 
 
   <dl class="typelist derived">
@@ -142,31 +148,34 @@
 
 
 
-  <h2 class="section" id="fields">Fields
+  <h2 class="section" id="constructors">Constructors
 </h2>
 
 
+  <a id="Runtime_DataFramework_Entities_EntityOnRecycledUnRegister__ctor_" data-uid="Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.#ctor*"></a>
 
-  <h3 id="Runtime_GameResources_Model_Base_GlobalGameResourceEntities_globalResourceOfSameType" data-uid="Runtime.GameResources.Model.Base.GlobalGameResourceEntities.globalResourceOfSameType">
-  globalResourceOfSameType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_DataFramework_Entities_EntityOnRecycledUnRegister__ctor_Runtime_DataFramework_Entities_IEntity_System_Action_Runtime_DataFramework_Entities_IEntity__" data-uid="Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.#ctor(Runtime.DataFramework.Entities.IEntity,System.Action{Runtime.DataFramework.Entities.IEntity})">
+  EntityOnRecycledUnRegister(IEntity, Action&lt;IEntity&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L135"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, IResourceEntity&gt; globalResourceOfSameType</code></pre>
+    <pre><code class="lang-csharp hljs">public EntityOnRecycledUnRegister(IEntity entity, Action&lt;IEntity&gt; onEntityRecycled)</code></pre>
   </div>
 
-
-
-
-  <h4 class="section">Field Value</h4>
+  <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a>&gt;</dt>
+    <dt><code>entity</code> <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
+    <dd></dd>
+    <dt><code>onEntityRecycled</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a>&gt;</dt>
     <dd></dd>
   </dl>
+
+
+
 
 
 
@@ -180,54 +189,18 @@
 </h2>
 
 
-  <a id="Runtime_GameResources_Model_Base_GlobalGameResourceEntities_GetAnyResource_" data-uid="Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource*"></a>
+  <a id="Runtime_DataFramework_Entities_EntityOnRecycledUnRegister_UnRegister_" data-uid="Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.UnRegister*"></a>
 
-  <h3 id="Runtime_GameResources_Model_Base_GlobalGameResourceEntities_GetAnyResource_System_String_" data-uid="Runtime.GameResources.Model.Base.GlobalGameResourceEntities.GetAnyResource(System.String)">
-  GetAnyResource(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_DataFramework_Entities_EntityOnRecycledUnRegister_UnRegister" data-uid="Runtime.DataFramework.Entities.EntityOnRecycledUnRegister.UnRegister">
+  UnRegister()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L140"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IResourceEntity GetAnyResource(string id)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_GameResources_Model_Base_GlobalGameResourceEntities_Reset_" data-uid="Runtime.GameResources.Model.Base.GlobalGameResourceEntities.Reset*"></a>
-
-  <h3 id="Runtime_GameResources_Model_Base_GlobalGameResourceEntities_Reset" data-uid="Runtime.GameResources.Model.Base.GlobalGameResourceEntities.Reset">
-  Reset()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L27"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void Reset()</code></pre>
+    <pre><code class="lang-csharp hljs">public void UnRegister()</code></pre>
   </div>
 
 
@@ -246,7 +219,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L17" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L129" class="edit-link">Edit this page</a>
         </div>
 
         
