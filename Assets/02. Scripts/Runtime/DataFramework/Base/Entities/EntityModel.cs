@@ -3,6 +3,7 @@ using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities.Builders;
+using Runtime.GameResources.Model.Base;
 
 namespace Runtime.DataFramework.Entities {
 	public interface IEntityModel : IModel {
@@ -59,6 +60,7 @@ namespace Runtime.DataFramework.Entities {
 
 		protected override void OnInit() {
 			base.OnInit();
+			
 			entityBuilderFactory = new EntityBuilderFactory();
 			foreach (T entity in entities.Values) {
 				entity.OnLoadFromSave();

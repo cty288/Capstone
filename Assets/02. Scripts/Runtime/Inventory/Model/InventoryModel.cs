@@ -32,7 +32,7 @@ namespace Runtime.Inventory.Model {
 		/// </summary>
 		/// <param name="uuid"></param>
 		/// <returns></returns>
-		bool RemoveItem(string uuid);
+		bool RemoveItem(string uuid, out int index);
 		
 		/// <summary>
 		/// Find and remove the first item with the specified uuid at the specified slot.
@@ -57,10 +57,19 @@ namespace Runtime.Inventory.Model {
 		/// <param name="slotCount"></param>
 		/// <returns></returns>
 		bool AddSlots(int slotCount);
-		
+		/// <summary>
+		/// Get the number of all slots currently.
+		/// </summary>
+		/// <returns></returns>
 		int GetSlotCount();
 		
 		List<string> GetUUIDsByIndex(int index);
+		
+		/// <summary>
+		/// Reset the inventory to the initial state.
+		/// </summary>
+		void ResetInventory();
+		
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -103,12 +112,15 @@ namespace Runtime.Inventory.Model {
 			return slots[index].CanPlaceItem(item);
 		}
 
-		public bool RemoveItem(string uuid) {
+		public bool RemoveItem(string uuid, out int index) {
 			for (int i = 0; i < GetSlotCount(); i++) {
 				if (slots[i].ContainsItem(uuid)) {
+					index = i;
 					return RemoveItemAt(i, uuid);
 				}
 			}
+
+			index = -1;
 			return false;
 		}
 
@@ -117,11 +129,6 @@ namespace Runtime.Inventory.Model {
 			InventorySlot slot = slots[index];
 			
 			if (slot.RemoveItem(uuid)) {
-				/*this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
-					Quantity = slot.GetQuantity(),
-					SlotIndex = index,
-					TopItemUUID = slot.GetLastItemUUID()
-				});*/
 				return true;
 			}
 			return false;
@@ -132,11 +139,6 @@ namespace Runtime.Inventory.Model {
 			InventorySlot slot = slots[index];
 			
 			if (slot.RemoveLastItem()) {
-				/*this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
-					Quantity = slot.GetQuantity(),
-					SlotIndex = index,
-					TopItemUUID = slot.GetLastItemUUID()
-				});*/
 				return true;
 			}
 			return false;
@@ -166,5 +168,11 @@ namespace Runtime.Inventory.Model {
 			if (index < 0 || index >= GetSlotCount()) return null;
 			return slots[index].GetUUIDList();
 		}
+
+		public void ResetInventory() {
+			slots.Clear();
+			AddSlots(InitialSlotCount);
+		}
+		
 	}
 }

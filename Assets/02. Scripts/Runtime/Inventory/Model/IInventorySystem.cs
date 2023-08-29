@@ -72,5 +72,17 @@ namespace Runtime.Inventory.Model {
 		bool AddSlots(int slotCount);
 		
 		int GetSlotCount();
+		
+		/// <summary>
+		/// Reset the inventory to the initial state.
+		/// </summary>
+		void ResetInventory();
+		
+		/// <summary>
+		/// Get the item count at the specified index.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		int GetSlotCurrentItemCount(int index);
 	}
 }

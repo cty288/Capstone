@@ -21,5 +21,9 @@ namespace Runtime.DataFramework.Entities {
 			
 			return (null, null);
 		}
+		
+		public static void Reset() {
+			globalEntities.Clear();
+		}
 	}
 }

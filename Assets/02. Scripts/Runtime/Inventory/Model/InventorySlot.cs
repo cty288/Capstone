@@ -89,7 +89,7 @@ namespace Runtime.Inventory.Model {
 				return true;
 			}
 
-			if (ItemKey == item.EntityName && GetQuantity() < item.GetMaxStackProperty().RealValue.Value) {
+			if (ItemKey == item.EntityName && GetQuantity() < item.GetMaxStackProperty().RealValue.Value && !ContainsItem(item.UUID)) {
 				return true;
 			}
 
