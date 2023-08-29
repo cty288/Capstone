@@ -178,35 +178,214 @@ namespace Tests.Tests_Editor {
 			Assert.AreEqual(1, inventorySystem.GetSlotCurrentItemCount(0)); 
 			Assert.AreEqual(1, inventorySystem.GetSlotCurrentItemCount(1)); 
 		}
-		/*[Test]
-		public void RemoveItem_ValidUUID_ShouldWork()
-		{
-			IResourceEntity item = new SomeResourceEntity(); // 用你的实际类型替换
-			inventorySystem.AddItem(item);
+		
+		[Test]
+		public void RemoveItem_Successfully() {
+			
+			IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			inventorySystem.AddItemAt(item, 0);
+			
 			bool result = inventorySystem.RemoveItem(item.UUID);
+    
 			Assert.IsTrue(result);
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(0));
 		}
-
+		
 		[Test]
-		public void RemoveItem_InvalidUUID_ShouldFail()
-		{
-			bool result = inventorySystem.RemoveItem("InvalidUUID");
-			Assert.IsFalse(result);
+		public void RemoveItemAt_Successfully() {
+			
+			IResourceEntity item1 = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			IResourceEntity item2 = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+    
+			inventorySystem.AddItemAt(item1, 0);
+			inventorySystem.AddItemAt(item2, 1);
+
+			
+			bool result = inventorySystem.RemoveItemAt(0, item1.UUID);
+    
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(0));
+			Assert.AreEqual(1, inventorySystem.GetSlotCurrentItemCount(1));
 		}
-
+		
 		[Test]
-		public void AddSlots_WithinLimit_ShouldWork()
-		{
+		public void AddSlots_Successfully() {
+			int initialSlotCount = inventorySystem.GetSlotCount();
+			
 			bool result = inventorySystem.AddSlots(5);
+    
 			Assert.IsTrue(result);
+			Assert.AreEqual(initialSlotCount + 5, inventorySystem.GetSlotCount());
+		}
+		
+		[Test]
+		public void ResetInventory_Successfully() {
+			inventorySystem.AddSlots(5);
+			IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			inventorySystem.AddItemAt(item, 0);
+    
+			// 重置库存
+			inventorySystem.ResetInventory();
+
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(0));
+			Assert.AreEqual(InventoryModel.InitialSlotCount, inventorySystem.GetSlotCount());
 		}
 
 		[Test]
-		public void AddSlots_ExceedLimit_ShouldFail()
-		{
-			bool result = inventorySystem.AddSlots(InventoryModel.MaxSlotCount + 1);
+		public void RemoveItem_NonexistentItem() {
+			bool result = inventorySystem.RemoveItem("fake_uuid");
+			bool result2 = inventorySystem.RemoveItemAt(0, "fake_uuid");
+			bool result3 = inventorySystem.RemoveLastItemAt(0);
 			Assert.IsFalse(result);
-		}*/
+			Assert.IsFalse(result2);
+			Assert.IsFalse(result3);
+		}
+		
+		[Test]
+		public void RemoveMultipleItemsFromFullSlot() {
+			for (int i = 0; i < 20; i++) {
+				IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+				inventorySystem.AddItemAt(item, 0);
+			}
+			
+			for (int i = 0; i < 10; i++) {
+				inventorySystem.RemoveLastItemAt(0);
+			}
+    
+			Assert.AreEqual(10, inventorySystem.GetSlotCurrentItemCount(0));
+		}
+		
+		
+		[Test]
+		public void RemoveDifferentTypesOfItems() {
+			IResourceEntity itemA = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			inventorySystem.AddItemAt(itemA, 0);
+			
+			IResourceEntity itemB = rawMaterialModel.GetRawMaterialBuilder<TestEmptyRawMaterial>().FromConfig().Build();
+			inventorySystem.AddItemAt(itemB, 1);
 
+		
+			bool resultA = inventorySystem.RemoveItem(itemA.UUID);
+			bool resultB = inventorySystem.RemoveItem(itemB.UUID);
+
+			Assert.IsTrue(resultA);
+			Assert.IsTrue(resultB);
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(0));
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(1));
+		}
+		
+		[Test]
+		public void RemoveAndCheckForEmptySlot() {
+			for (int i = 0; i < 20; i++) {
+				IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+				inventorySystem.AddItemAt(item, 0);
+			}
+			
+			for (int i = 0; i < 20; i++) {
+				inventorySystem.RemoveLastItemAt(0);
+			}
+    
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(0));
+			
+			IResourceEntity itemB = rawMaterialModel.GetRawMaterialBuilder<TestEmptyRawMaterial>().FromConfig().Build();
+			Assert.IsTrue(inventorySystem.CanPlaceItem(itemB, 0));
+		}
+		
+		[Test]
+		public void CrossRemoveItems() {
+			IResourceEntity itemA = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			inventorySystem.AddItemAt(itemA, 0);
+
+			
+			IResourceEntity itemB = rawMaterialModel.GetRawMaterialBuilder<TestEmptyRawMaterial>().FromConfig().Build();
+			inventorySystem.AddItemAt(itemB, 1);
+    
+			
+			bool resultB = inventorySystem.RemoveItem(itemB.UUID);
+			bool resultA = inventorySystem.RemoveItem(itemA.UUID);
+
+			Assert.IsTrue(resultB);
+			Assert.IsTrue(resultA);
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(0));
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(1));
+		}
+		
+		[Test]
+		public void RemoveItemWithPriority() {
+			IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			inventorySystem.AddItemAt(item, 0);
+			inventorySystem.AddItemAt(item, 1);
+
+			
+			bool result = inventorySystem.RemoveItem(item.UUID);
+
+			Assert.IsTrue(result);
+			
+			Assert.AreEqual(0, inventorySystem.GetSlotCurrentItemCount(0));
+			Assert.AreEqual(1, inventorySystem.GetSlotCurrentItemCount(1));
+		}
+		
+		[Test]
+		public void CheckEmptySlot() {
+			InventorySlotInfo info = inventorySystem.GetItemsAt(0);
+
+			Assert.AreEqual(0, info.Items.Count);
+			Assert.IsNull(info.TopItem);
+			Assert.AreEqual(0, info.SlotIndex);
+		}
+		
+		[Test]
+		public void CheckMixedTypeItems() {
+			IResourceEntity itemA = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			IResourceEntity itemB = rawMaterialModel.GetRawMaterialBuilder<TestEmptyRawMaterial>().FromConfig().Build();
+    
+			inventorySystem.AddItemAt(itemA, 0);
+			inventorySystem.AddItemAt(itemB, 0);
+
+			InventorySlotInfo info = inventorySystem.GetItemsAt(0);
+
+			Assert.AreEqual(1, info.Items.Count);
+			Assert.AreEqual(itemA, info.TopItem);
+			Assert.AreEqual(0, info.SlotIndex);
+		}
+		
+		[Test]
+		public void CheckMultipleSlots() {
+			IResourceEntity itemA = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			IResourceEntity itemB = rawMaterialModel.GetRawMaterialBuilder<TestEmptyRawMaterial>().FromConfig().Build();
+    
+			inventorySystem.AddItemAt(itemA, 0);
+			inventorySystem.AddItemAt(itemB, 1);
+
+			InventorySlotInfo info0 = inventorySystem.GetItemsAt(0);
+			InventorySlotInfo info1 = inventorySystem.GetItemsAt(1);
+
+			Assert.AreEqual(1, info0.Items.Count);
+			Assert.AreEqual(itemA, info0.TopItem);
+			Assert.AreEqual(0, info0.SlotIndex);
+
+			Assert.AreEqual(1, info1.Items.Count);
+			Assert.AreEqual(itemB, info1.TopItem);
+			Assert.AreEqual(1, info1.SlotIndex);
+		}
+		
+		[Test]
+		public void CheckAfterRemoval() {
+			
+			IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
+			inventorySystem.AddItemAt(item, 0);
+    
+			
+			inventorySystem.RemoveLastItemAt(0);
+
+			InventorySlotInfo info = inventorySystem.GetItemsAt(0);
+
+			Assert.AreEqual(0, info.Items.Count);
+			Assert.IsNull(info.TopItem);
+			Assert.AreEqual(0, info.SlotIndex);
+		}
+
+
+		
 	}
 }

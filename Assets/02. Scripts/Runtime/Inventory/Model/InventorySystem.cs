@@ -42,7 +42,8 @@ namespace Runtime.Inventory.Model {
 		private List<IResourceEntity> GetResourcesByIDs(List<string> uuids) {
 			List<IResourceEntity> resources = new List<IResourceEntity>();
 			foreach (string uuid in uuids) {
-				GlobalGameResourceEntities.GetAnyResource(uuid);
+				IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
+				resources.Add(entity);
 			}
 			return resources;
 		}
@@ -129,6 +130,15 @@ namespace Runtime.Inventory.Model {
 
 		public int GetSlotCurrentItemCount(int index) {
 			return inventoryModel.GetUUIDsByIndex(index).Count;
+		}
+
+		public InventorySlotInfo GetItemsAt(int index) {
+			List<string> uuids = inventoryModel.GetUUIDsByIndex(index);
+			List<IResourceEntity> resources = GetResourcesByIDs(uuids);
+			return new InventorySlotInfo() {
+				Items = resources,
+				SlotIndex = index
+			};
 		}
 	}
 }

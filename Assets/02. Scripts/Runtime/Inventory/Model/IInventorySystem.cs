@@ -10,6 +10,14 @@ namespace Runtime.Inventory.Model {
 	public struct InventorySlotInfo {
 		public int SlotIndex;
 		public List<IResourceEntity> Items;
+		public IResourceEntity TopItem {
+			get {
+				if (Items.Count == 0) {
+					return null;
+				}
+				return Items[^1];
+			}
+		}
 	}
 
 	public interface IInventorySystem : ISystem {
@@ -84,5 +92,12 @@ namespace Runtime.Inventory.Model {
 		/// <param name="index"></param>
 		/// <returns></returns>
 		int GetSlotCurrentItemCount(int index);
+		
+		/// <summary>
+		/// Find all resources with the specified index in the inventory.
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		InventorySlotInfo GetItemsAt(int index);
 	}
 }
