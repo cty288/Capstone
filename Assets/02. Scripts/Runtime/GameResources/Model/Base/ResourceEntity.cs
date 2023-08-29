@@ -16,18 +16,23 @@ namespace Runtime.GameResources.Model.Base {
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		
 		public IMaxStack GetMaxStackProperty();
+		
+		//public IStackSize GetStackSizeProperty();
 	}
 	
 	public abstract class ResourceEntity<T> :  AbstractBasicEntity, IResourceEntity where T : ResourceEntity<T>, new() {
 		private IMaxStack maxStackProperty;
+		//private IStackSize stackSizeProperty;
 		protected override void OnEntityStart() {
 			base.OnEntityStart();
 			
 			maxStackProperty = GetProperty<IMaxStack>();
+			//stackSizeProperty = GetProperty<IStackSize>();
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
 			RegisterInitialProperty<IMaxStack>(new MaxStack());
+			//RegisterInitialProperty<IStackSize>(new StackSize());
 		}
 
 
@@ -53,6 +58,10 @@ namespace Runtime.GameResources.Model.Base {
 		public IMaxStack GetMaxStackProperty() {
 			return maxStackProperty;
 		}
+
+		/*public IStackSize GetStackSizeProperty() {
+			return stackSizeProperty;
+		}*/
 	}
 
 }

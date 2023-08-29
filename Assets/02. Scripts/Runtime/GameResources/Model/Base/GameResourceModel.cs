@@ -16,6 +16,17 @@ namespace Runtime.GameResources.Model.Base {
 	
 	public static class GlobalGameResourceEntities {
 		public static Dictionary<string, IResourceEntity> globalResourceOfSameType = new Dictionary<string, IResourceEntity>();
+		
+		public static IResourceEntity GetAnyResource(string id) {
+			if (globalResourceOfSameType.TryGetValue(id, out var resource)) {
+				return resource;
+			}
+			return null;
+		}
+		
+		public static void Reset() {
+			globalResourceOfSameType.Clear();
+		}
 	}
 	
 	public abstract class GameResourceModel<T> : EntityModel<T>, IGameResourceModel<T>
@@ -23,7 +34,7 @@ namespace Runtime.GameResources.Model.Base {
 		
 		protected override void OnInit() {
 			base.OnInit();
-			GlobalGameResourceEntities.globalResourceOfSameType.Clear();
+			//GlobalGameResourceEntities.globalResourceOfSameType.Clear();
 			foreach (T entity in entities.Values) {
 				GlobalGameResourceEntities.globalResourceOfSameType.Add(entity.UUID, entity);
 			}
@@ -35,10 +46,7 @@ namespace Runtime.GameResources.Model.Base {
 		}
 
 		public IResourceEntity GetAnyResource(string id) {
-			if (GlobalGameResourceEntities.globalResourceOfSameType.TryGetValue(id, out var resource)) {
-				return resource;
-			}
-			return null;
+			return GlobalGameResourceEntities.GetAnyResource(id);
 		}
 
 		public override bool RemoveEntity(string id) {

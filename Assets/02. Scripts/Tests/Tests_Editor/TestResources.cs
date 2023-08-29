@@ -56,8 +56,6 @@ namespace Tests.Tests_Editor {
 		}
 	}
 	
-	//public class TestResourceAdditionalModel
-	
 	//=======================================================================================
 	
 	public class TestResources {

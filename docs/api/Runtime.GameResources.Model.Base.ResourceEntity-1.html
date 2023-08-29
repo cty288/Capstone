@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_GameResources_Model_Base_ResourceEntity_1" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1" class="text-break">
     Class ResourceEntity&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -132,7 +132,7 @@
   <dl class="typelist derived">
     <dt>Derived</dt>
     <dd>
-      <div><a class="xref" href="Runtime.GameResources.Model.Base.RawMaterialEntity-1.html">RawMaterialEntity&lt;T&gt;</a></div>
+      <div><a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html">RawMaterialEntity&lt;T&gt;</a></div>
     </dd>
   </dl>
 
@@ -185,6 +185,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_configTable">Entity.configTable</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_onEntityRecycled">Entity.onEntityRecycled</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetConfigTable">Entity.GetConfigTable()</a>
     </div>
     <div>
@@ -210,6 +213,12 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart">Entity.OnStart()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_UnRegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.UnRegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyName_">Entity.GetProperty(PropertyName)</a>
@@ -295,7 +304,7 @@
 
   <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetMaxStackProperty" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetMaxStackProperty">
   GetMaxStackProperty()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The display name of the resource entity is the bait adjectives + the name of the resource entity <br>
@@ -328,7 +337,7 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
   <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnDoRecycle" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnDoRecycle">
   OnDoRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -354,7 +363,7 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
   <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnEntityRegisterAdditionalProperties" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnEntityRegisterAdditionalProperties">
   OnEntityRegisterAdditionalProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L33"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A place to register additional properties, normally empty. Recommended to register custom properties instead.</p>
@@ -381,7 +390,7 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
   <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnEntityStart" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnEntityStart">
   OnEntityStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>After the entity is built, or loaded from save, this will be called</p>
@@ -408,7 +417,7 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L21" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L23" class="edit-link">Edit this page</a>
         </div>
 
         

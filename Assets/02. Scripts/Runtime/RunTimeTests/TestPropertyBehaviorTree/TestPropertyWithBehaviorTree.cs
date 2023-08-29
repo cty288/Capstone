@@ -161,6 +161,10 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 Debug.Log($"Attack 1 Damage: {Attack1Damage}");
             }
+
+            if (Input.GetKeyDown(KeyCode.R)) {
+                enemyModel.RemoveEntity(BoundEntity.UUID);
+            }
         }
     
         protected void OnTestPropertyChange(int oldValue, int newValue){
