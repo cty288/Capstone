@@ -73,7 +73,7 @@ namespace Runtime.DataFramework.Entities {
 		}
 
 		/// <summary>
-		/// If your custom property is DataOnlyProperty, use dynamic for T
+		/// If your custom property is AutoConfigCustomProperty, use dynamic for T
 		/// </summary>
 		/// <param name="customPropertyName"></param>
 		/// <param name="dataName"></param>

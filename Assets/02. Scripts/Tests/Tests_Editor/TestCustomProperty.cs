@@ -14,7 +14,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Tests.Tests_Editor {
 	public class TestCustomProperty {
 		internal class TestBasicEnemyWithCustomProperties1 : EnemyEntity<TestBasicEnemyWithCustomProperties1> {
-			public override string EntityName { get; protected set; } = "TTT";
+			public override string EntityName { get; set; } = "TTT";
 
 			public override void OnRecycle() {
             
@@ -70,7 +70,7 @@ namespace Tests.Tests_Editor {
 		}
 		public class TestEntity : EnemyEntity<TestEntity> {
 			[field: SerializeField]
-			public override string EntityName { get; protected set; } = "TTT2";
+			public override string EntityName { get; set; } = "TTT2";
 			public override void OnRecycle() {
         
 			}
@@ -118,8 +118,8 @@ namespace Tests.Tests_Editor {
 			}
 		}
 		
-		public class TTT2Attack1SpeedModifier : PropertyDependencyModifier<dynamic> {
-			public override dynamic OnModify(dynamic propertyValue) {
+		public class TTT2Attack1SpeedModifier : PropertyDependencyModifier<int> {
+			public override int OnModify(int propertyValue) {
 				return propertyValue + GetDependency(new PropertyNameInfo("custom_properties.attack1.damage")).GetRealValue().Value +
 				       GetDependency(new PropertyNameInfo(PropertyName.rarity)).GetRealValue().Value;
 			}
@@ -198,7 +198,8 @@ namespace Tests.Tests_Editor {
 			ent1.RegisterOnCustomDataChanged("attack1", "damage", OnAttack1DamageChanged);
 			//ent1.custom
 
-			ent1.GetCustomDataValue<dynamic>("attack1", "damage").Value += 100;
+			//ent1.GetCustomDataValue("attack1", "damage").Value
+			ent1.GetCustomDataValue<int>("attack1", "damage").Value += 100;
 			void OnAttack1DamageChanged(ICustomDataProperty property, dynamic oldValue, dynamic newValue) {
 				Debug.Log($"OnAttack1DamageChanged: {oldValue} -> {newValue}");
 				Assert.AreEqual(1000, newValue);
@@ -219,6 +220,7 @@ namespace Tests.Tests_Editor {
 			Assert.IsNotNull(ent1);
 			
 			Assert.AreEqual(1000, ent1.GetCustomDataValue("attack1", "damage").Value);
+			Assert.AreEqual(1000, ent1.GetCustomDataValue<int>("attack1", "damage").Value);
 
 			Assert.AreEqual(ent1.GetProperty<ICustomProperties>().BaseValue["attack1"].GetHashCode(),
 				ent1.GetProperty<ICustomProperties>().RealValues.Value["attack1"].GetHashCode());

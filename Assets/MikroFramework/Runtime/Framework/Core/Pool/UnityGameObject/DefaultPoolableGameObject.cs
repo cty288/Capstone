@@ -11,8 +11,11 @@ namespace MikroFramework.ResKit
 {
     public class DefaultPoolableGameObject: PoolableGameObject {
         [SerializeField] private UnityEvent onRecycledEvent;
-        public override void OnInit() {
-            
+        [SerializeField] private UnityEvent onAllocateEvent;
+
+
+        public override void OnAllocate() {
+            onAllocateEvent?.Invoke();
         }
 
         public override void OnRecycled() {

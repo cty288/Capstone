@@ -5,6 +5,7 @@ using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Newtonsoft.Json.Linq;
 using Runtime.DataFramework.Description;
+using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 
 namespace Runtime.DataFramework.Properties.CustomProperties{
@@ -273,8 +274,21 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 						val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));
 					}
 					else {
-						BaseValue.Add(key, new CustomDataProperty<dynamic>(key));
-						ICustomDataProperty bv = this.BaseValue[key];
+						string type = value[key]["type"];
+						ICustomDataProperty bv;
+						if (type != "dynamic") {
+							Type parsedType = SerializationFactory.Singleton.ParseType(type);
+							//use reflection to create a Custom data property of the type specifie
+							bv =
+								(ICustomDataProperty) Activator.CreateInstance(
+									typeof(CustomDataProperty<>).MakeGenericType(parsedType), key, null, null);
+						}
+						else {
+							bv = new CustomDataProperty<dynamic>(key);
+						}
+						
+
+						BaseValue.Add(key, bv);
 						bv.SetBaseValue(bv.OnGetBaseValueFromConfig(value[key]));
 						requestRegisterProperty?.Invoke(bv.GetType(), bv, GetFullName()+"."+key, true, false);
 					}

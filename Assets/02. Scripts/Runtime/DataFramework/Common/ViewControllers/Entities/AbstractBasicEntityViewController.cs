@@ -7,10 +7,8 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
-	public abstract class AbstractBasicEntityViewController<T, TEntityModel>: AbstractEntityViewController<T, TEntityModel> 
-		where T : class, IHaveCustomProperties, IHaveTags, new()
-		where TEntityModel: class, IEntityModel
-	{
+	public abstract class AbstractBasicEntityViewController<T>: AbstractEntityViewController<T> 
+		where T : class, IHaveCustomProperties, IHaveTags, new() {
 		
 		protected void BindCustomData<T>(string bindedPropertyName, string customPropertyName, string customDataName,
 			Action<T, T?> callback = null) {

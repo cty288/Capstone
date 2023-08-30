@@ -27,7 +27,7 @@ namespace MikroFramework.Pool
           
         }
 
-        public abstract void OnInit();
+        public abstract void OnAllocate();
 
 
         /// <summary>

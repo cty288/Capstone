@@ -51,13 +51,23 @@ namespace Framework {
 			foreach (AbstractSavableSystem savableSystem in savableSystems) {
 				savableSystem.Save(saveFileSuffix);
 			}
-			ES3AutoSaveMgr.Current.Save();
+
+			if (ES3AutoSaveMgr.Current) {
+				ES3AutoSaveMgr.Current.Save();
+			}
+			
 		}
     
 		public void ClearSave() {
 			ES3.DeleteFile($"models_{saveFileSuffix}.es3");
 			ES3.DeleteFile($"systems_{saveFileSuffix}.es3");
 			ES3.DeleteFile("SaveFile.es3");
+		}
+		
+		public void Reset() {
+			ResetArchitecture();
+			savableModels.Clear();
+			savableSystems.Clear();
 		}
 	}
 }

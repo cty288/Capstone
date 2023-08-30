@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using Runtime.Weapons.Model.Base;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Utilities.Collision
 {
@@ -7,9 +10,11 @@ namespace Runtime.Utilities.Collision
     /// </summary>
     public class HitData
     {
-        public int Damage;
+        public int Damage = 0;
+        public float Recoil = 0f;
         public Vector3 HitPoint;
         public Vector3 HitNormal;
+        public Vector3 HitDirectionNormalized;
         public IHurtbox Hurtbox;
         public IHitDetector HitDetector;
 
@@ -76,12 +81,24 @@ namespace Runtime.Utilities.Collision
     }
 
     /// <summary>
+    /// Struct for storing data for CheckHit() in HitScan.
+    /// </summary>
+    public struct HitDetectorInfo
+    {
+        public Camera camera;
+        public LayerMask layer;
+        public List<LineRenderer> lineRenderers;
+        public Transform launchPoint;
+        public IWeaponEntity weapon;
+    }
+    
+    /// <summary>
     /// Used by classes that check for collision: HitBox, HitScan, etc.
     /// </summary>
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public bool CheckHit();
+        public void CheckHit(HitDetectorInfo hitDetectorInfo); //HitDetectorInfo only required for HitScan right now.
     }
 
     /// <summary>

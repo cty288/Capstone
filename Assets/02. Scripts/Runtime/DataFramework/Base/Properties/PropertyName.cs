@@ -9,6 +9,7 @@ namespace Runtime.DataFramework.Properties
 		attack_range,
 		bait_adjectives,
 		max_stack,
+		stack_size,
 		custom_properties,
 		custom_property,
 		custom_property_data,
@@ -26,6 +27,14 @@ namespace Runtime.DataFramework.Properties
 		//weapon properties test
 		base_damage,
 		attack_speed,
+		range,
+		ammo_size,
+		reload_speed,
+		bullets_per_shot,
+		spread,
+		recoil,
+		charge_speed,
+		bullet_speed,
 		test_hashset
 	}
 }

@@ -6,63 +6,74 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
-	public abstract class AbstractEntityViewController<T, TEntityModel> : AbstractMikroController<MainGame>, IEntityViewController 
-		where T : class, IEntity, new() 
-		where TEntityModel : class, IEntityModel {
+	public abstract class AbstractEntityViewController<T> : AbstractMikroController<MainGame>, IEntityViewController 
+		where T : class, IEntity, new() {
 
 		
 		
 		[field: ES3Serializable]
 		//[field: SerializeField]
 		public string ID { get; set; }
-
-		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = true;
+		
+		
+		[Header("Entity Recycle Logic")]
+		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = false;
+		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
+		
 		
 		IEntity IEntityViewController.Entity => BoundEntity;
 
-		protected TEntityModel entityModel;
+
+		private IEntityModel entityModel;
 		
 		protected T BoundEntity { get; private set; }
 		
 		private Dictionary<PropertyInfo, Func<dynamic>> propertyBindings = new Dictionary<PropertyInfo, Func<dynamic>>();
 		private Dictionary<PropertyInfo, FieldInfo> propertyFields = new Dictionary<PropertyInfo, FieldInfo>();
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
-
-		//private Type type;
-		public void Init(string id, IEntity entity) {
-			ID = id;
-			BoundEntity = entity as T;
-		}
 		
-		protected virtual void Awake() {
-			entityModel = this.GetModel<TEntityModel>();
-			//type = typeof(T);
-		}
+		
 
 		protected virtual void Start() {
 			OnStart();
 			OnEntityStart();
 		}
 
-		protected virtual void OnStart() {
-			if (string.IsNullOrEmpty(ID)) {
-				//Debug.LogError("ID for enemy is null or empty! Do not instantiate enemy view controller directly! " +
-				//               "Use EntityBuilderFactory instead!");
-				//return;
-				//first time init
-				IEntity entity = OnInitEntity();
-				Init(entity.UUID, entity);
+		public void InitWithID(string id) {
+			ID = id;
+			IEntity ent = null;
+			(ent, entityModel) = GlobalEntities.GetEntityAndModel(ID);
+			if (ent == null) {
+				Debug.LogError("Entity with ID " + ID + " not found");
+				return;
 			}
-			BoundEntity = entityModel.GetEntity(ID) as T;
+			BoundEntity = ent as T;
+			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyed(gameObject);
+		}
+
+		private void OnEntityRecycled(IEntity ent) {
+			if (autoDestroyWhenEntityRemoved) {
+				Destroy(gameObject);
+			}
+		}
+
+		protected virtual void OnStart() {
+			string id = ID;
+			if (string.IsNullOrEmpty(ID)) {
+				IEntity entity = OnBuildNewEntity();
+				id = entity.UUID;
+			}
+			InitWithID(id);
 			OnBindProperty();
 		}
 
-		protected abstract IEntity OnInitEntity();
+		protected abstract IEntity OnBuildNewEntity();
 
 		#region Property Binding
 
@@ -286,7 +297,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected virtual void OnDestroy() {
 			propertyBindings.Clear();
 			propertyFields.Clear();
-			entityModel.RemoveEntity(ID);
+			if (autoRemoveEntityWhenDestroyed) {
+				entityModel.RemoveEntity(ID);
+			}
+			
 		}
 	}
 }
