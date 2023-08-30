@@ -1,26 +1,60 @@
-﻿using MikroFramework.Architecture;
+﻿using System.Collections.Generic;
+using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Builder;
 
 namespace Runtime.GameResources.Model.Base {
-
-	public interface IGameResourceModel : IModel, IEntityModel<IResourceEntity> {
-		RawMaterialBuilder<T> GetRawMaterialBuilder<T>(bool addToModelOnceBuilt = true)
-			where T : class, IRawMaterialEntity, new();
+	
+	public interface IGameResourceModel<T> : IModel, IEntityModel<T> where T : IResourceEntity {
+		/// <summary>
+		/// Get any resource, as long as it inherits from IResourceEntity
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public IResourceEntity GetAnyResource(string id);
 	}
-	public class GameResourceModel : EntityModel<IResourceEntity>, IGameResourceModel {
+	
+	public static class GlobalGameResourceEntities {
+		public static Dictionary<string, IResourceEntity> globalResourceOfSameType = new Dictionary<string, IResourceEntity>();
+		
+		public static IResourceEntity GetAnyResource(string id) {
+			if (globalResourceOfSameType.TryGetValue(id, out var resource)) {
+				return resource;
+			}
+			return null;
+		}
+		
+		public static void Reset() {
+			globalResourceOfSameType.Clear();
+		}
+	}
+	
+	public abstract class GameResourceModel<T> : EntityModel<T>, IGameResourceModel<T>
+	 where T : IResourceEntity {
+		
 		protected override void OnInit() {
 			base.OnInit();
+			//GlobalGameResourceEntities.globalResourceOfSameType.Clear();
+			foreach (T entity in entities.Values) {
+				GlobalGameResourceEntities.globalResourceOfSameType.Add(entity.UUID, entity);
+			}
 		}
 
-		public RawMaterialBuilder<T> GetRawMaterialBuilder<T>(bool addToModelOnceBuilt = true) where T : class, IRawMaterialEntity, new() {
-			RawMaterialBuilder<T> builder = entityBuilderFactory.GetBuilder<RawMaterialBuilder<T>, T>(1);
-		
-			if (addToModelOnceBuilt) {
-				builder.RegisterOnEntityCreated(OnEntityBuilt);
-			}
+		protected override void OnEntityBuilt(T entity) {
+			base.OnEntityBuilt(entity);
+			GlobalGameResourceEntities.globalResourceOfSameType.Add(entity.UUID, entity);
+		}
 
-			return builder;
+		public IResourceEntity GetAnyResource(string id) {
+			return GlobalGameResourceEntities.GetAnyResource(id);
+		}
+
+		public override bool RemoveEntity(string id) {
+			bool success = base.RemoveEntity(id);
+			if (success) {
+				GlobalGameResourceEntities.globalResourceOfSameType.Remove(id);
+			}
+			return success;
 		}
 	}
 }

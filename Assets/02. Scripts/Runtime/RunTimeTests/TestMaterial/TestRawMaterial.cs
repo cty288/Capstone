@@ -5,7 +5,9 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Model.Builder;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
-using Runtime.GameResources.ViewControllers.Instances;
+using Runtime.RawMaterials.Model.Base;
+using Runtime.RawMaterials.Model.Builder;
+using Runtime.RawMaterials.ViewControllers;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 
@@ -13,7 +15,7 @@ namespace Runtime.RunTimeTests.TestMaterial {
 	
 
 	public class TestBasicRawMaterial : RawMaterialEntity<TestBasicRawMaterial> {
-		public override string EntityName { get; protected set; } = "TestRaw";
+		public override string EntityName { get; set; } = "TestRaw";
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return null;
@@ -32,19 +34,16 @@ namespace Runtime.RunTimeTests.TestMaterial {
 	}
 	
 	public class TestRawMaterial : AbstractRawMaterialViewController<TestBasicRawMaterial> {
-		protected override void OnStart() {
-			
-		}
-
 		private void Update() {
 			if (Input.GetKeyDown(KeyCode.S)) {
 				ES3AutoSaveMgr.Current.Save();
 				((MainGame) MainGame.Interface).SaveGame();
 			}
 		}
+		
 
-		protected override void OnDisplayNameUpdate(string displayName) {
-			Debug.Log("display name update: " + displayName);
+		protected override void OnEntityStart() {
+			
 		}
 
 		protected override void OnBindEntityProperty() {

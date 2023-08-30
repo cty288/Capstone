@@ -22,7 +22,7 @@ namespace Runtime.Temporary.Weapon
         public void Start()
         {
             hitbox.HitResponder = this;
-            hitbox.CheckHit();
+            // hitbox.CheckHit();
             Destroy(gameObject, particle.main.duration);
         }
 

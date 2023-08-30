@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MikroFramework.Event;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Description;
@@ -13,7 +14,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Runtime.DataFramework.Entities {
 	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName  {
 	
-		public string EntityName { get; }
+		public string EntityName { get; set; }
 		/// <summary>
 		/// Register a property to the entity. This must be called before the entity is initialized
 		/// To register a property after the entity is initialized, use RegisterTempProperty
@@ -111,21 +112,42 @@ namespace Runtime.DataFramework.Entities {
 	
 		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier);
 
-		public void LoadPropertyBaseValueFromConfig();
+		public void LoadPropertyBaseValueFromConfig(ConfigTable overrideTable = null);
 
 
 		/// <summary>
 		/// After the entity is built, or loaded from save, this will be called
 		/// </summary>
 		public void OnStart();
+
+		public IUnRegister RegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
+
+		public void UnRegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
+	}
+	
+	
+	public class EntityOnRecycledUnRegister : IUnRegister
+	{
+		private Action<IEntity> onEntityRecycled;
+
+		private IEntity entity;
 		
+		public EntityOnRecycledUnRegister(IEntity entity, Action<IEntity> onEntityRecycled) {
+			this.entity = entity;
+			this.onEntityRecycled = onEntityRecycled;
+		}
+
+		public void UnRegister() {
+			entity.UnRegisterOnEntityRecycled(onEntityRecycled);
+			entity = null;
+		}
 	}
 
 
 
 
 	public abstract class Entity :  IEntity  {
-		public abstract string EntityName { get; protected set; }
+		public abstract string EntityName { get; set; }
 	
 		[ES3NonSerializable]
 		private Dictionary<string, IPropertyBase> _allProperties { get; } =
@@ -154,6 +176,8 @@ namespace Runtime.DataFramework.Entities {
 		private bool initialized = false;
 
 		protected ConfigTable configTable;
+
+		protected Action<IEntity> onEntityRecycled;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 			configTable = GetConfigTable();
@@ -303,12 +327,13 @@ namespace Runtime.DataFramework.Entities {
 			}
 		}
 
-		public void LoadPropertyBaseValueFromConfig() {
+		public void LoadPropertyBaseValueFromConfig(ConfigTable overrideTable = null) {
 			int i = 0;
+			ConfigTable targetTable = overrideTable ?? configTable;
 			while (i < _allProperties.Count) {
 				IPropertyBase property = _allProperties.ElementAt(i).Value;
 				if(property is ILoadFromConfigProperty loadFromConfigProperty) {
-					dynamic value = configTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
+					dynamic value = targetTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
 					if (value is not null) {
 						loadFromConfigProperty.LoadFromConfig(value);
 					}
@@ -321,8 +346,17 @@ namespace Runtime.DataFramework.Entities {
 		public virtual void OnStart() {
 			OnEntityStart();
 		}
-		
-		
+
+		public IUnRegister RegisterOnEntityRecycled(Action<IEntity> onEntityRecycled) {
+			this.onEntityRecycled += onEntityRecycled;
+			return new EntityOnRecycledUnRegister(this, onEntityRecycled);
+		}
+
+		public void UnRegisterOnEntityRecycled(Action<IEntity> onEntityRecycled) {
+			this.onEntityRecycled -= onEntityRecycled;
+		}
+
+
 		/// <summary>
 		/// After the entity is built, or loaded from save, this will be called
 		/// </summary>
@@ -430,12 +464,14 @@ namespace Runtime.DataFramework.Entities {
 		
 			tempPropertyNames.Clear();
 			initialized = false;
+			this.onEntityRecycled = null;
 			OnRecycle();
 		}
 
 		[field: ES3Serializable]
 		public bool IsRecycled { get; set; } = false;
 		public void RecycleToCache() {
+			this.onEntityRecycled?.Invoke(this);
 			OnDoRecycle();
 		}
 

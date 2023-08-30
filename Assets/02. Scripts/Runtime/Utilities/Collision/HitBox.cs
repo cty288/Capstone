@@ -11,7 +11,6 @@ namespace Runtime.Utilities.Collision
         //Related BoxCollider.
         [SerializeField] private BoxCollider m_collider;
         //LayerMask to check for collision.
-        [SerializeField] private LayerMask layerMask;
 
         private float thickness = 0.025f;
         //Entity that's called when a collision is detected.
@@ -24,7 +23,7 @@ namespace Runtime.Utilities.Collision
         /// Creates a HitData object that is sent to the HitResponder and HurtResponder, invoking their responses.
         /// </summary>
         /// <returns>Returns true if a hit is detected.</returns>
-        public bool CheckHit()
+        public void CheckHit(HitDetectorInfo hitDetectorInfo)
         {
             Vector3 scaledSize = new Vector3(
                 m_collider.size.x * transform.lossyScale.x,
@@ -40,7 +39,7 @@ namespace Runtime.Utilities.Collision
 
             HitData hitData = null;
             IHurtbox hurtbox = null;
-            RaycastHit[] hits = Physics.BoxCastAll(start, halfExtents, direction, orientation, distance, layerMask);
+            RaycastHit[] hits = Physics.BoxCastAll(start, halfExtents, direction, orientation, distance, hitDetectorInfo.layer);
             foreach (RaycastHit hit in hits)
             {
                 hurtbox = hit.collider.GetComponent<IHurtbox>();
@@ -56,11 +55,6 @@ namespace Runtime.Utilities.Collision
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                 }
             }
-
-            if (hits.Length > 0)
-                return true;
-            else
-                return false;
         }
     }
 }

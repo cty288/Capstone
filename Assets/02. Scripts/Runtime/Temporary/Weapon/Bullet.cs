@@ -23,7 +23,7 @@ namespace Runtime.Temporary.Weapon
 
         private void FixedUpdate()
         {
-            hitbox.CheckHit();
+            // hitbox.CheckHit();
         }
 
         public bool CheckHit(HitData data)

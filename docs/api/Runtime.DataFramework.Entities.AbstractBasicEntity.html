@@ -144,6 +144,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_configTable">Entity.configTable</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_onEntityRecycled">Entity.onEntityRecycled</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetConfigTable">Entity.GetConfigTable()</a>
     </div>
     <div>
@@ -165,10 +168,16 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_SetPropertyModifier__1_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__">Entity.SetPropertyModifier&lt;T&gt;(PropertyNameInfo, IPropertyDependencyModifier&lt;T&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig">Entity.LoadPropertyBaseValueFromConfig()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_">Entity.LoadPropertyBaseValueFromConfig(ConfigTable)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart">Entity.OnStart()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_UnRegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.UnRegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyName_">Entity.GetProperty(PropertyName)</a>
@@ -298,7 +307,7 @@
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/AbstractBasicEntity.cs/#L82"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>If your custom property is DataOnlyProperty, use dynamic for T</p>
+  <div class="markdown level1 summary"><p>If your custom property is AutoConfigCustomProperty, use dynamic for T</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 

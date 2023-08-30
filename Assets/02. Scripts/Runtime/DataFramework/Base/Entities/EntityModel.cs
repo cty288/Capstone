@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities.Builders;
+using Runtime.GameResources.Model.Base;
 
 namespace Runtime.DataFramework.Entities {
 	public interface IEntityModel : IModel {
@@ -53,18 +55,25 @@ namespace Runtime.DataFramework.Entities {
 		[field: ES3Serializable]
 		protected Dictionary<string, T> entities = new Dictionary<string, T>();
 
+		
+		
 
 		protected override void OnInit() {
 			base.OnInit();
+			
 			entityBuilderFactory = new EntityBuilderFactory();
 			foreach (T entity in entities.Values) {
 				entity.OnLoadFromSave();
+				GlobalEntities.RegisterEntity(entity, this);
 				//entity.OnStart();
 			}
 		}
+		
+		
 	
-		protected void OnEntityBuilt(T entity){
+		protected virtual void OnEntityBuilt(T entity){
 			entities.Add(entity.UUID, entity);
+			GlobalEntities.RegisterEntity(entity, this);
 			//entity.OnStart();
 		}
 
@@ -75,11 +84,12 @@ namespace Runtime.DataFramework.Entities {
 			return default;
 		}
 
-		public bool RemoveEntity(string id) {
+		public virtual bool RemoveEntity(string id) {
 			if (entities.ContainsKey(id)) {
 				IEntity entity = entities[id];
 				entity.RecycleToCache();
 				entities.Remove(id);
+				GlobalEntities.UnregisterEntity(id);
 				return true;
 			}
 			return false;

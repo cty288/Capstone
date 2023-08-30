@@ -4,6 +4,7 @@ using MikroFramework.Singletons;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.Enemies.Model.Properties;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
+using UnityEngine;
 
 namespace Runtime.Utilities.ConfigSheet {
 	public class SerializationFactory : MikroSingleton<SerializationFactory>, ISingleton {
@@ -27,7 +28,12 @@ namespace Runtime.Utilities.ConfigSheet {
 			RegisterType("double", typeof(double));
 			RegisterType("short", typeof(short));
 			RegisterType("dynamic", typeof(object));
-			
+			RegisterType("Vector2", typeof(Vector2));
+			RegisterType("Vector3", typeof(Vector3));
+			RegisterType("Vector4", typeof(Vector4));
+			RegisterType("Vector2Int", typeof(Vector2Int));
+			RegisterType("Vector3Int", typeof(Vector3Int));
+
 
 			RegisterType("HealthInfo", typeof(HealthInfo));
 			RegisterType("TasteType", typeof(TasteType));

@@ -12,9 +12,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TEntityModel"></typeparam>
-	public abstract class AbstractDamagableViewController<T, TEntityModel> : AbstractBasicEntityViewController<T, TEntityModel>
-		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, new()
-		where TEntityModel: class, IEntityModel{
+	public abstract class AbstractDamagableViewController<T> : AbstractBasicEntityViewController<T>
+		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, new() {
 		protected override void OnStart() {
 			base.OnStart();
 			BoundEntity.RegisterOnTakeDamage(OnTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);

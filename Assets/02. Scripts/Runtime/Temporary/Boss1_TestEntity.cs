@@ -7,7 +7,7 @@ namespace Runtime.Temporary
     public class Boss1_TestEntity : EnemyEntity<Boss1_TestEntity>
     {
         [field: ES3Serializable]
-        public override string EntityName { get; protected set; } = "Boss1";
+        public override string EntityName { get; set; } = "Boss1";
 
         public override void OnRecycle()
         {

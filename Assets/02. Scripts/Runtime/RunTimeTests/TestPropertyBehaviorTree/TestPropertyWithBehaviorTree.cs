@@ -15,7 +15,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
     public class TestEntity : EnemyEntity<TestEntity> {
         [field: SerializeField]
-        public override string EntityName { get; protected set; } = "TestEnemy2";
+        public override string EntityName { get; set; } = "TestEnemy2";
     
         [field: ES3Serializable]
         public int MyPersistentButNotInherentData { get; set; } = 100;
@@ -160,6 +160,10 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
 
             if (Input.GetKeyDown(KeyCode.Space)) {
                 Debug.Log($"Attack 1 Damage: {Attack1Damage}");
+            }
+
+            if (Input.GetKeyDown(KeyCode.R)) {
+                enemyModel.RemoveEntity(BoundEntity.UUID);
             }
         }
     
