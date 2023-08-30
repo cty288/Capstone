@@ -55,6 +55,7 @@ namespace Runtime.Utilities.Collision
             offset[1] = Random.Range(-_weapon.GetSpread().RealValue.Value, _weapon.GetSpread().RealValue.Value);
             offset[2] = Random.Range(-_weapon.GetSpread().RealValue.Value, _weapon.GetSpread().RealValue.Value);
             
+            
             HitData hitData = null;
             RaycastHit hit;
             if (Physics.Raycast(origin, Vector3.Normalize(_camera.transform.forward + offset), out hit,
