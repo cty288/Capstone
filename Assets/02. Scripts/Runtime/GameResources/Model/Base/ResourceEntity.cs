@@ -17,9 +17,14 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public IMaxStack GetMaxStackProperty();
 		
-		//public IStackSize GetStackSizeProperty();
+		//public string 
 	}
 	
+	//3 forms
+	//on ground
+	//in inventory (sprite)
+	//in hand
+
 	public abstract class ResourceEntity<T> :  AbstractBasicEntity, IResourceEntity where T : ResourceEntity<T>, new() {
 		private IMaxStack maxStackProperty;
 		//private IStackSize stackSizeProperty;

@@ -57,7 +57,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyed(gameObject);
 		}
 
-		private void OnEntityRecycled(IEntity ent) {
+		protected virtual void OnEntityRecycled(IEntity ent) {
 			if (autoDestroyWhenEntityRemoved) {
 				Destroy(gameObject);
 			}
