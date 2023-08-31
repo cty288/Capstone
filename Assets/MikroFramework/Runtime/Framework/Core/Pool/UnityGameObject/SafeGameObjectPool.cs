@@ -106,10 +106,12 @@ namespace MikroFramework.Pool
                     return false;
                 }
 
+                PoolableGameObject poolable = obj.GetComponent<PoolableGameObject>();
                 if (CurrentCount < maxCount)
                 {
                     obj.SetActive(false);
-                    obj.GetComponent<PoolableGameObject>().OnRecycled();
+                    poolable.OnRecycled();
+                    poolable.IsRecycled = true;
                     cachedStack.Push(obj);
                     return true;
                 }
@@ -120,6 +122,7 @@ namespace MikroFramework.Pool
                     destroyedObjectInQueue.Enqueue(obj);
                     destroyingObjs.Value = true;
                     obj.GetComponent<PoolableGameObject>().OnRecycled();
+                    poolable.IsRecycled = true;
                     return false;
                 }
             }
@@ -146,6 +149,7 @@ namespace MikroFramework.Pool
                 createdObj.SetActive(true);
                 PoolableGameObject poolableGameObject = createdObj.GetComponent<PoolableGameObject>();
                 poolableGameObject.Pool = this;
+                poolableGameObject.IsRecycled = false;
                 poolableGameObject.OnAllocate();
             }
             else {
@@ -266,6 +270,7 @@ namespace MikroFramework.Pool
                         createdObject.transform.SetParent(this.transform);
                         cachedStack.Push(createdObject);
                         numHiddenObjectCreating--;
+                        createdObject.GetComponent<PoolableGameObject>().IsRecycled = true;
                     }
                 }
 
