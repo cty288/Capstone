@@ -21,7 +21,7 @@ namespace MikroFramework.ActionKit
         private GameObject stopExecutingWhenGameObjectDestroyedTarget;
         public void Execute() {
             Finished.Value = false;
-            Finished.RegisterOnValueChaned(OnFinishedValueChanged);
+            Finished.RegisterOnValueChanged(OnFinishedValueChanged);
 
             if (Finished.Value) {
                 return;

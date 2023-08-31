@@ -1,6 +1,8 @@
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
+using Runtime.Weapons;
+using Runtime.Weapons.Model.Base;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
     public interface IEntityViewController : IController{
@@ -17,5 +19,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         public IEnemyEntity EnemyEntity { get; }
 
         IEntity IEntityViewController.Entity => EnemyEntity;
+    }
+
+    public interface IWeaponViewController : IEntityViewController
+    {
+        public IWeaponEntity WeaponEntity { get; }
+
+        IEntity IEntityViewController.Entity => WeaponEntity;
     }
 }

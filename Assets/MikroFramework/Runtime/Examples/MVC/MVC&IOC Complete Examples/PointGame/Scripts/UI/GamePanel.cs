@@ -16,9 +16,9 @@ namespace MikroFramework.Examples
             countDownSystem = this.GetSystem<ICountDownSystem>();
             gameModel = this.GetModel<IGameModel>();
 
-            gameModel.Gold.RegisterOnValueChaned(OnGoldValueChanged);
-            gameModel.Life.RegisterOnValueChaned(OnLifeValueChanged);
-            gameModel.Score.RegisterOnValueChaned(OnScoreValueChanged);
+            gameModel.Gold.RegisterOnValueChanged(OnGoldValueChanged);
+            gameModel.Life.RegisterOnValueChanged(OnLifeValueChanged);
+            gameModel.Score.RegisterOnValueChanged(OnScoreValueChanged);
 
             OnGoldValueChanged(gameModel.Gold.Value);
             OnLifeValueChanged(gameModel.Life.Value);

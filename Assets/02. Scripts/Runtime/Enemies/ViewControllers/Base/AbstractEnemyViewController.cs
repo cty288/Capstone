@@ -18,7 +18,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 	
 		//[Bind(PropertyName.health, nameof(GetCurrentHealth), nameof(OnCurrentHealthChanged))]
 		public int CurrentHealth { get; }
-
+		
 
 		protected IEnemyEntityModel enemyModel;
 

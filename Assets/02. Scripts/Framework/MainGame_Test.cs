@@ -3,6 +3,7 @@ using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.RawMaterials.Model.Base;
+using Runtime.Weapons.Model.Base;
 
 namespace Framework {
 	public class MainGame_Test : SavableArchitecture<MainGame_Test> {
@@ -14,6 +15,7 @@ namespace Framework {
 			//this.RegisterModel<IGameResourceModel>(new GameResourceModel());
 			this.RegisterModel<IRawMaterialModel>(new RawMaterialModel());
 			this.RegisterModel<IInventoryModel>(new InventoryModel());
+			this.RegisterModel<IWeaponModel>(new WeaponModel());
 		}
 
 		protected override string saveFileSuffix { get; } = "test";
