@@ -1,3 +1,4 @@
+using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
@@ -21,6 +22,7 @@ namespace Framework {
 			this.RegisterModel<IRawMaterialModel>(new RawMaterialModel());
 			this.RegisterModel<IInventoryModel>(new InventoryModel());
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
+			this.RegisterExtensibleUtility<ResLoader>(new ResLoader());
 		}
 
 		public override void SaveGame() {
