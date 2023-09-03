@@ -1915,6 +1915,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1265324488}
   - component: {fileID: 1265324487}
+  - component: {fileID: 1265324489}
   m_Layer: 0
   m_Name: PlayerInput
   m_TagString: Untagged
@@ -2000,6 +2001,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 074a305b-60c7-45a9-bfbf-33c4ec1ad3a6
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c0dd0f3a-59ac-4692-9c3b-f60aa8d4c3df
+    m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7286fdd3-d6ab-4669-acd8-cfe354d165e8
+    m_ActionName: Player/Sprint[/Keyboard/shift,/XInputControllerWindows/leftStick/up]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d39b94de-b42c-4f66-9272-92054f8d1425
+    m_ActionName: Player/Shoot[/Mouse/leftButton,/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -2020,6 +2033,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1265324489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265324486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ed1c816cc184842881d20091291c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1308815434
 GameObject:
   m_ObjectHideFlags: 0
@@ -4595,7 +4620,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8420789319069525650}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 31d4e0761cac4a84180022e0e1fb6203, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
