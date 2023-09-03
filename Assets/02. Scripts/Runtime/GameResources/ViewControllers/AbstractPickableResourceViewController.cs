@@ -17,8 +17,9 @@ public interface IPickableResourceViewController : IResourceViewController {
 [RequireComponent(typeof(TriggerCheck))]
 public abstract class AbstractPickableResourceViewController<T> : AbstractResourceViewController<T>, 
     IPickableResourceViewController where T : class, IResourceEntity, new() {
-    protected TriggerCheck 
-    private void Awake() {
+    protected TriggerCheck triggerCheck;
+    protected virtual void Awake() {
+        triggerCheck = GetComponent<TriggerCheck>();
         
     }
 }
