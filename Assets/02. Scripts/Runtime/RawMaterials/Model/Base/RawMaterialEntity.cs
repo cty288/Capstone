@@ -1,4 +1,5 @@
-﻿using Runtime.GameResources.Model.Base;
+﻿using Polyglot;
+using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
 using Runtime.Utilities.ConfigSheet;
 
@@ -25,6 +26,10 @@ namespace Runtime.RawMaterials.Model.Base {
 		
 		public IBaitAdjectives GetBaitAdjectivesProperty() {
 			return baitAdjectivesProperty;
+		}
+
+		protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
+			return Localization.Get("raw_material_name");
 		}
 	}
 }

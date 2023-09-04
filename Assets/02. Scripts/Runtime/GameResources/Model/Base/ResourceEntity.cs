@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -14,9 +15,10 @@ using Runtime.Utilities.ConfigSheet;
 namespace Runtime.GameResources.Model.Base {
 	
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
-		
 		public IMaxStack GetMaxStackProperty();
-		
+		public BindableProperty<bool> Pickable { get; }
+
+		public void OnPicked();
 		//public string 
 	}
 	
@@ -27,6 +29,15 @@ namespace Runtime.GameResources.Model.Base {
 
 	public abstract class ResourceEntity<T> :  AbstractBasicEntity, IResourceEntity where T : ResourceEntity<T>, new() {
 		private IMaxStack maxStackProperty;
+		
+		[field: ES3Serializable]
+		public BindableProperty<bool> Pickable { get; } = new BindableProperty<bool>(true);
+
+
+
+		[field: ES3Serializable]
+		protected bool pickedBefore = false;
+		
 		//private IStackSize stackSizeProperty;
 		protected override void OnEntityStart() {
 			base.OnEntityStart();
@@ -64,9 +75,27 @@ namespace Runtime.GameResources.Model.Base {
 			return maxStackProperty;
 		}
 
+
+		public override string GetDisplayName() {
+			string originalDisplayName = base.GetDisplayName();
+			if (pickedBefore) {
+				return originalDisplayName;
+			}
+			else {
+				string displayName = OnGetDisplayNameBeforeFirstPicked(originalDisplayName);
+				return displayName;
+			}
+		}
+
+		protected abstract string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName);
+		
 		/*public IStackSize GetStackSizeProperty() {
 			return stackSizeProperty;
 		}*/
+		
+		public void OnPicked() {
+			pickedBefore = true;
+		}
 	}
 
 }
