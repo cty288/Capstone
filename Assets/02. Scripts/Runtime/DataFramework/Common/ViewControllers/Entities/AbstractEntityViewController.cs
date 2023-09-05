@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using MikroFramework.Pool;
+using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
@@ -20,7 +23,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[field: ES3Serializable]
 		//[field: SerializeField]
 		public string ID { get; set; }
-		
+
+		[Header("Entity Name Tag")]
+		[SerializeField] protected bool showNameTagWhenPointed = true;
+		[SerializeField] protected Transform nameTagFollowTransform;
+		[SerializeField] protected string nameTagPrefabName = "NameTag_General";
+	
 		
 		[Header("Entity Recycle Logic")]
 		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = false;
@@ -39,6 +47,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 		
 		
+		protected virtual void Awake() {
+			
+		}
+		
 
 		protected virtual void Start() {
 			OnStart();
@@ -55,6 +67,30 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyed(gameObject);
+		}
+
+		public void OnPointByCrosshair() {
+			if (showNameTagWhenPointed) {
+				if(!nameTagFollowTransform) {
+					Debug.LogError($"Name tag follow transform not set for {gameObject.name}!");
+					return;
+				}
+
+				GameObject nameTag = NameTagManager.Singleton.SpawnNameTag(nameTagFollowTransform, nameTagPrefabName);
+				if (nameTag) {
+					INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
+					if (nameTagComponent != null) {
+						nameTagComponent.SetName(BoundEntity.GetDisplayName());
+					}
+				}
+			}
+		}
+
+		public void OnUnPointByCrosshair() {
+			if (showNameTagWhenPointed && nameTagFollowTransform) {
+				NameTagManager.Singleton.DespawnNameTag(nameTagFollowTransform);
+			}
+			
 		}
 
 		protected virtual void OnEntityRecycled(IEntity ent) {

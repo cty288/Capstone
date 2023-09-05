@@ -119,11 +119,6 @@ namespace Runtime.Temporary.Player
         private void FixedUpdate()
         {      
             MovePlayer();
-            if (Input.GetKeyDown(KeyCode.K)) {
-                GameObject obj = ControlInfoFactory.Singleton.GetBindingKeyGameObject(ClientInput.Singleton.FindActionInPlayerActionMap("Sprint"),
-                    out BindingInfo info, out string actionName);
-                Debug.Log("Action Name: " + actionName);
-            }
         }
 
         private void MyInput()

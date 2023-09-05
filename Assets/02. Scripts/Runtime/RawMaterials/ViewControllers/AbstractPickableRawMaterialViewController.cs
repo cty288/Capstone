@@ -7,12 +7,13 @@ using Runtime.RawMaterials.Model.Base;
 using Runtime.RawMaterials.Model.Builder;
 
 namespace Runtime.RawMaterials.ViewControllers {
-	public abstract class AbstractRawMaterialViewController<T> : AbstractResourceViewController<T> 
+	public abstract class AbstractPickableRawMaterialViewController<T> : AbstractPickableResourceViewController<T> 
 		where  T : class, IRawMaterialEntity, new(){
 		
 		protected IRawMaterialModel rawMaterialModel;
 
-		private void Awake() {
+		protected override void Awake() {
+			base.Awake();
 			rawMaterialModel = this.GetModel<IRawMaterialModel>();
 		}
 

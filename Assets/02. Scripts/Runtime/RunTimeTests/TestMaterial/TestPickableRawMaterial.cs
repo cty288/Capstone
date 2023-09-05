@@ -33,7 +33,7 @@ namespace Runtime.RunTimeTests.TestMaterial {
 		}
 	}
 	
-	public class TestRawMaterial : AbstractRawMaterialViewController<TestBasicRawMaterial> {
+	public class TestPickableRawMaterial : AbstractPickableRawMaterialViewController<TestBasicRawMaterial> {
 		private void Update() {
 			if (Input.GetKeyDown(KeyCode.S)) {
 				ES3AutoSaveMgr.Current.Save();

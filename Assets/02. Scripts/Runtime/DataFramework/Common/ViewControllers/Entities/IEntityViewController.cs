@@ -11,6 +11,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         public IEntity Entity { get; }
         
         public void InitWithID(string id);
+        
+        public void OnPointByCrosshair();
+        
+        public void OnUnPointByCrosshair();
     
         //public void Init(string id, IEntity entity);
     }

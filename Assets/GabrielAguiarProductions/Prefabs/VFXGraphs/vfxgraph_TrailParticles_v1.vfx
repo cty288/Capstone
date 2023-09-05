@@ -24,13 +24,7 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614555}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614556}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614558}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614580}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614583}
@@ -40,21 +34,6 @@ MonoBehaviour:
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614585}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614589}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614596}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614591}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614598}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614593}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614900}
@@ -83,43 +62,16 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614811}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614813}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614815}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614850}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614830}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614833}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614868}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614890}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614835}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614838}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614839}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614841}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614843}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614848}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614911}
@@ -569,7 +521,7 @@ MonoBehaviour:
     enumValues: []
     descendantCount: 0
   m_ImportDependencies: []
-  m_GraphVersion: 8
+  m_GraphVersion: 9
   m_ResourceVersion: 1
   m_SubgraphDependencies: []
   m_CategoryPath: 
@@ -1050,7 +1002,7 @@ MonoBehaviour:
   stripCapacity: 16
   particlePerStripCount: 16
   needsComputeBounds: 0
-  boundsSettingMode: 1
+  boundsMode: 1
   m_Space: 0
 --- !u!114 &8926484042661614580
 MonoBehaviour:
@@ -1918,7 +1870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
+  m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
@@ -2335,7 +2287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
+  m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
@@ -2350,7 +2302,7 @@ MonoBehaviour:
   stripCapacity: 16
   particlePerStripCount: 16
   needsComputeBounds: 0
-  boundsSettingMode: 1
+  boundsMode: 1
   m_Space: 1
 --- !u!114 &8926484042661614830
 MonoBehaviour:
@@ -4298,7 +4250,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614891}
   m_ExposedName: ParticlesColor
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 1
   m_Category: PARTICLES ADDITIVE
   m_Min:
     m_Type:
@@ -4514,7 +4466,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614897}
   m_ExposedName: TrailHeadLifetime
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 9
   m_Category: TRAIL HEAD
   m_Min:
     m_Type:
@@ -4597,7 +4549,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614899}
   m_ExposedName: TrailHeadRate
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 6
   m_Category: TRAIL HEAD
   m_Min:
     m_Type:
@@ -4677,7 +4629,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614901}
   m_ExposedName: TrailHeadTexture
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 3
   m_Category: TRAIL HEAD
   m_Min:
     m_Type:
@@ -4893,7 +4845,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614907}
   m_ExposedName: TrailHeadSIze
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 12
   m_Category: TRAIL HEAD
   m_Min:
     m_Type:
@@ -5008,7 +4960,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614912}
   m_ExposedName: ParticlesTexture
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 4
   m_Category: PARTICLES ADDITIVE
   m_Min:
     m_Type:
@@ -5088,7 +5040,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614914}
   m_ExposedName: ParticlesSIze
   m_Exposed: 1
-  m_Order: 6
+  m_Order: 17
   m_Category: PARTICLES ADDITIVE
   m_Min:
     m_Type:
@@ -5307,7 +5259,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614920}
   m_ExposedName: ParticlesLifetime
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 13
   m_Category: PARTICLES ADDITIVE
   m_Min:
     m_Type:
@@ -5526,7 +5478,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614926}
   m_ExposedName: ParticlesRadius
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 10
   m_Category: PARTICLES ADDITIVE
   m_Min:
     m_Type:
@@ -5606,7 +5558,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614928}
   m_ExposedName: ParticlesRate
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 7
   m_Category: PARTICLES ADDITIVE
   m_Min:
     m_Type:
@@ -5686,7 +5638,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614930}
   m_ExposedName: ParticlesTurbulence
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 15
   m_Category: PARTICLES ADDITIVE
   m_Min:
     m_Type:
@@ -5858,7 +5810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
+  m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
@@ -6275,7 +6227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
+  m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
@@ -6290,7 +6242,7 @@ MonoBehaviour:
   stripCapacity: 16
   particlePerStripCount: 16
   needsComputeBounds: 0
-  boundsSettingMode: 1
+  boundsMode: 1
   m_Space: 1
 --- !u!114 &8926484042661614952
 MonoBehaviour:
@@ -8544,7 +8496,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615021}
   m_ExposedName: ParticlesABSIze
   m_Exposed: 1
-  m_Order: 6
+  m_Order: 18
   m_Category: PARTICLES AB
   m_Min:
     m_Type:
@@ -8627,7 +8579,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615023}
   m_ExposedName: ParticlesABTurbulence
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 16
   m_Category: PARTICLES AB
   m_Min:
     m_Type:
@@ -8707,7 +8659,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615025}
   m_ExposedName: ParticlesABLifetime
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 14
   m_Category: PARTICLES AB
   m_Min:
     m_Type:
@@ -8790,7 +8742,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615027}
   m_ExposedName: ParticlesABRadius
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 11
   m_Category: PARTICLES AB
   m_Min:
     m_Type:
@@ -8870,7 +8822,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615029}
   m_ExposedName: ParticlesABRate
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 8
   m_Category: PARTICLES AB
   m_Min:
     m_Type:
@@ -8950,7 +8902,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615031}
   m_ExposedName: ParticlesABTexture
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 5
   m_Category: PARTICLES AB
   m_Min:
     m_Type:
@@ -9030,7 +8982,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615033}
   m_ExposedName: ParticlesABColor
   m_Exposed: 1
-  m_Order: 0
+  m_Order: 2
   m_Category: PARTICLES AB
   m_Min:
     m_Type:

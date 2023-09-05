@@ -120,7 +120,7 @@ namespace Runtime.Weapons.Model.Base
         }
 
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
-            return originalDisplayName;
+            return "???";
         }
     }
 }

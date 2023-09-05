@@ -29,7 +29,7 @@ namespace Runtime.RawMaterials.Model.Base {
 		}
 
 		protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
-			return Localization.Get("raw_material_name");
+			return "???";
 		}
 	}
 }
