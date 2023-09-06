@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Framework;
+using Mikrocosmos.Controls;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -10,9 +11,12 @@ using MikroFramework.Event;
 using MikroFramework.Pool;
 using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
+using MikroFramework.Utilities;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractEntityViewController<T> : AbstractMikroController<MainGame>, IEntityViewController 
@@ -29,12 +33,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField] protected Transform nameTagFollowTransform;
 		[SerializeField] protected string nameTagPrefabName = "NameTag_General";
 	
+		[FormerlySerializedAs("triggerCheck")]
+		[Header("Entity Interaction")]
+		[SerializeField] protected TriggerCheck interactiveHintTriggerCheck;
+		[SerializeField] protected string interactiveHintPrefabName = "InteractHint_General";
+		[SerializeField] protected string interactiveHintLocalizedKey = "interact";
+		//[SerializeField] protected Transform hintCanvasFollowTransform = this.transform;
 		
 		[Header("Entity Recycle Logic")]
 		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
 		
-		
+
 		IEntity IEntityViewController.Entity => BoundEntity;
 
 
@@ -48,9 +58,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		
 		protected virtual void Awake() {
-			
+			interactiveHintTriggerCheck = GetComponent<TriggerCheck>();
+			if (interactiveHintTriggerCheck) {
+				interactiveHintTriggerCheck.OnEnter += OnEnterInteractiveCheck;
+				interactiveHintTriggerCheck.OnExit += OnExitInteractiveCheck;
+				TryHideHint();
+			}
+
 		}
-		
+
 
 		protected virtual void Start() {
 			OnStart();
@@ -76,7 +92,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					return;
 				}
 
-				GameObject nameTag = NameTagManager.Singleton.SpawnNameTag(nameTagFollowTransform, nameTagPrefabName);
+				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
 				if (nameTag) {
 					INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
 					if (nameTagComponent != null) {
@@ -88,7 +104,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public void OnUnPointByCrosshair() {
 			if (showNameTagWhenPointed && nameTagFollowTransform) {
-				NameTagManager.Singleton.DespawnNameTag(nameTagFollowTransform);
+				HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
 			}
 			
 		}
@@ -329,6 +345,36 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		#endregion
 
+		
+		private void OnEnterInteractiveCheck(Collider other) {
+			if(other.CompareTag("Player")) {
+				TryShowHint();
+			}
+		}
+		private void OnExitInteractiveCheck(Collider other) {
+			if(other.CompareTag("Player")) {
+				TryHideHint();
+            
+			}
+		}
+		
+		protected virtual void TryShowHint() {
+			GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName, HUDCategory.InteractiveTag);
+			if (hud) {
+				InteractiveHint element = hud.GetComponent<InteractiveHint>();
+				if (element != null) {
+					element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+						Localization.Get(interactiveHintLocalizedKey));
+				}
+			}
+		}
+    
+		protected virtual void TryHideHint() {
+			if (interactiveHintTriggerCheck) {
+				HUDManager.Singleton.DespawnHUDElement(interactiveHintTriggerCheck.transform, HUDCategory.InteractiveTag);
+			}
+		}
+
 
 		protected virtual void OnDestroy() {
 			propertyBindings.Clear();
@@ -336,7 +382,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (autoRemoveEntityWhenDestroyed) {
 				entityModel.RemoveEntity(ID);
 			}
-			
+
+			if (interactiveHintTriggerCheck) {
+				interactiveHintTriggerCheck.OnEnter -= OnEnterInteractiveCheck;
+				interactiveHintTriggerCheck.OnExit -= OnExitInteractiveCheck;
+			}
 		}
 	}
 }

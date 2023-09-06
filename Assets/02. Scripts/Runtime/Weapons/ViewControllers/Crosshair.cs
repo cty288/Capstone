@@ -8,7 +8,8 @@ using Object = UnityEngine.Object;
 
 public class Crosshair : MonoMikroSingleton<Crosshair> {
     private Transform centerTransform;
-    private Camera mainCamera;   
+    private Camera mainCamera;  
+    [SerializeField] 
     private float rayDistance = 100f;
     private IEntityViewController currentPointedEntity;
     private LayerMask detectLayerMask;

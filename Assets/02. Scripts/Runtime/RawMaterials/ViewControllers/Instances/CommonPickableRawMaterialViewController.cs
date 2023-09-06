@@ -20,6 +20,10 @@ namespace Runtime.RawMaterials.ViewControllers.Instances {
 			return builder.OverrideName(entityName).FromConfig().Build();
 		}
 
+		protected override void OnEntityStart() {
+			
+		}
+
 		protected override void OnBindEntityProperty() {
 			
 		}

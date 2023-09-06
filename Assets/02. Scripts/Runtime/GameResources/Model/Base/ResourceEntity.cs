@@ -16,7 +16,6 @@ namespace Runtime.GameResources.Model.Base {
 	
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		public IMaxStack GetMaxStackProperty();
-		public BindableProperty<bool> Pickable { get; }
 
 		public void OnPicked();
 		//public string 
@@ -30,10 +29,6 @@ namespace Runtime.GameResources.Model.Base {
 	public abstract class ResourceEntity<T> :  AbstractBasicEntity, IResourceEntity where T : ResourceEntity<T>, new() {
 		private IMaxStack maxStackProperty;
 		
-		[field: ES3Serializable]
-		public BindableProperty<bool> Pickable { get; } = new BindableProperty<bool>(true);
-
-
 
 		[field: ES3Serializable]
 		protected bool pickedBefore = false;

@@ -8,26 +8,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class InteractHintCanvas : MonoBehaviour {
+public class InteractiveHint : MonoBehaviour {
     private Transform hintIconSpawnPoint;
     private RectTransform controlLayout;
-    private TMP_Text nameText;
     private TMP_Text hintText;
-    private Transform camera;
 
     private void Awake() {
-        controlLayout = transform.Find("ControlLayout").GetComponent<RectTransform>();
-        hintIconSpawnPoint = transform.Find("ControlLayout/HintIconSpawnPoint");
-        hintText = transform.Find("ControlLayout/Text").GetComponent<TMP_Text>();
-        nameText = transform.Find("NameText").GetComponent<TMP_Text>();
+        controlLayout = GetComponent<RectTransform>();
+        hintIconSpawnPoint = transform.Find("HintIconSpawnPoint");
+        hintText = transform.Find("Text").GetComponent<TMP_Text>();
     }
-
-    private void Start() {
-        if (Camera.main) {
-            camera = Camera.main.transform;
-        }
-       
-    }
+    
 
     public void SetHint(InputAction action, string hintText) {
         //destroy all children of hintIconSpawnPoint
@@ -60,34 +51,11 @@ public class InteractHintCanvas : MonoBehaviour {
         }
     }
     
-    public void SetName(string nameText) {
-        if (this.nameText) {
-            this.nameText.text = nameText;
-        }
-    }
     
-    public void Show() {
-        gameObject.SetActive(true);
-    }
-    
-    public void Hide() {
-        gameObject.SetActive(false);
-    }
     
     private IEnumerator RebuildLayout() {
         LayoutRebuilder.ForceRebuildLayoutImmediate(controlLayout);
         yield return new WaitForEndOfFrame();
         LayoutRebuilder.ForceRebuildLayoutImmediate(controlLayout);
-    }
-
-    private void LateUpdate() {
-        if (camera) {
-            if (Vector3.Distance(transform.position, camera.position) > 0.5f) {
-                //lock x and z rotation
-                transform.rotation = Quaternion.Euler(0, camera.rotation.eulerAngles.y, 0);
-                //transform.rotation = Quaternion.LookRotation(transform.position - camera.position);
-                
-            }
-        }
     }
 }
