@@ -62,13 +62,19 @@ namespace Runtime.Weapons
         protected override void Awake() {
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
+            cam = Camera.main;
         }
 
-        protected override void Start()
+        
+        protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
+            return builder.FromConfig().Build();
+        }
+        
+        protected override void OnBindEntityProperty() {}
+
+        protected override void OnEntityStart()
         {
-            base.Start();
-            cam = Camera.main;
-            
+            currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
             lineRenderers = new List<LineRenderer>();
             for (int i = 0; i < BoundEntity.GetBulletsPerShot().BaseValue; i++)
             {
@@ -85,17 +91,6 @@ namespace Runtime.Weapons
                 launchPoint = launchPoint,
                 weapon = BoundEntity
             };
-        }
-        
-        protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
-            return builder.FromConfig().Build();
-        }
-        
-        protected override void OnBindEntityProperty() {}
-
-        protected override void OnEntityStart()
-        {
-            currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
         }
         
         public void Update()
