@@ -146,8 +146,8 @@ namespace ES3Types
 
         public ES3Type_ES3Prefab() : base(typeof(ES3Prefab)) { Instance = this; }
 
-        public override void Write(object obj, ES3Writer writer)
-        {
+        public override void Write(object obj, ES3Writer writer) {
+        
         }
 
         public override object Read<T>(ES3Reader reader)

@@ -41,7 +41,7 @@ namespace Framework {
        
 		}
 
-		public void SaveGame() {
+		public virtual void SaveGame() {
 			if (!IsSave) {
 				return;
 			}

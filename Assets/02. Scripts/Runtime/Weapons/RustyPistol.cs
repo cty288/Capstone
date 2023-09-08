@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
+using Mikrocosmos.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Temporary.Player;
@@ -56,7 +57,13 @@ namespace Runtime.Weapons
         
         // For IHitResponder.
         public int Damage => BoundEntity.GetBaseDamage().BaseValue;
-        
+        private DPunkInputs.PlayerActions playerActions;
+
+        protected override void Awake() {
+            base.Awake();
+            playerActions = ClientInput.Singleton.GetPlayerActions();
+        }
+
         protected override void Start()
         {
             base.Start();
@@ -107,7 +114,7 @@ namespace Runtime.Weapons
         
         public void FixedUpdate()
         {
-            if (Input.GetMouseButton(0))
+            if (playerActions.Shoot.IsPressed())
             {
                 if (currentAmmo > 0 && currentCD >= BoundEntity.GetAttackSpeed().BaseValue)
                 {

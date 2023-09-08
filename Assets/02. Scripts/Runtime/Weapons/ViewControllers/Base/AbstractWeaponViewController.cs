@@ -14,7 +14,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         where T : class, IWeaponEntity, new() {
 
         private IWeaponModel weaponModel;
-        private void Awake() {
+        protected virtual void Awake() {
             weaponModel = this.GetModel<IWeaponModel>();
         }
 
