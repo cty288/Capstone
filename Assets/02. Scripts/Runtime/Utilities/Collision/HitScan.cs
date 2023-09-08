@@ -51,21 +51,21 @@ namespace Runtime.Utilities.Collision
         {
             Vector3 origin = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
             //TODO: Adjust spread to be less random and less punishing when further away [?].
-            offset[0] = Random.Range(-_weapon.GetSpread().BaseValue, _weapon.GetSpread().BaseValue);
-            offset[1] = Random.Range(-_weapon.GetSpread().BaseValue, _weapon.GetSpread().BaseValue);
-            offset[2] = Random.Range(-_weapon.GetSpread().BaseValue, _weapon.GetSpread().BaseValue);
+            offset[0] = Random.Range(-_weapon.GetSpread().RealValue.Value, _weapon.GetSpread().RealValue.Value);
+            offset[1] = Random.Range(-_weapon.GetSpread().RealValue.Value, _weapon.GetSpread().RealValue.Value);
+            offset[2] = Random.Range(-_weapon.GetSpread().RealValue.Value, _weapon.GetSpread().RealValue.Value);
             
             HitData hitData = null;
             RaycastHit hit;
             if (Physics.Raycast(origin, Vector3.Normalize(_camera.transform.forward + offset), out hit,
-                    _weapon.GetRange().BaseValue, _layer))
+                    _weapon.GetRange().RealValue.Value, _layer))
             {
                 // Debug.Log("hit");
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
                 if (hurtbox != null)
                 {
                     hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this);
-                    hitData.Recoil = _weapon.GetRecoil().BaseValue;
+                    hitData.Recoil = _weapon.GetRecoil().RealValue.Value;
                     hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
                 }
 
@@ -83,7 +83,7 @@ namespace Runtime.Utilities.Collision
             }
             else
             {
-                SetLine(lr, _launchPoint.position, Vector3.Normalize(_camera.transform.forward + offset) * _weapon.GetRange().BaseValue);
+                SetLine(lr, _launchPoint.position, Vector3.Normalize(_camera.transform.forward + offset) * _weapon.GetRange().RealValue.Value);
                 CoroutineRunner.Singleton.StartCoroutine(DrawHitscan(lr));
             }
         }
