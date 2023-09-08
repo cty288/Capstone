@@ -87,11 +87,14 @@ public class HUDManager : MonoMikroSingleton<HUDManager> {
             return;
         }
 
+        List<Tuple<Transform, HUDCategory>> toRemove = new List<Tuple<Transform, HUDCategory>>();
         Dictionary<Vector3, Vector3> screenPosDict = new Dictionary<Vector3, Vector3>();
-        foreach (HUDElementInfo hudElementInfo in hudElementInfos.Values) {
-            foreach (KeyValuePair<Transform,GameObject> ele in hudElementInfo.followDict) {
+        foreach (var hudElementInfo in hudElementInfos) {
+            foreach (KeyValuePair<Transform,GameObject> ele in hudElementInfo.Value.followDict) {
                 if (!ele.Key) {
-                    DespawnHUDElement(ele.Key, HUDCategory.NameTag);
+                    //DespawnHUDElement(ele.Key, hudElementInfo.Key);
+                    toRemove.Add(new Tuple<Transform, HUDCategory>(ele.Key, hudElementInfo.Key));
+                    continue;
                 }
                 
                 var position = ele.Key.position;
@@ -101,6 +104,10 @@ public class HUDManager : MonoMikroSingleton<HUDManager> {
                 Vector3 screenPos = screenPosDict[position];
                 ele.Value.transform.position = screenPos;
             }
+        }
+        
+        foreach (var tuple in toRemove) {
+            DespawnHUDElement(tuple.Item1, tuple.Item2);
         }
     }
 }

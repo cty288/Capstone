@@ -763,6 +763,65 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Shared"",
+            ""id"": ""0bc06407-a490-4257-82ab-9da51f91d328"",
+            ""actions"": [
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3328196-93b3-4b46-9972-ce05911a66df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""05c770fc-f842-4974-b813-e11f1d58d48f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e10dbe44-2d22-4b8b-b92e-eb3d2156679c"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""785e8582-0344-4e1a-bcab-458869daba71"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""360bc820-012b-4859-898c-eedb3bc35a25"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -816,6 +875,10 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Shared
+        m_Shared = asset.FindActionMap("Shared", throwIfNotFound: true);
+        m_Shared_Inventory = m_Shared.FindAction("Inventory", throwIfNotFound: true);
+        m_Shared_Close = m_Shared.FindAction("Close", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1085,6 +1148,60 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Shared
+    private readonly InputActionMap m_Shared;
+    private List<ISharedActions> m_SharedActionsCallbackInterfaces = new List<ISharedActions>();
+    private readonly InputAction m_Shared_Inventory;
+    private readonly InputAction m_Shared_Close;
+    public struct SharedActions
+    {
+        private @DPunkInputs m_Wrapper;
+        public SharedActions(@DPunkInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Inventory => m_Wrapper.m_Shared_Inventory;
+        public InputAction @Close => m_Wrapper.m_Shared_Close;
+        public InputActionMap Get() { return m_Wrapper.m_Shared; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SharedActions set) { return set.Get(); }
+        public void AddCallbacks(ISharedActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SharedActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SharedActionsCallbackInterfaces.Add(instance);
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
+            @Close.started += instance.OnClose;
+            @Close.performed += instance.OnClose;
+            @Close.canceled += instance.OnClose;
+        }
+
+        private void UnregisterCallbacks(ISharedActions instance)
+        {
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
+            @Close.started -= instance.OnClose;
+            @Close.performed -= instance.OnClose;
+            @Close.canceled -= instance.OnClose;
+        }
+
+        public void RemoveCallbacks(ISharedActions instance)
+        {
+            if (m_Wrapper.m_SharedActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ISharedActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SharedActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SharedActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public SharedActions @Shared => new SharedActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1125,5 +1242,10 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface ISharedActions
+    {
+        void OnInventory(InputAction.CallbackContext context);
+        void OnClose(InputAction.CallbackContext context);
     }
 }

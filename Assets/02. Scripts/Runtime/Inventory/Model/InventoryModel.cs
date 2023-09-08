@@ -28,6 +28,14 @@ namespace Runtime.Inventory.Model {
 		bool CanPlaceItem(IResourceEntity item, int index);
 		
 		/// <summary>
+		/// Check if the item can be placed at the specified index. <br/>
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="index">The nearest index that can be placed.</param>
+		/// <returns></returns>
+		bool CanPlaceItem(IResourceEntity item, out int index);
+		
+		/// <summary>
 		/// Find and remove the first item with the specified uuid.
 		/// </summary>
 		/// <param name="uuid"></param>
@@ -69,7 +77,9 @@ namespace Runtime.Inventory.Model {
 		/// Reset the inventory to the initial state.
 		/// </summary>
 		void ResetInventory();
-		
+
+		void InitWithInitialSlots();
+
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -81,6 +91,7 @@ namespace Runtime.Inventory.Model {
 	
 	
 	public class InventoryModel: AbstractSavableModel, IInventoryModel {
+
 		[ES3Serializable] private List<InventorySlot> slots;
 		
 		
@@ -89,39 +100,46 @@ namespace Runtime.Inventory.Model {
 		public static int InitialSlotCount = 10;
 		protected override void OnInit() {
 			base.OnInit();
-			if (slots == null) { //not load from saved
-				slots = new List<InventorySlot>();
-				AddSlots(InitialSlotCount);
-			}
+			
 		}
 		
 
 		public bool AddItemAt(IResourceEntity item, int index) {
 			if (!CanPlaceItem(item, index)) return false;
-			
 			InventorySlot slot = slots[index];
 			if (slot.TryAddItem(item)) {
 				return true;
 			}
-
 			return false;
 		}
 
-		public bool CanPlaceItem(IResourceEntity item, int index) {
-			if (index < 0 || index >= GetSlotCount()) return false;
-			return slots[index].CanPlaceItem(item);
+		public bool CanPlaceItem(IResourceEntity item, out int index) {
+			for (int i = 0; i < GetSlotCount(); i++) {
+				if (CanPlaceItem(item, i)) {
+					index = i;
+					return true;
+				}
+			}
+			index = -1;
+			return false;
 		}
 
 		public bool RemoveItem(string uuid, out int index) {
+			
 			for (int i = 0; i < GetSlotCount(); i++) {
 				if (slots[i].ContainsItem(uuid)) {
 					index = i;
 					return RemoveItemAt(i, uuid);
 				}
 			}
-
+			
 			index = -1;
 			return false;
+		}
+		
+		public bool CanPlaceItem(IResourceEntity item, int index) {
+			if (index < 0 || index >= GetSlotCount()) return false;
+			return slots[index].CanPlaceItem(item);
 		}
 
 		public bool RemoveItemAt(int index, string uuid) {
@@ -173,6 +191,12 @@ namespace Runtime.Inventory.Model {
 			slots.Clear();
 			AddSlots(InitialSlotCount);
 		}
-		
+
+		public void InitWithInitialSlots() {
+			if (slots == null) { //not load from saved
+				slots = new List<InventorySlot>();
+				AddSlots(InitialSlotCount);
+			}
+		}
 	}
 }

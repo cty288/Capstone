@@ -35,7 +35,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	
 		[FormerlySerializedAs("triggerCheck")]
 		[Header("Entity Interaction")]
-		[SerializeField] protected TriggerCheck interactiveHintTriggerCheck;
+		[SerializeField] protected bool hasInteractiveHint = false;
 		[SerializeField] protected string interactiveHintPrefabName = "InteractHint_General";
 		[SerializeField] protected string interactiveHintLocalizedKey = "interact";
 		//[SerializeField] protected Transform hintCanvasFollowTransform = this.transform;
@@ -58,13 +58,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		
 		protected virtual void Awake() {
-			interactiveHintTriggerCheck = GetComponent<TriggerCheck>();
-			if (interactiveHintTriggerCheck) {
-				interactiveHintTriggerCheck.OnEnter += OnEnterInteractiveCheck;
-				interactiveHintTriggerCheck.OnExit += OnExitInteractiveCheck;
-				TryHideHint();
-			}
-
+			OnPlayerExitInteractiveZone(null, null);
 		}
 
 
@@ -107,6 +101,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
 			}
 			
+		}
+
+		public void OnPlayerEnterInteractiveZone() {
+			throw new NotImplementedException();
+		}
+
+		public void OnPlayerExitInteractiveZone() {
+			throw new NotImplementedException();
 		}
 
 		protected virtual void OnEntityRecycled(IEntity ent) {
@@ -346,32 +348,24 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		#endregion
 
 		
-		private void OnEnterInteractiveCheck(Collider other) {
-			if(other.CompareTag("Player")) {
-				TryShowHint();
-			}
-		}
-		private void OnExitInteractiveCheck(Collider other) {
-			if(other.CompareTag("Player")) {
-				TryHideHint();
-            
-			}
-		}
-		
-		protected virtual void TryShowHint() {
-			GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName, HUDCategory.InteractiveTag);
-			if (hud) {
-				InteractiveHint element = hud.GetComponent<InteractiveHint>();
-				if (element != null) {
-					element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
-						Localization.Get(interactiveHintLocalizedKey));
+		public virtual void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			if (hasInteractiveHint) {
+				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName, HUDCategory.InteractiveTag);
+				if (hud) {
+					InteractiveHint element = hud.GetComponent<InteractiveHint>();
+					if (element != null) {
+						element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+							Localization.Get(interactiveHintLocalizedKey));
+					}
 				}
 			}
+			
 		}
-    
-		protected virtual void TryHideHint() {
-			if (interactiveHintTriggerCheck) {
-				HUDManager.Singleton.DespawnHUDElement(interactiveHintTriggerCheck.transform, HUDCategory.InteractiveTag);
+		
+
+		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			if (hasInteractiveHint) {
+				HUDManager.Singleton.DespawnHUDElement(transform, HUDCategory.InteractiveTag);
 			}
 		}
 
@@ -381,11 +375,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			propertyFields.Clear();
 			if (autoRemoveEntityWhenDestroyed) {
 				entityModel.RemoveEntity(ID);
-			}
-
-			if (interactiveHintTriggerCheck) {
-				interactiveHintTriggerCheck.OnEnter -= OnEnterInteractiveCheck;
-				interactiveHintTriggerCheck.OnExit -= OnExitInteractiveCheck;
 			}
 		}
 	}

@@ -73,11 +73,15 @@ namespace Mikrocosmos.Controls
         public DPunkInputs.PlayerActions GetPlayerActions() {
             return  Inputs.Player;
         }
+        
+        public DPunkInputs.SharedActions GetSharedActions() {
+            return Inputs.Shared;
+        }
 
         public void EnablePlayerMaps() {
             Inputs.UI.Disable();
             Inputs.Player.Enable();
-            
+            Inputs.Shared.Enable();
             if (playerInput) {
                 playerInput.SwitchCurrentActionMap("Player");
                 this.SendEvent<OnControlMapSwitched>(new OnControlMapSwitched()
@@ -90,9 +94,9 @@ namespace Mikrocosmos.Controls
 
         
         public void EnableUIMaps() {
-          
             Inputs.Player.Disable();
             Inputs.UI.Enable();
+            Inputs.Shared.Enable();
             if (playerInput) {
                 playerInput.SwitchCurrentActionMap("UI");
                 this.SendEvent<OnControlMapSwitched>(new OnControlMapSwitched()

@@ -31,6 +31,10 @@ namespace Runtime.RunTimeTests.TestMaterial {
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
 		}
+
+		public override ResourceCategory GetResourceCategory() {
+			return ResourceCategory.RawMaterial;
+		}
 	}
 	
 	public class TestPickableRawMaterial : AbstractPickableRawMaterialViewController<TestBasicRawMaterial> {

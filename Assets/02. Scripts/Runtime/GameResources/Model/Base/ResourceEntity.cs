@@ -13,11 +13,17 @@ using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 
 namespace Runtime.GameResources.Model.Base {
-	
+	public enum ResourceCategory {
+		RawMaterial,
+		Bait,
+		Weapon
+	}
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		public IMaxStack GetMaxStackProperty();
 
 		public void OnPicked();
+		
+		public ResourceCategory GetResourceCategory();
 		//public string 
 	}
 	
@@ -91,6 +97,8 @@ namespace Runtime.GameResources.Model.Base {
 		public void OnPicked() {
 			pickedBefore = true;
 		}
+
+		public abstract ResourceCategory GetResourceCategory();
 	}
 
 }

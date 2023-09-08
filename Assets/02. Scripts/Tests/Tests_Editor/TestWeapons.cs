@@ -29,6 +29,10 @@ namespace Tests.Tests_Editor {
 				new AutoConfigCustomProperty("shield"),
 			};
 		}
+
+		public override ResourceCategory GetResourceCategory() {
+			return ResourceCategory.Weapon;
+		}
 	}
 	
 	//=====================================================================
