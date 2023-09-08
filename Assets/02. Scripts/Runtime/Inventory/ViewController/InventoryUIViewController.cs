@@ -16,11 +16,11 @@ public class InventoryUIViewController : AbstractPanel, IController {
     public override void OnInit() {
         slotLayout = transform.Find("InventoryLayout").GetComponent<RectTransform>();
         inventorySystem = this.GetSystem<IInventorySystem>();
-        
+        inventorySystem.InitOnGameStart();
         this.RegisterEvent<OnInventorySlotAddedEvent>(OnInventorySlotAdded)
             .UnRegisterWhenGameObjectDestroyed(gameObject);
         
-       inventorySystem.InitOnGameStart();
+        OnInventorySlotAdded(new OnInventorySlotAddedEvent(){AddedCount = inventorySystem.GetSlotCount()});
     }
 
     private void OnInventorySlotAdded(OnInventorySlotAddedEvent e) {
@@ -30,11 +30,16 @@ public class InventoryUIViewController : AbstractPanel, IController {
     }
 
     public override void OnOpen(UIMsg msg) {
-       
+       this.RegisterEvent<OnInventorySlotUpdateEvent>(OnInventorySlotUIUpdate)
+           .UnRegisterWhenGameObjectDestroyed(gameObject);
+    }
+
+    private void OnInventorySlotUIUpdate(OnInventorySlotUpdateEvent obj) {
+        
     }
 
     public override void OnClosed() {
-        
+        this.UnRegisterEvent<OnInventorySlotUpdateEvent>(OnInventorySlotUIUpdate);
     }
 
     public IArchitecture GetArchitecture() {

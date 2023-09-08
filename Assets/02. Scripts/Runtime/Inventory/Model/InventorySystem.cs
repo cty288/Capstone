@@ -4,9 +4,9 @@ using MikroFramework.Architecture;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
-	public struct OnInventoryReloadEvent {
+	/*public struct OnInventoryReloadEvent {
 		public List<InventorySlotInfo> InventorySlots;
-	}
+	}*/
 
 	
 	public class InventorySystem : AbstractSystem, IInventorySystem {
@@ -132,12 +132,6 @@ namespace Runtime.Inventory.Model {
 					SlotIndex = i
 				});
 			}
-
-			
-
-			this.SendEvent<OnInventoryReloadEvent>(new OnInventoryReloadEvent() {
-				InventorySlots = slots
-			});
 		}
 
 		public int GetSlotCurrentItemCount(int index) {
