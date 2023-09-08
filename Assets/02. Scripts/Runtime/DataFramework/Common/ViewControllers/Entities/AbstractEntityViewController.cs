@@ -21,11 +21,8 @@ using UnityEngine.Serialization;
 namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractEntityViewController<T> : AbstractMikroController<MainGame>, IEntityViewController 
 		where T : class, IEntity, new() {
-
-		
 		
 		[field: ES3Serializable]
-		//[field: SerializeField]
 		public string ID { get; set; }
 
 		[Header("Entity Name Tag")]
@@ -59,6 +56,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		protected virtual void Awake() {
 			OnPlayerExitInteractiveZone(null, null);
+			CheckProperties();
 		}
 
 
@@ -74,6 +72,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (ent == null) {
 				Debug.LogError("Entity with ID " + ID + " not found");
 				return;
+			}
+
+			if (BoundEntity != null) {
+				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 			}
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -103,13 +105,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 		}
 
-		public void OnPlayerEnterInteractiveZone() {
-			throw new NotImplementedException();
-		}
 
-		public void OnPlayerExitInteractiveZone() {
-			throw new NotImplementedException();
-		}
 
 		protected virtual void OnEntityRecycled(IEntity ent) {
 			if (autoDestroyWhenEntityRemoved) {
@@ -132,7 +128,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		#region Property Binding
 
 		protected void OnBindProperty() {
-			CheckProperties();
+			
 			OnBindEntityProperty();
 			BindPropertyAttributes();
 			
@@ -143,8 +139,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private void CheckProperties() {
 			PropertyInfo[] allProperties = GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			foreach (PropertyInfo property in allProperties) {
-				if (property.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is
-				    BindAttribute attribute) {
+				if (property.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is BindAttribute attribute) {
 					if (property.CanWrite) {
 						//the property must be read only
 						Debug.LogError("Property " + property.Name + $" on {gameObject.name} is not read only! " +

@@ -15,7 +15,10 @@ public class DefaultPoolableGameObjectSaved : DefaultPoolableGameObject, IContro
 	}
 
 	private void OnBeforeSaveGame(OnBeforeGameSave e) {
-		es3AutoSave.enabled = !IsRecycled;
+		if (es3AutoSave) {
+			es3AutoSave.enabled = !IsRecycled;
+		}
+		
 		//Debug.Log($"save game! enabled: {es3AutoSave.enabled}. Recycled: {IsRecycled}");
 	}
 
