@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2972797463422123061}
   - component: {fileID: 1220751591432458910}
   - component: {fileID: 7244799634334982120}
+  - component: {fileID: -1991884982735151530}
   m_Layer: 0
   m_Name: PooledCube
   m_TagString: Untagged
@@ -126,7 +127,9 @@ MonoBehaviour:
     - {fileID: 2972797463422123061}
     - {fileID: 7244799634334982120}
     - {fileID: 11500000, guid: ed658205ecc2d8d4596bbfa691d9afc0, type: 3}
-    _Values: a509f67b36159b1b8441d5688bc16e6933172bffbb06a66e51ae7ca633869d7d62183121e1700d1567c5d7e05e0aea3f9c5bfdbd768860629d77d478670a17033bc2bd707ba50b15d67dd6d4ed1a28786136da025b023524
+    - {fileID: -1991884982735151530}
+    - {fileID: 11500000, guid: 607a27845b3911f42a2d3e9c037de457, type: 3}
+    _Values: a509f67b36159b1b8441d5688bc16e6933172bffbb06a66e51ae7ca633869d7d62183121e1700d1567c5d7e05e0aea3f9c5bfdbd768860629d77d478670a17033bc2bd707ba50b15d67dd6d4ed1a28786136da025b023524033328300979e5531752b2e51d9c640a
 --- !u!114 &1220751591432458910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,10 +162,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed658205ecc2d8d4596bbfa691d9afc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pool: {fileID: 0}
   onRecycledEvent:
     m_PersistentCalls:
       m_Calls: []
   onAllocateEvent:
     m_PersistentCalls:
       m_Calls: []
+  Pool: {fileID: 0}
+--- !u!114 &-1991884982735151530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3742075524737897007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607a27845b3911f42a2d3e9c037de457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
