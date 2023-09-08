@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Mikrocosmos.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources.Model.Base;
 using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
 using Runtime.Utilities.Collision;
@@ -31,6 +32,10 @@ namespace Runtime.Weapons
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
             return null;
+        }
+
+        public override ResourceCategory GetResourceCategory() {
+            return ResourceCategory.Weapon;
         }
     }
 

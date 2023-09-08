@@ -34,6 +34,10 @@ namespace Tests.Tests_Editor {
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
 		}
+
+		public override ResourceCategory GetResourceCategory() {
+			return ResourceCategory.RawMaterial;
+		}
 	}
 	
 	internal class TestEmptyRawMaterial : RawMaterialEntity<TestBasicRawMaterial> {
@@ -54,6 +58,10 @@ namespace Tests.Tests_Editor {
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
 		}
+
+		public override ResourceCategory GetResourceCategory() {
+			return ResourceCategory.RawMaterial;
+		}
 	}
 	
 	//=======================================================================================
@@ -69,7 +77,7 @@ namespace Tests.Tests_Editor {
 				.Build();
 			
 			Assert.AreEqual(5, ent.GetRarity());
-			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
+			Assert.AreEqual("???", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
 			
@@ -82,7 +90,7 @@ namespace Tests.Tests_Editor {
 			Assert.IsNotNull(ent);
             
 			Assert.AreEqual(5, ent.GetRarity());
-			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
+			Assert.AreEqual("???", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
             
@@ -101,7 +109,7 @@ namespace Tests.Tests_Editor {
 				.Build();
 			
 			Assert.AreEqual(10, ent.GetRarity());
-			Assert.AreEqual("Test Empty", ent.GetDisplayName());
+			Assert.AreEqual("???", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(0, ent.GetBaitAdjectivesProperty().RealValues.Count);
 			
@@ -114,7 +122,7 @@ namespace Tests.Tests_Editor {
 			Assert.IsNotNull(ent);
             
 			Assert.AreEqual(10, ent.GetRarity());
-			Assert.AreEqual("Test Empty", ent.GetDisplayName());
+			Assert.AreEqual("???", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(0, ent.GetBaitAdjectivesProperty().RealValues.Count);
             
@@ -134,7 +142,7 @@ namespace Tests.Tests_Editor {
 				.Build();
 			
 			Assert.AreEqual(5, ent.GetRarity());
-			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
+			Assert.AreEqual("???", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
 			
@@ -147,7 +155,7 @@ namespace Tests.Tests_Editor {
 			Assert.IsNotNull(ent);
             
 			Assert.AreEqual(5, ent.GetRarity());
-			Assert.AreEqual("Test Raw Material", ent.GetDisplayName());
+			Assert.AreEqual("???", ent.GetDisplayName());
 			Assert.AreEqual(20, ent.GetMaxStackProperty().RealValue.Value);
 			Assert.AreEqual(2, ent.GetBaitAdjectivesProperty().RealValues.Count);
             

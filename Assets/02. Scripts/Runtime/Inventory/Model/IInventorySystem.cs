@@ -47,6 +47,15 @@ namespace Runtime.Inventory.Model {
 		/// <param name="index"></param>
 		/// <returns></returns>
 		bool CanPlaceItem(IResourceEntity item, int index);
+
+
+		/// <summary>
+		/// Check if the item can be placed at the specified index. <br/>
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="index">The nearest index that can be placed.</param>
+		/// <returns></returns>
+		bool CanPlaceItem(IResourceEntity item, out int index);
 		
 		/// <summary>
 		/// Find and remove the first item with the specified uuid.
@@ -99,5 +108,7 @@ namespace Runtime.Inventory.Model {
 		/// <param name="index"></param>
 		/// <returns></returns>
 		InventorySlotInfo GetItemsAt(int index);
+		
+		void InitOnGameStart();
 	}
 }

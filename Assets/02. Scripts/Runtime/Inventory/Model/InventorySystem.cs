@@ -1,17 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MikroFramework.Architecture;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
-	public struct OnInventoryReloadEvent {
+	/*public struct OnInventoryReloadEvent {
 		public List<InventorySlotInfo> InventorySlots;
-	}
+	}*/
 
 	
 	public class InventorySystem : AbstractSystem, IInventorySystem {
 		private IInventoryModel inventoryModel;
 		protected override void OnInit() {
 			inventoryModel = this.GetModel<IInventoryModel>();
+		}
+		
+		public void InitOnGameStart() {
+			inventoryModel.InitWithInitialSlots();
 		}
 
 		public bool AddItem(IResourceEntity item) {
@@ -31,7 +36,7 @@ namespace Runtime.Inventory.Model {
 				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
 					UpdatedSlot = new InventorySlotInfo() {
 						Items = resources,
-						SlotIndex = index
+						SlotIndex = index,
 					}
 				});
 				return true;
@@ -50,6 +55,10 @@ namespace Runtime.Inventory.Model {
 
 		public bool CanPlaceItem(IResourceEntity item, int index) {
 			return inventoryModel.CanPlaceItem(item, index);
+		}
+
+		public bool CanPlaceItem(IResourceEntity item, out int index) {
+			return inventoryModel.CanPlaceItem(item, out index);
 		}
 
 		public bool RemoveItem(string uuid) {
@@ -92,7 +101,7 @@ namespace Runtime.Inventory.Model {
 				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
 					UpdatedSlot = new InventorySlotInfo() {
 						Items = resources,
-						SlotIndex = index
+						SlotIndex = index,
 					}
 				});
 				return true;
@@ -114,6 +123,7 @@ namespace Runtime.Inventory.Model {
 		public void ResetInventory() {
 			inventoryModel.ResetInventory();
 			List<InventorySlotInfo> slots = new List<InventorySlotInfo>();
+
 			for (int i = 0; i < GetSlotCount(); i++) {
 				List<string> uuids = inventoryModel.GetUUIDsByIndex(i);
 				List<IResourceEntity> resources = GetResourcesByIDs(uuids);
@@ -122,10 +132,6 @@ namespace Runtime.Inventory.Model {
 					SlotIndex = i
 				});
 			}
-
-			this.SendEvent<OnInventoryReloadEvent>(new OnInventoryReloadEvent() {
-				InventorySlots = slots
-			});
 		}
 
 		public int GetSlotCurrentItemCount(int index) {
@@ -140,5 +146,7 @@ namespace Runtime.Inventory.Model {
 				SlotIndex = index
 			};
 		}
+
+
 	}
 }

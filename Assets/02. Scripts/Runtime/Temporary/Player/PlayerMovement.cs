@@ -79,8 +79,8 @@ namespace Runtime.Temporary.Player
         // Start is called before the first frame update
         void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = false;
 
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
@@ -119,11 +119,6 @@ namespace Runtime.Temporary.Player
         private void FixedUpdate()
         {      
             MovePlayer();
-            if (Input.GetKeyDown(KeyCode.K)) {
-                GameObject obj = ControlInfoFactory.Singleton.GetBindingKeyGameObject(ClientInput.Singleton.FindActionInPlayerActionMap("Sprint"),
-                    out BindingInfo info, out string actionName);
-                Debug.Log("Action Name: " + actionName);
-            }
         }
 
         private void MyInput()

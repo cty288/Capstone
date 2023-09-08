@@ -31,9 +31,13 @@ namespace Runtime.RunTimeTests.TestMaterial {
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
 		}
+
+		public override ResourceCategory GetResourceCategory() {
+			return ResourceCategory.RawMaterial;
+		}
 	}
 	
-	public class TestRawMaterial : AbstractRawMaterialViewController<TestBasicRawMaterial> {
+	public class TestPickableRawMaterial : AbstractPickableRawMaterialViewController<TestBasicRawMaterial> {
 		private void Update() {
 			if (Input.GetKeyDown(KeyCode.S)) {
 				ES3AutoSaveMgr.Current.Save();

@@ -3,30 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Framework;
+using Mikrocosmos.Controls;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using MikroFramework.Pool;
+using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
+using MikroFramework.Utilities;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractEntityViewController<T> : AbstractMikroController<MainGame>, IEntityViewController 
 		where T : class, IEntity, new() {
-
-		
 		
 		[field: ES3Serializable]
-		//[field: SerializeField]
 		public string ID { get; set; }
-		
+
+		[Header("Entity Name Tag")]
+		[SerializeField] protected bool showNameTagWhenPointed = true;
+		[SerializeField] protected Transform nameTagFollowTransform;
+		[SerializeField] protected string nameTagPrefabName = "NameTag_General";
+	
+		[FormerlySerializedAs("triggerCheck")]
+		[Header("Entity Interaction")]
+		[SerializeField] protected bool hasInteractiveHint = false;
+		[SerializeField] protected string interactiveHintPrefabName = "InteractHint_General";
+		[SerializeField] protected string interactiveHintLocalizedKey = "interact";
+		//[SerializeField] protected Transform hintCanvasFollowTransform = this.transform;
 		
 		[Header("Entity Recycle Logic")]
 		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
 		
-		
+
 		IEntity IEntityViewController.Entity => BoundEntity;
 
 
@@ -39,6 +54,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 		
 		
+		protected virtual void Awake() {
+			OnPlayerExitInteractiveZone(null, null);
+			CheckProperties();
+		}
+
 
 		protected virtual void Start() {
 			OnStart();
@@ -53,11 +73,41 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				Debug.LogError("Entity with ID " + ID + " not found");
 				return;
 			}
+
+			if (BoundEntity != null) {
+				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+			}
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyed(gameObject);
 		}
 
-		private void OnEntityRecycled(IEntity ent) {
+		public void OnPointByCrosshair() {
+			if (showNameTagWhenPointed) {
+				if(!nameTagFollowTransform) {
+					Debug.LogError($"Name tag follow transform not set for {gameObject.name}!");
+					return;
+				}
+
+				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
+				if (nameTag) {
+					INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
+					if (nameTagComponent != null) {
+						nameTagComponent.SetName(BoundEntity.GetDisplayName());
+					}
+				}
+			}
+		}
+
+		public void OnUnPointByCrosshair() {
+			if (showNameTagWhenPointed && nameTagFollowTransform) {
+				HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
+			}
+			
+		}
+
+
+
+		protected virtual void OnEntityRecycled(IEntity ent) {
 			if (autoDestroyWhenEntityRemoved) {
 				Destroy(gameObject);
 			}
@@ -78,7 +128,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		#region Property Binding
 
 		protected void OnBindProperty() {
-			CheckProperties();
+			
 			OnBindEntityProperty();
 			BindPropertyAttributes();
 			
@@ -89,8 +139,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private void CheckProperties() {
 			PropertyInfo[] allProperties = GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			foreach (PropertyInfo property in allProperties) {
-				if (property.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is
-				    BindAttribute attribute) {
+				if (property.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is BindAttribute attribute) {
 					if (property.CanWrite) {
 						//the property must be read only
 						Debug.LogError("Property " + property.Name + $" on {gameObject.name} is not read only! " +
@@ -293,6 +342,28 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		#endregion
 
+		
+		public virtual void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			if (hasInteractiveHint) {
+				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName, HUDCategory.InteractiveTag);
+				if (hud) {
+					InteractiveHint element = hud.GetComponent<InteractiveHint>();
+					if (element != null) {
+						element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+							Localization.Get(interactiveHintLocalizedKey));
+					}
+				}
+			}
+			
+		}
+		
+
+		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			if (hasInteractiveHint) {
+				HUDManager.Singleton.DespawnHUDElement(transform, HUDCategory.InteractiveTag);
+			}
+		}
+
 
 		protected virtual void OnDestroy() {
 			propertyBindings.Clear();
@@ -300,7 +371,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (autoRemoveEntityWhenDestroyed) {
 				entityModel.RemoveEntity(ID);
 			}
-			
 		}
 	}
 }
