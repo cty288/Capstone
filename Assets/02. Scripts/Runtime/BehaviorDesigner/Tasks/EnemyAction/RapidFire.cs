@@ -7,7 +7,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class RapidFire : EnemyAction
     {
-        public GameObject bulletPrefab;
+        public SharedGameObject bulletPrefab;
         public int bulletCount;
         public int spawnInterval;
         private bool ended;
@@ -39,7 +39,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         void SpawnBullet()
         {
-            GameObject b = Object.Instantiate(bulletPrefab, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), Quaternion.LookRotation(playerTrans.Value.position- new Vector3(transform.position.x, transform.position.y + 2, transform.position.z)));
+            GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), Quaternion.LookRotation(playerTrans.Value.position- new Vector3(transform.position.x, transform.position.y + 2, transform.position.z)));
             b.GetComponent<Rigidbody>().velocity =  b.transform.forward* bulletSpeed;
         
         }

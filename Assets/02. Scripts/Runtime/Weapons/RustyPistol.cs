@@ -81,7 +81,7 @@ namespace Runtime.Weapons
                 lineRenderers.Add(Instantiate(lineRendererPrefab, transform).GetComponent<LineRenderer>());
             }
             
-            hitScan = new HitScan(this);
+            hitScan = new HitScan(this, CurrentFaction.Value);
             hitDetectorInfo = new HitDetectorInfo
             {
                 camera = cam,
@@ -131,8 +131,7 @@ namespace Runtime.Weapons
             }
         }
         
-        public void Shoot()
-        {
+        public void Shoot() {
             hitScan.CheckHit(hitDetectorInfo);
         }
         
