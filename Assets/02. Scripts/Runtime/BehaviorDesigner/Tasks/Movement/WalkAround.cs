@@ -15,7 +15,7 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         public SharedFloat m_ArriveDistance = 0.1f;
         [global::BehaviorDesigner.Runtime.Tasks.Tooltip("The GameObject that the agent is moving towards")]
         [UnityEngine.Serialization.FormerlySerializedAs("target")]
-        public SharedGameObject m_Target;
+        public SharedGameObject m_Target; 
 
         [global::BehaviorDesigner.Runtime.Tasks.Tooltip("The GameObject that the task operates on. If null the task GameObject is used.")]
         public SharedGameObject targetGameObject;

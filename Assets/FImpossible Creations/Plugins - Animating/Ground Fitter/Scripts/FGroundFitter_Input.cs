@@ -4,9 +4,24 @@ namespace FIMSpace.GroundFitter
 {
     public class FGroundFitter_Input : FGroundFitter_InputBase
     {
+
+        public GameObject player;
         protected virtual void Update()
         {
+            Vector3 dir = Vector3.zero;
+            dir = player.transform.position - this.gameObject.transform.position;
 
+            dir.Normalize();
+
+            RotationOffset = Quaternion.LookRotation(dir).eulerAngles.y;
+
+            MoveVector = Vector3.forward;
+
+            controller.Sprint = Sprint;
+            controller.MoveVector = MoveVector;
+            controller.RotationOffset = RotationOffset;
+            
+            /*
             if (Input.GetKeyDown(KeyCode.Space)) TriggerJump();
 
             Vector3 dir = Vector3.zero;
@@ -19,6 +34,8 @@ namespace FIMSpace.GroundFitter
                 if (Input.GetKey(KeyCode.A)) dir.x -= 1f;
                 if (Input.GetKey(KeyCode.D)) dir.x += 1f;
                 if (Input.GetKey(KeyCode.S)) dir.z -= 1f;
+
+                
 
                 dir.Normalize();
 
@@ -40,7 +57,8 @@ namespace FIMSpace.GroundFitter
 
             controller.Sprint = Sprint;
             controller.MoveVector = MoveVector;
-            controller.RotationOffset = RotationOffset;
+            controller.RotationOffset = RotationOffset;8
+            */
         }
     }
 }
