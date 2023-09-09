@@ -15,6 +15,7 @@ using MikroFramework.Utilities;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
+using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -78,7 +79,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 			}
 			BoundEntity = ent as T;
-			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyed(gameObject);
+			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		}
 
 		public void OnPointByCrosshair() {
@@ -243,7 +244,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 						bindableProperty.UnRegisterOnObjectValueChanged(cb);
 					}
 				};
-				bindableProperty.RegisterWithInitObject(cb).UnRegisterWhenGameObjectDestroyed(gameObject);
+				bindableProperty.RegisterWithInitObject(cb).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 				propertyBindings.Add(bindedProperty, () => getter((BindablePropertyType) bindableProperty.Value));
 
 			}
@@ -266,7 +267,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 						bindableProperty.UnRegisterOnValueChanged(cb);
 					}
 				};
-				bindableProperty.RegisterWithInitValue(cb).UnRegisterWhenGameObjectDestroyed(gameObject);
+				bindableProperty.RegisterWithInitValue(cb).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 				propertyBindings.Add(bindedProperty, () => getter(bindableProperty.Value));
 
 			}

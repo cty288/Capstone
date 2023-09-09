@@ -6,6 +6,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.UIKit;
 using Runtime.Inventory.Model;
+using Runtime.Utilities;
 using UnityEngine;
 
 public class InventoryUIViewController : AbstractPanel, IController {
@@ -18,7 +19,7 @@ public class InventoryUIViewController : AbstractPanel, IController {
         inventorySystem = this.GetSystem<IInventorySystem>();
         inventorySystem.InitOnGameStart();
         this.RegisterEvent<OnInventorySlotAddedEvent>(OnInventorySlotAdded)
-            .UnRegisterWhenGameObjectDestroyed(gameObject);
+            .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         
         OnInventorySlotAdded(new OnInventorySlotAddedEvent(){AddedCount = inventorySystem.GetSlotCount()});
     }
@@ -31,7 +32,7 @@ public class InventoryUIViewController : AbstractPanel, IController {
 
     public override void OnOpen(UIMsg msg) {
        this.RegisterEvent<OnInventorySlotUpdateEvent>(OnInventorySlotUIUpdate)
-           .UnRegisterWhenGameObjectDestroyed(gameObject);
+           .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
     }
 
     private void OnInventorySlotUIUpdate(OnInventorySlotUpdateEvent obj) {
