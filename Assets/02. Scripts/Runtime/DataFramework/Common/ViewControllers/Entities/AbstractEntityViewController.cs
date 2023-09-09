@@ -21,7 +21,7 @@ using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController 
-		where T : class, IEntity, new() {
+		where T : class, IEntity {
 		
 		[field: ES3Serializable]
 		public string ID { get; set; }

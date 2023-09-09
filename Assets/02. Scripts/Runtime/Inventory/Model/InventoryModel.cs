@@ -92,7 +92,7 @@ namespace Runtime.Inventory.Model {
 	
 	public class InventoryModel: AbstractSavableModel, IInventoryModel {
 
-		[ES3Serializable] private List<InventorySlot> slots = new List<InventorySlot>();
+		[ES3Serializable] private List<InventorySlot> slots; //= new List<InventorySlot>();
 		
 		
 		public static int MaxSlotCount = 40;
@@ -188,6 +188,9 @@ namespace Runtime.Inventory.Model {
 		}
 
 		public void ResetInventory() {
+			if (slots == null) {
+				return;
+			}
 			slots.Clear();
 			AddSlots(InitialSlotCount);
 		}
