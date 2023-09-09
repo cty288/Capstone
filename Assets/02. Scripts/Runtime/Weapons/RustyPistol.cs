@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
+using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
@@ -53,6 +55,10 @@ namespace Runtime.Weapons
         private HitDetectorInfo hitDetectorInfo;
         
         [SerializeField] private GameObject hitParticlePrefab;
+        
+        [field: ES3Serializable]
+        public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
+
         
         // For IHitResponder.
         public int Damage => BoundEntity.GetBaseDamage().BaseValue;
