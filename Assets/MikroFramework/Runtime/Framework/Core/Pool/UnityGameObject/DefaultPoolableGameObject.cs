@@ -14,7 +14,9 @@ namespace MikroFramework.ResKit
         
         public override void OnStartOrAllocate() {
             base.OnStartOrAllocate();
-            transform.SetParent(null);
+            if (Pool) {
+                transform.SetParent(null);
+            }
         }
 
         public override void OnRecycled() {
