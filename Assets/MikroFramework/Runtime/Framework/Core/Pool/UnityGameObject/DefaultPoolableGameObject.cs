@@ -12,8 +12,8 @@ namespace MikroFramework.ResKit
     public class DefaultPoolableGameObject: PoolableGameObject {
         
         
-        public override void OnAllocate() {
-            base.OnAllocate();
+        public override void OnStartOrAllocate() {
+            base.OnStartOrAllocate();
             transform.SetParent(null);
         }
 

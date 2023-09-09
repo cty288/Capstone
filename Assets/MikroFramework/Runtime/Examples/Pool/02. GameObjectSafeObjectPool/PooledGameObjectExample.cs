@@ -12,7 +12,7 @@ namespace MikroFramework.Examples
 
         public int Id;
         
-        public override void OnAllocate() {
+        public override void OnStartOrAllocate() {
             
         }
 

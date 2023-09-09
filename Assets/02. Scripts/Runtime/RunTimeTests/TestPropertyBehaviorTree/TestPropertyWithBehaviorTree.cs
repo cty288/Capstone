@@ -152,11 +152,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             if (Input.GetKeyDown(KeyCode.D)) {
                 Destroy(this.gameObject);
             }
-
-            if (Input.GetKeyDown(KeyCode.S)) {
-                ES3AutoSaveMgr.Current.Save();
-                ((MainGame) MainGame.Interface).SaveGame();
-            }
+            
 
             if (Input.GetKeyDown(KeyCode.Space)) {
                 Debug.Log($"Attack 1 Damage: {Attack1Damage}");

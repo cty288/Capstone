@@ -34,7 +34,13 @@ namespace MikroFramework.Pool
           
         }
 
-        public virtual void OnAllocate() {
+        private void Start() {
+            if (Pool == null) {
+                OnStartOrAllocate();
+            }
+        }
+
+        public virtual void OnStartOrAllocate() {
             onAllocateEvent?.Invoke();
         }
 

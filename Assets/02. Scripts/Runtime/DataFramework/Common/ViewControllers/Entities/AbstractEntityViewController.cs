@@ -20,7 +20,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
-	public abstract class AbstractEntityViewController<T> : AbstractMikroController<MainGame>, IEntityViewController 
+	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController 
 		where T : class, IEntity, new() {
 		
 		[field: ES3Serializable]
@@ -38,8 +38,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField] protected string interactiveHintLocalizedKey = "interact";
 		//[SerializeField] protected Transform hintCanvasFollowTransform = this.transform;
 		
+		[FormerlySerializedAs("autoRemoveEntityWhenDestroyed")]
 		[Header("Entity Recycle Logic")]
-		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = false;
+		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
 		
 
@@ -55,13 +56,17 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 		
 		
-		protected virtual void Awake() {
-			OnPlayerExitInteractiveZone(null, null);
+		protected override void Awake() {
+			base.Awake();
 			CheckProperties();
 		}
 
+		
 
-		protected virtual void Start() {
+		public override void OnStartOrAllocate() {
+			base.OnStartOrAllocate();
+			OnPlayerExitInteractiveZone(null, null);
+			
 			OnStart();
 			OnEntityStart();
 		}
@@ -110,8 +115,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		protected virtual void OnEntityRecycled(IEntity ent) {
 			if (autoDestroyWhenEntityRemoved) {
-				Destroy(gameObject);
+				RecycleToCache();
 			}
+			
 		}
 
 		protected virtual void OnStart() {
@@ -122,6 +128,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			InitWithID(id);
 			OnBindProperty();
+		}
+
+		public override void OnRecycled() {
+			base.OnRecycled();
+			if (BoundEntity != null) {
+				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+			}
+			if (autoRemoveEntityWhenDestroyedOrRecycled) {
+				entityModel.RemoveEntity(ID);
+			}
+			ID = null;
+			BoundEntity = null;
+			propertyBindings.Clear();
 		}
 
 		protected abstract IEntity OnBuildNewEntity();
@@ -369,7 +388,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected virtual void OnDestroy() {
 			propertyBindings.Clear();
 			propertyFields.Clear();
-			if (autoRemoveEntityWhenDestroyed) {
+			if (autoRemoveEntityWhenDestroyedOrRecycled && entityModel!=null) {
 				entityModel.RemoveEntity(ID);
 			}
 		}

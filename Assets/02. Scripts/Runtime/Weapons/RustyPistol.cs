@@ -98,6 +98,7 @@ namespace Runtime.Weapons
             };
         }
         
+        
         public void Update()
         {
             currentCD += Time.deltaTime;

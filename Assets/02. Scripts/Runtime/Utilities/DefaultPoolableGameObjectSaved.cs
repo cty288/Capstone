@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class DefaultPoolableGameObjectSaved : DefaultPoolableGameObject, IController {
 	private ES3AutoSave es3AutoSave;
-	private void Awake() {
+	protected virtual void Awake() {
 		es3AutoSave = GetComponent<ES3AutoSave>();
 		this.RegisterEvent<OnBeforeGameSave>(OnBeforeSaveGame).UnRegisterWhenGameObjectDestroyed(gameObject);
 	}

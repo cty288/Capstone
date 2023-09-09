@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 40627015723111649}
   - component: {fileID: 2972797463422123061}
   - component: {fileID: 1220751591432458910}
-  - component: {fileID: 7244799634334982120}
   - component: {fileID: -1991884982735151530}
   m_Layer: 0
   m_Name: PooledCube
@@ -125,7 +124,7 @@ MonoBehaviour:
     - {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
     - {fileID: 40627015723111649}
     - {fileID: 2972797463422123061}
-    - {fileID: 7244799634334982120}
+    - {fileID: 0}
     - {fileID: 11500000, guid: ed658205ecc2d8d4596bbfa691d9afc0, type: 3}
     - {fileID: -1991884982735151530}
     - {fileID: 11500000, guid: 607a27845b3911f42a2d3e9c037de457, type: 3}
@@ -150,25 +149,6 @@ MonoBehaviour:
   saveChildren: 0
   componentsToSave:
   - {fileID: 5410352376247172775}
---- !u!114 &7244799634334982120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3742075524737897007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed658205ecc2d8d4596bbfa691d9afc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onRecycledEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onAllocateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  Pool: {fileID: 0}
 --- !u!114 &-1991884982735151530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,3 +161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607a27845b3911f42a2d3e9c037de457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
