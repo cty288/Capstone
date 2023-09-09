@@ -119,6 +119,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			
 		}
+		
 
 		protected virtual void OnStart() {
 			string id = ID;
