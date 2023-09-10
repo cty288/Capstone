@@ -1,19 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using Framework;
-using Mikrocosmos.Controls;
 using MikroFramework.ResKit;
 using MikroFramework.Singletons;
 using Polyglot;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
-namespace Mikrocosmos
+namespace Runtime.Controls
 {
     public class ControlInfoFactory : MikroSingleton<ControlInfoFactory> {
         private BindingKeyData bindingKeyData;

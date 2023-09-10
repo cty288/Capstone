@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Framework;
-using Mikrocosmos.Controls;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -13,8 +12,12 @@ using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
 using MikroFramework.Utilities;
 using Polyglot;
+using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
+using Runtime.GameResources.ViewControllers;
+using Runtime.Player;
+using Runtime.UI.NameTags;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -25,6 +28,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		[field: ES3Serializable]
 		public string ID { get; set; }
+		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]
+		[Tooltip("If not, you must manually call InitWithID() to initialize the entity.")]
+		[SerializeField] protected bool autoCreateNewEntityWhenStart = true;
 
 		[Header("Entity Name Tag")]
 		[SerializeField] protected bool showNameTagWhenPointed = true;
@@ -68,7 +74,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			OnPlayerExitInteractiveZone(null, null);
 			
 			OnStart();
-			OnEntityStart();
+			
 		}
 
 		public void InitWithID(string id) {
@@ -85,6 +91,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			OnBindProperty();
+			OnEntityStart();
 		}
 
 		public void OnPointByCrosshair() {
@@ -93,6 +101,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					Debug.LogError($"Name tag follow transform not set for {gameObject.name}!");
 					return;
 				}
+				
 
 				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
 				if (nameTag) {
@@ -124,11 +133,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected virtual void OnStart() {
 			string id = ID;
 			if (string.IsNullOrEmpty(ID)) {
-				IEntity entity = OnBuildNewEntity();
-				id = entity.UUID;
+				if (autoCreateNewEntityWhenStart) {
+					IEntity entity = OnBuildNewEntity();
+					if (entity != null) {
+						id = entity.UUID;
+						InitWithID(id);
+					}
+				}
 			}
-			InitWithID(id);
-			OnBindProperty();
+			else { //load from saved
+				OnBindProperty();
+				OnEntityStart();
+			}
 		}
 
 		public override void OnRecycled() {

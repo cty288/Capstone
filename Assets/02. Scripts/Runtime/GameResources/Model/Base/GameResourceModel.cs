@@ -18,6 +18,9 @@ namespace Runtime.GameResources.Model.Base {
 		public static Dictionary<string, IResourceEntity> globalResourceOfSameType = new Dictionary<string, IResourceEntity>();
 		
 		public static IResourceEntity GetAnyResource(string id) {
+			if (id == null) {
+				return null;
+			}
 			if (globalResourceOfSameType.TryGetValue(id, out var resource)) {
 				return resource;
 			}

@@ -791,7 +791,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e10dbe44-2d22-4b8b-b92e-eb3d2156679c"",
-                    ""path"": ""<Keyboard>/t"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

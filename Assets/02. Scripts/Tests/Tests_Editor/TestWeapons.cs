@@ -33,6 +33,8 @@ namespace Tests.Tests_Editor {
 		public override ResourceCategory GetResourceCategory() {
 			return ResourceCategory.Weapon;
 		}
+
+		public override string OnGroundVCPrefabName { get; } = "TestWeapon1_OnGround";
 	}
 	
 	//=====================================================================

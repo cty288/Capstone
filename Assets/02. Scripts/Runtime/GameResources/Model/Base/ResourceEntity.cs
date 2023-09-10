@@ -26,6 +26,8 @@ namespace Runtime.GameResources.Model.Base {
 		public ResourceCategory GetResourceCategory();
 		
 		public string InventoryVCPrefabName { get; }
+		
+		public string OnGroundVCPrefabName { get; }
 	}
 	
 	//3 forms
@@ -103,6 +105,8 @@ namespace Runtime.GameResources.Model.Base {
 		
 		[field: ES3Serializable]
 		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
+
+		public abstract string OnGroundVCPrefabName { get; }
 	}
 
 }

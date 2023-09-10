@@ -1,6 +1,7 @@
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
+using Runtime.Player;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;

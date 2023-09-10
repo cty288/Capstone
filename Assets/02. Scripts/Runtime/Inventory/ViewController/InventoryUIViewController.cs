@@ -1,66 +1,91 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Framework;
-using MikroFramework;
 using MikroFramework.Architecture;
-using MikroFramework.Event;
-using MikroFramework.Pool;
 using MikroFramework.UIKit;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
 using Runtime.Utilities;
 using UnityEngine;
 
-public class InventoryUIViewController : AbstractPanel, IController {
-    [SerializeField] private GameObject slotPrefab;
+namespace Runtime.Inventory.ViewController {
+    public class InventoryUIViewController : AbstractPanel, IController {
+        [SerializeField] private GameObject slotPrefab;
     
-    private RectTransform slotLayout;
-    private IInventorySystem inventorySystem;
-    private List<InventorySlotViewController> slotViewControllers = new List<InventorySlotViewController>();
-    public override void OnInit() {
-        slotLayout = transform.Find("InventoryLayout").GetComponent<RectTransform>();
-        inventorySystem = this.GetSystem<IInventorySystem>();
-        inventorySystem.InitOnGameStart();
-        this.RegisterEvent<OnInventorySlotAddedEvent>(OnInventorySlotAdded)
-            .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        private RectTransform slotLayout;
+        [SerializeField] RectTransform hotbarLayout;
+        private IInventoryModel inventoryModel;
+        private List<ResourceSlotViewController> slotViewControllers = new List<ResourceSlotViewController>();
+        public override void OnInit() {
+            slotLayout = transform.Find("InventoryLayout").GetComponent<RectTransform>();
+            inventoryModel = this.GetModel<IInventoryModel>();
+            // inventorySystem.InitOnGameStart();
+            this.RegisterEvent<OnInventorySlotAddedEvent>(OnInventorySlotAdded)
+                .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            
+           SetInitialSlots();
+        }
+
+        private void SetInitialSlots() {
+            OnInventorySlotAdded(new OnInventorySlotAddedEvent() {
+                AddedCount = inventoryModel.GetSlotCount(),
+                StartIndex = 0,
+                AddedSlots = inventoryModel.GetAllSlots()
+            });
+            
+            //update hotbar
+            int hotBarCount = inventoryModel.GetHotBarSlotCount();
+            for (int i = 0; i < hotBarCount; i++) {
+                ShowSlotItem(i);
+            }
+        }
+
+        private void OnInventorySlotAdded(OnInventorySlotAddedEvent e) {
+            int hotBarCount = inventoryModel.GetHotBarSlotCount();
+            List<ResourceSlot> addedSlots = e.AddedSlots;
+            int j = 0;
+            for (int i = e.StartIndex; i < e.AddedCount + e.StartIndex; i++) {
+                RectTransform targetLayout = i < hotBarCount ? hotbarLayout : slotLayout;
+                int indexInHierarchy = i < hotBarCount ? i : i - hotBarCount;
+                
+                GameObject slot = Instantiate(slotPrefab, targetLayout);
+                slot.transform.SetSiblingIndex(indexInHierarchy);
+                
+                ResourceSlotViewController slotViewController = slot.GetComponent<ResourceSlotViewController>();
+                slotViewController.SetSlot(addedSlots[j++]);
+                slotViewControllers.Insert(i, slotViewController);
+            }
+        }
+
+        public override void OnOpen(UIMsg msg) {
+            for (int i = 0; i < inventoryModel.GetSlotCount(); i++) {
+                bool isHotBar = i < inventoryModel.GetHotBarSlotCount();
+                if (!isHotBar) {
+                    ShowSlotItem(i);
+                }
+            }
+        }
         
-        OnInventorySlotAdded(new OnInventorySlotAddedEvent(){AddedCount = inventorySystem.GetSlotCount()});
-    }
-
-    private void OnInventorySlotAdded(OnInventorySlotAddedEvent e) {
-        for (int i = 0; i < e.AddedCount; i++) {
-            GameObject slot = Instantiate(slotPrefab, slotLayout);
-            slotViewControllers.Add(slot.GetComponent<InventorySlotViewController>());
-        }
-    }
-
-    public override void OnOpen(UIMsg msg) {
-       this.RegisterEvent<OnInventorySlotUpdateEvent>(OnInventorySlotUIUpdate)
-           .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-
-       for (int i = 0; i < inventorySystem.GetSlotCount(); i++) {
-           InventorySlotInfo slotInfo = inventorySystem.GetItemsAt(i);
-           SetSlotItem(i, slotInfo.TopItem, slotInfo.Items.Count);
-       }
-    }
-
-    private void OnInventorySlotUIUpdate(OnInventorySlotUpdateEvent e) {
-        SetSlotItem(e.UpdatedSlot.SlotIndex, e.UpdatedSlot.TopItem, e.UpdatedSlot.Items.Count);
-    }
     
-    private void SetSlotItem(int slotIndex, IResourceEntity item, int count) {
-        slotViewControllers[slotIndex].SetItem(item, count);
-    }
-
-    public override void OnClosed() {
-        this.UnRegisterEvent<OnInventorySlotUpdateEvent>(OnInventorySlotUIUpdate);
-        foreach (InventorySlotViewController slotViewController in slotViewControllers) {
-            slotViewController.Clear();
+        private void ShowSlotItem(int slotIndex) {
+            slotViewControllers[slotIndex].Activate(true);
         }
-    }
 
-    public IArchitecture GetArchitecture() {
-        return MainGame.Interface;
+        public override void OnClosed() {
+            for (int i = 0; i < inventoryModel.GetSlotCount(); i++) {
+                bool isHotBar = i < inventoryModel.GetHotBarSlotCount();
+                if (!isHotBar) {
+                    ResourceSlotViewController slotViewController = slotViewControllers[i];
+                    slotViewController.Activate(false);
+                }
+            }
+        }
+
+        public IArchitecture GetArchitecture() {
+            return MainGame.Interface;
+        }
+
+
     }
 }

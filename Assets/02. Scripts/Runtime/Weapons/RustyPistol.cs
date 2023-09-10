@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
-using Mikrocosmos.Controls;
+using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
@@ -37,6 +37,8 @@ namespace Runtime.Weapons
         public override ResourceCategory GetResourceCategory() {
             return ResourceCategory.Weapon;
         }
+
+        public override string OnGroundVCPrefabName { get; } = "RustyPistolOnGround";
     }
 
     public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder

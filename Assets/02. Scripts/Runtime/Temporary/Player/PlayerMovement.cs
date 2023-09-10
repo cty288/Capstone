@@ -1,6 +1,7 @@
 using System;
+using Framework;
 using Mikrocosmos;
-using Mikrocosmos.Controls;
+using Runtime.Controls;
 using UnityEngine;
 
 namespace Runtime.Temporary.Player
@@ -115,6 +116,10 @@ namespace Runtime.Temporary.Player
                 rb.drag = groundDrag;
             else
                 rb.drag = 0;
+
+            if (Input.GetKeyDown(KeyCode.F5)) {
+                ((MainGame) MainGame.Interface).SaveGame();
+            }
         }
         private void FixedUpdate()
         {      

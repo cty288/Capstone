@@ -1,18 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Singletons;
-using MikroFramework.UIKit;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
-using UnityEngine.Serialization;
 
-
-namespace Mikrocosmos.Controls
+namespace Runtime.Controls
 {
     public struct OnControlMapSwitched {
         public string MapName;

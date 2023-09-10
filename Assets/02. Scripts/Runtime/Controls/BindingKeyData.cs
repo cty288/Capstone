@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MikroFramework.CodeGen;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Mikrocosmos
+namespace Runtime.Controls
 {
 
     //action.GetBindingDisplayString(bindingIndex, out deviceLayoutName, out controlPath, displayStringOptions);
