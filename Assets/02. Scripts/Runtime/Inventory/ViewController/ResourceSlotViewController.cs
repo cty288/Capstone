@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Framework;
 using MikroFramework;
+using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
+using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
 using TMPro;
 using UnityEngine;
@@ -12,7 +15,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Runtime.Inventory.ViewController {
-    public class ResourceSlotViewController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler,
+    public class ResourceSlotViewController : AbstractMikroController<MainGame>, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler,
         IEndDragHandler, IDragHandler, IBeginDragHandler {
         private TMP_Text numberText;
         private GameObject topVC = null;
@@ -33,7 +36,7 @@ namespace Runtime.Inventory.ViewController {
         }
 
         public void OnPointerClick() {
-            Debug.Log("OnPointerClick");
+           
         }
         
         public void OnPointerDown(PointerEventData eventData) {
@@ -70,11 +73,8 @@ namespace Runtime.Inventory.ViewController {
         public void OnEndDrag(PointerEventData eventData) {
             //check if pointer is on self
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
-                ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot;
-                if (currentHoveredSlot != null && currentHoveredSlot != slot) {
-                    IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
-                    currentHoveredSlot.TryMoveAllItemFromSlot(slot, topItem);
-                }
+                this.SendCommand<SlotItemDragReleaseCommand>(
+                    SlotItemDragReleaseCommand.Allocate(eventData.position, slot));
                
                 spawnPoint.transform.DOMove(transform.position, 0.2f).OnComplete(() => {
                     spawnPoint.SetParent(transform);
@@ -90,7 +90,7 @@ namespace Runtime.Inventory.ViewController {
         private void StopDragImmediately() {
             var transform1 = transform;
             spawnPoint.transform.position = transform1.position;
-            spawnPoint.SetParent(transform1);
+            spawnPoint.parent = transform1;
             startDragTriggered = false;
         }
     
@@ -98,9 +98,16 @@ namespace Runtime.Inventory.ViewController {
             if (topVC) {
                 GameObjectPoolManager.Singleton.Recycle(topVC);
             }
-            numberText.text = "";
+
+            if (numberText) {
+                numberText.text = "";
+            }
+           
             topVC = null;
-            button.targetGraphic = null;
+            if (button) {
+                button.targetGraphic = null;
+            }
+          
         }
 
         public void SetSlot(ResourceSlot slot) {

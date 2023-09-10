@@ -45,10 +45,7 @@ namespace Runtime.RunTimeTests.TestMaterial {
 			}
 		}
 		
-
-		protected override void OnEntityStart() {
-			
-		}
+		
 
 		protected override void OnBindEntityProperty() {
 			

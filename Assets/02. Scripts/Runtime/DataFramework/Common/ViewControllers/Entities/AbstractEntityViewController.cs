@@ -53,7 +53,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		IEntity IEntityViewController.Entity => BoundEntity;
 
 
-		private IEntityModel entityModel;
+		protected IEntityModel entityModel;
 		
 		protected T BoundEntity { get; private set; }
 		
@@ -142,8 +142,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 			}
 			else { //load from saved
-				OnBindProperty();
-				OnEntityStart();
+				InitWithID(id);
 			}
 		}
 

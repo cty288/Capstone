@@ -17,6 +17,10 @@ namespace Runtime.GameResources {
 			resLoader = this.GetUtility<ResLoader>();
 		}
 
+		private ResourceVCFactory() {
+			
+		}
+
 
 		/// <summary>
 		/// Spawn a pickable resource view controller (on ground) from a resource entity

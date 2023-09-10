@@ -16,6 +16,7 @@ namespace Runtime.GameResources.Model.Base {
 	public enum ResourceCategory {
 		RawMaterial,
 		Bait,
+		Trap,
 		Weapon
 	}
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {

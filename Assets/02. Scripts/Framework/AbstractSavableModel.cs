@@ -1,13 +1,22 @@
 using MikroFramework.Architecture;
 
 namespace Framework {
+	public interface ISavableModel {
+		void OnLoad(string suffix);
+		void OnSave(string suffix);
+		
+		bool IsFirstTimeCreated { get; set; }
+	}
+	
+	
 	[ES3Serializable]
-	public abstract class AbstractSavableModel : AbstractModel {
+	public abstract class AbstractSavableModel : AbstractModel, ISavableModel {
 		protected override void OnInit() {
 		
 		}
 
 		public void Save(string suffix) {
+			IsFirstTimeCreated = false;
 			ES3.Save("Model_" + this.GetType().Name, this, $"models_{suffix}.es3");
 			OnSave(suffix);
 		}
@@ -19,5 +28,8 @@ namespace Framework {
 		public virtual void OnSave(string suffix) {
 		
 		}
+
+		[field: ES3Serializable] 
+		public bool IsFirstTimeCreated { get; set; } = true;
 	}
 }

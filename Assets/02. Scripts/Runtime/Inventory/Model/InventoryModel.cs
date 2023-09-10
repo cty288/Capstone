@@ -6,7 +6,7 @@ using MikroFramework.BindableProperty;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
-	public interface IInventoryModel : IModel, IResourceSlotsModel {
+	public interface IInventoryModel : IModel, IResourceSlotsModel, ISavableModel {
 		
 		
 		/// <summary>
@@ -23,19 +23,31 @@ namespace Runtime.Inventory.Model {
 		/// </summary>
 		/// <param name="slotCount"></param>
 		/// <returns></returns>
-		bool AddHotBarSlots(int slotCount);
+		bool AddHotBarSlots(HotBarCategory category, int slotCount, ResourceSlot slot);
 		
 
 		//void InitWithInitialSlots();
 		
-		int GetHotBarSlotCount();
-
+		int GetHotBarSlotCount(HotBarCategory category);
+		
+		List<ResourceSlot> GetHotBarSlots(HotBarCategory category);
 	}
 	
 	public struct OnInventorySlotAddedEvent {
-		public int StartIndex;
 		public int AddedCount;
 		public List<ResourceSlot> AddedSlots;
+	}
+	
+	public struct OnInventoryHotBarSlotAddedEvent {
+		public HotBarCategory Category;
+		public int AddedCount;
+		public List<ResourceSlot> AddedSlots;
+	}
+
+	public enum HotBarCategory {
+		None,
+		Right,
+		Left
 	}
 
 	
@@ -43,48 +55,100 @@ namespace Runtime.Inventory.Model {
 	
 	
 	public class InventoryModel: ResourceSlotsModel, IInventoryModel {
-		
-		[ES3Serializable] 
-		private int hotBarSlotCount = 0; //refer to those in the hotbar, always the first x of the slots
+
+		[ES3Serializable]
+		private Dictionary<HotBarCategory, List<ResourceSlot>> hotBarSlots =
+			new Dictionary<HotBarCategory, List<ResourceSlot>>();
+
+
 		
 		public static int MaxSlotCount = 27;
-		public static int MaxHotBarSlotCount = 9;
 		
-		public static int InitialSlotCount = 9;
-		public static int InitialHotBarSlotCount = 3;
+		public static Dictionary<HotBarCategory, int> MaxHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
+			{HotBarCategory.Right, 3},
+			{HotBarCategory.Left, 5}
+		};
+		
+
+		
+
 		
 		
-		public bool AddHotBarSlots(int slotCount) {
+		public bool AddHotBarSlots(HotBarCategory category, int slotCount, ResourceSlot slot) {
 			int actualAddedCount = slotCount;
-			if (slotCount + hotBarSlotCount > MaxHotBarSlotCount) {
-				actualAddedCount = MaxHotBarSlotCount - hotBarSlotCount;
+			if (category == HotBarCategory.None) {
+				return false;
 			}
-			int startIndex = hotBarSlotCount;
+			
+			if (!hotBarSlots.ContainsKey(category)) {
+				hotBarSlots.Add(category, new List<ResourceSlot>());
+			}
+			
+			int curCount = GetHotBarSlotCount(category);
+			int maxCount = MaxHotBarSlotCount[category];
+			if (slotCount + curCount > maxCount) {
+				actualAddedCount = maxCount - curCount;
+			}
+			
+		
 			//insert to the end of slots[slotCount-1]
 			List<ResourceSlot> addedSlots = new List<ResourceSlot>();
 			for (int i = 0; i < actualAddedCount; i++) {
-				ResourceSlot slot = new ResourceSlot();
-				slots.Insert(hotBarSlotCount + i, slot);
+				hotBarSlots[category].Add(slot);
 				addedSlots.Add(slot);
 			}
-			hotBarSlotCount += actualAddedCount;
 			
-			this.SendEvent<OnInventorySlotAddedEvent>(new OnInventorySlotAddedEvent() {
-				StartIndex = startIndex,
+			
+			this.SendEvent<OnInventoryHotBarSlotAddedEvent>(new OnInventoryHotBarSlotAddedEvent() {
+				Category = category,
 				AddedCount = actualAddedCount,
 				AddedSlots = addedSlots
 			});
 			return actualAddedCount == slotCount;
 		}
 
+		public override bool AddItem(IResourceEntity item) {
+			//check each hot bar first
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value) {
+					if (AddItemAt(item, slot)) {
+						return true;
+					}
+				}
+			}
+			return base.AddItem(item);
+		}
+
+		public override bool RemoveItem(string uuid) {
+			//check each hot bar first
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value) {
+					if (slot.RemoveItem(uuid)) {
+						return true;
+					}
+				}
+			}
+			return base.RemoveItem(uuid);
+		}
+
+		public override bool CanPlaceItem(IResourceEntity item) {
+			//check each hot bar first
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value) {
+					if (slot.CanPlaceItem(item)) {
+						return true;
+					}
+				}
+			}
+			return base.CanPlaceItem(item);
+		}
 
 		public bool AddSlots(int slotCount) {
 			int actualAddedCount = slotCount;
-			if (slotCount + GetSlotCount() > MaxSlotCount + hotBarSlotCount) {
-				actualAddedCount = MaxSlotCount + hotBarSlotCount - GetSlotCount();
+			if (slotCount + GetSlotCount() > MaxSlotCount) {
+				actualAddedCount = MaxSlotCount - GetSlotCount();
 			}
 			
-			int startIndex = GetSlotCount();
 			
 			List<ResourceSlot> addedSlots = new List<ResourceSlot>();
 			for (int i = 0; i < actualAddedCount; i++) {
@@ -94,7 +158,6 @@ namespace Runtime.Inventory.Model {
 			}
 			
 			this.SendEvent<OnInventorySlotAddedEvent>(new OnInventorySlotAddedEvent() {
-				StartIndex = startIndex,
 				AddedCount = actualAddedCount,
 				AddedSlots = addedSlots
 			});
@@ -107,24 +170,37 @@ namespace Runtime.Inventory.Model {
 
 		protected override void OnInit() {
 			base.OnInit();
-			if (slots == null) { //not load from saved
+			if (IsFirstTimeCreated) { //not load from saved
 				slots = new List<ResourceSlot>();
-				AddSlots(InitialSlotCount);
-				AddHotBarSlots(InitialHotBarSlotCount);
+				
+				
+				
 			}
 		}
 
-		public int GetHotBarSlotCount() {
-			return hotBarSlotCount;
+		public int GetHotBarSlotCount(HotBarCategory category) {
+			return hotBarSlots[category].Count;
 		}
 
-		public override void Reset() {
+		public List<ResourceSlot> GetHotBarSlots(HotBarCategory category) {
+			if (!hotBarSlots.ContainsKey(category)) {
+				return null;
+			}
+			return hotBarSlots[category];
+		}
+		
+		public override void Clear() {
 			if (slots == null) {
 				return;
 			}
 			slots.Clear();
-			AddSlots(InitialSlotCount);
-			AddHotBarSlots(InitialHotBarSlotCount);
+			
+			foreach (HotBarCategory category in Enum.GetValues(typeof(HotBarCategory))) {
+				if (!hotBarSlots.ContainsKey(category)) {
+					continue;
+				}
+				hotBarSlots[category].Clear();
+			}
 		}
 	}
 }

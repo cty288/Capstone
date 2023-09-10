@@ -4,8 +4,7 @@ using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
 	[Serializable]
-	public class ResourceSlot
-	{
+	public class ResourceSlot {
 		public static ResourceSlot currentHoveredSlot = null;
 		[ES3Serializable]
 		private string ItemKey = null;
@@ -95,6 +94,13 @@ namespace Runtime.Inventory.Model {
 			return true;
 		}
 		
+		public void Clear() {
+			ItemKey = null;
+			UUIDList.Clear();
+			UUIDSetMain.Clear();
+			this.OnSlotUpdateCallback?.Invoke(GetLastItemUUID(), UUIDList);
+		}
+		
 		
 		/// <summary>
 		/// Try to move all items from other slot to this slot. If this slot can not store all items, try to move as many as possible.
@@ -138,7 +144,7 @@ namespace Runtime.Inventory.Model {
 		
 		
 		
-		public bool CanPlaceItem(IResourceEntity item) {
+		public virtual bool CanPlaceItem(IResourceEntity item) {
 			if (IsEmpty()) {
 				return true;
 			}
@@ -163,5 +169,33 @@ namespace Runtime.Inventory.Model {
 		public List<string> GetUUIDList() {
 			return UUIDList;
 		}
+	}
+
+
+	[Serializable]
+	public class LeftHotBarSlot : ResourceSlot {
+		public override bool CanPlaceItem(IResourceEntity item) {
+			if (item.GetResourceCategory() != ResourceCategory.Bait &&
+			    item.GetResourceCategory() != ResourceCategory.Trap) {
+				return false;
+			}
+			return base.CanPlaceItem(item);
+		}
+	}
+	
+	
+	[Serializable]
+	public class RightHotBarSlot : ResourceSlot {
+		public override bool CanPlaceItem(IResourceEntity item) {
+			if (item.GetResourceCategory() != ResourceCategory.Weapon) {
+				return false;
+			}
+			return base.CanPlaceItem(item);
+		}
+	}
+	
+	[Serializable]
+	public class RubbishSlot : ResourceSlot {
+		
 	}
 }

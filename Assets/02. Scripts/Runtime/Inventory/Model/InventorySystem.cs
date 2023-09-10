@@ -11,10 +11,23 @@ namespace Runtime.Inventory.Model {
 	
 	public class InventorySystem : AbstractSystem, IInventorySystem {
 		private IInventoryModel inventoryModel;
+		
+
+		public static int InitialSlotCount = 9;
+		public static Dictionary<HotBarCategory, int> InitialHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
+			{HotBarCategory.Right, 2},
+			{HotBarCategory.Left, 3}
+		};
+		
 		protected override void OnInit() {
 			inventoryModel = this.GetModel<IInventoryModel>();
-			//inventoryModel.InitWithInitialSlots();
+
+			if (inventoryModel.IsFirstTimeCreated) {
+				AddInitialSlots();
+			}
 		}
+		
+
 
 		private List<IResourceEntity> GetResourcesByIDs(List<string> uuids) {
 			List<IResourceEntity> resources = new List<IResourceEntity>();
@@ -24,17 +37,22 @@ namespace Runtime.Inventory.Model {
 			}
 			return resources;
 		}
-		
 
-		public SlotInfo GetItemsAt(int index) {
-			List<string> uuids = inventoryModel.GetUUIDsByIndex(index);
-			List<IResourceEntity> resources = GetResourcesByIDs(uuids);
-			return new SlotInfo() {
-				Items = resources,
-				SlotIndex = index
-			};
+
+		public void ResetInventory() {
+			inventoryModel.Clear();
+			AddInitialSlots();
 		}
+		
+		
+		private void AddInitialSlots() {
+			inventoryModel.AddSlots(InitialSlotCount);
 
-
+			inventoryModel.AddHotBarSlots(HotBarCategory.Left, InitialHotBarSlotCount[HotBarCategory.Left],
+				new LeftHotBarSlot());
+				
+			inventoryModel.AddHotBarSlots(HotBarCategory.Right, InitialHotBarSlotCount[HotBarCategory.Right],
+				new RightHotBarSlot());
+		}
 	}
 }

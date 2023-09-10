@@ -1,11 +1,12 @@
-﻿using Runtime.DataFramework.Entities;
+﻿using Framework;
+using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model.Builders;
 
 namespace Runtime.Enemies.Model {
 	/// <summary>
 	/// Model for enemies
 	/// </summary>
-	public interface IEnemyEntityModel : IEntityModel<IEnemyEntity> {
+	public interface IEnemyEntityModel : IEntityModel<IEnemyEntity>, ISavableModel {
 		/// <summary>
 		/// Get the enemy builder for the entity type
 		/// </summary>

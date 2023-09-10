@@ -21,12 +21,6 @@ namespace Runtime.Inventory.Model {
 	}
 
 	public interface IInventorySystem : ISystem {
-		
-		/// <summary>
-		/// Get all items in the inventory at the specified index
-		/// </summary>
-		/// <param name="index"></param>
-		/// <returns></returns>
-		public SlotInfo GetItemsAt(int index);
+		public void ResetInventory();
 	}
 }

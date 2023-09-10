@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Framework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Builder;
 
 namespace Runtime.GameResources.Model.Base {
 	
-	public interface IGameResourceModel<T> : IModel, IEntityModel<T> where T : IResourceEntity {
+	public interface IGameResourceModel<T> : IModel, IEntityModel<T>, ISavableModel where T : IResourceEntity {
 		/// <summary>
 		/// Get any resource, as long as it inherits from IResourceEntity
 		/// </summary>

@@ -1,11 +1,12 @@
-﻿using MikroFramework.Architecture;
+﻿using Framework;
+using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Weapons.Model.Builders;
 
 namespace Runtime.Weapons.Model.Base
 {
-    public interface IWeaponModel : IGameResourceModel<IWeaponEntity> {
+    public interface IWeaponModel : IGameResourceModel<IWeaponEntity>, ISavableModel {
         WeaponBuilder<T> GetWeaponBuilder<T>(bool addToModelOnceBuilt = true)
             where T : class, IWeaponEntity, new();
     }
