@@ -69,7 +69,7 @@ namespace Runtime.Weapons
 
         
         // For IHitResponder.
-        public int Damage => BoundEntity.GetBaseDamage().BaseValue;
+        public int Damage => BoundEntity.GetBaseDamage().RealValue;
         private DPunkInputs.PlayerActions playerActions;
 
         protected override void Awake() {
@@ -87,9 +87,9 @@ namespace Runtime.Weapons
 
         protected override void OnEntityStart()
         {
-            currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
+            currentAmmo = BoundEntity.GetAmmoSize().RealValue;
             lineRenderers = new List<LineRenderer>();
-            for (int i = 0; i < BoundEntity.GetBulletsPerShot().BaseValue; i++)
+            for (int i = 0; i < BoundEntity.GetBulletsPerShot().RealValue; i++)
             {
                 Debug.Log("adding line renderer");
                 lineRenderers.Add(Instantiate(lineRendererPrefab, transform).GetComponent<LineRenderer>());
@@ -111,13 +111,13 @@ namespace Runtime.Weapons
         {
             currentCD += Time.deltaTime;
             
-            if (currentReloadCD < BoundEntity.GetReloadSpeed().BaseValue)
+            if (currentReloadCD < BoundEntity.GetReloadSpeed().RealValue)
             {
                 currentReloadCD += Time.deltaTime;
             }
             else
             {
-                currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
+                currentAmmo = BoundEntity.GetAmmoSize().RealValue;
             }
         }
         
@@ -125,7 +125,7 @@ namespace Runtime.Weapons
         {
             if (playerActions.Shoot.IsPressed())
             {
-                if (currentAmmo > 0 && currentCD >= BoundEntity.GetAttackSpeed().BaseValue)
+                if (currentAmmo > 0 && currentCD >= BoundEntity.GetAttackSpeed().RealValue)
                 {
                     Shoot();
                     currentCD = 0;
