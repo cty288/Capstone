@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Inventory_Model_InventorySystem" data-uid="Runtime.Inventory.Model.InventorySystem" class="text-break">
     Class InventorySystem
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L12"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -158,227 +158,29 @@
 
 
 
-  <h2 class="section" id="methods">Methods
+  <h2 class="section" id="fields">Fields
 </h2>
 
 
-  <a id="Runtime_Inventory_Model_InventorySystem_AddItem_" data-uid="Runtime.Inventory.Model.InventorySystem.AddItem*"></a>
 
-  <h3 id="Runtime_Inventory_Model_InventorySystem_AddItem_Runtime_GameResources_Model_Base_IResourceEntity_" data-uid="Runtime.Inventory.Model.InventorySystem.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)">
-  AddItem(IResourceEntity)
+  <h3 id="Runtime_Inventory_Model_InventorySystem_InitialHotBarSlotCount" data-uid="Runtime.Inventory.Model.InventorySystem.InitialHotBarSlotCount">
+  InitialHotBarSlotCount
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L17"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Add item to the inventory. If the item is stackable, it will be added to the existing stack. <br>
-If there's no existing stack, a new stack will be created. <br></p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool AddItem(IResourceEntity item)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>item</code> <a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Inventory_Model_InventorySystem_AddItemAt_" data-uid="Runtime.Inventory.Model.InventorySystem.AddItemAt*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_AddItemAt_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_" data-uid="Runtime.Inventory.Model.InventorySystem.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)">
-  AddItemAt(IResourceEntity, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L26"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Add an item to the inventory at the specified index. If the item is stackable, it will be added to the existing stack.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool AddItemAt(IResourceEntity item, int index)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>item</code> <a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
-    <dd></dd>
-    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Inventory_Model_InventorySystem_AddSlots_" data-uid="Runtime.Inventory.Model.InventorySystem.AddSlots*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_AddSlots_System_Int32_" data-uid="Runtime.Inventory.Model.InventorySystem.AddSlots(System.Int32)">
-  AddSlots(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L103"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Add the specified number of slots to the inventory. <br>
-Factors causing false: <br></p>
-<ol>
-<li>The resulting number of slots exceeds the maximum number of slots. In this case, only the slots that can be added will be added.</li>
-</ol>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool AddSlots(int slotCount)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>slotCount</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Inventory_Model_InventorySystem_CanPlaceItem_" data-uid="Runtime.Inventory.Model.InventorySystem.CanPlaceItem*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_System_Int32_" data-uid="Runtime.Inventory.Model.InventorySystem.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity,System.Int32)">
-  CanPlaceItem(IResourceEntity, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L51"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Returns true if the item can be placed at the specified index. <br>
-Factors causing false: <br></p>
-<ol>
-<li>The index is out of range. <br></li>
-<li>The item is not currently stackable at the specified index. <br></li>
-</ol>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CanPlaceItem(IResourceEntity item, int index)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>item</code> <a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
-    <dd></dd>
-    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Inventory_Model_InventorySystem_GetItemsAt_" data-uid="Runtime.Inventory.Model.InventorySystem.GetItemsAt*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_GetItemsAt_System_Int32_" data-uid="Runtime.Inventory.Model.InventorySystem.GetItemsAt(System.Int32)">
-  GetItemsAt(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L135"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Find all resources with the specified index in the inventory.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public InventorySlotInfo GetItemsAt(int index)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.Inventory.Model.InventorySlotInfo.html">InventorySlotInfo</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Inventory_Model_InventorySystem_GetSlotCount_" data-uid="Runtime.Inventory.Model.InventorySystem.GetSlotCount*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_GetSlotCount" data-uid="Runtime.Inventory.Model.InventorySystem.GetSlotCount">
-  GetSlotCount()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L110"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int GetSlotCount()</code></pre>
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;HotBarCategory, int&gt; InitialHotBarSlotCount</code></pre>
   </div>
 
 
-  <h4 class="section">Returns</h4>
+
+
+  <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="Runtime.Inventory.Model.HotBarCategory.html">HotBarCategory</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -391,29 +193,22 @@ Factors causing false: <br></p>
 
 
 
-
-  <a id="Runtime_Inventory_Model_InventorySystem_GetSlotCurrentItemCount_" data-uid="Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_GetSlotCurrentItemCount_System_Int32_" data-uid="Runtime.Inventory.Model.InventorySystem.GetSlotCurrentItemCount(System.Int32)">
-  GetSlotCurrentItemCount(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Model_InventorySystem_InitialSlotCount" data-uid="Runtime.Inventory.Model.InventorySystem.InitialSlotCount">
+  InitialSlotCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L16"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Get the item count at the specified index.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int GetSlotCurrentItemCount(int index)</code></pre>
+    <pre><code class="lang-csharp hljs">public static int InitialSlotCount</code></pre>
   </div>
 
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
 
-  <h4 class="section">Returns</h4>
+
+
+  <h4 class="section">Field Value</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
     <dd></dd>
@@ -427,13 +222,15 @@ Factors causing false: <br></p>
 
 
 
+  <h2 class="section" id="methods">Methods
+</h2>
 
 
   <a id="Runtime_Inventory_Model_InventorySystem_OnInit_" data-uid="Runtime.Inventory.Model.InventorySystem.OnInit*"></a>
 
   <h3 id="Runtime_Inventory_Model_InventorySystem_OnInit" data-uid="Runtime.Inventory.Model.InventorySystem.OnInit">
   OnInit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -455,128 +252,14 @@ Factors causing false: <br></p>
 
 
 
-  <a id="Runtime_Inventory_Model_InventorySystem_RemoveItem_" data-uid="Runtime.Inventory.Model.InventorySystem.RemoveItem*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_RemoveItem_System_String_" data-uid="Runtime.Inventory.Model.InventorySystem.RemoveItem(System.String)">
-  RemoveItem(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L55"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Find and remove the first item with the specified uuid.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool RemoveItem(string uuid)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>uuid</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Inventory_Model_InventorySystem_RemoveItemAt_" data-uid="Runtime.Inventory.Model.InventorySystem.RemoveItemAt*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_RemoveItemAt_System_Int32_System_String_" data-uid="Runtime.Inventory.Model.InventorySystem.RemoveItemAt(System.Int32,System.String)">
-  RemoveItemAt(int, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L71"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Find and remove the first item with the specified uuid at the specified slot.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool RemoveItemAt(int index, string uuid)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-    <dt><code>uuid</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Inventory_Model_InventorySystem_RemoveLastItemAt_" data-uid="Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_RemoveLastItemAt_System_Int32_" data-uid="Runtime.Inventory.Model.InventorySystem.RemoveLastItemAt(System.Int32)">
-  RemoveLastItemAt(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L87"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Remove the last item at the specified slot.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool RemoveLastItemAt(int index)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
   <a id="Runtime_Inventory_Model_InventorySystem_ResetInventory_" data-uid="Runtime.Inventory.Model.InventorySystem.ResetInventory*"></a>
 
   <h3 id="Runtime_Inventory_Model_InventorySystem_ResetInventory" data-uid="Runtime.Inventory.Model.InventorySystem.ResetInventory">
   ResetInventory()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Reset the inventory to the initial state.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
@@ -599,7 +282,7 @@ Factors causing false: <br></p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L11" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L12" class="edit-link">Edit this page</a>
         </div>
 
         

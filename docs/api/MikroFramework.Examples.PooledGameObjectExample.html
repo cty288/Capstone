@@ -129,6 +129,12 @@
       <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RecycleToCache">PoolableGameObject.RecycleToCache()</a>
     </div>
     <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnRecycledEvent(UnityAction)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnAllocateEvent(UnityAction)</a>
+    </div>
+    <div>
       <span class="xref">MonoBehaviour.IsInvoking()</span>
     </div>
     <div>
@@ -570,18 +576,19 @@
 </h2>
 
 
-  <a id="MikroFramework_Examples_PooledGameObjectExample_OnAllocate_" data-uid="MikroFramework.Examples.PooledGameObjectExample.OnAllocate*"></a>
+  <a id="MikroFramework_Examples_PooledGameObjectExample_OnRecycled_" data-uid="MikroFramework.Examples.PooledGameObjectExample.OnRecycled*"></a>
 
-  <h3 id="MikroFramework_Examples_PooledGameObjectExample_OnAllocate" data-uid="MikroFramework.Examples.PooledGameObjectExample.OnAllocate">
-  OnAllocate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Examples/Pool/02. GameObjectSafeObjectPool/PooledGameObjectExample.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <h3 id="MikroFramework_Examples_PooledGameObjectExample_OnRecycled" data-uid="MikroFramework.Examples.PooledGameObjectExample.OnRecycled">
+  OnRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Examples/Pool/02. GameObjectSafeObjectPool/PooledGameObjectExample.cs/#L19"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void OnAllocate()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void OnRecycled()</code></pre>
   </div>
 
 
@@ -596,19 +603,18 @@
 
 
 
-  <a id="MikroFramework_Examples_PooledGameObjectExample_OnRecycled_" data-uid="MikroFramework.Examples.PooledGameObjectExample.OnRecycled*"></a>
+  <a id="MikroFramework_Examples_PooledGameObjectExample_OnStartOrAllocate_" data-uid="MikroFramework.Examples.PooledGameObjectExample.OnStartOrAllocate*"></a>
 
-  <h3 id="MikroFramework_Examples_PooledGameObjectExample_OnRecycled" data-uid="MikroFramework.Examples.PooledGameObjectExample.OnRecycled">
-  OnRecycled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Examples/Pool/02. GameObjectSafeObjectPool/PooledGameObjectExample.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <h3 id="MikroFramework_Examples_PooledGameObjectExample_OnStartOrAllocate" data-uid="MikroFramework.Examples.PooledGameObjectExample.OnStartOrAllocate">
+  OnStartOrAllocate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Examples/Pool/02. GameObjectSafeObjectPool/PooledGameObjectExample.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void OnRecycled()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void OnStartOrAllocate()</code></pre>
   </div>
 
 

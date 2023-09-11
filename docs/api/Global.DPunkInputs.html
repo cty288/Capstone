@@ -1,0 +1,850 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class DPunkInputs
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class DPunkInputs
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Global_DPunkInputs.md&amp;value=---%0Auid%3A%20Global.DPunkInputs%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Global.DPunkInputs">
+
+
+
+  <h1 id="Global_DPunkInputs" data-uid="Global.DPunkInputs" class="text-break">
+    Class DPunkInputs
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Global.html">Global</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DPunkInputs : IInputActionCollection2, IInputActionCollection, IEnumerable&lt;InputAction&gt;, IEnumerable, IDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">DPunkInputs</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><span class="xref">IInputActionCollection2</span></div>
+      <div><span class="xref">IInputActionCollection</span></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<span class="xref">InputAction</span>&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Global_DPunkInputs__ctor_" data-uid="Global.DPunkInputs.#ctor*"></a>
+
+  <h3 id="Global_DPunkInputs__ctor" data-uid="Global.DPunkInputs.#ctor">
+  DPunkInputs()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DPunkInputs()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Global_DPunkInputs_GamepadScheme_" data-uid="Global.DPunkInputs.GamepadScheme*"></a>
+
+  <h3 id="Global_DPunkInputs_GamepadScheme" data-uid="Global.DPunkInputs.GamepadScheme">
+  GamepadScheme
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L1215"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputControlScheme GamepadScheme { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">InputControlScheme</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Global_DPunkInputs_KeyboardMouseScheme_" data-uid="Global.DPunkInputs.KeyboardMouseScheme*"></a>
+
+  <h3 id="Global_DPunkInputs_KeyboardMouseScheme" data-uid="Global.DPunkInputs.KeyboardMouseScheme">
+  KeyboardMouseScheme
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L1206"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputControlScheme KeyboardMouseScheme { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">InputControlScheme</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Global_DPunkInputs_Player_" data-uid="Global.DPunkInputs.Player*"></a>
+
+  <h3 id="Global_DPunkInputs_Player" data-uid="Global.DPunkInputs.Player">
+  Player
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L1032"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DPunkInputs.PlayerActions Player { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DPunkInputs.html">DPunkInputs</a>.<a class="xref" href="DPunkInputs.PlayerActions.html">PlayerActions</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Global_DPunkInputs_Shared_" data-uid="Global.DPunkInputs.Shared*"></a>
+
+  <h3 id="Global_DPunkInputs_Shared" data-uid="Global.DPunkInputs.Shared">
+  Shared
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L1204"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DPunkInputs.SharedActions Shared { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DPunkInputs.html">DPunkInputs</a>.<a class="xref" href="DPunkInputs.SharedActions.html">SharedActions</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Global_DPunkInputs_UI_" data-uid="Global.DPunkInputs.UI*"></a>
+
+  <h3 id="Global_DPunkInputs_UI" data-uid="Global.DPunkInputs.UI">
+  UI
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L1150"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DPunkInputs.UIActions UI { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DPunkInputs.html">DPunkInputs</a>.<a class="xref" href="DPunkInputs.UIActions.html">UIActions</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Global_DPunkInputs_asset_" data-uid="Global.DPunkInputs.asset*"></a>
+
+  <h3 id="Global_DPunkInputs_asset" data-uid="Global.DPunkInputs.asset">
+  asset
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputActionAsset asset { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">InputActionAsset</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Global_DPunkInputs_bindingMask_" data-uid="Global.DPunkInputs.bindingMask*"></a>
+
+  <h3 id="Global_DPunkInputs_bindingMask" data-uid="Global.DPunkInputs.bindingMask">
+  bindingMask
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L889"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Optional mask applied to all bindings in the collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputBinding? bindingMask { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">InputBinding</span>?</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="Global_DPunkInputs_bindingMask_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If this is not null, only bindings that match the mask will be used.</p>
+<p>Modifying this property while any of the actions in the collection are enabled will
+lead to the actions getting disabled temporarily and then re-enabled.</p>
+</div>
+
+
+
+
+  <a id="Global_DPunkInputs_bindings_" data-uid="Global.DPunkInputs.bindings*"></a>
+
+  <h3 id="Global_DPunkInputs_bindings" data-uid="Global.DPunkInputs.bindings">
+  bindings
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L928"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Iterate over all bindings in the collection of actions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;InputBinding&gt; bindings { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<span class="xref">InputBinding</span>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span class="xref">bindings</span></div>
+    <div><span class="xref">bindings</span></div>
+    <div><span class="xref">bindings</span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Global_DPunkInputs_controlSchemes_" data-uid="Global.DPunkInputs.controlSchemes*"></a>
+
+  <h3 id="Global_DPunkInputs_controlSchemes" data-uid="Global.DPunkInputs.controlSchemes">
+  controlSchemes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L901"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>List of control schemes defined for the set of actions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ReadOnlyArray&lt;InputControlScheme&gt; controlSchemes { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">ReadOnlyArray</span>&lt;<span class="xref">InputControlScheme</span>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="Global_DPunkInputs_controlSchemes_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Control schemes are optional and the list may be empty.</p>
+</div>
+
+
+
+
+  <a id="Global_DPunkInputs_devices_" data-uid="Global.DPunkInputs.devices*"></a>
+
+  <h3 id="Global_DPunkInputs_devices" data-uid="Global.DPunkInputs.devices">
+  devices
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L895"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Devices to use with the actions in this collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ReadOnlyArray&lt;InputDevice&gt;? devices { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">ReadOnlyArray</span>&lt;<span class="xref">InputDevice</span>&gt;?</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="Global_DPunkInputs_devices_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>If this is set, actions in the collection will exclusively bind to devices
+in the given list. For example, if two gamepads are present in the system yet
+only one gamepad is listed here, then a &quot;&lt;Gamepad&gt;/leftStick&quot; binding will
+only bind to the gamepad in the list and not to the one that is only available
+globally.</p>
+<p>Modifying this property after bindings in the collection have already been resolved,
+will lead to <span class="xref">UnityEngine.InputSystem.InputAction.controls</span> getting refreshed. If any of the actions
+in the collection are currently in progress (see <span class="xref">UnityEngine.InputSystem.InputAction.phase</span>),
+the actions will remain unaffected and in progress except if the controls currently
+driving them (see <span class="xref">UnityEngine.InputSystem.InputAction.activeControl</span>) are no longer part of any
+of the selected devices. In that case, the action is <span class="xref">UnityEngine.InputSystem.InputAction.canceled</span>.</p>
+</div>
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Global_DPunkInputs_Contains_" data-uid="Global.DPunkInputs.Contains*"></a>
+
+  <h3 id="Global_DPunkInputs_Contains_UnityEngine_InputSystem_InputAction_" data-uid="Global.DPunkInputs.Contains(UnityEngine.InputSystem.InputAction)">
+  Contains(InputAction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L903"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Check whether the given action is contained in this collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(InputAction action)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>action</code> <span class="xref">InputAction</span></dt>
+    <dd><p>An arbitrary input action.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>True if the given action is contained in the collection, false if not.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Global_DPunkInputs_Contains_UnityEngine_InputSystem_InputAction__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Calling this method will not allocate GC memory (unlike when iterating generically
+over the collection). Also, a collection may have a faster containment check rather than
+having to search through all its actions.</p>
+</div>
+
+
+
+
+  <a id="Global_DPunkInputs_Disable_" data-uid="Global.DPunkInputs.Disable*"></a>
+
+  <h3 id="Global_DPunkInputs_Disable" data-uid="Global.DPunkInputs.Disable">
+  Disable()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L923"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Disable all actions in the collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Disable()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span class="xref">Disable</span>()</div>
+    <div><span class="xref">enabled</span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Global_DPunkInputs_Dispose_" data-uid="Global.DPunkInputs.Dispose*"></a>
+
+  <h3 id="Global_DPunkInputs_Dispose" data-uid="Global.DPunkInputs.Dispose">
+  Dispose()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L884"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Global_DPunkInputs_Enable_" data-uid="Global.DPunkInputs.Enable*"></a>
+
+  <h3 id="Global_DPunkInputs_Enable" data-uid="Global.DPunkInputs.Enable">
+  Enable()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L918"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Enable all actions in the collection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Enable()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span class="xref">Enable</span>()</div>
+    <div><span class="xref">enabled</span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Global_DPunkInputs_FindAction_" data-uid="Global.DPunkInputs.FindAction*"></a>
+
+  <h3 id="Global_DPunkInputs_FindAction_System_String_System_Boolean_" data-uid="Global.DPunkInputs.FindAction(System.String,System.Boolean)">
+  FindAction(string, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L930"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find an <span class="xref">UnityEngine.InputSystem.InputAction</span> in the collection by its <span class="xref">UnityEngine.InputSystem.InputAction.name</span> or
+by its <span class="xref">UnityEngine.InputSystem.InputAction.id</span> (in string form).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputAction FindAction(string actionNameOrId, bool throwIfNotFound = false)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>actionNameOrId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Name of the action as either a &quot;map/action&quot; combination (e.g. &quot;gameplay/fire&quot;) or
+a simple name. In the former case, the name is split at the '/' slash and the first part is used to find
+a map with that name and the second part is used to find an action with that name inside the map. In the
+latter case, all maps are searched in order and the first action that has the given name in any of the maps
+is returned. Note that name comparisons are case-insensitive.</p>
+<pre><code> Alternatively, the given string can be a GUID as given by &lt;xref href=&quot;UnityEngine.InputSystem.InputAction.id&quot; data-throw-if-not-resolved=&quot;false&quot;&gt;&lt;/xref&gt;.
+</code></pre>
+</dd>
+    <dt><code>throwIfNotFound</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>If <code>true</code>, instead of returning <code>null</code> when the action
+cannot be found, throw <code>ArgumentException</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">InputAction</span></dt>
+    <dd><p>The action with the corresponding name or <code>null</code> if no matching action could be found.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentnullexception">ArgumentNullException</a></dt>
+    <dd><p><code class="paramref">actionNameOrId</code> is <code>null</code>.</p>
+</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd><p>Thrown if <code class="paramref">throwIfNotFound</code> is true and the
+action could not be found. -Or- If <code class="paramref">actionNameOrId</code> contains a slash but is missing
+either the action or the map name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="Global_DPunkInputs_FindBinding_" data-uid="Global.DPunkInputs.FindBinding*"></a>
+
+  <h3 id="Global_DPunkInputs_FindBinding_UnityEngine_InputSystem_InputBinding_UnityEngine_InputSystem_InputAction__" data-uid="Global.DPunkInputs.FindBinding(UnityEngine.InputSystem.InputBinding,UnityEngine.InputSystem.InputAction@)">
+  FindBinding(InputBinding, out InputAction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L935"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find the index of the first binding that matches the given mask.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int FindBinding(InputBinding bindingMask, out InputAction action)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bindingMask</code> <span class="xref">InputBinding</span></dt>
+    <dd></dd>
+    <dt><code>action</code> <span class="xref">InputAction</span></dt>
+    <dd><p>Receives the action on which the binding was found. If none was found,
+will be set to <code>null</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>Index into <span class="xref">UnityEngine.InputSystem.InputAction.bindings</span> of <code class="paramref">action</code> of the binding
+that matches <code class="paramref">mask</code>. If no binding matches, will return -1.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="Global_DPunkInputs_FindBinding_UnityEngine_InputSystem_InputBinding_UnityEngine_InputSystem_InputAction___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>For details about matching bindings by a mask, see <span class="xref">UnityEngine.InputSystem.InputBinding.Matches(UnityEngine.InputSystem.InputBinding)</span>.</p>
+<p><example><pre><code class="lang-csharp">var index = playerInput.actions.FindBinding(
+new InputBinding { path = &quot;&lt;Gamepad&gt;/buttonSouth&quot; },
+out var action);</code></pre></example></p>
+<pre><code>     if (index != -1)
+         Debug.Log($&quot;The A button is bound to {action}&quot;);&lt;/code&gt;&lt;/pre&gt;&lt;/example&gt;
+</code></pre>
+</div>
+
+
+  <dl class="typelist seealso">
+    <dt>See Also</dt>
+    <dd>
+    <div><span class="xref">Matches</span>(<span class="xref">InputBinding</span>)</div>
+    <div><span class="xref">bindings</span></div>
+    </dd>
+  </dl>
+
+
+  <a id="Global_DPunkInputs_GetEnumerator_" data-uid="Global.DPunkInputs.GetEnumerator*"></a>
+
+  <h3 id="Global_DPunkInputs_GetEnumerator" data-uid="Global.DPunkInputs.GetEnumerator">
+  GetEnumerator()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L908"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;InputAction&gt; GetEnumerator()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1">IEnumerator</a>&lt;<span class="xref">InputAction</span>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Controls/DPunkInputs.cs/#L18" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

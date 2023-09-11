@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Temporary_Weapon_Bullet" data-uid="Runtime.Temporary.Weapon.Bullet" class="text-break">
     Class Bullet
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L6"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Bullet : MonoBehaviour, IHitResponder</code></pre>
+    <pre><code class="lang-csharp hljs">public class Bullet : MonoBehaviour, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -117,6 +117,7 @@
     <dt>Implements</dt>
     <dd>
       <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
   </dl>
 
@@ -502,18 +503,50 @@
 </h2>
 
 
+  <a id="Runtime_Temporary_Weapon_Bullet_CurrentFaction_" data-uid="Runtime.Temporary.Weapon.Bullet.CurrentFaction*"></a>
+
+  <h3 id="Runtime_Temporary_Weapon_Bullet_CurrentFaction" data-uid="Runtime.Temporary.Weapon.Bullet.CurrentFaction">
+  CurrentFaction
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Runtime_Temporary_Weapon_Bullet_Damage_" data-uid="Runtime.Temporary.Weapon.Bullet.Damage*"></a>
 
   <h3 id="Runtime_Temporary_Weapon_Bullet_Damage" data-uid="Runtime.Temporary.Weapon.Bullet.Damage">
   Damage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L21"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Damage { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int Damage { get; protected set; }</code></pre>
   </div>
 
 
@@ -541,7 +574,7 @@
 
   <h3 id="Runtime_Temporary_Weapon_Bullet_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.Weapon.Bullet.CheckHit(Runtime.Utilities.Collision.HitData)">
   CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L33"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -577,7 +610,7 @@
 
   <h3 id="Runtime_Temporary_Weapon_Bullet_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.Weapon.Bullet.HitResponse(Runtime.Utilities.Collision.HitData)">
   HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -604,11 +637,44 @@
 
 
 
+  <a id="Runtime_Temporary_Weapon_Bullet_Init_" data-uid="Runtime.Temporary.Weapon.Bullet.Init*"></a>
+
+  <h3 id="Runtime_Temporary_Weapon_Bullet_Init_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_Faction_System_Int32_" data-uid="Runtime.Temporary.Weapon.Bullet.Init(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction,System.Int32)">
+  Init(Faction, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Init(Faction faction, int damage)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>faction</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a></dt>
+    <dd></dd>
+    <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L6" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Bullet.cs/#L10" class="edit-link">Edit this page</a>
         </div>
 
         

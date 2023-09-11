@@ -83,7 +83,7 @@
 
   <h1 id="MikroFramework_Pool_PoolableGameObject" data-uid="MikroFramework.Pool.PoolableGameObject" class="text-break">
     Class PoolableGameObject
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -506,7 +506,7 @@
 
   <h3 id="MikroFramework_Pool_PoolableGameObject_Pool" data-uid="MikroFramework.Pool.PoolableGameObject.Pool">
   Pool
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L19"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The pool that belongs to this object</p>
@@ -543,7 +543,7 @@ public GameObjectPool Pool</code></pre>
 
   <h3 id="MikroFramework_Pool_PoolableGameObject_IsRecycled" data-uid="MikroFramework.Pool.PoolableGameObject.IsRecycled">
   IsRecycled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L21"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -574,18 +574,19 @@ public GameObjectPool Pool</code></pre>
 </h2>
 
 
-  <a id="MikroFramework_Pool_PoolableGameObject_OnAllocate_" data-uid="MikroFramework.Pool.PoolableGameObject.OnAllocate*"></a>
+  <a id="MikroFramework_Pool_PoolableGameObject_OnRecycled_" data-uid="MikroFramework.Pool.PoolableGameObject.OnRecycled*"></a>
 
-  <h3 id="MikroFramework_Pool_PoolableGameObject_OnAllocate" data-uid="MikroFramework.Pool.PoolableGameObject.OnAllocate">
-  OnAllocate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <h3 id="MikroFramework_Pool_PoolableGameObject_OnRecycled" data-uid="MikroFramework.Pool.PoolableGameObject.OnRecycled">
+  OnRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L51"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract void OnAllocate()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnRecycled()</code></pre>
   </div>
 
 
@@ -600,19 +601,18 @@ public GameObjectPool Pool</code></pre>
 
 
 
-  <a id="MikroFramework_Pool_PoolableGameObject_OnRecycled_" data-uid="MikroFramework.Pool.PoolableGameObject.OnRecycled*"></a>
+  <a id="MikroFramework_Pool_PoolableGameObject_OnStartOrAllocate_" data-uid="MikroFramework.Pool.PoolableGameObject.OnStartOrAllocate*"></a>
 
-  <h3 id="MikroFramework_Pool_PoolableGameObject_OnRecycled" data-uid="MikroFramework.Pool.PoolableGameObject.OnRecycled">
-  OnRecycled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  <h3 id="MikroFramework_Pool_PoolableGameObject_OnStartOrAllocate" data-uid="MikroFramework.Pool.PoolableGameObject.OnStartOrAllocate">
+  OnStartOrAllocate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract void OnRecycled()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnStartOrAllocate()</code></pre>
   </div>
 
 
@@ -631,7 +631,7 @@ public GameObjectPool Pool</code></pre>
 
   <h3 id="MikroFramework_Pool_PoolableGameObject_RecycleToCache" data-uid="MikroFramework.Pool.PoolableGameObject.RecycleToCache">
   RecycleToCache()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Call this method to recycle this gameobject back to its pool</p>
@@ -654,11 +654,73 @@ public GameObjectPool Pool</code></pre>
 
 
 
+  <a id="MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_" data-uid="MikroFramework.Pool.PoolableGameObject.RegisterOnAllocateEvent*"></a>
+
+  <h3 id="MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_" data-uid="MikroFramework.Pool.PoolableGameObject.RegisterOnAllocateEvent(UnityEngine.Events.UnityAction)">
+  RegisterOnAllocateEvent(UnityAction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterOnAllocateEvent(UnityAction action)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>action</code> <span class="xref">UnityAction</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_" data-uid="MikroFramework.Pool.PoolableGameObject.RegisterOnRecycledEvent*"></a>
+
+  <h3 id="MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_" data-uid="MikroFramework.Pool.PoolableGameObject.RegisterOnRecycledEvent(UnityEngine.Events.UnityAction)">
+  RegisterOnRecycledEvent(UnityAction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterOnRecycledEvent(UnityAction action)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>action</code> <span class="xref">UnityAction</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L10" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L11" class="edit-link">Edit this page</a>
         </div>
 
         
