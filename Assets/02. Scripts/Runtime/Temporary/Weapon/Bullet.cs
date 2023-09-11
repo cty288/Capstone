@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace Runtime.Temporary.Weapon
 {
-    public class Bullet : MonoBehaviour, IHitResponder
+    
+    //TODO: add bullet damage to gun config
+    public class Bullet : MonoBehaviour, IHitResponder, IBelongToFaction
     {
-        [SerializeField] private int m_damage = 0;
+        //[SerializeField] private int m_damage = 0;
 
         [Header("Hitboxes")]
         [SerializeField] private HitBox hitbox;
@@ -15,7 +17,8 @@ namespace Runtime.Temporary.Weapon
         [Header("Hit Effects")]
         [SerializeField] private GameObject explosionPrefab;
 
-        public int Damage => m_damage;
+        
+        public int Damage { get; protected set; }
 
         private void Start()
         {
@@ -23,8 +26,7 @@ namespace Runtime.Temporary.Weapon
             Destroy(gameObject, 3f);
         }
 
-        private void FixedUpdate()
-        {
+        private void FixedUpdate() {
             // hitbox.CheckHit();
         }
 
@@ -34,14 +36,17 @@ namespace Runtime.Temporary.Weapon
             else { return true; }
         }
 
-        public void HitResponse(HitData data)
-        {
+        public void HitResponse(HitData data) {
             Debug.Log("Bullet Hit Response: " + data.HitPoint);
             Instantiate(explosionPrefab, data.HitPoint, Quaternion.identity);
             Destroy(gameObject);
         }
+        
+        public void Init(Faction faction, int damage) {
+            CurrentFaction.Value = faction;
+            Damage = damage;
+        }
 
-        [field: ES3Serializable]
-        public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
+        public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
     }
 }

@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using Runtime.Controls;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
@@ -52,6 +55,11 @@ namespace Runtime.Temporary.Weapon
         [SerializeField] private GameObject hitParticlePrefab;
 
         public int Damage => m_damage;
+        private DPunkInputs.PlayerActions playerActions;
+
+        private void Awake() {
+            playerActions = ClientInput.Singleton.GetPlayerActions();
+        }
 
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
@@ -71,7 +79,7 @@ namespace Runtime.Temporary.Weapon
 
         public void FixedUpdate()
         {
-            if (Input.GetMouseButton(0))
+            if (playerActions.Shoot.IsPressed())
             {
                 if (currentCD >= shootCD)
                 {
@@ -97,17 +105,18 @@ namespace Runtime.Temporary.Weapon
                 Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
                 RaycastHit hit;
                 Vector3 destination = Vector3.zero;
-                if (Physics.Raycast(ray, out hit))
-                {
+                if (Physics.Raycast(ray, out hit)) {
                     destination = hit.point;
                 }
-                else
-                {
+                else {
                     destination = ray.GetPoint(range);
                 }
+                
+                //TODO: object pools
                 GameObject p = Instantiate(projectile);
                 p.transform.rotation = transform.rotation;
                 p.transform.position = launchPoint.position;
+                p.GetComponent<Bullet>().Init(Faction.Friendly, 10); //temp
                 p.GetComponent<Rigidbody>().velocity = (destination - launchPoint.position).normalized * proj.speed;
             }
         }

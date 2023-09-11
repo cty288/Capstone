@@ -1,3 +1,7 @@
+using System;
+using Framework;
+using Mikrocosmos;
+using Runtime.Controls;
 using UnityEngine;
 
 namespace Runtime.Temporary.Player
@@ -8,6 +12,9 @@ namespace Runtime.Temporary.Player
         [Header("Camera")]
         [SerializeField]
         float mouseSensitivity = 3.5f;
+        [SerializeField]
+        float controllerSensitivity = 10f;
+        
 
         [SerializeField]
         Transform cameraTrans;
@@ -63,11 +70,18 @@ namespace Runtime.Temporary.Player
 
         public Rigidbody rb;
 
+
+        private DPunkInputs.PlayerActions playerActions;
+
+        private void Awake() {
+            playerActions = ClientInput.Singleton.GetPlayerActions();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = false;
 
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
@@ -80,13 +94,15 @@ namespace Runtime.Temporary.Player
         void Update()
         {
             //Camera;
-            Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-        
-
-            cameraPitch -= mouseDelta.y * mouseSensitivity;
+            
+            //Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+            Vector2 mouseDelta = playerActions.Look.ReadValue<Vector2>();
+            //Debug.Log(mouseDelta);
+            float sensitivity = ClientInput.Singleton.PlayerInput.currentControlScheme == "Gamepad" ? controllerSensitivity : mouseSensitivity;
+            cameraPitch -= mouseDelta.y * sensitivity;
             cameraPitch = Mathf.Clamp(cameraPitch, fpsBotClamp, fpsTopClamp);
             cameraTrans.localEulerAngles = Vector3.right * cameraPitch;
-            transform.Rotate(Vector3.up * mouseDelta.x * mouseSensitivity);
+            transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
 
 
             // ground check
@@ -100,6 +116,10 @@ namespace Runtime.Temporary.Player
                 rb.drag = groundDrag;
             else
                 rb.drag = 0;
+
+            if (Input.GetKeyDown(KeyCode.F5)) {
+                ((MainGame) MainGame.Interface).SaveGame();
+            }
         }
         private void FixedUpdate()
         {      
@@ -108,11 +128,11 @@ namespace Runtime.Temporary.Player
 
         private void MyInput()
         {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
-            verticalInput = Input.GetAxisRaw("Vertical");
+            horizontalInput = playerActions.Move.ReadValue<Vector2>().x;
+            verticalInput = playerActions.Move.ReadValue<Vector2>().y;
 
             // when to jump
-            if (Input.GetKey(KeyCode.Space) && readyToJump && grounded)
+            if (playerActions.Jump.WasPressedThisFrame() && readyToJump && grounded)
             {
                 readyToJump = false;
 
@@ -120,9 +140,10 @@ namespace Runtime.Temporary.Player
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (playerActions.Sprint.IsPressed())
             {
                 sprinting = true;
+                Debug.Log("Sprinting");
             }
             else
             {
@@ -182,8 +203,8 @@ namespace Runtime.Temporary.Player
     
         private Vector3 GetDirection()
         {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
+            float horizontalInput = playerActions.Move.ReadValue<Vector2>().x;
+            float verticalInput = playerActions.Move.ReadValue<Vector2>().y;
 
             Vector3 direction = new Vector3();
 

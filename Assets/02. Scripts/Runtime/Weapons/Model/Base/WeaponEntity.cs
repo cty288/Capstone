@@ -118,5 +118,9 @@ namespace Runtime.Weapons.Model.Base
         {
             return chargeSpeedProperty;
         }
+
+        protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
+            return "???";
+        }
     }
 }

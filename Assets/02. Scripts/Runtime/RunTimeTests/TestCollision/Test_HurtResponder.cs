@@ -33,8 +33,8 @@ namespace Runtime.RunTimeTests.TestCollision
             return true;
         }
 
-        public void HurtResponse(HitData data)
-        {
+        public void HurtResponse(HitData data) {
+            
             // Debug.Log("Hurt Response: Took " + data.Damage + " damage.");
             if(data.Attacker.IsSameFaction(this)) return;
             

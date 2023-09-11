@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
+using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources.Model.Base;
 using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
 using Runtime.Utilities.Collision;
@@ -33,6 +35,12 @@ namespace Runtime.Weapons
         {
             return null;
         }
+
+        public override ResourceCategory GetResourceCategory() {
+            return ResourceCategory.Weapon;
+        }
+
+        public override string OnGroundVCPrefabName { get; } = "RustyPistolOnGround";
     }
 
     public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
@@ -62,29 +70,14 @@ namespace Runtime.Weapons
         
         // For IHitResponder.
         public int Damage => BoundEntity.GetBaseDamage().BaseValue;
-        
-        protected override void Start()
-        {
-            base.Start();
+        private DPunkInputs.PlayerActions playerActions;
+
+        protected override void Awake() {
+            base.Awake();
+            playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
-            
-            lineRenderers = new List<LineRenderer>();
-            for (int i = 0; i < BoundEntity.GetBulletsPerShot().BaseValue; i++)
-            {
-                Debug.Log("adding line renderer");
-                lineRenderers.Add(Instantiate(lineRendererPrefab, transform).GetComponent<LineRenderer>());
-            }
-            
-            hitScan = new HitScan(this);
-            hitDetectorInfo = new HitDetectorInfo
-            {
-                camera = cam,
-                layer = layer,
-                lineRenderers = lineRenderers,
-                launchPoint = launchPoint,
-                weapon = BoundEntity
-            };
         }
+
         
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
             return builder.FromConfig().Build();
@@ -95,7 +88,24 @@ namespace Runtime.Weapons
         protected override void OnEntityStart()
         {
             currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
+            lineRenderers = new List<LineRenderer>();
+            for (int i = 0; i < BoundEntity.GetBulletsPerShot().BaseValue; i++)
+            {
+                Debug.Log("adding line renderer");
+                lineRenderers.Add(Instantiate(lineRendererPrefab, transform).GetComponent<LineRenderer>());
+            }
+            
+            hitScan = new HitScan(this, CurrentFaction.Value);
+            hitDetectorInfo = new HitDetectorInfo
+            {
+                camera = cam,
+                layer = layer,
+                lineRenderers = lineRenderers,
+                launchPoint = launchPoint,
+                weapon = BoundEntity
+            };
         }
+        
         
         public void Update()
         {
@@ -113,7 +123,7 @@ namespace Runtime.Weapons
         
         public void FixedUpdate()
         {
-            if (Input.GetMouseButton(0))
+            if (playerActions.Shoot.IsPressed())
             {
                 if (currentAmmo > 0 && currentCD >= BoundEntity.GetAttackSpeed().BaseValue)
                 {
@@ -125,8 +135,7 @@ namespace Runtime.Weapons
             }
         }
         
-        public void Shoot()
-        {
+        public void Shoot() {
             hitScan.CheckHit(hitDetectorInfo);
         }
         

@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ICommonEntityModel : IEntityModel&lt;IEntity&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public interface ICommonEntityModel : IEntityModel&lt;IEntity&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture, ISavableModel</code></pre>
   </div>
 
 
@@ -124,6 +124,15 @@
     </div>
     <div>
       <a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html#MikroFramework_Architecture_IBelongToArchitecture_GetArchitecture">IBelongToArchitecture.GetArchitecture()</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_OnLoad_System_String_">ISavableModel.OnLoad(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_OnSave_System_String_">ISavableModel.OnSave(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_IsFirstTimeCreated">ISavableModel.IsFirstTimeCreated</a>
     </div>
   </dd></dl>
 
