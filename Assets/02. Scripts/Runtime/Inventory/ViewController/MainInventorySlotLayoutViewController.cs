@@ -20,6 +20,7 @@ namespace Runtime.Inventory.ViewController {
 				RectTransform targetLayout = slotLayout;
 
 				GameObject slot = Instantiate(slotPrefab, targetLayout);
+				slot.transform.SetParent(targetLayout);
 				slot.transform.SetAsLastSibling();
                 
 				ResourceSlotViewController slotViewController = slot.GetComponent<ResourceSlotViewController>();

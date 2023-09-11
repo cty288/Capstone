@@ -31,6 +31,7 @@ namespace Runtime.Inventory.ViewController {
            // new Dictionary<HotBarCategory, List<ResourceSlotViewController>>();
 
         public override void OnInit() {
+            gameObject.SetActive(true);
             inventoryModel = this.GetModel<IInventoryModel>();
             foreach (InventorySlotLayoutViewController slotLayoutViewController in hotBarSlotLayoutViewControllersInspector) {
                 hotBarSlotLayoutViewControllers.Add(slotLayoutViewController.HotBarCategory, slotLayoutViewController);
@@ -46,6 +47,7 @@ namespace Runtime.Inventory.ViewController {
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             
            SetInitialSlots();
+           gameObject.SetActive(false);
         }
 
         private void OnInventoryHotBarSlotAdded(OnInventoryHotBarSlotAddedEvent e) {
