@@ -25,6 +25,9 @@ Shader "Universal Render Pipeline/Custom/Sand"
 
         _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
         _SpecGlossMap("Specular", 2D) = "white" {}
+    	
+    	_ShadowEdgePower("Shadow Edge Power", Float) = 3.0
+    	_ShadowEdgeSaturation("Shadow Edge Power", Range(0, 1)) = 0.25
         
     	_BumpScale("Bump Scale", Range(0.0, 0.7)) = 0.3
         _BumpMap("Sand Map", 2D) = "bump" {}
@@ -76,6 +79,9 @@ Shader "Universal Render Pipeline/Custom/Sand"
                 float _Metallic;
         
                 float4 _SpecColor;
+
+				float _ShadowEdgePower;
+				float _ShadowEdgeSaturation;
 
 				float _BumpScale;
 				float4 _BumpMap_ST;

@@ -102,10 +102,10 @@ half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData)
     
     half attenuation = RangeRemap(-0.32f, 0.4f, radiance);
     attenuation = 1 - (abs(attenuation - 0.5f) * 2);
-    attenuation = pow(attenuation, 3);
+    attenuation = pow(attenuation, _ShadowEdgePower);
     half3 hsv = RgbToHsv(lightingData.mainLightColor);
-    hsv.y *= 1 + attenuation*0.5f;
-    hsv.z *= 1 + attenuation*0.5f;
+    hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
+    hsv.z *= 1 + attenuation*_ShadowEdgeSaturation;
     radiance = RangeRemap(0.0f, 0.1f, radiance);
     hsv.z *= radiance;
     lightingData.mainLightColor = HsvToRgb(hsv);

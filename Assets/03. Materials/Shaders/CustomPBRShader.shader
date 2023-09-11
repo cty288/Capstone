@@ -26,6 +26,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
         _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
         _SpecGlossMap("Specular", 2D) = "white" {}
     	
+    	_ShadowEdgePower("Shadow Edge Power", Float) = 3.0
+    	_ShadowEdgeSaturation("Shadow Edge Power", Range(0, 1)) = 0.25
+    	
     	[Toggle(_NORMALMAP)] _NormalMapToggle ("Use Normal Map", Float) = 0
     	_BumpScale("Bump Scale", Float) = 1.0
         _BumpMap("Normal Map", 2D) = "bump" {}
@@ -71,6 +74,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
                 float _Metallic;
         
                 float4 _SpecColor;
+
+				float _ShadowEdgePower;
+				float _ShadowEdgeSaturation;
 
 				float _BumpScale;
 				float4 _BumpMap_ST;
