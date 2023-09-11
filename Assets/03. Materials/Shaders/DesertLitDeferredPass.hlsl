@@ -81,10 +81,10 @@ Varyings LitGBufferPassVertex(Attributes IN)
 
     OUT.viewDirWS = viewDirWS;
 
-    #ifdef _NORMALMAP
-        half3 viewDirTS = GetViewDirectionTangentSpace(OUT.tangentWS, OUT.normalWS, viewDirWS);
+	#ifdef _NORMALMAP
+	    half3 viewDirTS = GetViewDirectionTangentSpace(OUT.tangentWS, OUT.normalWS, viewDirWS);
 		OUT.viewDirTS = viewDirTS;
-    #endif
+	#endif
 
 	OUTPUT_LIGHTMAP_UV(IN.lightmapUV, unity_LightmapST, OUT.lightmapUV);
 	OUTPUT_SH(OUT.normalWS.xyz, OUT.vertexSH);

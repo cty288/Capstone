@@ -43,28 +43,29 @@ TEXTURE2D(_MetallicGlossMap);   SAMPLER(sampler_MetallicGlossMap);
 TEXTURE2D(_SpecGlossMap);       SAMPLER(sampler_SpecGlossMap);
 TEXTURE2D(_ClearCoatMap);       SAMPLER(sampler_ClearCoatMap);
 
-half4 SampleMetallicSpecGloss(float2 uv, half albedoAlpha) {
+#ifdef _SPECULAR_SETUP
+	#define SAMPLE_METALLICSPECULAR(uv) SAMPLE_TEXTURE2D(_SpecGlossMap, sampler_SpecGlossMap, uv)
+#else
+	#define SAMPLE_METALLICSPECULAR(uv) SAMPLE_TEXTURE2D(_MetallicGlossMap, sampler_MetallicGlossMap, uv)
+#endif
+
+half4 SampleMetallicSpecGloss(float2 uv, half albedoAlpha)
+{
 	half4 specGloss;
+
 	#ifdef _METALLICSPECGLOSSMAP
-		specGloss = SAMPLE_TEXTURE2D(_MetallicSpecGlossMap, sampler_MetallicSpecGlossMap, uv)
-		#ifdef _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-			specGloss.a = albedoAlpha * _Smoothness;
-		#else
-			specGloss.a *= _Smoothness;
-		#endif
+		specGloss = SAMPLE_METALLICSPECULAR(uv);
+		specGloss.a = albedoAlpha * _Smoothness;
 	#else // _METALLICSPECGLOSSMAP
 		#if _SPECULAR_SETUP
 			specGloss.rgb = _SpecColor.rgb;
 		#else
 			specGloss.rgb = _Metallic.rrr;
 		#endif
-
-		#ifdef _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+	
 			specGloss.a = albedoAlpha * _Smoothness;
-		#else
-			specGloss.a = _Smoothness;
-		#endif
 	#endif
+
 	return specGloss;
 }
 
@@ -90,8 +91,8 @@ void InitializeSurfaceData(float2 uv, out SurfaceData surfaceData){
 	half4 albedoAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
 	surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
 	surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
-
-	surfaceData.normalTS = SampleNormal(uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
+	
+	surfaceData.normalTS = SampleNormal(uv * _BumpMap_ST.xy + _BumpMap_ST.zw, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
 	surfaceData.emission = SampleEmission(uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
 	surfaceData.occlusion = SampleOcclusion(uv);
 		
