@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1" class="text-break">
     Class AbstractEnemyViewController&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractEnemyViewController&lt;T&gt; : AbstractCreatureViewController&lt;T&gt;, IEnemyViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture where T : class, IEnemyEntity, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AbstractEnemyViewController&lt;T&gt; : AbstractCreatureViewController&lt;T&gt;, IEnemyViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IBelongToFaction where T : class, IEnemyEntity, new()</code></pre>
   </div>
 
 
@@ -138,6 +138,7 @@
       <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
   </dl>
 
@@ -658,7 +659,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_enemyModel" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.enemyModel">
   enemyModel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -689,11 +690,43 @@
 </h2>
 
 
+  <a id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_CurrentFaction_" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.CurrentFaction*"></a>
+
+  <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_CurrentFaction" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.CurrentFaction">
+  CurrentFaction
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_CurrentHealth_" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.CurrentHealth*"></a>
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_CurrentHealth" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.CurrentHealth">
   CurrentHealth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -724,7 +757,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_Danger" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.Danger">
   Danger
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -755,7 +788,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_MaxHealth" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.MaxHealth">
   MaxHealth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L19"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -790,7 +823,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_Awake" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.Awake">
   Awake()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -816,7 +849,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_GetCurrentHealth_System_Object_" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.GetCurrentHealth(System.Object)">
   GetCurrentHealth(dynamic)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -852,7 +885,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_GetMaxHealth_System_Object_" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.GetMaxHealth(System.Object)">
   GetMaxHealth(dynamic)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -888,7 +921,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnBindEntityProperty" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnBindEntityProperty">
   OnBindEntityProperty()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -914,7 +947,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnBuildNewEntity" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnBuildNewEntity">
   OnBuildNewEntity()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -945,7 +978,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnCurrentHealthChanged_System_Int32_System_Int32_" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnCurrentHealthChanged(System.Int32,System.Int32)">
   OnCurrentHealthChanged(int, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -978,7 +1011,7 @@
 
   <h3 id="Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnInitEnemyEntity_Runtime_Enemies_Model_Builders_EnemyBuilder__0__" data-uid="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnInitEnemyEntity(Runtime.Enemies.Model.Builders.EnemyBuilder{`0})">
   OnInitEnemyEntity(EnemyBuilder&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1014,7 +1047,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L11" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Base/AbstractEnemyViewController.cs/#L13" class="edit-link">Edit this page</a>
         </div>
 
         

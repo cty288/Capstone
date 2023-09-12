@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class PlayerController
+      <title>Class SlotResourceDescriptionPanel
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class PlayerController
+      <meta name="title" content="Class SlotResourceDescriptionPanel
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Temporary_PlayerController.md&amp;value=---%0Auid%3A%20Runtime.Temporary.PlayerController%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Global_SlotResourceDescriptionPanel.md&amp;value=---%0Auid%3A%20Global.SlotResourceDescriptionPanel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.Temporary.PlayerController">
+        <article data-uid="Global.SlotResourceDescriptionPanel">
 
 
 
-  <h1 id="Runtime_Temporary_PlayerController" data-uid="Runtime.Temporary.PlayerController" class="text-break">
-    Class PlayerController
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Global_SlotResourceDescriptionPanel" data-uid="Global.SlotResourceDescriptionPanel" class="text-break">
+    Class SlotResourceDescriptionPanel
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Temporary.html">Temporary</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Global.html">Global</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class PlayerController : MonoBehaviour, IHitResponder, IHurtResponder, IBelongToFaction</code></pre>
+    <pre><code class="lang-csharp hljs">public class SlotResourceDescriptionPanel : PoolableGameObject, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -109,16 +109,22 @@
       <div><span class="xref">Component</span></div>
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
-      <div><span class="xref">PlayerController</span></div>
+      <div><a class="xref" href="MikroFramework.Pool.PoolableGameObject.html">PoolableGameObject</a></div>
+      <div><span class="xref">SlotResourceDescriptionPanel</span></div>
     </dd>
   </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
-      <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
-      <div><a class="xref" href="Runtime.Utilities.Collision.IHurtResponder.html">IHurtResponder</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IController.html">IController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendCommand.html">ICanSendCommand</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanRegisterEvent.html">ICanRegisterEvent</a></div>
+      <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
     </dd>
   </dl>
 
@@ -126,6 +132,24 @@
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_Pool">PoolableGameObject.Pool</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_IsRecycled">PoolableGameObject.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RecycleToCache">PoolableGameObject.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_OnStartOrAllocate">PoolableGameObject.OnStartOrAllocate()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnRecycledEvent(UnityAction)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnAllocateEvent(UnityAction)</a>
+    </div>
     <div>
       <span class="xref">MonoBehaviour.IsInvoking()</span>
     </div>
@@ -500,118 +524,22 @@
 
 
 
-  <h2 class="section" id="fields">Fields
-</h2>
-
-
-
-  <h3 id="Runtime_Temporary_PlayerController_curHealth" data-uid="Runtime.Temporary.PlayerController.curHealth">
-  curHealth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L14"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int curHealth</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_Temporary_PlayerController_maxHealth" data-uid="Runtime.Temporary.PlayerController.maxHealth">
-  maxHealth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L12"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int maxHealth</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
   <h2 class="section" id="properties">Properties
 </h2>
 
 
-  <a id="Runtime_Temporary_PlayerController_CurrentFaction_" data-uid="Runtime.Temporary.PlayerController.CurrentFaction*"></a>
+  <a id="Global_SlotResourceDescriptionPanel_IsShowing_" data-uid="Global.SlotResourceDescriptionPanel.IsShowing*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_CurrentFaction" data-uid="Runtime.Temporary.PlayerController.CurrentFaction">
-  CurrentFaction
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L21"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; protected set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="Runtime_Temporary_PlayerController_Damage_" data-uid="Runtime.Temporary.PlayerController.Damage*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_Damage" data-uid="Runtime.Temporary.PlayerController.Damage">
-  Damage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Global_SlotResourceDescriptionPanel_IsShowing" data-uid="Global.SlotResourceDescriptionPanel.IsShowing">
+  IsShowing
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Damage { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool IsShowing { get; }</code></pre>
   </div>
 
 
@@ -620,7 +548,7 @@
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
   </dl>
 
@@ -635,29 +563,50 @@
 </h2>
 
 
-  <a id="Runtime_Temporary_PlayerController_CheckHit_" data-uid="Runtime.Temporary.PlayerController.CheckHit*"></a>
+  <a id="Global_SlotResourceDescriptionPanel_Awake_" data-uid="Global.SlotResourceDescriptionPanel.Awake*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.CheckHit(Runtime.Utilities.Collision.HitData)">
-  CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Global_SlotResourceDescriptionPanel_Awake" data-uid="Global.SlotResourceDescriptionPanel.Awake">
+  Awake()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHit(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Awake()</code></pre>
   </div>
 
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Global_SlotResourceDescriptionPanel_GetArchitecture_" data-uid="Global.SlotResourceDescriptionPanel.GetArchitecture*"></a>
+
+  <h3 id="Global_SlotResourceDescriptionPanel_GetArchitecture" data-uid="Global.SlotResourceDescriptionPanel.GetArchitecture">
+  GetArchitecture()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IArchitecture GetArchitecture()</code></pre>
+  </div>
+
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dt><a class="xref" href="MikroFramework.Architecture.IArchitecture.html">IArchitecture</a></dt>
     <dd></dd>
   </dl>
 
@@ -671,31 +620,20 @@
 
 
 
-  <a id="Runtime_Temporary_PlayerController_CheckHurt_" data-uid="Runtime.Temporary.PlayerController.CheckHurt*"></a>
+  <a id="Global_SlotResourceDescriptionPanel_Hide_" data-uid="Global.SlotResourceDescriptionPanel.Hide*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_CheckHurt_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.CheckHurt(Runtime.Utilities.Collision.HitData)">
-  CheckHurt(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Global_SlotResourceDescriptionPanel_Hide" data-uid="Global.SlotResourceDescriptionPanel.Hide">
+  Hide()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L37"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHurt(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Hide()</code></pre>
   </div>
 
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
 
 
 
@@ -707,23 +645,53 @@
 
 
 
-  <a id="Runtime_Temporary_PlayerController_HitResponse_" data-uid="Runtime.Temporary.PlayerController.HitResponse*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.HitResponse(Runtime.Utilities.Collision.HitData)">
-  HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <a id="Global_SlotResourceDescriptionPanel_OnRecycled_" data-uid="Global.SlotResourceDescriptionPanel.OnRecycled*"></a>
+
+  <h3 id="Global_SlotResourceDescriptionPanel_OnRecycled" data-uid="Global.SlotResourceDescriptionPanel.OnRecycled">
+  OnRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnRecycled()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Global_SlotResourceDescriptionPanel_SetContent_" data-uid="Global.SlotResourceDescriptionPanel.SetContent*"></a>
+
+  <h3 id="Global_SlotResourceDescriptionPanel_SetContent_System_String_System_String_" data-uid="Global.SlotResourceDescriptionPanel.SetContent(System.String,System.String)">
+  SetContent(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void HitResponse(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">public void SetContent(string name, string description)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>description</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd></dd>
   </dl>
 
@@ -738,56 +706,20 @@
 
 
 
-  <a id="Runtime_Temporary_PlayerController_HurtResponse_" data-uid="Runtime.Temporary.PlayerController.HurtResponse*"></a>
+  <a id="Global_SlotResourceDescriptionPanel_Show_" data-uid="Global.SlotResourceDescriptionPanel.Show*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_HurtResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.HurtResponse(Runtime.Utilities.Collision.HitData)">
-  HurtResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Global_SlotResourceDescriptionPanel_Show" data-uid="Global.SlotResourceDescriptionPanel.Show">
+  Show()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L33"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void HurtResponse(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Show()</code></pre>
   </div>
 
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Temporary_PlayerController_TakeDamage_" data-uid="Runtime.Temporary.PlayerController.TakeDamage*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_TakeDamage_System_Int32_" data-uid="Runtime.Temporary.PlayerController.TakeDamage(System.Int32)">
-  TakeDamage(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L46"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void TakeDamage(int damage)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
 
 
 
@@ -804,7 +736,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L9" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/SlotResourceDescriptionPanel.cs/#L11" class="edit-link">Edit this page</a>
         </div>
 
         

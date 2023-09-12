@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class PlayerController
+      <title>Class HUDManagerUI
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class PlayerController
+      <meta name="title" content="Class HUDManagerUI
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Temporary_PlayerController.md&amp;value=---%0Auid%3A%20Runtime.Temporary.PlayerController%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Global_HUDManagerUI.md&amp;value=---%0Auid%3A%20Global.HUDManagerUI%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.Temporary.PlayerController">
+        <article data-uid="Global.HUDManagerUI">
 
 
 
-  <h1 id="Runtime_Temporary_PlayerController" data-uid="Runtime.Temporary.PlayerController" class="text-break">
-    Class PlayerController
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Global_HUDManagerUI" data-uid="Global.HUDManagerUI" class="text-break">
+    Class HUDManagerUI
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManagerUI.cs/#L8"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Temporary.html">Temporary</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Global.html">Global</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class PlayerController : MonoBehaviour, IHitResponder, IHurtResponder, IBelongToFaction</code></pre>
+    <pre><code class="lang-csharp hljs">public class HUDManagerUI : MonoBehaviour, ISingleton</code></pre>
   </div>
 
 
@@ -109,16 +109,14 @@
       <div><span class="xref">Component</span></div>
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
-      <div><span class="xref">PlayerController</span></div>
+      <div><span class="xref">HUDManagerUI</span></div>
     </dd>
   </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
-      <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
-      <div><a class="xref" href="Runtime.Utilities.Collision.IHurtResponder.html">IHurtResponder</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
+      <div><a class="xref" href="MikroFramework.Singletons.ISingleton.html">ISingleton</a></div>
     </dd>
   </dl>
 
@@ -500,118 +498,22 @@
 
 
 
-  <h2 class="section" id="fields">Fields
-</h2>
-
-
-
-  <h3 id="Runtime_Temporary_PlayerController_curHealth" data-uid="Runtime.Temporary.PlayerController.curHealth">
-  curHealth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L14"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int curHealth</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_Temporary_PlayerController_maxHealth" data-uid="Runtime.Temporary.PlayerController.maxHealth">
-  maxHealth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L12"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int maxHealth</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
   <h2 class="section" id="properties">Properties
 </h2>
 
 
-  <a id="Runtime_Temporary_PlayerController_CurrentFaction_" data-uid="Runtime.Temporary.PlayerController.CurrentFaction*"></a>
+  <a id="Global_HUDManagerUI_Singleton_" data-uid="Global.HUDManagerUI.Singleton*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_CurrentFaction" data-uid="Runtime.Temporary.PlayerController.CurrentFaction">
-  CurrentFaction
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L21"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; protected set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="Runtime_Temporary_PlayerController_Damage_" data-uid="Runtime.Temporary.PlayerController.Damage*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_Damage" data-uid="Runtime.Temporary.PlayerController.Damage">
-  Damage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Global_HUDManagerUI_Singleton" data-uid="Global.HUDManagerUI.Singleton">
+  Singleton
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManagerUI.cs/#L14"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Damage { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static HUDManagerUI Singleton { get; }</code></pre>
   </div>
 
 
@@ -620,7 +522,7 @@
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dt><a class="xref" href="Global.HUDManagerUI.html">HUDManagerUI</a></dt>
     <dd></dd>
   </dl>
 
@@ -635,160 +537,100 @@
 </h2>
 
 
-  <a id="Runtime_Temporary_PlayerController_CheckHit_" data-uid="Runtime.Temporary.PlayerController.CheckHit*"></a>
+  <a id="Global_HUDManagerUI_DespawnHUDElement_" data-uid="Global.HUDManagerUI.DespawnHUDElement*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.CheckHit(Runtime.Utilities.Collision.HitData)">
-  CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Global_HUDManagerUI_DespawnHUDElement_UnityEngine_Transform_Runtime_UI_NameTags_HUDCategory_" data-uid="Global.HUDManagerUI.DespawnHUDElement(UnityEngine.Transform,Runtime.UI.NameTags.HUDCategory)">
+  DespawnHUDElement(Transform, HUDCategory)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManagerUI.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHit(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">public void DespawnHUDElement(Transform targetFollow, HUDCategory hudCategory)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
+    <dt><code>targetFollow</code> <span class="xref">Transform</span></dt>
+    <dd></dd>
+    <dt><code>hudCategory</code> <a class="xref" href="Runtime.UI.NameTags.HUDCategory.html">HUDCategory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Global_HUDManagerUI_OnSingletonInit_" data-uid="Global.HUDManagerUI.OnSingletonInit*"></a>
+
+  <h3 id="Global_HUDManagerUI_OnSingletonInit" data-uid="Global.HUDManagerUI.OnSingletonInit">
+  OnSingletonInit()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManagerUI.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSingletonInit()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Global_HUDManagerUI_SpawnHUDElement_" data-uid="Global.HUDManagerUI.SpawnHUDElement*"></a>
+
+  <h3 id="Global_HUDManagerUI_SpawnHUDElement_UnityEngine_Transform_System_String_Runtime_UI_NameTags_HUDCategory_System_Boolean_" data-uid="Global.HUDManagerUI.SpawnHUDElement(UnityEngine.Transform,System.String,Runtime.UI.NameTags.HUDCategory,System.Boolean)">
+  SpawnHUDElement(Transform, string, HUDCategory, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManagerUI.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Spawn an HUD element and follow the target</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject SpawnHUDElement(Transform targetFollow, string prefabName, HUDCategory hudCategory, bool isWorld)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>targetFollow</code> <span class="xref">Transform</span></dt>
+    <dd></dd>
+    <dt><code>prefabName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The asset bundle name of the prefab</p>
+</dd>
+    <dt><code>hudCategory</code> <a class="xref" href="Runtime.UI.NameTags.HUDCategory.html">HUDCategory</a></dt>
+    <dd><p>The type of the HUD element. No two HUD elements of the same type can follow the same target. <br>
+To create a new HUD element type, add a new enum value to <a class="xref" href="Runtime.UI.NameTags.HUDCategory.html">HUDCategory</a></p>
+</dd>
+    <dt><code>isWorld</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dt><span class="xref">GameObject</span></dt>
     <dd></dd>
   </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Temporary_PlayerController_CheckHurt_" data-uid="Runtime.Temporary.PlayerController.CheckHurt*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_CheckHurt_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.CheckHurt(Runtime.Utilities.Collision.HitData)">
-  CheckHurt(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L31"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHurt(HitData data)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Temporary_PlayerController_HitResponse_" data-uid="Runtime.Temporary.PlayerController.HitResponse*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.HitResponse(Runtime.Utilities.Collision.HitData)">
-  HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L36"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void HitResponse(HitData data)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Temporary_PlayerController_HurtResponse_" data-uid="Runtime.Temporary.PlayerController.HurtResponse*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_HurtResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.HurtResponse(Runtime.Utilities.Collision.HitData)">
-  HurtResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L41"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void HurtResponse(HitData data)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Temporary_PlayerController_TakeDamage_" data-uid="Runtime.Temporary.PlayerController.TakeDamage*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_TakeDamage_System_Int32_" data-uid="Runtime.Temporary.PlayerController.TakeDamage(System.Int32)">
-  TakeDamage(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L46"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void TakeDamage(int damage)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
 
 
 
@@ -804,7 +646,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L9" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManagerUI.cs/#L8" class="edit-link">Edit this page</a>
         </div>
 
         
