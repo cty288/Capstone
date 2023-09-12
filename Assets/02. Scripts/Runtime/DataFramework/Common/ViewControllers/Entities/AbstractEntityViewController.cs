@@ -103,7 +103,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 				
 
-				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
+				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag, true);
 				if (nameTag) {
 					INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
 					if (nameTagComponent != null) {
@@ -381,7 +381,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		public virtual void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
 			if (hasInteractiveHint) {
-				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName, HUDCategory.InteractiveTag);
+				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName,
+					HUDCategory.InteractiveTag, true);
 				if (hud) {
 					InteractiveHint element = hud.GetComponent<InteractiveHint>();
 					if (element != null) {

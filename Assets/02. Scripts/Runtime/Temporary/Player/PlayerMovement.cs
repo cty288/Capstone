@@ -126,48 +126,66 @@ namespace Runtime.Temporary.Player
             MovePlayer();
         }
 
+
+
+        private bool sprintTapPressed = false;
+        private float sprintTapCheckTimer = 0.4f;
         private void MyInput()
         {
             horizontalInput = playerActions.Move.ReadValue<Vector2>().x;
             verticalInput = playerActions.Move.ReadValue<Vector2>().y;
 
             // when to jump
-            if (playerActions.Jump.WasPressedThisFrame() && readyToJump && grounded)
-            {
+            if (playerActions.Jump.WasPressedThisFrame() && readyToJump && grounded) {
                 readyToJump = false;
 
                 Jump();
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if (playerActions.Sprint.IsPressed())
-            {
+            ;
+            if (playerActions.SprintTap.WasPerformedThisFrame()) {
+                Debug.Log("Sprint Tap");
+                sprintTapPressed = true;
+                sprintTapCheckTimer = 0.4f;
+            }
+            
+            
+            
+            if (playerActions.SprintHold.IsPressed() || sprintTapPressed) {
                 sprinting = true;
                 Debug.Log("Sprinting");
             }
-            else
-            {
+            else {
                 sprinting = false;
             }
+            
+            sprintTapCheckTimer -= Time.deltaTime;
+            if (sprintTapCheckTimer <= 0 && sprintTapPressed) {
+                if (verticalInput == 0) {
+                    sprintTapPressed = false;
+                }
+            }
+            
         }
-
+       
         private void MovePlayer()
         {
-            // calculate movement direction
-            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            moveDirection = (orientation.forward * verticalInput + orientation.right * horizontalInput).normalized;
 
-            float spd = moveSpeed;
+            moveDirection *= moveSpeed;
             if (sprinting)
             {
-                spd = moveSpeed * sprintmultiplier;
+                moveDirection += orientation.forward * verticalInput * (moveSpeed * (sprintmultiplier - 1));
             }
+            
             // on ground
             if (grounded)
-                rb.AddForce(moveDirection.normalized * spd * 10f, ForceMode.Force);
+                rb.AddForce(moveDirection * 10f, ForceMode.Force);
 
             // in air
             else if (!grounded)
-                rb.AddForce(moveDirection.normalized * spd * 10f * airMultiplier, ForceMode.Force);
+                rb.AddForce(moveDirection * 10f * airMultiplier, ForceMode.Force);
         }
 
         private void SpeedControl()

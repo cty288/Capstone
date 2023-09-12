@@ -1,61 +1,19 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using MikroFramework;
-using MikroFramework.Pool;
 using MikroFramework.Singletons;
+using Runtime.UI.NameTags;
 using UnityEngine;
 
-namespace Runtime.UI.NameTags {
-    public class HUDElementInfo {
-        public Dictionary<Transform, (GameObject, bool)> followDict = new Dictionary<Transform, (GameObject, bool)>();
-        
-        public Dictionary<string, SafeGameObjectPool> prefabPools = new Dictionary<string, SafeGameObjectPool>();
-        
-        public HUDElementInfo() {
-            
-        }
-        
-        public (GameObject, bool) GetOrCreate(Transform targetFollow, Transform spawnedTransform, string prefabName, bool isWorld) {
-            if (followDict.ContainsKey(targetFollow)) {
-                return followDict[targetFollow];
-            }
-        
-            if (!prefabPools.ContainsKey(prefabName)) {
-                prefabPools.Add(prefabName, GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 10, 50,
-                    out GameObject prefab));
-            }
-        
-            GameObject nameTag = prefabPools[prefabName].Allocate();
-            nameTag.transform.SetParent(spawnedTransform);
-            nameTag.transform.localScale = Vector3.one;
-            nameTag.transform.rotation = Quaternion.identity;
-            followDict.Add(targetFollow, (nameTag, isWorld));
-            return (nameTag, isWorld);
-        }
-    
-        public void Despawn(Transform targetFollow) {
-            if (followDict.ContainsKey(targetFollow)) {
-                GameObjectPoolManager.Singleton.Recycle(followDict[targetFollow].Item1);
-                followDict.Remove(targetFollow);
-            }
-        }
-    }
-
-    public enum HUDCategory {
-        NameTag,
-        InteractiveTag,
-        SlotDescription,
-    }
-    
-    public class HUDManager : MonoBehaviour, ISingleton {
-
+public class HUDManagerUI : MonoBehaviour, ISingleton
+{
         private Dictionary<HUDCategory, HUDElementInfo> hudElementInfos = new Dictionary<HUDCategory, HUDElementInfo>();
         private Camera mainCamera;
 
 
-        public static HUDManager Singleton {
+        public static HUDManagerUI Singleton {
             get {
-                return SingletonProperty<HUDManager>.Singleton;
+                return SingletonProperty<HUDManagerUI>.Singleton;
             }
         }
 
@@ -129,5 +87,4 @@ namespace Runtime.UI.NameTags {
         public void OnSingletonInit() {
             
         }
-    }
 }
