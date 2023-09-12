@@ -23,7 +23,7 @@ namespace Runtime.Inventory.Model {
 			inventoryModel = this.GetModel<IInventoryModel>();
 
 			if (inventoryModel.IsFirstTimeCreated) {
-				AddInitialSlots();
+				ResetInventory();
 			}
 		}
 		
@@ -42,6 +42,8 @@ namespace Runtime.Inventory.Model {
 		public void ResetInventory() {
 			inventoryModel.Clear();
 			AddInitialSlots();
+			inventoryModel.SelectHotBarSlot(HotBarCategory.Left, 0);
+			inventoryModel.SelectHotBarSlot(HotBarCategory.Right, 0);
 		}
 		
 		

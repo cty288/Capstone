@@ -29,9 +29,10 @@ namespace Runtime.Inventory.ViewController {
         private Image slotHoverBG;
         private SlotResourceDescriptionPanel currentDescriptionPanel;
         private Transform descriptionPanelFollowTr;
+        private Image selectedBG;
 
         public static GameObject pointerDownObject = null;
-        private void Awake() {
+        protected virtual void Awake() {
             numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
             spawnPoint = transform.Find("InventoryItemSpawnPos");
             slotHoverBG = transform.Find("SlotHoverBG").GetComponent<Image>();
@@ -41,6 +42,8 @@ namespace Runtime.Inventory.ViewController {
             currentDescriptionPanel = HUDManagerUI.Singleton
                 .SpawnHUDElement(descriptionPanelFollowTr, "DescriptionTag", HUDCategory.SlotDescription, false)
                 .GetComponent<SlotResourceDescriptionPanel>();
+            selectedBG = transform.Find("SelectedBG").GetComponent<Image>();
+            selectedBG.gameObject.SetActive(false);
             currentDescriptionPanel.Hide();
             //descriptionPanel.Awake();
             Clear();
@@ -229,7 +232,10 @@ namespace Runtime.Inventory.ViewController {
             OnPointerExit(default);
             StopDragImmediately();
         }
-        
-        
+
+        public void SetSelected(bool selected) {
+            selectedBG.gameObject.SetActive(selected);
+        }
+
     }
 }

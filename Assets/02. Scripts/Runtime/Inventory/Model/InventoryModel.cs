@@ -31,6 +31,14 @@ namespace Runtime.Inventory.Model {
 		int GetHotBarSlotCount(HotBarCategory category);
 		
 		List<ResourceSlot> GetHotBarSlots(HotBarCategory category);
+		
+		void SelectHotBarSlot(HotBarCategory category, int index);
+		
+		void SelectNextHotBarSlot(HotBarCategory category);
+		
+		void SelectPreviousHotBarSlot(HotBarCategory category);
+		
+		int GetSelectedHotBarSlotIndex(HotBarCategory category);
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -50,15 +58,26 @@ namespace Runtime.Inventory.Model {
 		Left
 	}
 
+	[Serializable]
+	public class HotBarSlotsInfo {
+		public int CurrentSelectedIndex = 0;
+		public List<ResourceSlot> Slots = new List<ResourceSlot>();
+		
+		public HotBarSlotsInfo() {
+			
+		}
+	}
 	
-	
-	
+	public struct OnHotBarSlotSelectedEvent {
+		public HotBarCategory Category;
+		public int SelectedIndex;
+	}
 	
 	public class InventoryModel: ResourceSlotsModel, IInventoryModel {
 
 		[ES3Serializable]
-		private Dictionary<HotBarCategory, List<ResourceSlot>> hotBarSlots =
-			new Dictionary<HotBarCategory, List<ResourceSlot>>();
+		private Dictionary<HotBarCategory, HotBarSlotsInfo> hotBarSlots =
+			new Dictionary<HotBarCategory, HotBarSlotsInfo>();
 
 
 		
@@ -81,7 +100,7 @@ namespace Runtime.Inventory.Model {
 			}
 			
 			if (!hotBarSlots.ContainsKey(category)) {
-				hotBarSlots.Add(category, new List<ResourceSlot>());
+				hotBarSlots.Add(category, new HotBarSlotsInfo());
 			}
 			
 			int curCount = GetHotBarSlotCount(category);
@@ -94,7 +113,7 @@ namespace Runtime.Inventory.Model {
 			//insert to the end of slots[slotCount-1]
 			List<ResourceSlot> addedSlots = new List<ResourceSlot>();
 			for (int i = 0; i < actualAddedCount; i++) {
-				hotBarSlots[category].Add(slot);
+				hotBarSlots[category].Slots.Add(slot);
 				addedSlots.Add(slot);
 			}
 			
@@ -110,7 +129,7 @@ namespace Runtime.Inventory.Model {
 		public override bool AddItem(IResourceEntity item) {
 			//check each hot bar first
 			foreach (var hotBarSlot in hotBarSlots) {
-				foreach (var slot in hotBarSlot.Value) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
 					if (AddItemAt(item, slot)) {
 						return true;
 					}
@@ -122,7 +141,7 @@ namespace Runtime.Inventory.Model {
 		public override bool RemoveItem(string uuid) {
 			//check each hot bar first
 			foreach (var hotBarSlot in hotBarSlots) {
-				foreach (var slot in hotBarSlot.Value) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
 					if (slot.RemoveItem(uuid)) {
 						return true;
 					}
@@ -134,7 +153,7 @@ namespace Runtime.Inventory.Model {
 		public override bool CanPlaceItem(IResourceEntity item) {
 			//check each hot bar first
 			foreach (var hotBarSlot in hotBarSlots) {
-				foreach (var slot in hotBarSlot.Value) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
 					if (slot.CanPlaceItem(item)) {
 						return true;
 					}
@@ -179,16 +198,56 @@ namespace Runtime.Inventory.Model {
 		}
 
 		public int GetHotBarSlotCount(HotBarCategory category) {
-			return hotBarSlots[category].Count;
+			return hotBarSlots[category].Slots.Count;
 		}
 
 		public List<ResourceSlot> GetHotBarSlots(HotBarCategory category) {
 			if (!hotBarSlots.ContainsKey(category)) {
 				return null;
 			}
-			return hotBarSlots[category];
+			return hotBarSlots[category].Slots;
 		}
-		
+
+		public void SelectHotBarSlot(HotBarCategory category, int index) {
+			HotBarSlotsInfo info = hotBarSlots[category];
+			if (index < 0 || index >= info.Slots.Count) {
+				return;
+			}
+			info.CurrentSelectedIndex = index;
+			this.SendEvent<OnHotBarSlotSelectedEvent>(new OnHotBarSlotSelectedEvent() {
+				Category = category,
+				SelectedIndex = index
+			});
+		}
+
+		public void SelectNextHotBarSlot(HotBarCategory category) {
+			HotBarSlotsInfo info = hotBarSlots[category];
+			if (info.Slots.Count == 0) {
+				return;
+			}
+			info.CurrentSelectedIndex = (info.CurrentSelectedIndex + 1) % info.Slots.Count;
+			this.SendEvent<OnHotBarSlotSelectedEvent>(new OnHotBarSlotSelectedEvent() {
+				Category = category,
+				SelectedIndex = info.CurrentSelectedIndex
+			});
+		}
+
+		public void SelectPreviousHotBarSlot(HotBarCategory category) {
+			HotBarSlotsInfo info = hotBarSlots[category];
+			if (info.Slots.Count == 0) {
+				return;
+			}
+			info.CurrentSelectedIndex = (info.CurrentSelectedIndex - 1 + info.Slots.Count) % info.Slots.Count;
+			this.SendEvent<OnHotBarSlotSelectedEvent>(new OnHotBarSlotSelectedEvent() {
+				Category = category,
+				SelectedIndex = info.CurrentSelectedIndex
+			});
+		}
+
+		public int GetSelectedHotBarSlotIndex(HotBarCategory category) {
+			return hotBarSlots[category].CurrentSelectedIndex;
+		}
+
 		public override void Clear() {
 			if (slots == null) {
 				return;
@@ -199,7 +258,7 @@ namespace Runtime.Inventory.Model {
 				if (!hotBarSlots.ContainsKey(category)) {
 					continue;
 				}
-				hotBarSlots[category].Clear();
+				hotBarSlots[category].Slots.Clear();
 			}
 		}
 	}
