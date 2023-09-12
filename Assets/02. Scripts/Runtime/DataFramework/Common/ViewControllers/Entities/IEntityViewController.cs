@@ -1,7 +1,9 @@
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies.Model;
 using Runtime.Player;
+using Runtime.Utilities.Collision;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
@@ -25,7 +27,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         //public void Init(string id, IEntity entity);
     }
 
-    public interface IEnemyViewController : IEntityViewController {
+    public interface IEnemyViewController : IEntityViewController, IBelongToFaction {
         public IEnemyEntity EnemyEntity { get; }
 
         IEntity IEntityViewController.Entity => EnemyEntity;
