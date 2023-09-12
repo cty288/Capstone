@@ -47,11 +47,16 @@ namespace Runtime.GameResources.ViewControllers {
             }
         }
 
-        public override void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
-            base.OnPlayerEnterInteractiveZone(player, zone);
+        public override void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
+            base.OnPlayerInteractiveZoneReachable(player, zone);
             if (!HoldAbsorb) {
                 HandleAbsorb(player, zone);
             }
+        }
+
+        public override void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone) {
+            base.OnPlayerInteractiveZoneNotReachable(player, zone);
+           
         }
 
         public override void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
@@ -79,9 +84,9 @@ namespace Runtime.GameResources.ViewControllers {
                 //TODO: test it
                 Sequence.Allocate()
                     .AddAction(
-                        UntilAction.Allocate(() => inventoryModel.CanPlaceItem(BoundEntity) || zone.IsInZone(this) || !this))
+                        UntilAction.Allocate(() => inventoryModel.CanPlaceItem(BoundEntity) || zone.IsInZone(gameObject) || !this))
                     .AddAction(CallbackAction.Allocate(() => {
-                        if (this && zone.IsInZone(this)) {
+                        if (this && zone.IsInZone(gameObject)) {
                             HandleAbsorb(player, zone);
                         }
                     })).Execute();

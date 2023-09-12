@@ -71,7 +71,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public override void OnStartOrAllocate() {
 			base.OnStartOrAllocate();
-			OnPlayerExitInteractiveZone(null, null);
+			OnPlayerInteractiveZoneNotReachable(null, null);
 			
 			OnStart();
 			
@@ -379,7 +379,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		#endregion
 
 		
-		public virtual void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+		public virtual void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
 			if (hasInteractiveHint) {
 				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName,
 					HUDCategory.InteractiveTag, true);
@@ -395,10 +395,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 		
 
-		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+		public virtual void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone) {
 			if (hasInteractiveHint) {
 				HUDManager.Singleton.DespawnHUDElement(transform, HUDCategory.InteractiveTag);
 			}
+		}
+
+		public virtual void OnPlayerInInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			
+		}
+
+		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			
 		}
 
 
