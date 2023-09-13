@@ -764,18 +764,18 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""HotBarLeftNavigate"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""18d902d6-b831-456e-83cc-54dfc436dae8"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""HotBarRightNavigate"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""c48b9f6c-cafc-4cca-b352-899a884a7a68"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -829,7 +829,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""4d59a3dc-6a66-458c-bd29-19880b2c4f5d"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -840,7 +840,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""1f9c67fb-9e64-4f6c-a7b8-68d2cc060cb6"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -862,7 +862,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""932084c8-e7be-402a-bbd8-b03372fe3e29"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -873,7 +873,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""764da5ea-a4d7-4d64-a5af-47c8ed9aef18"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

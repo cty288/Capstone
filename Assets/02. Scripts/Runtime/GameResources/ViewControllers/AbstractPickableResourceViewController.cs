@@ -24,20 +24,21 @@ namespace Runtime.GameResources.ViewControllers {
     public abstract class AbstractPickableResourceViewController<T> : AbstractResourceViewController<T>,
         IPickableResourceViewController where T : class, IResourceEntity, new() {
     
-        protected ResLoader resLoader;
+       // protected ResLoader resLoader;
         //protected PoolableGameObject poolable;
         protected IInventoryModel inventoryModel;
         protected bool isAbsorbing = false;
         
         [Header("Entity Recycle Logic")]
         [Tooltip("The time when the entity will be recycled when it is not absorbed by the player")]
-        [SerializeField] protected float entityAutoRemovalTimeWhenNoAbsorb = 120f;
+        [SerializeField] [ES3Serializable]
+        protected float entityAutoRemovalTimeWhenNoAbsorb = 120f;
         
         private Coroutine entityRemovalTimerCoroutine;
         protected override void Awake() {
             base.Awake();
             //poolable = GetComponent<PoolableGameObject>();
-            resLoader = this.GetUtility<ResLoader>();
+           // resLoader = this.GetUtility<ResLoader>();
             inventoryModel = this.GetModel<IInventoryModel>();
         }
 
@@ -47,11 +48,16 @@ namespace Runtime.GameResources.ViewControllers {
             }
         }
 
-        public override void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
-            base.OnPlayerEnterInteractiveZone(player, zone);
+        public override void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
+            base.OnPlayerInteractiveZoneReachable(player, zone);
             if (!HoldAbsorb) {
                 HandleAbsorb(player, zone);
             }
+        }
+
+        public override void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone) {
+            base.OnPlayerInteractiveZoneNotReachable(player, zone);
+           
         }
 
         public override void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
@@ -59,7 +65,7 @@ namespace Runtime.GameResources.ViewControllers {
             HoldAbsorb = false;
         }
 
-        private void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
+        protected virtual void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
             if (!player || !Camera.main || isAbsorbing) return;
             if(inventoryModel.AddItem(BoundEntity)) {
                 isAbsorbing = true;
@@ -70,18 +76,16 @@ namespace Runtime.GameResources.ViewControllers {
                 OnStartAbsorb();
                 transform.DOMoveInTargetLocalSpace(Camera.main.transform, Vector3.zero, 0.2f).
                     SetEase(Ease.Linear)
-                    .OnComplete(() => {
-                        Destroy(this.gameObject);
-                    });
+                    .OnComplete(RecycleToCache);
             }
             else {
                 //did not add successfully, will wait until the player has enough space, use Until Action
                 //TODO: test it
                 Sequence.Allocate()
                     .AddAction(
-                        UntilAction.Allocate(() => inventoryModel.CanPlaceItem(BoundEntity) || zone.IsInZone(this) || !this))
+                        UntilAction.Allocate(() => inventoryModel.CanPlaceItem(BoundEntity) || zone.IsInZone(gameObject) || !this))
                     .AddAction(CallbackAction.Allocate(() => {
-                        if (this && zone.IsInZone(this)) {
+                        if (this && zone.IsInZone(gameObject)) {
                             HandleAbsorb(player, zone);
                         }
                     })).Execute();

@@ -29,6 +29,8 @@ namespace Runtime.GameResources.Model.Base {
 		public string InventoryVCPrefabName { get; }
 		
 		public string OnGroundVCPrefabName { get; }
+		
+		public string InHandVCPrefabName { get; }
 	}
 	
 	//3 forms
@@ -108,6 +110,7 @@ namespace Runtime.GameResources.Model.Base {
 		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
 
 		public abstract string OnGroundVCPrefabName { get; }
+		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
 	}
 
 }
