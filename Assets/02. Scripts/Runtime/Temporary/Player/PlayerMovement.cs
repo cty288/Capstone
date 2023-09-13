@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using Framework;
 using Mikrocosmos;
-using Runtime.Controls;
+using Mikrocosmos.Controls;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using Runtime.Controls;
 
 namespace Runtime.Temporary.Player
 {
@@ -80,6 +83,16 @@ namespace Runtime.Temporary.Player
         //temporary
         public Transform orientation;
 
+        
+        [Header("Sliding")]
+        public float maxSlideTime;
+        public float slideForce;
+        private float slideTimer;
+
+        public float slideYScale;
+        private float startYScale;
+        
+        public bool sliding;
         //temporary
         float horizontalInput;
         float verticalInput;
@@ -88,7 +101,7 @@ namespace Runtime.Temporary.Player
 
         public Rigidbody rb;
 
-        public bool sliding;
+
         public MovementState state;
         public enum MovementState
         {
@@ -114,6 +127,9 @@ namespace Runtime.Temporary.Player
             rb.freezeRotation = true;
 
             readyToJump = true;
+            readyToDoubleJump = true;
+            
+            startYScale = transform.localScale.y;
 
         }
 
@@ -129,6 +145,7 @@ namespace Runtime.Temporary.Player
 
             MyInput();
             SpeedControl();
+            StateHandler();
 
             // handle drag
             if (grounded)
@@ -149,7 +166,7 @@ namespace Runtime.Temporary.Player
             if (Input.GetKeyDown(KeyCode.K)) {
                 GameObject obj = ControlInfoFactory.Singleton.GetBindingKeyGameObject(ClientInput.Singleton.FindActionInPlayerActionMap("Sprint"),
                     out BindingInfo info, out string actionName);
-                Debug.Log("Action Name: " + actionName);
+                //Debug.Log("Action Name: " + actionName);
             }
             Debug.Log(OnSlope());
         }
@@ -215,14 +232,14 @@ namespace Runtime.Temporary.Player
             cameraTrans.localEulerAngles = Vector3.right * cameraPitch;
             transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
         }
-
         private void MyInput()
         {
             horizontalInput = playerActions.Move.ReadValue<Vector2>().x;
             verticalInput = playerActions.Move.ReadValue<Vector2>().y;
 
             // when to jump
-            if (playerActions.Jump.WasPressedThisFrame() && readyToJump && grounded) {
+            if (playerActions.Jump.WasPressedThisFrame() && readyToJump && grounded)
+            {
                 readyToJump = false;
                 readyToDoubleJump = true;
 
@@ -250,22 +267,32 @@ namespace Runtime.Temporary.Player
                 sprinting = true;
                 Debug.Log("Sprinting");
             }
-            else {
+            else
+            {
                 sprinting = false;
             }
-            
-            sprintTapCheckTimer -= Time.deltaTime;
-            if (sprintTapCheckTimer <= 0 && sprintTapPressed) {
-                if (verticalInput == 0) {
-                    sprintTapPressed = false;
-                }
+
+            if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
+            {
+                sliding = true;
+                transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+                rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+
+                slideTimer = maxSlideTime;
             }
-            
+
+            if (playerActions.Slide.WasReleasedThisFrame() && sliding)
+            {
+                sliding = false;
+
+                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            }
         }
-       
+
         private void MovePlayer()
         {
-            moveDirection = (orientation.forward * verticalInput + orientation.right * horizontalInput).normalized;
+            // calculate movement direction
+            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
             float spd = accelForce;
             // on slope
@@ -298,6 +325,8 @@ namespace Runtime.Temporary.Player
             // turn gravity off while on slope
             rb.useGravity = !OnSlope();
 
+            if (sliding)
+                SlidingMovement();
         }
 
         private void SpeedControl()
@@ -320,6 +349,12 @@ namespace Runtime.Temporary.Player
                     Vector3 limitedVel = flatVel.normalized * moveSpeed;
                     rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
                 }
+            }
+            
+            //stop player if no inputs
+            if (moveDirection == Vector3.zero)
+            {
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
             }
         }
 
@@ -394,6 +429,32 @@ namespace Runtime.Temporary.Player
         public Vector3 GetSlopeMoveDirection(Vector3 direction)
         {
             return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+        }
+        
+        private void SlidingMovement()
+        {
+            Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+            // sliding normal
+            if(!OnSlope() || rb.velocity.y > -0.1f)
+            {
+                rb.AddForce(inputDirection.normalized * slideForce*0.5f, ForceMode.Force);
+
+                slideTimer -= Time.deltaTime;
+            }
+
+            // sliding down a slope
+            else
+            {
+                rb.AddForce(GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
+            }
+
+            if (slideTimer <= 0)
+            {
+                sliding = false;
+
+                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            }
         }
     }
 }
