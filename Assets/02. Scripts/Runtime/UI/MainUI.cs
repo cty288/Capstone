@@ -30,7 +30,7 @@ namespace Runtime.UI {
 			if (Input.GetKeyDown(KeyCode.I)) {
 				IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
 				inventoryModel.AddSlots(2);
-				inventoryModel.AddHotBarSlots(HotBarCategory.Left, 1, new LeftHotBarSlot());
+				inventoryModel.AddHotBarSlots(HotBarCategory.Left, 1, ()=>new LeftHotBarSlot());
 			}
 		}
 		

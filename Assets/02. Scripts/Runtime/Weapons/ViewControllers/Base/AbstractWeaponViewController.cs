@@ -12,7 +12,12 @@ using Runtime.Weapons.Model.Properties;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
-    public abstract class AbstractWeaponViewController<T> : AbstractResourceViewController<T>, IBelongToFaction
+    
+    /// <summary>
+    /// For both 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IBelongToFaction
         where T : class, IWeaponEntity, new() {
 
         private IWeaponModel weaponModel;

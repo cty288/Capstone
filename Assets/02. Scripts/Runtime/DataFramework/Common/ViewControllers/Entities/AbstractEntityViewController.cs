@@ -30,7 +30,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public string ID { get; set; }
 		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]
 		[Tooltip("If not, you must manually call InitWithID() to initialize the entity.")]
-		[SerializeField] protected bool autoCreateNewEntityWhenStart = true;
+		[SerializeField] protected bool autoCreateNewEntityWhenStart = false;
 
 		[Header("Entity Name Tag")]
 		[SerializeField] protected bool showNameTagWhenPointed = true;
@@ -95,7 +95,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			OnEntityStart();
 		}
 
-		public void OnPointByCrosshair() {
+		public virtual void OnPointByCrosshair() {
 			if (showNameTagWhenPointed) {
 				if(!nameTagFollowTransform) {
 					Debug.LogError($"Name tag follow transform not set for {gameObject.name}!");
@@ -113,7 +113,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 
-		public void OnUnPointByCrosshair() {
+		public virtual void OnUnPointByCrosshair() {
 			if (showNameTagWhenPointed && nameTagFollowTransform) {
 				HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
 			}

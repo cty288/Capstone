@@ -23,7 +23,7 @@ namespace Runtime.Inventory.Model {
 		/// </summary>
 		/// <param name="slotCount"></param>
 		/// <returns></returns>
-		bool AddHotBarSlots(HotBarCategory category, int slotCount, ResourceSlot slot);
+		bool AddHotBarSlots(HotBarCategory category, int slotCount, Func<ResourceSlot> getter);
 		
 
 		//void InitWithInitialSlots();
@@ -39,6 +39,9 @@ namespace Runtime.Inventory.Model {
 		void SelectPreviousHotBarSlot(HotBarCategory category);
 		
 		int GetSelectedHotBarSlotIndex(HotBarCategory category);
+		
+		ResourceSlot GetSelectedHotBarSlot(HotBarCategory category);
+		
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -93,7 +96,7 @@ namespace Runtime.Inventory.Model {
 
 		
 		
-		public bool AddHotBarSlots(HotBarCategory category, int slotCount, ResourceSlot slot) {
+		public bool AddHotBarSlots(HotBarCategory category, int slotCount, Func<ResourceSlot> getter) {
 			int actualAddedCount = slotCount;
 			if (category == HotBarCategory.None) {
 				return false;
@@ -113,6 +116,7 @@ namespace Runtime.Inventory.Model {
 			//insert to the end of slots[slotCount-1]
 			List<ResourceSlot> addedSlots = new List<ResourceSlot>();
 			for (int i = 0; i < actualAddedCount; i++) {
+				ResourceSlot slot = getter.Invoke();
 				hotBarSlots[category].Slots.Add(slot);
 				addedSlots.Add(slot);
 			}
@@ -246,6 +250,14 @@ namespace Runtime.Inventory.Model {
 
 		public int GetSelectedHotBarSlotIndex(HotBarCategory category) {
 			return hotBarSlots[category].CurrentSelectedIndex;
+		}
+
+		public ResourceSlot GetSelectedHotBarSlot(HotBarCategory category) {
+			HotBarSlotsInfo info = hotBarSlots[category];
+			if (info.Slots.Count == 0) {
+				return null;
+			}
+			return info.Slots[info.CurrentSelectedIndex];
 		}
 
 		public override void Clear() {

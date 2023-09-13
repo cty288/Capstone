@@ -192,7 +192,7 @@ namespace Runtime.Inventory.ViewController {
             }
         }
 
-        private void OnSlotUpdate(string topItemID, List<string> allItems) {
+        private void OnSlotUpdate(ResourceSlot slot, string topItemID, List<string> allItems) {
             ShowItem();
         }
 

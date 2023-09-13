@@ -39,10 +39,13 @@ namespace Runtime.Weapons.ViewControllers {
             
             
             Ray ray = mainCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
-            RaycastHit hit;
             bool hitEntity = false;
 
             
+            //clear hits
+            for (int i = 0; i < hits.Length; i++) {
+                hits[i] = new RaycastHit();
+            }
             int numHits = Physics.RaycastNonAlloc(ray, hits, 100f, detectLayerMask);
             var sortedHits = hits.OrderBy(hit => hit.distance).ToArray();
 

@@ -70,6 +70,7 @@ namespace Runtime.Inventory.ViewController {
             rubbishSlotViewController.SetSlot(new RubbishSlot());
             
             foreach (KeyValuePair<HotBarCategory,InventorySlotLayoutViewController> hotBarSlotLayoutViewController in hotBarSlotLayoutViewControllers) {
+                
                 hotBarSlotLayoutViewController.Value.OnInventorySlotAdded(
                     inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key),
                     inventoryModel.GetHotBarSlotCount(hotBarSlotLayoutViewController.Key));
