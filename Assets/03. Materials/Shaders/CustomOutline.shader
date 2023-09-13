@@ -70,6 +70,7 @@ Shader "Hidden/CustomOutline"
 				return float4(color, alpha);
 			}
 
+			//#define _HigherFidelity
 			float4 frag(Varyings i) : SV_Target
 			{
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
@@ -87,6 +88,8 @@ Shader "Hidden/CustomOutline"
 				float depth2 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, bottomRightUV).r;
 				float depth3 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, topLeftUV).r;
 
+				#ifndef _HigherFidelity
+
 				int nearest0 = depth0 > depth1 ? 0 : 1;
 				int nearest1 = depth2 > depth3 ? 2 : 3;
 				int nearest = (depth0 > depth1 ? depth0 : depth1) > (depth2 > depth3 ? depth2 : depth3) ? nearest0 : nearest1;
@@ -95,10 +98,41 @@ Shader "Hidden/CustomOutline"
 					nearest == 1 ? topRightUV :
 						nearest == 2 ? bottomRightUV : topLeftUV;
 
+				#else
+				
+					float2 bottomLeftUV2 = i.uv - float2(_MainTex_TexelSize.x * 2, _MainTex_TexelSize.y * 2) * halfScaleFloor;
+					float2 topRightUV2 = i.uv - float2(_MainTex_TexelSize.x * 2, _MainTex_TexelSize.y * 2) * halfScaleCeil;
+					float2 bottomRightUV2 = i.uv - float2(_MainTex_TexelSize.x * 2 * halfScaleCeil, -_MainTex_TexelSize.y * 2 * halfScaleFloor);
+					float2 topLeftUV2 = i.uv - float2(-_MainTex_TexelSize.x * 2 * halfScaleFloor, _MainTex_TexelSize.y * 2 * halfScaleCeil);
+
+					float depth4 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, bottomLeftUV2).r;
+					float depth5 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, topRightUV2).r;
+					float depth6 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, bottomRightUV2).r;
+					float depth7 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, topLeftUV2).r;
+
+					int nearest2 = depth4 > depth5 ? 4 : 5;
+					int nearest3 = depth6 > depth7 ? 6 : 7;
+					int nearest = (depth4 > depth5 ? depth4 : depth5) > (depth6 > depth7 ? depth6 : depth7) ? nearest2 : nearest3;
+
+					float2 nearestUV = nearest == 0 ? bottomLeftUV2 :
+					nearest == 1 ? topRightUV2 :
+						nearest == 2 ? bottomRightUV2 : topLeftUV2;
+
+					float depthFiniteDiff2 = depth5 - depth4;
+				float depthFiniteDiff3 = depth7 - depth6;
+
+				#endif
+				
+
 				float depthFiniteDiff0 = depth1 - depth0;
 				float depthFiniteDiff1 = depth3 - depth2;
 
-				float edgeDepth = sqrt(pow(depthFiniteDiff0, 2) + pow(depthFiniteDiff1, 2)) * 100;
+				#ifndef _HigherFidelity
+					float edgeDepth = sqrt(pow(depthFiniteDiff0, 2) + pow(depthFiniteDiff1, 2)) * 100;
+				#else
+					float edgeDepth = sqrt(pow(depthFiniteDiff0, 2) + pow(depthFiniteDiff1, 2) + pow(depthFiniteDiff2, 2) + pow(depthFiniteDiff3, 2)) * 100;
+				#endif
+				
 
 				float3 normal0 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, bottomLeftUV).rgb;
 				float3 normal1 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, topRightUV).rgb;
@@ -108,8 +142,26 @@ Shader "Hidden/CustomOutline"
 				float3 normalFiniteDiff0 = normal1 - normal0;
 				float3 normalFiniteDiff1 = normal3 - normal2;
 
-				float edgeNormal = sqrt(dot(normalFiniteDiff0, normalFiniteDiff0) + dot(normalFiniteDiff1, normalFiniteDiff1));
-				edgeNormal = edgeNormal > _NormalThreshold ? 1 : 0;
+				
+				#ifdef _HigherFidelity
+					float3 normal4 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, bottomLeftUV2).rgb;
+					float3 normal5 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, topRightUV2).rgb;
+					float3 normal6 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, bottomRightUV2).rgb;
+					float3 normal7 = SAMPLE_TEXTURE2D(_CameraNormalsTexture, sampler_CameraNormalsTexture, topLeftUV2).rgb;
+
+					float3 normalFiniteDiff2 = normal5 - normal4;
+					float3 normalFiniteDiff3 = normal7 - normal6;
+				#endif
+
+				
+
+				#ifndef _HigherFidelity
+					float edgeNormal = sqrt(dot(normalFiniteDiff0, normalFiniteDiff0) + dot(normalFiniteDiff1, normalFiniteDiff1));
+					edgeNormal = edgeNormal > _NormalThreshold ? 1 : 0;
+				#else
+					float edgeNormal = sqrt(dot(normalFiniteDiff0, normalFiniteDiff0) + dot(normalFiniteDiff1, normalFiniteDiff1) + dot(normalFiniteDiff2, normalFiniteDiff2) + dot(normalFiniteDiff3, normalFiniteDiff3));
+					edgeNormal = edgeNormal > _NormalThreshold ? 1 : 0;
+				#endif
 
 				float3 viewNormal = normal0 * 2 - 1;
 				float NdotV = 1 - dot(viewNormal, -i.viewSpaceDir);
