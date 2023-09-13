@@ -1921,6 +1921,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2006819501, guid: d808818389e67a940ac2b47a4fba4ccf, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3493241377681090172, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -2045,12 +2049,22 @@ PrefabInstance:
     - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
       propertyPath: groundDrag
-      value: 2
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
+        type: 3}
+      propertyPath: slideForce
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
       propertyPath: slideSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
+        type: 3}
+      propertyPath: slideYScale
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
@@ -2064,28 +2078,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
+      propertyPath: maxSlideTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
+        type: 3}
       propertyPath: airMultiplier
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
       propertyPath: maxSlopeAngle
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
       propertyPath: additionalGravity
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
       propertyPath: slopeIncreaseMultiplier
-      value: 1.2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5324266519022786326, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}
       propertyPath: speedIncreaseMultiplier
-      value: 1.1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5324266519022786327, guid: d808818389e67a940ac2b47a4fba4ccf,
         type: 3}

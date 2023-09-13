@@ -80,6 +80,16 @@ namespace Runtime.Temporary.Player
         //temporary
         public Transform orientation;
 
+        
+        [Header("Sliding")]
+        public float maxSlideTime;
+        public float slideForce;
+        private float slideTimer;
+
+        public float slideYScale;
+        private float startYScale;
+        
+        public bool sliding;
         //temporary
         float horizontalInput;
         float verticalInput;
@@ -88,7 +98,7 @@ namespace Runtime.Temporary.Player
 
         public Rigidbody rb;
 
-        public bool sliding;
+
         public MovementState state;
         public enum MovementState
         {
@@ -115,6 +125,8 @@ namespace Runtime.Temporary.Player
 
             readyToJump = true;
             readyToDoubleJump = true;
+            
+            startYScale = transform.localScale.y;
 
         }
 
@@ -239,6 +251,22 @@ namespace Runtime.Temporary.Player
             {
                 sprinting = false;
             }
+
+            if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
+            {
+                sliding = true;
+                transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+                rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+
+                slideTimer = maxSlideTime;
+            }
+
+            if (playerActions.Slide.WasReleasedThisFrame() && sliding)
+            {
+                sliding = false;
+
+                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            }
         }
 
         private void MovePlayer()
@@ -259,11 +287,6 @@ namespace Runtime.Temporary.Player
             else if (grounded)
             {
                 rb.AddForce(moveDirection.normalized * spd, ForceMode.Force);
-                //stop player if no inputs
-                if (moveDirection == Vector3.zero)
-                {
-                    rb.velocity = new Vector3(0, rb.velocity.y, 0);
-                }
             }
                 
             // in air
@@ -277,6 +300,8 @@ namespace Runtime.Temporary.Player
             // turn gravity off while on slope
             rb.useGravity = !OnSlope();
 
+            if (sliding)
+                SlidingMovement();
         }
 
         private void SpeedControl()
@@ -299,6 +324,12 @@ namespace Runtime.Temporary.Player
                     Vector3 limitedVel = flatVel.normalized * moveSpeed;
                     rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
                 }
+            }
+            
+            //stop player if no inputs
+            if (moveDirection == Vector3.zero)
+            {
+                rb.velocity = new Vector3(0, rb.velocity.y, 0);
             }
         }
 
@@ -373,6 +404,32 @@ namespace Runtime.Temporary.Player
         public Vector3 GetSlopeMoveDirection(Vector3 direction)
         {
             return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+        }
+        
+        private void SlidingMovement()
+        {
+            Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+            // sliding normal
+            if(!OnSlope() || rb.velocity.y > -0.1f)
+            {
+                rb.AddForce(inputDirection.normalized * slideForce*0.5f, ForceMode.Force);
+
+                slideTimer -= Time.deltaTime;
+            }
+
+            // sliding down a slope
+            else
+            {
+                rb.AddForce(GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
+            }
+
+            if (slideTimer <= 0)
+            {
+                sliding = false;
+
+                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            }
         }
     }
 }
