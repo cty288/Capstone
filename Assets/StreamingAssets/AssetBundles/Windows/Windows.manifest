@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 574568730
+CRC: 1909614374
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -24,3 +24,23 @@ AssetBundleManifest:
       Name: test/scene_test.ab
       Dependencies:
         Dependency_0: mftest
+    Info_6:
+      Name: data
+      Dependencies:
+        Dependency_0: settings
+    Info_7:
+      Name: settings
+      Dependencies: {}
+    Info_8:
+      Name: info
+      Dependencies:
+        Dependency_0: assets/fonts
+    Info_9:
+      Name: description
+      Dependencies:
+        Dependency_0: settings
+        Dependency_1: info
+        Dependency_2: assets/fonts
+    Info_10:
+      Name: assets/fonts
+      Dependencies: {}

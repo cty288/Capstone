@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Temporary;
 using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
@@ -33,6 +35,10 @@ namespace Runtime.RunTimeTests.TestCollision
         private HitDetectorInfo hitDetectorInfo;
 
         public int Damage => m_damage;
+        
+        [field: ES3Serializable]
+        public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Hostile);
+
 
         public void Start()
         {

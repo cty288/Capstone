@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -12,16 +13,38 @@ using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 
 namespace Runtime.GameResources.Model.Base {
-	
+	public enum ResourceCategory {
+		RawMaterial,
+		Bait,
+		Trap,
+		Weapon
+	}
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
-		
 		public IMaxStack GetMaxStackProperty();
+
+		public void OnPicked();
 		
-		//public IStackSize GetStackSizeProperty();
+		public ResourceCategory GetResourceCategory();
+		
+		public string InventoryVCPrefabName { get; }
+		
+		public string OnGroundVCPrefabName { get; }
+		
+		public string InHandVCPrefabName { get; }
 	}
 	
+	//3 forms
+	//on ground
+	//in inventory (sprite)
+	//in hand
+
 	public abstract class ResourceEntity<T> :  AbstractBasicEntity, IResourceEntity where T : ResourceEntity<T>, new() {
 		private IMaxStack maxStackProperty;
+		
+
+		[field: ES3Serializable]
+		protected bool pickedBefore = false;
+		
 		//private IStackSize stackSizeProperty;
 		protected override void OnEntityStart() {
 			base.OnEntityStart();
@@ -59,9 +82,35 @@ namespace Runtime.GameResources.Model.Base {
 			return maxStackProperty;
 		}
 
+
+		public override string GetDisplayName() {
+			string originalDisplayName = base.GetDisplayName();
+			if (pickedBefore) {
+				return originalDisplayName;
+			}
+			else {
+				string displayName = OnGetDisplayNameBeforeFirstPicked(originalDisplayName);
+				return displayName;
+			}
+		}
+
+		protected abstract string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName);
+		
 		/*public IStackSize GetStackSizeProperty() {
 			return stackSizeProperty;
 		}*/
+		
+		public void OnPicked() {
+			pickedBefore = true;
+		}
+
+		public abstract ResourceCategory GetResourceCategory();
+		
+		[field: ES3Serializable]
+		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
+
+		public abstract string OnGroundVCPrefabName { get; }
+		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
 	}
 
 }

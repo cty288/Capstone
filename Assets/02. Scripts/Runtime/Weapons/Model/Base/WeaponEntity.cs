@@ -37,7 +37,12 @@ namespace Runtime.Weapons.Model.Base
         protected override ConfigTable GetConfigTable() {
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
         }
-        
+
+
+        public override ResourceCategory GetResourceCategory() {
+            return ResourceCategory.Weapon;
+        }
+
         protected override void OnEntityStart() {
             base.OnEntityStart();
             baseDamageProperty = GetProperty<IBaseDamage>();
@@ -57,6 +62,7 @@ namespace Runtime.Weapons.Model.Base
         }
         
         protected override void OnEntityRegisterAdditionalProperties() {
+            base.OnEntityRegisterAdditionalProperties();
             RegisterInitialProperty<IBaseDamage>(new BaseDamage());
             RegisterInitialProperty<IAttackSpeed>(new AttackSpeed());
             RegisterInitialProperty<IRange>(new Range());
@@ -117,6 +123,10 @@ namespace Runtime.Weapons.Model.Base
         public IChargeSpeed GetChargeSpeed()
         {
             return chargeSpeedProperty;
+        }
+
+        protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
+            return "???";
         }
     }
 }

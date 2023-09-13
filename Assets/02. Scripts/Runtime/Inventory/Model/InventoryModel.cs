@@ -6,48 +6,8 @@ using MikroFramework.BindableProperty;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
-	public interface IInventoryModel : IModel {
-
-		/// <summary>
-		/// Add an item to the inventory at the specified index. If the item is stackable, it will be added to the existing stack.
-		/// </summary>
-		/// <param name="item"></param>
-		/// <param name="index"></param>
-		/// <returns></returns>
-		bool AddItemAt(IResourceEntity item, int index);
+	public interface IInventoryModel : IModel, IResourceSlotsModel, ISavableModel {
 		
-		/// <summary>
-		/// Returns true if the item can be placed at the specified index. <br/>
-		/// Factors causing false: <br/>
-		/// 1. The index is out of range. <br/>
-		/// 2. The item is not currently stackable at the specified index. <br/>
-		/// </summary>
-		/// <param name="item"></param>
-		/// <param name="index"></param>
-		/// <returns></returns>
-		bool CanPlaceItem(IResourceEntity item, int index);
-		
-		/// <summary>
-		/// Find and remove the first item with the specified uuid.
-		/// </summary>
-		/// <param name="uuid"></param>
-		/// <returns></returns>
-		bool RemoveItem(string uuid, out int index);
-		
-		/// <summary>
-		/// Find and remove the first item with the specified uuid at the specified slot.
-		/// </summary>
-		/// <param name="index"></param>
-		/// <param name="uuid"></param>
-		/// <returns></returns>
-		bool RemoveItemAt(int index, string uuid);
-		
-		/// <summary>
-		/// Remove the last item at the specified slot.
-		/// </summary>
-		/// <param name="index"></param>
-		/// <returns></returns>
-		bool RemoveLastItemAt(int index);
 		
 		/// <summary>
 		/// Add the specified number of slots to the inventory. <br/>
@@ -57,91 +17,153 @@ namespace Runtime.Inventory.Model {
 		/// <param name="slotCount"></param>
 		/// <returns></returns>
 		bool AddSlots(int slotCount);
+		
 		/// <summary>
-		/// Get the number of all slots currently.
+		/// Add the specified number of slots to the hotbar. <br/>
 		/// </summary>
+		/// <param name="slotCount"></param>
 		/// <returns></returns>
-		int GetSlotCount();
+		bool AddHotBarSlots(HotBarCategory category, int slotCount, Func<ResourceSlot> getter);
 		
-		List<string> GetUUIDsByIndex(int index);
+
+		//void InitWithInitialSlots();
 		
-		/// <summary>
-		/// Reset the inventory to the initial state.
-		/// </summary>
-		void ResetInventory();
+		int GetHotBarSlotCount(HotBarCategory category);
+		
+		List<ResourceSlot> GetHotBarSlots(HotBarCategory category);
+		
+		void SelectHotBarSlot(HotBarCategory category, int index);
+		
+		void SelectNextHotBarSlot(HotBarCategory category);
+		
+		void SelectPreviousHotBarSlot(HotBarCategory category);
+		
+		int GetSelectedHotBarSlotIndex(HotBarCategory category);
+		
+		ResourceSlot GetSelectedHotBarSlot(HotBarCategory category);
 		
 	}
 	
 	public struct OnInventorySlotAddedEvent {
 		public int AddedCount;
+		public List<ResourceSlot> AddedSlots;
+	}
+	
+	public struct OnInventoryHotBarSlotAddedEvent {
+		public HotBarCategory Category;
+		public int AddedCount;
+		public List<ResourceSlot> AddedSlots;
 	}
 
+	public enum HotBarCategory {
+		None,
+		Right,
+		Left
+	}
 
-	
-	
-	
-	public class InventoryModel: AbstractSavableModel, IInventoryModel {
-		[ES3Serializable] private List<InventorySlot> slots;
+	[Serializable]
+	public class HotBarSlotsInfo {
+		public int CurrentSelectedIndex = 0;
+		public List<ResourceSlot> Slots = new List<ResourceSlot>();
 		
-		
-		public static int MaxSlotCount = 40;
-		
-		public static int InitialSlotCount = 10;
-		protected override void OnInit() {
-			base.OnInit();
-			if (slots == null) { //not load from saved
-				slots = new List<InventorySlot>();
-				AddSlots(InitialSlotCount);
-			}
-		}
-		
-
-		public bool AddItemAt(IResourceEntity item, int index) {
-			if (!CanPlaceItem(item, index)) return false;
+		public HotBarSlotsInfo() {
 			
-			InventorySlot slot = slots[index];
-			if (slot.TryAddItem(item)) {
-				return true;
+		}
+	}
+	
+	public struct OnHotBarSlotSelectedEvent {
+		public HotBarCategory Category;
+		public int SelectedIndex;
+	}
+	
+	public class InventoryModel: ResourceSlotsModel, IInventoryModel {
+
+		[ES3Serializable]
+		private Dictionary<HotBarCategory, HotBarSlotsInfo> hotBarSlots =
+			new Dictionary<HotBarCategory, HotBarSlotsInfo>();
+
+
+		
+		public static int MaxSlotCount = 27;
+		
+		public static Dictionary<HotBarCategory, int> MaxHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
+			{HotBarCategory.Right, 3},
+			{HotBarCategory.Left, 5}
+		};
+		
+
+		
+
+		
+		
+		public bool AddHotBarSlots(HotBarCategory category, int slotCount, Func<ResourceSlot> getter) {
+			int actualAddedCount = slotCount;
+			if (category == HotBarCategory.None) {
+				return false;
 			}
-
-			return false;
+			
+			if (!hotBarSlots.ContainsKey(category)) {
+				hotBarSlots.Add(category, new HotBarSlotsInfo());
+			}
+			
+			int curCount = GetHotBarSlotCount(category);
+			int maxCount = MaxHotBarSlotCount[category];
+			if (slotCount + curCount > maxCount) {
+				actualAddedCount = maxCount - curCount;
+			}
+			
+		
+			//insert to the end of slots[slotCount-1]
+			List<ResourceSlot> addedSlots = new List<ResourceSlot>();
+			for (int i = 0; i < actualAddedCount; i++) {
+				ResourceSlot slot = getter.Invoke();
+				hotBarSlots[category].Slots.Add(slot);
+				addedSlots.Add(slot);
+			}
+			
+			
+			this.SendEvent<OnInventoryHotBarSlotAddedEvent>(new OnInventoryHotBarSlotAddedEvent() {
+				Category = category,
+				AddedCount = actualAddedCount,
+				AddedSlots = addedSlots
+			});
+			return actualAddedCount == slotCount;
 		}
 
-		public bool CanPlaceItem(IResourceEntity item, int index) {
-			if (index < 0 || index >= GetSlotCount()) return false;
-			return slots[index].CanPlaceItem(item);
-		}
-
-		public bool RemoveItem(string uuid, out int index) {
-			for (int i = 0; i < GetSlotCount(); i++) {
-				if (slots[i].ContainsItem(uuid)) {
-					index = i;
-					return RemoveItemAt(i, uuid);
+		public override bool AddItem(IResourceEntity item) {
+			//check each hot bar first
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
+					if (AddItemAt(item, slot)) {
+						return true;
+					}
 				}
 			}
-
-			index = -1;
-			return false;
+			return base.AddItem(item);
 		}
 
-		public bool RemoveItemAt(int index, string uuid) {
-			if (index < 0 || index >= GetSlotCount()) return false;
-			InventorySlot slot = slots[index];
-			
-			if (slot.RemoveItem(uuid)) {
-				return true;
+		public override bool RemoveItem(string uuid) {
+			//check each hot bar first
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
+					if (slot.RemoveItem(uuid)) {
+						return true;
+					}
+				}
 			}
-			return false;
+			return base.RemoveItem(uuid);
 		}
 
-		public bool RemoveLastItemAt(int index) {
-			if (index < 0 || index >= GetSlotCount()) return false;
-			InventorySlot slot = slots[index];
-			
-			if (slot.RemoveLastItem()) {
-				return true;
+		public override bool CanPlaceItem(IResourceEntity item) {
+			//check each hot bar first
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
+					if (slot.CanPlaceItem(item)) {
+						return true;
+					}
+				}
 			}
-			return false;
+			return base.CanPlaceItem(item);
 		}
 
 		public bool AddSlots(int slotCount) {
@@ -150,29 +172,106 @@ namespace Runtime.Inventory.Model {
 				actualAddedCount = MaxSlotCount - GetSlotCount();
 			}
 			
+			
+			List<ResourceSlot> addedSlots = new List<ResourceSlot>();
 			for (int i = 0; i < actualAddedCount; i++) {
-				slots.Add(new InventorySlot());
+				ResourceSlot slot = new ResourceSlot();
+				slots.Add(slot);
+				addedSlots.Add(slot);
 			}
 			
 			this.SendEvent<OnInventorySlotAddedEvent>(new OnInventorySlotAddedEvent() {
-				AddedCount = actualAddedCount
+				AddedCount = actualAddedCount,
+				AddedSlots = addedSlots
 			});
 			return actualAddedCount == slotCount;
 		}
 
-		public int GetSlotCount() {
-			return slots.Count;
+		/*public void InitWithInitialSlots() {
+			
+		}*/
+
+		protected override void OnInit() {
+			base.OnInit();
+			if (IsFirstTimeCreated) { //not load from saved
+				slots = new List<ResourceSlot>();
+				
+				
+				
+			}
 		}
 
-		public List<string> GetUUIDsByIndex(int index) {
-			if (index < 0 || index >= GetSlotCount()) return null;
-			return slots[index].GetUUIDList();
+		public int GetHotBarSlotCount(HotBarCategory category) {
+			return hotBarSlots[category].Slots.Count;
 		}
 
-		public void ResetInventory() {
+		public List<ResourceSlot> GetHotBarSlots(HotBarCategory category) {
+			if (!hotBarSlots.ContainsKey(category)) {
+				return null;
+			}
+			return hotBarSlots[category].Slots;
+		}
+
+		public void SelectHotBarSlot(HotBarCategory category, int index) {
+			HotBarSlotsInfo info = hotBarSlots[category];
+			if (index < 0 || index >= info.Slots.Count) {
+				return;
+			}
+			info.CurrentSelectedIndex = index;
+			this.SendEvent<OnHotBarSlotSelectedEvent>(new OnHotBarSlotSelectedEvent() {
+				Category = category,
+				SelectedIndex = index
+			});
+		}
+
+		public void SelectNextHotBarSlot(HotBarCategory category) {
+			HotBarSlotsInfo info = hotBarSlots[category];
+			if (info.Slots.Count == 0) {
+				return;
+			}
+			info.CurrentSelectedIndex = (info.CurrentSelectedIndex + 1) % info.Slots.Count;
+			this.SendEvent<OnHotBarSlotSelectedEvent>(new OnHotBarSlotSelectedEvent() {
+				Category = category,
+				SelectedIndex = info.CurrentSelectedIndex
+			});
+		}
+
+		public void SelectPreviousHotBarSlot(HotBarCategory category) {
+			HotBarSlotsInfo info = hotBarSlots[category];
+			if (info.Slots.Count == 0) {
+				return;
+			}
+			info.CurrentSelectedIndex = (info.CurrentSelectedIndex - 1 + info.Slots.Count) % info.Slots.Count;
+			this.SendEvent<OnHotBarSlotSelectedEvent>(new OnHotBarSlotSelectedEvent() {
+				Category = category,
+				SelectedIndex = info.CurrentSelectedIndex
+			});
+		}
+
+		public int GetSelectedHotBarSlotIndex(HotBarCategory category) {
+			return hotBarSlots[category].CurrentSelectedIndex;
+		}
+
+		public ResourceSlot GetSelectedHotBarSlot(HotBarCategory category) {
+			HotBarSlotsInfo info = hotBarSlots[category];
+			if (info.Slots.Count == 0) {
+				return null;
+			}
+			return info.Slots[info.CurrentSelectedIndex];
+		}
+
+		public override void Clear() {
+			if (slots == null) {
+				return;
+			}
 			slots.Clear();
-			AddSlots(InitialSlotCount);
+			
+			foreach (HotBarCategory category in Enum.GetValues(typeof(HotBarCategory))) {
+				if (!hotBarSlots.ContainsKey(category)) {
+					continue;
+				}
+				hotBarSlots[category].Slots.Clear();
+			}
 		}
-		
 	}
 }

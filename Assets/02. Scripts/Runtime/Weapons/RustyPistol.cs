@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
-using Mikrocosmos.Controls;
+using MikroFramework.BindableProperty;
+using Runtime.Controls;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources.Model.Base;
 using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
 using Runtime.Utilities.Collision;
@@ -32,6 +35,9 @@ namespace Runtime.Weapons
         {
             return null;
         }
+
+
+        public override string OnGroundVCPrefabName { get; } = "RustyPistol";
     }
 
     public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
@@ -55,8 +61,10 @@ namespace Runtime.Weapons
         
         [SerializeField] private GameObject hitParticlePrefab;
         
+        
+        
         // For IHitResponder.
-        public int Damage => BoundEntity.GetBaseDamage().BaseValue;
+        public int Damage => BoundEntity.GetBaseDamage().RealValue;
         private DPunkInputs.PlayerActions playerActions;
 
         protected override void Awake() {
@@ -72,11 +80,11 @@ namespace Runtime.Weapons
         
         protected override void OnBindEntityProperty() {}
 
-        protected override void OnEntityStart()
-        {
-            currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
+        protected override void OnEntityStart() {
+            base.OnEntityStart();
+            currentAmmo = BoundEntity.GetAmmoSize().RealValue;
             lineRenderers = new List<LineRenderer>();
-            for (int i = 0; i < BoundEntity.GetBulletsPerShot().BaseValue; i++)
+            for (int i = 0; i < BoundEntity.GetBulletsPerShot().RealValue; i++)
             {
                 Debug.Log("adding line renderer");
                 lineRenderers.Add(Instantiate(lineRendererPrefab, transform).GetComponent<LineRenderer>());
@@ -92,26 +100,31 @@ namespace Runtime.Weapons
                 weapon = BoundEntity
             };
         }
-        
+
+        protected override void OnStartAbsorb() {
+           
+        }
+
+
         public void Update()
         {
             currentCD += Time.deltaTime;
             
-            if (currentReloadCD < BoundEntity.GetReloadSpeed().BaseValue)
+            if (currentReloadCD < BoundEntity.GetReloadSpeed().RealValue)
             {
                 currentReloadCD += Time.deltaTime;
             }
             else
             {
-                currentAmmo = BoundEntity.GetAmmoSize().BaseValue;
+                currentAmmo = BoundEntity.GetAmmoSize().RealValue;
             }
         }
         
         public void FixedUpdate()
         {
-            if (playerActions.Shoot.IsPressed())
+            if (playerActions.Shoot.IsPressed() && isHolding)
             {
-                if (currentAmmo > 0 && currentCD >= BoundEntity.GetAttackSpeed().BaseValue)
+                if (currentAmmo > 0 && currentCD >= BoundEntity.GetAttackSpeed().RealValue)
                 {
                     Shoot();
                     currentCD = 0;

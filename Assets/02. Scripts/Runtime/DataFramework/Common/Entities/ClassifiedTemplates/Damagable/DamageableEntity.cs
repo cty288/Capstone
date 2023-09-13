@@ -52,6 +52,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			return HealthProperty.GetCurrentHealth();
 		}
 
+		
+
 		/// <summary>
 		/// Will not take damage if the damage dealer is in the same faction <br/>
 		/// Will take 0 damage if the entity is invincible
@@ -59,7 +61,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// <param name="damage"></param>
 		/// <param name="damageDealer"></param>
 		public void TakeDamage(int damage, [CanBeNull] IBelongToFaction damageDealer) {
-			if(damageDealer != null && damageDealer.CurrentFaction == CurrentFaction.Value) {
+			if(damageDealer != null && damageDealer.IsSameFaction(this)) {
 				return;
 			}
 			

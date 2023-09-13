@@ -1,44 +1,78 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MikroFramework.Architecture;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
-	public struct OnInventoryReloadEvent {
+	/*public struct OnInventoryReloadEvent {
 		public List<InventorySlotInfo> InventorySlots;
-	}
+	}*/
 
+	public struct OnCurrentHotbarUpdateEvent {
+		public HotBarCategory Category;
+		public IResourceEntity TopItem;
+	}
 	
 	public class InventorySystem : AbstractSystem, IInventorySystem {
 		private IInventoryModel inventoryModel;
+		
+
+		public static int InitialSlotCount = 9;
+		public static Dictionary<HotBarCategory, int> InitialHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
+			{HotBarCategory.Right, 2},
+			{HotBarCategory.Left, 3}
+		};
+		
+		private Dictionary<HotBarCategory, ResourceSlot> currentSelectedSlot = new Dictionary<HotBarCategory, ResourceSlot>();
+		private Dictionary<ResourceSlot, HotBarCategory> slotToCategories = new Dictionary<ResourceSlot, HotBarCategory>();
+
 		protected override void OnInit() {
 			inventoryModel = this.GetModel<IInventoryModel>();
-		}
 
-		public bool AddItem(IResourceEntity item) {
-			for (int i = 0; i < GetSlotCount(); i++) {
-				if (CanPlaceItem(item, i)) {
-					return AddItemAt(item, i);
-				}
+			this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
+			if (inventoryModel.IsFirstTimeCreated) {
+				ResetInventory();
 			}
-			return false;
-		}
-
-		public bool AddItemAt(IResourceEntity item, int index) {
-			if(inventoryModel.AddItemAt(item, index)) {
-				List<string> uuids = inventoryModel.GetUUIDsByIndex(index);
-				List<IResourceEntity> resources = GetResourcesByIDs(uuids);
-
-				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
-					UpdatedSlot = new InventorySlotInfo() {
-						Items = resources,
-						SlotIndex = index
-					}
-				});
-				return true;
+			else {
+				inventoryModel.SelectHotBarSlot(HotBarCategory.Left, inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Left));
+				inventoryModel.SelectHotBarSlot(HotBarCategory.Right, inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
 			}
-			return false;
 		}
-		
+
+		private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
+			ResourceSlot slot = inventoryModel.GetHotBarSlots(e.Category)[e.SelectedIndex];
+			currentSelectedSlot.TryAdd(e.Category, null);
+			
+			ResourceSlot previousSlot = currentSelectedSlot[e.Category];
+			if (previousSlot != null) {
+				previousSlot.UnregisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+			}
+
+			currentSelectedSlot[e.Category] = slot;
+			slotToCategories.TryAdd(slot, e.Category);
+			
+			slot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+			OnCurrentSlotUpdate(slot, slot.GetLastItemUUID(), slot.GetUUIDList());
+		}
+
+		private void OnCurrentSlotUpdate(ResourceSlot slot, string topUUID, List<string> allUUIDs) {
+			if (!slotToCategories.ContainsKey(slot)) {
+				return;
+			}
+			HotBarCategory category = slotToCategories[slot];
+
+			IResourceEntity resourceEntity = null;
+			if (topUUID != null) {
+				resourceEntity = GlobalGameResourceEntities.GetAnyResource(topUUID);
+			}
+			
+			this.SendEvent<OnCurrentHotbarUpdateEvent>(new OnCurrentHotbarUpdateEvent() {
+				Category = category,
+				TopItem = resourceEntity
+			});
+		}
+
+
 		private List<IResourceEntity> GetResourcesByIDs(List<string> uuids) {
 			List<IResourceEntity> resources = new List<IResourceEntity>();
 			foreach (string uuid in uuids) {
@@ -48,97 +82,23 @@ namespace Runtime.Inventory.Model {
 			return resources;
 		}
 
-		public bool CanPlaceItem(IResourceEntity item, int index) {
-			return inventoryModel.CanPlaceItem(item, index);
-		}
-
-		public bool RemoveItem(string uuid) {
-			if (inventoryModel.RemoveItem(uuid, out int index)) {
-				List<string> uuids = inventoryModel.GetUUIDsByIndex(index);
-				List<IResourceEntity> resources = GetResourcesByIDs(uuids);
-
-				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
-					UpdatedSlot = new InventorySlotInfo() {
-						Items = resources,
-						SlotIndex = index
-					}
-				});
-				return true;
-			}
-			return false;
-		}
-
-		public bool RemoveItemAt(int index, string uuid) {
-			if (inventoryModel.RemoveItemAt(index, uuid)) {
-				List<string> uuids = inventoryModel.GetUUIDsByIndex(index);
-				List<IResourceEntity> resources = GetResourcesByIDs(uuids);
-
-				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
-					UpdatedSlot = new InventorySlotInfo() {
-						Items = resources,
-						SlotIndex = index
-					}
-				});
-				return true;
-			}
-			return false;
-		}
-
-		public bool RemoveLastItemAt(int index) {
-			if (inventoryModel.RemoveLastItemAt(index)) {
-				List<string> uuids = inventoryModel.GetUUIDsByIndex(index);
-				List<IResourceEntity> resources = GetResourcesByIDs(uuids);
-
-				this.SendEvent<OnInventorySlotUpdateEvent>(new OnInventorySlotUpdateEvent() {
-					UpdatedSlot = new InventorySlotInfo() {
-						Items = resources,
-						SlotIndex = index
-					}
-				});
-				return true;
-			}
-			return false;
-		}
-
-		public bool AddSlots(int slotCount) {
-			if (inventoryModel.AddSlots(slotCount)) {
-				return true;
-			}
-			return false;
-		}
-
-		public int GetSlotCount() {
-			return inventoryModel.GetSlotCount();
-		}
 
 		public void ResetInventory() {
-			inventoryModel.ResetInventory();
-			List<InventorySlotInfo> slots = new List<InventorySlotInfo>();
-			for (int i = 0; i < GetSlotCount(); i++) {
-				List<string> uuids = inventoryModel.GetUUIDsByIndex(i);
-				List<IResourceEntity> resources = GetResourcesByIDs(uuids);
-				slots.Add(new InventorySlotInfo() {
-					Items = resources,
-					SlotIndex = i
-				});
-			}
-
-			this.SendEvent<OnInventoryReloadEvent>(new OnInventoryReloadEvent() {
-				InventorySlots = slots
-			});
+			inventoryModel.Clear();
+			AddInitialSlots();
+			inventoryModel.SelectHotBarSlot(HotBarCategory.Left, 0);
+			inventoryModel.SelectHotBarSlot(HotBarCategory.Right, 0);
 		}
+		
+		
+		private void AddInitialSlots() {
+			inventoryModel.AddSlots(InitialSlotCount);
 
-		public int GetSlotCurrentItemCount(int index) {
-			return inventoryModel.GetUUIDsByIndex(index).Count;
-		}
-
-		public InventorySlotInfo GetItemsAt(int index) {
-			List<string> uuids = inventoryModel.GetUUIDsByIndex(index);
-			List<IResourceEntity> resources = GetResourcesByIDs(uuids);
-			return new InventorySlotInfo() {
-				Items = resources,
-				SlotIndex = index
-			};
+			inventoryModel.AddHotBarSlots(HotBarCategory.Left, InitialHotBarSlotCount[HotBarCategory.Left],
+				()=>new LeftHotBarSlot());
+				
+			inventoryModel.AddHotBarSlots(HotBarCategory.Right, InitialHotBarSlotCount[HotBarCategory.Right],
+				()=>new RightHotBarSlot());
 		}
 	}
 }

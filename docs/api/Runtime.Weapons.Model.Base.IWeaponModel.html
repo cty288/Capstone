@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Weapons_Model_Base_IWeaponModel" data-uid="Runtime.Weapons.Model.Base.IWeaponModel" class="text-break">
     Interface IWeaponModel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponModel.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponModel.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IWeaponModel : IGameResourceModel&lt;IWeaponEntity&gt;, IEntityModel&lt;IWeaponEntity&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IWeaponModel : IGameResourceModel&lt;IWeaponEntity&gt;, IEntityModel&lt;IWeaponEntity&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture, ISavableModel</code></pre>
   </div>
 
 
@@ -128,6 +128,15 @@
     <div>
       <a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html#MikroFramework_Architecture_IBelongToArchitecture_GetArchitecture">IBelongToArchitecture.GetArchitecture()</a>
     </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_OnLoad_System_String_">ISavableModel.OnLoad(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_OnSave_System_String_">ISavableModel.OnSave(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_IsFirstTimeCreated">ISavableModel.IsFirstTimeCreated</a>
+    </div>
   </dd></dl>
 
 
@@ -143,7 +152,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_IWeaponModel_GetWeaponBuilder__1_System_Boolean_" data-uid="Runtime.Weapons.Model.Base.IWeaponModel.GetWeaponBuilder``1(System.Boolean)">
   GetWeaponBuilder&lt;T&gt;(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponModel.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponModel.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -184,7 +193,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponModel.cs/#L8" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponModel.cs/#L9" class="edit-link">Edit this page</a>
         </div>
 
         

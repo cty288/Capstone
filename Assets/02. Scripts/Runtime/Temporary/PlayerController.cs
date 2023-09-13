@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 
@@ -15,6 +17,10 @@ namespace Runtime.Temporary
         public int Damage => m_damage;
  
         private List<GameObject> hitObjects = new List<GameObject>();
+        
+        [field: ES3Serializable]
+        public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
+
 
 
         public bool CheckHit(HitData data)

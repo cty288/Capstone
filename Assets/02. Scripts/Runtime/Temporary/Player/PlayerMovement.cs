@@ -1,9 +1,9 @@
 using System;
-using Mikrocosmos;
-using Mikrocosmos.Controls;
-using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+using Framework;
+using Mikrocosmos;
+using Runtime.Controls;
+using UnityEngine;
 
 namespace Runtime.Temporary.Player
 {
@@ -107,20 +107,20 @@ namespace Runtime.Temporary.Player
         // Start is called before the first frame update
         void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = false;
 
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
 
             readyToJump = true;
-            readyToDoubleJump = true;
 
         }
 
         // Update is called once per frame
         void Update()
         {
+            //Camera;
             
             HandleCamera();
 
@@ -129,24 +129,31 @@ namespace Runtime.Temporary.Player
 
             MyInput();
             SpeedControl();
-            StateHandler();
 
             // handle drag
             if (grounded)
                 rb.drag = groundDrag;
             else
                 rb.drag = 0;
+
+            if (Input.GetKeyDown(KeyCode.F5)) {
+                ((MainGame) MainGame.Interface).SaveGame();
+            }
         }
+        private bool sprintTapPressed = false;
+        private float sprintTapCheckTimer = 0.4f;
+        
         private void FixedUpdate()
         {      
             MovePlayer();
             if (Input.GetKeyDown(KeyCode.K)) {
                 GameObject obj = ControlInfoFactory.Singleton.GetBindingKeyGameObject(ClientInput.Singleton.FindActionInPlayerActionMap("Sprint"),
                     out BindingInfo info, out string actionName);
-                //Debug.Log("Action Name: " + actionName);
+                Debug.Log("Action Name: " + actionName);
             }
             Debug.Log(OnSlope());
         }
+        
         private void StateHandler()
         {
             // Mode - Sliding
@@ -208,14 +215,14 @@ namespace Runtime.Temporary.Player
             cameraTrans.localEulerAngles = Vector3.right * cameraPitch;
             transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
         }
+
         private void MyInput()
         {
             horizontalInput = playerActions.Move.ReadValue<Vector2>().x;
             verticalInput = playerActions.Move.ReadValue<Vector2>().y;
 
             // when to jump
-            if (playerActions.Jump.WasPressedThisFrame() && readyToJump && grounded)
-            {
+            if (playerActions.Jump.WasPressedThisFrame() && readyToJump && grounded) {
                 readyToJump = false;
                 readyToDoubleJump = true;
 
@@ -230,21 +237,35 @@ namespace Runtime.Temporary.Player
                 Jump();
                 
             }
-            if (playerActions.Sprint.IsPressed())
-            {
+            ;
+            if (playerActions.SprintTap.WasPerformedThisFrame()) {
+                Debug.Log("Sprint Tap");
+                sprintTapPressed = true;
+                sprintTapCheckTimer = 0.4f;
+            }
+            
+            
+            
+            if (playerActions.SprintHold.IsPressed() || sprintTapPressed) {
                 sprinting = true;
                 Debug.Log("Sprinting");
             }
-            else
-            {
+            else {
                 sprinting = false;
             }
+            
+            sprintTapCheckTimer -= Time.deltaTime;
+            if (sprintTapCheckTimer <= 0 && sprintTapPressed) {
+                if (verticalInput == 0) {
+                    sprintTapPressed = false;
+                }
+            }
+            
         }
-
+       
         private void MovePlayer()
         {
-            // calculate movement direction
-            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            moveDirection = (orientation.forward * verticalInput + orientation.right * horizontalInput).normalized;
 
             float spd = accelForce;
             // on slope

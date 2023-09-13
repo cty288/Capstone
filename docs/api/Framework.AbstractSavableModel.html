@@ -83,7 +83,7 @@
 
   <h1 id="Framework_AbstractSavableModel" data-uid="Framework.AbstractSavableModel" class="text-break">
     Class AbstractSavableModel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L4"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L12"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractSavableModel : AbstractModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AbstractSavableModel : AbstractModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture, ISavableModel</code></pre>
   </div>
 
 
@@ -118,6 +118,7 @@
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Framework.ISavableModel.html">ISavableModel</a></div>
     </dd>
   </dl>
 
@@ -125,7 +126,7 @@
     <dt>Derived</dt>
     <dd>
       <div><a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html">EntityModel&lt;T&gt;</a></div>
-      <div><a class="xref" href="Runtime.Inventory.Model.InventoryModel.html">InventoryModel</a></div>
+      <div><a class="xref" href="Runtime.Inventory.Model.ResourceSlotsModel.html">ResourceSlotsModel</a></div>
     </dd>
   </dl>
 
@@ -160,6 +161,41 @@
 
 
 
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Framework_AbstractSavableModel_IsFirstTimeCreated_" data-uid="Framework.AbstractSavableModel.IsFirstTimeCreated*"></a>
+
+  <h3 id="Framework_AbstractSavableModel_IsFirstTimeCreated" data-uid="Framework.AbstractSavableModel.IsFirstTimeCreated">
+  IsFirstTimeCreated
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsFirstTimeCreated { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -168,7 +204,7 @@
 
   <h3 id="Framework_AbstractSavableModel_OnInit" data-uid="Framework.AbstractSavableModel.OnInit">
   OnInit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L6"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L14"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -194,7 +230,7 @@
 
   <h3 id="Framework_AbstractSavableModel_OnLoad_System_String_" data-uid="Framework.AbstractSavableModel.OnLoad(System.String)">
   OnLoad(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -225,7 +261,7 @@
 
   <h3 id="Framework_AbstractSavableModel_OnSave_System_String_" data-uid="Framework.AbstractSavableModel.OnSave(System.String)">
   OnSave(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -256,7 +292,7 @@
 
   <h3 id="Framework_AbstractSavableModel_Save_System_String_" data-uid="Framework.AbstractSavableModel.Save(System.String)">
   Save(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -287,7 +323,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L4" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Framework/AbstractSavableModel.cs/#L12" class="edit-link">Edit this page</a>
         </div>
 
         

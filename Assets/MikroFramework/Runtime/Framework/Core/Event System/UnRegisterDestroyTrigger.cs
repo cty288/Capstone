@@ -18,7 +18,7 @@ namespace MikroFramework.Event
             unRegisters.Add(unRegister, alsoUnregisterWhenDisabled);
         }
 
-        private void OnDestroy() {
+        protected void OnDestroy() {
             foreach (IUnRegister unRegister in unRegisters.Keys) {
                 unRegister.UnRegister();
             }

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MikroFramework.Pool
 {
     public abstract class PoolableGameObject : MonoBehaviour
     {
-        
+        [SerializeField] private UnityEvent onRecycledEvent;
+        [SerializeField] private UnityEvent onAllocateEvent;
         /// <summary>
         /// The pool that belongs to this object
         /// </summary>
@@ -32,12 +34,35 @@ namespace MikroFramework.Pool
           
         }
 
-        public abstract void OnAllocate();
+        private void Start() {
+            if (Pool == null) {
+                OnStartOrAllocate();
+            }
+        }
+
+        public virtual void OnStartOrAllocate() {
+            onAllocateEvent?.Invoke();
+        }
 
 
         /// <summary>
         /// Triggered after recycled back to the pool, or after calling Recycle()
         /// </summary>
-        public abstract void OnRecycled();
+        public virtual void OnRecycled() {
+            onRecycledEvent?.Invoke();
+        }
+        
+        public void RegisterOnRecycledEvent(UnityAction action) {
+            onRecycledEvent.AddListener(action);
+        }
+        
+        public void RegisterOnAllocateEvent(UnityAction action) {
+            onAllocateEvent.AddListener(action);
+        }
+        
+        private void OnDestroy() {
+            onRecycledEvent?.RemoveAllListeners();
+            onAllocateEvent?.RemoveAllListeners();
+        }
     }
 }

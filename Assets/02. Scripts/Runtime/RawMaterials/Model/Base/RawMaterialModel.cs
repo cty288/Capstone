@@ -1,8 +1,9 @@
-﻿using Runtime.GameResources.Model.Base;
+﻿using Framework;
+using Runtime.GameResources.Model.Base;
 using Runtime.RawMaterials.Model.Builder;
 
 namespace Runtime.RawMaterials.Model.Base {
-	public interface IRawMaterialModel : IGameResourceModel<IRawMaterialEntity> {
+	public interface IRawMaterialModel : IGameResourceModel<IRawMaterialEntity>, ISavableModel {
 		RawMaterialBuilder<T> GetRawMaterialBuilder<T>(bool addToModelOnceBuilt = true)
 			where T : class, IRawMaterialEntity, new();
 	}

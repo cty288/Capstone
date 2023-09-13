@@ -150,7 +150,7 @@ namespace MikroFramework.Pool
                 PoolableGameObject poolableGameObject = createdObj.GetComponent<PoolableGameObject>();
                 poolableGameObject.Pool = this;
                 poolableGameObject.IsRecycled = false;
-                poolableGameObject.OnAllocate();
+                poolableGameObject.OnStartOrAllocate();
             }
             else {
                 Debug.LogWarning("A Prefab is missing but the SafeGameObjectPool is still trying to access it!");

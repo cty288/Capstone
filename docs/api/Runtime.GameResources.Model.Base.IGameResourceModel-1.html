@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_GameResources_Model_Base_IGameResourceModel_1" data-uid="Runtime.GameResources.Model.Base.IGameResourceModel`1" class="text-break">
     Interface IGameResourceModel&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IGameResourceModel&lt;T&gt; : IEntityModel&lt;T&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture where T : IResourceEntity</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IGameResourceModel&lt;T&gt; : IEntityModel&lt;T&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture, ISavableModel where T : IResourceEntity</code></pre>
   </div>
 
 
@@ -130,6 +130,15 @@
     <div>
       <a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html#MikroFramework_Architecture_IBelongToArchitecture_GetArchitecture">IBelongToArchitecture.GetArchitecture()</a>
     </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_OnLoad_System_String_">ISavableModel.OnLoad(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_OnSave_System_String_">ISavableModel.OnSave(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.ISavableModel.html#Framework_ISavableModel_IsFirstTimeCreated">ISavableModel.IsFirstTimeCreated</a>
+    </div>
   </dd></dl>
 
 
@@ -145,7 +154,7 @@
 
   <h3 id="Runtime_GameResources_Model_Base_IGameResourceModel_1_GetAnyResource_System_String_" data-uid="Runtime.GameResources.Model.Base.IGameResourceModel`1.GetAnyResource(System.String)">
   GetAnyResource(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get any resource, as long as it inherits from IResourceEntity</p>
@@ -182,7 +191,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L8" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L9" class="edit-link">Edit this page</a>
         </div>
 
         

@@ -1,5 +1,6 @@
 ﻿using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources.Model.Base;
 using Runtime.RawMaterials.Model.Base;
 
 namespace Runtime.RawMaterials.Model.Instances {
@@ -20,6 +21,10 @@ namespace Runtime.RawMaterials.Model.Instances {
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
+		}
+
+		public override ResourceCategory GetResourceCategory() {
+			return ResourceCategory.RawMaterial;
 		}
 	}
 }

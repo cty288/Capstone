@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Mikrocosmos.Controls;
 using Polyglot;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Mikrocosmos {
+namespace Runtime.Controls {
     [Serializable]
     public struct LocalizedControlKey {
         public string mainInputAction;

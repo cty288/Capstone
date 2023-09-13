@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_GameResources_Model_Base_GameResourceModel_1" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1" class="text-break">
     Class GameResourceModel&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class GameResourceModel&lt;T&gt; : EntityModel&lt;T&gt;, IGameResourceModel&lt;T&gt;, IEntityModel&lt;T&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture where T : IResourceEntity</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class GameResourceModel&lt;T&gt; : EntityModel&lt;T&gt;, IGameResourceModel&lt;T&gt;, IEntityModel&lt;T&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture, ISavableModel where T : IResourceEntity</code></pre>
   </div>
 
 
@@ -128,6 +128,7 @@
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Framework.ISavableModel.html">ISavableModel</a></div>
     </dd>
   </dl>
 
@@ -162,6 +163,9 @@
     </div>
     <div>
       <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_OnSave_System_String_">AbstractSavableModel.OnSave(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_IsFirstTimeCreated">AbstractSavableModel.IsFirstTimeCreated</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
@@ -199,7 +203,7 @@
 
   <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_GetAnyResource_System_String_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.GetAnyResource(System.String)">
   GetAnyResource(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L52"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get any resource, as long as it inherits from IResourceEntity</p>
@@ -236,7 +240,7 @@
 
   <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnEntityBuilt__0_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnEntityBuilt(`0)">
   OnEntityBuilt(T)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -267,7 +271,7 @@
 
   <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnInit" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnInit">
   OnInit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -293,7 +297,7 @@
 
   <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_RemoveEntity_System_String_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.RemoveEntity(System.String)">
   RemoveEntity(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L56"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -329,7 +333,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L32" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L36" class="edit-link">Edit this page</a>
         </div>
 
         
