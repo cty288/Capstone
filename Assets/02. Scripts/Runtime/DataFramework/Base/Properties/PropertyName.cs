@@ -24,7 +24,7 @@ namespace Runtime.DataFramework.Properties
 		test_interest,
 		test_interest_list,
 		test_interest_dict,
-		//weapon properties test
+		//weapon properties
 		base_damage,
 		attack_speed,
 		range,
