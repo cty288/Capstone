@@ -123,7 +123,6 @@ namespace Runtime.Weapons
             
         public void Shoot()
         {
-            Debug.Log("shoot");
             particleSystem.Play();
             
             Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
@@ -134,11 +133,10 @@ namespace Runtime.Weapons
                 Random.Range(-spread, spread));
             shootDir.Normalize();
             
-            Debug.Log(BoundEntity.GetSpread().RealValue.Value);
-            
-            if (Physics.Raycast(particleSystem.transform.position, shootDir, out RaycastHit hit,
+            if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit hit,
                     BoundEntity.GetRange().RealValue.Value, layer))
             {
+                Debug.Log("hit");
                 StartCoroutine(PlayTrail(particleSystem.transform.position, hit.point, hit));
             }
             else
@@ -150,7 +148,6 @@ namespace Runtime.Weapons
 
         private IEnumerator PlayTrail(Vector3 startPoint, Vector3 endPoint, RaycastHit hit)
         {
-            Debug.Log("start: " + startPoint + ", end: " + endPoint);
             TrailRenderer instance = trailPool.Get();
             instance.gameObject.SetActive(true);
             instance.transform.position = startPoint;
@@ -173,6 +170,8 @@ namespace Runtime.Weapons
             }
 
             instance.transform.position = endPoint;
+            
+            Instantiate(hitParticlePrefab, hit.point, Quaternion.identity);
 
             yield return new WaitForSeconds(0.01f);
             yield return null;
