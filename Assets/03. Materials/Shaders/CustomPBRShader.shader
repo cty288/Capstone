@@ -28,6 +28,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
     	
     	_ShadowEdgePower("Shadow Edge Power", Float) = 3.0
     	_ShadowEdgeSaturation("Shadow Edge Power", Range(0, 1)) = 0.25
+    	_ShadowRadianceRange("Shadow Radiance Range (X, Y)", Vector) = (0.1, 0.5, 0 ,0)
     	
     	[Toggle(_NORMALMAP)] _NormalMapToggle ("Use Normal Map", Float) = 0
     	_BumpScale("Bump Scale", Float) = 1.0
@@ -77,6 +78,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 
 				float _ShadowEdgePower;
 				float _ShadowEdgeSaturation;
+				float2 _ShadowRadianceRange;
 
 				float _BumpScale;
 				float4 _BumpMap_ST;

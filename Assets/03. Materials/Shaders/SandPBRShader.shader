@@ -28,6 +28,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
     	
     	_ShadowEdgePower("Shadow Edge Power", Float) = 3.0
     	_ShadowEdgeSaturation("Shadow Edge Power", Range(0, 1)) = 0.25
+    	_ShadowRadianceRange("Shadow Radiance Range (X, Y)", Vector) = (0.1, 0.5, 0 ,0)
         
     	_BumpScale("Bump Scale", Range(0.0, 0.7)) = 0.3
         _BumpMap("Sand Map", 2D) = "bump" {}
@@ -82,6 +83,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
 
 				float _ShadowEdgePower;
 				float _ShadowEdgeSaturation;
+				float2 _ShadowRadianceRange;
 
 				float _BumpScale;
 				float4 _BumpMap_ST;
@@ -314,7 +316,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
 			    InputData inputData;
 			    InitializeInputData(IN, surfaceData.normalTS, inputData);
 
-				half4 color = DesertFragmentPBR(inputData, surfaceData);
+				half4 color = DesertFragmentPBR(inputData, surfaceData, IN.normalWS);
 
 				float fresnel = CalculateFresnel(IN, _FresnelPower, _FresnelCutOffOut, _FresnelCutOffIn);
 
