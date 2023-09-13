@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Runtime.GameResources.ViewControllers {
 	public interface IInHandResourceViewController : IResourceViewController {
-		void OnStartHold();
+		void OnStartHold(GameObject ownerGameObject);
 		
 		void OnStopHold();
 	}
@@ -23,6 +23,7 @@ namespace Runtime.GameResources.ViewControllers {
 		private LayerMask originalLayer;
 		protected bool isHolding = false;
 		protected Rigidbody rigidbody;
+		protected GameObject ownerGameObject = null;
 
 		protected override void Awake() {
 			base.Awake();
@@ -47,6 +48,7 @@ namespace Runtime.GameResources.ViewControllers {
 			gameObject.layer = originalLayer;
 			isHolding = false;
 			rigidbody.isKinematic = false;
+			this.ownerGameObject = null;
 		}
 
 		protected override void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
@@ -56,19 +58,21 @@ namespace Runtime.GameResources.ViewControllers {
 			base.HandleAbsorb(player, zone);
 		}
 
-		public void OnStartHold() {
+		public void OnStartHold(GameObject ownerGameObject) {
 			isHolding = true;
 			rigidbody.isKinematic = true;
 			foreach (Collider selfCollider in selfColliders) {
 				selfCollider.isTrigger = true;
 			}
+			this.ownerGameObject = ownerGameObject;
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 			OnUnPointByCrosshair();
 		}
-
+		
 		public void OnStopHold() {
 			isHolding = false;
 			rigidbody.isKinematic = false;
+			this.ownerGameObject = null;
 			//gameObject.layer = originalLayer;
 			RecycleToCache();
 		}

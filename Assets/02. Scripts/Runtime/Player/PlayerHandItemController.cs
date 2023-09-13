@@ -58,7 +58,7 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 			spawnedItem.transform.localScale = Vector3.one;
 
 			inHandResourceViewControllers[category] = spawnedItem.GetComponent<IInHandResourceViewController>();
-			inHandResourceViewControllers[category].OnStartHold();
+			inHandResourceViewControllers[category].OnStartHold(gameObject);
 		}
 		
 	}

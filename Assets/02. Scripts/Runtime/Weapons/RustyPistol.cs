@@ -150,13 +150,15 @@ namespace Runtime.Weapons
             }
         }
         
-        public void HitResponse(HitData data)
-        {
+        public void HitResponse(HitData data) {
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
             
             //TODO: Change to non-temporary class of player entity.
-            PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
-            playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
+            //PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+            //playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
+            if (ownerGameObject.TryGetComponent(out Rigidbody rb)) {
+                rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
+            }
         }
     }
 }
