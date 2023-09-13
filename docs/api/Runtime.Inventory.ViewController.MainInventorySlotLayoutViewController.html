@@ -132,6 +132,7 @@
   <dl class="typelist derived">
     <dt>Derived</dt>
     <dd>
+      <div><a class="xref" href="Global.WeaponInventorySlotLayoutViewController.html">WeaponInventorySlotLayoutViewController</a></div>
       <div><a class="xref" href="Runtime.Inventory.ViewController.ResourceInventorySlotLayoutViewController.html">ResourceInventorySlotLayoutViewController</a></div>
     </dd>
   </dl>
@@ -519,6 +520,40 @@
 
 
 
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Runtime_Inventory_ViewController_MainInventorySlotLayoutViewController_slotViewControllers" data-uid="Runtime.Inventory.ViewController.MainInventorySlotLayoutViewController.slotViewControllers">
+  slotViewControllers
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/MainInventorySlotLayoutViewController.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected List&lt;ResourceSlotViewController&gt; slotViewControllers</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Runtime.Inventory.ViewController.ResourceSlotViewController.html">ResourceSlotViewController</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -553,7 +588,7 @@
 
   <h3 id="Runtime_Inventory_ViewController_MainInventorySlotLayoutViewController_OnHideSlotItem" data-uid="Runtime.Inventory.ViewController.MainInventorySlotLayoutViewController.OnHideSlotItem">
   OnHideSlotItem()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/MainInventorySlotLayoutViewController.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/MainInventorySlotLayoutViewController.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -608,11 +643,42 @@
 
 
 
+  <a id="Runtime_Inventory_ViewController_MainInventorySlotLayoutViewController_OnSelected_" data-uid="Runtime.Inventory.ViewController.MainInventorySlotLayoutViewController.OnSelected*"></a>
+
+  <h3 id="Runtime_Inventory_ViewController_MainInventorySlotLayoutViewController_OnSelected_System_Int32_" data-uid="Runtime.Inventory.ViewController.MainInventorySlotLayoutViewController.OnSelected(System.Int32)">
+  OnSelected(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/MainInventorySlotLayoutViewController.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnSelected(int slotIndex)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>slotIndex</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_Inventory_ViewController_MainInventorySlotLayoutViewController_OnShowSlotItem_" data-uid="Runtime.Inventory.ViewController.MainInventorySlotLayoutViewController.OnShowSlotItem*"></a>
 
   <h3 id="Runtime_Inventory_ViewController_MainInventorySlotLayoutViewController_OnShowSlotItem" data-uid="Runtime.Inventory.ViewController.MainInventorySlotLayoutViewController.OnShowSlotItem">
   OnShowSlotItem()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/MainInventorySlotLayoutViewController.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/MainInventorySlotLayoutViewController.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -622,6 +688,39 @@
     <pre><code class="lang-csharp hljs">public override void OnShowSlotItem()</code></pre>
   </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_ViewController_MainInventorySlotLayoutViewController_OnSlotViewControllerSpawned_" data-uid="Runtime.Inventory.ViewController.MainInventorySlotLayoutViewController.OnSlotViewControllerSpawned*"></a>
+
+  <h3 id="Runtime_Inventory_ViewController_MainInventorySlotLayoutViewController_OnSlotViewControllerSpawned_Runtime_Inventory_ViewController_ResourceSlotViewController_System_Int32_" data-uid="Runtime.Inventory.ViewController.MainInventorySlotLayoutViewController.OnSlotViewControllerSpawned(Runtime.Inventory.ViewController.ResourceSlotViewController,System.Int32)">
+  OnSlotViewControllerSpawned(ResourceSlotViewController, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/ViewController/MainInventorySlotLayoutViewController.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnSlotViewControllerSpawned(ResourceSlotViewController slotViewController, int index)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>slotViewController</code> <a class="xref" href="Runtime.Inventory.ViewController.ResourceSlotViewController.html">ResourceSlotViewController</a></dt>
+    <dd></dd>
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
 
 
 

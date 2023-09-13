@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Struct OnInventorySlotAddedEvent
+      <title>Struct OnCurrentHotbarUpdateEvent
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct OnInventorySlotAddedEvent
+      <meta name="title" content="Struct OnCurrentHotbarUpdateEvent
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Inventory_Model_OnInventorySlotAddedEvent.md&amp;value=---%0Auid%3A%20Runtime.Inventory.Model.OnInventorySlotAddedEvent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Inventory_Model_OnCurrentHotbarUpdateEvent.md&amp;value=---%0Auid%3A%20Runtime.Inventory.Model.OnCurrentHotbarUpdateEvent%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,13 +77,13 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.Inventory.Model.OnInventorySlotAddedEvent">
+        <article data-uid="Runtime.Inventory.Model.OnCurrentHotbarUpdateEvent">
 
 
 
-  <h1 id="Runtime_Inventory_Model_OnInventorySlotAddedEvent" data-uid="Runtime.Inventory.Model.OnInventorySlotAddedEvent" class="text-break">
-    Struct OnInventorySlotAddedEvent
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_Inventory_Model_OnCurrentHotbarUpdateEvent" data-uid="Runtime.Inventory.Model.OnCurrentHotbarUpdateEvent" class="text-break">
+    Struct OnCurrentHotbarUpdateEvent
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct OnInventorySlotAddedEvent</code></pre>
+    <pre><code class="lang-csharp hljs">public struct OnCurrentHotbarUpdateEvent</code></pre>
   </div>
 
 
@@ -137,16 +137,16 @@
 
 
 
-  <h3 id="Runtime_Inventory_Model_OnInventorySlotAddedEvent_AddedCount" data-uid="Runtime.Inventory.Model.OnInventorySlotAddedEvent.AddedCount">
-  AddedCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Model_OnCurrentHotbarUpdateEvent_Category" data-uid="Runtime.Inventory.Model.OnCurrentHotbarUpdateEvent.Category">
+  Category
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L12"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int AddedCount</code></pre>
+    <pre><code class="lang-csharp hljs">public HotBarCategory Category</code></pre>
   </div>
 
 
@@ -154,7 +154,7 @@
 
   <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dt><a class="xref" href="Runtime.Inventory.Model.HotBarCategory.html">HotBarCategory</a></dt>
     <dd></dd>
   </dl>
 
@@ -167,16 +167,16 @@
 
 
 
-  <h3 id="Runtime_Inventory_Model_OnInventorySlotAddedEvent_AddedSlots" data-uid="Runtime.Inventory.Model.OnInventorySlotAddedEvent.AddedSlots">
-  AddedSlots
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Model_OnCurrentHotbarUpdateEvent_TopItem" data-uid="Runtime.Inventory.Model.OnCurrentHotbarUpdateEvent.TopItem">
+  TopItem
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;ResourceSlot&gt; AddedSlots</code></pre>
+    <pre><code class="lang-csharp hljs">public IResourceEntity TopItem</code></pre>
   </div>
 
 
@@ -184,7 +184,7 @@
 
   <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Runtime.Inventory.Model.ResourceSlot.html">ResourceSlot</a>&gt;</dt>
+    <dt><a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
     <dd></dd>
   </dl>
 
@@ -200,7 +200,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L47" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L11" class="edit-link">Edit this page</a>
         </div>
 
         

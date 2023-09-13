@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class InventorySystem
+      <title>Class DirectSelectHotBarSlotCommand
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class InventorySystem
+      <meta name="title" content="Class DirectSelectHotBarSlotCommand
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Inventory_Model_InventorySystem.md&amp;value=---%0Auid%3A%20Runtime.Inventory.Model.InventorySystem%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Inventory_Commands_DirectSelectHotBarSlotCommand.md&amp;value=---%0Auid%3A%20Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.Inventory.Model.InventorySystem">
+        <article data-uid="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand">
 
 
 
-  <h1 id="Runtime_Inventory_Model_InventorySystem" data-uid="Runtime.Inventory.Model.InventorySystem" class="text-break">
-    Class InventorySystem
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_Inventory_Commands_DirectSelectHotBarSlotCommand" data-uid="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand" class="text-break">
+    Class DirectSelectHotBarSlotCommand
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Commands/DirectSelectHotBarSlotCommand.cs/#L6"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Inventory.html">Inventory</a>.<a class="xref" href="Runtime.Inventory.Model.html">Model</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Inventory.html">Inventory</a>.<a class="xref" href="Runtime.Inventory.Commands.html">Commands</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class InventorySystem : AbstractSystem, IInventorySystem, ISystem, ICanSetArchitecture, ICanGetModel, ICanGetUtility, ICanSendEvent, ICanRegisterEvent, ICanGetSystem, ICanSendQuery, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public class DirectSelectHotBarSlotCommand : AbstractCommand&lt;DirectSelectHotBarSlotCommand&gt;, ICommand, ICanSetArchitecture, ICanGetSystem, ICanGetModel, ICanGetUtility, ICanSendEvent, ICanSendCommand, IPoolable, ICanSendQuery, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -105,22 +105,22 @@
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><a class="xref" href="MikroFramework.Architecture.AbstractSystem.html">AbstractSystem</a></div>
-      <div><span class="xref">InventorySystem</span></div>
+      <div><a class="xref" href="MikroFramework.Architecture.AbstractCommand-1.html">AbstractCommand</a>&lt;<a class="xref" href="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand.html">DirectSelectHotBarSlotCommand</a>&gt;</div>
+      <div><span class="xref">DirectSelectHotBarSlotCommand</span></div>
     </dd>
   </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
-      <div><a class="xref" href="Runtime.Inventory.Model.IInventorySystem.html">IInventorySystem</a></div>
-      <div><a class="xref" href="MikroFramework.Architecture.ISystem.html">ISystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICommand.html">ICommand</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanSetArchitecture.html">ICanSetArchitecture</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
-      <div><a class="xref" href="MikroFramework.Architecture.ICanRegisterEvent.html">ICanRegisterEvent</a></div>
-      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendCommand.html">ICanSendCommand</a></div>
+      <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
       <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
     </dd>
@@ -130,6 +130,18 @@
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="MikroFramework.Architecture.AbstractCommand-1.html#MikroFramework_Architecture_AbstractCommand_1_AutoRecycle">AbstractCommand&lt;DirectSelectHotBarSlotCommand&gt;.AutoRecycle</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Architecture.AbstractCommand-1.html#MikroFramework_Architecture_AbstractCommand_1_OnRecycled">AbstractCommand&lt;DirectSelectHotBarSlotCommand&gt;.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Architecture.AbstractCommand-1.html#MikroFramework_Architecture_AbstractCommand_1_IsRecycled">AbstractCommand&lt;DirectSelectHotBarSlotCommand&gt;.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Architecture.AbstractCommand-1.html#MikroFramework_Architecture_AbstractCommand_1_RecycleToCache">AbstractCommand&lt;DirectSelectHotBarSlotCommand&gt;.RecycleToCache()</a>
+    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
@@ -158,61 +170,27 @@
 
 
 
-  <h2 class="section" id="fields">Fields
+  <h2 class="section" id="constructors">Constructors
 </h2>
 
 
+  <a id="Runtime_Inventory_Commands_DirectSelectHotBarSlotCommand__ctor_" data-uid="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand.#ctor*"></a>
 
-  <h3 id="Runtime_Inventory_Model_InventorySystem_InitialHotBarSlotCount" data-uid="Runtime.Inventory.Model.InventorySystem.InitialHotBarSlotCount">
-  InitialHotBarSlotCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Commands_DirectSelectHotBarSlotCommand__ctor" data-uid="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand.#ctor">
+  DirectSelectHotBarSlotCommand()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Commands/DirectSelectHotBarSlotCommand.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dictionary&lt;HotBarCategory, int&gt; InitialHotBarSlotCount</code></pre>
+    <pre><code class="lang-csharp hljs">public DirectSelectHotBarSlotCommand()</code></pre>
   </div>
 
 
 
 
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="Runtime.Inventory.Model.HotBarCategory.html">HotBarCategory</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_InitialSlotCount" data-uid="Runtime.Inventory.Model.InventorySystem.InitialSlotCount">
-  InitialSlotCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L20"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int InitialSlotCount</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
 
 
 
@@ -226,20 +204,33 @@
 </h2>
 
 
-  <a id="Runtime_Inventory_Model_InventorySystem_OnInit_" data-uid="Runtime.Inventory.Model.InventorySystem.OnInit*"></a>
+  <a id="Runtime_Inventory_Commands_DirectSelectHotBarSlotCommand_Allocate_" data-uid="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand.Allocate*"></a>
 
-  <h3 id="Runtime_Inventory_Model_InventorySystem_OnInit" data-uid="Runtime.Inventory.Model.InventorySystem.OnInit">
-  OnInit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Commands_DirectSelectHotBarSlotCommand_Allocate_Runtime_Inventory_Model_HotBarCategory_System_Int32_" data-uid="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand.Allocate(Runtime.Inventory.Model.HotBarCategory,System.Int32)">
+  Allocate(HotBarCategory, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Commands/DirectSelectHotBarSlotCommand.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnInit()</code></pre>
+    <pre><code class="lang-csharp hljs">public static DirectSelectHotBarSlotCommand Allocate(HotBarCategory category, int index)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>category</code> <a class="xref" href="Runtime.Inventory.Model.HotBarCategory.html">HotBarCategory</a></dt>
+    <dd></dd>
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand.html">DirectSelectHotBarSlotCommand</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -251,19 +242,19 @@
 
 
 
+  <a id="Runtime_Inventory_Commands_DirectSelectHotBarSlotCommand_OnExecute_" data-uid="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand.OnExecute*"></a>
 
-  <a id="Runtime_Inventory_Model_InventorySystem_ResetInventory_" data-uid="Runtime.Inventory.Model.InventorySystem.ResetInventory*"></a>
-
-  <h3 id="Runtime_Inventory_Model_InventorySystem_ResetInventory" data-uid="Runtime.Inventory.Model.InventorySystem.ResetInventory">
-  ResetInventory()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Commands_DirectSelectHotBarSlotCommand_OnExecute" data-uid="Runtime.Inventory.Commands.DirectSelectHotBarSlotCommand.OnExecute">
+  OnExecute()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Commands/DirectSelectHotBarSlotCommand.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Execute this command</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void ResetInventory()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnExecute()</code></pre>
   </div>
 
 
@@ -282,7 +273,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L16" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Commands/DirectSelectHotBarSlotCommand.cs/#L6" class="edit-link">Edit this page</a>
         </div>
 
         

@@ -1300,7 +1300,7 @@ This is not recommended though it's convenient, because it will cost more perfor
 
   <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnDestroy" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnDestroy">
   OnDestroy()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L405"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L413"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1379,18 +1379,19 @@ This is not recommended though it's convenient, because it will cost more perfor
 
 
 
-  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerEnterInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerEnterInteractiveZone*"></a>
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerExitInteractiveZone*"></a>
 
-  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerEnterInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerEnterInteractiveZone(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
-  OnPlayerEnterInteractiveZone(GameObject, PlayerInteractiveZone)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L382"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerExitInteractiveZone(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
+  OnPlayerExitInteractiveZone(GameObject, PlayerInteractiveZone)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L408"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Exit the interactive zone, no matter if reachable or not</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1412,10 +1413,44 @@ This is not recommended though it's convenient, because it will cost more perfor
 
 
 
-  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerExitInteractiveZone*"></a>
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInInteractiveZone*"></a>
 
-  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerExitInteractiveZone(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
-  OnPlayerExitInteractiveZone(GameObject, PlayerInteractiveZone)
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInInteractiveZone(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
+  OnPlayerInInteractiveZone(GameObject, PlayerInteractiveZone)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L404"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Enter the interactive zone, no matter if reachable or not</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnPlayerInInteractiveZone(GameObject player, PlayerInteractiveZone zone)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>player</code> <span class="xref">GameObject</span></dt>
+    <dd></dd>
+    <dt><code>zone</code> <a class="xref" href="Runtime.Player.PlayerInteractiveZone.html">PlayerInteractiveZone</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneNotReachable_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInteractiveZoneNotReachable*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneNotReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInteractiveZoneNotReachable(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
+  OnPlayerInteractiveZoneNotReachable(GameObject, PlayerInteractiveZone)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L398"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -1423,7 +1458,40 @@ This is not recommended though it's convenient, because it will cost more perfor
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>player</code> <span class="xref">GameObject</span></dt>
+    <dd></dd>
+    <dt><code>zone</code> <a class="xref" href="Runtime.Player.PlayerInteractiveZone.html">PlayerInteractiveZone</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneReachable_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInteractiveZoneReachable*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInteractiveZoneReachable(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
+  OnPlayerInteractiveZoneReachable(GameObject, PlayerInteractiveZone)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L382"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1456,7 +1524,7 @@ This is not recommended though it's convenient, because it will cost more perfor
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnPointByCrosshair()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnPointByCrosshair()</code></pre>
   </div>
 
 
@@ -1561,7 +1629,7 @@ This is not recommended though it's convenient, because it will cost more perfor
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnUnPointByCrosshair()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnUnPointByCrosshair()</code></pre>
   </div>
 
 

@@ -38,7 +38,7 @@ namespace Runtime.GameResources.ViewControllers {
         protected override void Awake() {
             base.Awake();
             //poolable = GetComponent<PoolableGameObject>();
-           // resLoader = this.GetUtility<ResLoader>();
+           // resLoader = this.GetUtility<ResLoader>();DescriptionTag
             inventoryModel = this.GetModel<IInventoryModel>();
         }
 
