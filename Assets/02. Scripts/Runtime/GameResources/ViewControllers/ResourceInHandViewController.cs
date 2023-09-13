@@ -59,12 +59,17 @@ namespace Runtime.GameResources.ViewControllers {
 		public void OnStartHold() {
 			isHolding = true;
 			rigidbody.isKinematic = true;
+			foreach (Collider selfCollider in selfColliders) {
+				selfCollider.isTrigger = true;
+			}
+			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 			OnUnPointByCrosshair();
 		}
 
 		public void OnStopHold() {
 			isHolding = false;
 			rigidbody.isKinematic = false;
+			//gameObject.layer = originalLayer;
 			RecycleToCache();
 		}
 
