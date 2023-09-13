@@ -1,6 +1,11 @@
-EntityName / Property Names,health,vigiliance,taste,danger,attack_range
+EntityName / Property Names,health,taste,danger,custom_properties,tags
+Types,HealthInfo,List<TasteType>,int,dynamic,"Dictionary<TagName,int>"
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}",float,"List, values separated by ,",int,float
+{""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,",int,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+{""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
+If no levels, use negative numbers to represent"
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,
 BEGIN,,,,,
-TTT,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]",456,789

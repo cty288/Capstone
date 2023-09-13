@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ResetAction
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ResetAction
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=MikroFramework_ResetAction.md&amp;value=---%0Auid%3A%20MikroFramework.ResetAction%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MikroFramework.ResetAction">
+
+
+
+  <h1 id="MikroFramework_ResetAction" data-uid="MikroFramework.ResetAction" class="text-break">
+    Class ResetAction
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ActionKit/Action/ResetAction.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MikroFramework.html">MikroFramework</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MikroFramework.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ResetAction : MikroAction, ICommand, ICanSetArchitecture, ICanGetSystem, ICanGetModel, ICanGetUtility, ICanSendEvent, ICanSendCommand, ICanSendQuery, IBelongToArchitecture, IPoolable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="MikroFramework.ActionKit.MikroAction.html">MikroAction</a></div>
+      <div><span class="xref">ResetAction</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="MikroFramework.Architecture.ICommand.html">ICommand</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSetArchitecture.html">ICanSetArchitecture</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendCommand.html">ICanSendCommand</a></div>
+      <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_Finished">MikroAction.Finished</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_OnEndedCallback">MikroAction.OnEndedCallback</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_OnBeginCallback">MikroAction.OnBeginCallback</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_Execute">MikroAction.Execute()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_Reset">MikroAction.Reset()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_Finish">MikroAction.Finish()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_OnBegin">MikroAction.OnBegin()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_OnEnd">MikroAction.OnEnd()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_OnDispose">MikroAction.OnDispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_AutoRecycle">MikroAction.AutoRecycle</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_SetStopExecutingWhenTargetGameObjectDestroyed_UnityEngine_GameObject_">MikroAction.SetStopExecutingWhenTargetGameObjectDestroyed(GameObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_IsRecycled">MikroAction.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_SetAutoRecycle_System_Boolean_">MikroAction.SetAutoRecycle(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_RecycleToCache">MikroAction.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_GetArchitecture">MikroAction.GetArchitecture()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroAction.html#MikroFramework_ActionKit_MikroAction_SetArchitecture_MikroFramework_Architecture_IArchitecture_">MikroAction.SetArchitecture(IArchitecture)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MikroActionExtensions.html#MikroFramework_ActionKit_MikroActionExtensions_StopActionWhenGameObjectDestroyed_MikroFramework_ActionKit_MikroAction_UnityEngine_GameObject_">MikroActionExtensions.StopActionWhenGameObjectDestroyed(MikroAction, GameObject)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Architecture.CanGetModelExtension.html#MikroFramework_Architecture_CanGetModelExtension_GetModel__1_MikroFramework_Architecture_ICanGetModel_">CanGetModelExtension.GetModel&lt;T&gt;(ICanGetModel)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Architecture.CanGetSystemExtension.html#MikroFramework_Architecture_CanGetSystemExtension_GetSystem__1_MikroFramework_Architecture_ICanGetSystem_System_Action___0__">CanGetSystemExtension.GetSystem&lt;T&gt;(ICanGetSystem, Action&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Architecture.CanGetUtilityExtension.html#MikroFramework_Architecture_CanGetUtilityExtension_GetUtility__1_MikroFramework_Architecture_ICanGetUtility_">CanGetUtilityExtension.GetUtility&lt;T&gt;(ICanGetUtility)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Architecture.CanSendCommandExtension.html#MikroFramework_Architecture_CanSendCommandExtension_SendCommand__1_MikroFramework_Architecture_ICanSendCommand_">CanSendCommandExtension.SendCommand&lt;T&gt;(ICanSendCommand)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Architecture.CanSendCommandExtension.html#MikroFramework_Architecture_CanSendCommandExtension_SendCommand__1_MikroFramework_Architecture_ICanSendCommand___0_">CanSendCommandExtension.SendCommand&lt;T&gt;(ICanSendCommand, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Architecture.CanSendEventExtension.html#MikroFramework_Architecture_CanSendEventExtension_SendEvent__1_MikroFramework_Architecture_ICanSendEvent_">CanSendEventExtension.SendEvent&lt;T&gt;(ICanSendEvent)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Architecture.CanSendEventExtension.html#MikroFramework_Architecture_CanSendEventExtension_SendEvent__1_MikroFramework_Architecture_ICanSendEvent___0_">CanSendEventExtension.SendEvent&lt;T&gt;(ICanSendEvent, T)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.CanSendQueryExtension.html#MikroFramework_CanSendQueryExtension_SendQuery__1_MikroFramework_ICanSendQuery_MikroFramework_IQuery___0__">CanSendQueryExtension.SendQuery&lt;T&gt;(ICanSendQuery, IQuery&lt;T&gt;)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MikroFramework_ResetAction_Allocate_" data-uid="MikroFramework.ResetAction.Allocate*"></a>
+
+  <h3 id="MikroFramework_ResetAction_Allocate_MikroFramework_ActionKit_MikroAction_System_Action_" data-uid="MikroFramework.ResetAction.Allocate(MikroFramework.ActionKit.MikroAction,System.Action)">
+  Allocate(MikroAction, Action)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ActionKit/Action/ResetAction.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ResetAction Allocate(MikroAction resetAction, Action onReset = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>resetAction</code> <a class="xref" href="MikroFramework.ActionKit.MikroAction.html">MikroAction</a></dt>
+    <dd></dd>
+    <dt><code>onReset</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.ResetAction.html">ResetAction</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResetAction_OnExecuting_" data-uid="MikroFramework.ResetAction.OnExecuting*"></a>
+
+  <h3 id="MikroFramework_ResetAction_OnExecuting" data-uid="MikroFramework.ResetAction.OnExecuting">
+  OnExecuting()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ActionKit/Action/ResetAction.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>OnExecuting is called each frame after executing this action, until this action is finished</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnExecuting()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MikroFramework_ResetAction_RecycleBackToPool_" data-uid="MikroFramework.ResetAction.RecycleBackToPool*"></a>
+
+  <h3 id="MikroFramework_ResetAction_RecycleBackToPool" data-uid="MikroFramework.ResetAction.RecycleBackToPool">
+  RecycleBackToPool()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ActionKit/Action/ResetAction.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void RecycleBackToPool()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/ActionKit/Action/ResetAction.cs/#L10" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

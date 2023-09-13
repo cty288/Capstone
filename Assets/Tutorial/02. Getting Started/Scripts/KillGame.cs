@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Framework;
 using MikroFramework.Architecture;
 using Tutorial._06._QueriesAndUtilities;
 using UnityEngine;
@@ -14,4 +15,6 @@ public class KillGame : SavableArchitecture<KillGame> {
 		RegisterExtensibleUtility<StupidCalculator>(new StupidCalculator());
 		
 	}
+
+	protected override string saveFileSuffix { get; } = "kill_game";
 }

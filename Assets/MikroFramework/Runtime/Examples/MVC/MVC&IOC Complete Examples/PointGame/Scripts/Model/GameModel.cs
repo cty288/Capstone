@@ -39,13 +39,13 @@ namespace MikroFramework.Examples
             IStorage storage = this.GetUtility<IStorage>();
 
             BestScore.Value = storage.LoadInt(nameof(BestScore), 0);
-            BestScore.RegisterOnValueChaned(v => { storage.SaveInt(nameof(BestScore), v);});
+            BestScore.RegisterOnValueChanged(v => { storage.SaveInt(nameof(BestScore), v);});
 
             Life.Value = storage.LoadInt(nameof(Life), 1);
-            Life.RegisterOnValueChaned(v => { storage.SaveInt(nameof(Life), v); });
+            Life.RegisterOnValueChanged(v => { storage.SaveInt(nameof(Life), v); });
 
             Gold.Value = storage.LoadInt(nameof(Gold), 1);
-            Gold.RegisterOnValueChaned(v => { storage.SaveInt(nameof(Gold), v); });
+            Gold.RegisterOnValueChanged(v => { storage.SaveInt(nameof(Gold), v); });
 
         }
     }

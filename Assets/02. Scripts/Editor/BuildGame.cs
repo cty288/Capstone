@@ -1,117 +1,110 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using Mikrocosmos;
 using MikroFramework.ResKit;
-using MikroFramework.SceneEntranceKit;
 using MikroFramework.Serializer;
 using MikroFramework.Utilities;
 using UnityEditor;
-using UnityEditor.Build;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 using EditorUtility = UnityEditor.EditorUtility;
 
 
-public class BuildGame : EditorWindow
-{
-    protected static string m_BuildPath = "";
-    private static string version = "";
-    public static BuildTarget buildTarget = BuildTarget.StandaloneWindows;
-    public static bool debugMode = true;
-    public static bool exportAppidFile = false;
+namespace Editor {
+    public class BuildGame : EditorWindow
+    {
+        protected static string m_BuildPath = "";
+        private static string version = "";
+        public static BuildTarget buildTarget = BuildTarget.StandaloneWindows;
+        public static bool debugMode = true;
+        public static bool exportAppidFile = false;
     
-    [MenuItem("DPunk/Build Game")] 
-    public static void BuildGameWorkflow () {
+        [MenuItem("DPunk/Build Game")] 
+        public static void BuildGameWorkflow () {
         
-        version = Application.version;
-        buildTarget = EditorUserBuildSettings.activeBuildTarget;
-        //set buildpath to be located in the parent folder of the Assets folder
-        m_BuildPath = Path.GetFullPath(Path.Combine(Application.dataPath, "../../Dpunk Released/" + version + "/"));
-        GetWindow<BuildGame>().Show();
-    }
+            version = Application.version;
+            buildTarget = EditorUserBuildSettings.activeBuildTarget;
+            //set buildpath to be located in the parent folder of the Assets folder
+            m_BuildPath = Path.GetFullPath(Path.Combine(Application.dataPath, "../../Dpunk Released/" + version + "/"));
+            GetWindow<BuildGame>().Show();
+        }
     
-    [MenuItem("DPunk/Build AB Only")] 
-    public static void BuildABMenuItem () {
-        BuildAB();
-        GameObject gameObject = GameObject.Find("[ResKit]");
-        if (gameObject) {
-            DestroyImmediate(gameObject);
-        }
-    }
-
-    public static void Build(string path, BuildTarget target, string version) {
-        PlayerSettings.bundleVersion = version;
-        
-        //if the path doesn't exist, create it
-        if (!Directory.Exists(path)) {
-            Directory.CreateDirectory(path);
-        }
-        //check if the editor's build target is the same as the target platform. If not, switch it.
-       // BuildTarget previousBuildTarget = EditorUserBuildSettings.activeBuildTarget;
-        if (EditorUserBuildSettings.activeBuildTarget != target) {
-            string prevABLocation = HotUpdateConfig.LocalAssetBundleFolder;
-            //delete the previous asset bundle folder
-            if (Directory.Exists(prevABLocation)) {
-                Directory.Delete(prevABLocation, true);
+        [MenuItem("DPunk/Build AB Only")] 
+        public static void BuildABMenuItem () {
+            BuildAB();
+            GameObject gameObject = GameObject.Find("[ResKit]");
+            if (gameObject) {
+                DestroyImmediate(gameObject);
             }
-            EditorUserBuildSettings.SwitchActiveBuildTarget(target);
         }
+
+        public static void Build(string path, BuildTarget target, string version) {
+            PlayerSettings.bundleVersion = version;
+        
+            //if the path doesn't exist, create it
+            if (!Directory.Exists(path)) {
+                Directory.CreateDirectory(path);
+            }
+            //check if the editor's build target is the same as the target platform. If not, switch it.
+            // BuildTarget previousBuildTarget = EditorUserBuildSettings.activeBuildTarget;
+            if (EditorUserBuildSettings.activeBuildTarget != target) {
+                string prevABLocation = HotUpdateConfig.LocalAssetBundleFolder;
+                //delete the previous asset bundle folder
+                if (Directory.Exists(prevABLocation)) {
+                    Directory.Delete(prevABLocation, true);
+                }
+                EditorUserBuildSettings.SwitchActiveBuildTarget(target);
+            }
         
 
-        BuildAB();
-        GameObject gameObject = GameObject.Find("[ResKit]");
-        if (gameObject) {
-            DestroyImmediate(gameObject);
-        }
-        string[] levels = new string[] {"Assets/01. Scenes/GameEntrance.unity"};
+            BuildAB();
+            GameObject gameObject = GameObject.Find("[ResKit]");
+            if (gameObject) {
+                DestroyImmediate(gameObject);
+            }
+            string[] levels = new string[] {"Assets/01. Scenes/GameEntrance.unity"};
         
         
-        // Build player.
-        BuildPipeline.BuildPlayer(levels, path + "/Mikrocosmos.exe", target, BuildOptions.None);
+            // Build player.
+            BuildPipeline.BuildPlayer(levels, path + "/Mikrocosmos.exe", target, BuildOptions.None);
 
       
-        //open the folder
-        MikroFramework.Utilities.EditorUtility.OpenInFolder(path);
-    }
-    private void OnGUI() {
-        //choose location: an input field and a button, when clicked, open a file browser.
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Build Location");
-        m_BuildPath = EditorGUILayout.TextField(m_BuildPath);
-        if (GUILayout.Button("Browse")) {
-            m_BuildPath = EditorUtility.OpenFolderPanel("Choose Location of Built Game", "", "");
+            //open the folder
+            MikroFramework.Utilities.EditorUtility.OpenInFolder(path);
         }
-        EditorGUILayout.EndHorizontal();
+        private void OnGUI() {
+            //choose location: an input field and a button, when clicked, open a file browser.
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Build Location");
+            m_BuildPath = EditorGUILayout.TextField(m_BuildPath);
+            if (GUILayout.Button("Browse")) {
+                m_BuildPath = EditorUtility.OpenFolderPanel("Choose Location of Built Game", "", "");
+            }
+            EditorGUILayout.EndHorizontal();
         
-        //define version, with default value equals to Application.version
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Version");
-        version = EditorGUILayout.TextField(version);
-        EditorGUILayout.EndHorizontal();
+            //define version, with default value equals to Application.version
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Version");
+            version = EditorGUILayout.TextField(version);
+            EditorGUILayout.EndHorizontal();
         
-        //build target
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Build Target");
-        buildTarget = (BuildTarget) EditorGUILayout.EnumPopup(buildTarget);
-        EditorGUILayout.EndHorizontal();
+            //build target
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Build Target");
+            buildTarget = (BuildTarget) EditorGUILayout.EnumPopup(buildTarget);
+            EditorGUILayout.EndHorizontal();
         
        
         
-        //build button
-        if (GUILayout.Button("Build & Switch Build Target!")) {
-            Build(m_BuildPath, buildTarget, version);
+            //build button
+            if (GUILayout.Button("Build & Switch Build Target!")) {
+                Build(m_BuildPath, buildTarget, version);
+            }
         }
-    }
     
     
-     public static void BuildAB(bool isHotUpdate=false) {
+        public static void BuildAB(bool isHotUpdate=false) {
             string outputPath = "";
             if (!isHotUpdate) {
-                 outputPath= HotUpdateConfig.LocalAssetBundleFolder;
+                outputPath= HotUpdateConfig.LocalAssetBundleFolder;
             }
             else {
                 outputPath = HotUpdateConfig.AssetBundleAssetDataBuildPath;
@@ -201,6 +194,7 @@ public class BuildGame : EditorWindow
             BuildABMenuItem();
             Debug.Log("Build AB Finished!");
         }*/
+    }
 }
 
 

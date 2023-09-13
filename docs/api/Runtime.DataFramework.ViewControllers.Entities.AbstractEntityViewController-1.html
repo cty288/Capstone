@@ -1,0 +1,1716 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class AbstractEntityViewController&lt;T&gt;
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class AbstractEntityViewController&lt;T&gt;
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1">
+
+
+
+  <h1 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1" class="text-break">
+    Class AbstractEntityViewController&lt;T&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.ViewControllers.html">ViewControllers</a>.<a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.html">Entities</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class AbstractEntityViewController&lt;T&gt; : DefaultPoolableGameObjectSaved, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture where T : class, IEntity</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">Object</span></div>
+      <div><span class="xref">Component</span></div>
+      <div><span class="xref">Behaviour</span></div>
+      <div><span class="xref">MonoBehaviour</span></div>
+      <div><a class="xref" href="MikroFramework.Pool.PoolableGameObject.html">PoolableGameObject</a></div>
+      <div><a class="xref" href="MikroFramework.ResKit.DefaultPoolableGameObject.html">DefaultPoolableGameObject</a></div>
+      <div><a class="xref" href="Runtime.Utilities.DefaultPoolableGameObjectSaved.html">DefaultPoolableGameObjectSaved</a></div>
+      <div><span class="xref">AbstractEntityViewController&lt;T&gt;</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.IEntityViewController.html">IEntityViewController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IController.html">IController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendCommand.html">ICanSendCommand</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanRegisterEvent.html">ICanRegisterEvent</a></div>
+      <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html">AbstractBasicEntityViewController&lt;T&gt;</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Runtime.Utilities.DefaultPoolableGameObjectSaved.html#Runtime_Utilities_DefaultPoolableGameObjectSaved_GetArchitecture">DefaultPoolableGameObjectSaved.GetArchitecture()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_Pool">PoolableGameObject.Pool</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_IsRecycled">PoolableGameObject.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RecycleToCache">PoolableGameObject.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnRecycledEvent(UnityAction)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnAllocateEvent(UnityAction)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.IsInvoking()</span>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.CancelInvoke()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.Invoke(string, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.InvokeRepeating(string, float, float)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.CancelInvoke(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.IsInvoking(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StartCoroutine(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StartCoroutine(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StartCoroutine(IEnumerator)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StartCoroutine_Auto(IEnumerator)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerator">MonoBehaviour.StopCoroutine(IEnumerator)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.StopCoroutine(Coroutine)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">MonoBehaviour.StopCoroutine(string)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.StopAllCoroutines()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">MonoBehaviour.print(object)</a>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.useGUILayout</span>
+    </div>
+    <div>
+      <span class="xref">MonoBehaviour.runInEditMode</span>
+    </div>
+    <div>
+      <span class="xref">Behaviour.enabled</span>
+    </div>
+    <div>
+      <span class="xref">Behaviour.isActiveAndEnabled</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponent(Type)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponent&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.TryGetComponent(Type, out Component)</a>
+    </div>
+    <div>
+      <span class="xref">Component.TryGetComponent&lt;T&gt;(out T)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.GetComponent(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInChildren(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInChildren(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentInChildren&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentInChildren&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInChildren(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInChildren(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInChildren&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInChildren&lt;T&gt;(bool, List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentsInChildren&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">Component.GetComponentsInChildren&lt;T&gt;(List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInParent(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentInParent(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentInParent&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentInParent&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInParent(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponentsInParent(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInParent&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Component.GetComponentsInParent&lt;T&gt;(bool, List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponentsInParent&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponents(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Component.GetComponents(Type, List&lt;Component&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">Component.GetComponents&lt;T&gt;(List&lt;T&gt;)</a>
+    </div>
+    <div>
+      <span class="xref">Component.GetComponents&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.CompareTag(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessageUpwards(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.SendMessage(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, object, SendMessageOptions)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">Component.BroadcastMessage(string, SendMessageOptions)</a>
+    </div>
+    <div>
+      <span class="xref">Component.transform</span>
+    </div>
+    <div>
+      <span class="xref">Component.gameObject</span>
+    </div>
+    <div>
+      <span class="xref">Component.tag</span>
+    </div>
+    <div>
+      <span class="xref">Object.GetInstanceID()</span>
+    </div>
+    <div>
+      <span class="xref">Object.GetHashCode()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object.Equals(object)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object, Vector3, Quaternion)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object, Vector3, Quaternion, Transform)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate(Object, Transform)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.Instantiate(Object, Transform, bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T, Vector3, Quaternion)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T, Vector3, Quaternion, Transform)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Instantiate&lt;T&gt;(T, Transform)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.Instantiate&lt;T&gt;(T, Transform, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Object.Destroy(Object, float)</a>
+    </div>
+    <div>
+      <span class="xref">Object.Destroy(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.DestroyImmediate(Object, bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.DestroyImmediate(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfType(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsByType(Type, FindObjectsSortMode)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsByType(Type, FindObjectsInactive, FindObjectsSortMode)</a>
+    </div>
+    <div>
+      <span class="xref">Object.DontDestroyOnLoad(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Object.DestroyObject(Object, float)</a>
+    </div>
+    <div>
+      <span class="xref">Object.DestroyObject(Object)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindSceneObjectsOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfTypeIncludingAssets(Type)</a>
+    </div>
+    <div>
+      <span class="xref">Object.FindObjectsOfType&lt;T&gt;()</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindObjectsByType&lt;T&gt;(FindObjectsSortMode)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.FindObjectsOfType&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.FindObjectsByType&lt;T&gt;(FindObjectsInactive, FindObjectsSortMode)</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindObjectOfType&lt;T&gt;()</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Object.FindObjectOfType&lt;T&gt;(bool)</a>
+    </div>
+    <div>
+      <span class="xref">Object.FindFirstObjectByType&lt;T&gt;()</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindAnyObjectByType&lt;T&gt;()</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindFirstObjectByType&lt;T&gt;(FindObjectsInactive)</span>
+    </div>
+    <div>
+      <span class="xref">Object.FindAnyObjectByType&lt;T&gt;(FindObjectsInactive)</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectsOfTypeAll(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectOfType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindFirstObjectByType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindAnyObjectByType(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindObjectOfType(Type, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindFirstObjectByType(Type, FindObjectsInactive)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Object.FindAnyObjectByType(Type, FindObjectsInactive)</a>
+    </div>
+    <div>
+      <span class="xref">Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">Object.name</span>
+    </div>
+    <div>
+      <span class="xref">Object.hideFlags</span>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MonoActionExecutor.html#MikroFramework_ActionKit_MonoActionExecutor_Execute_UnityEngine_MonoBehaviour_MikroFramework_ActionKit_MikroAction_">MonoActionExecutor.Execute(MonoBehaviour, MikroAction)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MonoBehaviorActionExtensions.html#MikroFramework_ActionKit_MonoBehaviorActionExtensions_Repeat_UnityEngine_MonoBehaviour_System_Int32_">MonoBehaviorActionExtensions.Repeat(MonoBehaviour, int)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MonoBehaviorActionExtensions.html#MikroFramework_ActionKit_MonoBehaviorActionExtensions_Sequence_UnityEngine_MonoBehaviour_">MonoBehaviorActionExtensions.Sequence(MonoBehaviour)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.ActionKit.MonoBehaviorActionExtensions.html#MikroFramework_ActionKit_MonoBehaviorActionExtensions_Spawn_UnityEngine_MonoBehaviour_">MonoBehaviorActionExtensions.Spawn(MonoBehaviour)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.DelayActionExtensions.html#MikroFramework_DelayActionExtensions_Delay_UnityEngine_MonoBehaviour_System_Single_System_Action_">DelayActionExtensions.Delay(MonoBehaviour, float, Action)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Extensions.GameObjectExtension.html#MikroFramework_Extensions_GameObjectExtension_Hide_UnityEngine_MonoBehaviour_">GameObjectExtension.Hide(MonoBehaviour)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Extensions.GameObjectExtension.html#MikroFramework_Extensions_GameObjectExtension_Show_UnityEngine_MonoBehaviour_">GameObjectExtension.Show(MonoBehaviour)</a>
+  </div>
+  <div>
+      <a class="xref" href="MikroFramework.Extensions.TransformExtension.html#MikroFramework_Extensions_TransformExtension_Identity_UnityEngine_MonoBehaviour_">TransformExtension.Identity(MonoBehaviour)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoCreateNewEntityWhenStart" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.autoCreateNewEntityWhenStart">
+  autoCreateNewEntityWhenStart
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Header(&quot;Auto Create New Entity by OnBuildNewEntity() When Start&quot;)]
+[Tooltip(&quot;If not, you must manually call InitWithID() to initialize the entity.&quot;)]
+[SerializeField]
+protected bool autoCreateNewEntityWhenStart</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoDestroyWhenEntityRemoved" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.autoDestroyWhenEntityRemoved">
+  autoDestroyWhenEntityRemoved
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SerializeField]
+protected bool autoDestroyWhenEntityRemoved</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoRemoveEntityWhenDestroyedOrRecycled" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.autoRemoveEntityWhenDestroyedOrRecycled">
+  autoRemoveEntityWhenDestroyedOrRecycled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FormerlySerializedAs(&quot;autoRemoveEntityWhenDestroyed&quot;)]
+[Header(&quot;Entity Recycle Logic&quot;)]
+[SerializeField]
+protected bool autoRemoveEntityWhenDestroyedOrRecycled</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_entityModel" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.entityModel">
+  entityModel
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IEntityModel entityModel</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Entities.IEntityModel.html">IEntityModel</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_hasInteractiveHint" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.hasInteractiveHint">
+  hasInteractiveHint
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[FormerlySerializedAs(&quot;triggerCheck&quot;)]
+[Header(&quot;Entity Interaction&quot;)]
+[SerializeField]
+protected bool hasInteractiveHint</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_interactiveHintLocalizedKey" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.interactiveHintLocalizedKey">
+  interactiveHintLocalizedKey
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SerializeField]
+protected string interactiveHintLocalizedKey</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_interactiveHintPrefabName" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.interactiveHintPrefabName">
+  interactiveHintPrefabName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SerializeField]
+protected string interactiveHintPrefabName</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_nameTagFollowTransform" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.nameTagFollowTransform">
+  nameTagFollowTransform
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SerializeField]
+protected Transform nameTagFollowTransform</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Transform</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_nameTagPrefabName" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.nameTagPrefabName">
+  nameTagPrefabName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[SerializeField]
+protected string nameTagPrefabName</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_properties" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.properties">
+  properties
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected List&lt;PropertyInfo&gt; properties</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.propertyinfo">PropertyInfo</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_showNameTagWhenPointed" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.showNameTagWhenPointed">
+  showNameTagWhenPointed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Header(&quot;Entity Name Tag&quot;)]
+[SerializeField]
+protected bool showNameTagWhenPointed</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_BoundEntity_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.BoundEntity*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_BoundEntity" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.BoundEntity">
+  BoundEntity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected T BoundEntity { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ID_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ID*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ID" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ID">
+  ID
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ID { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Awake_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Awake*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Awake" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Awake">
+  Awake()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Awake()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_MikroFramework_BindableProperty_BindableProperty___0__System_Action___0___0__" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,MikroFramework.BindableProperty.BindableProperty{``0},System.Action{``0,``0})">
+  Bind&lt;T&gt;(string, BindableProperty&lt;T&gt;, Action&lt;T, T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L217"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Automatically bind a BindableProperty to a property, the generic type of BindableProperty must be the same as the property</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Bind&lt;T&gt;(string bindedPropertyName, BindableProperty&lt;T&gt; bindableProperty, Action&lt;T, T&gt; callback = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bindedPropertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>bindableProperty</code> <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;T&gt;</dt>
+    <dd></dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Type of the property, as well as the generic type of your bindable property</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_MikroFramework_BindableProperty_IBindableProperty_System_Func_System_Object___0__System_Action___0___0__" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,MikroFramework.BindableProperty.IBindableProperty,System.Func{System.Object,``0},System.Action{``0,``0})">
+  Bind&lt;T&gt;(string, IBindableProperty, Func&lt;dynamic, T&gt;, Action&lt;T, T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L250"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Bind&lt;T&gt;(string bindedPropertyName, IBindableProperty bindableProperty, Func&lt;dynamic, T&gt; getter, Action&lt;T, T&gt; callback)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bindedPropertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>bindableProperty</code> <a class="xref" href="MikroFramework.BindableProperty.IBindableProperty.html">IBindableProperty</a></dt>
+    <dd></dd>
+    <dt><code>getter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<span class="xref">dynamic</span>, T&gt;</dt>
+    <dd></dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_System_Action_System_Object_System_Object__" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``1(System.String,System.Action{System.Object,System.Object})">
+  Bind&lt;IPropertyType&gt;(string, Action&lt;dynamic, dynamic&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Automatically bind propertyName property to the real value of IPropertyType of th entity. This will not bind to nested properties
+This is not recommended though it's convenient, because it will cost more performance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Bind&lt;IPropertyType&gt;(string bindedPropertyName, Action&lt;dynamic, dynamic&gt; callback = null) where IPropertyType : class, IPropertyBase</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bindedPropertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">dynamic</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">dynamic</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>IPropertyType</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__2_System_String_MikroFramework_BindableProperty_BindableProperty___0__System_Func___0___1__System_Action___1___1__" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.Bind``2(System.String,MikroFramework.BindableProperty.BindableProperty{``0},System.Func{``0,``1},System.Action{``1,``1})">
+  Bind&lt;BindedDataType, TargetType&gt;(string, BindableProperty&lt;BindedDataType&gt;, Func&lt;BindedDataType, TargetType&gt;, Action&lt;TargetType, TargetType&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Bind a BindableProperty to a property, with custom getter in case the property is not the same type as the BindableProperty</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void Bind&lt;BindedDataType, TargetType&gt;(string bindedPropertyName, BindableProperty&lt;BindedDataType&gt; bindableProperty, Func&lt;BindedDataType, TargetType&gt; getter, Action&lt;TargetType, TargetType&gt; callback = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bindedPropertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>bindableProperty</code> <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;BindedDataType&gt;</dt>
+    <dd></dd>
+    <dt><code>getter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;BindedDataType, TargetType&gt;</dt>
+    <dd><p>your custom getter, should return something with the same type as the target</p>
+</dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;TargetType, TargetType&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>BindedDataType</code></dt>
+    <dd><p>Type of the value of the source property</p>
+</dd>
+    <dt><code>TargetType</code></dt>
+    <dd><p>type of the target property</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ForceUpdatePropertyBindings_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ForceUpdatePropertyBindings*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ForceUpdatePropertyBindings" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.ForceUpdatePropertyBindings">
+  ForceUpdatePropertyBindings()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L311"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void ForceUpdatePropertyBindings()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_InitWithID_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.InitWithID*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_InitWithID_System_String_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.InitWithID(System.String)">
+  InitWithID(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitWithID(string id)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindEntityProperty_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindEntityProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindEntityProperty" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindEntityProperty">
+  OnBindEntityProperty()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract void OnBindEntityProperty()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindProperty_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindProperty" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBindProperty">
+  OnBindProperty()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L166"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void OnBindProperty()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBuildNewEntity_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBuildNewEntity*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBuildNewEntity" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnBuildNewEntity">
+  OnBuildNewEntity()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract IEntity OnBuildNewEntity()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnDestroy_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnDestroy*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnDestroy" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnDestroy">
+  OnDestroy()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L413"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnDestroy()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityRecycled_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnEntityRecycled*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityRecycled_Runtime_DataFramework_Entities_IEntity_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnEntityRecycled(Runtime.DataFramework.Entities.IEntity)">
+  OnEntityRecycled(IEntity)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnEntityRecycled(IEntity ent)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>ent</code> <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityStart_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnEntityStart*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityStart" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnEntityStart">
+  OnEntityStart()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract void OnEntityStart()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerExitInteractiveZone*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerExitInteractiveZone(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
+  OnPlayerExitInteractiveZone(GameObject, PlayerInteractiveZone)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L408"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Exit the interactive zone, no matter if reachable or not</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>player</code> <span class="xref">GameObject</span></dt>
+    <dd></dd>
+    <dt><code>zone</code> <a class="xref" href="Runtime.Player.PlayerInteractiveZone.html">PlayerInteractiveZone</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInInteractiveZone*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInInteractiveZone(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
+  OnPlayerInInteractiveZone(GameObject, PlayerInteractiveZone)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L404"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Enter the interactive zone, no matter if reachable or not</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnPlayerInInteractiveZone(GameObject player, PlayerInteractiveZone zone)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>player</code> <span class="xref">GameObject</span></dt>
+    <dd></dd>
+    <dt><code>zone</code> <a class="xref" href="Runtime.Player.PlayerInteractiveZone.html">PlayerInteractiveZone</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneNotReachable_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInteractiveZoneNotReachable*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneNotReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInteractiveZoneNotReachable(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
+  OnPlayerInteractiveZoneNotReachable(GameObject, PlayerInteractiveZone)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L398"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>player</code> <span class="xref">GameObject</span></dt>
+    <dd></dd>
+    <dt><code>zone</code> <a class="xref" href="Runtime.Player.PlayerInteractiveZone.html">PlayerInteractiveZone</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneReachable_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInteractiveZoneReachable*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPlayerInteractiveZoneReachable(UnityEngine.GameObject,Runtime.Player.PlayerInteractiveZone)">
+  OnPlayerInteractiveZoneReachable(GameObject, PlayerInteractiveZone)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L382"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>player</code> <span class="xref">GameObject</span></dt>
+    <dd></dd>
+    <dt><code>zone</code> <a class="xref" href="Runtime.Player.PlayerInteractiveZone.html">PlayerInteractiveZone</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPointByCrosshair_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPointByCrosshair*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPointByCrosshair" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnPointByCrosshair">
+  OnPointByCrosshair()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnPointByCrosshair()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnRecycled_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnRecycled*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnRecycled" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnRecycled">
+  OnRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnRecycled()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnStart_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnStart*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnStart" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnStart">
+  OnStart()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnStart()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnStartOrAllocate_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnStartOrAllocate*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnStartOrAllocate" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnStartOrAllocate">
+  OnStartOrAllocate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnStartOrAllocate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnUnPointByCrosshair_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnUnPointByCrosshair*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnUnPointByCrosshair" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.OnUnPointByCrosshair">
+  OnUnPointByCrosshair()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L116"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnUnPointByCrosshair()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_UpdateBinding_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.UpdateBinding*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_UpdateBinding__2_MikroFramework_BindableProperty_IBindableProperty_System_Reflection_PropertyInfo_System_Func___1___0__System_Action___0___0__" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController`1.UpdateBinding``2(MikroFramework.BindableProperty.IBindableProperty,System.Reflection.PropertyInfo,System.Func{``1,``0},System.Action{``0,``0})">
+  UpdateBinding&lt;T, BindablePropertyType&gt;(IBindableProperty, PropertyInfo, Func&lt;BindablePropertyType, T&gt;, Action&lt;T, T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L265"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void UpdateBinding&lt;T, BindablePropertyType&gt;(IBindableProperty bindableProperty, PropertyInfo bindedProperty, Func&lt;BindablePropertyType, T&gt; getter, Action&lt;T, T&gt; callback)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>bindableProperty</code> <a class="xref" href="MikroFramework.BindableProperty.IBindableProperty.html">IBindableProperty</a></dt>
+    <dd></dd>
+    <dt><code>bindedProperty</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.reflection.propertyinfo">PropertyInfo</a></dt>
+    <dd></dd>
+    <dt><code>getter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;BindablePropertyType, T&gt;</dt>
+    <dd></dd>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;T, T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+    <dt><code>BindablePropertyType</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractEntityViewController.cs/#L26" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

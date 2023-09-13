@@ -123,121 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &154508918
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 154508921}
-  - component: {fileID: 154508920}
-  - component: {fileID: 154508919}
-  - component: {fileID: 154508922}
-  m_Layer: 0
-  m_Name: Test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &154508919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154508918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startWhenEnabled: 1
-  asynchronousLoad: 0
-  pauseWhenDisabled: 0
-  restartWhenComplete: 0
-  logTaskChanges: 0
-  group: 0
-  resetValuesOnRestart: 0
-  externalBehavior: {fileID: 0}
-  mBehaviorSource:
-    behaviorName: Behavior
-    behaviorDescription: 
-    mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(361.5,30)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(-18.5,170)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":-1},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(10,150)"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-330,130)"},"ID":3,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityDebug.LogValue","NodeData":{"Offset":"(-170,130)"},"ID":4,"Name":"Log
-        Value","Instant":true,"SharedGenericVariablevariable":{"Type":"BehaviorDesigner.Runtime.SharedGenericVariable","Name":null,"GenericVariablemValue":{"Stringtype":"SharedInt","SharedVariablevalue":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"danger","IsShared":true,"PropertyMapping":"TestPropertyWithBehaviorTree/Danger","PropertyMappingOwner":0,"Int32mValue":0}}}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityDebug.LogValue","NodeData":{"Offset":"(-10,130)"},"ID":5,"Name":"Log
-        Value","Instant":true,"SharedGenericVariablevariable":{"Type":"BehaviorDesigner.Runtime.SharedGenericVariable","Name":null,"GenericVariablemValue":{"Stringtype":"SharedInt","SharedVariablevalue":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"health","IsShared":true,"PropertyMapping":"TestPropertyWithBehaviorTree/CurrentHealth","PropertyMappingOwner":1,"Int32mValue":0}}}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityDebug.LogValue","NodeData":{"Offset":"(150,130)"},"ID":6,"Name":"Log
-        Value","Instant":true,"SharedGenericVariablevariable":{"Type":"BehaviorDesigner.Runtime.SharedGenericVariable","Name":null,"GenericVariablemValue":{"Stringtype":"SharedFloat","SharedVariablevalue":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"vigiliance","IsShared":true,"PropertyMapping":"TestPropertyWithBehaviorTree/Vigiliance","PropertyMappingOwner":2,"SinglemValue":0}}}}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"danger","IsShared":true,"PropertyMapping":"TestPropertyWithBehaviorTree/Danger","PropertyMappingOwner":3,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"vigiliance","IsShared":true,"PropertyMapping":"TestPropertyWithBehaviorTree/Vigiliance","PropertyMappingOwner":4,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"health","IsShared":true,"PropertyMapping":"TestPropertyWithBehaviorTree/CurrentHealth","PropertyMappingOwner":5,"Int32mValue":0}]}'
-      fieldSerializationData:
-        typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
-        unityObjects:
-        - {fileID: 154508918}
-        - {fileID: 154508918}
-        - {fileID: 154508918}
-        - {fileID: 154508918}
-        - {fileID: 154508918}
-        - {fileID: 154508918}
-        byteData: 
-        byteDataArray: 
-      Version: 1.7.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
---- !u!114 &154508920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154508918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e874dc28614dd340a0770cc2b0d79b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &154508921
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154508918}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.2756405, y: 5.28105, z: 4.35683}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &154508922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154508918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cfcc9ceea0bf419cb3bcaf548c2600d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveLayer: 0
-  saveTag: 0
-  saveName: 0
-  saveHideFlags: 0
-  saveActive: 0
-  saveChildren: 0
-  componentsToSave:
-  - {fileID: 154508920}
 --- !u!1 &340762445
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +176,7 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp-firstpass
     - Assembly-CSharp
-    showAdvancedSettings: 0
+    showAdvancedSettings: 1
 --- !u!114 &340762447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,9 +190,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openPrefabs: 0
-  prefabs: []
+  prefabs:
+  - {fileID: -8683022771338316783, guid: cf53a0d863c695949a1e93550102e0d5, type: 3}
   idRef:
-    _Keys: 05538413e6809d1d4d6084722392a903720be70d0853bf24de114c2121049f1f4a60cd9b4d49737c1e9bf4f9df6a7c33bedce8e870dcfd4f946035d4347bfc473f9b427b9fbbae4580632ca348b9034871801f0213776f6e9d81d15181b74f66973cb944270193032da367d409a197255eed46b49aff5a382bd417218c00c638eb39c47b8cb88f7014e42a90f0649b3d
+    _Keys: 05538413e6809d1d4d6084722392a903720be70d0853bf24de114c2121049f1f4a60cd9b4d49737c1e9bf4f9df6a7c33bedce8e870dcfd4f946035d4347bfc473f9b427b9fbbae4580632ca348b9034871801f0213776f6e5eed46b49aff5a38eb39c47b8cb88f7014e42a90f0649b3df3e41087943cd925e0f585073e4a4c6587648de86f63ee3791c0d2c3015558332894c1439af521422e11f1a5839a395fab6cfdc438eb99268547335efb17885351dd08a48b0a3f5c
     _Values:
     - {fileID: 1231450062}
     - {fileID: 1231450065}
@@ -320,13 +206,18 @@ MonoBehaviour:
     - {fileID: 447809306}
     - {fileID: 447809308}
     - {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-    - {fileID: 154508918}
-    - {fileID: 154508921}
-    - {fileID: 154508920}
     - {fileID: 11500000, guid: 1e874dc28614dd340a0770cc2b0d79b3, type: 3}
-    - {fileID: 154508919}
     - {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
     - {fileID: 2800000, guid: 5b5f458971c6fd5459c51a7b8079bc3b, type: 3}
+    - {fileID: 383354340}
+    - {fileID: 383354342}
+    - {fileID: 383354341}
+    - {fileID: 11500000, guid: b89d7f88ee9957f41bdfdef15bd3259e, type: 3}
+    - {fileID: 3202249513327129465, guid: cf53a0d863c695949a1e93550102e0d5, type: 3}
+    - {fileID: 3202249513327129462, guid: cf53a0d863c695949a1e93550102e0d5, type: 3}
+    - {fileID: 3202249513327129463, guid: cf53a0d863c695949a1e93550102e0d5, type: 3}
+    - {fileID: 3202249513327129464, guid: cf53a0d863c695949a1e93550102e0d5, type: 3}
+    - {fileID: -8683022771338316783, guid: cf53a0d863c695949a1e93550102e0d5, type: 3}
 --- !u!4 &340762448
 Transform:
   m_ObjectHideFlags: 0
@@ -336,6 +227,51 @@ Transform:
   m_GameObject: {fileID: 340762445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &383354340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383354342}
+  - component: {fileID: 383354341}
+  m_Layer: 0
+  m_Name: TestPropertyPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &383354341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383354340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89d7f88ee9957f41bdfdef15bd3259e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3202249513327129465, guid: cf53a0d863c695949a1e93550102e0d5, type: 3}
+--- !u!4 &383354342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383354340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.2756405, y: 5.28105, z: 4.35683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

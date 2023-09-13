@@ -9,7 +9,7 @@ using UnityEngine;
 namespace MikroFramework.BindableProperty
 {
     public interface IBindableProperty {
-        public object ObjectValue { get; set; }
+        public dynamic Value { get; set; }
 
         public IUnRegister RegisterOnObjectValueChaned(Action<object> onValueChanged);
 
@@ -27,7 +27,7 @@ namespace MikroFramework.BindableProperty
     [Serializable]
     public class BindableProperty<T> : IBindableProperty
     {
-        object IBindableProperty.ObjectValue
+        object IBindableProperty.Value
         {
             get => Value;
             set => Value = (T) value;
@@ -48,7 +48,7 @@ namespace MikroFramework.BindableProperty
 
         [ES3Serializable]
         [SerializeField]
-        private T value = default(T);
+        private T? value = default(T);
 
         public T Value
         {
@@ -81,7 +81,7 @@ namespace MikroFramework.BindableProperty
         /// <returns>The returned IUnRegister allows you to call its UnRegisterWhenGameObjectDestroyed()
         /// function to unregister the event more convenient instead of calling UnRegisterOnValueChanged function</returns>
         [Obsolete("Use the one with two values (new and old) instead")]
-        public IUnRegister RegisterOnValueChaned(Action<T> onValueChanged)
+        public IUnRegister RegisterOnValueChanged(Action<T> onValueChanged)
         {
             this.onValueChanged += onValueChanged;
 
@@ -91,14 +91,14 @@ namespace MikroFramework.BindableProperty
         [Obsolete("Use the one with two values (new and old) instead")]
         public IUnRegister RegisterWithInitValue(Action<T> onValueChanged) {
             onValueChanged?.Invoke(value);
-            return RegisterOnValueChaned(onValueChanged);
+            return RegisterOnValueChanged(onValueChanged);
         }
 
 
         public IUnRegister RegisterWithInitValue(Action<T,T> onValueChanged)
         {
-            onValueChanged?.Invoke(default, value);
-            return RegisterOnValueChaned(onValueChanged);
+            onValueChanged?.Invoke(value, value);
+            return RegisterOnValueChanged(onValueChanged);
         }
 
 
@@ -117,7 +117,7 @@ namespace MikroFramework.BindableProperty
         /// <param name="onValueChanged">old and new values</param>
         /// <returns>The returned IUnRegister allows you to call its UnRegisterWhenGameObjectDestroyed()
         /// function to unregister the event more convenient instead of calling UnRegisterOnValueChanged function</returns>
-        public IUnRegister RegisterOnValueChaned(Action<T, T> onValueChanged)
+        public IUnRegister RegisterOnValueChanged(Action<T, T> onValueChanged)
         {
             this.onValueChanged2 += onValueChanged;
 
@@ -153,11 +153,15 @@ namespace MikroFramework.BindableProperty
         }
         
         public IUnRegister RegisterOnObjectValueChaned(Action<object> onValueChanged) {
-            return RegisterOnValueChaned((v) => { onValueChanged(v); });
+            Action<T> action = (v) => { onValueChanged(v); };
+            actionDict.Add(onValueChanged, action);
+            return RegisterOnValueChanged(action);
         }
         
         public IUnRegister RegisterOnObjectValueChaned(Action<object, object> onValueChanged) {
-            return RegisterOnValueChaned((v, w) => { onValueChanged(v, w); });
+            Action<T, T> action = (v, w) => { onValueChanged(v, w); };
+            actionDict2.Add(onValueChanged, action);
+            return RegisterOnValueChanged(action);
         }
 
         [NonSerialized]

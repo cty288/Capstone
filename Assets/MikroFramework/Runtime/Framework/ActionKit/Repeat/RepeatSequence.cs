@@ -38,7 +38,7 @@ namespace MikroFramework
         }
 
         protected override void OnBegin() {
-            repeatSequence.Finished.RegisterOnValueChaned(OnRepeatSequenceFinishedValueChanged);
+            repeatSequence.Finished.RegisterOnValueChanged(OnRepeatSequenceFinishedValueChanged);
             repeatSequence.Execute();
         }
 

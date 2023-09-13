@@ -1,23 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;using MikroFramework.Architecture;
-using UnityEngine;
+using MikroFramework.Architecture;
 
-[ES3Serializable]
-public abstract class AbstractSavableModel : AbstractModel {
-	protected override void OnInit() {
+namespace Framework {
+	public interface ISavableModel {
+		void OnLoad(string suffix);
+		void OnSave(string suffix);
 		
-	}
-
-	public void Save() {
-		ES3.Save("Model_" + this.GetType().Name, this, "models.es3");
-		OnSave();
+		bool IsFirstTimeCreated { get; set; }
 	}
 	
-	public virtual void OnLoad() {
-		
-	}
 	
-	public virtual void OnSave() {
+	[ES3Serializable]
+	public abstract class AbstractSavableModel : AbstractModel, ISavableModel {
+		protected override void OnInit() {
 		
+		}
+
+		public void Save(string suffix) {
+			IsFirstTimeCreated = false;
+			ES3.Save("Model_" + this.GetType().Name, this, $"models_{suffix}.es3");
+			OnSave(suffix);
+		}
+	
+		public virtual void OnLoad(string suffix) {
+		
+		}
+	
+		public virtual void OnSave(string suffix) {
+		
+		}
+
+		[field: ES3Serializable] 
+		public bool IsFirstTimeCreated { get; set; } = true;
 	}
 }
