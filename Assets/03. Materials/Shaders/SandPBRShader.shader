@@ -10,26 +10,36 @@ Shader "Universal Render Pipeline/Custom/Sand"
 {
     Properties
     {
+    	[Header(Main Texture)]
         [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
         [MainColor] _BaseColor("Color", Color) = (1,1,1,1)
-
+    	
+    	[Space(20)]
         _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
     	
+    	[Space(20)]
+    	[Header(Metallic Specular)]
     	[Toggle(_METALLICSPECGLOSSMAP)] _GlossToggle ("Use Gloss Map(s)", Float) = 1
     	[Toggle(_SPECULAR_SETUP)] _MetSpecToggle ("Use Metallic/Specular", Float) = 1
         _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
         _GlossMapScale("Smoothness Scale", Range(0.0, 1.0)) = 1.0
 
+    	[Space(10)]
         _Metallic("Metallic", Range(0.0, 1.0)) = 0.0
         _MetallicGlossMap("Metallic", 2D) = "white" {}
 
+    	[Space(10)]
         _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
         _SpecGlossMap("Specular", 2D) = "white" {}
     	
-    	_ShadowEdgePower("Shadow Edge Power", Float) = 3.0
-    	_ShadowEdgeSaturation("Shadow Edge Power", Range(0, 1)) = 0.25
+    	[Space(20)]
+    	[Header(Saturated Shadow Edges)]
+    	[PowerSlider(1.5)]_ShadowEdgePower("Shadow Edge Power", Range(0.01, 5.0)) = 3.0
+    	_ShadowEdgeSaturation("Shadow Edge Saturation", Range(0, 1)) = 0.25
     	_ShadowRadianceRange("Shadow Radiance Range (X, Y)", Vector) = (0.1, 0.5, 0 ,0)
         
+    	[Space(20)]
+    	[Header(Sand Normals)]
     	_BumpScale("Bump Scale", Range(0.0, 0.7)) = 0.3
         _BumpMap("Sand Map", 2D) = "bump" {}
     	_RippleMap0("Shallow Ripple Map", 2D) = "bump" {}
@@ -37,15 +47,22 @@ Shader "Universal Render Pipeline/Custom/Sand"
     	_RippleStrength("Ripple Strength", Float) = 1
     	_SteepnessPower("Ripple Steepness Power", Float) = 1
         
+    	[Space(20)]
+    	[Header(AO)]
     	[Toggle(_OCCLUSIONMAP)] _AOToggle ("Use AO", Float) = 0
         _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
         _OcclusionMap("Occlusion", 2D) = "white" {}
 
+    	[Space(20)]
+    	[Header(Emission)]
         [HDR] _EmissionColor("Color", Color) = (0,0,0)
         _EmissionMap("Emission", 2D) = "white" {}
         
+    	[Space(25)]
         _ReceiveShadows("Receive Shadows", Float) = 1.0
     	
+    	[Space(20)]
+    	[Header(Fresnel Highlight)]
     	_HighlightColor ("Highlight Color", Color) = (1,0,0,1)
 		_FresnelPower ("Fresnel", Range(0, 10)) = 5
         _FresnelCutOffIn ("Cut Off In", Range(0,1)) = 0.1

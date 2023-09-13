@@ -101,17 +101,17 @@ half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData, float3 nor
     half3 radiance = CalculateRadiance(mainLight.direction, (mainLight.distanceAttenuation) * mainLight.shadowAttenuation, normalVertex, _ShadowRadianceRange.x, _ShadowRadianceRange.y);
     half3 radiance2 = CalculateRadiance(mainLight.direction, (mainLight.distanceAttenuation) * mainLight.shadowAttenuation, inputData.normalWS, _ShadowRadianceRange.x, _ShadowRadianceRange.y);
     
-    half attenuation = RangeRemap(0.0f, 0.6f, radiance);
-    attenuation = 1 - (abs(attenuation - 0.5f) * 2);
+    half attenuation = RangeRemap(0.0f, 0.8f, radiance);
+    attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
     half attenuation2 = RangeRemap(0.0f, 0.6f, radiance2);
     attenuation2 = 1 - (abs(attenuation2 - 0.5f) * 2);
     attenuation = min(attenuation, attenuation2);
     attenuation = pow(attenuation, _ShadowEdgePower);
     half3 hsv = RgbToHsv(lightingData.mainLightColor);
-    hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
-    //hsv.z *= 1 + attenuation*_ShadowEdgeSaturation;
-    //hsv.y += attenuation*_ShadowEdgeSaturation;
-    hsv.z += 0.4*attenuation*_ShadowEdgeSaturation;
+    //hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
+    hsv.z *= 1 + attenuation*_ShadowEdgeSaturation;
+    hsv.y += attenuation*_ShadowEdgeSaturation;
+    hsv.z += 0.15*attenuation*_ShadowEdgeSaturation;
     radiance = RangeRemap(0.0f, 0.1f, radiance);
     hsv.z *= radiance;
     lightingData.mainLightColor = HsvToRgb(hsv);
