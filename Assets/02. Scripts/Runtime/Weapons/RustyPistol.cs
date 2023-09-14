@@ -36,11 +36,8 @@ namespace Runtime.Weapons
             return null;
         }
 
-        public override ResourceCategory GetResourceCategory() {
-            return ResourceCategory.Weapon;
-        }
 
-        public override string OnGroundVCPrefabName { get; } = "RustyPistolOnGround";
+        public override string OnGroundVCPrefabName { get; } = "RustyPistol";
     }
 
     public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
@@ -64,9 +61,7 @@ namespace Runtime.Weapons
         
         [SerializeField] private GameObject hitParticlePrefab;
         
-        [field: ES3Serializable]
-        public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
-
+        
         
         // For IHitResponder.
         public int Damage => BoundEntity.GetBaseDamage().RealValue;
@@ -85,8 +80,8 @@ namespace Runtime.Weapons
         
         protected override void OnBindEntityProperty() {}
 
-        protected override void OnEntityStart()
-        {
+        protected override void OnEntityStart() {
+            base.OnEntityStart();
             currentAmmo = BoundEntity.GetAmmoSize().RealValue;
             lineRenderers = new List<LineRenderer>();
             for (int i = 0; i < BoundEntity.GetBulletsPerShot().RealValue; i++)
@@ -105,8 +100,12 @@ namespace Runtime.Weapons
                 weapon = BoundEntity
             };
         }
-        
-        
+
+        protected override void OnStartAbsorb() {
+           
+        }
+
+
         public void Update()
         {
             currentCD += Time.deltaTime;
@@ -123,7 +122,7 @@ namespace Runtime.Weapons
         
         public void FixedUpdate()
         {
-            if (playerActions.Shoot.IsPressed())
+            if (playerActions.Shoot.IsPressed() && isHolding)
             {
                 if (currentAmmo > 0 && currentCD >= BoundEntity.GetAttackSpeed().RealValue)
                 {

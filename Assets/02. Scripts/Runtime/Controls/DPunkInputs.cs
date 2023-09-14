@@ -98,6 +98,15 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0792d6e-fcf2-4ada-a085-6181c1b62b90"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -318,6 +327,17 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""SprintHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4c0b397-8516-4e81-b8a4-f69b1599a591"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -764,18 +784,18 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""HotBarLeftNavigate"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""18d902d6-b831-456e-83cc-54dfc436dae8"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""HotBarRightNavigate"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""c48b9f6c-cafc-4cca-b352-899a884a7a68"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -829,7 +849,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""4d59a3dc-6a66-458c-bd29-19880b2c4f5d"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -840,7 +860,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""1f9c67fb-9e64-4f6c-a7b8-68d2cc060cb6"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -862,7 +882,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""932084c8-e7be-402a-bbd8-b03372fe3e29"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -873,7 +893,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""764da5ea-a4d7-4d64-a5af-47c8ed9aef18"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -957,6 +977,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_SprintHold = m_Player.FindAction("SprintHold", throwIfNotFound: true);
+        m_Player_Slide = m_Player.FindAction("Slide", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1044,6 +1065,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_SprintHold;
+    private readonly InputAction m_Player_Slide;
     public struct PlayerActions
     {
         private @DPunkInputs m_Wrapper;
@@ -1056,6 +1078,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @SprintHold => m_Wrapper.m_Player_SprintHold;
+        public InputAction @Slide => m_Wrapper.m_Player_Slide;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1089,6 +1112,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @SprintHold.started += instance.OnSprintHold;
             @SprintHold.performed += instance.OnSprintHold;
             @SprintHold.canceled += instance.OnSprintHold;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1117,6 +1143,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @SprintHold.started -= instance.OnSprintHold;
             @SprintHold.performed -= instance.OnSprintHold;
             @SprintHold.canceled -= instance.OnSprintHold;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1350,6 +1379,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSprintHold(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
