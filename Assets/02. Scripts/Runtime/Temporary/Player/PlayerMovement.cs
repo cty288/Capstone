@@ -6,7 +6,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Runtime.Controls;
-
+using Cinemachine;
+using DG.Tweening;
 namespace Runtime.Temporary.Player
 {
     [RequireComponent(typeof(Rigidbody))]
@@ -21,6 +22,10 @@ namespace Runtime.Temporary.Player
 
         [SerializeField]
         Transform cameraTrans;
+        [SerializeField]
+        Transform camHolder;
+        
+        public CinemachineVirtualCamera vcam;
     
         float cameraPitch = 0;
         public float fpsTopClamp=90;
@@ -92,6 +97,32 @@ namespace Runtime.Temporary.Player
         private float startYScale;
         
         public bool sliding;
+        
+        [Header("Wallrunning")]
+        public LayerMask whatIsWall;
+        public float wallRunForce;
+        public float wallJumpUpForce;
+        public float wallJumpSideForce;
+        //public float wallClimbSpeed;
+        public float maxWallRunTime;
+        private float wallRunTimer;
+        
+        //wallrun checks
+        public float wallCheckDistance;
+        //public float minJumpHeight;
+        private RaycastHit leftWallhit;
+        private RaycastHit rightWallhit;
+        private bool wallLeft;
+        private bool wallRight;
+        
+        private bool exitingWall;
+        public float exitWallTime;
+        private float exitWallTimer;
+        
+        public bool useGravity;
+        public float gravityCounterForce;
+
+        private bool wallrunning;
         //temporary
         float horizontalInput;
         float verticalInput;
@@ -100,6 +131,7 @@ namespace Runtime.Temporary.Player
 
         public Rigidbody rb;
 
+        public Transform model;
 
         public MovementState state;
         public enum MovementState
@@ -107,7 +139,8 @@ namespace Runtime.Temporary.Player
             walking,
             sprinting,
             sliding,
-            air
+            air,
+            wallrunning
         }
         
         private DPunkInputs.PlayerActions playerActions;
@@ -128,7 +161,7 @@ namespace Runtime.Temporary.Player
             readyToJump = true;
             readyToDoubleJump = true;
             
-            startYScale = transform.localScale.y;
+            startYScale = model.localScale.y;
 
         }
 
@@ -145,6 +178,7 @@ namespace Runtime.Temporary.Player
             MyInput();
             SpeedControl();
             StateHandler();
+            CheckForWall();
 
             // handle drag
             if (grounded)
@@ -172,8 +206,15 @@ namespace Runtime.Temporary.Player
         
         private void StateHandler()
         {
+            // Mode - Wallrunning
+            if (wallrunning)
+            {
+                state = MovementState.wallrunning;
+
+                 desiredMoveSpeed = sprintSpeed;
+            }
             // Mode - Sliding
-            if (sliding)
+            else if (sliding)
             {
                 state = MovementState.sliding;
 
@@ -228,8 +269,39 @@ namespace Runtime.Temporary.Player
             float sensitivity = ClientInput.Singleton.PlayerInput.currentControlScheme == "Gamepad" ? controllerSensitivity : mouseSensitivity;
             cameraPitch -= mouseDelta.y * sensitivity;
             cameraPitch = Mathf.Clamp(cameraPitch, fpsBotClamp, fpsTopClamp);
-            cameraTrans.localEulerAngles = Vector3.right * cameraPitch;
+            camHolder.localEulerAngles = Vector3.right * cameraPitch;
             transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
+
+            if (horizontalInput != 0 ||verticalInput != 0)
+            {
+                if (state == MovementState.walking)
+                {
+                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1;
+                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.1f;
+                }
+                else if (state == MovementState.sprinting)
+                {
+                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 2;
+                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.3f;
+                }
+                else
+                {
+                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
+                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+                }
+            }
+            else
+            {
+                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
+                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+            }
+
+            
+        }
+
+        public void DoCamTilt(float zTilt)
+        {
+            cameraTrans.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
         }
         private void MyInput()
         {
@@ -274,17 +346,56 @@ namespace Runtime.Temporary.Player
             if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
             {
                 sliding = true;
-                transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+                model.localScale = new Vector3(model.localScale.x, slideYScale, model.localScale.z);
                 rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
 
                 slideTimer = maxSlideTime;
+                
             }
 
             if (playerActions.Slide.WasReleasedThisFrame() && sliding)
             {
                 sliding = false;
 
-                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+                model.localScale = new Vector3(model.localScale.x, startYScale, model.localScale.z);
+                
+                //camera
+                DoCamTilt(0f);
+            }
+            
+            if((wallLeft || wallRight) && verticalInput > 0 && !grounded && !exitingWall&&playerActions.SprintHold.IsPressed())
+            {
+                if (!wallrunning)
+                    StartWallRun();
+
+                // wallrun timer
+                if (wallRunTimer > 0)
+                    wallRunTimer -= Time.deltaTime;
+
+                if(wallRunTimer <= 0 && wallrunning)
+                {
+                    exitingWall = true;
+                    exitWallTimer = exitWallTime;
+                }
+
+                // wall jump
+                if (playerActions.Jump.WasPressedThisFrame() ) WallJump();
+            }
+            else if (exitingWall)
+            {
+                if (wallrunning)
+                    StopWallRun();
+
+                if (exitWallTimer > 0)
+                    exitWallTimer -= Time.deltaTime;
+
+                if (exitWallTimer <= 0)
+                    exitingWall = false;
+            }
+            else
+            {
+                if (wallrunning)
+                    StopWallRun();
             }
         }
 
@@ -294,8 +405,12 @@ namespace Runtime.Temporary.Player
             moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
             float spd = accelForce;
+            if (SlopeTooBig())
+            {
+                rb.AddForce(slopeHit.normal * 1000, ForceMode.Force);
+            }
             // on slope
-            if (OnSlope() && !exitingSlope)
+            else if (OnSlope() && !exitingSlope)
             {
                 rb.AddForce(GetSlopeMoveDirection(moveDirection) * spd, ForceMode.Force);
 
@@ -322,10 +437,12 @@ namespace Runtime.Temporary.Player
             }
             
             // turn gravity off while on slope
-            rb.useGravity = !OnSlope();
+            if(!wallrunning)rb.useGravity = !OnSlope();
 
             if (sliding)
                 SlidingMovement();
+            if (wallrunning)
+                WallRunningMovement();
         }
 
         private void SpeedControl()
@@ -398,6 +515,17 @@ namespace Runtime.Temporary.Player
 
             return false;
         }
+
+        public bool SlopeTooBig()
+        {
+            if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+            {
+                float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                return angle >= maxSlopeAngle && angle != 0;
+            }
+            
+            return false;
+        }
         private IEnumerator SmoothlyLerpMoveSpeed()
         {
             // smoothly lerp movementSpeed to desired value
@@ -434,12 +562,25 @@ namespace Runtime.Temporary.Player
         {
             Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
+            if (horizontalInput > 0)
+            {
+                DoCamTilt(-5f);
+            }
+            else if (horizontalInput < 0)
+            {
+                DoCamTilt(5f);
+            }
+            else
+            {
+                DoCamTilt(0f);
+            }
             // sliding normal
             if(!OnSlope() || rb.velocity.y > -0.1f)
             {
                 rb.AddForce(inputDirection.normalized * slideForce*0.5f, ForceMode.Force);
 
                 slideTimer -= Time.deltaTime;
+                
             }
 
             // sliding down a slope
@@ -452,8 +593,85 @@ namespace Runtime.Temporary.Player
             {
                 sliding = false;
 
-                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+                model.localScale = new Vector3(model.localScale.x, startYScale, model.localScale.z);
+                
+                //camera
+                DoCamTilt(0f);
             }
+            
+        }
+        
+        private void CheckForWall()
+        {
+            wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallhit, wallCheckDistance, whatIsWall);
+            wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallhit, wallCheckDistance, whatIsWall);
+        }
+        
+        private void StartWallRun()
+        {
+            wallrunning = true;
+
+            wallRunTimer = maxWallRunTime;
+
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+            // apply camera effects
+
+            if (wallLeft) DoCamTilt(-5f);
+            if (wallRight) DoCamTilt(5f);
+        }
+        
+        private void StopWallRun()
+        {
+            wallrunning = false;
+
+            // reset camera effects
+
+            DoCamTilt(0f);
+        }
+        
+        private void WallJump()
+        {
+            // enter exiting wall state
+            exitingWall = true;
+            exitWallTimer = exitWallTime;
+
+            Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
+
+            Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
+
+            // reset y velocity and add force
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.AddForce(forceToApply, ForceMode.Impulse);
+        }
+        
+        private void WallRunningMovement()
+        {
+            rb.useGravity = useGravity;
+
+            Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
+
+            Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
+
+            if ((orientation.forward - wallForward).magnitude > (orientation.forward - -wallForward).magnitude)
+                wallForward = -wallForward;
+
+            // forward force
+            rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
+
+            // upwards/downwards force
+            /*if (upwardsRunning)
+                rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
+            if (downwardsRunning)
+                rb.velocity = new Vector3(rb.velocity.x, -wallClimbSpeed, rb.velocity.z);*/
+
+            // push to wall force
+            if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))
+                rb.AddForce(-wallNormal * 100, ForceMode.Force);
+
+            // weaken gravity
+            if (useGravity)
+                rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
         }
     }
 }
