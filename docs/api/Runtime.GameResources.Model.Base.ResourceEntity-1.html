@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_GameResources_Model_Base_ResourceEntity_1" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1" class="text-break">
     Class ResourceEntity&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -267,9 +267,6 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnGetDescription_System_String_">Entity.OnGetDescription(string)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDisplayName">Entity.GetDisplayName()</a>
-    </div>
-    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
@@ -297,15 +294,147 @@
 
 
 
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_pickedBefore" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.pickedBefore">
+  pickedBefore
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool pickedBefore</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_InventoryVCPrefabName_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.InventoryVCPrefabName*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_InventoryVCPrefabName" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.InventoryVCPrefabName">
+  InventoryVCPrefabName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string InventoryVCPrefabName { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnGroundVCPrefabName_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnGroundVCPrefabName*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnGroundVCPrefabName" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnGroundVCPrefabName">
+  OnGroundVCPrefabName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L110"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract string OnGroundVCPrefabName { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
+
+
+  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetDisplayName_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetDisplayName*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetDisplayName" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetDisplayName">
+  GetDisplayName()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the display name of the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string GetDisplayName()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
 
 
   <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetMaxStackProperty_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetMaxStackProperty*"></a>
 
   <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetMaxStackProperty" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetMaxStackProperty">
   GetMaxStackProperty()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L79"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The display name of the resource entity is the bait adjectives + the name of the resource entity <br>
@@ -334,11 +463,42 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
 
 
+  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetResourceCategory_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetResourceCategory*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_GetResourceCategory" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.GetResourceCategory">
+  GetResourceCategory()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract ResourceCategory GetResourceCategory()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.GameResources.Model.Base.ResourceCategory.html">ResourceCategory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnDoRecycle_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnDoRecycle*"></a>
 
   <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnDoRecycle" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnDoRecycle">
   OnDoRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -364,7 +524,7 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
   <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnEntityRegisterAdditionalProperties" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnEntityRegisterAdditionalProperties">
   OnEntityRegisterAdditionalProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A place to register additional properties, normally empty. Recommended to register custom properties instead.</p>
@@ -391,7 +551,7 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
   <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnEntityStart" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnEntityStart">
   OnEntityStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>After the entity is built, or loaded from save, this will be called</p>
@@ -414,11 +574,73 @@ e.g. &quot;Fresh&quot; + &quot;Dark&quot; + &quot;Mushroom&quot; = &quot;Fresh, 
 
 
 
+  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnGetDisplayNameBeforeFirstPicked_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnGetDisplayNameBeforeFirstPicked*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnGetDisplayNameBeforeFirstPicked_System_String_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnGetDisplayNameBeforeFirstPicked(System.String)">
+  OnGetDisplayNameBeforeFirstPicked(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>originalDisplayName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnPicked_" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnPicked*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_ResourceEntity_1_OnPicked" data-uid="Runtime.GameResources.Model.Base.ResourceEntity`1.OnPicked">
+  OnPicked()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnPicked()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L23" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/ResourceEntity.cs/#L39" class="edit-link">Edit this page</a>
         </div>
 
         

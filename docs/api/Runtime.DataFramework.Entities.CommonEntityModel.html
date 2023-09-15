@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class CommonEntityModel : EntityModel&lt;IEntity&gt;, ICommonEntityModel, IEntityModel&lt;IEntity&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public class CommonEntityModel : EntityModel&lt;IEntity&gt;, ICommonEntityModel, IEntityModel&lt;IEntity&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture, ISavableModel</code></pre>
   </div>
 
 
@@ -123,6 +123,7 @@
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Framework.ISavableModel.html">ISavableModel</a></div>
     </dd>
   </dl>
 
@@ -159,6 +160,9 @@
     </div>
     <div>
       <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_OnSave_System_String_">AbstractSavableModel.OnSave(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_IsFirstTimeCreated">AbstractSavableModel.IsFirstTimeCreated</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>

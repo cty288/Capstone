@@ -8,7 +8,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class RangedAOE : EnemyAction
     {
-        public GameObject bulletPrefab;
+        public SharedGameObject bulletPrefab;
         public int bulletCount;
         public int spawnInterval;
         private bool ended;
@@ -40,7 +40,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         void SpawnBullet()
         {
-            GameObject b = Object.Instantiate(bulletPrefab, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
+            GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
             b.GetComponent<EnemyBomb>().Init(playerTrans.Value, bulletTravelTime);
 
 

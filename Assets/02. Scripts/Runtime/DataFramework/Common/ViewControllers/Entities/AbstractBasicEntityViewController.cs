@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractBasicEntityViewController<T>: AbstractEntityViewController<T> 
-		where T : class, IHaveCustomProperties, IHaveTags, new() {
+		where T : class, IHaveCustomProperties, IHaveTags {
 		
 		protected void BindCustomData<T>(string bindedPropertyName, string customPropertyName, string customDataName,
 			Action<T, T?> callback = null) {

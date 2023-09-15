@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Framework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Builder;
 
 namespace Runtime.GameResources.Model.Base {
 	
-	public interface IGameResourceModel<T> : IModel, IEntityModel<T> where T : IResourceEntity {
+	public interface IGameResourceModel<T> : IModel, IEntityModel<T>, ISavableModel where T : IResourceEntity {
 		/// <summary>
 		/// Get any resource, as long as it inherits from IResourceEntity
 		/// </summary>
@@ -18,6 +19,9 @@ namespace Runtime.GameResources.Model.Base {
 		public static Dictionary<string, IResourceEntity> globalResourceOfSameType = new Dictionary<string, IResourceEntity>();
 		
 		public static IResourceEntity GetAnyResource(string id) {
+			if (id == null) {
+				return null;
+			}
 			if (globalResourceOfSameType.TryGetValue(id, out var resource)) {
 				return resource;
 			}

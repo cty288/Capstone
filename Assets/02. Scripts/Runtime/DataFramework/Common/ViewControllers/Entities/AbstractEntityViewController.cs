@@ -3,34 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using MikroFramework.Pool;
+using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
+using MikroFramework.Utilities;
+using Polyglot;
+using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
+using Runtime.GameResources.ViewControllers;
+using Runtime.Player;
+using Runtime.UI.NameTags;
+using Runtime.Utilities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
-	public abstract class AbstractEntityViewController<T> : AbstractMikroController<MainGame>, IEntityViewController 
-		where T : class, IEntity, new() {
-
-		
+	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController 
+		where T : class, IEntity {
 		
 		[field: ES3Serializable]
-		//[field: SerializeField]
 		public string ID { get; set; }
+		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]
+		[Tooltip("If not, you must manually call InitWithID() to initialize the entity.")]
+		[SerializeField] protected bool autoCreateNewEntityWhenStart = true;
+
+		[Header("Entity Name Tag")]
+		[SerializeField] protected bool showNameTagWhenPointed = true;
+		[SerializeField] protected Transform nameTagFollowTransform;
+		[SerializeField] protected string nameTagPrefabName = "NameTag_General";
+	
+		[FormerlySerializedAs("triggerCheck")]
+		[Header("Entity Interaction")]
+		[SerializeField] protected bool hasInteractiveHint = false;
+		[SerializeField] protected string interactiveHintPrefabName = "InteractHint_General";
+		[SerializeField] protected string interactiveHintLocalizedKey = "interact";
+		//[SerializeField] protected Transform hintCanvasFollowTransform = this.transform;
 		
-		
+		[FormerlySerializedAs("autoRemoveEntityWhenDestroyed")]
 		[Header("Entity Recycle Logic")]
-		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyed = false;
+		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
 		
-		
+
 		IEntity IEntityViewController.Entity => BoundEntity;
 
 
-		private IEntityModel entityModel;
+		protected IEntityModel entityModel;
 		
 		protected T BoundEntity { get; private set; }
 		
@@ -39,10 +62,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 		
 		
+		protected override void Awake() {
+			base.Awake();
+			CheckProperties();
+		}
 
-		protected virtual void Start() {
+		
+
+		public override void OnStartOrAllocate() {
+			base.OnStartOrAllocate();
+			OnPlayerExitInteractiveZone(null, null);
+			
 			OnStart();
-			OnEntityStart();
+			
 		}
 
 		public void InitWithID(string id) {
@@ -53,24 +85,78 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				Debug.LogError("Entity with ID " + ID + " not found");
 				return;
 			}
+
+			if (BoundEntity != null) {
+				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+			}
 			BoundEntity = ent as T;
-			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyed(gameObject);
+			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			OnBindProperty();
+			OnEntityStart();
 		}
 
-		private void OnEntityRecycled(IEntity ent) {
-			if (autoDestroyWhenEntityRemoved) {
-				Destroy(gameObject);
+		public void OnPointByCrosshair() {
+			if (showNameTagWhenPointed) {
+				if(!nameTagFollowTransform) {
+					Debug.LogError($"Name tag follow transform not set for {gameObject.name}!");
+					return;
+				}
+				
+
+				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
+				if (nameTag) {
+					INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
+					if (nameTagComponent != null) {
+						nameTagComponent.SetName(BoundEntity.GetDisplayName());
+					}
+				}
 			}
 		}
+
+		public void OnUnPointByCrosshair() {
+			if (showNameTagWhenPointed && nameTagFollowTransform) {
+				HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
+			}
+			
+		}
+
+
+
+		protected virtual void OnEntityRecycled(IEntity ent) {
+			if (autoDestroyWhenEntityRemoved) {
+				RecycleToCache();
+			}
+			
+		}
+		
 
 		protected virtual void OnStart() {
 			string id = ID;
 			if (string.IsNullOrEmpty(ID)) {
-				IEntity entity = OnBuildNewEntity();
-				id = entity.UUID;
+				if (autoCreateNewEntityWhenStart) {
+					IEntity entity = OnBuildNewEntity();
+					if (entity != null) {
+						id = entity.UUID;
+						InitWithID(id);
+					}
+				}
 			}
-			InitWithID(id);
-			OnBindProperty();
+			else { //load from saved
+				InitWithID(id);
+			}
+		}
+
+		public override void OnRecycled() {
+			base.OnRecycled();
+			if (BoundEntity != null) {
+				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+			}
+			if (autoRemoveEntityWhenDestroyedOrRecycled) {
+				entityModel.RemoveEntity(ID);
+			}
+			ID = null;
+			BoundEntity = null;
+			propertyBindings.Clear();
 		}
 
 		protected abstract IEntity OnBuildNewEntity();
@@ -78,7 +164,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		#region Property Binding
 
 		protected void OnBindProperty() {
-			CheckProperties();
+			
 			OnBindEntityProperty();
 			BindPropertyAttributes();
 			
@@ -89,8 +175,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private void CheckProperties() {
 			PropertyInfo[] allProperties = GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			foreach (PropertyInfo property in allProperties) {
-				if (property.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is
-				    BindAttribute attribute) {
+				if (property.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is BindAttribute attribute) {
 					if (property.CanWrite) {
 						//the property must be read only
 						Debug.LogError("Property " + property.Name + $" on {gameObject.name} is not read only! " +
@@ -194,7 +279,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 						bindableProperty.UnRegisterOnObjectValueChanged(cb);
 					}
 				};
-				bindableProperty.RegisterWithInitObject(cb).UnRegisterWhenGameObjectDestroyed(gameObject);
+				bindableProperty.RegisterWithInitObject(cb).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 				propertyBindings.Add(bindedProperty, () => getter((BindablePropertyType) bindableProperty.Value));
 
 			}
@@ -217,7 +302,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 						bindableProperty.UnRegisterOnValueChanged(cb);
 					}
 				};
-				bindableProperty.RegisterWithInitValue(cb).UnRegisterWhenGameObjectDestroyed(gameObject);
+				bindableProperty.RegisterWithInitValue(cb).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 				propertyBindings.Add(bindedProperty, () => getter(bindableProperty.Value));
 
 			}
@@ -293,14 +378,35 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		#endregion
 
+		
+		public virtual void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			if (hasInteractiveHint) {
+				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName, HUDCategory.InteractiveTag);
+				if (hud) {
+					InteractiveHint element = hud.GetComponent<InteractiveHint>();
+					if (element != null) {
+						element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+							Localization.Get(interactiveHintLocalizedKey));
+					}
+				}
+			}
+			
+		}
+		
+
+		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			if (hasInteractiveHint) {
+				HUDManager.Singleton.DespawnHUDElement(transform, HUDCategory.InteractiveTag);
+			}
+		}
+
 
 		protected virtual void OnDestroy() {
 			propertyBindings.Clear();
 			propertyFields.Clear();
-			if (autoRemoveEntityWhenDestroyed) {
+			if (autoRemoveEntityWhenDestroyedOrRecycled && entityModel!=null) {
 				entityModel.RemoveEntity(ID);
 			}
-			
 		}
 	}
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
 using UnityEditor;
@@ -10,7 +12,7 @@ namespace Runtime.Utilities.Collision
     /// <summary>
     /// HitScan checks for collision using Raycast.
     /// </summary>
-    public class HitScan : IHitDetector
+    public class HitScan : IHitDetector, IBelongToFaction
     {
         private IHitResponder hitResponder;
         public IHitResponder HitResponder { get => hitResponder; set => hitResponder = value; }
@@ -23,9 +25,10 @@ namespace Runtime.Utilities.Collision
         private LayerMask _layer;
         private IWeaponEntity _weapon;
 
-        public HitScan(IHitResponder hitResponder)
+        public HitScan(IHitResponder hitResponder, Faction faction)
         {
             this.hitResponder = hitResponder;
+            CurrentFaction.Value = faction;
         }
         
         /// <summary>
@@ -47,6 +50,7 @@ namespace Runtime.Utilities.Collision
             }
         }
 
+        //TODO: faction and IDamagable integration.
         private void ShootRay(LineRenderer lr)
         {
             Vector3 origin = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
@@ -101,6 +105,8 @@ namespace Runtime.Utilities.Collision
             yield return new WaitForSeconds(0.3f);
             lr.enabled = false;
         }
+
+        public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
     }
 }
 

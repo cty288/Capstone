@@ -22,7 +22,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 		protected IEnemyEntityModel enemyModel;
 
-		private void Awake() {
+		protected override void Awake() {
+			base.Awake();
 			enemyModel = this.GetModel<IEnemyEntityModel>();
 		}
 

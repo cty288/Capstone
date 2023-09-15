@@ -115,6 +115,12 @@
   </dl>
 
 
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.Utilities.DefaultPoolableGameObjectSaved.html">DefaultPoolableGameObjectSaved</a></div>
+    </dd>
+  </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
@@ -123,7 +129,16 @@
       <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_Pool">PoolableGameObject.Pool</a>
     </div>
     <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_IsRecycled">PoolableGameObject.IsRecycled</a>
+    </div>
+    <div>
       <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RecycleToCache">PoolableGameObject.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnRecycledEvent(UnityAction)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnAllocateEvent(UnityAction)</a>
     </div>
     <div>
       <span class="xref">MonoBehaviour.IsInvoking()</span>
@@ -503,18 +518,19 @@
 </h2>
 
 
-  <a id="MikroFramework_ResKit_DefaultPoolableGameObject_OnAllocate_" data-uid="MikroFramework.ResKit.DefaultPoolableGameObject.OnAllocate*"></a>
+  <a id="MikroFramework_ResKit_DefaultPoolableGameObject_OnRecycled_" data-uid="MikroFramework.ResKit.DefaultPoolableGameObject.OnRecycled*"></a>
 
-  <h3 id="MikroFramework_ResKit_DefaultPoolableGameObject_OnAllocate" data-uid="MikroFramework.ResKit.DefaultPoolableGameObject.OnAllocate">
-  OnAllocate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/DefaultPoolableGameObject.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <h3 id="MikroFramework_ResKit_DefaultPoolableGameObject_OnRecycled" data-uid="MikroFramework.ResKit.DefaultPoolableGameObject.OnRecycled">
+  OnRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/DefaultPoolableGameObject.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void OnAllocate()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void OnRecycled()</code></pre>
   </div>
 
 
@@ -529,19 +545,18 @@
 
 
 
-  <a id="MikroFramework_ResKit_DefaultPoolableGameObject_OnRecycled_" data-uid="MikroFramework.ResKit.DefaultPoolableGameObject.OnRecycled*"></a>
+  <a id="MikroFramework_ResKit_DefaultPoolableGameObject_OnStartOrAllocate_" data-uid="MikroFramework.ResKit.DefaultPoolableGameObject.OnStartOrAllocate*"></a>
 
-  <h3 id="MikroFramework_ResKit_DefaultPoolableGameObject_OnRecycled" data-uid="MikroFramework.ResKit.DefaultPoolableGameObject.OnRecycled">
-  OnRecycled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/DefaultPoolableGameObject.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  <h3 id="MikroFramework_ResKit_DefaultPoolableGameObject_OnStartOrAllocate" data-uid="MikroFramework.ResKit.DefaultPoolableGameObject.OnStartOrAllocate">
+  OnStartOrAllocate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/DefaultPoolableGameObject.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void OnRecycled()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void OnStartOrAllocate()</code></pre>
   </div>
 
 

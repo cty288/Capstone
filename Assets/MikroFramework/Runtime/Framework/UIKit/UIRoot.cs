@@ -95,7 +95,7 @@ namespace MikroFramework.UIKit
 
         private Dictionary<Type, List<IPanel>> allGeneratedPanels = new Dictionary<Type, List<IPanel>>();
         private ResLoader resLoader;
-        private IPanel currentMainPanel = null;
+        protected IPanel currentMainPanel = null;
 
         [SerializeField] private GameObject defaultMainPanel;
         protected virtual void Awake()
@@ -131,7 +131,7 @@ namespace MikroFramework.UIKit
         /// <param name="message">The message to be passed to the panel</param>
         /// <param name="createNewIfNotExist"> </param>
         /// <param name="assetNameIfNotExist">The asset name in the asset bundle for the panel. Used to create the panel if it doesn't exist in the scene</param>
-        public T Open<T>(IPanelContainer parent, UIMsg message, bool createNewIfNotExist = true,
+        public virtual T Open<T>(IPanelContainer parent, UIMsg message, bool createNewIfNotExist = true,
             string assetNameIfNotExist = "") where T : class, IPanel
         {
             IPanelContainer parentContainer = null;
@@ -225,7 +225,7 @@ namespace MikroFramework.UIKit
         /// </summary>
         /// <param name="panel"></param>
         /// <param name="alsoCloseChild"></param>
-        public void ClosePanel(IPanel panel, bool alsoCloseChild = true)
+        public virtual void ClosePanel(IPanel panel, bool alsoCloseChild = true)
         {
             if (!allGeneratedPanels.ContainsKey(panel.GetType()) ||
                 !allGeneratedPanels[panel.GetType()].Contains(panel))
@@ -249,9 +249,12 @@ namespace MikroFramework.UIKit
                     }
                     else
                     {
-                        if (defaultMainPanel)
-                        {
+                        if (defaultMainPanel) {
                             DoOpen(defaultMainPanel.GetComponent<IPanel>(), this, null);
+                            currentMainPanel = defaultMainPanel.GetComponent<IPanel>();
+                        }
+                        else {
+                            currentMainPanel = null;
                         }
                     }
                 }

@@ -10,17 +10,20 @@ using UnityEngine.Events;
 namespace MikroFramework.ResKit
 {
     public class DefaultPoolableGameObject: PoolableGameObject {
-        [SerializeField] private UnityEvent onRecycledEvent;
-        [SerializeField] private UnityEvent onAllocateEvent;
-
-
-        public override void OnAllocate() {
-            onAllocateEvent?.Invoke();
+        
+        
+        public override void OnStartOrAllocate() {
+            base.OnStartOrAllocate();
+            if (Pool) {
+                transform.SetParent(null);
+            }
         }
 
         public override void OnRecycled() {
-            onRecycledEvent?.Invoke();
+            base.OnRecycled();
             transform.SetParent(Pool.transform);
         }
+
+        
     }
 }

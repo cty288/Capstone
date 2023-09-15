@@ -29,6 +29,12 @@ namespace Tests.Tests_Editor {
 				new AutoConfigCustomProperty("shield"),
 			};
 		}
+
+		public override ResourceCategory GetResourceCategory() {
+			return ResourceCategory.Weapon;
+		}
+
+		public override string OnGroundVCPrefabName { get; } = "TestWeapon1_OnGround";
 	}
 	
 	//=====================================================================

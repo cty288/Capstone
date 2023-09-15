@@ -27,8 +27,8 @@ namespace Runtime.RunTimeTests.TestCollision
             return true;
         }
 
-        public void HurtResponse(HitData data)
-        {
+        public void HurtResponse(HitData data) {
+            
             // Debug.Log("Hurt Response: Took " + data.Damage + " damage.");
             entity.TakeDamage(data.Damage);
             Vector3 force = -data.HitNormal * 10;

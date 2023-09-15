@@ -23,7 +23,7 @@ namespace Runtime.DataFramework.Entities {
 		public new T GetEntity(string id);
 	}
 
-	public interface ICommonEntityModel : IEntityModel<IEntity> {
+	public interface ICommonEntityModel : IEntityModel<IEntity>, ISavableModel {
 	
 		public T GetEntity<T>(string id) where T : class, IEntity;
 	
