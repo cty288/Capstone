@@ -9,7 +9,7 @@
 Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 {
     Properties
-    {
+    { 
     	[Header(Main Texture)]
         [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
         [MainColor] _BaseColor("Color", Color) = (1,1,1,1)

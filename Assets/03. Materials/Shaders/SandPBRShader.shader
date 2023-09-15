@@ -37,7 +37,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
     	[PowerSlider(1.5)]_ShadowEdgePower("Shadow Edge Power", Range(0.01, 5.0)) = 3.0
     	_ShadowEdgeSaturation("Shadow Edge Saturation", Range(0, 1)) = 0.25
     	_ShadowRadianceRange("Shadow Radiance Range (X, Y)", Vector) = (0.1, 0.5, 0 ,0)
-        
+         
     	[Space(20)]
     	[Header(Sand Normals)]
     	_BumpScale("Bump Scale", Range(0.0, 0.7)) = 0.3

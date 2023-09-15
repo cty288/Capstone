@@ -154,7 +154,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8018458492895172928}
-  - component: {fileID: 8018458492895172932}
   - component: {fileID: 2784581043173634225}
   - component: {fileID: 1634876173769045248}
   - component: {fileID: 511714132863472459}
@@ -184,34 +183,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8018458492895172932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8018458492895172931}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e44257728dfdd14e851904104bd448e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  layer:
-    serializedVersion: 2
-    m_Bits: 128
-  type: 0
-  shootCD: 0.1
-  range: 20
-  m_damage: 10
-  launchPoint: {fileID: 8018458494930671214}
-  proj:
-    damage: 0
-    speed: 10
-  projectile: {fileID: 6621937864502374110, guid: fdd2c4ebc31dcc548a6451c2d3d7298f,
-    type: 3}
-  hitParticlePrefab: {fileID: 8833649071567523099, guid: 3ca9e3ac23d4eff4f968c25e87a681c2,
-    type: 3}
 --- !u!114 &2784581043173634225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,14 +212,21 @@ MonoBehaviour:
   autoRemoveEntityWhenDestroyedOrRecycled: 0
   autoDestroyWhenEntityRemoved: 1
   entityAutoRemovalTimeWhenNoAbsorb: 120
-  lineRendererPrefab: {fileID: 3737558337171688241, guid: 674d441af292d8847aa95a0c7fad699a,
+  autoReload: 0
+  cam: {fileID: 0}
+  hitParticlePrefab: {fileID: 8833649071567523099, guid: 3ca9e3ac23d4eff4f968c25e87a681c2,
     type: 3}
+  lastShootTime: 0
+  reloadStartTime: 0
+  isReloading: 0
+  isScopedIn: 0
+  currentAmmo: 0
+  gunPositionTransform: {fileID: 0}
+  scopeInPositionTransform: {fileID: 0}
+  trailRenderer: {fileID: 0}
   layer:
     serializedVersion: 2
     m_Bits: 128
-  launchPoint: {fileID: 8018458494930671214}
-  hitParticlePrefab: {fileID: 8833649071567523099, guid: 3ca9e3ac23d4eff4f968c25e87a681c2,
-    type: 3}
 --- !u!54 &1634876173769045248
 Rigidbody:
   m_ObjectHideFlags: 0
