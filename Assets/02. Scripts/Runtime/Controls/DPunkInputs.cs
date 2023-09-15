@@ -116,6 +116,15 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0792d6e-fcf2-4ada-a085-6181c1b62b90"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -358,6 +367,17 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Scope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4c0b397-8516-4e81-b8a4-f69b1599a591"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -999,6 +1019,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_Player_SprintHold = m_Player.FindAction("SprintHold", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
+        m_Player_Slide = m_Player.FindAction("Slide", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1088,6 +1109,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SprintHold;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Scope;
+    private readonly InputAction m_Player_Slide;
     public struct PlayerActions
     {
         private @DPunkInputs m_Wrapper;
@@ -1102,6 +1124,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         public InputAction @SprintHold => m_Wrapper.m_Player_SprintHold;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Scope => m_Wrapper.m_Player_Scope;
+        public InputAction @Slide => m_Wrapper.m_Player_Slide;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1141,6 +1164,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Scope.started += instance.OnScope;
             @Scope.performed += instance.OnScope;
             @Scope.canceled += instance.OnScope;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1175,6 +1201,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Scope.started -= instance.OnScope;
             @Scope.performed -= instance.OnScope;
             @Scope.canceled -= instance.OnScope;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1410,6 +1439,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         void OnSprintHold(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
