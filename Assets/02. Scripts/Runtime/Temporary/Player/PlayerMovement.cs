@@ -152,8 +152,8 @@ namespace Runtime.Temporary.Player
         // Start is called before the first frame update
         void Start()
         {
-            //Cursor.lockState = CursorLockMode.None;
-            //Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
@@ -276,7 +276,7 @@ namespace Runtime.Temporary.Player
             {
                 if (state == MovementState.walking)
                 {
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1;
+                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1.5f;
                     vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.1f;
                 }
                 else if (state == MovementState.sprinting)
@@ -452,6 +452,11 @@ namespace Runtime.Temporary.Player
             {
                 if (rb.velocity.magnitude > moveSpeed)
                     rb.velocity = rb.velocity.normalized * moveSpeed;
+                //stop player if no inputs
+                if (moveDirection == Vector3.zero)
+                {
+                    rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                }
             }
 
             // limiting speed on ground or in air
@@ -467,11 +472,7 @@ namespace Runtime.Temporary.Player
                 }
             }
             
-            //stop player if no inputs
-            if (moveDirection == Vector3.zero)
-            {
-                rb.velocity = new Vector3(0, rb.velocity.y, 0);
-            }
+
         }
 
         private void Jump()
@@ -610,9 +611,8 @@ namespace Runtime.Temporary.Player
         private void StartWallRun()
         {
             wallrunning = true;
-
+            
             wallRunTimer = maxWallRunTime;
-
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
             // apply camera effects
@@ -632,6 +632,7 @@ namespace Runtime.Temporary.Player
         
         private void WallJump()
         {
+            readyToDoubleJump = true;
             // enter exiting wall state
             exitingWall = true;
             exitWallTimer = exitWallTime;
