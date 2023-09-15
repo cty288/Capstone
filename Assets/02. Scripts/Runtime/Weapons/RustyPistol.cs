@@ -15,6 +15,7 @@ using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.ViewControllers.Base;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -50,9 +51,11 @@ namespace Runtime.Weapons
 
     public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
     {
-        private Camera cam;
+        [Header("Auto Reload")]
+        public bool autoReload = false;
         
         [Header("HitDetector Settings")] [SerializeField]
+        [ReadOnly] private Camera cam;
         private HitScan hitScan;
         private HitDetectorInfo hitDetectorInfo;
         
@@ -77,7 +80,6 @@ namespace Runtime.Weapons
         }
         
         protected override void OnBindEntityProperty() {}
-
         
         //=====
         public float lastShootTime = 0f;
@@ -135,6 +137,22 @@ namespace Runtime.Weapons
                     Shoot();
                     
                     currentAmmo--;
+
+                    if (autoReload)
+                    {
+                        if (currentAmmo == 0)
+                        {
+                            if (isScopedIn)
+                            {
+                                StartCoroutine(ScopeOut(true));
+                            }
+                            else
+                            {
+                                isReloading = true;
+                                reloadStartTime = Time.time;
+                            }
+                        }
+                    } 
                 }
             }
             
@@ -159,16 +177,14 @@ namespace Runtime.Weapons
             }
             
             // Scope
-            if (playerActions.Scope.WasPerformedThisFrame())
+            if (playerActions.Scope.WasPerformedThisFrame() && !isReloading)
             {
                 if (isScopedIn)
                 {
-                    Debug.Log("scope out: " + isScopedIn);
                     StartCoroutine(ScopeOut());
                 }
                 else
                 {                    
-                    Debug.Log("scope in: " + isScopedIn);
                     StartCoroutine(ScopeIn());
                 }
             }
