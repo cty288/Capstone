@@ -223,7 +223,7 @@ public class ResourceSlot</code></pre>
 
   <h3 id="Runtime_Inventory_Model_ResourceSlot_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_" data-uid="Runtime.Inventory.Model.ResourceSlot.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)">
   CanPlaceItem(IResourceEntity)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L148"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -259,7 +259,7 @@ public class ResourceSlot</code></pre>
 
   <h3 id="Runtime_Inventory_Model_ResourceSlot_Clear" data-uid="Runtime.Inventory.Model.ResourceSlot.Clear">
   Clear()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L98"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -285,7 +285,7 @@ public class ResourceSlot</code></pre>
 
   <h3 id="Runtime_Inventory_Model_ResourceSlot_ContainsItem_System_String_" data-uid="Runtime.Inventory.Model.ResourceSlot.ContainsItem(System.String)">
   ContainsItem(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L142"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -383,7 +383,7 @@ public class ResourceSlot</code></pre>
 
   <h3 id="Runtime_Inventory_Model_ResourceSlot_GetUUIDList" data-uid="Runtime.Inventory.Model.ResourceSlot.GetUUIDList">
   GetUUIDList()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L169"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L170"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -443,21 +443,21 @@ public class ResourceSlot</code></pre>
 
   <a id="Runtime_Inventory_Model_ResourceSlot_RegisterOnSlotUpdateCallback_" data-uid="Runtime.Inventory.Model.ResourceSlot.RegisterOnSlotUpdateCallback*"></a>
 
-  <h3 id="Runtime_Inventory_Model_ResourceSlot_RegisterOnSlotUpdateCallback_System_Action_System_String_System_Collections_Generic_List_System_String___" data-uid="Runtime.Inventory.Model.ResourceSlot.RegisterOnSlotUpdateCallback(System.Action{System.String,System.Collections.Generic.List{System.String}})">
-  RegisterOnSlotUpdateCallback(Action&lt;string, List&lt;string&gt;&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Model_ResourceSlot_RegisterOnSlotUpdateCallback_System_Action_Runtime_Inventory_Model_ResourceSlot_System_String_System_Collections_Generic_List_System_String___" data-uid="Runtime.Inventory.Model.ResourceSlot.RegisterOnSlotUpdateCallback(System.Action{Runtime.Inventory.Model.ResourceSlot,System.String,System.Collections.Generic.List{System.String}})">
+  RegisterOnSlotUpdateCallback(Action&lt;ResourceSlot, string, List&lt;string&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L163"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void RegisterOnSlotUpdateCallback(Action&lt;string, List&lt;string&gt;&gt; callback)</code></pre>
+    <pre><code class="lang-csharp hljs">public void RegisterOnSlotUpdateCallback(Action&lt;ResourceSlot, string, List&lt;string&gt;&gt; callback)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-3">Action</a>&lt;<a class="xref" href="Runtime.Inventory.Model.ResourceSlot.html">ResourceSlot</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -615,7 +615,7 @@ public class ResourceSlot</code></pre>
 
   <h3 id="Runtime_Inventory_Model_ResourceSlot_TryMoveAllItemFromSlot_Runtime_Inventory_Model_ResourceSlot_Runtime_GameResources_Model_Base_IResourceEntity_" data-uid="Runtime.Inventory.Model.ResourceSlot.TryMoveAllItemFromSlot(Runtime.Inventory.Model.ResourceSlot,Runtime.GameResources.Model.Base.IResourceEntity)">
   TryMoveAllItemFromSlot(ResourceSlot, IResourceEntity)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L112"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Try to move all items from other slot to this slot. If this slot can not store all items, try to move as many as possible.</p>
@@ -647,21 +647,21 @@ public class ResourceSlot</code></pre>
 
   <a id="Runtime_Inventory_Model_ResourceSlot_UnregisterOnSlotUpdateCallback_" data-uid="Runtime.Inventory.Model.ResourceSlot.UnregisterOnSlotUpdateCallback*"></a>
 
-  <h3 id="Runtime_Inventory_Model_ResourceSlot_UnregisterOnSlotUpdateCallback_System_Action_System_String_System_Collections_Generic_List_System_String___" data-uid="Runtime.Inventory.Model.ResourceSlot.UnregisterOnSlotUpdateCallback(System.Action{System.String,System.Collections.Generic.List{System.String}})">
-  UnregisterOnSlotUpdateCallback(Action&lt;string, List&lt;string&gt;&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L166"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Model_ResourceSlot_UnregisterOnSlotUpdateCallback_System_Action_Runtime_Inventory_Model_ResourceSlot_System_String_System_Collections_Generic_List_System_String___" data-uid="Runtime.Inventory.Model.ResourceSlot.UnregisterOnSlotUpdateCallback(System.Action{Runtime.Inventory.Model.ResourceSlot,System.String,System.Collections.Generic.List{System.String}})">
+  UnregisterOnSlotUpdateCallback(Action&lt;ResourceSlot, string, List&lt;string&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlot.cs/#L167"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void UnregisterOnSlotUpdateCallback(Action&lt;string, List&lt;string&gt;&gt; callback)</code></pre>
+    <pre><code class="lang-csharp hljs">public void UnregisterOnSlotUpdateCallback(Action&lt;ResourceSlot, string, List&lt;string&gt;&gt; callback)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
+    <dt><code>callback</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-3">Action</a>&lt;<a class="xref" href="Runtime.Inventory.Model.ResourceSlot.html">ResourceSlot</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
     <dd></dd>
   </dl>
 

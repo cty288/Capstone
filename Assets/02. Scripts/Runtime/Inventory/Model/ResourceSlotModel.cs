@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
@@ -52,18 +53,19 @@ namespace Runtime.Inventory.Model {
 		public List<ResourceSlot> GetAllSlots();
 		
 		public int GetSlotCurrentItemCount(int index);
+		
+		public void RegisterInitialEntityEvents(IResourceEntity entity);
 
 	}
 	public abstract class ResourceSlotsModel : AbstractSavableModel, IResourceSlotsModel {
 		[ES3Serializable] protected List<ResourceSlot> slots; //= new List<InventorySlot>();
 		
 		
-		
-		
-		
+
 		
 		protected virtual bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
 			if (slot.TryAddItem(item)) {
+				RegisterInitialEntityEvents(item);
 				item.OnPicked();
 				return true;
 			}
@@ -79,19 +81,28 @@ namespace Runtime.Inventory.Model {
 			return false;
 		}
 		
-		
+		//need to register to item recycle event. If the item is recycled, remove it from the slot.
 		public virtual bool AddItem(IResourceEntity item) {
 			for (int i = 0; i < GetSlotCount(); i++) {
 				if (CanPlaceItem(item, i)) {
+					
 					return AddItemAt(item, slots[i]);
 				}
 			}
 			return false;
 		}
-		
+
+		private void OnEntityRecycled(IEntity entity) {
+			entity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+			RemoveItem(entity.UUID);
+		}
+
+		//unregister from item recycle event
 		public virtual bool RemoveItem(string uuid) {
 			for (int i = 0; i < GetSlotCount(); i++) {
 				if (slots[i].ContainsItem(uuid)) {
+					IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
+					entity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 					return slots[i].RemoveItem(uuid);
 				}
 			}
@@ -116,6 +127,10 @@ namespace Runtime.Inventory.Model {
 
 		public int GetSlotCurrentItemCount(int index) {
 			return slots[index].GetQuantity();
+		}
+
+		public void RegisterInitialEntityEvents(IResourceEntity entity) {
+			entity.RegisterOnEntityRecycled(OnEntityRecycled);
 		}
 	}
 }

@@ -71,7 +71,7 @@ half4 LitPassFragment(Varyings IN) : SV_TARGET
     InputData inputData;
     InitializeInputData(IN, surfaceData.normalTS, inputData);
 	
-    half4 color = DesertFragmentPBR(inputData, surfaceData);
+    half4 color = DesertFragmentPBR(inputData, surfaceData, IN.normalWS);
 
 	float fresnel = CalculateFresnel(IN, _FresnelPower, _FresnelCutOffOut, _FresnelCutOffIn);
 

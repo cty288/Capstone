@@ -42,11 +42,8 @@ namespace Runtime.Weapons
             return null;
         }
 
-        public override ResourceCategory GetResourceCategory() {
-            return ResourceCategory.Weapon;
-        }
 
-        public override string OnGroundVCPrefabName { get; } = "RustyPistolOnGround";
+        public override string OnGroundVCPrefabName { get; } = "RustyPistol";
     }
 
     public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
@@ -61,9 +58,7 @@ namespace Runtime.Weapons
         
         [SerializeField] private GameObject hitParticlePrefab;
         
-        [field: ES3Serializable]
-        public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
-
+        
         
         // For IHitResponder.
         public int Damage => BoundEntity.GetBaseDamage().RealValue;
@@ -104,7 +99,7 @@ namespace Runtime.Weapons
             //TODO: Set shoot action hold duration when weapon is equipped.
             // _holdAction = playerActions.Shoot;
             // _holdAction.started += OnHoldActionStarted;
-            
+            base.OnEntityStart();
             currentAmmo = BoundEntity.GetAmmoSize().RealValue;
             
             hitScan = new HitScan(this, CurrentFaction.Value, trailRenderer);
@@ -117,6 +112,10 @@ namespace Runtime.Weapons
             };
         }
             
+        protected override void OnStartAbsorb() {
+           
+        }
+        
         public void Shoot()
         {
             particleSystem.Play();
@@ -127,7 +126,7 @@ namespace Runtime.Weapons
         public void Update()
         {
             //Shoot
-            if (playerActions.Shoot.WasPerformedThisFrame() && !isReloading)
+            if (playerActions.Shoot.WasPerformedThisFrame() && !isReloading && isHolding)
             {
                 if (currentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
@@ -285,13 +284,17 @@ namespace Runtime.Weapons
             return data.Hurtbox.Owner != gameObject;
         }
         
-        public void HitResponse(HitData data)
-        {
+        public void HitResponse(HitData data) {
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
             
             //TODO: Change to non-temporary class of player entity.
-            PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+            // PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
             // playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
+            //PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
+            //playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
+            if (ownerGameObject.TryGetComponent(out Rigidbody rb)) {
+                rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
+            }
         }
     }
 }

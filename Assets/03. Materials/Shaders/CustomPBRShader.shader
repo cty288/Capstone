@@ -10,35 +10,56 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 {
     Properties
     {
+    	[Header(Main Texture)]
         [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
         [MainColor] _BaseColor("Color", Color) = (1,1,1,1)
 
+    	[Space(20)]
         _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
 
+    	[Space(20)]
+    	[Header(Metallic Specular)]
     	[Toggle(_METALLICSPECGLOSSMAP)] _GlossToggle ("Use Gloss Map(s)", Float) = 1
     	[Toggle(_SPECULAR_SETUP)] _MetSpecToggle ("Use Metallic/Specular", Float) = 1
         _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
         _GlossMapScale("Smoothness Scale", Range(0.0, 1.0)) = 1.0
 
+    	[Space(10)]
         _Metallic("Metallic", Range(0.0, 1.0)) = 0.0
         _MetallicGlossMap("Metallic", 2D) = "white" {}
 
+    	[Space(10)]
         _SpecColor("Specular", Color) = (0.2, 0.2, 0.2)
         _SpecGlossMap("Specular", 2D) = "white" {}
     	
+    	[Space(20)]
+    	[Header(Saturated Shadow Edges)]
+    	_ShadowEdgePower("Shadow Edge Power", Float) = 3.0
+    	_ShadowEdgeSaturation("Shadow Edge Power", Range(0, 1)) = 0.25
+    	_ShadowRadianceRange("Shadow Radiance Range (X, Y)", Vector) = (0.1, 0.5, 0 ,0)
+    	
+    	[Space(20)]
+    	[Header(Normals)]
     	[Toggle(_NORMALMAP)] _NormalMapToggle ("Use Normal Map", Float) = 0
     	_BumpScale("Bump Scale", Float) = 1.0
         _BumpMap("Normal Map", 2D) = "bump" {}
         
+    	[Space(20)]
+    	[Header(AO)]
     	[Toggle(_OCCLUSIONMAP)] _AOToggle ("Use AO", Float) = 0
         _OcclusionStrength("Occlusion Strength", Range(0.0, 1.0)) = 1.0
         _OcclusionMap("Occlusion", 2D) = "white" {}
 
+    	[Space(20)]
+    	[Header(Emission)]
         [HDR] _EmissionColor("Color", Color) = (0,0,0)
         _EmissionMap("Emission", 2D) = "white" {}
         
+    	[Space(25)]
         _ReceiveShadows("Receive Shadows", Float) = 1.0
     	
+    	[Space(20)]
+    	[Header(Fresnel Highlight)]
     	_HighlightColor ("Highlight Color", Color) = (1,0,0,1)
 		_FresnelPower ("Fresnel", Range(0, 10)) = 5
         _FresnelCutOffIn ("Cut Off In", Range(0,1)) = 0.1
@@ -71,6 +92,10 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
                 float _Metallic;
         
                 float4 _SpecColor;
+
+				float _ShadowEdgePower;
+				float _ShadowEdgeSaturation;
+				float2 _ShadowRadianceRange;
 
 				float _BumpScale;
 				float4 _BumpMap_ST;

@@ -24,7 +24,7 @@ namespace Runtime.Inventory.Model {
 			}
 		}
 		
-		private Action<string, List<string>> OnSlotUpdateCallback;
+		private Action<ResourceSlot, string, List<string>> OnSlotUpdateCallback;
 
 
 
@@ -53,7 +53,7 @@ namespace Runtime.Inventory.Model {
 				}
 				UUIDList.Add(item.UUID);
 				UUIDSetMain.Add(item.UUID);
-				this.OnSlotUpdateCallback?.Invoke(GetLastItemUUID(), UUIDList);
+				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 				return true;
 			}
 			return false;
@@ -71,7 +71,7 @@ namespace Runtime.Inventory.Model {
 			if (IsEmpty()) {
 				ItemKey = null;
 			}
-			this.OnSlotUpdateCallback?.Invoke(GetLastItemUUID(), UUIDList);
+			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 			return true;
 		}
 		
@@ -87,10 +87,11 @@ namespace Runtime.Inventory.Model {
 				return false;
 			}
 			UUIDList.Remove(uuid);
+			UUIDSetMain.Remove(uuid);
 			if (IsEmpty()) {
 				ItemKey = null;
 			}
-			this.OnSlotUpdateCallback?.Invoke(GetLastItemUUID(), UUIDList);
+			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 			return true;
 		}
 		
@@ -98,7 +99,7 @@ namespace Runtime.Inventory.Model {
 			ItemKey = null;
 			UUIDList.Clear();
 			UUIDSetMain.Clear();
-			this.OnSlotUpdateCallback?.Invoke(GetLastItemUUID(), UUIDList);
+			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 		}
 		
 		
@@ -134,8 +135,8 @@ namespace Runtime.Inventory.Model {
 			if (otherSlot.IsEmpty()) {
 				otherSlot.ItemKey = null;
 			}
-			this.OnSlotUpdateCallback?.Invoke(GetLastItemUUID(), UUIDList);
-			otherSlot.OnSlotUpdateCallback?.Invoke(otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
+			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
+			otherSlot.OnSlotUpdateCallback?.Invoke(this, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
 		}
 		
 		public bool ContainsItem(string uuid) {
@@ -159,11 +160,11 @@ namespace Runtime.Inventory.Model {
 
 			return false;
 		}
-		public void RegisterOnSlotUpdateCallback(Action<string, List<string>> callback) {
+		public void RegisterOnSlotUpdateCallback(Action<ResourceSlot, string, List<string>> callback) {
 			OnSlotUpdateCallback += callback;
 		}
 		
-		public void UnregisterOnSlotUpdateCallback(Action<string, List<string>> callback) {
+		public void UnregisterOnSlotUpdateCallback(Action<ResourceSlot, string, List<string>> callback) {
 			OnSlotUpdateCallback -= callback;
 		}
 		public List<string> GetUUIDList() {

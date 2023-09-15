@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1" class="text-break">
     Class AbstractWeaponViewController&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -91,11 +91,12 @@
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"></div>
+  <div class="markdown summary"><p>For both</p>
+</div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractWeaponViewController&lt;T&gt; : AbstractResourceViewController&lt;T&gt;, IResourceViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IBelongToFaction where T : class, IWeaponEntity, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AbstractWeaponViewController&lt;T&gt; : AbstractPickableInHandResourceViewController&lt;T&gt;, IPickableResourceViewController, IInHandResourceViewController, IResourceViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IBelongToFaction where T : class, IWeaponEntity, new()</code></pre>
   </div>
 
 
@@ -120,6 +121,8 @@
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html">AbstractEntityViewController</a>&lt;T&gt;</div>
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html">AbstractBasicEntityViewController</a>&lt;T&gt;</div>
       <div><a class="xref" href="Runtime.GameResources.ViewControllers.AbstractResourceViewController-1.html">AbstractResourceViewController</a>&lt;T&gt;</div>
+      <div><a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html">AbstractPickableResourceViewController</a>&lt;T&gt;</div>
+      <div><a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html">AbstractPickableInHandResourceViewController</a>&lt;T&gt;</div>
       <div><span class="xref">AbstractWeaponViewController&lt;T&gt;</span></div>
     </dd>
   </dl>
@@ -127,6 +130,8 @@
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
+      <div><a class="xref" href="Runtime.GameResources.ViewControllers.IPickableResourceViewController.html">IPickableResourceViewController</a></div>
+      <div><a class="xref" href="Runtime.GameResources.ViewControllers.IInHandResourceViewController.html">IInHandResourceViewController</a></div>
       <div><a class="xref" href="Runtime.GameResources.ViewControllers.IResourceViewController.html">IResourceViewController</a></div>
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.IEntityViewController.html">IEntityViewController</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IController.html">IController</a></div>
@@ -151,6 +156,60 @@
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_selfColliders">AbstractPickableInHandResourceViewController&lt;T&gt;.selfColliders</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_isHolding">AbstractPickableInHandResourceViewController&lt;T&gt;.isHolding</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_rigidbody">AbstractPickableInHandResourceViewController&lt;T&gt;.rigidbody</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_ownerGameObject">AbstractPickableInHandResourceViewController&lt;T&gt;.ownerGameObject</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartAbsorb">AbstractPickableInHandResourceViewController&lt;T&gt;.OnStartAbsorb()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnRecycled">AbstractPickableInHandResourceViewController&lt;T&gt;.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_HandleAbsorb_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractPickableInHandResourceViewController&lt;T&gt;.HandleAbsorb(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartHold_UnityEngine_GameObject_">AbstractPickableInHandResourceViewController&lt;T&gt;.OnStartHold(GameObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStopHold">AbstractPickableInHandResourceViewController&lt;T&gt;.OnStopHold()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnPointByCrosshair">AbstractPickableInHandResourceViewController&lt;T&gt;.OnPointByCrosshair()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_inventoryModel">AbstractPickableResourceViewController&lt;T&gt;.inventoryModel</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_isAbsorbing">AbstractPickableResourceViewController&lt;T&gt;.isAbsorbing</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_entityAutoRemovalTimeWhenNoAbsorb">AbstractPickableResourceViewController&lt;T&gt;.entityAutoRemovalTimeWhenNoAbsorb</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_OnEntityStart">AbstractPickableResourceViewController&lt;T&gt;.OnEntityStart()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_OnPlayerInteractiveZoneReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractPickableResourceViewController&lt;T&gt;.OnPlayerInteractiveZoneReachable(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_OnPlayerInteractiveZoneNotReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractPickableResourceViewController&lt;T&gt;.OnPlayerInteractiveZoneNotReachable(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_OnPlayerExitInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractPickableResourceViewController&lt;T&gt;.OnPlayerExitInteractiveZone(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_HoldAbsorb">AbstractPickableResourceViewController&lt;T&gt;.HoldAbsorb</a>
+    </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_1_BindCustomData__1_System_String_System_String_System_String_System_Action___0___0__">AbstractBasicEntityViewController&lt;T&gt;.BindCustomData&lt;T&gt;(string, string, string, Action&lt;T, T&gt;)</a>
     </div>
@@ -203,9 +262,6 @@
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_InitWithID_System_String_">AbstractEntityViewController&lt;T&gt;.InitWithID(string)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPointByCrosshair">AbstractEntityViewController&lt;T&gt;.OnPointByCrosshair()</a>
-    </div>
-    <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnUnPointByCrosshair">AbstractEntityViewController&lt;T&gt;.OnUnPointByCrosshair()</a>
     </div>
     <div>
@@ -215,13 +271,7 @@
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnStart">AbstractEntityViewController&lt;T&gt;.OnStart()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnRecycled">AbstractEntityViewController&lt;T&gt;.OnRecycled()</a>
-    </div>
-    <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindProperty">AbstractEntityViewController&lt;T&gt;.OnBindProperty()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityStart">AbstractEntityViewController&lt;T&gt;.OnEntityStart()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindEntityProperty">AbstractEntityViewController&lt;T&gt;.OnBindEntityProperty()</a>
@@ -245,10 +295,7 @@
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ForceUpdatePropertyBindings">AbstractEntityViewController&lt;T&gt;.ForceUpdatePropertyBindings()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerEnterInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;T&gt;.OnPlayerEnterInteractiveZone(GameObject, PlayerInteractiveZone)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;T&gt;.OnPlayerExitInteractiveZone(GameObject, PlayerInteractiveZone)</a>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;T&gt;.OnPlayerInInteractiveZone(GameObject, PlayerInteractiveZone)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnDestroy">AbstractEntityViewController&lt;T&gt;.OnDestroy()</a>
@@ -653,7 +700,7 @@
 
   <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_CurrentFaction" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.CurrentFaction">
   CurrentFaction
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
@@ -689,7 +736,7 @@
 
   <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_Awake" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.Awake">
   Awake()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -715,7 +762,7 @@
 
   <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnBuildNewEntity" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnBuildNewEntity">
   OnBuildNewEntity()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L30"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -746,7 +793,7 @@
 
   <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnInitWeaponEntity_Runtime_Weapons_Model_Builders_WeaponBuilder__0__" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnInitWeaponEntity(Runtime.Weapons.Model.Builders.WeaponBuilder{`0})">
   OnInitWeaponEntity(WeaponBuilder&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -782,7 +829,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L15" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L20" class="edit-link">Edit this page</a>
         </div>
 
         

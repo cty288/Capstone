@@ -64,13 +64,13 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Sprint"",
+                    ""name"": ""SprintTap"",
                     ""type"": ""Button"",
                     ""id"": ""7286fdd3-d6ab-4669-acd8-cfe354d165e8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Shoot"",
@@ -85,6 +85,15 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""b8cb01e9-e78a-4313-b77e-4d66672d9dc8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SprintHold"",
+                    ""type"": ""Button"",
+                    ""id"": ""3d4e2c31-eb1c-45b1-bc15-4eea515134fe"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -144,31 +153,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""8180e8bd-4097-4f4e-ab88-4523101a6ce9"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""down"",
                     ""id"": ""320bffee-a40b-4347-ac70-c210eb8bc73a"",
                     ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""1c5327b5-f71c-4f60-99c7-4e737386f1d1"",
-                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -188,31 +175,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""2e46982e-44cc-431b-9f0b-c11910bf467a"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""right"",
                     ""id"": ""fcfe95b8-67b9-4526-84b5-5d0bc98d6400"",
                     ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""77bff152-3580-4b21-b6de-dcd0c7e41164"",
-                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -300,11 +265,11 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ec492ada-0722-40ad-9ee7-71176fa9e24c"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": ""Tap(duration=0.4)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Sprint"",
+                    ""action"": ""SprintTap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -312,10 +277,10 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""61ccc1df-e439-499d-9b27-148270ff390c"",
                     ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": ""MultiTap"",
+                    ""interactions"": ""Tap(duration=0.4)"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Sprint"",
+                    ""action"": ""SprintTap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -360,6 +325,17 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0fb199c4-1e9c-410d-9bfe-d8f76acea290"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SprintHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -825,6 +801,24 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HotBarLeftNavigate"",
+                    ""type"": ""Button"",
+                    ""id"": ""18d902d6-b831-456e-83cc-54dfc436dae8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HotBarRightNavigate"",
+                    ""type"": ""Button"",
+                    ""id"": ""c48b9f6c-cafc-4cca-b352-899a884a7a68"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -860,6 +854,105 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Close"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""0e54ce33-f5a5-436c-8c9c-6cd2f7303e68"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotBarLeftNavigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""4d59a3dc-6a66-458c-bd29-19880b2c4f5d"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HotBarLeftNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""1f9c67fb-9e64-4f6c-a7b8-68d2cc060cb6"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HotBarLeftNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""6ac2143d-f9fb-417c-8605-ff793388fbbc"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotBarRightNavigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""932084c8-e7be-402a-bbd8-b03372fe3e29"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HotBarRightNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""764da5ea-a4d7-4d64-a5af-47c8ed9aef18"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HotBarRightNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""54b9ea18-2d53-490d-a862-1f34350df2d5"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotBarRightNavigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""5fe2b36e-7ba8-4c52-ac85-8ac3e3c1669a"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""HotBarRightNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""815a879a-6dfc-4818-8e92-63a85c03bc70"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""HotBarRightNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -900,11 +993,12 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_SprintTap = m_Player.FindAction("SprintTap", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
+        m_Player_SprintHold = m_Player.FindAction("SprintHold", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -921,6 +1015,8 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_Shared = asset.FindActionMap("Shared", throwIfNotFound: true);
         m_Shared_Inventory = m_Shared.FindAction("Inventory", throwIfNotFound: true);
         m_Shared_Close = m_Shared.FindAction("Close", throwIfNotFound: true);
+        m_Shared_HotBarLeftNavigate = m_Shared.FindAction("HotBarLeftNavigate", throwIfNotFound: true);
+        m_Shared_HotBarRightNavigate = m_Shared.FindAction("HotBarRightNavigate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -986,9 +1082,10 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_SprintTap;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_SprintHold;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Scope;
     public struct PlayerActions
@@ -999,11 +1096,12 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @SprintTap => m_Wrapper.m_Player_SprintTap;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Scope => m_Wrapper.m_Player_Scope;
+        public InputAction @SprintHold => m_Wrapper.m_Player_SprintHold;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1025,15 +1123,18 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Sprint.started += instance.OnSprint;
-            @Sprint.performed += instance.OnSprint;
-            @Sprint.canceled += instance.OnSprint;
+            @SprintTap.started += instance.OnSprintTap;
+            @SprintTap.performed += instance.OnSprintTap;
+            @SprintTap.canceled += instance.OnSprintTap;
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @SprintHold.started += instance.OnSprintHold;
+            @SprintHold.performed += instance.OnSprintHold;
+            @SprintHold.canceled += instance.OnSprintHold;
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
@@ -1056,15 +1157,18 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Sprint.started -= instance.OnSprint;
-            @Sprint.performed -= instance.OnSprint;
-            @Sprint.canceled -= instance.OnSprint;
+            @SprintTap.started -= instance.OnSprintTap;
+            @SprintTap.performed -= instance.OnSprintTap;
+            @SprintTap.canceled -= instance.OnSprintTap;
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @SprintHold.started -= instance.OnSprintHold;
+            @SprintHold.performed -= instance.OnSprintHold;
+            @SprintHold.canceled -= instance.OnSprintHold;
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
@@ -1212,12 +1316,16 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     private List<ISharedActions> m_SharedActionsCallbackInterfaces = new List<ISharedActions>();
     private readonly InputAction m_Shared_Inventory;
     private readonly InputAction m_Shared_Close;
+    private readonly InputAction m_Shared_HotBarLeftNavigate;
+    private readonly InputAction m_Shared_HotBarRightNavigate;
     public struct SharedActions
     {
         private @DPunkInputs m_Wrapper;
         public SharedActions(@DPunkInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Inventory => m_Wrapper.m_Shared_Inventory;
         public InputAction @Close => m_Wrapper.m_Shared_Close;
+        public InputAction @HotBarLeftNavigate => m_Wrapper.m_Shared_HotBarLeftNavigate;
+        public InputAction @HotBarRightNavigate => m_Wrapper.m_Shared_HotBarRightNavigate;
         public InputActionMap Get() { return m_Wrapper.m_Shared; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1233,6 +1341,12 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Close.started += instance.OnClose;
             @Close.performed += instance.OnClose;
             @Close.canceled += instance.OnClose;
+            @HotBarLeftNavigate.started += instance.OnHotBarLeftNavigate;
+            @HotBarLeftNavigate.performed += instance.OnHotBarLeftNavigate;
+            @HotBarLeftNavigate.canceled += instance.OnHotBarLeftNavigate;
+            @HotBarRightNavigate.started += instance.OnHotBarRightNavigate;
+            @HotBarRightNavigate.performed += instance.OnHotBarRightNavigate;
+            @HotBarRightNavigate.canceled += instance.OnHotBarRightNavigate;
         }
 
         private void UnregisterCallbacks(ISharedActions instance)
@@ -1243,6 +1357,12 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Close.started -= instance.OnClose;
             @Close.performed -= instance.OnClose;
             @Close.canceled -= instance.OnClose;
+            @HotBarLeftNavigate.started -= instance.OnHotBarLeftNavigate;
+            @HotBarLeftNavigate.performed -= instance.OnHotBarLeftNavigate;
+            @HotBarLeftNavigate.canceled -= instance.OnHotBarLeftNavigate;
+            @HotBarRightNavigate.started -= instance.OnHotBarRightNavigate;
+            @HotBarRightNavigate.performed -= instance.OnHotBarRightNavigate;
+            @HotBarRightNavigate.canceled -= instance.OnHotBarRightNavigate;
         }
 
         public void RemoveCallbacks(ISharedActions instance)
@@ -1284,9 +1404,10 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnSprint(InputAction.CallbackContext context);
+        void OnSprintTap(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnSprintHold(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
     }
@@ -1307,5 +1428,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     {
         void OnInventory(InputAction.CallbackContext context);
         void OnClose(InputAction.CallbackContext context);
+        void OnHotBarLeftNavigate(InputAction.CallbackContext context);
+        void OnHotBarRightNavigate(InputAction.CallbackContext context);
     }
 }

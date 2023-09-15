@@ -17,7 +17,7 @@ namespace Tests.Tests_Editor {
 			inventoryModel = MainGame_Test.Interface.GetModel<IInventoryModel>();
 			rawMaterialModel = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
 			inventorySystem = MainGame_Test.Interface.GetSystem<IInventorySystem>();
-			inventorySystem.ResetInventory();
+			inventorySystem.ResetSlots();
 		}
 		
 		
@@ -176,7 +176,7 @@ namespace Tests.Tests_Editor {
 			inventoryModel.AddItem(item);
     
 			// 重置库存
-			inventorySystem.ResetInventory();
+			inventorySystem.ResetSlots();
 
 			Assert.AreEqual(0, inventoryModel.GetSlotCurrentItemCount(0));
 			Assert.AreEqual(InventorySystem.InitialSlotCount, inventoryModel.GetSlotCount());

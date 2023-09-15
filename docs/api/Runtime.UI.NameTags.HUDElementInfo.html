@@ -150,7 +150,7 @@
 
   <h3 id="Runtime_UI_NameTags_HUDElementInfo__ctor" data-uid="Runtime.UI.NameTags.HUDElementInfo.#ctor">
   HUDElementInfo()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L14"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -186,7 +186,7 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Dictionary&lt;Transform, GameObject&gt; followDict</code></pre>
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;Transform, (GameObject, bool)&gt; followDict</code></pre>
   </div>
 
 
@@ -194,7 +194,7 @@
 
   <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<span class="xref">Transform</span>, <span class="xref">GameObject</span>&gt;</dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<span class="xref">Transform</span>, (<span class="xref">GameObject</span>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>)&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -209,7 +209,7 @@
 
   <h3 id="Runtime_UI_NameTags_HUDElementInfo_prefabPools" data-uid="Runtime.UI.NameTags.HUDElementInfo.prefabPools">
   prefabPools
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L12"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -244,7 +244,7 @@
 
   <h3 id="Runtime_UI_NameTags_HUDElementInfo_Despawn_UnityEngine_Transform_" data-uid="Runtime.UI.NameTags.HUDElementInfo.Despawn(UnityEngine.Transform)">
   Despawn(Transform)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -273,16 +273,16 @@
 
   <a id="Runtime_UI_NameTags_HUDElementInfo_GetOrCreate_" data-uid="Runtime.UI.NameTags.HUDElementInfo.GetOrCreate*"></a>
 
-  <h3 id="Runtime_UI_NameTags_HUDElementInfo_GetOrCreate_UnityEngine_Transform_UnityEngine_Transform_System_String_" data-uid="Runtime.UI.NameTags.HUDElementInfo.GetOrCreate(UnityEngine.Transform,UnityEngine.Transform,System.String)">
-  GetOrCreate(Transform, Transform, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_UI_NameTags_HUDElementInfo_GetOrCreate_UnityEngine_Transform_UnityEngine_Transform_System_String_System_Boolean_" data-uid="Runtime.UI.NameTags.HUDElementInfo.GetOrCreate(UnityEngine.Transform,UnityEngine.Transform,System.String,System.Boolean)">
+  GetOrCreate(Transform, Transform, string, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GameObject GetOrCreate(Transform targetFollow, Transform spawnedTransform, string prefabName)</code></pre>
+    <pre><code class="lang-csharp hljs">public (GameObject, bool) GetOrCreate(Transform targetFollow, Transform spawnedTransform, string prefabName, bool isWorld)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -293,11 +293,13 @@
     <dd></dd>
     <dt><code>prefabName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd></dd>
+    <dt><code>isWorld</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
   </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><span class="xref">GameObject</span></dt>
+    <dt>(<span class="xref">GameObject</span>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>)</dt>
     <dd></dd>
   </dl>
 

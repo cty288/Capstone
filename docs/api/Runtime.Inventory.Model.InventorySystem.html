@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Inventory_Model_InventorySystem" data-uid="Runtime.Inventory.Model.InventorySystem" class="text-break">
     Class InventorySystem
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L16"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class InventorySystem : AbstractSystem, IInventorySystem, ISystem, ICanSetArchitecture, ICanGetModel, ICanGetUtility, ICanSendEvent, ICanRegisterEvent, ICanGetSystem, ICanSendQuery, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public class InventorySystem : AbstractResourceSlotsSystem&lt;IInventoryModel&gt;, IInventorySystem, IResourceSlotsSystem, ISystem, ICanSetArchitecture, ICanGetModel, ICanGetUtility, ICanSendEvent, ICanRegisterEvent, ICanGetSystem, ICanSendQuery, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -106,6 +106,7 @@
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.AbstractSystem.html">AbstractSystem</a></div>
+      <div><a class="xref" href="Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html">AbstractResourceSlotsSystem</a>&lt;<a class="xref" href="Runtime.Inventory.Model.IInventoryModel.html">IInventoryModel</a>&gt;</div>
       <div><span class="xref">InventorySystem</span></div>
     </dd>
   </dl>
@@ -114,6 +115,7 @@
     <dt>Implements</dt>
     <dd>
       <div><a class="xref" href="Runtime.Inventory.Model.IInventorySystem.html">IInventorySystem</a></div>
+      <div><a class="xref" href="Runtime.Inventory.Model.IResourceSlotsSystem.html">IResourceSlotsSystem</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ISystem.html">ISystem</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanSetArchitecture.html">ICanSetArchitecture</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
@@ -130,6 +132,9 @@
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_model">AbstractResourceSlotsSystem&lt;IInventoryModel&gt;.model</a>
+    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
@@ -165,7 +170,7 @@
 
   <h3 id="Runtime_Inventory_Model_InventorySystem_InitialHotBarSlotCount" data-uid="Runtime.Inventory.Model.InventorySystem.InitialHotBarSlotCount">
   InitialHotBarSlotCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -195,7 +200,7 @@
 
   <h3 id="Runtime_Inventory_Model_InventorySystem_InitialSlotCount" data-uid="Runtime.Inventory.Model.InventorySystem.InitialSlotCount">
   InitialSlotCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -230,7 +235,7 @@
 
   <h3 id="Runtime_Inventory_Model_InventorySystem_OnInit" data-uid="Runtime.Inventory.Model.InventorySystem.OnInit">
   OnInit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -252,18 +257,18 @@
 
 
 
-  <a id="Runtime_Inventory_Model_InventorySystem_ResetInventory_" data-uid="Runtime.Inventory.Model.InventorySystem.ResetInventory*"></a>
+  <a id="Runtime_Inventory_Model_InventorySystem_ResetSlots_" data-uid="Runtime.Inventory.Model.InventorySystem.ResetSlots*"></a>
 
-  <h3 id="Runtime_Inventory_Model_InventorySystem_ResetInventory" data-uid="Runtime.Inventory.Model.InventorySystem.ResetInventory">
-  ResetInventory()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Inventory_Model_InventorySystem_ResetSlots" data-uid="Runtime.Inventory.Model.InventorySystem.ResetSlots">
+  ResetSlots()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void ResetInventory()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void ResetSlots()</code></pre>
   </div>
 
 
@@ -282,7 +287,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L12" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventorySystem.cs/#L16" class="edit-link">Edit this page</a>
         </div>
 
         

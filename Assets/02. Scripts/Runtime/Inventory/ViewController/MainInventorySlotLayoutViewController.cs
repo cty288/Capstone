@@ -8,7 +8,7 @@ namespace Runtime.Inventory.ViewController {
 		
 		private RectTransform slotLayout;
 		[SerializeField] private GameObject slotPrefab;
-		private List<ResourceSlotViewController> slotViewControllers = new List<ResourceSlotViewController>();
+		protected List<ResourceSlotViewController> slotViewControllers = new List<ResourceSlotViewController>();
 		protected virtual void Awake() {
 			slotLayout = GetComponent<RectTransform>();
 		}
@@ -26,7 +26,12 @@ namespace Runtime.Inventory.ViewController {
 				ResourceSlotViewController slotViewController = slot.GetComponent<ResourceSlotViewController>();
 				slotViewController.SetSlot(addedSlots[j++]);
 				slotViewControllers.Add(slotViewController);
+				OnSlotViewControllerSpawned(slotViewController, i);
 			}
+		}
+		
+		public virtual void OnSlotViewControllerSpawned(ResourceSlotViewController slotViewController, int index) {
+			
 		}
 		
 
@@ -36,6 +41,10 @@ namespace Runtime.Inventory.ViewController {
 
 		public override void OnHideSlotItem() {
 			slotViewControllers.ForEach(slot => slot.Activate(false));
+		}
+
+		public override void OnSelected(int slotIndex) {
+			
 		}
 	}
 }

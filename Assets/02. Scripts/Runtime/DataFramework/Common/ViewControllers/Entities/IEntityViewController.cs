@@ -20,8 +20,23 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         
         public void OnUnPointByCrosshair();
         
-        public void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone);
+        public void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone);
         
+        public void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone);
+        
+        /// <summary>
+        /// Enter the interactive zone, no matter if reachable or not
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="zone"></param>
+        
+        public void OnPlayerInInteractiveZone(GameObject player, PlayerInteractiveZone zone);
+        
+        /// <summary>
+        /// Exit the interactive zone, no matter if reachable or not
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="zone"></param>
         public void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone);
     
         //public void Init(string id, IEntity entity);

@@ -46,9 +46,14 @@ namespace Runtime.Inventory.ViewController {
             this.RegisterEvent<OnInventoryHotBarSlotAddedEvent>(OnInventoryHotBarSlotAdded)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             
+            this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected)
+                .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            
            SetInitialSlots();
            gameObject.SetActive(false);
         }
+
+
 
         private void OnInventoryHotBarSlotAdded(OnInventoryHotBarSlotAddedEvent e) {
             if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
@@ -60,9 +65,12 @@ namespace Runtime.Inventory.ViewController {
             mainSlotLayoutViewController.OnInventorySlotAdded(
                 inventoryModel.GetAllSlots(), inventoryModel.GetSlotCount());
 
+            
+            
             rubbishSlotViewController.SetSlot(new RubbishSlot());
             
             foreach (KeyValuePair<HotBarCategory,InventorySlotLayoutViewController> hotBarSlotLayoutViewController in hotBarSlotLayoutViewControllers) {
+                
                 hotBarSlotLayoutViewController.Value.OnInventorySlotAdded(
                     inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key),
                     inventoryModel.GetHotBarSlotCount(hotBarSlotLayoutViewController.Key));
@@ -71,8 +79,15 @@ namespace Runtime.Inventory.ViewController {
                     hotBarSlotLayoutViewController.Value.OnShowSlotItem();
                 }
             }
-            
-            
+
+            OnHotBarSlotSelected(new OnHotBarSlotSelectedEvent() {
+                Category = HotBarCategory.Left,
+                SelectedIndex = inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Left)
+            });
+            OnHotBarSlotSelected(new OnHotBarSlotSelectedEvent() {
+                Category = HotBarCategory.Right,
+                SelectedIndex = inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Right)
+            });
         }
 
         private void OnInventorySlotAdded(OnInventorySlotAddedEvent e) {
@@ -94,7 +109,12 @@ namespace Runtime.Inventory.ViewController {
         }
         
         
-
+        private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
+            Debug.Log("OnHotBarSlotSelected");
+            if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
+                controller.OnSelected(e.SelectedIndex);
+            }
+        }
         public override void OnClosed() {
             mainSlotLayoutViewController.OnHideSlotItem();
             

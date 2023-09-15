@@ -1,8 +1,10 @@
+using System;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Runtime.GameResources.ViewControllers {
@@ -28,6 +30,13 @@ namespace Runtime.GameResources.ViewControllers {
 
         protected override void OnBindEntityProperty() {
         
+        }
+
+
+        private void Update() {
+            if (Input.GetKeyDown(KeyCode.L)) {
+                entityModel.RemoveEntity(BoundEntity.UUID);
+            }
         }
     }
 }
