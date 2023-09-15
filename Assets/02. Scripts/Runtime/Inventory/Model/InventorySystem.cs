@@ -13,10 +13,7 @@ namespace Runtime.Inventory.Model {
 		public IResourceEntity TopItem;
 	}
 	
-	public class InventorySystem : AbstractSystem, IInventorySystem {
-		private IInventoryModel inventoryModel;
-		
-
+	public class InventorySystem : AbstractResourceSlotsSystem<IInventoryModel>, IInventorySystem {
 		public static int InitialSlotCount = 9;
 		public static Dictionary<HotBarCategory, int> InitialHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
 			{HotBarCategory.Right, 2},
@@ -27,20 +24,33 @@ namespace Runtime.Inventory.Model {
 		private Dictionary<ResourceSlot, HotBarCategory> slotToCategories = new Dictionary<ResourceSlot, HotBarCategory>();
 
 		protected override void OnInit() {
-			inventoryModel = this.GetModel<IInventoryModel>();
+			base.OnInit();
 
 			this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
-			if (inventoryModel.IsFirstTimeCreated) {
-				ResetInventory();
+			if (model.IsFirstTimeCreated) {
+				ResetSlots();
 			}
 			else {
-				inventoryModel.SelectHotBarSlot(HotBarCategory.Left, inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Left));
-				inventoryModel.SelectHotBarSlot(HotBarCategory.Right, inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+				model.SelectHotBarSlot(HotBarCategory.Left, model.GetSelectedHotBarSlotIndex(HotBarCategory.Left));
+				model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+			}
+
+			List<ResourceSlot> allHotBarSlots = new List<ResourceSlot>();
+			allHotBarSlots.AddRange(model.GetHotBarSlots(HotBarCategory.Left));
+			allHotBarSlots.AddRange(model.GetHotBarSlots(HotBarCategory.Right));
+			foreach (ResourceSlot resourceSlot in allHotBarSlots) {
+				List<string> uuids = resourceSlot.GetUUIDList();
+				for (int i = 0; i < uuids.Count; i++) {
+					IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuids[i]);
+					if (entity != null) {
+						model.RegisterInitialEntityEvents(entity);
+					}
+				}
 			}
 		}
 
 		private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
-			ResourceSlot slot = inventoryModel.GetHotBarSlots(e.Category)[e.SelectedIndex];
+			ResourceSlot slot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
 			currentSelectedSlot.TryAdd(e.Category, null);
 			
 			ResourceSlot previousSlot = currentSelectedSlot[e.Category];
@@ -83,21 +93,20 @@ namespace Runtime.Inventory.Model {
 		}
 
 
-		public void ResetInventory() {
-			inventoryModel.Clear();
+		public override void ResetSlots() {
+			model.Clear();
 			AddInitialSlots();
-			inventoryModel.SelectHotBarSlot(HotBarCategory.Left, 0);
-			inventoryModel.SelectHotBarSlot(HotBarCategory.Right, 0);
+			model.SelectHotBarSlot(HotBarCategory.Left, 0);
+			model.SelectHotBarSlot(HotBarCategory.Right, 0);
 		}
-		
-		
-		private void AddInitialSlots() {
-			inventoryModel.AddSlots(InitialSlotCount);
 
-			inventoryModel.AddHotBarSlots(HotBarCategory.Left, InitialHotBarSlotCount[HotBarCategory.Left],
+		private void AddInitialSlots() {
+			model.AddSlots(InitialSlotCount);
+
+			model.AddHotBarSlots(HotBarCategory.Left, InitialHotBarSlotCount[HotBarCategory.Left],
 				()=>new LeftHotBarSlot());
 				
-			inventoryModel.AddHotBarSlots(HotBarCategory.Right, InitialHotBarSlotCount[HotBarCategory.Right],
+			model.AddHotBarSlots(HotBarCategory.Right, InitialHotBarSlotCount[HotBarCategory.Right],
 				()=>new RightHotBarSlot());
 		}
 	}

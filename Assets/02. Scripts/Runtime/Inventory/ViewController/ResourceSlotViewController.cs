@@ -6,10 +6,12 @@ using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Extensions;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
+using Runtime.RawMaterials.Model.Base;
 using Runtime.UI.NameTags;
 using TMPro;
 using UnityEngine;
@@ -30,6 +32,7 @@ namespace Runtime.Inventory.ViewController {
         private SlotResourceDescriptionPanel currentDescriptionPanel;
         private Transform descriptionPanelFollowTr;
         private Image selectedBG;
+        protected bool isSelected = false;
 
         public static GameObject pointerDownObject = null;
         protected virtual void Awake() {
@@ -44,6 +47,7 @@ namespace Runtime.Inventory.ViewController {
                 .GetComponent<SlotResourceDescriptionPanel>();
             selectedBG = transform.Find("SelectedBG").GetComponent<Image>();
             selectedBG.gameObject.SetActive(false);
+            
             currentDescriptionPanel.Hide();
             //descriptionPanel.Awake();
             Clear();
@@ -82,6 +86,8 @@ namespace Runtime.Inventory.ViewController {
                 dragStartPos = eventData.position;
             }
         }
+        
+        
         
 
         public void OnEndDrag(PointerEventData eventData) {
@@ -226,7 +232,11 @@ namespace Runtime.Inventory.ViewController {
             if (ResourceSlot.currentHoveredSlot == slot) {
                 descriptionPanelFollowTr.position = Input.mousePosition;
             }
+            
+            
         }
+        
+        
 
         private void OnDisable() {
             OnPointerExit(default);
@@ -235,6 +245,7 @@ namespace Runtime.Inventory.ViewController {
 
         public void SetSelected(bool selected) {
             selectedBG.gameObject.SetActive(selected);
+            isSelected = selected;
         }
 
     }

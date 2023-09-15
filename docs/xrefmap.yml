@@ -1724,25 +1724,6 @@ references:
   isSpec: "True"
   fullName: DPunkInputs.devices
   nameWithType: DPunkInputs.devices
-- uid: Global.DefaultPoolableGameObjectSaved
-  name: DefaultPoolableGameObjectSaved
-  href: api/Global.DefaultPoolableGameObjectSaved.html
-  commentId: T:Global.DefaultPoolableGameObjectSaved
-  fullName: DefaultPoolableGameObjectSaved
-  nameWithType: DefaultPoolableGameObjectSaved
-- uid: Global.DefaultPoolableGameObjectSaved.GetArchitecture
-  name: GetArchitecture()
-  href: api/Global.DefaultPoolableGameObjectSaved.html#Global_DefaultPoolableGameObjectSaved_GetArchitecture
-  commentId: M:Global.DefaultPoolableGameObjectSaved.GetArchitecture
-  fullName: DefaultPoolableGameObjectSaved.GetArchitecture()
-  nameWithType: DefaultPoolableGameObjectSaved.GetArchitecture()
-- uid: Global.DefaultPoolableGameObjectSaved.GetArchitecture*
-  name: GetArchitecture
-  href: api/Global.DefaultPoolableGameObjectSaved.html#Global_DefaultPoolableGameObjectSaved_GetArchitecture_
-  commentId: Overload:Global.DefaultPoolableGameObjectSaved.GetArchitecture
-  isSpec: "True"
-  fullName: DefaultPoolableGameObjectSaved.GetArchitecture
-  nameWithType: DefaultPoolableGameObjectSaved.GetArchitecture
 - uid: Global.Enemy
   name: Enemy
   href: api/Global.Enemy.html
@@ -2859,18 +2840,6 @@ references:
   commentId: T:Global.SupplyStation
   fullName: SupplyStation
   nameWithType: SupplyStation
-- uid: Global.TestEntrance
-  name: TestEntrance
-  href: api/Global.TestEntrance.html
-  commentId: T:Global.TestEntrance
-  fullName: TestEntrance
-  nameWithType: TestEntrance
-- uid: Global.TestPoolControl
-  name: TestPoolControl
-  href: api/Global.TestPoolControl.html
-  commentId: T:Global.TestPoolControl
-  fullName: TestPoolControl
-  nameWithType: TestPoolControl
 - uid: Global.TimeSystemTest
   name: TimeSystemTest
   href: api/Global.TimeSystemTest.html
@@ -32384,14 +32353,14 @@ references:
   fullName.vb: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController(Of T).OnStartAbsorb
   nameWithType: AbstractPickableInHandResourceViewController<T>.OnStartAbsorb
   nameWithType.vb: AbstractPickableInHandResourceViewController(Of T).OnStartAbsorb
-- uid: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnStartHold
-  name: OnStartHold()
-  href: api/Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartHold
-  commentId: M:Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnStartHold
-  fullName: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController<T>.OnStartHold()
-  fullName.vb: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController(Of T).OnStartHold()
-  nameWithType: AbstractPickableInHandResourceViewController<T>.OnStartHold()
-  nameWithType.vb: AbstractPickableInHandResourceViewController(Of T).OnStartHold()
+- uid: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnStartHold(UnityEngine.GameObject)
+  name: OnStartHold(GameObject)
+  href: api/Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartHold_UnityEngine_GameObject_
+  commentId: M:Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnStartHold(UnityEngine.GameObject)
+  fullName: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController<T>.OnStartHold(UnityEngine.GameObject)
+  fullName.vb: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController(Of T).OnStartHold(UnityEngine.GameObject)
+  nameWithType: AbstractPickableInHandResourceViewController<T>.OnStartHold(GameObject)
+  nameWithType.vb: AbstractPickableInHandResourceViewController(Of T).OnStartHold(GameObject)
 - uid: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnStartHold*
   name: OnStartHold
   href: api/Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartHold_
@@ -32426,6 +32395,14 @@ references:
   fullName.vb: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController(Of T).isHolding
   nameWithType: AbstractPickableInHandResourceViewController<T>.isHolding
   nameWithType.vb: AbstractPickableInHandResourceViewController(Of T).isHolding
+- uid: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.ownerGameObject
+  name: ownerGameObject
+  href: api/Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_ownerGameObject
+  commentId: F:Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.ownerGameObject
+  fullName: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController<T>.ownerGameObject
+  fullName.vb: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController(Of T).ownerGameObject
+  nameWithType: AbstractPickableInHandResourceViewController<T>.ownerGameObject
+  nameWithType.vb: AbstractPickableInHandResourceViewController(Of T).ownerGameObject
 - uid: Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.rigidbody
   name: rigidbody
   href: api/Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_rigidbody
@@ -32701,12 +32678,12 @@ references:
   commentId: T:Runtime.GameResources.ViewControllers.IInHandResourceViewController
   fullName: Runtime.GameResources.ViewControllers.IInHandResourceViewController
   nameWithType: IInHandResourceViewController
-- uid: Runtime.GameResources.ViewControllers.IInHandResourceViewController.OnStartHold
-  name: OnStartHold()
-  href: api/Runtime.GameResources.ViewControllers.IInHandResourceViewController.html#Runtime_GameResources_ViewControllers_IInHandResourceViewController_OnStartHold
-  commentId: M:Runtime.GameResources.ViewControllers.IInHandResourceViewController.OnStartHold
-  fullName: Runtime.GameResources.ViewControllers.IInHandResourceViewController.OnStartHold()
-  nameWithType: IInHandResourceViewController.OnStartHold()
+- uid: Runtime.GameResources.ViewControllers.IInHandResourceViewController.OnStartHold(UnityEngine.GameObject)
+  name: OnStartHold(GameObject)
+  href: api/Runtime.GameResources.ViewControllers.IInHandResourceViewController.html#Runtime_GameResources_ViewControllers_IInHandResourceViewController_OnStartHold_UnityEngine_GameObject_
+  commentId: M:Runtime.GameResources.ViewControllers.IInHandResourceViewController.OnStartHold(UnityEngine.GameObject)
+  fullName: Runtime.GameResources.ViewControllers.IInHandResourceViewController.OnStartHold(UnityEngine.GameObject)
+  nameWithType: IInHandResourceViewController.OnStartHold(GameObject)
 - uid: Runtime.GameResources.ViewControllers.IInHandResourceViewController.OnStartHold*
   name: OnStartHold
   href: api/Runtime.GameResources.ViewControllers.IInHandResourceViewController.html#Runtime_GameResources_ViewControllers_IInHandResourceViewController_OnStartHold_
@@ -33087,6 +33064,57 @@ references:
   commentId: N:Runtime.Inventory.Model
   fullName: Runtime.Inventory.Model
   nameWithType: Runtime.Inventory.Model
+- uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1
+  name: AbstractResourceSlotsSystem<T>
+  href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html
+  commentId: T:Runtime.Inventory.Model.AbstractResourceSlotsSystem`1
+  name.vb: AbstractResourceSlotsSystem(Of T)
+  fullName: Runtime.Inventory.Model.AbstractResourceSlotsSystem<T>
+  fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T)
+  nameWithType: AbstractResourceSlotsSystem<T>
+  nameWithType.vb: AbstractResourceSlotsSystem(Of T)
+- uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.OnInit
+  name: OnInit()
+  href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_OnInit
+  commentId: M:Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.OnInit
+  fullName: Runtime.Inventory.Model.AbstractResourceSlotsSystem<T>.OnInit()
+  fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T).OnInit()
+  nameWithType: AbstractResourceSlotsSystem<T>.OnInit()
+  nameWithType.vb: AbstractResourceSlotsSystem(Of T).OnInit()
+- uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.OnInit*
+  name: OnInit
+  href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_OnInit_
+  commentId: Overload:Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.OnInit
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.AbstractResourceSlotsSystem<T>.OnInit
+  fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T).OnInit
+  nameWithType: AbstractResourceSlotsSystem<T>.OnInit
+  nameWithType.vb: AbstractResourceSlotsSystem(Of T).OnInit
+- uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.ResetSlots
+  name: ResetSlots()
+  href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_ResetSlots
+  commentId: M:Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.ResetSlots
+  fullName: Runtime.Inventory.Model.AbstractResourceSlotsSystem<T>.ResetSlots()
+  fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T).ResetSlots()
+  nameWithType: AbstractResourceSlotsSystem<T>.ResetSlots()
+  nameWithType.vb: AbstractResourceSlotsSystem(Of T).ResetSlots()
+- uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.ResetSlots*
+  name: ResetSlots
+  href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_ResetSlots_
+  commentId: Overload:Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.ResetSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.AbstractResourceSlotsSystem<T>.ResetSlots
+  fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T).ResetSlots
+  nameWithType: AbstractResourceSlotsSystem<T>.ResetSlots
+  nameWithType.vb: AbstractResourceSlotsSystem(Of T).ResetSlots
+- uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.model
+  name: model
+  href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_model
+  commentId: F:Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.model
+  fullName: Runtime.Inventory.Model.AbstractResourceSlotsSystem<T>.model
+  fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T).model
+  nameWithType: AbstractResourceSlotsSystem<T>.model
+  nameWithType.vb: AbstractResourceSlotsSystem(Of T).model
 - uid: Runtime.Inventory.Model.HotBarCategory
   name: HotBarCategory
   href: api/Runtime.Inventory.Model.HotBarCategory.html
@@ -33286,19 +33314,6 @@ references:
   commentId: T:Runtime.Inventory.Model.IInventorySystem
   fullName: Runtime.Inventory.Model.IInventorySystem
   nameWithType: IInventorySystem
-- uid: Runtime.Inventory.Model.IInventorySystem.ResetInventory
-  name: ResetInventory()
-  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_ResetInventory
-  commentId: M:Runtime.Inventory.Model.IInventorySystem.ResetInventory
-  fullName: Runtime.Inventory.Model.IInventorySystem.ResetInventory()
-  nameWithType: IInventorySystem.ResetInventory()
-- uid: Runtime.Inventory.Model.IInventorySystem.ResetInventory*
-  name: ResetInventory
-  href: api/Runtime.Inventory.Model.IInventorySystem.html#Runtime_Inventory_Model_IInventorySystem_ResetInventory_
-  commentId: Overload:Runtime.Inventory.Model.IInventorySystem.ResetInventory
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.IInventorySystem.ResetInventory
-  nameWithType: IInventorySystem.ResetInventory
 - uid: Runtime.Inventory.Model.IResourceSlotsModel
   name: IResourceSlotsModel
   href: api/Runtime.Inventory.Model.IResourceSlotsModel.html
@@ -33386,6 +33401,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.IResourceSlotsModel.GetSlotCurrentItemCount
   nameWithType: IResourceSlotsModel.GetSlotCurrentItemCount
+- uid: Runtime.Inventory.Model.IResourceSlotsModel.RegisterInitialEntityEvents(Runtime.GameResources.Model.Base.IResourceEntity)
+  name: RegisterInitialEntityEvents(IResourceEntity)
+  href: api/Runtime.Inventory.Model.IResourceSlotsModel.html#Runtime_Inventory_Model_IResourceSlotsModel_RegisterInitialEntityEvents_Runtime_GameResources_Model_Base_IResourceEntity_
+  commentId: M:Runtime.Inventory.Model.IResourceSlotsModel.RegisterInitialEntityEvents(Runtime.GameResources.Model.Base.IResourceEntity)
+  fullName: Runtime.Inventory.Model.IResourceSlotsModel.RegisterInitialEntityEvents(Runtime.GameResources.Model.Base.IResourceEntity)
+  nameWithType: IResourceSlotsModel.RegisterInitialEntityEvents(IResourceEntity)
+- uid: Runtime.Inventory.Model.IResourceSlotsModel.RegisterInitialEntityEvents*
+  name: RegisterInitialEntityEvents
+  href: api/Runtime.Inventory.Model.IResourceSlotsModel.html#Runtime_Inventory_Model_IResourceSlotsModel_RegisterInitialEntityEvents_
+  commentId: Overload:Runtime.Inventory.Model.IResourceSlotsModel.RegisterInitialEntityEvents
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IResourceSlotsModel.RegisterInitialEntityEvents
+  nameWithType: IResourceSlotsModel.RegisterInitialEntityEvents
 - uid: Runtime.Inventory.Model.IResourceSlotsModel.RemoveItem(System.String)
   name: RemoveItem(string)
   href: api/Runtime.Inventory.Model.IResourceSlotsModel.html#Runtime_Inventory_Model_IResourceSlotsModel_RemoveItem_System_String_
@@ -33402,6 +33430,25 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.IResourceSlotsModel.RemoveItem
   nameWithType: IResourceSlotsModel.RemoveItem
+- uid: Runtime.Inventory.Model.IResourceSlotsSystem
+  name: IResourceSlotsSystem
+  href: api/Runtime.Inventory.Model.IResourceSlotsSystem.html
+  commentId: T:Runtime.Inventory.Model.IResourceSlotsSystem
+  fullName: Runtime.Inventory.Model.IResourceSlotsSystem
+  nameWithType: IResourceSlotsSystem
+- uid: Runtime.Inventory.Model.IResourceSlotsSystem.ResetSlots
+  name: ResetSlots()
+  href: api/Runtime.Inventory.Model.IResourceSlotsSystem.html#Runtime_Inventory_Model_IResourceSlotsSystem_ResetSlots
+  commentId: M:Runtime.Inventory.Model.IResourceSlotsSystem.ResetSlots
+  fullName: Runtime.Inventory.Model.IResourceSlotsSystem.ResetSlots()
+  nameWithType: IResourceSlotsSystem.ResetSlots()
+- uid: Runtime.Inventory.Model.IResourceSlotsSystem.ResetSlots*
+  name: ResetSlots
+  href: api/Runtime.Inventory.Model.IResourceSlotsSystem.html#Runtime_Inventory_Model_IResourceSlotsSystem_ResetSlots_
+  commentId: Overload:Runtime.Inventory.Model.IResourceSlotsSystem.ResetSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IResourceSlotsSystem.ResetSlots
+  nameWithType: IResourceSlotsSystem.ResetSlots
 - uid: Runtime.Inventory.Model.InventoryModel
   name: InventoryModel
   href: api/Runtime.Inventory.Model.InventoryModel.html
@@ -33614,185 +33661,6 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.InventoryModel.SelectPreviousHotBarSlot
   nameWithType: InventoryModel.SelectPreviousHotBarSlot
-- uid: Runtime.Inventory.Model.InventorySlot
-  name: InventorySlot
-  href: api/Runtime.Inventory.Model.InventorySlot.html
-  commentId: T:Runtime.Inventory.Model.InventorySlot
-  fullName: Runtime.Inventory.Model.InventorySlot
-  nameWithType: InventorySlot
-- uid: Runtime.Inventory.Model.InventorySlot.#ctor
-  name: InventorySlot()
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot__ctor
-  commentId: M:Runtime.Inventory.Model.InventorySlot.#ctor
-  name.vb: New()
-  fullName: Runtime.Inventory.Model.InventorySlot.InventorySlot()
-  fullName.vb: Runtime.Inventory.Model.InventorySlot.New()
-  nameWithType: InventorySlot.InventorySlot()
-  nameWithType.vb: InventorySlot.New()
-- uid: Runtime.Inventory.Model.InventorySlot.#ctor*
-  name: InventorySlot
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot__ctor_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.#ctor
-  isSpec: "True"
-  name.vb: New
-  fullName: Runtime.Inventory.Model.InventorySlot.InventorySlot
-  fullName.vb: Runtime.Inventory.Model.InventorySlot.New
-  nameWithType: InventorySlot.InventorySlot
-  nameWithType.vb: InventorySlot.New
-- uid: Runtime.Inventory.Model.InventorySlot.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)
-  name: CanPlaceItem(IResourceEntity)
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_
-  commentId: M:Runtime.Inventory.Model.InventorySlot.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)
-  fullName: Runtime.Inventory.Model.InventorySlot.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)
-  nameWithType: InventorySlot.CanPlaceItem(IResourceEntity)
-- uid: Runtime.Inventory.Model.InventorySlot.CanPlaceItem*
-  name: CanPlaceItem
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_CanPlaceItem_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.CanPlaceItem
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.CanPlaceItem
-  nameWithType: InventorySlot.CanPlaceItem
-- uid: Runtime.Inventory.Model.InventorySlot.ContainsItem(System.String)
-  name: ContainsItem(string)
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_ContainsItem_System_String_
-  commentId: M:Runtime.Inventory.Model.InventorySlot.ContainsItem(System.String)
-  name.vb: ContainsItem(String)
-  fullName: Runtime.Inventory.Model.InventorySlot.ContainsItem(string)
-  fullName.vb: Runtime.Inventory.Model.InventorySlot.ContainsItem(String)
-  nameWithType: InventorySlot.ContainsItem(string)
-  nameWithType.vb: InventorySlot.ContainsItem(String)
-- uid: Runtime.Inventory.Model.InventorySlot.ContainsItem*
-  name: ContainsItem
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_ContainsItem_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.ContainsItem
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.ContainsItem
-  nameWithType: InventorySlot.ContainsItem
-- uid: Runtime.Inventory.Model.InventorySlot.GetLastItemUUID
-  name: GetLastItemUUID()
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetLastItemUUID
-  commentId: M:Runtime.Inventory.Model.InventorySlot.GetLastItemUUID
-  fullName: Runtime.Inventory.Model.InventorySlot.GetLastItemUUID()
-  nameWithType: InventorySlot.GetLastItemUUID()
-- uid: Runtime.Inventory.Model.InventorySlot.GetLastItemUUID*
-  name: GetLastItemUUID
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetLastItemUUID_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.GetLastItemUUID
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.GetLastItemUUID
-  nameWithType: InventorySlot.GetLastItemUUID
-- uid: Runtime.Inventory.Model.InventorySlot.GetQuantity
-  name: GetQuantity()
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetQuantity
-  commentId: M:Runtime.Inventory.Model.InventorySlot.GetQuantity
-  fullName: Runtime.Inventory.Model.InventorySlot.GetQuantity()
-  nameWithType: InventorySlot.GetQuantity()
-- uid: Runtime.Inventory.Model.InventorySlot.GetQuantity*
-  name: GetQuantity
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetQuantity_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.GetQuantity
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.GetQuantity
-  nameWithType: InventorySlot.GetQuantity
-- uid: Runtime.Inventory.Model.InventorySlot.GetUUIDList
-  name: GetUUIDList()
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetUUIDList
-  commentId: M:Runtime.Inventory.Model.InventorySlot.GetUUIDList
-  fullName: Runtime.Inventory.Model.InventorySlot.GetUUIDList()
-  nameWithType: InventorySlot.GetUUIDList()
-- uid: Runtime.Inventory.Model.InventorySlot.GetUUIDList*
-  name: GetUUIDList
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_GetUUIDList_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.GetUUIDList
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.GetUUIDList
-  nameWithType: InventorySlot.GetUUIDList
-- uid: Runtime.Inventory.Model.InventorySlot.IsEmpty
-  name: IsEmpty()
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_IsEmpty
-  commentId: M:Runtime.Inventory.Model.InventorySlot.IsEmpty
-  fullName: Runtime.Inventory.Model.InventorySlot.IsEmpty()
-  nameWithType: InventorySlot.IsEmpty()
-- uid: Runtime.Inventory.Model.InventorySlot.IsEmpty*
-  name: IsEmpty
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_IsEmpty_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.IsEmpty
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.IsEmpty
-  nameWithType: InventorySlot.IsEmpty
-- uid: Runtime.Inventory.Model.InventorySlot.RemoveItem(System.String)
-  name: RemoveItem(string)
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_RemoveItem_System_String_
-  commentId: M:Runtime.Inventory.Model.InventorySlot.RemoveItem(System.String)
-  name.vb: RemoveItem(String)
-  fullName: Runtime.Inventory.Model.InventorySlot.RemoveItem(string)
-  fullName.vb: Runtime.Inventory.Model.InventorySlot.RemoveItem(String)
-  nameWithType: InventorySlot.RemoveItem(string)
-  nameWithType.vb: InventorySlot.RemoveItem(String)
-- uid: Runtime.Inventory.Model.InventorySlot.RemoveItem*
-  name: RemoveItem
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_RemoveItem_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.RemoveItem
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.RemoveItem
-  nameWithType: InventorySlot.RemoveItem
-- uid: Runtime.Inventory.Model.InventorySlot.RemoveLastItem
-  name: RemoveLastItem()
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_RemoveLastItem
-  commentId: M:Runtime.Inventory.Model.InventorySlot.RemoveLastItem
-  fullName: Runtime.Inventory.Model.InventorySlot.RemoveLastItem()
-  nameWithType: InventorySlot.RemoveLastItem()
-- uid: Runtime.Inventory.Model.InventorySlot.RemoveLastItem*
-  name: RemoveLastItem
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_RemoveLastItem_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.RemoveLastItem
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.RemoveLastItem
-  nameWithType: InventorySlot.RemoveLastItem
-- uid: Runtime.Inventory.Model.InventorySlot.TryAddItem(Runtime.GameResources.Model.Base.IResourceEntity)
-  name: TryAddItem(IResourceEntity)
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_TryAddItem_Runtime_GameResources_Model_Base_IResourceEntity_
-  commentId: M:Runtime.Inventory.Model.InventorySlot.TryAddItem(Runtime.GameResources.Model.Base.IResourceEntity)
-  fullName: Runtime.Inventory.Model.InventorySlot.TryAddItem(Runtime.GameResources.Model.Base.IResourceEntity)
-  nameWithType: InventorySlot.TryAddItem(IResourceEntity)
-- uid: Runtime.Inventory.Model.InventorySlot.TryAddItem*
-  name: TryAddItem
-  href: api/Runtime.Inventory.Model.InventorySlot.html#Runtime_Inventory_Model_InventorySlot_TryAddItem_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlot.TryAddItem
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlot.TryAddItem
-  nameWithType: InventorySlot.TryAddItem
-- uid: Runtime.Inventory.Model.InventorySlotInfo
-  name: InventorySlotInfo
-  href: api/Runtime.Inventory.Model.InventorySlotInfo.html
-  commentId: T:Runtime.Inventory.Model.InventorySlotInfo
-  fullName: Runtime.Inventory.Model.InventorySlotInfo
-  nameWithType: InventorySlotInfo
-- uid: Runtime.Inventory.Model.InventorySlotInfo.Items
-  name: Items
-  href: api/Runtime.Inventory.Model.InventorySlotInfo.html#Runtime_Inventory_Model_InventorySlotInfo_Items
-  commentId: F:Runtime.Inventory.Model.InventorySlotInfo.Items
-  fullName: Runtime.Inventory.Model.InventorySlotInfo.Items
-  nameWithType: InventorySlotInfo.Items
-- uid: Runtime.Inventory.Model.InventorySlotInfo.SlotIndex
-  name: SlotIndex
-  href: api/Runtime.Inventory.Model.InventorySlotInfo.html#Runtime_Inventory_Model_InventorySlotInfo_SlotIndex
-  commentId: F:Runtime.Inventory.Model.InventorySlotInfo.SlotIndex
-  fullName: Runtime.Inventory.Model.InventorySlotInfo.SlotIndex
-  nameWithType: InventorySlotInfo.SlotIndex
-- uid: Runtime.Inventory.Model.InventorySlotInfo.TopItem
-  name: TopItem
-  href: api/Runtime.Inventory.Model.InventorySlotInfo.html#Runtime_Inventory_Model_InventorySlotInfo_TopItem
-  commentId: P:Runtime.Inventory.Model.InventorySlotInfo.TopItem
-  fullName: Runtime.Inventory.Model.InventorySlotInfo.TopItem
-  nameWithType: InventorySlotInfo.TopItem
-- uid: Runtime.Inventory.Model.InventorySlotInfo.TopItem*
-  name: TopItem
-  href: api/Runtime.Inventory.Model.InventorySlotInfo.html#Runtime_Inventory_Model_InventorySlotInfo_TopItem_
-  commentId: Overload:Runtime.Inventory.Model.InventorySlotInfo.TopItem
-  isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySlotInfo.TopItem
-  nameWithType: InventorySlotInfo.TopItem
 - uid: Runtime.Inventory.Model.InventorySystem
   name: InventorySystem
   href: api/Runtime.Inventory.Model.InventorySystem.html
@@ -33824,19 +33692,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.InventorySystem.OnInit
   nameWithType: InventorySystem.OnInit
-- uid: Runtime.Inventory.Model.InventorySystem.ResetInventory
-  name: ResetInventory()
-  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_ResetInventory
-  commentId: M:Runtime.Inventory.Model.InventorySystem.ResetInventory
-  fullName: Runtime.Inventory.Model.InventorySystem.ResetInventory()
-  nameWithType: InventorySystem.ResetInventory()
-- uid: Runtime.Inventory.Model.InventorySystem.ResetInventory*
-  name: ResetInventory
-  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_ResetInventory_
-  commentId: Overload:Runtime.Inventory.Model.InventorySystem.ResetInventory
+- uid: Runtime.Inventory.Model.InventorySystem.ResetSlots
+  name: ResetSlots()
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_ResetSlots
+  commentId: M:Runtime.Inventory.Model.InventorySystem.ResetSlots
+  fullName: Runtime.Inventory.Model.InventorySystem.ResetSlots()
+  nameWithType: InventorySystem.ResetSlots()
+- uid: Runtime.Inventory.Model.InventorySystem.ResetSlots*
+  name: ResetSlots
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_ResetSlots_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.ResetSlots
   isSpec: "True"
-  fullName: Runtime.Inventory.Model.InventorySystem.ResetInventory
-  nameWithType: InventorySystem.ResetInventory
+  fullName: Runtime.Inventory.Model.InventorySystem.ResetSlots
+  nameWithType: InventorySystem.ResetSlots
 - uid: Runtime.Inventory.Model.LeftHotBarSlot
   name: LeftHotBarSlot
   href: api/Runtime.Inventory.Model.LeftHotBarSlot.html
@@ -33916,18 +33784,6 @@ references:
   commentId: F:Runtime.Inventory.Model.OnInventoryHotBarSlotAddedEvent.Category
   fullName: Runtime.Inventory.Model.OnInventoryHotBarSlotAddedEvent.Category
   nameWithType: OnInventoryHotBarSlotAddedEvent.Category
-- uid: Runtime.Inventory.Model.OnInventoryReloadEvent
-  name: OnInventoryReloadEvent
-  href: api/Runtime.Inventory.Model.OnInventoryReloadEvent.html
-  commentId: T:Runtime.Inventory.Model.OnInventoryReloadEvent
-  fullName: Runtime.Inventory.Model.OnInventoryReloadEvent
-  nameWithType: OnInventoryReloadEvent
-- uid: Runtime.Inventory.Model.OnInventoryReloadEvent.InventorySlots
-  name: InventorySlots
-  href: api/Runtime.Inventory.Model.OnInventoryReloadEvent.html#Runtime_Inventory_Model_OnInventoryReloadEvent_InventorySlots
-  commentId: F:Runtime.Inventory.Model.OnInventoryReloadEvent.InventorySlots
-  fullName: Runtime.Inventory.Model.OnInventoryReloadEvent.InventorySlots
-  nameWithType: OnInventoryReloadEvent.InventorySlots
 - uid: Runtime.Inventory.Model.OnInventorySlotAddedEvent
   name: OnInventorySlotAddedEvent
   href: api/Runtime.Inventory.Model.OnInventorySlotAddedEvent.html
@@ -33946,18 +33802,6 @@ references:
   commentId: F:Runtime.Inventory.Model.OnInventorySlotAddedEvent.AddedSlots
   fullName: Runtime.Inventory.Model.OnInventorySlotAddedEvent.AddedSlots
   nameWithType: OnInventorySlotAddedEvent.AddedSlots
-- uid: Runtime.Inventory.Model.OnInventorySlotUpdateEvent
-  name: OnInventorySlotUpdateEvent
-  href: api/Runtime.Inventory.Model.OnInventorySlotUpdateEvent.html
-  commentId: T:Runtime.Inventory.Model.OnInventorySlotUpdateEvent
-  fullName: Runtime.Inventory.Model.OnInventorySlotUpdateEvent
-  nameWithType: OnInventorySlotUpdateEvent
-- uid: Runtime.Inventory.Model.OnInventorySlotUpdateEvent.UpdatedSlot
-  name: UpdatedSlot
-  href: api/Runtime.Inventory.Model.OnInventorySlotUpdateEvent.html#Runtime_Inventory_Model_OnInventorySlotUpdateEvent_UpdatedSlot
-  commentId: F:Runtime.Inventory.Model.OnInventorySlotUpdateEvent.UpdatedSlot
-  fullName: Runtime.Inventory.Model.OnInventorySlotUpdateEvent.UpdatedSlot
-  nameWithType: OnInventorySlotUpdateEvent.UpdatedSlot
 - uid: Runtime.Inventory.Model.ResourceSlot
   name: ResourceSlot
   href: api/Runtime.Inventory.Model.ResourceSlot.html
@@ -34286,6 +34130,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.ResourceSlotsModel.GetSlotCurrentItemCount
   nameWithType: ResourceSlotsModel.GetSlotCurrentItemCount
+- uid: Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents(Runtime.GameResources.Model.Base.IResourceEntity)
+  name: RegisterInitialEntityEvents(IResourceEntity)
+  href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_RegisterInitialEntityEvents_Runtime_GameResources_Model_Base_IResourceEntity_
+  commentId: M:Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents(Runtime.GameResources.Model.Base.IResourceEntity)
+  fullName: Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents(Runtime.GameResources.Model.Base.IResourceEntity)
+  nameWithType: ResourceSlotsModel.RegisterInitialEntityEvents(IResourceEntity)
+- uid: Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents*
+  name: RegisterInitialEntityEvents
+  href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_RegisterInitialEntityEvents_
+  commentId: Overload:Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents
+  nameWithType: ResourceSlotsModel.RegisterInitialEntityEvents
 - uid: Runtime.Inventory.Model.ResourceSlotsModel.RemoveItem(System.String)
   name: RemoveItem(string)
   href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_RemoveItem_System_String_
@@ -34809,6 +34666,12 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.ViewController.ResourceSlotViewController.SetSlot
   nameWithType: ResourceSlotViewController.SetSlot
+- uid: Runtime.Inventory.ViewController.ResourceSlotViewController.isSelected
+  name: isSelected
+  href: api/Runtime.Inventory.ViewController.ResourceSlotViewController.html#Runtime_Inventory_ViewController_ResourceSlotViewController_isSelected
+  commentId: F:Runtime.Inventory.ViewController.ResourceSlotViewController.isSelected
+  fullName: Runtime.Inventory.ViewController.ResourceSlotViewController.isSelected
+  nameWithType: ResourceSlotViewController.isSelected
 - uid: Runtime.Inventory.ViewController.ResourceSlotViewController.pointerDownObject
   name: pointerDownObject
   href: api/Runtime.Inventory.ViewController.ResourceSlotViewController.html#Runtime_Inventory_ViewController_ResourceSlotViewController_pointerDownObject
@@ -35293,58 +35156,6 @@ references:
   fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractPickableRawMaterialViewController(Of T).selfColliders
   nameWithType: AbstractPickableRawMaterialViewController<T>.selfColliders
   nameWithType.vb: AbstractPickableRawMaterialViewController(Of T).selfColliders
-- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1
-  name: AbstractRawMaterialViewController<T>
-  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html
-  commentId: T:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1
-  name.vb: AbstractRawMaterialViewController(Of T)
-  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>
-  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T)
-  nameWithType: AbstractRawMaterialViewController<T>
-  nameWithType.vb: AbstractRawMaterialViewController(Of T)
-- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnBuildNewEntity
-  name: OnBuildNewEntity()
-  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnBuildNewEntity
-  commentId: M:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnBuildNewEntity
-  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.OnBuildNewEntity()
-  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnBuildNewEntity()
-  nameWithType: AbstractRawMaterialViewController<T>.OnBuildNewEntity()
-  nameWithType.vb: AbstractRawMaterialViewController(Of T).OnBuildNewEntity()
-- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnBuildNewEntity*
-  name: OnBuildNewEntity
-  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnBuildNewEntity_
-  commentId: Overload:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnBuildNewEntity
-  isSpec: "True"
-  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.OnBuildNewEntity
-  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnBuildNewEntity
-  nameWithType: AbstractRawMaterialViewController<T>.OnBuildNewEntity
-  nameWithType.vb: AbstractRawMaterialViewController(Of T).OnBuildNewEntity
-- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder{`0})
-  name: OnInitResourceEntity(RawMaterialBuilder<T>)
-  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnInitResourceEntity_Runtime_RawMaterials_Model_Builder_RawMaterialBuilder__0__
-  commentId: M:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder{`0})
-  name.vb: OnInitResourceEntity(RawMaterialBuilder(Of T))
-  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder<T>)
-  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder(Of T))
-  nameWithType: AbstractRawMaterialViewController<T>.OnInitResourceEntity(RawMaterialBuilder<T>)
-  nameWithType.vb: AbstractRawMaterialViewController(Of T).OnInitResourceEntity(RawMaterialBuilder(Of T))
-- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitResourceEntity*
-  name: OnInitResourceEntity
-  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_OnInitResourceEntity_
-  commentId: Overload:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.OnInitResourceEntity
-  isSpec: "True"
-  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.OnInitResourceEntity
-  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).OnInitResourceEntity
-  nameWithType: AbstractRawMaterialViewController<T>.OnInitResourceEntity
-  nameWithType.vb: AbstractRawMaterialViewController(Of T).OnInitResourceEntity
-- uid: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.rawMaterialModel
-  name: rawMaterialModel
-  href: api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html#Runtime_RawMaterials_ViewControllers_AbstractRawMaterialViewController_1_rawMaterialModel
-  commentId: F:Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController`1.rawMaterialModel
-  fullName: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController<T>.rawMaterialModel
-  fullName.vb: Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController(Of T).rawMaterialModel
-  nameWithType: AbstractRawMaterialViewController<T>.rawMaterialModel
-  nameWithType.vb: AbstractRawMaterialViewController(Of T).rawMaterialModel
 - uid: Runtime.RawMaterials.ViewControllers.Instances
   name: Runtime.RawMaterials.ViewControllers.Instances
   href: api/Runtime.RawMaterials.ViewControllers.Instances.html
@@ -35386,54 +35197,6 @@ references:
   isSpec: "True"
   fullName: Runtime.RawMaterials.ViewControllers.Instances.CommonPickableRawMaterialViewController.OnInitResourceEntity
   nameWithType: CommonPickableRawMaterialViewController.OnInitResourceEntity
-- uid: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController
-  name: CommonRawMaterialViewController
-  href: api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.html
-  commentId: T:Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController
-  fullName: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController
-  nameWithType: CommonRawMaterialViewController
-- uid: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnBindEntityProperty
-  name: OnBindEntityProperty()
-  href: api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.html#Runtime_RawMaterials_ViewControllers_Instances_CommonRawMaterialViewController_OnBindEntityProperty
-  commentId: M:Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnBindEntityProperty
-  fullName: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnBindEntityProperty()
-  nameWithType: CommonRawMaterialViewController.OnBindEntityProperty()
-- uid: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnBindEntityProperty*
-  name: OnBindEntityProperty
-  href: api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.html#Runtime_RawMaterials_ViewControllers_Instances_CommonRawMaterialViewController_OnBindEntityProperty_
-  commentId: Overload:Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnBindEntityProperty
-  isSpec: "True"
-  fullName: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnBindEntityProperty
-  nameWithType: CommonRawMaterialViewController.OnBindEntityProperty
-- uid: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnEntityStart
-  name: OnEntityStart()
-  href: api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.html#Runtime_RawMaterials_ViewControllers_Instances_CommonRawMaterialViewController_OnEntityStart
-  commentId: M:Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnEntityStart
-  fullName: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnEntityStart()
-  nameWithType: CommonRawMaterialViewController.OnEntityStart()
-- uid: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnEntityStart*
-  name: OnEntityStart
-  href: api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.html#Runtime_RawMaterials_ViewControllers_Instances_CommonRawMaterialViewController_OnEntityStart_
-  commentId: Overload:Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnEntityStart
-  isSpec: "True"
-  fullName: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnEntityStart
-  nameWithType: CommonRawMaterialViewController.OnEntityStart
-- uid: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder{Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity})
-  name: OnInitResourceEntity(RawMaterialBuilder<CommonRawMaterialEntity>)
-  href: api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.html#Runtime_RawMaterials_ViewControllers_Instances_CommonRawMaterialViewController_OnInitResourceEntity_Runtime_RawMaterials_Model_Builder_RawMaterialBuilder_Runtime_RawMaterials_Model_Instances_CommonRawMaterialEntity__
-  commentId: M:Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder{Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity})
-  name.vb: OnInitResourceEntity(RawMaterialBuilder(Of CommonRawMaterialEntity))
-  fullName: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder<Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity>)
-  fullName.vb: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnInitResourceEntity(Runtime.RawMaterials.Model.Builder.RawMaterialBuilder(Of Runtime.RawMaterials.Model.Instances.CommonRawMaterialEntity))
-  nameWithType: CommonRawMaterialViewController.OnInitResourceEntity(RawMaterialBuilder<CommonRawMaterialEntity>)
-  nameWithType.vb: CommonRawMaterialViewController.OnInitResourceEntity(RawMaterialBuilder(Of CommonRawMaterialEntity))
-- uid: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnInitResourceEntity*
-  name: OnInitResourceEntity
-  href: api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.html#Runtime_RawMaterials_ViewControllers_Instances_CommonRawMaterialViewController_OnInitResourceEntity_
-  commentId: Overload:Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnInitResourceEntity
-  isSpec: "True"
-  fullName: Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.OnInitResourceEntity
-  nameWithType: CommonRawMaterialViewController.OnInitResourceEntity
 - uid: Runtime.Temporary
   name: Runtime.Temporary
   href: api/Runtime.Temporary.html
@@ -35515,93 +35278,6 @@ references:
   commentId: F:Runtime.Temporary.AbstractProjectile.splatterSound
   fullName: Runtime.Temporary.AbstractProjectile.splatterSound
   nameWithType: AbstractProjectile.splatterSound
-- uid: Runtime.Temporary.Boss1_TestEntity
-  name: Boss1_TestEntity
-  href: api/Runtime.Temporary.Boss1_TestEntity.html
-  commentId: T:Runtime.Temporary.Boss1_TestEntity
-  fullName: Runtime.Temporary.Boss1_TestEntity
-  nameWithType: Boss1_TestEntity
-- uid: Runtime.Temporary.Boss1_TestEntity.EntityName
-  name: EntityName
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_EntityName
-  commentId: P:Runtime.Temporary.Boss1_TestEntity.EntityName
-  fullName: Runtime.Temporary.Boss1_TestEntity.EntityName
-  nameWithType: Boss1_TestEntity.EntityName
-- uid: Runtime.Temporary.Boss1_TestEntity.EntityName*
-  name: EntityName
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_EntityName_
-  commentId: Overload:Runtime.Temporary.Boss1_TestEntity.EntityName
-  isSpec: "True"
-  fullName: Runtime.Temporary.Boss1_TestEntity.EntityName
-  nameWithType: Boss1_TestEntity.EntityName
-- uid: Runtime.Temporary.Boss1_TestEntity.GetDefaultFaction
-  name: GetDefaultFaction()
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_GetDefaultFaction
-  commentId: M:Runtime.Temporary.Boss1_TestEntity.GetDefaultFaction
-  fullName: Runtime.Temporary.Boss1_TestEntity.GetDefaultFaction()
-  nameWithType: Boss1_TestEntity.GetDefaultFaction()
-- uid: Runtime.Temporary.Boss1_TestEntity.GetDefaultFaction*
-  name: GetDefaultFaction
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_GetDefaultFaction_
-  commentId: Overload:Runtime.Temporary.Boss1_TestEntity.GetDefaultFaction
-  isSpec: "True"
-  fullName: Runtime.Temporary.Boss1_TestEntity.GetDefaultFaction
-  nameWithType: Boss1_TestEntity.GetDefaultFaction
-- uid: Runtime.Temporary.Boss1_TestEntity.OnEnemyRegisterAdditionalProperties
-  name: OnEnemyRegisterAdditionalProperties()
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_OnEnemyRegisterAdditionalProperties
-  commentId: M:Runtime.Temporary.Boss1_TestEntity.OnEnemyRegisterAdditionalProperties
-  fullName: Runtime.Temporary.Boss1_TestEntity.OnEnemyRegisterAdditionalProperties()
-  nameWithType: Boss1_TestEntity.OnEnemyRegisterAdditionalProperties()
-- uid: Runtime.Temporary.Boss1_TestEntity.OnEnemyRegisterAdditionalProperties*
-  name: OnEnemyRegisterAdditionalProperties
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_OnEnemyRegisterAdditionalProperties_
-  commentId: Overload:Runtime.Temporary.Boss1_TestEntity.OnEnemyRegisterAdditionalProperties
-  isSpec: "True"
-  fullName: Runtime.Temporary.Boss1_TestEntity.OnEnemyRegisterAdditionalProperties
-  nameWithType: Boss1_TestEntity.OnEnemyRegisterAdditionalProperties
-- uid: Runtime.Temporary.Boss1_TestEntity.OnGetDescription(System.String)
-  name: OnGetDescription(string)
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_OnGetDescription_System_String_
-  commentId: M:Runtime.Temporary.Boss1_TestEntity.OnGetDescription(System.String)
-  name.vb: OnGetDescription(String)
-  fullName: Runtime.Temporary.Boss1_TestEntity.OnGetDescription(string)
-  fullName.vb: Runtime.Temporary.Boss1_TestEntity.OnGetDescription(String)
-  nameWithType: Boss1_TestEntity.OnGetDescription(string)
-  nameWithType.vb: Boss1_TestEntity.OnGetDescription(String)
-- uid: Runtime.Temporary.Boss1_TestEntity.OnGetDescription*
-  name: OnGetDescription
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_OnGetDescription_
-  commentId: Overload:Runtime.Temporary.Boss1_TestEntity.OnGetDescription
-  isSpec: "True"
-  fullName: Runtime.Temporary.Boss1_TestEntity.OnGetDescription
-  nameWithType: Boss1_TestEntity.OnGetDescription
-- uid: Runtime.Temporary.Boss1_TestEntity.OnRecycle
-  name: OnRecycle()
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_OnRecycle
-  commentId: M:Runtime.Temporary.Boss1_TestEntity.OnRecycle
-  fullName: Runtime.Temporary.Boss1_TestEntity.OnRecycle()
-  nameWithType: Boss1_TestEntity.OnRecycle()
-- uid: Runtime.Temporary.Boss1_TestEntity.OnRecycle*
-  name: OnRecycle
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_OnRecycle_
-  commentId: Overload:Runtime.Temporary.Boss1_TestEntity.OnRecycle
-  isSpec: "True"
-  fullName: Runtime.Temporary.Boss1_TestEntity.OnRecycle
-  nameWithType: Boss1_TestEntity.OnRecycle
-- uid: Runtime.Temporary.Boss1_TestEntity.OnRegisterCustomProperties
-  name: OnRegisterCustomProperties()
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_OnRegisterCustomProperties
-  commentId: M:Runtime.Temporary.Boss1_TestEntity.OnRegisterCustomProperties
-  fullName: Runtime.Temporary.Boss1_TestEntity.OnRegisterCustomProperties()
-  nameWithType: Boss1_TestEntity.OnRegisterCustomProperties()
-- uid: Runtime.Temporary.Boss1_TestEntity.OnRegisterCustomProperties*
-  name: OnRegisterCustomProperties
-  href: api/Runtime.Temporary.Boss1_TestEntity.html#Runtime_Temporary_Boss1_TestEntity_OnRegisterCustomProperties_
-  commentId: Overload:Runtime.Temporary.Boss1_TestEntity.OnRegisterCustomProperties
-  isSpec: "True"
-  fullName: Runtime.Temporary.Boss1_TestEntity.OnRegisterCustomProperties
-  nameWithType: Boss1_TestEntity.OnRegisterCustomProperties
 - uid: Runtime.Temporary.EnemyBomb
   name: EnemyBomb
   href: api/Runtime.Temporary.EnemyBomb.html

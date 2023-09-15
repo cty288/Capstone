@@ -87,6 +87,7 @@ namespace Runtime.Inventory.Model {
 				return false;
 			}
 			UUIDList.Remove(uuid);
+			UUIDSetMain.Remove(uuid);
 			if (IsEmpty()) {
 				ItemKey = null;
 			}
