@@ -16,7 +16,10 @@ using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 namespace Runtime.Weapons
 {
@@ -48,21 +51,10 @@ namespace Runtime.Weapons
     public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
     {
         private Camera cam;
-        // public GameObject lineRendererPrefab;
-        // private List<LineRenderer> lineRenderers;
-        // public LayerMask layer;
         
-        // [Header("Timers & Counters")]
-        // private float lastShootTime;
-        // private int currentAmmo;
-        // private float currentReloadCD;
-        //
-        // [Header("Gun General Settings")] [SerializeField]
-        // protected Transform launchPoint;
-        //
-        // [Header("HitDetector Settings")] [SerializeField]
-        // private HitScan hitScan;
-        // private HitDetectorInfo hitDetectorInfo;
+        [Header("HitDetector Settings")] [SerializeField]
+        private HitScan hitScan;
+        private HitDetectorInfo hitDetectorInfo;
         
         [SerializeField] private GameObject hitParticlePrefab;
         
@@ -88,140 +80,189 @@ namespace Runtime.Weapons
 
         
         //=====
-        private float lastShootTime = 0f;
-        private float reloadStartTime = 0f;
-        private int currentAmmo;
-
-        private ObjectPool<TrailRenderer> trailPool;
-        public TrailRenderer trailPrefab;
+        public float lastShootTime = 0f;
+        public float reloadStartTime = 0f;
+        public bool isReloading = false;
+        public bool isScopedIn = false;
+        public int currentAmmo;
+        public Transform gunPositionTransform;
+        public Transform scopeInPositionTransform;
+        
+        // private ObjectPool<TrailRenderer> trailPool;
+        public TrailRenderer trailRenderer;
         public ParticleSystem particleSystem;
         public LayerMask layer;
         
+        //FOR CHARGE SPEED
+        // private InputAction _holdAction;
+        
         protected override void OnEntityStart()
         {
+            //FOR CHARGE SPEED
+            //TODO: Set shoot action hold duration when weapon is equipped.
+            // _holdAction = playerActions.Shoot;
+            // _holdAction.started += OnHoldActionStarted;
+            
             currentAmmo = BoundEntity.GetAmmoSize().RealValue;
             
-            trailPool = new ObjectPool<TrailRenderer>(CreateTrail, null, null, null, true, 10, 30);
-            
-            // lineRenderers = new List<LineRenderer>();
-            // for (int i = 0; i < BoundEntity.GetBulletsPerShot().RealValue; i++)
-            // {
-            //     Debug.Log("adding line renderer");
-            //     lineRenderers.Add(Instantiate(lineRendererPrefab, transform).GetComponent<LineRenderer>());
-            // }
-            //
-            // hitScan = new HitScan(this, CurrentFaction.Value);
-            // hitDetectorInfo = new HitDetectorInfo
-            // {
-            //     camera = cam,
-            //     layer = layer,
-            //     lineRenderers = lineRenderers,
-            //     launchPoint = launchPoint,
-            //     weapon = BoundEntity
-            // };
+            hitScan = new HitScan(this, CurrentFaction.Value, trailRenderer);
+            hitDetectorInfo = new HitDetectorInfo
+            {
+                camera = cam,
+                layer = layer,
+                launchPoint = particleSystem.transform,
+                weapon = BoundEntity
+            };
         }
             
         public void Shoot()
         {
             particleSystem.Play();
             
-            Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
-            float spread = BoundEntity.GetSpread().RealValue.Value;
-            shootDir += new Vector3(
-                Random.Range(-spread, spread),
-                Random.Range(-spread, spread),
-                Random.Range(-spread, spread));
-            shootDir.Normalize();
-            
-            if (Physics.Raycast(cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out RaycastHit hit,
-                    BoundEntity.GetRange().RealValue.Value, layer))
-            {
-                Debug.Log("hit");
-                StartCoroutine(PlayTrail(particleSystem.transform.position, hit.point, hit));
-            }
-            else
-            {
-                Debug.Log("no hit");
-                StartCoroutine(PlayTrail(particleSystem.transform.position, particleSystem.transform.position + (shootDir * BoundEntity.GetRange().RealValue), new RaycastHit()));
-            }
-        }
-
-        private IEnumerator PlayTrail(Vector3 startPoint, Vector3 endPoint, RaycastHit hit)
-        {
-            TrailRenderer instance = trailPool.Get();
-            instance.gameObject.SetActive(true);
-            instance.transform.position = startPoint;
-            yield return null; // avoid position carry-over from last frame if reused
-
-            instance.emitting = true;
-
-            float distance = Vector3.Distance(startPoint, endPoint);
-            float remainingDistance = distance;
-            while (remainingDistance > 0)
-            {
-                instance.transform.position = Vector3.Lerp(
-                    startPoint,
-                    endPoint,
-                    Mathf.Clamp01(1 - (remainingDistance / distance))
-                );
-                remainingDistance -= 50f * Time.deltaTime;
-
-                yield return null;
-            }
-
-            instance.transform.position = endPoint;
-            
-            Instantiate(hitParticlePrefab, hit.point, Quaternion.identity);
-
-            yield return new WaitForSeconds(0.01f);
-            yield return null;
-            instance.emitting = false;
-            instance.gameObject.SetActive(false);
-            trailPool.Release(instance);
-        }
-        
-        private TrailRenderer CreateTrail()
-        {
-            GameObject instance = new GameObject("bullet trail");
-            TrailRenderer trail = instance.AddComponent<TrailRenderer>();
-            trail.colorGradient = trailPrefab.colorGradient;
-            trail.material = trailPrefab.material;
-            trail.widthCurve = trailPrefab.widthCurve;
-            trail.time = trailPrefab.time;
-            trail.minVertexDistance = trailPrefab.minVertexDistance;
-            
-            trail.emitting = false;
-            trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-
-            return trail;
+            hitScan.CheckHit(hitDetectorInfo);
         }
         
         public void Update()
         {
-            if (playerActions.Shoot.IsPressed())
+            //Shoot
+            if (playerActions.Shoot.WasPerformedThisFrame() && !isReloading)
             {
                 if (currentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
                 {
                     lastShootTime = Time.time;
-
+            
                     Shoot();
                     
                     currentAmmo--;
-                    if(currentAmmo == 0)
-                        reloadStartTime = Time.time;
                 }
             }
             
-            if (Time.time > reloadStartTime + BoundEntity.GetReloadSpeed().RealValue)
+            //Reload
+            if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && currentAmmo < BoundEntity.GetAmmoSize().RealValue)
+            {
+                if (isScopedIn)
+                {
+                    StartCoroutine(ScopeOut(true));
+                }
+                else
+                {
+                    isReloading = true;
+                    reloadStartTime = Time.time;
+                }
+            }
+
+            if (isReloading && (Time.time > reloadStartTime + BoundEntity.GetReloadSpeed().RealValue))
             {
                 currentAmmo = BoundEntity.GetAmmoSize().RealValue;
+                StartCoroutine(ReloadAnimation());
+            }
+            
+            // Scope
+            if (playerActions.Scope.WasPerformedThisFrame())
+            {
+                if (isScopedIn)
+                {
+                    Debug.Log("scope out: " + isScopedIn);
+                    StartCoroutine(ScopeOut());
+                }
+                else
+                {                    
+                    Debug.Log("scope in: " + isScopedIn);
+                    StartCoroutine(ScopeIn());
+                }
             }
         }
-
-        // public void Shoot() {
-        //     hitScan.CheckHit(hitDetectorInfo);
+        
+        //FOR CHARGE SPEED
+        // void OnDisable() {
+        //     _holdAction.started -= OnHoldActionStarted;
         // }
+        //
+        // protected void OnHoldActionStarted(InputAction.CallbackContext context) {
+        //     HoldInteraction holdInteraction = context.interaction as HoldInteraction;
+        //     holdInteraction.duration = BoundEntity.GetChargeSpeed().RealValue.Value;
+        //     Debug.Log(holdInteraction.duration);
+        // }
+        
+        private IEnumerator ReloadAnimation()
+        {
+            float startTime = 0f;
+            float dipTime = 0.25f;
+            float riseTime = 0.5f;
+
+            while ((dipTime - startTime) / dipTime > 0f)
+            {
+                transform.position = Vector3.Lerp(
+                    gunPositionTransform.position,
+                    new Vector3(gunPositionTransform.position.x, gunPositionTransform.position.y - 0.2f, gunPositionTransform.position.z),
+                    (dipTime - startTime) / dipTime);
+                
+                startTime += Time.deltaTime;
+                yield return null;
+            }
+            
+            while (((riseTime - startTime) / riseTime) > 0f)
+            {
+                transform.position = Vector3.Lerp(
+                    transform.position,
+                    gunPositionTransform.position,
+                    (riseTime - startTime) / riseTime);
+                
+                startTime += Time.deltaTime;
+                yield return null;
+            }
+            
+            yield return null;
+            isReloading = false;
+        } 
+        
+        private IEnumerator ScopeIn()
+        {
+            float startTime = 0f;
+            float amimationTime = 0.1f;
+
+            while ((amimationTime - startTime) / amimationTime > 0f)
+            {
+                transform.position = Vector3.Lerp(
+                    scopeInPositionTransform.position,
+                    gunPositionTransform.position,
+                    (amimationTime - startTime) / amimationTime);
+                
+                startTime += Time.deltaTime;
+                yield return null;
+            }
+            
+            yield return null;
+            isScopedIn = true;
+        } 
+        
+        private IEnumerator ScopeOut(bool reloadAfter = false)
+        {
+            float startTime = 0f;
+            float amimationTime = 0.1f;
+
+            while ((amimationTime - startTime) / amimationTime > 0f)
+            {
+                transform.position = Vector3.Lerp(
+                    gunPositionTransform.position,
+                    scopeInPositionTransform.position,
+                    (amimationTime - startTime) / amimationTime);
+                
+                startTime += Time.deltaTime;
+                yield return null;
+            }
+            
+            yield return null;
+            isScopedIn = false;
+            
+            if (reloadAfter)
+            {
+                isReloading = true;
+                reloadStartTime = Time.time;
+            }
+        } 
+
         
         public bool CheckHit(HitData data)
         {

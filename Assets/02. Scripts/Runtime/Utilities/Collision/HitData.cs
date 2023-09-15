@@ -110,7 +110,6 @@ namespace Runtime.Utilities.Collision
     {
         public Camera camera;
         public LayerMask layer;
-        public List<LineRenderer> lineRenderers;
         public Transform launchPoint;
         public IWeaponEntity weapon;
     }

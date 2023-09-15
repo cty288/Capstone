@@ -89,6 +89,24 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""db8f654a-adab-4217-8ba1-a50641e98af9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scope"",
+                    ""type"": ""Button"",
+                    ""id"": ""cbf8d540-afc1-436b-91c4-48125cf9e3b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -305,7 +323,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""38a17437-65e4-42fd-be8a-caced6f73bb2"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=1.401298E-45)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Shoot"",
@@ -342,6 +360,28 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95e8bd0a-f201-4619-86a2-0372858c6915"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""149cb66e-76fe-4ddb-861c-d93b581eaa01"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Scope"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -863,6 +903,8 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
+        m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -947,6 +989,8 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Reload;
+    private readonly InputAction m_Player_Scope;
     public struct PlayerActions
     {
         private @DPunkInputs m_Wrapper;
@@ -958,6 +1002,8 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Reload => m_Wrapper.m_Player_Reload;
+        public InputAction @Scope => m_Wrapper.m_Player_Scope;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -988,6 +1034,12 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
+            @Scope.started += instance.OnScope;
+            @Scope.performed += instance.OnScope;
+            @Scope.canceled += instance.OnScope;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1013,6 +1065,12 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
+            @Scope.started -= instance.OnScope;
+            @Scope.performed -= instance.OnScope;
+            @Scope.canceled -= instance.OnScope;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1229,6 +1287,8 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
+        void OnScope(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

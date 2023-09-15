@@ -67,6 +67,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "db8f654a-adab-4217-8ba1-a50641e98af9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Scope",
+                    "type": "Button",
+                    "id": "cbf8d540-afc1-436b-91c4-48125cf9e3b6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -283,7 +301,7 @@
                     "name": "",
                     "id": "38a17437-65e4-42fd-be8a-caced6f73bb2",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Hold(duration=1.401298E-45)",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Shoot",
@@ -320,6 +338,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "95e8bd0a-f201-4619-86a2-0372858c6915",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "149cb66e-76fe-4ddb-861c-d93b581eaa01",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Scope",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
