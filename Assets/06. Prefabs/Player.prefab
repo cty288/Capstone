@@ -912,20 +912,45 @@ MonoBehaviour:
   mouseSensitivity: 0.5
   controllerSensitivity: 10
   cameraTrans: {fileID: 2227095693541951493}
+  camHolder: {fileID: 8110311304114022759}
+  vcam: {fileID: 7453984105727094038}
   fpsTopClamp: 90
   fpsBotClamp: -90
-  moveSpeed: 0
-  sprintmultiplier: 0
+  accelForce: 100
+  walkSpeed: 4
+  sprintSpeed: 8
+  slideSpeed: 15
   groundDrag: 4
   jumpForce: 12
   jumpCooldown: 0.3
   airMultiplier: 0.3
+  speedIncreaseMultiplier: 1.5
+  slopeIncreaseMultiplier: 2.5
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  additionalGravity: 10
+  maxSlopeAngle: 40
   orientation: {fileID: 9114554745536944238}
+  maxSlideTime: 1
+  slideForce: 300
+  slideYScale: 0.25
+  sliding: 0
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 2048
+  wallRunForce: 200
+  wallJumpUpForce: 3
+  wallJumpSideForce: 5
+  maxWallRunTime: 1.5
+  wallCheckDistance: 0.7
+  exitWallTime: 0.3
+  useGravity: 1
+  gravityCounterForce: 20
   rb: {fileID: 0}
+  model: {fileID: 9114554746596025947}
+  state: 0
 --- !u!114 &4007921578581031039
 MonoBehaviour:
   m_ObjectHideFlags: 0
