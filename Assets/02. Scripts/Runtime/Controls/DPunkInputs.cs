@@ -996,9 +996,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_Player_SprintTap = m_Player.FindAction("SprintTap", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_SprintHold = m_Player.FindAction("SprintHold", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
-        m_Player_SprintHold = m_Player.FindAction("SprintHold", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1099,9 +1099,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         public InputAction @SprintTap => m_Wrapper.m_Player_SprintTap;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @SprintHold => m_Wrapper.m_Player_SprintHold;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Scope => m_Wrapper.m_Player_Scope;
-        public InputAction @SprintHold => m_Wrapper.m_Player_SprintHold;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
