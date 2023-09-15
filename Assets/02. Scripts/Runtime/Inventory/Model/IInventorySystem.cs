@@ -20,7 +20,31 @@ namespace Runtime.Inventory.Model {
 		}
 	}
 
-	public interface IInventorySystem : ISystem {
-		public void ResetInventory();
+	public interface IInventorySystem : IResourceSlotsSystem {
+		
+	}
+
+	public interface IResourceSlotsSystem : ISystem {
+		public void ResetSlots();
+	}
+	
+	public abstract class AbstractResourceSlotsSystem<T> : AbstractSystem, IResourceSlotsSystem where T : class, IResourceSlotsModel {
+		protected T model;
+
+		protected override void OnInit() {
+			model = this.GetModel<T>();
+			List<ResourceSlot> slots = model.GetAllSlots();
+			foreach (ResourceSlot resourceSlot in slots) {
+				List<string> uuids = resourceSlot.GetUUIDList();
+				for (int i = 0; i < uuids.Count; i++) {
+					IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuids[i]);
+					if (entity != null) {
+						model.RegisterInitialEntityEvents(entity);
+					}
+				}
+			}
+		}
+
+		public abstract void ResetSlots();
 	}
 }

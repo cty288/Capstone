@@ -9,6 +9,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class PlayerHandItemController : AbstractMikroController<MainGame> {
 	private IInventoryModel inventoryModel;
@@ -42,7 +43,7 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 		inHandResourceViewControllers.TryAdd(category, null);
 
 		IInHandResourceViewController previousViewController = inHandResourceViewControllers[category];
-		if (previousViewController != null) {
+		if (previousViewController as Object != null) {
 			previousViewController.OnStopHold();
 		}
 		
