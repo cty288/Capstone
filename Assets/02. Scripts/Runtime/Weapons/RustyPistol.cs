@@ -87,7 +87,7 @@ namespace Runtime.Weapons
         
         // private ObjectPool<TrailRenderer> trailPool;
         public TrailRenderer trailRenderer;
-        public ParticleSystem particleSystem;
+        // public ParticleSystem particleSystem;
         public LayerMask layer;
         
         //FOR CHARGE SPEED
@@ -107,7 +107,7 @@ namespace Runtime.Weapons
             {
                 camera = cam,
                 layer = layer,
-                launchPoint = particleSystem.transform,
+                launchPoint = trailRenderer.transform,
                 weapon = BoundEntity
             };
         }
@@ -118,7 +118,7 @@ namespace Runtime.Weapons
         
         public void Shoot()
         {
-            particleSystem.Play();
+            // particleSystem.Play();
             
             hitScan.CheckHit(hitDetectorInfo);
         }
@@ -126,7 +126,9 @@ namespace Runtime.Weapons
         public void Update()
         {
             //Shoot
-            if (playerActions.Shoot.WasPerformedThisFrame() && !isReloading && isHolding)
+            if (playerActions.Shoot.IsPressed() && !isReloading 
+                                                // && isHolding
+                                                )
             {
                 if (currentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
@@ -292,9 +294,9 @@ namespace Runtime.Weapons
             // playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
             //PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
             //playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
-            if (ownerGameObject.TryGetComponent(out Rigidbody rb)) {
-                rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
-            }
+            // if (ownerGameObject.TryGetComponent(out Rigidbody rb)) {
+            //     rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
+            // }
         }
     }
 }

@@ -288,7 +288,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""38a17437-65e4-42fd-be8a-caced6f73bb2"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Hold(duration=1.401298E-45)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Shoot"",
