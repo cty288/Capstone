@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Temporary_Weapon_Explosion" data-uid="Runtime.Temporary.Weapon.Explosion" class="text-break">
     Class Explosion
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Explosion : MonoBehaviour, IHitResponder</code></pre>
+    <pre><code class="lang-csharp hljs">public class Explosion : MonoBehaviour, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -117,6 +117,7 @@
     <dt>Implements</dt>
     <dd>
       <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
   </dl>
 
@@ -502,11 +503,43 @@
 </h2>
 
 
+  <a id="Runtime_Temporary_Weapon_Explosion_CurrentFaction_" data-uid="Runtime.Temporary.Weapon.Explosion.CurrentFaction*"></a>
+
+  <h3 id="Runtime_Temporary_Weapon_Explosion_CurrentFaction" data-uid="Runtime.Temporary.Weapon.Explosion.CurrentFaction">
+  CurrentFaction
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; protected set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Runtime_Temporary_Weapon_Explosion_Damage_" data-uid="Runtime.Temporary.Weapon.Explosion.Damage*"></a>
 
   <h3 id="Runtime_Temporary_Weapon_Explosion_Damage" data-uid="Runtime.Temporary.Weapon.Explosion.Damage">
   Damage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -541,7 +574,7 @@
 
   <h3 id="Runtime_Temporary_Weapon_Explosion_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.Weapon.Explosion.CheckHit(Runtime.Utilities.Collision.HitData)">
   CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -577,7 +610,7 @@
 
   <h3 id="Runtime_Temporary_Weapon_Explosion_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.Weapon.Explosion.HitResponse(Runtime.Utilities.Collision.HitData)">
   HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -608,7 +641,7 @@
 
   <h3 id="Runtime_Temporary_Weapon_Explosion_Start" data-uid="Runtime.Temporary.Weapon.Explosion.Start">
   Start()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -634,7 +667,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L7" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/Explosion.cs/#L9" class="edit-link">Edit this page</a>
         </div>
 
         

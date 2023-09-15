@@ -7,14 +7,15 @@ using UnityEngine;
 
 namespace Runtime.UI.NameTags {
     public class HUDElementInfo {
-        public Dictionary<Transform, GameObject> followDict = new Dictionary<Transform, GameObject>();
+        public Dictionary<Transform, (GameObject, bool)> followDict = new Dictionary<Transform, (GameObject, bool)>();
+        
         public Dictionary<string, SafeGameObjectPool> prefabPools = new Dictionary<string, SafeGameObjectPool>();
         
         public HUDElementInfo() {
             
         }
         
-        public GameObject GetOrCreate(Transform targetFollow, Transform spawnedTransform, string prefabName) {
+        public (GameObject, bool) GetOrCreate(Transform targetFollow, Transform spawnedTransform, string prefabName, bool isWorld) {
             if (followDict.ContainsKey(targetFollow)) {
                 return followDict[targetFollow];
             }
@@ -28,13 +29,13 @@ namespace Runtime.UI.NameTags {
             nameTag.transform.SetParent(spawnedTransform);
             nameTag.transform.localScale = Vector3.one;
             nameTag.transform.rotation = Quaternion.identity;
-            followDict.Add(targetFollow, nameTag);
-            return nameTag;
+            followDict.Add(targetFollow, (nameTag, isWorld));
+            return (nameTag, isWorld);
         }
     
         public void Despawn(Transform targetFollow) {
             if (followDict.ContainsKey(targetFollow)) {
-                GameObjectPoolManager.Singleton.Recycle(followDict[targetFollow]);
+                GameObjectPoolManager.Singleton.Recycle(followDict[targetFollow].Item1);
                 followDict.Remove(targetFollow);
             }
         }
@@ -42,15 +43,21 @@ namespace Runtime.UI.NameTags {
 
     public enum HUDCategory {
         NameTag,
-        InteractiveTag
+        InteractiveTag,
+        SlotDescription,
     }
-
-    public class HUDManager : MonoMikroSingleton<HUDManager> {
+    
+    public class HUDManager : MonoBehaviour, ISingleton {
 
         private Dictionary<HUDCategory, HUDElementInfo> hudElementInfos = new Dictionary<HUDCategory, HUDElementInfo>();
         private Camera mainCamera;
 
 
+        public static HUDManager Singleton {
+            get {
+                return SingletonProperty<HUDManager>.Singleton;
+            }
+        }
 
         private void Awake() {
             mainCamera = Camera.main;
@@ -65,12 +72,12 @@ namespace Runtime.UI.NameTags {
         /// <param name="hudCategory">The type of the HUD element. No two HUD elements of the same type can follow the same target. <br />
         /// To create a new HUD element type, add a new enum value to <see cref="HUDCategory"/></param>
         /// <returns></returns>
-        public GameObject SpawnHUDElement(Transform targetFollow, string prefabName, HUDCategory hudCategory) {
+        public GameObject SpawnHUDElement(Transform targetFollow, string prefabName, HUDCategory hudCategory, bool isWorld) {
             if (!hudElementInfos.ContainsKey(hudCategory)) {
                 hudElementInfos.Add(hudCategory, new HUDElementInfo());
             }
 
-            return hudElementInfos[hudCategory].GetOrCreate(targetFollow, transform, prefabName);
+            return hudElementInfos[hudCategory].GetOrCreate(targetFollow, transform, prefabName, isWorld).Item1;
         }
     
         public void DespawnHUDElement(Transform targetFollow, HUDCategory hudCategory) {
@@ -89,25 +96,38 @@ namespace Runtime.UI.NameTags {
             List<Tuple<Transform, HUDCategory>> toRemove = new List<Tuple<Transform, HUDCategory>>();
             Dictionary<Vector3, Vector3> screenPosDict = new Dictionary<Vector3, Vector3>();
             foreach (var hudElementInfo in hudElementInfos) {
-                foreach (KeyValuePair<Transform,GameObject> ele in hudElementInfo.Value.followDict) {
+                foreach (KeyValuePair<Transform,(GameObject,bool)> ele in hudElementInfo.Value.followDict) {
                     if (!ele.Key) {
                         //DespawnHUDElement(ele.Key, hudElementInfo.Key);
                         toRemove.Add(new Tuple<Transform, HUDCategory>(ele.Key, hudElementInfo.Key));
                         continue;
                     }
-                
-                    var position = ele.Key.position;
-                    if (!screenPosDict.ContainsKey(position)) {
-                        screenPosDict.Add(position, mainCamera.WorldToScreenPoint(position));
+
+                    if (ele.Key.gameObject.activeInHierarchy) {
+                        var position = ele.Key.position;
+                        Vector3 screenPos = Vector3.zero;
+                        if (ele.Value.Item2) { //is world
+                            if (!screenPosDict.ContainsKey(position)) {
+                                screenPosDict.Add(position, mainCamera.WorldToScreenPoint(position));
+                            }
+                            screenPos = screenPosDict[position];
+                        }
+                        else {
+                            screenPos = position;
+                        }
+                       
+                        ele.Value.Item1.transform.position = screenPos;
                     }
-                    Vector3 screenPos = screenPosDict[position];
-                    ele.Value.transform.position = screenPos;
                 }
             }
         
             foreach (var tuple in toRemove) {
                 DespawnHUDElement(tuple.Item1, tuple.Item2);
             }
+        }
+
+        public void OnSingletonInit() {
+            
         }
     }
 }

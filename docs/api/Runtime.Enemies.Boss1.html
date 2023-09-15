@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Boss1 : AbstractEnemyViewController&lt;Boss1Entity&gt;, IEnemyViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHurtResponder, IHitResponder</code></pre>
+    <pre><code class="lang-csharp hljs">public class Boss1 : AbstractEnemyViewController&lt;Boss1Entity&gt;, IEnemyViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHurtResponder, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -136,6 +136,7 @@
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
       <div><a class="xref" href="Runtime.Utilities.Collision.IHurtResponder.html">IHurtResponder</a></div>
       <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
   </dl>
 
@@ -172,6 +173,9 @@
     </div>
     <div>
       <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnCurrentHealthChanged_System_Int32_System_Int32_">AbstractEnemyViewController&lt;Boss1Entity&gt;.OnCurrentHealthChanged(int, int)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_CurrentFaction">AbstractEnemyViewController&lt;Boss1Entity&gt;.CurrentFaction</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnStart">AbstractDamagableViewController&lt;Boss1Entity&gt;.OnStart()</a>
@@ -261,7 +265,13 @@
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ForceUpdatePropertyBindings">AbstractEntityViewController&lt;Boss1Entity&gt;.ForceUpdatePropertyBindings()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerEnterInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;Boss1Entity&gt;.OnPlayerEnterInteractiveZone(GameObject, PlayerInteractiveZone)</a>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;Boss1Entity&gt;.OnPlayerInteractiveZoneReachable(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneNotReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;Boss1Entity&gt;.OnPlayerInteractiveZoneNotReachable(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;Boss1Entity&gt;.OnPlayerInInteractiveZone(GameObject, PlayerInteractiveZone)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;Boss1Entity&gt;.OnPlayerExitInteractiveZone(GameObject, PlayerInteractiveZone)</a>

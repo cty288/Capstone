@@ -30,7 +30,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public string ID { get; set; }
 		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]
 		[Tooltip("If not, you must manually call InitWithID() to initialize the entity.")]
-		[SerializeField] protected bool autoCreateNewEntityWhenStart = true;
+		[SerializeField] protected bool autoCreateNewEntityWhenStart = false;
 
 		[Header("Entity Name Tag")]
 		[SerializeField] protected bool showNameTagWhenPointed = true;
@@ -71,7 +71,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public override void OnStartOrAllocate() {
 			base.OnStartOrAllocate();
-			OnPlayerExitInteractiveZone(null, null);
+			OnPlayerInteractiveZoneNotReachable(null, null);
 			
 			OnStart();
 			
@@ -95,7 +95,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			OnEntityStart();
 		}
 
-		public void OnPointByCrosshair() {
+		public virtual void OnPointByCrosshair() {
 			if (showNameTagWhenPointed) {
 				if(!nameTagFollowTransform) {
 					Debug.LogError($"Name tag follow transform not set for {gameObject.name}!");
@@ -103,7 +103,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 				
 
-				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
+				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag, true);
 				if (nameTag) {
 					INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
 					if (nameTagComponent != null) {
@@ -113,7 +113,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 
-		public void OnUnPointByCrosshair() {
+		public virtual void OnUnPointByCrosshair() {
 			if (showNameTagWhenPointed && nameTagFollowTransform) {
 				HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
 			}
@@ -379,9 +379,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		#endregion
 
 		
-		public virtual void OnPlayerEnterInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+		public virtual void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
 			if (hasInteractiveHint) {
-				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName, HUDCategory.InteractiveTag);
+				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName,
+					HUDCategory.InteractiveTag, true);
 				if (hud) {
 					InteractiveHint element = hud.GetComponent<InteractiveHint>();
 					if (element != null) {
@@ -394,10 +395,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 		
 
-		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+		public virtual void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone) {
 			if (hasInteractiveHint) {
 				HUDManager.Singleton.DespawnHUDElement(transform, HUDCategory.InteractiveTag);
 			}
+		}
+
+		public virtual void OnPlayerInInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			
+		}
+
+		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			
 		}
 
 

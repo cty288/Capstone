@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Temporary_Weapon_BasicGun" data-uid="Runtime.Temporary.Weapon.BasicGun" class="text-break">
     Class BasicGun
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L31"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class BasicGun : MonoBehaviour, IHitResponder</code></pre>
+    <pre><code class="lang-csharp hljs">public class BasicGun : MonoBehaviour, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -117,6 +117,7 @@
     <dt>Implements</dt>
     <dd>
       <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
   </dl>
 
@@ -505,7 +506,7 @@
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_cam" data-uid="Runtime.Temporary.Weapon.BasicGun.cam">
   cam
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L33"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -535,7 +536,7 @@
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_currentCD" data-uid="Runtime.Temporary.Weapon.BasicGun.currentCD">
   currentCD
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -565,7 +566,7 @@
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_launchPoint" data-uid="Runtime.Temporary.Weapon.BasicGun.launchPoint">
   launchPoint
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -597,7 +598,7 @@ protected Transform launchPoint</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_layer" data-uid="Runtime.Temporary.Weapon.BasicGun.layer">
   layer
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -627,7 +628,7 @@ protected Transform launchPoint</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_lr" data-uid="Runtime.Temporary.Weapon.BasicGun.lr">
   lr
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -657,7 +658,7 @@ protected Transform launchPoint</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_proj" data-uid="Runtime.Temporary.Weapon.BasicGun.proj">
   proj
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -689,7 +690,7 @@ protected ProjectileStats proj</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_projectile" data-uid="Runtime.Temporary.Weapon.BasicGun.projectile">
   projectile
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L50"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -719,7 +720,7 @@ protected ProjectileStats proj</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_range" data-uid="Runtime.Temporary.Weapon.BasicGun.range">
   range
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -750,7 +751,7 @@ public float range</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_shootCD" data-uid="Runtime.Temporary.Weapon.BasicGun.shootCD">
   shootCD
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -782,7 +783,7 @@ protected float shootCD</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_type" data-uid="Runtime.Temporary.Weapon.BasicGun.type">
   type
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -813,11 +814,43 @@ protected float shootCD</code></pre>
 </h2>
 
 
+  <a id="Runtime_Temporary_Weapon_BasicGun_CurrentFaction_" data-uid="Runtime.Temporary.Weapon.BasicGun.CurrentFaction*"></a>
+
+  <h3 id="Runtime_Temporary_Weapon_BasicGun_CurrentFaction" data-uid="Runtime.Temporary.Weapon.BasicGun.CurrentFaction">
+  CurrentFaction
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; protected set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Runtime_Temporary_Weapon_BasicGun_Damage_" data-uid="Runtime.Temporary.Weapon.BasicGun.Damage*"></a>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_Damage" data-uid="Runtime.Temporary.Weapon.BasicGun.Damage">
   Damage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L57"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -852,7 +885,7 @@ protected float shootCD</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.Weapon.BasicGun.CheckHit(Runtime.Utilities.Collision.HitData)">
   CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L131"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -888,7 +921,7 @@ protected float shootCD</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_DrawLine_UnityEngine_Vector3_UnityEngine_Vector3_" data-uid="Runtime.Temporary.Weapon.BasicGun.DrawLine(UnityEngine.Vector3,UnityEngine.Vector3)">
   DrawLine(Vector3, Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L143"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -921,7 +954,7 @@ protected float shootCD</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_FixedUpdate" data-uid="Runtime.Temporary.Weapon.BasicGun.FixedUpdate">
   FixedUpdate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L80"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -947,7 +980,7 @@ protected float shootCD</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.Weapon.BasicGun.HitResponse(Runtime.Utilities.Collision.HitData)">
   HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L137"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -978,7 +1011,7 @@ protected float shootCD</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_Shoot" data-uid="Runtime.Temporary.Weapon.BasicGun.Shoot">
   Shoot()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L92"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1004,7 +1037,7 @@ protected float shootCD</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_Start" data-uid="Runtime.Temporary.Weapon.BasicGun.Start">
   Start()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L67"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1030,7 +1063,7 @@ protected float shootCD</code></pre>
 
   <h3 id="Runtime_Temporary_Weapon_BasicGun_Update" data-uid="Runtime.Temporary.Weapon.BasicGun.Update">
   Update()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1056,7 +1089,7 @@ protected float shootCD</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L29" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Weapon/BasicGun.cs/#L31" class="edit-link">Edit this page</a>
         </div>
 
         

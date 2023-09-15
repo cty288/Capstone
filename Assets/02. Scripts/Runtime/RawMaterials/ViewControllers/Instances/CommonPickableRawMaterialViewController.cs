@@ -17,6 +17,7 @@ namespace Runtime.RawMaterials.ViewControllers.Instances {
 		
  
 		protected override IEntity OnInitResourceEntity(RawMaterialBuilder<CommonRawMaterialEntity> builder) {
+			
 			return builder.OverrideName(entityName).FromConfig().Build();
 		}
 		

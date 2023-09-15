@@ -1,6 +1,8 @@
 using System;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
@@ -51,5 +53,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected void OnCurrentHealthChanged(int oldValue, int newValue) {
 			Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
 		}
+
+		public BindableProperty<Faction> CurrentFaction => BoundEntity.CurrentFaction;
 	}
 }

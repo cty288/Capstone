@@ -4,11 +4,13 @@ using DG.Tweening;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.Extensions;
 using MikroFramework.Pool;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
+using Runtime.UI.NameTags;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,13 +27,25 @@ namespace Runtime.Inventory.ViewController {
         private bool startDragTriggered = false;
         private Button button;
         private Image slotHoverBG;
+        private SlotResourceDescriptionPanel currentDescriptionPanel;
+        private Transform descriptionPanelFollowTr;
+        private Image selectedBG;
 
         public static GameObject pointerDownObject = null;
-        private void Awake() {
+        protected virtual void Awake() {
             numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
             spawnPoint = transform.Find("InventoryItemSpawnPos");
             slotHoverBG = transform.Find("SlotHoverBG").GetComponent<Image>();
+            //descriptionPanel = transform.Find("DescriptionTag").GetComponent<SlotResourceDescriptionPanel>();
             button = GetComponent<Button>();
+            descriptionPanelFollowTr = transform.Find("DescriptionFollowTr");
+            currentDescriptionPanel = HUDManagerUI.Singleton
+                .SpawnHUDElement(descriptionPanelFollowTr, "DescriptionTag", HUDCategory.SlotDescription, false)
+                .GetComponent<SlotResourceDescriptionPanel>();
+            selectedBG = transform.Find("SelectedBG").GetComponent<Image>();
+            selectedBG.gameObject.SetActive(false);
+            currentDescriptionPanel.Hide();
+            //descriptionPanel.Awake();
             Clear();
         }
 
@@ -107,6 +121,11 @@ namespace Runtime.Inventory.ViewController {
             if (button) {
                 button.targetGraphic = null;
             }
+
+            if (currentDescriptionPanel) {
+                currentDescriptionPanel.SetContent("", "");
+            }
+            
           
         }
 
@@ -117,6 +136,7 @@ namespace Runtime.Inventory.ViewController {
         private void ShowItem() {
             Clear();
 
+            
             IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
             int totalCount = slot.GetQuantity();
             if (topItem == null || totalCount == 0) {
@@ -145,6 +165,16 @@ namespace Runtime.Inventory.ViewController {
         
             numberText.text = totalCount.ToString();
 
+            if (currentDescriptionPanel) {
+                currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription());
+                
+                if (ResourceSlot.currentHoveredSlot == slot) {
+                    currentDescriptionPanel.Show();
+                }
+            }
+            
+            
+
         }
         
         /// <summary>
@@ -162,28 +192,50 @@ namespace Runtime.Inventory.ViewController {
             }
         }
 
-        private void OnSlotUpdate(string topItemID, List<string> allItems) {
+        private void OnSlotUpdate(ResourceSlot slot, string topItemID, List<string> allItems) {
             ShowItem();
         }
 
         private void OnDestroy() {
             slot?.UnregisterOnSlotUpdateCallback(OnSlotUpdate);
+            if (currentDescriptionPanel) {
+                HUDManagerUI.Singleton.DespawnHUDElement(descriptionPanelFollowTr, HUDCategory.SlotDescription);
+            }
         }
 
 
         public void OnPointerEnter(PointerEventData eventData) {
             slotHoverBG.DOFade(0.5f, 0.2f);
             ResourceSlot.currentHoveredSlot = slot;
+            if (slot.GetQuantity() > 0) {
+                if (currentDescriptionPanel) {
+                    currentDescriptionPanel.Show();
+                }
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData) {
            slotHoverBG.DOFade(0, 0.2f);
            ResourceSlot.currentHoveredSlot = null;
+           if (currentDescriptionPanel) {
+               currentDescriptionPanel.Hide();
+           }
+        }
+
+        private void Update() {
+            if (ResourceSlot.currentHoveredSlot == slot) {
+                descriptionPanelFollowTr.position = Input.mousePosition;
+            }
         }
 
         private void OnDisable() {
             OnPointerExit(default);
             StopDragImmediately();
         }
+
+        public void SetSelected(bool selected) {
+            selectedBG.gameObject.SetActive(selected);
+        }
+
     }
 }

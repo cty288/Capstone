@@ -52,6 +52,7 @@ namespace Runtime.Inventory.Model {
 		public List<ResourceSlot> GetAllSlots();
 		
 		public int GetSlotCurrentItemCount(int index);
+		
 
 	}
 	public abstract class ResourceSlotsModel : AbstractSavableModel, IResourceSlotsModel {

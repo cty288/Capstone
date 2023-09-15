@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,7 +10,7 @@ namespace Runtime.Utilities.Collision
     /// <summary>
     /// Stores data about a detected collision.
     /// </summary>
-    public class HitData
+    public class HitData : IPoolable
     {
         public int Damage = 0;
         public float Recoil = 0f;
@@ -17,6 +19,7 @@ namespace Runtime.Utilities.Collision
         public Vector3 HitDirectionNormalized;
         public IHurtbox Hurtbox;
         public IHitDetector HitDetector;
+        public IBelongToFaction Attacker;
 
         /// <summary>
         /// Sets the data of the hit. Used for HitScan.
@@ -33,6 +36,7 @@ namespace Runtime.Utilities.Collision
             HitNormal = hit.normal;
             Hurtbox = hurtbox;
             HitDetector = hitDetector;
+            Attacker = hitResponder;
             return this;
         }
 
@@ -52,6 +56,7 @@ namespace Runtime.Utilities.Collision
             HitNormal = hit.normal;
             Hurtbox = hurtbox;
             HitDetector = hitDetector;
+            Attacker = hitResponder;
             return this;
         }
 
@@ -68,12 +73,30 @@ namespace Runtime.Utilities.Collision
                             return true;
             return false;
         }
+
+        public void OnRecycled()
+        {
+            Damage = 0;
+            Recoil = 0f;
+            HitPoint = Vector3.zero;
+            HitNormal = Vector3.zero;
+            HitDirectionNormalized = Vector3.zero;
+            Hurtbox = null;
+            HitDetector = null;
+            Attacker = null;
+        }
+
+        public bool IsRecycled { get; set; }
+        public void RecycleToCache()
+        {
+            SafeObjectPool<HitData>.Singleton.Recycle(this);
+        }
     }
 
     /// <summary>
     /// Place one a GameObject if it will hit other objects.
     /// </summary>
-    public interface IHitResponder
+    public interface IHitResponder : IBelongToFaction
     {
         int Damage { get; }
         public bool CheckHit(HitData data);
@@ -104,7 +127,7 @@ namespace Runtime.Utilities.Collision
     /// <summary>
     /// Place one a GameObject if it will BE hit by other objects.
     /// </summary>
-    public interface IHurtResponder
+    public interface IHurtResponder : IBelongToFaction
     {
         public bool CheckHurt(HitData data);
         public void HurtResponse(HitData data);

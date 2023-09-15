@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_UI_NameTags_HUDManager" data-uid="Runtime.UI.NameTags.HUDManager" class="text-break">
     Class HUDManager
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L50"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class HUDManager : MonoMikroSingleton&lt;HUDManager&gt;, ISingleton</code></pre>
+    <pre><code class="lang-csharp hljs">public class HUDManager : MonoBehaviour, ISingleton</code></pre>
   </div>
 
 
@@ -109,8 +109,6 @@
       <div><span class="xref">Component</span></div>
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
-      <div><a class="xref" href="MikroFramework.MikroBehavior.html">MikroBehavior</a></div>
-      <div><a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html">MonoMikroSingleton</a>&lt;<a class="xref" href="Runtime.UI.NameTags.HUDManager.html">HUDManager</a>&gt;</div>
       <div><span class="xref">HUDManager</span></div>
     </dd>
   </dl>
@@ -126,48 +124,6 @@
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
-    <div>
-      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_instance">MonoMikroSingleton&lt;HUDManager&gt;.instance</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_Exists">MonoMikroSingleton&lt;HUDManager&gt;.Exists</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_Singleton">MonoMikroSingleton&lt;HUDManager&gt;.Singleton</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_OnBeforeDestroy">MonoMikroSingleton&lt;HUDManager&gt;.OnBeforeDestroy()</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_OnSingletonInit">MonoMikroSingleton&lt;HUDManager&gt;.OnSingletonInit()</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_onApplicationQuit">MonoMikroSingleton&lt;HUDManager&gt;.onApplicationQuit</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_IsApplicationQuit">MonoMikroSingleton&lt;HUDManager&gt;.IsApplicationQuit</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.Singletons.MonoMikroSingleton-1.html#MikroFramework_Singletons_MonoMikroSingleton_1_OnApplicationQuit">MonoMikroSingleton&lt;HUDManager&gt;.OnApplicationQuit()</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_AddListener_MikroFramework_Event_EventType_System_Action_MikroFramework_Event_MikroMessage__">MikroBehavior.AddListener(EventType, Action&lt;MikroMessage&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_RemoveListener_MikroFramework_Event_EventType_System_Action_MikroFramework_Event_MikroMessage__">MikroBehavior.RemoveListener(EventType, Action&lt;MikroMessage&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_RemoveListener_MikroFramework_Event_EventType_">MikroBehavior.RemoveListener(EventType)</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_Broadcast_MikroFramework_Event_EventType_MikroFramework_Event_MikroMessage_">MikroBehavior.Broadcast(EventType, MikroMessage)</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_Delay_System_Single_System_Action_">MikroBehavior.Delay(float, Action)</a>
-    </div>
-    <div>
-      <a class="xref" href="MikroFramework.MikroBehavior.html#MikroFramework_MikroBehavior_Delay_System_Single_MikroFramework_Event_EventType_MikroFramework_Event_MikroMessage_">MikroBehavior.Delay(float, EventType, MikroMessage)</a>
-    </div>
     <div>
       <span class="xref">MonoBehaviour.IsInvoking()</span>
     </div>
@@ -542,6 +498,41 @@
 
 
 
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_UI_NameTags_HUDManager_Singleton_" data-uid="Runtime.UI.NameTags.HUDManager.Singleton*"></a>
+
+  <h3 id="Runtime_UI_NameTags_HUDManager_Singleton" data-uid="Runtime.UI.NameTags.HUDManager.Singleton">
+  Singleton
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static HUDManager Singleton { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.UI.NameTags.HUDManager.html">HUDManager</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -550,7 +541,7 @@
 
   <h3 id="Runtime_UI_NameTags_HUDManager_DespawnHUDElement_UnityEngine_Transform_Runtime_UI_NameTags_HUDCategory_" data-uid="Runtime.UI.NameTags.HUDManager.DespawnHUDElement(UnityEngine.Transform,Runtime.UI.NameTags.HUDCategory)">
   DespawnHUDElement(Transform, HUDCategory)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L83"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -579,11 +570,37 @@
 
 
 
+  <a id="Runtime_UI_NameTags_HUDManager_OnSingletonInit_" data-uid="Runtime.UI.NameTags.HUDManager.OnSingletonInit*"></a>
+
+  <h3 id="Runtime_UI_NameTags_HUDManager_OnSingletonInit" data-uid="Runtime.UI.NameTags.HUDManager.OnSingletonInit">
+  OnSingletonInit()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnSingletonInit()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_UI_NameTags_HUDManager_SpawnHUDElement_" data-uid="Runtime.UI.NameTags.HUDManager.SpawnHUDElement*"></a>
 
-  <h3 id="Runtime_UI_NameTags_HUDManager_SpawnHUDElement_UnityEngine_Transform_System_String_Runtime_UI_NameTags_HUDCategory_" data-uid="Runtime.UI.NameTags.HUDManager.SpawnHUDElement(UnityEngine.Transform,System.String,Runtime.UI.NameTags.HUDCategory)">
-  SpawnHUDElement(Transform, string, HUDCategory)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_UI_NameTags_HUDManager_SpawnHUDElement_UnityEngine_Transform_System_String_Runtime_UI_NameTags_HUDCategory_System_Boolean_" data-uid="Runtime.UI.NameTags.HUDManager.SpawnHUDElement(UnityEngine.Transform,System.String,Runtime.UI.NameTags.HUDCategory,System.Boolean)">
+  SpawnHUDElement(Transform, string, HUDCategory, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Spawn an HUD element and follow the target</p>
@@ -591,7 +608,7 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GameObject SpawnHUDElement(Transform targetFollow, string prefabName, HUDCategory hudCategory)</code></pre>
+    <pre><code class="lang-csharp hljs">public GameObject SpawnHUDElement(Transform targetFollow, string prefabName, HUDCategory hudCategory, bool isWorld)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -605,6 +622,8 @@
     <dd><p>The type of the HUD element. No two HUD elements of the same type can follow the same target. <br>
 To create a new HUD element type, add a new enum value to <a class="xref" href="Runtime.UI.NameTags.HUDCategory.html">HUDCategory</a></p>
 </dd>
+    <dt><code>isWorld</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
   </dl>
 
   <h4 class="section">Returns</h4>
@@ -627,7 +646,7 @@ To create a new HUD element type, add a new enum value to <a class="xref" href="
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L48" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/NameTags/HUDManager.cs/#L50" class="edit-link">Edit this page</a>
         </div>
 
         
