@@ -63,7 +63,7 @@ namespace Runtime.Weapons.Model.Base
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
             
-            if (isLoadedFromSave) { //otherwise it is managed by es3
+            if (!isLoadedFromSave) { //otherwise it is managed by es3
                 CurrentAmmo = ammoSizeProperty.RealValue.Value;
             }
            
