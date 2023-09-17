@@ -80,15 +80,14 @@ namespace Runtime.Weapons
         public float reloadTimer = 0f;
         public bool isReloading = false;
         public bool isScopedIn = false;
-        //public int currentAmmo;
         public GameObject model;
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
         
-        // private ObjectPool<TrailRenderer> trailPool;
         public TrailRenderer trailRenderer;
-        // public ParticleSystem particleSystem;
         public LayerMask layer;
+
+        
         
         //FOR CHARGE SPEED
         // private InputAction _holdAction;
@@ -277,7 +276,7 @@ namespace Runtime.Weapons
                 isReloading = true;
             }
         } 
-
+        
         
         public bool CheckHit(HitData data)
         {
@@ -285,16 +284,17 @@ namespace Runtime.Weapons
         }
         
         public void HitResponse(HitData data) {
-            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-            
-            //TODO: Change to non-temporary class of player entity.
-            // PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
-            // playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
-            //PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
-            //playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
-            // if (ownerGameObject.TryGetComponent(out Rigidbody rb)) {
-            //     rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
-            // }
+            // Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            // float positionMultiplier = 1f;
+            // float spawnX = data.HitPoint.x - data.HitNormal.x * positionMultiplier;
+            // float spawnY = data.HitPoint.y - data.HitNormal.y * positionMultiplier;
+            // float spawnZ = data.HitPoint.z - data.HitNormal.z * positionMultiplier;
+            // Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
+            //
+            // GameObject bulletHole = bulletHolesPool.Get();
+            // bulletHole.transform.position = spawnPosition;
+            // bulletHole.transform.rotation = Quaternion.LookRotation(data.HitNormal);
+
         }
     }
 }

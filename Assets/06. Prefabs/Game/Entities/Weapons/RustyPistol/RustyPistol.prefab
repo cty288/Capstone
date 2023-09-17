@@ -424,14 +424,15 @@ MonoBehaviour:
   reloadTimer: 0
   isReloading: 0
   isScopedIn: 0
-  currentAmmo: 0
   model: {fileID: 7541528740236041959}
   gunPositionTransform: {fileID: 4909081000382950346}
   scopeInPositionTransform: {fileID: 6163880320635768847}
   trailRenderer: {fileID: 8009820199792817655}
   layer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2177
+  bulletHoleDecal: {fileID: 3778095381011902674, guid: 99b0c50a2dc59634ea25b1a0f73f9351,
+    type: 3}
 --- !u!54 &1634876173769045248
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -470,7 +471,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3620443720334071876}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: NameTagSpawnPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
