@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class WeaponEntity&lt;T&gt; : ResourceEntity&lt;T&gt;, IWeaponEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName where T : WeaponEntity&lt;T&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class WeaponEntity&lt;T&gt; : ResourceEntity&lt;T&gt;, IWeaponEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture where T : WeaponEntity&lt;T&gt;, new()</code></pre>
   </div>
 
 
@@ -128,6 +128,9 @@
       <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
     </dd>
   </dl>
 
@@ -286,6 +289,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnGetDescription_System_String_">Entity.OnGetDescription(string)</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetArchitecture">Entity.GetArchitecture()</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
@@ -356,7 +362,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetAmmoSize" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetAmmoSize">
   GetAmmoSize()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L106"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -387,7 +393,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetAttackSpeed" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetAttackSpeed">
   GetAttackSpeed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -418,7 +424,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetBaseDamage" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetBaseDamage">
   GetBaseDamage()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L91"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -449,7 +455,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetBulletSpeed" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetBulletSpeed">
   GetBulletSpeed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L131"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -480,7 +486,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetBulletsPerShot" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetBulletsPerShot">
   GetBulletsPerShot()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L116"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -511,7 +517,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetChargeSpeed" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetChargeSpeed">
   GetChargeSpeed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L136"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -573,7 +579,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetRange" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetRange">
   GetRange()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L101"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -604,7 +610,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetRecoil" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetRecoil">
   GetRecoil()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L126"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -635,7 +641,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetReloadSpeed" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetReloadSpeed">
   GetReloadSpeed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L110"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L111"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -666,7 +672,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetResourceCategory" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetResourceCategory">
   GetResourceCategory()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L50"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -697,7 +703,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_GetSpread" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.GetSpread">
   GetSpread()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L121"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -728,7 +734,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_OnDoRecycle" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.OnDoRecycle">
   OnDoRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L73"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -754,7 +760,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_OnEntityRegisterAdditionalProperties" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.OnEntityRegisterAdditionalProperties">
   OnEntityRegisterAdditionalProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L77"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A place to register additional properties, normally empty. Recommended to register custom properties instead.</p>
@@ -781,7 +787,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_OnEntityStart_System_Boolean_" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.OnEntityStart(System.Boolean)">
   OnEntityStart(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>After the entity is built, or loaded from save, this will be called</p>
@@ -813,7 +819,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_OnGetDisplayNameBeforeFirstPicked_System_String_" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.OnGetDisplayNameBeforeFirstPicked(System.String)">
   OnGetDisplayNameBeforeFirstPicked(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L147"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -849,7 +855,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_WeaponEntity_1_Reload" data-uid="Runtime.Weapons.Model.Base.WeaponEntity`1.Reload">
   Reload()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L142"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L143"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>

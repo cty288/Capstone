@@ -42,6 +42,7 @@ namespace Runtime.Weapons.Model.Base
         
         
         protected override ConfigTable GetConfigTable() {
+            
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
         }
 
