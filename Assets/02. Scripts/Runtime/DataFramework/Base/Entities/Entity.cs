@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Framework;
+using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Pool;
 using Polyglot;
@@ -12,7 +14,7 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.DataFramework.Entities {
-	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName  {
+	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent  {
 	
 		public string EntityName { get; set; }
 		/// <summary>
@@ -501,6 +503,10 @@ namespace Runtime.DataFramework.Entities {
 			}
 
 			return "";
+		}
+
+		public IArchitecture GetArchitecture() {
+			return MainGame.Interface;
 		}
 	}
 }
