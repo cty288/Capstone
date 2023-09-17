@@ -8,6 +8,8 @@ using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
+using Runtime.Weapons.Model.Base;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -57,7 +59,7 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 			spawnedItem.transform.localPosition = Vector3.zero;
 			spawnedItem.transform.localRotation = Quaternion.identity;
 			spawnedItem.transform.localScale = Vector3.one;
-
+			
 			inHandResourceViewControllers[category] = spawnedItem.GetComponent<IInHandResourceViewController>();
 			inHandResourceViewControllers[category].OnStartHold(gameObject);
 		}

@@ -85,11 +85,11 @@ namespace Runtime.Weapons
         
         public TrailRenderer trailRenderer;
         public LayerMask layer;
-
-        
         
         //FOR CHARGE SPEED
         // private InputAction _holdAction;
+
+        public GunRecoil recoilScript;
         
         protected override void OnEntityStart()
         {
@@ -97,11 +97,8 @@ namespace Runtime.Weapons
             //TODO: Set shoot action hold duration when weapon is equipped.
             // _holdAction = playerActions.Shoot;
             // _holdAction.started += OnHoldActionStarted;
+            
             base.OnEntityStart();
-            
-            //currentAmmo = BoundEntity.GetAmmoSize().RealValue;
-            
-            //isHolding = true;
             
             hitDetectorInfo = new HitDetectorInfo
             {
@@ -125,6 +122,7 @@ namespace Runtime.Weapons
             // particleSystem.Play();
             
             hitDetector.CheckHit(hitDetectorInfo);
+            BoundEntity.OnRecoil();
         }
         
         public void Update()
@@ -252,8 +250,8 @@ namespace Runtime.Weapons
             
             yield return null;
             isScopedIn = true;
-        } 
-        
+        }
+
         private IEnumerator ScopeOut(bool reloadAfter = false)
         {
             float startTime = 0f;
@@ -265,26 +263,27 @@ namespace Runtime.Weapons
                     gunPositionTransform.position,
                     scopeInPositionTransform.position,
                     (amimationTime - startTime) / amimationTime);
-                
+
                 startTime += Time.deltaTime;
                 yield return null;
             }
-            
+
             yield return null;
             isScopedIn = false;
-            
+
             if (reloadAfter)
             {
                 isReloading = true;
             }
-        
+        }
+
         public bool CheckHit(HitData data)
         {
             return data.Hurtbox.Owner != gameObject;
         }
         
-        public void HitResponse(HitData data) {
-            // Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+        public override void HitResponse(HitData data) {
+            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
             // float positionMultiplier = 1f;
             // float spawnX = data.HitPoint.x - data.HitNormal.x * positionMultiplier;
             // float spawnY = data.HitPoint.y - data.HitNormal.y * positionMultiplier;

@@ -1,4 +1,5 @@
-﻿using MikroFramework.BindableProperty;
+﻿using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -9,6 +10,11 @@ using Runtime.Weapons.Model.Properties;
 
 namespace Runtime.Weapons.Model.Base
 {
+    public struct OnWeaponRecoil
+    {
+        
+    }
+    
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
@@ -24,9 +30,11 @@ namespace Runtime.Weapons.Model.Base
         public int CurrentAmmo { get; set; }
         
         public void Reload();
+
+        public void OnRecoil();
     }
     
-    public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity where T : WeaponEntity<T>, new() {
+    public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
         private IBaseDamage baseDamageProperty;
         private IAttackSpeed attackSpeedProperty;
         private IRange rangeProperty;
@@ -143,8 +151,17 @@ namespace Runtime.Weapons.Model.Base
             CurrentAmmo = ammoSizeProperty.RealValue.Value;
         }
 
+        public void OnRecoil()
+        {
+            // this.SendEvent<OnWeaponRecoil>(new OnWeaponRecoil()
+            // {
+            //
+            // });
+        }
+
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
             return "???";
         }
+        
     }
 }

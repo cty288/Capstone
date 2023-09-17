@@ -24,6 +24,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         private IWeaponModel weaponModel;
 
         protected IHitDetector hitDetector;
+        
         protected override void Awake() {
             base.Awake();
             weaponModel = this.GetModel<IWeaponModel>();
