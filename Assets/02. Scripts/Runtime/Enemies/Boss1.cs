@@ -45,7 +45,7 @@ namespace Runtime.Enemies
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties() {
-            return new[] {new AutoConfigCustomProperty("attack1")};
+            return null;
         }
 
         
