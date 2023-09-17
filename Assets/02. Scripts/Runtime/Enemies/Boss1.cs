@@ -27,6 +27,10 @@ namespace Runtime.Enemies
 
         [field: ES3Serializable]
         public bool ShellStatus { get; set; } = true;
+        
+        public int MaxShellHealth { get; }
+        
+        public int CurrentShellHealth { get; }
         public override void OnRecycle()
         {
 
@@ -44,7 +48,7 @@ namespace Runtime.Enemies
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
-            return null;
+            return new[] {new AutoConfigCustomProperty("shellHealthInfo")};
         }
 
         
@@ -98,6 +102,9 @@ namespace Runtime.Enemies
 
         protected override void OnEntityStart()
         {
+            //binding
+            BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
+            BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
             hurtBoxes = new List<HurtBox>(GetComponentsInChildren<HurtBox>());
             foreach (HurtBox hurtBox in hurtBoxes)
             {
@@ -112,6 +119,7 @@ namespace Runtime.Enemies
             //Collision-related.
             hitbox_roll.HitResponder = this;
             hitDetectorInfo = new HitDetectorInfo();
+
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)
