@@ -53,13 +53,12 @@ namespace Runtime.Weapons
         
         [Header("HitDetector Settings")] [SerializeField]
         [ReadOnly] private Camera cam;
-        private HitScan hitScan;
         private HitDetectorInfo hitDetectorInfo;
         
         [SerializeField] private GameObject hitParticlePrefab;
         
         // For IHitResponder.
-        public int Damage => BoundEntity.GetBaseDamage().RealValue;
+        
         private DPunkInputs.PlayerActions playerActions;
 
         protected override void Awake() {
@@ -104,7 +103,6 @@ namespace Runtime.Weapons
             
             //isHolding = true;
             
-            hitScan = new HitScan(this, CurrentFaction.Value, trailRenderer);
             hitDetectorInfo = new HitDetectorInfo
             {
                 camera = cam,
@@ -113,7 +111,11 @@ namespace Runtime.Weapons
                 weapon = BoundEntity
             };
         }
-            
+
+        protected override IHitDetector OnCreateHitDetector() {
+            return new HitScan(this, CurrentFaction.Value, trailRenderer);
+        }
+
         protected override void OnStartAbsorb() {
            
         }
@@ -122,7 +124,7 @@ namespace Runtime.Weapons
         {
             // particleSystem.Play();
             
-            hitScan.CheckHit(hitDetectorInfo);
+            hitDetector.CheckHit(hitDetectorInfo);
         }
         
         public void Update()
@@ -275,8 +277,6 @@ namespace Runtime.Weapons
             {
                 isReloading = true;
             }
-        } 
-        
         
         public bool CheckHit(HitData data)
         {
@@ -294,7 +294,6 @@ namespace Runtime.Weapons
             // GameObject bulletHole = bulletHolesPool.Get();
             // bulletHole.transform.position = spawnPosition;
             // bulletHole.transform.rotation = Quaternion.LookRotation(data.HitNormal);
-
         }
     }
 }

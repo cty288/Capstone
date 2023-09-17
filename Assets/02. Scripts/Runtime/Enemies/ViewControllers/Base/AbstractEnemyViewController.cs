@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using MikroFramework;
+using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
@@ -7,10 +10,11 @@ using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
+using Runtime.Utilities.Collision;
 using UnityEngine;
 
 namespace Runtime.Enemies.ViewControllers.Base {
-	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController 
+	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
 	
@@ -23,6 +27,10 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 
 		protected IEnemyEntityModel enemyModel;
+
+		public int Damage => GetCurrentHitDamage();
+		private List<GameObject> hitObjects = new List<GameObject>();
+		protected abstract int GetCurrentHitDamage();
 
 		protected override void Awake() {
 			base.Awake();
@@ -49,11 +57,39 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected dynamic GetCurrentHealth(dynamic info) {
 			return info.CurrentHealth;
 		}
-	
-		protected void OnCurrentHealthChanged(int oldValue, int newValue) {
-			Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
+
+		protected override void OnEntityDie(IBelongToFaction damagedealer) {
+			MikroAction action = WaitingForDeathCondition();
+			if (action != null) {
+				action.OnEndedCallback += () => {
+					OnDieWaitEnd();
+				};
+				action.Execute();
+			}
+			else {
+				OnDieWaitEnd();
+			}
 		}
 
-		public BindableProperty<Faction> CurrentFaction => BoundEntity.CurrentFaction;
+		private void OnDieWaitEnd() {
+			enemyModel.RemoveEntity(BoundEntity.UUID);
+		}
+
+		protected abstract MikroAction WaitingForDeathCondition();
+
+		protected void OnCurrentHealthChanged(int oldValue, int newValue) {
+			Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
+			
+		}
+		
+		public bool CheckHit(HitData data) {
+			if (data.Hurtbox.Owner == gameObject) { return false; }
+			else if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
+			else { return true; }
+		}
+
+		public void HitResponse(HitData data) {
+			hitObjects.Add(data.Hurtbox.Owner);
+		}
 	}
 }
