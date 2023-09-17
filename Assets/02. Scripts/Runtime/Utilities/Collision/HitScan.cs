@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Runtime.Utilities.Collision
 {
@@ -16,19 +18,23 @@ namespace Runtime.Utilities.Collision
     {
         private IHitResponder hitResponder;
         public IHitResponder HitResponder { get => hitResponder; set => hitResponder = value; }
-        
 
+        private ObjectPool<TrailRenderer> trailPool;
+        private TrailRenderer _tr;
         private Vector3 offset = Vector3.zero;
         private Transform _launchPoint;
         private Camera _camera;
-        private List<LineRenderer> _lineRenderers;
+        // private List<LineRenderer> _lineRenderers;
         private LayerMask _layer;
         private IWeaponEntity _weapon;
 
-        public HitScan(IHitResponder hitResponder, Faction faction)
+        public HitScan(IHitResponder hitResponder, Faction faction, TrailRenderer tr)
         {
             this.hitResponder = hitResponder;
             CurrentFaction.Value = faction;
+            _tr = tr;
+            
+            trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
         }
         
         /// <summary>
@@ -40,28 +46,27 @@ namespace Runtime.Utilities.Collision
             // Debug.Log("checkhit");
             _launchPoint = hitDetectorInfo.launchPoint;
             _camera = hitDetectorInfo.camera;
-            _lineRenderers = hitDetectorInfo.lineRenderers;
             _layer = hitDetectorInfo.layer;
             _weapon = hitDetectorInfo.weapon;
 
-            foreach (LineRenderer lr in _lineRenderers)
-            {
-                ShootRay(lr);
-            }
+            ShootBullet();
         }
 
         //TODO: faction and IDamagable integration.
-        private void ShootRay(LineRenderer lr)
+        private void ShootBullet()
         {
-            Vector3 origin = _camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
-            //TODO: Adjust spread to be less random and less punishing when further away [?].
-            offset[0] = Random.Range(-_weapon.GetSpread().RealValue.Value, _weapon.GetSpread().RealValue.Value);
-            offset[1] = Random.Range(-_weapon.GetSpread().RealValue.Value, _weapon.GetSpread().RealValue.Value);
-            offset[2] = Random.Range(-_weapon.GetSpread().RealValue.Value, _weapon.GetSpread().RealValue.Value);
+            Vector3 shootDir = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
+            float spread = _weapon.GetSpread().RealValue.Value;
+            shootDir += new Vector3(
+                Random.Range(-spread, spread),
+                Random.Range(-spread, spread),
+                Random.Range(-spread, spread));
+            shootDir.Normalize();
             
             HitData hitData = null;
             RaycastHit hit;
-            if (Physics.Raycast(origin, Vector3.Normalize(_camera.transform.forward + offset), out hit,
+            
+            if (Physics.Raycast(_camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit,
                     _weapon.GetRange().RealValue.Value, _layer))
             {
                 // Debug.Log("hit");
@@ -78,31 +83,66 @@ namespace Runtime.Utilities.Collision
                     // Debug.Log("validate");
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
-
-                    //Draw hitscan line.
-                    SetLine(lr, _launchPoint.position, hitData.HitPoint);
-                    Debug.Log("hit");
-                    CoroutineRunner.Singleton.StartCoroutine(DrawHitscan(lr));
+                    
+                    CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, hit));
+                }
+                else
+                {
+                    CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
                 }
             }
             else
             {
-                SetLine(lr, _launchPoint.position, Vector3.Normalize(_camera.transform.forward + offset) * _weapon.GetRange().RealValue.Value);
-                CoroutineRunner.Singleton.StartCoroutine(DrawHitscan(lr));
+                CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
             }
         }
-
-        private void SetLine(LineRenderer lr, Vector3 start, Vector3 end)
+        
+        private IEnumerator PlayTrail(Vector3 startPoint, Vector3 endPoint, RaycastHit hit)
         {
-            lr.SetPosition(0, start);
-            lr.SetPosition(1, end);
+            TrailRenderer instance = trailPool.Get();
+            instance.gameObject.SetActive(true);
+            instance.transform.position = startPoint;
+            yield return null; // avoid position carry-over from last frame if reused
+
+            instance.emitting = true;
+
+            float distance = Vector3.Distance(startPoint, endPoint);
+            float remainingDistance = distance;
+            while (remainingDistance > 0)
+            {
+                instance.transform.position = Vector3.Lerp(
+                    startPoint,
+                    endPoint,
+                    Mathf.Clamp01(1 - (remainingDistance / distance))
+                );
+                remainingDistance -= _weapon.GetBulletSpeed().GetRealValue().Value * Time.deltaTime;
+
+                yield return null;
+            }
+
+            instance.transform.position = endPoint;
+
+            yield return new WaitForSeconds(0.01f);
+            yield return null;
+            instance.emitting = false;
+            instance.gameObject.SetActive(false);
+            trailPool.Release(instance);
         }
         
-        IEnumerator DrawHitscan(LineRenderer lr)
+        private TrailRenderer CreateTrail()
         {
-            lr.enabled = true;
-            yield return new WaitForSeconds(0.3f);
-            lr.enabled = false;
+            GameObject instance = new GameObject("bullet trail");
+            TrailRenderer trail = instance.AddComponent<TrailRenderer>();
+            trail.colorGradient = _tr.colorGradient;
+            trail.material = _tr.material;
+            trail.widthCurve = _tr.widthCurve;
+            trail.time = _tr.time;
+            trail.minVertexDistance = _tr.minVertexDistance;
+            
+            trail.emitting = false;
+            trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+            return trail;
         }
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);

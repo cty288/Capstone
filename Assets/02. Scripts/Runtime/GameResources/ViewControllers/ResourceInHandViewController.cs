@@ -58,7 +58,7 @@ namespace Runtime.GameResources.ViewControllers {
 			base.HandleAbsorb(player, zone);
 		}
 
-		public void OnStartHold(GameObject ownerGameObject) {
+		public virtual void OnStartHold(GameObject ownerGameObject) {
 			isHolding = true;
 			rigidbody.isKinematic = true;
 			foreach (Collider selfCollider in selfColliders) {
@@ -69,7 +69,7 @@ namespace Runtime.GameResources.ViewControllers {
 			OnUnPointByCrosshair();
 		}
 		
-		public void OnStopHold() {
+		public virtual void OnStopHold() {
 			isHolding = false;
 			rigidbody.isKinematic = false;
 			this.ownerGameObject = null;
