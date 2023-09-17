@@ -20,8 +20,8 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 		new Dictionary<HotBarCategory, IInHandResourceViewController>();
 	private void Awake() {
 		inventoryModel = this.GetModel<IInventoryModel>();
-		leftHandTr = transform.Find("Cameraroot/LeftHandSpawnPos");
-		rightHandTr = transform.Find("Cameraroot/RightHandSpawnPos");
+		leftHandTr = transform.Find("Camholder/Cameraroot/LeftHandSpawnPos");
+		rightHandTr = transform.Find("Camholder/Cameraroot/RightHandSpawnPos");
 
 		SwitchHandItem(HotBarCategory.Left,
 			GlobalGameResourceEntities.GetAnyResource(inventoryModel.GetSelectedHotBarSlot(HotBarCategory.Left)

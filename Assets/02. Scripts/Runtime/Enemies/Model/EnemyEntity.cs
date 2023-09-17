@@ -38,8 +38,8 @@ namespace Runtime.Enemies.Model {
 		
 		
 
-		protected override void OnEntityStart() {
-			base.OnEntityStart();
+		protected override void OnEntityStart(bool isLoadedFromSave) {
+			base.OnEntityStart(isLoadedFromSave);
 			dangerProperty = GetProperty<IDangerProperty>();
 			healthProperty = GetProperty<IHealthProperty>();
 			tasteProperty = GetProperty<ITasteProperty>();

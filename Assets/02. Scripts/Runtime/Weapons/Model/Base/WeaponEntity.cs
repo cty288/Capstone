@@ -20,6 +20,10 @@ namespace Runtime.Weapons.Model.Base
         public IRecoil GetRecoil();
         public IBulletSpeed GetBulletSpeed();
         public IChargeSpeed GetChargeSpeed();
+        
+        public int CurrentAmmo { get; set; }
+        
+        public void Reload();
     }
     
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity where T : WeaponEntity<T>, new() {
@@ -33,6 +37,9 @@ namespace Runtime.Weapons.Model.Base
         private IRecoil recoilProperty;
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
+        [field: ES3Serializable]
+        public int CurrentAmmo { get; set; }
+        
         
         protected override ConfigTable GetConfigTable() {
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
@@ -43,8 +50,8 @@ namespace Runtime.Weapons.Model.Base
             return ResourceCategory.Weapon;
         }
 
-        protected override void OnEntityStart() {
-            base.OnEntityStart();
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            base.OnEntityStart(isLoadedFromSave);
             baseDamageProperty = GetProperty<IBaseDamage>();
             attackSpeedProperty = GetProperty<IAttackSpeed>();
             rangeProperty = GetProperty<IRange>();
@@ -55,6 +62,11 @@ namespace Runtime.Weapons.Model.Base
             recoilProperty = GetProperty<IRecoil>();
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
+            
+            if (isLoadedFromSave) { //otherwise it is managed by es3
+                CurrentAmmo = ammoSizeProperty.RealValue.Value;
+            }
+           
         }
         
         public override void OnDoRecycle() {
@@ -123,6 +135,12 @@ namespace Runtime.Weapons.Model.Base
         public IChargeSpeed GetChargeSpeed()
         {
             return chargeSpeedProperty;
+        }
+
+
+
+        public void Reload() {
+            CurrentAmmo = ammoSizeProperty.RealValue.Value;
         }
 
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {

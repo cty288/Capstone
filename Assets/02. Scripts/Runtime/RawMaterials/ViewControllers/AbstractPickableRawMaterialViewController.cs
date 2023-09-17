@@ -26,17 +26,6 @@ namespace Runtime.RawMaterials.ViewControllers {
 
 		protected abstract IEntity OnInitResourceEntity(RawMaterialBuilder<T> builder);
 
-		protected override void OnStartAbsorb() {
-			foreach (Collider selfCollider in selfColliders) {
-				selfCollider.isTrigger = true;
-			}
-		}
-
-		public override void OnRecycled() {
-			base.OnRecycled();
-			foreach (Collider selfCollider in selfColliders) {
-				selfCollider.isTrigger = false;
-			}
-		}
+		
 	}
 }

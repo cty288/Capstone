@@ -66,6 +66,7 @@ namespace Runtime.Weapons
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
+            
         }
         
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
@@ -79,7 +80,7 @@ namespace Runtime.Weapons
         public float reloadTimer = 0f;
         public bool isReloading = false;
         public bool isScopedIn = false;
-        public int currentAmmo;
+        //public int currentAmmo;
         public GameObject model;
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
@@ -100,9 +101,9 @@ namespace Runtime.Weapons
             // _holdAction.started += OnHoldActionStarted;
             base.OnEntityStart();
             
-            currentAmmo = BoundEntity.GetAmmoSize().RealValue;
+            //currentAmmo = BoundEntity.GetAmmoSize().RealValue;
             
-            isHolding = true;
+            //isHolding = true;
             
             hitScan = new HitScan(this, CurrentFaction.Value, trailRenderer);
             hitDetectorInfo = new HitDetectorInfo
@@ -132,18 +133,18 @@ namespace Runtime.Weapons
                 //Shoot
                 if (playerActions.Shoot.IsPressed() && !isReloading)
                 {
-                    if (currentAmmo > 0 &&
+                    if (BoundEntity.CurrentAmmo > 0 &&
                         Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
                     {
                         lastShootTime = Time.time;
 
                         Shoot();
 
-                        currentAmmo--;
+                        BoundEntity.CurrentAmmo--;
 
                         if (autoReload)
                         {
-                            if (currentAmmo == 0)
+                            if (BoundEntity.CurrentAmmo == 0)
                             {
                                 if (isScopedIn)
                                 {
@@ -160,7 +161,7 @@ namespace Runtime.Weapons
 
                 //Reload
                 if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
-                    currentAmmo < BoundEntity.GetAmmoSize().RealValue)
+                    BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
                     if (isScopedIn)
                     {
@@ -174,7 +175,7 @@ namespace Runtime.Weapons
 
                 if (isReloading && (reloadTimer >= BoundEntity.GetReloadSpeed().RealValue))
                 {
-                    currentAmmo = BoundEntity.GetAmmoSize().RealValue;
+                    BoundEntity.Reload();
                     StartCoroutine(ReloadAnimation());
                     reloadTimer = 0f;
                 }

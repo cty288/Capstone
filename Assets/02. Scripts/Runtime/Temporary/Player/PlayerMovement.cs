@@ -86,8 +86,8 @@ namespace Runtime.Temporary.Player
         private bool exitingSlope;
         //temporary
         public Transform orientation;
+        [SerializeField] private LayerMask slopeLayerMask;
 
-        
         [Header("Sliding")]
         public float maxSlideTime;
         public float slideForce;
@@ -507,7 +507,7 @@ namespace Runtime.Temporary.Player
         
         public bool OnSlope()
         {
-            if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+            if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f, slopeLayerMask))
             {
                 float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
                 return angle < maxSlopeAngle && angle != 0;
@@ -518,7 +518,7 @@ namespace Runtime.Temporary.Player
 
         public bool SlopeTooBig()
         {
-            if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+            if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f, slopeLayerMask))
             {
                 float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
                 return angle >= maxSlopeAngle && angle != 0;

@@ -1,3 +1,5 @@
+using System.Linq;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,7 +76,7 @@ namespace Runtime.Player {
                     int numHits = Physics.RaycastNonAlloc(position, entityVC.Key.transform.position - position, hits, 100f);
                     var sortedHits = hits.OrderBy(hit => hit.distance).ToArray();
                     
-                    for (int i = 0; i < numHits; i++) {
+                    for (int i = 0; i < sortedHits.Length; i++) {
                         if (!sortedHits[i].collider) {
                             continue;
                         }
@@ -112,7 +114,7 @@ namespace Runtime.Player {
                     int numHits = Physics.RaycastNonAlloc(position, entityVC.Key.transform.position - position, hits, 100f);
                     var sortedHits = hits.OrderBy(hit => hit.distance).ToArray();
                     
-                    for (int i = 0; i < numHits; i++) {
+                    for (int i = 0; i < sortedHits.Length; i++) {
                         if (!sortedHits[i].collider) {
                             continue;
                         }

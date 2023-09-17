@@ -118,7 +118,7 @@ namespace Runtime.DataFramework.Entities {
 		/// <summary>
 		/// After the entity is built, or loaded from save, this will be called
 		/// </summary>
-		public void OnStart();
+		public void OnStart(bool isLoadedFromSave);
 
 		public IUnRegister RegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
 
@@ -212,7 +212,7 @@ namespace Runtime.DataFramework.Entities {
 				}
 			}
 			
-			OnStart();
+			OnStart(true);
 		}
 
 
@@ -343,8 +343,8 @@ namespace Runtime.DataFramework.Entities {
 
 		}
 
-		public virtual void OnStart() {
-			OnEntityStart();
+		public virtual void OnStart(bool isLoadedFromSave) {
+			OnEntityStart(isLoadedFromSave);
 		}
 
 		public IUnRegister RegisterOnEntityRecycled(Action<IEntity> onEntityRecycled) {
@@ -360,7 +360,8 @@ namespace Runtime.DataFramework.Entities {
 		/// <summary>
 		/// After the entity is built, or loaded from save, this will be called
 		/// </summary>
-		protected abstract void OnEntityStart();
+		/// <param name="isLoadedFromSave"></param>
+		protected abstract void OnEntityStart(bool isLoadedFromSave);
 
 		public IPropertyBase GetProperty(PropertyName name) {
 			if (_allProperties.TryGetValue(name.ToString(), out var property)) {

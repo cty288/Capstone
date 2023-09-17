@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
@@ -28,6 +29,7 @@ namespace Runtime.GameResources.ViewControllers {
         //protected PoolableGameObject poolable;
         protected IInventoryModel inventoryModel;
         protected bool isAbsorbing = false;
+        protected Dictionary<Collider, bool> selfColliders = new Dictionary<Collider, bool>();
         
         [Header("Entity Recycle Logic")]
         [Tooltip("The time when the entity will be recycled when it is not absorbed by the player")]
@@ -40,6 +42,9 @@ namespace Runtime.GameResources.ViewControllers {
             //poolable = GetComponent<PoolableGameObject>();
            // resLoader = this.GetUtility<ResLoader>();DescriptionTag
             inventoryModel = this.GetModel<IInventoryModel>();
+            foreach (Collider selfCollider in GetComponentsInChildren<Collider>(true)) {
+                selfColliders.Add(selfCollider, selfCollider.isTrigger);
+            }
         }
 
         protected override void OnEntityStart() {
@@ -73,6 +78,9 @@ namespace Runtime.GameResources.ViewControllers {
                     StopCoroutine(entityRemovalTimerCoroutine);
                     entityRemovalTimerCoroutine = null;
                 }
+                foreach (Collider selfCollider in selfColliders.Keys) {
+                    selfCollider.isTrigger = true;
+                }
                 OnStartAbsorb();
                 transform.DOMoveInTargetLocalSpace(Camera.main.transform, Vector3.zero, 0.2f).
                     SetEase(Ease.Linear)
@@ -100,6 +108,9 @@ namespace Runtime.GameResources.ViewControllers {
             if (entityRemovalTimerCoroutine != null) {
                 StopCoroutine(entityRemovalTimerCoroutine);
                 entityRemovalTimerCoroutine = null;
+            }
+            foreach (Collider selfCollider in selfColliders.Keys) {
+                selfCollider.isTrigger = selfColliders[selfCollider];
             }
         }
         

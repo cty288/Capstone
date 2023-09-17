@@ -1,4 +1,5 @@
-﻿using Runtime.DataFramework.Entities;
+﻿using System.Collections.Generic;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Runtime.GameResources.ViewControllers {
 	public abstract class AbstractPickableInHandResourceViewController<T> : 
 		AbstractPickableResourceViewController<T>, IInHandResourceViewController
 		where T : class, IResourceEntity, new() {
-		protected Collider[] selfColliders;
+		
 		private LayerMask originalLayer;
 		protected bool isHolding = false;
 		protected Rigidbody rigidbody;
@@ -28,23 +29,18 @@ namespace Runtime.GameResources.ViewControllers {
 		protected override void Awake() {
 			base.Awake();
 			originalLayer = gameObject.layer;
-			selfColliders = GetComponents<Collider>();
+			selfColliders = new Dictionary<Collider, bool>();
+			
 			rigidbody = GetComponent<Rigidbody>();
 		}
 
 		protected override void OnStartAbsorb() {
-			foreach (Collider selfCollider in selfColliders) {
-				selfCollider.isTrigger = true;
-			}
-
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 		}
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			foreach (Collider selfCollider in selfColliders) {
-				selfCollider.isTrigger = false;
-			}
+			
 			gameObject.layer = originalLayer;
 			isHolding = false;
 			rigidbody.isKinematic = false;
@@ -55,14 +51,15 @@ namespace Runtime.GameResources.ViewControllers {
 			if (isHolding) {
 				return;
 			}
+			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 			base.HandleAbsorb(player, zone);
 		}
 
 		public virtual void OnStartHold(GameObject ownerGameObject) {
 			isHolding = true;
 			rigidbody.isKinematic = true;
-			foreach (Collider selfCollider in selfColliders) {
-				selfCollider.isTrigger = true;
+			foreach (Collider selfCollider in selfColliders.Keys) {
+				selfCollider.isTrigger = selfColliders[selfCollider];
 			}
 			this.ownerGameObject = ownerGameObject;
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");

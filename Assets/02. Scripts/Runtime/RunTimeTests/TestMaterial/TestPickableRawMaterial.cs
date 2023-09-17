@@ -54,5 +54,9 @@ namespace Runtime.RunTimeTests.TestMaterial {
 		protected override IEntity OnInitResourceEntity(RawMaterialBuilder<TestBasicRawMaterial> builder) {
 			return builder.FromConfig().AddBaitAdjective(BaitAdjective.Test_Adjective_3).Build();
 		}
+
+		protected override void OnStartAbsorb() {
+			
+		}
 	}
 }

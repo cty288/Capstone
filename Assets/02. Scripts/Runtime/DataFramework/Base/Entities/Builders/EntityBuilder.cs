@@ -94,7 +94,7 @@ namespace Runtime.DataFramework.Entities.Builders {
             ent.Initialize();
             onEntityCreated?.Invoke(ent);
             RecycleToCache();
-            ent.OnStart();
+            ent.OnStart(false);
             return ent;
         }
 
