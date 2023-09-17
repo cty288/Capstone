@@ -201,7 +201,7 @@ namespace Runtime.Temporary.Player
                     out BindingInfo info, out string actionName);
                 //Debug.Log("Action Name: " + actionName);
             }
-            Debug.Log(OnSlope());
+            // Debug.Log(OnSlope());
         }
         
         private void StateHandler()

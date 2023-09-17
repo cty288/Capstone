@@ -58,8 +58,6 @@ namespace Runtime.Weapons
         
         [SerializeField] private GameObject hitParticlePrefab;
         
-        
-        
         // For IHitResponder.
         public int Damage => BoundEntity.GetBaseDamage().RealValue;
         private DPunkInputs.PlayerActions playerActions;
@@ -78,10 +76,11 @@ namespace Runtime.Weapons
         
         //=====
         public float lastShootTime = 0f;
-        public float reloadStartTime = 0f;
+        public float reloadTimer = 0f;
         public bool isReloading = false;
         public bool isScopedIn = false;
         public int currentAmmo;
+        public GameObject model;
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
         
@@ -100,7 +99,10 @@ namespace Runtime.Weapons
             // _holdAction = playerActions.Shoot;
             // _holdAction.started += OnHoldActionStarted;
             base.OnEntityStart();
+            
             currentAmmo = BoundEntity.GetAmmoSize().RealValue;
+            
+            isHolding = true;
             
             hitScan = new HitScan(this, CurrentFaction.Value, trailRenderer);
             hitDetectorInfo = new HitDetectorInfo
@@ -125,68 +127,73 @@ namespace Runtime.Weapons
         
         public void Update()
         {
-            //Shoot
-            if (playerActions.Shoot.IsPressed() && !isReloading 
-                                                // && isHolding
-                                                )
+            if (isHolding)
             {
-                if (currentAmmo > 0 &&
-                    Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
+                //Shoot
+                if (playerActions.Shoot.IsPressed() && !isReloading)
                 {
-                    lastShootTime = Time.time;
-            
-                    Shoot();
-                    
-                    currentAmmo--;
-
-                    if (autoReload)
+                    if (currentAmmo > 0 &&
+                        Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
                     {
-                        if (currentAmmo == 0)
+                        lastShootTime = Time.time;
+
+                        Shoot();
+
+                        currentAmmo--;
+
+                        if (autoReload)
                         {
-                            if (isScopedIn)
+                            if (currentAmmo == 0)
                             {
-                                StartCoroutine(ScopeOut(true));
-                            }
-                            else
-                            {
-                                isReloading = true;
-                                reloadStartTime = Time.time;
+                                if (isScopedIn)
+                                {
+                                    StartCoroutine(ScopeOut(true));
+                                }
+                                else
+                                {
+                                    isReloading = true;
+                                }
                             }
                         }
-                    } 
+                    }
                 }
-            }
-            
-            //Reload
-            if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && currentAmmo < BoundEntity.GetAmmoSize().RealValue)
-            {
-                if (isScopedIn)
-                {
-                    StartCoroutine(ScopeOut(true));
-                }
-                else
-                {
-                    isReloading = true;
-                    reloadStartTime = Time.time;
-                }
-            }
 
-            if (isReloading && (Time.time > reloadStartTime + BoundEntity.GetReloadSpeed().RealValue))
-            {
-                currentAmmo = BoundEntity.GetAmmoSize().RealValue;
-                StartCoroutine(ReloadAnimation());
-            }
-            
-            // Scope
-            if (playerActions.Scope.WasPerformedThisFrame() && !isReloading)
-            {
-                if (isScopedIn)
+                //Reload
+                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
+                    currentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
-                    StartCoroutine(ScopeOut());
+                    if (isScopedIn)
+                    {
+                        StartCoroutine(ScopeOut(true));
+                    }
+                    else
+                    {
+                        isReloading = true;
+                    }
                 }
-                else
-                {                    
-                    StartCoroutine(ScopeIn());
+
+                if (isReloading && (reloadTimer >= BoundEntity.GetReloadSpeed().RealValue))
+                {
+                    currentAmmo = BoundEntity.GetAmmoSize().RealValue;
+                    StartCoroutine(ReloadAnimation());
+                    reloadTimer = 0f;
+                }
+                else if (isReloading)
+                {
+                    reloadTimer += Time.deltaTime;
+                }
+
+                // Scope
+                if (playerActions.Scope.WasPerformedThisFrame() && !isReloading)
+                {
+                    if (isScopedIn)
+                    {
+                        StartCoroutine(ScopeOut());
+                    }
+                    else
+                    {
+                        StartCoroutine(ScopeIn());
+                    }
                 }
             }
         }
@@ -206,25 +213,16 @@ namespace Runtime.Weapons
         {
             float startTime = 0f;
             float dipTime = 0.25f;
-            float riseTime = 0.5f;
 
+            Vector3 lowerPosition = new Vector3(gunPositionTransform.position.x,
+                gunPositionTransform.position.y - 0.2f, gunPositionTransform.position.z);
+            
             while ((dipTime - startTime) / dipTime > 0f)
             {
-                transform.position = Vector3.Lerp(
+                model.transform.position = Vector3.Lerp(
                     gunPositionTransform.position,
-                    new Vector3(gunPositionTransform.position.x, gunPositionTransform.position.y - 0.2f, gunPositionTransform.position.z),
+                    lowerPosition,
                     (dipTime - startTime) / dipTime);
-                
-                startTime += Time.deltaTime;
-                yield return null;
-            }
-            
-            while (((riseTime - startTime) / riseTime) > 0f)
-            {
-                transform.position = Vector3.Lerp(
-                    transform.position,
-                    gunPositionTransform.position,
-                    (riseTime - startTime) / riseTime);
                 
                 startTime += Time.deltaTime;
                 yield return null;
@@ -241,7 +239,7 @@ namespace Runtime.Weapons
 
             while ((amimationTime - startTime) / amimationTime > 0f)
             {
-                transform.position = Vector3.Lerp(
+                model.transform.position = Vector3.Lerp(
                     scopeInPositionTransform.position,
                     gunPositionTransform.position,
                     (amimationTime - startTime) / amimationTime);
@@ -261,7 +259,7 @@ namespace Runtime.Weapons
 
             while ((amimationTime - startTime) / amimationTime > 0f)
             {
-                transform.position = Vector3.Lerp(
+                model.transform.position = Vector3.Lerp(
                     gunPositionTransform.position,
                     scopeInPositionTransform.position,
                     (amimationTime - startTime) / amimationTime);
@@ -276,7 +274,6 @@ namespace Runtime.Weapons
             if (reloadAfter)
             {
                 isReloading = true;
-                reloadStartTime = Time.time;
             }
         } 
 
