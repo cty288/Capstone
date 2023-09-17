@@ -1,4 +1,5 @@
-﻿using MikroFramework.BindableProperty;
+﻿using JetBrains.Annotations;
+using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -121,5 +122,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		
 		public BindableProperty<bool> IsInvincible { get; }
+		
+		public bool CheckCanTakeDamage([CanBeNull] IBelongToFaction damageDealer);
 	}
 }
