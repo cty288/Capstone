@@ -96,7 +96,7 @@ namespace Runtime.Enemies
             //binding
             BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
             BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
-            BindCustomData<bool>("ShellClosed","shellHealthInfo","shellClosed");
+            BindCustomData<bool>("ShellClosed","shellHealthInfo","shellClosed",OnShellStatusChanged);
             //Animation-related.
             // animator = GetComponent<Animator>();
             animationSMBManager = GetComponent<AnimationSMBManager>();
@@ -121,10 +121,17 @@ namespace Runtime.Enemies
                 //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();
         }
-
+        
         protected void OnShellStatusChanged(bool oldValue,bool newValue)
         {
-            Debug.Log("Shell status changed to:" + newValue);
+            if (newValue)
+            {
+                //TODO: close shell
+            }
+            else
+            {
+                //TODO: open shell
+            }
         }
         private void Update()
         {
@@ -148,12 +155,21 @@ namespace Runtime.Enemies
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
                 shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,shellHp.Value.CurrentHealth-data.Damage);
             }
-            else
+            BoundEntity.TakeDamage(data.Damage,data.Attacker);
+        }
+
+        public void ChangeShellStatus(bool newStatus)
+        {
+            IBindableProperty shellStatus = BoundEntity.GetCustomDataValue("shellHealthInfo", "shellClosed");
+            if (shellStatus.Value != newStatus)
             {
-                BoundEntity.TakeDamage(data.Damage,data.Attacker);
+                shellStatus.Value = newStatus;
+                if (newStatus)
+                {
+                    BoundEntity.IsInvincible.Value = true;
+                }
             }
         }
-        
     }
 }
 
