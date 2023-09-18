@@ -13,6 +13,7 @@ using Runtime.Enemies.Model.Properties;
 using Runtime.Enemies.ViewControllers.Base;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Enemies;
+using Runtime.UI.NameTags;
 using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -50,7 +51,7 @@ namespace Runtime.Enemies
 
         
     }
-    public class Boss1 : AbstractEnemyViewController<Boss1Entity>
+    public class Boss1 : AbstractBossViewController<Boss1Entity>
     {
         [Header("HitResponder_Info")]
         [SerializeField] private int m_damage = 10;
