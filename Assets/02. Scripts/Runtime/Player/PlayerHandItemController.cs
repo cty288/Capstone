@@ -8,6 +8,7 @@ using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
+using Runtime.Utilities;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
@@ -34,7 +35,7 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 				.GetLastItemUUID()));
 		
 		this.RegisterEvent<OnCurrentHotbarUpdateEvent>(OnCurrentHotbarUpdate)
-			.UnRegisterWhenGameObjectDestroyed(gameObject);
+			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 	}
 
 	private void OnCurrentHotbarUpdate(OnCurrentHotbarUpdateEvent e) {

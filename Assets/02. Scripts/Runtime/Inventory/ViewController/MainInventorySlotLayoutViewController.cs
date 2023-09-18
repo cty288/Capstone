@@ -10,7 +10,7 @@ namespace Runtime.Inventory.ViewController {
 		[SerializeField] private GameObject slotPrefab;
 		protected List<ResourceSlotViewController> slotViewControllers = new List<ResourceSlotViewController>();
 		protected virtual void Awake() {
-			slotLayout = GetComponent<RectTransform>();
+			slotLayout = transform.Find("InventoryLayout").GetComponent<RectTransform>();
 		}
 
 		public override void OnInventorySlotAdded(List<ResourceSlot> addedSlots, int addedCount) {
