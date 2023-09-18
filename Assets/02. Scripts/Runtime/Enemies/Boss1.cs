@@ -28,9 +28,7 @@ namespace Runtime.Enemies
         [field: ES3Serializable]
         public bool ShellStatus { get; set; } = true;
         
-        public int MaxShellHealth { get; }
-        
-        public int CurrentShellHealth { get; }
+
         public override void OnRecycle()
         {
 
@@ -55,6 +53,10 @@ namespace Runtime.Enemies
     }
     public class Boss1 : AbstractEnemyViewController<Boss1Entity>, IHurtResponder, IHitResponder
     {
+        
+        public int MaxShellHealth { get; }
+        
+        public int CurrentShellHealth { get; }
         [Header("HitResponder_Info")]
         [SerializeField] private int m_damage = 10;
         public Animator animator;
