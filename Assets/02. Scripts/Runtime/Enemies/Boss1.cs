@@ -145,8 +145,8 @@ namespace Runtime.Enemies
         {
             if (ShellClosed)
             {
-                BindableProperty<dynamic> shellHp = BoundEntity.GetCustomDataValue<dynamic>("shellHealthInfo","currentShellHealth");
-                shellHp.Value -= data.Damage;
+                IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
+                shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,shellHp.Value.CurrentHealth-data.Damage);
             }
             else
             {
