@@ -7,12 +7,14 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Weapons.Model.Base
 {
-    public struct OnWeaponRecoil
+    public struct OnWeaponRecoilEvent
     {
-        
+        // public GunRecoil gunRecoilScript;
     }
     
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
@@ -28,6 +30,7 @@ namespace Runtime.Weapons.Model.Base
         public IChargeSpeed GetChargeSpeed();
         
         public int CurrentAmmo { get; set; }
+        // public GunRecoil GunRecoilScript { get; set; }
         
         public void Reload();
 
@@ -47,8 +50,10 @@ namespace Runtime.Weapons.Model.Base
         private IChargeSpeed chargeSpeedProperty;
         [field: ES3Serializable]
         public int CurrentAmmo { get; set; }
-        
-        
+
+        // public GunRecoil GunRecoilScript { get; set; }
+
+
         protected override ConfigTable GetConfigTable() {
             
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
@@ -154,10 +159,7 @@ namespace Runtime.Weapons.Model.Base
 
         public void OnRecoil()
         {
-            // this.SendEvent<OnWeaponRecoil>(new OnWeaponRecoil()
-            // {
-            //
-            // });
+            this.SendEvent<OnWeaponRecoilEvent>(new OnWeaponRecoilEvent());
         }
 
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {

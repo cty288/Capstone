@@ -120,9 +120,8 @@ namespace Runtime.Weapons
         public void Shoot()
         {
             // particleSystem.Play();
-            
-            hitDetector.CheckHit(hitDetectorInfo);
             BoundEntity.OnRecoil();
+            hitDetector.CheckHit(hitDetectorInfo);
         }
         
         public void Update()

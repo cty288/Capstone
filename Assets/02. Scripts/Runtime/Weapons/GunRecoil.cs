@@ -1,10 +1,13 @@
 ﻿using System;
+using Framework;
+using MikroFramework.Architecture;
+using Runtime.Weapons.Model.Base;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Runtime.Weapons
 {
-    public class GunRecoil : MonoBehaviour
+    public class GunRecoil : AbstractMikroController<MainGame>
     {
         private Vector3 currentRotation;
         private Vector3 targetRotation;
@@ -16,10 +19,10 @@ namespace Runtime.Weapons
         [SerializeField] private float snappiness;
         [SerializeField] private float returnSpeed;
 
-        private void Awake()
+        private void Start()
         {
-            // this.RegisterEvent<OnCurrentHotbarUpdateEvent>(OnCurrentHotbarUpdate)
-            //     .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnWeaponRecoilEvent>(Recoil);
+            // Debug.Log("register recoil");
         }
 
         private void Update()
@@ -34,6 +37,10 @@ namespace Runtime.Weapons
             targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
         }
 
-     
+        private void Recoil(OnWeaponRecoilEvent e)
+        {
+            Debug.Log("recoil");
+            RecoilFire();
+        }
     }
 }
