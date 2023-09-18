@@ -66,19 +66,26 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			if(!CheckCanTakeDamage(damageDealer)) {
 				return;
 			}
-			
-			if(IsInvincible.Value) {
-				damage = 0;
-			}
+
+			int actualDamage = OnTakeDamageAdditionalCheck(damage, damageDealer);
 			
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
 			
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage
-			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : damage;
+			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : actualDamage;
 			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
 
-				onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer);
+			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer);
+		}
+		
+		
+		public virtual int OnTakeDamageAdditionalCheck(int damage, [CanBeNull] IBelongToFaction damageDealer) {
+			if(IsInvincible.Value) {
+				damage = 0;
+			}
+
+			return damage;
 		}
 		
 		public bool CheckCanTakeDamage([CanBeNull] IBelongToFaction damageDealer) {
