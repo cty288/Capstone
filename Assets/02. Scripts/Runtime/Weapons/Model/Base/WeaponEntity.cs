@@ -1,4 +1,5 @@
-﻿using MikroFramework.BindableProperty;
+﻿using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -6,9 +7,16 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Weapons.Model.Base
 {
+    public struct OnWeaponRecoilEvent
+    {
+        // public GunRecoil gunRecoilScript;
+    }
+    
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
@@ -22,11 +30,14 @@ namespace Runtime.Weapons.Model.Base
         public IChargeSpeed GetChargeSpeed();
         
         public int CurrentAmmo { get; set; }
+        // public GunRecoil GunRecoilScript { get; set; }
         
         public void Reload();
+
+        public void OnRecoil();
     }
     
-    public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity where T : WeaponEntity<T>, new() {
+    public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
         private IBaseDamage baseDamageProperty;
         private IAttackSpeed attackSpeedProperty;
         private IRange rangeProperty;
@@ -39,8 +50,10 @@ namespace Runtime.Weapons.Model.Base
         private IChargeSpeed chargeSpeedProperty;
         [field: ES3Serializable]
         public int CurrentAmmo { get; set; }
-        
-        
+
+        // public GunRecoil GunRecoilScript { get; set; }
+
+
         protected override ConfigTable GetConfigTable() {
             
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
@@ -144,8 +157,14 @@ namespace Runtime.Weapons.Model.Base
             CurrentAmmo = ammoSizeProperty.RealValue.Value;
         }
 
+        public void OnRecoil()
+        {
+            this.SendEvent<OnWeaponRecoilEvent>(new OnWeaponRecoilEvent());
+        }
+
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
             return "???";
         }
+        
     }
 }

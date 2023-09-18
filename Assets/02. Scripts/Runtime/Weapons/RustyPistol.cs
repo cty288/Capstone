@@ -53,13 +53,12 @@ namespace Runtime.Weapons
         
         [Header("HitDetector Settings")] [SerializeField]
         [ReadOnly] private Camera cam;
-        private HitScan hitScan;
         private HitDetectorInfo hitDetectorInfo;
         
         [SerializeField] private GameObject hitParticlePrefab;
         
         // For IHitResponder.
-        public int Damage => BoundEntity.GetBaseDamage().RealValue;
+        
         private DPunkInputs.PlayerActions playerActions;
 
         protected override void Awake() {
@@ -80,18 +79,17 @@ namespace Runtime.Weapons
         public float reloadTimer = 0f;
         public bool isReloading = false;
         public bool isScopedIn = false;
-        //public int currentAmmo;
         public GameObject model;
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
         
-        // private ObjectPool<TrailRenderer> trailPool;
         public TrailRenderer trailRenderer;
-        // public ParticleSystem particleSystem;
         public LayerMask layer;
         
         //FOR CHARGE SPEED
         // private InputAction _holdAction;
+
+        public GunRecoil recoilScript;
         
         protected override void OnEntityStart()
         {
@@ -99,13 +97,9 @@ namespace Runtime.Weapons
             //TODO: Set shoot action hold duration when weapon is equipped.
             // _holdAction = playerActions.Shoot;
             // _holdAction.started += OnHoldActionStarted;
+            
             base.OnEntityStart();
             
-            //currentAmmo = BoundEntity.GetAmmoSize().RealValue;
-            
-            //isHolding = true;
-            
-            hitScan = new HitScan(this, CurrentFaction.Value, trailRenderer);
             hitDetectorInfo = new HitDetectorInfo
             {
                 camera = cam,
@@ -114,7 +108,11 @@ namespace Runtime.Weapons
                 weapon = BoundEntity
             };
         }
-            
+
+        protected override IHitDetector OnCreateHitDetector() {
+            return new HitScan(this, CurrentFaction.Value, trailRenderer);
+        }
+
         protected override void OnStartAbsorb() {
            
         }
@@ -122,8 +120,8 @@ namespace Runtime.Weapons
         public void Shoot()
         {
             // particleSystem.Play();
-            
-            hitScan.CheckHit(hitDetectorInfo);
+            BoundEntity.OnRecoil();
+            hitDetector.CheckHit(hitDetectorInfo);
         }
         
         public void Update()
@@ -251,8 +249,8 @@ namespace Runtime.Weapons
             
             yield return null;
             isScopedIn = true;
-        } 
-        
+        }
+
         private IEnumerator ScopeOut(bool reloadAfter = false)
         {
             float startTime = 0f;
@@ -264,37 +262,36 @@ namespace Runtime.Weapons
                     gunPositionTransform.position,
                     scopeInPositionTransform.position,
                     (amimationTime - startTime) / amimationTime);
-                
+
                 startTime += Time.deltaTime;
                 yield return null;
             }
-            
+
             yield return null;
             isScopedIn = false;
-            
+
             if (reloadAfter)
             {
                 isReloading = true;
             }
-        } 
+        }
 
-        
         public bool CheckHit(HitData data)
         {
             return data.Hurtbox.Owner != gameObject;
         }
         
-        public void HitResponse(HitData data) {
+        public override void HitResponse(HitData data) {
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-            
-            //TODO: Change to non-temporary class of player entity.
-            // PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
-            // playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
-            //PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
-            //playerMovement.rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
-            // if (ownerGameObject.TryGetComponent(out Rigidbody rb)) {
-            //     rb.AddForce(data.Recoil * -data.HitDirectionNormalized, ForceMode.Impulse);
-            // }
+            // float positionMultiplier = 1f;
+            // float spawnX = data.HitPoint.x - data.HitNormal.x * positionMultiplier;
+            // float spawnY = data.HitPoint.y - data.HitNormal.y * positionMultiplier;
+            // float spawnZ = data.HitPoint.z - data.HitNormal.z * positionMultiplier;
+            // Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
+            //
+            // GameObject bulletHole = bulletHolesPool.Get();
+            // bulletHole.transform.position = spawnPosition;
+            // bulletHole.transform.rotation = Quaternion.LookRotation(data.HitNormal);
         }
     }
 }

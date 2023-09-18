@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
+using Framework;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
@@ -14,17 +17,20 @@ namespace Runtime.Utilities.Collision
     /// <summary>
     /// HitScan checks for collision using Raycast.
     /// </summary>
-    public class HitScan : IHitDetector, IBelongToFaction
+    public class HitScan : IHitDetector, IBelongToFaction, ICanGetUtility
     {
         private IHitResponder hitResponder;
         public IHitResponder HitResponder { get => hitResponder; set => hitResponder = value; }
 
-        private ObjectPool<TrailRenderer> trailPool;
         private TrailRenderer _tr;
+        private ObjectPool<TrailRenderer> trailPool;
+        public GameObject bulletHoleDecal;
+        public ObjectPool<GameObject> bulletHolesPool;
+        public float bulletHoleFadeTime = 5f;
+        
         private Vector3 offset = Vector3.zero;
         private Transform _launchPoint;
         private Camera _camera;
-        // private List<LineRenderer> _lineRenderers;
         private LayerMask _layer;
         private IWeaponEntity _weapon;
 
@@ -35,6 +41,9 @@ namespace Runtime.Utilities.Collision
             _tr = tr;
             
             trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
+            bulletHolesPool = new ObjectPool<GameObject>(CreateBulletHole, OnTakeFromPool, 
+                OnReturnedToPool, OnDestroyPoolObject, true, 10, 20);
+            bulletHoleDecal = this.GetUtility<ResLoader>().LoadSync<GameObject>("BulletHoleDecal");
         }
         
         /// <summary>
@@ -78,9 +87,9 @@ namespace Runtime.Utilities.Collision
                     hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
                 }
 
-                if (hitData.Validate())
+                if (hurtbox != null && hitData.Validate())
                 {
-                    // Debug.Log("validate");
+                    // hit something with hurtbox
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                     
@@ -88,13 +97,49 @@ namespace Runtime.Utilities.Collision
                 }
                 else
                 {
-                    CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
+                    // hit something without hurtbox, e.g. wall
+                    CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, new RaycastHit()));
+                    
+                    float positionMultiplier = 0.2f;
+                    float spawnX = hit.point.x - hit.normal.x * positionMultiplier;
+                    float spawnY = hit.point.y - hit.normal.y * positionMultiplier;
+                    float spawnZ = hit.point.z - hit.normal.z * positionMultiplier;
+                    Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
+                    
+                    GameObject bulletHole = bulletHolesPool.Get();
+                    bulletHole.transform.position = spawnPosition;  
+                    bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
+                    bulletHole.transform.Rotate(Vector3.forward, Random.Range(0f, 360f));
+                    CoroutineRunner.Singleton.StartCoroutine(FadeBullet(bulletHole));
                 }
             }
             else
             {
+                //hit nothing
                 CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
             }
+        }
+
+        private IEnumerator FadeBullet(GameObject bulletHole)
+        {
+            yield return new WaitForSeconds(bulletHoleFadeTime);
+            bulletHolesPool.Release(bulletHole);
+        }
+        
+        void OnReturnedToPool(GameObject obj)
+        {
+            obj.SetActive(false);
+        }
+
+        // Called when an item is taken from the pool using Get
+        void OnTakeFromPool(GameObject obj)
+        {
+            obj.SetActive(true);
+        }
+        
+        void OnDestroyPoolObject(GameObject obj)
+        {
+            GameObject.Destroy(obj);
         }
         
         private IEnumerator PlayTrail(Vector3 startPoint, Vector3 endPoint, RaycastHit hit)
@@ -144,8 +189,18 @@ namespace Runtime.Utilities.Collision
 
             return trail;
         }
+        
+        private GameObject CreateBulletHole()
+        {
+            return GameObject.Instantiate(bulletHoleDecal);;
+        }
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
+        
+        public IArchitecture GetArchitecture()
+        {
+            return MainGame.Interface;
+        }
     }
 }
 

@@ -18,7 +18,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		
 		[field: ES3Serializable]
 		public BindableProperty<bool> IsInvincible { get; } = new BindableProperty<bool>();
-		
+
+
+
 		private OnTakeDamage onTakeDamage;
 		
 		private OnHeal onHeal;
@@ -61,7 +63,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// <param name="damage"></param>
 		/// <param name="damageDealer"></param>
 		public void TakeDamage(int damage, [CanBeNull] IBelongToFaction damageDealer) {
-			if(damageDealer != null && damageDealer.IsSameFaction(this)) {
+			if(!CheckCanTakeDamage(damageDealer)) {
 				return;
 			}
 
@@ -84,6 +86,14 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			}
 
 			return damage;
+		}
+		
+		public bool CheckCanTakeDamage([CanBeNull] IBelongToFaction damageDealer) {
+			if(damageDealer != null && damageDealer.IsSameFaction(this)) {
+				return false;
+			}
+
+			return true;
 		}
 
 		public IUnRegister RegisterOnTakeDamage(OnTakeDamage onTakeDamage) {
