@@ -29,6 +29,7 @@ namespace MikroFramework.Pool
                 Pool.Recycle(this.gameObject);
                 Pool = null;
             }else {
+                OnRecycled();
                 Destroy(this.gameObject);
             }
           

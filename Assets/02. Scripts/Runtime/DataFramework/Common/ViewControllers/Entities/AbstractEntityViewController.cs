@@ -157,6 +157,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			ID = null;
 			BoundEntity = null;
 			propertyBindings.Clear();
+			
 		}
 
 		protected abstract IEntity OnBuildNewEntity();
