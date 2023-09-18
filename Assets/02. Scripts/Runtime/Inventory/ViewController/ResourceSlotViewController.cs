@@ -215,6 +215,11 @@ namespace Runtime.Inventory.ViewController {
             ResourceSlot.currentHoveredSlot = slot;
             if (slot.GetQuantity() > 0) {
                 if (currentDescriptionPanel) {
+                    IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+                    if (topItem == null) {
+                        return;
+                    }
+                    currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription());
                     currentDescriptionPanel.Show();
                 }
             }

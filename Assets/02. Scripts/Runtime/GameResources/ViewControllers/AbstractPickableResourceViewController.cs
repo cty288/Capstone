@@ -116,7 +116,7 @@ namespace Runtime.GameResources.ViewControllers {
         
         private IEnumerator EntityRemovalTimer() {
             yield return new WaitForSeconds(entityAutoRemovalTimeWhenNoAbsorb);
-            if (this && entityModel!=null) {
+            if (this && entityModel!=null && entityAutoRemovalTimeWhenNoAbsorb >= 0) {
                 entityModel.RemoveEntity(BoundEntity.UUID);
             }
         }
