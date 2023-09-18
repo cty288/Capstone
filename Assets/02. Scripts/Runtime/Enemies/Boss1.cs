@@ -131,6 +131,12 @@ namespace Runtime.Enemies
                     break;
             }
         }
+
+        // public override void HurtResponse(HitData data)
+        // {
+        //     base.HurtResponse(data);
+        //     //new stuff like spawn blood effect
+        // }
     }
 }
 

@@ -88,7 +88,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			else { return true; }
 		}
 
-		public void HitResponse(HitData data) {
+		public virtual void HitResponse(HitData data) {
 			hitObjects.Add(data.Hurtbox.Owner);
 		}
 	}

@@ -9,4 +9,15 @@ CustomProperty Structure:
 If no levels, use negative numbers to represent"
 ,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,
 BEGIN,,,,,
-Boss1,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",456,,
+Boss1,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",456,"{
+  ""shellHealthInfo"": {
+
+    ""info"": {
+      ""type"": ""HealthInfo"",
+      ""value"": {
+        ""maxHealth"": 100,
+        ""currentHealth"": 100
+      }
+    }
+  }
+}",
