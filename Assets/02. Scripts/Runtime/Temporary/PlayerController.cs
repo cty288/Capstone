@@ -38,8 +38,7 @@ namespace Runtime.Temporary
             throw new System.NotImplementedException();
         }
 
-        public void HurtResponse(HitData data)
-        {
+        public void HurtResponse(HitData data) {
             throw new System.NotImplementedException();
         }
 

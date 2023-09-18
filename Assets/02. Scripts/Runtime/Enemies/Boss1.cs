@@ -1,5 +1,7 @@
 using Framework;
 using System.Collections.Generic;
+using MikroFramework;
+using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
@@ -27,8 +29,6 @@ namespace Runtime.Enemies
 
         [field: ES3Serializable]
         public bool ShellStatus { get; set; } = true;
-        
-
         public override void OnRecycle()
         {
 
@@ -51,7 +51,7 @@ namespace Runtime.Enemies
 
         
     }
-    public class Boss1 : AbstractEnemyViewController<Boss1Entity>, IHurtResponder, IHitResponder
+    public class Boss1 : AbstractEnemyViewController<Boss1Entity>
     {
         
         public int MaxShellHealth { get; }
@@ -62,39 +62,28 @@ namespace Runtime.Enemies
         public Animator animator;
         public AnimationSMBManager animationSMBManager;
         public NavMeshAgent agent;
-        public int Damage => m_damage;
+      
+        
+        
+        protected override int GetCurrentHitDamage() {
+            return m_damage; //TODO: this is temporary, the damage should be retrieved from the model according to the current attack.
+        }
+
         [SerializeField] private HitBox hitbox_roll;
 
-        private List<GameObject> hitObjects = new List<GameObject>();
+       
         private HitDetectorInfo hitDetectorInfo;
-        [Header("Hurtresponder_Info")]
-        [SerializeField] private List<HurtBox> hurtBoxes = new List<HurtBox>();
+        
+        
+        protected override MikroAction WaitingForDeathCondition() {
+            return UntilAction.Allocate(() => {
+                if (Input.GetKeyDown(KeyCode.M)) {
+                    Debug.Log("Boss 1 death animation ends.");
+                    return true;
+                }
 
-        public bool CheckHit(HitData data)
-        {
-            if (data.Hurtbox.Owner == gameObject) { return false; }
-            else if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
-            else { return true; }
-        }
-
-        public bool CheckHurt(HitData data)
-        {
-            return true;
-        }
-
-        public void HitResponse(HitData data)
-        {
-            hitObjects.Add(data.Hurtbox.Owner);
-        }
-
-        public void HurtResponse(HitData data)
-        {
-            BoundEntity.TakeDamage(data.Damage,null);
-        }
-
-        protected override void OnEntityDie(IBelongToFaction damagedealer)
-        {
-            throw new System.NotImplementedException();
+                return false;
+            });
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
@@ -107,11 +96,6 @@ namespace Runtime.Enemies
             //binding
             BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
             BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
-            hurtBoxes = new List<HurtBox>(GetComponentsInChildren<HurtBox>());
-            foreach (HurtBox hurtBox in hurtBoxes)
-            {
-                hurtBox.HurtResponder = this;
-            }
 
             //Animation-related.
             // animator = GetComponent<Animator>();
@@ -119,14 +103,15 @@ namespace Runtime.Enemies
             animationSMBManager.Event.AddListener(OnAnimationEvent);
 
             //Collision-related.
-            hitbox_roll.HitResponder = this;
+            if (hitbox_roll) {
+                hitbox_roll.HitResponder = this;
+            }
+           
             hitDetectorInfo = new HitDetectorInfo();
-
         }
 
-        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)
-        {
-            throw new System.NotImplementedException();
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+            Debug.Log($"Boss 1 Take damage: {damage}. Boss 1 current health: {currenthealth}");
         }
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<Boss1Entity> builder)

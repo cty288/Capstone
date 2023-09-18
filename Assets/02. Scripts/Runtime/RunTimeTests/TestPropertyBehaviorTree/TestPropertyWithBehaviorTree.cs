@@ -1,4 +1,5 @@
 using Framework;
+using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
@@ -102,7 +103,9 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         }
 
 
-
+        protected override int GetCurrentHitDamage() {
+            return Attack1Damage;
+        }
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<TestEntity> builder) {
             if (!isVariant) {
@@ -196,6 +199,10 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
 
         protected override void OnEntityDie(IBelongToFaction damagedealer) {
             Debug.Log("TestEntity Die");
+        }
+
+        protected override MikroAction WaitingForDeathCondition() {
+            return null;
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
