@@ -26,9 +26,7 @@ namespace Runtime.Enemies
     {
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "Boss1";
-
-        [field: ES3Serializable]
-        public bool ShellStatus { get; set; } = true;
+        
         public override void OnRecycle()
         {
 
@@ -51,12 +49,14 @@ namespace Runtime.Enemies
 
         
     }
-    public class Boss1 : AbstractEnemyViewController<Boss1Entity>
+    public class Boss1 : AbstractEnemyViewController<Boss1Entity>, IHurtResponder
     {
         
         public int MaxShellHealth { get; }
         
         public int CurrentShellHealth { get; }
+        
+        public bool ShellClosed { get; }
         [Header("HitResponder_Info")]
         [SerializeField] private int m_damage = 10;
         public Animator animator;
@@ -96,7 +96,7 @@ namespace Runtime.Enemies
             //binding
             BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
             BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
-
+            BindCustomData<bool>("ShellClosed","shellHealthInfo","shellClosed");
             //Animation-related.
             // animator = GetComponent<Animator>();
             animationSMBManager = GetComponent<AnimationSMBManager>();
@@ -140,6 +140,20 @@ namespace Runtime.Enemies
                     break;
             }
         }
+
+        public override void HurtResponse(HitData data)
+        {
+            if (ShellClosed)
+            {
+                BindableProperty<dynamic> shellHp = BoundEntity.GetCustomDataValue<dynamic>("shellHealthInfo","currentShellHealth");
+                shellHp.Value -= data.Damage;
+            }
+            else
+            {
+                BoundEntity.TakeDamage(data.Damage,data.Attacker);
+            }
+        }
+        
     }
 }
 
