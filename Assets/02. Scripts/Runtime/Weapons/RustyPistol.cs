@@ -138,7 +138,7 @@ namespace Runtime.Weapons
 
                         Shoot();
 
-                        BoundEntity.CurrentAmmo--;
+                        BoundEntity.CurrentAmmo.Value--;
 
                         if (autoReload)
                         {

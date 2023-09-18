@@ -31,6 +31,8 @@ namespace Runtime.Player {
             interactiveHintTriggerCheck = GetComponent<TriggerCheck>();
             interactiveHintTriggerCheck.OnEnter += OnEnterInteractiveCheck;
             interactiveHintTriggerCheck.OnExit += OnExitInteractiveCheck;
+            
+           
         }
 
         private void OnExitInteractiveCheck(Collider other) {

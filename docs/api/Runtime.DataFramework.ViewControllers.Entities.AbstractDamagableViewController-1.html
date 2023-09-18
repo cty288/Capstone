@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1" class="text-break">
     Class AbstractDamagableViewController&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -96,7 +96,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractDamagableViewController&lt;T&gt; : AbstractBasicEntityViewController&lt;T&gt;, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture where T : class, IHaveCustomProperties, IHaveTags, IDamageable</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AbstractDamagableViewController&lt;T&gt; : AbstractBasicEntityViewController&lt;T&gt;, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHurtResponder, IBelongToFaction where T : class, IHaveCustomProperties, IHaveTags, IDamageable</code></pre>
   </div>
 
 
@@ -136,6 +136,8 @@
       <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Runtime.Utilities.Collision.IHurtResponder.html">IHurtResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
   </dl>
 
@@ -178,9 +180,6 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_interactiveHintLocalizedKey">AbstractEntityViewController&lt;T&gt;.interactiveHintLocalizedKey</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoRemoveEntityWhenDestroyedOrRecycled">AbstractEntityViewController&lt;T&gt;.autoRemoveEntityWhenDestroyedOrRecycled</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoDestroyWhenEntityRemoved">AbstractEntityViewController&lt;T&gt;.autoDestroyWhenEntityRemoved</a>
@@ -652,15 +651,118 @@
 
 
 
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CurrentFaction_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.CurrentFaction*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CurrentFaction" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.CurrentFaction">
+  CurrentFaction
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CheckHurt_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.CheckHurt*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CheckHurt_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.CheckHurt(Runtime.Utilities.Collision.HitData)">
+  CheckHurt(HitData)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CheckHurt(HitData data)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_HurtResponse_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.HurtResponse*"></a>
+
+  <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_HurtResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.HurtResponse(Runtime.Utilities.Collision.HitData)">
+  HurtResponse(HitData)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void HurtResponse(HitData data)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
 
 
   <a id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityDie_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityDie*"></a>
 
   <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityDie_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   OnEntityDie(IBelongToFaction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L52"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>When the entity dies, this method will be called</p>
@@ -692,7 +794,7 @@
 
   <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityHeal_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityHeal(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   OnEntityHeal(int, int, IBelongToFaction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L68"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>When the entity is healed, this method will be called</p>
@@ -728,7 +830,7 @@
 
   <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityTakeDamage_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnEntityTakeDamage(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   OnEntityTakeDamage(int, int, IBelongToFaction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>When the entity takes damage, this method will be called</p>
@@ -765,7 +867,7 @@
 
   <h3 id="Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnStart" data-uid="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController`1.OnStart">
   OnStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -791,7 +893,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L16" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/ViewControllers/Entities/AbstractDamagableViewController.cs/#L20" class="edit-link">Edit this page</a>
         </div>
 
         

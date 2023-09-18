@@ -25,13 +25,14 @@ namespace Runtime.GameResources.ViewControllers {
 		protected bool isHolding = false;
 		protected Rigidbody rigidbody;
 		protected GameObject ownerGameObject = null;
+		protected float originalAutoRemovalTimeWhenNoAbsorb;
 
 		protected override void Awake() {
 			base.Awake();
 			originalLayer = gameObject.layer;
 			selfColliders = new Dictionary<Collider, bool>();
-			
 			rigidbody = GetComponent<Rigidbody>();
+			
 		}
 
 		protected override void OnStartAbsorb() {
@@ -45,7 +46,10 @@ namespace Runtime.GameResources.ViewControllers {
 			isHolding = false;
 			rigidbody.isKinematic = false;
 			this.ownerGameObject = null;
+			entityAutoRemovalTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
 		}
+		
+		
 
 		protected override void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
 			if (isHolding) {
@@ -61,15 +65,16 @@ namespace Runtime.GameResources.ViewControllers {
 			foreach (Collider selfCollider in selfColliders.Keys) {
 				selfCollider.isTrigger = selfColliders[selfCollider];
 			}
+
+			originalAutoRemovalTimeWhenNoAbsorb = entityAutoRemovalTimeWhenNoAbsorb;
+			entityAutoRemovalTimeWhenNoAbsorb = -1;
 			this.ownerGameObject = ownerGameObject;
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 			OnUnPointByCrosshair();
 		}
 		
 		public virtual void OnStopHold() {
-			isHolding = false;
-			rigidbody.isKinematic = false;
-			this.ownerGameObject = null;
+			
 			//gameObject.layer = originalLayer;
 			RecycleToCache();
 		}
