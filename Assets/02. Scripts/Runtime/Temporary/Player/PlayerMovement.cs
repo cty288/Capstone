@@ -272,29 +272,29 @@ namespace Runtime.Temporary.Player
             camHolder.localEulerAngles = Vector3.right * cameraPitch;
             transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
 
-            if (horizontalInput != 0 ||verticalInput != 0)
-            {
-                if (state == MovementState.walking)
-                {
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1;
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.1f;
-                }
-                else if (state == MovementState.sprinting)
-                {
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 2;
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.3f;
-                }
-                else
-                {
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
-                }
-            }
-            else
-            {
-                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
-                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
-            }
+            // if (horizontalInput != 0 ||verticalInput != 0)
+            // {
+            //     if (state == MovementState.walking)
+            //     {
+            //         vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1;
+            //         vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.1f;
+            //     }
+            //     else if (state == MovementState.sprinting)
+            //     {
+            //         vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 2;
+            //         vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.3f;
+            //     }
+            //     else
+            //     {
+            //         vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
+            //         vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+            //     }
+            // }
+            // else
+            // {
+            //     vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
+            //     vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+            // }
 
             
         }
@@ -327,8 +327,8 @@ namespace Runtime.Temporary.Player
             }
             ;
             if (playerActions.SprintTap.WasPerformedThisFrame()) {
-                Debug.Log("Sprint Tap");
-                sprintTapPressed = true;
+                // Debug.Log("Sprint Tap");
+                sprintTapPressed = true;  
                 sprintTapCheckTimer = 0.4f;
             }
             
@@ -336,7 +336,7 @@ namespace Runtime.Temporary.Player
             
             if (playerActions.SprintHold.IsPressed() || sprintTapPressed) {
                 sprinting = true;
-                Debug.Log("Sprinting");
+                // Debug.Log("Sprinting");
             }
             else
             {
