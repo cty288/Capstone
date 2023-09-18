@@ -25,12 +25,17 @@ namespace Runtime.Temporary.Player
         [SerializeField]
         Transform camHolder;
         
-        public CinemachineVirtualCamera vcam;
+        [SerializeField] 
+        CinemachineVirtualCamera vcam;
     
         float cameraPitch = 0;
-        public float fpsTopClamp=90;
-        public float fpsBotClamp=-90;
+        [SerializeField] 
+        float fpsTopClamp=90;
+        [SerializeField] 
+        float fpsBotClamp=-90;
 
+        [SerializeField] 
+        private float defaultFOV;
     
         //TODO: add acceleration to entity data
         //TODO: add maxSpeed to entity data
@@ -152,6 +157,7 @@ namespace Runtime.Temporary.Player
         // Start is called before the first frame update
         void Start()
         {
+            vcam.m_Lens.FieldOfView = defaultFOV;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -302,6 +308,19 @@ namespace Runtime.Temporary.Player
         public void DoCamTilt(float zTilt)
         {
             cameraTrans.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
+        }
+        
+        //smooth FOV transition
+        IEnumerator ChangeFOV(CinemachineVirtualCamera cam, float endFOV, float duration)
+        {
+            float startFOV = cam.m_Lens.FieldOfView;
+            float time = 0;
+            while(time < duration)
+            {
+                cam.m_Lens.FieldOfView = Mathf.Lerp(startFOV, endFOV, time / duration);
+                yield return null;
+                time += Time.deltaTime;
+            }
         }
         private void MyInput()
         {
