@@ -165,6 +165,8 @@ namespace Runtime.Temporary.Player
 
         }
 
+        
+
         // Update is called once per frame
         void Update()
         {
@@ -292,8 +294,8 @@ namespace Runtime.Temporary.Player
             }
             else
             {
-                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
-                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0.4f;
+                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.1f;
             }
 
             

@@ -14,7 +14,7 @@ namespace Runtime.Inventory.ViewController {
 		}
 
 		public override void OnInventorySlotAdded(List<ResourceSlot> addedSlots, int addedCount) {
-			
+			Awake();
 			int j = 0;
 			for (int i = 0; i < addedCount; i++) {
 				RectTransform targetLayout = slotLayout;
