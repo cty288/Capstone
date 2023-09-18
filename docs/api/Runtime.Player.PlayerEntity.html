@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class RustyPistolEntity
+      <title>Class PlayerEntity
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class RustyPistolEntity
+      <meta name="title" content="Class PlayerEntity
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Weapons_RustyPistolEntity.md&amp;value=---%0Auid%3A%20Runtime.Weapons.RustyPistolEntity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Player_PlayerEntity.md&amp;value=---%0Auid%3A%20Runtime.Player.PlayerEntity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,17 +77,17 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.Weapons.RustyPistolEntity">
+        <article data-uid="Runtime.Player.PlayerEntity">
 
 
 
-  <h1 id="Runtime_Weapons_RustyPistolEntity" data-uid="Runtime.Weapons.RustyPistolEntity" class="text-break">
-    Class RustyPistolEntity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_Player_PlayerEntity" data-uid="Runtime.Player.PlayerEntity" class="text-break">
+    Class PlayerEntity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L7"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Weapons.html">Weapons</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Player.html">Player</a></dd></dl>
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RustyPistolEntity : WeaponEntity&lt;RustyPistolEntity&gt;, IWeaponEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public class PlayerEntity : AbstractCreature, ICreature, IDamageable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -107,17 +107,18 @@
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.Entity.html">Entity</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
-      <div><a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html">ResourceEntity</a>&lt;<a class="xref" href="Runtime.Weapons.RustyPistolEntity.html">RustyPistolEntity</a>&gt;</div>
-      <div><a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html">WeaponEntity</a>&lt;<a class="xref" href="Runtime.Weapons.RustyPistolEntity.html">RustyPistolEntity</a>&gt;</div>
-      <div><span class="xref">RustyPistolEntity</span></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html">DamageableEntity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.AbstractCreature.html">AbstractCreature</a></div>
+      <div><span class="xref">PlayerEntity</span></div>
     </dd>
   </dl>
 
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
-      <div><a class="xref" href="Runtime.Weapons.Model.Base.IWeaponEntity.html">IWeaponEntity</a></div>
-      <div><a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.ICreature.html">ICreature</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable.html">IDamageable</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.IHaveCustomProperties.html">IHaveCustomProperties</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags.html">IHaveTags</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></div>
@@ -135,82 +136,49 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_CurrentAmmo">WeaponEntity&lt;RustyPistolEntity&gt;.CurrentAmmo</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_CurrentFaction">DamageableEntity.CurrentFaction</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetConfigTable">WeaponEntity&lt;RustyPistolEntity&gt;.GetConfigTable()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_IsInvincible">DamageableEntity.IsInvincible</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetResourceCategory">WeaponEntity&lt;RustyPistolEntity&gt;.GetResourceCategory()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_HealthProperty">DamageableEntity.HealthProperty</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnEntityStart_System_Boolean_">WeaponEntity&lt;RustyPistolEntity&gt;.OnEntityStart(bool)</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnEntityStart_System_Boolean_">DamageableEntity.OnEntityStart(bool)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnDoRecycle">WeaponEntity&lt;RustyPistolEntity&gt;.OnDoRecycle()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnRegisterProperties">DamageableEntity.OnRegisterProperties()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnEntityRegisterAdditionalProperties">WeaponEntity&lt;RustyPistolEntity&gt;.OnEntityRegisterAdditionalProperties()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetMaxHealth">DamageableEntity.GetMaxHealth()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetBaseDamage">WeaponEntity&lt;RustyPistolEntity&gt;.GetBaseDamage()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetCurrentHealth">DamageableEntity.GetCurrentHealth()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetAttackSpeed">WeaponEntity&lt;RustyPistolEntity&gt;.GetAttackSpeed()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.TakeDamage(int, IBelongToFaction)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetRange">WeaponEntity&lt;RustyPistolEntity&gt;.GetRange()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnTakeDamageAdditionalCheck_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.OnTakeDamageAdditionalCheck(int, IBelongToFaction)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetAmmoSize">WeaponEntity&lt;RustyPistolEntity&gt;.GetAmmoSize()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_CheckCanTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.CheckCanTakeDamage(IBelongToFaction)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetReloadSpeed">WeaponEntity&lt;RustyPistolEntity&gt;.GetReloadSpeed()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamageableEntity.RegisterOnTakeDamage(OnTakeDamage)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetBulletsPerShot">WeaponEntity&lt;RustyPistolEntity&gt;.GetBulletsPerShot()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_UnRegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamageableEntity.UnRegisterOnTakeDamage(OnTakeDamage)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetSpread">WeaponEntity&lt;RustyPistolEntity&gt;.GetSpread()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.Heal(int, IBelongToFaction)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetRecoil">WeaponEntity&lt;RustyPistolEntity&gt;.GetRecoil()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamageableEntity.RegisterOnHeal(OnHeal)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetBulletSpeed">WeaponEntity&lt;RustyPistolEntity&gt;.GetBulletSpeed()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetChargeSpeed">WeaponEntity&lt;RustyPistolEntity&gt;.GetChargeSpeed()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_Reload">WeaponEntity&lt;RustyPistolEntity&gt;.Reload()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnRecoil">WeaponEntity&lt;RustyPistolEntity&gt;.OnRecoil()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnGetDisplayNameBeforeFirstPicked_System_String_">WeaponEntity&lt;RustyPistolEntity&gt;.OnGetDisplayNameBeforeFirstPicked(string)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html#Runtime_GameResources_Model_Base_ResourceEntity_1_pickedBefore">ResourceEntity&lt;RustyPistolEntity&gt;.pickedBefore</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html#Runtime_GameResources_Model_Base_ResourceEntity_1_GetMaxStackProperty">ResourceEntity&lt;RustyPistolEntity&gt;.GetMaxStackProperty()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html#Runtime_GameResources_Model_Base_ResourceEntity_1_GetDisplayName">ResourceEntity&lt;RustyPistolEntity&gt;.GetDisplayName()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html#Runtime_GameResources_Model_Base_ResourceEntity_1_OnPicked">ResourceEntity&lt;RustyPistolEntity&gt;.OnPicked()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html#Runtime_GameResources_Model_Base_ResourceEntity_1_InventoryVCPrefabName">ResourceEntity&lt;RustyPistolEntity&gt;.InventoryVCPrefabName</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.Model.Base.ResourceEntity-1.html#Runtime_GameResources_Model_Base_ResourceEntity_1_InHandVCPrefabName">ResourceEntity&lt;RustyPistolEntity&gt;.InHandVCPrefabName</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_OnRegisterProperties">AbstractBasicEntity.OnRegisterProperties()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_UnRegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamageableEntity.UnRegisterOnHeal(OnHeal)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetCustomProperties">AbstractBasicEntity.GetCustomProperties()</a>
@@ -321,6 +289,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDescription">Entity.GetDescription()</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDisplayName">Entity.GetDisplayName()</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetArchitecture">Entity.GetArchitecture()</a>
     </div>
     <div>
@@ -355,11 +326,11 @@
 </h2>
 
 
-  <a id="Runtime_Weapons_RustyPistolEntity_EntityName_" data-uid="Runtime.Weapons.RustyPistolEntity.EntityName*"></a>
+  <a id="Runtime_Player_PlayerEntity_EntityName_" data-uid="Runtime.Player.PlayerEntity.EntityName*"></a>
 
-  <h3 id="Runtime_Weapons_RustyPistolEntity_EntityName" data-uid="Runtime.Weapons.RustyPistolEntity.EntityName">
+  <h3 id="Runtime_Player_PlayerEntity_EntityName" data-uid="Runtime.Player.PlayerEntity.EntityName">
   EntityName
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L8"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -386,27 +357,28 @@
 
 
 
-  <a id="Runtime_Weapons_RustyPistolEntity_OnGroundVCPrefabName_" data-uid="Runtime.Weapons.RustyPistolEntity.OnGroundVCPrefabName*"></a>
+  <h2 class="section" id="methods">Methods
+</h2>
 
-  <h3 id="Runtime_Weapons_RustyPistolEntity_OnGroundVCPrefabName" data-uid="Runtime.Weapons.RustyPistolEntity.OnGroundVCPrefabName">
-  OnGroundVCPrefabName
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L46"><i class="bi bi-code-slash"></i></a>
+
+  <a id="Runtime_Player_PlayerEntity_GetConfigTable_" data-uid="Runtime.Player.PlayerEntity.GetConfigTable*"></a>
+
+  <h3 id="Runtime_Player_PlayerEntity_GetConfigTable" data-uid="Runtime.Player.PlayerEntity.GetConfigTable">
+  GetConfigTable()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override string OnGroundVCPrefabName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected override ConfigTable GetConfigTable()</code></pre>
   </div>
 
 
-
-
-
-  <h4 class="section">Property Value</h4>
+  <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dt><a class="xref" href="Runtime.Utilities.ConfigSheet.ConfigTable.html">ConfigTable</a></dt>
     <dd></dd>
   </dl>
 
@@ -417,15 +389,98 @@
 
 
 
-  <h2 class="section" id="methods">Methods
-</h2>
 
 
-  <a id="Runtime_Weapons_RustyPistolEntity_OnGetDescription_" data-uid="Runtime.Weapons.RustyPistolEntity.OnGetDescription*"></a>
 
-  <h3 id="Runtime_Weapons_RustyPistolEntity_OnGetDescription_System_String_" data-uid="Runtime.Weapons.RustyPistolEntity.OnGetDescription(System.String)">
+  <a id="Runtime_Player_PlayerEntity_GetDefaultFaction_" data-uid="Runtime.Player.PlayerEntity.GetDefaultFaction*"></a>
+
+  <h3 id="Runtime_Player_PlayerEntity_GetDefaultFaction" data-uid="Runtime.Player.PlayerEntity.GetDefaultFaction">
+  GetDefaultFaction()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Faction GetDefaultFaction()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Player_PlayerEntity_OnDoRecycle_" data-uid="Runtime.Player.PlayerEntity.OnDoRecycle*"></a>
+
+  <h3 id="Runtime_Player_PlayerEntity_OnDoRecycle" data-uid="Runtime.Player.PlayerEntity.OnDoRecycle">
+  OnDoRecycle()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnDoRecycle()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Player_PlayerEntity_OnEntityRegisterAdditionalProperties_" data-uid="Runtime.Player.PlayerEntity.OnEntityRegisterAdditionalProperties*"></a>
+
+  <h3 id="Runtime_Player_PlayerEntity_OnEntityRegisterAdditionalProperties" data-uid="Runtime.Player.PlayerEntity.OnEntityRegisterAdditionalProperties">
+  OnEntityRegisterAdditionalProperties()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A place to register additional properties, normally empty. Recommended to register custom properties instead.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnEntityRegisterAdditionalProperties()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Player_PlayerEntity_OnGetDescription_" data-uid="Runtime.Player.PlayerEntity.OnGetDescription*"></a>
+
+  <h3 id="Runtime_Player_PlayerEntity_OnGetDescription_System_String_" data-uid="Runtime.Player.PlayerEntity.OnGetDescription(System.String)">
   OnGetDescription(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L21"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Return the description of the entity</p>
@@ -460,11 +515,11 @@ Or you can ignore defaultLocalizationKey can manually implement yours</p>
 
 
 
-  <a id="Runtime_Weapons_RustyPistolEntity_OnRecycle_" data-uid="Runtime.Weapons.RustyPistolEntity.OnRecycle*"></a>
+  <a id="Runtime_Player_PlayerEntity_OnRecycle_" data-uid="Runtime.Player.PlayerEntity.OnRecycle*"></a>
 
-  <h3 id="Runtime_Weapons_RustyPistolEntity_OnRecycle" data-uid="Runtime.Weapons.RustyPistolEntity.OnRecycle">
+  <h3 id="Runtime_Player_PlayerEntity_OnRecycle" data-uid="Runtime.Player.PlayerEntity.OnRecycle">
   OnRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -486,11 +541,11 @@ Or you can ignore defaultLocalizationKey can manually implement yours</p>
 
 
 
-  <a id="Runtime_Weapons_RustyPistolEntity_OnRegisterCustomProperties_" data-uid="Runtime.Weapons.RustyPistolEntity.OnRegisterCustomProperties*"></a>
+  <a id="Runtime_Player_PlayerEntity_OnRegisterCustomProperties_" data-uid="Runtime.Player.PlayerEntity.OnRegisterCustomProperties*"></a>
 
-  <h3 id="Runtime_Weapons_RustyPistolEntity_OnRegisterCustomProperties" data-uid="Runtime.Weapons.RustyPistolEntity.OnRegisterCustomProperties">
+  <h3 id="Runtime_Player_PlayerEntity_OnRegisterCustomProperties" data-uid="Runtime.Player.PlayerEntity.OnRegisterCustomProperties">
   OnRegisterCustomProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L29"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -521,7 +576,7 @@ Or you can ignore defaultLocalizationKey can manually implement yours</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L27" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/PlayerEntity.cs/#L7" class="edit-link">Edit this page</a>
         </div>
 
         

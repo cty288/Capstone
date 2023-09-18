@@ -10,4 +10,9 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
             slotViewControllers[i].SetSelected(i == slotIndex);
         }
     }
+
+    public override void OnSlotViewControllerSpawned(ResourceSlotViewController slotViewController, int index) {
+        base.OnSlotViewControllerSpawned(slotViewController, index);
+        (slotViewController as ShortCutResourceSlotViewController)?.SetShortCutText((index + 1).ToString());
+    }
 }

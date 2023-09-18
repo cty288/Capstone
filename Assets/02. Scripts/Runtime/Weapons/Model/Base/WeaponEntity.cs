@@ -29,7 +29,7 @@ namespace Runtime.Weapons.Model.Base
         public IBulletSpeed GetBulletSpeed();
         public IChargeSpeed GetChargeSpeed();
         
-        public int CurrentAmmo { get; set; }
+        public BindableProperty<int> CurrentAmmo { get; set; }
         // public GunRecoil GunRecoilScript { get; set; }
         
         public void Reload();
@@ -49,7 +49,7 @@ namespace Runtime.Weapons.Model.Base
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
         [field: ES3Serializable]
-        public int CurrentAmmo { get; set; }
+        public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
 
         // public GunRecoil GunRecoilScript { get; set; }
 
@@ -78,7 +78,7 @@ namespace Runtime.Weapons.Model.Base
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
             
             if (!isLoadedFromSave) { //otherwise it is managed by es3
-                CurrentAmmo = ammoSizeProperty.RealValue.Value;
+                CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
             }
            
         }
@@ -86,7 +86,11 @@ namespace Runtime.Weapons.Model.Base
         public override void OnDoRecycle() {
             SafeObjectPool<T>.Singleton.Recycle(this as T);
         }
-        
+
+        public override void OnRecycle() {
+            CurrentAmmo.UnRegisterAll();
+        }
+
         protected override void OnEntityRegisterAdditionalProperties() {
             base.OnEntityRegisterAdditionalProperties();
             RegisterInitialProperty<IBaseDamage>(new BaseDamage());
@@ -154,7 +158,7 @@ namespace Runtime.Weapons.Model.Base
 
 
         public void Reload() {
-            CurrentAmmo = ammoSizeProperty.RealValue.Value;
+            CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
         }
 
         public void OnRecoil()
