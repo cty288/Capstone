@@ -21,6 +21,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public override void OnStart()
         {
             base.OnStart();
+            
+            
 
             if (m_Target.Value == null) {
                 return;
