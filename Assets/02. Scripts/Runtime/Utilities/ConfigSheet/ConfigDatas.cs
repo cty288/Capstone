@@ -14,6 +14,7 @@ namespace Runtime.Utilities.ConfigSheet
 		private ConfigTable rawMaterialEntityConfigTable_test;
 		private ConfigTable weaponEntityConfigTable;
 		private ConfigTable weaponEntityConfigTable_test;
+		private ConfigTable playerEntityConfigTable;
 
 		public ConfigTable EnemyEntityConfigTable => enemyEntityConfigTable;
 		public ConfigTable EnemyEntityConfigTable_Test => enemyEntityConfigTable_test;
@@ -23,6 +24,8 @@ namespace Runtime.Utilities.ConfigSheet
 
 		public ConfigTable WeaponEntityConfigTable => weaponEntityConfigTable;
 		public ConfigTable WeaponEntityConfigTable_Test => weaponEntityConfigTable_test;
+		
+		public ConfigTable PlayerEntityConfigTable => playerEntityConfigTable;
         
 		public override void OnSingletonInit()
 		{
@@ -45,6 +48,9 @@ namespace Runtime.Utilities.ConfigSheet
 			
 			weaponEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"1228926880", "data_weapons_test");
+			
+			playerEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+				"231118994", "data_player");
 		}
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

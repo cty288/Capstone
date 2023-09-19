@@ -25,6 +25,8 @@ namespace Runtime.Inventory.ViewController {
         private GameObject topVC = null;
         private Transform spawnPoint;
         private ResourceSlot slot;
+
+        public ResourceSlot Slot => slot;
         private Vector2 dragStartPos;
         private bool startDragTriggered = false;
         private Button button;
