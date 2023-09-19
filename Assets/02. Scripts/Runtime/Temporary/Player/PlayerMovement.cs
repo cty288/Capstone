@@ -212,6 +212,18 @@ namespace Runtime.Temporary.Player
             else
                 rb.drag = 0;
 
+
+            if (sprintTapCheckTimer>=0f)
+            {
+                sprintTapCheckTimer -= Time.deltaTime;
+                sprintTapCheckTimer=Mathf.Max (sprintTapCheckTimer,0);
+            }
+            else
+            {
+                sprintTapPressed = false;
+            }
+            
+            
             if (Input.GetKeyDown(KeyCode.F5)) {
                 ((MainGame) MainGame.Interface).SaveGame();
             }
@@ -368,22 +380,37 @@ namespace Runtime.Temporary.Player
                 
             }
             ;
-            if (playerActions.SprintTap.WasPerformedThisFrame()) {
-                Debug.Log("Sprint Tap");
-                sprintTapPressed = true;
-                sprintTapCheckTimer = 0.4f;
+            if (playerActions.SprintTap.WasPerformedThisFrame())
+            {
+                if (sprintTapPressed)
+                {
+                    sprinting = true;
+                    sprintTapCheckTimer = 0f;
+                }
+                else
+                {
+                    Debug.Log("Sprint Tap");
+                    sprintTapPressed = true;
+                    sprintTapCheckTimer = 0.4f;
+                }
+                
             }
-            
-            
-            
-            if (playerActions.SprintHold.IsPressed() || sprintTapPressed) {
-                sprinting = true;
-                Debug.Log("Sprinting");
-            }
-            else
+            else if (playerActions.SprintTap.WasReleasedThisFrame())
             {
                 sprinting = false;
             }
+            
+            
+            
+            if (playerActions.SprintHold.IsPressed()) {
+                sprinting = true;
+                Debug.Log("Sprinting");
+            }
+            if (playerActions.SprintHold.WasReleasedThisFrame())
+            {
+                sprinting = false;
+            }
+            
 
             if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
             {
@@ -494,6 +521,11 @@ namespace Runtime.Temporary.Player
             {
                 if (rb.velocity.magnitude > moveSpeed)
                     rb.velocity = rb.velocity.normalized * moveSpeed;
+                //stop player if no inputs
+                if (moveDirection == Vector3.zero)
+                {
+                    rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                }
             }
 
             // limiting speed on ground or in air
@@ -509,11 +541,7 @@ namespace Runtime.Temporary.Player
                 }
             }
             
-            //stop player if no inputs
-            if (moveDirection == Vector3.zero)
-            {
-                rb.velocity = new Vector3(0, rb.velocity.y, 0);
-            }
+
         }
 
         private void Jump()
@@ -619,12 +647,17 @@ namespace Runtime.Temporary.Player
             // sliding normal
             if(!OnSlope() || rb.velocity.y > -0.1f)
             {
-                rb.AddForce(inputDirection.normalized * slideForce*0.5f, ForceMode.Force);
-
+                rb.AddForce(inputDirection.normalized * slideForce*0.3f, ForceMode.Force);
+                rb.AddForce(-GetSlopeMoveDirection(inputDirection) * slideForce*0.25f, ForceMode.Force);
                 slideTimer -= Time.deltaTime;
                 
             }
-
+            else if (rb.velocity.y > -0.1f)
+            {
+                rb.AddForce(inputDirection.normalized * slideForce*0.3f, ForceMode.Force);
+                rb.AddForce(-GetSlopeMoveDirection(inputDirection) * slideForce*0.25f, ForceMode.Force);
+                slideTimer -= Time.deltaTime;
+            }
             // sliding down a slope
             else
             {
