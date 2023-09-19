@@ -682,6 +682,16 @@ MonoBehaviour:
   vcam: {fileID: 7453984105727094038}
   fpsTopClamp: 90
   fpsBotClamp: -90
+  defaultFOV: 100
+  idleBob:
+    AmplitudeGain: 0.05
+    FrequencyGain: 0.5
+  walkBob:
+    AmplitudeGain: 0.1
+    FrequencyGain: 1
+  sprintBob:
+    AmplitudeGain: 0.2
+    FrequencyGain: 2
   accelForce: 100
   walkSpeed: 4
   sprintSpeed: 8

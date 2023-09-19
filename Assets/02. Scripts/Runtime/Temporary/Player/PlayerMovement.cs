@@ -25,13 +25,38 @@ namespace Runtime.Temporary.Player
         [SerializeField]
         Transform camHolder;
         
-        public CinemachineVirtualCamera vcam;
+        [SerializeField] 
+        CinemachineVirtualCamera vcam;
     
         float cameraPitch = 0;
-        public float fpsTopClamp=90;
-        public float fpsBotClamp=-90;
+        [SerializeField] 
+        float fpsTopClamp=90;
+        [SerializeField] 
+        float fpsBotClamp=-90;
 
-    
+        [SerializeField] 
+        private float defaultFOV;
+
+
+        [Header("Headbob")] 
+        [SerializeField] 
+        private HeadBobData idleBob;
+        [SerializeField] 
+        private HeadBobData walkBob;
+        [SerializeField] 
+        private HeadBobData sprintBob;
+        [Serializable]
+        public struct HeadBobData
+        {
+            public float AmplitudeGain;
+            public float FrequencyGain;
+
+            public HeadBobData(float amplitudeGain,float frequencyGain)
+            {
+                this.AmplitudeGain = amplitudeGain;
+                this.FrequencyGain = frequencyGain;
+            }
+        }
         //TODO: add acceleration to entity data
         //TODO: add maxSpeed to entity data
     
@@ -152,6 +177,7 @@ namespace Runtime.Temporary.Player
         // Start is called before the first frame update
         void Start()
         {
+            vcam.m_Lens.FieldOfView = defaultFOV;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -272,36 +298,52 @@ namespace Runtime.Temporary.Player
             camHolder.localEulerAngles = Vector3.right * cameraPitch;
             transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
 
-            if (horizontalInput != 0 ||verticalInput != 0)
+            
+            if (state == MovementState.walking)
             {
-                if (state == MovementState.walking)
-                {
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1;
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.1f;
-                }
-                else if (state == MovementState.sprinting)
-                {
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 2;
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.3f;
-                }
+                if (horizontalInput == 0 &&verticalInput == 0)
+                    ChangeBobVars(idleBob);
                 else
-                {
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
-                    vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
-                }
+                    ChangeBobVars(walkBob);
+            }
+            else if (state == MovementState.sprinting)
+            {
+                ChangeBobVars(sprintBob);
             }
             else
             {
-                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0.4f;
-                vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0.1f;
+                ChangeBobVars(0,0);
             }
 
             
         }
 
+        public void ChangeBobVars(HeadBobData data)
+        {
+            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
+            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
+        }
+        public void ChangeBobVars(float frequencyGain,float amplitudeGain)
+        {
+            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+        }
         public void DoCamTilt(float zTilt)
         {
             cameraTrans.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
+        }
+        
+        //smooth FOV transition
+        IEnumerator ChangeFOV(CinemachineVirtualCamera cam, float endFOV, float duration)
+        {
+            float startFOV = cam.m_Lens.FieldOfView;
+            float time = 0;
+            while(time < duration)
+            {
+                cam.m_Lens.FieldOfView = Mathf.Lerp(startFOV, endFOV, time / duration);
+                yield return null;
+                time += Time.deltaTime;
+            }
         }
         private void MyInput()
         {
