@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Temporary_PlayerController" data-uid="Runtime.Temporary.PlayerController" class="text-break">
     Class PlayerController
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/ViewControllers/PlayerController.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class PlayerController : MonoBehaviour, IHitResponder, IHurtResponder, IBelongToFaction</code></pre>
+    <pre><code class="lang-csharp hljs">public class PlayerController : AbstractCreatureViewController&lt;PlayerEntity&gt;, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHurtResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -109,6 +109,13 @@
       <div><span class="xref">Component</span></div>
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
+      <div><a class="xref" href="MikroFramework.Pool.PoolableGameObject.html">PoolableGameObject</a></div>
+      <div><a class="xref" href="MikroFramework.ResKit.DefaultPoolableGameObject.html">DefaultPoolableGameObject</a></div>
+      <div><a class="xref" href="Runtime.Utilities.DefaultPoolableGameObjectSaved.html">DefaultPoolableGameObjectSaved</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html">AbstractEntityViewController</a>&lt;<a class="xref" href="Runtime.Player.PlayerEntity.html">PlayerEntity</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html">AbstractBasicEntityViewController</a>&lt;<a class="xref" href="Runtime.Player.PlayerEntity.html">PlayerEntity</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html">AbstractDamagableViewController</a>&lt;<a class="xref" href="Runtime.Player.PlayerEntity.html">PlayerEntity</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController-1.html">AbstractCreatureViewController</a>&lt;<a class="xref" href="Runtime.Player.PlayerEntity.html">PlayerEntity</a>&gt;</div>
       <div><span class="xref">PlayerController</span></div>
     </dd>
   </dl>
@@ -116,7 +123,15 @@
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
-      <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.IEntityViewController.html">IEntityViewController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IController.html">IController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendCommand.html">ICanSendCommand</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanRegisterEvent.html">ICanRegisterEvent</a></div>
+      <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
       <div><a class="xref" href="Runtime.Utilities.Collision.IHurtResponder.html">IHurtResponder</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
@@ -126,6 +141,135 @@
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnStart">AbstractDamagableViewController&lt;PlayerEntity&gt;.OnStart()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CurrentFaction">AbstractDamagableViewController&lt;PlayerEntity&gt;.CurrentFaction</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CheckHurt_Runtime_Utilities_Collision_HitData_">AbstractDamagableViewController&lt;PlayerEntity&gt;.CheckHurt(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_HurtResponse_Runtime_Utilities_Collision_HitData_">AbstractDamagableViewController&lt;PlayerEntity&gt;.HurtResponse(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_1_BindCustomData__1_System_String_System_String_System_String_System_Action___0___0__">AbstractBasicEntityViewController&lt;PlayerEntity&gt;.BindCustomData&lt;T&gt;(string, string, string, Action&lt;T, T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_1_BindCustomData__1_System_String_System_String_System_String_System_Func_System_Object___0__System_Action___0___0__">AbstractBasicEntityViewController&lt;PlayerEntity&gt;.BindCustomData&lt;TargetType&gt;(string, string, string, Func&lt;dynamic, TargetType&gt;, Action&lt;TargetType, TargetType&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ID">AbstractEntityViewController&lt;PlayerEntity&gt;.ID</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoCreateNewEntityWhenStart">AbstractEntityViewController&lt;PlayerEntity&gt;.autoCreateNewEntityWhenStart</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_showNameTagWhenPointed">AbstractEntityViewController&lt;PlayerEntity&gt;.showNameTagWhenPointed</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_nameTagFollowTransform">AbstractEntityViewController&lt;PlayerEntity&gt;.nameTagFollowTransform</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_nameTagPrefabName">AbstractEntityViewController&lt;PlayerEntity&gt;.nameTagPrefabName</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_hasInteractiveHint">AbstractEntityViewController&lt;PlayerEntity&gt;.hasInteractiveHint</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_interactiveHintPrefabName">AbstractEntityViewController&lt;PlayerEntity&gt;.interactiveHintPrefabName</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_interactiveHintLocalizedKey">AbstractEntityViewController&lt;PlayerEntity&gt;.interactiveHintLocalizedKey</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoDestroyWhenEntityRemoved">AbstractEntityViewController&lt;PlayerEntity&gt;.autoDestroyWhenEntityRemoved</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_entityModel">AbstractEntityViewController&lt;PlayerEntity&gt;.entityModel</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_BoundEntity">AbstractEntityViewController&lt;PlayerEntity&gt;.BoundEntity</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_properties">AbstractEntityViewController&lt;PlayerEntity&gt;.properties</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Awake">AbstractEntityViewController&lt;PlayerEntity&gt;.Awake()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnStartOrAllocate">AbstractEntityViewController&lt;PlayerEntity&gt;.OnStartOrAllocate()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_InitWithID_System_String_">AbstractEntityViewController&lt;PlayerEntity&gt;.InitWithID(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPointByCrosshair">AbstractEntityViewController&lt;PlayerEntity&gt;.OnPointByCrosshair()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnUnPointByCrosshair">AbstractEntityViewController&lt;PlayerEntity&gt;.OnUnPointByCrosshair()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityRecycled_Runtime_DataFramework_Entities_IEntity_">AbstractEntityViewController&lt;PlayerEntity&gt;.OnEntityRecycled(IEntity)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnRecycled">AbstractEntityViewController&lt;PlayerEntity&gt;.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindProperty">AbstractEntityViewController&lt;PlayerEntity&gt;.OnBindProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_System_Action_System_Object_System_Object__">AbstractEntityViewController&lt;PlayerEntity&gt;.Bind&lt;IPropertyType&gt;(string, Action&lt;dynamic, dynamic&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_MikroFramework_BindableProperty_BindableProperty___0__System_Action___0___0__">AbstractEntityViewController&lt;PlayerEntity&gt;.Bind&lt;T&gt;(string, BindableProperty&lt;T&gt;, Action&lt;T, T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__2_System_String_MikroFramework_BindableProperty_BindableProperty___0__System_Func___0___1__System_Action___1___1__">AbstractEntityViewController&lt;PlayerEntity&gt;.Bind&lt;BindedDataType, TargetType&gt;(string, BindableProperty&lt;BindedDataType&gt;, Func&lt;BindedDataType, TargetType&gt;, Action&lt;TargetType, TargetType&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_Bind__1_System_String_MikroFramework_BindableProperty_IBindableProperty_System_Func_System_Object___0__System_Action___0___0__">AbstractEntityViewController&lt;PlayerEntity&gt;.Bind&lt;T&gt;(string, IBindableProperty, Func&lt;dynamic, T&gt;, Action&lt;T, T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_UpdateBinding__2_MikroFramework_BindableProperty_IBindableProperty_System_Reflection_PropertyInfo_System_Func___1___0__System_Action___0___0__">AbstractEntityViewController&lt;PlayerEntity&gt;.UpdateBinding&lt;T, BindablePropertyType&gt;(IBindableProperty, PropertyInfo, Func&lt;BindablePropertyType, T&gt;, Action&lt;T, T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_ForceUpdatePropertyBindings">AbstractEntityViewController&lt;PlayerEntity&gt;.ForceUpdatePropertyBindings()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;PlayerEntity&gt;.OnPlayerInteractiveZoneReachable(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInteractiveZoneNotReachable_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;PlayerEntity&gt;.OnPlayerInteractiveZoneNotReachable(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerInInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;PlayerEntity&gt;.OnPlayerInInteractiveZone(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnPlayerExitInteractiveZone_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractEntityViewController&lt;PlayerEntity&gt;.OnPlayerExitInteractiveZone(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnDestroy">AbstractEntityViewController&lt;PlayerEntity&gt;.OnDestroy()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Utilities.DefaultPoolableGameObjectSaved.html#Runtime_Utilities_DefaultPoolableGameObjectSaved_GetArchitecture">DefaultPoolableGameObjectSaved.GetArchitecture()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_Pool">PoolableGameObject.Pool</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_IsRecycled">PoolableGameObject.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RecycleToCache">PoolableGameObject.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnRecycledEvent(UnityAction)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnAllocateEvent(UnityAction)</a>
+    </div>
     <div>
       <span class="xref">MonoBehaviour.IsInvoking()</span>
     </div>
@@ -500,164 +644,54 @@
 
 
 
-  <h2 class="section" id="fields">Fields
-</h2>
-
-
-
-  <h3 id="Runtime_Temporary_PlayerController_curHealth" data-uid="Runtime.Temporary.PlayerController.curHealth">
-  curHealth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L14"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int curHealth</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_Temporary_PlayerController_maxHealth" data-uid="Runtime.Temporary.PlayerController.maxHealth">
-  maxHealth
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L12"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int maxHealth</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-  <h2 class="section" id="properties">Properties
-</h2>
-
-
-  <a id="Runtime_Temporary_PlayerController_CurrentFaction_" data-uid="Runtime.Temporary.PlayerController.CurrentFaction*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_CurrentFaction" data-uid="Runtime.Temporary.PlayerController.CurrentFaction">
-  CurrentFaction
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L21"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; protected set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="Runtime_Temporary_PlayerController_Damage_" data-uid="Runtime.Temporary.PlayerController.Damage*"></a>
-
-  <h3 id="Runtime_Temporary_PlayerController_Damage" data-uid="Runtime.Temporary.PlayerController.Damage">
-  Damage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L17"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Damage { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <h2 class="section" id="methods">Methods
 </h2>
 
 
-  <a id="Runtime_Temporary_PlayerController_CheckHit_" data-uid="Runtime.Temporary.PlayerController.CheckHit*"></a>
+  <a id="Runtime_Temporary_PlayerController_OnBindEntityProperty_" data-uid="Runtime.Temporary.PlayerController.OnBindEntityProperty*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.CheckHit(Runtime.Utilities.Collision.HitData)">
-  CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Temporary_PlayerController_OnBindEntityProperty" data-uid="Runtime.Temporary.PlayerController.OnBindEntityProperty">
+  OnBindEntityProperty()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/ViewControllers/PlayerController.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHit(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnBindEntityProperty()</code></pre>
   </div>
 
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Temporary_PlayerController_OnBuildNewEntity_" data-uid="Runtime.Temporary.PlayerController.OnBuildNewEntity*"></a>
+
+  <h3 id="Runtime_Temporary_PlayerController_OnBuildNewEntity" data-uid="Runtime.Temporary.PlayerController.OnBuildNewEntity">
+  OnBuildNewEntity()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/ViewControllers/PlayerController.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override IEntity OnBuildNewEntity()</code></pre>
+  </div>
+
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dt><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
     <dd></dd>
   </dl>
 
@@ -671,29 +705,24 @@
 
 
 
-  <a id="Runtime_Temporary_PlayerController_CheckHurt_" data-uid="Runtime.Temporary.PlayerController.CheckHurt*"></a>
+  <a id="Runtime_Temporary_PlayerController_OnEntityDie_" data-uid="Runtime.Temporary.PlayerController.OnEntityDie*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_CheckHurt_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.CheckHurt(Runtime.Utilities.Collision.HitData)">
-  CheckHurt(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Temporary_PlayerController_OnEntityDie_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.Temporary.PlayerController.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
+  OnEntityDie(IBelongToFaction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/ViewControllers/PlayerController.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>When the entity dies, this method will be called</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHurt(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnEntityDie(IBelongToFaction damagedealer)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dt><code>damagedealer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></dt>
     <dd></dd>
   </dl>
 
@@ -707,23 +736,29 @@
 
 
 
-  <a id="Runtime_Temporary_PlayerController_HitResponse_" data-uid="Runtime.Temporary.PlayerController.HitResponse*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.HitResponse(Runtime.Utilities.Collision.HitData)">
-  HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <a id="Runtime_Temporary_PlayerController_OnEntityHeal_" data-uid="Runtime.Temporary.PlayerController.OnEntityHeal*"></a>
+
+  <h3 id="Runtime_Temporary_PlayerController_OnEntityHeal_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.Temporary.PlayerController.OnEntityHeal(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
+  OnEntityHeal(int, int, IBelongToFaction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/ViewControllers/PlayerController.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>When the entity is healed, this method will be called</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void HitResponse(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
+    <dt><code>heal</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>currenthealth</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>healer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></dt>
     <dd></dd>
   </dl>
 
@@ -738,25 +773,20 @@
 
 
 
-  <a id="Runtime_Temporary_PlayerController_HurtResponse_" data-uid="Runtime.Temporary.PlayerController.HurtResponse*"></a>
+  <a id="Runtime_Temporary_PlayerController_OnEntityStart_" data-uid="Runtime.Temporary.PlayerController.OnEntityStart*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_HurtResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.PlayerController.HurtResponse(Runtime.Utilities.Collision.HitData)">
-  HurtResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Temporary_PlayerController_OnEntityStart" data-uid="Runtime.Temporary.PlayerController.OnEntityStart">
+  OnEntityStart()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/ViewControllers/PlayerController.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void HurtResponse(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnEntityStart()</code></pre>
   </div>
 
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
 
 
 
@@ -769,24 +799,30 @@
 
 
 
-  <a id="Runtime_Temporary_PlayerController_TakeDamage_" data-uid="Runtime.Temporary.PlayerController.TakeDamage*"></a>
+  <a id="Runtime_Temporary_PlayerController_OnEntityTakeDamage_" data-uid="Runtime.Temporary.PlayerController.OnEntityTakeDamage*"></a>
 
-  <h3 id="Runtime_Temporary_PlayerController_TakeDamage_System_Int32_" data-uid="Runtime.Temporary.PlayerController.TakeDamage(System.Int32)">
-  TakeDamage(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Temporary_PlayerController_OnEntityTakeDamage_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.Temporary.PlayerController.OnEntityTakeDamage(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
+  OnEntityTakeDamage(int, int, IBelongToFaction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/ViewControllers/PlayerController.cs/#L30"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>When the entity takes damage, this method will be called</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void TakeDamage(int damage)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
     <dd></dd>
+    <dt><code>currenthealth</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>damagedealer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></dt>
+    <dd><p>The dealer of the damage. You can access its faction from it</p>
+</dd>
   </dl>
 
 
@@ -804,7 +840,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/PlayerController.cs/#L9" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Player/ViewControllers/PlayerController.cs/#L13" class="edit-link">Edit this page</a>
         </div>
 
         

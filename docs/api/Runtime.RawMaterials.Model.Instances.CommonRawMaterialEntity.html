@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class CommonRawMaterialEntity : RawMaterialEntity&lt;CommonRawMaterialEntity&gt;, IRawMaterialEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName</code></pre>
+    <pre><code class="lang-csharp hljs">public class CommonRawMaterialEntity : RawMaterialEntity&lt;CommonRawMaterialEntity&gt;, IRawMaterialEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -124,6 +124,9 @@
       <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
     </dd>
   </dl>
 
@@ -132,7 +135,7 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html#Runtime_RawMaterials_Model_Base_RawMaterialEntity_1_OnEntityStart">RawMaterialEntity&lt;CommonRawMaterialEntity&gt;.OnEntityStart()</a>
+      <a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html#Runtime_RawMaterials_Model_Base_RawMaterialEntity_1_OnEntityStart_System_Boolean_">RawMaterialEntity&lt;CommonRawMaterialEntity&gt;.OnEntityStart(bool)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialEntity-1.html#Runtime_RawMaterials_Model_Base_RawMaterialEntity_1_OnEntityRegisterAdditionalProperties">RawMaterialEntity&lt;CommonRawMaterialEntity&gt;.OnEntityRegisterAdditionalProperties()</a>
@@ -234,7 +237,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_">Entity.LoadPropertyBaseValueFromConfig(ConfigTable)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart">Entity.OnStart()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart_System_Boolean_">Entity.OnStart(bool)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
@@ -280,6 +283,9 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDescription">Entity.GetDescription()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetArchitecture">Entity.GetArchitecture()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>

@@ -96,7 +96,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class DamageableEntity : AbstractBasicEntity, IHaveTags, IDamageable, IHaveCustomProperties, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, IBelongToFaction</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class DamageableEntity : AbstractBasicEntity, IHaveTags, IDamageable, IHaveCustomProperties, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture, IBelongToFaction</code></pre>
   </div>
 
 
@@ -122,6 +122,9 @@
       <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
   </dl>
@@ -209,7 +212,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_">Entity.LoadPropertyBaseValueFromConfig(ConfigTable)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart">Entity.OnStart()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart_System_Boolean_">Entity.OnStart(bool)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
@@ -269,6 +272,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDisplayName">Entity.GetDisplayName()</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetArchitecture">Entity.GetArchitecture()</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
@@ -304,7 +310,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity__ctor" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.#ctor">
   DamageableEntity()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L37"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -366,7 +372,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_HealthProperty" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.HealthProperty">
   HealthProperty
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L29"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get the health property of the entity</p>
@@ -430,11 +436,47 @@
 </h2>
 
 
+  <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_CheckCanTakeDamage_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.CheckCanTakeDamage*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_CheckCanTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.CheckCanTakeDamage(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
+  CheckCanTakeDamage(IBelongToFaction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CheckCanTakeDamage(IBelongToFaction damageDealer)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>damageDealer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetCurrentHealth_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.GetCurrentHealth*"></a>
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetCurrentHealth" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.GetCurrentHealth">
   GetCurrentHealth()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get the current health of the entity</p>
@@ -466,7 +508,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetDefaultFaction" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.GetDefaultFaction">
   GetDefaultFaction()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -497,7 +539,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetMaxHealth" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.GetMaxHealth">
   GetMaxHealth()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Get the max health of the entity</p>
@@ -529,7 +571,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.Heal(System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   Heal(int, IBelongToFaction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L109"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Heal the entity</p>
@@ -563,9 +605,9 @@
 
   <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnEntityStart_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.OnEntityStart*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnEntityStart" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.OnEntityStart">
-  OnEntityStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnEntityStart_System_Boolean_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.OnEntityStart(System.Boolean)">
+  OnEntityStart(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>After the entity is built, or loaded from save, this will be called</p>
@@ -573,9 +615,14 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnEntityStart()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnEntityStart(bool isLoadedFromSave)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>isLoadedFromSave</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -592,7 +639,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnRegisterProperties" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.OnRegisterProperties">
   OnRegisterProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -614,11 +661,49 @@
 
 
 
+  <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnTakeDamageAdditionalCheck_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.OnTakeDamageAdditionalCheck*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnTakeDamageAdditionalCheck_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.OnTakeDamageAdditionalCheck(System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
+  OnTakeDamageAdditionalCheck(int, IBelongToFaction)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual int OnTakeDamageAdditionalCheck(int damage, IBelongToFaction damageDealer)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>damageDealer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnHeal_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.RegisterOnHeal*"></a>
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.RegisterOnHeal(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.OnHeal)">
   RegisterOnHeal(OnHeal)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L123"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Register the event when the entity is healed</p>
@@ -655,7 +740,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.RegisterOnTakeDamage(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.OnTakeDamage)">
   RegisterOnTakeDamage(OnTakeDamage)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L99"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Register the event when the entity takes damage</p>
@@ -692,7 +777,7 @@
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.TakeDamage(System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   TakeDamage(int, IBelongToFaction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L65"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Will not take damage if the damage dealer is in the same faction <br>
@@ -727,7 +812,7 @@ Will take 0 damage if the entity is invincible</p>
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_UnRegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.UnRegisterOnHeal(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.OnHeal)">
   UnRegisterOnHeal(OnHeal)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L128"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Unregister the event when the entity is healed</p>
@@ -759,7 +844,7 @@ Will take 0 damage if the entity is invincible</p>
 
   <h3 id="Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_UnRegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_" data-uid="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.UnRegisterOnTakeDamage(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.OnTakeDamage)">
   UnRegisterOnTakeDamage(OnTakeDamage)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/ClassifiedTemplates/Damagable/DamageableEntity.cs/#L104"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Unregister the event when the entity takes damage</p>

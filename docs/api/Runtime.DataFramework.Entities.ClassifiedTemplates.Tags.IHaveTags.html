@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IHaveTags : IEntity, IPoolable, IHaveDescription, IHaveDisplayName</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IHaveTags : IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -159,7 +159,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_">IEntity.LoadPropertyBaseValueFromConfig(ConfigTable)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_OnStart">IEntity.OnStart()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_OnStart_System_Boolean_">IEntity.OnStart(bool)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html#Runtime_DataFramework_Entities_IEntity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">IEntity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
@@ -181,6 +181,9 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html#Runtime_DataFramework_Description_IHaveDisplayName_GetDisplayName">IHaveDisplayName.GetDisplayName()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html#MikroFramework_Architecture_IBelongToArchitecture_GetArchitecture">IBelongToArchitecture.GetArchitecture()</a>
     </div>
   </dd></dl>
 

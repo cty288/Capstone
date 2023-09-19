@@ -46,7 +46,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		[FormerlySerializedAs("autoRemoveEntityWhenDestroyed")]
 		[Header("Entity Recycle Logic")]
-		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
+		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
 		
 
@@ -151,12 +151,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (BoundEntity != null) {
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 			}
-			if (autoRemoveEntityWhenDestroyedOrRecycled) {
+			/*if (autoRemoveEntityWhenDestroyedOrRecycled) {
 				entityModel.RemoveEntity(ID);
-			}
+			}*/
 			ID = null;
 			BoundEntity = null;
 			propertyBindings.Clear();
+			
 		}
 
 		protected abstract IEntity OnBuildNewEntity();
@@ -413,9 +414,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected virtual void OnDestroy() {
 			propertyBindings.Clear();
 			propertyFields.Clear();
-			if (autoRemoveEntityWhenDestroyedOrRecycled && entityModel!=null) {
+			/*if (autoRemoveEntityWhenDestroyedOrRecycled && entityModel!=null) {
 				entityModel.RemoveEntity(ID);
-			}
+			}*/
 		}
 	}
 }

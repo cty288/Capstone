@@ -1,4 +1,5 @@
-﻿using MikroFramework.BindableProperty;
+﻿using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -6,9 +7,16 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Weapons.Model.Base
 {
+    public struct OnWeaponRecoilEvent
+    {
+        // public GunRecoil gunRecoilScript;
+    }
+    
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
@@ -20,9 +28,16 @@ namespace Runtime.Weapons.Model.Base
         public IRecoil GetRecoil();
         public IBulletSpeed GetBulletSpeed();
         public IChargeSpeed GetChargeSpeed();
+        
+        public BindableProperty<int> CurrentAmmo { get; set; }
+        // public GunRecoil GunRecoilScript { get; set; }
+        
+        public void Reload();
+
+        public void OnRecoil();
     }
     
-    public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity where T : WeaponEntity<T>, new() {
+    public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
         private IBaseDamage baseDamageProperty;
         private IAttackSpeed attackSpeedProperty;
         private IRange rangeProperty;
@@ -33,8 +48,14 @@ namespace Runtime.Weapons.Model.Base
         private IRecoil recoilProperty;
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
-        
+        [field: ES3Serializable]
+        public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
+
+        // public GunRecoil GunRecoilScript { get; set; }
+
+
         protected override ConfigTable GetConfigTable() {
+            
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
         }
 
@@ -43,8 +64,8 @@ namespace Runtime.Weapons.Model.Base
             return ResourceCategory.Weapon;
         }
 
-        protected override void OnEntityStart() {
-            base.OnEntityStart();
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            base.OnEntityStart(isLoadedFromSave);
             baseDamageProperty = GetProperty<IBaseDamage>();
             attackSpeedProperty = GetProperty<IAttackSpeed>();
             rangeProperty = GetProperty<IRange>();
@@ -55,12 +76,21 @@ namespace Runtime.Weapons.Model.Base
             recoilProperty = GetProperty<IRecoil>();
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
+            
+            if (!isLoadedFromSave) { //otherwise it is managed by es3
+                CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
+            }
+           
         }
         
         public override void OnDoRecycle() {
             SafeObjectPool<T>.Singleton.Recycle(this as T);
         }
-        
+
+        public override void OnRecycle() {
+            CurrentAmmo.UnRegisterAll();
+        }
+
         protected override void OnEntityRegisterAdditionalProperties() {
             base.OnEntityRegisterAdditionalProperties();
             RegisterInitialProperty<IBaseDamage>(new BaseDamage());
@@ -125,8 +155,20 @@ namespace Runtime.Weapons.Model.Base
             return chargeSpeedProperty;
         }
 
+
+
+        public void Reload() {
+            CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
+        }
+
+        public void OnRecoil()
+        {
+            this.SendEvent<OnWeaponRecoilEvent>(new OnWeaponRecoilEvent());
+        }
+
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
             return "???";
         }
+        
     }
 }

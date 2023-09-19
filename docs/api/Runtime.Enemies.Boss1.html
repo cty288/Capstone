@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Enemies_Boss1" data-uid="Runtime.Enemies.Boss1" class="text-break">
     Class Boss1
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Boss1 : AbstractEnemyViewController&lt;Boss1Entity&gt;, IEnemyViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHurtResponder, IHitResponder, IBelongToFaction</code></pre>
+    <pre><code class="lang-csharp hljs">public class Boss1 : AbstractBossViewController&lt;Boss1Entity&gt;, IHurtResponder, IEnemyViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -117,6 +117,7 @@
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html">AbstractDamagableViewController</a>&lt;<a class="xref" href="Runtime.Enemies.Boss1Entity.html">Boss1Entity</a>&gt;</div>
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractCreatureViewController-1.html">AbstractCreatureViewController</a>&lt;<a class="xref" href="Runtime.Enemies.Boss1Entity.html">Boss1Entity</a>&gt;</div>
       <div><a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html">AbstractEnemyViewController</a>&lt;<a class="xref" href="Runtime.Enemies.Boss1Entity.html">Boss1Entity</a>&gt;</div>
+      <div><a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html">AbstractBossViewController</a>&lt;<a class="xref" href="Runtime.Enemies.Boss1Entity.html">Boss1Entity</a>&gt;</div>
       <div><span class="xref">Boss1</span></div>
     </dd>
   </dl>
@@ -124,6 +125,7 @@
   <dl class="typelist implements">
     <dt>Implements</dt>
     <dd>
+      <div><a class="xref" href="Runtime.Utilities.Collision.IHurtResponder.html">IHurtResponder</a></div>
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.IEnemyViewController.html">IEnemyViewController</a></div>
       <div><a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.IEntityViewController.html">IEntityViewController</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IController.html">IController</a></div>
@@ -134,7 +136,6 @@
       <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
-      <div><a class="xref" href="Runtime.Utilities.Collision.IHurtResponder.html">IHurtResponder</a></div>
       <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
@@ -144,6 +145,12 @@
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractBossViewController_1_OnSpawnHealthBar">AbstractBossViewController&lt;Boss1Entity&gt;.OnSpawnHealthBar()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractBossViewController_1_OnDestroyHealthBar_HealthBar_">AbstractBossViewController&lt;Boss1Entity&gt;.OnDestroyHealthBar(HealthBar)</a>
+    </div>
     <div>
       <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_Danger">AbstractEnemyViewController&lt;Boss1Entity&gt;.Danger</a>
     </div>
@@ -157,7 +164,16 @@
       <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_enemyModel">AbstractEnemyViewController&lt;Boss1Entity&gt;.enemyModel</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_currentHealthBar">AbstractEnemyViewController&lt;Boss1Entity&gt;.currentHealthBar</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_Damage">AbstractEnemyViewController&lt;Boss1Entity&gt;.Damage</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_Awake">AbstractEnemyViewController&lt;Boss1Entity&gt;.Awake()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnStart">AbstractEnemyViewController&lt;Boss1Entity&gt;.OnStart()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnBindEntityProperty">AbstractEnemyViewController&lt;Boss1Entity&gt;.OnBindEntityProperty()</a>
@@ -172,13 +188,28 @@
       <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_GetCurrentHealth_System_Object_">AbstractEnemyViewController&lt;Boss1Entity&gt;.GetCurrentHealth(dynamic)</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnEntityDie_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">AbstractEnemyViewController&lt;Boss1Entity&gt;.OnEntityDie(IBelongToFaction)</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnCurrentHealthChanged_System_Int32_System_Int32_">AbstractEnemyViewController&lt;Boss1Entity&gt;.OnCurrentHealthChanged(int, int)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_CurrentFaction">AbstractEnemyViewController&lt;Boss1Entity&gt;.CurrentFaction</a>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnRecycled">AbstractEnemyViewController&lt;Boss1Entity&gt;.OnRecycled()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnStart">AbstractDamagableViewController&lt;Boss1Entity&gt;.OnStart()</a>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_CheckHit_Runtime_Utilities_Collision_HitData_">AbstractEnemyViewController&lt;Boss1Entity&gt;.CheckHit(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_HitResponse_Runtime_Utilities_Collision_HitData_">AbstractEnemyViewController&lt;Boss1Entity&gt;.HitResponse(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CurrentFaction">AbstractDamagableViewController&lt;Boss1Entity&gt;.CurrentFaction</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CheckHurt_Runtime_Utilities_Collision_HitData_">AbstractDamagableViewController&lt;Boss1Entity&gt;.CheckHurt(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_HurtResponse_Runtime_Utilities_Collision_HitData_">AbstractDamagableViewController&lt;Boss1Entity&gt;.HurtResponse(HitData)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_1_BindCustomData__1_System_String_System_String_System_String_System_Action___0___0__">AbstractBasicEntityViewController&lt;Boss1Entity&gt;.BindCustomData&lt;T&gt;(string, string, string, Action&lt;T, T&gt;)</a>
@@ -211,9 +242,6 @@
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_interactiveHintLocalizedKey">AbstractEntityViewController&lt;Boss1Entity&gt;.interactiveHintLocalizedKey</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoRemoveEntityWhenDestroyedOrRecycled">AbstractEntityViewController&lt;Boss1Entity&gt;.autoRemoveEntityWhenDestroyedOrRecycled</a>
-    </div>
-    <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoDestroyWhenEntityRemoved">AbstractEntityViewController&lt;Boss1Entity&gt;.autoDestroyWhenEntityRemoved</a>
     </div>
     <div>
@@ -239,9 +267,6 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnEntityRecycled_Runtime_DataFramework_Entities_IEntity_">AbstractEntityViewController&lt;Boss1Entity&gt;.OnEntityRecycled(IEntity)</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnRecycled">AbstractEntityViewController&lt;Boss1Entity&gt;.OnRecycled()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_OnBindProperty">AbstractEntityViewController&lt;Boss1Entity&gt;.OnBindProperty()</a>
@@ -678,7 +703,7 @@
 
   <h3 id="Runtime_Enemies_Boss1_agent" data-uid="Runtime.Enemies.Boss1.agent">
   agent
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -708,7 +733,7 @@
 
   <h3 id="Runtime_Enemies_Boss1_animationSMBManager" data-uid="Runtime.Enemies.Boss1.animationSMBManager">
   animationSMBManager
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -738,7 +763,7 @@
 
   <h3 id="Runtime_Enemies_Boss1_animator" data-uid="Runtime.Enemies.Boss1.animator">
   animator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -765,168 +790,30 @@
 
 
 
-  <h2 class="section" id="properties">Properties
-</h2>
-
-
-  <a id="Runtime_Enemies_Boss1_Damage_" data-uid="Runtime.Enemies.Boss1.Damage*"></a>
-
-  <h3 id="Runtime_Enemies_Boss1_Damage" data-uid="Runtime.Enemies.Boss1.Damage">
-  Damage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L59"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Damage { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <h2 class="section" id="methods">Methods
 </h2>
 
 
-  <a id="Runtime_Enemies_Boss1_CheckHit_" data-uid="Runtime.Enemies.Boss1.CheckHit*"></a>
+  <a id="Runtime_Enemies_Boss1_GetCurrentHitDamage_" data-uid="Runtime.Enemies.Boss1.GetCurrentHitDamage*"></a>
 
-  <h3 id="Runtime_Enemies_Boss1_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Enemies.Boss1.CheckHit(Runtime.Utilities.Collision.HitData)">
-  CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Enemies_Boss1_GetCurrentHitDamage" data-uid="Runtime.Enemies.Boss1.GetCurrentHitDamage">
+  GetCurrentHitDamage()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L64"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHit(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override int GetCurrentHitDamage()</code></pre>
   </div>
 
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
     <dd></dd>
   </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Enemies_Boss1_CheckHurt_" data-uid="Runtime.Enemies.Boss1.CheckHurt*"></a>
-
-  <h3 id="Runtime_Enemies_Boss1_CheckHurt_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Enemies.Boss1.CheckHurt(Runtime.Utilities.Collision.HitData)">
-  CheckHurt(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L74"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHurt(HitData data)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Enemies_Boss1_HitResponse_" data-uid="Runtime.Enemies.Boss1.HitResponse*"></a>
-
-  <h3 id="Runtime_Enemies_Boss1_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Enemies.Boss1.HitResponse(Runtime.Utilities.Collision.HitData)">
-  HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L79"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void HitResponse(HitData data)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Enemies_Boss1_HurtResponse_" data-uid="Runtime.Enemies.Boss1.HurtResponse*"></a>
-
-  <h3 id="Runtime_Enemies_Boss1_HurtResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Enemies.Boss1.HurtResponse(Runtime.Utilities.Collision.HitData)">
-  HurtResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L84"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void HurtResponse(HitData data)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
 
 
 
@@ -942,7 +829,7 @@
 
   <h3 id="Runtime_Enemies_Boss1_OnAnimationEvent_System_String_" data-uid="Runtime.Enemies.Boss1.OnAnimationEvent(System.String)">
   OnAnimationEvent(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L139"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L126"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -969,43 +856,11 @@
 
 
 
-  <a id="Runtime_Enemies_Boss1_OnEntityDie_" data-uid="Runtime.Enemies.Boss1.OnEntityDie*"></a>
-
-  <h3 id="Runtime_Enemies_Boss1_OnEntityDie_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.Enemies.Boss1.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
-  OnEntityDie(IBelongToFaction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L89"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>When the entity dies, this method will be called</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnEntityDie(IBelongToFaction damagedealer)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>damagedealer</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
   <a id="Runtime_Enemies_Boss1_OnEntityHeal_" data-uid="Runtime.Enemies.Boss1.OnEntityHeal*"></a>
 
   <h3 id="Runtime_Enemies_Boss1_OnEntityHeal_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.Enemies.Boss1.OnEntityHeal(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   OnEntityHeal(int, int, IBelongToFaction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L85"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>When the entity is healed, this method will be called</p>
@@ -1041,7 +896,7 @@
 
   <h3 id="Runtime_Enemies_Boss1_OnEntityStart" data-uid="Runtime.Enemies.Boss1.OnEntityStart">
   OnEntityStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L90"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1067,7 +922,7 @@
 
   <h3 id="Runtime_Enemies_Boss1_OnEntityTakeDamage_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_" data-uid="Runtime.Enemies.Boss1.OnEntityTakeDamage(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)">
   OnEntityTakeDamage(int, int, IBelongToFaction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L105"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>When the entity takes damage, this method will be called</p>
@@ -1104,7 +959,7 @@
 
   <h3 id="Runtime_Enemies_Boss1_OnInitEnemyEntity_Runtime_Enemies_Model_Builders_EnemyBuilder_Runtime_Enemies_Boss1Entity__" data-uid="Runtime.Enemies.Boss1.OnInitEnemyEntity(Runtime.Enemies.Model.Builders.EnemyBuilder{Runtime.Enemies.Boss1Entity})">
   OnInitEnemyEntity(EnemyBuilder&lt;Boss1Entity&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L109"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1140,7 +995,7 @@
 
   <h3 id="Runtime_Enemies_Boss1_OnShellStatusChanged_System_Boolean_System_Boolean_" data-uid="Runtime.Enemies.Boss1.OnShellStatusChanged(System.Boolean,System.Boolean)">
   OnShellStatusChanged(bool, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L117"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1169,11 +1024,42 @@
 
 
 
+  <a id="Runtime_Enemies_Boss1_WaitingForDeathCondition_" data-uid="Runtime.Enemies.Boss1.WaitingForDeathCondition*"></a>
+
+  <h3 id="Runtime_Enemies_Boss1_WaitingForDeathCondition" data-uid="Runtime.Enemies.Boss1.WaitingForDeathCondition">
+  WaitingForDeathCondition()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override MikroAction WaitingForDeathCondition()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.ActionKit.MikroAction.html">MikroAction</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L52" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L54" class="edit-link">Edit this page</a>
         </div>
 
         

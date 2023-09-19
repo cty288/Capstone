@@ -96,7 +96,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractCreatureViewController&lt;T&gt; : AbstractDamagableViewController&lt;T&gt;, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AbstractCreatureViewController&lt;T&gt; : AbstractDamagableViewController&lt;T&gt;, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHurtResponder, IBelongToFaction where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature</code></pre>
   </div>
 
 
@@ -137,6 +137,8 @@
       <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
       <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Runtime.Utilities.Collision.IHurtResponder.html">IHurtResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
     </dd>
   </dl>
 
@@ -144,6 +146,7 @@
     <dt>Derived</dt>
     <dd>
       <div><a class="xref" href="Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html">AbstractEnemyViewController&lt;T&gt;</a></div>
+      <div><a class="xref" href="Runtime.Temporary.PlayerController.html">PlayerController</a></div>
     </dd>
   </dl>
 
@@ -161,6 +164,15 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_OnEntityHeal_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">AbstractDamagableViewController&lt;T&gt;.OnEntityHeal(int, int, IBelongToFaction)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CurrentFaction">AbstractDamagableViewController&lt;T&gt;.CurrentFaction</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_CheckHurt_Runtime_Utilities_Collision_HitData_">AbstractDamagableViewController&lt;T&gt;.CheckHurt(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractDamagableViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractDamagableViewController_1_HurtResponse_Runtime_Utilities_Collision_HitData_">AbstractDamagableViewController&lt;T&gt;.HurtResponse(HitData)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractBasicEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractBasicEntityViewController_1_BindCustomData__1_System_String_System_String_System_String_System_Action___0___0__">AbstractBasicEntityViewController&lt;T&gt;.BindCustomData&lt;T&gt;(string, string, string, Action&lt;T, T&gt;)</a>
@@ -191,9 +203,6 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_interactiveHintLocalizedKey">AbstractEntityViewController&lt;T&gt;.interactiveHintLocalizedKey</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoRemoveEntityWhenDestroyedOrRecycled">AbstractEntityViewController&lt;T&gt;.autoRemoveEntityWhenDestroyedOrRecycled</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoDestroyWhenEntityRemoved">AbstractEntityViewController&lt;T&gt;.autoDestroyWhenEntityRemoved</a>

@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Weapons_RustyPistolEntity" data-uid="Runtime.Weapons.RustyPistolEntity" class="text-break">
     Class RustyPistolEntity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RustyPistolEntity : WeaponEntity&lt;RustyPistolEntity&gt;, IWeaponEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName</code></pre>
+    <pre><code class="lang-csharp hljs">public class RustyPistolEntity : WeaponEntity&lt;RustyPistolEntity&gt;, IWeaponEntity, IResourceEntity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -124,6 +124,9 @@
       <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
     </dd>
   </dl>
 
@@ -132,13 +135,16 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
+      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_CurrentAmmo">WeaponEntity&lt;RustyPistolEntity&gt;.CurrentAmmo</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetConfigTable">WeaponEntity&lt;RustyPistolEntity&gt;.GetConfigTable()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetResourceCategory">WeaponEntity&lt;RustyPistolEntity&gt;.GetResourceCategory()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnEntityStart">WeaponEntity&lt;RustyPistolEntity&gt;.OnEntityStart()</a>
+      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnEntityStart_System_Boolean_">WeaponEntity&lt;RustyPistolEntity&gt;.OnEntityStart(bool)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnDoRecycle">WeaponEntity&lt;RustyPistolEntity&gt;.OnDoRecycle()</a>
@@ -175,6 +181,12 @@
     </div>
     <div>
       <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_GetChargeSpeed">WeaponEntity&lt;RustyPistolEntity&gt;.GetChargeSpeed()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_Reload">WeaponEntity&lt;RustyPistolEntity&gt;.Reload()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnRecoil">WeaponEntity&lt;RustyPistolEntity&gt;.OnRecoil()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.Weapons.Model.Base.WeaponEntity-1.html#Runtime_Weapons_Model_Base_WeaponEntity_1_OnGetDisplayNameBeforeFirstPicked_System_String_">WeaponEntity&lt;RustyPistolEntity&gt;.OnGetDisplayNameBeforeFirstPicked(string)</a>
@@ -261,7 +273,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_">Entity.LoadPropertyBaseValueFromConfig(ConfigTable)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart">Entity.OnStart()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart_System_Boolean_">Entity.OnStart(bool)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
@@ -309,6 +321,9 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDescription">Entity.GetDescription()</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetArchitecture">Entity.GetArchitecture()</a>
+    </div>
+    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
     <div>
@@ -344,7 +359,7 @@
 
   <h3 id="Runtime_Weapons_RustyPistolEntity_EntityName" data-uid="Runtime.Weapons.RustyPistolEntity.EntityName">
   EntityName
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L29"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -375,7 +390,7 @@
 
   <h3 id="Runtime_Weapons_RustyPistolEntity_OnGroundVCPrefabName" data-uid="Runtime.Weapons.RustyPistolEntity.OnGroundVCPrefabName">
   OnGroundVCPrefabName
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -410,7 +425,7 @@
 
   <h3 id="Runtime_Weapons_RustyPistolEntity_OnGetDescription_System_String_" data-uid="Runtime.Weapons.RustyPistolEntity.OnGetDescription(System.String)">
   OnGetDescription(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Return the description of the entity</p>
@@ -449,7 +464,7 @@ Or you can ignore defaultLocalizationKey can manually implement yours</p>
 
   <h3 id="Runtime_Weapons_RustyPistolEntity_OnRecycle" data-uid="Runtime.Weapons.RustyPistolEntity.OnRecycle">
   OnRecycle()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L31"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -475,7 +490,7 @@ Or you can ignore defaultLocalizationKey can manually implement yours</p>
 
   <h3 id="Runtime_Weapons_RustyPistolEntity_OnRegisterCustomProperties" data-uid="Runtime.Weapons.RustyPistolEntity.OnRegisterCustomProperties">
   OnRegisterCustomProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -506,7 +521,7 @@ Or you can ignore defaultLocalizationKey can manually implement yours</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L21" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L27" class="edit-link">Edit this page</a>
         </div>
 
         

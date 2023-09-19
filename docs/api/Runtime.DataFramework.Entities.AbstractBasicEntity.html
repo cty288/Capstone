@@ -96,7 +96,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractBasicEntity : Entity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AbstractBasicEntity : Entity, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -120,6 +120,9 @@
       <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
     </dd>
   </dl>
 
@@ -171,7 +174,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_">Entity.LoadPropertyBaseValueFromConfig(ConfigTable)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart">Entity.OnStart()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart_System_Boolean_">Entity.OnStart(bool)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
@@ -229,6 +232,9 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDisplayName">Entity.GetDisplayName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetArchitecture">Entity.GetArchitecture()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
@@ -502,8 +508,8 @@
 
   <a id="Runtime_DataFramework_Entities_AbstractBasicEntity_OnEntityStart_" data-uid="Runtime.DataFramework.Entities.AbstractBasicEntity.OnEntityStart*"></a>
 
-  <h3 id="Runtime_DataFramework_Entities_AbstractBasicEntity_OnEntityStart" data-uid="Runtime.DataFramework.Entities.AbstractBasicEntity.OnEntityStart">
-  OnEntityStart()
+  <h3 id="Runtime_DataFramework_Entities_AbstractBasicEntity_OnEntityStart_System_Boolean_" data-uid="Runtime.DataFramework.Entities.AbstractBasicEntity.OnEntityStart(System.Boolean)">
+  OnEntityStart(bool)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Common/Entities/AbstractBasicEntity.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -512,9 +518,14 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnEntityStart()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnEntityStart(bool isLoadedFromSave)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>isLoadedFromSave</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
 
 
 

@@ -25,6 +25,10 @@ namespace Runtime.RawMaterials.ViewControllers.Instances {
 		protected override void OnBindEntityProperty() {
 			
 		}
-		
+
+
+		protected override void OnStartAbsorb() {
+			
+		}
 	}
 }

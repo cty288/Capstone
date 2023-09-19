@@ -33,7 +33,7 @@ namespace Runtime.DataFramework.Entities {
 			OnEntityRegisterAdditionalProperties();
 		}
 
-		protected override void OnEntityStart() {
+		protected override void OnEntityStart(bool isLoadedFromSave) {
 			rarityProperty = GetProperty<IRarityProperty>();
 			tagProperty = GetProperty<ITagProperty>();
 			customProperties = GetProperty<ICustomProperties>();

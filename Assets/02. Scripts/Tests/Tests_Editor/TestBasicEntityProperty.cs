@@ -25,7 +25,7 @@ namespace Tests.Tests_Editor {
 				RegisterInitialProperty<IDangerProperty>(new TestDanger());
 			}
 
-			protected override void OnEntityStart() {
+			protected override void OnEntityStart(bool isLoadedFromSave) {
 				
 			}
 
@@ -61,7 +61,7 @@ namespace Tests.Tests_Editor {
 				});
 			}
 
-			protected override void OnEntityStart() {
+			protected override void OnEntityStart(bool isLoadedFromSave) {
 				
 			}
 
@@ -93,7 +93,7 @@ namespace Tests.Tests_Editor {
 				});
 			}
 
-			protected override void OnEntityStart() {
+			protected override void OnEntityStart(bool isLoadedFromSave) {
 				
 			}
 
@@ -132,7 +132,7 @@ namespace Tests.Tests_Editor {
 				});
 			}
 
-			protected override void OnEntityStart() {
+			protected override void OnEntityStart(bool isLoadedFromSave) {
 				
 			}
 
@@ -368,7 +368,7 @@ namespace Tests.Tests_Editor {
 				));
 			}
 
-			protected override void OnEntityStart() {
+			protected override void OnEntityStart(bool isLoadedFromSave) {
 				
 			}
 

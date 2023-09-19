@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1" class="text-break">
     Class AbstractPickableInHandResourceViewController&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -161,6 +161,9 @@
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_isAbsorbing">AbstractPickableResourceViewController&lt;T&gt;.isAbsorbing</a>
     </div>
     <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_selfColliders">AbstractPickableResourceViewController&lt;T&gt;.selfColliders</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableResourceViewController_1_entityAutoRemovalTimeWhenNoAbsorb">AbstractPickableResourceViewController&lt;T&gt;.entityAutoRemovalTimeWhenNoAbsorb</a>
     </div>
     <div>
@@ -207,9 +210,6 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_interactiveHintLocalizedKey">AbstractEntityViewController&lt;T&gt;.interactiveHintLocalizedKey</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoRemoveEntityWhenDestroyedOrRecycled">AbstractEntityViewController&lt;T&gt;.autoRemoveEntityWhenDestroyedOrRecycled</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.ViewControllers.Entities.AbstractEntityViewController-1.html#Runtime_DataFramework_ViewControllers_Entities_AbstractEntityViewController_1_autoDestroyWhenEntityRemoved">AbstractEntityViewController&lt;T&gt;.autoDestroyWhenEntityRemoved</a>
@@ -670,7 +670,7 @@
 
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_isHolding" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.isHolding">
   isHolding
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -698,9 +698,39 @@
 
 
 
+  <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_originalAutoRemovalTimeWhenNoAbsorb" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.originalAutoRemovalTimeWhenNoAbsorb">
+  originalAutoRemovalTimeWhenNoAbsorb
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected float originalAutoRemovalTimeWhenNoAbsorb</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_ownerGameObject" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.ownerGameObject">
   ownerGameObject
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -730,7 +760,7 @@
 
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_rigidbody" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.rigidbody">
   rigidbody
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -757,36 +787,6 @@
 
 
 
-
-  <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_selfColliders" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.selfColliders">
-  selfColliders
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L22"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected Collider[] selfColliders</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">Collider</span>[]</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -795,7 +795,7 @@
 
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_Awake" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.Awake">
   Awake()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L30"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -854,7 +854,7 @@
 
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnPointByCrosshair" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnPointByCrosshair">
   OnPointByCrosshair()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L82"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -880,7 +880,7 @@
 
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnRecycled" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnRecycled">
   OnRecycled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
@@ -907,7 +907,7 @@
 
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartAbsorb" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnStartAbsorb">
   OnStartAbsorb()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -933,14 +933,14 @@
 
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartHold_UnityEngine_GameObject_" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnStartHold(UnityEngine.GameObject)">
   OnStartHold(GameObject)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L62"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnStartHold(GameObject ownerGameObject)</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnStartHold(GameObject ownerGameObject)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -964,14 +964,14 @@
 
   <h3 id="Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStopHold" data-uid="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController`1.OnStopHold">
   OnStopHold()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L76"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnStopHold()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void OnStopHold()</code></pre>
   </div>
 
 
@@ -990,7 +990,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L19" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/ViewControllers/ResourceInHandViewController.cs/#L20" class="edit-link">Edit this page</a>
         </div>
 
         

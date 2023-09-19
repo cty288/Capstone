@@ -21,7 +21,9 @@ namespace MikroFramework.ResKit
 
         public override void OnRecycled() {
             base.OnRecycled();
-            transform.SetParent(Pool.transform);
+            if (Pool) {
+                transform.SetParent(Pool.transform);
+            }
         }
 
         

@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class EnemyEntity&lt;T&gt; : AbstractCreature, IEnemyEntity, ICreature, IDamageable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName where T : EnemyEntity&lt;T&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class EnemyEntity&lt;T&gt; : AbstractCreature, IEnemyEntity, ICreature, IDamageable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture where T : EnemyEntity&lt;T&gt;, new()</code></pre>
   </div>
 
 
@@ -131,6 +131,9 @@
       <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
     </dd>
   </dl>
 
@@ -164,6 +167,12 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.TakeDamage(int, IBelongToFaction)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnTakeDamageAdditionalCheck_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.OnTakeDamageAdditionalCheck(int, IBelongToFaction)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_CheckCanTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.CheckCanTakeDamage(IBelongToFaction)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamageableEntity.RegisterOnTakeDamage(OnTakeDamage)</a>
@@ -247,7 +256,7 @@
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_">Entity.LoadPropertyBaseValueFromConfig(ConfigTable)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart">Entity.OnStart()</a>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart_System_Boolean_">Entity.OnStart(bool)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
@@ -302,6 +311,9 @@
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDisplayName">Entity.GetDisplayName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetArchitecture">Entity.GetArchitecture()</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
@@ -665,8 +677,8 @@
 
   <a id="Runtime_Enemies_Model_EnemyEntity_1_OnEntityStart_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnEntityStart*"></a>
 
-  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_OnEntityStart" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnEntityStart">
-  OnEntityStart()
+  <h3 id="Runtime_Enemies_Model_EnemyEntity_1_OnEntityStart_System_Boolean_" data-uid="Runtime.Enemies.Model.EnemyEntity`1.OnEntityStart(System.Boolean)">
+  OnEntityStart(bool)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Model/EnemyEntity.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -675,9 +687,14 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnEntityStart()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnEntityStart(bool isLoadedFromSave)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>isLoadedFromSave</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
 
 
 

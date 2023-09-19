@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IInventorySystem : ISystem, ICanSetArchitecture, ICanGetModel, ICanGetUtility, ICanSendEvent, ICanRegisterEvent, ICanGetSystem, ICanSendQuery, IBelongToArchitecture</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IInventorySystem : IResourceSlotsSystem, ISystem, ICanSetArchitecture, ICanGetModel, ICanGetUtility, ICanSendEvent, ICanRegisterEvent, ICanGetSystem, ICanSendQuery, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -108,6 +108,9 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
+      <a class="xref" href="Runtime.Inventory.Model.IResourceSlotsSystem.html#Runtime_Inventory_Model_IResourceSlotsSystem_ResetSlots">IResourceSlotsSystem.ResetSlots()</a>
+    </div>
+    <div>
       <a class="xref" href="MikroFramework.Architecture.ISystem.html#MikroFramework_Architecture_ISystem_Init">ISystem.Init()</a>
     </div>
     <div>
@@ -117,36 +120,6 @@
       <a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html#MikroFramework_Architecture_IBelongToArchitecture_GetArchitecture">IBelongToArchitecture.GetArchitecture()</a>
     </div>
   </dd></dl>
-
-
-
-
-
-
-  <h2 class="section" id="methods">Methods
-</h2>
-
-
-  <a id="Runtime_Inventory_Model_IInventorySystem_ResetInventory_" data-uid="Runtime.Inventory.Model.IInventorySystem.ResetInventory*"></a>
-
-  <h3 id="Runtime_Inventory_Model_IInventorySystem_ResetInventory" data-uid="Runtime.Inventory.Model.IInventorySystem.ResetInventory">
-  ResetInventory()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/IInventorySystem.cs/#L24"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void ResetInventory()</code></pre>
-  </div>
-
-
-
-
-
-
-
 
 
 

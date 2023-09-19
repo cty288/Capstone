@@ -18,7 +18,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		
 		[field: ES3Serializable]
 		public BindableProperty<bool> IsInvincible { get; } = new BindableProperty<bool>();
-		
+
+
+
 		private OnTakeDamage onTakeDamage;
 		
 		private OnHeal onHeal;
@@ -27,8 +29,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public IHealthProperty HealthProperty => healthProperty;
 
 
-		protected override void OnEntityStart() {
-			base.OnEntityStart();
+		protected override void OnEntityStart(bool isLoadedFromSave) {
+			base.OnEntityStart(isLoadedFromSave);
 			this.healthProperty = GetProperty<IHealthProperty>();
 		}
 
@@ -61,22 +63,37 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// <param name="damage"></param>
 		/// <param name="damageDealer"></param>
 		public void TakeDamage(int damage, [CanBeNull] IBelongToFaction damageDealer) {
-			if(damageDealer != null && damageDealer.IsSameFaction(this)) {
+			if(!CheckCanTakeDamage(damageDealer)) {
 				return;
 			}
-			
-			if(IsInvincible.Value) {
-				damage = 0;
-			}
+
+			int actualDamage = OnTakeDamageAdditionalCheck(damage, damageDealer);
 			
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
 			
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage
-			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : damage;
+			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : actualDamage;
 			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
 
-				onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer);
+			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer);
+		}
+		
+		
+		public virtual int OnTakeDamageAdditionalCheck(int damage, [CanBeNull] IBelongToFaction damageDealer) {
+			if(IsInvincible.Value) {
+				damage = 0;
+			}
+
+			return damage;
+		}
+		
+		public bool CheckCanTakeDamage([CanBeNull] IBelongToFaction damageDealer) {
+			if(damageDealer != null && damageDealer.IsSameFaction(this)) {
+				return false;
+			}
+
+			return true;
 		}
 
 		public IUnRegister RegisterOnTakeDamage(OnTakeDamage onTakeDamage) {

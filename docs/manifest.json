@@ -123,10 +123,30 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Global.BossHealthBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Global.BossHealthBar.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Global.Bullet.yml",
       "output": {
         ".html": {
           "relative_path": "api/Global.Bullet.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Global.BulletHoleManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Global.BulletHoleManager.html"
         }
       },
       "version": ""
@@ -223,20 +243,20 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Global.DefaultPoolableGameObjectSaved.yml",
+      "source_relative_path": "api/Global.Enemy.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Global.DefaultPoolableGameObjectSaved.html"
+          "relative_path": "api/Global.Enemy.html"
         }
       },
       "version": ""
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Global.Enemy.yml",
+      "source_relative_path": "api/Global.FollowCamera.yml",
       "output": {
         ".html": {
-          "relative_path": "api/Global.Enemy.html"
+          "relative_path": "api/Global.FollowCamera.html"
         }
       },
       "version": ""
@@ -327,6 +347,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Global.HUDManagerUI.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Global.HealthBar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Global.HealthBar.html"
         }
       },
       "version": ""
@@ -613,26 +643,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Global.TestEntrance.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Global.TestEntrance.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Global.TestPoolControl.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Global.TestPoolControl.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Global.TimeSystemTest.yml",
       "output": {
         ".html": {
@@ -677,6 +687,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Global.UIGameStart.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Global.UIHealthBarZone.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Global.UIHealthBarZone.html"
         }
       },
       "version": ""
@@ -6763,10 +6783,30 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.yml",
       "output": {
         ".html": {
           "relative_path": "api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Runtime.Enemies.ViewControllers.Base.AbstractNormalEnemyViewController-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Runtime.Enemies.ViewControllers.Base.AbstractNormalEnemyViewController-1.html"
         }
       },
       "version": ""
@@ -7153,6 +7193,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Runtime.Inventory.Model.HotBarCategory.yml",
       "output": {
         ".html": {
@@ -7203,30 +7253,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Runtime.Inventory.Model.IResourceSlotsSystem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Runtime.Inventory.Model.IResourceSlotsSystem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Runtime.Inventory.Model.InventoryModel.yml",
       "output": {
         ".html": {
           "relative_path": "api/Runtime.Inventory.Model.InventoryModel.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Runtime.Inventory.Model.InventorySlot.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Runtime.Inventory.Model.InventorySlot.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Runtime.Inventory.Model.InventorySlotInfo.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Runtime.Inventory.Model.InventorySlotInfo.html"
         }
       },
       "version": ""
@@ -7283,30 +7323,10 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Runtime.Inventory.Model.OnInventoryReloadEvent.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Runtime.Inventory.Model.OnInventoryReloadEvent.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Runtime.Inventory.Model.OnInventorySlotAddedEvent.yml",
       "output": {
         ".html": {
           "relative_path": "api/Runtime.Inventory.Model.OnInventorySlotAddedEvent.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Runtime.Inventory.Model.OnInventorySlotUpdateEvent.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Runtime.Inventory.Model.OnInventorySlotUpdateEvent.html"
         }
       },
       "version": ""
@@ -7443,6 +7463,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Runtime.Player.PlayerEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Runtime.Player.PlayerEntity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Runtime.Player.PlayerInteractiveZone.yml",
       "output": {
         ".html": {
@@ -7573,30 +7603,10 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Runtime.RawMaterials.ViewControllers.AbstractRawMaterialViewController-1.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Runtime.RawMaterials.ViewControllers.Instances.CommonPickableRawMaterialViewController.yml",
       "output": {
         ".html": {
           "relative_path": "api/Runtime.RawMaterials.ViewControllers.Instances.CommonPickableRawMaterialViewController.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Runtime.RawMaterials.ViewControllers.Instances.CommonRawMaterialViewController.html"
         }
       },
       "version": ""
@@ -7643,16 +7653,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Runtime.Temporary.Boss1_TestEntity.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Runtime.Temporary.Boss1_TestEntity.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Runtime.Temporary.EnemyBomb.yml",
       "output": {
         ".html": {
@@ -7667,6 +7667,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Runtime.Temporary.MeteorBehavior.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Runtime.Temporary.Player.PlayerMovement.MovementState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Runtime.Temporary.Player.PlayerMovement.MovementState.html"
         }
       },
       "version": ""
@@ -8213,6 +8223,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Runtime.Weapons.GunRecoil.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Runtime.Weapons.GunRecoil.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Runtime.Weapons.Model.Base.IWeaponEntity.yml",
       "output": {
         ".html": {
@@ -8227,6 +8247,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Runtime.Weapons.Model.Base.IWeaponModel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.html"
         }
       },
       "version": ""

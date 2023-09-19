@@ -1,4 +1,5 @@
-﻿using Runtime.DataFramework.Entities;
+﻿using System.Collections.Generic;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
 using UnityEngine;
@@ -19,60 +20,61 @@ namespace Runtime.GameResources.ViewControllers {
 	public abstract class AbstractPickableInHandResourceViewController<T> : 
 		AbstractPickableResourceViewController<T>, IInHandResourceViewController
 		where T : class, IResourceEntity, new() {
-		protected Collider[] selfColliders;
+		
 		private LayerMask originalLayer;
 		protected bool isHolding = false;
 		protected Rigidbody rigidbody;
 		protected GameObject ownerGameObject = null;
+		protected float originalAutoRemovalTimeWhenNoAbsorb;
 
 		protected override void Awake() {
 			base.Awake();
 			originalLayer = gameObject.layer;
-			selfColliders = GetComponents<Collider>();
+			selfColliders = new Dictionary<Collider, bool>();
 			rigidbody = GetComponent<Rigidbody>();
+			
 		}
 
 		protected override void OnStartAbsorb() {
-			foreach (Collider selfCollider in selfColliders) {
-				selfCollider.isTrigger = true;
-			}
-
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 		}
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			foreach (Collider selfCollider in selfColliders) {
-				selfCollider.isTrigger = false;
-			}
+			
 			gameObject.layer = originalLayer;
 			isHolding = false;
 			rigidbody.isKinematic = false;
 			this.ownerGameObject = null;
+			entityAutoRemovalTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
 		}
+		
+		
 
 		protected override void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
 			if (isHolding) {
 				return;
 			}
+			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 			base.HandleAbsorb(player, zone);
 		}
 
-		public void OnStartHold(GameObject ownerGameObject) {
+		public virtual void OnStartHold(GameObject ownerGameObject) {
 			isHolding = true;
 			rigidbody.isKinematic = true;
-			foreach (Collider selfCollider in selfColliders) {
-				selfCollider.isTrigger = true;
+			foreach (Collider selfCollider in selfColliders.Keys) {
+				selfCollider.isTrigger = selfColliders[selfCollider];
 			}
+
+			originalAutoRemovalTimeWhenNoAbsorb = entityAutoRemovalTimeWhenNoAbsorb;
+			entityAutoRemovalTimeWhenNoAbsorb = -1;
 			this.ownerGameObject = ownerGameObject;
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 			OnUnPointByCrosshair();
 		}
 		
-		public void OnStopHold() {
-			isHolding = false;
-			rigidbody.isKinematic = false;
-			this.ownerGameObject = null;
+		public virtual void OnStopHold() {
+			
 			//gameObject.layer = originalLayer;
 			RecycleToCache();
 		}

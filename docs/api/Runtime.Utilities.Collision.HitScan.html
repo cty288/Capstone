@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Utilities_Collision_HitScan" data-uid="Runtime.Utilities.Collision.HitScan" class="text-break">
     Class HitScan
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -96,7 +96,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class HitScan : IHitDetector, IBelongToFaction</code></pre>
+    <pre><code class="lang-csharp hljs">public class HitScan : IHitDetector, IBelongToFaction, ICanGetUtility, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -115,6 +115,8 @@
     <dd>
       <div><a class="xref" href="Runtime.Utilities.Collision.IHitDetector.html">IHitDetector</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
     </dd>
   </dl>
 
@@ -156,16 +158,16 @@
 
   <a id="Runtime_Utilities_Collision_HitScan__ctor_" data-uid="Runtime.Utilities.Collision.HitScan.#ctor*"></a>
 
-  <h3 id="Runtime_Utilities_Collision_HitScan__ctor_Runtime_Utilities_Collision_IHitResponder_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_Faction_" data-uid="Runtime.Utilities.Collision.HitScan.#ctor(Runtime.Utilities.Collision.IHitResponder,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction)">
-  HitScan(IHitResponder, Faction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Utilities_Collision_HitScan__ctor_Runtime_Utilities_Collision_IHitResponder_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_Faction_UnityEngine_TrailRenderer_" data-uid="Runtime.Utilities.Collision.HitScan.#ctor(Runtime.Utilities.Collision.IHitResponder,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction,UnityEngine.TrailRenderer)">
+  HitScan(IHitResponder, Faction, TrailRenderer)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L37"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public HitScan(IHitResponder hitResponder, Faction faction)</code></pre>
+    <pre><code class="lang-csharp hljs">public HitScan(IHitResponder hitResponder, Faction faction, TrailRenderer tr)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -174,10 +176,106 @@
     <dd></dd>
     <dt><code>faction</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a></dt>
     <dd></dd>
+    <dt><code>tr</code> <span class="xref">TrailRenderer</span></dt>
+    <dd></dd>
   </dl>
 
 
 
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Runtime_Utilities_Collision_HitScan_bulletHoleDecal" data-uid="Runtime.Utilities.Collision.HitScan.bulletHoleDecal">
+  bulletHoleDecal
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject bulletHoleDecal</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">GameObject</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Utilities_Collision_HitScan_bulletHoleFadeTime" data-uid="Runtime.Utilities.Collision.HitScan.bulletHoleFadeTime">
+  bulletHoleFadeTime
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float bulletHoleFadeTime</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Utilities_Collision_HitScan_bulletHolesPool" data-uid="Runtime.Utilities.Collision.HitScan.bulletHolesPool">
+  bulletHolesPool
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObjectPool&lt;GameObject&gt; bulletHolesPool</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">ObjectPool</span>&lt;<span class="xref">GameObject</span>&gt;</dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -195,7 +293,7 @@
 
   <h3 id="Runtime_Utilities_Collision_HitScan_CurrentFaction" data-uid="Runtime.Utilities.Collision.HitScan.CurrentFaction">
   CurrentFaction
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L198"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
@@ -227,7 +325,7 @@
 
   <h3 id="Runtime_Utilities_Collision_HitScan_HitResponder" data-uid="Runtime.Utilities.Collision.HitScan.HitResponder">
   HitResponder
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -262,7 +360,7 @@
 
   <h3 id="Runtime_Utilities_Collision_HitScan_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_" data-uid="Runtime.Utilities.Collision.HitScan.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)">
   CheckHit(HitDetectorInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Called every frame to check for Raycast collision.</p>
@@ -290,11 +388,42 @@
 
 
 
+  <a id="Runtime_Utilities_Collision_HitScan_GetArchitecture_" data-uid="Runtime.Utilities.Collision.HitScan.GetArchitecture*"></a>
+
+  <h3 id="Runtime_Utilities_Collision_HitScan_GetArchitecture" data-uid="Runtime.Utilities.Collision.HitScan.GetArchitecture">
+  GetArchitecture()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IArchitecture GetArchitecture()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.Architecture.IArchitecture.html">IArchitecture</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L15" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitScan.cs/#L20" class="edit-link">Edit this page</a>
         </div>
 
         
