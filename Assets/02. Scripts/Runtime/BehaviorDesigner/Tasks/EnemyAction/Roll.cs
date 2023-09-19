@@ -8,7 +8,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     public class Roll : EnemyAction
     {
 
-
+        
         public SharedTransform playerTrans;
         Rigidbody rb;
         private Vector3 targetLocation;

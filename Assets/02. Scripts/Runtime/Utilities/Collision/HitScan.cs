@@ -72,6 +72,7 @@ namespace Runtime.Utilities.Collision
                 Random.Range(-spread, spread));
             shootDir.Normalize();
             
+            
             HitData hitData = null;
             RaycastHit hit;
             
