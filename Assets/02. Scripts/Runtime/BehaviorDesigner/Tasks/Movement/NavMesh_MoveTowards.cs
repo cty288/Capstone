@@ -1,5 +1,6 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using BehaviorDesigner.Runtime.Tasks.Movement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +8,7 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
 {
     [TaskCategory("Unity/NavMeshAgent")]
     [TaskDescription("Like other MoveTowards but uses the NavMesh.")]
-    public class NavMesh_MoveTowards : Action
+    public class NavMesh_MoveTowards : NavMeshMovement
     {
         [global::BehaviorDesigner.Runtime.Tasks.Tooltip("The agent has arrived when the magnitude is less than this value")]
         [UnityEngine.Serialization.FormerlySerializedAs("arriveDistance")]

@@ -12,8 +12,11 @@ namespace Runtime.Weapons
         private Vector3 currentRotation;
         private Vector3 targetRotation;
 
+         //negative is upwards, positive downwards
         [SerializeField] private float recoilX;
+        //positive to right
         [SerializeField] private float recoilY;
+        //screen shake
         [SerializeField] private float recoilZ;
 
         [SerializeField] private float snappiness;
@@ -34,7 +37,9 @@ namespace Runtime.Weapons
 
         public void RecoilFire()
         {
-            targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+            // targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ)); // original
+            targetRotation += new Vector3(recoilX, Random.Range(0, recoilY), Random.Range(-recoilZ, recoilZ)); // 0 to number
+            // targetRotation += new Vector3(recoilX, recoilY, recoilZ); // exact numbers
         }
 
         private void Recoil(OnWeaponRecoilEvent e)
