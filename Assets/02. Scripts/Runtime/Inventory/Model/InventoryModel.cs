@@ -84,7 +84,7 @@ namespace Runtime.Inventory.Model {
 
 
 		
-		public static int MaxSlotCount = 27;
+		public static int MaxSlotCount = 32;
 		
 		public static Dictionary<HotBarCategory, int> MaxHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
 			{HotBarCategory.Right, 3},
