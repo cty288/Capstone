@@ -27,9 +27,7 @@ namespace Runtime.Enemies
     {
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "Boss1";
-
-        [field: ES3Serializable]
-        public bool ShellStatus { get; set; } = true;
+        
         public override void OnRecycle()
         {
 
@@ -45,14 +43,21 @@ namespace Runtime.Enemies
             return null;
         }
 
-        protected override ICustomProperty[] OnRegisterCustomProperties() {
-            return null;
+        protected override ICustomProperty[] OnRegisterCustomProperties()
+        {
+            return new[] {new AutoConfigCustomProperty("shellHealthInfo")};
         }
 
         
     }
     public class Boss1 : AbstractBossViewController<Boss1Entity>
     {
+        
+        public int MaxShellHealth { get; }
+        
+        public int CurrentShellHealth { get; }
+        
+        public bool ShellClosed { get; }
         [Header("HitResponder_Info")]
         [SerializeField] private int m_damage = 10;
         public Animator animator;
@@ -89,6 +94,10 @@ namespace Runtime.Enemies
 
         protected override void OnEntityStart()
         {
+            //binding
+            BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
+            BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
+            BindCustomData<bool>("ShellClosed","shellHealthInfo","shellClosed",OnShellStatusChanged);
             //Animation-related.
             // animator = GetComponent<Animator>();
             animationSMBManager = GetComponent<AnimationSMBManager>();
@@ -113,10 +122,17 @@ namespace Runtime.Enemies
                 //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();
         }
-
+        
         protected void OnShellStatusChanged(bool oldValue,bool newValue)
         {
-            Debug.Log("Shell status changed to:" + newValue);
+            if (newValue)
+            {
+                //TODO: close shell
+            }
+            else
+            {
+                //TODO: open shell
+            }
         }
         private void Update()
         {
@@ -130,6 +146,29 @@ namespace Runtime.Enemies
             {
                 default:
                     break;
+            }
+        }
+
+        public override void HurtResponse(HitData data)
+        {
+            if (ShellClosed)
+            {
+                IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
+                shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,shellHp.Value.CurrentHealth-data.Damage);
+            }
+            BoundEntity.TakeDamage(data.Damage,data.Attacker);
+        }
+
+        public void ChangeShellStatus(bool newStatus)
+        {
+            IBindableProperty shellStatus = BoundEntity.GetCustomDataValue("shellHealthInfo", "shellClosed");
+            if (shellStatus.Value != newStatus)
+            {
+                shellStatus.Value = newStatus;
+                if (newStatus)
+                {
+                    BoundEntity.IsInvincible.Value = true;
+                }
             }
         }
     }
