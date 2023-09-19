@@ -27,14 +27,28 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 
 		protected IEnemyEntityModel enemyModel;
+		
+		protected HealthBar currentHealthBar = null;
 
 		public int Damage => GetCurrentHitDamage();
 		private List<GameObject> hitObjects = new List<GameObject>();
+		
+		
 		protected abstract int GetCurrentHitDamage();
 
 		protected override void Awake() {
 			base.Awake();
 			enemyModel = this.GetModel<IEnemyEntityModel>();
+		}
+
+		protected abstract HealthBar OnSpawnHealthBar();
+
+		protected abstract void OnDestroyHealthBar(HealthBar healthBar);
+
+		protected override void OnStart() {
+			base.OnStart();
+			currentHealthBar = OnSpawnHealthBar();
+			currentHealthBar.OnSetEntity(BoundEntity);
 		}
 
 		protected override void OnBindEntityProperty() {
@@ -81,7 +95,12 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
 			
 		}
-		
+
+		public override void OnRecycled() {
+			base.OnRecycled();
+			OnDestroyHealthBar(currentHealthBar);
+		}
+
 		public bool CheckHit(HitData data) {
 			if (data.Hurtbox.Owner == gameObject) { return false; }
 			else if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }

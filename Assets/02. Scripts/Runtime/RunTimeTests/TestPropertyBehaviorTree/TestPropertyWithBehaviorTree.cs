@@ -107,6 +107,14 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             return Attack1Damage;
         }
 
+        protected override HealthBar OnSpawnHealthBar() {
+            return null;
+        }
+
+        protected override void OnDestroyHealthBar(HealthBar healthBar) {
+            
+        }
+
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<TestEntity> builder) {
             if (!isVariant) {
                 return builder.

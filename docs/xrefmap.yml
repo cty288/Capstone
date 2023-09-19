@@ -459,6 +459,25 @@ references:
   commentId: F:Global.AttackPlayer.Damage
   fullName: AttackPlayer.Damage
   nameWithType: AttackPlayer.Damage
+- uid: Global.BossHealthBar
+  name: BossHealthBar
+  href: api/Global.BossHealthBar.html
+  commentId: T:Global.BossHealthBar
+  fullName: BossHealthBar
+  nameWithType: BossHealthBar
+- uid: Global.BossHealthBar.OnSetEntity(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable)
+  name: OnSetEntity(IDamageable)
+  href: api/Global.BossHealthBar.html#Global_BossHealthBar_OnSetEntity_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_IDamageable_
+  commentId: M:Global.BossHealthBar.OnSetEntity(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable)
+  fullName: BossHealthBar.OnSetEntity(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable)
+  nameWithType: BossHealthBar.OnSetEntity(IDamageable)
+- uid: Global.BossHealthBar.OnSetEntity*
+  name: OnSetEntity
+  href: api/Global.BossHealthBar.html#Global_BossHealthBar_OnSetEntity_
+  commentId: Overload:Global.BossHealthBar.OnSetEntity
+  isSpec: "True"
+  fullName: BossHealthBar.OnSetEntity
+  nameWithType: BossHealthBar.OnSetEntity
 - uid: Global.Bullet
   name: Bullet
   href: api/Global.Bullet.html
@@ -1814,6 +1833,12 @@ references:
   commentId: T:Global.Enemy
   fullName: Enemy
   nameWithType: Enemy
+- uid: Global.FollowCamera
+  name: FollowCamera
+  href: api/Global.FollowCamera.html
+  commentId: T:Global.FollowCamera
+  fullName: FollowCamera
+  nameWithType: FollowCamera
 - uid: Global.FullBulletCommand
   name: FullBulletCommand
   href: api/Global.FullBulletCommand.html
@@ -2254,6 +2279,25 @@ references:
   isSpec: "True"
   fullName: HUDManagerUI.SpawnHUDElement
   nameWithType: HUDManagerUI.SpawnHUDElement
+- uid: Global.HealthBar
+  name: HealthBar
+  href: api/Global.HealthBar.html
+  commentId: T:Global.HealthBar
+  fullName: HealthBar
+  nameWithType: HealthBar
+- uid: Global.HealthBar.OnSetEntity(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable)
+  name: OnSetEntity(IDamageable)
+  href: api/Global.HealthBar.html#Global_HealthBar_OnSetEntity_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_IDamageable_
+  commentId: M:Global.HealthBar.OnSetEntity(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable)
+  fullName: HealthBar.OnSetEntity(Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable)
+  nameWithType: HealthBar.OnSetEntity(IDamageable)
+- uid: Global.HealthBar.OnSetEntity*
+  name: OnSetEntity
+  href: api/Global.HealthBar.html#Global_HealthBar_OnSetEntity_
+  commentId: Overload:Global.HealthBar.OnSetEntity
+  isSpec: "True"
+  fullName: HealthBar.OnSetEntity
+  nameWithType: HealthBar.OnSetEntity
 - uid: Global.HurtPlayerCommand
   name: HurtPlayerCommand
   href: api/Global.HurtPlayerCommand.html
@@ -2954,6 +2998,51 @@ references:
   commentId: T:Global.UIGameStart
   fullName: UIGameStart
   nameWithType: UIGameStart
+- uid: Global.UIHealthBarZone
+  name: UIHealthBarZone
+  href: api/Global.UIHealthBarZone.html
+  commentId: T:Global.UIHealthBarZone
+  fullName: UIHealthBarZone
+  nameWithType: UIHealthBarZone
+- uid: Global.UIHealthBarZone.OnSingletonInit
+  name: OnSingletonInit()
+  href: api/Global.UIHealthBarZone.html#Global_UIHealthBarZone_OnSingletonInit
+  commentId: M:Global.UIHealthBarZone.OnSingletonInit
+  fullName: UIHealthBarZone.OnSingletonInit()
+  nameWithType: UIHealthBarZone.OnSingletonInit()
+- uid: Global.UIHealthBarZone.OnSingletonInit*
+  name: OnSingletonInit
+  href: api/Global.UIHealthBarZone.html#Global_UIHealthBarZone_OnSingletonInit_
+  commentId: Overload:Global.UIHealthBarZone.OnSingletonInit
+  isSpec: "True"
+  fullName: UIHealthBarZone.OnSingletonInit
+  nameWithType: UIHealthBarZone.OnSingletonInit
+- uid: Global.UIHealthBarZone.Singleton
+  name: Singleton
+  href: api/Global.UIHealthBarZone.html#Global_UIHealthBarZone_Singleton
+  commentId: P:Global.UIHealthBarZone.Singleton
+  fullName: UIHealthBarZone.Singleton
+  nameWithType: UIHealthBarZone.Singleton
+- uid: Global.UIHealthBarZone.Singleton*
+  name: Singleton
+  href: api/Global.UIHealthBarZone.html#Global_UIHealthBarZone_Singleton_
+  commentId: Overload:Global.UIHealthBarZone.Singleton
+  isSpec: "True"
+  fullName: UIHealthBarZone.Singleton
+  nameWithType: UIHealthBarZone.Singleton
+- uid: Global.UIHealthBarZone.SpawnHealthBarObject(HealthBar)
+  name: SpawnHealthBarObject(HealthBar)
+  href: api/Global.UIHealthBarZone.html#Global_UIHealthBarZone_SpawnHealthBarObject_HealthBar_
+  commentId: M:Global.UIHealthBarZone.SpawnHealthBarObject(HealthBar)
+  fullName: UIHealthBarZone.SpawnHealthBarObject(HealthBar)
+  nameWithType: UIHealthBarZone.SpawnHealthBarObject(HealthBar)
+- uid: Global.UIHealthBarZone.SpawnHealthBarObject*
+  name: SpawnHealthBarObject
+  href: api/Global.UIHealthBarZone.html#Global_UIHealthBarZone_SpawnHealthBarObject_
+  commentId: Overload:Global.UIHealthBarZone.SpawnHealthBarObject
+  isSpec: "True"
+  fullName: UIHealthBarZone.SpawnHealthBarObject
+  nameWithType: UIHealthBarZone.SpawnHealthBarObject
 - uid: Global.WeaponInventorySlotLayoutViewController
   name: WeaponInventorySlotLayoutViewController
   href: api/Global.WeaponInventorySlotLayoutViewController.html
@@ -31461,6 +31550,49 @@ references:
   commentId: N:Runtime.Enemies.ViewControllers.Base
   fullName: Runtime.Enemies.ViewControllers.Base
   nameWithType: Runtime.Enemies.ViewControllers.Base
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1
+  name: AbstractBossViewController<T>
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html
+  commentId: T:Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1
+  name.vb: AbstractBossViewController(Of T)
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController<T>
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController(Of T)
+  nameWithType: AbstractBossViewController<T>
+  nameWithType.vb: AbstractBossViewController(Of T)
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1.OnDestroyHealthBar(HealthBar)
+  name: OnDestroyHealthBar(HealthBar)
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractBossViewController_1_OnDestroyHealthBar_HealthBar_
+  commentId: M:Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1.OnDestroyHealthBar(HealthBar)
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController<T>.OnDestroyHealthBar(HealthBar)
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController(Of T).OnDestroyHealthBar(HealthBar)
+  nameWithType: AbstractBossViewController<T>.OnDestroyHealthBar(HealthBar)
+  nameWithType.vb: AbstractBossViewController(Of T).OnDestroyHealthBar(HealthBar)
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1.OnDestroyHealthBar*
+  name: OnDestroyHealthBar
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractBossViewController_1_OnDestroyHealthBar_
+  commentId: Overload:Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1.OnDestroyHealthBar
+  isSpec: "True"
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController<T>.OnDestroyHealthBar
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController(Of T).OnDestroyHealthBar
+  nameWithType: AbstractBossViewController<T>.OnDestroyHealthBar
+  nameWithType.vb: AbstractBossViewController(Of T).OnDestroyHealthBar
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1.OnSpawnHealthBar
+  name: OnSpawnHealthBar()
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractBossViewController_1_OnSpawnHealthBar
+  commentId: M:Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1.OnSpawnHealthBar
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController<T>.OnSpawnHealthBar()
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController(Of T).OnSpawnHealthBar()
+  nameWithType: AbstractBossViewController<T>.OnSpawnHealthBar()
+  nameWithType.vb: AbstractBossViewController(Of T).OnSpawnHealthBar()
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1.OnSpawnHealthBar*
+  name: OnSpawnHealthBar
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractBossViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractBossViewController_1_OnSpawnHealthBar_
+  commentId: Overload:Runtime.Enemies.ViewControllers.Base.AbstractBossViewController`1.OnSpawnHealthBar
+  isSpec: "True"
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController<T>.OnSpawnHealthBar
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractBossViewController(Of T).OnSpawnHealthBar
+  nameWithType: AbstractBossViewController<T>.OnSpawnHealthBar
+  nameWithType.vb: AbstractBossViewController(Of T).OnSpawnHealthBar
 - uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1
   name: AbstractEnemyViewController<T>
   href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html
@@ -31694,6 +31826,23 @@ references:
   fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnCurrentHealthChanged
   nameWithType: AbstractEnemyViewController<T>.OnCurrentHealthChanged
   nameWithType.vb: AbstractEnemyViewController(Of T).OnCurrentHealthChanged
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnDestroyHealthBar(HealthBar)
+  name: OnDestroyHealthBar(HealthBar)
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnDestroyHealthBar_HealthBar_
+  commentId: M:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnDestroyHealthBar(HealthBar)
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnDestroyHealthBar(HealthBar)
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnDestroyHealthBar(HealthBar)
+  nameWithType: AbstractEnemyViewController<T>.OnDestroyHealthBar(HealthBar)
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnDestroyHealthBar(HealthBar)
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnDestroyHealthBar*
+  name: OnDestroyHealthBar
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnDestroyHealthBar_
+  commentId: Overload:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnDestroyHealthBar
+  isSpec: "True"
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnDestroyHealthBar
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnDestroyHealthBar
+  nameWithType: AbstractEnemyViewController<T>.OnDestroyHealthBar
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnDestroyHealthBar
 - uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
   name: OnEntityDie(IBelongToFaction)
   href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnEntityDie_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_
@@ -31729,6 +31878,57 @@ references:
   fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnInitEnemyEntity
   nameWithType: AbstractEnemyViewController<T>.OnInitEnemyEntity
   nameWithType.vb: AbstractEnemyViewController(Of T).OnInitEnemyEntity
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnRecycled
+  name: OnRecycled()
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnRecycled
+  commentId: M:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnRecycled
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnRecycled()
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnRecycled()
+  nameWithType: AbstractEnemyViewController<T>.OnRecycled()
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnRecycled()
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnRecycled*
+  name: OnRecycled
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnRecycled_
+  commentId: Overload:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnRecycled
+  isSpec: "True"
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnRecycled
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnRecycled
+  nameWithType: AbstractEnemyViewController<T>.OnRecycled
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnRecycled
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnSpawnHealthBar
+  name: OnSpawnHealthBar()
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnSpawnHealthBar
+  commentId: M:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnSpawnHealthBar
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnSpawnHealthBar()
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnSpawnHealthBar()
+  nameWithType: AbstractEnemyViewController<T>.OnSpawnHealthBar()
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnSpawnHealthBar()
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnSpawnHealthBar*
+  name: OnSpawnHealthBar
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnSpawnHealthBar_
+  commentId: Overload:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnSpawnHealthBar
+  isSpec: "True"
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnSpawnHealthBar
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnSpawnHealthBar
+  nameWithType: AbstractEnemyViewController<T>.OnSpawnHealthBar
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnSpawnHealthBar
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnStart
+  name: OnStart()
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnStart
+  commentId: M:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnStart
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnStart()
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnStart()
+  nameWithType: AbstractEnemyViewController<T>.OnStart()
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnStart()
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnStart*
+  name: OnStart
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_OnStart_
+  commentId: Overload:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.OnStart
+  isSpec: "True"
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.OnStart
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).OnStart
+  nameWithType: AbstractEnemyViewController<T>.OnStart
+  nameWithType.vb: AbstractEnemyViewController(Of T).OnStart
 - uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.WaitingForDeathCondition
   name: WaitingForDeathCondition()
   href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_WaitingForDeathCondition
@@ -31746,6 +31946,14 @@ references:
   fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).WaitingForDeathCondition
   nameWithType: AbstractEnemyViewController<T>.WaitingForDeathCondition
   nameWithType.vb: AbstractEnemyViewController(Of T).WaitingForDeathCondition
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.currentHealthBar
+  name: currentHealthBar
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_currentHealthBar
+  commentId: F:Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.currentHealthBar
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController<T>.currentHealthBar
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).currentHealthBar
+  nameWithType: AbstractEnemyViewController<T>.currentHealthBar
+  nameWithType.vb: AbstractEnemyViewController(Of T).currentHealthBar
 - uid: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController`1.enemyModel
   name: enemyModel
   href: api/Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController-1.html#Runtime_Enemies_ViewControllers_Base_AbstractEnemyViewController_1_enemyModel
@@ -31754,6 +31962,15 @@ references:
   fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractEnemyViewController(Of T).enemyModel
   nameWithType: AbstractEnemyViewController<T>.enemyModel
   nameWithType.vb: AbstractEnemyViewController(Of T).enemyModel
+- uid: Runtime.Enemies.ViewControllers.Base.AbstractNormalEnemyViewController`1
+  name: AbstractNormalEnemyViewController<T>
+  href: api/Runtime.Enemies.ViewControllers.Base.AbstractNormalEnemyViewController-1.html
+  commentId: T:Runtime.Enemies.ViewControllers.Base.AbstractNormalEnemyViewController`1
+  name.vb: AbstractNormalEnemyViewController(Of T)
+  fullName: Runtime.Enemies.ViewControllers.Base.AbstractNormalEnemyViewController<T>
+  fullName.vb: Runtime.Enemies.ViewControllers.Base.AbstractNormalEnemyViewController(Of T)
+  nameWithType: AbstractNormalEnemyViewController<T>
+  nameWithType.vb: AbstractNormalEnemyViewController(Of T)
 - uid: Runtime.GameResources
   name: Runtime.GameResources
   href: api/Runtime.GameResources.html
@@ -34922,6 +35139,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.ViewController.ResourceSlotViewController.SetSlot
   nameWithType: ResourceSlotViewController.SetSlot
+- uid: Runtime.Inventory.ViewController.ResourceSlotViewController.Slot
+  name: Slot
+  href: api/Runtime.Inventory.ViewController.ResourceSlotViewController.html#Runtime_Inventory_ViewController_ResourceSlotViewController_Slot
+  commentId: P:Runtime.Inventory.ViewController.ResourceSlotViewController.Slot
+  fullName: Runtime.Inventory.ViewController.ResourceSlotViewController.Slot
+  nameWithType: ResourceSlotViewController.Slot
+- uid: Runtime.Inventory.ViewController.ResourceSlotViewController.Slot*
+  name: Slot
+  href: api/Runtime.Inventory.ViewController.ResourceSlotViewController.html#Runtime_Inventory_ViewController_ResourceSlotViewController_Slot_
+  commentId: Overload:Runtime.Inventory.ViewController.ResourceSlotViewController.Slot
+  isSpec: "True"
+  fullName: Runtime.Inventory.ViewController.ResourceSlotViewController.Slot
+  nameWithType: ResourceSlotViewController.Slot
 - uid: Runtime.Inventory.ViewController.ResourceSlotViewController.isSelected
   name: isSelected
   href: api/Runtime.Inventory.ViewController.ResourceSlotViewController.html#Runtime_Inventory_ViewController_ResourceSlotViewController_isSelected
@@ -35974,112 +36204,90 @@ references:
   commentId: T:Runtime.Temporary.PlayerController
   fullName: Runtime.Temporary.PlayerController
   nameWithType: PlayerController
-- uid: Runtime.Temporary.PlayerController.CheckHit(Runtime.Utilities.Collision.HitData)
-  name: CheckHit(HitData)
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_CheckHit_Runtime_Utilities_Collision_HitData_
-  commentId: M:Runtime.Temporary.PlayerController.CheckHit(Runtime.Utilities.Collision.HitData)
-  fullName: Runtime.Temporary.PlayerController.CheckHit(Runtime.Utilities.Collision.HitData)
-  nameWithType: PlayerController.CheckHit(HitData)
-- uid: Runtime.Temporary.PlayerController.CheckHit*
-  name: CheckHit
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_CheckHit_
-  commentId: Overload:Runtime.Temporary.PlayerController.CheckHit
+- uid: Runtime.Temporary.PlayerController.OnBindEntityProperty
+  name: OnBindEntityProperty()
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnBindEntityProperty
+  commentId: M:Runtime.Temporary.PlayerController.OnBindEntityProperty
+  fullName: Runtime.Temporary.PlayerController.OnBindEntityProperty()
+  nameWithType: PlayerController.OnBindEntityProperty()
+- uid: Runtime.Temporary.PlayerController.OnBindEntityProperty*
+  name: OnBindEntityProperty
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnBindEntityProperty_
+  commentId: Overload:Runtime.Temporary.PlayerController.OnBindEntityProperty
   isSpec: "True"
-  fullName: Runtime.Temporary.PlayerController.CheckHit
-  nameWithType: PlayerController.CheckHit
-- uid: Runtime.Temporary.PlayerController.CheckHurt(Runtime.Utilities.Collision.HitData)
-  name: CheckHurt(HitData)
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_CheckHurt_Runtime_Utilities_Collision_HitData_
-  commentId: M:Runtime.Temporary.PlayerController.CheckHurt(Runtime.Utilities.Collision.HitData)
-  fullName: Runtime.Temporary.PlayerController.CheckHurt(Runtime.Utilities.Collision.HitData)
-  nameWithType: PlayerController.CheckHurt(HitData)
-- uid: Runtime.Temporary.PlayerController.CheckHurt*
-  name: CheckHurt
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_CheckHurt_
-  commentId: Overload:Runtime.Temporary.PlayerController.CheckHurt
+  fullName: Runtime.Temporary.PlayerController.OnBindEntityProperty
+  nameWithType: PlayerController.OnBindEntityProperty
+- uid: Runtime.Temporary.PlayerController.OnBuildNewEntity
+  name: OnBuildNewEntity()
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnBuildNewEntity
+  commentId: M:Runtime.Temporary.PlayerController.OnBuildNewEntity
+  fullName: Runtime.Temporary.PlayerController.OnBuildNewEntity()
+  nameWithType: PlayerController.OnBuildNewEntity()
+- uid: Runtime.Temporary.PlayerController.OnBuildNewEntity*
+  name: OnBuildNewEntity
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnBuildNewEntity_
+  commentId: Overload:Runtime.Temporary.PlayerController.OnBuildNewEntity
   isSpec: "True"
-  fullName: Runtime.Temporary.PlayerController.CheckHurt
-  nameWithType: PlayerController.CheckHurt
-- uid: Runtime.Temporary.PlayerController.CurrentFaction
-  name: CurrentFaction
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_CurrentFaction
-  commentId: P:Runtime.Temporary.PlayerController.CurrentFaction
-  fullName: Runtime.Temporary.PlayerController.CurrentFaction
-  nameWithType: PlayerController.CurrentFaction
-- uid: Runtime.Temporary.PlayerController.CurrentFaction*
-  name: CurrentFaction
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_CurrentFaction_
-  commentId: Overload:Runtime.Temporary.PlayerController.CurrentFaction
+  fullName: Runtime.Temporary.PlayerController.OnBuildNewEntity
+  nameWithType: PlayerController.OnBuildNewEntity
+- uid: Runtime.Temporary.PlayerController.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name: OnEntityDie(IBelongToFaction)
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnEntityDie_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_
+  commentId: M:Runtime.Temporary.PlayerController.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  fullName: Runtime.Temporary.PlayerController.OnEntityDie(Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  nameWithType: PlayerController.OnEntityDie(IBelongToFaction)
+- uid: Runtime.Temporary.PlayerController.OnEntityDie*
+  name: OnEntityDie
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnEntityDie_
+  commentId: Overload:Runtime.Temporary.PlayerController.OnEntityDie
   isSpec: "True"
-  fullName: Runtime.Temporary.PlayerController.CurrentFaction
-  nameWithType: PlayerController.CurrentFaction
-- uid: Runtime.Temporary.PlayerController.Damage
-  name: Damage
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_Damage
-  commentId: P:Runtime.Temporary.PlayerController.Damage
-  fullName: Runtime.Temporary.PlayerController.Damage
-  nameWithType: PlayerController.Damage
-- uid: Runtime.Temporary.PlayerController.Damage*
-  name: Damage
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_Damage_
-  commentId: Overload:Runtime.Temporary.PlayerController.Damage
+  fullName: Runtime.Temporary.PlayerController.OnEntityDie
+  nameWithType: PlayerController.OnEntityDie
+- uid: Runtime.Temporary.PlayerController.OnEntityHeal(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name: OnEntityHeal(int, int, IBelongToFaction)
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnEntityHeal_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_
+  commentId: M:Runtime.Temporary.PlayerController.OnEntityHeal(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name.vb: OnEntityHeal(Integer, Integer, IBelongToFaction)
+  fullName: Runtime.Temporary.PlayerController.OnEntityHeal(int, int, Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  fullName.vb: Runtime.Temporary.PlayerController.OnEntityHeal(Integer, Integer, Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  nameWithType: PlayerController.OnEntityHeal(int, int, IBelongToFaction)
+  nameWithType.vb: PlayerController.OnEntityHeal(Integer, Integer, IBelongToFaction)
+- uid: Runtime.Temporary.PlayerController.OnEntityHeal*
+  name: OnEntityHeal
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnEntityHeal_
+  commentId: Overload:Runtime.Temporary.PlayerController.OnEntityHeal
   isSpec: "True"
-  fullName: Runtime.Temporary.PlayerController.Damage
-  nameWithType: PlayerController.Damage
-- uid: Runtime.Temporary.PlayerController.HitResponse(Runtime.Utilities.Collision.HitData)
-  name: HitResponse(HitData)
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_HitResponse_Runtime_Utilities_Collision_HitData_
-  commentId: M:Runtime.Temporary.PlayerController.HitResponse(Runtime.Utilities.Collision.HitData)
-  fullName: Runtime.Temporary.PlayerController.HitResponse(Runtime.Utilities.Collision.HitData)
-  nameWithType: PlayerController.HitResponse(HitData)
-- uid: Runtime.Temporary.PlayerController.HitResponse*
-  name: HitResponse
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_HitResponse_
-  commentId: Overload:Runtime.Temporary.PlayerController.HitResponse
+  fullName: Runtime.Temporary.PlayerController.OnEntityHeal
+  nameWithType: PlayerController.OnEntityHeal
+- uid: Runtime.Temporary.PlayerController.OnEntityStart
+  name: OnEntityStart()
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnEntityStart
+  commentId: M:Runtime.Temporary.PlayerController.OnEntityStart
+  fullName: Runtime.Temporary.PlayerController.OnEntityStart()
+  nameWithType: PlayerController.OnEntityStart()
+- uid: Runtime.Temporary.PlayerController.OnEntityStart*
+  name: OnEntityStart
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnEntityStart_
+  commentId: Overload:Runtime.Temporary.PlayerController.OnEntityStart
   isSpec: "True"
-  fullName: Runtime.Temporary.PlayerController.HitResponse
-  nameWithType: PlayerController.HitResponse
-- uid: Runtime.Temporary.PlayerController.HurtResponse(Runtime.Utilities.Collision.HitData)
-  name: HurtResponse(HitData)
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_HurtResponse_Runtime_Utilities_Collision_HitData_
-  commentId: M:Runtime.Temporary.PlayerController.HurtResponse(Runtime.Utilities.Collision.HitData)
-  fullName: Runtime.Temporary.PlayerController.HurtResponse(Runtime.Utilities.Collision.HitData)
-  nameWithType: PlayerController.HurtResponse(HitData)
-- uid: Runtime.Temporary.PlayerController.HurtResponse*
-  name: HurtResponse
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_HurtResponse_
-  commentId: Overload:Runtime.Temporary.PlayerController.HurtResponse
+  fullName: Runtime.Temporary.PlayerController.OnEntityStart
+  nameWithType: PlayerController.OnEntityStart
+- uid: Runtime.Temporary.PlayerController.OnEntityTakeDamage(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name: OnEntityTakeDamage(int, int, IBelongToFaction)
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnEntityTakeDamage_System_Int32_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_
+  commentId: M:Runtime.Temporary.PlayerController.OnEntityTakeDamage(System.Int32,System.Int32,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  name.vb: OnEntityTakeDamage(Integer, Integer, IBelongToFaction)
+  fullName: Runtime.Temporary.PlayerController.OnEntityTakeDamage(int, int, Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  fullName.vb: Runtime.Temporary.PlayerController.OnEntityTakeDamage(Integer, Integer, Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction)
+  nameWithType: PlayerController.OnEntityTakeDamage(int, int, IBelongToFaction)
+  nameWithType.vb: PlayerController.OnEntityTakeDamage(Integer, Integer, IBelongToFaction)
+- uid: Runtime.Temporary.PlayerController.OnEntityTakeDamage*
+  name: OnEntityTakeDamage
+  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_OnEntityTakeDamage_
+  commentId: Overload:Runtime.Temporary.PlayerController.OnEntityTakeDamage
   isSpec: "True"
-  fullName: Runtime.Temporary.PlayerController.HurtResponse
-  nameWithType: PlayerController.HurtResponse
-- uid: Runtime.Temporary.PlayerController.TakeDamage(System.Int32)
-  name: TakeDamage(int)
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_TakeDamage_System_Int32_
-  commentId: M:Runtime.Temporary.PlayerController.TakeDamage(System.Int32)
-  name.vb: TakeDamage(Integer)
-  fullName: Runtime.Temporary.PlayerController.TakeDamage(int)
-  fullName.vb: Runtime.Temporary.PlayerController.TakeDamage(Integer)
-  nameWithType: PlayerController.TakeDamage(int)
-  nameWithType.vb: PlayerController.TakeDamage(Integer)
-- uid: Runtime.Temporary.PlayerController.TakeDamage*
-  name: TakeDamage
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_TakeDamage_
-  commentId: Overload:Runtime.Temporary.PlayerController.TakeDamage
-  isSpec: "True"
-  fullName: Runtime.Temporary.PlayerController.TakeDamage
-  nameWithType: PlayerController.TakeDamage
-- uid: Runtime.Temporary.PlayerController.curHealth
-  name: curHealth
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_curHealth
-  commentId: F:Runtime.Temporary.PlayerController.curHealth
-  fullName: Runtime.Temporary.PlayerController.curHealth
-  nameWithType: PlayerController.curHealth
-- uid: Runtime.Temporary.PlayerController.maxHealth
-  name: maxHealth
-  href: api/Runtime.Temporary.PlayerController.html#Runtime_Temporary_PlayerController_maxHealth
-  commentId: F:Runtime.Temporary.PlayerController.maxHealth
-  fullName: Runtime.Temporary.PlayerController.maxHealth
-  nameWithType: PlayerController.maxHealth
+  fullName: Runtime.Temporary.PlayerController.OnEntityTakeDamage
+  nameWithType: PlayerController.OnEntityTakeDamage
 - uid: Runtime.Temporary.SceneDebug
   name: SceneDebug
   href: api/Runtime.Temporary.SceneDebug.html
@@ -38753,6 +38961,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.ConfigSheet.ConfigDatas.OnSingletonInit
   nameWithType: ConfigDatas.OnSingletonInit
+- uid: Runtime.Utilities.ConfigSheet.ConfigDatas.PlayerEntityConfigTable
+  name: PlayerEntityConfigTable
+  href: api/Runtime.Utilities.ConfigSheet.ConfigDatas.html#Runtime_Utilities_ConfigSheet_ConfigDatas_PlayerEntityConfigTable
+  commentId: P:Runtime.Utilities.ConfigSheet.ConfigDatas.PlayerEntityConfigTable
+  fullName: Runtime.Utilities.ConfigSheet.ConfigDatas.PlayerEntityConfigTable
+  nameWithType: ConfigDatas.PlayerEntityConfigTable
+- uid: Runtime.Utilities.ConfigSheet.ConfigDatas.PlayerEntityConfigTable*
+  name: PlayerEntityConfigTable
+  href: api/Runtime.Utilities.ConfigSheet.ConfigDatas.html#Runtime_Utilities_ConfigSheet_ConfigDatas_PlayerEntityConfigTable_
+  commentId: Overload:Runtime.Utilities.ConfigSheet.ConfigDatas.PlayerEntityConfigTable
+  isSpec: "True"
+  fullName: Runtime.Utilities.ConfigSheet.ConfigDatas.PlayerEntityConfigTable
+  nameWithType: ConfigDatas.PlayerEntityConfigTable
 - uid: Runtime.Utilities.ConfigSheet.ConfigDatas.RawMaterialEntityConfigTable
   name: RawMaterialEntityConfigTable
   href: api/Runtime.Utilities.ConfigSheet.ConfigDatas.html#Runtime_Utilities_ConfigSheet_ConfigDatas_RawMaterialEntityConfigTable

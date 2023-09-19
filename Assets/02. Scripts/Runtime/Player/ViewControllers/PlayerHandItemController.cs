@@ -8,6 +8,7 @@ using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
+using Runtime.Utilities;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
@@ -15,15 +16,15 @@ using Object = UnityEngine.Object;
 
 public class PlayerHandItemController : AbstractMikroController<MainGame> {
 	private IInventoryModel inventoryModel;
-	private Transform leftHandTr;
-	private Transform rightHandTr;
+	[SerializeField] private Transform leftHandTr;
+	[SerializeField] private Transform rightHandTr;
 
 	private Dictionary<HotBarCategory, IInHandResourceViewController> inHandResourceViewControllers =
 		new Dictionary<HotBarCategory, IInHandResourceViewController>();
 	private void Awake() {
 		inventoryModel = this.GetModel<IInventoryModel>();
-		leftHandTr = transform.Find("CameraRecoil/Camholder//Cameraroot/LeftHandSpawnPos");
-		rightHandTr = transform.Find("CameraRecoil/Camholder/Cameraroot/RightHandSpawnPos");
+		//leftHandTr = transform.Find("Camera/CameraFollower/LeftHandSpawnPos");
+		//rightHandTr = transform.Find("Camera/CameraFollower/RightHandSpawnPos");
 
 		SwitchHandItem(HotBarCategory.Left,
 			GlobalGameResourceEntities.GetAnyResource(inventoryModel.GetSelectedHotBarSlot(HotBarCategory.Left)
@@ -34,7 +35,7 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 				.GetLastItemUUID()));
 		
 		this.RegisterEvent<OnCurrentHotbarUpdateEvent>(OnCurrentHotbarUpdate)
-			.UnRegisterWhenGameObjectDestroyed(gameObject);
+			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 	}
 
 	private void OnCurrentHotbarUpdate(OnCurrentHotbarUpdateEvent e) {
