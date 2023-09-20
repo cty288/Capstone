@@ -41,26 +41,6 @@ namespace Runtime.Utilities.Collision
         }
 
         /// <summary>
-        /// Sets the data of the hit. Used for HitBox.
-        /// </summary>
-        /// <param name="hitResponder"></param>
-        /// <param name="hurtbox"></param>
-        /// <param name="hit"></param>
-        /// <param name="hitDetector"></param>
-        /// <param name="hitBoxCenter"></param>
-        /// <returns>Returns HitData object.</returns>
-        public HitData SetHitBoxData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector, Vector3 hitBoxCenter)
-        {
-            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultiplier);
-            HitPoint = hit.point == Vector3.zero ? hitBoxCenter : hit.point;
-            HitNormal = hit.normal;
-            Hurtbox = hurtbox;
-            HitDetector = hitDetector;
-            Attacker = hitResponder;
-            return this;
-        }
-
-        /// <summary>
         /// Checks if the HitData created is valid (doesn't hit itself, responders exist, etc.
         /// </summary>
         /// <returns>Returns true if valid HitData.</returns>

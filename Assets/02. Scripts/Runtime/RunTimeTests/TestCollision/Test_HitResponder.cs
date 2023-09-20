@@ -32,7 +32,6 @@ namespace Runtime.RunTimeTests.TestCollision
         [SerializeField] private GameObject hitParticlePrefab;
 
         private List<GameObject> hitObjects = new List<GameObject>();
-        private HitDetectorInfo hitDetectorInfo;
 
         public int Damage => m_damage;
         
