@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Runtime.GameResources.Model.Base;
+using Runtime.Inventory.ViewController;
 
 namespace Runtime.Inventory.Model {
 	[Serializable]
 	public class ResourceSlot {
-		public static ResourceSlot currentHoveredSlot = null;
+		public static ResourceSlotViewController currentHoveredSlot = null;
 		[ES3Serializable]
 		private string ItemKey = null;
 		//public int Quantity = 0;

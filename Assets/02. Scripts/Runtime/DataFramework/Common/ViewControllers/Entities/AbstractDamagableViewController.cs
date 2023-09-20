@@ -72,7 +72,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			return BoundEntity.CheckCanTakeDamage(data.Attacker);
 		}
 
-		public void HurtResponse(HitData data) {
+		public virtual void HurtResponse(HitData data) {
 			BoundEntity.TakeDamage(data.Damage,data.Attacker);
 		}
 	}

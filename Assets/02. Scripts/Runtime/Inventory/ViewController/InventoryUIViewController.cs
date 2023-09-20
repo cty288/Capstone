@@ -14,10 +14,12 @@ namespace Runtime.Inventory.ViewController {
        
         [SerializeField] private InventorySlotLayoutViewController mainSlotLayoutViewController;
         [SerializeField] private List<InventorySlotLayoutViewController> hotBarSlotLayoutViewControllersInspector;
+        
 
+       
 
-        private Dictionary<HotBarCategory, InventorySlotLayoutViewController> hotBarSlotLayoutViewControllers =
-            new Dictionary<HotBarCategory, InventorySlotLayoutViewController>();
+        private Dictionary<HotBarCategory, List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewControllers =
+            new Dictionary<HotBarCategory, List<InventorySlotLayoutViewController>>();
         
         
         private RubbishSlotViewController rubbishSlotViewController;
@@ -34,11 +36,16 @@ namespace Runtime.Inventory.ViewController {
             gameObject.SetActive(true);
             inventoryModel = this.GetModel<IInventoryModel>();
             foreach (InventorySlotLayoutViewController slotLayoutViewController in hotBarSlotLayoutViewControllersInspector) {
-                hotBarSlotLayoutViewControllers.Add(slotLayoutViewController.HotBarCategory, slotLayoutViewController);
+                if (!hotBarSlotLayoutViewControllers.ContainsKey(slotLayoutViewController.HotBarCategory)) {
+                    hotBarSlotLayoutViewControllers.Add(slotLayoutViewController.HotBarCategory, new List<InventorySlotLayoutViewController>());
+                }
+
+                hotBarSlotLayoutViewControllers[slotLayoutViewController.HotBarCategory].Add(slotLayoutViewController);
             }
             
             rubbishSlotViewController = GetComponentInChildren<RubbishSlotViewController>(true);
-            
+
+           
             // inventorySystem.InitOnGameStart();
             this.RegisterEvent<OnInventorySlotAddedEvent>(OnInventorySlotAdded)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
@@ -49,6 +56,8 @@ namespace Runtime.Inventory.ViewController {
             this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             
+            
+            
            SetInitialSlots();
            gameObject.SetActive(false);
         }
@@ -57,7 +66,11 @@ namespace Runtime.Inventory.ViewController {
 
         private void OnInventoryHotBarSlotAdded(OnInventoryHotBarSlotAddedEvent e) {
             if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
-                controller.OnInventorySlotAdded(e.AddedSlots, e.AddedCount);
+                controller.ForEach(slotLayoutViewController => {
+                    slotLayoutViewController.OnInventorySlotAdded(
+                        inventoryModel.GetHotBarSlots(e.Category),
+                        inventoryModel.GetHotBarSlotCount(e.Category));
+                });
             }
         }
 
@@ -67,16 +80,21 @@ namespace Runtime.Inventory.ViewController {
 
             
             
+            
             rubbishSlotViewController.SetSlot(new RubbishSlot());
             
-            foreach (KeyValuePair<HotBarCategory,InventorySlotLayoutViewController> hotBarSlotLayoutViewController in hotBarSlotLayoutViewControllers) {
-                
-                hotBarSlotLayoutViewController.Value.OnInventorySlotAdded(
-                    inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key),
-                    inventoryModel.GetHotBarSlotCount(hotBarSlotLayoutViewController.Key));
+            foreach (KeyValuePair<HotBarCategory,List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewController in hotBarSlotLayoutViewControllers) {
 
-                if (hotBarSlotLayoutViewController.Value.ShowSlotItemWhenInventoryUIClosed) {
-                    hotBarSlotLayoutViewController.Value.OnShowSlotItem();
+                List<InventorySlotLayoutViewController> slotLayoutViewControllers =
+                    hotBarSlotLayoutViewController.Value;
+                    
+                foreach (InventorySlotLayoutViewController slotLayoutViewController in slotLayoutViewControllers) {
+                    slotLayoutViewController.OnInventorySlotAdded(
+                                       inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key),
+                                       inventoryModel.GetHotBarSlotCount(hotBarSlotLayoutViewController.Key));
+                    if (slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                        slotLayoutViewController.OnShowSlotItem();
+                    }
                 }
             }
 
@@ -97,11 +115,16 @@ namespace Runtime.Inventory.ViewController {
         public override void OnOpen(UIMsg msg) {
             mainSlotLayoutViewController.OnShowSlotItem();
             
-            foreach (KeyValuePair<HotBarCategory,InventorySlotLayoutViewController> hotBarSlotLayoutViewController 
+            foreach (KeyValuePair<HotBarCategory,List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewController 
                      in hotBarSlotLayoutViewControllers) {
                 
-                if (!hotBarSlotLayoutViewController.Value.ShowSlotItemWhenInventoryUIClosed) {
-                    hotBarSlotLayoutViewController.Value.OnShowSlotItem();
+                List<InventorySlotLayoutViewController> slotLayoutViewControllers =
+                    hotBarSlotLayoutViewController.Value;
+                
+                foreach (InventorySlotLayoutViewController slotLayoutViewController in slotLayoutViewControllers) {
+                    if (!slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                        slotLayoutViewController.OnShowSlotItem();
+                    }
                 }
             }
             
@@ -112,18 +135,25 @@ namespace Runtime.Inventory.ViewController {
         private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
             Debug.Log("OnHotBarSlotSelected");
             if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
-                controller.OnSelected(e.SelectedIndex);
+                
+                foreach (InventorySlotLayoutViewController slotLayoutViewController in controller) {
+                    slotLayoutViewController.OnSelected(e.SelectedIndex);
+                }
             }
         }
         public override void OnClosed() {
             mainSlotLayoutViewController.OnHideSlotItem();
             
-            foreach (KeyValuePair<HotBarCategory,InventorySlotLayoutViewController> hotBarSlotLayoutViewController 
+            foreach (KeyValuePair<HotBarCategory,List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewController 
                      in hotBarSlotLayoutViewControllers) {
-                
-                if (!hotBarSlotLayoutViewController.Value.ShowSlotItemWhenInventoryUIClosed) {
-                    hotBarSlotLayoutViewController.Value.OnHideSlotItem();
+
+                foreach (InventorySlotLayoutViewController inventorySlotLayoutViewController in hotBarSlotLayoutViewController.Value) {
+                    if (!inventorySlotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                        inventorySlotLayoutViewController.OnHideSlotItem();
+                    }
                 }
+                
+               
             }
             
             rubbishSlotViewController.Activate(false);

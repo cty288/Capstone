@@ -82,6 +82,8 @@ namespace Runtime.Weapons
         public GameObject model;
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
+        public GameObject defaultGunModel;
+        public GameObject reloadGunModel;
         
         public TrailRenderer trailRenderer;
         public LayerMask layer;
@@ -167,19 +169,8 @@ namespace Runtime.Weapons
                     }
                     else
                     {
-                        isReloading = true;
+                        StartCoroutine(ReloadChangeModel());
                     }
-                }
-
-                if (isReloading && (reloadTimer >= BoundEntity.GetReloadSpeed().RealValue))
-                {
-                    BoundEntity.Reload();
-                    StartCoroutine(ReloadAnimation());
-                    reloadTimer = 0f;
-                }
-                else if (isReloading)
-                {
-                    reloadTimer += Time.deltaTime;
                 }
 
                 // Scope
@@ -207,29 +198,21 @@ namespace Runtime.Weapons
         //     holdInteraction.duration = BoundEntity.GetChargeSpeed().RealValue.Value;
         //     Debug.Log(holdInteraction.duration);
         // }
-        
-        private IEnumerator ReloadAnimation()
-        {
-            float startTime = 0f;
-            float dipTime = 0.25f;
 
-            Vector3 lowerPosition = new Vector3(gunPositionTransform.position.x,
-                gunPositionTransform.position.y - 0.2f, gunPositionTransform.position.z);
+        private IEnumerator ReloadChangeModel()
+        {
+            isReloading = true;
+
+            defaultGunModel.SetActive(false);
+            reloadGunModel.SetActive(true);
+
+            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
             
-            while ((dipTime - startTime) / dipTime > 0f)
-            {
-                model.transform.position = Vector3.Lerp(
-                    gunPositionTransform.position,
-                    lowerPosition,
-                    (dipTime - startTime) / dipTime);
-                
-                startTime += Time.deltaTime;
-                yield return null;
-            }
-            
-            yield return null;
+            defaultGunModel.SetActive(true);
+            reloadGunModel.SetActive(false);
             isReloading = false;
-        } 
+            BoundEntity.Reload();
+        }
         
         private IEnumerator ScopeIn()
         {
@@ -272,7 +255,8 @@ namespace Runtime.Weapons
 
             if (reloadAfter)
             {
-                isReloading = true;
+                // isReloading = true;
+                StartCoroutine(ReloadChangeModel());
             }
         }
 

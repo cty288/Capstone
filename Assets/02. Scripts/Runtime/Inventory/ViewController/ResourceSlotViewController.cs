@@ -36,19 +36,29 @@ namespace Runtime.Inventory.ViewController {
         private Image selectedBG;
         protected bool isSelected = false;
 
+        protected Image slotBG;
         public static GameObject pointerDownObject = null;
+
+        [SerializeField] private Sprite filledSlotBG;
+        [SerializeField] private Sprite unfilledSlotBG;
+        [SerializeField] private float hoverBGAlpha = 1f;
+        [SerializeField] private bool turnUnSelectedBGOffWhenSelected = true;
         protected virtual void Awake() {
             numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
             spawnPoint = transform.Find("InventoryItemSpawnPos");
-            slotHoverBG = transform.Find("SlotHoverBG").GetComponent<Image>();
+            slotBG = transform.Find("SlotBG").GetComponent<Image>();
+            slotHoverBG = transform.Find("SlotHoverBG")?.GetComponent<Image>();
             //descriptionPanel = transform.Find("DescriptionTag").GetComponent<SlotResourceDescriptionPanel>();
             button = GetComponent<Button>();
             descriptionPanelFollowTr = transform.Find("DescriptionFollowTr");
             currentDescriptionPanel = HUDManagerUI.Singleton
                 .SpawnHUDElement(descriptionPanelFollowTr, "DescriptionTag", HUDCategory.SlotDescription, false)
                 .GetComponent<SlotResourceDescriptionPanel>();
-            selectedBG = transform.Find("SelectedBG").GetComponent<Image>();
-            selectedBG.gameObject.SetActive(false);
+            selectedBG = transform.Find("SelectedBG")?.GetComponent<Image>();
+            if (selectedBG) {
+                selectedBG.gameObject.SetActive(false);
+            }
+            
             
             currentDescriptionPanel.Hide();
             //descriptionPanel.Awake();
@@ -148,6 +158,7 @@ namespace Runtime.Inventory.ViewController {
             IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
             int totalCount = slot.GetQuantity();
             if (topItem == null || totalCount == 0) {
+                slotBG.sprite = unfilledSlotBG;
                 return;
             }
 
@@ -172,11 +183,12 @@ namespace Runtime.Inventory.ViewController {
             rectTransform.offsetMax = new Vector2(-10, -10);
         
             numberText.text = totalCount.ToString();
+            slotBG.sprite = filledSlotBG;
 
             if (currentDescriptionPanel) {
                 currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription());
                 
-                if (ResourceSlot.currentHoveredSlot == slot) {
+                if (ResourceSlot.currentHoveredSlot == this) {
                     currentDescriptionPanel.Show();
                 }
             }
@@ -213,8 +225,11 @@ namespace Runtime.Inventory.ViewController {
 
 
         public void OnPointerEnter(PointerEventData eventData) {
-            slotHoverBG.DOFade(0.5f, 0.2f);
-            ResourceSlot.currentHoveredSlot = slot;
+            if (slotHoverBG) {
+                slotHoverBG.DOFade(hoverBGAlpha, 0.2f);
+            }
+            
+            ResourceSlot.currentHoveredSlot = this;
             if (slot.GetQuantity() > 0) {
                 if (currentDescriptionPanel) {
                     IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
@@ -228,7 +243,10 @@ namespace Runtime.Inventory.ViewController {
         }
 
         public void OnPointerExit(PointerEventData eventData) {
-           slotHoverBG.DOFade(0, 0.2f);
+            if (slotHoverBG) {
+                slotHoverBG.DOFade(0, 0.2f);
+            }
+            
            ResourceSlot.currentHoveredSlot = null;
            if (currentDescriptionPanel) {
                currentDescriptionPanel.Hide();
@@ -236,7 +254,7 @@ namespace Runtime.Inventory.ViewController {
         }
 
         private void Update() {
-            if (ResourceSlot.currentHoveredSlot == slot) {
+            if (ResourceSlot.currentHoveredSlot == this) {
                 descriptionPanelFollowTr.position = Input.mousePosition;
             }
             
@@ -250,8 +268,18 @@ namespace Runtime.Inventory.ViewController {
             StopDragImmediately();
         }
 
-        public void SetSelected(bool selected) {
-            selectedBG.gameObject.SetActive(selected);
+        public virtual void SetSelected(bool selected) {
+            if (selectedBG) {
+                selectedBG.gameObject.SetActive(selected);
+            }
+
+            slotBG.gameObject.SetActive(true);
+            if (selected) {
+                if (turnUnSelectedBGOffWhenSelected) {
+                    slotBG.gameObject.SetActive(false);
+                }
+            }
+
             isSelected = selected;
         }
 

@@ -39,6 +39,8 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         isShowing = false;
     }
 
+
+
     private IEnumerator RebuildLayout() {
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         yield return null;
