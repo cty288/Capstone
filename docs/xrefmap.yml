@@ -484,12 +484,6 @@ references:
   commentId: T:Global.Bullet
   fullName: Bullet
   nameWithType: Bullet
-- uid: Global.BulletHoleManager
-  name: BulletHoleManager
-  href: api/Global.BulletHoleManager.html
-  commentId: T:Global.BulletHoleManager
-  fullName: BulletHoleManager
-  nameWithType: BulletHoleManager
 - uid: Global.BulletPickItem
   name: BulletPickItem
   href: api/Global.BulletPickItem.html
@@ -2694,6 +2688,12 @@ references:
   isSpec: "True"
   fullName: PlayerModel.OnInit
   nameWithType: PlayerModel.OnInit
+- uid: Global.RandomNavMeshMovement
+  name: RandomNavMeshMovement
+  href: api/Global.RandomNavMeshMovement.html
+  commentId: T:Global.RandomNavMeshMovement
+  fullName: RandomNavMeshMovement
+  nameWithType: RandomNavMeshMovement
 - uid: Global.ReloadCommand
   name: ReloadCommand
   href: api/Global.ReloadCommand.html
@@ -21770,6 +21770,56 @@ references:
   commentId: F:Runtime.BehaviorDesigner.Tasks.EnemyAction.GoToNextStage.currentStage
   fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.GoToNextStage.currentStage
   nameWithType: GoToNextStage.currentStage
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl
+  name: Howl
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.html
+  commentId: T:Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl
+  nameWithType: Howl
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnAwake
+  name: OnAwake()
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_OnAwake
+  commentId: M:Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnAwake
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnAwake()
+  nameWithType: Howl.OnAwake()
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnAwake*
+  name: OnAwake
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_OnAwake_
+  commentId: Overload:Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnAwake
+  isSpec: "True"
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnAwake
+  nameWithType: Howl.OnAwake
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnUpdate
+  name: OnUpdate()
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_OnUpdate
+  commentId: M:Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnUpdate
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnUpdate()
+  nameWithType: Howl.OnUpdate()
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnUpdate*
+  name: OnUpdate
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_OnUpdate_
+  commentId: Overload:Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnUpdate
+  isSpec: "True"
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnUpdate
+  nameWithType: Howl.OnUpdate
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.howlAnimationName
+  name: howlAnimationName
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_howlAnimationName
+  commentId: F:Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.howlAnimationName
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.howlAnimationName
+  nameWithType: Howl.howlAnimationName
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.howling
+  name: howling
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_howling
+  commentId: F:Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.howling
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.howling
+  nameWithType: Howl.howling
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.tigerAnimator
+  name: tigerAnimator
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_tigerAnimator
+  commentId: F:Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.tigerAnimator
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.tigerAnimator
+  nameWithType: Howl.tigerAnimator
 - uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.Meteor
   name: Meteor
   href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.Meteor.html
@@ -22200,6 +22250,69 @@ references:
   commentId: F:Runtime.BehaviorDesigner.Tasks.Movement.NavMesh_MoveTowards.targetGameObject
   fullName: Runtime.BehaviorDesigner.Tasks.Movement.NavMesh_MoveTowards.targetGameObject
   nameWithType: NavMesh_MoveTowards.targetGameObject
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround
+  name: WalkAround
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html
+  commentId: T:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround
+  nameWithType: WalkAround
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnReset
+  name: OnReset()
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_OnReset
+  commentId: M:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnReset
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnReset()
+  nameWithType: WalkAround.OnReset()
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnReset*
+  name: OnReset
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_OnReset_
+  commentId: Overload:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnReset
+  isSpec: "True"
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnReset
+  nameWithType: WalkAround.OnReset
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnStart
+  name: OnStart()
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_OnStart
+  commentId: M:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnStart
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnStart()
+  nameWithType: WalkAround.OnStart()
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnStart*
+  name: OnStart
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_OnStart_
+  commentId: Overload:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnStart
+  isSpec: "True"
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnStart
+  nameWithType: WalkAround.OnStart
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnUpdate
+  name: OnUpdate()
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_OnUpdate
+  commentId: M:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnUpdate
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnUpdate()
+  nameWithType: WalkAround.OnUpdate()
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnUpdate*
+  name: OnUpdate
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_OnUpdate_
+  commentId: Overload:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnUpdate
+  isSpec: "True"
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.OnUpdate
+  nameWithType: WalkAround.OnUpdate
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.m_ArriveDistance
+  name: m_ArriveDistance
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_m_ArriveDistance
+  commentId: F:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.m_ArriveDistance
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.m_ArriveDistance
+  nameWithType: WalkAround.m_ArriveDistance
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.m_Target
+  name: m_Target
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_m_Target
+  commentId: F:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.m_Target
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.m_Target
+  nameWithType: WalkAround.m_Target
+- uid: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.targetGameObject
+  name: targetGameObject
+  href: api/Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.html#Runtime_BehaviorDesigner_Tasks_Movement_WalkAround_targetGameObject
+  commentId: F:Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.targetGameObject
+  fullName: Runtime.BehaviorDesigner.Tasks.Movement.WalkAround.targetGameObject
+  nameWithType: WalkAround.targetGameObject
 - uid: Runtime.Controls
   name: Runtime.Controls
   href: api/Runtime.Controls.html
@@ -30554,6 +30667,35 @@ references:
   commentId: T:Runtime.Enemies.Boss1
   fullName: Runtime.Enemies.Boss1
   nameWithType: Boss1
+- uid: Runtime.Enemies.Boss1.ChangeShellStatus(System.Boolean)
+  name: ChangeShellStatus(bool)
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_ChangeShellStatus_System_Boolean_
+  commentId: M:Runtime.Enemies.Boss1.ChangeShellStatus(System.Boolean)
+  name.vb: ChangeShellStatus(Boolean)
+  fullName: Runtime.Enemies.Boss1.ChangeShellStatus(bool)
+  fullName.vb: Runtime.Enemies.Boss1.ChangeShellStatus(Boolean)
+  nameWithType: Boss1.ChangeShellStatus(bool)
+  nameWithType.vb: Boss1.ChangeShellStatus(Boolean)
+- uid: Runtime.Enemies.Boss1.ChangeShellStatus*
+  name: ChangeShellStatus
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_ChangeShellStatus_
+  commentId: Overload:Runtime.Enemies.Boss1.ChangeShellStatus
+  isSpec: "True"
+  fullName: Runtime.Enemies.Boss1.ChangeShellStatus
+  nameWithType: Boss1.ChangeShellStatus
+- uid: Runtime.Enemies.Boss1.CurrentShellHealth
+  name: CurrentShellHealth
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_CurrentShellHealth
+  commentId: P:Runtime.Enemies.Boss1.CurrentShellHealth
+  fullName: Runtime.Enemies.Boss1.CurrentShellHealth
+  nameWithType: Boss1.CurrentShellHealth
+- uid: Runtime.Enemies.Boss1.CurrentShellHealth*
+  name: CurrentShellHealth
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_CurrentShellHealth_
+  commentId: Overload:Runtime.Enemies.Boss1.CurrentShellHealth
+  isSpec: "True"
+  fullName: Runtime.Enemies.Boss1.CurrentShellHealth
+  nameWithType: Boss1.CurrentShellHealth
 - uid: Runtime.Enemies.Boss1.GetCurrentHitDamage
   name: GetCurrentHitDamage()
   href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_GetCurrentHitDamage
@@ -30567,6 +30709,32 @@ references:
   isSpec: "True"
   fullName: Runtime.Enemies.Boss1.GetCurrentHitDamage
   nameWithType: Boss1.GetCurrentHitDamage
+- uid: Runtime.Enemies.Boss1.HurtResponse(Runtime.Utilities.Collision.HitData)
+  name: HurtResponse(HitData)
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_HurtResponse_Runtime_Utilities_Collision_HitData_
+  commentId: M:Runtime.Enemies.Boss1.HurtResponse(Runtime.Utilities.Collision.HitData)
+  fullName: Runtime.Enemies.Boss1.HurtResponse(Runtime.Utilities.Collision.HitData)
+  nameWithType: Boss1.HurtResponse(HitData)
+- uid: Runtime.Enemies.Boss1.HurtResponse*
+  name: HurtResponse
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_HurtResponse_
+  commentId: Overload:Runtime.Enemies.Boss1.HurtResponse
+  isSpec: "True"
+  fullName: Runtime.Enemies.Boss1.HurtResponse
+  nameWithType: Boss1.HurtResponse
+- uid: Runtime.Enemies.Boss1.MaxShellHealth
+  name: MaxShellHealth
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_MaxShellHealth
+  commentId: P:Runtime.Enemies.Boss1.MaxShellHealth
+  fullName: Runtime.Enemies.Boss1.MaxShellHealth
+  nameWithType: Boss1.MaxShellHealth
+- uid: Runtime.Enemies.Boss1.MaxShellHealth*
+  name: MaxShellHealth
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_MaxShellHealth_
+  commentId: Overload:Runtime.Enemies.Boss1.MaxShellHealth
+  isSpec: "True"
+  fullName: Runtime.Enemies.Boss1.MaxShellHealth
+  nameWithType: Boss1.MaxShellHealth
 - uid: Runtime.Enemies.Boss1.OnAnimationEvent(System.String)
   name: OnAnimationEvent(string)
   href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_OnAnimationEvent_System_String_
@@ -30660,6 +30828,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Enemies.Boss1.OnShellStatusChanged
   nameWithType: Boss1.OnShellStatusChanged
+- uid: Runtime.Enemies.Boss1.ShellClosed
+  name: ShellClosed
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_ShellClosed
+  commentId: P:Runtime.Enemies.Boss1.ShellClosed
+  fullName: Runtime.Enemies.Boss1.ShellClosed
+  nameWithType: Boss1.ShellClosed
+- uid: Runtime.Enemies.Boss1.ShellClosed*
+  name: ShellClosed
+  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_ShellClosed_
+  commentId: Overload:Runtime.Enemies.Boss1.ShellClosed
+  isSpec: "True"
+  fullName: Runtime.Enemies.Boss1.ShellClosed
+  nameWithType: Boss1.ShellClosed
 - uid: Runtime.Enemies.Boss1.WaitingForDeathCondition
   name: WaitingForDeathCondition()
   href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_WaitingForDeathCondition
@@ -30765,19 +30946,6 @@ references:
   isSpec: "True"
   fullName: Runtime.Enemies.Boss1Entity.OnRegisterCustomProperties
   nameWithType: Boss1Entity.OnRegisterCustomProperties
-- uid: Runtime.Enemies.Boss1Entity.ShellStatus
-  name: ShellStatus
-  href: api/Runtime.Enemies.Boss1Entity.html#Runtime_Enemies_Boss1Entity_ShellStatus
-  commentId: P:Runtime.Enemies.Boss1Entity.ShellStatus
-  fullName: Runtime.Enemies.Boss1Entity.ShellStatus
-  nameWithType: Boss1Entity.ShellStatus
-- uid: Runtime.Enemies.Boss1Entity.ShellStatus*
-  name: ShellStatus
-  href: api/Runtime.Enemies.Boss1Entity.html#Runtime_Enemies_Boss1Entity_ShellStatus_
-  commentId: Overload:Runtime.Enemies.Boss1Entity.ShellStatus
-  isSpec: "True"
-  fullName: Runtime.Enemies.Boss1Entity.ShellStatus
-  nameWithType: Boss1Entity.ShellStatus
 - uid: Runtime.Enemies.Model
   name: Runtime.Enemies.Model
   href: api/Runtime.Enemies.Model.html
@@ -35164,6 +35332,12 @@ references:
   commentId: F:Runtime.Inventory.ViewController.ResourceSlotViewController.pointerDownObject
   fullName: Runtime.Inventory.ViewController.ResourceSlotViewController.pointerDownObject
   nameWithType: ResourceSlotViewController.pointerDownObject
+- uid: Runtime.Inventory.ViewController.ResourceSlotViewController.slotBG
+  name: slotBG
+  href: api/Runtime.Inventory.ViewController.ResourceSlotViewController.html#Runtime_Inventory_ViewController_ResourceSlotViewController_slotBG
+  commentId: F:Runtime.Inventory.ViewController.ResourceSlotViewController.slotBG
+  fullName: Runtime.Inventory.ViewController.ResourceSlotViewController.slotBG
+  nameWithType: ResourceSlotViewController.slotBG
 - uid: Runtime.Player
   name: Runtime.Player
   href: api/Runtime.Player.html
@@ -35903,6 +36077,28 @@ references:
   commentId: T:Runtime.Temporary.Player.PlayerMovement
   fullName: Runtime.Temporary.Player.PlayerMovement
   nameWithType: PlayerMovement
+- uid: Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(Runtime.Temporary.Player.PlayerMovement.HeadBobData)
+  name: ChangeBobVars(HeadBobData)
+  href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_ChangeBobVars_Runtime_Temporary_Player_PlayerMovement_HeadBobData_
+  commentId: M:Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(Runtime.Temporary.Player.PlayerMovement.HeadBobData)
+  fullName: Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(Runtime.Temporary.Player.PlayerMovement.HeadBobData)
+  nameWithType: PlayerMovement.ChangeBobVars(PlayerMovement.HeadBobData)
+- uid: Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(System.Single,System.Single)
+  name: ChangeBobVars(float, float)
+  href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_ChangeBobVars_System_Single_System_Single_
+  commentId: M:Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(System.Single,System.Single)
+  name.vb: ChangeBobVars(Single, Single)
+  fullName: Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(float, float)
+  fullName.vb: Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(Single, Single)
+  nameWithType: PlayerMovement.ChangeBobVars(float, float)
+  nameWithType.vb: PlayerMovement.ChangeBobVars(Single, Single)
+- uid: Runtime.Temporary.Player.PlayerMovement.ChangeBobVars*
+  name: ChangeBobVars
+  href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_ChangeBobVars_
+  commentId: Overload:Runtime.Temporary.Player.PlayerMovement.ChangeBobVars
+  isSpec: "True"
+  fullName: Runtime.Temporary.Player.PlayerMovement.ChangeBobVars
+  nameWithType: PlayerMovement.ChangeBobVars
 - uid: Runtime.Temporary.Player.PlayerMovement.DoCamTilt(System.Single)
   name: DoCamTilt(float)
   href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_DoCamTilt_System_Single_
@@ -35932,6 +36128,43 @@ references:
   isSpec: "True"
   fullName: Runtime.Temporary.Player.PlayerMovement.GetSlopeMoveDirection
   nameWithType: PlayerMovement.GetSlopeMoveDirection
+- uid: Runtime.Temporary.Player.PlayerMovement.HeadBobData
+  name: PlayerMovement.HeadBobData
+  href: api/Runtime.Temporary.Player.PlayerMovement.HeadBobData.html
+  commentId: T:Runtime.Temporary.Player.PlayerMovement.HeadBobData
+  fullName: Runtime.Temporary.Player.PlayerMovement.HeadBobData
+  nameWithType: PlayerMovement.HeadBobData
+- uid: Runtime.Temporary.Player.PlayerMovement.HeadBobData.#ctor(System.Single,System.Single)
+  name: HeadBobData(float, float)
+  href: api/Runtime.Temporary.Player.PlayerMovement.HeadBobData.html#Runtime_Temporary_Player_PlayerMovement_HeadBobData__ctor_System_Single_System_Single_
+  commentId: M:Runtime.Temporary.Player.PlayerMovement.HeadBobData.#ctor(System.Single,System.Single)
+  name.vb: New(Single, Single)
+  fullName: Runtime.Temporary.Player.PlayerMovement.HeadBobData.HeadBobData(float, float)
+  fullName.vb: Runtime.Temporary.Player.PlayerMovement.HeadBobData.New(Single, Single)
+  nameWithType: PlayerMovement.HeadBobData.HeadBobData(float, float)
+  nameWithType.vb: PlayerMovement.HeadBobData.New(Single, Single)
+- uid: Runtime.Temporary.Player.PlayerMovement.HeadBobData.#ctor*
+  name: HeadBobData
+  href: api/Runtime.Temporary.Player.PlayerMovement.HeadBobData.html#Runtime_Temporary_Player_PlayerMovement_HeadBobData__ctor_
+  commentId: Overload:Runtime.Temporary.Player.PlayerMovement.HeadBobData.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Runtime.Temporary.Player.PlayerMovement.HeadBobData.HeadBobData
+  fullName.vb: Runtime.Temporary.Player.PlayerMovement.HeadBobData.New
+  nameWithType: PlayerMovement.HeadBobData.HeadBobData
+  nameWithType.vb: PlayerMovement.HeadBobData.New
+- uid: Runtime.Temporary.Player.PlayerMovement.HeadBobData.AmplitudeGain
+  name: AmplitudeGain
+  href: api/Runtime.Temporary.Player.PlayerMovement.HeadBobData.html#Runtime_Temporary_Player_PlayerMovement_HeadBobData_AmplitudeGain
+  commentId: F:Runtime.Temporary.Player.PlayerMovement.HeadBobData.AmplitudeGain
+  fullName: Runtime.Temporary.Player.PlayerMovement.HeadBobData.AmplitudeGain
+  nameWithType: PlayerMovement.HeadBobData.AmplitudeGain
+- uid: Runtime.Temporary.Player.PlayerMovement.HeadBobData.FrequencyGain
+  name: FrequencyGain
+  href: api/Runtime.Temporary.Player.PlayerMovement.HeadBobData.html#Runtime_Temporary_Player_PlayerMovement_HeadBobData_FrequencyGain
+  commentId: F:Runtime.Temporary.Player.PlayerMovement.HeadBobData.FrequencyGain
+  fullName: Runtime.Temporary.Player.PlayerMovement.HeadBobData.FrequencyGain
+  nameWithType: PlayerMovement.HeadBobData.FrequencyGain
 - uid: Runtime.Temporary.Player.PlayerMovement.MovementState
   name: PlayerMovement.MovementState
   href: api/Runtime.Temporary.Player.PlayerMovement.MovementState.html
@@ -36018,18 +36251,6 @@ references:
   commentId: F:Runtime.Temporary.Player.PlayerMovement.exitWallTime
   fullName: Runtime.Temporary.Player.PlayerMovement.exitWallTime
   nameWithType: PlayerMovement.exitWallTime
-- uid: Runtime.Temporary.Player.PlayerMovement.fpsBotClamp
-  name: fpsBotClamp
-  href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_fpsBotClamp
-  commentId: F:Runtime.Temporary.Player.PlayerMovement.fpsBotClamp
-  fullName: Runtime.Temporary.Player.PlayerMovement.fpsBotClamp
-  nameWithType: PlayerMovement.fpsBotClamp
-- uid: Runtime.Temporary.Player.PlayerMovement.fpsTopClamp
-  name: fpsTopClamp
-  href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_fpsTopClamp
-  commentId: F:Runtime.Temporary.Player.PlayerMovement.fpsTopClamp
-  fullName: Runtime.Temporary.Player.PlayerMovement.fpsTopClamp
-  nameWithType: PlayerMovement.fpsTopClamp
 - uid: Runtime.Temporary.Player.PlayerMovement.gravityCounterForce
   name: gravityCounterForce
   href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_gravityCounterForce
@@ -36150,12 +36371,6 @@ references:
   commentId: F:Runtime.Temporary.Player.PlayerMovement.useGravity
   fullName: Runtime.Temporary.Player.PlayerMovement.useGravity
   nameWithType: PlayerMovement.useGravity
-- uid: Runtime.Temporary.Player.PlayerMovement.vcam
-  name: vcam
-  href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_vcam
-  commentId: F:Runtime.Temporary.Player.PlayerMovement.vcam
-  fullName: Runtime.Temporary.Player.PlayerMovement.vcam
-  nameWithType: PlayerMovement.vcam
 - uid: Runtime.Temporary.Player.PlayerMovement.walkSpeed
   name: walkSpeed
   href: api/Runtime.Temporary.Player.PlayerMovement.html#Runtime_Temporary_Player_PlayerMovement_walkSpeed
@@ -40860,6 +41075,12 @@ references:
   commentId: F:Runtime.Weapons.RustyPistol.autoReload
   fullName: Runtime.Weapons.RustyPistol.autoReload
   nameWithType: RustyPistol.autoReload
+- uid: Runtime.Weapons.RustyPistol.defaultGunModel
+  name: defaultGunModel
+  href: api/Runtime.Weapons.RustyPistol.html#Runtime_Weapons_RustyPistol_defaultGunModel
+  commentId: F:Runtime.Weapons.RustyPistol.defaultGunModel
+  fullName: Runtime.Weapons.RustyPistol.defaultGunModel
+  nameWithType: RustyPistol.defaultGunModel
 - uid: Runtime.Weapons.RustyPistol.gunPositionTransform
   name: gunPositionTransform
   href: api/Runtime.Weapons.RustyPistol.html#Runtime_Weapons_RustyPistol_gunPositionTransform
@@ -40902,6 +41123,12 @@ references:
   commentId: F:Runtime.Weapons.RustyPistol.recoilScript
   fullName: Runtime.Weapons.RustyPistol.recoilScript
   nameWithType: RustyPistol.recoilScript
+- uid: Runtime.Weapons.RustyPistol.reloadGunModel
+  name: reloadGunModel
+  href: api/Runtime.Weapons.RustyPistol.html#Runtime_Weapons_RustyPistol_reloadGunModel
+  commentId: F:Runtime.Weapons.RustyPistol.reloadGunModel
+  fullName: Runtime.Weapons.RustyPistol.reloadGunModel
+  nameWithType: RustyPistol.reloadGunModel
 - uid: Runtime.Weapons.RustyPistol.reloadTimer
   name: reloadTimer
   href: api/Runtime.Weapons.RustyPistol.html#Runtime_Weapons_RustyPistol_reloadTimer
