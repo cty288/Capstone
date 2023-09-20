@@ -16,7 +16,8 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
     private void Awake() {
         slider = transform.Find("HealthBarArea/HealthSlider").GetComponent<Slider>();
         
-        
+        playerModel = this.GetModel<IGamePlayerModel>();
+
         playerModel.GetPlayer().HealthProperty.RealValue.RegisterWithInitValue(OnHealthChanged)
             .UnRegisterWhenGameObjectDestroyed(gameObject);
     }
