@@ -14,7 +14,7 @@ namespace Runtime.Inventory.Commands {
 		
 		
 		protected override void OnExecute() {
-			ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot;
+			ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot.Slot;
 			
 			if (currentHoveredSlot != null && currentHoveredSlot != fromSlot) {
 				if (currentHoveredSlot != fromSlot) {
