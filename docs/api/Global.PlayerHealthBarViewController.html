@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class AbstractMikroController&lt;T&gt;
+      <title>Class PlayerHealthBarViewController
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class AbstractMikroController&lt;T&gt;
+      <meta name="title" content="Class PlayerHealthBarViewController
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=MikroFramework_Architecture_AbstractMikroController_1.md&amp;value=---%0Auid%3A%20MikroFramework.Architecture.AbstractMikroController%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Global_PlayerHealthBarViewController.md&amp;value=---%0Auid%3A%20Global.PlayerHealthBarViewController%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,34 +77,29 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="MikroFramework.Architecture.AbstractMikroController`1">
+        <article data-uid="Global.PlayerHealthBarViewController">
 
 
 
-  <h1 id="MikroFramework_Architecture_AbstractMikroController_1" data-uid="MikroFramework.Architecture.AbstractMikroController`1" class="text-break">
-    Class AbstractMikroController&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Architecture/Abstracts/AbstractMikroController.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Global_PlayerHealthBarViewController" data-uid="Global.PlayerHealthBarViewController" class="text-break">
+    Class PlayerHealthBarViewController
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/HealthBar/PlayerHealthBarViewController.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="MikroFramework.html">MikroFramework</a>.<a class="xref" href="MikroFramework.Architecture.html">Architecture</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>MikroFramework.dll</dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Global.html">Global</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
   <div class="markdown summary"></div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractMikroController&lt;T&gt; : MonoBehaviour, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture where T : Architecture&lt;T&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public class PlayerHealthBarViewController : AbstractMikroController&lt;MainGame&gt;, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture</code></pre>
   </div>
 
 
 
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd></dd>
-  </dl>
 
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
@@ -114,7 +109,8 @@
       <div><span class="xref">Component</span></div>
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
-      <div><span class="xref">AbstractMikroController&lt;T&gt;</span></div>
+      <div><a class="xref" href="MikroFramework.Architecture.AbstractMikroController-1.html">AbstractMikroController</a>&lt;<a class="xref" href="Framework.MainGame.html">MainGame</a>&gt;</div>
+      <div><span class="xref">PlayerHealthBarViewController</span></div>
     </dd>
   </dl>
 
@@ -132,36 +128,6 @@
     </dd>
   </dl>
 
-  <dl class="typelist derived">
-    <dt>Derived</dt>
-    <dd>
-      <div><a class="xref" href="Global.AttackPlayer.html">AttackPlayer</a></div>
-      <div><a class="xref" href="Global.Bullet.html">Bullet</a></div>
-      <div><a class="xref" href="Global.BulletPickItem.html">BulletPickItem</a></div>
-      <div><a class="xref" href="Global.Gun.html">Gun</a></div>
-      <div><a class="xref" href="Global.GunPickItem.html">GunPickItem</a></div>
-      <div><a class="xref" href="Global.HealthBar.html">HealthBar</a></div>
-      <div><a class="xref" href="Global.Player.html">Player</a></div>
-      <div><a class="xref" href="Global.PlayerHandItemController.html">PlayerHandItemController</a></div>
-      <div><a class="xref" href="Global.PlayerHealthBarViewController.html">PlayerHealthBarViewController</a></div>
-      <div><a class="xref" href="Global.PlayerInventoryController.html">PlayerInventoryController</a></div>
-      <div><a class="xref" href="Global.SupplyStation.html">SupplyStation</a></div>
-      <div><a class="xref" href="Global.UIController.html">UIController</a></div>
-      <div><a class="xref" href="Global.UIGamePass.html">UIGamePass</a></div>
-      <div><a class="xref" href="Global.UIHealthBarZone.html">UIHealthBarZone</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.Enemy.html">Enemy</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.ErrorArea.html">ErrorArea</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.GamePanel.html">GamePanel</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.GameWinPanel.html">GameWinPanel</a></div>
-      <div><a class="xref" href="MikroFramework.Game.html">Game</a></div>
-      <div><a class="xref" href="MikroFramework.GameStartPanel.html">GameStartPanel</a></div>
-      <div><a class="xref" href="MikroFramework.UI.html">UI</a></div>
-      <div><a class="xref" href="Runtime.Inventory.ViewController.InventorySlotLayoutViewController.html">InventorySlotLayoutViewController</a></div>
-      <div><a class="xref" href="Runtime.Inventory.ViewController.ResourceSlotViewController.html">ResourceSlotViewController</a></div>
-      <div><a class="xref" href="Runtime.Temporary.Player.PlayerMovement.html">PlayerMovement</a></div>
-      <div><a class="xref" href="Runtime.Weapons.GunRecoil.html">GunRecoil</a></div>
-    </dd>
-  </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
@@ -511,30 +477,6 @@
     <dt>Extension Methods</dt>
     <dd>
   <div>
-      <a class="xref" href="MikroFramework.Architecture.CanGetModelExtension.html#MikroFramework_Architecture_CanGetModelExtension_GetModel__1_MikroFramework_Architecture_ICanGetModel_">CanGetModelExtension.GetModel&lt;T&gt;(ICanGetModel)</a>
-  </div>
-  <div>
-      <a class="xref" href="MikroFramework.Architecture.CanGetSystemExtension.html#MikroFramework_Architecture_CanGetSystemExtension_GetSystem__1_MikroFramework_Architecture_ICanGetSystem_System_Action___0__">CanGetSystemExtension.GetSystem&lt;T&gt;(ICanGetSystem, Action&lt;T&gt;)</a>
-  </div>
-  <div>
-      <a class="xref" href="MikroFramework.Architecture.CanGetUtilityExtension.html#MikroFramework_Architecture_CanGetUtilityExtension_GetUtility__1_MikroFramework_Architecture_ICanGetUtility_">CanGetUtilityExtension.GetUtility&lt;T&gt;(ICanGetUtility)</a>
-  </div>
-  <div>
-      <a class="xref" href="MikroFramework.Architecture.CanRegisterEventExtension.html#MikroFramework_Architecture_CanRegisterEventExtension_RegisterEvent__1_MikroFramework_Architecture_ICanRegisterEvent_System_Action___0__">CanRegisterEventExtension.RegisterEvent&lt;T&gt;(ICanRegisterEvent, Action&lt;T&gt;)</a>
-  </div>
-  <div>
-      <a class="xref" href="MikroFramework.Architecture.CanRegisterEventExtension.html#MikroFramework_Architecture_CanRegisterEventExtension_UnRegisterEvent__1_MikroFramework_Architecture_ICanRegisterEvent_System_Action___0__">CanRegisterEventExtension.UnRegisterEvent&lt;T&gt;(ICanRegisterEvent, Action&lt;T&gt;)</a>
-  </div>
-  <div>
-      <a class="xref" href="MikroFramework.Architecture.CanSendCommandExtension.html#MikroFramework_Architecture_CanSendCommandExtension_SendCommand__1_MikroFramework_Architecture_ICanSendCommand_">CanSendCommandExtension.SendCommand&lt;T&gt;(ICanSendCommand)</a>
-  </div>
-  <div>
-      <a class="xref" href="MikroFramework.Architecture.CanSendCommandExtension.html#MikroFramework_Architecture_CanSendCommandExtension_SendCommand__1_MikroFramework_Architecture_ICanSendCommand___0_">CanSendCommandExtension.SendCommand&lt;T&gt;(ICanSendCommand, T)</a>
-  </div>
-  <div>
-      <a class="xref" href="MikroFramework.CanSendQueryExtension.html#MikroFramework_CanSendQueryExtension_SendQuery__1_MikroFramework_ICanSendQuery_MikroFramework_IQuery___0__">CanSendQueryExtension.SendQuery&lt;T&gt;(ICanSendQuery, IQuery&lt;T&gt;)</a>
-  </div>
-  <div>
       <a class="xref" href="MikroFramework.ActionKit.MonoActionExecutor.html#MikroFramework_ActionKit_MonoActionExecutor_Execute_UnityEngine_MonoBehaviour_MikroFramework_ActionKit_MikroAction_">MonoActionExecutor.Execute(MonoBehaviour, MikroAction)</a>
   </div>
   <div>
@@ -568,7 +510,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Architecture/Abstracts/AbstractMikroController.cs/#L10" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/HealthBar/PlayerHealthBarViewController.cs/#L13" class="edit-link">Edit this page</a>
         </div>
 
         

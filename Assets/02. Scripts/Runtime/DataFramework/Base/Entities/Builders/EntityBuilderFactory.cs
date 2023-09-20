@@ -1,6 +1,7 @@
 ﻿using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.GameResources.Model.Builder;
+using Runtime.Player.Builders;
 using Runtime.RawMaterials.Model.Builder;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
@@ -14,6 +15,10 @@ namespace Runtime.DataFramework.Entities.Builders {
 	}
 	
 	public class EntityBuilderFactory : IEntityBuilderFactory {
+		
+		
+		
+		
 		
 		public TBuilder GetBuilder<TBuilder, TEntity>(int rarity) 
 			where TBuilder : EntityBuilder<TBuilder, TEntity> 
@@ -29,6 +34,8 @@ namespace Runtime.DataFramework.Entities.Builders {
 				return RawMaterialBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}else if (typeof(TBuilder) == typeof(WeaponBuilder<TEntity>)) {
 				return WeaponBuilder<TEntity>.Allocate(rarity) as TBuilder;
+			}else if (typeof(TBuilder) == typeof(PlayerBuilder<TEntity>)) {
+				return PlayerBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
 			
 			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;

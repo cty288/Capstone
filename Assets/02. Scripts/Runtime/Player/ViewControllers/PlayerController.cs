@@ -12,7 +12,7 @@ namespace Runtime.Temporary
 {
     public class PlayerController : AbstractCreatureViewController<PlayerEntity> {
         protected override IEntity OnBuildNewEntity() {
-            return this.GetModel<ICommonEntityModel>().GetBuilder<PlayerEntity>(1).FromConfig().Build();
+            return this.GetModel<IGamePlayerModel>().GetPlayer();
         }
 
         protected override void OnEntityStart() {
