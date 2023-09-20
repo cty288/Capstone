@@ -51,22 +51,13 @@ namespace Runtime.RunTimeTests.TestCollision
 
             //Collision-related.
             hitbox_RightHand.HitResponder = this;
-            hitDetectorInfo = new HitDetectorInfo();
+            // hitDetectorInfo = new HitDetectorInfo();
         }
 
         private void Update()
         {
             //Animation-related.
             animator.SetFloat("Speed", agent.velocity.magnitude);
-        }
-
-        private void FixedUpdate()
-        {
-            //Collision-related.
-            if (punching)
-            {
-                hitbox_RightHand.CheckHit(hitDetectorInfo);
-            }
         }
 
         public bool CheckHit(HitData data)
@@ -78,6 +69,7 @@ namespace Runtime.RunTimeTests.TestCollision
 
         public void HitResponse(HitData data)
         {
+            Debug.Log("hit response, punching: " + punching);
             hitObjects.Add(data.Hurtbox.Owner);
 
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
@@ -91,9 +83,11 @@ namespace Runtime.RunTimeTests.TestCollision
                 case "PunchStart":
                     hitObjects.Clear();
                     punching = true;
+                    hitbox_RightHand.StartCheckingHits();
                     break;
                 case "PunchEnd":
                     punching = false;
+                    hitbox_RightHand.StopCheckingHits();
                     break;
                 default:
                     break;

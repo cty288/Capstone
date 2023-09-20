@@ -134,10 +134,10 @@ namespace Runtime.Enemies
                 //TODO: open shell
             }
         }
-        private void Update()
-        {
-
-        }
+        // private void Update()
+        // {
+        //
+        // }
 
         public void OnAnimationEvent(string eventName)
         {
@@ -159,18 +159,18 @@ namespace Runtime.Enemies
             BoundEntity.TakeDamage(data.Damage,data.Attacker);
         }
 
-        public void ChangeShellStatus(bool newStatus)
-        {
-            IBindableProperty shellStatus = BoundEntity.GetCustomDataValue("shellHealthInfo", "shellClosed");
-            if (shellStatus.Value != newStatus)
-            {
-                shellStatus.Value = newStatus;
-                if (newStatus)
-                {
-                    BoundEntity.IsInvincible.Value = true;
-                }
-            }
-        }
+        // public void ChangeShellStatus(bool newStatus)
+        // {
+        //     IBindableProperty shellStatus = BoundEntity.GetCustomDataValue("shellHealthInfo", "shellClosed");
+        //     if (shellStatus.Value != newStatus)
+        //     {
+        //         shellStatus.Value = newStatus;
+        //         if (newStatus)
+        //         {
+        //             BoundEntity.IsInvincible.Value = true;
+        //         }
+        //     }
+        // }
     }
 }
 

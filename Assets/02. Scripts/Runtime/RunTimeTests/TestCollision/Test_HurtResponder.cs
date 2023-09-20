@@ -35,7 +35,7 @@ namespace Runtime.RunTimeTests.TestCollision
 
         public void HurtResponse(HitData data) {
             
-            // Debug.Log("Hurt Response: Took " + data.Damage + " damage.");
+            Debug.Log("Hurt Response: Took " + data.Damage + " damage.");
             if(data.Attacker.IsSameFaction(this)) return;
             
             entity.TakeDamage(data.Damage);

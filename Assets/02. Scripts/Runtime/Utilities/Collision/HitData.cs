@@ -120,7 +120,7 @@ namespace Runtime.Utilities.Collision
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public void CheckHit(HitDetectorInfo hitDetectorInfo); //HitDetectorInfo only required for HitScan right now.
+        public void CheckHit(HitDetectorInfo hitDetectorInfo); //CheckHit only required for HitScan right now.
     }
 
     /// <summary>
