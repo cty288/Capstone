@@ -567,7 +567,7 @@
 
   <h3 id="Runtime_UI_MainUI_ClosePanel_MikroFramework_UIKit_IPanel_System_Boolean_" data-uid="Runtime.UI.MainUI.ClosePanel(MikroFramework.UIKit.IPanel,System.Boolean)">
   ClosePanel(IPanel, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/MainUI.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/MainUI.cs/#L65"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Close the current panel. If the current panel is the main panel, then it will return to the last opened main panel.</p>
@@ -601,7 +601,7 @@
 
   <h3 id="Runtime_UI_MainUI_GetArchitecture" data-uid="Runtime.UI.MainUI.GetArchitecture">
   GetArchitecture()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/MainUI.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/MainUI.cs/#L74"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -630,8 +630,8 @@
 
   <a id="Runtime_UI_MainUI_OpenOrClose_" data-uid="Runtime.UI.MainUI.OpenOrClose*"></a>
 
-  <h3 id="Runtime_UI_MainUI_OpenOrClose__1_MikroFramework_UIKit_IPanelContainer_MikroFramework_UIKit_UIMsg_System_Boolean_System_String_" data-uid="Runtime.UI.MainUI.OpenOrClose``1(MikroFramework.UIKit.IPanelContainer,MikroFramework.UIKit.UIMsg,System.Boolean,System.String)">
-  OpenOrClose&lt;T&gt;(IPanelContainer, UIMsg, bool, string)
+  <h3 id="Runtime_UI_MainUI_OpenOrClose__1_MikroFramework_UIKit_IPanelContainer_MikroFramework_UIKit_UIMsg_System_Boolean_System_Boolean_System_String_" data-uid="Runtime.UI.MainUI.OpenOrClose``1(MikroFramework.UIKit.IPanelContainer,MikroFramework.UIKit.UIMsg,System.Boolean,System.Boolean,System.String)">
+  OpenOrClose&lt;T&gt;(IPanelContainer, UIMsg, bool, bool, string)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/UI/MainUI.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -639,7 +639,7 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public T OpenOrClose&lt;T&gt;(IPanelContainer parent, UIMsg message, bool createNewIfNotExist = true, string assetNameIfNotExist = &quot;&quot;) where T : class, IPanel</code></pre>
+    <pre><code class="lang-csharp hljs">public T OpenOrClose&lt;T&gt;(IPanelContainer parent, UIMsg message, bool switchUIPlayerMap = true, bool createNewIfNotExist = true, string assetNameIfNotExist = &quot;&quot;) where T : class, IPanel</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -647,6 +647,8 @@
     <dt><code>parent</code> <a class="xref" href="MikroFramework.UIKit.IPanelContainer.html">IPanelContainer</a></dt>
     <dd></dd>
     <dt><code>message</code> <a class="xref" href="MikroFramework.UIKit.UIMsg.html">UIMsg</a></dt>
+    <dd></dd>
+    <dt><code>switchUIPlayerMap</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
     <dt><code>createNewIfNotExist</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
