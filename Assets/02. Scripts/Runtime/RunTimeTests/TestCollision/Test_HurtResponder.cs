@@ -30,13 +30,14 @@ namespace Runtime.RunTimeTests.TestCollision
 
         public bool CheckHurt(HitData data)
         {
+            if (data.Attacker.IsSameFaction(this)) 
+                return false;
             return true;
         }
 
         public void HurtResponse(HitData data) {
             
             Debug.Log("Hurt Response: Took " + data.Damage + " damage.");
-            if(data.Attacker.IsSameFaction(this)) return;
             
             entity.TakeDamage(data.Damage);
             Vector3 force = -data.HitNormal * 10;

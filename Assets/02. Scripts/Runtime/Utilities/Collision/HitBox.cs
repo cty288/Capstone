@@ -11,19 +11,12 @@ namespace Runtime.Utilities.Collision
     [RequireComponent(typeof(TriggerCheck))]
     public class HitBox : MonoBehaviour, IHitDetector
     {
-        //Related BoxCollider.
-        [SerializeField] private BoxCollider m_collider;
-        //LayerMask to check for collision.
-
-        private float thickness = 0.025f;
-        //Entity that's called when a collision is detected.
+        private Collider _collider;
+        private TriggerCheck _triggerCheck;
         private IHitResponder m_hitResponder;
 
         public IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
-
-        //start
-        private Collider _collider;
-        private TriggerCheck _triggerCheck;
+        
         
         
         private void Start()
@@ -47,7 +40,7 @@ namespace Runtime.Utilities.Collision
             Debug.Log("trigger hit detected: " + c.name);
             HitData hitData = null;
             IHurtbox hurtbox;
-            Vector3 center = transform.TransformPoint(m_collider.center);
+            Vector3 center = _collider.transform.position;
             Vector3 hitPoint = c.ClosestPoint(transform.position);
             Vector3 hitNormal = transform.position - hitPoint;
             
@@ -62,7 +55,7 @@ namespace Runtime.Utilities.Collision
                         HitNormal = hitNormal,
                         Hurtbox = hurtbox,
                         HitDetector = this,
-                        Attacker = m_hitResponder
+                        Attacker = m_hitResponder,
                     };
             }
 
