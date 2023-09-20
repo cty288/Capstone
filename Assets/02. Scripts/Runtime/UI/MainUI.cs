@@ -18,7 +18,7 @@ namespace Runtime.UI {
 
 		private void Update() {
 			if (controlActions.Inventory.WasPressedThisFrame()) {
-				OpenOrClose<InventoryUIViewController>(this, null);
+				OpenOrClose<InventoryUIViewController>(this, null, true);
 			}
 
 			if (controlActions.Close.WasPressedThisFrame()) {
@@ -42,16 +42,23 @@ namespace Runtime.UI {
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
 			}
-			ClientInput.Singleton.EnableUIMaps();
+			//ClientInput.Singleton.EnableUIMaps();
 			return panel;
 		}
 	
-		public T OpenOrClose<T>(IPanelContainer parent, UIMsg message, bool createNewIfNotExist = true, string assetNameIfNotExist = "")  where T : class, IPanel {
+		public T OpenOrClose<T>(IPanelContainer parent, UIMsg message, bool switchUIPlayerMap = true, 
+			bool createNewIfNotExist = true, string assetNameIfNotExist = "")  where T : class, IPanel {
 			if (currentMainPanel!=null && currentMainPanel.GetType() == typeof(T)) {
 				ClosePanel(currentMainPanel);
+				if (switchUIPlayerMap) {
+					ClientInput.Singleton.EnablePlayerMaps();
+				}
 				return null;
 			}
 		
+			if (switchUIPlayerMap) {
+				ClientInput.Singleton.EnableUIMaps();
+			}
 			return Open<T>(parent, message, createNewIfNotExist, assetNameIfNotExist);
 		}
 
@@ -61,7 +68,7 @@ namespace Runtime.UI {
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
 			}
-			ClientInput.Singleton.EnablePlayerMaps();
+			//ClientInput.Singleton.EnablePlayerMaps();
 		}
 
 		public IArchitecture GetArchitecture() {
