@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1909614374
+CRC: 1545345327
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -34,7 +34,8 @@ AssetBundleManifest:
     Info_8:
       Name: info
       Dependencies:
-        Dependency_0: assets/fonts
+        Dependency_0: settings
+        Dependency_1: assets/fonts
     Info_9:
       Name: description
       Dependencies:
@@ -43,4 +44,18 @@ AssetBundleManifest:
         Dependency_2: assets/fonts
     Info_10:
       Name: assets/fonts
+      Dependencies: {}
+    Info_11:
+      Name: entities/resources
+      Dependencies:
+        Dependency_0: mftest
+    Info_12:
+      Name: assets/goods_inventory
+      Dependencies: {}
+    Info_13:
+      Name: entities/resources_inventory
+      Dependencies:
+        Dependency_0: assets/goods_inventory
+    Info_14:
+      Name: decals
       Dependencies: {}

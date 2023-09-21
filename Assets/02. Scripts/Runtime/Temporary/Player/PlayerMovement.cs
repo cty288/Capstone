@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using Runtime.Controls;
 using Cinemachine;
 using DG.Tweening;
+using MikroFramework.Architecture;
+
 namespace Runtime.Temporary.Player
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : AbstractMikroController<MainGame>
     {
         [Header("Camera")]
         [SerializeField]

@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Temporary_Player_PlayerMovement" data-uid="Runtime.Temporary.Player.PlayerMovement" class="text-break">
     Class PlayerMovement
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L13"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -96,7 +96,7 @@
 
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[RequireComponent(typeof(Rigidbody))]
-public class PlayerMovement : MonoBehaviour</code></pre>
+public class PlayerMovement : AbstractMikroController&lt;MainGame&gt;, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture</code></pre>
   </div>
 
 
@@ -110,10 +110,24 @@ public class PlayerMovement : MonoBehaviour</code></pre>
       <div><span class="xref">Component</span></div>
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
+      <div><a class="xref" href="MikroFramework.Architecture.AbstractMikroController-1.html">AbstractMikroController</a>&lt;<a class="xref" href="Framework.MainGame.html">MainGame</a>&gt;</div>
       <div><span class="xref">PlayerMovement</span></div>
     </dd>
   </dl>
 
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="MikroFramework.Architecture.IController.html">IController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendCommand.html">ICanSendCommand</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanRegisterEvent.html">ICanRegisterEvent</a></div>
+      <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+    </dd>
+  </dl>
 
 
   <dl class="typelist derived">
@@ -500,7 +514,7 @@ public class PlayerMovement : MonoBehaviour</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_accelForce" data-uid="Runtime.Temporary.Player.PlayerMovement.accelForce">
   accelForce
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L67"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -531,7 +545,7 @@ public float accelForce</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_additionalGravity" data-uid="Runtime.Temporary.Player.PlayerMovement.additionalGravity">
   additionalGravity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L107"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -561,7 +575,7 @@ public float accelForce</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_airMultiplier" data-uid="Runtime.Temporary.Player.PlayerMovement.airMultiplier">
   airMultiplier
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L87"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -591,7 +605,7 @@ public float accelForce</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_exitWallTime" data-uid="Runtime.Temporary.Player.PlayerMovement.exitWallTime">
   exitWallTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L144"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L146"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -621,7 +635,7 @@ public float accelForce</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_gravityCounterForce" data-uid="Runtime.Temporary.Player.PlayerMovement.gravityCounterForce">
   gravityCounterForce
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L150"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -651,7 +665,7 @@ public float accelForce</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_groundDrag" data-uid="Runtime.Temporary.Player.PlayerMovement.groundDrag">
   groundDrag
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -681,7 +695,7 @@ public float accelForce</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_jumpCooldown" data-uid="Runtime.Temporary.Player.PlayerMovement.jumpCooldown">
   jumpCooldown
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L84"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -711,7 +725,7 @@ public float accelForce</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_jumpForce" data-uid="Runtime.Temporary.Player.PlayerMovement.jumpForce">
   jumpForce
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L81"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -741,7 +755,7 @@ public float accelForce</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_maxSlideTime" data-uid="Runtime.Temporary.Player.PlayerMovement.maxSlideTime">
   maxSlideTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L119"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -772,7 +786,7 @@ public float maxSlideTime</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_maxSlopeAngle" data-uid="Runtime.Temporary.Player.PlayerMovement.maxSlopeAngle">
   maxSlopeAngle
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L111"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -803,7 +817,7 @@ public float maxSlopeAngle</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_maxWallRunTime" data-uid="Runtime.Temporary.Player.PlayerMovement.maxWallRunTime">
   maxWallRunTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -833,7 +847,7 @@ public float maxSlopeAngle</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_model" data-uid="Runtime.Temporary.Player.PlayerMovement.model">
   model
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L161"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -863,7 +877,7 @@ public float maxSlopeAngle</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_orientation" data-uid="Runtime.Temporary.Player.PlayerMovement.orientation">
   orientation
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L115"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -893,7 +907,7 @@ public float maxSlopeAngle</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_playerHeight" data-uid="Runtime.Temporary.Player.PlayerMovement.playerHeight">
   playerHeight
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L103"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -924,7 +938,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_rb" data-uid="Runtime.Temporary.Player.PlayerMovement.rb">
   rb
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L159"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -954,7 +968,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_slideForce" data-uid="Runtime.Temporary.Player.PlayerMovement.slideForce">
   slideForce
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L120"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -984,7 +998,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_slideSpeed" data-uid="Runtime.Temporary.Player.PlayerMovement.slideSpeed">
   slideSpeed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L72"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1014,7 +1028,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_slideYScale" data-uid="Runtime.Temporary.Player.PlayerMovement.slideYScale">
   slideYScale
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L123"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1044,7 +1058,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_sliding" data-uid="Runtime.Temporary.Player.PlayerMovement.sliding">
   sliding
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L126"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1074,7 +1088,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_slopeIncreaseMultiplier" data-uid="Runtime.Temporary.Player.PlayerMovement.slopeIncreaseMultiplier">
   slopeIncreaseMultiplier
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L98"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1104,7 +1118,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_speedIncreaseMultiplier" data-uid="Runtime.Temporary.Player.PlayerMovement.speedIncreaseMultiplier">
   speedIncreaseMultiplier
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1134,7 +1148,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_sprintSpeed" data-uid="Runtime.Temporary.Player.PlayerMovement.sprintSpeed">
   sprintSpeed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L71"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1164,7 +1178,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_state" data-uid="Runtime.Temporary.Player.PlayerMovement.state">
   state
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L163"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1194,7 +1208,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_useGravity" data-uid="Runtime.Temporary.Player.PlayerMovement.useGravity">
   useGravity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L149"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1224,7 +1238,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_walkSpeed" data-uid="Runtime.Temporary.Player.PlayerMovement.walkSpeed">
   walkSpeed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L70"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1254,7 +1268,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_wallCheckDistance" data-uid="Runtime.Temporary.Player.PlayerMovement.wallCheckDistance">
   wallCheckDistance
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L138"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1284,7 +1298,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_wallJumpSideForce" data-uid="Runtime.Temporary.Player.PlayerMovement.wallJumpSideForce">
   wallJumpSideForce
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L132"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1314,7 +1328,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_wallJumpUpForce" data-uid="Runtime.Temporary.Player.PlayerMovement.wallJumpUpForce">
   wallJumpUpForce
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L131"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1344,7 +1358,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_wallRunForce" data-uid="Runtime.Temporary.Player.PlayerMovement.wallRunForce">
   wallRunForce
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1374,7 +1388,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_whatIsGround" data-uid="Runtime.Temporary.Player.PlayerMovement.whatIsGround">
   whatIsGround
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L104"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1404,7 +1418,7 @@ public float playerHeight</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_whatIsWall" data-uid="Runtime.Temporary.Player.PlayerMovement.whatIsWall">
   whatIsWall
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L129"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1440,7 +1454,7 @@ public LayerMask whatIsWall</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_ChangeBobVars_Runtime_Temporary_Player_PlayerMovement_HeadBobData_" data-uid="Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(Runtime.Temporary.Player.PlayerMovement.HeadBobData)">
   ChangeBobVars(HeadBobData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L333"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L335"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1471,7 +1485,7 @@ public LayerMask whatIsWall</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_ChangeBobVars_System_Single_System_Single_" data-uid="Runtime.Temporary.Player.PlayerMovement.ChangeBobVars(System.Single,System.Single)">
   ChangeBobVars(float, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L338"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L340"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1504,7 +1518,7 @@ public LayerMask whatIsWall</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_DoCamTilt_System_Single_" data-uid="Runtime.Temporary.Player.PlayerMovement.DoCamTilt(System.Single)">
   DoCamTilt(float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L343"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L345"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1535,7 +1549,7 @@ public LayerMask whatIsWall</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_GetSlopeMoveDirection_UnityEngine_Vector3_" data-uid="Runtime.Temporary.Player.PlayerMovement.GetSlopeMoveDirection(UnityEngine.Vector3)">
   GetSlopeMoveDirection(Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L626"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L628"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1571,7 +1585,7 @@ public LayerMask whatIsWall</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_OnSlope" data-uid="Runtime.Temporary.Player.PlayerMovement.OnSlope">
   OnSlope()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L578"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L580"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1602,7 +1616,7 @@ public LayerMask whatIsWall</code></pre>
 
   <h3 id="Runtime_Temporary_Player_PlayerMovement_SlopeTooBig" data-uid="Runtime.Temporary.Player.PlayerMovement.SlopeTooBig">
   SlopeTooBig()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L589"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L591"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1633,7 +1647,7 @@ public LayerMask whatIsWall</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L13" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/Player/PlayerMovement.cs/#L15" class="edit-link">Edit this page</a>
         </div>
 
         

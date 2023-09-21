@@ -4,34 +4,42 @@ using MikroFramework.UIKit;
 using Runtime.Controls;
 using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
+using Runtime.Player;
 using UnityEngine;
 
 namespace Runtime.UI {
 	public class MainUI : UIRoot, IController {
 		DPunkInputs.SharedActions controlActions;
+		private IGamePlayerModel playerModel;
 		protected override void Awake() {
 			base.Awake();
 			controlActions = ClientInput.Singleton.GetSharedActions();
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
+			playerModel = this.GetModel<IGamePlayerModel>();
 		}
 
 		private void Update() {
-			if (controlActions.Inventory.WasPressedThisFrame()) {
-				OpenOrClose<InventoryUIViewController>(this, null);
-			}
-
+			
 			if (controlActions.Close.WasPressedThisFrame()) {
 				if (currentMainPanel != null) {
 					ClosePanel(currentMainPanel);
 				}
 			}
+
+			if (playerModel.IsPlayerDead()) {
+				return;
+			}
 			
-			if (Input.GetKeyDown(KeyCode.I)) {
+			if (controlActions.Inventory.WasPressedThisFrame()) {
+				OpenOrClose<InventoryUIViewController>(this, null, true);
+			}
+
+			/*if (Input.GetKeyDown(KeyCode.I)) {
 				IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
 				inventoryModel.AddSlots(2);
 				inventoryModel.AddHotBarSlots(HotBarCategory.Left, 1, ()=>new LeftHotBarSlot());
-			}
+			}*/
 		}
 		
 
@@ -42,16 +50,23 @@ namespace Runtime.UI {
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
 			}
-			ClientInput.Singleton.EnableUIMaps();
+			//ClientInput.Singleton.EnableUIMaps();
 			return panel;
 		}
 	
-		public T OpenOrClose<T>(IPanelContainer parent, UIMsg message, bool createNewIfNotExist = true, string assetNameIfNotExist = "")  where T : class, IPanel {
+		public T OpenOrClose<T>(IPanelContainer parent, UIMsg message, bool switchUIPlayerMap = true, 
+			bool createNewIfNotExist = true, string assetNameIfNotExist = "")  where T : class, IPanel {
 			if (currentMainPanel!=null && currentMainPanel.GetType() == typeof(T)) {
 				ClosePanel(currentMainPanel);
+				if (switchUIPlayerMap) {
+					ClientInput.Singleton.EnablePlayerMaps();
+				}
 				return null;
 			}
 		
+			if (switchUIPlayerMap) {
+				ClientInput.Singleton.EnableUIMaps();
+			}
 			return Open<T>(parent, message, createNewIfNotExist, assetNameIfNotExist);
 		}
 
@@ -61,7 +76,7 @@ namespace Runtime.UI {
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
 			}
-			ClientInput.Singleton.EnablePlayerMaps();
+			//ClientInput.Singleton.EnablePlayerMaps();
 		}
 
 		public IArchitecture GetArchitecture() {

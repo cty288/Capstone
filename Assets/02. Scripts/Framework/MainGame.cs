@@ -3,8 +3,10 @@ using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
+using Runtime.Player;
 using Runtime.RawMaterials.Model.Base;
 using Runtime.Weapons.Model.Base;
+
 
 namespace Framework {
 	public struct OnBeforeGameSave{}
@@ -22,6 +24,8 @@ namespace Framework {
 			this.RegisterModel<IRawMaterialModel>(new RawMaterialModel());
 			this.RegisterModel<IInventoryModel>(new InventoryModel());
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
+			this.RegisterModel<IGamePlayerModel>(new GamePlayerModel());
+			
 			this.RegisterExtensibleUtility<ResLoader>(new ResLoader());
 		}
 
