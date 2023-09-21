@@ -94,7 +94,7 @@ namespace Runtime.Inventory.Model {
 
 
 		public override void ResetSlots() {
-			model.Clear();
+			model.Reset();
 			AddInitialSlots();
 			model.SelectHotBarSlot(HotBarCategory.Left, 0);
 			model.SelectHotBarSlot(HotBarCategory.Right, 0);

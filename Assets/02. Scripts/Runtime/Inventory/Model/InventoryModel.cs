@@ -291,5 +291,10 @@ namespace Runtime.Inventory.Model {
 			}
 			
 		}
+
+		public override void Reset() {
+			Clear();
+			slots.Clear();
+		}
 	}
 }
