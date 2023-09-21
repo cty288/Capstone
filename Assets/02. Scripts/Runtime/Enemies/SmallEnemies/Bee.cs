@@ -1,4 +1,5 @@
 using Runtime.DataFramework.ViewControllers;
+
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
@@ -13,85 +14,99 @@ using UnityEngine.AI;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
+using System.Collections.Generic;
 
 namespace Runtime.Enemies.SmallEnemies
 {
-    public class BeeEntity : EnemyEntity<BeeEntity>
+    public class BeeEntity : EnemyEntity<BeeEntity> 
     {
-        public override string EntityName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        [field: ES3Serializable]
+        public override string EntityName { get; set; } = "Bee";
+
+      
 
         public override void OnRecycle()
         {
-            throw new System.NotImplementedException();
+         
         }
 
         protected override void OnEnemyRegisterAdditionalProperties()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override string OnGetDescription(string defaultLocalizationKey)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 
 
-    public class Bee : AbstractNormalEnemyViewController<BeeEntity>
+    public class Bee : AbstractNormalEnemyViewController<BeeEntity> 
     {
+        public HealthBar hb;
         protected override int GetCurrentHitDamage()
         {
-            throw new System.NotImplementedException();
+
+            return 0;
         }
 
         protected override void OnDestroyHealthBar(HealthBar healthBar)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
         {
-            throw new System.NotImplementedException();
+            
+           
+            
         }
+      
+        
 
         protected override void OnEntityStart()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<BeeEntity> builder)
         {
-            throw new System.NotImplementedException();
+            return builder.
+                FromConfig()
+                //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+                .Build();
         }
 
         protected override HealthBar OnSpawnHealthBar()
         {
-            throw new System.NotImplementedException();
+            //todo
+            return new BossHealthBar();
         }
 
         protected override MikroAction WaitingForDeathCondition()
         {
-            throw new System.NotImplementedException();
+            return null;
         }
         public override void HurtResponse(HitData data)
         {
-            base.HurtResponse(data);
+            Debug.Log("aha");
+            BoundEntity.TakeDamage(data.Damage , data.Attacker);
+            
 
         }
-        public override void HitResponse(HitData data)
-        {
-            base.HitResponse(data);
-        }
+       
+        
 
 
     }

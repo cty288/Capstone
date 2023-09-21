@@ -14,6 +14,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool ended;
         public float bulletTravelTime;
 
+        //some add-on variables that we can use to add juice to ranged projectile actions
+        //will have to make a new RangedAction class to contain all these later
+        public Vector3 offset;
+        public string[] collisionTagsToCheck;
+        public float duration, rotationSpeed, beforeTurnSpeed, afterTurnSpeed, defaultDestinationDistance, destroyDelay;
+        //containers
+        Vector3 startPosition, faceDirection, goingToPositionl;
+        float distance;
+        Quaternion rotation;
+        ParticleSystem loopFX, impactFX;
+
+
         public SharedTransform playerTrans;
 
         public override void OnStart()

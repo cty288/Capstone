@@ -23,6 +23,7 @@ namespace Runtime.Utilities.Collision
         {
             if (m_owner == null)
                 m_owner = transform.root.gameObject;
+            
         }
 
         public bool CheckHit(HitData data)

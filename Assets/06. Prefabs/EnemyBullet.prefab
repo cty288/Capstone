@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8640486797151710566}
   - component: {fileID: 6796628351134471035}
   - component: {fileID: 8260054264255871090}
+  - component: {fileID: 5180833265361177525}
   m_Layer: 0
   m_Name: EnemyBullet
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1700704895486175575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -114,3 +115,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5180833265361177525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700704895486175575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b8125a4b245da4ebb0a67adf826699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  destWithOffset: {x: 0, y: 0, z: 0}
+  collisionTagsToCheck: []
+  duration: 10
+  rotationSpeed: 5
+  beforeTurnSpeed: 10
+  afterTurnSpeed: 10
+  defaultDestinationDistance: 10
+  distanceBeforeTurn: 5.28
+  destroyDelay: 2
+  test: 1

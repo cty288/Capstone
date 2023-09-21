@@ -33,15 +33,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             for(int i = 0; i < bulletCount; i++)
             {
                 SpawnBullet();
-                yield return new WaitForSeconds(spawnInterval);
+                yield return new WaitForEndOfFrame();
             }
             ended = true;
         }
         void SpawnBullet()
         {
-            GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), Quaternion.LookRotation(playerTrans.Value.position- new Vector3(transform.position.x, transform.position.y + 2, transform.position.z)));
-            b.GetComponent<Rigidbody>().velocity =  b.transform.forward* bulletSpeed;
-        
+            //GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), Quaternion.LookRotation(playerTrans.Value.position- new Vector3(transform.position.x, transform.position.y + 2, transform.position.z)));
+            //b.GetComponent<Rigidbody>().velocity =  b.transform.forward* bulletSpeed;
+            GameObject b = Object.Instantiate(bulletPrefab.Value, transform.position + new Vector3(0, 2, 0), transform.rotation);
+            Transform t = playerTrans.Value;
+            
+            b.GetComponent<EnemyBomb>().destWithOffset = t.position + new Vector3(Random.Range(-3,3),Random.Range(-3,3),Random.Range(-3,3));
+            
         }
     }
 }
