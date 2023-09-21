@@ -14,7 +14,9 @@ namespace Runtime.Weapons.Model.Base
 {
     public struct OnWeaponRecoilEvent
     {
-        // public GunRecoil gunRecoilScript;
+        public Vector3 recoilVector;
+        public float snappiness;
+        public float returnSpeed;
     }
     
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
@@ -50,9 +52,6 @@ namespace Runtime.Weapons.Model.Base
         private IChargeSpeed chargeSpeedProperty;
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
-
-        // public GunRecoil GunRecoilScript { get; set; }
-
 
         protected override ConfigTable GetConfigTable() {
             
@@ -163,7 +162,12 @@ namespace Runtime.Weapons.Model.Base
 
         public void OnRecoil()
         {
-            this.SendEvent<OnWeaponRecoilEvent>(new OnWeaponRecoilEvent());
+            this.SendEvent<OnWeaponRecoilEvent>(new OnWeaponRecoilEvent()
+            {
+                recoilVector = recoilProperty.GetRecoilVector(),
+                snappiness = recoilProperty.GetSnappiness(),
+                returnSpeed = recoilProperty.GetReturnSpeed(),
+            });
         }
 
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {

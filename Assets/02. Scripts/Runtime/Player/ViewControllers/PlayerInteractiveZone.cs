@@ -90,7 +90,7 @@ namespace Runtime.Player {
                             entityViewControllersNotBlocked.TryAdd(entityVC.Key, entityVC.Value);
                            // entityViewControllersBlocked.Remove(entityVC.Key);
                             removedVCs.Add(entityVC.Key);
-                            entityVC.Value?.OnPlayerInteractiveZoneReachable(transform.parent.gameObject, this);
+                            // entityVC.Value?.OnPlayerInteractiveZoneReachable(transform.parent.gameObject, this);
                             break;
                         }
                         

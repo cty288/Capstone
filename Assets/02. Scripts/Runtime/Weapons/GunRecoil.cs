@@ -45,6 +45,13 @@ namespace Runtime.Weapons
         private void Recoil(OnWeaponRecoilEvent e)
         {
             Debug.Log("recoil");
+            
+            recoilX = e.recoilVector.x;
+            recoilY = e.recoilVector.y;
+            recoilZ = e.recoilVector.z;
+            snappiness = e.snappiness;
+            returnSpeed = e.returnSpeed;
+            
             RecoilFire();
         }
     }
