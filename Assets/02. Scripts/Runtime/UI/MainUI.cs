@@ -4,34 +4,42 @@ using MikroFramework.UIKit;
 using Runtime.Controls;
 using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
+using Runtime.Player;
 using UnityEngine;
 
 namespace Runtime.UI {
 	public class MainUI : UIRoot, IController {
 		DPunkInputs.SharedActions controlActions;
+		private IGamePlayerModel playerModel;
 		protected override void Awake() {
 			base.Awake();
 			controlActions = ClientInput.Singleton.GetSharedActions();
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
+			playerModel = this.GetModel<IGamePlayerModel>();
 		}
 
 		private void Update() {
-			if (controlActions.Inventory.WasPressedThisFrame()) {
-				OpenOrClose<InventoryUIViewController>(this, null, true);
-			}
-
+			
 			if (controlActions.Close.WasPressedThisFrame()) {
 				if (currentMainPanel != null) {
 					ClosePanel(currentMainPanel);
 				}
 			}
+
+			if (playerModel.IsPlayerDead()) {
+				return;
+			}
 			
-			if (Input.GetKeyDown(KeyCode.I)) {
+			if (controlActions.Inventory.WasPressedThisFrame()) {
+				OpenOrClose<InventoryUIViewController>(this, null, true);
+			}
+
+			/*if (Input.GetKeyDown(KeyCode.I)) {
 				IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
 				inventoryModel.AddSlots(2);
 				inventoryModel.AddHotBarSlots(HotBarCategory.Left, 1, ()=>new LeftHotBarSlot());
-			}
+			}*/
 		}
 		
 
