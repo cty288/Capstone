@@ -97,7 +97,7 @@ namespace Runtime.Enemies
             //binding
             BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
             BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
-            //BindCustomData<bool>("ShellClosed","shellHealthInfo","shellClosed",OnShellStatusChanged);
+            BindCustomData<bool>("ShellClosed","shellHealthInfo","shellClosed",OnShellStatusChanged);
             //Animation-related.
             // animator = GetComponent<Animator>();
             animationSMBManager = GetComponent<AnimationSMBManager>();
@@ -159,18 +159,17 @@ namespace Runtime.Enemies
             BoundEntity.TakeDamage(data.Damage,data.Attacker);
         }
 
-        // public void ChangeShellStatus(bool newStatus)
-        // {
-        //     IBindableProperty shellStatus = BoundEntity.GetCustomDataValue("shellHealthInfo", "shellClosed");
-        //     if (shellStatus.Value != newStatus)
-        //     {
-        //         shellStatus.Value = newStatus;
-        //         if (newStatus)
-        //         {
-        //             BoundEntity.IsInvincible.Value = true;
-        //         }
-        //     }
-        // }
+        public void ChangeShellStatus(bool newStatus)
+        {
+             IBindableProperty shellStatus = BoundEntity.GetCustomDataValue("shellHealthInfo", "shellClosed");
+             if (shellStatus.Value != newStatus)
+             {
+                 Debug.Log("changed");
+                 shellStatus.Value = newStatus;
+                 animator.SetBool("ShellClosed",newStatus);
+                 BoundEntity.IsInvincible.Value = newStatus;
+             }
+        }
     }
 }
 
