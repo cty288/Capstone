@@ -60,11 +60,18 @@ namespace Editor {
             if (gameObject) {
                 DestroyImmediate(gameObject);
             }
-            string[] levels = new string[] {"Assets/01. Scenes/GameEntrance.unity"};
+            //string[] levels = new string[] {"Assets/01. Scenes/MainGame.unity"};
         
+            //get all the scenes in the build settings
+            List<string> levels = new List<string>();
+            foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes) {
+                if (scene.enabled) {
+                    levels.Add(scene.path);
+                }
+            }
         
             // Build player.
-            BuildPipeline.BuildPlayer(levels, path + "/Mikrocosmos.exe", target, BuildOptions.None);
+            BuildPipeline.BuildPlayer(levels.ToArray(), path + "/Game.exe", target, BuildOptions.None);
 
       
             //open the folder
