@@ -13,7 +13,6 @@ namespace Runtime.Utilities.Collision
     public class HitData : IPoolable
     {
         public int Damage = 0;
-        public float Recoil = 0f;
         public Vector3 HitPoint;
         public Vector3 HitNormal;
         public Vector3 HitDirectionNormalized;
@@ -41,26 +40,6 @@ namespace Runtime.Utilities.Collision
         }
 
         /// <summary>
-        /// Sets the data of the hit. Used for HitBox.
-        /// </summary>
-        /// <param name="hitResponder"></param>
-        /// <param name="hurtbox"></param>
-        /// <param name="hit"></param>
-        /// <param name="hitDetector"></param>
-        /// <param name="hitBoxCenter"></param>
-        /// <returns>Returns HitData object.</returns>
-        public HitData SetHitBoxData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector, Vector3 hitBoxCenter)
-        {
-            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultiplier);
-            HitPoint = hit.point == Vector3.zero ? hitBoxCenter : hit.point;
-            HitNormal = hit.normal;
-            Hurtbox = hurtbox;
-            HitDetector = hitDetector;
-            Attacker = hitResponder;
-            return this;
-        }
-
-        /// <summary>
         /// Checks if the HitData created is valid (doesn't hit itself, responders exist, etc.
         /// </summary>
         /// <returns>Returns true if valid HitData.</returns>
@@ -77,7 +56,6 @@ namespace Runtime.Utilities.Collision
         public void OnRecycled()
         {
             Damage = 0;
-            Recoil = 0f;
             HitPoint = Vector3.zero;
             HitNormal = Vector3.zero;
             HitDirectionNormalized = Vector3.zero;
@@ -120,7 +98,7 @@ namespace Runtime.Utilities.Collision
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public void CheckHit(HitDetectorInfo hitDetectorInfo); //HitDetectorInfo only required for HitScan right now.
+        public void CheckHit(HitDetectorInfo hitDetectorInfo); //CheckHit only required for HitScan right now.
     }
 
     /// <summary>

@@ -71,6 +71,7 @@ namespace MikroFramework.Utilities
         {
             if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
             {
+                // Debug.Log("stay, layer");
                 if (colliders.Contains(other)) {
                     return;
                 }
@@ -84,6 +85,7 @@ namespace MikroFramework.Utilities
         {
             if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
             {
+                // Debug.Log("enter, layer");
                 enterRC.Retain();
                 colliders.Add(other);
                 OnEnter?.Invoke(other);
@@ -95,6 +97,7 @@ namespace MikroFramework.Utilities
         {
             if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
             {
+                // Debug.Log("exit, layer");
                 //enterRC.Release();
                 if (colliders.Contains(other))
                 {
