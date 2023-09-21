@@ -92,7 +92,7 @@ namespace Runtime.Inventory.Model {
 			return false;
 		}
 
-		private void OnEntityRecycled(IEntity entity) {
+		protected void OnEntityRecycled(IEntity entity) {
 			entity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 			RemoveItem(entity.UUID);
 		}

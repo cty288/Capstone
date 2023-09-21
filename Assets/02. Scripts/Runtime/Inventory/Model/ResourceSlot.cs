@@ -161,6 +161,7 @@ namespace Runtime.Inventory.Model {
 
 			return false;
 		}
+		
 		public void RegisterOnSlotUpdateCallback(Action<ResourceSlot, string, List<string>> callback) {
 			OnSlotUpdateCallback += callback;
 		}

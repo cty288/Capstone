@@ -100,6 +100,10 @@ namespace Runtime.Inventory.Model {
 			model.SelectHotBarSlot(HotBarCategory.Right, 0);
 		}
 
+		public override void ClearSlots() {
+			model.Clear();
+		}
+
 		private void AddInitialSlots() {
 			model.AddSlots(InitialSlotCount);
 

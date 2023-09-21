@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
@@ -147,6 +148,8 @@ namespace Runtime.Inventory.Model {
 			foreach (var hotBarSlot in hotBarSlots) {
 				foreach (var slot in hotBarSlot.Value.Slots) {
 					if (slot.RemoveItem(uuid)) {
+						IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
+						entity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 						return true;
 					}
 				}
@@ -264,14 +267,29 @@ namespace Runtime.Inventory.Model {
 			if (slots == null) {
 				return;
 			}
-			slots.Clear();
+			
+			
+			
+			foreach (var resourceSlot in slots) {
+				while (!resourceSlot.IsEmpty()) {
+					string uuid = resourceSlot.GetLastItemUUID();
+					GlobalEntities.GetEntityAndModel(uuid).Item2.RemoveEntity(uuid);
+				}
+			}
 			
 			foreach (HotBarCategory category in Enum.GetValues(typeof(HotBarCategory))) {
 				if (!hotBarSlots.ContainsKey(category)) {
 					continue;
 				}
-				hotBarSlots[category].Slots.Clear();
+
+				foreach (ResourceSlot resourceSlot in hotBarSlots[category].Slots) {
+					while (!resourceSlot.IsEmpty()) {
+						string uuid = resourceSlot.GetLastItemUUID();
+						GlobalEntities.GetEntityAndModel(uuid).Item2.RemoveEntity(uuid);
+					}
+				}
 			}
+			
 		}
 	}
 }
