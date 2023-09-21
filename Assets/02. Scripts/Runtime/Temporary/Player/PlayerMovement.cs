@@ -200,21 +200,16 @@ namespace Runtime.Temporary.Player
             
             HandleCamera();
 
-            // ground check
-            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+            
 
             MyInput();
-            SpeedControl();
+            
             StateHandler();
             CheckForWall();
 
-            // handle drag
-            if (grounded)
-                rb.drag = groundDrag;
-            else
-                rb.drag = 0;
+            
 
-
+            
             
             
             if (Input.GetKeyDown(KeyCode.F5)) {
@@ -224,7 +219,15 @@ namespace Runtime.Temporary.Player
 
         
         private void FixedUpdate()
-        {      
+        {
+            SpeedControl();
+            // ground check
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+            // handle drag
+            if (grounded)
+                rb.drag = groundDrag;
+            else
+                rb.drag = 0;
             MovePlayer();
             if (Input.GetKeyDown(KeyCode.K)) {
                 GameObject obj = ControlInfoFactory.Singleton.GetBindingKeyGameObject(ClientInput.Singleton.FindActionInPlayerActionMap("Sprint"),
@@ -472,7 +475,7 @@ namespace Runtime.Temporary.Player
             else if (!grounded)
             {
                 rb.AddForce(moveDirection.normalized * spd * airMultiplier, ForceMode.Force);
-                if(!OnSlope())
+                if(!OnSlope()&&!wallrunning)
                     rb.AddForce((-transform.up)*additionalGravity,ForceMode.Force);
             }
             
@@ -551,6 +554,7 @@ namespace Runtime.Temporary.Player
             if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f, slopeLayerMask))
             {
                 float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                Debug.Log(angle);
                 return angle < maxSlopeAngle && angle != 0;
             }
 
@@ -622,12 +626,6 @@ namespace Runtime.Temporary.Player
                 rb.AddForce(-GetSlopeMoveDirection(inputDirection) * slideForce*0.25f, ForceMode.Force);
                 slideTimer -= Time.deltaTime;
                 
-            }
-            else if (rb.velocity.y > -0.1f)
-            {
-                rb.AddForce(inputDirection.normalized * slideForce*0.3f, ForceMode.Force);
-                rb.AddForce(GetSlopeMoveDirection(inputDirection) * slideForce*0.25f, ForceMode.Force);
-                slideTimer -= Time.deltaTime;
             }
             // sliding down a slope
             else
