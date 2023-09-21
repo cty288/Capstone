@@ -215,23 +215,13 @@ namespace Runtime.Temporary.Player
                 rb.drag = 0;
 
 
-            if (sprintTapCheckTimer>=0f)
-            {
-                sprintTapCheckTimer -= Time.deltaTime;
-                sprintTapCheckTimer=Mathf.Max (sprintTapCheckTimer,0);
-            }
-            else
-            {
-                sprintTapPressed = false;
-            }
             
             
             if (Input.GetKeyDown(KeyCode.F5)) {
                 ((MainGame) MainGame.Interface).SaveGame();
             }
         }
-        private bool sprintTapPressed = false;
-        private float sprintTapCheckTimer = 0.4f;
+
         
         private void FixedUpdate()
         {      
@@ -381,27 +371,6 @@ namespace Runtime.Temporary.Player
                 Jump();
                 
             }
-            ;
-            if (playerActions.SprintTap.WasPerformedThisFrame())
-            {
-                if (sprintTapPressed)
-                {
-                    sprinting = true;
-                    sprintTapCheckTimer = 0f;
-                }
-                else
-                {
-                    Debug.Log("Sprint Tap");
-                    sprintTapPressed = true;
-                    sprintTapCheckTimer = 0.4f;
-                }
-                
-            }
-            else if (playerActions.SprintTap.WasReleasedThisFrame())
-            {
-                sprinting = false;
-            }
-            
             
             
             if (playerActions.SprintHold.IsPressed()) {
@@ -657,7 +626,7 @@ namespace Runtime.Temporary.Player
             else if (rb.velocity.y > -0.1f)
             {
                 rb.AddForce(inputDirection.normalized * slideForce*0.3f, ForceMode.Force);
-                rb.AddForce(-GetSlopeMoveDirection(inputDirection) * slideForce*0.25f, ForceMode.Force);
+                rb.AddForce(GetSlopeMoveDirection(inputDirection) * slideForce*0.25f, ForceMode.Force);
                 slideTimer -= Time.deltaTime;
             }
             // sliding down a slope
