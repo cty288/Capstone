@@ -1,6 +1,6 @@
 EntityName / Property Names,base_damage,attack_speed,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
 Types,int,float,float,int,float,int,float,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,int,float (cooldown),float,int,float (seconds),int,float (higher means more spread),float,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
+Notes ->,int,float (cooldown),float,int,float (seconds),int,float (higher means more spread),,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
@@ -14,7 +14,13 @@ RustyPistol,10,0.3,50,6,2,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 2
 }",0,100,1,,,,
-TheSanctuary,1,1,25,1,5,1,0.06,100,1,25,1,"{
+TheSanctuary,1,1,25,1,5,1,0.06,"{
+  ""recoilX"": -10,
+  ""recoilY"": 5,
+  ""recoilZ"": 0.5,
+  ""snappiness"": 7,
+  ""returnSpeed"": 2
+}",1,25,1,"{
   ""explosion"": {
     ""damage"": {
       ""type"": ""int"",
