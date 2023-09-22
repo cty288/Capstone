@@ -199,6 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2809865963667975713}
   - component: {fileID: 6159616833526698476}
+  - component: {fileID: 6892314525974302836}
   m_Layer: 5
   m_Name: EnemyHealthBar
   m_TagString: Untagged
@@ -242,6 +243,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthyColor: {r: 1, g: 0, b: 0, a: 1}
   hurtColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &6892314525974302836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2809865963667975712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5f870245e7796642b3a38ae058342c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
 --- !u!1 &2809865963932545822
 GameObject:
   m_ObjectHideFlags: 0
