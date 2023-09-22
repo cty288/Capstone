@@ -46,7 +46,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), Quaternion.LookRotation(playerTrans.Value.position- new Vector3(transform.position.x, transform.position.y + 2, transform.position.z)));
             b.GetComponent<Rigidbody>().velocity =  b.transform.forward* bulletSpeed;
-            b.GetComponent<HitBox>().HitResponder = boss1vc;
+            HitBox bHitBox = b.GetComponent<HitBox>();
+            bHitBox.HitResponder = boss1vc;
+            bHitBox.StartCheckingHits();
+            // Debug.Log("b.GetComponent<HitBox>().HitResponder: " + boss1vc);
 
         }
     }

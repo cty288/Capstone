@@ -21,14 +21,23 @@ namespace Runtime.Utilities.Collision
         
         private void Start()
         {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             _triggerCheck = gameObject.GetComponent<TriggerCheck>();
             _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox"); 
             _collider = gameObject.GetComponent<Collider>();
         }
-
+        
         public void StartCheckingHits()
         {
-            // Debug.Log("start checking hits");
+            if (_triggerCheck == null)
+            {
+                Initialize();
+            }
+
             _triggerCheck.OnEnter += TriggerCheckHit;
         }
         
