@@ -2,6 +2,7 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -20,18 +21,52 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3[] corners;
         private float timeStart;
 
+
+        //Joon's implementation variables
+        public GameObject shell;
+        private bool chargeUp = true;
+        public float movementSpeed;
+        private Vector3 localSavePlayerPosition;
+        private bool hasMovedPassPlayer;
+        private Vector3 dir;
+        private float timer = 2f;
+        public float maxRotationSpeed = 260; // Maximum rotation speed (degrees per second)
+        public float acceleration = 30.0f; // Rate of acceleration
+        private float currentRotationSpeed = 0.0f;
+        public GameObject pivot;
+        public bool stun;
+        private SharedVector3 initRotation;
+        private float chargeTime = 3.0f;  // Total charge time in seconds
+        private float currentChargeTime = 0.0f;
+        private float initialRotationSpeed = 0.0f;
+        private float rotationDecreaseRate = 120f;
+        
+        
+
         public override void OnStart()
         {
-            rb = GetComponent<Rigidbody>();
-            
+            //reset
+            maxRotationSpeed = 260;
+            initialRotationSpeed = 0f;
+            initRotation = this.gameObject.transform.eulerAngles;
+            currentChargeTime = 0f;
+             rb = GetComponent<Rigidbody>();
+            /*
             targetLocation = playerTrans.Value.position + transform.forward * 3;
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
             ogSpeed = navMeshAgent.speed;
             navMeshAgent.CalculatePath(targetLocation, path);
             corners = path.corners;
+            */
+
             
             
+            chargeUp = true;
+            //pivot.transform.position = this.gameObject.GetComponentInChildren<MeshRenderer>().bounds.center;
+           
             
+
+
             timeStart = Time.time;
         }
         // public override TaskStatus OnUpdate()
@@ -63,6 +98,81 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         public override TaskStatus OnUpdate()
         {
+           
+            if (stun)
+            {
+                Debug.Log("stunned");
+                    
+                pivot.transform.DORotate((Vector3)initRotation.Value, 5f).OnComplete(() =>
+                {
+                    NavMeshAgent navMeshComponent = GetComponent<NavMeshAgent>();
+                    if (navMeshComponent != null)
+                    {
+                        navMeshComponent.enabled = true;
+                    }
+                });
+                return TaskStatus.Running;
+            }
+            if (chargeUp)
+            {
+                Debug.Log("chargning");
+                if (currentChargeTime < chargeTime)
+                {
+                    // Gradually increase the rotation speed over the charge time
+                    initialRotationSpeed += (maxRotationSpeed / chargeTime) * Time.deltaTime;
+                    currentChargeTime += Time.deltaTime;
+
+                    // Rotate the object based on the current rotation speed
+                    pivot.transform.Rotate(Vector3.forward * initialRotationSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    localSavePlayerPosition = playerTrans.Value.position;
+                    dir = (localSavePlayerPosition - this.transform.position).normalized;
+                    chargeUp = false;
+                }
+
+                return TaskStatus.Running;
+            }
+            else
+            {
+               
+
+                if(Vector3.Distance(localSavePlayerPosition , this.transform.position) < 2f)
+                {
+                   
+                    dir = this.transform.forward;
+                    Vector3 dragForce = -rb.velocity * 0.005f;
+                    rb.AddForce(dragForce, ForceMode.Impulse);
+                    
+                    
+                        maxRotationSpeed -= rotationDecreaseRate * Time.deltaTime;
+                        pivot.transform.Rotate(new Vector3(1, 1, 1) * maxRotationSpeed * Time.deltaTime);
+                        if(maxRotationSpeed < 0)
+                        {
+                            chargeUp = true;
+                            return TaskStatus.Success;
+                        }
+                        return TaskStatus.Running;
+                       
+                    
+                }
+                else
+                {
+                    maxRotationSpeed = 260;
+                    pivot.transform.Rotate(new Vector3(1,1,1)* maxRotationSpeed * Time.deltaTime);
+                    dir = (localSavePlayerPosition - this.transform.position).normalized;
+                    Debug.DrawRay(this.transform.position, dir * 100, Color.green);
+                    //CheckForCollisions();
+                    rb.AddForce(dir * 0.25f, ForceMode.Impulse);
+                    Debug.Log(Vector3.Distance(localSavePlayerPosition, this.transform.position));
+                    //this.gameObject.transform.Translate(dir * 20 * Time.deltaTime , Space.World);
+                    return TaskStatus.Running;
+                }
+                return TaskStatus.Running;
+            }
+            
+            /*
             if (corners != null && currentCorner < corners.Length)
             {
                 Vector3 direction = corners[currentCorner] - transform.position;
@@ -78,6 +188,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 }
             }
             return TaskStatus.Success;
+            */
         }
+
+        
+
+     
     }
 }
