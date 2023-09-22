@@ -47,6 +47,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool flag = false;
         private bool collisionFlag = false;
 
+        private Collider bossCollider;
         
         public HitBox HitBox;
 
@@ -58,8 +59,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             initialRotationSpeed = 0f;
             initRotation = this.gameObject.transform.eulerAngles;
             currentChargeTime = 0f;
-             rb = GetComponent<Rigidbody>();
-             playerRb = playerTrans.Value.GetComponent<Rigidbody>();
+            rb = GetComponent<Rigidbody>();
+            playerRb = playerTrans.Value.GetComponent<Rigidbody>();
+            bossCollider = GetComponent<Collider>();
             /*
             targetLocation = playerTrans.Value.position + transform.forward * 3;
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
@@ -75,6 +77,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             rb.isKinematic = false;
             chargeUp = true;
             timer = 3f;
+            bossCollider.enabled = true;
             
         }
         // public override TaskStatus OnUpdate()
@@ -227,6 +230,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 }
             });
             HitBox.StopCheckingHits();
+            bossCollider.enabled = false;
         }
 
         public override void OnCollisionEnter(Collision collision) {

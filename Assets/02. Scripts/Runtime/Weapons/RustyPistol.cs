@@ -131,7 +131,11 @@ namespace Runtime.Weapons
             BoundEntity.OnRecoil(isScopedIn);
             hitDetector.CheckHit(hitDetectorInfo);
         }
-        
+
+        public override void OnStartHold(GameObject ownerGameObject) {
+            base.OnStartHold(ownerGameObject);
+        }
+
         public void Update()
         {
             if (isHolding && !playerModel.IsPlayerDead())

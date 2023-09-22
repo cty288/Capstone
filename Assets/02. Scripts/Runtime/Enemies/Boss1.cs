@@ -105,7 +105,7 @@ namespace Runtime.Enemies
             
             BoundEntity.ShellClosed.RegisterWithInitValue(OnShellClosedChanged).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             //Animation-related.
-            // animator = GetComponent<Animator>();
+            //animator = GetComponent<Animator>();
 
 
             //Collision-related.

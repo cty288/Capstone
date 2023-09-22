@@ -30,7 +30,7 @@ namespace Runtime.GameResources.ViewControllers {
 		protected override void Awake() {
 			base.Awake();
 			originalLayer = gameObject.layer;
-			selfColliders = new Dictionary<Collider, bool>();
+			//selfColliders = new Dictionary<Collider, bool>();
 			rigidbody = GetComponent<Rigidbody>();
 			
 		}
@@ -63,7 +63,7 @@ namespace Runtime.GameResources.ViewControllers {
 			isHolding = true;
 			rigidbody.isKinematic = true;
 			foreach (Collider selfCollider in selfColliders.Keys) {
-				selfCollider.isTrigger = selfColliders[selfCollider];
+				selfCollider.isTrigger = true;
 			}
 
 			originalAutoRemovalTimeWhenNoAbsorb = entityAutoRemovalTimeWhenNoAbsorb;
