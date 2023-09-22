@@ -62,10 +62,11 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			//otherwise, move the health bar down to the original position
 			//use raycast all
 			if (isPointed && currentHealthBar) {
-				RaycastHit[] hits = Physics.RaycastAll(mainCamera.transform.position,
-					realHealthBarSpawnPoint.transform.position - mainCamera.transform.position,
-					Vector3.Distance(mainCamera.transform.position, realHealthBarSpawnPoint.transform.position),
-					LayerMask.GetMask("Enemy"));
+				var camTr = mainCamera.transform;
+				RaycastHit[] hits = Physics.RaycastAll(camTr.position,
+					realHealthBarSpawnPoint.transform.position - camTr.position,
+					Vector3.Distance(camTr.position, realHealthBarSpawnPoint.transform.position));
+				
 				if (hits.Length > 0) {
 					//hit the enemy, move the health bar up
 					currentHealthBar.transform.position = hits[0].point;
