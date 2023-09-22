@@ -30,6 +30,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             navMeshAgent.CalculatePath(targetLocation, path);
             corners = path.corners;
             
+            
+            
             timeStart = Time.time;
         }
         // public override TaskStatus OnUpdate()
