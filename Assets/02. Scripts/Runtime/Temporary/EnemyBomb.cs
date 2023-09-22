@@ -1,4 +1,5 @@
 using System.Collections;
+using Runtime.Utilities.Collision;
 using UnityEngine;
 
 namespace Runtime.Temporary
@@ -9,18 +10,21 @@ namespace Runtime.Temporary
         private Vector3 targetPos;
         public float travelTime;
         private Vector3 start;
+
+        private HitBox hb;
         // Start is called before the first frame update
         void Start()
         {
             start = transform.position;
             StartCoroutine(Curve());
+            hb = GetComponent<HitBox>();
 
         }
 
         // Update is called once per frame
         void Update()
         {
-        
+            
         }
         public void Init(Transform target,float tTime)
         {

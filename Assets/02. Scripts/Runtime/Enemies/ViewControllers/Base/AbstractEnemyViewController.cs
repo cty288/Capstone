@@ -108,7 +108,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			
 		}
 
-		public bool CheckHit(HitData data) {
+		public virtual bool CheckHit(HitData data) {
 			if (data.Hurtbox.Owner == gameObject) { return false; }
 			else if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
 			else { return true; }

@@ -9,6 +9,7 @@ using Runtime.Controls;
 using Cinemachine;
 using DG.Tweening;
 using MikroFramework.Architecture;
+using Runtime.Player;
 
 namespace Runtime.Temporary.Player
 {
@@ -198,17 +199,25 @@ namespace Runtime.Temporary.Player
         {
             //Camera;
             
-            HandleCamera();
+
+
+
+            IGamePlayerModel playerModel = this.GetModel<IGamePlayerModel>();
+            if (playerModel.IsPlayerDead())
+            {
+                rb.freezeRotation = false;
+            }
+            else
+            {
+                HandleCamera();
 
             
 
-            MyInput();
+                MyInput();
             
-            StateHandler();
-            CheckForWall();
-
-            
-
+                StateHandler();
+                CheckForWall();
+            }
             
             
             
