@@ -135,7 +135,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781485886}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.686, y: -0.422, z: 0.855}
+  m_LocalPosition: {x: 0.3269992, y: -0.16100001, z: 1.0250008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -377,11 +377,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bd4e5eefca4818be49c5253956c622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoilX: -5
-  recoilY: 5
-  recoilZ: 0.35
-  snappiness: 6
-  returnSpeed: 2
+  recoilX: -7
+  recoilY: 3
+  recoilZ: 0.25
+  snappiness: 7
+  returnSpeed: 6
 --- !u!1 &6661646818158682616
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,7 +681,7 @@ MonoBehaviour:
   vcam: {fileID: 7453984105727094038}
   fpsTopClamp: 90
   fpsBotClamp: -90
-  defaultFOV: 100
+  defaultFOV: 90
   idleBob:
     AmplitudeGain: 0.05
     FrequencyGain: 0.5
@@ -692,11 +692,11 @@ MonoBehaviour:
     AmplitudeGain: 0.2
     FrequencyGain: 2
   accelForce: 100
-  walkSpeed: 4
-  sprintSpeed: 8
-  slideSpeed: 15
+  walkSpeed: 3
+  sprintSpeed: 6
+  slideSpeed: 9
   groundDrag: 4
-  jumpForce: 12
+  jumpForce: 15
   jumpCooldown: 0.3
   airMultiplier: 0.3
   speedIncreaseMultiplier: 1.5
@@ -705,7 +705,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  additionalGravity: 10
+  additionalGravity: 27
   maxSlopeAngle: 60
   orientation: {fileID: 9114554745536944238}
   slopeLayerMask:
@@ -882,7 +882,7 @@ GameObject:
   - component: {fileID: 935346839}
   m_Layer: 3
   m_Name: Model
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
