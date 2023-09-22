@@ -19,6 +19,7 @@ public class BossHealthBar : HealthBar {
 	private Material healthBGMaterial;
 	
 	private TMP_Text bossNameText;
+	private IDamageable entity;
 
 	private void Awake() {
 		bar = transform.Find("BarParent").GetComponent<Scrollbar>();
@@ -29,13 +30,18 @@ public class BossHealthBar : HealthBar {
 	}
 
 	public override void OnSetEntity(IDamageable entity) {
+		this.entity = entity;
 		entity.HealthProperty.RealValue.RegisterWithInitValue(OnHealthChanged)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 
 		bossNameText.text = "";
-		if (!String.IsNullOrEmpty(entity.EntityName)) {
-			bossNameText.text = entity.EntityName;
+		if (!String.IsNullOrEmpty(entity.GetDisplayName())) {
+			bossNameText.text = entity.GetDisplayName();
 		}
+	}
+
+	public override void OnHealthBarDestroyed() {
+		entity.HealthProperty.RealValue.UnRegisterOnValueChanged(OnHealthChanged);
 	}
 
 	private void OnHealthChanged(HealthInfo oldHealth, HealthInfo newHealth) {

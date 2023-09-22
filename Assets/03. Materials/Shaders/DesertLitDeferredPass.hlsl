@@ -108,12 +108,6 @@ FragmentOutput LitGBufferPassFragment(Varyings IN) : SV_TARGET
 
 	UNITY_SETUP_INSTANCE_ID(IN);
 	UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
-
-	#ifdef _NORMALMAP
-		half3 viewDirTS = IN.viewDirTS;
-	#else
-		half3 viewDirTS = GetViewDirectionTangentSpace(IN.tangentWS, IN.normalWS, IN.viewDirWS);
-	#endif
 	
     SurfaceData surfaceData;
     InitializeSurfaceData(IN.uv, surfaceData);
