@@ -11,8 +11,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public SharedTransform playerTrans;
         Rigidbody rb;
         private Vector3 targetLocation;
-        public int dashVelocity;
-        public SharedFloat dashTime;
+        //public int dashVelocity;
+        //public SharedFloat dashTime;
+        public float abortDistance = 20f;
+        public float forceToPlayer = 50f;
         private NavMeshAgent navMeshAgent;
         private float ogSpeed;
         private int currentCorner = 0;
@@ -20,7 +22,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private NavMeshPath path = new NavMeshPath();
         private Vector3[] corners;
         private float timeStart;
-
+        private Rigidbody playerRb;
 
         //Joon's implementation variables
         public GameObject shell;
@@ -29,9 +31,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 localSavePlayerPosition;
         private bool hasMovedPassPlayer;
         private Vector3 dir;
-        private float timer = 2f;
+        private float timer = 3f;
         public float maxRotationSpeed = 260; // Maximum rotation speed (degrees per second)
-        public float acceleration = 30.0f; // Rate of acceleration
+        
         private float currentRotationSpeed = 0.0f;
         public GameObject pivot;
         public bool stun;
@@ -41,6 +43,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float initialRotationSpeed = 0.0f;
         private float rotationDecreaseRate = 160f;
         private bool flag = false;
+        private bool collisionFlag = false;
         
         
 
@@ -53,6 +56,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             initRotation = this.gameObject.transform.eulerAngles;
             currentChargeTime = 0f;
              rb = GetComponent<Rigidbody>();
+             playerRb = playerTrans.Value.GetComponent<Rigidbody>();
             /*
             targetLocation = playerTrans.Value.position + transform.forward * 3;
             navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
@@ -61,15 +65,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             corners = path.corners;
             */
 
-            
-            
+            collisionFlag = false;
+            rb.isKinematic = false;
             chargeUp = true;
-            //pivot.transform.position = this.gameObject.GetComponentInChildren<MeshRenderer>().bounds.center;
-           
-            
-
-
-            timeStart = Time.time;
+            timer = 3f;
         }
         // public override TaskStatus OnUpdate()
         // {
@@ -143,27 +142,38 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 if(flag)
                 {
                     
+                   /*
                    // dir = this.transform.forward;
                     //Vector3 dragForce = -rb.velocity * 0.005f;
                     //rb.AddForce(dragForce, ForceMode.Impulse);
                     
                         
-                        maxRotationSpeed -= rotationDecreaseRate * Time.deltaTime;
-                        pivot.transform.Rotate(new Vector3(1, 1, 1) * maxRotationSpeed * Time.deltaTime);
-                        if(maxRotationSpeed < 0)
-                        {
-                            chargeUp = true;
-                            return TaskStatus.Success;
-                        }
-                        return TaskStatus.Running;
-                       
+                    maxRotationSpeed -= rotationDecreaseRate * Time.deltaTime;
+                    pivot.transform.Rotate(new Vector3(1, 1, 1) * maxRotationSpeed * Time.deltaTime);
+                    if(maxRotationSpeed < 0)
+                    {
+                        chargeUp = true;
+                        return TaskStatus.Success;*/
+                    //}
                     
+                    //lerp velocity to 0
+                    
+                 
+                    if(rb.velocity.magnitude < 0.5f) {
+                        rb.velocity = Vector3.zero;
+                        return TaskStatus.Success;
+                    }
+                    else {
+                        rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 1f * Time.deltaTime);
+                        Debug.Log("slowing down");
+                        return TaskStatus.Running;
+                    }
                 }
                 else
                 {
-                    if(Vector3.Distance(localSavePlayerPosition, this.transform.position) < 2f)
-                    {
+                    if(Vector3.Distance(localSavePlayerPosition, this.transform.position) < abortDistance || timer < 0) {
                         flag = true;
+                        return TaskStatus.Running;
                     }
                     maxRotationSpeed = 260;
                     pivot.transform.Rotate(new Vector3(1,1,1)* maxRotationSpeed * Time.deltaTime);
@@ -173,6 +183,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     rb.AddForce(dir * 0.25f, ForceMode.Impulse);
                     Debug.Log(Vector3.Distance(localSavePlayerPosition, this.transform.position));
                     //this.gameObject.transform.Translate(dir * 20 * Time.deltaTime , Space.World);
+                    timer -= Time.deltaTime;
                     return TaskStatus.Running;
                 }
                
@@ -197,8 +208,34 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             */
         }
 
-        
 
-     
+        public override void OnEnd() {
+            base.OnEnd();
+            rb.isKinematic = true;
+            pivot.transform.DORotate((Vector3)initRotation.Value, 2f).OnComplete(() =>
+            {
+                NavMeshAgent navMeshComponent = GetComponent<NavMeshAgent>();
+                if (navMeshComponent != null) {
+                    navMeshComponent.enabled = true;
+                }
+            });
+            
+        }
+
+        public override void OnCollisionEnter(Collision collision) {
+            base.OnCollisionEnter(collision);
+            Debug.Log("Collision");
+            if (collision.collider.gameObject.CompareTag("Player") && !collisionFlag) {
+                Vector3 dir = playerTrans.Value.position - transform.position;
+                dir.y = 0;
+                //make it 45 degrees from the ground
+                dir = Quaternion.AngleAxis(20, Vector3.Cross(dir, Vector3.up)) * dir;
+                dir.Normalize();
+                playerRb.AddForce(dir * forceToPlayer, ForceMode.Impulse);
+                flag = true;
+                collisionFlag = true;
+                Debug.Log("Hit player");
+            }
+        }
     }
 }
