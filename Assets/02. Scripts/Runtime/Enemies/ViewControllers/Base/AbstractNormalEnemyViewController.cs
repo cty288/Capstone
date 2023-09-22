@@ -72,6 +72,12 @@ namespace Runtime.Enemies.ViewControllers.Base {
 					RaycastHit hit;
 					if (Physics.Raycast(camTr.position, realHealthBarSpawnPoint.transform.position - camTr.position, out hit, 100f, crossHairDetectLayerMask)) {
 						targetPos += Vector3.up * 0.5f;
+						//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
+						if (Math.Abs(hit.point.x - realHealthBarSpawnPoint.transform.position.x) < 2f &&
+						    Math.Abs(hit.point.z - realHealthBarSpawnPoint.transform.position.z) < 2f) {
+
+							targetPos += new Vector3(0.5f, 0, 0.5f);
+						}
 					}
 					else {
 						targetPos = healthBarSpawnPoint.transform.position;
