@@ -163,6 +163,8 @@ namespace Runtime.Enemies
             }
             BoundEntity.TakeDamage(data.Damage, data.Attacker);
         }
+        
+        
 
         public void ChangeShellStatus(bool newStatus)
         {

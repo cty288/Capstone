@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Mikrocosmos{
     public class KeepGlobalRotation : MonoBehaviour{
@@ -12,8 +13,14 @@ namespace Mikrocosmos{
 
         [SerializeField]
         private Vector3 positionOffset;
+
+        public Vector3 PositionOffset {
+            get => positionOffset;
+            set => positionOffset = value;
+        }
         private void OnEnable() {
             //positionOffset = positionRelativeTo.position - transform.position;
+
         }
 
         private void Update() {
