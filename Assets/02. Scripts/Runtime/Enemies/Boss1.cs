@@ -143,6 +143,12 @@ namespace Runtime.Enemies
             // Debug.Log("Animation Event: " + eventName);
             switch (eventName)
             {
+                case "ShellOpen":
+                    ChangeShellStatus(false);
+                    break;
+                case "ShellClose":
+                    ChangeShellStatus(true);
+                    break;
                 default:
                     break;
             }
@@ -155,7 +161,7 @@ namespace Runtime.Enemies
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
                 shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,shellHp.Value.CurrentHealth-data.Damage);
             }
-            BoundEntity.TakeDamage(data.Damage,data.Attacker);
+            BoundEntity.TakeDamage(data.Damage, data.Attacker);
         }
 
         public void ChangeShellStatus(bool newStatus)
