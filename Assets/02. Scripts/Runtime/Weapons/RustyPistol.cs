@@ -219,17 +219,17 @@ namespace Runtime.Weapons
             float startTime = 0f;
             float amimationTime = 0.1f;
 
-            while ((amimationTime - startTime) / amimationTime > 0f)
+            while (startTime <= amimationTime)
             {
                 model.transform.position = Vector3.Lerp(
-                    scopeInPositionTransform.position,
                     gunPositionTransform.position,
-                    (amimationTime - startTime) / amimationTime);
+                    scopeInPositionTransform.position,
+                    startTime / amimationTime);
                 
                 startTime += Time.deltaTime;
                 yield return null;
             }
-            
+            model.transform.position = scopeInPositionTransform.position;
             yield return null;
             isScopedIn = true;
         }
@@ -239,16 +239,18 @@ namespace Runtime.Weapons
             float startTime = 0f;
             float amimationTime = 0.1f;
 
-            while ((amimationTime - startTime) / amimationTime > 0f)
+            while (startTime <= amimationTime)
             {
                 model.transform.position = Vector3.Lerp(
-                    gunPositionTransform.position,
                     scopeInPositionTransform.position,
-                    (amimationTime - startTime) / amimationTime);
+                    gunPositionTransform.position,
+                    startTime / amimationTime);
 
                 startTime += Time.deltaTime;
                 yield return null;
             }
+
+            model.transform.position = gunPositionTransform.position;
 
             yield return null;
             isScopedIn = false;
