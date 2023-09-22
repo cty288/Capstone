@@ -29,7 +29,7 @@ namespace MikroFramework.ResKit
         /// <returns></returns>
         public static AssetBundleRes Allocate(string assetName) {
             AssetBundleRes res = SafeObjectPool<AssetBundleRes>.Singleton.Allocate();
-
+            res.resLoader = ResLoader.Allocate();
             res.AssetPath= ResKitUtility.GetAssetBundlePath(assetName);
             res.ResType = typeof(AssetBundle);
             res.Name = assetName;

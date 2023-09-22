@@ -228,8 +228,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 if (navMeshComponent != null) {
                     navMeshComponent.enabled = true;
                 }
+                HitBox.StopCheckingHits();
             });
-            HitBox.StopCheckingHits();
+            
             bossCollider.enabled = false;
         }
 

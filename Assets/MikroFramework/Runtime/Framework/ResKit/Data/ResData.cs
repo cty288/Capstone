@@ -15,7 +15,7 @@ namespace MikroFramework.ResKit {
     /// <summary>
     /// Class that manage Project AB Manifest and saves all AB's load path (from local or hot-update manager)
     /// </summary>
-    [MonoSingletonPath("[FrameworkPersistent]/[ResKit]/ResData")]
+    //[MonoSingletonPath("[FrameworkPersistent]/[ResKit]/ResData")]
     public class ResData : MonoPersistentMikroSingleton<ResData> {
         private static AssetBundleManifest manifest;
         private static AssetBundle manifestBundle;
@@ -46,7 +46,7 @@ namespace MikroFramework.ResKit {
         /// </summary>
         public List<AssetBundleData> AssetBundleDatas = new List<AssetBundleData>();
 
-        private AssetDataTable assetDataTable = new AssetDataTable();
+        private static AssetDataTable assetDataTable = new AssetDataTable();
 
         /// <summary>
         /// Get an AssetData only by its name and type, does not need ownerBundleName
