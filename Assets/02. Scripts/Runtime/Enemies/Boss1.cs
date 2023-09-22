@@ -14,6 +14,7 @@ using Runtime.Enemies.ViewControllers.Base;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Enemies;
 using Runtime.UI.NameTags;
+using Runtime.Utilities;
 using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -27,6 +28,8 @@ namespace Runtime.Enemies
     {
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "Boss1";
+
+        [field: ES3Serializable] public BindableProperty<bool> ShellClosed { get; } = new BindableProperty<bool>(true);
         
         public override void OnRecycle()
         {
@@ -56,8 +59,6 @@ namespace Runtime.Enemies
         public int MaxShellHealth { get; }
         
         public int CurrentShellHealth { get; }
-        
-        public bool ShellClosed { get; }
         [Header("HitResponder_Info")]
         [SerializeField] private int m_damage = 10;
         public Animator animator;
@@ -94,10 +95,13 @@ namespace Runtime.Enemies
 
         protected override void OnEntityStart()
         {
+            Debug.Log("start");
             //binding
             BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
             BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
-            //BindCustomData<bool>("ShellClosed","shellHealthInfo","shellClosed",OnShellStatusChanged);
+            
+            
+            BoundEntity.ShellClosed.RegisterWithInitValue(OnShellClosedChanged).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             //Animation-related.
             // animator = GetComponent<Animator>();
             animationSMBManager = GetComponent<AnimationSMBManager>();
@@ -123,16 +127,11 @@ namespace Runtime.Enemies
                 .Build();
         }
         
-        protected void OnShellStatusChanged(bool oldValue,bool newValue)
+        protected void OnShellClosedChanged(bool oldValue,bool newValue)
         {
-            if (newValue)
-            {
-                //TODO: close shell
-            }
-            else
-            {
-                //TODO: open shell
-            }
+            Debug.Log("changed to" + newValue);
+            animator.SetBool("ShellClosed",newValue);
+            BoundEntity.IsInvincible.Value = newValue;
         }
         // private void Update()
         // {
@@ -151,7 +150,7 @@ namespace Runtime.Enemies
 
         public override void HurtResponse(HitData data)
         {
-            if (ShellClosed)
+            if (BoundEntity.ShellClosed)
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
                 shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,shellHp.Value.CurrentHealth-data.Damage);
@@ -159,18 +158,11 @@ namespace Runtime.Enemies
             BoundEntity.TakeDamage(data.Damage,data.Attacker);
         }
 
-        // public void ChangeShellStatus(bool newStatus)
-        // {
-        //     IBindableProperty shellStatus = BoundEntity.GetCustomDataValue("shellHealthInfo", "shellClosed");
-        //     if (shellStatus.Value != newStatus)
-        //     {
-        //         shellStatus.Value = newStatus;
-        //         if (newStatus)
-        //         {
-        //             BoundEntity.IsInvincible.Value = true;
-        //         }
-        //     }
-        // }
+        public void ChangeShellStatus(bool newStatus)
+        {
+            BindableProperty<bool> shellStatus = BoundEntity.ShellClosed;
+            shellStatus.Value = newStatus;
+        }
     }
 }
 
