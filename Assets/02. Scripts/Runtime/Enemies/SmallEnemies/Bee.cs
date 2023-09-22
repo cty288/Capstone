@@ -49,20 +49,14 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class Bee : AbstractNormalEnemyViewController<BeeEntity> 
     {
-        public HealthBar hb;
-        protected override int GetCurrentHitDamage()
-        {
-
+        
+        protected override int GetCurrentHitDamage() {
             return 0;
         }
 
-        protected override void OnDestroyHealthBar(HealthBar healthBar)
-        {
-            
-        }
+      
 
-        protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
-        {
+        protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
             
            
             
@@ -87,27 +81,10 @@ namespace Runtime.Enemies.SmallEnemies
                 //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();
         }
-
-        protected override HealthBar OnSpawnHealthBar()
-        {
-            //todo
-            return new BossHealthBar();
-        }
-
-        protected override MikroAction WaitingForDeathCondition()
-        {
-            return null;
-        }
-        public override void HurtResponse(HitData data)
-        {
-            Debug.Log("aha");
-            BoundEntity.TakeDamage(data.Damage , data.Attacker);
-            
-
-        }
-       
         
 
-
+        protected override MikroAction WaitingForDeathCondition() {
+            return null;
+        }
     }
 }

@@ -188,7 +188,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 0
-  recoilScript: {fileID: 0}
 --- !u!120 &10541468
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1270,7 +1269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_collider: {fileID: 908874548}
 --- !u!65 &908874548
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1789,6 +1787,7 @@ GameObject:
   - component: {fileID: 1228760971}
   - component: {fileID: 1228760970}
   - component: {fileID: 1228760969}
+  - component: {fileID: 1228760976}
   m_Layer: 0
   m_Name: Bee
   m_TagString: Untagged
@@ -1953,10 +1952,41 @@ Transform:
   m_LocalPosition: {x: -23.121727, y: 3.2155533, z: -3.2372124}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1874503940}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1228760976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228760968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ccfe7931e27ba4aa53614d60942937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
+  autoCreateNewEntityWhenStart: 1
+  showNameTagWhenPointed: 1
+  nameTagFollowTransform: {fileID: 0}
+  nameTagPrefabName: NameTag_General
+  hasInteractiveHint: 0
+  interactiveHintPrefabName: InteractHint_General
+  interactiveHintLocalizedKey: interact
+  autoDestroyWhenEntityRemoved: 1
+  healthBarPrefabName: EnemyHealthBar
+  healthBarSpawnPoint: {fileID: 0}
+  hb: {fileID: 0}
 --- !u!1 &1238491041
 GameObject:
   m_ObjectHideFlags: 0
@@ -3275,6 +3305,53 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.14, y: 0.5736806, z: 0.12}
   m_Center: {x: -0.0000000041491592, y: -0.0368402, z: 0.0000000011760721}
+--- !u!1 &1874503939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1874503940}
+  - component: {fileID: 1874503941}
+  m_Layer: 0
+  m_Name: HealthBarSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1874503940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874503939}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.91, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1228760975}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1874503941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874503939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18658476032860a409f513d9189fcd83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotation: {x: 0, y: 0, z: 0}
+  positionRelativeTo: {fileID: 1228760975}
+  positionOffset: {x: 0, y: 0.91, z: 0}
 --- !u!1 &1904590135
 GameObject:
   m_ObjectHideFlags: 0
@@ -4025,7 +4102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_collider: {fileID: 2107604497}
 --- !u!65 &2107604497
 BoxCollider:
   m_ObjectHideFlags: 0
