@@ -13,11 +13,12 @@ namespace Tests.Tests_Editor {
 		
 		[SetUp]
 		public void SetUp() {
-			
+			MainGame_Test.ResetArchitecture();
 			inventoryModel = MainGame_Test.Interface.GetModel<IInventoryModel>();
 			rawMaterialModel = MainGame_Test.Interface.GetModel<IRawMaterialModel>();
 			inventorySystem = MainGame_Test.Interface.GetSystem<IInventorySystem>();
 			inventorySystem.ResetSlots();
+			//inventoryModel.GetAllSlots().Clear();
 		}
 		
 		

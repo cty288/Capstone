@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Inventory_Model_InventoryModel" data-uid="Runtime.Inventory.Model.InventoryModel" class="text-break">
     Class InventoryModel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L80"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -135,6 +135,9 @@
     </div>
     <div>
       <a class="xref" href="Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_AddItemAt_Runtime_GameResources_Model_Base_IResourceEntity_Runtime_Inventory_Model_ResourceSlot_">ResourceSlotsModel.AddItemAt(IResourceEntity, ResourceSlot)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_OnEntityRecycled_Runtime_DataFramework_Entities_IEntity_">ResourceSlotsModel.OnEntityRecycled(IEntity)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_GetSlotCount">ResourceSlotsModel.GetSlotCount()</a>
@@ -195,7 +198,7 @@
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_MaxHotBarSlotCount" data-uid="Runtime.Inventory.Model.InventoryModel.MaxHotBarSlotCount">
   MaxHotBarSlotCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L90"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -225,7 +228,7 @@
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_MaxSlotCount" data-uid="Runtime.Inventory.Model.InventoryModel.MaxSlotCount">
   MaxSlotCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L88"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -260,7 +263,7 @@
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_AddHotBarSlots_Runtime_Inventory_Model_HotBarCategory_System_Int32_System_Func_Runtime_Inventory_Model_ResourceSlot__" data-uid="Runtime.Inventory.Model.InventoryModel.AddHotBarSlots(Runtime.Inventory.Model.HotBarCategory,System.Int32,System.Func{Runtime.Inventory.Model.ResourceSlot})">
   AddHotBarSlots(HotBarCategory, int, Func&lt;ResourceSlot&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L100"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Add the specified number of slots to the hotbar. <br></p>
@@ -301,7 +304,7 @@
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_AddItem_Runtime_GameResources_Model_Base_IResourceEntity_" data-uid="Runtime.Inventory.Model.InventoryModel.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)">
   AddItem(IResourceEntity)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Add item to the slots. If the item is stackable, it will be added to the existing stack. <br>
@@ -339,7 +342,7 @@ If there's no existing stack, a new stack will be created. <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_AddSlots_System_Int32_" data-uid="Runtime.Inventory.Model.InventoryModel.AddSlots(System.Int32)">
   AddSlots(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L169"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L172"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Add the specified number of slots to the inventory. <br>
@@ -380,7 +383,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_" data-uid="Runtime.Inventory.Model.InventoryModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)">
   CanPlaceItem(IResourceEntity)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L160"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns true if the item can be placed at the specified index. <br>
@@ -422,7 +425,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_Clear" data-uid="Runtime.Inventory.Model.InventoryModel.Clear">
   Clear()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L263"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L266"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reset all slots to the initial state.</p>
@@ -449,7 +452,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_GetHotBarSlotCount_Runtime_Inventory_Model_HotBarCategory_" data-uid="Runtime.Inventory.Model.InventoryModel.GetHotBarSlotCount(Runtime.Inventory.Model.HotBarCategory)">
   GetHotBarSlotCount(HotBarCategory)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L207"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -485,7 +488,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_GetHotBarSlots_Runtime_Inventory_Model_HotBarCategory_" data-uid="Runtime.Inventory.Model.InventoryModel.GetHotBarSlots(Runtime.Inventory.Model.HotBarCategory)">
   GetHotBarSlots(HotBarCategory)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L211"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -521,7 +524,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_GetSelectedHotBarSlot_Runtime_Inventory_Model_HotBarCategory_" data-uid="Runtime.Inventory.Model.InventoryModel.GetSelectedHotBarSlot(Runtime.Inventory.Model.HotBarCategory)">
   GetSelectedHotBarSlot(HotBarCategory)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L255"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L258"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -557,7 +560,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_GetSelectedHotBarSlotIndex_Runtime_Inventory_Model_HotBarCategory_" data-uid="Runtime.Inventory.Model.InventoryModel.GetSelectedHotBarSlotIndex(Runtime.Inventory.Model.HotBarCategory)">
   GetSelectedHotBarSlotIndex(HotBarCategory)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L251"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L254"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -593,7 +596,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_OnInit" data-uid="Runtime.Inventory.Model.InventoryModel.OnInit">
   OnInit()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L194"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L197"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -619,7 +622,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_RemoveItem_System_String_" data-uid="Runtime.Inventory.Model.InventoryModel.RemoveItem(System.String)">
   RemoveItem(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L146"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Find and remove the first item with the specified uuid.</p>
@@ -652,11 +655,37 @@ Factors causing false: <br></p>
 
 
 
+  <a id="Runtime_Inventory_Model_InventoryModel_Reset_" data-uid="Runtime.Inventory.Model.InventoryModel.Reset*"></a>
+
+  <h3 id="Runtime_Inventory_Model_InventoryModel_Reset" data-uid="Runtime.Inventory.Model.InventoryModel.Reset">
+  Reset()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Reset()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_Inventory_Model_InventoryModel_SelectHotBarSlot_" data-uid="Runtime.Inventory.Model.InventoryModel.SelectHotBarSlot*"></a>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_SelectHotBarSlot_Runtime_Inventory_Model_HotBarCategory_System_Int32_" data-uid="Runtime.Inventory.Model.InventoryModel.SelectHotBarSlot(Runtime.Inventory.Model.HotBarCategory,System.Int32)">
   SelectHotBarSlot(HotBarCategory, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L218"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -689,7 +718,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_SelectNextHotBarSlot_Runtime_Inventory_Model_HotBarCategory_" data-uid="Runtime.Inventory.Model.InventoryModel.SelectNextHotBarSlot(Runtime.Inventory.Model.HotBarCategory)">
   SelectNextHotBarSlot(HotBarCategory)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L227"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L230"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -720,7 +749,7 @@ Factors causing false: <br></p>
 
   <h3 id="Runtime_Inventory_Model_InventoryModel_SelectPreviousHotBarSlot_Runtime_Inventory_Model_HotBarCategory_" data-uid="Runtime.Inventory.Model.InventoryModel.SelectPreviousHotBarSlot(Runtime.Inventory.Model.HotBarCategory)">
   SelectPreviousHotBarSlot(HotBarCategory)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L239"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L242"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -751,7 +780,7 @@ Factors causing false: <br></p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L79" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/InventoryModel.cs/#L80" class="edit-link">Edit this page</a>
         </div>
 
         

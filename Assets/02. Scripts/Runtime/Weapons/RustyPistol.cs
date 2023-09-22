@@ -91,7 +91,7 @@ namespace Runtime.Weapons
         //FOR CHARGE SPEED
         // private InputAction _holdAction;
 
-        public GunRecoil recoilScript;
+        // public GunRecoil recoilScript;
         
         protected override void OnEntityStart()
         {
@@ -122,7 +122,7 @@ namespace Runtime.Weapons
         public void Shoot()
         {
             // particleSystem.Play();
-            BoundEntity.OnRecoil();
+            BoundEntity.OnRecoil(isScopedIn);
             hitDetector.CheckHit(hitDetectorInfo);
         }
         

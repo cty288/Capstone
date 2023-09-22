@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Runtime.Utilities.Collision
 {
+    [RequireComponent(typeof(Collider))]
     public class HurtBox : MonoBehaviour, IHurtbox
     {
         [SerializeField] private bool m_active = true;

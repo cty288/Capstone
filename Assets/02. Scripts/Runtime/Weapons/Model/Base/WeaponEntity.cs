@@ -14,7 +14,9 @@ namespace Runtime.Weapons.Model.Base
 {
     public struct OnWeaponRecoilEvent
     {
-        // public GunRecoil gunRecoilScript;
+        public Vector3 recoilVector;
+        public float snappiness;
+        public float returnSpeed;
     }
     
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
@@ -26,6 +28,7 @@ namespace Runtime.Weapons.Model.Base
         public IBulletsPerShot GetBulletsPerShot();
         public ISpread GetSpread();
         public IRecoil GetRecoil();
+        public IScopeRecoil GetScopeRecoil();
         public IBulletSpeed GetBulletSpeed();
         public IChargeSpeed GetChargeSpeed();
         
@@ -34,7 +37,7 @@ namespace Runtime.Weapons.Model.Base
         
         public void Reload();
 
-        public void OnRecoil();
+        public void OnRecoil(bool isScopedIn);
     }
     
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
@@ -46,13 +49,11 @@ namespace Runtime.Weapons.Model.Base
         private IBulletsPerShot bulletsPerShotProperty;
         private ISpread spreadProperty;
         private IRecoil recoilProperty;
+        private IScopeRecoil scopeRecoilProperty;
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
-
-        // public GunRecoil GunRecoilScript { get; set; }
-
 
         protected override ConfigTable GetConfigTable() {
             
@@ -74,6 +75,7 @@ namespace Runtime.Weapons.Model.Base
             bulletsPerShotProperty = GetProperty<IBulletsPerShot>();
             spreadProperty = GetProperty<ISpread>();
             recoilProperty = GetProperty<IRecoil>();
+            scopeRecoilProperty = GetProperty<IScopeRecoil>();
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
             
@@ -101,6 +103,7 @@ namespace Runtime.Weapons.Model.Base
             RegisterInitialProperty<IBulletsPerShot>(new BulletsPerShot());
             RegisterInitialProperty<ISpread>(new Spread());
             RegisterInitialProperty<IRecoil>(new Recoil());
+            RegisterInitialProperty<IScopeRecoil>(new ScopeRecoil());
             RegisterInitialProperty<IBulletSpeed>(new BulletSpeed());
             RegisterInitialProperty<IChargeSpeed>(new ChargeSpeed());
         }
@@ -144,7 +147,12 @@ namespace Runtime.Weapons.Model.Base
         {
             return recoilProperty;
         }
-        
+
+        public IScopeRecoil GetScopeRecoil()
+        {
+            return scopeRecoilProperty;
+        }
+
         public IBulletSpeed GetBulletSpeed()
         {
             return bulletSpeedProperty;
@@ -161,9 +169,24 @@ namespace Runtime.Weapons.Model.Base
             CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
         }
 
-        public void OnRecoil()
+        public void OnRecoil(bool isScopedIn)
         {
-            this.SendEvent<OnWeaponRecoilEvent>(new OnWeaponRecoilEvent());
+            if (isScopedIn)
+            {
+                this.SendEvent<OnWeaponRecoilEvent>(new OnWeaponRecoilEvent()
+                {
+                    recoilVector = scopeRecoilProperty.GetRecoilVector(),
+                    snappiness = scopeRecoilProperty.GetSnappiness(),
+                    returnSpeed = scopeRecoilProperty.GetReturnSpeed(),
+                });
+            } else {
+                this.SendEvent<OnWeaponRecoilEvent>(new OnWeaponRecoilEvent()
+                {
+                    recoilVector = recoilProperty.GetRecoilVector(),
+                    snappiness = recoilProperty.GetSnappiness(),
+                    returnSpeed = recoilProperty.GetReturnSpeed(),
+                });
+            }
         }
 
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
