@@ -1,5 +1,6 @@
 using Framework;
 using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
@@ -75,22 +76,24 @@ namespace Runtime.Enemies
 
        
         private HitDetectorInfo hitDetectorInfo;
-        
-        
-        protected override MikroAction WaitingForDeathCondition() {
-            return UntilAction.Allocate(() => {
-                if (Input.GetKeyDown(KeyCode.M)) {
-                    Debug.Log("Boss 1 death animation ends.");
-                    return true;
-                }
+        private bool deathAnimationEnd = false;
 
-                return false;
-            });
+        protected override void Awake() {
+            base.Awake();
+            animationSMBManager = GetComponent<AnimationSMBManager>();
+            animationSMBManager.Event.AddListener(OnAnimationEvent);
         }
 
-        protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
-        {
-            throw new System.NotImplementedException();
+        protected override MikroAction WaitingForDeathCondition() {
+            transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
+                deathAnimationEnd = true;
+            });
+            
+            return UntilAction.Allocate(() => deathAnimationEnd);
+        }
+
+        protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
+          
         }
 
         protected override void OnEntityStart()
@@ -104,8 +107,7 @@ namespace Runtime.Enemies
             BoundEntity.ShellClosed.RegisterWithInitValue(OnShellClosedChanged).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             //Animation-related.
             // animator = GetComponent<Animator>();
-            animationSMBManager = GetComponent<AnimationSMBManager>();
-            animationSMBManager.Event.AddListener(OnAnimationEvent);
+
 
             //Collision-related.
             if (hitbox_roll) {
@@ -168,6 +170,13 @@ namespace Runtime.Enemies
         {
             BindableProperty<bool> shellStatus = BoundEntity.ShellClosed;
             shellStatus.Value = newStatus;
+        }
+
+
+        public override void OnRecycled() {
+            base.OnRecycled();
+            transform.localScale = Vector3.one;
+            deathAnimationEnd = false;
         }
     }
 }
