@@ -17,6 +17,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		private bool isPointed = false;
 
 		private Camera mainCamera = null;
+
+		protected LayerMask crossHairDetectLayerMask;
 		protected override void Awake() {
 			base.Awake();
 			mainCamera = Camera.main;
@@ -26,6 +28,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 					.GetComponent<KeepGlobalRotation>();
 
 			}
+			crossHairDetectLayerMask = LayerMask.GetMask("CrossHairDetect");
 		}
 
 		protected override HealthBar OnSpawnHealthBar() {
@@ -57,25 +60,28 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		}
 
 		private void FixedUpdate() {
-			//if it is pointed, then make sure the health bar is not blocking the view
-			//solution: raycast from the camera to realHealthBarSpawnPoint, if it hits the enemy, then move the health bar up until it doesn't hit the enemy
-			//otherwise, move the health bar down to the original position
-			//use raycast all
-			if (isPointed && currentHealthBar) {
-				var camTr = mainCamera.transform;
-				RaycastHit[] hits = Physics.RaycastAll(camTr.position,
-					realHealthBarSpawnPoint.transform.position - camTr.position,
-					Vector3.Distance(camTr.position, realHealthBarSpawnPoint.transform.position));
+			if (currentHealthBar) {
+				Vector3 targetPos = currentHealthBar.transform.position;
+			
+				//if it is pointed, then make sure the health bar is not blocking the view
+				//solution: raycast from the camera to realHealthBarSpawnPoint, if it hits the enemy, then move the health bar up until it doesn't hit the enemy
+				//otherwise, move the health bar down to the original position
+				if (isPointed) {
+					var camTr = mainCamera.transform;
 				
-				if (hits.Length > 0) {
-					//hit the enemy, move the health bar up
-					currentHealthBar.transform.position = hits[0].point;
+					RaycastHit hit;
+					if (Physics.Raycast(camTr.position, realHealthBarSpawnPoint.transform.position - camTr.position, out hit, 100f, crossHairDetectLayerMask)) {
+						targetPos += Vector3.up * 0.5f;
+					}
+					else {
+						targetPos = healthBarSpawnPoint.transform.position;
+					}
 				}
-				else {
-					//didn't hit the enemy, move the health bar down
-					currentHealthBar.transform.position = realHealthBarSpawnPoint.transform.position;
-				}
+
+				currentHealthBar.transform.position =
+					Vector3.Lerp(currentHealthBar.transform.position, targetPos, 0.1f);
 			}
+			
 		}
 
 		protected override void OnDestroyHealthBar(HealthBar healthBar) {
