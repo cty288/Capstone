@@ -245,7 +245,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_IWeaponEntity_CurrentAmmo" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.CurrentAmmo">
   CurrentAmmo
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -373,7 +373,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_IWeaponEntity_GetBulletSpeed" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.GetBulletSpeed">
   GetBulletSpeed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -435,7 +435,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_IWeaponEntity_GetChargeSpeed" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.GetChargeSpeed">
   GetChargeSpeed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L33"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -555,6 +555,37 @@
 
 
 
+  <a id="Runtime_Weapons_Model_Base_IWeaponEntity_GetScopeRecoil_" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.GetScopeRecoil*"></a>
+
+  <h3 id="Runtime_Weapons_Model_Base_IWeaponEntity_GetScopeRecoil" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.GetScopeRecoil">
+  GetScopeRecoil()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IScopeRecoil GetScopeRecoil()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Weapons.Model.Properties.IScopeRecoil.html">IScopeRecoil</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_Weapons_Model_Base_IWeaponEntity_GetSpread_" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.GetSpread*"></a>
 
   <h3 id="Runtime_Weapons_Model_Base_IWeaponEntity_GetSpread" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.GetSpread">
@@ -588,18 +619,23 @@
 
   <a id="Runtime_Weapons_Model_Base_IWeaponEntity_OnRecoil_" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.OnRecoil*"></a>
 
-  <h3 id="Runtime_Weapons_Model_Base_IWeaponEntity_OnRecoil" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.OnRecoil">
-  OnRecoil()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Weapons_Model_Base_IWeaponEntity_OnRecoil_System_Boolean_" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.OnRecoil(System.Boolean)">
+  OnRecoil(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void OnRecoil()</code></pre>
+    <pre><code class="lang-csharp hljs">void OnRecoil(bool isScopedIn)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>isScopedIn</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -616,7 +652,7 @@
 
   <h3 id="Runtime_Weapons_Model_Base_IWeaponEntity_Reload" data-uid="Runtime.Weapons.Model.Base.IWeaponEntity.Reload">
   Reload()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Base/WeaponEntity.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
