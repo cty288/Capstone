@@ -39,13 +39,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float chargeTime = 3.0f;  // Total charge time in seconds
         private float currentChargeTime = 0.0f;
         private float initialRotationSpeed = 0.0f;
-        private float rotationDecreaseRate = 120f;
+        private float rotationDecreaseRate = 160f;
+        private bool flag = false;
         
         
 
         public override void OnStart()
         {
             //reset
+            flag = false;
             maxRotationSpeed = 260;
             initialRotationSpeed = 0f;
             initRotation = this.gameObject.transform.eulerAngles;
@@ -138,14 +140,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                
 
-                if(Vector3.Distance(localSavePlayerPosition , this.transform.position) < 2f)
+                if(flag)
                 {
-                   
-                    dir = this.transform.forward;
-                    Vector3 dragForce = -rb.velocity * 0.005f;
-                    rb.AddForce(dragForce, ForceMode.Impulse);
                     
+                   // dir = this.transform.forward;
+                    //Vector3 dragForce = -rb.velocity * 0.005f;
+                    //rb.AddForce(dragForce, ForceMode.Impulse);
                     
+                        
                         maxRotationSpeed -= rotationDecreaseRate * Time.deltaTime;
                         pivot.transform.Rotate(new Vector3(1, 1, 1) * maxRotationSpeed * Time.deltaTime);
                         if(maxRotationSpeed < 0)
@@ -159,6 +161,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 }
                 else
                 {
+                    if(Vector3.Distance(localSavePlayerPosition, this.transform.position) < 2f)
+                    {
+                        flag = true;
+                    }
                     maxRotationSpeed = 260;
                     pivot.transform.Rotate(new Vector3(1,1,1)* maxRotationSpeed * Time.deltaTime);
                     dir = (localSavePlayerPosition - this.transform.position).normalized;
@@ -169,7 +175,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     //this.gameObject.transform.Translate(dir * 20 * Time.deltaTime , Space.World);
                     return TaskStatus.Running;
                 }
-                return TaskStatus.Running;
+               
             }
             
             /*
