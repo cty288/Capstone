@@ -3,6 +3,8 @@ using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using Runtime.Enemies;
+using Runtime.Utilities.Collision;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -44,8 +46,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float rotationDecreaseRate = 160f;
         private bool flag = false;
         private bool collisionFlag = false;
+
         
-        
+        public HitBox HitBox;
 
         public override void OnStart()
         {
@@ -65,10 +68,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             corners = path.corners;
             */
 
+
+            HitBox.GetComponentInParent<Boss1>().ClearHitObjects();
+            HitBox.StartCheckingHits();
             collisionFlag = false;
             rb.isKinematic = false;
             chargeUp = true;
             timer = 3f;
+            
         }
         // public override TaskStatus OnUpdate()
         // {
@@ -219,7 +226,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     navMeshComponent.enabled = true;
                 }
             });
-            
+            HitBox.StopCheckingHits();
         }
 
         public override void OnCollisionEnter(Collision collision) {
@@ -235,6 +242,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 flag = true;
                 collisionFlag = true;
                 Debug.Log("Hit player");
+                
+                
+                
+                /*HitBox.TriggerCheckHit(playerTrans.Value.GetComponentInChildren<HurtBox>(true)
+                    .GetComponent<Collider>());*/
             }
         }
     }

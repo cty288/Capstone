@@ -31,7 +31,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected HealthBar currentHealthBar = null;
 
 		public int Damage => GetCurrentHitDamage();
-		private List<GameObject> hitObjects = new List<GameObject>();
+		protected List<GameObject> hitObjects = new List<GameObject>();
 		
 		
 		protected abstract int GetCurrentHitDamage();
@@ -109,6 +109,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		}
 
 		public virtual bool CheckHit(HitData data) {
+			
 			if (data.Hurtbox.Owner == gameObject) { return false; }
 			else if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
 			else { return true; }
