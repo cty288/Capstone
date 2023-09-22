@@ -35,8 +35,8 @@ public class BossHealthBar : HealthBar {
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 
 		bossNameText.text = "";
-		if (!String.IsNullOrEmpty(entity.EntityName)) {
-			bossNameText.text = entity.EntityName;
+		if (!String.IsNullOrEmpty(entity.GetDisplayName())) {
+			bossNameText.text = entity.GetDisplayName();
 		}
 	}
 

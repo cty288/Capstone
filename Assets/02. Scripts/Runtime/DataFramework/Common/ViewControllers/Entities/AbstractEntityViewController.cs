@@ -97,17 +97,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void OnPointByCrosshair() {
 			if (showNameTagWhenPointed) {
-				if(!nameTagFollowTransform) {
-					Debug.LogError($"Name tag follow transform not set for {gameObject.name}!");
-					return;
-				}
-				
-
-				GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag, true);
-				if (nameTag) {
-					INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
-					if (nameTagComponent != null) {
-						nameTagComponent.SetName(BoundEntity.GetDisplayName());
+				if(nameTagFollowTransform) {
+					GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag, true);
+					if (nameTag) {
+						INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
+						if (nameTagComponent != null) {
+							nameTagComponent.SetName(BoundEntity.GetDisplayName());
+						}
 					}
 				}
 			}
