@@ -1,44 +1,29 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.ViewControllers.Entities;
+using Runtime.Enemies.Model;
 using Runtime.Temporary;
 using UnityEngine;
 
 namespace Runtime.BehaviorDesigner.Conditional
 {
-    public class IsHealthUnder : EnemyConditional
-    {
+    public class IsEnemyHealthUnder : EnemyConditional {
+
+        public SharedGameObject EntityGameObject;
+        
+        private IEnemyEntity enemyVC;
         public SharedFloat healthPercentage;
-        public TestEnity boss; // this boss should be whatever entity script or instance to be changed later
+        public override void OnStart() {
+            base.OnStart();
+            enemyVC = EntityGameObject.Value.GetComponent<IEnemyViewController>().EnemyEntity;
+        }
 
-        public SharedBool checkOnce = false;
-        public bool activated = false;
+        public override TaskStatus OnUpdate() {
 
-        public override TaskStatus OnUpdate()
-        {
-            // if (checkOnce.Value && activated)
-            // {
-            //     return TaskStatus.Failure;
-            // }
-
-            // if (!activated)
-            // {
-            //     int curHealth = boss.curHealth;
-            //     int maxHealth = boss.maxHealth;
-            //     if (curHealth < maxHealth * healthPercentage.Value)
-            //     {
-            //         Debug.Log(curHealth);
-            //         if (checkOnce.Value)
-            //         {
-            //             activated = true;
-            //         }
-            //         return TaskStatus.Success;
-            //     }
-            // }
-            int curHealth = boss.curHealth;
-            int maxHealth = boss.maxHealth;
-            if (curHealth < maxHealth * healthPercentage.Value)
-            {
-                Debug.Log(curHealth);
+            int curHealth = enemyVC.HealthProperty.GetCurrentHealth();
+            int maxHealth = enemyVC.HealthProperty.GetMaxHealth();
+            if (curHealth < maxHealth * healthPercentage.Value) {
                 return TaskStatus.Success;
             }
 
