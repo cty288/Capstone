@@ -26,6 +26,8 @@ namespace Runtime.Inventory.Model {
 
 	public interface IResourceSlotsSystem : ISystem {
 		public void ResetSlots();
+
+		public void ClearSlots();
 	}
 	
 	public abstract class AbstractResourceSlotsSystem<T> : AbstractSystem, IResourceSlotsSystem where T : class, IResourceSlotsModel {
@@ -46,5 +48,6 @@ namespace Runtime.Inventory.Model {
 		}
 
 		public abstract void ResetSlots();
+		public abstract void ClearSlots();
 	}
 }

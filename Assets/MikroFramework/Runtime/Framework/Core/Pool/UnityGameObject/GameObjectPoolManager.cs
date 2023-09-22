@@ -38,7 +38,7 @@ namespace MikroFramework
         private void Awake()
         {
             pools = new Dictionary<string, SafeGameObjectPool>();
-            resLoader = new ResLoader();
+            resLoader = ResLoader.Allocate();
         }
 
         public SafeGameObjectPool GetOrCreatePool(GameObject prefab)

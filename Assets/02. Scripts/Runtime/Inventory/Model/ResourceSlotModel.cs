@@ -49,6 +49,8 @@ namespace Runtime.Inventory.Model {
 		/// Reset all slots to the initial state.
 		/// </summary>
 		void Clear();
+
+		void Reset();
 		
 		public List<ResourceSlot> GetAllSlots();
 		
@@ -92,7 +94,7 @@ namespace Runtime.Inventory.Model {
 			return false;
 		}
 
-		private void OnEntityRecycled(IEntity entity) {
+		protected void OnEntityRecycled(IEntity entity) {
 			entity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 			RemoveItem(entity.UUID);
 		}
@@ -121,7 +123,9 @@ namespace Runtime.Inventory.Model {
 		
 
 		public abstract void Clear();
-		public List<ResourceSlot> GetAllSlots() {
+		public abstract void Reset();
+
+			public List<ResourceSlot> GetAllSlots() {
 			return slots;
 		}
 

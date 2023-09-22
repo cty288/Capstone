@@ -50,7 +50,17 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
             }
         }
     }
-
+    
+    
+    private void OnDestroy() {
+        if (currentSlot != null) {
+            currentSlot.UnregisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+        }
+        if (currentWeapon != null) {
+            currentWeapon.CurrentAmmo.UnRegisterOnValueChanged(OnAmmoChanged);
+        }
+    }
+    
     private void OnAmmoChanged(int num) {
         ammoText.text = $"Ammo: {num}";
     }

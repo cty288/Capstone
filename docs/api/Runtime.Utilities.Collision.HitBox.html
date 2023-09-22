@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Utilities_Collision_HitBox" data-uid="Runtime.Utilities.Collision.HitBox" class="text-break">
     Class HitBox
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -96,7 +96,8 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[RequireComponent(typeof(BoxCollider))]
+    <pre><code class="lang-csharp hljs">[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(TriggerCheck))]
 public class HitBox : MonoBehaviour, IHitDetector</code></pre>
   </div>
 
@@ -508,7 +509,7 @@ public class HitBox : MonoBehaviour, IHitDetector</code></pre>
 
   <h3 id="Runtime_Utilities_Collision_HitBox_HitResponder" data-uid="Runtime.Utilities.Collision.HitBox.HitResponder">
   HitResponder
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -543,7 +544,7 @@ public class HitBox : MonoBehaviour, IHitDetector</code></pre>
 
   <h3 id="Runtime_Utilities_Collision_HitBox_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_" data-uid="Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)">
   CheckHit(HitDetectorInfo)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Called every frame to check for BoxCast collision.
@@ -552,7 +553,7 @@ Creates a HitData object that is sent to the HitResponder and HurtResponder, inv
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CheckHit(HitDetectorInfo hitDetectorInfo)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CheckHit(HitDetectorInfo hitDetectorInfo = default)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -572,11 +573,94 @@ Creates a HitData object that is sent to the HitResponder and HurtResponder, inv
 
 
 
+  <a id="Runtime_Utilities_Collision_HitBox_StartCheckingHits_" data-uid="Runtime.Utilities.Collision.HitBox.StartCheckingHits*"></a>
+
+  <h3 id="Runtime_Utilities_Collision_HitBox_StartCheckingHits" data-uid="Runtime.Utilities.Collision.HitBox.StartCheckingHits">
+  StartCheckingHits()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StartCheckingHits()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_Collision_HitBox_StopCheckingHits_" data-uid="Runtime.Utilities.Collision.HitBox.StopCheckingHits*"></a>
+
+  <h3 id="Runtime_Utilities_Collision_HitBox_StopCheckingHits" data-uid="Runtime.Utilities.Collision.HitBox.StopCheckingHits">
+  StopCheckingHits()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StopCheckingHits()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_Collision_HitBox_TriggerCheckHit_" data-uid="Runtime.Utilities.Collision.HitBox.TriggerCheckHit*"></a>
+
+  <h3 id="Runtime_Utilities_Collision_HitBox_TriggerCheckHit_UnityEngine_Collider_" data-uid="Runtime.Utilities.Collision.HitBox.TriggerCheckHit(UnityEngine.Collider)">
+  TriggerCheckHit(Collider)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TriggerCheckHit(Collider c)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>c</code> <span class="xref">Collider</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L8" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L10" class="edit-link">Edit this page</a>
         </div>
 
         

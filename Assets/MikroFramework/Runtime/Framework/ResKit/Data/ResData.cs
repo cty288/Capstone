@@ -28,6 +28,7 @@ namespace MikroFramework.ResKit {
         /// Initialize the ResData singleton for hot-update
         /// </summary>
         public void Init(Action onFinished, Action<HotUpdateError> onInitError) {
+            gameObject.transform.SetParent(null);
             onError += onInitError;
             Load(onFinished);
         }

@@ -1827,6 +1827,12 @@ references:
   commentId: T:Global.Enemy
   fullName: Enemy
   nameWithType: Enemy
+- uid: Global.FaceCamera
+  name: FaceCamera
+  href: api/Global.FaceCamera.html
+  commentId: T:Global.FaceCamera
+  fullName: FaceCamera
+  nameWithType: FaceCamera
 - uid: Global.FollowCamera
   name: FollowCamera
   href: api/Global.FollowCamera.html
@@ -2986,6 +2992,12 @@ references:
   commentId: T:Global.TimeSystemTest
   fullName: TimeSystemTest
   nameWithType: TimeSystemTest
+- uid: Global.TutorialController
+  name: TutorialController
+  href: api/Global.TutorialController.html
+  commentId: T:Global.TutorialController
+  fullName: TutorialController
+  nameWithType: TutorialController
 - uid: Global.UIController
   name: UIController
   href: api/Global.UIController.html
@@ -30679,22 +30691,6 @@ references:
   commentId: T:Runtime.Enemies.Boss1
   fullName: Runtime.Enemies.Boss1
   nameWithType: Boss1
-- uid: Runtime.Enemies.Boss1.ChangeShellStatus(System.Boolean)
-  name: ChangeShellStatus(bool)
-  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_ChangeShellStatus_System_Boolean_
-  commentId: M:Runtime.Enemies.Boss1.ChangeShellStatus(System.Boolean)
-  name.vb: ChangeShellStatus(Boolean)
-  fullName: Runtime.Enemies.Boss1.ChangeShellStatus(bool)
-  fullName.vb: Runtime.Enemies.Boss1.ChangeShellStatus(Boolean)
-  nameWithType: Boss1.ChangeShellStatus(bool)
-  nameWithType.vb: Boss1.ChangeShellStatus(Boolean)
-- uid: Runtime.Enemies.Boss1.ChangeShellStatus*
-  name: ChangeShellStatus
-  href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_ChangeShellStatus_
-  commentId: Overload:Runtime.Enemies.Boss1.ChangeShellStatus
-  isSpec: "True"
-  fullName: Runtime.Enemies.Boss1.ChangeShellStatus
-  nameWithType: Boss1.ChangeShellStatus
 - uid: Runtime.Enemies.Boss1.CurrentShellHealth
   name: CurrentShellHealth
   href: api/Runtime.Enemies.Boss1.html#Runtime_Enemies_Boss1_CurrentShellHealth
@@ -33726,6 +33722,23 @@ references:
   fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T)
   nameWithType: AbstractResourceSlotsSystem<T>
   nameWithType.vb: AbstractResourceSlotsSystem(Of T)
+- uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.ClearSlots
+  name: ClearSlots()
+  href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_ClearSlots
+  commentId: M:Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.ClearSlots
+  fullName: Runtime.Inventory.Model.AbstractResourceSlotsSystem<T>.ClearSlots()
+  fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T).ClearSlots()
+  nameWithType: AbstractResourceSlotsSystem<T>.ClearSlots()
+  nameWithType.vb: AbstractResourceSlotsSystem(Of T).ClearSlots()
+- uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.ClearSlots*
+  name: ClearSlots
+  href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_ClearSlots_
+  commentId: Overload:Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.ClearSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.AbstractResourceSlotsSystem<T>.ClearSlots
+  fullName.vb: Runtime.Inventory.Model.AbstractResourceSlotsSystem(Of T).ClearSlots
+  nameWithType: AbstractResourceSlotsSystem<T>.ClearSlots
+  nameWithType.vb: AbstractResourceSlotsSystem(Of T).ClearSlots
 - uid: Runtime.Inventory.Model.AbstractResourceSlotsSystem`1.OnInit
   name: OnInit()
   href: api/Runtime.Inventory.Model.AbstractResourceSlotsSystem-1.html#Runtime_Inventory_Model_AbstractResourceSlotsSystem_1_OnInit
@@ -34083,12 +34096,38 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.IResourceSlotsModel.RemoveItem
   nameWithType: IResourceSlotsModel.RemoveItem
+- uid: Runtime.Inventory.Model.IResourceSlotsModel.Reset
+  name: Reset()
+  href: api/Runtime.Inventory.Model.IResourceSlotsModel.html#Runtime_Inventory_Model_IResourceSlotsModel_Reset
+  commentId: M:Runtime.Inventory.Model.IResourceSlotsModel.Reset
+  fullName: Runtime.Inventory.Model.IResourceSlotsModel.Reset()
+  nameWithType: IResourceSlotsModel.Reset()
+- uid: Runtime.Inventory.Model.IResourceSlotsModel.Reset*
+  name: Reset
+  href: api/Runtime.Inventory.Model.IResourceSlotsModel.html#Runtime_Inventory_Model_IResourceSlotsModel_Reset_
+  commentId: Overload:Runtime.Inventory.Model.IResourceSlotsModel.Reset
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IResourceSlotsModel.Reset
+  nameWithType: IResourceSlotsModel.Reset
 - uid: Runtime.Inventory.Model.IResourceSlotsSystem
   name: IResourceSlotsSystem
   href: api/Runtime.Inventory.Model.IResourceSlotsSystem.html
   commentId: T:Runtime.Inventory.Model.IResourceSlotsSystem
   fullName: Runtime.Inventory.Model.IResourceSlotsSystem
   nameWithType: IResourceSlotsSystem
+- uid: Runtime.Inventory.Model.IResourceSlotsSystem.ClearSlots
+  name: ClearSlots()
+  href: api/Runtime.Inventory.Model.IResourceSlotsSystem.html#Runtime_Inventory_Model_IResourceSlotsSystem_ClearSlots
+  commentId: M:Runtime.Inventory.Model.IResourceSlotsSystem.ClearSlots
+  fullName: Runtime.Inventory.Model.IResourceSlotsSystem.ClearSlots()
+  nameWithType: IResourceSlotsSystem.ClearSlots()
+- uid: Runtime.Inventory.Model.IResourceSlotsSystem.ClearSlots*
+  name: ClearSlots
+  href: api/Runtime.Inventory.Model.IResourceSlotsSystem.html#Runtime_Inventory_Model_IResourceSlotsSystem_ClearSlots_
+  commentId: Overload:Runtime.Inventory.Model.IResourceSlotsSystem.ClearSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.IResourceSlotsSystem.ClearSlots
+  nameWithType: IResourceSlotsSystem.ClearSlots
 - uid: Runtime.Inventory.Model.IResourceSlotsSystem.ResetSlots
   name: ResetSlots()
   href: api/Runtime.Inventory.Model.IResourceSlotsSystem.html#Runtime_Inventory_Model_IResourceSlotsSystem_ResetSlots
@@ -34272,6 +34311,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.InventoryModel.RemoveItem
   nameWithType: InventoryModel.RemoveItem
+- uid: Runtime.Inventory.Model.InventoryModel.Reset
+  name: Reset()
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_Reset
+  commentId: M:Runtime.Inventory.Model.InventoryModel.Reset
+  fullName: Runtime.Inventory.Model.InventoryModel.Reset()
+  nameWithType: InventoryModel.Reset()
+- uid: Runtime.Inventory.Model.InventoryModel.Reset*
+  name: Reset
+  href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_Reset_
+  commentId: Overload:Runtime.Inventory.Model.InventoryModel.Reset
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventoryModel.Reset
+  nameWithType: InventoryModel.Reset
 - uid: Runtime.Inventory.Model.InventoryModel.SelectHotBarSlot(Runtime.Inventory.Model.HotBarCategory,System.Int32)
   name: SelectHotBarSlot(HotBarCategory, int)
   href: api/Runtime.Inventory.Model.InventoryModel.html#Runtime_Inventory_Model_InventoryModel_SelectHotBarSlot_Runtime_Inventory_Model_HotBarCategory_System_Int32_
@@ -34320,6 +34372,19 @@ references:
   commentId: T:Runtime.Inventory.Model.InventorySystem
   fullName: Runtime.Inventory.Model.InventorySystem
   nameWithType: InventorySystem
+- uid: Runtime.Inventory.Model.InventorySystem.ClearSlots
+  name: ClearSlots()
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_ClearSlots
+  commentId: M:Runtime.Inventory.Model.InventorySystem.ClearSlots
+  fullName: Runtime.Inventory.Model.InventorySystem.ClearSlots()
+  nameWithType: InventorySystem.ClearSlots()
+- uid: Runtime.Inventory.Model.InventorySystem.ClearSlots*
+  name: ClearSlots
+  href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_ClearSlots_
+  commentId: Overload:Runtime.Inventory.Model.InventorySystem.ClearSlots
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.InventorySystem.ClearSlots
+  nameWithType: InventorySystem.ClearSlots
 - uid: Runtime.Inventory.Model.InventorySystem.InitialHotBarSlotCount
   name: InitialHotBarSlotCount
   href: api/Runtime.Inventory.Model.InventorySystem.html#Runtime_Inventory_Model_InventorySystem_InitialHotBarSlotCount
@@ -34783,6 +34848,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.ResourceSlotsModel.GetSlotCurrentItemCount
   nameWithType: ResourceSlotsModel.GetSlotCurrentItemCount
+- uid: Runtime.Inventory.Model.ResourceSlotsModel.OnEntityRecycled(Runtime.DataFramework.Entities.IEntity)
+  name: OnEntityRecycled(IEntity)
+  href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_OnEntityRecycled_Runtime_DataFramework_Entities_IEntity_
+  commentId: M:Runtime.Inventory.Model.ResourceSlotsModel.OnEntityRecycled(Runtime.DataFramework.Entities.IEntity)
+  fullName: Runtime.Inventory.Model.ResourceSlotsModel.OnEntityRecycled(Runtime.DataFramework.Entities.IEntity)
+  nameWithType: ResourceSlotsModel.OnEntityRecycled(IEntity)
+- uid: Runtime.Inventory.Model.ResourceSlotsModel.OnEntityRecycled*
+  name: OnEntityRecycled
+  href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_OnEntityRecycled_
+  commentId: Overload:Runtime.Inventory.Model.ResourceSlotsModel.OnEntityRecycled
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.ResourceSlotsModel.OnEntityRecycled
+  nameWithType: ResourceSlotsModel.OnEntityRecycled
 - uid: Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents(Runtime.GameResources.Model.Base.IResourceEntity)
   name: RegisterInitialEntityEvents(IResourceEntity)
   href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_RegisterInitialEntityEvents_Runtime_GameResources_Model_Base_IResourceEntity_
@@ -34812,6 +34890,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Inventory.Model.ResourceSlotsModel.RemoveItem
   nameWithType: ResourceSlotsModel.RemoveItem
+- uid: Runtime.Inventory.Model.ResourceSlotsModel.Reset
+  name: Reset()
+  href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_Reset
+  commentId: M:Runtime.Inventory.Model.ResourceSlotsModel.Reset
+  fullName: Runtime.Inventory.Model.ResourceSlotsModel.Reset()
+  nameWithType: ResourceSlotsModel.Reset()
+- uid: Runtime.Inventory.Model.ResourceSlotsModel.Reset*
+  name: Reset
+  href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_Reset_
+  commentId: Overload:Runtime.Inventory.Model.ResourceSlotsModel.Reset
+  isSpec: "True"
+  fullName: Runtime.Inventory.Model.ResourceSlotsModel.Reset
+  nameWithType: ResourceSlotsModel.Reset
 - uid: Runtime.Inventory.Model.ResourceSlotsModel.slots
   name: slots
   href: api/Runtime.Inventory.Model.ResourceSlotsModel.html#Runtime_Inventory_Model_ResourceSlotsModel_slots
@@ -38755,6 +38846,45 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.Collision.HitBox.HitResponder
   nameWithType: HitBox.HitResponder
+- uid: Runtime.Utilities.Collision.HitBox.StartCheckingHits
+  name: StartCheckingHits()
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_StartCheckingHits
+  commentId: M:Runtime.Utilities.Collision.HitBox.StartCheckingHits
+  fullName: Runtime.Utilities.Collision.HitBox.StartCheckingHits()
+  nameWithType: HitBox.StartCheckingHits()
+- uid: Runtime.Utilities.Collision.HitBox.StartCheckingHits*
+  name: StartCheckingHits
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_StartCheckingHits_
+  commentId: Overload:Runtime.Utilities.Collision.HitBox.StartCheckingHits
+  isSpec: "True"
+  fullName: Runtime.Utilities.Collision.HitBox.StartCheckingHits
+  nameWithType: HitBox.StartCheckingHits
+- uid: Runtime.Utilities.Collision.HitBox.StopCheckingHits
+  name: StopCheckingHits()
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_StopCheckingHits
+  commentId: M:Runtime.Utilities.Collision.HitBox.StopCheckingHits
+  fullName: Runtime.Utilities.Collision.HitBox.StopCheckingHits()
+  nameWithType: HitBox.StopCheckingHits()
+- uid: Runtime.Utilities.Collision.HitBox.StopCheckingHits*
+  name: StopCheckingHits
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_StopCheckingHits_
+  commentId: Overload:Runtime.Utilities.Collision.HitBox.StopCheckingHits
+  isSpec: "True"
+  fullName: Runtime.Utilities.Collision.HitBox.StopCheckingHits
+  nameWithType: HitBox.StopCheckingHits
+- uid: Runtime.Utilities.Collision.HitBox.TriggerCheckHit(UnityEngine.Collider)
+  name: TriggerCheckHit(Collider)
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_TriggerCheckHit_UnityEngine_Collider_
+  commentId: M:Runtime.Utilities.Collision.HitBox.TriggerCheckHit(UnityEngine.Collider)
+  fullName: Runtime.Utilities.Collision.HitBox.TriggerCheckHit(UnityEngine.Collider)
+  nameWithType: HitBox.TriggerCheckHit(Collider)
+- uid: Runtime.Utilities.Collision.HitBox.TriggerCheckHit*
+  name: TriggerCheckHit
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_TriggerCheckHit_
+  commentId: Overload:Runtime.Utilities.Collision.HitBox.TriggerCheckHit
+  isSpec: "True"
+  fullName: Runtime.Utilities.Collision.HitBox.TriggerCheckHit
+  nameWithType: HitBox.TriggerCheckHit
 - uid: Runtime.Utilities.Collision.HitData
   name: HitData
   href: api/Runtime.Utilities.Collision.HitData.html
@@ -38829,12 +38959,6 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.Collision.HitData.OnRecycled
   nameWithType: HitData.OnRecycled
-- uid: Runtime.Utilities.Collision.HitData.Recoil
-  name: Recoil
-  href: api/Runtime.Utilities.Collision.HitData.html#Runtime_Utilities_Collision_HitData_Recoil
-  commentId: F:Runtime.Utilities.Collision.HitData.Recoil
-  fullName: Runtime.Utilities.Collision.HitData.Recoil
-  nameWithType: HitData.Recoil
 - uid: Runtime.Utilities.Collision.HitData.RecycleToCache
   name: RecycleToCache()
   href: api/Runtime.Utilities.Collision.HitData.html#Runtime_Utilities_Collision_HitData_RecycleToCache
@@ -38848,19 +38972,6 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.Collision.HitData.RecycleToCache
   nameWithType: HitData.RecycleToCache
-- uid: Runtime.Utilities.Collision.HitData.SetHitBoxData(Runtime.Utilities.Collision.IHitResponder,Runtime.Utilities.Collision.IHurtbox,UnityEngine.RaycastHit,Runtime.Utilities.Collision.IHitDetector,UnityEngine.Vector3)
-  name: SetHitBoxData(IHitResponder, IHurtbox, RaycastHit, IHitDetector, Vector3)
-  href: api/Runtime.Utilities.Collision.HitData.html#Runtime_Utilities_Collision_HitData_SetHitBoxData_Runtime_Utilities_Collision_IHitResponder_Runtime_Utilities_Collision_IHurtbox_UnityEngine_RaycastHit_Runtime_Utilities_Collision_IHitDetector_UnityEngine_Vector3_
-  commentId: M:Runtime.Utilities.Collision.HitData.SetHitBoxData(Runtime.Utilities.Collision.IHitResponder,Runtime.Utilities.Collision.IHurtbox,UnityEngine.RaycastHit,Runtime.Utilities.Collision.IHitDetector,UnityEngine.Vector3)
-  fullName: Runtime.Utilities.Collision.HitData.SetHitBoxData(Runtime.Utilities.Collision.IHitResponder, Runtime.Utilities.Collision.IHurtbox, UnityEngine.RaycastHit, Runtime.Utilities.Collision.IHitDetector, UnityEngine.Vector3)
-  nameWithType: HitData.SetHitBoxData(IHitResponder, IHurtbox, RaycastHit, IHitDetector, Vector3)
-- uid: Runtime.Utilities.Collision.HitData.SetHitBoxData*
-  name: SetHitBoxData
-  href: api/Runtime.Utilities.Collision.HitData.html#Runtime_Utilities_Collision_HitData_SetHitBoxData_
-  commentId: Overload:Runtime.Utilities.Collision.HitData.SetHitBoxData
-  isSpec: "True"
-  fullName: Runtime.Utilities.Collision.HitData.SetHitBoxData
-  nameWithType: HitData.SetHitBoxData
 - uid: Runtime.Utilities.Collision.HitData.SetHitScanData(Runtime.Utilities.Collision.IHitResponder,Runtime.Utilities.Collision.IHurtbox,UnityEngine.RaycastHit,Runtime.Utilities.Collision.IHitDetector)
   name: SetHitScanData(IHitResponder, IHurtbox, RaycastHit, IHitDetector)
   href: api/Runtime.Utilities.Collision.HitData.html#Runtime_Utilities_Collision_HitData_SetHitScanData_Runtime_Utilities_Collision_IHitResponder_Runtime_Utilities_Collision_IHurtbox_UnityEngine_RaycastHit_Runtime_Utilities_Collision_IHitDetector_
@@ -39831,6 +39942,24 @@ references:
   commentId: T:Runtime.Weapons.Model.Base.OnWeaponRecoilEvent
   fullName: Runtime.Weapons.Model.Base.OnWeaponRecoilEvent
   nameWithType: OnWeaponRecoilEvent
+- uid: Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.recoilVector
+  name: recoilVector
+  href: api/Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.html#Runtime_Weapons_Model_Base_OnWeaponRecoilEvent_recoilVector
+  commentId: F:Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.recoilVector
+  fullName: Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.recoilVector
+  nameWithType: OnWeaponRecoilEvent.recoilVector
+- uid: Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.returnSpeed
+  name: returnSpeed
+  href: api/Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.html#Runtime_Weapons_Model_Base_OnWeaponRecoilEvent_returnSpeed
+  commentId: F:Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.returnSpeed
+  fullName: Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.returnSpeed
+  nameWithType: OnWeaponRecoilEvent.returnSpeed
+- uid: Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.snappiness
+  name: snappiness
+  href: api/Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.html#Runtime_Weapons_Model_Base_OnWeaponRecoilEvent_snappiness
+  commentId: F:Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.snappiness
+  fullName: Runtime.Weapons.Model.Base.OnWeaponRecoilEvent.snappiness
+  nameWithType: OnWeaponRecoilEvent.snappiness
 - uid: Runtime.Weapons.Model.Base.WeaponEntity`1
   name: WeaponEntity<T>
   href: api/Runtime.Weapons.Model.Base.WeaponEntity-1.html
@@ -40814,6 +40943,45 @@ references:
   commentId: T:Runtime.Weapons.Model.Properties.IRecoil
   fullName: Runtime.Weapons.Model.Properties.IRecoil
   nameWithType: IRecoil
+- uid: Runtime.Weapons.Model.Properties.IRecoil.GetRecoilVector
+  name: GetRecoilVector()
+  href: api/Runtime.Weapons.Model.Properties.IRecoil.html#Runtime_Weapons_Model_Properties_IRecoil_GetRecoilVector
+  commentId: M:Runtime.Weapons.Model.Properties.IRecoil.GetRecoilVector
+  fullName: Runtime.Weapons.Model.Properties.IRecoil.GetRecoilVector()
+  nameWithType: IRecoil.GetRecoilVector()
+- uid: Runtime.Weapons.Model.Properties.IRecoil.GetRecoilVector*
+  name: GetRecoilVector
+  href: api/Runtime.Weapons.Model.Properties.IRecoil.html#Runtime_Weapons_Model_Properties_IRecoil_GetRecoilVector_
+  commentId: Overload:Runtime.Weapons.Model.Properties.IRecoil.GetRecoilVector
+  isSpec: "True"
+  fullName: Runtime.Weapons.Model.Properties.IRecoil.GetRecoilVector
+  nameWithType: IRecoil.GetRecoilVector
+- uid: Runtime.Weapons.Model.Properties.IRecoil.GetReturnSpeed
+  name: GetReturnSpeed()
+  href: api/Runtime.Weapons.Model.Properties.IRecoil.html#Runtime_Weapons_Model_Properties_IRecoil_GetReturnSpeed
+  commentId: M:Runtime.Weapons.Model.Properties.IRecoil.GetReturnSpeed
+  fullName: Runtime.Weapons.Model.Properties.IRecoil.GetReturnSpeed()
+  nameWithType: IRecoil.GetReturnSpeed()
+- uid: Runtime.Weapons.Model.Properties.IRecoil.GetReturnSpeed*
+  name: GetReturnSpeed
+  href: api/Runtime.Weapons.Model.Properties.IRecoil.html#Runtime_Weapons_Model_Properties_IRecoil_GetReturnSpeed_
+  commentId: Overload:Runtime.Weapons.Model.Properties.IRecoil.GetReturnSpeed
+  isSpec: "True"
+  fullName: Runtime.Weapons.Model.Properties.IRecoil.GetReturnSpeed
+  nameWithType: IRecoil.GetReturnSpeed
+- uid: Runtime.Weapons.Model.Properties.IRecoil.GetSnappiness
+  name: GetSnappiness()
+  href: api/Runtime.Weapons.Model.Properties.IRecoil.html#Runtime_Weapons_Model_Properties_IRecoil_GetSnappiness
+  commentId: M:Runtime.Weapons.Model.Properties.IRecoil.GetSnappiness
+  fullName: Runtime.Weapons.Model.Properties.IRecoil.GetSnappiness()
+  nameWithType: IRecoil.GetSnappiness()
+- uid: Runtime.Weapons.Model.Properties.IRecoil.GetSnappiness*
+  name: GetSnappiness
+  href: api/Runtime.Weapons.Model.Properties.IRecoil.html#Runtime_Weapons_Model_Properties_IRecoil_GetSnappiness_
+  commentId: Overload:Runtime.Weapons.Model.Properties.IRecoil.GetSnappiness
+  isSpec: "True"
+  fullName: Runtime.Weapons.Model.Properties.IRecoil.GetSnappiness
+  nameWithType: IRecoil.GetSnappiness
 - uid: Runtime.Weapons.Model.Properties.IReloadSpeed
   name: IReloadSpeed
   href: api/Runtime.Weapons.Model.Properties.IReloadSpeed.html
@@ -40938,21 +41106,57 @@ references:
   isSpec: "True"
   fullName: Runtime.Weapons.Model.Properties.Recoil.GetPropertyName
   nameWithType: Recoil.GetPropertyName
+- uid: Runtime.Weapons.Model.Properties.Recoil.GetRecoilVector
+  name: GetRecoilVector()
+  href: api/Runtime.Weapons.Model.Properties.Recoil.html#Runtime_Weapons_Model_Properties_Recoil_GetRecoilVector
+  commentId: M:Runtime.Weapons.Model.Properties.Recoil.GetRecoilVector
+  fullName: Runtime.Weapons.Model.Properties.Recoil.GetRecoilVector()
+  nameWithType: Recoil.GetRecoilVector()
+- uid: Runtime.Weapons.Model.Properties.Recoil.GetRecoilVector*
+  name: GetRecoilVector
+  href: api/Runtime.Weapons.Model.Properties.Recoil.html#Runtime_Weapons_Model_Properties_Recoil_GetRecoilVector_
+  commentId: Overload:Runtime.Weapons.Model.Properties.Recoil.GetRecoilVector
+  isSpec: "True"
+  fullName: Runtime.Weapons.Model.Properties.Recoil.GetRecoilVector
+  nameWithType: Recoil.GetRecoilVector
+- uid: Runtime.Weapons.Model.Properties.Recoil.GetReturnSpeed
+  name: GetReturnSpeed()
+  href: api/Runtime.Weapons.Model.Properties.Recoil.html#Runtime_Weapons_Model_Properties_Recoil_GetReturnSpeed
+  commentId: M:Runtime.Weapons.Model.Properties.Recoil.GetReturnSpeed
+  fullName: Runtime.Weapons.Model.Properties.Recoil.GetReturnSpeed()
+  nameWithType: Recoil.GetReturnSpeed()
+- uid: Runtime.Weapons.Model.Properties.Recoil.GetReturnSpeed*
+  name: GetReturnSpeed
+  href: api/Runtime.Weapons.Model.Properties.Recoil.html#Runtime_Weapons_Model_Properties_Recoil_GetReturnSpeed_
+  commentId: Overload:Runtime.Weapons.Model.Properties.Recoil.GetReturnSpeed
+  isSpec: "True"
+  fullName: Runtime.Weapons.Model.Properties.Recoil.GetReturnSpeed
+  nameWithType: Recoil.GetReturnSpeed
+- uid: Runtime.Weapons.Model.Properties.Recoil.GetSnappiness
+  name: GetSnappiness()
+  href: api/Runtime.Weapons.Model.Properties.Recoil.html#Runtime_Weapons_Model_Properties_Recoil_GetSnappiness
+  commentId: M:Runtime.Weapons.Model.Properties.Recoil.GetSnappiness
+  fullName: Runtime.Weapons.Model.Properties.Recoil.GetSnappiness()
+  nameWithType: Recoil.GetSnappiness()
+- uid: Runtime.Weapons.Model.Properties.Recoil.GetSnappiness*
+  name: GetSnappiness
+  href: api/Runtime.Weapons.Model.Properties.Recoil.html#Runtime_Weapons_Model_Properties_Recoil_GetSnappiness_
+  commentId: Overload:Runtime.Weapons.Model.Properties.Recoil.GetSnappiness
+  isSpec: "True"
+  fullName: Runtime.Weapons.Model.Properties.Recoil.GetSnappiness
+  nameWithType: Recoil.GetSnappiness
 - uid: Runtime.Weapons.Model.Properties.RecoilDefaultModifier
   name: RecoilDefaultModifier
   href: api/Runtime.Weapons.Model.Properties.RecoilDefaultModifier.html
   commentId: T:Runtime.Weapons.Model.Properties.RecoilDefaultModifier
   fullName: Runtime.Weapons.Model.Properties.RecoilDefaultModifier
   nameWithType: RecoilDefaultModifier
-- uid: Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify(System.Single)
-  name: OnModify(float)
-  href: api/Runtime.Weapons.Model.Properties.RecoilDefaultModifier.html#Runtime_Weapons_Model_Properties_RecoilDefaultModifier_OnModify_System_Single_
-  commentId: M:Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify(System.Single)
-  name.vb: OnModify(Single)
-  fullName: Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify(float)
-  fullName.vb: Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify(Single)
-  nameWithType: RecoilDefaultModifier.OnModify(float)
-  nameWithType.vb: RecoilDefaultModifier.OnModify(Single)
+- uid: Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify(Runtime.Weapons.Model.Properties.RecoilInfo)
+  name: OnModify(RecoilInfo)
+  href: api/Runtime.Weapons.Model.Properties.RecoilDefaultModifier.html#Runtime_Weapons_Model_Properties_RecoilDefaultModifier_OnModify_Runtime_Weapons_Model_Properties_RecoilInfo_
+  commentId: M:Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify(Runtime.Weapons.Model.Properties.RecoilInfo)
+  fullName: Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify(Runtime.Weapons.Model.Properties.RecoilInfo)
+  nameWithType: RecoilDefaultModifier.OnModify(RecoilInfo)
 - uid: Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify*
   name: OnModify
   href: api/Runtime.Weapons.Model.Properties.RecoilDefaultModifier.html#Runtime_Weapons_Model_Properties_RecoilDefaultModifier_OnModify_
@@ -40960,6 +41164,61 @@ references:
   isSpec: "True"
   fullName: Runtime.Weapons.Model.Properties.RecoilDefaultModifier.OnModify
   nameWithType: RecoilDefaultModifier.OnModify
+- uid: Runtime.Weapons.Model.Properties.RecoilInfo
+  name: RecoilInfo
+  href: api/Runtime.Weapons.Model.Properties.RecoilInfo.html
+  commentId: T:Runtime.Weapons.Model.Properties.RecoilInfo
+  fullName: Runtime.Weapons.Model.Properties.RecoilInfo
+  nameWithType: RecoilInfo
+- uid: Runtime.Weapons.Model.Properties.RecoilInfo.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single)
+  name: RecoilInfo(float, float, float, float, float)
+  href: api/Runtime.Weapons.Model.Properties.RecoilInfo.html#Runtime_Weapons_Model_Properties_RecoilInfo__ctor_System_Single_System_Single_System_Single_System_Single_System_Single_
+  commentId: M:Runtime.Weapons.Model.Properties.RecoilInfo.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single)
+  name.vb: New(Single, Single, Single, Single, Single)
+  fullName: Runtime.Weapons.Model.Properties.RecoilInfo.RecoilInfo(float, float, float, float, float)
+  fullName.vb: Runtime.Weapons.Model.Properties.RecoilInfo.New(Single, Single, Single, Single, Single)
+  nameWithType: RecoilInfo.RecoilInfo(float, float, float, float, float)
+  nameWithType.vb: RecoilInfo.New(Single, Single, Single, Single, Single)
+- uid: Runtime.Weapons.Model.Properties.RecoilInfo.#ctor*
+  name: RecoilInfo
+  href: api/Runtime.Weapons.Model.Properties.RecoilInfo.html#Runtime_Weapons_Model_Properties_RecoilInfo__ctor_
+  commentId: Overload:Runtime.Weapons.Model.Properties.RecoilInfo.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Runtime.Weapons.Model.Properties.RecoilInfo.RecoilInfo
+  fullName.vb: Runtime.Weapons.Model.Properties.RecoilInfo.New
+  nameWithType: RecoilInfo.RecoilInfo
+  nameWithType.vb: RecoilInfo.New
+- uid: Runtime.Weapons.Model.Properties.RecoilInfo.RecoilX
+  name: RecoilX
+  href: api/Runtime.Weapons.Model.Properties.RecoilInfo.html#Runtime_Weapons_Model_Properties_RecoilInfo_RecoilX
+  commentId: F:Runtime.Weapons.Model.Properties.RecoilInfo.RecoilX
+  fullName: Runtime.Weapons.Model.Properties.RecoilInfo.RecoilX
+  nameWithType: RecoilInfo.RecoilX
+- uid: Runtime.Weapons.Model.Properties.RecoilInfo.RecoilY
+  name: RecoilY
+  href: api/Runtime.Weapons.Model.Properties.RecoilInfo.html#Runtime_Weapons_Model_Properties_RecoilInfo_RecoilY
+  commentId: F:Runtime.Weapons.Model.Properties.RecoilInfo.RecoilY
+  fullName: Runtime.Weapons.Model.Properties.RecoilInfo.RecoilY
+  nameWithType: RecoilInfo.RecoilY
+- uid: Runtime.Weapons.Model.Properties.RecoilInfo.RecoilZ
+  name: RecoilZ
+  href: api/Runtime.Weapons.Model.Properties.RecoilInfo.html#Runtime_Weapons_Model_Properties_RecoilInfo_RecoilZ
+  commentId: F:Runtime.Weapons.Model.Properties.RecoilInfo.RecoilZ
+  fullName: Runtime.Weapons.Model.Properties.RecoilInfo.RecoilZ
+  nameWithType: RecoilInfo.RecoilZ
+- uid: Runtime.Weapons.Model.Properties.RecoilInfo.ReturnSpeed
+  name: ReturnSpeed
+  href: api/Runtime.Weapons.Model.Properties.RecoilInfo.html#Runtime_Weapons_Model_Properties_RecoilInfo_ReturnSpeed
+  commentId: F:Runtime.Weapons.Model.Properties.RecoilInfo.ReturnSpeed
+  fullName: Runtime.Weapons.Model.Properties.RecoilInfo.ReturnSpeed
+  nameWithType: RecoilInfo.ReturnSpeed
+- uid: Runtime.Weapons.Model.Properties.RecoilInfo.Snappiness
+  name: Snappiness
+  href: api/Runtime.Weapons.Model.Properties.RecoilInfo.html#Runtime_Weapons_Model_Properties_RecoilInfo_Snappiness
+  commentId: F:Runtime.Weapons.Model.Properties.RecoilInfo.Snappiness
+  fullName: Runtime.Weapons.Model.Properties.RecoilInfo.Snappiness
+  nameWithType: RecoilInfo.Snappiness
 - uid: Runtime.Weapons.Model.Properties.ReloadSpeed
   name: ReloadSpeed
   href: api/Runtime.Weapons.Model.Properties.ReloadSpeed.html
@@ -41281,12 +41540,6 @@ references:
   commentId: F:Runtime.Weapons.RustyPistol.model
   fullName: Runtime.Weapons.RustyPistol.model
   nameWithType: RustyPistol.model
-- uid: Runtime.Weapons.RustyPistol.recoilScript
-  name: recoilScript
-  href: api/Runtime.Weapons.RustyPistol.html#Runtime_Weapons_RustyPistol_recoilScript
-  commentId: F:Runtime.Weapons.RustyPistol.recoilScript
-  fullName: Runtime.Weapons.RustyPistol.recoilScript
-  nameWithType: RustyPistol.recoilScript
 - uid: Runtime.Weapons.RustyPistol.reloadGunModel
   name: reloadGunModel
   href: api/Runtime.Weapons.RustyPistol.html#Runtime_Weapons_RustyPistol_reloadGunModel
