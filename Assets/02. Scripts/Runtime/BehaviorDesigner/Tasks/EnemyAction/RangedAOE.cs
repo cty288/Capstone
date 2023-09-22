@@ -3,14 +3,17 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using Runtime.Temporary;
 using UnityEngine;
+using Runtime.Enemies;
+using Runtime.Utilities.Collision;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class RangedAOE : EnemyAction
     {
+        public Boss1 bossVC;
         public SharedGameObject bulletPrefab;
         public int bulletCount;
-        public int spawnInterval;
+        public float spawnInterval;
         private bool ended;
         public float bulletTravelTime;
 
@@ -54,7 +57,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
             b.GetComponent<EnemyBomb>().Init(playerTrans.Value, bulletTravelTime);
-
+            //HitBox bHitBox = b.GetComponent<HitBox>();
+            //bHitBox.HitResponder = bossVC;
+            //bHitBox.StartCheckingHits();
+            // Debug.Log("b.GetComponent<HitBox>().HitResponder: " + bossVC);
+            b.GetComponent<Temp_BulletHitResponder>().boss1 = bossVC.gameObject;
 
         }
     }

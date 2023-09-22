@@ -1,7 +1,11 @@
 using System.Collections;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.Enemies;
+using Runtime.Utilities.Collision;
 using UnityEngine;
+using Runtime.Temporary.Weapon;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -9,9 +13,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         public SharedGameObject bulletPrefab;
         public int bulletCount;
-        public int spawnInterval;
+        public float spawnInterval;
         private bool ended;
         public int bulletSpeed;
+        public Boss1 boss1vc;
 
         public SharedTransform playerTrans;
 
@@ -33,19 +38,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             for(int i = 0; i < bulletCount; i++)
             {
                 SpawnBullet();
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForSeconds(spawnInterval);
             }
             ended = true;
         }
         void SpawnBullet()
         {
-            //GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), Quaternion.LookRotation(playerTrans.Value.position- new Vector3(transform.position.x, transform.position.y + 2, transform.position.z)));
-            //b.GetComponent<Rigidbody>().velocity =  b.transform.forward* bulletSpeed;
-            GameObject b = Object.Instantiate(bulletPrefab.Value, transform.position + new Vector3(0, 2, 0), transform.rotation);
-            Transform t = playerTrans.Value;
-            
-            b.GetComponent<EnemyBomb>().destWithOffset = t.position + new Vector3(Random.Range(-3,3),Random.Range(-3,3),Random.Range(-3,3));
-            
+            GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), Quaternion.LookRotation(playerTrans.Value.position- new Vector3(transform.position.x, transform.position.y + 2, transform.position.z)));
+            b.GetComponent<Rigidbody>().velocity =  b.transform.forward* bulletSpeed;
+            //HitBox bHitBox = b.GetComponent<HitBox>();
+            //bHitBox.HitResponder = boss1vc;
+           // bHitBox.StartCheckingHits();
+            // Debug.Log("b.GetComponent<HitBox>().HitResponder: " + boss1vc);
+            b.GetComponent<Temp_BulletHitResponder>().boss1 = boss1vc.gameObject;
+
         }
     }
 }

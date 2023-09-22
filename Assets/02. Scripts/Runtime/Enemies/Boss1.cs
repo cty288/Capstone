@@ -65,7 +65,6 @@ namespace Runtime.Enemies
         public Animator animator;
         public AnimationSMBManager animationSMBManager;
         public NavMeshAgent agent;
-      
         
         
         protected override int GetCurrentHitDamage() {
