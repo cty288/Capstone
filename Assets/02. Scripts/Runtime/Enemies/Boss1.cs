@@ -114,6 +114,7 @@ namespace Runtime.Enemies
             }
            
             hitDetectorInfo = new HitDetectorInfo();
+            CurrentFaction.Value = Faction.Hostile;
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
@@ -162,6 +163,7 @@ namespace Runtime.Enemies
 
         public override void HurtResponse(HitData data)
         {
+            Debug.Log("hurt response");
             if (BoundEntity.ShellClosed)
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");

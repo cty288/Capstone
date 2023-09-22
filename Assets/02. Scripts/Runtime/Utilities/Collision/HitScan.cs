@@ -79,16 +79,18 @@ namespace Runtime.Utilities.Collision
             if (Physics.Raycast(_camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit,
                     _weapon.GetRange().RealValue.Value, _layer))
             {
-                // Debug.Log("hit");
+                Debug.Log("hit w/ gun: " + hit.collider.name);
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
                 if (hurtbox != null)
                 {
+                    Debug.Log("hurtbox make hitdata: " + hurtbox);
                     hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this);
                     hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
                 }
 
                 if (hurtbox != null && hitData.Validate())
                 {
+                    Debug.Log("hurtbox respond: " + hurtbox);
                     // hit something with hurtbox
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
@@ -97,6 +99,7 @@ namespace Runtime.Utilities.Collision
                 }
                 else
                 {
+                    Debug.Log("no hurtbox");
                     // hit something without hurtbox, e.g. wall
                     CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, new RaycastHit()));
                     
