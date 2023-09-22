@@ -25,7 +25,7 @@ namespace MikroFramework.ResKit
         /// <returns></returns>
         public static AssetRes Allocate(string assetName, string ownerBundleName, Type resType) {
             AssetRes res = SafeObjectPool<AssetRes>.Singleton.Allocate();
-
+            res.resLoader = ResLoader.Allocate();
             res.nameInAB = assetName;
 
             if (String.IsNullOrEmpty(ownerBundleName)) {

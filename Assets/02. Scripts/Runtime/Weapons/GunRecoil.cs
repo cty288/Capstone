@@ -37,14 +37,22 @@ namespace Runtime.Weapons
 
         public void RecoilFire()
         {
+            Debug.Log("recoil x: " + recoilX + " recoil y: " + recoilY + " recoil z: " + recoilZ + " snappiness: " + snappiness + " return speed: " + returnSpeed);
             // targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ)); // original
-            targetRotation += new Vector3(recoilX, Random.Range(0, recoilY), Random.Range(-recoilZ, recoilZ)); // 0 to number
-            // targetRotation += new Vector3(recoilX, recoilY, recoilZ); // exact numbers
+            // targetRotation += new Vector3(recoilX, Random.Range(0, recoilY), Random.Range(-recoilZ, recoilZ)); // 0 to number
+            targetRotation += new Vector3(recoilX, recoilY, recoilZ); // exact numbers
         }
 
         private void Recoil(OnWeaponRecoilEvent e)
         {
             Debug.Log("recoil");
+            
+            recoilX = e.recoilVector.x;
+            recoilY = e.recoilVector.y;
+            recoilZ = e.recoilVector.z;
+            snappiness = e.snappiness;
+            returnSpeed = e.returnSpeed;
+            
             RecoilFire();
         }
     }

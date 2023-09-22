@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 2784581043173634225}
   - component: {fileID: 1634876173769045248}
   - component: {fileID: 1074454363}
+  - component: {fileID: 8358356274865444584}
   m_Layer: 0
   m_Name: RustyPistol
   m_TagString: Untagged
@@ -481,7 +482,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!65 &1074454363
 BoxCollider:
@@ -494,8 +495,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2, z: 0.8}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.2, y: 0.25454015, z: 0.8491677}
+  m_Center: {x: 0, y: 0.027270079, z: -0.024583817}
+--- !u!65 &8358356274865444584
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018458492895172931}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.497083, z: 0.24088526}
+  m_Center: {x: 0, y: -0.09400132, z: -0.37812883}
 --- !u!1 &8164146894990651878
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,6 +519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3620443720334071876}
+  - component: {fileID: 8587109213290839777}
   m_Layer: 0
   m_Name: NameTagSpawnPos
   m_TagString: Untagged
@@ -527,6 +542,21 @@ Transform:
   m_Father: {fileID: 8018458492895172928}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8587109213290839777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164146894990651878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18658476032860a409f513d9189fcd83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotation: {x: 0, y: 0, z: 0}
+  positionRelativeTo: {fileID: 8018458492895172928}
+  positionOffset: {x: 0, y: 0.311, z: 0}
 --- !u!1001 &1297947845945056964
 PrefabInstance:
   m_ObjectHideFlags: 0

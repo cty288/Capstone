@@ -277,7 +277,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": ""Tap(duration=0.4)"",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
+                    ""groups"": """",
                     ""action"": ""SprintTap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -288,7 +288,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": ""Tap(duration=0.4)"",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": """",
                     ""action"": ""SprintTap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -845,7 +845,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e10dbe44-2d22-4b8b-b92e-eb3d2156679c"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

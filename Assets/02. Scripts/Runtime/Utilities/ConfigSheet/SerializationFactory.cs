@@ -4,6 +4,7 @@ using MikroFramework.Singletons;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.Enemies.Model.Properties;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
+using Runtime.Weapons.Model.Properties;
 using UnityEngine;
 
 namespace Runtime.Utilities.ConfigSheet {
@@ -39,6 +40,8 @@ namespace Runtime.Utilities.ConfigSheet {
 			RegisterType("TasteType", typeof(TasteType));
 			RegisterType("TagName", typeof(TagName));
 			RegisterType("BaitAdjective", typeof(BaitAdjective));
+			RegisterType("RecoilInfo", typeof(RecoilInfo));
+
 		}
 		
 		

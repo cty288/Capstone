@@ -84,7 +84,6 @@ namespace Runtime.Utilities.Collision
                 if (hurtbox != null)
                 {
                     hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this);
-                    hitData.Recoil = _weapon.GetRecoil().RealValue.Value;
                     hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
                 }
 

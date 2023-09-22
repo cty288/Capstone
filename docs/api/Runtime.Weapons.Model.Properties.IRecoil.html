@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Weapons_Model_Properties_IRecoil" data-uid="Runtime.Weapons.Model.Properties.IRecoil" class="text-break">
     Interface IRecoil
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L5"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IRecoil : IProperty&lt;float&gt;, ILoadFromConfigProperty, IPropertyBase</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IRecoil : IProperty&lt;RecoilInfo&gt;, ILoadFromConfigProperty, IPropertyBase</code></pre>
   </div>
 
 
@@ -108,16 +108,16 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_BaseValue">IProperty&lt;float&gt;.BaseValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_BaseValue">IProperty&lt;RecoilInfo&gt;.BaseValue</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_InitialValue">IProperty&lt;float&gt;.InitialValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_InitialValue">IProperty&lt;RecoilInfo&gt;.InitialValue</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_RealValue">IProperty&lt;float&gt;.RealValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_RealValue">IProperty&lt;RecoilInfo&gt;.RealValue</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_SetBaseValue__0_">IProperty&lt;float&gt;.SetBaseValue(float)</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html#Runtime_DataFramework_Properties_IProperty_1_SetBaseValue__0_">IProperty&lt;RecoilInfo&gt;.SetBaseValue(RecoilInfo)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Properties.ILoadFromConfigProperty.html#Runtime_DataFramework_Properties_ILoadFromConfigProperty_LoadFromConfig_System_Object_">ILoadFromConfigProperty.LoadFromConfig(dynamic)</a>
@@ -165,11 +165,108 @@
 
 
 
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_Weapons_Model_Properties_IRecoil_GetRecoilVector_" data-uid="Runtime.Weapons.Model.Properties.IRecoil.GetRecoilVector*"></a>
+
+  <h3 id="Runtime_Weapons_Model_Properties_IRecoil_GetRecoilVector" data-uid="Runtime.Weapons.Model.Properties.IRecoil.GetRecoilVector">
+  GetRecoilVector()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Vector3 GetRecoilVector()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Vector3</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Weapons_Model_Properties_IRecoil_GetReturnSpeed_" data-uid="Runtime.Weapons.Model.Properties.IRecoil.GetReturnSpeed*"></a>
+
+  <h3 id="Runtime_Weapons_Model_Properties_IRecoil_GetReturnSpeed" data-uid="Runtime.Weapons.Model.Properties.IRecoil.GetReturnSpeed">
+  GetReturnSpeed()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">float GetReturnSpeed()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Weapons_Model_Properties_IRecoil_GetSnappiness_" data-uid="Runtime.Weapons.Model.Properties.IRecoil.GetSnappiness*"></a>
+
+  <h3 id="Runtime_Weapons_Model_Properties_IRecoil_GetSnappiness" data-uid="Runtime.Weapons.Model.Properties.IRecoil.GetSnappiness">
+  GetSnappiness()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">float GetSnappiness()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L5" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L26" class="edit-link">Edit this page</a>
         </div>
 
         

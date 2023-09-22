@@ -13,7 +13,6 @@ namespace Runtime.Utilities.Collision
     public class HitData : IPoolable
     {
         public int Damage = 0;
-        public float Recoil = 0f;
         public Vector3 HitPoint;
         public Vector3 HitNormal;
         public Vector3 HitDirectionNormalized;
@@ -57,7 +56,6 @@ namespace Runtime.Utilities.Collision
         public void OnRecycled()
         {
             Damage = 0;
-            Recoil = 0f;
             HitPoint = Vector3.zero;
             HitNormal = Vector3.zero;
             HitDirectionNormalized = Vector3.zero;

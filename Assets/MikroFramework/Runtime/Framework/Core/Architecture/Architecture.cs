@@ -160,6 +160,10 @@ namespace MikroFramework.Architecture
             if (fwp) {
                 GameObject.DestroyImmediate(fwp);
             }
+            GameObject resData = GameObject.Find("ResData");
+            if (resData) {
+                GameObject.DestroyImmediate(resData);
+            }
             
             
             if (architecture == null) {
