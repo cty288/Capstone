@@ -45,10 +45,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
             b.GetComponent<EnemyBomb>().Init(playerTrans.Value, bulletTravelTime);
-            HitBox bHitBox = b.GetComponent<HitBox>();
-            bHitBox.HitResponder = bossVC;
-            bHitBox.StartCheckingHits();
+            //HitBox bHitBox = b.GetComponent<HitBox>();
+            //bHitBox.HitResponder = bossVC;
+            //bHitBox.StartCheckingHits();
             // Debug.Log("b.GetComponent<HitBox>().HitResponder: " + bossVC);
+            b.GetComponent<Temp_BulletHitResponder>().boss1 = bossVC.gameObject;
 
         }
     }
