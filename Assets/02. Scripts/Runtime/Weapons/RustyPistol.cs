@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
 using MikroFramework;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
+using Runtime.Player;
 using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
 using Runtime.Utilities.Collision;
@@ -92,6 +94,8 @@ namespace Runtime.Weapons
         // private InputAction _holdAction;
 
         // public GunRecoil recoilScript;
+
+        private IGamePlayerModel playerModel;
         
         protected override void OnEntityStart()
         {
@@ -101,6 +105,8 @@ namespace Runtime.Weapons
             // _holdAction.started += OnHoldActionStarted;
             
             base.OnEntityStart();
+            
+            playerModel = this.GetModel<IGamePlayerModel>();
             
             hitDetectorInfo = new HitDetectorInfo
             {
@@ -128,7 +134,7 @@ namespace Runtime.Weapons
         
         public void Update()
         {
-            if (isHolding)
+            if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Shoot
                 if (playerActions.Shoot.IsPressed() && !isReloading)
@@ -152,7 +158,7 @@ namespace Runtime.Weapons
                                 }
                                 else
                                 {
-                                    isReloading = true;
+                                    StartCoroutine(ReloadChangeModel());
                                 }
                             }
                         }
