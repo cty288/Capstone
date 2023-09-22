@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Weapons_Model_Properties_Recoil" data-uid="Runtime.Weapons.Model.Properties.Recoil" class="text-break">
     Class Recoil
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L6"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Recoil : AbstractLoadFromConfigProperty&lt;float&gt;, IRecoil, IProperty&lt;float&gt;, ILoadFromConfigProperty, IPropertyBase</code></pre>
+    <pre><code class="lang-csharp hljs">public class Recoil : AbstractLoadFromConfigProperty&lt;RecoilInfo&gt;, IRecoil, IProperty&lt;RecoilInfo&gt;, ILoadFromConfigProperty, IPropertyBase</code></pre>
   </div>
 
 
@@ -105,8 +105,8 @@
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Properties.Property-1.html">Property</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</div>
-      <div><a class="xref" href="Runtime.DataFramework.Properties.AbstractLoadFromConfigProperty-1.html">AbstractLoadFromConfigProperty</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.Property-1.html">Property</a>&lt;<a class="xref" href="Runtime.Weapons.Model.Properties.RecoilInfo.html">RecoilInfo</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.AbstractLoadFromConfigProperty-1.html">AbstractLoadFromConfigProperty</a>&lt;<a class="xref" href="Runtime.Weapons.Model.Properties.RecoilInfo.html">RecoilInfo</a>&gt;</div>
       <div><span class="xref">Recoil</span></div>
     </dd>
   </dl>
@@ -115,7 +115,7 @@
     <dt>Implements</dt>
     <dd>
       <div><a class="xref" href="Runtime.Weapons.Model.Properties.IRecoil.html">IRecoil</a></div>
-      <div><a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html">IProperty</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Properties.IProperty-1.html">IProperty</a>&lt;<a class="xref" href="Runtime.Weapons.Model.Properties.RecoilInfo.html">RecoilInfo</a>&gt;</div>
       <div><a class="xref" href="Runtime.DataFramework.Properties.ILoadFromConfigProperty.html">ILoadFromConfigProperty</a></div>
       <div><a class="xref" href="Runtime.DataFramework.Properties.IPropertyBase.html">IPropertyBase</a></div>
     </dd>
@@ -126,55 +126,55 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.AbstractLoadFromConfigProperty-1.html#Runtime_DataFramework_Properties_AbstractLoadFromConfigProperty_1_LoadFromConfig_System_Object_">AbstractLoadFromConfigProperty&lt;float&gt;.LoadFromConfig(dynamic)</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.AbstractLoadFromConfigProperty-1.html#Runtime_DataFramework_Properties_AbstractLoadFromConfigProperty_1_LoadFromConfig_System_Object_">AbstractLoadFromConfigProperty&lt;RecoilInfo&gt;.LoadFromConfig(dynamic)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_PropertyName">Property&lt;float&gt;.PropertyName</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_PropertyName">Property&lt;RecoilInfo&gt;.PropertyName</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_fullName">Property&lt;float&gt;.fullName</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_fullName">Property&lt;RecoilInfo&gt;.fullName</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_BaseValue">Property&lt;float&gt;.BaseValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_BaseValue">Property&lt;RecoilInfo&gt;.BaseValue</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_InitialValue">Property&lt;float&gt;.InitialValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_InitialValue">Property&lt;RecoilInfo&gt;.InitialValue</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_RealValue">Property&lt;float&gt;.RealValue</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_RealValue">Property&lt;RecoilInfo&gt;.RealValue</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_overrideDependentProperties">Property&lt;float&gt;.overrideDependentProperties</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_overrideDependentProperties">Property&lt;RecoilInfo&gt;.overrideDependentProperties</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetBaseValue__0_">Property&lt;float&gt;.SetBaseValue(float)</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetBaseValue__0_">Property&lt;RecoilInfo&gt;.SetBaseValue(RecoilInfo)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnSetFullName_System_String_">Property&lt;float&gt;.OnSetFullName(string)</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnSetFullName_System_String_">Property&lt;RecoilInfo&gt;.OnSetFullName(string)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetFullName">Property&lt;float&gt;.GetFullName()</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetFullName">Property&lt;RecoilInfo&gt;.GetFullName()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_modifier">Property&lt;float&gt;.modifier</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_modifier">Property&lt;RecoilInfo&gt;.modifier</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnRecycled">Property&lt;float&gt;.OnRecycled()</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnRecycled">Property&lt;RecoilInfo&gt;.OnRecycled()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetModifier__1_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__">Property&lt;float&gt;.SetModifier&lt;ValueType&gt;(IPropertyDependencyModifier&lt;ValueType&gt;)</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetModifier__1_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__">Property&lt;RecoilInfo&gt;.SetModifier&lt;ValueType&gt;(IPropertyDependencyModifier&lt;ValueType&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetDependentProperties">Property&lt;float&gt;.GetDependentProperties()</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_GetDependentProperties">Property&lt;RecoilInfo&gt;.GetDependentProperties()</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetDependentProperties_Runtime_DataFramework_Properties_PropertyNameInfo___">Property&lt;float&gt;.SetDependentProperties(params PropertyNameInfo[])</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_SetDependentProperties_Runtime_DataFramework_Properties_PropertyNameInfo___">Property&lt;RecoilInfo&gt;.SetDependentProperties(params PropertyNameInfo[])</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_Initialize_Runtime_DataFramework_Properties_IPropertyBase___System_String_">Property&lt;float&gt;.Initialize(IPropertyBase[], string)</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_Initialize_Runtime_DataFramework_Properties_IPropertyBase___System_String_">Property&lt;RecoilInfo&gt;.Initialize(IPropertyBase[], string)</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnClone__0_">Property&lt;float&gt;.OnClone(float)</a>
+      <a class="xref" href="Runtime.DataFramework.Properties.Property-1.html#Runtime_DataFramework_Properties_Property_1_OnClone__0_">Property&lt;RecoilInfo&gt;.OnClone(RecoilInfo)</a>
     </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
@@ -212,7 +212,7 @@
 
   <h3 id="Runtime_Weapons_Model_Properties_Recoil_GetDefaultDependentProperties" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetDefaultDependentProperties">
   GetDefaultDependentProperties()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -243,7 +243,7 @@
 
   <h3 id="Runtime_Weapons_Model_Properties_Recoil_GetDefautModifier" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetDefautModifier">
   GetDefautModifier()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Using Get instead of property to avoid ES3 serialization</p>
@@ -251,13 +251,13 @@
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override IPropertyDependencyModifier&lt;float&gt; GetDefautModifier()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override IPropertyDependencyModifier&lt;RecoilInfo&gt; GetDefautModifier()</code></pre>
   </div>
 
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a>&gt;</dt>
+    <dt><a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;<a class="xref" href="Runtime.Weapons.Model.Properties.RecoilInfo.html">RecoilInfo</a>&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -275,7 +275,7 @@
 
   <h3 id="Runtime_Weapons_Model_Properties_Recoil_GetPropertyName" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetPropertyName">
   GetPropertyName()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -302,11 +302,104 @@
 
 
 
+  <a id="Runtime_Weapons_Model_Properties_Recoil_GetRecoilVector_" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetRecoilVector*"></a>
+
+  <h3 id="Runtime_Weapons_Model_Properties_Recoil_GetRecoilVector" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetRecoilVector">
+  GetRecoilVector()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector3 GetRecoilVector()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Vector3</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Weapons_Model_Properties_Recoil_GetReturnSpeed_" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetReturnSpeed*"></a>
+
+  <h3 id="Runtime_Weapons_Model_Properties_Recoil_GetReturnSpeed" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetReturnSpeed">
+  GetReturnSpeed()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetReturnSpeed()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Weapons_Model_Properties_Recoil_GetSnappiness_" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetSnappiness*"></a>
+
+  <h3 id="Runtime_Weapons_Model_Properties_Recoil_GetSnappiness" data-uid="Runtime.Weapons.Model.Properties.Recoil.GetSnappiness">
+  GetSnappiness()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float GetSnappiness()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L6" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/Model/Properties/Recoil.cs/#L32" class="edit-link">Edit this page</a>
         </div>
 
         
