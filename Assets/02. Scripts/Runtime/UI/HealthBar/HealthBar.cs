@@ -6,5 +6,9 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using UnityEngine;
 
 public abstract class HealthBar : AbstractMikroController<MainGame> {
+   
+   
    public abstract void OnSetEntity(IDamageable entity);
+   
+   public abstract void OnHealthBarDestroyed();
 }
