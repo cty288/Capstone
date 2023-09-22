@@ -143,6 +143,12 @@ namespace Runtime.Enemies
             // Debug.Log("Animation Event: " + eventName);
             switch (eventName)
             {
+                case "ShellOpen":
+                    ChangeShellStatus(false);
+                    break;
+                case "ShellClose":
+                    ChangeShellStatus(true);
+                    break;
                 default:
                     break;
             }
