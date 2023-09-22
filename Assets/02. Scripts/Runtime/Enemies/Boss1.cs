@@ -155,6 +155,11 @@ namespace Runtime.Enemies
                     break;
             }
         }
+        
+        
+        public void ClearHitObjects() {
+            hitObjects.Clear();
+        }
 
         public override void HurtResponse(HitData data)
         {
@@ -167,8 +172,7 @@ namespace Runtime.Enemies
             BoundEntity.TakeDamage(data.Damage, data.Attacker);
         }
 
-        public void ChangeShellStatus(bool newStatus)
-        {
+        public void ChangeShellStatus(bool newStatus) {
             BindableProperty<bool> shellStatus = BoundEntity.ShellClosed;
             shellStatus.Value = newStatus;
         }
