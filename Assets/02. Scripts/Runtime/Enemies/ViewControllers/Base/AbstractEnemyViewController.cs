@@ -48,7 +48,9 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected override void OnStart() {
 			base.OnStart();
 			currentHealthBar = OnSpawnHealthBar();
-			currentHealthBar.OnSetEntity(BoundEntity);
+			if (currentHealthBar != null) {
+				currentHealthBar.OnSetEntity(BoundEntity);
+			}
 		}
 
 		protected override void OnBindEntityProperty() {
@@ -98,7 +100,12 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			OnDestroyHealthBar(currentHealthBar);
+			if (currentHealthBar) {
+				currentHealthBar.OnHealthBarDestroyed();
+				OnDestroyHealthBar(currentHealthBar);
+				
+			}
+			
 		}
 
 		public bool CheckHit(HitData data) {
