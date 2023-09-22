@@ -57,6 +57,7 @@ namespace Runtime.Utilities.Collision
             Vector3 hitNormal = transform.position - hitPoint;
             
             hurtbox = c.GetComponent<IHurtbox>();
+            // Debug.Log("hurtbox: " + hurtbox);
             if (hurtbox != null)
             {
                 // Debug.Log("make hitdata");

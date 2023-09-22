@@ -3,6 +3,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using MikroFramework;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -44,6 +45,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float rotationDecreaseRate = 160f;
         private bool flag = false;
         private bool collisionFlag = false;
+        public Collider shellCollider;
         
         
 
@@ -69,6 +71,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             rb.isKinematic = false;
             chargeUp = true;
             timer = 3f;
+            shellCollider.isTrigger = false;
         }
         // public override TaskStatus OnUpdate()
         // {
@@ -116,7 +119,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             if (chargeUp)
             {
-                Debug.Log("chargning");
+                // Debug.Log("chargning");
                 if (currentChargeTime < chargeTime)
                 {
                     // Gradually increase the rotation speed over the charge time
@@ -212,6 +215,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override void OnEnd() {
             base.OnEnd();
             rb.isKinematic = true;
+            shellCollider.isTrigger = true;
+
             pivot.transform.DORotate((Vector3)initRotation.Value, 2f).OnComplete(() =>
             {
                 NavMeshAgent navMeshComponent = GetComponent<NavMeshAgent>();

@@ -24,20 +24,20 @@ namespace Runtime.Temporary
         // Update is called once per frame
         void Update()
         {
-            
+
         }
         public void Init(Transform target,float tTime)
         {
             targetPos = target.position;
             travelTime = tTime;
         }
-        
+
         IEnumerator Curve()
         {
             float time = 0f;
  
             Vector3 end = targetPos - (transform.forward * 0.55f); // lead the target a bit to account for travel time, your math will vary
-     
+
             while(time < travelTime)
             {
                 time += Time.deltaTime;
@@ -51,7 +51,7 @@ namespace Runtime.Temporary
  
                 yield return null;
             }
-            
+
         }
     }
 }
