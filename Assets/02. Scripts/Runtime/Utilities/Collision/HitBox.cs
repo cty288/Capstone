@@ -21,23 +21,35 @@ namespace Runtime.Utilities.Collision
         
         private void Start()
         {
-            _triggerCheck = gameObject.GetComponent<TriggerCheck>();
-            _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox"); 
+            Initialize();
         }
 
+        private void Initialize()
+        {
+            _triggerCheck = gameObject.GetComponent<TriggerCheck>();
+            _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox"); 
+            _collider = gameObject.GetComponent<Collider>();
+        }
+        
         public void StartCheckingHits()
         {
+            if (_triggerCheck == null)
+            {
+                Initialize();
+            }
+
             _triggerCheck.OnEnter += TriggerCheckHit;
         }
         
         public void StopCheckingHits()
         {
+            // Debug.Log("stop checking hits");
             _triggerCheck.OnEnter -= TriggerCheckHit;
         }
         
         public void TriggerCheckHit(Collider c)
         {
-            Debug.Log("trigger hit detected: " + c.name);
+            // Debug.Log("trigger hit detected: " + c.name);
             HitData hitData = null;
             IHurtbox hurtbox;
             Vector3 center = _collider.transform.position;
@@ -47,7 +59,7 @@ namespace Runtime.Utilities.Collision
             hurtbox = c.GetComponent<IHurtbox>();
             if (hurtbox != null)
             {
-                Debug.Log("make hitdata");
+                // Debug.Log("make hitdata");
                 hitData = new HitData()
                     {
                         Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(m_hitResponder.Damage * hurtbox.DamageMultiplier),
@@ -59,9 +71,10 @@ namespace Runtime.Utilities.Collision
                     };
             }
 
-            if (hurtbox != null && hitData.Validate())
+            // Debug.Log("validate: " + (hitData.Validate()));
+            if (hitData.Validate())
             {
-                Debug.Log("validate: ");
+                // Debug.Log("validate: ");
                 hitData.HitDetector.HitResponder?.HitResponse(hitData);
                 hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
             }

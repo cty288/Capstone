@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
 using MikroFramework;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
+using Runtime.Player;
 using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
 using Runtime.Utilities.Collision;
@@ -92,6 +94,8 @@ namespace Runtime.Weapons
         // private InputAction _holdAction;
 
         // public GunRecoil recoilScript;
+
+        private IGamePlayerModel playerModel;
         
         protected override void OnEntityStart()
         {
@@ -101,6 +105,8 @@ namespace Runtime.Weapons
             // _holdAction.started += OnHoldActionStarted;
             
             base.OnEntityStart();
+            
+            playerModel = this.GetModel<IGamePlayerModel>();
             
             hitDetectorInfo = new HitDetectorInfo
             {
@@ -122,13 +128,13 @@ namespace Runtime.Weapons
         public void Shoot()
         {
             // particleSystem.Play();
-            BoundEntity.OnRecoil();
+            BoundEntity.OnRecoil(isScopedIn);
             hitDetector.CheckHit(hitDetectorInfo);
         }
         
         public void Update()
         {
-            if (isHolding)
+            if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Shoot
                 if (playerActions.Shoot.IsPressed() && !isReloading)
@@ -152,7 +158,7 @@ namespace Runtime.Weapons
                                 }
                                 else
                                 {
-                                    isReloading = true;
+                                    StartCoroutine(ReloadChangeModel());
                                 }
                             }
                         }
@@ -219,17 +225,17 @@ namespace Runtime.Weapons
             float startTime = 0f;
             float amimationTime = 0.1f;
 
-            while ((amimationTime - startTime) / amimationTime > 0f)
+            while (startTime <= amimationTime)
             {
                 model.transform.position = Vector3.Lerp(
-                    scopeInPositionTransform.position,
                     gunPositionTransform.position,
-                    (amimationTime - startTime) / amimationTime);
+                    scopeInPositionTransform.position,
+                    startTime / amimationTime);
                 
                 startTime += Time.deltaTime;
                 yield return null;
             }
-            
+            model.transform.position = scopeInPositionTransform.position;
             yield return null;
             isScopedIn = true;
         }
@@ -239,16 +245,18 @@ namespace Runtime.Weapons
             float startTime = 0f;
             float amimationTime = 0.1f;
 
-            while ((amimationTime - startTime) / amimationTime > 0f)
+            while (startTime <= amimationTime)
             {
                 model.transform.position = Vector3.Lerp(
-                    gunPositionTransform.position,
                     scopeInPositionTransform.position,
-                    (amimationTime - startTime) / amimationTime);
+                    gunPositionTransform.position,
+                    startTime / amimationTime);
 
                 startTime += Time.deltaTime;
                 yield return null;
             }
+
+            model.transform.position = gunPositionTransform.position;
 
             yield return null;
             isScopedIn = false;
