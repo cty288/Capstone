@@ -45,6 +45,12 @@ namespace Runtime.Utilities.Collision
         /// <returns>Returns true if valid HitData.</returns>
         public bool Validate()
         {
+            // Debug.Log("hurtbox: " + Hurtbox + 
+            //           " hurtboxHurtResponder: " + Hurtbox.HurtResponder +
+            //           " hurtResponder.checkhurt: " + Hurtbox.HurtResponder.CheckHurt(this) +
+            //           " hitrespond: " + HitDetector.HitResponder +
+            //           " hitrespond.checkhit: " + HitDetector.HitResponder.CheckHit(this));
+            
             if (Hurtbox != null)
                 if (Hurtbox.CheckHit(this))
                     if (Hurtbox.HurtResponder == null || Hurtbox.HurtResponder.CheckHurt(this))

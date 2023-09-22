@@ -30,12 +30,15 @@ namespace Runtime.RunTimeTests.TestCollision
 
         public bool CheckHurt(HitData data)
         {
-            if (data.Attacker.IsSameFaction(this)) 
-                return false;
             return true;
         }
 
         public void HurtResponse(HitData data) {
+            if (data.Attacker.IsSameFaction(this))
+            {
+                Debug.Log("is same faction");
+                return;
+            }
             
             Debug.Log("Hurt Response: Took " + data.Damage + " damage.");
             
