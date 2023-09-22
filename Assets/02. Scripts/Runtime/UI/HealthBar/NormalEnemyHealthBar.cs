@@ -12,6 +12,7 @@ using UnityEngine.UI;
 namespace Runtime.UI.HealthBar {
 	public class NormalEnemyHealthBar : global::HealthBar {
 		private Image bar;
+		private TMP_Text nameText;
 	
 		[SerializeField] private Color healthyColor = Color.red;
 		[SerializeField] private Color hurtColor = Color.red;
@@ -24,13 +25,18 @@ namespace Runtime.UI.HealthBar {
 			bar = transform.Find("Mask/Fill Area/Fill").GetComponent<Image>();
 			healthBGMaterial = Instantiate(bar.material);
 			bar.material = healthBGMaterial;
-			
+			nameText = transform.Find("NameText").GetComponent<TMP_Text>();
 		}
 
 		public override void OnSetEntity(IDamageable entity) {
 			this.entity = entity;
 			entity.HealthProperty.RealValue.RegisterWithInitValue(OnHealthChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
+			nameText.text = "";
+			if (!String.IsNullOrEmpty(entity.GetDisplayName())) {
+				nameText.text =entity.GetDisplayName();
+			}
 		}
 
 		public override void OnHealthBarDestroyed() {
