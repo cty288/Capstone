@@ -15,7 +15,7 @@ namespace MikroFramework.ResKit {
     /// <summary>
     /// Class that manage Project AB Manifest and saves all AB's load path (from local or hot-update manager)
     /// </summary>
-    //[MonoSingletonPath("[FrameworkPersistent]/[ResKit]/ResData")]
+    [MonoSingletonPath("[FrameworkPersistent]/[ResKit]/ResData")]
     public class ResData : MonoPersistentMikroSingleton<ResData> {
         private static AssetBundleManifest manifest;
         private static AssetBundle manifestBundle;
@@ -28,10 +28,12 @@ namespace MikroFramework.ResKit {
         /// Initialize the ResData singleton for hot-update
         /// </summary>
         public void Init(Action onFinished, Action<HotUpdateError> onInitError) {
-            gameObject.transform.SetParent(null);
+            //SgameObject.transform.SetParent(null);
             onError += onInitError;
             Load(onFinished);
+            //DontDestroyOnLoad(gameObject);
         }
+        
 
         protected override void OnBeforeDestroy() {
             base.OnBeforeDestroy();
