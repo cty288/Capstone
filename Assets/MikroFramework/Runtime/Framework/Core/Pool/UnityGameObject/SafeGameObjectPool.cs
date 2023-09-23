@@ -70,14 +70,14 @@ namespace MikroFramework.Pool
 
         private void Awake()
         {
-            creatingObjs.RegisterOnValueChaned(value => {
+            creatingObjs.RegisterOnValueChanged(value => {
                 if (value)
                 {
                     StartCoroutine(InitializeObjectsToGame());
                 }
             }).UnRegisterWhenGameObjectDestroyed(this.gameObject);
 
-            destroyingObjs.RegisterOnValueChaned(value => {
+            destroyingObjs.RegisterOnValueChanged(value => {
                 if (value)
                 {
                     StartCoroutine(DestoryObjectsInQueue());
@@ -106,10 +106,12 @@ namespace MikroFramework.Pool
                     return false;
                 }
 
+                PoolableGameObject poolable = obj.GetComponent<PoolableGameObject>();
                 if (CurrentCount < maxCount)
                 {
                     obj.SetActive(false);
-                    obj.GetComponent<PoolableGameObject>().OnRecycled();
+                    poolable.OnRecycled();
+                    poolable.IsRecycled = true;
                     cachedStack.Push(obj);
                     return true;
                 }
@@ -120,6 +122,7 @@ namespace MikroFramework.Pool
                     destroyedObjectInQueue.Enqueue(obj);
                     destroyingObjs.Value = true;
                     obj.GetComponent<PoolableGameObject>().OnRecycled();
+                    poolable.IsRecycled = true;
                     return false;
                 }
             }
@@ -144,10 +147,12 @@ namespace MikroFramework.Pool
             {
                 createdObj.transform.SetParent(this.transform);
                 createdObj.SetActive(true);
-                createdObj.GetComponent<PoolableGameObject>().Pool = this;
+                PoolableGameObject poolableGameObject = createdObj.GetComponent<PoolableGameObject>();
+                poolableGameObject.Pool = this;
+                poolableGameObject.IsRecycled = false;
+                poolableGameObject.OnStartOrAllocate();
             }
-            else
-            {
+            else {
                 Debug.LogWarning("A Prefab is missing but the SafeGameObjectPool is still trying to access it!");
             }
 
@@ -265,6 +270,7 @@ namespace MikroFramework.Pool
                         createdObject.transform.SetParent(this.transform);
                         cachedStack.Push(createdObject);
                         numHiddenObjectCreating--;
+                        createdObject.GetComponent<PoolableGameObject>().IsRecycled = true;
                     }
                 }
 

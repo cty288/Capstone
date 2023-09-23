@@ -28,9 +28,12 @@ namespace MikroFramework.ResKit {
         /// Initialize the ResData singleton for hot-update
         /// </summary>
         public void Init(Action onFinished, Action<HotUpdateError> onInitError) {
+            //SgameObject.transform.SetParent(null);
             onError += onInitError;
             Load(onFinished);
+            //DontDestroyOnLoad(gameObject);
         }
+        
 
         protected override void OnBeforeDestroy() {
             base.OnBeforeDestroy();
@@ -45,7 +48,7 @@ namespace MikroFramework.ResKit {
         /// </summary>
         public List<AssetBundleData> AssetBundleDatas = new List<AssetBundleData>();
 
-        private AssetDataTable assetDataTable = new AssetDataTable();
+        private static AssetDataTable assetDataTable = new AssetDataTable();
 
         /// <summary>
         /// Get an AssetData only by its name and type, does not need ownerBundleName
@@ -204,8 +207,9 @@ namespace MikroFramework.ResKit {
                                 //get file's "real name" (e.g.: AssetName: xxx/yyy, realName: yyy)
                                 string realName = abmd5Base.AssetName.Substring(abmd5Base.AssetName.LastIndexOf('/') + 1);
 
-                                if (files[j].Name == realName)
-                                {
+                                string t = files[j].FullName.Substring(hotUpdateFolder.Length);
+                                t = t.Replace(@"\", "/");
+                                if (t == abmd5Base.AssetName){
                                     AssetBundleData assetBundleData = new AssetBundleData()
                                     {
                                         Name = abmd5Base.AssetName,

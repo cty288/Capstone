@@ -1,0 +1,630 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class BindableDictionary&lt;TKey, TValue&gt;
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class BindableDictionary&lt;TKey, TValue&gt;
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Utilities_BindableDictionary_2.md&amp;value=---%0Auid%3A%20Runtime.Utilities.BindableDictionary%602%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Runtime.Utilities.BindableDictionary`2">
+
+
+
+  <h1 id="Runtime_Utilities_BindableDictionary_2" data-uid="Runtime.Utilities.BindableDictionary`2" class="text-break">
+    Class BindableDictionary&lt;TKey, TValue&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Utilities.html">Utilities</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class BindableDictionary&lt;TKey, TValue&gt; : BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;, IBindableProperty, IEnumerable&lt;KeyValuePair&lt;TKey, TValue&gt;&gt;, IEnumerable</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TKey</code></dt>
+    <dd></dd>
+    <dt><code>TValue</code></dt>
+    <dd></dd>
+  </dl>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;TKey, TValue&gt;&gt;</div>
+      <div><span class="xref">BindableDictionary&lt;TKey, TValue&gt;</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="MikroFramework.BindableProperty.IBindableProperty.html">IBindableProperty</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;TKey, TValue&gt;&gt;</div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_Value">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.Value</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_RegisterOnValueChaned_System_Action__0__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.RegisterOnValueChaned(Action&lt;Dictionary&lt;TKey, TValue&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_RegisterWithInitValue_System_Action__0__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.RegisterWithInitValue(Action&lt;Dictionary&lt;TKey, TValue&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_RegisterWithInitValue_System_Action__0__0__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.RegisterWithInitValue(Action&lt;Dictionary&lt;TKey, TValue&gt;, Dictionary&lt;TKey, TValue&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_ToString">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_RegisterOnValueChaned_System_Action__0__0__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.RegisterOnValueChaned(Action&lt;Dictionary&lt;TKey, TValue&gt;, Dictionary&lt;TKey, TValue&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_UnRegisterOnValueChanged_System_Action__0__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.UnRegisterOnValueChanged(Action&lt;Dictionary&lt;TKey, TValue&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_UnRegisterOnValueChanged_System_Action__0__0__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.UnRegisterOnValueChanged(Action&lt;Dictionary&lt;TKey, TValue&gt;, Dictionary&lt;TKey, TValue&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_UnRegisterAll">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.UnRegisterAll()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_ObjectValue">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.ObjectValue</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_RegisterOnObjectValueChaned_System_Action_System_Object__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.RegisterOnObjectValueChaned(Action&lt;object&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_RegisterOnObjectValueChaned_System_Action_System_Object_System_Object__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.RegisterOnObjectValueChaned(Action&lt;object, object&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_RegisterWithInitObject_System_Action_System_Object__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.RegisterWithInitObject(Action&lt;object&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_RegisterWithInitObject_System_Action_System_Object_System_Object__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.RegisterWithInitObject(Action&lt;object, object&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_UnRegisterOnObjectValueChanged_System_Action_System_Object__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.UnRegisterOnObjectValueChanged(Action&lt;object&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html#MikroFramework_BindableProperty_BindableProperty_1_UnRegisterOnObjectValueChanged_System_Action_System_Object_System_Object__">BindableProperty&lt;Dictionary&lt;TKey, TValue&gt;&gt;.UnRegisterOnObjectValueChanged(Action&lt;object, object&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2__ctor_" data-uid="Runtime.Utilities.BindableDictionary`2.#ctor*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2__ctor_System_Collections_Generic_Dictionary__0__1__" data-uid="Runtime.Utilities.BindableDictionary`2.#ctor(System.Collections.Generic.Dictionary{`0,`1})">
+  BindableDictionary(Dictionary&lt;TKey, TValue&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableDictionary(Dictionary&lt;TKey, TValue&gt; defaultValue = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>defaultValue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_Item_" data-uid="Runtime.Utilities.BindableDictionary`2.Item*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_Item__0_" data-uid="Runtime.Utilities.BindableDictionary`2.Item(`0)">
+  this[TKey]
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TValue this[TKey key] { get; set; }</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <span class="xref">TKey</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">TValue</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_AddAndInvoke_" data-uid="Runtime.Utilities.BindableDictionary`2.AddAndInvoke*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_AddAndInvoke_System_Collections_Generic_KeyValuePair__0__1__" data-uid="Runtime.Utilities.BindableDictionary`2.AddAndInvoke(System.Collections.Generic.KeyValuePair{`0,`1})">
+  AddAndInvoke(KeyValuePair&lt;TKey, TValue&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddAndInvoke(KeyValuePair&lt;TKey, TValue&gt; item)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>item</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_AddAndInvoke_" data-uid="Runtime.Utilities.BindableDictionary`2.AddAndInvoke*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_AddAndInvoke__0__1_" data-uid="Runtime.Utilities.BindableDictionary`2.AddAndInvoke(`0,`1)">
+  AddAndInvoke(TKey, TValue)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddAndInvoke(TKey key, TValue value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <span class="xref">TKey</span></dt>
+    <dd></dd>
+    <dt><code>value</code> <span class="xref">TValue</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_ClearAndInvoke_" data-uid="Runtime.Utilities.BindableDictionary`2.ClearAndInvoke*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_ClearAndInvoke" data-uid="Runtime.Utilities.BindableDictionary`2.ClearAndInvoke">
+  ClearAndInvoke()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClearAndInvoke()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_GetEnumerator_" data-uid="Runtime.Utilities.BindableDictionary`2.GetEnumerator*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_GetEnumerator" data-uid="Runtime.Utilities.BindableDictionary`2.GetEnumerator">
+  GetEnumerator()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;KeyValuePair&lt;TKey, TValue&gt;&gt; GetEnumerator()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerator-1">IEnumerator</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;TKey, TValue&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_RegisterOnAdd_" data-uid="Runtime.Utilities.BindableDictionary`2.RegisterOnAdd*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_RegisterOnAdd_System_Action__0__1__" data-uid="Runtime.Utilities.BindableDictionary`2.RegisterOnAdd(System.Action{`0,`1})">
+  RegisterOnAdd(Action&lt;TKey, TValue&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableDictExtensionUnregisterOnAdd&lt;TKey, TValue&gt; RegisterOnAdd(Action&lt;TKey, TValue&gt; onAdd)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onAdd</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Utilities.BindableDictExtensionUnregisterOnAdd-2.html">BindableDictExtensionUnregisterOnAdd</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_RegisterOnRemove_" data-uid="Runtime.Utilities.BindableDictionary`2.RegisterOnRemove*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_RegisterOnRemove_System_Action__0__1__" data-uid="Runtime.Utilities.BindableDictionary`2.RegisterOnRemove(System.Action{`0,`1})">
+  RegisterOnRemove(Action&lt;TKey, TValue&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableDictExtensionUnregisterOnRemove&lt;TKey, TValue&gt; RegisterOnRemove(Action&lt;TKey, TValue&gt; onRemove)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onRemove</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Utilities.BindableDictExtensionUnregisterOnRemove-2.html">BindableDictExtensionUnregisterOnRemove</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_RemoveAndInvoke_" data-uid="Runtime.Utilities.BindableDictionary`2.RemoveAndInvoke*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_RemoveAndInvoke_System_Collections_Generic_KeyValuePair__0__1__" data-uid="Runtime.Utilities.BindableDictionary`2.RemoveAndInvoke(System.Collections.Generic.KeyValuePair{`0,`1})">
+  RemoveAndInvoke(KeyValuePair&lt;TKey, TValue&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L69"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveAndInvoke(KeyValuePair&lt;TKey, TValue&gt; item)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>item</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_RemoveAndInvoke_" data-uid="Runtime.Utilities.BindableDictionary`2.RemoveAndInvoke*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_RemoveAndInvoke__0_" data-uid="Runtime.Utilities.BindableDictionary`2.RemoveAndInvoke(`0)">
+  RemoveAndInvoke(TKey)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveAndInvoke(TKey key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <span class="xref">TKey</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_UnRegisterOnAdd_" data-uid="Runtime.Utilities.BindableDictionary`2.UnRegisterOnAdd*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_UnRegisterOnAdd_System_Action__0__1__" data-uid="Runtime.Utilities.BindableDictionary`2.UnRegisterOnAdd(System.Action{`0,`1})">
+  UnRegisterOnAdd(Action&lt;TKey, TValue&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnRegisterOnAdd(Action&lt;TKey, TValue&gt; onAdd)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onAdd</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Utilities_BindableDictionary_2_UnRegisterOnRemove_" data-uid="Runtime.Utilities.BindableDictionary`2.UnRegisterOnRemove*"></a>
+
+  <h3 id="Runtime_Utilities_BindableDictionary_2_UnRegisterOnRemove_System_Action__0__1__" data-uid="Runtime.Utilities.BindableDictionary`2.UnRegisterOnRemove(System.Action{`0,`1})">
+  UnRegisterOnRemove(Action&lt;TKey, TValue&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnRegisterOnRemove(Action&lt;TKey, TValue&gt; onRemove)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onRemove</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;TKey, TValue&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/BindableDictionaryExtension.cs/#L45" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

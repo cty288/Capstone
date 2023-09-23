@@ -40,7 +40,7 @@ namespace MikroFramework.ResKit
                 state = value;
 
                 if (state == ResState.Loaded) {
-                    onLoadedEvent.Trigger(this);
+                    onLoadedEvent?.Trigger(this);
                 }
             }
         }

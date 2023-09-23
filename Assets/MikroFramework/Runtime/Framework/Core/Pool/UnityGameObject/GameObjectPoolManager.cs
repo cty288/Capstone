@@ -38,7 +38,7 @@ namespace MikroFramework
         private void Awake()
         {
             pools = new Dictionary<string, SafeGameObjectPool>();
-            resLoader = new ResLoader();
+            resLoader = ResLoader.Allocate();
         }
 
         public SafeGameObjectPool GetOrCreatePool(GameObject prefab)
@@ -143,7 +143,8 @@ namespace MikroFramework
 
                 if (!CheckPoolExists(recycledObject,out pool))
                 {
-                    Debug.LogError($"The pool does not exist for {prefabName}! Use CreatePool() to create its pool!");
+                    Debug.LogWarning($"The pool does not exist for {prefabName}! Use CreatePool() to create its pool! The object is destroyed!");
+                    Destroy(recycledObject);
                     return false;
                 }
                 else

@@ -1,0 +1,357 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class GameResourceModel&lt;T&gt;
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class GameResourceModel&lt;T&gt;
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_GameResources_Model_Base_GameResourceModel_1.md&amp;value=---%0Auid%3A%20Runtime.GameResources.Model.Base.GameResourceModel%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1">
+
+
+
+  <h1 id="Runtime_GameResources_Model_Base_GameResourceModel_1" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1" class="text-break">
+    Class GameResourceModel&lt;T&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.GameResources.html">GameResources</a>.<a class="xref" href="Runtime.GameResources.Model.html">Model</a>.<a class="xref" href="Runtime.GameResources.Model.Base.html">Base</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class GameResourceModel&lt;T&gt; : EntityModel&lt;T&gt;, IGameResourceModel&lt;T&gt;, IEntityModel&lt;T&gt;, IEntityModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture, ISavableModel where T : IResourceEntity</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.AbstractModel.html">AbstractModel</a></div>
+      <div><a class="xref" href="Framework.AbstractSavableModel.html">AbstractSavableModel</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html">EntityModel</a>&lt;T&gt;</div>
+      <div><span class="xref">GameResourceModel&lt;T&gt;</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.GameResources.Model.Base.IGameResourceModel-1.html">IGameResourceModel</a>&lt;T&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.IEntityModel-1.html">IEntityModel</a>&lt;T&gt;</div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.IEntityModel.html">IEntityModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IModel.html">IModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSetArchitecture.html">ICanSetArchitecture</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Framework.ISavableModel.html">ISavableModel</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.RawMaterials.Model.Base.RawMaterialModel.html">RawMaterialModel</a></div>
+      <div><a class="xref" href="Runtime.Weapons.Model.Base.WeaponModel.html">WeaponModel</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_entityBuilderFactory">EntityModel&lt;T&gt;.entityBuilderFactory</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_entities">EntityModel&lt;T&gt;.entities</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_GetEntity_System_String_">EntityModel&lt;T&gt;.GetEntity(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.EntityModel-1.html#Runtime_DataFramework_Entities_EntityModel_1_EntityCount">EntityModel&lt;T&gt;.EntityCount</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_Save_System_String_">AbstractSavableModel.Save(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_OnLoad_System_String_">AbstractSavableModel.OnLoad(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_OnSave_System_String_">AbstractSavableModel.OnSave(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_IsFirstTimeCreated">AbstractSavableModel.IsFirstTimeCreated</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_GameResources_Model_Base_GameResourceModel_1_GetAnyResource_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.GetAnyResource*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_GetAnyResource_System_String_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.GetAnyResource(System.String)">
+  GetAnyResource(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get any resource, as long as it inherits from IResourceEntity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IResourceEntity GetAnyResource(string id)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnEntityBuilt_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnEntityBuilt*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnEntityBuilt__0_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnEntityBuilt(`0)">
+  OnEntityBuilt(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnEntityBuilt(T entity)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entity</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnInit_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnInit*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_OnInit" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.OnInit">
+  OnInit()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnInit()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_GameResources_Model_Base_GameResourceModel_1_RemoveEntity_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.RemoveEntity*"></a>
+
+  <h3 id="Runtime_GameResources_Model_Base_GameResourceModel_1_RemoveEntity_System_String_" data-uid="Runtime.GameResources.Model.Base.GameResourceModel`1.RemoveEntity(System.String)">
+  RemoveEntity(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool RemoveEntity(string id)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/GameResources/Model/Base/GameResourceModel.cs/#L36" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

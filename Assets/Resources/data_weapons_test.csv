@@ -1,0 +1,74 @@
+EntityName / Property Names,base_damage,attack_speed,range,ammo_size,bullets_per_shot,spread,recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
+Types,int,float,float,int,int,float,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,int,float (cooldown),float,int,int,float (higher means more spread),,float (seconds),float,,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+{""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
+If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,
+BEGIN,,,,,,,,,,,,,,
+TestWeapon1,10,0.5,50,6,1,0.07,"{
+  ""recoilX"": -10,
+  ""recoilY"": 5,
+  ""recoilZ"": 0.5,
+  ""snappiness"": 7,
+  ""returnSpeed"": 2
+}",0,300,1,"{
+  ""explosion"": {
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 200
+    },
+    ""distance"": {
+      ""type"": ""int"",
+      ""value"": 10
+    }
+  },
+  ""shield"": {
+    ""health"": {
+      ""type"": ""int"",
+      ""value"": 200
+    },
+    ""angle"": {
+      ""type"": ""float[]"",
+      ""value"": [-60.0, 60.0]
+    },
+    ""cooldown"": {
+      ""type"": ""float"",
+      ""value"": 30.0
+    }
+  }
+}",,,
+"TestWeapon2
+",1,1,25,1,1,0.06,"{
+  ""recoilX"": -10,
+  ""recoilY"": 5,
+  ""recoilZ"": 0.5,
+  ""snappiness"": 7,
+  ""returnSpeed"": 2
+}",1,100,1,"{
+  ""explosion"": {
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 200
+    },
+    ""distance"": {
+      ""type"": ""int"",
+      ""value"": 10
+    }
+  },
+  ""shield"": {
+    ""health"": {
+      ""type"": ""int"",
+      ""value"": 200
+    },
+    ""angle"": {
+      ""type"": ""float[]"",
+      ""value"": [-60.0, 60.0]
+    },
+    ""cooldown"": {
+      ""type"": ""float"",
+      ""value"": 30.0
+    }
+  }
+}",,,

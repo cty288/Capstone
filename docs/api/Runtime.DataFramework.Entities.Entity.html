@@ -1,0 +1,1384 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class Entity
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class Entity
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_DataFramework_Entities_Entity.md&amp;value=---%0Auid%3A%20Runtime.DataFramework.Entities.Entity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Runtime.DataFramework.Entities.Entity">
+
+
+
+  <h1 id="Runtime_DataFramework_Entities_Entity" data-uid="Runtime.DataFramework.Entities.Entity" class="text-break">
+    Class Entity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.DataFramework.html">DataFramework</a>.<a class="xref" href="Runtime.DataFramework.Entities.html">Entities</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class Entity : IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">Entity</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></div>
+      <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Runtime_DataFramework_Entities_Entity__ctor_" data-uid="Runtime.DataFramework.Entities.Entity.#ctor*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity__ctor" data-uid="Runtime.DataFramework.Entities.Entity.#ctor">
+  Entity()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Entity()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_configTable" data-uid="Runtime.DataFramework.Entities.Entity.configTable">
+  configTable
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L180"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ConfigTable configTable</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Utilities.ConfigSheet.ConfigTable.html">ConfigTable</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_onEntityRecycled" data-uid="Runtime.DataFramework.Entities.Entity.onEntityRecycled">
+  onEntityRecycled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L182"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Action&lt;IEntity&gt; onEntityRecycled</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_EntityName_" data-uid="Runtime.DataFramework.Entities.Entity.EntityName*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_EntityName" data-uid="Runtime.DataFramework.Entities.Entity.EntityName">
+  EntityName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract string EntityName { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_IsRecycled_" data-uid="Runtime.DataFramework.Entities.Entity.IsRecycled*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_IsRecycled" data-uid="Runtime.DataFramework.Entities.Entity.IsRecycled">
+  IsRecycled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L474"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsRecycled { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_UUID_" data-uid="Runtime.DataFramework.Entities.Entity.UUID*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_UUID" data-uid="Runtime.DataFramework.Entities.Entity.UUID">
+  UUID
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string UUID { get; protected set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetArchitecture_" data-uid="Runtime.DataFramework.Entities.Entity.GetArchitecture*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetArchitecture" data-uid="Runtime.DataFramework.Entities.Entity.GetArchitecture">
+  GetArchitecture()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L508"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IArchitecture GetArchitecture()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.Architecture.IArchitecture.html">IArchitecture</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetConfigTable_" data-uid="Runtime.DataFramework.Entities.Entity.GetConfigTable*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetConfigTable" data-uid="Runtime.DataFramework.Entities.Entity.GetConfigTable">
+  GetConfigTable()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract ConfigTable GetConfigTable()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Utilities.ConfigSheet.ConfigTable.html">ConfigTable</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetDescription_" data-uid="Runtime.DataFramework.Entities.Entity.GetDescription*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetDescription" data-uid="Runtime.DataFramework.Entities.Entity.GetDescription">
+  GetDescription()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L486"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the description of the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string GetDescription()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetDisplayName_" data-uid="Runtime.DataFramework.Entities.Entity.GetDisplayName*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetDisplayName" data-uid="Runtime.DataFramework.Entities.Entity.GetDisplayName">
+  GetDisplayName()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L499"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the display name of the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string GetDisplayName()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetProperty_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyName_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty(Runtime.DataFramework.Properties.PropertyName)">
+  GetProperty(PropertyName)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L368"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get a property by name, return null if not found
+This will not retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+To retrieve nested properties, use the one that takes full name instead</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IPropertyBase GetProperty(PropertyName name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="Runtime.DataFramework.Properties.PropertyName.html">PropertyName</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Properties.IPropertyBase.html">IPropertyBase</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetProperty_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyNameInfo_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty(Runtime.DataFramework.Properties.PropertyNameInfo)">
+  GetProperty(PropertyNameInfo)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L376"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get a property by full name, return null if not found
+This can retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+e.g. GetProperty(&quot;custom_properties.attack.damage&quot;)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IPropertyBase GetProperty(PropertyNameInfo name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Properties.IPropertyBase.html">IPropertyBase</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetProperty_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty_System_Type_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty(System.Type)">
+  GetProperty(Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L398"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Return a property if you know its type, return null if not found
+This will not retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+To retrieve nested properties, use the one that takes full name instead</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IPropertyBase GetProperty(Type type)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Properties.IPropertyBase.html">IPropertyBase</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetProperty_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty__1" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty``1">
+  GetProperty&lt;T&gt;()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L383"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Return a property if you know its type, return null if not found
+This will not retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+To retrieve nested properties, use the one that takes full name instead</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetProperty&lt;T&gt;() where T : class, IPropertyBase</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_GetProperty_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_GetProperty__1_Runtime_DataFramework_Properties_PropertyNameInfo_" data-uid="Runtime.DataFramework.Entities.Entity.GetProperty``1(Runtime.DataFramework.Properties.PropertyNameInfo)">
+  GetProperty&lt;T&gt;(PropertyNameInfo)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L390"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get a property by full name, return null if not found
+This can retrieve those nested properties (in PropertyDict, PropertyList, etc.)
+This will auto convert the property to the given type</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetProperty&lt;T&gt;(PropertyNameInfo name) where T : class, IPropertyBase</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_HasProperty_" data-uid="Runtime.DataFramework.Entities.Entity.HasProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_HasProperty_Runtime_DataFramework_Properties_PropertyNameInfo_" data-uid="Runtime.DataFramework.Entities.Entity.HasProperty(Runtime.DataFramework.Properties.PropertyNameInfo)">
+  HasProperty(PropertyNameInfo)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L405"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasProperty(PropertyNameInfo nameInfo)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>nameInfo</code> <a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_InitProperty_" data-uid="Runtime.DataFramework.Entities.Entity.InitProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_InitProperty_Runtime_DataFramework_Properties_IPropertyBase_" data-uid="Runtime.DataFramework.Entities.Entity.InitProperty(Runtime.DataFramework.Properties.IPropertyBase)">
+  InitProperty(IPropertyBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L438"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void InitProperty(IPropertyBase property)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>property</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyBase.html">IPropertyBase</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_Initialize_" data-uid="Runtime.DataFramework.Entities.Entity.Initialize*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_Initialize" data-uid="Runtime.DataFramework.Entities.Entity.Initialize">
+  Initialize()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L421"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Initialize()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_" data-uid="Runtime.DataFramework.Entities.Entity.LoadPropertyBaseValueFromConfig*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_" data-uid="Runtime.DataFramework.Entities.Entity.LoadPropertyBaseValueFromConfig(Runtime.Utilities.ConfigSheet.ConfigTable)">
+  LoadPropertyBaseValueFromConfig(ConfigTable)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L332"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void LoadPropertyBaseValueFromConfig(ConfigTable overrideTable = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>overrideTable</code> <a class="xref" href="Runtime.Utilities.ConfigSheet.ConfigTable.html">ConfigTable</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnAllocate_" data-uid="Runtime.DataFramework.Entities.Entity.OnAllocate*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnAllocate" data-uid="Runtime.DataFramework.Entities.Entity.OnAllocate">
+  OnAllocate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L299"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnAllocate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnDoRecycle_" data-uid="Runtime.DataFramework.Entities.Entity.OnDoRecycle*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnDoRecycle" data-uid="Runtime.DataFramework.Entities.Entity.OnDoRecycle">
+  OnDoRecycle()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L481"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void OnDoRecycle()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnEntityStart_" data-uid="Runtime.DataFramework.Entities.Entity.OnEntityStart*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnEntityStart_System_Boolean_" data-uid="Runtime.DataFramework.Entities.Entity.OnEntityStart(System.Boolean)">
+  OnEntityStart(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L366"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>After the entity is built, or loaded from save, this will be called</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract void OnEntityStart(bool isLoadedFromSave)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>isLoadedFromSave</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnGetDescription_" data-uid="Runtime.DataFramework.Entities.Entity.OnGetDescription*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnGetDescription_System_String_" data-uid="Runtime.DataFramework.Entities.Entity.OnGetDescription(System.String)">
+  OnGetDescription(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L496"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Return the description of the entity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract string OnGetDescription(string defaultLocalizationKey)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>defaultLocalizationKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>This is always equal to EntityName_desc. Use Localization.Get or Localization.GetFormat to retrieve its description based on the key <br>
+Or you can ignore defaultLocalizationKey can manually implement yours</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnLoadFromSave_" data-uid="Runtime.DataFramework.Entities.Entity.OnLoadFromSave*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnLoadFromSave" data-uid="Runtime.DataFramework.Entities.Entity.OnLoadFromSave">
+  OnLoadFromSave()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L191"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnLoadFromSave()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnRecycle_" data-uid="Runtime.DataFramework.Entities.Entity.OnRecycle*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnRecycle" data-uid="Runtime.DataFramework.Entities.Entity.OnRecycle">
+  OnRecycle()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L483"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void OnRecycle()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnRecycled_" data-uid="Runtime.DataFramework.Entities.Entity.OnRecycled*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnRecycled" data-uid="Runtime.DataFramework.Entities.Entity.OnRecycled">
+  OnRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L454"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnRecycled()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnRegisterProperties_" data-uid="Runtime.DataFramework.Entities.Entity.OnRegisterProperties*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnRegisterProperties" data-uid="Runtime.DataFramework.Entities.Entity.OnRegisterProperties">
+  OnRegisterProperties()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L296"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected abstract void OnRegisterProperties()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_OnStart_" data-uid="Runtime.DataFramework.Entities.Entity.OnStart*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_OnStart_System_Boolean_" data-uid="Runtime.DataFramework.Entities.Entity.OnStart(System.Boolean)">
+  OnStart(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L348"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>After the entity is built, or loaded from save, this will be called</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnStart(bool isLoadedFromSave)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>isLoadedFromSave</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_RecycleToCache_" data-uid="Runtime.DataFramework.Entities.Entity.RecycleToCache*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_RecycleToCache" data-uid="Runtime.DataFramework.Entities.Entity.RecycleToCache">
+  RecycleToCache()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L476"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RecycleToCache()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_RegisterInitialProperty_" data-uid="Runtime.DataFramework.Entities.Entity.RegisterInitialProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_RegisterInitialProperty__1___0_" data-uid="Runtime.DataFramework.Entities.Entity.RegisterInitialProperty``1(``0)">
+  RegisterInitialProperty&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Register a property to the entity. This must be called before the entity is initialized
+To register a property after the entity is initialized, use RegisterTempProperty</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterInitialProperty&lt;T&gt;(T property) where T : IPropertyBase</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>property</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_" data-uid="Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__" data-uid="Runtime.DataFramework.Entities.Entity.RegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})">
+  RegisterOnEntityRecycled(Action&lt;IEntity&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L352"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IUnRegister RegisterOnEntityRecycled(Action&lt;IEntity&gt; onEntityRecycled)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onEntityRecycled</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.Event.IUnRegister.html">IUnRegister</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_RegisterTempProperty_" data-uid="Runtime.DataFramework.Entities.Entity.RegisterTempProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_RegisterTempProperty__1___0_System_String_System_Boolean_System_Boolean_" data-uid="Runtime.DataFramework.Entities.Entity.RegisterTempProperty``1(``0,System.String,System.Boolean,System.Boolean)">
+  RegisterTempProperty&lt;T&gt;(T, string, bool, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L238"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Register a property to the entity. The property will be removed once the entity is recycled</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterTempProperty&lt;T&gt;(T property, string overriddenName, bool isRoot, bool alsoInitialize = true) where T : IPropertyBase</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>property</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>overriddenName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>isRoot</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+    <dt><code>alsoInitialize</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_SetPropertyBaseValue_" data-uid="Runtime.DataFramework.Entities.Entity.SetPropertyBaseValue*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_SetPropertyBaseValue__1_Runtime_DataFramework_Properties_PropertyNameInfo___0_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__" data-uid="Runtime.DataFramework.Entities.Entity.SetPropertyBaseValue``1(Runtime.DataFramework.Properties.PropertyNameInfo,``0,Runtime.DataFramework.Properties.IPropertyDependencyModifier{``0})">
+  SetPropertyBaseValue&lt;T&gt;(PropertyNameInfo, T, IPropertyDependencyModifier&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L303"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Set the base value of all properties with the given name</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPropertyBaseValue&lt;T&gt;(PropertyNameInfo name, T value, IPropertyDependencyModifier&lt;T&gt; modifier = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></dt>
+    <dd></dd>
+    <dt><code>value</code> <span class="xref">T</span></dt>
+    <dd></dd>
+    <dt><code>modifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_SetPropertyModifier_" data-uid="Runtime.DataFramework.Entities.Entity.SetPropertyModifier*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_SetPropertyModifier__1_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__" data-uid="Runtime.DataFramework.Entities.Entity.SetPropertyModifier``1(Runtime.DataFramework.Properties.PropertyNameInfo,Runtime.DataFramework.Properties.IPropertyDependencyModifier{``0})">
+  SetPropertyModifier&lt;T&gt;(PropertyNameInfo, IPropertyDependencyModifier&lt;T&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L319"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Set the modifier of all properties with the given name</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPropertyModifier&lt;T&gt;(PropertyNameInfo name, IPropertyDependencyModifier&lt;T&gt; modifier)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></dt>
+    <dd></dd>
+    <dt><code>modifier</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyDependencyModifier-1.html">IPropertyDependencyModifier</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_TryGetProperty_" data-uid="Runtime.DataFramework.Entities.Entity.TryGetProperty*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_TryGetProperty_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyBase__" data-uid="Runtime.DataFramework.Entities.Entity.TryGetProperty(Runtime.DataFramework.Properties.PropertyNameInfo,Runtime.DataFramework.Properties.IPropertyBase@)">
+  TryGetProperty(PropertyNameInfo, out IPropertyBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L409"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetProperty(PropertyNameInfo nameInfo, out IPropertyBase property)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>nameInfo</code> <a class="xref" href="Runtime.DataFramework.Properties.PropertyNameInfo.html">PropertyNameInfo</a></dt>
+    <dd></dd>
+    <dt><code>property</code> <a class="xref" href="Runtime.DataFramework.Properties.IPropertyBase.html">IPropertyBase</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_DataFramework_Entities_Entity_UnRegisterOnEntityRecycled_" data-uid="Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled*"></a>
+
+  <h3 id="Runtime_DataFramework_Entities_Entity_UnRegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__" data-uid="Runtime.DataFramework.Entities.Entity.UnRegisterOnEntityRecycled(System.Action{Runtime.DataFramework.Entities.IEntity})">
+  UnRegisterOnEntityRecycled(Action&lt;IEntity&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L357"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnRegisterOnEntityRecycled(Action&lt;IEntity&gt; onEntityRecycled)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>onEntityRecycled</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/DataFramework/Base/Entities/Entity.cs/#L151" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -21,7 +21,7 @@ MonoBehaviour:
     directory: 0
     format: 0
     prettyPrint: 1
-    bufferSize: 2048
+    bufferSize: 20480
     saveChildren: 1
     postprocessRawCachedData: 0
     typeChecking: 1
@@ -31,13 +31,19 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - Assembly-CSharp
+    - BehaviorDesigner
+    - BehaviorDesigner.Movement
+    - Cinemachine
     - DOTween.Modules
     - EasySave3
     - MainGame
+    - MainGame.Editor
     - MikroFramework
     - Polyglot.Scripts
+    - Tests
     - UniRx
-    showAdvancedSettings: 0
+    - Unity.ProBuilder.Examples
+    showAdvancedSettings: 1
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1
   addAllPrefabsToManager: 1

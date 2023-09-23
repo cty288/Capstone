@@ -1,0 +1,61 @@
+ManifestFileVersion: 0
+CRC: 1400013907
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: mftest2
+      Dependencies:
+        Dependency_0: mftest
+    Info_1:
+      Name: others
+      Dependencies: {}
+    Info_2:
+      Name: mftest
+      Dependencies: {}
+    Info_3:
+      Name: test_sphere
+      Dependencies: {}
+    Info_4:
+      Name: scene
+      Dependencies:
+        Dependency_0: mftest2
+        Dependency_1: others
+    Info_5:
+      Name: test/scene_test.ab
+      Dependencies:
+        Dependency_0: mftest
+    Info_6:
+      Name: data
+      Dependencies:
+        Dependency_0: settings
+    Info_7:
+      Name: settings
+      Dependencies: {}
+    Info_8:
+      Name: info
+      Dependencies:
+        Dependency_0: settings
+        Dependency_1: assets/fonts
+    Info_9:
+      Name: description
+      Dependencies:
+        Dependency_0: settings
+        Dependency_1: info
+        Dependency_2: assets/fonts
+    Info_10:
+      Name: assets/fonts
+      Dependencies: {}
+    Info_11:
+      Name: entities/resources
+      Dependencies:
+        Dependency_0: mftest
+    Info_12:
+      Name: assets/goods_inventory
+      Dependencies: {}
+    Info_13:
+      Name: entities/resources_inventory
+      Dependencies:
+        Dependency_0: assets/goods_inventory
+    Info_14:
+      Name: decals
+      Dependencies: {}

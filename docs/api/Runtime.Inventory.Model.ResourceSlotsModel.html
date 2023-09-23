@@ -1,0 +1,612 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ResourceSlotsModel
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ResourceSlotsModel
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Inventory_Model_ResourceSlotsModel.md&amp;value=---%0Auid%3A%20Runtime.Inventory.Model.ResourceSlotsModel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Runtime.Inventory.Model.ResourceSlotsModel">
+
+
+
+  <h1 id="Runtime_Inventory_Model_ResourceSlotsModel" data-uid="Runtime.Inventory.Model.ResourceSlotsModel" class="text-break">
+    Class ResourceSlotsModel
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Inventory.html">Inventory</a>.<a class="xref" href="Runtime.Inventory.Model.html">Model</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class ResourceSlotsModel : AbstractSavableModel, ISavableModel, IResourceSlotsModel, IModel, ICanSetArchitecture, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.AbstractModel.html">AbstractModel</a></div>
+      <div><a class="xref" href="Framework.AbstractSavableModel.html">AbstractSavableModel</a></div>
+      <div><span class="xref">ResourceSlotsModel</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Framework.ISavableModel.html">ISavableModel</a></div>
+      <div><a class="xref" href="Runtime.Inventory.Model.IResourceSlotsModel.html">IResourceSlotsModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IModel.html">IModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSetArchitecture.html">ICanSetArchitecture</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.Inventory.Model.InventoryModel.html">InventoryModel</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_OnInit">AbstractSavableModel.OnInit()</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_Save_System_String_">AbstractSavableModel.Save(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_OnLoad_System_String_">AbstractSavableModel.OnLoad(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_OnSave_System_String_">AbstractSavableModel.OnSave(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Framework.AbstractSavableModel.html#Framework_AbstractSavableModel_IsFirstTimeCreated">AbstractSavableModel.IsFirstTimeCreated</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_slots" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.slots">
+  slots
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected List&lt;ResourceSlot&gt; slots</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Runtime.Inventory.Model.ResourceSlot.html">ResourceSlot</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_AddItem_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.AddItem*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_AddItem_Runtime_GameResources_Model_Base_IResourceEntity_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.AddItem(Runtime.GameResources.Model.Base.IResourceEntity)">
+  AddItem(IResourceEntity)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Add item to the slots. If the item is stackable, it will be added to the existing stack. <br>
+If there's no existing stack, a new stack will be created. <br></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool AddItem(IResourceEntity item)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>item</code> <a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_AddItemAt_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.AddItemAt*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_AddItemAt_Runtime_GameResources_Model_Base_IResourceEntity_Runtime_Inventory_Model_ResourceSlot_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.AddItemAt(Runtime.GameResources.Model.Base.IResourceEntity,Runtime.Inventory.Model.ResourceSlot)">
+  AddItemAt(IResourceEntity, ResourceSlot)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual bool AddItemAt(IResourceEntity item, ResourceSlot slot)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>item</code> <a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
+    <dd></dd>
+    <dt><code>slot</code> <a class="xref" href="Runtime.Inventory.Model.ResourceSlot.html">ResourceSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_CanPlaceItem_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.CanPlaceItem*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_CanPlaceItem_Runtime_GameResources_Model_Base_IResourceEntity_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.CanPlaceItem(Runtime.GameResources.Model.Base.IResourceEntity)">
+  CanPlaceItem(IResourceEntity)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns true if the item can be placed at the specified index. <br>
+Factors causing false: <br></p>
+<ol>
+<li>The index is out of range. <br></li>
+<li>The item is not currently stackable at the specified index. <br></li>
+</ol>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool CanPlaceItem(IResourceEntity item)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>item</code> <a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_Clear_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.Clear*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_Clear" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.Clear">
+  Clear()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reset all slots to the initial state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void Clear()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_GetAllSlots_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.GetAllSlots*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_GetAllSlots" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.GetAllSlots">
+  GetAllSlots()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;ResourceSlot&gt; GetAllSlots()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Runtime.Inventory.Model.ResourceSlot.html">ResourceSlot</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_GetSlotCount_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.GetSlotCount*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_GetSlotCount" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.GetSlotCount">
+  GetSlotCount()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Get the number of all slots currently.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetSlotCount()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_GetSlotCurrentItemCount_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.GetSlotCurrentItemCount*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_GetSlotCurrentItemCount_System_Int32_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.GetSlotCurrentItemCount(System.Int32)">
+  GetSlotCurrentItemCount(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int GetSlotCurrentItemCount(int index)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_OnEntityRecycled_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.OnEntityRecycled*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_OnEntityRecycled_Runtime_DataFramework_Entities_IEntity_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.OnEntityRecycled(Runtime.DataFramework.Entities.IEntity)">
+  OnEntityRecycled(IEntity)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void OnEntityRecycled(IEntity entity)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entity</code> <a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_RegisterInitialEntityEvents_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_RegisterInitialEntityEvents_Runtime_GameResources_Model_Base_IResourceEntity_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.RegisterInitialEntityEvents(Runtime.GameResources.Model.Base.IResourceEntity)">
+  RegisterInitialEntityEvents(IResourceEntity)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterInitialEntityEvents(IResourceEntity entity)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>entity</code> <a class="xref" href="Runtime.GameResources.Model.Base.IResourceEntity.html">IResourceEntity</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_RemoveItem_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.RemoveItem*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_RemoveItem_System_String_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.RemoveItem(System.String)">
+  RemoveItem(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Find and remove the first item with the specified uuid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool RemoveItem(string uuid)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>uuid</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Inventory_Model_ResourceSlotsModel_Reset_" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.Reset*"></a>
+
+  <h3 id="Runtime_Inventory_Model_ResourceSlotsModel_Reset" data-uid="Runtime.Inventory.Model.ResourceSlotsModel.Reset">
+  Reset()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void Reset()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Inventory/Model/ResourceSlotModel.cs/#L62" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

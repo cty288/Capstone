@@ -1,0 +1,78 @@
+{
+  "metadata": [
+    {
+        "src": [
+            {
+                "src": "..",
+                "files": [
+                    "MainGame.csproj",
+                    "MikroFramework.csproj"
+                   
+                ],
+                "exclude": [
+                    "Assets/Plugins/**",
+                    "Assets/02. Scripts/Editor/**",
+                    "Assets/02. Scripts/Tests/**",
+                    "Assets/02. Scripts/*.meta",
+                    "Assets/02. Scripts/*.asmdef",
+                    "**/*.meta"
+                ]
+            } 
+        ],
+        "globalNamespaceId": "Global",
+        "filter": "filterConfig.yml",
+        "dest": "api",
+        "namespaceLayout" : "nested"
+    }
+ ],
+  "build": {
+    "globalMetadata": {
+      "_appTitle": "Capstone documentation",
+      "_appFooter": "Capstone documentation",
+      "_enableSearch": true
+    },
+    "content": [
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md"
+        ]
+      },
+      {
+        "files": [
+          "articles/**.md",
+          "articles/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "../docs",
+    "globalMetadataFiles": [],
+    "fileMetadataFiles": [],
+    "template": [
+      "default",
+      "modern",
+      "templates/darkfx"
+    ],
+    "postProcessors": [],
+    "keepFileLink": false,
+    "disableGitFeatures": false,
+    "sitemap": {
+      "baseUrl": "https://cty288.github.io/Capstone/",
+      "changefreq": "weekly",
+      "fileOptions": {
+        "api/*": {
+            "changefreq": "daily"
+        }
+      }
+    }
+  }
+}

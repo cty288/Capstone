@@ -1,0 +1,574 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class Boss1Entity
+ | Capstone documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class Boss1Entity
+ | Capstone documentation ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Enemies_Boss1Entity.md&amp;value=---%0Auid%3A%20Runtime.Enemies.Boss1Entity%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Runtime.Enemies.Boss1Entity">
+
+
+
+  <h1 id="Runtime_Enemies_Boss1Entity" data-uid="Runtime.Enemies.Boss1Entity" class="text-break">
+    Class Boss1Entity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Runtime.html">Runtime</a>.<a class="xref" href="Runtime.Enemies.html">Enemies</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class Boss1Entity : EnemyEntity&lt;Boss1Entity&gt;, IEnemyEntity, ICreature, IDamageable, IBelongToFaction, IHaveCustomProperties, IHaveTags, IEntity, IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent, IBelongToArchitecture</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.Entity.html">Entity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html">AbstractBasicEntity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html">DamageableEntity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.AbstractCreature.html">AbstractCreature</a></div>
+      <div><a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html">EnemyEntity</a>&lt;<a class="xref" href="Runtime.Enemies.Boss1Entity.html">Boss1Entity</a>&gt;</div>
+      <div><span class="xref">Boss1Entity</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.Enemies.Model.IEnemyEntity.html">IEnemyEntity</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.Creatures.ICreature.html">ICreature</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.IDamageable.html">IDamageable</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties.IHaveCustomProperties.html">IHaveCustomProperties</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Tags.IHaveTags.html">IHaveTags</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></div>
+      <div><a class="xref" href="MikroFramework.Pool.IPoolable.html">IPoolable</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDescription.html">IHaveDescription</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Description.IHaveDisplayName.html">IHaveDisplayName</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendEvent.html">ICanSendEvent</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_dangerProperty">EnemyEntity&lt;Boss1Entity&gt;.dangerProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_healthProperty">EnemyEntity&lt;Boss1Entity&gt;.healthProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_tasteProperty">EnemyEntity&lt;Boss1Entity&gt;.tasteProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_OnEntityRegisterAdditionalProperties">EnemyEntity&lt;Boss1Entity&gt;.OnEntityRegisterAdditionalProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_OnEntityStart_System_Boolean_">EnemyEntity&lt;Boss1Entity&gt;.OnEntityStart(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_GetDefaultFaction">EnemyEntity&lt;Boss1Entity&gt;.GetDefaultFaction()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_GetDanger">EnemyEntity&lt;Boss1Entity&gt;.GetDanger()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_GetHealth">EnemyEntity&lt;Boss1Entity&gt;.GetHealth()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_GetTaste">EnemyEntity&lt;Boss1Entity&gt;.GetTaste()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_GetConfigTable">EnemyEntity&lt;Boss1Entity&gt;.GetConfigTable()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Enemies.Model.EnemyEntity-1.html#Runtime_Enemies_Model_EnemyEntity_1_OnDoRecycle">EnemyEntity&lt;Boss1Entity&gt;.OnDoRecycle()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_CurrentFaction">DamageableEntity.CurrentFaction</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_IsInvincible">DamageableEntity.IsInvincible</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_HealthProperty">DamageableEntity.HealthProperty</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnRegisterProperties">DamageableEntity.OnRegisterProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetMaxHealth">DamageableEntity.GetMaxHealth()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_GetCurrentHealth">DamageableEntity.GetCurrentHealth()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_TakeDamage_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.TakeDamage(int, IBelongToFaction)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_OnTakeDamageAdditionalCheck_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.OnTakeDamageAdditionalCheck(int, IBelongToFaction)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_CheckCanTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.CheckCanTakeDamage(IBelongToFaction)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamageableEntity.RegisterOnTakeDamage(OnTakeDamage)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_UnRegisterOnTakeDamage_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnTakeDamage_">DamageableEntity.UnRegisterOnTakeDamage(OnTakeDamage)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_Heal_System_Int32_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_">DamageableEntity.Heal(int, IBelongToFaction)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_RegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamageableEntity.RegisterOnHeal(OnHeal)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable.DamageableEntity.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_DamageableEntity_UnRegisterOnHeal_Runtime_DataFramework_Entities_ClassifiedTemplates_Damagable_OnHeal_">DamageableEntity.UnRegisterOnHeal(OnHeal)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetCustomProperties">AbstractBasicEntity.GetCustomProperties()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetCustomDataValue_System_String_System_String_">AbstractBasicEntity.GetCustomDataValue(string, string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetCustomDataValue__1_System_String_System_String_">AbstractBasicEntity.GetCustomDataValue&lt;T&gt;(string, string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_RegisterOnCustomDataChanged_System_String_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_System_Object_System_Object__">AbstractBasicEntity.RegisterOnCustomDataChanged(string, string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_RegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__">AbstractBasicEntity.RegisterOnCustomDataChanged(string, Action&lt;ICustomProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_UnRegisterOnCustomDataChanged_System_String_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomDataProperty_System_Object_System_Object__">AbstractBasicEntity.UnRegisterOnCustomDataChanged(string, string, Action&lt;ICustomDataProperty, dynamic, dynamic&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_UnRegisterOnCustomDataChanged_System_String_System_Action_Runtime_DataFramework_Properties_CustomProperties_ICustomProperty__">AbstractBasicEntity.UnRegisterOnCustomDataChanged(string, Action&lt;ICustomProperty&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_HasCustomProperty_System_String_">AbstractBasicEntity.HasCustomProperty(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetTagProperty">AbstractBasicEntity.GetTagProperty()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.AbstractBasicEntity.html#Runtime_DataFramework_Entities_AbstractBasicEntity_GetRarity">AbstractBasicEntity.GetRarity()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_UUID">Entity.UUID</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_configTable">Entity.configTable</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_onEntityRecycled">Entity.onEntityRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnLoadFromSave">Entity.OnLoadFromSave()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterInitialProperty__1___0_">Entity.RegisterInitialProperty&lt;T&gt;(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterTempProperty__1___0_System_String_System_Boolean_System_Boolean_">Entity.RegisterTempProperty&lt;T&gt;(T, string, bool, bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnAllocate">Entity.OnAllocate()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_SetPropertyBaseValue__1_Runtime_DataFramework_Properties_PropertyNameInfo___0_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__">Entity.SetPropertyBaseValue&lt;T&gt;(PropertyNameInfo, T, IPropertyDependencyModifier&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_SetPropertyModifier__1_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyDependencyModifier___0__">Entity.SetPropertyModifier&lt;T&gt;(PropertyNameInfo, IPropertyDependencyModifier&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_LoadPropertyBaseValueFromConfig_Runtime_Utilities_ConfigSheet_ConfigTable_">Entity.LoadPropertyBaseValueFromConfig(ConfigTable)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnStart_System_Boolean_">Entity.OnStart(bool)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.RegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_UnRegisterOnEntityRecycled_System_Action_Runtime_DataFramework_Entities_IEntity__">Entity.UnRegisterOnEntityRecycled(Action&lt;IEntity&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyName_">Entity.GetProperty(PropertyName)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_Runtime_DataFramework_Properties_PropertyNameInfo_">Entity.GetProperty(PropertyNameInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty__1">Entity.GetProperty&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty__1_Runtime_DataFramework_Properties_PropertyNameInfo_">Entity.GetProperty&lt;T&gt;(PropertyNameInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetProperty_System_Type_">Entity.GetProperty(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_HasProperty_Runtime_DataFramework_Properties_PropertyNameInfo_">Entity.HasProperty(PropertyNameInfo)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_TryGetProperty_Runtime_DataFramework_Properties_PropertyNameInfo_Runtime_DataFramework_Properties_IPropertyBase__">Entity.TryGetProperty(PropertyNameInfo, out IPropertyBase)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_Initialize">Entity.Initialize()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_InitProperty_Runtime_DataFramework_Properties_IPropertyBase_">Entity.InitProperty(IPropertyBase)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_OnRecycled">Entity.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_IsRecycled">Entity.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_RecycleToCache">Entity.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDescription">Entity.GetDescription()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetDisplayName">Entity.GetDisplayName()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.DataFramework.Entities.Entity.html#Runtime_DataFramework_Entities_Entity_GetArchitecture">Entity.GetArchitecture()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Runtime_Enemies_Boss1Entity_EntityName_" data-uid="Runtime.Enemies.Boss1Entity.EntityName*"></a>
+
+  <h3 id="Runtime_Enemies_Boss1Entity_EntityName" data-uid="Runtime.Enemies.Boss1Entity.EntityName">
+  EntityName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string EntityName { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Boss1Entity_ShellClosed_" data-uid="Runtime.Enemies.Boss1Entity.ShellClosed*"></a>
+
+  <h3 id="Runtime_Enemies_Boss1Entity_ShellClosed" data-uid="Runtime.Enemies.Boss1Entity.ShellClosed">
+  ShellClosed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public BindableProperty&lt;bool&gt; ShellClosed { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Runtime_Enemies_Boss1Entity_OnEnemyRegisterAdditionalProperties_" data-uid="Runtime.Enemies.Boss1Entity.OnEnemyRegisterAdditionalProperties*"></a>
+
+  <h3 id="Runtime_Enemies_Boss1Entity_OnEnemyRegisterAdditionalProperties" data-uid="Runtime.Enemies.Boss1Entity.OnEnemyRegisterAdditionalProperties">
+  OnEnemyRegisterAdditionalProperties()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnEnemyRegisterAdditionalProperties()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Boss1Entity_OnGetDescription_" data-uid="Runtime.Enemies.Boss1Entity.OnGetDescription*"></a>
+
+  <h3 id="Runtime_Enemies_Boss1Entity_OnGetDescription_System_String_" data-uid="Runtime.Enemies.Boss1Entity.OnGetDescription(System.String)">
+  OnGetDescription(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Return the description of the entity</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override string OnGetDescription(string defaultLocalizationKey)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>defaultLocalizationKey</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>This is always equal to EntityName_desc. Use Localization.Get or Localization.GetFormat to retrieve its description based on the key <br>
+Or you can ignore defaultLocalizationKey can manually implement yours</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Boss1Entity_OnRecycle_" data-uid="Runtime.Enemies.Boss1Entity.OnRecycle*"></a>
+
+  <h3 id="Runtime_Enemies_Boss1Entity_OnRecycle" data-uid="Runtime.Enemies.Boss1Entity.OnRecycle">
+  OnRecycle()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnRecycle()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Enemies_Boss1Entity_OnRegisterCustomProperties_" data-uid="Runtime.Enemies.Boss1Entity.OnRegisterCustomProperties*"></a>
+
+  <h3 id="Runtime_Enemies_Boss1Entity_OnRegisterCustomProperties" data-uid="Runtime.Enemies.Boss1Entity.OnRegisterCustomProperties">
+  OnRegisterCustomProperties()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override ICustomProperty[] OnRegisterCustomProperties()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.DataFramework.Properties.CustomProperties.ICustomProperty.html">ICustomProperty</a>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/Boss1.cs/#L28" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          Capstone documentation
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

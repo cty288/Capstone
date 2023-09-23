@@ -1,23 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;using MikroFramework.Architecture;
-using UnityEngine;
+using MikroFramework.Architecture;
 
-[ES3Serializable]
-public abstract class AbstractSavableSystem : AbstractSystem{
-	protected override void OnInit() {
+namespace Framework {
+	[ES3Serializable]
+	public abstract class AbstractSavableSystem : AbstractSystem{
+		protected override void OnInit() {
 		
-	}
+		}
 
-	public void Save() {
-		ES3.Save("System_" + this.GetType().Name, this, "systems.es3");
-		OnSave();
-	}
+		public void Save(string suffix) {
+			ES3.Save("System_" + this.GetType().Name, this, $"systems_{suffix}.es3");
+			OnSave(suffix);
+		}
 	
-	public virtual void OnLoad() {
+		public virtual void OnLoad(string suffix) {
 		
-	}
+		}
 	
-	public virtual void OnSave() {
+		public virtual void OnSave(string suffix) {
 		
+		}
 	}
 }
