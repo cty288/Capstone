@@ -11,27 +11,28 @@ using UnityEngine;
 namespace MikroFramework.ResKit
 {
    // [MonoSingletonPath("[FrameworkPersistent]/[ResKit]/ResManager")]
-    public class ResManager : ManagerBehavior,ISingleton {
+    public class ResManager : ISingleton {
 
         private ResTable SharedLoadedResources = new ResTable();
+
+        public ResTable SharedLoadedResource => SharedLoadedResources;
 
         private const string SimulationModeKey = "simulation mode";
 
         private static int simulationMode = -1;
 
-        private static ResManager singleton {
+        public static ResManager singleton {
             get {
                 return SingletonProperty<ResManager>.Singleton;
             }
         }
 
-        private void Awake() {
-            DontDestroyOnLoad(this.gameObject);
+        private ResManager() {
             SafeObjectPool<ResourcesRes>.Singleton.Init(10,30);
             SafeObjectPool<AssetBundleRes>.Singleton.Init(20,50);
             SafeObjectPool<AssetRes>.Singleton.Init(30,100);
         }
-
+        
         /// <summary>
         /// Get Global resource pool
         /// </summary>
@@ -106,37 +107,6 @@ namespace MikroFramework.ResKit
                 return false;
             }
         }
-#if UNITY_EDITOR
-        private void OnGUI()
-        {
-            if (Input.GetKey(KeyCode.F1))
-            {
-                GUILayout.BeginVertical("box");
 
-                IEnumerator valueEnumerator = SharedLoadedResources.Items.GetEnumerator();
-
-                while (valueEnumerator.MoveNext()) {
-                    Res loadedRes = valueEnumerator.Current as Res;
-                    GUILayout.Label($"Name: {loadedRes.Name}, ResCount: {loadedRes.RefCount}, ResState: {loadedRes.State}");
-                }
-                
-
-                GUILayout.Label($"ResourceRes Object Pool count: {SafeObjectPool<ResourcesRes>.Singleton.CurrentCount}" +
-                                $"/{SafeObjectPool<ResourcesRes>.Singleton.MaxCount}. " +
-                                $"Active object count: {SafeObjectPool<ResourcesRes>.Singleton.NumActiveObject.Value}");
-
-                GUILayout.Label($"AssetBundleRes Object Pool count: {SafeObjectPool<AssetBundleRes>.Singleton.CurrentCount}" +
-                                $"/{SafeObjectPool<AssetBundleRes>.Singleton.MaxCount}. " +
-                                $"Active object count: {SafeObjectPool<AssetBundleRes>.Singleton.NumActiveObject.Value}");
-
-                GUILayout.Label($"AssetRes Object Pool count: {SafeObjectPool<AssetRes>.Singleton.CurrentCount}" +
-                                $"/{SafeObjectPool<AssetRes>.Singleton.MaxCount}. " +
-                                $"Active object count: {SafeObjectPool<AssetRes>.Singleton.NumActiveObject.Value}");
-
-                GUILayout.EndVertical();
-            }
-
-        }
-#endif
     }
 }
