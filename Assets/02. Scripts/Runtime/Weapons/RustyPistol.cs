@@ -129,7 +129,7 @@ namespace Runtime.Weapons
         {
             // particleSystem.Play();
             BoundEntity.OnRecoil(isScopedIn);
-            hitDetector.CheckHit(hitDetectorInfo);
+            hitDetector.CheckHit(hitDetectorInfo, Damage);
         }
 
         public override void OnStartHold(GameObject ownerGameObject) {

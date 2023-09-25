@@ -8,7 +8,7 @@ using Runtime.Utilities.Collision;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class Roll : EnemyAction
+    public class Roll : EnemyAction<Boss1Entity>
     {
         public SharedTransform playerTrans;
         Rigidbody rb;
@@ -72,7 +72,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
 
             HitBox.GetComponentInParent<Boss1>().ClearHitObjects();
-            HitBox.StartCheckingHits();
+            HitBox.StartCheckingHits(enemyEntity.GetCustomDataValue<int>("damages", "rollDamage"));
             collisionFlag = false;
             rb.isKinematic = false;
             chargeUp = true;

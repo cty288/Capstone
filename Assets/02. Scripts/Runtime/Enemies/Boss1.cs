@@ -49,7 +49,15 @@ namespace Runtime.Enemies
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
-            return new[] {new AutoConfigCustomProperty("shellHealthInfo")};
+            return new[] {
+                new AutoConfigCustomProperty("shellHealthInfo"),
+                new AutoConfigCustomProperty("damages")
+            };
+        }
+        
+        public void ChangeShellStatus(bool newStatus) {
+            
+            ShellClosed.Value = newStatus;
         }
 
         

@@ -82,7 +82,7 @@ namespace Runtime.RunTimeTests.TestCollision
                 case "PunchStart":
                     hitObjects.Clear();
                     punching = true;
-                    hitbox_RightHand.StartCheckingHits();
+                    hitbox_RightHand.StartCheckingHits(m_damage);
                     break;
                 case "PunchEnd":
                     punching = false;

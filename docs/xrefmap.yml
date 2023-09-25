@@ -21880,12 +21880,6 @@ references:
   isSpec: "True"
   fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.ChangeShellStatus.OnUpdate
   nameWithType: ChangeShellStatus.OnUpdate
-- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.ChangeShellStatus.bossVC
-  name: bossVC
-  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.ChangeShellStatus.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_ChangeShellStatus_bossVC
-  commentId: F:Runtime.BehaviorDesigner.Tasks.EnemyAction.ChangeShellStatus.bossVC
-  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.ChangeShellStatus.bossVC
-  nameWithType: ChangeShellStatus.bossVC
 - uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.ChangeShellStatus.closed
   name: closed
   href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.ChangeShellStatus.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_ChangeShellStatus_closed
@@ -21923,6 +21917,46 @@ references:
   commentId: F:Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.body
   fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.body
   nameWithType: EnemyAction.body
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.enemyViewController
+  name: enemyViewController
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_enemyViewController
+  commentId: F:Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.enemyViewController
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.enemyViewController
+  nameWithType: EnemyAction.enemyViewController
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1
+  name: EnemyAction<T>
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction-1.html
+  commentId: T:Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1
+  name.vb: EnemyAction(Of T)
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction<T>
+  fullName.vb: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction(Of T)
+  nameWithType: EnemyAction<T>
+  nameWithType.vb: EnemyAction(Of T)
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.OnAwake
+  name: OnAwake()
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction-1.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1_OnAwake
+  commentId: M:Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.OnAwake
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction<T>.OnAwake()
+  fullName.vb: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction(Of T).OnAwake()
+  nameWithType: EnemyAction<T>.OnAwake()
+  nameWithType.vb: EnemyAction(Of T).OnAwake()
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.OnAwake*
+  name: OnAwake
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction-1.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1_OnAwake_
+  commentId: Overload:Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.OnAwake
+  isSpec: "True"
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction<T>.OnAwake
+  fullName.vb: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction(Of T).OnAwake
+  nameWithType: EnemyAction<T>.OnAwake
+  nameWithType.vb: EnemyAction(Of T).OnAwake
+- uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.enemyEntity
+  name: enemyEntity
+  href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction-1.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1_enemyEntity
+  commentId: F:Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.enemyEntity
+  fullName: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction<T>.enemyEntity
+  fullName.vb: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction(Of T).enemyEntity
+  nameWithType: EnemyAction<T>.enemyEntity
+  nameWithType.vb: EnemyAction(Of T).enemyEntity
 - uid: Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyBomb
   name: EnemyBomb
   href: api/Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyBomb.html
@@ -31390,6 +31424,22 @@ references:
   commentId: T:Runtime.Enemies.Boss1Entity
   fullName: Runtime.Enemies.Boss1Entity
   nameWithType: Boss1Entity
+- uid: Runtime.Enemies.Boss1Entity.ChangeShellStatus(System.Boolean)
+  name: ChangeShellStatus(bool)
+  href: api/Runtime.Enemies.Boss1Entity.html#Runtime_Enemies_Boss1Entity_ChangeShellStatus_System_Boolean_
+  commentId: M:Runtime.Enemies.Boss1Entity.ChangeShellStatus(System.Boolean)
+  name.vb: ChangeShellStatus(Boolean)
+  fullName: Runtime.Enemies.Boss1Entity.ChangeShellStatus(bool)
+  fullName.vb: Runtime.Enemies.Boss1Entity.ChangeShellStatus(Boolean)
+  nameWithType: Boss1Entity.ChangeShellStatus(bool)
+  nameWithType.vb: Boss1Entity.ChangeShellStatus(Boolean)
+- uid: Runtime.Enemies.Boss1Entity.ChangeShellStatus*
+  name: ChangeShellStatus
+  href: api/Runtime.Enemies.Boss1Entity.html#Runtime_Enemies_Boss1Entity_ChangeShellStatus_
+  commentId: Overload:Runtime.Enemies.Boss1Entity.ChangeShellStatus
+  isSpec: "True"
+  fullName: Runtime.Enemies.Boss1Entity.ChangeShellStatus
+  nameWithType: Boss1Entity.ChangeShellStatus
 - uid: Runtime.Enemies.Boss1Entity.EntityName
   name: EntityName
   href: api/Runtime.Enemies.Boss1Entity.html#Runtime_Enemies_Boss1Entity_EntityName
@@ -39910,12 +39960,15 @@ references:
   commentId: T:Runtime.Utilities.Collision.HitBox
   fullName: Runtime.Utilities.Collision.HitBox
   nameWithType: HitBox
-- uid: Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  name: CheckHit(HitDetectorInfo)
-  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_
-  commentId: M:Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  fullName: Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  nameWithType: HitBox.CheckHit(HitDetectorInfo)
+- uid: Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo,System.Int32)
+  name: CheckHit(HitDetectorInfo, int)
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_System_Int32_
+  commentId: M:Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo,System.Int32)
+  name.vb: CheckHit(HitDetectorInfo, Integer)
+  fullName: Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo, int)
+  fullName.vb: Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo, Integer)
+  nameWithType: HitBox.CheckHit(HitDetectorInfo, int)
+  nameWithType.vb: HitBox.CheckHit(HitDetectorInfo, Integer)
 - uid: Runtime.Utilities.Collision.HitBox.CheckHit*
   name: CheckHit
   href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_CheckHit_
@@ -39923,6 +39976,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.Collision.HitBox.CheckHit
   nameWithType: HitBox.CheckHit
+- uid: Runtime.Utilities.Collision.HitBox.Damage
+  name: Damage
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_Damage
+  commentId: P:Runtime.Utilities.Collision.HitBox.Damage
+  fullName: Runtime.Utilities.Collision.HitBox.Damage
+  nameWithType: HitBox.Damage
+- uid: Runtime.Utilities.Collision.HitBox.Damage*
+  name: Damage
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_Damage_
+  commentId: Overload:Runtime.Utilities.Collision.HitBox.Damage
+  isSpec: "True"
+  fullName: Runtime.Utilities.Collision.HitBox.Damage
+  nameWithType: HitBox.Damage
 - uid: Runtime.Utilities.Collision.HitBox.HitResponder
   name: HitResponder
   href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_HitResponder
@@ -39936,12 +40002,15 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.Collision.HitBox.HitResponder
   nameWithType: HitBox.HitResponder
-- uid: Runtime.Utilities.Collision.HitBox.StartCheckingHits
-  name: StartCheckingHits()
-  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_StartCheckingHits
-  commentId: M:Runtime.Utilities.Collision.HitBox.StartCheckingHits
-  fullName: Runtime.Utilities.Collision.HitBox.StartCheckingHits()
-  nameWithType: HitBox.StartCheckingHits()
+- uid: Runtime.Utilities.Collision.HitBox.StartCheckingHits(System.Int32)
+  name: StartCheckingHits(int)
+  href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_StartCheckingHits_System_Int32_
+  commentId: M:Runtime.Utilities.Collision.HitBox.StartCheckingHits(System.Int32)
+  name.vb: StartCheckingHits(Integer)
+  fullName: Runtime.Utilities.Collision.HitBox.StartCheckingHits(int)
+  fullName.vb: Runtime.Utilities.Collision.HitBox.StartCheckingHits(Integer)
+  nameWithType: HitBox.StartCheckingHits(int)
+  nameWithType.vb: HitBox.StartCheckingHits(Integer)
 - uid: Runtime.Utilities.Collision.HitBox.StartCheckingHits*
   name: StartCheckingHits
   href: api/Runtime.Utilities.Collision.HitBox.html#Runtime_Utilities_Collision_HitBox_StartCheckingHits_
@@ -40143,12 +40212,15 @@ references:
   fullName.vb: Runtime.Utilities.Collision.HitScan.New
   nameWithType: HitScan.HitScan
   nameWithType.vb: HitScan.New
-- uid: Runtime.Utilities.Collision.HitScan.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  name: CheckHit(HitDetectorInfo)
-  href: api/Runtime.Utilities.Collision.HitScan.html#Runtime_Utilities_Collision_HitScan_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_
-  commentId: M:Runtime.Utilities.Collision.HitScan.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  fullName: Runtime.Utilities.Collision.HitScan.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  nameWithType: HitScan.CheckHit(HitDetectorInfo)
+- uid: Runtime.Utilities.Collision.HitScan.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo,System.Int32)
+  name: CheckHit(HitDetectorInfo, int)
+  href: api/Runtime.Utilities.Collision.HitScan.html#Runtime_Utilities_Collision_HitScan_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_System_Int32_
+  commentId: M:Runtime.Utilities.Collision.HitScan.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo,System.Int32)
+  name.vb: CheckHit(HitDetectorInfo, Integer)
+  fullName: Runtime.Utilities.Collision.HitScan.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo, int)
+  fullName.vb: Runtime.Utilities.Collision.HitScan.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo, Integer)
+  nameWithType: HitScan.CheckHit(HitDetectorInfo, int)
+  nameWithType.vb: HitScan.CheckHit(HitDetectorInfo, Integer)
 - uid: Runtime.Utilities.Collision.HitScan.CheckHit*
   name: CheckHit
   href: api/Runtime.Utilities.Collision.HitScan.html#Runtime_Utilities_Collision_HitScan_CheckHit_
@@ -40169,6 +40241,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.Collision.HitScan.CurrentFaction
   nameWithType: HitScan.CurrentFaction
+- uid: Runtime.Utilities.Collision.HitScan.Damage
+  name: Damage
+  href: api/Runtime.Utilities.Collision.HitScan.html#Runtime_Utilities_Collision_HitScan_Damage
+  commentId: P:Runtime.Utilities.Collision.HitScan.Damage
+  fullName: Runtime.Utilities.Collision.HitScan.Damage
+  nameWithType: HitScan.Damage
+- uid: Runtime.Utilities.Collision.HitScan.Damage*
+  name: Damage
+  href: api/Runtime.Utilities.Collision.HitScan.html#Runtime_Utilities_Collision_HitScan_Damage_
+  commentId: Overload:Runtime.Utilities.Collision.HitScan.Damage
+  isSpec: "True"
+  fullName: Runtime.Utilities.Collision.HitScan.Damage
+  nameWithType: HitScan.Damage
 - uid: Runtime.Utilities.Collision.HitScan.GetArchitecture
   name: GetArchitecture()
   href: api/Runtime.Utilities.Collision.HitScan.html#Runtime_Utilities_Collision_HitScan_GetArchitecture
@@ -40303,12 +40388,15 @@ references:
   commentId: T:Runtime.Utilities.Collision.IHitDetector
   fullName: Runtime.Utilities.Collision.IHitDetector
   nameWithType: IHitDetector
-- uid: Runtime.Utilities.Collision.IHitDetector.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  name: CheckHit(HitDetectorInfo)
-  href: api/Runtime.Utilities.Collision.IHitDetector.html#Runtime_Utilities_Collision_IHitDetector_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_
-  commentId: M:Runtime.Utilities.Collision.IHitDetector.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  fullName: Runtime.Utilities.Collision.IHitDetector.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)
-  nameWithType: IHitDetector.CheckHit(HitDetectorInfo)
+- uid: Runtime.Utilities.Collision.IHitDetector.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo,System.Int32)
+  name: CheckHit(HitDetectorInfo, int)
+  href: api/Runtime.Utilities.Collision.IHitDetector.html#Runtime_Utilities_Collision_IHitDetector_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_System_Int32_
+  commentId: M:Runtime.Utilities.Collision.IHitDetector.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo,System.Int32)
+  name.vb: CheckHit(HitDetectorInfo, Integer)
+  fullName: Runtime.Utilities.Collision.IHitDetector.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo, int)
+  fullName.vb: Runtime.Utilities.Collision.IHitDetector.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo, Integer)
+  nameWithType: IHitDetector.CheckHit(HitDetectorInfo, int)
+  nameWithType.vb: IHitDetector.CheckHit(HitDetectorInfo, Integer)
 - uid: Runtime.Utilities.Collision.IHitDetector.CheckHit*
   name: CheckHit
   href: api/Runtime.Utilities.Collision.IHitDetector.html#Runtime_Utilities_Collision_IHitDetector_CheckHit_
@@ -40316,6 +40404,19 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.Collision.IHitDetector.CheckHit
   nameWithType: IHitDetector.CheckHit
+- uid: Runtime.Utilities.Collision.IHitDetector.Damage
+  name: Damage
+  href: api/Runtime.Utilities.Collision.IHitDetector.html#Runtime_Utilities_Collision_IHitDetector_Damage
+  commentId: P:Runtime.Utilities.Collision.IHitDetector.Damage
+  fullName: Runtime.Utilities.Collision.IHitDetector.Damage
+  nameWithType: IHitDetector.Damage
+- uid: Runtime.Utilities.Collision.IHitDetector.Damage*
+  name: Damage
+  href: api/Runtime.Utilities.Collision.IHitDetector.html#Runtime_Utilities_Collision_IHitDetector_Damage_
+  commentId: Overload:Runtime.Utilities.Collision.IHitDetector.Damage
+  isSpec: "True"
+  fullName: Runtime.Utilities.Collision.IHitDetector.Damage
+  nameWithType: IHitDetector.Damage
 - uid: Runtime.Utilities.Collision.IHitDetector.HitResponder
   name: HitResponder
   href: api/Runtime.Utilities.Collision.IHitDetector.html#Runtime_Utilities_Collision_IHitDetector_HitResponder
@@ -40348,19 +40449,6 @@ references:
   isSpec: "True"
   fullName: Runtime.Utilities.Collision.IHitResponder.CheckHit
   nameWithType: IHitResponder.CheckHit
-- uid: Runtime.Utilities.Collision.IHitResponder.Damage
-  name: Damage
-  href: api/Runtime.Utilities.Collision.IHitResponder.html#Runtime_Utilities_Collision_IHitResponder_Damage
-  commentId: P:Runtime.Utilities.Collision.IHitResponder.Damage
-  fullName: Runtime.Utilities.Collision.IHitResponder.Damage
-  nameWithType: IHitResponder.Damage
-- uid: Runtime.Utilities.Collision.IHitResponder.Damage*
-  name: Damage
-  href: api/Runtime.Utilities.Collision.IHitResponder.html#Runtime_Utilities_Collision_IHitResponder_Damage_
-  commentId: Overload:Runtime.Utilities.Collision.IHitResponder.Damage
-  isSpec: "True"
-  fullName: Runtime.Utilities.Collision.IHitResponder.Damage
-  nameWithType: IHitResponder.Damage
 - uid: Runtime.Utilities.Collision.IHitResponder.HitResponse(Runtime.Utilities.Collision.HitData)
   name: HitResponse(HitData)
   href: api/Runtime.Utilities.Collision.IHitResponder.html#Runtime_Utilities_Collision_IHitResponder_HitResponse_Runtime_Utilities_Collision_HitData_

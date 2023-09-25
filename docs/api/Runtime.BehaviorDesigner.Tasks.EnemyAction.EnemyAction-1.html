@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class Howl
+      <title>Class EnemyAction&lt;T&gt;
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class Howl
+      <meta name="title" content="Class EnemyAction&lt;T&gt;
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl.md&amp;value=---%0Auid%3A%20Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1.md&amp;value=---%0Auid%3A%20Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,13 +77,13 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl">
+        <article data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1">
 
 
 
-  <h1 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl" class="text-break">
-    Class Howl
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Howl.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1" class="text-break">
+    Class EnemyAction&lt;T&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/EnemyAction.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,11 +95,16 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Howl : EnemyAction</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class EnemyAction&lt;T&gt; : EnemyAction where T : class, IEnemyEntity</code></pre>
   </div>
 
 
 
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
 
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
@@ -108,11 +113,20 @@
       <div><span class="xref">Task</span></div>
       <div><span class="xref">Action</span></div>
       <div><a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.html">EnemyAction</a></div>
-      <div><span class="xref">Howl</span></div>
+      <div><span class="xref">EnemyAction&lt;T&gt;</span></div>
     </dd>
   </dl>
 
 
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.ChangeShellStatus.html">ChangeShellStatus</a></div>
+      <div><a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.html">RangedAOE</a></div>
+      <div><a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.RapidFire.html">RapidFire</a></div>
+      <div><a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.html">Roll</a></div>
+    </dd>
+  </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
@@ -134,6 +148,9 @@
     </div>
     <div>
       <span class="xref">Task.OnStart()</span>
+    </div>
+    <div>
+      <span class="xref">Task.OnUpdate()</span>
     </div>
     <div>
       <span class="xref">Task.OnLateUpdate()</span>
@@ -294,16 +311,16 @@
 
 
 
-  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_howlAnimationName" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.howlAnimationName">
-  howlAnimationName
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Howl.cs/#L10"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1_enemyEntity" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.enemyEntity">
+  enemyEntity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/EnemyAction.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string howlAnimationName</code></pre>
+    <pre><code class="lang-csharp hljs">protected T enemyEntity</code></pre>
   </div>
 
 
@@ -311,67 +328,7 @@
 
   <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_howling" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.howling">
-  howling
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Howl.cs/#L11"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SharedBool howling</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">SharedBool</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_tigerAnimator" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.tigerAnimator">
-  tigerAnimator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Howl.cs/#L9"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Animator tigerAnimator</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">Animator</span></dt>
+    <dt><span class="xref">T</span></dt>
     <dd></dd>
   </dl>
 
@@ -387,11 +344,11 @@
 </h2>
 
 
-  <a id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_OnAwake_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnAwake*"></a>
+  <a id="Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1_OnAwake_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.OnAwake*"></a>
 
-  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_OnAwake" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnAwake">
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1_OnAwake" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction`1.OnAwake">
   OnAwake()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Howl.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/EnemyAction.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -413,42 +370,11 @@
 
 
 
-  <a id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_OnUpdate_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnUpdate*"></a>
-
-  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Howl_OnUpdate" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Howl.OnUpdate">
-  OnUpdate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Howl.cs/#L25"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override TaskStatus OnUpdate()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><span class="xref">TaskStatus</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Howl.cs/#L7" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/EnemyAction.cs/#L25" class="edit-link">Edit this page</a>
         </div>
 
         

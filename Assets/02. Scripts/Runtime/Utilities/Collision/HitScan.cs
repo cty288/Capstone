@@ -50,16 +50,19 @@ namespace Runtime.Utilities.Collision
         /// Called every frame to check for Raycast collision.
         /// </summary>
         /// <returns>Returns true if hit detected.</returns>
-        public void CheckHit(HitDetectorInfo hitDetectorInfo)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage)
         {
             // Debug.Log("checkhit");
             _launchPoint = hitDetectorInfo.launchPoint;
             _camera = hitDetectorInfo.camera;
             _layer = hitDetectorInfo.layer;
             _weapon = hitDetectorInfo.weapon;
+            this.Damage = damage;
 
             ShootBullet();
         }
+
+        public int Damage { get; protected set; }
 
         //TODO: faction and IDamagable integration.
         private void ShootBullet()

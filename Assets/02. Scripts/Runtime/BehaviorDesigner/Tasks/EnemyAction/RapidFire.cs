@@ -9,7 +9,7 @@ using Runtime.Temporary.Weapon;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class RapidFire : EnemyAction
+    public class RapidFire : EnemyAction<Boss1Entity>
     {
         public SharedGameObject bulletPrefab;
         public int bulletCount;
@@ -42,10 +42,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             ended = true;
         }
-        void SpawnBullet()
-        {
-            GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), Quaternion.LookRotation(playerTrans.Value.position- new Vector3(transform.position.x, transform.position.y + 2, transform.position.z)));
-            b.GetComponent<Rigidbody>().velocity =  b.transform.forward* bulletSpeed;
+        void SpawnBullet() {
+            GameObject b = Object.Instantiate(bulletPrefab.Value,
+                new Vector3(transform.position.x, transform.position.y + 2, transform.position.z),
+                Quaternion.LookRotation(playerTrans.Value.position -
+                                        new Vector3(transform.position.x, transform.position.y + 2,
+                                            transform.position.z)));
+            
+            b.GetComponent<Rigidbody>().velocity = b.transform.forward * bulletSpeed;
             // HitBox bHitBox = b.GetComponent<HitBox>();
             // bHitBox.HitResponder = boss1vc;
             // bHitBox.StartCheckingHits();

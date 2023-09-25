@@ -8,7 +8,7 @@ using Runtime.Utilities.Collision;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class RangedAOE : EnemyAction
+    public class RangedAOE : EnemyAction<Boss1Entity>
     {
         public Boss1 bossVC;
         public SharedGameObject bulletPrefab;
