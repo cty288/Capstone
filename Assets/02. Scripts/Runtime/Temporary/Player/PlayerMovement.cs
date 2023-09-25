@@ -9,6 +9,7 @@ using Runtime.Controls;
 using Cinemachine;
 using DG.Tweening;
 using MikroFramework.Architecture;
+using MikroFramework.Utilities;
 using Runtime.Player;
 
 namespace Runtime.Temporary.Player
@@ -102,8 +103,12 @@ namespace Runtime.Temporary.Player
         //temporary
         [Header("Ground Check")]
         public float playerHeight;
-        public LayerMask whatIsGround;
-        bool grounded;
+
+        private TriggerCheck groundCheck;
+        //public LayerMask whatIsGround;
+        private bool grounded {
+            get => groundCheck.Triggered;
+        }
 
         public float additionalGravity;
 
@@ -175,6 +180,7 @@ namespace Runtime.Temporary.Player
 
         private void Awake() {
             playerActions = ClientInput.Singleton.GetPlayerActions();
+            groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
         }
 
         // Start is called before the first frame update
@@ -231,19 +237,14 @@ namespace Runtime.Temporary.Player
         {
             SpeedControl();
             // ground check
-            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+            //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
             // handle drag
             if (grounded)
                 rb.drag = groundDrag;
             else
                 rb.drag = 0;
             MovePlayer();
-            if (Input.GetKeyDown(KeyCode.K)) {
-                GameObject obj = ControlInfoFactory.Singleton.GetBindingKeyGameObject(ClientInput.Singleton.FindActionInPlayerActionMap("Sprint"),
-                    out BindingInfo info, out string actionName);
-                //Debug.Log("Action Name: " + actionName);
-            }
-            // Debug.Log(OnSlope());
+            
         }
         
         private void StateHandler()
