@@ -1,5 +1,6 @@
 using Framework;
 using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
@@ -14,6 +15,7 @@ using Runtime.Enemies.ViewControllers.Base;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Enemies;
 using Runtime.UI.NameTags;
+using Runtime.Utilities;
 using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -27,6 +29,8 @@ namespace Runtime.Enemies
     {
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "Boss1";
+
+        [field: ES3Serializable] public BindableProperty<bool> ShellClosed { get; } = new BindableProperty<bool>(true);
         
         public override void OnRecycle()
         {
@@ -56,14 +60,11 @@ namespace Runtime.Enemies
         public int MaxShellHealth { get; }
         
         public int CurrentShellHealth { get; }
-        
-        public bool ShellClosed { get; }
         [Header("HitResponder_Info")]
         [SerializeField] private int m_damage = 10;
         public Animator animator;
         public AnimationSMBManager animationSMBManager;
         public NavMeshAgent agent;
-      
         
         
         protected override int GetCurrentHitDamage() {
@@ -74,34 +75,38 @@ namespace Runtime.Enemies
 
        
         private HitDetectorInfo hitDetectorInfo;
-        
-        
-        protected override MikroAction WaitingForDeathCondition() {
-            return UntilAction.Allocate(() => {
-                if (Input.GetKeyDown(KeyCode.M)) {
-                    Debug.Log("Boss 1 death animation ends.");
-                    return true;
-                }
+        private bool deathAnimationEnd = false;
 
-                return false;
-            });
+        protected override void Awake() {
+            base.Awake();
+            animationSMBManager = GetComponent<AnimationSMBManager>();
+            animationSMBManager.Event.AddListener(OnAnimationEvent);
         }
 
-        protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
-        {
-            throw new System.NotImplementedException();
+        protected override MikroAction WaitingForDeathCondition() {
+            transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
+                deathAnimationEnd = true;
+            });
+            
+            return UntilAction.Allocate(() => deathAnimationEnd);
+        }
+
+        protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
+          
         }
 
         protected override void OnEntityStart()
         {
+            Debug.Log("start");
             //binding
             BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
             BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
-            //BindCustomData<bool>("ShellClosed","shellHealthInfo","shellClosed",OnShellStatusChanged);
+            
+            
+            BoundEntity.ShellClosed.RegisterWithInitValue(OnShellClosedChanged).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             //Animation-related.
-            // animator = GetComponent<Animator>();
-            animationSMBManager = GetComponent<AnimationSMBManager>();
-            animationSMBManager.Event.AddListener(OnAnimationEvent);
+            //animator = GetComponent<Animator>();
+
 
             //Collision-related.
             if (hitbox_roll) {
@@ -109,6 +114,7 @@ namespace Runtime.Enemies
             }
            
             hitDetectorInfo = new HitDetectorInfo();
+            CurrentFaction.Value = Faction.Hostile;
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
@@ -123,16 +129,11 @@ namespace Runtime.Enemies
                 .Build();
         }
         
-        protected void OnShellStatusChanged(bool oldValue,bool newValue)
+        protected void OnShellClosedChanged(bool oldValue,bool newValue)
         {
-            if (newValue)
-            {
-                //TODO: close shell
-            }
-            else
-            {
-                //TODO: open shell
-            }
+            Debug.Log("changed to" + newValue);
+            animator.SetBool("ShellClosed",newValue);
+            BoundEntity.IsInvincible.Value = newValue;
         }
         // private void Update()
         // {
@@ -144,35 +145,44 @@ namespace Runtime.Enemies
             // Debug.Log("Animation Event: " + eventName);
             switch (eventName)
             {
+                case "ShellOpen":
+                    ChangeShellStatus(false);
+                    break;
+                case "ShellClose":
+                    ChangeShellStatus(true);
+                    break;
                 default:
                     break;
             }
         }
+        
+        
+        public void ClearHitObjects() {
+            hitObjects.Clear();
+        }
 
         public override void HurtResponse(HitData data)
         {
-            if (ShellClosed)
+            Debug.Log("hurt response");
+            if (BoundEntity.ShellClosed)
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
                 shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,shellHp.Value.CurrentHealth-data.Damage);
             }
-            BoundEntity.TakeDamage(data.Damage,data.Attacker);
+            BoundEntity.TakeDamage(data.Damage, data.Attacker);
         }
-        
-        
 
-        // public void ChangeShellStatus(bool newStatus)
-        // {
-        //     IBindableProperty shellStatus = BoundEntity.GetCustomDataValue("shellHealthInfo", "shellClosed");
-        //     if (shellStatus.Value != newStatus)
-        //     {
-        //         shellStatus.Value = newStatus;
-        //         if (newStatus)
-        //         {
-        //             BoundEntity.IsInvincible.Value = true;
-        //         }
-        //     }
-        // }
+        public void ChangeShellStatus(bool newStatus) {
+            BindableProperty<bool> shellStatus = BoundEntity.ShellClosed;
+            shellStatus.Value = newStatus;
+        }
+
+
+        public override void OnRecycled() {
+            base.OnRecycled();
+            transform.localScale = Vector3.one;
+            deathAnimationEnd = false;
+        }
     }
 }
 

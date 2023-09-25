@@ -15,38 +15,48 @@ namespace MikroFramework.ResKit {
     /// <summary>
     /// Class that manage Project AB Manifest and saves all AB's load path (from local or hot-update manager)
     /// </summary>
-    [MonoSingletonPath("[FrameworkPersistent]/[ResKit]/ResData")]
-    public class ResData : MonoPersistentMikroSingleton<ResData> {
+    //[MonoSingletonPath("[FrameworkPersistent]/[ResKit]/ResData")]
+    public class ResData : MikroSingleton<ResData> {
         private static AssetBundleManifest manifest;
         private static AssetBundle manifestBundle;
 
         private Action<HotUpdateError> onError;
 
-       
-
+        
+        private ResData(){}
         /// <summary>
         /// Initialize the ResData singleton for hot-update
         /// </summary>
         public void Init(Action onFinished, Action<HotUpdateError> onInitError) {
-            gameObject.transform.SetParent(null);
+            //SgameObject.transform.SetParent(null);
             onError += onInitError;
             Load(onFinished);
+            //DontDestroyOnLoad(gameObject);
         }
+        
+        public static bool Exists
+        {
+            get
+            {
+                return instance != null;
+            }
+        }
+        
 
-        protected override void OnBeforeDestroy() {
+        /*protected override void OnBeforeDestroy() {
             base.OnBeforeDestroy();
             if (manifestBundle != null)
             {
                 manifestBundle.Unload(true);
             }
-        }
+        }*/
 
         /// <summary>
         /// Contains all native AB package datas, including names, MD5...
         /// </summary>
         public List<AssetBundleData> AssetBundleDatas = new List<AssetBundleData>();
 
-        private AssetDataTable assetDataTable = new AssetDataTable();
+        private static AssetDataTable assetDataTable = new AssetDataTable();
 
         /// <summary>
         /// Get an AssetData only by its name and type, does not need ownerBundleName
@@ -162,7 +172,7 @@ namespace MikroFramework.ResKit {
                     HotUpdateState hotUpdateState = HotUpdateManager.Singleton.State;
                     if (hotUpdateState == HotUpdateState.NeverUpdated || hotUpdateState == HotUpdateState.Overridden)
                     {
-                        StartCoroutine(HotUpdateManager.Singleton.Downloader.GetLocalAssetResVersion(resVersion => {
+                        CoroutineRunner.Singleton.StartCoroutine(HotUpdateManager.Singleton.Downloader.GetLocalAssetResVersion(resVersion => {
                             foreach (ABMD5Base abmd5Base in resVersion.ABMD5List)
                             {
                                 AssetBundleData data = new AssetBundleData()
@@ -272,7 +282,7 @@ namespace MikroFramework.ResKit {
 
                         if (manifest != null) {
                             HotUpdateDownloader downloader = new HotUpdateDownloader();
-                            StartCoroutine(downloader.GetLocalAssetResVersion(resVersion => {
+                            CoroutineRunner.Singleton.StartCoroutine(downloader.GetLocalAssetResVersion(resVersion => {
                                 foreach (ABMD5Base abmd5Base in resVersion.ABMD5List)
                                 {
                                     AssetBundleData data = new AssetBundleData()

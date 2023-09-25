@@ -33,6 +33,7 @@ namespace Runtime.DataFramework.Properties
 		bullets_per_shot,
 		spread,
 		recoil,
+		scope_recoil,
 		charge_speed,
 		bullet_speed,
 		test_hashset

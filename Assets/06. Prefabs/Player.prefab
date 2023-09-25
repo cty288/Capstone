@@ -80,6 +80,86 @@ Transform:
   m_Father: {fileID: 1044063752}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1655466175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1655466179}
+  - component: {fileID: 1655466178}
+  - component: {fileID: 1655466177}
+  - component: {fileID: 1655466176}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1655466179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655466175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.998, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9114554746361318855}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1655466178
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655466175}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2796448, y: 0.2796448, z: 0.2796448}
+  m_Center: {x: -0.0072954595, y: 0.012919977, z: 0.02062893}
+--- !u!114 &1655466177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655466175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32dc96957271f284483981eb18b94c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  maxDistance: 100
+  detectTime: 1
+--- !u!54 &1655466176
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655466175}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1724910869
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,11 +457,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bd4e5eefca4818be49c5253956c622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoilX: -5
-  recoilY: 5
-  recoilZ: 0.35
-  snappiness: 6
-  returnSpeed: 2
+  recoilX: -7
+  recoilY: 3
+  recoilZ: 0.25
+  snappiness: 7
+  returnSpeed: 6
 --- !u!1 &6661646818158682616
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,8 +625,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 5ef42e002df77594a806edbabfe205aa, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 1}
-  m_AmplitudeGain: 0.5
-  m_FrequencyGain: 0.3
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 0
   mNoiseOffsets: {x: -451.37964, y: 684.7062, z: 648.0488}
 --- !u!114 &7453984106192166103
 MonoBehaviour:
@@ -643,6 +723,7 @@ Transform:
   - {fileID: 4007921578962478626}
   - {fileID: 5251483978662756406}
   - {fileID: 1044063752}
+  - {fileID: 1655466179}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -674,14 +755,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4be94d0c3514ac44bd4c57b34b8de27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 0.5
+  mouseSensitivity: 0.1
   controllerSensitivity: 10
   cameraTrans: {fileID: 2227095693541951493}
   camHolder: {fileID: 8110311304114022759}
   vcam: {fileID: 7453984105727094038}
   fpsTopClamp: 90
   fpsBotClamp: -90
-  defaultFOV: 100
+  defaultFOV: 90
   idleBob:
     AmplitudeGain: 0.05
     FrequencyGain: 0.5
@@ -692,20 +773,17 @@ MonoBehaviour:
     AmplitudeGain: 0.2
     FrequencyGain: 2
   accelForce: 100
-  walkSpeed: 4
-  sprintSpeed: 8
-  slideSpeed: 15
+  walkSpeed: 3
+  sprintSpeed: 6
+  slideSpeed: 9
   groundDrag: 4
-  jumpForce: 12
+  jumpForce: 15
   jumpCooldown: 0.3
   airMultiplier: 0.3
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
   playerHeight: 2
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 256
-  additionalGravity: 10
+  additionalGravity: 27
   maxSlopeAngle: 60
   orientation: {fileID: 9114554745536944238}
   slopeLayerMask:

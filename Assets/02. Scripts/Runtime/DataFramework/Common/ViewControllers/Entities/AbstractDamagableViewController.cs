@@ -69,10 +69,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public BindableProperty<Faction> CurrentFaction => BoundEntity.CurrentFaction;
 		public bool CheckHurt(HitData data) {
-			return BoundEntity.CheckCanTakeDamage(data.Attacker);
+			// Debug.Log("check hurt: " + BoundEntity.CheckCanTakeDamage(data.Attacker));
+			// return BoundEntity.CheckCanTakeDamage(data.Attacker);
+			return true;
 		}
 
 		public virtual void HurtResponse(HitData data) {
+			// Debug.Log("I AM HURTING");
 			BoundEntity.TakeDamage(data.Damage,data.Attacker);
 		}
 	}

@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll" class="text-break">
     Class Roll
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -139,9 +139,6 @@
       <span class="xref">Task.OnFixedUpdate()</span>
     </div>
     <div>
-      <span class="xref">Task.OnEnd()</span>
-    </div>
-    <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Task.OnPause(bool)</a>
     </div>
     <div>
@@ -185,9 +182,6 @@
     </div>
     <div>
       <span class="xref">Task.StopAllCoroutines()</span>
-    </div>
-    <div>
-      <span class="xref">Task.OnCollisionEnter(Collision)</span>
     </div>
     <div>
       <span class="xref">Task.OnCollisionExit(Collision)</span>
@@ -291,16 +285,16 @@
 
 
 
-  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_dashVelocity" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.dashVelocity">
-  dashVelocity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_HitBox" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.HitBox">
+  HitBox
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L52"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int dashVelocity</code></pre>
+    <pre><code class="lang-csharp hljs">public HitBox HitBox</code></pre>
   </div>
 
 
@@ -308,7 +302,157 @@
 
   <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dt><a class="xref" href="Runtime.Utilities.Collision.HitBox.html">HitBox</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_abortDistance" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.abortDistance">
+  abortDistance
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float abortDistance</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_forceToPlayer" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.forceToPlayer">
+  forceToPlayer
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float forceToPlayer</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_maxRotationSpeed" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.maxRotationSpeed">
+  maxRotationSpeed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float maxRotationSpeed</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_movementSpeed" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.movementSpeed">
+  movementSpeed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float movementSpeed</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_pivot" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.pivot">
+  pivot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject pivot</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">GameObject</span></dt>
     <dd></dd>
   </dl>
 
@@ -323,7 +467,7 @@
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_playerTrans" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.playerTrans">
   playerTrans
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -350,15 +494,132 @@
 
 
 
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_shell" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.shell">
+  shell
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject shell</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">GameObject</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_stun" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.stun">
+  stun
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool stun</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
+
+
+  <a id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_OnCollisionEnter_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.OnCollisionEnter*"></a>
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_OnCollisionEnter_UnityEngine_Collision_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.OnCollisionEnter(UnityEngine.Collision)">
+  OnCollisionEnter(Collision)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnCollisionEnter(Collision collision)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>collision</code> <span class="xref">Collision</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_OnEnd_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.OnEnd*"></a>
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_OnEnd" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.OnEnd">
+  OnEnd()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnEnd()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
   <a id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_OnStart_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.OnStart*"></a>
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_OnStart" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.OnStart">
   OnStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -384,7 +645,7 @@
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_Roll_OnUpdate" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.Roll.OnUpdate">
   OnUpdate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L110"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -415,7 +676,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L8" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/Roll.cs/#L11" class="edit-link">Edit this page</a>
         </div>
 
         
