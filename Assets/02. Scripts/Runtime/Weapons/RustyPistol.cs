@@ -58,7 +58,7 @@ namespace Runtime.Weapons
         private HitDetectorInfo hitDetectorInfo;
         
         [SerializeField] private GameObject hitParticlePrefab;
-        
+        protected bool isScopedIn = false;
         // For IHitResponder.
         
         private DPunkInputs.PlayerActions playerActions;
@@ -80,7 +80,7 @@ namespace Runtime.Weapons
         public float lastShootTime = 0f;
         public float reloadTimer = 0f;
         public bool isReloading = false;
-        public bool isScopedIn = false;
+       
         public GameObject model;
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
@@ -136,39 +136,59 @@ namespace Runtime.Weapons
             base.OnStartHold(ownerGameObject);
         }
 
-        public void Update()
-        {
-            if (isHolding && !playerModel.IsPlayerDead())
-            {
-                //Shoot
-                if (playerActions.Shoot.IsPressed() && !isReloading)
-                {
-                    if (BoundEntity.CurrentAmmo > 0 &&
-                        Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
+        public override void OnItemStartUse() {
+            
+        }
+
+        public override void OnItemStopUse() {
+            
+        }
+
+        public override void OnItemUse() {
+            if (!isReloading) {
+                if (BoundEntity.CurrentAmmo > 0 &&
+                    Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
+                    lastShootTime = Time.time;
+
+                    Shoot();
+
+                    BoundEntity.CurrentAmmo.Value--;
+
+                    if (autoReload)
                     {
-                        lastShootTime = Time.time;
-
-                        Shoot();
-
-                        BoundEntity.CurrentAmmo.Value--;
-
-                        if (autoReload)
+                        if (BoundEntity.CurrentAmmo == 0)
                         {
-                            if (BoundEntity.CurrentAmmo == 0)
+                            if (isScopedIn)
                             {
-                                if (isScopedIn)
-                                {
-                                    StartCoroutine(ScopeOut(true));
-                                }
-                                else
-                                {
-                                    StartCoroutine(ReloadChangeModel());
-                                }
+                                StartCoroutine(ScopeOut(true));
+                            }
+                            else
+                            {
+                                StartCoroutine(ReloadChangeModel());
                             }
                         }
                     }
                 }
+            }
+        }
 
+        public override void OnItemScopePressed() {
+            if (isReloading) {
+                return;
+            }
+            if (isScopedIn) {
+                StartCoroutine(ScopeOut());
+            }
+            else {
+                StartCoroutine(ScopeIn());   
+            }
+        }
+        
+
+        public void Update()
+        {
+            if (isHolding && !playerModel.IsPlayerDead())
+            {
                 //Reload
                 if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
@@ -182,19 +202,7 @@ namespace Runtime.Weapons
                         StartCoroutine(ReloadChangeModel());
                     }
                 }
-
-                // Scope
-                if (playerActions.Scope.WasPerformedThisFrame() && !isReloading)
-                {
-                    if (isScopedIn)
-                    {
-                        StartCoroutine(ScopeOut());
-                    }
-                    else
-                    {
-                        StartCoroutine(ScopeIn());
-                    }
-                }
+                
             }
         }
         
@@ -288,6 +296,15 @@ namespace Runtime.Weapons
             // GameObject bulletHole = bulletHolesPool.Get();
             // bulletHole.transform.position = spawnPosition;
             // bulletHole.transform.rotation = Quaternion.LookRotation(data.HitNormal);
+        }
+
+        public override void OnRecycled() {
+            base.OnRecycled();
+            isScopedIn = false;
+            isReloading = false;
+            
+            defaultGunModel.SetActive(true);
+            reloadGunModel.SetActive(false);
         }
     }
 }
