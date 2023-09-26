@@ -61,12 +61,12 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityStart()
         {
-            
+            Debug.Log("bee created");
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)
         {
-            
+            Debug.Log($"bee 1 Take damage: {damage}. bee 1 current health: {currenthealth}");
         }
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<BeeEntity> builder)
