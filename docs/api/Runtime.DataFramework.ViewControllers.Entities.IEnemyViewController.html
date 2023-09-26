@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IEnemyViewController : IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IBelongToFaction</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IEnemyViewController : IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -136,6 +136,12 @@
     </div>
     <div>
       <a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html#MikroFramework_Architecture_IBelongToArchitecture_GetArchitecture">IBelongToArchitecture.GetArchitecture()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html#Runtime_Utilities_Collision_IHitResponder_CheckHit_Runtime_Utilities_Collision_HitData_">IHitResponder.CheckHit(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html#Runtime_Utilities_Collision_IHitResponder_HitResponse_Runtime_Utilities_Collision_HitData_">IHitResponder.HitResponse(HitData)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html#Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_IBelongToFaction_CurrentFaction">IBelongToFaction.CurrentFaction</a>

@@ -7,7 +7,8 @@ namespace Runtime.Temporary.Weapon
 {
     
     //TODO: add bullet damage to gun config
-    public class Bullet : MonoBehaviour, IHitResponder, IBelongToFaction
+    
+    public class BulletDeprecated : MonoBehaviour, IHitResponder, IBelongToFaction
     {
         //[SerializeField] private int m_damage = 0;
 

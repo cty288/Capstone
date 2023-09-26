@@ -1,11 +1,14 @@
 using System.Collections;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using MikroFramework;
+using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 using Runtime.Temporary.Weapon;
+using Runtime.Weapons.ViewControllers.Base;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -19,6 +22,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public Boss1 boss1vc;
 
         public SharedTransform playerTrans;
+
+        private SafeGameObjectPool pool;
+
+        public override void OnAwake() {
+            base.OnAwake();
+            pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 20, 50);
+        }
 
         public override void OnStart()
         {
@@ -43,22 +53,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             ended = true;
         }
         void SpawnBullet() {
-            GameObject b = Object.Instantiate(bulletPrefab.Value,
-                new Vector3(transform.position.x, transform.position.y + 2, transform.position.z),
-                Quaternion.LookRotation(playerTrans.Value.position -
-                                        new Vector3(transform.position.x, transform.position.y + 2,
-                                            transform.position.z)));
-            
-            b.GetComponent<Rigidbody>().velocity = b.transform.forward * bulletSpeed;
-            // HitBox bHitBox = b.GetComponent<HitBox>();
-            // bHitBox.HitResponder = boss1vc;
-            // bHitBox.StartCheckingHits();
-            // Debug.Log("b hit responder: " + b.GetComponent<Temp_BulletHitResponder>());
-            // Debug.Log("boss1: " + b.GetComponent<Temp_BulletHitResponder>().boss1);
-            // Debug.Log("boss1vc: " + boss1vc);
-            
 
-            b.GetComponent<Temp_BulletHitResponder>().boss1 = boss1vc.gameObject;
+
+            UnityEngine.GameObject b = pool.Allocate();
+            b.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            b.transform.rotation = Quaternion.LookRotation(playerTrans.Value.position -
+                                        new Vector3(transform.position.x, transform.position.y + 2,
+                                            transform.position.z));
+
+            b.GetComponent<Rigidbody>().velocity = b.transform.forward * bulletSpeed;
+            b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
+                enemyEntity.GetCustomDataValue<int>("damages", "rapidFireDamage"), gameObject);
 
         }
     }

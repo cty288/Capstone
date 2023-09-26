@@ -1,6 +1,8 @@
 using System.Collections;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using MikroFramework;
+using MikroFramework.Pool;
 using Runtime.Temporary;
 using UnityEngine;
 using Runtime.Enemies;
@@ -10,7 +12,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class RangedAOE : EnemyAction<Boss1Entity>
     {
-        public Boss1 bossVC;
+        
         public SharedGameObject bulletPrefab;
         public int bulletCount;
         public float spawnInterval;
@@ -28,8 +30,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         // Quaternion rotation;
         // ParticleSystem loopFX, impactFX;
 
-
+        private SafeGameObjectPool pool;
         public SharedTransform playerTrans;
+
+        public override void OnAwake() {
+            base.OnAwake();
+            pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 20, 50);
+        }
 
         public override void OnStart()
         {
@@ -56,17 +63,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         void SpawnBullet()
         {
             Debug.Log("start");
-            GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
-            b.GetComponent<Temporary.EnemyBomb>().Init(playerTrans.Value, bulletTravelTime);
-            //HitBox bHitBox = b.GetComponent<HitBox>();
-            //bHitBox.HitResponder = bossVC;
-            //bHitBox.StartCheckingHits();
-            // Debug.Log("b.GetComponent<HitBox>().HitResponder: " + bossVC);
-            
-            // Debug.Log("b hit responder: " + b.GetComponent<Temp_BulletHitResponder>());
-            // Debug.Log("boss1: " + b.GetComponent<Temp_BulletHitResponder>().boss1);
-            // Debug.Log("bossvc: " + bossVC);
-            b.GetComponent<Temp_BulletHitResponder>().boss1 = bossVC.gameObject;
+            GameObject b = pool.Allocate();
+            b.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            b.transform.rotation = Quaternion.LookRotation(playerTrans.Value.position -
+                new Vector3(transform.position.x, transform.position.y + 2, transform.position.z));
+
+            b.GetComponent<Temporary.EnemyBomb>().Init(playerTrans.Value, bulletTravelTime, enemyEntity.CurrentFaction,
+                enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), gameObject);
 
         }
     }

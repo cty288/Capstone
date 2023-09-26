@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class PoolableGameObject
+      <title>Class Boss1Bullet
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class PoolableGameObject
+      <meta name="title" content="Class Boss1Bullet
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=MikroFramework_Pool_PoolableGameObject.md&amp;value=---%0Auid%3A%20MikroFramework.Pool.PoolableGameObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=a_Boss1Bullet.md&amp;value=---%0Auid%3A%20a.Boss1Bullet%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,25 +77,25 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="MikroFramework.Pool.PoolableGameObject">
+        <article data-uid="a.Boss1Bullet">
 
 
 
-  <h1 id="MikroFramework_Pool_PoolableGameObject" data-uid="MikroFramework.Pool.PoolableGameObject" class="text-break">
-    Class PoolableGameObject
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  <h1 id="a_Boss1Bullet" data-uid="a.Boss1Bullet" class="text-break">
+    Class Boss1Bullet
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Instances/Boss1Bullet.cs/#L5"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="MikroFramework.html">MikroFramework</a>.<a class="xref" href="MikroFramework.Pool.html">Pool</a></dd></dl>
-  <dl><dt>Assembly</dt><dd>MikroFramework.dll</dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="a.html">a</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
   <div class="markdown summary"></div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class PoolableGameObject : MonoBehaviour</code></pre>
+    <pre><code class="lang-csharp hljs">public class Boss1Bullet : AbstractBulletViewController, IBulletViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -109,24 +109,78 @@
       <div><span class="xref">Component</span></div>
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
-      <div><span class="xref">PoolableGameObject</span></div>
-    </dd>
-  </dl>
-
-
-  <dl class="typelist derived">
-    <dt>Derived</dt>
-    <dd>
-      <div><a class="xref" href="Global.SlotResourceDescriptionPanel.html">SlotResourceDescriptionPanel</a></div>
-      <div><a class="xref" href="MikroFramework.Examples.PooledGameObjectExample.html">PooledGameObjectExample</a></div>
-      <div><a class="xref" href="MikroFramework.ResKit.DefaultPoolableGameObject.html">DefaultPoolableGameObject</a></div>
+      <div><a class="xref" href="MikroFramework.Pool.PoolableGameObject.html">PoolableGameObject</a></div>
       <div><a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html">AbstractBulletViewController</a></div>
+      <div><span class="xref">Boss1Bullet</span></div>
     </dd>
   </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.Weapons.ViewControllers.Base.IBulletViewController.html">IBulletViewController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IController.html">IController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendCommand.html">ICanSendCommand</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanRegisterEvent.html">ICanRegisterEvent</a></div>
+      <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
+    </dd>
+  </dl>
+
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_CurrentFaction">AbstractBulletViewController.CurrentFaction</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_Damage">AbstractBulletViewController.Damage</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_hitBox">AbstractBulletViewController.hitBox</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_bulletOwner">AbstractBulletViewController.bulletOwner</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_Init_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_Faction_System_Int32_UnityEngine_GameObject_">AbstractBulletViewController.Init(Faction, int, GameObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_OnStartOrAllocate">AbstractBulletViewController.OnStartOrAllocate()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_CheckHit_Runtime_Utilities_Collision_HitData_">AbstractBulletViewController.CheckHit(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_HitResponse_Runtime_Utilities_Collision_HitData_">AbstractBulletViewController.HitResponse(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_OnRecycled">AbstractBulletViewController.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_GetArchitecture">AbstractBulletViewController.GetArchitecture()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_Pool">PoolableGameObject.Pool</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_IsRecycled">PoolableGameObject.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RecycleToCache">PoolableGameObject.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnRecycledEvent(UnityAction)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnAllocateEvent(UnityAction)</a>
+    </div>
     <div>
       <span class="xref">MonoBehaviour.IsInvoking()</span>
     </div>
@@ -501,120 +555,22 @@
 
 
 
-  <h2 class="section" id="fields">Fields
-</h2>
-
-
-
-  <h3 id="MikroFramework_Pool_PoolableGameObject_Pool" data-uid="MikroFramework.Pool.PoolableGameObject.Pool">
-  Pool
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L19"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The pool that belongs to this object</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[HideInInspector]
-public GameObjectPool Pool</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="MikroFramework.Pool.GameObjectPool.html">GameObjectPool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-  <h2 class="section" id="properties">Properties
-</h2>
-
-
-  <a id="MikroFramework_Pool_PoolableGameObject_IsRecycled_" data-uid="MikroFramework.Pool.PoolableGameObject.IsRecycled*"></a>
-
-  <h3 id="MikroFramework_Pool_PoolableGameObject_IsRecycled" data-uid="MikroFramework.Pool.PoolableGameObject.IsRecycled">
-  IsRecycled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L21"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual bool IsRecycled { get; set; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
   <h2 class="section" id="methods">Methods
 </h2>
 
 
-  <a id="MikroFramework_Pool_PoolableGameObject_OnRecycled_" data-uid="MikroFramework.Pool.PoolableGameObject.OnRecycled*"></a>
+  <a id="a_Boss1Bullet_OnBulletRecycled_" data-uid="a.Boss1Bullet.OnBulletRecycled*"></a>
 
-  <h3 id="MikroFramework_Pool_PoolableGameObject_OnRecycled" data-uid="MikroFramework.Pool.PoolableGameObject.OnRecycled">
-  OnRecycled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L52"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnRecycled()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="MikroFramework_Pool_PoolableGameObject_OnStartOrAllocate_" data-uid="MikroFramework.Pool.PoolableGameObject.OnStartOrAllocate*"></a>
-
-  <h3 id="MikroFramework_Pool_PoolableGameObject_OnStartOrAllocate" data-uid="MikroFramework.Pool.PoolableGameObject.OnStartOrAllocate">
-  OnStartOrAllocate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  <h3 id="a_Boss1Bullet_OnBulletRecycled" data-uid="a.Boss1Bullet.OnBulletRecycled">
+  OnBulletRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Instances/Boss1Bullet.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void OnStartOrAllocate()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnBulletRecycled()</code></pre>
   </div>
 
 
@@ -629,81 +585,23 @@ public GameObjectPool Pool</code></pre>
 
 
 
-  <a id="MikroFramework_Pool_PoolableGameObject_RecycleToCache_" data-uid="MikroFramework.Pool.PoolableGameObject.RecycleToCache*"></a>
+  <a id="a_Boss1Bullet_OnHitResponse_" data-uid="a.Boss1Bullet.OnHitResponse*"></a>
 
-  <h3 id="MikroFramework_Pool_PoolableGameObject_RecycleToCache" data-uid="MikroFramework.Pool.PoolableGameObject.RecycleToCache">
-  RecycleToCache()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L26"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Call this method to recycle this gameobject back to its pool</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void RecycleToCache()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_" data-uid="MikroFramework.Pool.PoolableGameObject.RegisterOnAllocateEvent*"></a>
-
-  <h3 id="MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_" data-uid="MikroFramework.Pool.PoolableGameObject.RegisterOnAllocateEvent(UnityEngine.Events.UnityAction)">
-  RegisterOnAllocateEvent(UnityAction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <h3 id="a_Boss1Bullet_OnHitResponse_Runtime_Utilities_Collision_HitData_" data-uid="a.Boss1Bullet.OnHitResponse(Runtime.Utilities.Collision.HitData)">
+  OnHitResponse(HitData)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Instances/Boss1Bullet.cs/#L6"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void RegisterOnAllocateEvent(UnityAction action)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnHitResponse(HitData data)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>action</code> <span class="xref">UnityAction</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_" data-uid="MikroFramework.Pool.PoolableGameObject.RegisterOnRecycledEvent*"></a>
-
-  <h3 id="MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_" data-uid="MikroFramework.Pool.PoolableGameObject.RegisterOnRecycledEvent(UnityEngine.Events.UnityAction)">
-  RegisterOnRecycledEvent(UnityAction)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L56"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void RegisterOnRecycledEvent(UnityAction action)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>action</code> <span class="xref">UnityAction</span></dt>
+    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
     <dd></dd>
   </dl>
 
@@ -722,7 +620,7 @@ public GameObjectPool Pool</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/MikroFramework/Runtime/Framework/Core/Pool/UnityGameObject/PoolableGameObject.cs/#L11" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Enemies/ViewControllers/Instances/Boss1Bullet.cs/#L5" class="edit-link">Edit this page</a>
         </div>
 
         

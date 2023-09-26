@@ -1,24 +1,22 @@
 using System.Collections;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class EnemyBomb : MonoBehaviour
+    public class EnemyBomb : AbstractBulletViewController
     {
         public AnimationCurve curve;
         private Vector3 targetPos;
         public float travelTime;
         private Vector3 start;
 
-        private HitBox hb;
-        // Start is called before the first frame update
-        void Start()
-        {
+      
+        void Start() {
             start = transform.position;
             StartCoroutine(Curve());
-            hb = GetComponent<HitBox>();
-
         }
 
         // Update is called once per frame
@@ -26,8 +24,8 @@ namespace Runtime.Temporary
         {
 
         }
-        public void Init(Transform target,float tTime)
-        {
+        public void Init(Transform target,float tTime, Faction faction, int damage, GameObject bulletOwner) {
+            Init(faction, damage, bulletOwner);
             targetPos = target.position;
             travelTime = tTime;
         }
@@ -51,7 +49,15 @@ namespace Runtime.Temporary
  
                 yield return null;
             }
+        }
 
+
+        protected override void OnHitResponse(HitData data) {
+           
+        }
+
+        protected override void OnBulletRecycled() {
+            StopAllCoroutines();
         }
     }
 }

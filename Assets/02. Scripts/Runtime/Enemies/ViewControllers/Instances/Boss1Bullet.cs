@@ -6,5 +6,9 @@ namespace a {
 		protected override void OnHitResponse(HitData data) {
 			
 		}
+
+		protected override void OnBulletRecycled() {
+			
+		}
 	}
 }

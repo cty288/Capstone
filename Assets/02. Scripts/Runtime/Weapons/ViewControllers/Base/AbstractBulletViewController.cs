@@ -11,8 +11,15 @@ using UnityEngine;
 
 namespace Runtime.Weapons.ViewControllers.Base {
 	
+	public interface IBulletViewController : IController, IHitResponder {
+		int Damage { get; }
+
+		public void Init(Faction faction, int damage, GameObject bulletOwner);
+	}
+	
+	
 	[RequireComponent(typeof(HitBox))]
-	public abstract class AbstractBulletViewController : PoolableGameObject, IHitResponder, IController {
+	public abstract class AbstractBulletViewController : PoolableGameObject, IHitResponder, IController, IBulletViewController {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 		
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
@@ -22,20 +29,24 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		private Coroutine autoRecycleCoroutine = null;
 		
 		protected HitBox hitBox = null;
+		protected GameObject bulletOwner = null;
 
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
 		}
 
-		public void Init(Faction faction, int damage) {
+		public void Init(Faction faction, int damage, GameObject bulletOwner) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
+			hitBox.HitResponder = this;
+			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
+			this.bulletOwner = bulletOwner;
 		}
 
 		public override void OnStartOrAllocate() {
 			base.OnStartOrAllocate();
-			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
+			
 		}
 		
 		private IEnumerator AutoRecycle() {
@@ -47,8 +58,10 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 
 		public bool CheckHit(HitData data) {
-			
-			if (data.Hurtbox.Owner == gameObject) { return false; }
+
+			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner)) {
+				return false;
+			}
 			else { return true; }
 		}
 
@@ -62,12 +75,18 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
+			OnBulletRecycled();
 			hitObjects.Clear();
 			if (autoRecycleCoroutine != null) {
 				StopCoroutine(autoRecycleCoroutine);
 				autoRecycleCoroutine = null;
 			}
+			hitBox.StopCheckingHits();
+			this.bulletOwner = null;
+			
 		}
+
+		protected abstract void OnBulletRecycled();
 
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
