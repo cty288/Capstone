@@ -50,11 +50,6 @@ namespace Runtime.Enemies.SmallEnemies
     public class Bee : AbstractNormalEnemyViewController<BeeEntity> 
     {
         
-        protected override int GetCurrentHitDamage() {
-            return 0;
-        }
-
-      
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
             

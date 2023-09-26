@@ -69,16 +69,12 @@ namespace Runtime.Enemies
         
         public int CurrentShellHealth { get; }
         [Header("HitResponder_Info")]
-        [SerializeField] private int m_damage = 10;
         public Animator animator;
         public AnimationSMBManager animationSMBManager;
         public NavMeshAgent agent;
         
         
-        protected override int GetCurrentHitDamage() {
-            return m_damage; //TODO: this is temporary, the damage should be retrieved from the model according to the current attack.
-        }
-
+        
         [SerializeField] private HitBox hitbox_roll;
 
        

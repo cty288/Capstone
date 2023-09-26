@@ -124,6 +124,10 @@ namespace Runtime.Utilities.Collision
         }
 
         public int Damage { get; protected set; }
+
+        private void OnDestroy() {
+            StopCheckingHits();
+        }
     }
 }
 

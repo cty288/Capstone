@@ -30,12 +30,11 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 		protected HealthBar currentHealthBar = null;
 
-		public int Damage => GetCurrentHitDamage();
+		
 		protected List<GameObject> hitObjects = new List<GameObject>();
 		
 		
-		protected abstract int GetCurrentHitDamage();
-
+		
 		protected override void Awake() {
 			base.Awake();
 			enemyModel = this.GetModel<IEnemyEntityModel>();

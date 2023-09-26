@@ -21,15 +21,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float ogSpeed;
         private int currentCorner = 0;
         
-        // private NavMeshPath path = new NavMeshPath();
+        private NavMeshPath path = new NavMeshPath();
         private Vector3[] corners;
         private float timeStart;
         private Rigidbody playerRb;
 
         //Joon's implementation variables
-        // public GameObject shell;
+        public GameObject shell;
         private bool chargeUp = true;
-        // public float movementSpeed;
+        public float movementSpeed;
         private Vector3 localSavePlayerPosition;
         private bool hasMovedPassPlayer;
         private Vector3 dir;

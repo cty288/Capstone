@@ -103,9 +103,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         }
 
 
-        protected override int GetCurrentHitDamage() {
-            return Attack1Damage;
-        }
+       
 
         protected override HealthBar OnSpawnHealthBar() {
             return null;
