@@ -241,7 +241,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 Vector3 dir = playerTrans.Value.position - transform.position;
                 dir.y = 0;
                 //make it 45 degrees from the ground
-                dir = Quaternion.AngleAxis(20, Vector3.Cross(dir, Vector3.up)) * dir;
+                dir = Quaternion.AngleAxis(45, Vector3.Cross(dir, Vector3.up)) * dir;
                 dir.Normalize();
                 playerRb.AddForce(dir * forceToPlayer, ForceMode.Impulse);
                 flag = true;
