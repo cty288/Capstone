@@ -48,7 +48,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool collisionFlag = false;
 
         private Collider bossCollider;
-        
+        private bool canDealDamage = false;
         public HitBox HitBox;
 
         public override void OnStart()
@@ -72,7 +72,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
 
             HitBox.GetComponentInParent<Boss1>().ClearHitObjects();
-            HitBox.StartCheckingHits(enemyEntity.GetCustomDataValue<int>("damages", "rollDamage"));
+            
             collisionFlag = false;
             rb.isKinematic = false;
             chargeUp = true;
@@ -121,6 +121,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     {
                         navMeshComponent.enabled = true;
                     }
+                   
                 });
                 return TaskStatus.Running;
             }
@@ -141,14 +142,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     localSavePlayerPosition = playerTrans.Value.position;
                     dir = (localSavePlayerPosition - this.transform.position).normalized;
                     chargeUp = false;
+                    canDealDamage = true;
+                    HitBox.StartCheckingHits(enemyEntity.GetCustomDataValue<int>("damages", "rollDamage"));
                 }
 
                 return TaskStatus.Running;
             }
             else
             {
-               
-
                 if(flag)
                 {
                     
@@ -168,6 +169,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     
                     //lerp velocity to 0
                     
+                    if (rb.velocity.magnitude <= 2f && canDealDamage) {
+                        HitBox.StopCheckingHits();
+                        canDealDamage = false;
+                    }
                  
                     if(rb.velocity.magnitude < 0.5f) {
                         rb.velocity = Vector3.zero;
@@ -178,6 +183,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                         Debug.Log("slowing down");
                         return TaskStatus.Running;
                     }
+
                 }
                 else
                 {
@@ -232,12 +238,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             });
             
             bossCollider.enabled = false;
+            canDealDamage = false;
         }
 
         public override void OnCollisionEnter(Collision collision) {
             base.OnCollisionEnter(collision);
             Debug.Log("Collision");
-            if (collision.collider.gameObject.CompareTag("Player") && !collisionFlag) {
+            if (canDealDamage && collision.collider.gameObject.CompareTag("Player") && !collisionFlag) {
                 Vector3 dir = playerTrans.Value.position - transform.position;
                 dir.y = 0;
                 //make it 45 degrees from the ground
