@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using Polyglot;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -30,13 +31,14 @@ namespace Runtime.Weapons
     {
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
+        [field: ES3Serializable] public override int Width { get; } = 2;
+        
         public override void OnRecycle()
         {
         }
         
-        protected override string OnGetDescription(string defaultLocalizationKey)
-        {
-            return null;
+        protected override string OnGetDescription(string defaultLocalizationKey) {
+            return Localization.Get(defaultLocalizationKey);
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
@@ -46,6 +48,7 @@ namespace Runtime.Weapons
 
 
         public override string OnGroundVCPrefabName { get; } = "RustyPistol";
+
     }
 
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>

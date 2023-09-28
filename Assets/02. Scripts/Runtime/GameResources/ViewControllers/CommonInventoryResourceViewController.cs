@@ -25,18 +25,13 @@ namespace Runtime.GameResources.ViewControllers {
         }
 
         protected override void OnEntityStart() {
-            icon.sprite = InventorySpriteFactory.Singleton.GetSprite($"{BoundEntity.EntityName}_Icon");
+            icon.sprite = InventorySpriteFactory.Singleton.GetSprite(BoundEntity.IconSpriteName);
         }
 
         protected override void OnBindEntityProperty() {
         
         }
 
-
-        private void Update() {
-            if (Input.GetKeyDown(KeyCode.L)) {
-                entityModel.RemoveEntity(BoundEntity.UUID);
-            }
-        }
+        
     }
 }

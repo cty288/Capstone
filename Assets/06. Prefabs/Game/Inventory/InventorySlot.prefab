@@ -107,10 +107,10 @@ RectTransform:
   m_Father: {fileID: 8123951636911846960}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0.08324215, y: 0}
+  m_AnchorMax: {x: 0.91675794, y: 0.8704843}
+  m_AnchoredPosition: {x: -0.5625076, y: 0.1875}
+  m_SizeDelta: {x: 2.125, y: -1.875}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5689464081014401140
 GameObject:
@@ -230,7 +230,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 108.2, y: 108.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8123951636911846975
 CanvasRenderer:
@@ -257,6 +257,8 @@ MonoBehaviour:
   hoverBGAlpha: 1
   turnUnSelectedBGOffWhenSelected: 1
   selectedBG: {fileID: 4213096673563006695}
+  expandWithItemWidth: 1
+  expandAdditionWidth: 23
 --- !u!114 &89771404625195517
 MonoBehaviour:
   m_ObjectHideFlags: 0
