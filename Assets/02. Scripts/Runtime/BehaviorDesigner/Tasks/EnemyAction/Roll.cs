@@ -196,7 +196,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     dir = (localSavePlayerPosition - this.transform.position).normalized;
                     Debug.DrawRay(this.transform.position, dir * 100, Color.green);
                     //CheckForCollisions();
-                    rb.AddForce(dir * 0.25f, ForceMode.Impulse);
+                    rb.AddForce(dir * 25f, ForceMode.Impulse);
                     Debug.Log(Vector3.Distance(localSavePlayerPosition, this.transform.position));
                     //this.gameObject.transform.Translate(dir * 20 * Time.deltaTime , Space.World);
                     timer -= Time.deltaTime;
@@ -237,7 +237,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 HitBox.StopCheckingHits();
             });
             
-            bossCollider.enabled = false;
+            //bossCollider.enabled = false;
             canDealDamage = false;
         }
 

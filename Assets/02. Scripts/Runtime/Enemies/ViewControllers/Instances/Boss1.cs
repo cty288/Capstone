@@ -80,11 +80,13 @@ namespace Runtime.Enemies
        
         private HitDetectorInfo hitDetectorInfo;
         private bool deathAnimationEnd = false;
+        private Collider collider;
 
         protected override void Awake() {
             base.Awake();
             animationSMBManager = GetComponent<AnimationSMBManager>();
             animationSMBManager.Event.AddListener(OnAnimationEvent);
+            collider = GetComponent<Collider>();
         }
 
         protected override MikroAction WaitingForDeathCondition() {
@@ -179,6 +181,7 @@ namespace Runtime.Enemies
         public void ChangeShellStatus(bool newStatus) {
             BindableProperty<bool> shellStatus = BoundEntity.ShellClosed;
             shellStatus.Value = newStatus;
+            collider.enabled = newStatus;
         }
 
 
@@ -186,6 +189,7 @@ namespace Runtime.Enemies
             base.OnRecycled();
             transform.localScale = Vector3.one;
             deathAnimationEnd = false;
+            collider.enabled = true;
         }
     }
 }
