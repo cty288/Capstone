@@ -19,24 +19,21 @@ namespace Runtime.Temporary.Player
     {
         [Header("Camera")]
         [SerializeField]
-        float mouseSensitivity = 3.5f;
+        private float mouseSensitivity = 3.5f;
         [SerializeField]
-        float controllerSensitivity = 10f;
+        private float controllerSensitivity = 10f;
         
 
         [SerializeField]
-        Transform cameraTrans;
+        private Transform cameraTrans;
         [SerializeField]
-        Transform camHolder;
-        
+        private Transform camHolder;
         [SerializeField] 
-        CinemachineVirtualCamera vcam;
+        private CinemachineVirtualCamera vcam;
     
-        float cameraPitch = 0;
-        [SerializeField] 
-        float fpsTopClamp=90;
-        [SerializeField] 
-        float fpsBotClamp=-90;
+        private float cameraPitch = 0;
+        private float fpsTopClamp=90;
+        private float fpsBotClamp=-90;
 
         [SerializeField] 
         private float defaultFOV;
@@ -66,43 +63,51 @@ namespace Runtime.Temporary.Player
     
         //temporary data
         [Header("Movement")] 
-        public float accelForce;
-        private float moveSpeed;
         
-        public float walkSpeed;
-        public float sprintSpeed;
-        public float slideSpeed;
+        [SerializeField]
+        private float accelForce;
+        private float moveSpeed;
+        [SerializeField]
+        private float walkSpeed;
+        [SerializeField]
+        private float sprintSpeed;
+        [SerializeField]
+        private float slideSpeed;
     
         //temporary
         private bool sprinting;
 
         //todo: entity data
-        public float groundDrag;
+        [SerializeField]
+        private float groundDrag;
     
         //jump todo: entity data
-        public float jumpForce;
+        [SerializeField]
+        private float jumpForce;
     
         //todo: entity data
-        public float jumpCooldown;
+        private float jumpCooldown = 0.3f;
     
         //todo: entity data
-        public float airMultiplier;
+        private float airMultiplier = 0.3f;
     
         //temporary
-        bool readyToJump;
+        private bool readyToJump;
         
         private bool readyToDoubleJump;
         
         private float desiredMoveSpeed;
         private float lastDesiredMoveSpeed;
 
-        public float speedIncreaseMultiplier;
-        public float slopeIncreaseMultiplier;
+        [SerializeField]
+        private float speedIncreaseMultiplier = 1.5f;
+        [SerializeField]
+        private float slopeIncreaseMultiplier = 2.5f;
         
         
         //temporary
         [Header("Ground Check")]
-        public float playerHeight;
+        private float playerHeight = 2;
 
         private TriggerCheck groundCheck;
         //public LayerMask whatIsGround;
@@ -110,38 +115,49 @@ namespace Runtime.Temporary.Player
             get => groundCheck.Triggered;
         }
 
-        public float additionalGravity;
+        [SerializeField]
+        private  float additionalGravity;
 
         
         [Header("Slope Handling")]
-        public float maxSlopeAngle;
+        [SerializeField]
+        private  float maxSlopeAngle;
         private RaycastHit slopeHit;
         private bool exitingSlope;
         //temporary
-        public Transform orientation;
+        [SerializeField]
+        private Transform orientation;
         [SerializeField] private LayerMask slopeLayerMask;
 
         [Header("Sliding")]
-        public float maxSlideTime;
-        public float slideForce;
+        [SerializeField]
+        private  float maxSlideTime;
+        [SerializeField]
+        private  float slideForce;
         private float slideTimer;
 
-        public float slideYScale;
+        private float slideYScale = 0.25f;
         private float startYScale;
         
-        public bool sliding;
+        private bool sliding;
         
         [Header("Wallrunning")]
-        public LayerMask whatIsWall;
-        public float wallRunForce;
-        public float wallJumpUpForce;
-        public float wallJumpSideForce;
+        [SerializeField]
+        private LayerMask whatIsWall;
+        [SerializeField]
+        private float wallRunForce;
+        [SerializeField]
+        private float wallJumpUpForce;
+        [SerializeField]
+        private float wallJumpSideForce;
         //public float wallClimbSpeed;
-        public float maxWallRunTime;
+        [SerializeField]
+        private float maxWallRunTime;
         private float wallRunTimer;
         
         //wallrun checks
-        public float wallCheckDistance;
+        [SerializeField]
+        private  float wallCheckDistance;
         //public float minJumpHeight;
         private RaycastHit leftWallhit;
         private RaycastHit rightWallhit;
@@ -149,11 +165,12 @@ namespace Runtime.Temporary.Player
         private bool wallRight;
         
         private bool exitingWall;
-        public float exitWallTime;
+        private float exitWallTime = 0.3f;
         private float exitWallTimer;
         
-        public bool useGravity;
-        public float gravityCounterForce;
+        private bool useGravity = true;
+        [SerializeField]
+        private float gravityCounterForce;
 
         private bool wallrunning;
         //temporary
@@ -162,12 +179,14 @@ namespace Runtime.Temporary.Player
 
         private Vector3 moveDirection;
         private Vector3 lastMoveDirection;
-        public Rigidbody rb;
+        private Rigidbody rb;
+        [SerializeField]
+        private Transform model;
 
-        public Transform model;
-
-        public MovementState state;
-        public enum MovementState
+        [SerializeField]
+        private MovementState state;
+        [Serializable]
+        private enum MovementState
         {
             walking,
             sprinting,
