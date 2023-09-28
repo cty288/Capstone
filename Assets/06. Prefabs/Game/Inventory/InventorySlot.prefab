@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.4999847, y: 1.5}
+  m_AnchoredPosition: {x: -1.4999695, y: 1.5}
   m_SizeDelta: {x: 39.625, y: 39.625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &322784388812291366
@@ -67,7 +67,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 5788e48b82e86b849b5757105a174d7f, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 3.24
 --- !u!1 &5400108491633417828
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +256,7 @@ MonoBehaviour:
   unfilledSlotBG: {fileID: 21300000, guid: 42467c1ff52bcfe4b97f9374ea63c778, type: 3}
   hoverBGAlpha: 1
   turnUnSelectedBGOffWhenSelected: 1
+  selectedBG: {fileID: 4213096673563006695}
 --- !u!114 &89771404625195517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,10 +334,10 @@ RectTransform:
   m_Father: {fileID: 8123951637694217084}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.6466667, y: 0.04666667}
-  m_AnchorMax: {x: 0.9466667, y: 0.32000002}
-  m_AnchoredPosition: {x: -1.199997, y: 0.099998474}
-  m_SizeDelta: {x: 3.2075043, y: -0.7532959}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -31.699997, y: 27.599998}
+  m_SizeDelta: {x: 48.207504, y: 40.246704}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8123951637144476317
 CanvasRenderer:
@@ -570,7 +571,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 42467c1ff52bcfe4b97f9374ea63c778, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -578,4 +579,4 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 3.07

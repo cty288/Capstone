@@ -33,7 +33,7 @@ namespace Runtime.Inventory.ViewController {
         private Image slotHoverBG;
         private SlotResourceDescriptionPanel currentDescriptionPanel;
         private Transform descriptionPanelFollowTr;
-        private Image selectedBG;
+        //private Image selectedBG;
         protected bool isSelected = false;
 
         protected Image slotBG;
@@ -43,6 +43,7 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private Sprite unfilledSlotBG;
         [SerializeField] private float hoverBGAlpha = 1f;
         [SerializeField] private bool turnUnSelectedBGOffWhenSelected = true;
+        [SerializeField] private Image selectedBG;
         protected virtual void Awake() {
             numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
             spawnPoint = transform.Find("InventoryItemSpawnPos");
@@ -54,7 +55,7 @@ namespace Runtime.Inventory.ViewController {
             currentDescriptionPanel = HUDManagerUI.Singleton
                 .SpawnHUDElement(descriptionPanelFollowTr, "DescriptionTag", HUDCategory.SlotDescription, false)
                 .GetComponent<SlotResourceDescriptionPanel>();
-            selectedBG = transform.Find("SelectedBG")?.GetComponent<Image>();
+            //selectedBG = transform.Find("SelectedBG")?.GetComponent<Image>();
             if (selectedBG) {
                 selectedBG.gameObject.SetActive(false);
             }
