@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class AbstractWeaponViewController&lt;T&gt;
+      <title>Class AbstractHitScanWeaponViewController&lt;T&gt;
  | Capstone documentation </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class AbstractWeaponViewController&lt;T&gt;
+      <meta name="title" content="Class AbstractHitScanWeaponViewController&lt;T&gt;
  | Capstone documentation ">
       
       <link rel="icon" href="../favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1.md&amp;value=---%0Auid%3A%20Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/cty288/Capstone/new/develop/apiSpec/new?filename=Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1.md&amp;value=---%0Auid%3A%20Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
   </head>
 
   <script type="module">
@@ -77,13 +77,13 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1">
+        <article data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1">
 
 
 
-  <h1 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1" class="text-break">
-    Class AbstractWeaponViewController&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1" class="text-break">
+    Class AbstractHitScanWeaponViewController&lt;T&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -91,12 +91,11 @@
   <dl><dt>Assembly</dt><dd>MainGame.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>For both</p>
-</div>
+  <div class="markdown summary"></div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class AbstractWeaponViewController&lt;T&gt; : AbstractPickableInHandResourceViewController&lt;T&gt;, IPickableResourceViewController, IInHandResourceViewController, IResourceViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHitResponder, IBelongToFaction where T : class, IWeaponEntity, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class AbstractHitScanWeaponViewController&lt;T&gt; : AbstractWeaponViewController&lt;T&gt;, IPickableResourceViewController, IInHandResourceViewController, IResourceViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHitResponder, IBelongToFaction where T : class, IWeaponEntity, new()</code></pre>
   </div>
 
 
@@ -123,7 +122,8 @@
       <div><a class="xref" href="Runtime.GameResources.ViewControllers.AbstractResourceViewController-1.html">AbstractResourceViewController</a>&lt;T&gt;</div>
       <div><a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html">AbstractPickableResourceViewController</a>&lt;T&gt;</div>
       <div><a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html">AbstractPickableInHandResourceViewController</a>&lt;T&gt;</div>
-      <div><span class="xref">AbstractWeaponViewController&lt;T&gt;</span></div>
+      <div><a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html">AbstractWeaponViewController</a>&lt;T&gt;</div>
+      <div><span class="xref">AbstractHitScanWeaponViewController&lt;T&gt;</span></div>
     </dd>
   </dl>
 
@@ -150,13 +150,31 @@
   <dl class="typelist derived">
     <dt>Derived</dt>
     <dd>
-      <div><a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html">AbstractHitScanWeaponViewController&lt;T&gt;</a></div>
+      <div><a class="xref" href="Runtime.Weapons.RustyPistol.html">RustyPistol</a></div>
     </dd>
   </dl>
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_hitDetector">AbstractWeaponViewController&lt;T&gt;.hitDetector</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_Awake">AbstractWeaponViewController&lt;T&gt;.Awake()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnBuildNewEntity">AbstractWeaponViewController&lt;T&gt;.OnBuildNewEntity()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnInitWeaponEntity_Runtime_Weapons_Model_Builders_WeaponBuilder__0__">AbstractWeaponViewController&lt;T&gt;.OnInitWeaponEntity(WeaponBuilder&lt;T&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_CurrentFaction">AbstractWeaponViewController&lt;T&gt;.CurrentFaction</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_Damage">AbstractWeaponViewController&lt;T&gt;.Damage</a>
+    </div>
     <div>
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_isHolding">AbstractPickableInHandResourceViewController&lt;T&gt;.isHolding</a>
     </div>
@@ -170,9 +188,6 @@
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_originalAutoRemovalTimeWhenNoAbsorb">AbstractPickableInHandResourceViewController&lt;T&gt;.originalAutoRemovalTimeWhenNoAbsorb</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartAbsorb">AbstractPickableInHandResourceViewController&lt;T&gt;.OnStartAbsorb()</a>
-    </div>
-    <div>
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnRecycled">AbstractPickableInHandResourceViewController&lt;T&gt;.OnRecycled()</a>
     </div>
     <div>
@@ -183,12 +198,6 @@
     </div>
     <div>
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStopHold">AbstractPickableInHandResourceViewController&lt;T&gt;.OnStopHold()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnItemStartUse">AbstractPickableInHandResourceViewController&lt;T&gt;.OnItemStartUse()</a>
-    </div>
-    <div>
-      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnItemStopUse">AbstractPickableInHandResourceViewController&lt;T&gt;.OnItemStopUse()</a>
     </div>
     <div>
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnItemUse">AbstractPickableInHandResourceViewController&lt;T&gt;.OnItemUse()</a>
@@ -707,16 +716,17 @@
 
 
 
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_hitDetector" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.hitDetector">
-  hitDetector
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_autoReload" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.autoReload">
+  autoReload
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected IHitDetector hitDetector</code></pre>
+    <pre><code class="lang-csharp hljs">[Header(&quot;Auto Reload&quot;)]
+public bool autoReload</code></pre>
   </div>
 
 
@@ -724,7 +734,7 @@
 
   <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Runtime.Utilities.Collision.IHitDetector.html">IHitDetector</a></dt>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
   </dl>
 
@@ -736,65 +746,300 @@
 
 
 
-  <h2 class="section" id="properties">Properties
-</h2>
 
-
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_CurrentFaction_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.CurrentFaction*"></a>
-
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_CurrentFaction" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.CurrentFaction">
-  CurrentFaction
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L49"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Faction can be changed during runtime</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BindableProperty&lt;Faction&gt; CurrentFaction { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="MikroFramework.BindableProperty.BindableProperty-1.html">BindableProperty</a>&lt;<a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a>&gt;</dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_Damage_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.Damage*"></a>
-
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_Damage" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.Damage">
-  Damage
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_cam" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.cam">
+  cam
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Damage { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">protected Camera cam</code></pre>
   </div>
 
 
 
 
-
-  <h4 class="section">Property Value</h4>
+  <h4 class="section">Field Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dt><span class="xref">Camera</span></dt>
     <dd></dd>
   </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_hitParticlePrefab" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.hitParticlePrefab">
+  hitParticlePrefab
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject hitParticlePrefab</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">GameObject</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_isReloading" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.isReloading">
+  isReloading
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool isReloading</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_isScopedIn" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.isScopedIn">
+  isScopedIn
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool isScopedIn</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_lastShootTime" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.lastShootTime">
+  lastShootTime
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected float lastShootTime</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_layer" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.layer">
+  layer
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Header(&quot;Layer Hit Mask&quot;)]
+public LayerMask layer</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">LayerMask</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_playerActions" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.playerActions">
+  playerActions
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected DPunkInputs.PlayerActions playerActions</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="DPunkInputs.html">DPunkInputs</a>.<a class="xref" href="DPunkInputs.PlayerActions.html">PlayerActions</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_playerModel" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.playerModel">
+  playerModel
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected IGamePlayerModel playerModel</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Runtime.Player.IGamePlayerModel.html">IGamePlayerModel</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_reloadTimer" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.reloadTimer">
+  reloadTimer
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected float reloadTimer</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_trailRenderer" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.trailRenderer">
+  trailRenderer
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Header(&quot;Aesthetic&quot;)]
+public TrailRenderer trailRenderer</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">TrailRenderer</span></dt>
+    <dd></dd>
+  </dl>
+
 
 
 
@@ -807,37 +1052,11 @@
 </h2>
 
 
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_Awake_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.Awake*"></a>
+  <a id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_CheckHit_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.CheckHit*"></a>
 
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_Awake" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.Awake">
-  Awake()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L28"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void Awake()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_CheckHit_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.CheckHit*"></a>
-
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.CheckHit(Runtime.Utilities.Collision.HitData)">
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.CheckHit(Runtime.Utilities.Collision.HitData)">
   CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -869,18 +1088,18 @@
 
 
 
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_HitResponse_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.HitResponse*"></a>
+  <a id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_HitResponse_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.HitResponse*"></a>
 
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.HitResponse(Runtime.Utilities.Collision.HitData)">
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.HitResponse(Runtime.Utilities.Collision.HitData)">
   HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L68"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract void HitResponse(HitData data)</code></pre>
+    <pre><code class="lang-csharp hljs">public override void HitResponse(HitData data)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -900,49 +1119,18 @@
 
 
 
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnBuildNewEntity_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnBuildNewEntity*"></a>
+  <a id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnCreateHitDetector_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnCreateHitDetector*"></a>
 
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnBuildNewEntity" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnBuildNewEntity">
-  OnBuildNewEntity()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L41"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override IEntity OnBuildNewEntity()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnCreateHitDetector_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnCreateHitDetector*"></a>
-
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnCreateHitDetector" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnCreateHitDetector">
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnCreateHitDetector" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnCreateHitDetector">
   OnCreateHitDetector()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected abstract IHitDetector OnCreateHitDetector()</code></pre>
+    <pre><code class="lang-csharp hljs">protected override IHitDetector OnCreateHitDetector()</code></pre>
   </div>
 
 
@@ -962,11 +1150,11 @@
 
 
 
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnEntityStart_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnEntityStart*"></a>
+  <a id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnEntityStart_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnEntityStart*"></a>
 
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnEntityStart" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnEntityStart">
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnEntityStart" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnEntityStart">
   OnEntityStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -988,31 +1176,99 @@
 
 
 
-  <a id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnInitWeaponEntity_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnInitWeaponEntity*"></a>
+  <a id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnItemStartUse_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnItemStartUse*"></a>
 
-  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_OnInitWeaponEntity_Runtime_Weapons_Model_Builders_WeaponBuilder__0__" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController`1.OnInitWeaponEntity(Runtime.Weapons.Model.Builders.WeaponBuilder{`0})">
-  OnInitWeaponEntity(WeaponBuilder&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnItemStartUse" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnItemStartUse">
+  OnItemStartUse()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L77"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected abstract IEntity OnInitWeaponEntity(WeaponBuilder&lt;T&gt; builder)</code></pre>
+    <pre><code class="lang-csharp hljs">public override void OnItemStartUse()</code></pre>
   </div>
 
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>builder</code> <a class="xref" href="Runtime.Weapons.Model.Builders.WeaponBuilder-1.html">WeaponBuilder</a>&lt;T&gt;</dt>
-    <dd></dd>
-  </dl>
 
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.DataFramework.Entities.IEntity.html">IEntity</a></dt>
-    <dd></dd>
-  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnItemStopUse_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnItemStopUse*"></a>
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnItemStopUse" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnItemStopUse">
+  OnItemStopUse()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnItemStopUse()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnStartAbsorb_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnStartAbsorb*"></a>
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnStartAbsorb" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.OnStartAbsorb">
+  OnStartAbsorb()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnStartAbsorb()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_Shoot_" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.Shoot*"></a>
+
+  <h3 id="Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_Shoot" data-uid="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController`1.Shoot">
+  Shoot()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void Shoot()</code></pre>
+  </div>
+
+
 
 
 
@@ -1028,7 +1284,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractWeaponViewController.cs/#L21" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/ViewControllers/Base/AbstractHitScanWeaponViewController.cs/#L9" class="edit-link">Edit this page</a>
         </div>
 
         
