@@ -102,9 +102,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			if (currentHealthBar) {
 				currentHealthBar.OnHealthBarDestroyed();
 				OnDestroyHealthBar(currentHealthBar);
-				
 			}
-			
+			currentHealthBar = null;
 		}
 
 		public virtual bool CheckHit(HitData data) {
