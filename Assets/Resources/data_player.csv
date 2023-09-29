@@ -1,12 +1,12 @@
-EntityName / Property Names,health,custom_properties,tags
-Types,HealthInfo,dynamic,"Dictionary<TagName,int>"
+EntityName / Property Names,health,acceleration_force,walk_speed,sprint_speed,slide_speed,ground_drag,jump_force,additional_gravity,max_slide_time,slide_force,wall_run_force,custom_properties,tags
+Types,HealthInfo,float,float,float,float,float,float,float,float,float,float,dynamic,"Dictionary<TagName,int>"
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}","Dict<string, CustomProperty>
+{""maxHealth"": 100, ""currentHealth"": 100}",,,,,,,,,,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent"
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,
-BEGIN,,,
-Player,"{""maxHealth"": 100, ""currentHealth"": 100}",,
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,
+BEGIN,,,,,,,,,,,,,
+Player,"{""maxHealth"": 100, ""currentHealth"": 100}",,,,,,,,,,,,

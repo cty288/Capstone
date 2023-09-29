@@ -44,7 +44,7 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
         slider.DOValue(newHealth.CurrentHealth / (float) newHealth.MaxHealth, 0.3f);
         DOTween.To(() => healthNumberAnim, x => healthNumberAnim = x, newHealth.CurrentHealth, 0.3f)
             .OnUpdate(() => {
-                healthNumberText.text = healthNumberAnim.ToString();
+                healthNumberText.text = healthNumberAnim.ToString() + "%";
             });
         
         //lerp material color (becoming redder and redder)
