@@ -23,7 +23,7 @@ namespace Runtime.BehaviorDesigner.Conditional
         public override TaskStatus OnUpdate() {
 
 
-            if (shellHp.Value.CurrentHealth < shellHp.Value.MaxHealth* healthPercentage.Value && enemyEntity.ShellClosed.Value) {
+            if (shellHp.Value.CurrentHealth <= shellHp.Value.MaxHealth* healthPercentage.Value && enemyEntity.ShellClosed.Value) {
                 return TaskStatus.Success;
             }
 

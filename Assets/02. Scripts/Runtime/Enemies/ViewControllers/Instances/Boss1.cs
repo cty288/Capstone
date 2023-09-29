@@ -140,11 +140,12 @@ namespace Runtime.Enemies
                 .Build();
         }
         
-        protected void OnShellClosedChanged(bool oldValue,bool newValue)
-        {
+        protected void OnShellClosedChanged(bool oldValue,bool newValue) {
             Debug.Log("changed to" + newValue);
+            if (CurrentShellHealth <= 0 && !newValue) {
+                animator.CrossFade("OpenImmediately", 0.1f);
+            }
             animator.SetBool("ShellClosed",newValue);
-            
         }
         // private void Update()
         // {
@@ -178,11 +179,22 @@ namespace Runtime.Enemies
             if (BoundEntity.ShellClosed)
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
-                shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,shellHp.Value.CurrentHealth-data.Damage);
+
+
+                if (shellHp.Value.CurrentHealth > 0) {
+                    if (shellHp.Value.CurrentHealth - data.Damage <= 0) {
+                        shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,0);
+                    }
+                    else {
+                        shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth, shellHp.Value.CurrentHealth - data.Damage);
+                    }
+                }
+               
+                
                 Debug.Log("Shell has taken" + data.Damage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }
-            else
-                BoundEntity.TakeDamage(data.Damage, data.Attacker);
+            
+            BoundEntity.TakeDamage(data.Damage, data.Attacker);
         }
 
         public void ChangeShellStatus(bool newStatus) {
