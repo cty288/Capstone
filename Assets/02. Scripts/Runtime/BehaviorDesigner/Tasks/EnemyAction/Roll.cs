@@ -10,7 +10,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class Roll : EnemyAction<Boss1Entity>
     {
-        public SharedTransform playerTrans;
         Rigidbody rb;
         private Vector3 targetLocation;
         //public int dashVelocity;
@@ -50,9 +49,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Collider bossCollider;
         private bool canDealDamage = false;
         public HitBox HitBox;
+        
+        private Transform playerTrans;
 
         public override void OnStart()
         {
+            base.OnStart();
             //reset
             flag = false;
             maxRotationSpeed = 260;
@@ -60,7 +62,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             initRotation = this.gameObject.transform.eulerAngles;
             currentChargeTime = 0f;
             rb = GetComponent<Rigidbody>();
-            playerRb = playerTrans.Value.GetComponent<Rigidbody>();
+            playerTrans = GetPlayer().transform;
+            playerRb = playerTrans.GetComponent<Rigidbody>();
             bossCollider = GetComponent<Collider>();
             /*
             targetLocation = playerTrans.Value.position + transform.forward * 3;
@@ -139,7 +142,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 }
                 else
                 {
-                    localSavePlayerPosition = playerTrans.Value.position;
+                    localSavePlayerPosition = playerTrans.position;
                     dir = (localSavePlayerPosition - this.transform.position).normalized;
                     chargeUp = false;
                     canDealDamage = true;
@@ -245,7 +248,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             base.OnCollisionEnter(collision);
             Debug.Log("Collision");
             if (canDealDamage && collision.collider.gameObject.CompareTag("Player") && !collisionFlag) {
-                Vector3 dir = playerTrans.Value.position - transform.position;
+                Vector3 dir = playerTrans.position - transform.position;
                 dir.y = 0;
                 //make it 45 degrees from the ground
                 dir = Quaternion.AngleAxis(45, Vector3.Cross(dir, Vector3.up)) * dir;
