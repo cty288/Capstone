@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using Polyglot;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -30,13 +31,14 @@ namespace Runtime.Weapons
     {
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
+        [field: ES3Serializable] public override int Width { get; } = 2;
+        
         public override void OnRecycle()
         {
         }
         
-        protected override string OnGetDescription(string defaultLocalizationKey)
-        {
-            return null;
+        protected override string OnGetDescription(string defaultLocalizationKey) {
+            return Localization.Get(defaultLocalizationKey);
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
@@ -46,28 +48,22 @@ namespace Runtime.Weapons
 
 
         public override string OnGroundVCPrefabName { get; } = "RustyPistol";
+
     }
 
-    public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
+    public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
-        [Header("Auto Reload")]
-        public bool autoReload = false;
-        
-        [Header("HitDetector Settings")] [SerializeField]
-        [ReadOnly] private Camera cam;
-        private HitDetectorInfo hitDetectorInfo;
-        
-        [SerializeField] private GameObject hitParticlePrefab;
-        protected bool isScopedIn = false;
-        // For IHitResponder.
-        
-        private DPunkInputs.PlayerActions playerActions;
+        // For Coroutine Animation [WILL BE REPLACED]
+        public GameObject model;
+        public Transform gunPositionTransform;
+        public Transform scopeInPositionTransform;
+        public GameObject defaultGunModel;
+        public GameObject reloadGunModel;
 
         protected override void Awake() {
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
-            
         }
         
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
@@ -76,74 +72,6 @@ namespace Runtime.Weapons
         
         protected override void OnBindEntityProperty() {}
         
-        //=====
-        public float lastShootTime = 0f;
-        public float reloadTimer = 0f;
-        public bool isReloading = false;
-       
-        public GameObject model;
-        public Transform gunPositionTransform;
-        public Transform scopeInPositionTransform;
-        public GameObject defaultGunModel;
-        public GameObject reloadGunModel;
-        
-        public TrailRenderer trailRenderer;
-        public LayerMask layer;
-        
-        //FOR CHARGE SPEED
-        // private InputAction _holdAction;
-
-        // public GunRecoil recoilScript;
-
-        private IGamePlayerModel playerModel;
-        
-        protected override void OnEntityStart()
-        {
-            //FOR CHARGE SPEED
-            //TODO: Set shoot action hold duration when weapon is equipped.
-            // _holdAction = playerActions.Shoot;
-            // _holdAction.started += OnHoldActionStarted;
-            
-            base.OnEntityStart();
-            
-            playerModel = this.GetModel<IGamePlayerModel>();
-            
-            hitDetectorInfo = new HitDetectorInfo
-            {
-                camera = cam,
-                layer = layer,
-                launchPoint = trailRenderer.transform,
-                weapon = BoundEntity
-            };
-        }
-
-        protected override IHitDetector OnCreateHitDetector() {
-            return new HitScan(this, CurrentFaction.Value, trailRenderer);
-        }
-
-        protected override void OnStartAbsorb() {
-           
-        }
-        
-        public void Shoot()
-        {
-            // particleSystem.Play();
-            BoundEntity.OnRecoil(isScopedIn);
-            hitDetector.CheckHit(hitDetectorInfo, Damage);
-        }
-
-        public override void OnStartHold(GameObject ownerGameObject) {
-            base.OnStartHold(ownerGameObject);
-        }
-
-        public override void OnItemStartUse() {
-            
-        }
-
-        public override void OnItemStopUse() {
-            
-        }
-
         public override void OnItemUse() {
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
@@ -205,17 +133,6 @@ namespace Runtime.Weapons
                 
             }
         }
-        
-        //FOR CHARGE SPEED
-        // void OnDisable() {
-        //     _holdAction.started -= OnHoldActionStarted;
-        // }
-        //
-        // protected void OnHoldActionStarted(InputAction.CallbackContext context) {
-        //     HoldInteraction holdInteraction = context.interaction as HoldInteraction;
-        //     holdInteraction.duration = BoundEntity.GetChargeSpeed().RealValue.Value;
-        //     Debug.Log(holdInteraction.duration);
-        // }
 
         private IEnumerator ReloadChangeModel()
         {
@@ -278,24 +195,6 @@ namespace Runtime.Weapons
                 // isReloading = true;
                 StartCoroutine(ReloadChangeModel());
             }
-        }
-
-        public bool CheckHit(HitData data)
-        {
-            return data.Hurtbox.Owner != gameObject;
-        }
-        
-        public override void HitResponse(HitData data) {
-            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-            // float positionMultiplier = 1f;
-            // float spawnX = data.HitPoint.x - data.HitNormal.x * positionMultiplier;
-            // float spawnY = data.HitPoint.y - data.HitNormal.y * positionMultiplier;
-            // float spawnZ = data.HitPoint.z - data.HitNormal.z * positionMultiplier;
-            // Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
-            //
-            // GameObject bulletHole = bulletHolesPool.Get();
-            // bulletHole.transform.position = spawnPosition;
-            // bulletHole.transform.rotation = Quaternion.LookRotation(data.HitNormal);
         }
 
         public override void OnRecycled() {

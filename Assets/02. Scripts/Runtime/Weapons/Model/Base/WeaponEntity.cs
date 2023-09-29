@@ -55,6 +55,9 @@ namespace Runtime.Weapons.Model.Base
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
 
+        
+        public abstract int Width { get; }
+
         protected override ConfigTable GetConfigTable() {
             
             return ConfigDatas.Singleton.WeaponEntityConfigTable;

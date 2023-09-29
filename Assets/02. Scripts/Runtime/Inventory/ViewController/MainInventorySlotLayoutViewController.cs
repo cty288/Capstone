@@ -16,6 +16,8 @@ namespace Runtime.Inventory.ViewController {
 		private int unlockedSlotCount = 0;
 
 		private bool awaked = false;
+		
+		[SerializeField] private bool isRightSide = false;
 		protected virtual void Awake() {
 			slotLayout = transform.Find("InventoryLayout").GetComponent<RectTransform>();
 			
@@ -70,11 +72,11 @@ namespace Runtime.Inventory.ViewController {
 		
 
 		public override void OnShowSlotItem() {
-			slotViewControllers.ForEach(slot => slot.Activate(true));
+			slotViewControllers.ForEach(slot => slot.Activate(true, isRightSide));
 		}
 
 		public override void OnHideSlotItem() {
-			slotViewControllers.ForEach(slot => slot.Activate(false));
+			slotViewControllers.ForEach(slot => slot.Activate(false, isRightSide));
 		}
 
 		public override void OnSelected(int slotIndex) {

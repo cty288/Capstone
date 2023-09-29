@@ -128,7 +128,7 @@ namespace Runtime.Inventory.ViewController {
                 }
             }
             
-            rubbishSlotViewController.Activate(true);
+            rubbishSlotViewController.Activate(true, true);
         }
         
         
@@ -156,7 +156,7 @@ namespace Runtime.Inventory.ViewController {
                
             }
             
-            rubbishSlotViewController.Activate(false);
+            rubbishSlotViewController.Activate(false, true);
         }
 
         public IArchitecture GetArchitecture() {

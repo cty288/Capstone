@@ -137,7 +137,7 @@ namespace Runtime.Inventory.Model {
 				otherSlot.ItemKey = null;
 			}
 			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
-			otherSlot.OnSlotUpdateCallback?.Invoke(this, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
+			otherSlot.OnSlotUpdateCallback?.Invoke(otherSlot, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
 		}
 		
 		public bool ContainsItem(string uuid) {

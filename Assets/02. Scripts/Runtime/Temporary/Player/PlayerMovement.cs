@@ -160,8 +160,8 @@ namespace Runtime.Temporary.Player
         float horizontalInput;
         float verticalInput;
 
-        Vector3 moveDirection;
-
+        private Vector3 moveDirection;
+        private Vector3 lastMoveDirection;
         public Rigidbody rb;
 
         public Transform model;
@@ -235,7 +235,7 @@ namespace Runtime.Temporary.Player
         
         private void FixedUpdate()
         {
-            SpeedControl();
+            //SpeedControl();
             // ground check
             //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
             // handle drag
@@ -458,57 +458,83 @@ namespace Runtime.Temporary.Player
             moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
             float spd = accelForce;
-            if (SlopeTooBig())
-            {
-                rb.AddForce(slopeHit.normal * 1000, ForceMode.Force);
-            }
-            // on slope
-            else if (OnSlope() && !exitingSlope)
-            {
-                rb.AddForce(GetSlopeMoveDirection(moveDirection) * spd, ForceMode.Force);
-
-                if (rb.velocity.y > 0)
-                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-            }
-            // on ground
-            else if (grounded)
-            {
-                rb.AddForce(moveDirection.normalized * spd, ForceMode.Force);
-                //stop player if no inputs
-                if (moveDirection == Vector3.zero)
+            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            if (flatVel.magnitude < moveSpeed) {
+                if (SlopeTooBig())
                 {
-                    rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                    rb.AddForce(slopeHit.normal * 1000, ForceMode.Force);
                 }
-            }
+                // on slope
+                else if (OnSlope() && !exitingSlope) {
+                    rb.AddForce(GetSlopeMoveDirection(moveDirection) * spd, ForceMode.Force);
+
+                    //if (rb.velocity.y > 0)
+                    //  rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                }
+                // on ground
+                else if (grounded)
+                {
+                    rb.AddForce(moveDirection.normalized * spd, ForceMode.Force);
+                    /*//stop player if no inputs
+                    if (moveDirection == Vector3.zero)
+                    {
+                        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                    }*/
+                }
+                // in air
+                else if (!grounded)
+                {
+                    rb.AddForce(moveDirection.normalized * spd * airMultiplier, ForceMode.Force);
+                }
                 
-            // in air
-            else if (!grounded)
-            {
-                rb.AddForce(moveDirection.normalized * spd * airMultiplier, ForceMode.Force);
+               
+                
+                if (sliding)
+                    SlidingMovement();
+                if (wallrunning)
+                    WallRunningMovement();
+            }
+
+            if (!grounded) {
                 if(!OnSlope()&&!wallrunning)
                     rb.AddForce((-transform.up)*additionalGravity,ForceMode.Force);
             }
             
+
+            
+            
             // turn gravity off while on slope
             if(!wallrunning)rb.useGravity = !OnSlope();
+            if (flatVel.magnitude < moveSpeed) {
+                if (sliding)
+                    SlidingMovement();
+                if (wallrunning)
+                    WallRunningMovement();
+            }
 
-            if (sliding)
-                SlidingMovement();
-            if (wallrunning)
-                WallRunningMovement();
+            
+            if (moveDirection == Vector3.zero && lastMoveDirection != Vector3.zero) {
+                if (grounded || (OnSlope() && !exitingSlope)) {
+                    rb.velocity -= flatVel;
+                }
+            }
+            
+            lastMoveDirection = moveDirection;
+
         }
 
-        private void SpeedControl()
+        /*private void SpeedControl()
         {
             // limiting speed on slope
             if (OnSlope() && !exitingSlope)
             {
-                if (rb.velocity.magnitude > moveSpeed)
-                    rb.velocity = rb.velocity.normalized * moveSpeed;
+                //if (rb.velocity.magnitude > moveSpeed)
+                  //  rb.velocity = rb.velocity.normalized * moveSpeed;
                 //stop player if no inputs
                 if (moveDirection == Vector3.zero)
                 {
-                    rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                    
+                   // rb.velocity = new Vector3(0, rb.velocity.y, 0);
                 }
             }
 
@@ -518,15 +544,16 @@ namespace Runtime.Temporary.Player
                 Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
                 // limit velocity if needed
-                if (flatVel.magnitude > moveSpeed)
-                {
-                    Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                    rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                if (flatVel.magnitude > moveSpeed) {
+                    
+                    //Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                    //rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                    
                 }
             }
             
 
-        }
+        }*/
 
         private void Jump()
         {

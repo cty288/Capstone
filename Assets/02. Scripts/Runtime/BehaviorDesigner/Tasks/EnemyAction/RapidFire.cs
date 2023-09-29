@@ -62,8 +62,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                                             transform.position.z));
 
             b.GetComponent<Rigidbody>().velocity = b.transform.forward * bulletSpeed;
+            
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-                enemyEntity.GetCustomDataValue<int>("damages", "rapidFireDamage"), gameObject);
+                enemyEntity.GetCustomDataValue<int>("damages", "rapidFireDamage"), 
+                gameObject);
 
         }
     }
