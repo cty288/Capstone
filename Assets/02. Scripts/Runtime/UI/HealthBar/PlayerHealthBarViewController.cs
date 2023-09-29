@@ -47,7 +47,7 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
                 healthNumberText.text = healthNumberAnim.ToString() + "%";
             });
         
-        //lerp material color
+        //lerp material color (becoming redder and redder)
         healthBGMaterial.DOColor(
             Color.Lerp(hurtColor, healthyColor, newHealth.CurrentHealth / (float) newHealth.MaxHealth), 0.3f);
     }
