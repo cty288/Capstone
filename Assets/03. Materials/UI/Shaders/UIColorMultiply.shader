@@ -10,7 +10,7 @@ Shader "Custom/UIColorMultiply"
         Tags { "Queue"="Transparent" }
         Pass
         {
-            //Blend SrcAlpha OneMinusSrcAlpha
+            Blend SrcAlpha OneMinusSrcAlpha
             
             Stencil {
                 Ref 1

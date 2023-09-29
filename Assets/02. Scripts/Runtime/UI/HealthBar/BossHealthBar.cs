@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
@@ -20,7 +21,7 @@ public class BossHealthBar : HealthBar {
 	
 	private TMP_Text bossNameText;
 	private IDamageable entity;
-	private IHealthProperty boundHealthProperty;
+	private BindableProperty<HealthInfo> boundHealthProperty;
 
 	private void Awake() {
 		bar = transform.Find("BarParent").GetComponent<Scrollbar>();
@@ -30,10 +31,10 @@ public class BossHealthBar : HealthBar {
 		bossNameText = transform.Find("NameText").GetComponent<TMP_Text>();
 	}
 
-	public override void OnSetEntity(IHealthProperty boundHealthProperty, IDamageable entity) {
+	public override void OnSetEntity(BindableProperty<HealthInfo> boundHealthProperty, IDamageable entity) {
 		this.entity = entity;
 		this.boundHealthProperty = boundHealthProperty;
-		boundHealthProperty.RealValue.RegisterWithInitValue(OnHealthChanged)
+		boundHealthProperty.RegisterWithInitValue(OnHealthChanged)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 
 		bossNameText.text = "";
@@ -43,7 +44,7 @@ public class BossHealthBar : HealthBar {
 	}
 
 	public override void OnHealthBarDestroyed() {
-		boundHealthProperty.RealValue.UnRegisterOnValueChanged(OnHealthChanged);
+		boundHealthProperty.UnRegisterOnValueChanged(OnHealthChanged);
 	}
 
 	private void OnHealthChanged(HealthInfo oldHealth, HealthInfo newHealth) {

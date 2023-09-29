@@ -71,15 +71,17 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			public GameObject spawnedHUD;
 			public HUDCategory hudCategory;
 			public Vector3 targetPos;
+			public bool AutoAdjust;
 			
 			public CrossHairManagedHUDInfo(Transform originalSpawnTransform, KeepGlobalRotation originalSpawnPositionOffset,
-				KeepGlobalRotation realSpawnPositionOffset, GameObject spawnedHUD, HUDCategory hudCategory) {
+				KeepGlobalRotation realSpawnPositionOffset, GameObject spawnedHUD, HUDCategory hudCategory, bool autoAdjust) {
 				this.originalSpawnTransform = originalSpawnTransform;
 				this.originalSpawnPositionOffset = originalSpawnPositionOffset;
 				this.realSpawnPositionOffset = realSpawnPositionOffset;
 				this.spawnedHUD = spawnedHUD;
 				this.hudCategory = hudCategory;
 				this.targetPos = this.originalSpawnPositionOffset.PositionOffset;
+				this.AutoAdjust = autoAdjust;
 			}
 		}
 
@@ -169,7 +171,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		/// <param name="prefabName"></param>
 		/// <param name="category"></param>
 		/// <returns></returns>
-		protected GameObject SpawnCrosshairResponseHUDElement(Transform followTransform, string prefabName, HUDCategory category) {
+		protected GameObject SpawnCrosshairResponseHUDElement(Transform followTransform, string prefabName, HUDCategory category, bool autoAdjust = true) {
 			if(followTransform.TryGetComponent<KeepGlobalRotation>(out var keepGlobalRotation)) {
 				
 				
@@ -185,7 +187,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				
 				crossHairManagedHUDs.Add(id,
 					new CrossHairManagedHUDInfo(followTransform, keepGlobalRotation, realHealthBarPositionOffset,
-						spawnedElement, category));
+						spawnedElement, category, autoAdjust));
 				
 				return spawnedElement;
 			}else {
@@ -212,26 +214,27 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					}
 					RaycastHit hit;
 					bool hitSelf = false;
-					
-					if (Physics.Raycast(camTr.position, hudInfo.originalSpawnTransform.transform.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
-						if (!hit.collider.isTrigger && hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
-							hitSelf = true;
 
-							Transform realHealthBarSpawnPoint = hudInfo.realSpawnPositionOffset.transform;
-							if (Physics.Raycast(camTr.position, realHealthBarSpawnPoint.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
-								if (hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
-									hudInfo.targetPos += Vector3.up * 0.5f;
-									//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
-									if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
-									    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
-										hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
-									}
+					if (hudInfo.AutoAdjust) {
+						if (Physics.Raycast(camTr.position, hudInfo.originalSpawnTransform.transform.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+							if (!hit.collider.isTrigger && hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
+								hitSelf = true;
+
+								Transform realHealthBarSpawnPoint = hudInfo.realSpawnPositionOffset.transform;
+								if (Physics.Raycast(camTr.position, realHealthBarSpawnPoint.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+									if (hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
+										hudInfo.targetPos += Vector3.up * 0.5f;
+										//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
+										if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
+										    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
+											hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
+										}
 									
+									}
 								}
 							}
 						}
 					}
-					
 					
 					
 					if (!hitSelf) {
