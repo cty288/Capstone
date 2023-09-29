@@ -19,7 +19,7 @@ namespace Runtime.Weapons.ViewControllers {
 
         public IEntityViewController CurrentPointedEntity => currentPointedEntity;
     
-        private RaycastHit[] hits = new RaycastHit[5];
+        private RaycastHit[] hits = new RaycastHit[10];
         
         
         [SerializeField]
@@ -49,7 +49,7 @@ namespace Runtime.Weapons.ViewControllers {
             int numHits = Physics.RaycastNonAlloc(ray, hits, 100f, detectLayerMask);
             var sortedHits = hits.OrderBy(hit => hit.distance).ToArray();
 
-            for (int i = 0; i < hits.Length; i++) {
+            for (int i = 0; i < sortedHits.Length; i++) {
                 if (!sortedHits[i].collider) {
                     continue;
                 }
