@@ -18,6 +18,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public float spawnInterval;
         private bool ended;
         public float bulletTravelTime;
+        private Transform playerTrans;
 
         //some add-on variables that we can use to add juice to ranged projectile actions
         //will have to make a new RangedAction class to contain all these later
@@ -31,15 +32,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         // ParticleSystem loopFX, impactFX;
 
         private SafeGameObjectPool pool;
-        public SharedTransform playerTrans;
+        //public SharedTransform playerTrans;
 
         public override void OnAwake() {
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 20, 50);
+            playerTrans = GetPlayer().transform;
         }
 
         public override void OnStart()
         {
+            base.OnStart();
             ended = false;
             StartCoroutine(RF());
         }
@@ -65,10 +68,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Debug.Log("start");
             GameObject b = pool.Allocate();
             b.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
-            b.transform.rotation = Quaternion.LookRotation(playerTrans.Value.position -
+            b.transform.rotation = Quaternion.LookRotation(playerTrans.position -
                 new Vector3(transform.position.x, transform.position.y + 2, transform.position.z));
 
-            b.GetComponent<Temporary.EnemyBomb>().Init(playerTrans.Value, bulletTravelTime, enemyEntity.CurrentFaction,
+            b.GetComponent<Temporary.EnemyBomb>().Init(playerTrans, bulletTravelTime, enemyEntity.CurrentFaction,
                 enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), gameObject);
 
         }

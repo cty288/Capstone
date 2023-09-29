@@ -20,18 +20,21 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool ended;
         public int bulletSpeed;
         public Boss1 boss1vc;
-
-        public SharedTransform playerTrans;
+        
+        private Transform playerTrans;
+        //public SharedTransform playerTrans;
 
         private SafeGameObjectPool pool;
 
         public override void OnAwake() {
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 20, 50);
+            playerTrans = GetPlayer().transform;
         }
 
         public override void OnStart()
         {
+            base.OnStart();
             ended = false;
             StartCoroutine(RF());
         }
@@ -57,9 +60,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             UnityEngine.GameObject b = pool.Allocate();
             b.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
-            b.transform.rotation = Quaternion.LookRotation(playerTrans.Value.position -
-                                        new Vector3(transform.position.x, transform.position.y + 2,
-                                            transform.position.z));
+            b.transform.rotation = Quaternion.LookRotation(playerTrans.position -
+                                                           new Vector3(transform.position.x, transform.position.y + 2,
+                                                               transform.position.z));
 
             b.GetComponent<Rigidbody>().velocity = b.transform.forward * bulletSpeed;
             

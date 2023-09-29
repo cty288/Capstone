@@ -18,6 +18,9 @@ namespace Tests.Tests_Editor {
 		public override void OnRecycle() {
             
 		}
+
+		public override int Width { get; } = 1;
+
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.WeaponEntityConfigTable_Test;
 		}

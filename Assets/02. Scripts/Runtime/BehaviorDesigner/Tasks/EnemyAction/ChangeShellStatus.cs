@@ -11,6 +11,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
        
         public SharedBool closed;
         public override void OnStart() {
+            base.OnStart();
             enemyEntity.ChangeShellStatus(closed.Value);
         }
         public override TaskStatus OnUpdate()
