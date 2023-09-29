@@ -80,13 +80,15 @@ namespace Runtime.Enemies
        
         private HitDetectorInfo hitDetectorInfo;
         private bool deathAnimationEnd = false;
-        private Collider collider;
+        [SerializeField]
+        private Collider shellCollider;
+
+        private Collider hardCollider;
 
         protected override void Awake() {
             base.Awake();
             animationSMBManager = GetComponent<AnimationSMBManager>();
             animationSMBManager.Event.AddListener(OnAnimationEvent);
-            collider = GetComponent<Collider>();
         }
 
         protected override MikroAction WaitingForDeathCondition() {
@@ -118,9 +120,12 @@ namespace Runtime.Enemies
             if (hitbox_roll) {
                 hitbox_roll.HitResponder = this;
             }
-           
+
+            hardCollider = GetComponent<Collider>();
             hitDetectorInfo = new HitDetectorInfo();
             CurrentFaction.Value = Faction.Hostile;
+
+            BoundEntity.IsInvincible.Value = true;
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
@@ -139,7 +144,7 @@ namespace Runtime.Enemies
         {
             Debug.Log("changed to" + newValue);
             animator.SetBool("ShellClosed",newValue);
-            BoundEntity.IsInvincible.Value = newValue;
+            
         }
         // private void Update()
         // {
@@ -152,10 +157,10 @@ namespace Runtime.Enemies
             switch (eventName)
             {
                 case "ShellOpen":
-                    ChangeShellStatus(false);
+                    BoundEntity.IsInvincible.Value = false;
                     break;
                 case "ShellClose":
-                    ChangeShellStatus(true);
+                    BoundEntity.IsInvincible.Value = true;
                     break;
                 default:
                     break;
@@ -174,14 +179,17 @@ namespace Runtime.Enemies
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
                 shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,shellHp.Value.CurrentHealth-data.Damage);
+                Debug.Log("Shell has taken" + data.Damage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }
-            BoundEntity.TakeDamage(data.Damage, data.Attacker);
+            else
+                BoundEntity.TakeDamage(data.Damage, data.Attacker);
         }
 
         public void ChangeShellStatus(bool newStatus) {
             BindableProperty<bool> shellStatus = BoundEntity.ShellClosed;
             shellStatus.Value = newStatus;
-            collider.enabled = newStatus;
+            shellCollider.enabled = !newStatus;
+            hardCollider.enabled = newStatus;
         }
 
 
@@ -189,7 +197,8 @@ namespace Runtime.Enemies
             base.OnRecycled();
             transform.localScale = Vector3.one;
             deathAnimationEnd = false;
-            collider.enabled = true;
+            shellCollider.enabled = true;
+            hardCollider.enabled = true;
         }
     }
 }
