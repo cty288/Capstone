@@ -224,7 +224,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 									//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
 									if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
 									    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
-										hudInfo.targetPos += new Vector3(0.5f, 0, 0.5f);
+										hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
 									}
 									
 								}
