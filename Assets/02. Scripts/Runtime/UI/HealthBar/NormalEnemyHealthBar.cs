@@ -20,6 +20,7 @@ namespace Runtime.UI.HealthBar {
 		private Material healthBGMaterial;
 		
 		private IDamageable entity;
+		private IHealthProperty boundHealthProperty;
 
 		private void Awake() {
 			bar = transform.Find("Mask/Fill Area/Fill").GetComponent<Image>();
@@ -28,19 +29,20 @@ namespace Runtime.UI.HealthBar {
 			nameText = transform.Find("NameText").GetComponent<TMP_Text>();
 		}
 
-		public override void OnSetEntity(IDamageable entity) {
+		public override void OnSetEntity(IHealthProperty boundHealthProperty, IDamageable entity) {
 			this.entity = entity;
-			entity.HealthProperty.RealValue.RegisterWithInitValue(OnHealthChanged)
+			this.boundHealthProperty = boundHealthProperty;
+			boundHealthProperty.RealValue.RegisterWithInitValue(OnHealthChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
 			nameText.text = "";
 			if (!String.IsNullOrEmpty(entity.GetDisplayName())) {
-				nameText.text =entity.GetDisplayName();
+				nameText.text = entity.GetDisplayName();
 			}
 		}
 
 		public override void OnHealthBarDestroyed() {
-			entity.HealthProperty.RealValue.UnRegisterOnValueChanged(OnHealthChanged);
+			boundHealthProperty.RealValue.UnRegisterOnValueChanged(OnHealthChanged);
 		}
 
 		private void OnHealthChanged(HealthInfo oldHealth, HealthInfo newHealth) {
