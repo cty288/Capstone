@@ -121,8 +121,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 				realHealthBarSpawnPoint.PositionOffset = Vector3.Lerp(realHealthBarSpawnPoint.PositionOffset, healthBarTargetPos, 0.1f);
 				
 			}
-			
 		}
+		//TODO: generalize this so that we can spawn any type of HUD element
 
 		protected override void OnDestroyHealthBar(HealthBar healthBar) {
 			HUDManager.Singleton.DespawnHUDElement(healthBarSpawnPoint, HUDCategory.HealthBar);
