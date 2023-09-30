@@ -14,7 +14,6 @@ namespace Runtime.RunTimeTests.TestCollision
         //Enity Stats.
         [Header("Entity Information")]
         public NavMeshAgent agent;
-        public TestEnity entity;
         [SerializeField] private int m_damage = 10;
 
         //Animation-related.
@@ -41,8 +40,6 @@ namespace Runtime.RunTimeTests.TestCollision
 
         public void Start()
         {
-            entity = gameObject.GetComponent<TestEnity>();
-
             //Animation-related.
             // animator = GetComponent<Animator>();
             animationSMBManager = GetComponent<AnimationSMBManager>();
@@ -66,11 +63,8 @@ namespace Runtime.RunTimeTests.TestCollision
             else { return true; }
         }
 
-        public void HitResponse(HitData data)
-        {
-            Debug.Log("hit response, punching: " + punching);
+        public void HitResponse(HitData data) {
             hitObjects.Add(data.Hurtbox.Owner);
-
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
         }
 
@@ -82,7 +76,7 @@ namespace Runtime.RunTimeTests.TestCollision
                 case "PunchStart":
                     hitObjects.Clear();
                     punching = true;
-                    hitbox_RightHand.StartCheckingHits();
+                    hitbox_RightHand.StartCheckingHits(m_damage);
                     break;
                 case "PunchEnd":
                     punching = false;

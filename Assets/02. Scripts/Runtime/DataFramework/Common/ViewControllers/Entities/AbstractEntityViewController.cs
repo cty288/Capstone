@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Framework;
+using Mikrocosmos;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -60,11 +61,43 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private Dictionary<PropertyInfo, Func<dynamic>> propertyBindings = new Dictionary<PropertyInfo, Func<dynamic>>();
 		private Dictionary<PropertyInfo, FieldInfo> propertyFields = new Dictionary<PropertyInfo, FieldInfo>();
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
+		protected bool isPointed = false;
+		protected Camera mainCamera;
 		
+		private class CrossHairManagedHUDInfo {
+			public Transform originalSpawnTransform;
+			public KeepGlobalRotation originalSpawnPositionOffset;
+			public KeepGlobalRotation realSpawnPositionOffset;
+			public GameObject spawnedHUD;
+			public HUDCategory hudCategory;
+			public Vector3 targetPos;
+			public bool AutoAdjust;
+			
+			public CrossHairManagedHUDInfo(Transform originalSpawnTransform, KeepGlobalRotation originalSpawnPositionOffset,
+				KeepGlobalRotation realSpawnPositionOffset, GameObject spawnedHUD, HUDCategory hudCategory, bool autoAdjust) {
+				this.originalSpawnTransform = originalSpawnTransform;
+				this.originalSpawnPositionOffset = originalSpawnPositionOffset;
+				this.realSpawnPositionOffset = realSpawnPositionOffset;
+				this.spawnedHUD = spawnedHUD;
+				this.hudCategory = hudCategory;
+				this.targetPos = this.originalSpawnPositionOffset.PositionOffset;
+				this.AutoAdjust = autoAdjust;
+			}
+		}
+
+
+		private Dictionary<string, CrossHairManagedHUDInfo> crossHairManagedHUDs =
+			new Dictionary<string, CrossHairManagedHUDInfo>();
 		
+		private LayerMask crossHairHUDManagedDetectLayerMask;
+
 		protected override void Awake() {
 			base.Awake();
+			crossHairHUDManagedDetectLayerMask = LayerMask.GetMask("CrossHairDetect");
+			//get all layers except for the crosshair detect layer
+			crossHairHUDManagedDetectLayerMask = ~crossHairHUDManagedDetectLayerMask;
 			CheckProperties();
+			mainCamera = Camera.main;
 		}
 
 		
@@ -96,9 +129,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		public virtual void OnPointByCrosshair() {
+			isPointed = true;
 			if (showNameTagWhenPointed) {
 				if(nameTagFollowTransform) {
-					GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag, true);
+					GameObject
+						nameTag = SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
+					
 					if (nameTag) {
 						INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
 						if (nameTagComponent != null) {
@@ -107,15 +143,109 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					}
 				}
 			}
+
+			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+				hudInfo.spawnedHUD.SetActive(true);
+			}
 		}
 
 		public virtual void OnUnPointByCrosshair() {
+			isPointed = false;
+			
+			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+				hudInfo.spawnedHUD.SetActive(false);
+			}
+			
 			if (showNameTagWhenPointed && nameTagFollowTransform) {
-				HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
+				DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
+			}
+			
+			
+		}
+		
+		/// <summary>
+		/// Spawb a UI HUD element that automatically follows the transform when pointed by crosshair
+		/// It will automatically adjust its position if it blocks the view
+		/// </summary>
+		/// <param name="followTransform"></param>
+		/// <param name="prefabName"></param>
+		/// <param name="category"></param>
+		/// <returns></returns>
+		protected GameObject SpawnCrosshairResponseHUDElement(Transform followTransform, string prefabName, HUDCategory category, bool autoAdjust = true) {
+			if(followTransform.TryGetComponent<KeepGlobalRotation>(out var keepGlobalRotation)) {
+				
+				
+				KeepGlobalRotation realHealthBarPositionOffset = Instantiate(followTransform, followTransform.parent)
+					.GetComponent<KeepGlobalRotation>();
+				
+				GameObject spawnedElement = HUDManager.Singleton.SpawnHUDElement(realHealthBarPositionOffset.transform, prefabName, category, true);
+				spawnedElement.transform.localScale = followTransform.localScale;
+				spawnedElement.SetActive(isPointed);
+
+
+				string id = followTransform.GetHashCode().ToString() + category.ToString();
+				
+				crossHairManagedHUDs.Add(id,
+					new CrossHairManagedHUDInfo(followTransform, keepGlobalRotation, realHealthBarPositionOffset,
+						spawnedElement, category, autoAdjust));
+				
+				return spawnedElement;
+			}else {
+				throw new Exception("The transform must have a KeepGlobalRotation component");
+			}
+		}
+		
+		protected void DespawnHUDElement(Transform followTransform, HUDCategory category) {
+			string id = followTransform.GetHashCode().ToString() + category.ToString();
+			if (crossHairManagedHUDs.TryGetValue(id, out var info)) {
+				HUDManager.Singleton.DespawnHUDElement(info.realSpawnPositionOffset.transform, category);
+				Destroy(info.realSpawnPositionOffset);
+				crossHairManagedHUDs.Remove(id);
 			}
 			
 		}
 
+		protected virtual void FixedUpdate() {
+			if (isPointed) {
+				var camTr = mainCamera.transform;
+				foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+					if (!hudInfo.spawnedHUD) {
+						continue;
+					}
+					RaycastHit hit;
+					bool hitSelf = false;
+
+					if (hudInfo.AutoAdjust) {
+						if (Physics.Raycast(camTr.position, hudInfo.originalSpawnTransform.transform.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+							if (!hit.collider.isTrigger && hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
+								hitSelf = true;
+
+								Transform realHealthBarSpawnPoint = hudInfo.realSpawnPositionOffset.transform;
+								if (Physics.Raycast(camTr.position, realHealthBarSpawnPoint.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+									if (hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
+										hudInfo.targetPos += Vector3.up * 0.5f;
+										//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
+										if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
+										    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
+											hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
+										}
+									
+									}
+								}
+							}
+						}
+					}
+					
+					
+					if (!hitSelf) {
+						hudInfo.targetPos = hudInfo.originalSpawnPositionOffset.PositionOffset;
+					}
+
+					hudInfo.realSpawnPositionOffset.PositionOffset =
+						Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 0.1f);
+				}
+			}
+		}
 
 
 		protected virtual void OnEntityRecycled(IEntity ent) {
@@ -153,7 +283,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			ID = null;
 			BoundEntity = null;
 			propertyBindings.Clear();
-			
+
+			string[] keys = crossHairManagedHUDs.Keys.ToArray();
+			foreach (string key in keys) {
+				DespawnHUDElement(crossHairManagedHUDs[key].originalSpawnTransform,
+					crossHairManagedHUDs[key].hudCategory);
+			}
+			crossHairManagedHUDs.Clear();
+			isPointed = false;
+
 		}
 
 		protected abstract IEntity OnBuildNewEntity();

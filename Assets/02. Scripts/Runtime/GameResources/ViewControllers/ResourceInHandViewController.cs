@@ -9,6 +9,14 @@ namespace Runtime.GameResources.ViewControllers {
 		void OnStartHold(GameObject ownerGameObject);
 		
 		void OnStopHold();
+
+		void OnItemStartUse();
+
+		void OnItemStopUse();
+
+		void OnItemUse();
+
+		void OnItemScopePressed();
 	}
 	
 	
@@ -27,6 +35,7 @@ namespace Runtime.GameResources.ViewControllers {
 		protected GameObject ownerGameObject = null;
 		protected float originalAutoRemovalTimeWhenNoAbsorb;
 
+		
 		protected override void Awake() {
 			base.Awake();
 			originalLayer = gameObject.layer;
@@ -79,6 +88,15 @@ namespace Runtime.GameResources.ViewControllers {
 			RecycleToCache();
 		}
 
+		public abstract void OnItemStartUse();
+
+		public abstract void OnItemStopUse();
+
+		public abstract void OnItemUse();
+		public abstract void OnItemScopePressed();
+
+		
+
 		public override void OnPointByCrosshair() {
 			if (isHolding) {
 				return;
@@ -86,6 +104,9 @@ namespace Runtime.GameResources.ViewControllers {
 			base.OnPointByCrosshair();
 		}
 
-
+		protected override void OnEntityRecycled(IEntity ent) {
+			base.OnEntityRecycled(ent);
+			
+		}
 	}
 }

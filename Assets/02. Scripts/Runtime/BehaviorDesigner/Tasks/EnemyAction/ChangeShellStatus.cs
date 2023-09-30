@@ -6,13 +6,13 @@ using UnityEngine.AI;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class ChangeShellStatus : EnemyAction
+    public class ChangeShellStatus : EnemyAction<Boss1Entity>
     {
-        public Boss1 bossVC;
+       
         public SharedBool closed;
-        public override void OnStart()
-        {
-            bossVC.ChangeShellStatus(closed.Value);
+        public override void OnStart() {
+            base.OnStart();
+            enemyEntity.ChangeShellStatus(closed.Value);
         }
         public override TaskStatus OnUpdate()
         {

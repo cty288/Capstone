@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using Runtime.Controls;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
+using Runtime.Player;
 using Runtime.Utilities;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers.Base;
@@ -21,8 +23,17 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 
 	private Dictionary<HotBarCategory, IInHandResourceViewController> inHandResourceViewControllers =
 		new Dictionary<HotBarCategory, IInHandResourceViewController>();
+
+	private IGamePlayerModel playerModel;
+	private DPunkInputs.PlayerActions playerActions;
+	private IInHandResourceViewController rightHandItemViewController = null;
+	
 	private void Awake() {
 		inventoryModel = this.GetModel<IInventoryModel>();
+		playerModel = this.GetModel<IGamePlayerModel>();
+		
+		playerActions = ClientInput.Singleton.GetPlayerActions();
+		
 		//leftHandTr = transform.Find("Camera/CameraFollower/LeftHandSpawnPos");
 		//rightHandTr = transform.Find("Camera/CameraFollower/RightHandSpawnPos");
 
@@ -42,6 +53,30 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 		SwitchHandItem(e.Category, e.TopItem);
 	}
 
+	private void Update() {
+		if (playerModel.IsPlayerDead()) {
+			return;
+		}
+
+		if (rightHandItemViewController != null) {
+			if (playerActions.Shoot.WasPressedThisFrame()) {
+				rightHandItemViewController.OnItemStartUse();
+			}
+			
+			if (playerActions.Shoot.IsPressed()) {
+				rightHandItemViewController.OnItemUse();
+			}
+			
+			if (playerActions.Shoot.WasReleasedThisFrame()) {
+				rightHandItemViewController.OnItemStopUse();
+			}
+			
+			if (playerActions.Scope.WasPerformedThisFrame()) {
+				rightHandItemViewController.OnItemScopePressed();
+			}
+		}
+	}
+
 	private void SwitchHandItem(HotBarCategory category, IResourceEntity resourceEntity) {
 		inHandResourceViewControllers.TryAdd(category, null);
 
@@ -51,6 +86,7 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 		}
 		
 		inHandResourceViewControllers[category] = null;
+		rightHandItemViewController = null;
 		
 		if (resourceEntity != null) {
 			GameObject spawnedItem = ResourceVCFactory.Singleton.SpawnInHandResourceVC(resourceEntity, true);
@@ -63,6 +99,7 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 			
 			inHandResourceViewControllers[category] = spawnedItem.GetComponent<IInHandResourceViewController>();
 			inHandResourceViewControllers[category].OnStartHold(gameObject);
+			rightHandItemViewController = inHandResourceViewControllers[category];
 		}
 		
 	}

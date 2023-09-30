@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using Polyglot;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -30,13 +31,14 @@ namespace Runtime.Weapons
     {
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
+        [field: ES3Serializable] public override int Width { get; } = 2;
+        
         public override void OnRecycle()
         {
         }
         
-        protected override string OnGetDescription(string defaultLocalizationKey)
-        {
-            return null;
+        protected override string OnGetDescription(string defaultLocalizationKey) {
+            return Localization.Get(defaultLocalizationKey);
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
@@ -46,28 +48,22 @@ namespace Runtime.Weapons
 
 
         public override string OnGroundVCPrefabName { get; } = "RustyPistol";
+
     }
 
-    public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
+    public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
-        [Header("Auto Reload")]
-        public bool autoReload = false;
-        
-        [Header("HitDetector Settings")] [SerializeField]
-        [ReadOnly] private Camera cam;
-        private HitDetectorInfo hitDetectorInfo;
-        
-        [SerializeField] private GameObject hitParticlePrefab;
-        
-        // For IHitResponder.
-        
-        private DPunkInputs.PlayerActions playerActions;
+        // For Coroutine Animation [WILL BE REPLACED]
+        public GameObject model;
+        public Transform gunPositionTransform;
+        public Transform scopeInPositionTransform;
+        public GameObject defaultGunModel;
+        public GameObject reloadGunModel;
 
         protected override void Awake() {
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
-            
         }
         
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
@@ -76,99 +72,51 @@ namespace Runtime.Weapons
         
         protected override void OnBindEntityProperty() {}
         
-        //=====
-        public float lastShootTime = 0f;
-        public float reloadTimer = 0f;
-        public bool isReloading = false;
-        public bool isScopedIn = false;
-        public GameObject model;
-        public Transform gunPositionTransform;
-        public Transform scopeInPositionTransform;
-        public GameObject defaultGunModel;
-        public GameObject reloadGunModel;
-        
-        public TrailRenderer trailRenderer;
-        public LayerMask layer;
-        
-        //FOR CHARGE SPEED
-        // private InputAction _holdAction;
+        public override void OnItemUse() {
+            if (!isReloading) {
+                if (BoundEntity.CurrentAmmo > 0 &&
+                    Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
+                    lastShootTime = Time.time;
 
-        // public GunRecoil recoilScript;
+                    Shoot();
 
-        private IGamePlayerModel playerModel;
-        
-        protected override void OnEntityStart()
-        {
-            //FOR CHARGE SPEED
-            //TODO: Set shoot action hold duration when weapon is equipped.
-            // _holdAction = playerActions.Shoot;
-            // _holdAction.started += OnHoldActionStarted;
-            
-            base.OnEntityStart();
-            
-            playerModel = this.GetModel<IGamePlayerModel>();
-            
-            hitDetectorInfo = new HitDetectorInfo
-            {
-                camera = cam,
-                layer = layer,
-                launchPoint = trailRenderer.transform,
-                weapon = BoundEntity
-            };
+                    BoundEntity.CurrentAmmo.Value--;
+
+                    if (autoReload)
+                    {
+                        if (BoundEntity.CurrentAmmo == 0)
+                        {
+                            if (isScopedIn)
+                            {
+                                StartCoroutine(ScopeOut(true));
+                            }
+                            else
+                            {
+                                StartCoroutine(ReloadChangeModel());
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        protected override IHitDetector OnCreateHitDetector() {
-            return new HitScan(this, CurrentFaction.Value, trailRenderer);
-        }
-
-        protected override void OnStartAbsorb() {
-           
+        public override void OnItemScopePressed() {
+            if (isReloading) {
+                return;
+            }
+            if (isScopedIn) {
+                StartCoroutine(ScopeOut());
+            }
+            else {
+                StartCoroutine(ScopeIn());   
+            }
         }
         
-        public void Shoot()
-        {
-            // particleSystem.Play();
-            BoundEntity.OnRecoil(isScopedIn);
-            hitDetector.CheckHit(hitDetectorInfo);
-        }
-
-        public override void OnStartHold(GameObject ownerGameObject) {
-            base.OnStartHold(ownerGameObject);
-        }
 
         public void Update()
         {
             if (isHolding && !playerModel.IsPlayerDead())
             {
-                //Shoot
-                if (playerActions.Shoot.IsPressed() && !isReloading)
-                {
-                    if (BoundEntity.CurrentAmmo > 0 &&
-                        Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
-                    {
-                        lastShootTime = Time.time;
-
-                        Shoot();
-
-                        BoundEntity.CurrentAmmo.Value--;
-
-                        if (autoReload)
-                        {
-                            if (BoundEntity.CurrentAmmo == 0)
-                            {
-                                if (isScopedIn)
-                                {
-                                    StartCoroutine(ScopeOut(true));
-                                }
-                                else
-                                {
-                                    StartCoroutine(ReloadChangeModel());
-                                }
-                            }
-                        }
-                    }
-                }
-
                 //Reload
                 if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
@@ -182,32 +130,9 @@ namespace Runtime.Weapons
                         StartCoroutine(ReloadChangeModel());
                     }
                 }
-
-                // Scope
-                if (playerActions.Scope.WasPerformedThisFrame() && !isReloading)
-                {
-                    if (isScopedIn)
-                    {
-                        StartCoroutine(ScopeOut());
-                    }
-                    else
-                    {
-                        StartCoroutine(ScopeIn());
-                    }
-                }
+                
             }
         }
-        
-        //FOR CHARGE SPEED
-        // void OnDisable() {
-        //     _holdAction.started -= OnHoldActionStarted;
-        // }
-        //
-        // protected void OnHoldActionStarted(InputAction.CallbackContext context) {
-        //     HoldInteraction holdInteraction = context.interaction as HoldInteraction;
-        //     holdInteraction.duration = BoundEntity.GetChargeSpeed().RealValue.Value;
-        //     Debug.Log(holdInteraction.duration);
-        // }
 
         private IEnumerator ReloadChangeModel()
         {
@@ -272,22 +197,13 @@ namespace Runtime.Weapons
             }
         }
 
-        public bool CheckHit(HitData data)
-        {
-            return data.Hurtbox.Owner != gameObject;
-        }
-        
-        public override void HitResponse(HitData data) {
-            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-            // float positionMultiplier = 1f;
-            // float spawnX = data.HitPoint.x - data.HitNormal.x * positionMultiplier;
-            // float spawnY = data.HitPoint.y - data.HitNormal.y * positionMultiplier;
-            // float spawnZ = data.HitPoint.z - data.HitNormal.z * positionMultiplier;
-            // Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
-            //
-            // GameObject bulletHole = bulletHolesPool.Get();
-            // bulletHole.transform.position = spawnPosition;
-            // bulletHole.transform.rotation = Quaternion.LookRotation(data.HitNormal);
+        public override void OnRecycled() {
+            base.OnRecycled();
+            isScopedIn = false;
+            isReloading = false;
+            
+            defaultGunModel.SetActive(true);
+            reloadGunModel.SetActive(false);
         }
     }
 }

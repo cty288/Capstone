@@ -505,6 +505,37 @@ public class HitBox : MonoBehaviour, IHitDetector</code></pre>
 </h2>
 
 
+  <a id="Runtime_Utilities_Collision_HitBox_Damage_" data-uid="Runtime.Utilities.Collision.HitBox.Damage*"></a>
+
+  <h3 id="Runtime_Utilities_Collision_HitBox_Damage" data-uid="Runtime.Utilities.Collision.HitBox.Damage">
+  Damage
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Damage { get; protected set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Runtime_Utilities_Collision_HitBox_HitResponder_" data-uid="Runtime.Utilities.Collision.HitBox.HitResponder*"></a>
 
   <h3 id="Runtime_Utilities_Collision_HitBox_HitResponder" data-uid="Runtime.Utilities.Collision.HitBox.HitResponder">
@@ -542,8 +573,8 @@ public class HitBox : MonoBehaviour, IHitDetector</code></pre>
 
   <a id="Runtime_Utilities_Collision_HitBox_CheckHit_" data-uid="Runtime.Utilities.Collision.HitBox.CheckHit*"></a>
 
-  <h3 id="Runtime_Utilities_Collision_HitBox_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_" data-uid="Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo)">
-  CheckHit(HitDetectorInfo)
+  <h3 id="Runtime_Utilities_Collision_HitBox_CheckHit_Runtime_Utilities_Collision_HitDetectorInfo_System_Int32_" data-uid="Runtime.Utilities.Collision.HitBox.CheckHit(Runtime.Utilities.Collision.HitDetectorInfo,System.Int32)">
+  CheckHit(HitDetectorInfo, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L89"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -553,12 +584,14 @@ Creates a HitData object that is sent to the HitResponder and HurtResponder, inv
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CheckHit(HitDetectorInfo hitDetectorInfo = default)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CheckHit(HitDetectorInfo hitDetectorInfo = default, int damage = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
     <dt><code>hitDetectorInfo</code> <a class="xref" href="Runtime.Utilities.Collision.HitDetectorInfo.html">HitDetectorInfo</a></dt>
+    <dd></dd>
+    <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
     <dd></dd>
   </dl>
 
@@ -575,8 +608,8 @@ Creates a HitData object that is sent to the HitResponder and HurtResponder, inv
 
   <a id="Runtime_Utilities_Collision_HitBox_StartCheckingHits_" data-uid="Runtime.Utilities.Collision.HitBox.StartCheckingHits*"></a>
 
-  <h3 id="Runtime_Utilities_Collision_HitBox_StartCheckingHits" data-uid="Runtime.Utilities.Collision.HitBox.StartCheckingHits">
-  StartCheckingHits()
+  <h3 id="Runtime_Utilities_Collision_HitBox_StartCheckingHits_System_Int32_" data-uid="Runtime.Utilities.Collision.HitBox.StartCheckingHits(System.Int32)">
+  StartCheckingHits(int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Utilities/Collision/HitBox.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -584,9 +617,14 @@ Creates a HitData object that is sent to the HitResponder and HurtResponder, inv
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void StartCheckingHits()</code></pre>
+    <pre><code class="lang-csharp hljs">public void StartCheckingHits(int damage)</code></pre>
   </div>
 
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
 
 
 

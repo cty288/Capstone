@@ -36,6 +36,16 @@ namespace Runtime.DataFramework.Properties
 		scope_recoil,
 		charge_speed,
 		bullet_speed,
-		test_hashset
+		test_hashset,
+		acceleration_force,
+		walk_speed,
+		sprint_speed,
+		slide_speed,
+		ground_drag,
+		jump_force,
+		additional_gravity,
+		max_slide_time,
+		slide_force,
+		wall_run_force
 	}
 }

@@ -8,9 +8,8 @@ using Runtime.Utilities.Collision;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class Roll : EnemyAction
+    public class Roll : EnemyAction<Boss1Entity>
     {
-        public SharedTransform playerTrans;
         Rigidbody rb;
         private Vector3 targetLocation;
         //public int dashVelocity;
@@ -48,11 +47,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool collisionFlag = false;
 
         private Collider bossCollider;
-        
+        private bool canDealDamage = false;
         public HitBox HitBox;
+        
+        private Transform playerTrans;
 
         public override void OnStart()
         {
+            base.OnStart();
             //reset
             flag = false;
             maxRotationSpeed = 260;
@@ -60,7 +62,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             initRotation = this.gameObject.transform.eulerAngles;
             currentChargeTime = 0f;
             rb = GetComponent<Rigidbody>();
-            playerRb = playerTrans.Value.GetComponent<Rigidbody>();
+            playerTrans = GetPlayer().transform;
+            playerRb = playerTrans.GetComponent<Rigidbody>();
             bossCollider = GetComponent<Collider>();
             /*
             targetLocation = playerTrans.Value.position + transform.forward * 3;
@@ -72,7 +75,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
 
             HitBox.GetComponentInParent<Boss1>().ClearHitObjects();
-            HitBox.StartCheckingHits();
+            
             collisionFlag = false;
             rb.isKinematic = false;
             chargeUp = true;
@@ -121,6 +124,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     {
                         navMeshComponent.enabled = true;
                     }
+                   
                 });
                 return TaskStatus.Running;
             }
@@ -138,17 +142,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 }
                 else
                 {
-                    localSavePlayerPosition = playerTrans.Value.position;
+                    localSavePlayerPosition = playerTrans.position;
                     dir = (localSavePlayerPosition - this.transform.position).normalized;
                     chargeUp = false;
+                    canDealDamage = true;
+                    HitBox.StartCheckingHits(enemyEntity.GetCustomDataValue<int>("damages", "rollDamage"));
                 }
 
                 return TaskStatus.Running;
             }
             else
             {
-               
-
                 if(flag)
                 {
                     
@@ -168,6 +172,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     
                     //lerp velocity to 0
                     
+                    if (rb.velocity.magnitude <= 2f && canDealDamage) {
+                        HitBox.StopCheckingHits();
+                        canDealDamage = false;
+                    }
                  
                     if(rb.velocity.magnitude < 0.5f) {
                         rb.velocity = Vector3.zero;
@@ -178,6 +186,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                         Debug.Log("slowing down");
                         return TaskStatus.Running;
                     }
+
                 }
                 else
                 {
@@ -190,7 +199,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     dir = (localSavePlayerPosition - this.transform.position).normalized;
                     Debug.DrawRay(this.transform.position, dir * 100, Color.green);
                     //CheckForCollisions();
-                    rb.AddForce(dir * 0.25f, ForceMode.Impulse);
+                    rb.AddForce(dir * 25f, ForceMode.Impulse);
                     Debug.Log(Vector3.Distance(localSavePlayerPosition, this.transform.position));
                     //this.gameObject.transform.Translate(dir * 20 * Time.deltaTime , Space.World);
                     timer -= Time.deltaTime;
@@ -231,17 +240,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 HitBox.StopCheckingHits();
             });
             
-            bossCollider.enabled = false;
+            //bossCollider.enabled = false;
+            canDealDamage = false;
         }
 
         public override void OnCollisionEnter(Collision collision) {
             base.OnCollisionEnter(collision);
             Debug.Log("Collision");
-            if (collision.collider.gameObject.CompareTag("Player") && !collisionFlag) {
-                Vector3 dir = playerTrans.Value.position - transform.position;
+            if (canDealDamage && collision.collider.gameObject.CompareTag("Player") && !collisionFlag) {
+                Vector3 dir = playerTrans.position - transform.position;
                 dir.y = 0;
                 //make it 45 degrees from the ground
-                dir = Quaternion.AngleAxis(20, Vector3.Cross(dir, Vector3.up)) * dir;
+                dir = Quaternion.AngleAxis(45, Vector3.Cross(dir, Vector3.up)) * dir;
                 dir.Normalize();
                 playerRb.AddForce(dir * forceToPlayer, ForceMode.Impulse);
                 flag = true;

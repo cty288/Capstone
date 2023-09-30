@@ -2,6 +2,7 @@
 using DG.Tweening;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
@@ -11,15 +12,16 @@ using UnityEngine.UI;
 
 namespace Runtime.UI.HealthBar {
 	public class NormalEnemyHealthBar : global::HealthBar {
-		private Image bar;
-		private TMP_Text nameText;
+		protected Image bar;
+		protected TMP_Text nameText;
 	
 		[SerializeField] private Color healthyColor = Color.red;
 		[SerializeField] private Color hurtColor = Color.red;
 		
-		private Material healthBGMaterial;
+		protected Material healthBGMaterial;
 		
-		private IDamageable entity;
+		protected IDamageable entity;
+		protected BindableProperty<HealthInfo> boundHealthProperty;
 
 		private void Awake() {
 			bar = transform.Find("Mask/Fill Area/Fill").GetComponent<Image>();
@@ -28,19 +30,20 @@ namespace Runtime.UI.HealthBar {
 			nameText = transform.Find("NameText").GetComponent<TMP_Text>();
 		}
 
-		public override void OnSetEntity(IDamageable entity) {
+		public override void OnSetEntity(BindableProperty<HealthInfo> healthProperty, IDamageable entity) {
 			this.entity = entity;
-			entity.HealthProperty.RealValue.RegisterWithInitValue(OnHealthChanged)
+			this.boundHealthProperty = healthProperty;
+			boundHealthProperty.RegisterWithInitValue(OnHealthChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
 			nameText.text = "";
 			if (!String.IsNullOrEmpty(entity.GetDisplayName())) {
-				nameText.text =entity.GetDisplayName();
+				nameText.text = entity.GetDisplayName();
 			}
 		}
 
 		public override void OnHealthBarDestroyed() {
-			entity.HealthProperty.RealValue.UnRegisterOnValueChanged(OnHealthChanged);
+			boundHealthProperty.UnRegisterOnValueChanged(OnHealthChanged);
 		}
 
 		private void OnHealthChanged(HealthInfo oldHealth, HealthInfo newHealth) {
