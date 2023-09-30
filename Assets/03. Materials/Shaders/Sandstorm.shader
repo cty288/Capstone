@@ -3,14 +3,40 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
     Properties
     {
         _BaseMap ("Texture", 2D) = "white" {}
+    	_BaseColor ("Color", Color) = (1, 1, 1, 1)
+    	[Toggle(_ALPHATEST_ON)] _AlphaTestToggle ("Alpha Clipping", Float) = 0
+		_Cutoff ("Alpha Cutoff", Float) = 0.5
+
+		[HideInInspector] _Cull("__cull", Float) = 2.0
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags {
+			"RenderPipeline"="UniversalPipeline"
+			"RenderType"="Transparent"
+			"Queue"="Transparent"
+			"UniversalMaterialType" = "Lit" "IgnoreProjector" = "True"
+		}
         LOD 100
+        
+        HLSLINCLUDE
+        
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+
+            CBUFFER_START(UnityPerMaterial)
+
+				float4 _BaseMap_ST;
+				float4 _BaseColor;
+				float _Cutoff;
+
+            CBUFFER_END
+
+        ENDHLSL
 
         Pass
         {
+        	Name "Unlit"
             Blend SrcAlpha OneMinusSrcAlpha
             
             HLSLPROGRAM
@@ -20,44 +46,59 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             
             #pragma vertex vert
             #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog   
 
-            #include "UnityCG.cginc"
+            #pragma shader_feature _ALPHATEST_ON
 
             
 
             struct appdata
             {
                 float4 vertex : POSITION;
+            	float3 normalOS     : NORMAL;
+                float4 tangentOS    : TANGENT;
                 float2 uv : TEXCOORD0;
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
-                float4 vertex : SV_POSITION;
+                float4 positionCS				: SV_POSITION;
+            	float3 positionWS               : TEXCOORD2;
+            	float3 normalWS                 : TEXCOORD3;
+            	float3 viewDirWS                : TEXCOORD5;
             };
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
+            TEXTURE2D(_BaseMap);
+			SAMPLER(sampler_BaseMap);
 
             v2f vert (appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
+            	VertexPositionInputs positionInputs = GetVertexPositionInputs(v.vertex);
+            	VertexNormalInputs normalInputs = GetVertexNormalInputs(v.normalOS.xyz);
+            	
+                o.positionCS = positionInputs.positionCS;
+            	o.positionWS = positionInputs.positionWS;
+
+            	half3 viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
+
+            	o.normalWS = NormalizeNormalPerVertex(normalInputs.normalWS);
+            	o.viewDirWS = viewDirWS;
+            	
+                o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
+            half4 frag (v2f i) : SV_Target
             {
+            	float3 normal = normalize(i.normalWS);
+            	float2 uv = i.uv;
+            	float2 rotatingUV = float2(frac(i.uv.x + _Time.x), uv.y);
+            	
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
+                half4 col = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, rotatingUV);
+            	col *= _BaseColor;
+            	col = half4(col.rgb, col.a * (1 - -normal.y));
                 return col;
             }
             ENDHLSL
@@ -93,7 +134,8 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
 			#pragma multi_compile_instancing
 			#pragma multi_compile _ DOTS_INSTANCING_ON
 
-            #include "Inputs.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
             
             ENDHLSL
@@ -121,8 +163,6 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             // -------------------------------------
             // Material Keywords
             #pragma shader_feature_local _NORMALMAP
-            #pragma shader_feature_local _PARALLAXMAP
-            #pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
@@ -131,8 +171,9 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             #pragma multi_compile_instancing
             #pragma multi_compile _ DOTS_INSTANCING_ON
 
-            #include "Inputs.hlsl"
-            #include "SandDepthNormalPass.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthNormalsPass.hlsl"
             
             ENDHLSL
         }
@@ -225,7 +266,8 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             #pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
 
-            #include "Inputs.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/Utils/Universal2D.hlsl"
             
             ENDHLSL
