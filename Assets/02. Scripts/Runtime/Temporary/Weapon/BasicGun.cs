@@ -116,7 +116,7 @@ namespace Runtime.Temporary.Weapon
                 GameObject p = Instantiate(projectile);
                 p.transform.rotation = transform.rotation;
                 p.transform.position = launchPoint.position;
-                p.GetComponent<Bullet>().Init(Faction.Friendly, 10); //temp
+                p.GetComponent<BulletDeprecated>().Init(Faction.Friendly, 10); //temp
                 p.GetComponent<Rigidbody>().velocity = (destination - launchPoint.position).normalized * proj.speed;
             }
         }

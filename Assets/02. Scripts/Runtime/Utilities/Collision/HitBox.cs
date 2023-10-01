@@ -31,8 +31,8 @@ namespace Runtime.Utilities.Collision
             _collider = gameObject.GetComponent<Collider>();
         }
         
-        public void StartCheckingHits()
-        {
+        public void StartCheckingHits(int damage) {
+            this.Damage = damage;
             if (_triggerCheck == null)
             {
                 Initialize();
@@ -63,7 +63,7 @@ namespace Runtime.Utilities.Collision
                 // Debug.Log("make hitdata");
                 hitData = new HitData()
                     {
-                        Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(m_hitResponder.Damage * hurtbox.DamageMultiplier),
+                        Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier),
                         HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
                         HitNormal = hitNormal,
                         Hurtbox = hurtbox,
@@ -86,7 +86,7 @@ namespace Runtime.Utilities.Collision
         /// Creates a HitData object that is sent to the HitResponder and HurtResponder, invoking their responses.
         /// </summary>
         /// <returns>Returns true if a hit is detected.</returns>
-        public void CheckHit(HitDetectorInfo hitDetectorInfo = new HitDetectorInfo())
+        public void CheckHit(HitDetectorInfo hitDetectorInfo = new HitDetectorInfo(), int damage = 0)
         {
             Debug.Log("checkhit() is replaced for testing");
             
@@ -121,6 +121,12 @@ namespace Runtime.Utilities.Collision
             //         hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
             //     }
             // }
+        }
+
+        public int Damage { get; protected set; }
+
+        private void OnDestroy() {
+            StopCheckingHits();
         }
     }
 }

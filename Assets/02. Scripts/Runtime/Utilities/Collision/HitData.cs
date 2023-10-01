@@ -30,7 +30,7 @@ namespace Runtime.Utilities.Collision
         /// <returns>Returns HitData object.</returns>
         public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector)
         {
-            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultiplier);
+            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitDetector.Damage * hurtbox.DamageMultiplier);
             HitPoint = hit.point;
             HitNormal = hit.normal;
             Hurtbox = hurtbox;
@@ -82,7 +82,7 @@ namespace Runtime.Utilities.Collision
     /// </summary>
     public interface IHitResponder : IBelongToFaction
     {
-        int Damage { get; }
+        //int Damage { get; }
         public bool CheckHit(HitData data);
         public void HitResponse(HitData data);
     }
@@ -104,7 +104,9 @@ namespace Runtime.Utilities.Collision
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public void CheckHit(HitDetectorInfo hitDetectorInfo); //CheckHit only required for HitScan right now.
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage); //CheckHit only required for HitScan right now.
+        
+        public int Damage { get; }
     }
 
     /// <summary>

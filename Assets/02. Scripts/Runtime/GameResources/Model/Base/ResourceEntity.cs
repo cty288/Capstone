@@ -28,9 +28,16 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string InventoryVCPrefabName { get; }
 		
+		public string IconSpriteName { get; }
+		
 		public string OnGroundVCPrefabName { get; }
 		
 		public string InHandVCPrefabName { get; }
+		
+		/// <summary>
+		/// Width in inventory. Use only 1 or 2. Only effective for weapons.
+		/// </summary>
+		public int Width { get; }
 	}
 	
 	//3 forms
@@ -109,8 +116,13 @@ namespace Runtime.GameResources.Model.Base {
 		[field: ES3Serializable]
 		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
 
+		public string IconSpriteName => $"{EntityName}_Icon";
+
 		public abstract string OnGroundVCPrefabName { get; }
 		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
+		
+		[field: ES3Serializable]
+		public virtual int Width { get; } = 1;
 	}
 
 }

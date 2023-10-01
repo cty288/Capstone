@@ -86,6 +86,7 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 		}
 		
 		inHandResourceViewControllers[category] = null;
+		rightHandItemViewController = null;
 		
 		if (resourceEntity != null) {
 			GameObject spawnedItem = ResourceVCFactory.Singleton.SpawnInHandResourceVC(resourceEntity, true);

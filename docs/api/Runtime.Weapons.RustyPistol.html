@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RustyPistol : AbstractWeaponViewController&lt;RustyPistolEntity&gt;, IPickableResourceViewController, IInHandResourceViewController, IResourceViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHitResponder, IBelongToFaction</code></pre>
+    <pre><code class="lang-csharp hljs">public class RustyPistol : AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;, IPickableResourceViewController, IInHandResourceViewController, IResourceViewController, IEntityViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -118,6 +118,7 @@
       <div><a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableResourceViewController-1.html">AbstractPickableResourceViewController</a>&lt;<a class="xref" href="Runtime.Weapons.RustyPistolEntity.html">RustyPistolEntity</a>&gt;</div>
       <div><a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html">AbstractPickableInHandResourceViewController</a>&lt;<a class="xref" href="Runtime.Weapons.RustyPistolEntity.html">RustyPistolEntity</a>&gt;</div>
       <div><a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html">AbstractWeaponViewController</a>&lt;<a class="xref" href="Runtime.Weapons.RustyPistolEntity.html">RustyPistolEntity</a>&gt;</div>
+      <div><a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html">AbstractHitScanWeaponViewController</a>&lt;<a class="xref" href="Runtime.Weapons.RustyPistolEntity.html">RustyPistolEntity</a>&gt;</div>
       <div><span class="xref">RustyPistol</span></div>
     </dd>
   </dl>
@@ -147,6 +148,63 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_autoReload">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.autoReload</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_layer">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.layer</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_trailRenderer">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.trailRenderer</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_hitParticlePrefab">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.hitParticlePrefab</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_cam">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.cam</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_playerActions">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.playerActions</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_playerModel">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.playerModel</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_isScopedIn">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.isScopedIn</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_isReloading">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.isReloading</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_lastShootTime">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.lastShootTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_reloadTimer">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.reloadTimer</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnEntityStart">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.OnEntityStart()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnCreateHitDetector">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.OnCreateHitDetector()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_Shoot">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.Shoot()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_CheckHit_Runtime_Utilities_Collision_HitData_">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.CheckHit(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_HitResponse_Runtime_Utilities_Collision_HitData_">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.HitResponse(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnStartAbsorb">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.OnStartAbsorb()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnItemStartUse">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.OnItemStartUse()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractHitScanWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractHitScanWeaponViewController_1_OnItemStopUse">AbstractHitScanWeaponViewController&lt;RustyPistolEntity&gt;.OnItemStopUse()</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractWeaponViewController-1.html#Runtime_Weapons_ViewControllers_Base_AbstractWeaponViewController_1_hitDetector">AbstractWeaponViewController&lt;RustyPistolEntity&gt;.hitDetector</a>
     </div>
     <div>
@@ -172,6 +230,9 @@
     </div>
     <div>
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_HandleAbsorb_UnityEngine_GameObject_Runtime_Player_PlayerInteractiveZone_">AbstractPickableInHandResourceViewController&lt;RustyPistolEntity&gt;.HandleAbsorb(GameObject, PlayerInteractiveZone)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStartHold_UnityEngine_GameObject_">AbstractPickableInHandResourceViewController&lt;RustyPistolEntity&gt;.OnStartHold(GameObject)</a>
     </div>
     <div>
       <a class="xref" href="Runtime.GameResources.ViewControllers.AbstractPickableInHandResourceViewController-1.html#Runtime_GameResources_ViewControllers_AbstractPickableInHandResourceViewController_1_OnStopHold">AbstractPickableInHandResourceViewController&lt;RustyPistolEntity&gt;.OnStopHold()</a>
@@ -684,40 +745,9 @@
 
 
 
-  <h3 id="Runtime_Weapons_RustyPistol_autoReload" data-uid="Runtime.Weapons.RustyPistol.autoReload">
-  autoReload
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L54"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[Header(&quot;Auto Reload&quot;)]
-public bool autoReload</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
   <h3 id="Runtime_Weapons_RustyPistol_defaultGunModel" data-uid="Runtime.Weapons.RustyPistol.defaultGunModel">
   defaultGunModel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L57"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -747,7 +777,7 @@ public bool autoReload</code></pre>
 
   <h3 id="Runtime_Weapons_RustyPistol_gunPositionTransform" data-uid="Runtime.Weapons.RustyPistol.gunPositionTransform">
   gunPositionTransform
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L55"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -775,129 +805,9 @@ public bool autoReload</code></pre>
 
 
 
-  <h3 id="Runtime_Weapons_RustyPistol_isReloading" data-uid="Runtime.Weapons.RustyPistol.isReloading">
-  isReloading
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L82"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool isReloading</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_Weapons_RustyPistol_isScopedIn" data-uid="Runtime.Weapons.RustyPistol.isScopedIn">
-  isScopedIn
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L61"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected bool isScopedIn</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_Weapons_RustyPistol_lastShootTime" data-uid="Runtime.Weapons.RustyPistol.lastShootTime">
-  lastShootTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L80"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public float lastShootTime</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="Runtime_Weapons_RustyPistol_layer" data-uid="Runtime.Weapons.RustyPistol.layer">
-  layer
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L91"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public LayerMask layer</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">LayerMask</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
   <h3 id="Runtime_Weapons_RustyPistol_model" data-uid="Runtime.Weapons.RustyPistol.model">
   model
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L54"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -927,7 +837,7 @@ public bool autoReload</code></pre>
 
   <h3 id="Runtime_Weapons_RustyPistol_reloadGunModel" data-uid="Runtime.Weapons.RustyPistol.reloadGunModel">
   reloadGunModel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -955,39 +865,9 @@ public bool autoReload</code></pre>
 
 
 
-  <h3 id="Runtime_Weapons_RustyPistol_reloadTimer" data-uid="Runtime.Weapons.RustyPistol.reloadTimer">
-  reloadTimer
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L81"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public float reloadTimer</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
   <h3 id="Runtime_Weapons_RustyPistol_scopeInPositionTransform" data-uid="Runtime.Weapons.RustyPistol.scopeInPositionTransform">
   scopeInPositionTransform
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L56"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1014,36 +894,6 @@ public bool autoReload</code></pre>
 
 
 
-
-  <h3 id="Runtime_Weapons_RustyPistol_trailRenderer" data-uid="Runtime.Weapons.RustyPistol.trailRenderer">
-  trailRenderer
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L90"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TrailRenderer trailRenderer</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">TrailRenderer</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -1052,7 +902,7 @@ public bool autoReload</code></pre>
 
   <h3 id="Runtime_Weapons_RustyPistol_Awake" data-uid="Runtime.Weapons.RustyPistol.Awake">
   Awake()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1074,78 +924,11 @@ public bool autoReload</code></pre>
 
 
 
-  <a id="Runtime_Weapons_RustyPistol_CheckHit_" data-uid="Runtime.Weapons.RustyPistol.CheckHit*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_CheckHit_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Weapons.RustyPistol.CheckHit(Runtime.Utilities.Collision.HitData)">
-  CheckHit(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L283"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool CheckHit(HitData data)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Weapons_RustyPistol_HitResponse_" data-uid="Runtime.Weapons.RustyPistol.HitResponse*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_HitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Weapons.RustyPistol.HitResponse(Runtime.Utilities.Collision.HitData)">
-  HitResponse(HitData)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L288"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void HitResponse(HitData data)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
   <a id="Runtime_Weapons_RustyPistol_OnBindEntityProperty_" data-uid="Runtime.Weapons.RustyPistol.OnBindEntityProperty*"></a>
 
   <h3 id="Runtime_Weapons_RustyPistol_OnBindEntityProperty" data-uid="Runtime.Weapons.RustyPistol.OnBindEntityProperty">
   OnBindEntityProperty()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L70"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1167,68 +950,11 @@ public bool autoReload</code></pre>
 
 
 
-  <a id="Runtime_Weapons_RustyPistol_OnCreateHitDetector_" data-uid="Runtime.Weapons.RustyPistol.OnCreateHitDetector*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_OnCreateHitDetector" data-uid="Runtime.Weapons.RustyPistol.OnCreateHitDetector">
-  OnCreateHitDetector()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L120"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override IHitDetector OnCreateHitDetector()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.Utilities.Collision.IHitDetector.html">IHitDetector</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Weapons_RustyPistol_OnEntityStart_" data-uid="Runtime.Weapons.RustyPistol.OnEntityStart*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_OnEntityStart" data-uid="Runtime.Weapons.RustyPistol.OnEntityStart">
-  OnEntityStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L100"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnEntityStart()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
   <a id="Runtime_Weapons_RustyPistol_OnInitWeaponEntity_" data-uid="Runtime.Weapons.RustyPistol.OnInitWeaponEntity*"></a>
 
   <h3 id="Runtime_Weapons_RustyPistol_OnInitWeaponEntity_Runtime_Weapons_Model_Builders_WeaponBuilder_Runtime_Weapons_RustyPistolEntity__" data-uid="Runtime.Weapons.RustyPistol.OnInitWeaponEntity(Runtime.Weapons.Model.Builders.WeaponBuilder{Runtime.Weapons.RustyPistolEntity})">
   OnInitWeaponEntity(WeaponBuilder&lt;RustyPistolEntity&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L66"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1264,7 +990,7 @@ public bool autoReload</code></pre>
 
   <h3 id="Runtime_Weapons_RustyPistol_OnItemScopePressed" data-uid="Runtime.Weapons.RustyPistol.OnItemScopePressed">
   OnItemScopePressed()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L100"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1286,63 +1012,11 @@ public bool autoReload</code></pre>
 
 
 
-  <a id="Runtime_Weapons_RustyPistol_OnItemStartUse_" data-uid="Runtime.Weapons.RustyPistol.OnItemStartUse*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_OnItemStartUse" data-uid="Runtime.Weapons.RustyPistol.OnItemStartUse">
-  OnItemStartUse()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L139"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void OnItemStartUse()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Weapons_RustyPistol_OnItemStopUse_" data-uid="Runtime.Weapons.RustyPistol.OnItemStopUse*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_OnItemStopUse" data-uid="Runtime.Weapons.RustyPistol.OnItemStopUse">
-  OnItemStopUse()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L143"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void OnItemStopUse()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
   <a id="Runtime_Weapons_RustyPistol_OnItemUse_" data-uid="Runtime.Weapons.RustyPistol.OnItemUse*"></a>
 
   <h3 id="Runtime_Weapons_RustyPistol_OnItemUse" data-uid="Runtime.Weapons.RustyPistol.OnItemUse">
   OnItemUse()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L72"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1368,7 +1042,7 @@ public bool autoReload</code></pre>
 
   <h3 id="Runtime_Weapons_RustyPistol_OnRecycled" data-uid="Runtime.Weapons.RustyPistol.OnRecycled">
   OnRecycled()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L301"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L197"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Triggered after recycled back to the pool, or after calling Recycle()</p>
@@ -1391,94 +1065,11 @@ public bool autoReload</code></pre>
 
 
 
-  <a id="Runtime_Weapons_RustyPistol_OnStartAbsorb_" data-uid="Runtime.Weapons.RustyPistol.OnStartAbsorb*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_OnStartAbsorb" data-uid="Runtime.Weapons.RustyPistol.OnStartAbsorb">
-  OnStartAbsorb()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L124"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnStartAbsorb()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Weapons_RustyPistol_OnStartHold_" data-uid="Runtime.Weapons.RustyPistol.OnStartHold*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_OnStartHold_UnityEngine_GameObject_" data-uid="Runtime.Weapons.RustyPistol.OnStartHold(UnityEngine.GameObject)">
-  OnStartHold(GameObject)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L135"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void OnStartHold(GameObject ownerGameObject)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <dl class="parameters">
-    <dt><code>ownerGameObject</code> <span class="xref">GameObject</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="Runtime_Weapons_RustyPistol_Shoot_" data-uid="Runtime.Weapons.RustyPistol.Shoot*"></a>
-
-  <h3 id="Runtime_Weapons_RustyPistol_Shoot" data-uid="Runtime.Weapons.RustyPistol.Shoot">
-  Shoot()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L128"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Shoot()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
   <a id="Runtime_Weapons_RustyPistol_Update_" data-uid="Runtime.Weapons.RustyPistol.Update*"></a>
 
   <h3 id="Runtime_Weapons_RustyPistol_Update" data-uid="Runtime.Weapons.RustyPistol.Update">
   Update()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L188"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Weapons/RustyPistol.cs/#L113"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
