@@ -48,7 +48,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			base.OnStart();
 			currentHealthBar = OnSpawnHealthBar();
 			if (currentHealthBar != null) {
-				currentHealthBar.OnSetEntity(BoundEntity);
+				currentHealthBar.OnSetEntity(BoundEntity.HealthProperty.RealValue, BoundEntity);
 			}
 		}
 
@@ -102,9 +102,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			if (currentHealthBar) {
 				currentHealthBar.OnHealthBarDestroyed();
 				OnDestroyHealthBar(currentHealthBar);
-				
 			}
-			
+			currentHealthBar = null;
 		}
 
 		public virtual bool CheckHit(HitData data) {

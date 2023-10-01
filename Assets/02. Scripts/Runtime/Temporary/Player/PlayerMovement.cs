@@ -19,24 +19,21 @@ namespace Runtime.Temporary.Player
     {
         [Header("Camera")]
         [SerializeField]
-        float mouseSensitivity = 3.5f;
+        private float mouseSensitivity = 3.5f;
         [SerializeField]
-        float controllerSensitivity = 10f;
+        private float controllerSensitivity = 10f;
         
 
         [SerializeField]
-        Transform cameraTrans;
+        private Transform cameraTrans;
         [SerializeField]
-        Transform camHolder;
-        
+        private Transform camHolder;
         [SerializeField] 
-        CinemachineVirtualCamera vcam;
+        private CinemachineVirtualCamera vcam;
     
-        float cameraPitch = 0;
-        [SerializeField] 
-        float fpsTopClamp=90;
-        [SerializeField] 
-        float fpsBotClamp=-90;
+        private float cameraPitch = 0;
+        private float fpsTopClamp=90;
+        private float fpsBotClamp=-90;
 
         [SerializeField] 
         private float defaultFOV;
@@ -66,43 +63,41 @@ namespace Runtime.Temporary.Player
     
         //temporary data
         [Header("Movement")] 
-        public float accelForce;
-        private float moveSpeed;
         
-        public float walkSpeed;
-        public float sprintSpeed;
-        public float slideSpeed;
+     
+        private float moveSpeed;
+     
     
         //temporary
         private bool sprinting;
 
-        //todo: entity data
-        public float groundDrag;
+       
     
-        //jump todo: entity data
-        public float jumpForce;
+       
     
         //todo: entity data
-        public float jumpCooldown;
+        [SerializeField]
+        private float jumpCooldown = 0.3f;
     
         //todo: entity data
-        public float airMultiplier;
+        [SerializeField]
+        private float airMultiplier = 0.3f;
     
         //temporary
-        bool readyToJump;
+        private bool readyToJump;
         
         private bool readyToDoubleJump;
         
         private float desiredMoveSpeed;
         private float lastDesiredMoveSpeed;
-
-        public float speedIncreaseMultiplier;
-        public float slopeIncreaseMultiplier;
+        
+        private float speedIncreaseMultiplier = 1.5f;
+        private float slopeIncreaseMultiplier = 2.5f;
         
         
         //temporary
         [Header("Ground Check")]
-        public float playerHeight;
+        private float playerHeight = 2;
 
         private TriggerCheck groundCheck;
         //public LayerMask whatIsGround;
@@ -110,38 +105,44 @@ namespace Runtime.Temporary.Player
             get => groundCheck.Triggered;
         }
 
-        public float additionalGravity;
+        private bool onSlope;
+        
+        
 
         
         [Header("Slope Handling")]
-        public float maxSlopeAngle;
+        [SerializeField]
+        private  float maxSlopeAngle;
         private RaycastHit slopeHit;
         private bool exitingSlope;
         //temporary
-        public Transform orientation;
+        [SerializeField]
+        private Transform orientation;
         [SerializeField] private LayerMask slopeLayerMask;
 
         [Header("Sliding")]
-        public float maxSlideTime;
-        public float slideForce;
         private float slideTimer;
 
-        public float slideYScale;
+        private float slideYScale = 0.25f;
         private float startYScale;
         
-        public bool sliding;
+        private bool sliding;
         
         [Header("Wallrunning")]
-        public LayerMask whatIsWall;
-        public float wallRunForce;
-        public float wallJumpUpForce;
-        public float wallJumpSideForce;
+        [SerializeField]
+        private LayerMask whatIsWall;
+        [SerializeField]
+        private float wallJumpUpForce;
+        [SerializeField]
+        private float wallJumpSideForce;
         //public float wallClimbSpeed;
-        public float maxWallRunTime;
+        [SerializeField]
+        private float maxWallRunTime;
         private float wallRunTimer;
         
         //wallrun checks
-        public float wallCheckDistance;
+        [SerializeField]
+        private  float wallCheckDistance;
         //public float minJumpHeight;
         private RaycastHit leftWallhit;
         private RaycastHit rightWallhit;
@@ -149,11 +150,12 @@ namespace Runtime.Temporary.Player
         private bool wallRight;
         
         private bool exitingWall;
-        public float exitWallTime;
+        private float exitWallTime = 0.3f;
         private float exitWallTimer;
         
-        public bool useGravity;
-        public float gravityCounterForce;
+        private bool useGravity = false;
+        [SerializeField]
+        private float gravityCounterForce;
 
         private bool wallrunning;
         //temporary
@@ -162,12 +164,16 @@ namespace Runtime.Temporary.Player
 
         private Vector3 moveDirection;
         private Vector3 lastMoveDirection;
-        public Rigidbody rb;
+        private Rigidbody rb;
+        [SerializeField]
+        private Transform model;
 
-        public Transform model;
+        private IGamePlayerModel playerModel;
 
-        public MovementState state;
-        public enum MovementState
+        [SerializeField]
+        private MovementState state;
+        [Serializable]
+        private enum MovementState
         {
             walking,
             sprinting,
@@ -177,6 +183,7 @@ namespace Runtime.Temporary.Player
         }
         
         private DPunkInputs.PlayerActions playerActions;
+        private IPlayerEntity playerEntity;
 
         private void Awake() {
             playerActions = ClientInput.Singleton.GetPlayerActions();
@@ -197,18 +204,16 @@ namespace Runtime.Temporary.Player
             readyToDoubleJump = true;
             
             startYScale = model.localScale.y;
+            
+            playerModel = this.GetModel<IGamePlayerModel>();
+
+            playerEntity = playerModel.GetPlayer();
 
         }
 
         // Update is called once per frame
         void Update()
         {
-            //Camera;
-            
-
-
-
-            IGamePlayerModel playerModel = this.GetModel<IGamePlayerModel>();
             if (playerModel.IsPlayerDead())
             {
                 rb.freezeRotation = false;
@@ -216,17 +221,12 @@ namespace Runtime.Temporary.Player
             else
             {
                 HandleCamera();
-
-            
-
                 MyInput();
-            
                 StateHandler();
                 CheckForWall();
+
+                onSlope = OnSlope();
             }
-            
-            
-            
             if (Input.GetKeyDown(KeyCode.F5)) {
                 ((MainGame) MainGame.Interface).SaveGame();
             }
@@ -240,7 +240,7 @@ namespace Runtime.Temporary.Player
             //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
             // handle drag
             if (grounded)
-                rb.drag = groundDrag;
+                rb.drag = playerEntity.GetGroundDrag().RealValue;
             else
                 rb.drag = 0;
             MovePlayer();
@@ -254,33 +254,32 @@ namespace Runtime.Temporary.Player
             {
                 state = MovementState.wallrunning;
 
-                 desiredMoveSpeed = sprintSpeed;
+                 desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
             }
             // Mode - Sliding
             else if (sliding)
             {
                 state = MovementState.sliding;
 
-                if (OnSlope() && rb.velocity.y < 0.1f)
-                    desiredMoveSpeed = slideSpeed;
+                if (onSlope && rb.velocity.y < 0.1f)
+                    desiredMoveSpeed = playerEntity.GetSlideSpeed().RealValue;
 
                 else
-                    desiredMoveSpeed = sprintSpeed;
+                    desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
             }
-                
 
             // Mode - Sprinting
             else if(grounded && sprinting)
             {
                 state = MovementState.sprinting;
-                desiredMoveSpeed = sprintSpeed;
+                desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
             }
 
             // Mode - Walking
             else if (grounded)
             {
                 state = MovementState.walking;
-                desiredMoveSpeed = walkSpeed;
+                desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue;
             }
 
             // Mode - Air
@@ -385,7 +384,6 @@ namespace Runtime.Temporary.Player
                 
             }
             
-            
             if (playerActions.SprintHold.IsPressed()) {
                 sprinting = true;
                 //Debug.Log("Sprinting");
@@ -402,8 +400,8 @@ namespace Runtime.Temporary.Player
                 model.localScale = new Vector3(model.localScale.x, slideYScale, model.localScale.z);
                 rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
 
-                slideTimer = maxSlideTime;
-                
+                slideTimer = playerEntity.GetMaxSlideTime().RealValue;
+
             }
 
             if (playerActions.Slide.WasReleasedThisFrame() && sliding)
@@ -456,17 +454,17 @@ namespace Runtime.Temporary.Player
         {
             // calculate movement direction
             moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-            float spd = accelForce;
+            
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             if (flatVel.magnitude < moveSpeed) {
-                if (SlopeTooBig())
-                {
-                    rb.AddForce(slopeHit.normal * 1000, ForceMode.Force);
-                }
-                // on slope
-                else if (OnSlope() && !exitingSlope) {
-                    rb.AddForce(GetSlopeMoveDirection(moveDirection) * spd, ForceMode.Force);
+ 
+                
+                if (sliding)
+                    SlidingMovement();
+                else if (wallrunning)
+                    WallRunningMovement();
+                else if (onSlope && !exitingSlope) {
+                    rb.AddForce(GetSlopeMoveDirection(moveDirection) * playerEntity.GetAccelerationForce().RealValue, ForceMode.Force);
 
                     //if (rb.velocity.y > 0)
                     //  rb.AddForce(Vector3.down * 80f, ForceMode.Force);
@@ -474,7 +472,7 @@ namespace Runtime.Temporary.Player
                 // on ground
                 else if (grounded)
                 {
-                    rb.AddForce(moveDirection.normalized * spd, ForceMode.Force);
+                    rb.AddForce(moveDirection.normalized * playerEntity.GetAccelerationForce().RealValue, ForceMode.Force);
                     /*//stop player if no inputs
                     if (moveDirection == Vector3.zero)
                     {
@@ -484,38 +482,21 @@ namespace Runtime.Temporary.Player
                 // in air
                 else if (!grounded)
                 {
-                    rb.AddForce(moveDirection.normalized * spd * airMultiplier, ForceMode.Force);
+                    rb.AddForce(moveDirection.normalized * playerEntity.GetAccelerationForce().RealValue * airMultiplier, ForceMode.Force);
                 }
-                
-               
-                
-                if (sliding)
-                    SlidingMovement();
-                if (wallrunning)
-                    WallRunningMovement();
             }
 
-            if (!grounded) {
-                if(!OnSlope()&&!wallrunning)
-                    rb.AddForce((-transform.up)*additionalGravity,ForceMode.Force);
+            if (!grounded&&!onSlope&&!wallrunning){
+                    rb.AddForce((-transform.up)* playerEntity.GetAdditionalGravity().RealValue,ForceMode.Force);
             }
-            
-
-            
             
             // turn gravity off while on slope
-            if(!wallrunning)rb.useGravity = !OnSlope();
-            if (flatVel.magnitude < moveSpeed) {
-                if (sliding)
-                    SlidingMovement();
-                if (wallrunning)
-                    WallRunningMovement();
-            }
+            if(!wallrunning)rb.useGravity = !onSlope;
 
             
             if (moveDirection == Vector3.zero && lastMoveDirection != Vector3.zero) {
-                if (grounded || (OnSlope() && !exitingSlope)) {
-                    rb.velocity -= flatVel;
+                if (grounded || (onSlope && !exitingSlope)) {
+                    rb.velocity = new Vector3(0, rb.velocity.y, 0);;
                 }
             }
             
@@ -523,37 +504,7 @@ namespace Runtime.Temporary.Player
 
         }
 
-        /*private void SpeedControl()
-        {
-            // limiting speed on slope
-            if (OnSlope() && !exitingSlope)
-            {
-                //if (rb.velocity.magnitude > moveSpeed)
-                  //  rb.velocity = rb.velocity.normalized * moveSpeed;
-                //stop player if no inputs
-                if (moveDirection == Vector3.zero)
-                {
-                    
-                   // rb.velocity = new Vector3(0, rb.velocity.y, 0);
-                }
-            }
 
-            // limiting speed on ground or in air
-            else
-            {
-                Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-                // limit velocity if needed
-                if (flatVel.magnitude > moveSpeed) {
-                    
-                    //Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                    //rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-                    
-                }
-            }
-            
-
-        }*/
 
         private void Jump()
         {
@@ -561,7 +512,7 @@ namespace Runtime.Temporary.Player
             // reset y velocity
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(transform.up * playerEntity.GetJumpForce().RealValue, ForceMode.Impulse);
         }
         private void ResetJump()
         {
@@ -570,21 +521,7 @@ namespace Runtime.Temporary.Player
             
             exitingSlope = false;
         }
-    
-        private Vector3 GetDirection()
-        {
-            float horizontalInput = playerActions.Move.ReadValue<Vector2>().x;
-            float verticalInput = playerActions.Move.ReadValue<Vector2>().y;
-
-            Vector3 direction = new Vector3();
-
-            direction = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-            if (verticalInput == 0 && horizontalInput == 0)
-                direction = orientation.forward;
-
-            return direction.normalized;
-        }
+        
         
         public bool OnSlope()
         {
@@ -597,17 +534,7 @@ namespace Runtime.Temporary.Player
 
             return false;
         }
-
-        public bool SlopeTooBig()
-        {
-            if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f, slopeLayerMask))
-            {
-                float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-                return angle >= maxSlopeAngle && angle != 0;
-            }
-            
-            return false;
-        }
+        
         private IEnumerator SmoothlyLerpMoveSpeed()
         {
             // smoothly lerp movementSpeed to desired value
@@ -619,7 +546,7 @@ namespace Runtime.Temporary.Player
             {
                 moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
 
-                if (OnSlope())
+                if (onSlope)
                 {
                     float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
                     float slopeAngleIncrease = 1 + (slopeAngle / 90f);
@@ -657,17 +584,17 @@ namespace Runtime.Temporary.Player
                 DoCamTilt(0f);
             }
             // sliding normal
-            if(!OnSlope() || rb.velocity.y > -0.1f)
+            if(!onSlope || rb.velocity.y > -0.1f)
             {
-                rb.AddForce(inputDirection.normalized * slideForce*0.3f, ForceMode.Force);
-                rb.AddForce(-GetSlopeMoveDirection(inputDirection) * slideForce*0.25f, ForceMode.Force);
+                rb.AddForce(inputDirection.normalized * playerEntity.GetSlideForce().RealValue *0.3f, ForceMode.Force);
+                rb.AddForce(-GetSlopeMoveDirection(inputDirection) * playerEntity.GetSlideForce().RealValue*0.25f, ForceMode.Force);
                 slideTimer -= Time.deltaTime;
                 
             }
             // sliding down a slope
             else
             {
-                rb.AddForce(GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
+                rb.AddForce(GetSlopeMoveDirection(inputDirection) * playerEntity.GetSlideForce().RealValue , ForceMode.Force);
             }
 
             if (slideTimer <= 0)
@@ -738,7 +665,7 @@ namespace Runtime.Temporary.Player
                 wallForward = -wallForward;
 
             // forward force
-            rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
+            rb.AddForce(wallForward * playerEntity.GetWallRunForce().RealValue, ForceMode.Force);
 
             // upwards/downwards force
             /*if (upwardsRunning)
@@ -755,5 +682,37 @@ namespace Runtime.Temporary.Player
                 rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
         }
     }
+    
+            /*private void SpeedControl()
+        {
+            // limiting speed on slope
+            if (OnSlope() && !exitingSlope)
+            {
+                //if (rb.velocity.magnitude > moveSpeed)
+                  //  rb.velocity = rb.velocity.normalized * moveSpeed;
+                //stop player if no inputs
+                if (moveDirection == Vector3.zero)
+                {
+                    
+                   // rb.velocity = new Vector3(0, rb.velocity.y, 0);
+                }
+            }
+
+            // limiting speed on ground or in air
+            else
+            {
+                Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+                // limit velocity if needed
+                if (flatVel.magnitude > moveSpeed) {
+                    
+                    //Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                    //rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                    
+                }
+            }
+            
+
+        }*/
 }
 
