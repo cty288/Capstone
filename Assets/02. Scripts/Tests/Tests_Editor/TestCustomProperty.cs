@@ -13,7 +13,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Tests.Tests_Editor {
 	public class TestCustomProperty {
-		internal class TestBasicEnemyWithCustomProperties1 : EnemyEntity<TestBasicEnemyWithCustomProperties1> {
+		internal class TestBasicEnemyWithCustomProperties1 : BossEntity<TestBasicEnemyWithCustomProperties1> {
 			public override string EntityName { get; set; } = "TTT";
 
 			public override void OnRecycle() {
@@ -68,7 +68,7 @@ namespace Tests.Tests_Editor {
 					GetDependency(new PropertyNameInfo("custom_properties.attack1.speed")).GetRealValue().Value;
 			}
 		}
-		public class TestEntity : EnemyEntity<TestEntity> {
+		public class TestEntity : BossEntity<TestEntity> {
 			[field: SerializeField]
 			public override string EntityName { get; set; } = "TTT2";
 			public override void OnRecycle() {

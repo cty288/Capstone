@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace Runtime.Enemies.SmallEnemies
 {
-    public class BeeEntity : EnemyEntity<BeeEntity> 
+    public class BeeEntity : NormalEnemyEntity<BeeEntity> 
     {
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "Bee";

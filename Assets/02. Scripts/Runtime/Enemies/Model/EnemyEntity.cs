@@ -13,7 +13,7 @@ namespace Runtime.Enemies.Model {
 	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
-		public BindableList<TasteType> GetTaste();
+		
 		//public BindableProperty<float> GetVigiliance();
 
 		//public BindableProperty<float> GetAttackRange();
@@ -24,15 +24,13 @@ namespace Runtime.Enemies.Model {
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
 		protected IDangerProperty dangerProperty;
 		protected IHealthProperty healthProperty;
-		protected ITasteProperty tasteProperty;
+		
 		
 		protected override void OnEntityRegisterAdditionalProperties() {
 			
 			RegisterInitialProperty<IDangerProperty>(new Danger());
-			RegisterInitialProperty<ITasteProperty>(new Taste());
 			//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 			//RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
-			
 			OnEnemyRegisterAdditionalProperties();
 		}
 		
@@ -42,7 +40,7 @@ namespace Runtime.Enemies.Model {
 			base.OnEntityStart(isLoadedFromSave);
 			dangerProperty = GetProperty<IDangerProperty>();
 			healthProperty = GetProperty<IHealthProperty>();
-			tasteProperty = GetProperty<ITasteProperty>();
+			
 		}
 
 		protected override Faction GetDefaultFaction() {
@@ -57,14 +55,9 @@ namespace Runtime.Enemies.Model {
 			return this.healthProperty.RealValue;
 		}
 
-		public BindableList<TasteType> GetTaste() {
-			return this.tasteProperty.RealValues;
-		}
+		
 
-		protected override ConfigTable GetConfigTable() {
-			return ConfigDatas.Singleton.EnemyEntityConfigTable;
-		}
-	
+		
 
 		protected abstract void OnEnemyRegisterAdditionalProperties();
 
