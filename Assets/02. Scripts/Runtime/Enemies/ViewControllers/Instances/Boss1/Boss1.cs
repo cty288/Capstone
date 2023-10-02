@@ -4,6 +4,7 @@ using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
+using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -32,22 +33,17 @@ namespace Runtime.Enemies
         
 
         [field: ES3Serializable] public BindableProperty<bool> ShellClosed { get; } = new BindableProperty<bool>(true);
-
-    
         
-        public override void OnRecycle()
-        {
+        public override void OnRecycle() {
 
         }
 
-        protected override void OnEnemyRegisterAdditionalProperties()
-        {
+        protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
 
-        protected override string OnGetDescription(string defaultLocalizationKey)
-        {
-            return null;
+        protected override string OnGetDescription(string defaultLocalizationKey) {
+            return Localization.Get(defaultLocalizationKey);
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
@@ -73,7 +69,7 @@ namespace Runtime.Enemies
         public int CurrentShellHealth { get; }
         [Header("HitResponder_Info")]
         public Animator animator;
-        public AnimationSMBManager animationSMBManager;
+        
         public NavMeshAgent agent;
         
         
@@ -95,8 +91,7 @@ namespace Runtime.Enemies
 
         protected override void Awake() {
             base.Awake();
-            animationSMBManager = GetComponent<AnimationSMBManager>();
-            animationSMBManager.Event.AddListener(OnAnimationEvent);
+           
         }
 
         protected override MikroAction WaitingForDeathCondition() {
@@ -161,9 +156,7 @@ namespace Runtime.Enemies
         //
         // }
 
-        public void OnAnimationEvent(string eventName)
-        {
-            // Debug.Log("Animation Event: " + eventName);
+        protected override void OnAnimationEvent(string eventName) {
             switch (eventName)
             {
                 case "ShellOpen":

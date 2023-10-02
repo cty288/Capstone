@@ -69,6 +69,10 @@ namespace Runtime.Enemies.SmallEnemies
             
         }
 
+        protected override void OnAnimationEvent(string eventName) {
+            
+        }
+
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<BeeEntity> builder)
         {
             return builder.
