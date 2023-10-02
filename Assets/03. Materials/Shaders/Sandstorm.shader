@@ -6,6 +6,7 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
     	_BaseColor ("Color", Color) = (1, 1, 1, 1)
     	[Toggle(_ALPHATEST_ON)] _AlphaTestToggle ("Alpha Clipping", Float) = 0
 		_Cutoff ("Alpha Cutoff", Float) = 0.5
+    	_NoiseMap ("Noise", 2D) = "black" {}
 
 		[HideInInspector] _Cull("__cull", Float) = 2.0
     }
@@ -67,9 +68,15 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             	float3 normalWS                 : TEXCOORD3;
             	float3 viewDirWS                : TEXCOORD5;
             };
-
+            
             TEXTURE2D(_BaseMap);
 			SAMPLER(sampler_BaseMap);
+
+            TEXTURE2D(_NoiseMap);
+			SAMPLER(sampler_NoiseMap);
+
+            TEXTURE2D(_CameraDepthTexture);
+			SAMPLER(sampler_CameraDepthTexture);
 
             v2f vert (appdata v)
             {
@@ -92,12 +99,21 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             half4 frag (v2f i) : SV_Target
             {
             	float3 normal = normalize(i.normalWS);
+            	half3 turbulence = SAMPLE_TEXTURE2D(_NoiseMap, sampler_NoiseMap, float2(frac(i.uv.x*0.5f + -_Time.x*0.4f), i.uv.y*2));
             	float2 uv = i.uv;
             	float2 rotatingUV = float2(frac(i.uv.x + _Time.x), uv.y);
+            	rotatingUV = frac(rotatingUV + 0.1f*turbulence.x);
+            	float2 windUV0 = float2(frac((i.uv.x*8 + _Time.x*5.3f*(1+normal.y))), uv.y * 8);
+            	windUV0 = frac(windUV0 + 0.3f*turbulence.y);
+            	
             	
                 // sample the texture
-                half4 col = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, rotatingUV);
-            	col *= _BaseColor;
+                half sand = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, rotatingUV * 2).r;
+            	half gale = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, windUV0).b;
+            	//storm = lerp(lerp(noise.r, noise.b, abs(storm0 - storm2)), noise.g, abs(storm1 - storm2));
+            	
+            	half4 col = half4(_BaseColor.rgb * sand, _BaseColor.a);
+            	col = lerp(half4(_BaseColor.rgb, _BaseColor.a), col, 1-gale);
             	col = half4(col.rgb, col.a * (1 - -normal.y));
                 return col;
             }

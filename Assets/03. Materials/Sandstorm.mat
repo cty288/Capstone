@@ -23,8 +23,8 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: b945ef2dcbd03cb44865983944cd7f8e, type: 3}
-        m_Scale: {x: 5, y: 3}
+        m_Texture: {fileID: 2800000, guid: 28b8c1d5395d7fd4ca1dd09ecb9f5ab7, type: 3}
+        m_Scale: {x: 1, y: 2}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
@@ -40,6 +40,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseMap:
+        m_Texture: {fileID: 2800000, guid: fad55651b3326c4488e8c05bd938469d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -81,7 +85,7 @@ Material:
     - _Smoothness: 0.5
     - _SteepnessPower: 1
     m_Colors:
-    - _BaseColor: {r: 0.5660378, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 1, g: 0.2203018, b: 0.2203018, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightColor: {r: 1, g: 0, b: 0, a: 1}
     - _ShadowRadianceRange: {r: 0.1, g: 0.5, b: 0, a: 0}
