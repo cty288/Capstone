@@ -1,37 +1,12 @@
-EntityName / Property Names,health,taste,danger,custom_properties,tags
-Types,HealthInfo,List<TasteType>,int,dynamic,"Dictionary<TagName,int>"
+EntityName / Property Names,health,danger,custom_properties,tags
+Types,HealthInfo,int,dynamic,"Dictionary<TagName,int>"
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,",int,"Dict<string, CustomProperty>
+{""maxHealth"": 100, ""currentHealth"": 100}",int,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent"
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,
-BEGIN,,,,,
-Boss1,"{""maxHealth"": 300, ""currentHealth"": 300}","[""Type1"", ""Type2""]",456,"{
-  ""shellHealthInfo"": {
-    ""info"": {
-      ""type"": ""HealthInfo"",
-      ""value"": {
-        ""maxHealth"": 100,
-        ""currentHealth"": 100
-      }
-    }
-  },
-  ""damages"":{
-    ""rollDamage"":{
-      ""type"": ""int"",
-      ""value"": 30
-    },
-    ""rapidFireDamage"":{
-      ""type"": ""int"",
-      ""value"": 10
-    },
-    ""rangedAOEDamage"":{
-      ""type"": ""int"",
-      ""value"": 10
-    }
-  }
-}",
-Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",123,,
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,
+BEGIN,,,,
+Bee,"{""maxHealth"": 30, ""currentHealth"": 30}",123,,
