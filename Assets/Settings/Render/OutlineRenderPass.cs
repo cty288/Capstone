@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-class CustomRenderPass : ScriptableRenderPass
+class OutlineRenderPass : ScriptableRenderPass
 {
 
     // Used to render from camera to post processings
@@ -20,7 +20,7 @@ class CustomRenderPass : ScriptableRenderPass
 
     private Material material;
 
-    public CustomRenderPass(Material material)
+    public OutlineRenderPass(Material material)
     {
         // Set the render pass event
         renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;

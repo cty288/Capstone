@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace Runtime.Enemies.SmallEnemies
 {
-    public class CactusEntity : EnemyEntity<CactusEntity>
+    public class CactusEntity : NormalEnemyEntity<CactusEntity>
     {
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "Cactus";
@@ -70,7 +70,10 @@ namespace Runtime.Enemies.SmallEnemies
             Debug.Log($"cactus 1 Take damage: {damage}. cactus 1 current health: {currenthealth}");
         }
 
-        
+
+        protected override void OnAnimationEvent(string eventName) {
+            
+        }
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<CactusEntity> builder)
         {

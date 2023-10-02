@@ -1,17 +1,17 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class CustomRendererFeature : ScriptableRendererFeature
+public class SandstormRendererFeature : ScriptableRendererFeature
 {
 
     [SerializeField] private Material material;
 
-    CustomRenderPass m_ScriptablePass;
+    SandstormRenderPass m_ScriptablePass;
     
     
     public override void Create()
     {
-        m_ScriptablePass = new CustomRenderPass(material);
+        m_ScriptablePass = new SandstormRenderPass(material);
     }
 
     // Here you can inject one or multiple render passes in the renderer.

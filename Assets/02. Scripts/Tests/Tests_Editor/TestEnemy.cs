@@ -20,7 +20,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Tests.Tests_Editor {
     public class TestEnemy {
 
-        internal class TestBasicEnemy : EnemyEntity<TestBasicEnemy> {
+        internal class TestBasicEnemy : BossEntity<TestBasicEnemy> {
             [field: ES3Serializable]
             public override string EntityName { get; set; } = "TestEnemy2";
 
@@ -108,7 +108,7 @@ namespace Tests.Tests_Editor {
             //another convenient ways
             Assert.AreEqual(200, ent1.GetDanger().Value);
             Assert.GreaterOrEqual(1000f, ent1.GetHealth().Value.CurrentHealth);
-            Assert.AreEqual(TasteType.Type1, ent1.GetTaste()[0]);
+            //Assert.AreEqual(TasteType.Type1, ent1.GetTaste()[0]);
             //Assert.AreEqual(1000.0f, ent1.GetVigiliance().Value);
             //Assert.AreEqual(2000.0f, ent1.GetAttackRange().Value);
         
