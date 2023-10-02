@@ -41,12 +41,13 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
             }
             if (Vector3.Magnitude(transform.position - position) < m_ArriveDistance.Value)
             {
+                Debug.Log("running2");
                 return TaskStatus.Running;
             }
          
             if (Vector3.Magnitude(transform.position - position) > limit)
             {
-                Debug.Log("dfdf");
+                Debug.Log("running3");
                 return TaskStatus.Success;
             }
             // Return a task status of success once we've reached the target
@@ -54,8 +55,8 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
 
             // We haven't reached the target yet so keep moving towards it
             //transform.position = Vector3.MoveTowards(transform.position, position, m_Speed.Value * Time.deltaTime);
-          
-            Debug.Log("fdfdfdfdfdfd");
+
+            Debug.Log("running");
             return TaskStatus.Running;
         }
 
