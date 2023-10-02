@@ -20,6 +20,8 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
 		}
         LOD 100
         
+        ZWrite On
+        
         HLSLINCLUDE
         
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -66,6 +68,7 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
                 float4 positionCS				: SV_POSITION;
             	float3 positionWS               : TEXCOORD2;
             	float3 normalWS                 : TEXCOORD3;
+            	float4 positionSS               : TEXCOORD4;
             	float3 viewDirWS                : TEXCOORD5;
             };
             
@@ -86,6 +89,7 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             	
                 o.positionCS = positionInputs.positionCS;
             	o.positionWS = positionInputs.positionWS;
+            	o.positionSS = ComputeScreenPos(o.positionCS);
 
             	half3 viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
 
@@ -101,11 +105,14 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             	float3 normal = normalize(i.normalWS);
             	half3 turbulence = SAMPLE_TEXTURE2D(_NoiseMap, sampler_NoiseMap, float2(frac(i.uv.x*0.5f + -_Time.x*0.4f), i.uv.y*2));
             	float2 uv = i.uv;
-            	float2 rotatingUV = float2(frac(i.uv.x + _Time.x), uv.y);
+            	float2 rotatingUV = float2(frac(i.uv.x + _Time.x*0.8f), uv.y);
             	rotatingUV = frac(rotatingUV + 0.1f*turbulence.x);
             	float2 windUV0 = float2(frac((i.uv.x*8 + _Time.x*5.3f*(1+normal.y))), uv.y * 8);
             	windUV0 = frac(windUV0 + 0.3f*turbulence.y);
-            	
+
+            	float depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, i.positionSS.xy/i.positionSS.w).r, _ZBufferParams);
+            	depth /= 20.f;
+            	depth = saturate(depth);
             	
                 // sample the texture
                 half sand = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, rotatingUV * 2).r;
@@ -114,7 +121,7 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
             	
             	half4 col = half4(_BaseColor.rgb * sand, _BaseColor.a);
             	col = lerp(half4(_BaseColor.rgb, _BaseColor.a), col, 1-gale);
-            	col = half4(col.rgb, col.a * (1 - -normal.y));
+            	col = half4(col.rgb, saturate(col.a * (1 - -normal.y) * (depth) + 0.2f*sand));
                 return col;
             }
             ENDHLSL
