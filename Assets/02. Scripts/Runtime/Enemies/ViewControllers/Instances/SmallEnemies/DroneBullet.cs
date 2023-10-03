@@ -8,11 +8,16 @@ namespace a
 {
 	public class DroneBullet : AbstractBulletViewController
 	{
-		public float bulletSpeed;
-        private void Update()
-        {
+		private float bulletSpeed;
+        private void Update() {
 			this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
 		}
+
+
+        public void SetData(float bulletSpeed) {
+	        this.bulletSpeed = bulletSpeed;
+        }
+
         protected override void OnHitResponse(HitData data)
 		{
 

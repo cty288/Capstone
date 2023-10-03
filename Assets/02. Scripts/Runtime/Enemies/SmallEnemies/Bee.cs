@@ -40,9 +40,10 @@ namespace Runtime.Enemies.SmallEnemies
             return null;
         }
 
-        protected override ICustomProperty[] OnRegisterCustomProperties()
-        {
-            return null;
+        protected override ICustomProperty[] OnRegisterCustomProperties() {
+            return new[] {
+                new AutoConfigCustomProperty("attack", null)
+            };
         }
     }
 

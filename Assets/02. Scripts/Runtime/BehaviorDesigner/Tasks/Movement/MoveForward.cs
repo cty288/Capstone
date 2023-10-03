@@ -16,7 +16,7 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
 {
     public class MoveForward : Action
     {
-        public GameObject target;
+        public SharedGameObject target;
         private Rigidbody rb;
         public float speed;
         public float arrivalDistanceThreshold;
@@ -30,11 +30,12 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
 
         public override TaskStatus OnUpdate()
         {
-            var dir = (target.transform.position - this.gameObject.transform.position).normalized;
+            var position = target.Value.transform.position;
+            var dir = (position - this.gameObject.transform.position).normalized;
             rb.velocity = dir * speed;
-            Debug.Log(Vector3.Distance(transform.position, target.transform.position));
+            Debug.Log(Vector3.Distance(transform.position, position));
             // Check if the distance between the object and the target is less than the threshold
-            if (Vector3.Distance(transform.position, target.transform.position) < arrivalDistanceThreshold)
+            if (Vector3.Distance(transform.position, target.Value.transform.position) < arrivalDistanceThreshold)
             {
                 this.gameObject.GetComponent<NavMeshAgent>().enabled = true;
                 return TaskStatus.Success;

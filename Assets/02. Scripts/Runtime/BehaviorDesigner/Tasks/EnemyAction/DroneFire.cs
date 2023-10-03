@@ -1,4 +1,5 @@
 using System.Collections;
+using a;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using MikroFramework;
@@ -17,17 +18,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     public class DroneFire : EnemyAction<BeeEntity>
     {
         public SharedGameObject bulletPrefab;
-        public int bulletCount;
-        public float spawnInterval;
+        //public int bulletCount;
+        //public float spawnInterval;
         private bool ended;
-        public int bulletSpeed;
-        public Bee droneVC;
+        //public int bulletSpeed;
+        
 
 
         private Transform playerTrans;
         //public SharedTransform playerTrans;
 
         private SafeGameObjectPool pool;
+        private int bulletCount;
+        private float spawnInterval;
+        private float bulletSpeed;
 
         public override void OnAwake()
         {
@@ -40,6 +44,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnStart();
             ended = false;
+            bulletCount = enemyEntity.GetCustomDataValue<int>("attack", "ammoSize");
+            spawnInterval = enemyEntity.GetCustomDataValue<float>("attack", "spawnInterval");
+            bulletSpeed = enemyEntity.GetCustomDataValue<float>("attack", "bulletSpeed");
             StartCoroutine(RF());
         }
         public override TaskStatus OnUpdate()
@@ -64,18 +71,23 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
 
             UnityEngine.GameObject b = pool.Allocate();
-            b.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            b.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             b.transform.rotation = Quaternion.LookRotation(playerTrans.position -
-                                                           new Vector3(transform.position.x, transform.position.y + 2,
+                                                           new Vector3(transform.position.x, transform.position.y,
                                                                transform.position.z));
 
             
-            /*
-            b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-                enemyEntity.GetCustomDataValue<int>("damages", "rapidFireDamage"),
-                gameObject);
-            */
             
+            b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
+                enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
+                gameObject);
+            b.GetComponent<DroneBullet>().SetData(bulletSpeed);
+
+        }
+
+        public override void OnEnd() {
+            base.OnEnd();
+            StopAllCoroutines();
         }
     }
 }

@@ -10,4 +10,23 @@ If no levels, use negative numbers to represent"
 ,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,
 BEGIN,,,,
 Bee,"{""maxHealth"": 30, ""currentHealth"": 30}",123,,
-SurveillanceDrone,"{""maxHealth"": 30, ""currentHealth"": 30}",123,,
+SurveillanceDrone,"{""maxHealth"": 30, ""currentHealth"": 30}",123,"{
+  ""attack"":{
+    ""bulletDamage"":{
+      ""type"": ""int"",
+      ""value"": 5
+    },
+    ""ammoSize"":{
+      ""type"": ""int"",
+      ""value"": 20
+    },
+    ""bulletSpeed"" : {
+      ""type"" : ""float"",
+      ""value"": 12
+    },
+    ""spawnInterval"":{
+      ""type"": ""float"",
+      ""value"": 0.2
+    }
+  }
+}",
