@@ -189,8 +189,7 @@ namespace Runtime.Enemies
             if (BoundEntity.ShellClosed)
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
-
-
+               
                 if (shellHp.Value.CurrentHealth > 0) {
                     if (shellHp.Value.CurrentHealth - data.Damage <= 0) {
                         shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,0);
@@ -203,8 +202,8 @@ namespace Runtime.Enemies
                 
                 Debug.Log("Shell has taken" + data.Damage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }
-            
-            BoundEntity.TakeDamage(data.Damage, data.Attacker);
+
+            BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
         }
 
         public void ChangeShellStatus(bool newStatus) {

@@ -760,8 +760,6 @@ MonoBehaviour:
   cameraTrans: {fileID: 2227095693541951493}
   camHolder: {fileID: 8110311304114022759}
   vcam: {fileID: 7453984105727094038}
-  fpsTopClamp: 90
-  fpsBotClamp: -90
   defaultFOV: 90
   idleBob:
     AmplitudeGain: 0.05
@@ -772,39 +770,21 @@ MonoBehaviour:
   sprintBob:
     AmplitudeGain: 0.2
     FrequencyGain: 2
-  accelForce: 100
-  walkSpeed: 3
-  sprintSpeed: 6
-  slideSpeed: 9
-  groundDrag: 4
-  jumpForce: 15
   jumpCooldown: 0.3
   airMultiplier: 0.3
-  speedIncreaseMultiplier: 1.5
-  slopeIncreaseMultiplier: 2.5
-  playerHeight: 2
-  additionalGravity: 27
   maxSlopeAngle: 60
   orientation: {fileID: 9114554745536944238}
   slopeLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  maxSlideTime: 1
-  slideForce: 300
-  slideYScale: 0.25
-  sliding: 0
   whatIsWall:
     serializedVersion: 2
     m_Bits: 2048
-  wallRunForce: 200
   wallJumpUpForce: 3
   wallJumpSideForce: 5
   maxWallRunTime: 1.5
   wallCheckDistance: 0.7
-  exitWallTime: 0.3
-  useGravity: 1
   gravityCounterForce: 20
-  rb: {fileID: 0}
   model: {fileID: 9114554746596025947}
   state: 0
 --- !u!114 &4007921578581031039
@@ -834,6 +814,7 @@ MonoBehaviour:
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
   autoDestroyWhenEntityRemoved: 1
+  showDamageNumber: 0
 --- !u!114 &4007921578581031012
 MonoBehaviour:
   m_ObjectHideFlags: 0

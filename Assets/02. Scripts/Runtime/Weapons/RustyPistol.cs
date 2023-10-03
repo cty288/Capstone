@@ -47,7 +47,7 @@ namespace Runtime.Weapons
         }
 
 
-        public override string OnGroundVCPrefabName { get; } = "RustyPistol";
+        public override string OnGroundVCPrefabName => EntityName;
 
     }
 
@@ -60,6 +60,9 @@ namespace Runtime.Weapons
         public GameObject defaultGunModel;
         public GameObject reloadGunModel;
 
+        
+        [Header("Debug")]
+        [SerializeField] private string overrideName = "RustyPistol";
         protected override void Awake() {
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
@@ -67,7 +70,7 @@ namespace Runtime.Weapons
         }
         
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
-            return builder.FromConfig().Build();
+            return builder.OverrideName(overrideName).FromConfig().Build();
         }
         
         protected override void OnBindEntityProperty() {}
