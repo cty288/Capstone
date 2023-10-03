@@ -1,15 +1,15 @@
-EntityName / Property Names,health,danger,custom_properties,tags
-Types,HealthInfo,int,dynamic,"Dictionary<TagName,int>"
+EntityName / Property Names,health,danger,custom_properties,tags,,Notes
+Types,HealthInfo,int,dynamic,"Dictionary<TagName,int>",,
 Notes ->,"json
 default: 
 {""maxHealth"": 100, ""currentHealth"": 100}",int,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
-If no levels, use negative numbers to represent"
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,
-BEGIN,,,,
-Bee,"{""maxHealth"": 30, ""currentHealth"": 30}",123,,
+If no levels, use negative numbers to represent",,
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,
+BEGIN,,,,,,
+Bee,"{""maxHealth"": 30, ""currentHealth"": 30}",123,,,,
 SurveillanceDrone,"{""maxHealth"": 30, ""currentHealth"": 30}",123,"{
   ""attack"":{
     ""bulletDamage"":{
@@ -29,4 +29,4 @@ SurveillanceDrone,"{""maxHealth"": 30, ""currentHealth"": 30}",123,"{
       ""value"": 0.2
     }
   }
-}",
+}",,,
