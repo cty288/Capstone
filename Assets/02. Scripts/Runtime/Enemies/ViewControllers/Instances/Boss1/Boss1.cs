@@ -69,7 +69,6 @@ namespace Runtime.Enemies
         public int CurrentShellHealth { get; }
         [Header("HitResponder_Info")]
         public Animator animator;
-        
         public NavMeshAgent agent;
         
         
@@ -89,11 +88,7 @@ namespace Runtime.Enemies
         
         [SerializeField] private Transform shellHealthBarSpawnTransform;
 
-        protected override void Awake() {
-            base.Awake();
-           
-        }
-
+      
         protected override MikroAction WaitingForDeathCondition() {
             transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
                 deathAnimationEnd = true;
