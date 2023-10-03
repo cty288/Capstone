@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2258497705
+CRC: 1271136557
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 04c8b10734f7144d56279d9a8dafc1cd
+    Hash: 4e27d65fa9af3795332641c1903c4853
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 77ec0f3bf6fe27c521c3b7eb3fc22640
+    Hash: 5b02469e1c2e11eceb1193ad8bb47d32
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -35,6 +35,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 2580a31b8d584dc4689b886251805906, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: b4351b1bd7f6f3b469cae84fa7aa0de4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f516e79703504697a83132fa15d4d8fc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 - Class: 114
@@ -85,7 +87,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.SpriteState
 Assets:
-- Assets/05. Sprites/UI/HealthBars/Boss Health bar color grayscale.png
+- Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar color grayscale.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout line top right decoration.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Exit button selected_1.png
@@ -98,25 +100,27 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box selected (White version).png
 - Assets/05. Sprites/UI/Inventory/Inventory - Top red bar.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Trash box.png
-- Assets/05. Sprites/UI/HealthBars/Boss Health bar middle decoration.png
+- Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar middle decoration.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout line decoration beneath star_1.png
 - Assets/06 Animations/UI/EscapeHint/Mouse.controller
-- Assets/05. Sprites/UI/HealthBars/Boss Health bar color.png
+- Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar color.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout description box.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory clicked.png
 - Assets/05. Sprites/UI/Inventory/Main Screen - Inventory Box number.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Bottom red bar_1.png
-- Assets/05. Sprites/UI/HealthBars/Boss Health bar color grayscale (slanted sides).png
+- Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar color grayscale (slanted
+  sides).png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box selected (White version)_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout attributes box.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Trash box top.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory full_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout attributes box_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout description box empty_1.png
+- Assets/06. Prefabs/Game/Entities/Bosses/Boss 1/Boss1ShellHealthBar.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout line top right decoration_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory full.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box name tag_1.png
-- Assets/05. Sprites/UI/HealthBars/Boss Health bar base color.png
+- Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar base color.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box name tag.png
 - Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click4-01.png
 - Assets/06 Animations/UI/EscapeHint/Mouse.anim
@@ -148,19 +152,20 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star white_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box full_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory empty_1.png
-- Assets/05. Sprites/UI/HealthBars/Boss Health bar color (slanted sides).png
+- Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar color (slanted sides).png
 - Assets/05. Sprites/UI/Inventory/Inventory - Bottom bar.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box empty_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Bottom red bar.png
 - Assets/05. Sprites/UI/Inventory/Main Screen - Inventory Box.png
 - Assets/06. Prefabs/Game/UI/HealthBars/EnemyHealthBar.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Top bar_1.png
-- Assets/05. Sprites/UI/HealthBars/Boss Health bar left decoration.png
+- Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar left decoration.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star white.png
+- Assets/06. Prefabs/Game/Inventory/DescriptionTag_Long.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box full.png
-- Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click5-01.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory empty.png
-- Assets/05. Sprites/UI/HealthBars/Boss Health bar right decoration.png
+- Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click5-01.png
+- Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar right decoration.png
 - Assets/05. Sprites/UI/Inventory/Main Screen - Inventory Box selected.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Top bar.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Bottom bar_1.png
@@ -173,4 +178,5 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Exit button selected.png
 Dependencies:
 - D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/assets/fonts
+- D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/entities/resources_inventory
 - D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/settings

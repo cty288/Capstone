@@ -103,7 +103,9 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         }
 
 
-       
+        protected override void OnAnimationEvent(string eventName) {
+            
+        }
 
         protected override HealthBar OnSpawnHealthBar() {
             return null;

@@ -2,8 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Event;
+using MikroFramework.Pool;
+using MikroFramework.ResKit;
 using Runtime.Controls;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
@@ -28,7 +32,6 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    private void Update() {
       //Alpha1 -> 49, Alpha9 -> 57
       //map Alpha1 -> 49 to index 0, Alpha9 -> 57 to index 8
-      
       InputAction leftNavigate = sharedActions.HotBarLeftNavigate;
       float leftNavigation = leftNavigate.ReadValue<float>();
       if (leftNavigation != 0 && leftNavigate.WasPressedThisFrame()) {
@@ -62,6 +65,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
             break;
          }
       }
+      
    }
 
    private void OnPlayerThrowResource(OnPlayerThrowResource e) {

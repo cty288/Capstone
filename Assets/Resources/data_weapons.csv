@@ -19,8 +19,8 @@ RustyPistol,10,0.3,50,6,2,1,0,"{
   ""recoilZ"": 0.25,
   ""snappiness"": 7,
   ""returnSpeed"": 6
-}",0,100,1,,,,
-TheSanctuary,1,1,25,1,5,1,0.06,"{
+}",0,300,1,,,,
+TheSanctuary,30,1,25,1,5,1,0.06,"{
   ""recoilX"": -10,
   ""recoilY"": 5,
   ""recoilZ"": 0.5,
@@ -32,29 +32,24 @@ TheSanctuary,1,1,25,1,5,1,0.06,"{
   ""recoilZ"": 0.5,
   ""snappiness"": 7,
   ""returnSpeed"": 2
-}",1,25,1,"{
+}",3,25,1,"{
   ""explosion"": {
-    ""damage"": {
-      ""type"": ""int"",
-      ""value"": 200
-    },
     ""distance"": {
       ""type"": ""int"",
       ""value"": 10
     }
-  },
-  ""shield"": {
-    ""health"": {
-      ""type"": ""int"",
-      ""value"": 200
-    },
-    ""angle"": {
-      ""type"": ""float[]"",
-      ""value"": [-60.0, 60.0]
-    },
-    ""cooldown"": {
-      ""type"": ""float"",
-      ""value"": 30.0
-    }
   }
 }",,,
+RustyPistol2,40,0.05,50,60,2,1,0,"{
+  ""recoilX"": -10,
+  ""recoilY"": 5,
+  ""recoilZ"": 0.5,
+  ""snappiness"": 7,
+  ""returnSpeed"": 2
+}","{
+  ""recoilX"": -7,
+  ""recoilY"": 3,
+  ""recoilZ"": 0.25,
+  ""snappiness"": 7,
+  ""returnSpeed"": 6
+}",0,300,1,,,,
