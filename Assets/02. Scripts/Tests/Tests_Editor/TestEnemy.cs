@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Framework;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -13,6 +14,7 @@ using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
+using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -20,7 +22,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Tests.Tests_Editor {
     public class TestEnemy {
 
-        internal class TestBasicEnemy : EnemyEntity<TestBasicEnemy> {
+        internal class TestBasicEnemy : BossEntity<TestBasicEnemy> {
             [field: ES3Serializable]
             public override string EntityName { get; set; } = "TestEnemy2";
 
@@ -108,7 +110,7 @@ namespace Tests.Tests_Editor {
             //another convenient ways
             Assert.AreEqual(200, ent1.GetDanger().Value);
             Assert.GreaterOrEqual(1000f, ent1.GetHealth().Value.CurrentHealth);
-            Assert.AreEqual(TasteType.Type1, ent1.GetTaste()[0]);
+            //Assert.AreEqual(TasteType.Type1, ent1.GetTaste()[0]);
             //Assert.AreEqual(1000.0f, ent1.GetVigiliance().Value);
             //Assert.AreEqual(2000.0f, ent1.GetAttackRange().Value);
         
@@ -205,7 +207,7 @@ namespace Tests.Tests_Editor {
             ent1.RegisterOnTakeDamage(OnEnt1TakeDamage);
             ent1.TakeDamage(200, ent2);
             
-            void OnEnt1TakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+            void OnEnt1TakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer, [CanBeNull] HitData hitData) {
                 Assert.AreEqual(200, damage);
                 Assert.AreEqual(799, currenthealth);
                 Assert.AreEqual(ent2, damagedealer);

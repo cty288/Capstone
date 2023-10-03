@@ -33,21 +33,30 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         public override TaskStatus OnUpdate()
         {
             var position = Target();
-            // Return a task status of success once we've reached the target
-            if (Vector3.Magnitude(transform.position - position) < m_ArriveDistance.Value)
-            {
-                return TaskStatus.Success;
-            }
-            if (Vector3.Magnitude(transform.position - position) > limit)
-            {
-                return TaskStatus.Success;
-            }
-            // We haven't reached the target yet so keep moving towards it
+
             transform.position = Vector3.MoveTowards(transform.position, position, m_Speed.Value * Time.deltaTime);
             if (m_LookAtTarget.Value && (position - transform.position).sqrMagnitude > 0.01f)
             {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(position - transform.position), m_MaxLookAtRotationDelta.Value);
             }
+            if (Vector3.Magnitude(transform.position - position) < m_ArriveDistance.Value)
+            {
+                Debug.Log("running2");
+                return TaskStatus.Running;
+            }
+         
+            if (Vector3.Magnitude(transform.position - position) > limit)
+            {
+                Debug.Log("running3");
+                return TaskStatus.Success;
+            }
+            // Return a task status of success once we've reached the target
+
+
+            // We haven't reached the target yet so keep moving towards it
+            //transform.position = Vector3.MoveTowards(transform.position, position, m_Speed.Value * Time.deltaTime);
+
+            Debug.Log("running");
             return TaskStatus.Running;
         }
 
