@@ -23,7 +23,8 @@ TTT,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]",
     },
     ""damage"": {
       ""type"": ""int"",
-      ""value"": 900
+      ""value"": 900,
+      ""dependencies"": [""rarity"", ""custom_properties.attack1.speed""]
     }
   },
   ""attack2"": {
