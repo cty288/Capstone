@@ -64,6 +64,10 @@ namespace Runtime.DataFramework.Properties {
             }
             throw new Exception($"Property {propertyName.ToString()} of entity {parentEntityName} does not have dependency of name {nameInfo.GetFullName()}");
         }
+        
+        protected bool HasDependency(PropertyNameInfo nameInfo) {
+            return dependenciesInFullname.ContainsKey(nameInfo.GetFullName());
+        }
     
         protected IPropertyBase GetDependency(PropertyNameInfo nameInfo) {
             if (dependenciesInFullname.TryGetValue(nameInfo.GetFullName(), out IPropertyBase propertyBase)) {
@@ -100,4 +104,17 @@ namespace Runtime.DataFramework.Properties {
             return propertyValue;
         }
     }
+    
+    public abstract class PropertyDependencyModifierWithRarity<T> : PropertyDependencyModifier<T> {
+        public override T OnModify(T propertyValue) {
+            int rarity = 1;
+            if(HasDependency(new PropertyNameInfo("rarity"))){
+                rarity = GetDependency<IRarityProperty>(new PropertyNameInfo("rarity")).RealValue.Value;
+            }
+            return OnModify(propertyValue, rarity);
+        }
+        
+        protected abstract T OnModify(T propertyValue, int rarity);
+    }
+    
 }

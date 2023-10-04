@@ -158,9 +158,9 @@ namespace Tests.Tests_Editor {
 			}
 		}
 		
-		internal class GoldPropertyModifier : PropertyDependencyModifier<TestResourceInfo> {
-			public override TestResourceInfo OnModify(TestResourceInfo propertyValue) {
-				propertyValue.Rarity += GetDependency<Rarity>().RealValue * 100;
+		internal class GoldPropertyModifier : PropertyDependencyModifierWithRarity<TestResourceInfo> {
+			protected override TestResourceInfo OnModify(TestResourceInfo propertyValue, int rarity) {
+				propertyValue.Rarity += rarity * 100;
 				return propertyValue;
 			}
 		}

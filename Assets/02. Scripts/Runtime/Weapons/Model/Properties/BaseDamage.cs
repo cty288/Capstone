@@ -20,9 +20,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class BaseDamageDefaultModifier : PropertyDependencyModifier<int>
+    public class BaseDamageDefaultModifier : PropertyDependencyModifierWithRarity<int>
     {
-        public override int OnModify(int propertyValue)
+        protected override int OnModify(int propertyValue, int rarity)
         {
             return propertyValue;
         }
