@@ -9,6 +9,10 @@ namespace Runtime.Utilities {
 
 		private void Awake() {
 			poolableGameObject = GetComponent<PoolableGameObject>();
+			if (!poolableGameObject) {
+				poolableGameObject = GetComponentInParent<PoolableGameObject>();
+			}
+			
 			if (poolableGameObject) {
 				poolableGameObject.RegisterOnRecycledEvent(OnRecycled);
 			}
