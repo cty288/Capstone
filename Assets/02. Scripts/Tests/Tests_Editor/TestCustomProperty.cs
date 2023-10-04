@@ -38,7 +38,7 @@ namespace Tests.Tests_Editor {
 				return new [] {
 					new AutoConfigCustomProperty("attack1"),
 					new AutoConfigCustomProperty("attack2"),
-					new AutoConfigCustomProperty("attack3")
+					new AutoConfigCustomProperty("attack3"),
 				};
 			}
 
