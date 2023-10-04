@@ -30,6 +30,7 @@ namespace Runtime.DataFramework.Properties.TestOnly {
 	
 	public class TestHealthDefaultModifier : PropertyDependencyModifier<HealthInfo> {
 		public override HealthInfo OnModify(HealthInfo propertyValue) {
+			
 			int rarityMultiplier = GetDependency(new PropertyNameInfo(PropertyName.rarity)).GetInitialValue() *
 			                       GetModifierParameterFromConfig<int>("health_rarity_multiplier", 5);
 			

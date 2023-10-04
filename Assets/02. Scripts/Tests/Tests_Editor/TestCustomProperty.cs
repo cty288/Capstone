@@ -38,7 +38,7 @@ namespace Tests.Tests_Editor {
 				return new [] {
 					new AutoConfigCustomProperty("attack1"),
 					new AutoConfigCustomProperty("attack2"),
-					new AutoConfigCustomProperty("attack3")
+					new AutoConfigCustomProperty("attack3"),
 				};
 			}
 
@@ -166,6 +166,8 @@ namespace Tests.Tests_Editor {
 			Assert.AreEqual(TasteType.Type1, ent1.GetProperty<ITasteProperty>().RealValues[0]);
 			Assert.AreEqual(1000.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
 			Assert.AreEqual(2000.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
+			Assert.IsTrue(ent1.GetCustomProperties()["attack1"].GetCustomDataProperty<int>("damage")
+				.GetDependentProperties().Length == 2);
 
 			Assert.AreEqual(3, ent1.GetCustomProperties().Values.Count);
 			//Assert.AreEqual(2.5, (double) ent1.GetCustomProperty("attack1").GetCustomDataValue("info").test);
