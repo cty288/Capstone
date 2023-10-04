@@ -154,7 +154,7 @@ namespace Tests.Tests_Editor {
 
 		internal class MyNewDangerModifier : PropertyDependencyModifier<int> {
 			public override int OnModify(int propertyValue) {
-				return GetDependency<Rarity>().RealValue * 100;
+				return  GetDependency<Rarity>().RealValue * 100;
 			}
 		}
 		

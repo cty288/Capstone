@@ -6,14 +6,17 @@ using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
+using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 
 namespace Runtime.Enemies.ViewControllers.Base {
+	[RequireComponent(typeof(AnimationSMBManager))]
 	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
@@ -34,11 +37,15 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected List<GameObject> hitObjects = new List<GameObject>();
 		
 		
-		
+		protected AnimationSMBManager animationSMBManager;
 		protected override void Awake() {
 			base.Awake();
 			enemyModel = this.GetModel<IEnemyEntityModel>();
+			animationSMBManager = GetComponent<AnimationSMBManager>();
+			animationSMBManager.Event.AddListener(OnAnimationEvent);
 		}
+
+		protected abstract void OnAnimationEvent(string eventName);
 
 		protected abstract HealthBar OnSpawnHealthBar();
 
