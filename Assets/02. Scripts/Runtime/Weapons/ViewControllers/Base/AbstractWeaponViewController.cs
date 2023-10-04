@@ -13,12 +13,14 @@ using Runtime.Weapons.Model.Properties;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
-    
+    public interface IWeaponViewController : IResourceViewController {
+        IWeaponEntity WeaponEntity { get; }
+    }
     /// <summary>
     /// For both 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IBelongToFaction, IHitResponder
+    public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IWeaponViewController, IBelongToFaction, IHitResponder
         where T : class, IWeaponEntity, new() {
 
         private IWeaponModel weaponModel;
@@ -33,6 +35,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected override void OnEntityStart() {
             base.OnEntityStart();
             hitDetector = OnCreateHitDetector();
+            
         }
         
         
@@ -55,5 +58,6 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public abstract void HitResponse(HitData data);
+        public IWeaponEntity WeaponEntity => BoundEntity;
     }
 }
