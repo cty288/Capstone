@@ -27,6 +27,13 @@ namespace Runtime.RunTimeTests.TestMaterial {
 			return ConfigDatas.Singleton.RawMaterialEntityConfigTable_Test;
 		}
 
+		protected override void OnEntityStart(bool isLoadedFromSave) {
+			
+		}
+
+		protected override void OnInitModifiers(int rarity) {
+            
+		}
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;

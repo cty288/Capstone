@@ -23,7 +23,13 @@ namespace Runtime.Enemies.SmallEnemies
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "Cactus";
 
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
 
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            
+        }
 
         public override void OnRecycle()
         {

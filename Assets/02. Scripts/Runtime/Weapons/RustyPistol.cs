@@ -46,7 +46,11 @@ namespace Runtime.Weapons
             return null;
         }
 
-
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
+        
+        
         public override string OnGroundVCPrefabName => EntityName;
 
     }

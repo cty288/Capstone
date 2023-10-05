@@ -29,6 +29,13 @@ namespace Tests.Tests_Editor {
 				
 			}
 
+			public override void OnAwake() {
+				
+			}
+
+			protected override void OnInitModifiers() {
+            
+			}
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
@@ -50,11 +57,18 @@ namespace Tests.Tests_Editor {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
 
+			public override void OnAwake() {
+				
+			}
+
+			protected override void OnInitModifiers() {
+				GetProperty<TestResourceList>().BaseValue[0].SetModifier(new GoldPropertyModifier());
+			}
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty(new Rarity());
 				RegisterInitialProperty(new TestResourceList() {
 					BaseValue = new List<TestResourceProperty>() {
-						new TestResourceProperty(new GoldPropertyModifier()){BaseValue = new TestResourceInfo("Gold", 1)},
+						new TestResourceProperty(){BaseValue = new TestResourceInfo("Gold", 1)},
 						new TestResourceProperty(){BaseValue = new TestResourceInfo("Silver", 2)},
 						new TestResourceProperty(){BaseValue = new TestResourceInfo("Bronze", 3)},
 					}
@@ -83,6 +97,13 @@ namespace Tests.Tests_Editor {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
 
+			public override void OnAwake() {
+				
+			}
+
+			protected override void OnInitModifiers() {
+                        
+			}
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty(new Rarity());
 				RegisterInitialProperty(new TestResourceTableProperty() {
@@ -116,6 +137,14 @@ namespace Tests.Tests_Editor {
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
+
+			public override void OnAwake() {
+				
+			}
+
+			protected override void OnInitModifiers() {
+                                    
+             }
 			protected override void OnRegisterProperties() {
 				RegisterInitialProperty(new Rarity());
 				RegisterInitialProperty(new TestResourceDictProperty() {
@@ -372,6 +401,13 @@ namespace Tests.Tests_Editor {
 				
 			}
 
+			public override void OnAwake() {
+				
+			}
+
+			protected override void OnInitModifiers() {
+                        
+            }
 			protected override string OnGetDescription(string defaultLocalizationKey) {
 				return null;
 			}

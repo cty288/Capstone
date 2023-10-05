@@ -24,7 +24,9 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         public override void OnRecycle() {
         
         }
-
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
         protected override string OnGetDescription(string defaultLocalizationKey) {
             return null;
         }
@@ -32,7 +34,11 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         protected override ConfigTable GetConfigTable() {
             return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
         }
-        
+
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            
+        }
+
         protected override void OnEnemyRegisterAdditionalProperties() {
             RegisterInitialProperty(new NewProperty());
         }
