@@ -89,10 +89,14 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				StopCoroutine(autoRecycleCoroutine);
 				autoRecycleCoroutine = null;
 			}
-			Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
-			if (bulletOwnerCollider != null) {
-				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
+
+			if (bulletOwner) {
+				Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
+				if (bulletOwnerCollider != null) {
+					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
+				}
 			}
+
 			
 			hitBox.StopCheckingHits();
 			this.bulletOwner = null;
