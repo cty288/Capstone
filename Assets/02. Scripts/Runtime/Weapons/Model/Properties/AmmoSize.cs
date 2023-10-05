@@ -19,9 +19,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class AmmoSizeDefaultModifier : PropertyDependencyModifier<int>
+    public class AmmoSizeDefaultModifier : PropertyDependencyModifierWithRarity<int>
     {
-        public override int OnModify(int propertyValue)
+        protected override int OnModify(int propertyValue, int rarity)
         {
             return propertyValue;
         }

@@ -36,12 +36,19 @@ namespace Tests.Tests_Editor {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
 
+            protected override void OnEntityStart(bool isLoadedFromSave) {
+                
+            }
 
 
             protected override void OnEnemyRegisterAdditionalProperties() {
                 RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
                 RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
                 RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
+            }
+
+            protected override void OnInitModifiers(int rarity) {
+                
             }
 
             protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -57,14 +64,20 @@ namespace Tests.Tests_Editor {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
 
- 
+            protected override void OnEntityStart(bool isLoadedFromSave) {
+                
+            }
+
+
             protected override string OnGetDescription(string defaultLocalizationKey) {
                 return null;
             }
             public override void OnDoRecycle() {
                 
             }
-
+            protected override void OnInitModifiers(int rarity) {
+                
+            }
             public override void OnRecycle() {
             
             }

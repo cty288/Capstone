@@ -29,9 +29,10 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		private IHealthProperty healthProperty;
 		public IHealthProperty HealthProperty => healthProperty;
 
+		
 
-		protected override void OnEntityStart(bool isLoadedFromSave) {
-			base.OnEntityStart(isLoadedFromSave);
+		public override void OnAwake() {
+			base.OnAwake();
 			this.healthProperty = GetProperty<IHealthProperty>();
 		}
 

@@ -21,10 +21,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class AttackSpeedDefaultModifier : PropertyDependencyModifier<float>
+    public class AttackSpeedDefaultModifier : PropertyDependencyModifierWithRarity<float>
     {
-        public override float OnModify(float propertyValue)
-        {
+        protected override float OnModify(float propertyValue, int rarity) {
             return propertyValue;
         }
     }

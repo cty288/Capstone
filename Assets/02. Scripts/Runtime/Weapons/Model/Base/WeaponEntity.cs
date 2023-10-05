@@ -69,7 +69,13 @@ namespace Runtime.Weapons.Model.Base
         }
 
         protected override void OnEntityStart(bool isLoadedFromSave) {
-            base.OnEntityStart(isLoadedFromSave);
+            if (!isLoadedFromSave) { //otherwise it is managed by es3
+                CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
+            }
+        }
+
+        public override void OnAwake() {
+            base.OnAwake();
             baseDamageProperty = GetProperty<IBaseDamage>();
             attackSpeedProperty = GetProperty<IAttackSpeed>();
             rangeProperty = GetProperty<IRange>();
@@ -81,13 +87,9 @@ namespace Runtime.Weapons.Model.Base
             scopeRecoilProperty = GetProperty<IScopeRecoil>();
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
-            
-            if (!isLoadedFromSave) { //otherwise it is managed by es3
-                CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
-            }
-           
+
         }
-        
+
         public override void OnDoRecycle() {
             SafeObjectPool<T>.Singleton.Recycle(this as T);
         }

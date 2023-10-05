@@ -13,6 +13,10 @@ namespace Runtime.DataFramework.Properties {
 			FullName = fullName;
 		}
 
+		public PropertyNameInfo(string customPropertyName, string propertyDataName) {
+			FullName = "custom_properties." + customPropertyName + "." + propertyDataName;
+		}
+
 	
 		/// <summary>
 		/// Use this constructor when the dependency is a property of the entity, not a sub property of some other properties
@@ -64,12 +68,15 @@ namespace Runtime.DataFramework.Properties {
 	
 		public void OnRecycled();
 
+		[Obsolete("Use SetModifier<TValueType>(PropertyModifier<TValueType> modifier) instead")]
 		public IPropertyBase SetModifier<T>(IPropertyDependencyModifier<T> modifier);
-	
-	
+
+		public IPropertyBase SetModifier<TValueType>(PropertyModifier<TValueType> modifier);
+
 		//public IPropertyBase[] GetSubProperties();
 	}
 
+	public delegate TValueType PropertyModifier<TValueType>(TValueType baseValue);
 
 
 	public interface ILoadFromConfigProperty: IPropertyBase {
@@ -176,14 +183,19 @@ namespace Runtime.DataFramework.Properties {
 		[field: ES3Serializable]
 		protected IPropertyDependencyModifier<T> modifier;
 
+		protected PropertyModifier<T> newModifier;
+
 		public virtual void OnRecycled() {
 			initializedBefore = false;
 			RealValue.UnRegisterAll();
 			RealValue.Value = default;
 			InitialValue = default;
 			overrideDependentProperties = null;
+			this.modifier = GetDefautModifier();
+			newModifier = null;
 		}
 
+		[Obsolete("Use SetModifier<TValueType>(PropertyModifier<TValueType> modifier) instead")]
 		public IPropertyBase SetModifier<ValueType>(IPropertyDependencyModifier<ValueType> modifier) {
 			if (initializedBefore) {
 				throw new Exception("Cannot set modifier after initialization");
@@ -197,11 +209,28 @@ namespace Runtime.DataFramework.Properties {
 			return this;
 		}
 
+		public IPropertyBase SetModifier<TValueType>(PropertyModifier<TValueType> modifier) {
+			if (initializedBefore) {
+				throw new Exception("Cannot set modifier after initialization");
+			}
+			
+			if (typeof(TValueType) == typeof(T)) {
+				newModifier = (PropertyModifier<T>) (object) modifier;
+			}
+			else {
+				throw new Exception("Value type mismatch for property " + PropertyName);
+			}
+			return this;
+		}
+
 		/// <summary>
 		/// Using Get instead of property to avoid ES3 serialization
 		/// </summary>
 		/// <returns></returns>
-		protected abstract IPropertyDependencyModifier<T> GetDefautModifier();
+		[Obsolete]
+		protected virtual IPropertyDependencyModifier<T> GetDefautModifier() {
+			return null;
+		}
 		protected abstract PropertyName GetPropertyName();
 	
 		/// <summary>
@@ -231,8 +260,12 @@ namespace Runtime.DataFramework.Properties {
 			T targetValue;
 			bool canClone = false;
 			targetValue = OnClone(BaseValue);
-			if (modifier != null) {
+			if (modifier != null && newModifier == null) {
 				targetValue = modifier.Modify(targetValue, dependencies, parentEntityName, fullName);
+			}
+
+			if (newModifier != null) {
+				targetValue = newModifier(targetValue);
 			}
 			InitialValue = targetValue;
 			RealValue.Value = OnClone(InitialValue);
@@ -263,6 +296,8 @@ namespace Runtime.DataFramework.Properties {
 				SetBaseValue(OnClone(value));
 			}
 		}
+		
+		
 	
 
 		//public abstract T OnSetBaseValueFromConfig(dynamic value);

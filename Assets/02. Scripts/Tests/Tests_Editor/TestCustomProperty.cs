@@ -19,7 +19,9 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
             
 			}
-
+			protected override void OnInitModifiers(int rarity) {
+            
+			}
 			protected override string OnGetDescription(string defaultLocalizationKey) {
 				return null;
 			}
@@ -27,7 +29,10 @@ namespace Tests.Tests_Editor {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
 
-	
+			protected override void OnEntityStart(bool isLoadedFromSave) {
+				
+			}
+
 
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
@@ -74,10 +79,17 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
         
 			}
+			protected override void OnInitModifiers(int rarity) {
+            
+			}
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
-			
+
+			protected override void OnEntityStart(bool isLoadedFromSave) {
+				
+			}
+
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty(new TestCustomProperty2());
 				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
@@ -125,6 +137,49 @@ namespace Tests.Tests_Editor {
 			}
 		}
 
+		
+		
+		
+		public class TestEntity3 : BossEntity<TestEntity3> {
+			[field: SerializeField]
+			public override string EntityName { get; set; } = "TTT3";
+			public override void OnRecycle() {
+        
+			}
+			
+			protected override void OnInitModifiers(int rarity) {
+				SetPropertyModifier<int>(new PropertyNameInfo("attack1", "speed"), 
+					(val) => val + rarity * 100);
+
+				SetPropertyModifier<int>(new PropertyNameInfo("attack2", "damage"),
+					(val) => val + rarity * 100 + GetCustomDataValue<int>("attack1", "speed"));
+			}
+
+			protected override ConfigTable GetConfigTable() {
+				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
+			}
+
+			protected override void OnEntityStart(bool isLoadedFromSave) {
+				
+			}
+
+			protected override void OnEnemyRegisterAdditionalProperties() {
+				RegisterInitialProperty(new TestCustomProperty2());
+				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
+			}
+
+			protected override string OnGetDescription(string defaultLocalizationKey) {
+				return null;
+			}
+			protected override ICustomProperty[] OnRegisterCustomProperties() {
+				return new ICustomProperty[] {
+					new AutoConfigCustomProperty("attack1"),
+					new AutoConfigCustomProperty("attack2"),
+					new AutoConfigCustomProperty("attack3")
+				};
+			}
+		}
 		//================================================================
 		
 		
@@ -287,6 +342,115 @@ namespace Tests.Tests_Editor {
 				.Build();
 
 			Assert.AreEqual(0, ent2.GetDanger().Value);
+		}
+		
+		
+		[Test]
+		public void TestNewModifierAndSaveLoad() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+			
+			
+			TestEntity3 ent1 = model.GetEnemyBuilder<TestEntity3>(10)
+				.FromConfig()
+				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f)
+				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f)
+				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
+				.Build();
+			
+			Assert.AreEqual(3, ent1.GetCustomProperties().Values.Count);
+
+
+			Assert.AreEqual(1100, ent1.GetCustomDataValue<int>("attack1", "speed").Value);
+			//1100 + 1000 + 4
+			Assert.AreEqual(2104, ent1.GetCustomDataValue<int>("attack2", "damage").Value);
+
+			ES3.Save("test_save_ent3", ent1, "test_save");
+			model.RemoveEntity(ent1.UUID);
+
+			Assert.AreEqual(0,
+				ent1.GetProperty<CustomProperties>(new PropertyNameInfo(PropertyName.custom_properties))
+					.BaseValue["attack1"].BaseValue.Count);
+
+
+			
+			
+			
+			ent1 = model.GetEnemyBuilder<TestEntity3>(10)
+				.FromConfig()
+				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f)
+				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f)
+				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
+				.Build();
+			
+			Assert.AreEqual(1100, ent1.GetCustomDataValue<int>("attack1", "speed").Value);
+			//1100 + 1000 + 4
+			Assert.AreEqual(2104, ent1.GetCustomDataValue<int>("attack2", "damage").Value);
+			
+			
+			
+			
+			
+			ent1 = ES3.Load<TestEntity3>("test_save_ent3", "test_save");
+			ent1.OnLoadFromSave();
+
+			Assert.IsNotNull(ent1);
+			
+			
+
+			Assert.AreEqual(ent1.GetProperty<ICustomProperties>().BaseValue["attack1"].GetHashCode(),
+				ent1.GetProperty<ICustomProperties>().RealValues.Value["attack1"].GetHashCode());
+			
+			Debug.Log("Hash code of attack1 Base: " + ent1.GetProperty<ICustomProperties>().BaseValue["attack1"].GetHashCode());
+			Debug.Log("Hash code of attack1 Real: " +
+			          ent1.GetProperty<ICustomProperties>().RealValues.Value["attack1"].GetHashCode());
+			
+			Assert.AreEqual(ent1.GetProperty<ICustomProperties>().BaseValue["attack1"].BaseValue["info"].GetRealValue().GetHashCode(),
+				ent1.GetCustomDataValue("attack1", "info").GetHashCode());
+			
+			
+			Assert.AreEqual(1100, ent1.GetCustomDataValue<int>("attack1", "speed").Value);
+			//1100 + 1000 + 4
+			Assert.AreEqual(2104, ent1.GetCustomDataValue<int>("attack2", "damage").Value);
+
+			
+			
+			
+			ES3.DeleteKey("test_save_ent3", "test_save");
+		}
+		
+		
+		
+		[Test]
+		public void TestOverrideNameSaveLoad() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+			
+			
+			TestEntity3 ent1 = model.GetEnemyBuilder<TestEntity3>(10)
+				.OverrideName("TTT2")
+				.FromConfig()
+				.Build();
+			
+
+			ES3.Save("test_save_ent4", ent1, "test_save");
+			model.RemoveEntity(ent1.UUID);
+			
+			ent1 = model.GetEnemyBuilder<TestEntity3>(10)
+				.FromConfig()
+				.Build();
+			Assert.AreEqual("TTT3", ent1.EntityName);
+
+			ent1 = ES3.Load<TestEntity3>("test_save_ent4", "test_save");
+			ent1.OnLoadFromSave();
+			Assert.AreEqual("TTT2", ent1.EntityName);
+		
+			ES3.DeleteKey("test_save_ent4", "test_save");
+			
 		}
 	}
 }

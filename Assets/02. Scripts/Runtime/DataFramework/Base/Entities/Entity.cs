@@ -16,7 +16,10 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Runtime.DataFramework.Entities {
 	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent  {
 	
-		public string EntityName { get; set; }
+		public string EntityName { get;}
+		
+		public void OverrideEntityName(string name);
+		
 		/// <summary>
 		/// Register a property to the entity. This must be called before the entity is initialized
 		/// To register a property after the entity is initialized, use RegisterTempProperty
@@ -93,7 +96,7 @@ namespace Runtime.DataFramework.Entities {
 		public string UUID { get; }
 
 		public void OnAllocate();
-	
+		void OnAwake();
 	
 		/// <summary>
 		/// Set the base value of all properties with the given name
@@ -103,16 +106,21 @@ namespace Runtime.DataFramework.Entities {
 		/// <param name="modifier"></param>
 		/// <typeparam name="T"></typeparam>
 	
-		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value, IPropertyDependencyModifier<T> modifier = null);
-	
+		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  PropertyModifier<T> modifier = null);
+
+		[Obsolete(
+			"Use SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  PropertyModifier<T> modifier = null) instead")]
+		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value, IPropertyDependencyModifier<T> modifier);
+
+		[Obsolete("Use SetPropertyModifier<T>(PropertyNameInfo name, PropertyModifier<T> modifier) instead")]
+		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier);
 		/// <summary>
 		/// Set the modifier of all properties with the given name
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="modifier"></param>
 		/// <typeparam name="T"></typeparam>
-	
-		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier);
+		public void SetPropertyModifier<T>(PropertyNameInfo name, PropertyModifier<T> modifier);
 
 		public void LoadPropertyBaseValueFromConfig(ConfigTable overrideTable = null);
 
@@ -150,6 +158,8 @@ namespace Runtime.DataFramework.Entities {
 
 	public abstract class Entity :  IEntity  {
 		public abstract string EntityName { get; set; }
+
+		[ES3Serializable] private string originalEntityName;
 	
 		[ES3NonSerializable]
 		private Dictionary<string, IPropertyBase> _allProperties { get; } =
@@ -182,6 +192,7 @@ namespace Runtime.DataFramework.Entities {
 		protected Action<IEntity> onEntityRecycled;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
+			originalEntityName = EntityName;
 			configTable = GetConfigTable();
 			OnRegisterProperties();
 		}
@@ -213,12 +224,19 @@ namespace Runtime.DataFramework.Entities {
 					s.RegisterRequestRegisterProperty(DoRegisterNonRootProperty);
 				}
 			}
-			
+			OnAwake();
 			OnStart(true);
 		}
 
 
-	
+		public void OverrideEntityName(string name) {
+			if (initialized) {
+				Debug.LogError("Cannot override entity name after entity is initialized");
+				return;
+			}
+			EntityName = name;
+		}
+
 		public void RegisterInitialProperty<T>(T property) where T : IPropertyBase {
 			if (property is ICustomProperty) {
 				Debug.LogError(
@@ -300,7 +318,8 @@ namespace Runtime.DataFramework.Entities {
 			this.UUID = System.Guid.NewGuid().ToString();
 		}
 
-		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value, IPropertyDependencyModifier<T> modifier = null) {
+		
+		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  PropertyModifier<T> modifier = null) {
 			if (initialized) {
 				Debug.LogError("Cannot set property value after entity is initialized");
 				return;
@@ -315,8 +334,39 @@ namespace Runtime.DataFramework.Entities {
 				Debug.LogError($"Property {name.ToString()} not found in entity {EntityName}");
 			}
 		}
-
+		
+		[Obsolete("Use SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  PropertyModifier<T> modifier = null) instead")]
+		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  IPropertyDependencyModifier<T> modifier) {
+			if (initialized) {
+				Debug.LogError("Cannot set property value after entity is initialized");
+				return;
+			}
+			IPropertyBase property = GetProperty(name);
+			if (property != null) {
+				property.SetBaseValue(value);
+				if (modifier != null) {
+					property.SetModifier(modifier);
+				}
+			}else {
+				Debug.LogError($"Property {name.ToString()} not found in entity {EntityName}");
+			}
+		}
+		
+		[Obsolete("Use SetPropertyModifier<T>(PropertyNameInfo name, PropertyModifier<T> modifier) instead")]
 		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier) {
+			if (initialized) {
+				Debug.LogError("Cannot set property value after entity is initialized");
+				return;
+			}
+			IPropertyBase property = GetProperty(name);
+			if (property != null) {
+				property.SetModifier(modifier);
+			}else {
+				Debug.LogError($"Property {name.ToString()} not found in entity {EntityName}");
+			}
+		}
+
+		public void SetPropertyModifier<T>(PropertyNameInfo name, PropertyModifier<T> modifier) {
 			if (initialized) {
 				Debug.LogError("Cannot set property value after entity is initialized");
 				return;
@@ -422,7 +472,8 @@ namespace Runtime.DataFramework.Entities {
 			if (initialized) {
 				return;
 			}
-
+			
+			OnInitModifiers();
 			List<string> order = EntityPropertyDependencyCache.GetInitializationOrder(EntityName, _allProperties);
 			foreach (string propertyName in order) {
 				if (_allProperties.TryGetValue(propertyName, out IPropertyBase property)) {
@@ -435,7 +486,10 @@ namespace Runtime.DataFramework.Entities {
 			initialized = true;
 		}
 
+		public abstract void OnAwake();
+
 		protected void InitProperty(IPropertyBase property) {
+			
 			PropertyNameInfo[] dependencies = property.GetDependentProperties();
 			if (dependencies != null) {
 				IPropertyBase[] dependentProperties = new IPropertyBase[dependencies.Length];
@@ -449,9 +503,11 @@ namespace Runtime.DataFramework.Entities {
 			}
 		}
 
+		protected abstract void OnInitModifiers();
 
 
 		public void OnRecycled() {
+			OnRecycle();
 			foreach (IPropertyBase property in _allProperties.Values) {
 				property.OnRecycled();
 			}
@@ -468,7 +524,7 @@ namespace Runtime.DataFramework.Entities {
 			tempPropertyNames.Clear();
 			initialized = false;
 			this.onEntityRecycled = null;
-			OnRecycle();
+			EntityName = originalEntityName;
 		}
 
 		[field: ES3Serializable]

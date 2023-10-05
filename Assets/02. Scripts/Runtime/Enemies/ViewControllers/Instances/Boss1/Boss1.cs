@@ -33,11 +33,17 @@ namespace Runtime.Enemies
         
 
         [field: ES3Serializable] public BindableProperty<bool> ShellClosed { get; } = new BindableProperty<bool>(true);
-        
+
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            
+        }
+
         public override void OnRecycle() {
 
         }
-
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
         protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
@@ -48,6 +54,7 @@ namespace Runtime.Enemies
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
+            
             return new[] {
                 new AutoConfigCustomProperty("shellHealthInfo"),
                 new AutoConfigCustomProperty("damages")
