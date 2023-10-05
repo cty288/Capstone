@@ -50,6 +50,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
 		
+		[Header("HUD Related")]
+		[Tooltip("This is the tolerance time for the cross hair HUD to disappear after the entity is not pointed.")] 
+		[SerializeField] 
+		protected float crossHairHUDTorlanceTime = 0.5f;
+		
+		protected float crossHairHUDTimer = 0f;
+		
 
 		IEntity IEntityViewController.Entity => BoundEntity;
 
@@ -130,6 +137,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void OnPointByCrosshair() {
 			isPointed = true;
+			crossHairHUDTimer = 0f;
 			if (showNameTagWhenPointed) {
 				if(nameTagFollowTransform) {
 					GameObject
@@ -152,16 +160,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public virtual void OnUnPointByCrosshair() {
 			isPointed = false;
 			
+			
+		}
+
+		private void OnHUDUnpointedTorlanceTimeEnds() {
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
 				hudInfo.spawnedHUD.SetActive(false);
 			}
-			
 			if (showNameTagWhenPointed && nameTagFollowTransform) {
 				DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
 			}
-			
-			
 		}
+		
+		
 		
 		/// <summary>
 		/// Spawb a UI HUD element that automatically follows the transform when pointed by crosshair
@@ -207,6 +218,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		protected virtual void FixedUpdate() {
 			//if (true) {
+			if (crossHairHUDTimer < crossHairHUDTorlanceTime && !isPointed) {
+				crossHairHUDTimer += Time.fixedDeltaTime;
+				if (crossHairHUDTimer >= crossHairHUDTorlanceTime) {
+					crossHairHUDTimer = 0;
+					OnHUDUnpointedTorlanceTimeEnds();
+				}
+			}
+			
 			var camTr = mainCamera.transform;
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
 				if (!hudInfo.spawnedHUD) {
@@ -331,6 +350,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			ID = null;
 			BoundEntity = null;
 			propertyBindings.Clear();
+			crossHairHUDTimer = 0;
 
 			string[] keys = crossHairManagedHUDs.Keys.ToArray();
 			foreach (string key in keys) {
