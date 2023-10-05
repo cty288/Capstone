@@ -22,10 +22,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool finished;
         public SharedBool underGround;
         public ReturnToGround rtg;
+        public BehaviorTree tree;
 
         public override void OnStart()
         {
             isMovingUnderground = false;
+            bool init = (bool)tree.GetVariable("init").GetValue();
+            Debug.Log(init);
         }
 
         public override TaskStatus OnUpdate()
