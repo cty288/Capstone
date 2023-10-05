@@ -16,7 +16,10 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Runtime.DataFramework.Entities {
 	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent  {
 	
-		public string EntityName { get; set; }
+		public string EntityName { get;}
+		
+		public void OverrideEntityName(string name);
+		
 		/// <summary>
 		/// Register a property to the entity. This must be called before the entity is initialized
 		/// To register a property after the entity is initialized, use RegisterTempProperty
@@ -155,6 +158,8 @@ namespace Runtime.DataFramework.Entities {
 
 	public abstract class Entity :  IEntity  {
 		public abstract string EntityName { get; set; }
+
+		[ES3Serializable] private string originalEntityName;
 	
 		[ES3NonSerializable]
 		private Dictionary<string, IPropertyBase> _allProperties { get; } =
@@ -187,6 +192,7 @@ namespace Runtime.DataFramework.Entities {
 		protected Action<IEntity> onEntityRecycled;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
+			originalEntityName = EntityName;
 			configTable = GetConfigTable();
 			OnRegisterProperties();
 		}
@@ -223,7 +229,14 @@ namespace Runtime.DataFramework.Entities {
 		}
 
 
-	
+		public void OverrideEntityName(string name) {
+			if (initialized) {
+				Debug.LogError("Cannot override entity name after entity is initialized");
+				return;
+			}
+			EntityName = name;
+		}
+
 		public void RegisterInitialProperty<T>(T property) where T : IPropertyBase {
 			if (property is ICustomProperty) {
 				Debug.LogError(
@@ -494,6 +507,7 @@ namespace Runtime.DataFramework.Entities {
 
 
 		public void OnRecycled() {
+			OnRecycle();
 			foreach (IPropertyBase property in _allProperties.Values) {
 				property.OnRecycled();
 			}
@@ -510,7 +524,7 @@ namespace Runtime.DataFramework.Entities {
 			tempPropertyNames.Clear();
 			initialized = false;
 			this.onEntityRecycled = null;
-			OnRecycle();
+			EntityName = originalEntityName;
 		}
 
 		[field: ES3Serializable]

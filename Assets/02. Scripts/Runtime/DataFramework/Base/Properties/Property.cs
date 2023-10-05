@@ -296,6 +296,8 @@ namespace Runtime.DataFramework.Properties {
 				SetBaseValue(OnClone(value));
 			}
 		}
+		
+		
 	
 
 		//public abstract T OnSetBaseValueFromConfig(dynamic value);

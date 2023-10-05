@@ -421,5 +421,36 @@ namespace Tests.Tests_Editor {
 			
 			ES3.DeleteKey("test_save_ent3", "test_save");
 		}
+		
+		
+		
+		[Test]
+		public void TestOverrideNameSaveLoad() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+			
+			
+			TestEntity3 ent1 = model.GetEnemyBuilder<TestEntity3>(10)
+				.OverrideName("TTT2")
+				.FromConfig()
+				.Build();
+			
+
+			ES3.Save("test_save_ent4", ent1, "test_save");
+			model.RemoveEntity(ent1.UUID);
+			
+			ent1 = model.GetEnemyBuilder<TestEntity3>(10)
+				.FromConfig()
+				.Build();
+			Assert.AreEqual("TTT3", ent1.EntityName);
+
+			ent1 = ES3.Load<TestEntity3>("test_save_ent4", "test_save");
+			ent1.OnLoadFromSave();
+			Assert.AreEqual("TTT2", ent1.EntityName);
+		
+			ES3.DeleteKey("test_save_ent4", "test_save");
+			
+		}
 	}
 }

@@ -29,7 +29,7 @@ namespace Runtime.DataFramework.Entities.Builders {
         
         public TBuilder OverrideName(string name) {
             CheckEntity();
-            Entity.EntityName = name;
+            Entity.OverrideEntityName(name);
             return (TBuilder) this;
         }
 
