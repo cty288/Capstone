@@ -46,7 +46,7 @@ namespace Runtime.Weapons.ViewControllers {
             for (int i = 0; i < hits.Length; i++) {
                 hits[i] = new RaycastHit();
             }
-            int numHits = Physics.RaycastNonAlloc(ray, hits, 100f, detectLayerMask);
+            int numHits = Physics.RaycastNonAlloc(ray, hits, rayDistance, detectLayerMask);
             var sortedHits = hits.OrderBy(hit => hit.distance).ToArray();
 
             for (int i = 0; i < sortedHits.Length; i++) {
