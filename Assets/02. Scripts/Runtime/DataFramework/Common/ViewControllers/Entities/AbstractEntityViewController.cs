@@ -290,7 +290,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 
 				hudInfo.realSpawnPositionOffset.PositionOffset =
-					Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 3 * Time.deltaTime);
+					Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 3 * Time.fixedDeltaTime);
 			}
 			//}
 		}
