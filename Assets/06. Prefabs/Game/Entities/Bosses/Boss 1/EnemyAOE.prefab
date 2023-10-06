@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 384
   maxDistance: 100
   detectTime: 1
 --- !u!114 &3474532455940811482
@@ -158,6 +158,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a3a03657da0294c8d35c444f2c9520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
+  autoRecycleTime: 5
   curve:
     serializedVersion: 2
     m_Curve:
@@ -192,3 +200,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   travelTime: 0
+  explosion: {fileID: 4524709138631070166, guid: 6473932a3c8fe30448c39ce6a47982d2,
+    type: 3}

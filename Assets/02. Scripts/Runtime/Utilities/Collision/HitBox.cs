@@ -1,5 +1,6 @@
 using System;
 using MikroFramework.Utilities;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace Runtime.Utilities.Collision
@@ -15,7 +16,7 @@ namespace Runtime.Utilities.Collision
         private TriggerCheck _triggerCheck;
         private IHitResponder m_hitResponder;
 
-        public IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
+        public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         
         
         
@@ -27,7 +28,8 @@ namespace Runtime.Utilities.Collision
         private void Initialize()
         {
             _triggerCheck = gameObject.GetComponent<TriggerCheck>();
-            _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox"); 
+            if (_triggerCheck.TargetLayers ==0)
+                _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox"); 
             _collider = gameObject.GetComponent<Collider>();
         }
         
@@ -47,7 +49,7 @@ namespace Runtime.Utilities.Collision
             _triggerCheck.OnEnter -= TriggerCheckHit;
         }
         
-        public void TriggerCheckHit(Collider c)
+        public virtual void TriggerCheckHit(Collider c)
         {
             // Debug.Log("trigger hit detected: " + c.name);
             HitData hitData = null;
@@ -70,15 +72,16 @@ namespace Runtime.Utilities.Collision
                         HitDetector = this,
                         Attacker = m_hitResponder,
                     };
+                if (hitData.Validate())
+                {
+                    // Debug.Log("validate: ");
+                    hitData.HitDetector.HitResponder?.HitResponse(hitData);
+                    hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
+                }
             }
 
             // Debug.Log("validate: " + (hitData.Validate()));
-            if (hitData.Validate())
-            {
-                // Debug.Log("validate: ");
-                hitData.HitDetector.HitResponder?.HitResponse(hitData);
-                hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
-            }
+
         }
         
         /// <summary>
