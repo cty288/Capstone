@@ -83,7 +83,7 @@ namespace Runtime.Temporary
             exp.transform.position = transform.position;
             exp.transform.rotation = Quaternion.identity;
             Debug.Log("IExplosionViewController: " + exp.GetComponent<IExplosionViewController>());
-            exp.GetComponent<IExplosionViewController>().Init(CurrentFaction, explosionDamage, bulletOwner,
+            exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, bulletOwner,
                 bulletOwner.GetComponent<ICanDealDamage>());
         }
     }
