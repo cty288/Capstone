@@ -13,10 +13,12 @@ namespace Runtime.Temporary
         public float travelTime;
         private Vector3 start;
 
+
+        public GameObject explosion;
+        private int explosionDamage;
       
         void Start() {
-            start = transform.position;
-            StartCoroutine(Curve());
+
         }
 
         // Update is called once per frame
@@ -25,9 +27,12 @@ namespace Runtime.Temporary
 
         }
         public void Init(Transform target,float tTime, Faction faction, int damage, GameObject bulletOwner) {
-            Init(faction, damage, bulletOwner);
+            Init(faction, 0, bulletOwner);
             targetPos = target.position;
+            explosionDamage = damage;
             travelTime = tTime;
+            start = transform.position;
+            StartCoroutine(Curve());
         }
 
         IEnumerator Curve()
@@ -53,11 +58,17 @@ namespace Runtime.Temporary
 
 
         protected override void OnHitResponse(HitData data) {
-           
+           Explode();
         }
 
         protected override void OnBulletRecycled() {
             StopAllCoroutines();
+        }
+
+        void Explode()
+        {
+            GameObject exp= Instantiate(explosion,transform.position,Quaternion.identity);
+            exp.GetComponent<AbstractExplosionViewController>().Init(CurrentFaction,explosionDamage,bulletOwner);
         }
     }
 }

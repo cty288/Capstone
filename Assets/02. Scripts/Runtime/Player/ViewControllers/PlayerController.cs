@@ -13,7 +13,13 @@ namespace Runtime.Temporary
 {
     public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
-        
+        private CameraShaker cameraShaker;
+
+        protected override void Awake() {
+            base.Awake();
+            cameraShaker = GetComponentInChildren<CameraShaker>();
+        }
+
         public static PlayerController GetClosestPlayer(Vector3 position) {
             if (players.Count == 0) {
                 //try find gameobject of type playercontroller
@@ -60,7 +66,14 @@ namespace Runtime.Temporary
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
-            Debug.Log($"Player takes {damage} damage. Current health: {currenthealth}");
+            float damageRatio = Mathf.Clamp01((float)damage / (float)BoundEntity.GetMaxHealth());
+            CameraShakeData shakeData = new CameraShakeData(
+                Mathf.Lerp(0f, 3f, damageRatio),
+                Mathf.Lerp(0.1f, 0.5f, damageRatio),
+                 Mathf.RoundToInt(Mathf.Lerp(10f, 50f, damageRatio))
+            );
+
+            cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {

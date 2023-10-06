@@ -31,7 +31,7 @@ namespace Runtime.Weapons
     {
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
-        [field: ES3Serializable] public override int Width { get; } = 2;
+        [field: ES3Serializable] public override int Width { get; } = 1;
         
         public override void OnRecycle()
         {
@@ -46,7 +46,11 @@ namespace Runtime.Weapons
             return null;
         }
 
-
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
+        
+        
         public override string OnGroundVCPrefabName => EntityName;
 
     }
@@ -60,6 +64,7 @@ namespace Runtime.Weapons
         public GameObject defaultGunModel;
         public GameObject reloadGunModel;
 
+        private GunAmmoVisual gunAmmoVisual;
         
         [Header("Debug")]
         [SerializeField] private string overrideName = "RustyPistol";
@@ -67,8 +72,14 @@ namespace Runtime.Weapons
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
+            gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>();
         }
-        
+
+        protected override void OnEntityStart() {
+            base.OnEntityStart();
+            gunAmmoVisual.Init(BoundEntity);
+        }
+
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
             return builder.OverrideName(overrideName).FromConfig().Build();
         }
@@ -104,7 +115,7 @@ namespace Runtime.Weapons
         }
 
         public override void OnItemScopePressed() {
-            if (isReloading) {
+            if (isReloading || playerModel.GetPlayer().GetMovementState() == MovementState.sprinting) {
                 return;
             }
             if (isScopedIn) {

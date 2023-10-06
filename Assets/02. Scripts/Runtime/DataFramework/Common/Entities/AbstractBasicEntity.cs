@@ -32,13 +32,20 @@ namespace Runtime.DataFramework.Entities {
 			RegisterInitialProperty<ICustomProperties>(new Properties.CustomProperties.CustomProperties(properties));
 			OnEntityRegisterAdditionalProperties();
 		}
+		
 
-		protected override void OnEntityStart(bool isLoadedFromSave) {
+		public override void OnAwake() {
+			
 			rarityProperty = GetProperty<IRarityProperty>();
 			tagProperty = GetProperty<ITagProperty>();
 			customProperties = GetProperty<ICustomProperties>();
 		}
-		
+
+		protected override void OnInitModifiers() {
+			OnInitModifiers(GetProperty<IRarityProperty>().BaseValue);
+		}
+
+		protected abstract void OnInitModifiers(int rarity);
 
 		/// <summary>
 		/// A place to register additional properties, normally empty. Recommended to register custom properties instead.
