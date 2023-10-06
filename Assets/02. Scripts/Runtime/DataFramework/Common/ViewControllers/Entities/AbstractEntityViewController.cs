@@ -53,7 +53,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("HUD Related")]
 		[Tooltip("This is the tolerance time for the cross hair HUD to disappear after the entity is not pointed.")] 
 		[SerializeField] 
-		protected float crossHairHUDTorlanceTime = 0.5f;
+		protected float crossHairHUDToleranceTime = 0.5f;
 		
 		protected float crossHairHUDTimer = 0f;
 		
@@ -137,9 +137,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void OnPointByCrosshair() {
 			isPointed = true;
-			crossHairHUDTimer = 0f;
+			
 			if (showNameTagWhenPointed) {
-				if(nameTagFollowTransform) {
+				if(nameTagFollowTransform && crossHairHUDTimer <= 0f) {
 					GameObject
 						nameTag = SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
 					
@@ -155,6 +155,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
 				hudInfo.spawnedHUD.SetActive(true);
 			}
+			
+			crossHairHUDTimer = 0f;
 		}
 
 		public virtual void OnUnPointByCrosshair() {
@@ -218,9 +220,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		protected virtual void FixedUpdate() {
 			//if (true) {
-			if (crossHairHUDTimer < crossHairHUDTorlanceTime && !isPointed) {
+			if (crossHairHUDTimer < crossHairHUDToleranceTime && !isPointed) {
 				crossHairHUDTimer += Time.fixedDeltaTime;
-				if (crossHairHUDTimer >= crossHairHUDTorlanceTime) {
+				if (crossHairHUDTimer >= crossHairHUDToleranceTime) {
 					crossHairHUDTimer = 0;
 					OnHUDUnpointedTorlanceTimeEnds();
 				}

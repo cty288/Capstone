@@ -1,4 +1,7 @@
 using System.Collections;
+using MikroFramework;
+using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
@@ -13,10 +16,12 @@ namespace Runtime.Temporary
         public float travelTime;
         private Vector3 start;
 
+
+        public GameObject explosion;
+        private int explosionDamage;
       
         void Start() {
-            start = transform.position;
-            StartCoroutine(Curve());
+
         }
 
         // Update is called once per frame
@@ -25,9 +30,12 @@ namespace Runtime.Temporary
 
         }
         public void Init(Transform target,float tTime, Faction faction, int damage, GameObject bulletOwner) {
-            Init(faction, damage, bulletOwner);
+            Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>());
             targetPos = target.position;
+            explosionDamage = damage;
             travelTime = tTime;
+            start = transform.position;
+            StartCoroutine(Curve());
         }
 
         IEnumerator Curve()
@@ -54,10 +62,29 @@ namespace Runtime.Temporary
 
         protected override void OnHitResponse(HitData data) {
            
+           //Explode();
+        }
+        
+
+        protected override void OnHitObject(Collider other) {
+            Explode();
         }
 
         protected override void OnBulletRecycled() {
             StopAllCoroutines();
+        }
+
+        void Explode() {
+            SafeGameObjectPool pool = GameObjectPoolManager.Singleton.CreatePool(explosion, 10, 100);
+
+            GameObject exp = pool.Allocate();
+            
+            //Instantiate(explosion,transform.position,Quaternion.identity);
+            exp.transform.position = transform.position;
+            exp.transform.rotation = Quaternion.identity;
+            Debug.Log("IExplosionViewController: " + exp.GetComponent<IExplosionViewController>());
+            exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, bulletOwner,
+                bulletOwner.GetComponent<ICanDealDamage>());
         }
     }
 }

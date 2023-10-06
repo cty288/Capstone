@@ -192,22 +192,24 @@ namespace Runtime.Enemies
 
         public override void HurtResponse(HitData data)
         {
+            int originalDamage = data.Damage;
+            //base.HurtResponse(data);
             Debug.Log("hurt response");
             if (BoundEntity.ShellClosed)
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
                
                 if (shellHp.Value.CurrentHealth > 0) {
-                    if (shellHp.Value.CurrentHealth - data.Damage <= 0) {
+                    if (shellHp.Value.CurrentHealth -originalDamage <= 0) {
                         shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,0);
                     }
                     else {
-                        shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth, shellHp.Value.CurrentHealth - data.Damage);
+                        shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth, shellHp.Value.CurrentHealth - originalDamage);
                     }
                 }
                
                 
-                Debug.Log("Shell has taken" + data.Damage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
+                Debug.Log("Shell has taken" + originalDamage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }
 
             BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
