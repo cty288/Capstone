@@ -14,14 +14,20 @@ using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
 	
+	public interface IDamageableViewController : IEntityViewController {
+		public IDamageable DamageableEntity { get; }
+	}
 	
+	public interface ICanDealDamageViewController : IEntityViewController {
+		public ICanDealDamage CanDealDamageEntity { get; }
+	}
 	
 	/// <summary>
 	/// An abstract view controller for entities that can take damage (have health)
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TEntityModel"></typeparam>
-	public abstract class AbstractDamagableViewController<T> : AbstractBasicEntityViewController<T>, IHurtResponder
+	public abstract class AbstractDamagableViewController<T> : AbstractBasicEntityViewController<T>, IHurtResponder, IDamageableViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable{
 		
 		[Header("Hurtresponder_Info")]
@@ -52,6 +58,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			if (currenthealth <= 0) {
 				OnEntityDie(damagedealer);
+				
 			}
 		}
 
@@ -88,5 +95,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			// Debug.Log("I AM HURTING");
 			BoundEntity.TakeDamage(data.Damage,data.Attacker, data);
 		}
+
+		public IDamageable DamageableEntity => BoundEntity;
 	}
 }

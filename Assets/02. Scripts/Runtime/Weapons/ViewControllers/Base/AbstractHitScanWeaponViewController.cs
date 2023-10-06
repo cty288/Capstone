@@ -54,8 +54,8 @@ namespace Runtime.Weapons.ViewControllers.Base
             return new HitScan(this, CurrentFaction.Value, trailRenderer);
         }
         
-        public virtual void Shoot()
-        {
+        public virtual void Shoot() {
+            crossHairViewController?.OnShoot();
             BoundEntity.OnRecoil(isScopedIn);
             hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetBaseDamage().RealValue);
         }

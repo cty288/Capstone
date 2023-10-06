@@ -1,4 +1,5 @@
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -49,5 +50,8 @@ namespace Runtime.Temporary.Weapon
         }
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
     }
 }

@@ -114,18 +114,20 @@ namespace Runtime.Weapons
             }
         }
 
-        public override void OnItemScopePressed() {
+        
+        public override bool OnItemScopePressed(bool shouldScope) {
             if (isReloading) {
-                return;
+                return false;
             }
-            if (isScopedIn) {
+            if (!shouldScope) {
                 StartCoroutine(ScopeOut());
             }
             else {
-                StartCoroutine(ScopeIn());   
+                StartCoroutine(ScopeIn());
             }
+            return shouldScope;
         }
-        
+
 
         public void Update()
         {
@@ -181,6 +183,7 @@ namespace Runtime.Weapons
             model.transform.position = scopeInPositionTransform.position;
             yield return null;
             isScopedIn = true;
+            crossHairViewController?.OnScope(true);
         }
 
         private IEnumerator ScopeOut(bool reloadAfter = false)
@@ -209,6 +212,7 @@ namespace Runtime.Weapons
                 // isReloading = true;
                 StartCoroutine(ReloadChangeModel());
             }
+            crossHairViewController?.OnScope(false);
         }
 
         public override void OnRecycled() {

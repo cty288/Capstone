@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -23,6 +24,10 @@ namespace Runtime.Enemies
        
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Hostile);
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
         public int Damage => m_damage;
         public List<GameObject> hitObjects= new List<GameObject>();
         public bool CheckHit(HitData data) {

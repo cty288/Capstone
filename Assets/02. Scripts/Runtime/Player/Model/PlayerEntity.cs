@@ -1,5 +1,6 @@
 ﻿using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -21,7 +22,7 @@ namespace Runtime.Player {
 		
 	}
 	
-	public class PlayerEntity : AbstractCreature, IPlayerEntity {
+	public class PlayerEntity : AbstractCreature, IPlayerEntity, ICanDealDamage {
 		public override string EntityName { get; set; } = "Player";
 		
 		private IAccelerationForce accelerationForce;
@@ -135,6 +136,10 @@ namespace Runtime.Player {
 
 		protected override Faction GetDefaultFaction() {
 			return Faction.Friendly;
+		}
+
+		public void OnKillDamageable(IDamageable damageable) {
+			
 		}
 	}
 }

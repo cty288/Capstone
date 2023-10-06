@@ -3,6 +3,7 @@ using System.Collections;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -63,6 +64,10 @@ namespace Runtime.Temporary.Weapon
 
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
+
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
 
         public void Start()
         {

@@ -64,15 +64,16 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		/// <param name="damage"></param>
 		/// <param name="damageDealer"></param>
-		public void TakeDamage(int damage, [CanBeNull] IBelongToFaction damageDealer, [CanBeNull] HitData hitData = null) {
-			if(!CheckCanTakeDamage(damageDealer)) {
+		public void TakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null) {
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			if(!CheckCanTakeDamage(damageDealer) || healthInfo.CurrentHealth <= 0) {
 				return;
 			}
 			
 
 			int actualDamage = OnTakeDamageAdditionalCheck(damage, damageDealer);
 			
-			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			
 			
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage
@@ -83,6 +84,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 				hitData.Damage = damageAmount;
 			}
 			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer, hitData);
+			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
+				damageDealer?.OnKillDamageable(this);
+			}
 		}
 		
 		
@@ -94,7 +98,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			return damage;
 		}
 		
-		public bool CheckCanTakeDamage([CanBeNull] IBelongToFaction damageDealer) {
+		public bool CheckCanTakeDamage([CanBeNull] ICanDealDamage damageDealer) {
 			if(damageDealer != null && damageDealer.IsSameFaction(this)) {
 				return false;
 			}

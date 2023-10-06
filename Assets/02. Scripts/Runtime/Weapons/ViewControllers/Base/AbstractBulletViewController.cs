@@ -5,6 +5,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -21,7 +22,10 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	[RequireComponent(typeof(HitBox))]
 	public abstract class AbstractBulletViewController : PoolableGameObject, IHitResponder, IController, IBulletViewController {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
-		
+		public void OnKillDamageable(IDamageable damageable) {
+			
+		}
+
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
 		

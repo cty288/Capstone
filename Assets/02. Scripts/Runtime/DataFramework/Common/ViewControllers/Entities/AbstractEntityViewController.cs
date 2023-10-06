@@ -53,7 +53,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("HUD Related")]
 		[Tooltip("This is the tolerance time for the cross hair HUD to disappear after the entity is not pointed.")] 
 		[SerializeField] 
-		protected float crossHairHUDTorlanceTime = 0.5f;
+		protected float crossHairHUDToleranceTime = 0.5f;
 		
 		protected float crossHairHUDTimer = 0f;
 		
@@ -218,9 +218,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		protected virtual void FixedUpdate() {
 			//if (true) {
-			if (crossHairHUDTimer < crossHairHUDTorlanceTime && !isPointed) {
+			if (crossHairHUDTimer < crossHairHUDToleranceTime && !isPointed) {
 				crossHairHUDTimer += Time.fixedDeltaTime;
-				if (crossHairHUDTimer >= crossHairHUDTorlanceTime) {
+				if (crossHairHUDTimer >= crossHairHUDToleranceTime) {
 					crossHairHUDTimer = 0;
 					OnHUDUnpointedTorlanceTimeEnds();
 				}
