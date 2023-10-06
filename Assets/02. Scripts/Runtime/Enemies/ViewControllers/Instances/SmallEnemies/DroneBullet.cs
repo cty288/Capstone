@@ -23,7 +23,11 @@ namespace a
 
 		}
 
-		protected override void OnBulletRecycled()
+        protected override void OnHitObject(Collider other) {
+	        
+        }
+
+        protected override void OnBulletRecycled()
 		{
 
 		}

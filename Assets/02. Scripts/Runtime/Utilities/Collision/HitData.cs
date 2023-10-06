@@ -56,7 +56,14 @@ namespace Runtime.Utilities.Collision
                 if (Hurtbox.CheckHit(this))
                     if (Hurtbox.HurtResponder == null || Hurtbox.HurtResponder.CheckHurt(this))
                         if (HitDetector.HitResponder == null || HitDetector.HitResponder.CheckHit(this))
-                            return true;
+                            if (HitDetector.HitResponder != null && Hurtbox.HurtResponder != null &&
+                                HitDetector.HitResponder.IsSameFaction(Hurtbox.HurtResponder)) {
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                            
             return false;
         }
 

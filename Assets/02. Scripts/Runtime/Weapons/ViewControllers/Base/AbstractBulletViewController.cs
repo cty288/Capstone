@@ -36,6 +36,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 
 		[SerializeField] private float autoRecycleTime = 5f;
+		[SerializeField] private bool penetrateSameFaction = false;
 		private Coroutine autoRecycleCoroutine = null;
 		
 		protected HitBox hitBox = null;
@@ -90,10 +91,24 @@ namespace Runtime.Weapons.ViewControllers.Base {
         hitObjects.Add(data.Hurtbox.Owner);
       }
 			OnHitResponse(data);
-			RecycleToCache();
+			//RecycleToCache();
 		}
 
 		protected abstract void OnHitResponse(HitData data);
+
+		protected virtual void OnTriggerEnter(Collider other) {
+			if (!other.isTrigger) {
+				if(other.transform.root.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
+					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
+						return;
+					}
+				}
+				OnHitObject(other);
+				RecycleToCache();
+			}
+		}
+		
+		protected abstract void OnHitObject(Collider other);
 
 		public override void OnRecycled() {
 			base.OnRecycled();
@@ -113,7 +128,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 			
 			hitBox.StopCheckingHits();
-			this.bulletOwner = null;
+			//this.bulletOwner = null;
 			//this.owner = null;
 			
 		}

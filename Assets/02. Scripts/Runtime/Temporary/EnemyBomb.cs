@@ -1,4 +1,6 @@
 using System.Collections;
+using MikroFramework;
+using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
@@ -59,16 +61,28 @@ namespace Runtime.Temporary
 
 
         protected override void OnHitResponse(HitData data) {
-           Explode();
+           
+           //Explode();
+        }
+        
+
+        protected override void OnHitObject(Collider other) {
+            Explode();
         }
 
         protected override void OnBulletRecycled() {
             StopAllCoroutines();
         }
 
-        void Explode()
-        {
-            GameObject exp= Instantiate(explosion,transform.position,Quaternion.identity);
+        void Explode() {
+            SafeGameObjectPool pool = GameObjectPoolManager.Singleton.CreatePool(explosion, 10, 100);
+
+            GameObject exp = pool.Allocate();
+            
+            //Instantiate(explosion,transform.position,Quaternion.identity);
+            exp.transform.position = transform.position;
+            exp.transform.rotation = Quaternion.identity;
+            Debug.Log("IExplosionViewController: " + exp.GetComponent<IExplosionViewController>());
             exp.GetComponent<IExplosionViewController>().Init(CurrentFaction, explosionDamage, bulletOwner,
                 bulletOwner.GetComponent<ICanDealDamage>());
         }
