@@ -36,11 +36,12 @@ namespace Runtime.Enemies.Model {
 		
 		
 
-		protected override void OnEntityStart(bool isLoadedFromSave) {
-			base.OnEntityStart(isLoadedFromSave);
+	
+
+		public override void OnAwake() {
+			base.OnAwake();
 			dangerProperty = GetProperty<IDangerProperty>();
 			healthProperty = GetProperty<IHealthProperty>();
-			
 		}
 
 		protected override Faction GetDefaultFaction() {

@@ -10,8 +10,10 @@ namespace Runtime.RawMaterials.Model.Base {
 	}
 	public abstract class RawMaterialEntity<T> : ResourceEntity<T>, IRawMaterialEntity where T : ResourceEntity<T>, new() {
 		private IBaitAdjectives baitAdjectivesProperty;
-		protected override void OnEntityStart(bool isLoadedFromSave) {
-			base.OnEntityStart(isLoadedFromSave);
+		
+
+		public override void OnAwake() {
+			base.OnAwake();
 			baitAdjectivesProperty = GetProperty<IBaitAdjectives>();
 		}
 

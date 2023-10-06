@@ -24,6 +24,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
         public override void OnStart()
         {
+            
             base.OnStart();
 
             // initially move towards the closest waypoint

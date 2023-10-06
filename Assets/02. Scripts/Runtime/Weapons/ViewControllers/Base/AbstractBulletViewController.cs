@@ -42,6 +42,11 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
+			//ignore collision with bullet owner
+			Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
+			if (bulletOwnerCollider != null) {
+				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
+			}
 		}
 
 		public override void OnStartOrAllocate() {
@@ -66,8 +71,12 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public void HitResponse(HitData data) {
-			if(data.Hurtbox!=null)
-				hitObjects.Add(data.Hurtbox.Owner);
+			if(data.Hurtbox!=null){
+			  if (data.Hurtbox.Owner == bulletOwner) {
+				  return;
+			  }
+        hitObjects.Add(data.Hurtbox.Owner);
+      }
 			OnHitResponse(data);
 			RecycleToCache();
 		}
@@ -82,8 +91,18 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				StopCoroutine(autoRecycleCoroutine);
 				autoRecycleCoroutine = null;
 			}
+
+			if (bulletOwner) {
+				Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
+				if (bulletOwnerCollider != null) {
+					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
+				}
+			}
+
+			
 			hitBox.StopCheckingHits();
 			this.bulletOwner = null;
+			
 			
 		}
 

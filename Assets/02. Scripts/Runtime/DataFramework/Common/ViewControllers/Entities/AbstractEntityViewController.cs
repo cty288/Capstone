@@ -50,6 +50,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
 		
+		[Header("HUD Related")]
+		[Tooltip("This is the tolerance time for the cross hair HUD to disappear after the entity is not pointed.")] 
+		[SerializeField] 
+		protected float crossHairHUDTorlanceTime = 0.5f;
+		
+		protected float crossHairHUDTimer = 0f;
+		
 
 		IEntity IEntityViewController.Entity => BoundEntity;
 
@@ -130,6 +137,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void OnPointByCrosshair() {
 			isPointed = true;
+			crossHairHUDTimer = 0f;
 			if (showNameTagWhenPointed) {
 				if(nameTagFollowTransform) {
 					GameObject
@@ -152,16 +160,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public virtual void OnUnPointByCrosshair() {
 			isPointed = false;
 			
+			
+		}
+
+		private void OnHUDUnpointedTorlanceTimeEnds() {
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
 				hudInfo.spawnedHUD.SetActive(false);
 			}
-			
 			if (showNameTagWhenPointed && nameTagFollowTransform) {
 				DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
 			}
-			
-			
 		}
+		
+		
 		
 		/// <summary>
 		/// Spawb a UI HUD element that automatically follows the transform when pointed by crosshair
@@ -206,45 +217,101 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		protected virtual void FixedUpdate() {
-			if (isPointed) {
-				var camTr = mainCamera.transform;
-				foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
-					if (!hudInfo.spawnedHUD) {
-						continue;
-					}
-					RaycastHit hit;
-					bool hitSelf = false;
+			//if (true) {
+			if (crossHairHUDTimer < crossHairHUDTorlanceTime && !isPointed) {
+				crossHairHUDTimer += Time.fixedDeltaTime;
+				if (crossHairHUDTimer >= crossHairHUDTorlanceTime) {
+					crossHairHUDTimer = 0;
+					OnHUDUnpointedTorlanceTimeEnds();
+				}
+			}
+			
+			var camTr = mainCamera.transform;
+			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+				if (!hudInfo.spawnedHUD) {
+					continue;
+				}
 
-					if (hudInfo.AutoAdjust) {
-						if (Physics.Raycast(camTr.position, hudInfo.originalSpawnTransform.transform.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
-							if (!hit.collider.isTrigger && hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
-								hitSelf = true;
+				
+				
+				RaycastHit hit;
+				bool needAdjust = false;
+				if (hudInfo.AutoAdjust) {
+					
+					
+					
+					//get the screen pos of this game obj and original target. If they are too close, then adjust original target pos
+					//by extending it further from this game obj targetPos + (targetPos - this game obj pos) until their distance on screen is larger than 100
+					//hudInfo.originalSpawnPositionOffset.PositionOffset is the local position of the original target
+				
+					Vector2 thisGameObjScreenPos = mainCamera.WorldToScreenPoint(transform.position);
+					Vector2 targetScreenPos = mainCamera.WorldToScreenPoint(transform.position + hudInfo.targetPos);
+					Vector2 originalTargetScreenPos =
+						mainCamera.WorldToScreenPoint(hudInfo.originalSpawnTransform.transform.position);
+					
+					
+					if (Physics.Raycast(camTr.position, hudInfo.originalSpawnTransform.transform.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+						if (!hit.collider.isTrigger && hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
+							needAdjust = true;
 
-								Transform realHealthBarSpawnPoint = hudInfo.realSpawnPositionOffset.transform;
-								if (Physics.Raycast(camTr.position, realHealthBarSpawnPoint.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
-									if (hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
-										hudInfo.targetPos += Vector3.up * 0.5f;
-										//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
-										if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
-										    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
-											hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
-										}
-									
+							Transform realHealthBarSpawnPoint = hudInfo.realSpawnPositionOffset.transform;
+							if (Physics.Raycast(camTr.position, transform.position + hudInfo.targetPos - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+								if (hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
+									hudInfo.targetPos += Vector3.up * 0.5f;
+									//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
+									if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
+									    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
+										hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
 									}
+								
 								}
 							}
 						}
 					}
+
+
+					float originalToScreenDistance =
+						Vector2.Distance(thisGameObjScreenPos, originalTargetScreenPos);
+					
+				
 					
 					
-					if (!hitSelf) {
-						hudInfo.targetPos = hudInfo.originalSpawnPositionOffset.PositionOffset;
+					if (originalToScreenDistance < 40f) {
+						needAdjust = true;
+						float distance = Vector2.Distance(thisGameObjScreenPos, targetScreenPos);
+						var position = transform.position + hudInfo.targetPos;
+						float realWorldDistance = Vector3.Distance(position, transform.position);
+						/*if (distance < 40f) {
+
+							float requiredRealWorldDistance = (realWorldDistance * 40f) / distance;
+
+					
+							float distanceToMove = requiredRealWorldDistance - realWorldDistance;
+
+							Vector3 direction = (position - transform.position).normalized;
+					
+							hudInfo.targetPos += direction * distanceToMove;
+						}*/
+						
+						//always make the screen distance equal to 40
+						float requiredRealWorldDistance = (realWorldDistance * 40f) / distance;
+						float distanceToMove = requiredRealWorldDistance - realWorldDistance;
+						Vector3 direction = (position - transform.position).normalized;
+						hudInfo.targetPos += direction * distanceToMove;
 					}
 
-					hudInfo.realSpawnPositionOffset.PositionOffset =
-						Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 0.1f);
 				}
+				
+				
+				
+				if (!needAdjust) {
+					hudInfo.targetPos = hudInfo.originalSpawnPositionOffset.PositionOffset;
+				}
+
+				hudInfo.realSpawnPositionOffset.PositionOffset =
+					Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 3 * Time.fixedDeltaTime);
 			}
+			//}
 		}
 
 
@@ -283,6 +350,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			ID = null;
 			BoundEntity = null;
 			propertyBindings.Clear();
+			crossHairHUDTimer = 0;
 
 			string[] keys = crossHairManagedHUDs.Keys.ToArray();
 			foreach (string key in keys) {

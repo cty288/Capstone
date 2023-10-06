@@ -55,7 +55,9 @@ namespace Runtime.Player {
 		public override void OnRecycle() {
 			
 		}
-
+		protected override void OnInitModifiers(int rarity) {
+            
+		}
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return "";
 		}
@@ -75,9 +77,13 @@ namespace Runtime.Player {
 			RegisterInitialProperty<IWallRunForce>(new WallRunForce());
 		}
 
+
 		protected override void OnEntityStart(bool isLoadedFromSave) {
-			base.OnEntityStart(isLoadedFromSave);
 			
+		}
+
+		public override void OnAwake() {
+			base.OnAwake();
 			accelerationForce = GetProperty<IAccelerationForce>();
 			walkSpeed = GetProperty<IWalkSpeed>();
 			sprintSpeed = GetProperty<ISprintSpeed>();
@@ -88,11 +94,11 @@ namespace Runtime.Player {
 			maxSlideTime = GetProperty<IMaxSlideTime>();
 			slideForce = GetProperty<ISlideForce>();
 			wallRunForce = GetProperty<IWallRunForce>();
-			
 		}
-		
+
 		public IAccelerationForce GetAccelerationForce() {
 			return accelerationForce;
+
 		}
 		
 		public IWalkSpeed GetWalkSpeed() {

@@ -1,4 +1,5 @@
-﻿using Runtime.DataFramework.Entities.Builders;
+﻿using System;
+using Runtime.DataFramework.Entities.Builders;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties;
 using Runtime.Enemies.Model.Properties;
@@ -9,11 +10,13 @@ namespace Runtime.DataFramework.Entities.Creatures {
 		where TBuilder : CreatureBuilder<TBuilder, TEntity>{
 		
 		
-		public TBuilder SetHealth(HealthInfo healthInfo, IPropertyDependencyModifier<HealthInfo> modifier = null) {
-			SetProperty<HealthInfo>(new PropertyNameInfo(PropertyName.health), healthInfo, modifier);
+		public TBuilder SetHealth(HealthInfo healthInfo) {
+			SetProperty<HealthInfo>(new PropertyNameInfo(PropertyName.health), healthInfo);
 			return (TBuilder) this;
 		}
 		
+		
+		[Obsolete("This method is obsolete. To set modifier, do this in the entity's own class.")]
 		public TBuilder SetHealthModifier(IPropertyDependencyModifier<HealthInfo> modifier = null) {
 			SetModifier(new PropertyNameInfo(PropertyName.health), modifier);
 			return (TBuilder)this;

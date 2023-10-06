@@ -42,11 +42,13 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class ScopeRecoilDefaultModifier : PropertyDependencyModifier<RecoilInfo>
+    public class ScopeRecoilDefaultModifier : PropertyDependencyModifierWithRarity<RecoilInfo>
     {
-        public override RecoilInfo OnModify(RecoilInfo propertyValue)
+        protected override RecoilInfo OnModify(RecoilInfo propertyValue, int rarity)
         {
             return propertyValue;
         }
     }
+    
+   
 }

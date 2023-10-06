@@ -8,6 +8,7 @@ namespace FIMSpace.GroundFitter
         public GameObject player;
         protected virtual void Update()
         {
+            /*
             Vector3 dir = Vector3.zero;
             dir = player.transform.position - this.gameObject.transform.position;
 
@@ -20,8 +21,8 @@ namespace FIMSpace.GroundFitter
             controller.Sprint = Sprint;
             controller.MoveVector = MoveVector;
             controller.RotationOffset = RotationOffset;
+            */
             
-            /*
             if (Input.GetKeyDown(KeyCode.Space)) TriggerJump();
 
             Vector3 dir = Vector3.zero;
@@ -57,8 +58,8 @@ namespace FIMSpace.GroundFitter
 
             controller.Sprint = Sprint;
             controller.MoveVector = MoveVector;
-            controller.RotationOffset = RotationOffset;8
-            */
+            controller.RotationOffset = RotationOffset;
+            
         }
     }
 }

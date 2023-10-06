@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities;
@@ -12,6 +14,8 @@ using UnityEngine;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
 	
+	
+	
 	/// <summary>
 	/// An abstract view controller for entities that can take damage (have health)
 	/// </summary>
@@ -22,6 +26,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		[Header("Hurtresponder_Info")]
 		private List<HurtBox> hurtBoxes = new List<HurtBox>();
+		
+		[Header("Damage Number")]
+		[SerializeField] private bool showDamageNumber = true;
+		//[SerializeField] private DamageNumberInfo damageNumberInfo;
 		
 		protected override void OnStart() {
 			base.OnStart();
@@ -37,9 +45,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			OnEntityHeal(healamount, currenthealth, healer);
 		}
 
-		private void OnTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+		private void OnTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer, [CanBeNull] HitData hitData) {
 			OnEntityTakeDamage(damage, currenthealth, damagedealer);
-			
+			if (showDamageNumber) {
+				DamageNumberHUD.Singleton.SpawnHUD(hitData?.HitPoint ?? transform.position, damage);
+			}
 			if (currenthealth <= 0) {
 				OnEntityDie(damagedealer);
 			}
@@ -50,7 +60,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		/// </summary>
 		/// <param name="damagedealer"></param>
 		protected abstract void OnEntityDie(IBelongToFaction damagedealer);
-		
+
 		/// <summary>
 		/// When the entity takes damage, this method will be called
 		/// </summary>
@@ -76,7 +86,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void HurtResponse(HitData data) {
 			// Debug.Log("I AM HURTING");
-			BoundEntity.TakeDamage(data.Damage,data.Attacker);
+			BoundEntity.TakeDamage(data.Damage,data.Attacker, data);
 		}
 	}
 }

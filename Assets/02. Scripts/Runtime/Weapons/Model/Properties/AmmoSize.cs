@@ -9,8 +9,7 @@ namespace Runtime.Weapons.Model.Properties
             return new AmmoSizeDefaultModifier();
         }
 
-        protected override PropertyName GetPropertyName()
-        {
+        protected override PropertyName GetPropertyName() {
             return PropertyName.ammo_size;
         }
 
@@ -20,9 +19,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class AmmoSizeDefaultModifier : PropertyDependencyModifier<int>
+    public class AmmoSizeDefaultModifier : PropertyDependencyModifierWithRarity<int>
     {
-        public override int OnModify(int propertyValue)
+        protected override int OnModify(int propertyValue, int rarity)
         {
             return propertyValue;
         }

@@ -20,10 +20,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class SpreadDefaultModifier : PropertyDependencyModifier<float>
+    public class SpreadDefaultModifier  : PropertyDependencyModifierWithRarity<float>
     {
-        public override float OnModify(float propertyValue)
-        {
+        protected override float OnModify(float propertyValue, int rarity) {
             return propertyValue;
         }
     }
