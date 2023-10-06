@@ -3,6 +3,7 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using MikroFramework;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies;
 using Runtime.Utilities.Collision;
@@ -68,7 +69,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                 enemyEntity.GetCustomDataValue<int>("damages", "rapidFireDamage"), 
-                gameObject);
+                gameObject, gameObject.GetComponent<ICanDealDamage>());
 
         }
     }

@@ -1,6 +1,7 @@
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
@@ -8,9 +9,10 @@ using Runtime.DataFramework.Properties;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
+using UnityEngine;
 
 namespace Runtime.Enemies.Model {
-	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags {
+	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
 		
@@ -67,5 +69,12 @@ namespace Runtime.Enemies.Model {
 		}
 
 
+		public void OnKillDamageable(IDamageable damageable) {
+			Debug.Log($"Kill Damageable: {damageable.EntityName}");
+		}
+
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			
+		}
 	}
 }

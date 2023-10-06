@@ -114,18 +114,20 @@ namespace Runtime.Weapons
             }
         }
 
-        public override void OnItemScopePressed() {
+        
+        public override bool OnItemScopePressed(bool shouldScope) {
             if (isReloading) {
-                return;
+                return false;
             }
-            if (isScopedIn) {
+            if (!shouldScope) {
                 StartCoroutine(ScopeOut());
             }
             else {
-                StartCoroutine(ScopeIn());   
+                StartCoroutine(ScopeIn());
             }
+            return shouldScope;
         }
-        
+
 
         public void Update()
         {

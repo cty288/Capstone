@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Temporary;
 using Runtime.Utilities.AnimationEvents;
@@ -36,6 +37,14 @@ namespace Runtime.RunTimeTests.TestCollision
         
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Hostile);
+
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
 
 
         public void Start()

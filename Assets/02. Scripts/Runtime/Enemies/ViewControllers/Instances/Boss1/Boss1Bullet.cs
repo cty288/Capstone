@@ -1,7 +1,6 @@
 ﻿using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
-
-
+using UnityEngine;
 
 
 namespace a {
@@ -12,7 +11,11 @@ namespace a {
 			
 		}
 
-		protected override void OnBulletRecycled() {
+        protected override void OnHitObject(Collider other) {
+	        
+        }
+
+        protected override void OnBulletRecycled() {
 			
 		}
         
