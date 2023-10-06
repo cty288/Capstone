@@ -115,7 +115,7 @@ namespace Runtime.Weapons
         }
 
         public override void OnItemScopePressed() {
-            if (isReloading) {
+            if (isReloading || playerModel.GetPlayer().GetMovementState() == MovementState.sprinting) {
                 return;
             }
             if (isScopedIn) {
