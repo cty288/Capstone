@@ -9,8 +9,14 @@ namespace Runtime.RawMaterials.Model.Instances {
 		public override string EntityName { get; set; }
 		
 		public CommonRawMaterialEntity():base(){}
-		
-		
+		protected override void OnInitModifiers(int rarity) {
+            
+		}
+
+		protected override void OnEntityStart(bool isLoadedFromSave) {
+			
+		}
+
 		public override void OnRecycle() {
 			
 		}

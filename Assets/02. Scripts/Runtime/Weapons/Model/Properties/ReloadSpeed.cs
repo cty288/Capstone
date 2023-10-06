@@ -20,10 +20,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class ReloadSpeedDefaultModifier : PropertyDependencyModifier<float>
+    public class ReloadSpeedDefaultModifier  : PropertyDependencyModifierWithRarity<float>
     {
-        public override float OnModify(float propertyValue)
-        {
+        protected override float OnModify(float propertyValue, int rarity) {
             return propertyValue;
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Framework;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -13,6 +14,7 @@ using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
+using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -34,12 +36,19 @@ namespace Tests.Tests_Editor {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
 
+            protected override void OnEntityStart(bool isLoadedFromSave) {
+                
+            }
 
 
             protected override void OnEnemyRegisterAdditionalProperties() {
                 RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
                 RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
                 RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
+            }
+
+            protected override void OnInitModifiers(int rarity) {
+                
             }
 
             protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -55,14 +64,20 @@ namespace Tests.Tests_Editor {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
 
- 
+            protected override void OnEntityStart(bool isLoadedFromSave) {
+                
+            }
+
+
             protected override string OnGetDescription(string defaultLocalizationKey) {
                 return null;
             }
             public override void OnDoRecycle() {
                 
             }
-
+            protected override void OnInitModifiers(int rarity) {
+                
+            }
             public override void OnRecycle() {
             
             }
@@ -205,7 +220,7 @@ namespace Tests.Tests_Editor {
             ent1.RegisterOnTakeDamage(OnEnt1TakeDamage);
             ent1.TakeDamage(200, ent2);
             
-            void OnEnt1TakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+            void OnEnt1TakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer, [CanBeNull] HitData hitData) {
                 Assert.AreEqual(200, damage);
                 Assert.AreEqual(799, currenthealth);
                 Assert.AreEqual(ent2, damagedealer);

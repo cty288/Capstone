@@ -16,12 +16,12 @@ namespace Runtime.Enemies.Model {
 			RegisterInitialProperty<ITasteProperty>(new Taste());
 			base.OnEntityRegisterAdditionalProperties();
 		}
-
-		protected override void OnEntityStart(bool isLoadedFromSave) {
-			base.OnEntityStart(isLoadedFromSave);
+		
+		public override void OnAwake() {
+			base.OnAwake();
 			tasteProperty = GetProperty<ITasteProperty>();
 		}
-		
+
 		public BindableList<TasteType> GetTaste() {
 			return this.tasteProperty.RealValues;
 		}

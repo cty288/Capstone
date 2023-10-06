@@ -8,7 +8,12 @@ using Runtime.RawMaterials.Model.Builder;
 using UnityEngine;
 
 namespace Runtime.RawMaterials.ViewControllers {
-	public abstract class AbstractPickableRawMaterialViewController<T> : AbstractPickableResourceViewController<T> 
+	
+	public interface IRawMaterialViewController : IResourceViewController {
+		IRawMaterialEntity RawMaterialEntity { get; }
+	}
+	
+	public abstract class AbstractPickableRawMaterialViewController<T> : AbstractPickableResourceViewController<T>, IRawMaterialViewController
 		where  T : class, IRawMaterialEntity, new(){
 		
 		protected IRawMaterialModel rawMaterialModel;
@@ -26,6 +31,7 @@ namespace Runtime.RawMaterials.ViewControllers {
 
 		protected abstract IEntity OnInitResourceEntity(RawMaterialBuilder<T> builder);
 
-		
+
+		public IRawMaterialEntity RawMaterialEntity => BoundEntity;
 	}
 }

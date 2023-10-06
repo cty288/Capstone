@@ -53,11 +53,10 @@ namespace Runtime.GameResources.Model.Base {
 		protected bool pickedBefore = false;
 		
 		//private IStackSize stackSizeProperty;
-		protected override void OnEntityStart(bool isLoadedFromSave) {
-			base.OnEntityStart(isLoadedFromSave);
-			
+
+		public override void OnAwake() {
+			base.OnAwake();
 			maxStackProperty = GetProperty<IMaxStack>();
-			//stackSizeProperty = GetProperty<IStackSize>();
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {

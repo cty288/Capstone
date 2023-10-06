@@ -20,10 +20,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class BulletsPerShotDefaultModifier : PropertyDependencyModifier<int>
+    public class BulletsPerShotDefaultModifier : PropertyDependencyModifierWithRarity<int>
     {
-        public override int OnModify(int propertyValue)
-        {
+        protected override int OnModify(int propertyValue, int rarity) {
             return propertyValue;
         }
     }

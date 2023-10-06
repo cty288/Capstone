@@ -15,13 +15,6 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 		
 
-		private Camera mainCamera = null;
-		
-		protected override void Awake() {
-			base.Awake();
-			mainCamera = Camera.main;
-		}
-
 		protected override void OnStart() {
 			base.OnStart();
 		}

@@ -13,30 +13,18 @@ namespace Runtime.Weapons.Model.Builders
             CheckEntity();
         }
 
-        public WeaponBuilder<T> SetBaseDamage(int baseDamage, IPropertyDependencyModifier<int> modifier = null)
+        public WeaponBuilder<T> SetBaseDamage(int baseDamage)
         {
-            SetProperty<int>(new PropertyNameInfo(PropertyName.base_damage), baseDamage, modifier);
+            SetProperty<int>(new PropertyNameInfo(PropertyName.base_damage), baseDamage);
             return this;
         }
-
-        public WeaponBuilder<T> SetBaseDamageModifier(IPropertyDependencyModifier<int> modifier = null)
-        {
-            SetModifier(new PropertyNameInfo(PropertyName.danger), modifier);
-            return this;
-        }
-
+        
         public WeaponBuilder<T> SetAllBasics(int baseDamage)
         {
             SetBaseDamage(baseDamage);
             return this;
         }
-
-        public WeaponBuilder<T> SetAllBasicsModifiers(IPropertyDependencyModifier<int> baseDamage)
-        {
-            SetBaseDamageModifier(baseDamage);
-            return this;
-        }
-
+        
         public override void RecycleToCache()
         {
             SafeObjectPool<WeaponBuilder<T>>.Singleton.Recycle(this);

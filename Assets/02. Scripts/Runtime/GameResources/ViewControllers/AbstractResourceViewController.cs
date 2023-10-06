@@ -6,7 +6,9 @@ using Runtime.GameResources.Model.Builder;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
 
 namespace Runtime.GameResources.ViewControllers {
-	public interface IResourceViewController : IEntityViewController{}
+	public interface IResourceViewController : IEntityViewController {
+		IResourceEntity ResourceEntity => Entity as IResourceEntity;
+	}
 	public abstract class AbstractResourceViewController<T>: AbstractBasicEntityViewController<T>, IResourceViewController
 	where  T : class, IResourceEntity {
 		/*protected override void OnEntityStart() {
@@ -31,5 +33,9 @@ namespace Runtime.GameResources.ViewControllers {
 		protected abstract void OnDisplayNameUpdate(string displayName);*/
 
 		//protected abstract IResourceEntity OnInitEntityInternal();
+
+		
+		
+		
 	}
 }

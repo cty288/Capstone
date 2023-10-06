@@ -21,9 +21,12 @@ namespace Runtime.Enemies.SmallEnemies
     public class BeeEntity : NormalEnemyEntity<BeeEntity> 
     {
         [field: ES3Serializable]
-        public override string EntityName { get; set; } = "Bee";
+        public override string EntityName { get; set; } = "SurveillanceDrone";
 
-      
+
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            
+        }
 
         public override void OnRecycle()
         {
@@ -40,32 +43,47 @@ namespace Runtime.Enemies.SmallEnemies
             return null;
         }
 
-        protected override ICustomProperty[] OnRegisterCustomProperties()
-        {
-            return null;
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
+
+        protected override ICustomProperty[] OnRegisterCustomProperties() {
+            return new[] {
+                new AutoConfigCustomProperty("attack", null)
+            };
         }
     }
 
 
-    public class Bee : AbstractNormalEnemyViewController<BeeEntity> 
-    {
-        
+    public class Bee : AbstractNormalEnemyViewController<BeeEntity> {
+        [SerializeField] private List<GameObject> waypoints;
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
             
            
             
         }
-      
         
 
-        protected override void OnEntityStart()
-        {
-            
+        protected override void OnEntityStart() {
+            foreach (GameObject waypoint in waypoints) {
+                waypoint.transform.SetParent(null);
+            }
+        }
+
+        public override void OnRecycled() {
+            base.OnRecycled();
+            foreach (GameObject waypoint in waypoints) {
+                waypoint.transform.SetParent(transform);
+            }
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)
         {
+            Debug.Log($"bee 1 Take damage: {damage}. bee 1 current health: {currenthealth}");
+        }
+
+        protected override void OnAnimationEvent(string eventName) {
             
         }
 
@@ -81,5 +99,6 @@ namespace Runtime.Enemies.SmallEnemies
         protected override MikroAction WaitingForDeathCondition() {
             return null;
         }
+        
     }
 }

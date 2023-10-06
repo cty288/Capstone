@@ -23,7 +23,8 @@ TTT,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]",
     },
     ""damage"": {
       ""type"": ""int"",
-      ""value"": 900
+      ""value"": 900,
+      ""dependencies"": [""rarity"", ""custom_properties.attack1.speed""]
     }
   },
   ""attack2"": {
@@ -92,7 +93,8 @@ TestEnemy2,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Typ
   ""attack2"": {
     ""damage"": {
       ""type"": ""int"",
-      ""value"": 4
+      ""value"": 4,
+      ""dependencies"": [""rarity""]
     }
   },
   ""attack3"": {
@@ -117,3 +119,38 @@ Boss1,"{""maxHealth"": 100, ""currentHealth"": 100}",123,"[""Type1"", ""Type2""]
     }
   }
 }",,
+TTT3,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]",456,789,"{
+  ""attack1"": {
+    ""speed"": {
+      ""type"": ""int"",
+      ""value"": 100,
+      ""dependencies"": [""rarity""]
+    },
+    ""info"": {
+      ""type"": ""dynamic"",
+      ""value"": {
+        ""test"": 2.5
+      }
+    },
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 900
+    }
+  },
+  ""attack2"": {
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 4,
+      ""dependencies"": [""rarity"", ""custom_properties.attack1.speed""]
+    }
+  },
+  ""attack3"": {
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 50
+    }
+  }
+}","{
+  ""Test_Flame"": 3,
+  ""Test_Ice"": -1
+}","[""Name1"", ""Name2"", ""Name3""]"

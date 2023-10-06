@@ -4,6 +4,7 @@ using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
+using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -33,25 +34,27 @@ namespace Runtime.Enemies
 
         [field: ES3Serializable] public BindableProperty<bool> ShellClosed { get; } = new BindableProperty<bool>(true);
 
-    
-        
-        public override void OnRecycle()
-        {
-
-        }
-
-        protected override void OnEnemyRegisterAdditionalProperties()
-        {
+        protected override void OnEntityStart(bool isLoadedFromSave) {
             
         }
 
-        protected override string OnGetDescription(string defaultLocalizationKey)
-        {
-            return null;
+        public override void OnRecycle() {
+
+        }
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
+        protected override void OnEnemyRegisterAdditionalProperties() {
+            
+        }
+
+        protected override string OnGetDescription(string defaultLocalizationKey) {
+            return Localization.Get(defaultLocalizationKey);
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
+            
             return new[] {
                 new AutoConfigCustomProperty("shellHealthInfo"),
                 new AutoConfigCustomProperty("damages")
@@ -73,7 +76,6 @@ namespace Runtime.Enemies
         public int CurrentShellHealth { get; }
         [Header("HitResponder_Info")]
         public Animator animator;
-        public AnimationSMBManager animationSMBManager;
         public NavMeshAgent agent;
         
         
@@ -93,12 +95,7 @@ namespace Runtime.Enemies
         
         [SerializeField] private Transform shellHealthBarSpawnTransform;
 
-        protected override void Awake() {
-            base.Awake();
-            animationSMBManager = GetComponent<AnimationSMBManager>();
-            animationSMBManager.Event.AddListener(OnAnimationEvent);
-        }
-
+      
         protected override MikroAction WaitingForDeathCondition() {
             transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
                 deathAnimationEnd = true;
@@ -161,9 +158,7 @@ namespace Runtime.Enemies
         //
         // }
 
-        public void OnAnimationEvent(string eventName)
-        {
-            // Debug.Log("Animation Event: " + eventName);
+        protected override void OnAnimationEvent(string eventName) {
             switch (eventName)
             {
                 case "ShellOpen":
@@ -201,8 +196,7 @@ namespace Runtime.Enemies
             if (BoundEntity.ShellClosed)
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
-
-
+               
                 if (shellHp.Value.CurrentHealth > 0) {
                     if (shellHp.Value.CurrentHealth - data.Damage <= 0) {
                         shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,0);
@@ -215,8 +209,8 @@ namespace Runtime.Enemies
                 
                 Debug.Log("Shell has taken" + data.Damage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }
-            
-            BoundEntity.TakeDamage(data.Damage, data.Attacker);
+
+            BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
         }
 
         public void ChangeShellStatus(bool newStatus) {
