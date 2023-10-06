@@ -31,7 +31,7 @@ namespace Runtime.Weapons
     {
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
-        [field: ES3Serializable] public override int Width { get; } = 2;
+        [field: ES3Serializable] public override int Width { get; } = 1;
         
         public override void OnRecycle()
         {
