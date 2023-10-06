@@ -67,6 +67,11 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public override void OnRecycled() {
             base.OnRecycled();
+           
+        }
+
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
             isScope = false;
         }
 

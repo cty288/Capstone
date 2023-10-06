@@ -5,8 +5,10 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 
@@ -23,6 +25,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	[RequireComponent(typeof(ExplosionHitBox))]
 	public abstract class AbstractExplosionViewController : PoolableGameObject, IHitResponder, IController, IExplosionViewController {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
+		protected IEntity entity = null;
 		public void OnKillDamageable(IDamageable damageable) {
 			owner?.OnKillDamageable(damageable);
 		}
@@ -53,6 +56,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
 			this.owner = owner;
+			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
+			entity?.RetainRecycleRC();
 		}
 
 		public override void OnStartOrAllocate() {
@@ -94,7 +99,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			hitBox.StopCheckingHits();
 			this.bulletOwner = null;
 			this.owner = null;
-			
+			entity?.ReleaseRecycleRC();
 		}
 
 		protected abstract void OnBulletRecycled();

@@ -5,6 +5,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
@@ -42,7 +43,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected HitBox hitBox = null;
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
-
+		protected IEntity entity = null;
+			
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
 		}
@@ -60,6 +62,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
 			}
 			this.owner = owner;
+
+			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
+			entity?.RetainRecycleRC();
 		}
 
 		public override void OnStartOrAllocate() {
@@ -130,6 +135,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			hitBox.StopCheckingHits();
 			//this.bulletOwner = null;
 			//this.owner = null;
+			entity?.ReleaseRecycleRC();
 			
 		}
 

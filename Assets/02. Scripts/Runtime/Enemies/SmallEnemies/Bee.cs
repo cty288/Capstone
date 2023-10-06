@@ -70,9 +70,10 @@ namespace Runtime.Enemies.SmallEnemies
                 waypoint.transform.SetParent(null);
             }
         }
+        
 
-        public override void OnRecycled() {
-            base.OnRecycled();
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
             foreach (GameObject waypoint in waypoints) {
                 waypoint.transform.SetParent(transform);
             }
