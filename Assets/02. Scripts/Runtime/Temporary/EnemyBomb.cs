@@ -18,8 +18,7 @@ namespace Runtime.Temporary
         private int explosionDamage;
       
         void Start() {
-            start = transform.position;
-            StartCoroutine(Curve());
+
         }
 
         // Update is called once per frame
@@ -32,6 +31,8 @@ namespace Runtime.Temporary
             targetPos = target.position;
             explosionDamage = damage;
             travelTime = tTime;
+            start = transform.position;
+            StartCoroutine(Curve());
         }
 
         IEnumerator Curve()

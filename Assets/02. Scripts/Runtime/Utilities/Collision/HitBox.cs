@@ -79,7 +79,19 @@ namespace Runtime.Utilities.Collision
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                 }
             }
-
+            else {
+                hitData = new HitData()
+                {
+                    Damage = Damage,
+                    HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
+                    HitNormal = hitNormal,
+                    Hurtbox = null,
+                    HitDetector = this,
+                    Attacker = m_hitResponder,
+                };
+                
+                HitResponder?.HitResponse(hitData);
+            }
             // Debug.Log("validate: " + (hitData.Validate()));
 
         }

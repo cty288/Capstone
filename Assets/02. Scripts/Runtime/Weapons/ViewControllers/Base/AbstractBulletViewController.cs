@@ -66,7 +66,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public void HitResponse(HitData data) {
-			hitObjects.Add(data.Hurtbox.Owner);
+			if(data.Hurtbox!=null)
+				hitObjects.Add(data.Hurtbox.Owner);
 			OnHitResponse(data);
 			RecycleToCache();
 		}
