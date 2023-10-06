@@ -28,13 +28,11 @@ namespace Runtime.Enemies.SmallEnemies
             
         }
 
-        public override void OnRecycle()
-        {
+        public override void OnRecycle() {
          
         }
 
-        protected override void OnEnemyRegisterAdditionalProperties()
-        {
+        protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
 

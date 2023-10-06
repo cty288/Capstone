@@ -55,6 +55,25 @@ namespace Runtime.Weapons
 
     }
 
+    public class XXX : AbstractHitScanWeaponViewController<RustyPistolEntity> {
+        protected override void OnBindEntityProperty() {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnItemUse() {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnItemScopePressed() {
+            
+        }
+
+
+        protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
+            throw new System.NotImplementedException();
+        }
+    }
+
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         // For Coroutine Animation [WILL BE REPLACED]
@@ -100,7 +119,7 @@ namespace Runtime.Weapons
                     {
                         if (BoundEntity.CurrentAmmo == 0)
                         {
-                            if (isScopedIn)
+                            if (IsScopedIn)
                             {
                                 StartCoroutine(ScopeOut(true));
                             }
@@ -115,17 +134,16 @@ namespace Runtime.Weapons
         }
 
         
-        public override bool OnItemScopePressed(bool shouldScope) {
+        public override void OnItemScopePressed() {
             if (isReloading) {
-                return false;
+                return;
             }
-            if (!shouldScope) {
+            if (IsScopedIn) {
                 StartCoroutine(ScopeOut());
             }
             else {
                 StartCoroutine(ScopeIn());
             }
-            return shouldScope;
         }
 
 
@@ -137,7 +155,7 @@ namespace Runtime.Weapons
                 if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
-                    if (isScopedIn)
+                    if (IsScopedIn)
                     {
                         StartCoroutine(ScopeOut(true));
                     }
@@ -182,7 +200,7 @@ namespace Runtime.Weapons
             }
             model.transform.position = scopeInPositionTransform.position;
             yield return null;
-            isScopedIn = true;
+            ChangeScopeStatus(true);
         }
 
         private IEnumerator ScopeOut(bool reloadAfter = false)
@@ -204,7 +222,7 @@ namespace Runtime.Weapons
             model.transform.position = gunPositionTransform.position;
 
             yield return null;
-            isScopedIn = false;
+            ChangeScopeStatus(false);
 
             if (reloadAfter)
             {
@@ -215,7 +233,7 @@ namespace Runtime.Weapons
 
         public override void OnRecycled() {
             base.OnRecycled();
-            isScopedIn = false;
+            ChangeScopeStatus(false);
             isReloading = false;
             
             defaultGunModel.SetActive(true);
