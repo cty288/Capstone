@@ -75,10 +75,12 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public void HitResponse(HitData data) {
-			if (data.Hurtbox.Owner == bulletOwner) {
-				return;
-			}
-			hitObjects.Add(data.Hurtbox.Owner);
+			if(data.Hurtbox!=null){
+			  if (data.Hurtbox.Owner == bulletOwner) {
+				  return;
+			  }
+        hitObjects.Add(data.Hurtbox.Owner);
+      }
 			OnHitResponse(data);
 			RecycleToCache();
 		}

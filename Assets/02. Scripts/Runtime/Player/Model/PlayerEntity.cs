@@ -5,6 +5,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Player.Properties;
+using Runtime.Temporary.Player;
 using Runtime.Utilities.ConfigSheet;
 
 namespace Runtime.Player {
@@ -19,7 +20,12 @@ namespace Runtime.Player {
 		IMaxSlideTime GetMaxSlideTime();
 		ISlideForce GetSlideForce();
 		IWallRunForce GetWallRunForce();
+
+		MovementState GetMovementState();
+		void SetMovementState(MovementState state);
 		
+		bool IsScopedIn();
+		void SetScopedIn(bool state);
 	}
 	
 	public class PlayerEntity : AbstractCreature, IPlayerEntity, ICanDealDamage {
@@ -35,6 +41,10 @@ namespace Runtime.Player {
 		private IMaxSlideTime maxSlideTime;
 		private ISlideForce slideForce;
 		private IWallRunForce wallRunForce;
+
+		private MovementState movementState;
+		private bool scopedIn;
+		
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.PlayerEntityConfigTable;
 		}
@@ -127,8 +137,26 @@ namespace Runtime.Player {
 		public IWallRunForce GetWallRunForce() {
 			return wallRunForce;
 		}
-		
-		
+
+		public MovementState GetMovementState()
+		{
+			return movementState;
+		}
+
+		public void SetMovementState(MovementState state)
+		{
+			movementState = state;
+		}
+
+		public bool IsScopedIn()
+		{
+			return scopedIn;
+		}
+
+		public void SetScopedIn(bool state)
+		{
+			scopedIn = state;
+		}
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;

@@ -116,7 +116,7 @@ namespace Runtime.Weapons
 
         
         public override bool OnItemScopePressed(bool shouldScope) {
-            if (isReloading) {
+            if (isReloading || playerModel.GetPlayer().GetMovementState() == MovementState.sprinting) {
                 return false;
             }
             if (!shouldScope) {
@@ -183,7 +183,6 @@ namespace Runtime.Weapons
             model.transform.position = scopeInPositionTransform.position;
             yield return null;
             isScopedIn = true;
-            crossHairViewController?.OnScope(true);
         }
 
         private IEnumerator ScopeOut(bool reloadAfter = false)
@@ -212,7 +211,6 @@ namespace Runtime.Weapons
                 // isReloading = true;
                 StartCoroutine(ReloadChangeModel());
             }
-            crossHairViewController?.OnScope(false);
         }
 
         public override void OnRecycled() {
