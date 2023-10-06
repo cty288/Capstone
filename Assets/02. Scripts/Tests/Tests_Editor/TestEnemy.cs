@@ -103,6 +103,10 @@ namespace Tests.Tests_Editor {
             public void OnKillDamageable(IDamageable damageable) {
                 
             }
+
+            public void OnDealDamage(IDamageable damageable, int damage) {
+                
+            }
         }
     
         //===============================Start writing your tests here===============================

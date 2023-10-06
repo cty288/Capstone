@@ -29,6 +29,10 @@ namespace Runtime.Temporary.Weapon
             
         }
 
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
+
 
         public void Start()
         {

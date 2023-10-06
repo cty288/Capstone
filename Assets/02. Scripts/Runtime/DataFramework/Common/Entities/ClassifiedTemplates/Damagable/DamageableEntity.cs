@@ -84,6 +84,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 				hitData.Damage = damageAmount;
 			}
 			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer, hitData);
+			damageDealer?.OnDealDamage(this, damageAmount);
 			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
 				damageDealer?.OnKillDamageable(this);
 			}

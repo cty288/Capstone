@@ -12,6 +12,10 @@ public class DefaultCrossHairViewController : CrossHairViewController {
 		aimAnimator = transform.Find("Aim_Default").GetComponent<Animator>();
 	}
 
+	protected override void OnWeaponHit(IDamageable damageable, int damage) {
+		
+	}
+
 	public override void OnStartHold(IResourceEntity resourceEntity) {
 		
 	}

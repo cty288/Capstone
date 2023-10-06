@@ -42,6 +42,10 @@ namespace Runtime.RunTimeTests.TestCollision
             
         }
 
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
+
 
         public void Start()
         {

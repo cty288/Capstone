@@ -18,6 +18,7 @@ public interface ICrossHairViewController {
     void OnScope(bool isScoped);
 
     void OnShoot();
+    void OnHit(IDamageable damageable, int damage);
 }
 public abstract class CrossHairViewController : DefaultPoolableGameObject, ICrossHairViewController, IController {
     public void OnStart(IResourceEntity resourceEntity) {
@@ -40,6 +41,16 @@ public abstract class CrossHairViewController : DefaultPoolableGameObject, ICros
         OnWeaponShoot();
     }
 
+    public void OnHit(IDamageable damageable, int damage) {
+        OnWeaponHit(damageable, damage);
+    }
+    /// <summary>
+    /// Only for weapons
+    /// </summary>
+    /// <param name="target"></param>
+    protected abstract void OnWeaponHit(IDamageable damageable, int damage);
+
+
     public abstract void OnStartHold(IResourceEntity resourceEntity);
     
     /// <summary>
@@ -60,6 +71,8 @@ public abstract class CrossHairViewController : DefaultPoolableGameObject, ICros
     /// <param name="target"></param>
     public abstract void OnWeaponShoot();
 
+    
+    
     public IArchitecture GetArchitecture() {
         return MainGame.Interface;
     }

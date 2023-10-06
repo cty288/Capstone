@@ -53,5 +53,9 @@ namespace Runtime.Temporary.Weapon
         public void OnKillDamageable(IDamageable damageable) {
             
         }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
     }
 }

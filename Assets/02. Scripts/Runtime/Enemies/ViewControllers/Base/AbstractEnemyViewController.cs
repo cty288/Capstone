@@ -130,6 +130,10 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			BoundEntity.OnKillDamageable(damageable);
 		}
 
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			BoundEntity.OnDealDamage(damageable, damage);
+		}
+
 		public ICanDealDamage CanDealDamageEntity => BoundEntity;
 	}
 }

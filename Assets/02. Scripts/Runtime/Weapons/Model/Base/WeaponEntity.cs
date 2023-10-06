@@ -205,5 +205,9 @@ namespace Runtime.Weapons.Model.Base
         public void OnKillDamageable(IDamageable damageable) {
             
         }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            Debug.Log($"Dealt {damage} damage to {damageable}");
+        }
     }
 }

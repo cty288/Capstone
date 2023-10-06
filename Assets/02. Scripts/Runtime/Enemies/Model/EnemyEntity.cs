@@ -72,5 +72,9 @@ namespace Runtime.Enemies.Model {
 		public void OnKillDamageable(IDamageable damageable) {
 			Debug.Log($"Kill Damageable: {damageable.EntityName}");
 		}
+
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			
+		}
 	}
 }

@@ -28,6 +28,10 @@ namespace Runtime.Enemies
             
         }
 
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
+
         public int Damage => m_damage;
         public List<GameObject> hitObjects= new List<GameObject>();
         public bool CheckHit(HitData data) {

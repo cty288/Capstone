@@ -169,5 +169,9 @@ namespace Runtime.Player {
 		public void OnKillDamageable(IDamageable damageable) {
 			
 		}
+
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			
+		}
 	}
 }

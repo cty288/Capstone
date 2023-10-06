@@ -27,6 +27,10 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			owner?.OnKillDamageable(damageable);
 		}
 
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			owner?.OnDealDamage(damageable, damage);
+		}
+
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
 		

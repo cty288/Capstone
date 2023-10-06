@@ -89,6 +89,11 @@ namespace Runtime.Weapons.ViewControllers.Base
             crossHairViewController?.OnKill(damageable);
         }
 
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            BoundEntity.OnDealDamage(damageable, damage);
+            crossHairViewController?.OnHit(damageable, damage);
+        }
+
         public int Damage => BoundEntity.GetBaseDamage().RealValue;
         public bool CheckHit(HitData data) {
             return data.Hurtbox.Owner != gameObject;
