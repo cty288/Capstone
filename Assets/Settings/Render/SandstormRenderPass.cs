@@ -18,6 +18,12 @@ class SandstormRenderPass : ScriptableRenderPass
     readonly int temporaryRTIdA = Shader.PropertyToID("_TempRT");
     readonly int temporaryRTIdB = Shader.PropertyToID("_TempRTB");
 
+    readonly int _posterizationID = Shader.PropertyToID("_Posterization");
+    readonly int _maxGradientDistanceID = Shader.PropertyToID("_MaxGradientDistance");
+    readonly int _sandstormDepthDistanceID = Shader.PropertyToID("_SandstormDepthDistance");
+    readonly int _noiseStrengthsID = Shader.PropertyToID("_NoiseStrengths");
+    readonly int _sandstormAlphaID = Shader.PropertyToID("_SandstormAlpha");
+
     private Material material;
 
     public SandstormRenderPass(Material material)
@@ -90,6 +96,11 @@ class SandstormRenderPass : ScriptableRenderPass
         {
             // P.s. optimize by caching the property ID somewhere else
             //material.SetInt(Shader.PropertyToID("_Scale"), customEffect.scale.value);
+            material.SetInteger(_posterizationID, customEffect.posterization.value);
+            material.SetFloat(_maxGradientDistanceID, customEffect.maxGradientDistance.value);
+            material.SetFloat(_sandstormDepthDistanceID, customEffect.sandstormDepthDistance.value);
+            material.SetVector(_noiseStrengthsID, customEffect.noiseStrengths.value);
+            material.SetFloat(_sandstormAlphaID, customEffect.sandstormAlpha.value);
             
             BlitTo(material);
         }
