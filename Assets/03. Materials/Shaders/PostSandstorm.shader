@@ -7,6 +7,11 @@ Shader "Hidden/PostSandstorm"
     	_AlphaMap("Alphas", 2D) = "white" {}
     	_NoiseMap ("Noise Texture", 2D) = "white" {}
     	
+    	_Posterization ("Posterization Levels", Integer) = 40
+    	_MaxGradientDistance ("Max Gradient Distance", Float) = 400.
+    	_SandstormDepthDistance ("Sandstorm Depth Distance", Float) = 100.
+    	_NoiseStrengths ("Noise Strengths", Vector) = (0.1, 0.1, 0.01, 0.8)
+    	_SandstormAlpha ("Sandstorm Alpha", Float) = 1
     }
     SubShader 
 	{
@@ -37,14 +42,13 @@ Shader "Hidden/PostSandstorm"
 			
             
 			float4 _MainTex_TexelSize;
-
-            float _Scale;
-            float _DepthThreshold;
-            float _NormalThreshold;
             float4x4 _ClipToView;
-            float _DepthNormalThreshold;
-			float _DepthNormalThresholdScale;
-			float _LineAlpha;
+
+            int _Posterization;
+            float _MaxGradientDistance;
+            float _SandstormDepthDistance;
+            float4 _NoiseStrengths;
+            float _SandstormAlpha;
             
             struct Attributes
             {
@@ -89,42 +93,29 @@ Shader "Hidden/PostSandstorm"
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 
 				float depth0 = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, i.uv).r, _ZBufferParams);
-				float fogDepth = depth0/400.f;
-				float fogDepth0 = depth0/400.f;
-				float sandstormDepth = saturate(depth0/100.f);
+				float fogDepth = depth0/_MaxGradientDistance;
+				float fogDepth0 = fogDepth;
+				float sandstormDepth = saturate(depth0/_SandstormDepthDistance);
 
 				float3 noise = SAMPLE_TEXTURE2D(_NoiseMap, sampler_NoiseMap, float2(frac(i.uv.x + _Time.x), frac(i.uv.y - _Time.x)));
-				float noise0 = noise.x * 0.1f;
+				float noise0 = noise.x * _NoiseStrengths.x;
 
 				float4 alphas = SAMPLE_TEXTURE2D(_AlphaMap, sampler_AlphaMap, float2(frac(i.uv.x - _Time.y*2 + noise0), frac(i.uv.y*(1+sandstormDepth) + _Time.y + noise0)));
-				fogDepth += alphas.r*0.1f;
+				fogDepth += alphas.r*_NoiseStrengths.y;
 
-				fogDepth0 = 1-pow(1-saturate(fogDepth0 + noise.y*0.01f), 2);
-
-				float posterizations = 40;
-				fogDepth0 = ceil(fogDepth0 * posterizations) / posterizations;
+				fogDepth0 = 1-pow(1-saturate(fogDepth0 + noise.y*_NoiseStrengths.z), 2);
+				
+				fogDepth0 = ceil(fogDepth0 * _Posterization) / _Posterization;
 
 				fogDepth0 = clamp(fogDepth0, 0, 0.99f);
 				fogDepth = clamp(fogDepth, 0, 0.99f);
 
-				//float depthThreshold = _DepthThreshold * depth0;
-
 				float4 lineColor = SAMPLE_TEXTURE2D(_Gradient, sampler_Gradient, float2(fogDepth0, 0.5f));
 				float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-				//lineColor = float4(lineColor.rgb * 2.f - 1.f, lineColor.a * edge); // Linear Burn
-				// color = base <= 0.5 ? 2 * base * blend : 1 - 2 * (1 - base) * (1 - blend); // overlay - non-commutative
-				//lineColor = float4(color.rgb <= 0.5 ? 2 * color.rgb * lineColor.rgb : 1 - 2 * (1 - color.rgb) * (1 - lineColor.rgb), lineColor.a * fogDepth0); // Overlay
-				//lineColor = float4(lineColor.rgb * 1.25f, lineColor.a * edge); // Multiply against value greater than 1
-				//lineColor = float4(lineColor.rgb * lineColor.rgb, lineColor.a * edge); // Multiply against self
-				// color = blend <= 0.5 ? base * (blend + 0.5) : 1 - (1 - base) * (1 - (blend - 0.5)); // soft light - non-commutative
 				float4 lineColor0 = float4(lineColor.rgb <= 0.5 ? color.rgb * (lineColor.rgb + 0.5) : 1 - (1 - color) * (1 - (lineColor.rgb - 0.5)), fogDepth0); // Soft Light
-				//lineColor = float4(max(lineColor.rgb, 0.6f), lineColor.a * edge); // Lighten
-				//lineColor = float4(lineColor.rgb <= 0.5 ? lineColor.rgb * (lineColor.rgb * 2) : 1 - (1 - lineColor.rgb) * (1 - 2 * (lineColor.rgb - 0.5)), lineColor.a * edge); // Soft Light
-				//lineColor = float4(color / (1.0001 - lineColor.rgb), depth); // Color Dodge
-				//lineColor = float4(1 - (1 - alphas.g) * (1 - lineColor.rgb), pow(max(lineColor.a*0.8f, alphas.g), 0.5f)); // Screen
-				float4 lineColor1 = float4(lineColor.rgb, lineColor.a * fogDepth0);
-				lineColor = lerp(lineColor1, lineColor0, fogDepth);
-				lineColor = float4(1 - (1 - alphas.g) * (1 - lineColor.rgb), pow(max(lineColor.a*0.8f, alphas.g), 1.f)); // Screen
+				lineColor = float4(lineColor.rgb, lineColor.a * fogDepth);
+				lineColor = lerp(lineColor, lineColor0, fogDepth);
+				lineColor = float4(1 - (1 - alphas.g) * (1 - lineColor.rgb), pow(max(lineColor.a*(_NoiseStrengths.w), alphas.g*_SandstormAlpha), 1.f)); // Screen
 				
 				//return float4(depth.rrr, 1);
 				return alphaBlend(lineColor, color);
