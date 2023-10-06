@@ -24,7 +24,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         // general references
         protected Camera cam;
         protected DPunkInputs.PlayerActions playerActions;
-        protected IGamePlayerModel playerModel;
+        
         
         //status
         protected bool isScopedIn = false;
@@ -39,7 +39,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         {
             base.OnEntityStart();
             
-            playerModel = this.GetModel<IGamePlayerModel>();
+            
             
             hitDetectorInfo = new HitDetectorInfo
             {

@@ -1,4 +1,5 @@
 using System.Collections;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
@@ -27,7 +28,7 @@ namespace Runtime.Temporary
 
         }
         public void Init(Transform target,float tTime, Faction faction, int damage, GameObject bulletOwner) {
-            Init(faction, 0, bulletOwner);
+            Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>());
             targetPos = target.position;
             explosionDamage = damage;
             travelTime = tTime;
@@ -68,7 +69,8 @@ namespace Runtime.Temporary
         void Explode()
         {
             GameObject exp= Instantiate(explosion,transform.position,Quaternion.identity);
-            exp.GetComponent<AbstractExplosionViewController>().Init(CurrentFaction,explosionDamage,bulletOwner);
+            exp.GetComponent<IExplosionViewController>().Init(CurrentFaction, explosionDamage, bulletOwner,
+                bulletOwner.GetComponent<ICanDealDamage>());
         }
     }
 }

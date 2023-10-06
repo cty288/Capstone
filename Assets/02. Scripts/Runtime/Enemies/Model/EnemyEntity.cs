@@ -9,6 +9,7 @@ using Runtime.DataFramework.Properties;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
+using UnityEngine;
 
 namespace Runtime.Enemies.Model {
 	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage {
@@ -69,7 +70,7 @@ namespace Runtime.Enemies.Model {
 
 
 		public void OnKillDamageable(IDamageable damageable) {
-			
+			Debug.Log($"Kill Damageable: {damageable.EntityName}");
 		}
 	}
 }

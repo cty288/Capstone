@@ -7,6 +7,8 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.ViewControllers;
+using Runtime.Player;
+using Runtime.Temporary.Player;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -30,10 +32,11 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected IHitDetector hitDetector;
 
         private bool isScope = false;
-        
+        protected IGamePlayerModel playerModel;
         protected override void Awake() {
             base.Awake();
             weaponModel = this.GetModel<IWeaponModel>();
+            playerModel = this.GetModel<IGamePlayerModel>();
         }
 
         protected override void OnEntityStart() {
@@ -50,6 +53,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public override void OnItemScopePressed() {
+            if (playerModel.GetPlayer().GetMovementState() == MovementState.sprinting) {
+                return;
+            }
             bool previsScope = isScope;
             isScope = OnItemScopePressed(!isScope);
             if (previsScope != isScope) {
@@ -79,7 +85,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 
         public void OnKillDamageable(IDamageable damageable) {
-            
+            BoundEntity.OnKillDamageable(damageable);
+            crossHairViewController?.OnKill(damageable);
         }
 
         public int Damage => BoundEntity.GetBaseDamage().RealValue;

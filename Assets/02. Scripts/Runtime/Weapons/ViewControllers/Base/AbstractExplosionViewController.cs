@@ -5,6 +5,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -15,34 +16,39 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		int Damage { get; }
 		
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner);
+		public void Init(Faction faction, int damage, GameObject bulletOwnerGo, ICanDealDamage owner);
 	}
 	
 	
 	[RequireComponent(typeof(ExplosionHitBox))]
 	public abstract class AbstractExplosionViewController : PoolableGameObject, IHitResponder, IController, IExplosionViewController {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
-		
+		public void OnKillDamageable(IDamageable damageable) {
+			owner?.OnKillDamageable(damageable);
+		}
+
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
 		
+
 		[SerializeField] private float autoRecycleTime = 2f;
 		private Coroutine autoRecycleCoroutine = null;
 		
 		protected ExplosionHitBox hitBox = null;
 		protected GameObject bulletOwner = null;
-
+		protected ICanDealDamage owner = null;
 		private void Awake() {
 			hitBox = GetComponent<ExplosionHitBox>();
 		}
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner) {
+		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
+			this.owner = owner;
 		}
 
 		public override void OnStartOrAllocate() {
@@ -83,6 +89,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			}
 			hitBox.StopCheckingHits();
 			this.bulletOwner = null;
+			this.owner = null;
 			
 		}
 

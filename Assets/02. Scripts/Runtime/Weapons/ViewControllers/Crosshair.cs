@@ -18,7 +18,7 @@ using Object = UnityEngine.Object;
 
 namespace Runtime.Weapons.ViewControllers {
     public class Crosshair : MonoMikroSingleton<Crosshair>, IController {
-        private Transform centerTransform;
+       // private Transform centerTransform;
         private Camera mainCamera;  
         [SerializeField] 
         private float rayDistance = 100f;
@@ -42,7 +42,7 @@ namespace Runtime.Weapons.ViewControllers {
         private GameObject currentCrosshair;
         private void Awake() {
             inventoryModel = this.GetModel<IInventoryModel>();
-            centerTransform = transform.Find("Center");
+            //centerTransform = transform.Find("Center");
             mainCamera = Camera.main;
             crossHairDetectLayerMask = LayerMask.GetMask("CrossHairDetect");
             noweaponCrosshair = transform.Find("NoWeaponCrossHair").gameObject;
@@ -64,6 +64,11 @@ namespace Runtime.Weapons.ViewControllers {
             noweaponCrosshair.SetActive(false);
             currentCrosshair = GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 1, 5, out _)
                 .Allocate();
+            currentCrosshair.transform.SetParent(transform);
+            currentCrosshair.transform.localPosition = Vector3.zero;
+            currentCrosshair.transform.localRotation = Quaternion.identity;
+            currentCrosshair.transform.localScale = Vector3.one;
+            
             
             return currentCrosshair.GetComponent<ICrossHairViewController>();
         }

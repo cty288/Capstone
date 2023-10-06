@@ -137,9 +137,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void OnPointByCrosshair() {
 			isPointed = true;
-			crossHairHUDTimer = 0f;
+			
 			if (showNameTagWhenPointed) {
-				if(nameTagFollowTransform) {
+				if(nameTagFollowTransform && crossHairHUDTimer <= 0f) {
 					GameObject
 						nameTag = SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
 					
@@ -155,6 +155,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
 				hudInfo.spawnedHUD.SetActive(true);
 			}
+			
+			crossHairHUDTimer = 0f;
 		}
 
 		public virtual void OnUnPointByCrosshair() {

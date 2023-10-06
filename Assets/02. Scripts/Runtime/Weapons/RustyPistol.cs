@@ -116,7 +116,7 @@ namespace Runtime.Weapons
 
         
         public override bool OnItemScopePressed(bool shouldScope) {
-            if (isReloading || playerModel.GetPlayer().GetMovementState() == MovementState.sprinting) {
+            if (isReloading) {
                 return false;
             }
             if (!shouldScope) {
