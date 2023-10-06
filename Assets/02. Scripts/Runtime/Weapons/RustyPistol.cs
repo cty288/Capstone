@@ -114,18 +114,20 @@ namespace Runtime.Weapons
             }
         }
 
-        public override void OnItemScopePressed() {
-            if (isReloading || playerModel.GetPlayer().GetMovementState() == MovementState.sprinting) {
-                return;
+        
+        public override bool OnItemScopePressed(bool shouldScope) {
+            if (isReloading) {
+                return false;
             }
-            if (isScopedIn) {
+            if (!shouldScope) {
                 StartCoroutine(ScopeOut());
             }
             else {
-                StartCoroutine(ScopeIn());   
+                StartCoroutine(ScopeIn());
             }
+            return shouldScope;
         }
-        
+
 
         public void Update()
         {

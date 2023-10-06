@@ -3,6 +3,7 @@ using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Singletons;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Player;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton {
+    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
 
@@ -88,5 +89,7 @@ namespace Runtime.Temporary
             base.OnDestroy();
             players.Remove(this);
         }
+
+        public ICanDealDamage CanDealDamageEntity => BoundEntity;
     }
 }
