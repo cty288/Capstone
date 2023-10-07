@@ -55,24 +55,6 @@ namespace Runtime.Weapons
 
     }
 
-    public class XXX : AbstractHitScanWeaponViewController<RustyPistolEntity> {
-        protected override void OnBindEntityProperty() {
-            throw new System.NotImplementedException();
-        }
-
-        public override void OnItemUse() {
-            throw new System.NotImplementedException();
-        }
-
-        public override void OnItemScopePressed() {
-            
-        }
-
-
-        protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
-            throw new System.NotImplementedException();
-        }
-    }
 
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
@@ -104,7 +86,9 @@ namespace Runtime.Weapons
         }
         
         protected override void OnBindEntityProperty() {}
-        
+
+
+
         public override void OnItemUse() {
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
