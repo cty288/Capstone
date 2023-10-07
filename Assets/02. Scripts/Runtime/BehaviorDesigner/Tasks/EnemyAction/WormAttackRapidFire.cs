@@ -76,13 +76,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             UnityEngine.GameObject b = pool.Allocate();
 
+            b.transform.position = gameObject.transform.position;
+            b.transform.rotation = gameObject.transform.rotation;
+            
+            
             // Calculate a random rotation offset within a specified range
             float randomAngle = Random.Range(-20, 20);
-
             // Apply the rotation offset to the bullet's rotation
             Quaternion randomRotation = Quaternion.Euler(randomAngle, randomAngle, 0);
             b.transform.rotation *= randomRotation;
-
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                 enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
                 gameObject, gameObject.GetComponent<ICanDealDamage>());
