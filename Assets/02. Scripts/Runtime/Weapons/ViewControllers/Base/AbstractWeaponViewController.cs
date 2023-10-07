@@ -31,7 +31,8 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         protected IHitDetector hitDetector;
 
-        private bool isScope = false;
+        private bool _isScopedIn = false;
+        protected bool IsScopedIn => _isScopedIn;
         protected IGamePlayerModel playerModel;
         protected override void Awake() {
             base.Awake();
@@ -42,7 +43,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected override void OnEntityStart() {
             base.OnEntityStart();
             hitDetector = OnCreateHitDetector();
-            isScope = false;
+            _isScopedIn = false;
         }
 
         public override void OnStartHold(GameObject ownerGameObject) {
@@ -52,22 +53,27 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
 
-        public override void OnItemScopePressed() {
-            if (playerModel.GetPlayer().GetMovementState() == MovementState.sprinting) {
-                return;
-            }
-            bool previsScope = isScope;
-            isScope = OnItemScopePressed(!isScope);
-            if (previsScope != isScope) {
-                crossHairViewController?.OnScope(isScope);
+
+        
+        protected void ChangeScopeStatus(bool shouldScope) {
+            bool previsScope = _isScopedIn;
+            _isScopedIn = shouldScope;
+            
+            if (previsScope != _isScopedIn) {
+                crossHairViewController?.OnScope(_isScopedIn);
             }
         }
 
-        public abstract bool OnItemScopePressed(bool shouldScope);
+      
 
         public override void OnRecycled() {
             base.OnRecycled();
-            isScope = false;
+           
+        }
+
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
+            _isScopedIn = false;
         }
 
 

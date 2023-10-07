@@ -13,7 +13,7 @@ public class DefaultCrossHairViewController : CrossHairViewController {
 	}
 
 	protected override void OnWeaponHit(IDamageable damageable, int damage) {
-		
+		aimAnimator.CrossFade("Show", 0f);
 	}
 
 	public override void OnStartHold(IResourceEntity resourceEntity) {
@@ -21,7 +21,7 @@ public class DefaultCrossHairViewController : CrossHairViewController {
 	}
 
 	public override void OnWeaponKillTarget(IDamageable target) {
-		aimAnimator.CrossFade("Show", 0.1f);
+		
 	}
 
 	public override void OnWeaponScope(bool isScoped) {

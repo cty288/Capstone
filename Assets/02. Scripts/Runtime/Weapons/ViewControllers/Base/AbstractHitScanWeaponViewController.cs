@@ -27,7 +27,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         
         //status
-        protected bool isScopedIn = false;
+        //protected bool isScopedIn = false;
         protected bool isReloading = false;
         
         //timers
@@ -56,7 +56,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         public virtual void Shoot() {
             crossHairViewController?.OnShoot();
-            BoundEntity.OnRecoil(isScopedIn);
+            BoundEntity.OnRecoil(IsScopedIn);
             hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetBaseDamage().RealValue);
         }
         

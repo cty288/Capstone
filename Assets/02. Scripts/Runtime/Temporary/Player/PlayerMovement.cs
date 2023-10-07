@@ -506,7 +506,7 @@ namespace Runtime.Temporary.Player
             }
             
             // turn gravity off while on slope
-            if(!wallrunning)rb.useGravity = !onSlope;
+            //if(!wallrunning)rb.useGravity = !onSlope;
 
             
             if (moveDirection == Vector3.zero && lastMoveDirection != Vector3.zero) {

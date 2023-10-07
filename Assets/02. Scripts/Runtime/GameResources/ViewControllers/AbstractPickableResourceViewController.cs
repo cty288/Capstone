@@ -104,6 +104,12 @@ namespace Runtime.GameResources.ViewControllers {
 
         public override void OnRecycled() {
             base.OnRecycled();
+           
+            
+        }
+
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
             isAbsorbing = false;
             if (entityRemovalTimerCoroutine != null) {
                 StopCoroutine(entityRemovalTimerCoroutine);
@@ -113,7 +119,7 @@ namespace Runtime.GameResources.ViewControllers {
                 selfCollider.isTrigger = selfColliders[selfCollider];
             }
         }
-        
+
         private IEnumerator EntityRemovalTimer() {
             yield return new WaitForSeconds(entityAutoRemovalTimeWhenNoAbsorb);
             if (this && entityModel!=null && entityAutoRemovalTimeWhenNoAbsorb >= 0) {

@@ -28,13 +28,11 @@ namespace Runtime.Enemies.SmallEnemies
             
         }
 
-        public override void OnRecycle()
-        {
+        public override void OnRecycle() {
          
         }
 
-        protected override void OnEnemyRegisterAdditionalProperties()
-        {
+        protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
 
@@ -70,9 +68,10 @@ namespace Runtime.Enemies.SmallEnemies
                 waypoint.transform.SetParent(null);
             }
         }
+        
 
-        public override void OnRecycled() {
-            base.OnRecycled();
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
             foreach (GameObject waypoint in waypoints) {
                 waypoint.transform.SetParent(transform);
             }

@@ -107,6 +107,11 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
+			
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
 			if (currentHealthBar) {
 				currentHealthBar.OnHealthBarDestroyed();
 				OnDestroyHealthBar(currentHealthBar);
@@ -127,11 +132,11 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 
 		public void OnKillDamageable(IDamageable damageable) {
-			BoundEntity.OnKillDamageable(damageable);
+			BoundEntity?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			BoundEntity.OnDealDamage(damageable, damage);
+			BoundEntity?.OnDealDamage(damageable, damage);
 		}
 
 		public ICanDealDamage CanDealDamageEntity => BoundEntity;

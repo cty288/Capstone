@@ -5,6 +5,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Pool;
+using MikroFramework.Utilities;
 using Polyglot;
 using Runtime.DataFramework.Description;
 using Runtime.DataFramework.Properties;
@@ -133,6 +134,20 @@ namespace Runtime.DataFramework.Entities {
 		public IUnRegister RegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
 
 		public void UnRegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
+		
+		public void RegisterReadyToRecycle(Action<IEntity> onReadyToRecycle);
+		
+		public void UnRegisterReadyToRecycle(Action<IEntity> onReadyToRecycle);
+		
+		public void RegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef);
+		
+		public void UnRegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef);
+		
+		public void ReadyToRecycle();
+		
+		public void RetainRecycleRC();
+		
+		public void ReleaseRecycleRC();
 	}
 	
 	
@@ -153,7 +168,30 @@ namespace Runtime.DataFramework.Entities {
 		}
 	}
 
-
+	public class EntityRecycleRC : SimpleRC {
+		private Action<IEntity> onZeroRef;
+		private IEntity entity;
+		public EntityRecycleRC(IEntity entity) {
+			this.entity = entity;
+		}
+		
+		public void RegisterOnZeroRef(Action<IEntity> onZeroRef) {
+			this.onZeroRef += onZeroRef;
+		}
+		
+		public void UnRegisterOnZeroRef(Action<IEntity> onZeroRef) {
+			this.onZeroRef -= onZeroRef;
+		}
+		
+		public void UnRegisterAllOnZeroRef() {
+			onZeroRef = null;
+		}
+		
+		protected override void OnZeroRef() {
+			base.OnZeroRef();
+			onZeroRef?.Invoke(entity);
+		}
+	}
 
 
 	public abstract class Entity :  IEntity  {
@@ -190,11 +228,26 @@ namespace Runtime.DataFramework.Entities {
 		protected ConfigTable configTable;
 
 		protected Action<IEntity> onEntityRecycled;
+
+		protected EntityRecycleRC recycleRC;
+
+		protected Action<IEntity> onReadyToRecycleEvent = null;
+		
+		protected Action<IEntity> onRecycleRCZeroRef = null;
+		
+		private bool readyToRecycle = false;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 			originalEntityName = EntityName;
+			recycleRC = new EntityRecycleRC(this);
+			recycleRC.RegisterOnZeroRef((e) => {
+				if (readyToRecycle) {
+					onRecycleRCZeroRef?.Invoke(this);
+				}
+			});
 			configTable = GetConfigTable();
 			OnRegisterProperties();
+			
 		}
 
 		protected abstract ConfigTable GetConfigTable();
@@ -408,6 +461,38 @@ namespace Runtime.DataFramework.Entities {
 			this.onEntityRecycled -= onEntityRecycled;
 		}
 
+		public void RegisterReadyToRecycle(Action<IEntity> onReadyToRecycle) {
+			this.onReadyToRecycleEvent += onReadyToRecycle;
+		}
+
+		public void UnRegisterReadyToRecycle(Action<IEntity> onReadyToRecycle) {
+			this.onReadyToRecycleEvent -= onReadyToRecycle;
+		}
+
+		public void RegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef) {
+			this.onRecycleRCZeroRef += onZeroRef;
+		}
+
+		public void UnRegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef) {
+			this.onRecycleRCZeroRef -= onZeroRef;
+		}
+
+		public void ReadyToRecycle() {
+			readyToRecycle = true;
+			this.onReadyToRecycleEvent?.Invoke(this);
+			if (recycleRC.RefCount == 0) {
+				this.onRecycleRCZeroRef?.Invoke(this);
+			}
+		}
+
+		public void RetainRecycleRC() {
+			recycleRC.Retain();
+		}
+		
+		
+		public void ReleaseRecycleRC() {
+			recycleRC.Release();
+		}
 
 		/// <summary>
 		/// After the entity is built, or loaded from save, this will be called
@@ -525,6 +610,8 @@ namespace Runtime.DataFramework.Entities {
 			initialized = false;
 			this.onEntityRecycled = null;
 			EntityName = originalEntityName;
+			this.onReadyToRecycleEvent = null;
+			readyToRecycle = false;
 		}
 
 		[field: ES3Serializable]

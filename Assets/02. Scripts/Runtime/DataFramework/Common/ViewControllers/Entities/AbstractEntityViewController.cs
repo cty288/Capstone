@@ -131,9 +131,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
 			OnBindProperty();
 			OnEntityStart();
 		}
+
+
 
 		public virtual void OnPointByCrosshair() {
 			isPointed = true;
@@ -321,7 +324,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (autoDestroyWhenEntityRemoved) {
 				RecycleToCache();
 			}
-			
+		}
+		
+		private void OnEntityReadyToRecycle(IEntity e) {
+			BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
+			if (autoDestroyWhenEntityRemoved) {
+				OnReadyToRecycle();
+			}
 		}
 		
 
@@ -353,7 +362,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity = null;
 			propertyBindings.Clear();
 			crossHairHUDTimer = 0;
+		}
 
+		protected virtual void OnReadyToRecycle() {
+			gameObject.SetActive(false);
 			string[] keys = crossHairManagedHUDs.Keys.ToArray();
 			foreach (string key in keys) {
 				DespawnHUDElement(crossHairManagedHUDs[key].originalSpawnTransform,
@@ -361,7 +373,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			crossHairManagedHUDs.Clear();
 			isPointed = false;
-
 		}
 
 		protected abstract IEntity OnBuildNewEntity();

@@ -14,6 +14,30 @@ SurveillanceDrone,"{""maxHealth"": 30, ""currentHealth"": 30}",123,"{
   ""attack"":{
     ""bulletDamage"":{
       ""type"": ""int"",
+      ""value"": 2
+    },
+    ""ammoSize"":{
+      ""type"": ""int"",
+      ""value"": 20
+    },
+    ""bulletSpeed"" : {
+      ""type"" : ""float"",
+      ""value"": 12
+    },
+    ""spawnInterval"":{
+      ""type"": ""float"",
+      ""value"": 0.5
+    },
+    ""explosionDamage"":{
+      ""type"": ""int"",
+      ""value"": 15
+    }
+  }
+}",  ,,
+Hunter Worm,"{""maxHealth"": 50, ""currentHealth"": 50}",123,"{
+  ""attack"":{
+    ""bulletDamage"":{
+      ""type"": ""int"",
       ""value"": 5
     },
     ""ammoSize"":{
@@ -27,6 +51,10 @@ SurveillanceDrone,"{""maxHealth"": 30, ""currentHealth"": 30}",123,"{
     ""spawnInterval"":{
       ""type"": ""float"",
       ""value"": 0.2
+    },
+    ""explosionDamage"":{
+      ""type"": ""int"",
+      ""value"": 10
     }
   }
 }",,,

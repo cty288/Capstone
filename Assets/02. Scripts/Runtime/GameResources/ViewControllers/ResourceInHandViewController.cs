@@ -56,15 +56,19 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			
+
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
+						
 			gameObject.layer = originalLayer;
 			isHolding = false;
 			rigidbody.isKinematic = false;
 			this.ownerGameObject = null;
 			entityAutoRemovalTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
 		}
-		
-		
+
 
 		protected override void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
 			if (isHolding) {
