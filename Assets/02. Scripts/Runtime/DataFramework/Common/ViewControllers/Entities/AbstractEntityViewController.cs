@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -71,7 +72,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected bool isPointed = false;
 		protected Camera mainCamera;
 		
-		private class CrossHairManagedHUDInfo {
+		protected class CrossHairManagedHUDInfo {
 			public Transform originalSpawnTransform;
 			public KeepGlobalRotation originalSpawnPositionOffset;
 			public KeepGlobalRotation realSpawnPositionOffset;
@@ -144,14 +145,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 			if (showNameTagWhenPointed) {
 				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
+					(GameObject, CrossHairManagedHUDInfo) nameTagInfo =
+						SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName,
+							HUDCategory.NameTag);
 					GameObject
-						nameTag = SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
+						nameTag = nameTagInfo.Item1;
 					
 					if (nameTag) {
 						INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
 						if (nameTagComponent != null) {
 							nameTagComponent.SetName(BoundEntity.GetDisplayName());
 						}
+						nameTag.gameObject.SetActive(false);
+						StartCoroutine(ShowNameTagDelayed(nameTag,nameTagInfo.Item2));
 					}
 				}
 			}
@@ -162,11 +168,17 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 			crossHairHUDTimer = 0f;
 		}
+		
+		private IEnumerator ShowNameTagDelayed(GameObject nameTag, CrossHairManagedHUDInfo hudInfo) {
+			AdjustHUD(hudInfo);
+			yield return new WaitForEndOfFrame();
+			yield return null;
+			nameTag.SetActive(true);
+		}
 
 		public virtual void OnUnPointByCrosshair() {
 			isPointed = false;
-			
-			
+			unPointTriggered = false;
 		}
 
 		private void OnHUDUnpointedTorlanceTimeEnds() {
@@ -188,7 +200,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		/// <param name="prefabName"></param>
 		/// <param name="category"></param>
 		/// <returns></returns>
-		protected GameObject SpawnCrosshairResponseHUDElement(Transform followTransform, string prefabName, HUDCategory category, bool autoAdjust = true) {
+		protected (GameObject, CrossHairManagedHUDInfo) SpawnCrosshairResponseHUDElement(Transform followTransform, string prefabName, HUDCategory category, bool autoAdjust = true) {
 			if(followTransform.TryGetComponent<KeepGlobalRotation>(out var keepGlobalRotation)) {
 				
 				
@@ -205,8 +217,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				crossHairManagedHUDs.Add(id,
 					new CrossHairManagedHUDInfo(followTransform, keepGlobalRotation, realHealthBarPositionOffset,
 						spawnedElement, category, autoAdjust));
-				
-				return spawnedElement;
+
+				return (spawnedElement, crossHairManagedHUDs[id]);
 			}else {
 				throw new Exception("The transform must have a KeepGlobalRotation component");
 			}
@@ -222,101 +234,115 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 		}
 
-		protected virtual void FixedUpdate() {
-			//if (true) {
-			if (crossHairHUDTimer < crossHairHUDToleranceTime && !isPointed) {
-				crossHairHUDTimer += Time.fixedDeltaTime;
+		private bool unPointTriggered = false;
+
+		protected virtual void Update() {
+			if (crossHairHUDTimer < crossHairHUDToleranceTime && !isPointed && !unPointTriggered) {
+				crossHairHUDTimer += Time.deltaTime;
 				if (crossHairHUDTimer >= crossHairHUDToleranceTime) {
 					crossHairHUDTimer = 0;
+					unPointTriggered = true;
 					OnHUDUnpointedTorlanceTimeEnds();
 				}
 			}
 			
-			var camTr = mainCamera.transform;
+			
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
-				if (!hudInfo.spawnedHUD) {
-					continue;
-				}
+				AdjustHUD(hudInfo);
+			}
+		}
 
-				
-				
-				RaycastHit hit;
-				bool needAdjust = false;
-				if (hudInfo.AutoAdjust) {
-					
-					
-					
-					//get the screen pos of this game obj and original target. If they are too close, then adjust original target pos
-					//by extending it further from this game obj targetPos + (targetPos - this game obj pos) until their distance on screen is larger than 100
-					//hudInfo.originalSpawnPositionOffset.PositionOffset is the local position of the original target
-				
-					Vector2 thisGameObjScreenPos = mainCamera.WorldToScreenPoint(transform.position);
-					Vector2 targetScreenPos = mainCamera.WorldToScreenPoint(transform.position + hudInfo.targetPos);
-					Vector2 originalTargetScreenPos =
-						mainCamera.WorldToScreenPoint(hudInfo.originalSpawnTransform.transform.position);
-					
-					
-					if (Physics.Raycast(camTr.position, hudInfo.originalSpawnTransform.transform.position - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
-						if (!hit.collider.isTrigger && hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
-							needAdjust = true;
 
-							Transform realHealthBarSpawnPoint = hudInfo.realSpawnPositionOffset.transform;
-							if (Physics.Raycast(camTr.position, transform.position + hudInfo.targetPos - camTr.position, out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
-								if (hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
-									hudInfo.targetPos += Vector3.up * 0.5f;
-									//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
-									if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
-									    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
-										hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
-									}
-								
+		private void AdjustHUD(CrossHairManagedHUDInfo hudInfo) {
+			var camTr = mainCamera.transform;
+			if (!hudInfo.spawnedHUD) {
+				return;
+			}
+
+
+
+			RaycastHit hit;
+			bool needAdjust = false;
+			if (hudInfo.AutoAdjust) {
+				//get the screen pos of this game obj and original target. If they are too close, then adjust original target pos
+				//by extending it further from this game obj targetPos + (targetPos - this game obj pos) until their distance on screen is larger than 100
+				//hudInfo.originalSpawnPositionOffset.PositionOffset is the local position of the original target
+
+				Vector2 thisGameObjScreenPos = mainCamera.WorldToScreenPoint(transform.position);
+				Vector2 targetScreenPos = mainCamera.WorldToScreenPoint(transform.position + hudInfo.targetPos);
+				Vector2 originalTargetScreenPos =
+					mainCamera.WorldToScreenPoint(hudInfo.originalSpawnTransform.transform.position);
+
+
+				if (Physics.Raycast(camTr.position, hudInfo.originalSpawnTransform.transform.position - camTr.position,
+					    out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+					if (!hit.collider.isTrigger && hit.collider.attachedRigidbody &&
+					    hit.collider.attachedRigidbody.gameObject == gameObject) {
+						needAdjust = true;
+
+						Transform realHealthBarSpawnPoint = hudInfo.realSpawnPositionOffset.transform;
+						if (Physics.Raycast(camTr.position, transform.position + hudInfo.targetPos - camTr.position,
+							    out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+							if (hit.collider.attachedRigidbody &&
+							    hit.collider.attachedRigidbody.gameObject == gameObject) {
+								hudInfo.targetPos += Vector3.up * 0.5f;
+								//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
+								if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
+								    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
+									hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
 								}
+
 							}
 						}
 					}
+				}
 
 
-					float originalToScreenDistance =
-						Vector2.Distance(thisGameObjScreenPos, originalTargetScreenPos);
-					
-				
-					
-					
-					if (originalToScreenDistance < 40f) {
-						needAdjust = true;
-						float distance = Vector2.Distance(thisGameObjScreenPos, targetScreenPos);
-						var position = transform.position + hudInfo.targetPos;
-						float realWorldDistance = Vector3.Distance(position, transform.position);
-						/*if (distance < 40f) {
+				float originalToScreenDistance =
+					Vector2.Distance(thisGameObjScreenPos, originalTargetScreenPos);
 
-							float requiredRealWorldDistance = (realWorldDistance * 40f) / distance;
 
-					
-							float distanceToMove = requiredRealWorldDistance - realWorldDistance;
 
-							Vector3 direction = (position - transform.position).normalized;
-					
-							hudInfo.targetPos += direction * distanceToMove;
-						}*/
-						
-						//always make the screen distance equal to 40
+
+				if (originalToScreenDistance < 40f) {
+					needAdjust = true;
+					float distance = Vector2.Distance(thisGameObjScreenPos, targetScreenPos);
+					var position = transform.position + hudInfo.targetPos;
+					float realWorldDistance = Vector3.Distance(position, transform.position);
+					/*if (distance < 40f) {
+
 						float requiredRealWorldDistance = (realWorldDistance * 40f) / distance;
+
+				
 						float distanceToMove = requiredRealWorldDistance - realWorldDistance;
+
 						Vector3 direction = (position - transform.position).normalized;
+				
 						hudInfo.targetPos += direction * distanceToMove;
-					}
+					}*/
 
-				}
-				
-				
-				
-				if (!needAdjust) {
-					hudInfo.targetPos = hudInfo.originalSpawnPositionOffset.PositionOffset;
+					//always make the screen distance equal to 40
+					float requiredRealWorldDistance = (realWorldDistance * 40f) / distance;
+					float distanceToMove = requiredRealWorldDistance - realWorldDistance;
+					Vector3 direction = (position - transform.position).normalized;
+					hudInfo.targetPos += direction * distanceToMove;
 				}
 
-				hudInfo.realSpawnPositionOffset.PositionOffset =
-					Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 3 * Time.fixedDeltaTime);
 			}
+
+
+
+			if (!needAdjust) {
+				hudInfo.targetPos = hudInfo.originalSpawnPositionOffset.PositionOffset;
+			}
+
+			hudInfo.realSpawnPositionOffset.PositionOffset = hudInfo.targetPos; 
+			//Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 3 * Time.fixedDeltaTime);
+		}
+		
+		protected virtual void FixedUpdate() {
+			//if (true) {
+			
 			//}
 		}
 
