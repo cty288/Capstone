@@ -139,10 +139,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 
 		public virtual void OnPointByCrosshair() {
+			bool isPointPreviously = isPointed;
 			isPointed = true;
 			
 			if (showNameTagWhenPointed) {
-				if(nameTagFollowTransform && crossHairHUDTimer <= 0f) {
+				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
 					GameObject
 						nameTag = SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag);
 					
