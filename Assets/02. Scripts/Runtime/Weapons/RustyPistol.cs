@@ -131,8 +131,9 @@ namespace Runtime.Weapons
         }
 
 
-        public void Update()
+        protected override void Update()
         {
+            base.Update();
             if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Reload
