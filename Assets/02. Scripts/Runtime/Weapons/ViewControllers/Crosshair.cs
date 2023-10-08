@@ -44,6 +44,11 @@ namespace Runtime.Weapons.ViewControllers {
 
         private GameObject currentCrosshair;
         private ICrossHairViewController currentCrosshairViewController;
+        
+        private Vector2 crossHairScreenPosition;
+
+        public Vector2 CrossHairScreenPosition => crossHairScreenPosition;
+        
         private void Awake() {
             inventoryModel = this.GetModel<IInventoryModel>();
             //centerTransform = transform.Find("Center");
@@ -95,9 +100,13 @@ namespace Runtime.Weapons.ViewControllers {
             if (!mainCamera) {
                 return;
             }
-            
-            
-            Ray ray = mainCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
+
+            crossHairScreenPosition = currentCrosshair
+                ? currentCrosshair.transform.position
+                : new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+
+            Ray ray = mainCamera.ScreenPointToRay(CrossHairScreenPosition);
             bool hitEntity = false;
             bool hitHurtBox = false;
 

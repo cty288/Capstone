@@ -8,6 +8,44 @@ using Runtime.Utilities.Collision;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class MyCrossHaitVC : WeaponCrossHairViewController {
+	protected override void OnAimHurtBoxStart(IHurtbox hurtbox) {
+		
+	}
+
+	protected override void OnWeaponAimOutOfRange() {
+		
+	}
+
+	protected override void OnWeaponStopAimOutOfRange() {
+		
+	}
+
+	protected override void OnAimHurtBoxEnd(IHurtbox hurtbox) {
+	
+	}
+
+	protected override void OnWeaponHit(IDamageable damageable, int damage) {
+	
+	}
+
+	public override void OnStartHold(IResourceEntity resourceEntity) {
+		
+	}
+
+	public override void OnWeaponKillTarget(IDamageable target) {
+		
+	}
+
+	public override void OnWeaponScope(bool isScoped) {
+		
+	}
+
+	public override void OnWeaponShoot() {
+		
+	}
+}
+
 public class DefaultWeaponCrossHairViewController : WeaponCrossHairViewController {
 	private Animator aimAnimator;
 	

@@ -21,6 +21,7 @@ using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
 using Runtime.UI.NameTags;
 using Runtime.Utilities;
+using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -51,10 +52,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
 		
+		
 		[Header("HUD Related")]
 		[Tooltip("This is the tolerance time for the cross hair HUD to disappear after the entity is not pointed.")] 
 		[SerializeField] 
-		protected float crossHairHUDToleranceTime = 0.5f;
+		protected float crossHairHUDToleranceMaxTime = 0.3f;
+
+		[SerializeField] protected float crossHairHUDToleranceScreenDistanceFactor = 0.5f;
 		
 		protected float crossHairHUDTimer = 0f;
 		
@@ -237,9 +241,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private bool unPointTriggered = false;
 
 		protected virtual void Update() {
-			if (crossHairHUDTimer < crossHairHUDToleranceTime && !isPointed && !unPointTriggered) {
+			if (crossHairHUDTimer < crossHairHUDToleranceMaxTime && !isPointed && !unPointTriggered) {
 				crossHairHUDTimer += Time.deltaTime;
-				if (crossHairHUDTimer >= crossHairHUDToleranceTime) {
+				//if the screen distance between crosshair and this game obj is too far, then directly set timer to tolerance time
+
+				Vector3 crossHairScreenPos = Crosshair.Singleton.CrossHairScreenPosition;
+				Vector3 thisScreenPos = mainCamera.WorldToScreenPoint(transform.position);
+				float distance = Vector3.Distance(crossHairScreenPos, thisScreenPos);
+				if (distance >= crossHairHUDToleranceScreenDistanceFactor * Screen.width) {
+					crossHairHUDTimer = crossHairHUDToleranceMaxTime;
+				}
+				
+				if (crossHairHUDTimer >= crossHairHUDToleranceMaxTime) {
 					crossHairHUDTimer = 0;
 					unPointTriggered = true;
 					OnHUDUnpointedTorlanceTimeEnds();
