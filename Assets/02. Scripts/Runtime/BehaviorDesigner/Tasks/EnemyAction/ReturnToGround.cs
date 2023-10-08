@@ -15,12 +15,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     public class ReturnToGround : EnemyAction
     {
         public SharedTransform headPosition;
+        public SharedBool initial = false;
         public SharedBool underGround;
         public float moveSpeed;
         public float timer = 1f;
-        public DiveUnderGround dug;
+        public DiveUnderGround[] dug = new DiveUnderGround[2];
         public override void OnStart()
         {
+            initial = true;
             
         }
 
@@ -39,7 +41,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 if (timer < 0)
                 {
                     underGround.Value = false;
-                    dug.underGround = false;
+                    foreach (var d in dug)
+                    {
+                        d.underGround = false;
+                    }
                     timer = 1f;
                     return TaskStatus.Success;
                 }
@@ -50,7 +55,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             else
             {
-                return TaskStatus.Running;
+                return TaskStatus.Success;
             }
 
            

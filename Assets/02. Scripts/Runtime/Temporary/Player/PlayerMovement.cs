@@ -14,6 +14,16 @@ using Runtime.Player;
 
 namespace Runtime.Temporary.Player
 {
+    [Serializable]
+    public enum MovementState
+    {
+        walking,
+        sprinting,
+        sliding,
+        air,
+        wallrunning
+    }
+    
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovement : AbstractMikroController<MainGame>
     {
@@ -172,15 +182,6 @@ namespace Runtime.Temporary.Player
 
         [SerializeField]
         private MovementState state;
-        [Serializable]
-        private enum MovementState
-        {
-            walking,
-            sprinting,
-            sliding,
-            air,
-            wallrunning
-        }
         
         private DPunkInputs.PlayerActions playerActions;
         private IPlayerEntity playerEntity;
@@ -253,6 +254,7 @@ namespace Runtime.Temporary.Player
             if (wallrunning)
             {
                 state = MovementState.wallrunning;
+                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
 
                  desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
             }
@@ -260,6 +262,7 @@ namespace Runtime.Temporary.Player
             else if (sliding)
             {
                 state = MovementState.sliding;
+                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
 
                 if (onSlope && rb.velocity.y < 0.1f)
                     desiredMoveSpeed = playerEntity.GetSlideSpeed().RealValue;
@@ -272,6 +275,8 @@ namespace Runtime.Temporary.Player
             else if(grounded && sprinting)
             {
                 state = MovementState.sprinting;
+                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+
                 desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
             }
 
@@ -279,13 +284,23 @@ namespace Runtime.Temporary.Player
             else if (grounded)
             {
                 state = MovementState.walking;
-                desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue;
+                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                if (this.GetModel<IGamePlayerModel>().GetPlayer().IsScopedIn())
+                {
+                    desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue * 0.5f; //TODO: set value according to gun weight
+                }
+                else
+                {
+                    desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue;
+
+                }
             }
 
             // Mode - Air
             else
             {
                 state = MovementState.air;
+                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
             }
 
             // check if desiredMoveSpeed has changed drastically
@@ -491,7 +506,7 @@ namespace Runtime.Temporary.Player
             }
             
             // turn gravity off while on slope
-            if(!wallrunning)rb.useGravity = !onSlope;
+            //if(!wallrunning)rb.useGravity = !onSlope;
 
             
             if (moveDirection == Vector3.zero && lastMoveDirection != Vector3.zero) {

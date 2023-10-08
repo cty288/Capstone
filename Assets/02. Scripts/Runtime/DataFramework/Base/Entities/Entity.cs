@@ -5,6 +5,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Pool;
+using MikroFramework.Utilities;
 using Polyglot;
 using Runtime.DataFramework.Description;
 using Runtime.DataFramework.Properties;
@@ -16,7 +17,10 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Runtime.DataFramework.Entities {
 	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent  {
 	
-		public string EntityName { get; set; }
+		public string EntityName { get;}
+		
+		public void OverrideEntityName(string name);
+		
 		/// <summary>
 		/// Register a property to the entity. This must be called before the entity is initialized
 		/// To register a property after the entity is initialized, use RegisterTempProperty
@@ -93,7 +97,7 @@ namespace Runtime.DataFramework.Entities {
 		public string UUID { get; }
 
 		public void OnAllocate();
-	
+		void OnAwake();
 	
 		/// <summary>
 		/// Set the base value of all properties with the given name
@@ -103,16 +107,21 @@ namespace Runtime.DataFramework.Entities {
 		/// <param name="modifier"></param>
 		/// <typeparam name="T"></typeparam>
 	
-		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value, IPropertyDependencyModifier<T> modifier = null);
-	
+		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  PropertyModifier<T> modifier = null);
+
+		[Obsolete(
+			"Use SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  PropertyModifier<T> modifier = null) instead")]
+		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value, IPropertyDependencyModifier<T> modifier);
+
+		[Obsolete("Use SetPropertyModifier<T>(PropertyNameInfo name, PropertyModifier<T> modifier) instead")]
+		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier);
 		/// <summary>
 		/// Set the modifier of all properties with the given name
 		/// </summary>
 		/// <param name="name"></param>
 		/// <param name="modifier"></param>
 		/// <typeparam name="T"></typeparam>
-	
-		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier);
+		public void SetPropertyModifier<T>(PropertyNameInfo name, PropertyModifier<T> modifier);
 
 		public void LoadPropertyBaseValueFromConfig(ConfigTable overrideTable = null);
 
@@ -125,6 +134,20 @@ namespace Runtime.DataFramework.Entities {
 		public IUnRegister RegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
 
 		public void UnRegisterOnEntityRecycled(Action<IEntity> onEntityRecycled);
+		
+		public void RegisterReadyToRecycle(Action<IEntity> onReadyToRecycle);
+		
+		public void UnRegisterReadyToRecycle(Action<IEntity> onReadyToRecycle);
+		
+		public void RegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef);
+		
+		public void UnRegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef);
+		
+		public void ReadyToRecycle();
+		
+		public void RetainRecycleRC();
+		
+		public void ReleaseRecycleRC();
 	}
 	
 	
@@ -145,11 +168,36 @@ namespace Runtime.DataFramework.Entities {
 		}
 	}
 
-
+	public class EntityRecycleRC : SimpleRC {
+		private Action<IEntity> onZeroRef;
+		private IEntity entity;
+		public EntityRecycleRC(IEntity entity) {
+			this.entity = entity;
+		}
+		
+		public void RegisterOnZeroRef(Action<IEntity> onZeroRef) {
+			this.onZeroRef += onZeroRef;
+		}
+		
+		public void UnRegisterOnZeroRef(Action<IEntity> onZeroRef) {
+			this.onZeroRef -= onZeroRef;
+		}
+		
+		public void UnRegisterAllOnZeroRef() {
+			onZeroRef = null;
+		}
+		
+		protected override void OnZeroRef() {
+			base.OnZeroRef();
+			onZeroRef?.Invoke(entity);
+		}
+	}
 
 
 	public abstract class Entity :  IEntity  {
 		public abstract string EntityName { get; set; }
+
+		[ES3Serializable] private string originalEntityName;
 	
 		[ES3NonSerializable]
 		private Dictionary<string, IPropertyBase> _allProperties { get; } =
@@ -180,10 +228,26 @@ namespace Runtime.DataFramework.Entities {
 		protected ConfigTable configTable;
 
 		protected Action<IEntity> onEntityRecycled;
+
+		protected EntityRecycleRC recycleRC;
+
+		protected Action<IEntity> onReadyToRecycleEvent = null;
+		
+		protected Action<IEntity> onRecycleRCZeroRef = null;
+		
+		private bool readyToRecycle = false;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
+			originalEntityName = EntityName;
+			recycleRC = new EntityRecycleRC(this);
+			recycleRC.RegisterOnZeroRef((e) => {
+				if (readyToRecycle) {
+					onRecycleRCZeroRef?.Invoke(this);
+				}
+			});
 			configTable = GetConfigTable();
 			OnRegisterProperties();
+			
 		}
 
 		protected abstract ConfigTable GetConfigTable();
@@ -213,12 +277,19 @@ namespace Runtime.DataFramework.Entities {
 					s.RegisterRequestRegisterProperty(DoRegisterNonRootProperty);
 				}
 			}
-			
+			OnAwake();
 			OnStart(true);
 		}
 
 
-	
+		public void OverrideEntityName(string name) {
+			if (initialized) {
+				Debug.LogError("Cannot override entity name after entity is initialized");
+				return;
+			}
+			EntityName = name;
+		}
+
 		public void RegisterInitialProperty<T>(T property) where T : IPropertyBase {
 			if (property is ICustomProperty) {
 				Debug.LogError(
@@ -300,7 +371,8 @@ namespace Runtime.DataFramework.Entities {
 			this.UUID = System.Guid.NewGuid().ToString();
 		}
 
-		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value, IPropertyDependencyModifier<T> modifier = null) {
+		
+		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  PropertyModifier<T> modifier = null) {
 			if (initialized) {
 				Debug.LogError("Cannot set property value after entity is initialized");
 				return;
@@ -315,8 +387,39 @@ namespace Runtime.DataFramework.Entities {
 				Debug.LogError($"Property {name.ToString()} not found in entity {EntityName}");
 			}
 		}
-
+		
+		[Obsolete("Use SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  PropertyModifier<T> modifier = null) instead")]
+		public void SetPropertyBaseValue<T>(PropertyNameInfo name, T value,  IPropertyDependencyModifier<T> modifier) {
+			if (initialized) {
+				Debug.LogError("Cannot set property value after entity is initialized");
+				return;
+			}
+			IPropertyBase property = GetProperty(name);
+			if (property != null) {
+				property.SetBaseValue(value);
+				if (modifier != null) {
+					property.SetModifier(modifier);
+				}
+			}else {
+				Debug.LogError($"Property {name.ToString()} not found in entity {EntityName}");
+			}
+		}
+		
+		[Obsolete("Use SetPropertyModifier<T>(PropertyNameInfo name, PropertyModifier<T> modifier) instead")]
 		public void SetPropertyModifier<T>(PropertyNameInfo name, IPropertyDependencyModifier<T> modifier) {
+			if (initialized) {
+				Debug.LogError("Cannot set property value after entity is initialized");
+				return;
+			}
+			IPropertyBase property = GetProperty(name);
+			if (property != null) {
+				property.SetModifier(modifier);
+			}else {
+				Debug.LogError($"Property {name.ToString()} not found in entity {EntityName}");
+			}
+		}
+
+		public void SetPropertyModifier<T>(PropertyNameInfo name, PropertyModifier<T> modifier) {
 			if (initialized) {
 				Debug.LogError("Cannot set property value after entity is initialized");
 				return;
@@ -358,6 +461,38 @@ namespace Runtime.DataFramework.Entities {
 			this.onEntityRecycled -= onEntityRecycled;
 		}
 
+		public void RegisterReadyToRecycle(Action<IEntity> onReadyToRecycle) {
+			this.onReadyToRecycleEvent += onReadyToRecycle;
+		}
+
+		public void UnRegisterReadyToRecycle(Action<IEntity> onReadyToRecycle) {
+			this.onReadyToRecycleEvent -= onReadyToRecycle;
+		}
+
+		public void RegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef) {
+			this.onRecycleRCZeroRef += onZeroRef;
+		}
+
+		public void UnRegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef) {
+			this.onRecycleRCZeroRef -= onZeroRef;
+		}
+
+		public void ReadyToRecycle() {
+			readyToRecycle = true;
+			this.onReadyToRecycleEvent?.Invoke(this);
+			if (recycleRC.RefCount == 0) {
+				this.onRecycleRCZeroRef?.Invoke(this);
+			}
+		}
+
+		public void RetainRecycleRC() {
+			recycleRC.Retain();
+		}
+		
+		
+		public void ReleaseRecycleRC() {
+			recycleRC.Release();
+		}
 
 		/// <summary>
 		/// After the entity is built, or loaded from save, this will be called
@@ -422,7 +557,8 @@ namespace Runtime.DataFramework.Entities {
 			if (initialized) {
 				return;
 			}
-
+			
+			OnInitModifiers();
 			List<string> order = EntityPropertyDependencyCache.GetInitializationOrder(EntityName, _allProperties);
 			foreach (string propertyName in order) {
 				if (_allProperties.TryGetValue(propertyName, out IPropertyBase property)) {
@@ -435,7 +571,10 @@ namespace Runtime.DataFramework.Entities {
 			initialized = true;
 		}
 
+		public abstract void OnAwake();
+
 		protected void InitProperty(IPropertyBase property) {
+			
 			PropertyNameInfo[] dependencies = property.GetDependentProperties();
 			if (dependencies != null) {
 				IPropertyBase[] dependentProperties = new IPropertyBase[dependencies.Length];
@@ -449,9 +588,11 @@ namespace Runtime.DataFramework.Entities {
 			}
 		}
 
+		protected abstract void OnInitModifiers();
 
 
 		public void OnRecycled() {
+			OnRecycle();
 			foreach (IPropertyBase property in _allProperties.Values) {
 				property.OnRecycled();
 			}
@@ -468,7 +609,9 @@ namespace Runtime.DataFramework.Entities {
 			tempPropertyNames.Clear();
 			initialized = false;
 			this.onEntityRecycled = null;
-			OnRecycle();
+			EntityName = originalEntityName;
+			this.onReadyToRecycleEvent = null;
+			readyToRecycle = false;
 		}
 
 		[field: ES3Serializable]

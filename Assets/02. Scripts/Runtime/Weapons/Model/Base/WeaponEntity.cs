@@ -3,6 +3,8 @@ using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
 using Runtime.Utilities.ConfigSheet;
@@ -19,7 +21,7 @@ namespace Runtime.Weapons.Model.Base
         public float returnSpeed;
     }
     
-    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
+    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
         public IRange GetRange();
@@ -69,7 +71,13 @@ namespace Runtime.Weapons.Model.Base
         }
 
         protected override void OnEntityStart(bool isLoadedFromSave) {
-            base.OnEntityStart(isLoadedFromSave);
+            if (!isLoadedFromSave) { //otherwise it is managed by es3
+                CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
+            }
+        }
+
+        public override void OnAwake() {
+            base.OnAwake();
             baseDamageProperty = GetProperty<IBaseDamage>();
             attackSpeedProperty = GetProperty<IAttackSpeed>();
             rangeProperty = GetProperty<IRange>();
@@ -81,13 +89,9 @@ namespace Runtime.Weapons.Model.Base
             scopeRecoilProperty = GetProperty<IScopeRecoil>();
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
-            
-            if (!isLoadedFromSave) { //otherwise it is managed by es3
-                CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
-            }
-           
+
         }
-        
+
         public override void OnDoRecycle() {
             SafeObjectPool<T>.Singleton.Recycle(this as T);
         }
@@ -195,6 +199,15 @@ namespace Runtime.Weapons.Model.Base
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
             return "???";
         }
-        
+
+        [field: ES3Serializable]
+        public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            Debug.Log($"Dealt {damage} damage to {damageable}");
+        }
     }
 }

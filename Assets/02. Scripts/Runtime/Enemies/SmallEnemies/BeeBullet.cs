@@ -6,6 +6,10 @@ using Runtime.Weapons.ViewControllers.Base;
 
 public class BeeBullet : AbstractBulletViewController
 {
+    protected override void OnHitObject(Collider other) {
+        
+    }
+
     protected override void OnBulletRecycled()
     {
         

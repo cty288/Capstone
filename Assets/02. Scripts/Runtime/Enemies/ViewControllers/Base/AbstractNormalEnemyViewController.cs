@@ -15,13 +15,6 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 		
 
-		private Camera mainCamera = null;
-		
-		protected override void Awake() {
-			base.Awake();
-			mainCamera = Camera.main;
-		}
-
 		protected override void OnStart() {
 			base.OnStart();
 		}
@@ -29,7 +22,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected override HealthBar OnSpawnHealthBar() {
 			HealthBar bar =
 				SpawnCrosshairResponseHUDElement(healthBarSpawnPoint, healthBarPrefabName, HUDCategory.HealthBar)
-					.GetComponent<HealthBar>();
+					.Item1.GetComponent<HealthBar>();
 			return bar;
 		}
 

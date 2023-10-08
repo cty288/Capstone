@@ -13,7 +13,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	/// Delegate for taking damage <br />
 	/// Note that damage is the valid damage, meaning that if the real damage > current health, the valid damage will be current health; else the valid damage will be the real damage
 	/// </summary>
-	public delegate void OnTakeDamage(int damage, int currentHealth, IBelongToFaction damageDealer, [CanBeNull] HitData hitData);
+	public delegate void OnTakeDamage(int damage, int currentHealth, ICanDealDamage damageDealer, [CanBeNull] HitData hitData);
 	
 	/// <summary>
 	/// Delegate for healing <br />
@@ -79,7 +79,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// <param name="damage">the amount of damage</param>
 		/// <param name="damageDealer">the damage dealer entity</param>
 		
-		public void TakeDamage(int damage, IBelongToFaction damageDealer, [CanBeNull] HitData hitData = null);
+		public void TakeDamage(int damage, ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null);
 
 
 		/// <summary>
@@ -124,6 +124,6 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		
 		public BindableProperty<bool> IsInvincible { get; }
 		
-		public bool CheckCanTakeDamage([CanBeNull] IBelongToFaction damageDealer);
+		public bool CheckCanTakeDamage([CanBeNull] ICanDealDamage damageDealer);
 	}
 }

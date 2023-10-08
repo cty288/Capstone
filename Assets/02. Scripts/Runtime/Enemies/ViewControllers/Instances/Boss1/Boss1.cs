@@ -33,11 +33,17 @@ namespace Runtime.Enemies
         
 
         [field: ES3Serializable] public BindableProperty<bool> ShellClosed { get; } = new BindableProperty<bool>(true);
-        
+
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            
+        }
+
         public override void OnRecycle() {
 
         }
-
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
         protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
@@ -48,6 +54,7 @@ namespace Runtime.Enemies
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
+            
             return new[] {
                 new AutoConfigCustomProperty("shellHealthInfo"),
                 new AutoConfigCustomProperty("damages")
@@ -169,7 +176,7 @@ namespace Runtime.Enemies
 
         private void SpawnShellHealthBar() {
             HealthBar healthBar = SpawnCrosshairResponseHUDElement(shellHealthBarSpawnTransform, "Boss1ShellHealthBar",
-                HUDCategory.HealthBar, false).GetComponent<HealthBar>();
+                HUDCategory.HealthBar, false).Item1.GetComponent<HealthBar>();
 
             healthBar.OnSetEntity(BoundEntity.GetCustomDataValue<HealthInfo>("shellHealthInfo", "info"), BoundEntity);
         }
@@ -185,22 +192,24 @@ namespace Runtime.Enemies
 
         public override void HurtResponse(HitData data)
         {
+            int originalDamage = data.Damage;
+            //base.HurtResponse(data);
             Debug.Log("hurt response");
             if (BoundEntity.ShellClosed)
             {
                 IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
                
                 if (shellHp.Value.CurrentHealth > 0) {
-                    if (shellHp.Value.CurrentHealth - data.Damage <= 0) {
+                    if (shellHp.Value.CurrentHealth -originalDamage <= 0) {
                         shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,0);
                     }
                     else {
-                        shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth, shellHp.Value.CurrentHealth - data.Damage);
+                        shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth, shellHp.Value.CurrentHealth - originalDamage);
                     }
                 }
                
                 
-                Debug.Log("Shell has taken" + data.Damage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
+                Debug.Log("Shell has taken" + originalDamage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }
 
             BoundEntity.TakeDamage(data.Damage, data.Attacker, data);

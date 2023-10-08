@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -23,6 +24,14 @@ namespace Runtime.Temporary.Weapon
         
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Neutral);
+
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
 
 
         public void Start()

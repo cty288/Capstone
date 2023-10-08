@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
+using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.GameResources.ViewControllers {
@@ -35,7 +37,11 @@ namespace Runtime.GameResources.ViewControllers {
 		protected GameObject ownerGameObject = null;
 		protected float originalAutoRemovalTimeWhenNoAbsorb;
 
-		
+		[Header("Cross hairs")] [SerializeField]
+		private string crossHairPrefabName;
+		[CanBeNull]
+		protected ICrossHairViewController crossHairViewController;
+
 		protected override void Awake() {
 			base.Awake();
 			originalLayer = gameObject.layer;
@@ -50,15 +56,19 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			
+
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
+						
 			gameObject.layer = originalLayer;
 			isHolding = false;
 			rigidbody.isKinematic = false;
 			this.ownerGameObject = null;
 			entityAutoRemovalTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
 		}
-		
-		
+
 
 		protected override void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
 			if (isHolding) {
@@ -80,11 +90,20 @@ namespace Runtime.GameResources.ViewControllers {
 			this.ownerGameObject = ownerGameObject;
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 			OnUnPointByCrosshair();
+
+			crossHairViewController = Crosshair.Singleton.SpawnCrossHair(crossHairPrefabName);
+			if (crossHairViewController != null) {
+				crossHairViewController.OnStart(BoundEntity);
+			}
 		}
 		
 		public virtual void OnStopHold() {
 			
 			//gameObject.layer = originalLayer;
+			if (crossHairViewController != null) {
+				crossHairViewController.OnStopHold();
+				Crosshair.Singleton.DespawnCrossHair();
+			}
 			RecycleToCache();
 		}
 

@@ -23,21 +23,26 @@ namespace Runtime.Enemies.SmallEnemies
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "SurveillanceDrone";
 
-      
 
-        public override void OnRecycle()
-        {
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            
+        }
+
+        public override void OnRecycle() {
          
         }
 
-        protected override void OnEnemyRegisterAdditionalProperties()
-        {
+        protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
 
         protected override string OnGetDescription(string defaultLocalizationKey)
         {
             return null;
+        }
+
+        protected override void OnInitModifiers(int rarity) {
+            
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -63,9 +68,10 @@ namespace Runtime.Enemies.SmallEnemies
                 waypoint.transform.SetParent(null);
             }
         }
+        
 
-        public override void OnRecycled() {
-            base.OnRecycled();
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
             foreach (GameObject waypoint in waypoints) {
                 waypoint.transform.SetParent(transform);
             }

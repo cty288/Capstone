@@ -4,6 +4,7 @@ using MikroFramework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities.Builders;
 using Runtime.GameResources.Model.Base;
+using UnityEngine;
 
 namespace Runtime.DataFramework.Entities {
 	public interface IEntityModel : IModel {
@@ -87,13 +88,21 @@ namespace Runtime.DataFramework.Entities {
 		public virtual bool RemoveEntity(string id) {
 			if (entities.ContainsKey(id)) {
 				IEntity entity = entities[id];
-				entity.RecycleToCache();
-				entities.Remove(id);
-				GlobalEntities.UnregisterEntity(id);
+				entity.RegisterOnRecycleRCZeroRef(OnEntityReadyToRecycle);
+				entity.ReadyToRecycle();
 				return true;
 			}
 			return false;
 		}
+
+		private void OnEntityReadyToRecycle(IEntity e) {
+			Debug.Log($"Entity {e.EntityName} is ready to recycle");
+			e.UnRegisterOnRecycleRCZeroRef(OnEntityReadyToRecycle);
+			e.RecycleToCache();
+			entities.Remove(e.UUID);
+			GlobalEntities.UnregisterEntity(e.UUID);
+		}
+
 
 		public int EntityCount => entities.Count;
 	}

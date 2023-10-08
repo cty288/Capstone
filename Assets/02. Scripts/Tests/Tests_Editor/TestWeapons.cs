@@ -18,6 +18,9 @@ namespace Tests.Tests_Editor {
 		public override void OnRecycle() {
             
 		}
+		protected override void OnInitModifiers(int rarity) {
+                
+		}
 
 		public override int Width { get; } = 1;
 

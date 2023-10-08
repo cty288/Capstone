@@ -5,7 +5,10 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 
@@ -14,28 +17,39 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	public interface IBulletViewController : IController, IHitResponder {
 		int Damage { get; }
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner);
+		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner);
 	}
 	
 	
 	[RequireComponent(typeof(HitBox))]
-	public abstract class AbstractBulletViewController : PoolableGameObject, IHitResponder, IController, IBulletViewController {
+	public abstract class AbstractBulletViewController : PoolableGameObject, IHitResponder, IController, IBulletViewController, ICanDealDamage {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
-		
+		public void OnKillDamageable(IDamageable damageable) {
+			owner?.OnKillDamageable(damageable);
+		}
+
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			owner?.OnDealDamage(damageable, damage);
+		}
+
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
-		
+
+
 		[SerializeField] private float autoRecycleTime = 5f;
+		[SerializeField] private bool penetrateSameFaction = false;
 		private Coroutine autoRecycleCoroutine = null;
 		
 		protected HitBox hitBox = null;
 		protected GameObject bulletOwner = null;
-
+		protected ICanDealDamage owner = null;
+		protected IEntity entity = null;
+			
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
 		}
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner) {
+		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
@@ -47,6 +61,10 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			if (bulletOwnerCollider != null) {
 				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
 			}
+			this.owner = owner;
+
+			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
+			entity?.RetainRecycleRC();
 		}
 
 		public override void OnStartOrAllocate() {
@@ -71,15 +89,31 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public void HitResponse(HitData data) {
-			if (data.Hurtbox.Owner == bulletOwner) {
-				return;
-			}
-			hitObjects.Add(data.Hurtbox.Owner);
+			if(data.Hurtbox!=null){
+			  if (data.Hurtbox.Owner == bulletOwner) {
+				  return;
+			  }
+        hitObjects.Add(data.Hurtbox.Owner);
+      }
 			OnHitResponse(data);
-			RecycleToCache();
+			//RecycleToCache();
 		}
 
 		protected abstract void OnHitResponse(HitData data);
+
+		protected virtual void OnTriggerEnter(Collider other) {
+			if (!other.isTrigger) {
+				if(other.transform.root.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
+					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
+						return;
+					}
+				}
+				OnHitObject(other);
+				RecycleToCache();
+			}
+		}
+		
+		protected abstract void OnHitObject(Collider other);
 
 		public override void OnRecycled() {
 			base.OnRecycled();
@@ -89,14 +123,19 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				StopCoroutine(autoRecycleCoroutine);
 				autoRecycleCoroutine = null;
 			}
-			Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
-			if (bulletOwnerCollider != null) {
-				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
+
+			if (bulletOwner) {
+				Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
+				if (bulletOwnerCollider != null) {
+					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
+				}
 			}
+
 			
 			hitBox.StopCheckingHits();
-			this.bulletOwner = null;
-			
+			//this.bulletOwner = null;
+			//this.owner = null;
+			entity?.ReleaseRecycleRC();
 			
 		}
 

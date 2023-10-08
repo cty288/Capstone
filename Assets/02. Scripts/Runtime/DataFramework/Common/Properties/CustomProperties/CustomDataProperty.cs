@@ -78,6 +78,21 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 
 		public T OnGetBaseValueFromConfig(dynamic value) {
 			string rawVal = value["value"].ToString();
+			
+			try {
+				if (value["dependencies"] is JArray dependencies) {
+						
+					defaultDependencies = new PropertyNameInfo[dependencies.Count];
+					for (int i = 0; i < dependencies.Count; i++) {
+						defaultDependencies[i] = new PropertyNameInfo(dependencies[i].ToString());
+					}
+				}
+			}
+			catch (Exception e) {
+					
+			}
+			
+			
 			if (typeof(T) == typeof(object)) {
 				string type = value["type"];
 				Type parsedType = SerializationFactory.Singleton.ParseType(type);
@@ -93,6 +108,8 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 				else {
 					result = JsonConvert.DeserializeObject(rawVal, parsedType);
 				}
+
+				
 				return result;
 			}
 			return JsonConvert.DeserializeObject<T>(rawVal);

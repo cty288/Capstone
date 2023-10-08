@@ -31,7 +31,7 @@ namespace Runtime.Weapons
     {
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
-        [field: ES3Serializable] public override int Width { get; } = 2;
+        [field: ES3Serializable] public override int Width { get; } = 1;
         
         public override void OnRecycle()
         {
@@ -46,10 +46,15 @@ namespace Runtime.Weapons
             return null;
         }
 
-
+        protected override void OnInitModifiers(int rarity) {
+            
+        }
+        
+        
         public override string OnGroundVCPrefabName => EntityName;
 
     }
+
 
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
@@ -60,6 +65,7 @@ namespace Runtime.Weapons
         public GameObject defaultGunModel;
         public GameObject reloadGunModel;
 
+        private GunAmmoVisual gunAmmoVisual;
         
         [Header("Debug")]
         [SerializeField] private string overrideName = "RustyPistol";
@@ -67,14 +73,22 @@ namespace Runtime.Weapons
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
+            gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>();
         }
-        
+
+        protected override void OnEntityStart() {
+            base.OnEntityStart();
+            gunAmmoVisual.Init(BoundEntity);
+        }
+
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
             return builder.OverrideName(overrideName).FromConfig().Build();
         }
         
         protected override void OnBindEntityProperty() {}
-        
+
+
+
         public override void OnItemUse() {
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
@@ -89,7 +103,7 @@ namespace Runtime.Weapons
                     {
                         if (BoundEntity.CurrentAmmo == 0)
                         {
-                            if (isScopedIn)
+                            if (IsScopedIn)
                             {
                                 StartCoroutine(ScopeOut(true));
                             }
@@ -103,28 +117,30 @@ namespace Runtime.Weapons
             }
         }
 
+        
         public override void OnItemScopePressed() {
             if (isReloading) {
                 return;
             }
-            if (isScopedIn) {
+            if (IsScopedIn) {
                 StartCoroutine(ScopeOut());
             }
             else {
-                StartCoroutine(ScopeIn());   
+                StartCoroutine(ScopeIn());
             }
         }
-        
 
-        public void Update()
+
+        protected override void Update()
         {
+            base.Update();
             if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Reload
                 if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
-                    if (isScopedIn)
+                    if (IsScopedIn)
                     {
                         StartCoroutine(ScopeOut(true));
                     }
@@ -169,7 +185,7 @@ namespace Runtime.Weapons
             }
             model.transform.position = scopeInPositionTransform.position;
             yield return null;
-            isScopedIn = true;
+            ChangeScopeStatus(true);
         }
 
         private IEnumerator ScopeOut(bool reloadAfter = false)
@@ -191,7 +207,7 @@ namespace Runtime.Weapons
             model.transform.position = gunPositionTransform.position;
 
             yield return null;
-            isScopedIn = false;
+            ChangeScopeStatus(false);
 
             if (reloadAfter)
             {
@@ -202,11 +218,12 @@ namespace Runtime.Weapons
 
         public override void OnRecycled() {
             base.OnRecycled();
-            isScopedIn = false;
+            ChangeScopeStatus(false);
             isReloading = false;
             
             defaultGunModel.SetActive(true);
             reloadGunModel.SetActive(false);
         }
+        
     }
 }

@@ -18,7 +18,13 @@ class OutlineRenderPass : ScriptableRenderPass
     readonly int temporaryRTIdA = Shader.PropertyToID("_TempRT");
     readonly int temporaryRTIdB = Shader.PropertyToID("_TempRTB");
 
-    private Material material;
+    readonly Material material;
+    readonly int _scaleID = Shader.PropertyToID("_Scale");                                                            
+    readonly int _depthThresholdID = Shader.PropertyToID("_DepthThreshold");                                          
+    readonly int _normalThresholdID = Shader.PropertyToID("_NormalThreshold");                                        
+    readonly int _depthNormalThresholdID = Shader.PropertyToID("_DepthNormalThreshold");                              
+    readonly int _depthNormalThresholdScaleID = Shader.PropertyToID("_DepthNormalThresholdScale");                    
+    readonly int _lineAlphaID = Shader.PropertyToID("_LineAlpha");                                                    
 
     public OutlineRenderPass(Material material)
     {
@@ -88,13 +94,12 @@ class OutlineRenderPass : ScriptableRenderPass
         // Only process if the effect is active
         if (customEffect.IsActive())
         {
-            // P.s. optimize by caching the property ID somewhere else
-            material.SetInt(Shader.PropertyToID("_Scale"), customEffect.scale.value);
-            material.SetFloat(Shader.PropertyToID("_DepthThreshold"), customEffect.depthThreshold.value);
-            material.SetFloat(Shader.PropertyToID("_NormalThreshold"), customEffect.normalThreshold.value);
-            material.SetFloat(Shader.PropertyToID("_DepthNormalThreshold"), customEffect.depthNormalThreshold.value);
-            material.SetFloat(Shader.PropertyToID("_DepthNormalThresholdScale"), customEffect.depthNormalThresholdScale.value);
-            material.SetFloat(Shader.PropertyToID("_LineAlpha"), customEffect.lineAlpha.value);
+            material.SetInt(_scaleID, customEffect.scale.value);
+            material.SetFloat(_depthThresholdID, customEffect.depthThreshold.value);
+            material.SetFloat(_normalThresholdID, customEffect.normalThreshold.value);
+            material.SetFloat(_depthNormalThresholdID, customEffect.depthNormalThreshold.value);
+            material.SetFloat(_depthNormalThresholdScaleID, customEffect.depthNormalThresholdScale.value);
+            material.SetFloat(_lineAlphaID, customEffect.lineAlpha.value);
             
             BlitTo(material);
         }

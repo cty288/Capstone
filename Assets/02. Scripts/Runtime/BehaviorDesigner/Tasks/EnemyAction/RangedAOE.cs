@@ -61,6 +61,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 SpawnBullet();
                 yield return new WaitForSeconds(spawnInterval);
             }
+
+            yield return new WaitForSeconds(bulletTravelTime - spawnInterval);
             ended = true;
         }
         void SpawnBullet()

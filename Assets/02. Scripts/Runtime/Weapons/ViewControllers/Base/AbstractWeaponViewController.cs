@@ -2,11 +2,13 @@ using System;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
+using Runtime.Temporary.Player;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -15,12 +17,14 @@ using UnityEngine;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
-    
+    public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController {
+        IWeaponEntity WeaponEntity { get; }
+    }
     /// <summary>
     /// For both 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IBelongToFaction, IHitResponder
+    public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IWeaponViewController, IBelongToFaction, IHitResponder
         where T : class, IWeaponEntity, new() {
 
         [Header("Auto Reload")]
@@ -32,6 +36,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         private IWeaponModel weaponModel;
 
         protected IHitDetector hitDetector;
+
+        private bool _isScopedIn = false;
+        protected bool IsScopedIn => _isScopedIn;
         
         // general references
         protected Camera cam;
@@ -50,14 +57,46 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected override void Awake() {
             base.Awake();
             weaponModel = this.GetModel<IWeaponModel>();
+            playerModel = this.GetModel<IGamePlayerModel>();
         }
 
         protected override void OnEntityStart() {
             base.OnEntityStart();
             hitDetector = OnCreateHitDetector();
+            _isScopedIn = false;
         }
+
+        public override void OnStartHold(GameObject ownerGameObject) {
+            base.OnStartHold(ownerGameObject);
+            if(ownerGameObject.TryGetComponent<ICanDealDamageViewController>(out var damageDealer)) {
+                BoundEntity.CurrentFaction.Value = damageDealer.CanDealDamageEntity.CurrentFaction.Value;
+            }
+        }
+
+
         
-        
+        protected void ChangeScopeStatus(bool shouldScope) {
+            bool previsScope = _isScopedIn;
+            _isScopedIn = shouldScope;
+            
+            if (previsScope != _isScopedIn) {
+                crossHairViewController?.OnScope(_isScopedIn);
+            }
+        }
+
+      
+
+        public override void OnRecycled() {
+            base.OnRecycled();
+           
+        }
+
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
+            _isScopedIn = false;
+        }
+
+
         protected abstract IHitDetector OnCreateHitDetector();
 
         protected override IEntity OnBuildNewEntity()
@@ -71,11 +110,23 @@ namespace Runtime.Weapons.ViewControllers.Base
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 
+        public void OnKillDamageable(IDamageable damageable) {
+            BoundEntity.OnKillDamageable(damageable);
+            crossHairViewController?.OnKill(damageable);
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            BoundEntity.OnDealDamage(damageable, damage);
+            crossHairViewController?.OnHit(damageable, damage);
+        }
+
         public int Damage => BoundEntity.GetBaseDamage().RealValue;
         public bool CheckHit(HitData data) {
             return data.Hurtbox.Owner != gameObject;
         }
 
         public abstract void HitResponse(HitData data);
+        public IWeaponEntity WeaponEntity => BoundEntity;
+        public ICanDealDamage CanDealDamageEntity => BoundEntity;
     }
 }

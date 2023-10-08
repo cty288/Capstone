@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
@@ -36,6 +37,9 @@ namespace Tests.Tests_Editor {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
 
+            protected override void OnEntityStart(bool isLoadedFromSave) {
+                
+            }
 
 
             protected override void OnEnemyRegisterAdditionalProperties() {
@@ -44,12 +48,16 @@ namespace Tests.Tests_Editor {
                 RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
             }
 
+            protected override void OnInitModifiers(int rarity) {
+                
+            }
+
             protected override ICustomProperty[] OnRegisterCustomProperties() {
                 return null;
             }
         }
         
-        internal class TestFriendlyEntity : AbstractCreature {
+        internal class TestFriendlyEntity : AbstractCreature, ICanDealDamage {
             [field: ES3Serializable]
             public override string EntityName { get; set; } = "TestEnemy2";
 
@@ -57,14 +65,20 @@ namespace Tests.Tests_Editor {
                 return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
             }
 
- 
+            protected override void OnEntityStart(bool isLoadedFromSave) {
+                
+            }
+
+
             protected override string OnGetDescription(string defaultLocalizationKey) {
                 return null;
             }
             public override void OnDoRecycle() {
                 
             }
-
+            protected override void OnInitModifiers(int rarity) {
+                
+            }
             public override void OnRecycle() {
             
             }
@@ -84,6 +98,14 @@ namespace Tests.Tests_Editor {
 
             protected override Faction GetDefaultFaction() {
                 return Faction.Friendly;
+            }
+
+            public void OnKillDamageable(IDamageable damageable) {
+                
+            }
+
+            public void OnDealDamage(IDamageable damageable, int damage) {
+                
             }
         }
     

@@ -5,7 +5,9 @@ using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
@@ -16,7 +18,7 @@ using UnityEngine;
 
 namespace Runtime.Enemies.ViewControllers.Base {
 	[RequireComponent(typeof(AnimationSMBManager))]
-	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder
+	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder, ICanDealDamageViewController
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
 	
@@ -105,6 +107,11 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
+			
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
 			if (currentHealthBar) {
 				currentHealthBar.OnHealthBarDestroyed();
 				OnDestroyHealthBar(currentHealthBar);
@@ -122,5 +129,16 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		public virtual void HitResponse(HitData data) {
 			hitObjects.Add(data.Hurtbox.Owner);
 		}
+
+
+		public void OnKillDamageable(IDamageable damageable) {
+			BoundEntity?.OnKillDamageable(damageable);
+		}
+
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			BoundEntity?.OnDealDamage(damageable, damage);
+		}
+
+		public ICanDealDamage CanDealDamageEntity => BoundEntity;
 	}
 }

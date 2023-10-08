@@ -19,7 +19,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         {
             base.OnEntityStart();
             
-            playerModel = this.GetModel<IGamePlayerModel>();
+            
             
             hitDetectorInfo = new HitDetectorInfo
             {
@@ -34,9 +34,9 @@ namespace Runtime.Weapons.ViewControllers.Base
             return new HitScan(this, CurrentFaction.Value, trailRenderer);
         }
         
-        public virtual void Shoot()
-        {
-            BoundEntity.OnRecoil(isScopedIn);
+        public virtual void Shoot() {
+            crossHairViewController?.OnShoot();
+            BoundEntity.OnRecoil(IsScopedIn);
             hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetBaseDamage().RealValue);
         }
         

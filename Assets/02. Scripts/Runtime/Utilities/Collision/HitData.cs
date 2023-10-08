@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Runtime.Utilities.Collision
         public Vector3 HitDirectionNormalized;
         public IHurtbox Hurtbox;
         public IHitDetector HitDetector;
-        public IBelongToFaction Attacker;
+        public ICanDealDamage Attacker;
 
         /// <summary>
         /// Sets the data of the hit. Used for HitScan.
@@ -55,7 +56,14 @@ namespace Runtime.Utilities.Collision
                 if (Hurtbox.CheckHit(this))
                     if (Hurtbox.HurtResponder == null || Hurtbox.HurtResponder.CheckHurt(this))
                         if (HitDetector.HitResponder == null || HitDetector.HitResponder.CheckHit(this))
-                            return true;
+                            if (HitDetector.HitResponder != null && Hurtbox.HurtResponder != null &&
+                                HitDetector.HitResponder.IsSameFaction(Hurtbox.HurtResponder)) {
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                            
             return false;
         }
 
@@ -80,7 +88,7 @@ namespace Runtime.Utilities.Collision
     /// <summary>
     /// Place one a GameObject if it will hit other objects.
     /// </summary>
-    public interface IHitResponder : IBelongToFaction
+    public interface IHitResponder : IBelongToFaction, ICanDealDamage
     {
         //int Damage { get; }
         public bool CheckHit(HitData data);
