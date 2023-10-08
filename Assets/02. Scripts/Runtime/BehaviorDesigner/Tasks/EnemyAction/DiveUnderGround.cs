@@ -27,8 +27,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override void OnStart()
         {
             isMovingUnderground = false;
-            bool init = (bool)tree.GetVariable("init").GetValue();
-            Debug.Log(init);
+        
         }
 
         public override TaskStatus OnUpdate()

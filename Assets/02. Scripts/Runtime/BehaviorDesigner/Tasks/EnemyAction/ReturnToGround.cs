@@ -20,10 +20,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public float moveSpeed;
         public float timer = 1f;
         public DiveUnderGround[] dug = new DiveUnderGround[2];
+        public BehaviorTree tree;
         public override void OnStart()
         {
+            tree = this.gameObject.GetComponent<BehaviorTree>();
             initial = true;
+            Debug.Log("dfdfdfdfdfdf");
+            SharedBool isInit = (SharedBool)tree.GetVariable("Init");
+            Debug.Log("dfdfdfdfdfdf");
+            isInit.SetValue(true);
             
+           
         }
 
         public override TaskStatus OnUpdate()
