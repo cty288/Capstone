@@ -1,14 +1,42 @@
-﻿using Runtime.Utilities.Collision;
+﻿using MikroFramework;
+using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
+using UnityEngine;
 
 namespace Runtime.Weapons.ViewControllers {
 	public class GunBullet : AbstractBulletViewController {
-		protected override void OnHitResponse(HitData data) {
-			
+		public GameObject explosionPrefab;
+		private int explosionDamage;
+
+		public override void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner)
+		{
+			base.Init(faction, damage, bulletOwner, owner);
+			explosionDamage = damage;
 		}
 
+		protected override void OnHitResponse(HitData data) {
+			Explode();
+		}
+
+		protected override void OnHitObject(Collider other) {
+		}
 		protected override void OnBulletRecycled() {
 			
+		}
+		
+		private void Explode() {
+			SafeGameObjectPool pool = GameObjectPoolManager.Singleton.CreatePool(explosionPrefab, 10, 100);
+
+			GameObject exp = pool.Allocate();
+            
+			//Instantiate(explosion,transform.position,Quaternion.identity);
+			exp.transform.position = transform.position;
+			exp.transform.rotation = Quaternion.identity;
+			exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, bulletOwner,
+				bulletOwner.GetComponent<ICanDealDamage>());
 		}
 	}
 }

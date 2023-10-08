@@ -9,6 +9,7 @@ using MikroFramework.Pool;
 using Polyglot;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
@@ -40,6 +41,10 @@ namespace Runtime.Weapons
         
         protected override string OnGetDescription(string defaultLocalizationKey) {
             return Localization.Get(defaultLocalizationKey);
+        }
+
+        protected override void OnInitModifiers(int rarity)
+        {
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
@@ -92,7 +97,8 @@ namespace Runtime.Weapons
                 if (BoundEntity.CurrentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
-
+                    
+                    Debug.Log("Shoot");
                     Shoot();
 
                     BoundEntity.CurrentAmmo.Value--;
@@ -127,7 +133,7 @@ namespace Runtime.Weapons
             
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
                 BoundEntity.GetBaseDamage().RealValue, 
-                gameObject);
+                gameObject, gameObject.GetComponent<ICanDealDamage>());
         }
         
         public override void OnItemScopePressed() {

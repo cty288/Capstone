@@ -49,7 +49,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			hitBox = GetComponent<HitBox>();
 		}
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner) {
+		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
@@ -81,7 +81,6 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 
 		public bool CheckHit(HitData data) {
-
 			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;
 			}
@@ -93,8 +92,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			  if (data.Hurtbox.Owner == bulletOwner) {
 				  return;
 			  }
-        hitObjects.Add(data.Hurtbox.Owner);
-      }
+			  hitObjects.Add(data.Hurtbox.Owner);
+			}
 			OnHitResponse(data);
 			//RecycleToCache();
 		}
