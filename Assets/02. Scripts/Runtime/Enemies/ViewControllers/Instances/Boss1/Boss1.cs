@@ -57,7 +57,8 @@ namespace Runtime.Enemies
             
             return new[] {
                 new AutoConfigCustomProperty("shellHealthInfo"),
-                new AutoConfigCustomProperty("damages")
+                new AutoConfigCustomProperty("damages"),
+                new AutoConfigCustomProperty("ranges")
             };
         }
         
