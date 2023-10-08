@@ -93,12 +93,15 @@ namespace Runtime.GameResources.ViewControllers {
 
 			crossHairViewController = Crosshair.Singleton.SpawnCrossHair(crossHairPrefabName);
 			if (crossHairViewController != null) {
-				crossHairViewController.OnStart(BoundEntity);
+				crossHairViewController.OnStart(BoundEntity, gameObject);
 			}
 		}
 		
 		public virtual void OnStopHold() {
-			
+			rigidbody.isKinematic = false;
+			foreach (Collider selfCollider in selfColliders.Keys) {
+				selfCollider.isTrigger = selfColliders[selfCollider];
+			}
 			//gameObject.layer = originalLayer;
 			if (crossHairViewController != null) {
 				crossHairViewController.OnStopHold();

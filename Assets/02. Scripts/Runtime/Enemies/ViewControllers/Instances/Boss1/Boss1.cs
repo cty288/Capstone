@@ -135,7 +135,12 @@ namespace Runtime.Enemies
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
-            Debug.Log($"Boss 1 Take damage: {damage}. Boss 1 current health: {currenthealth}");
+            if (BoundEntity.IsInvincible) {
+                showDamageNumber = false;
+            }
+            else {
+                showDamageNumber = true;
+            }
         }
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<Boss1Entity> builder)
@@ -207,7 +212,8 @@ namespace Runtime.Enemies
                         shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth, shellHp.Value.CurrentHealth - originalDamage);
                     }
                 }
-               
+
+                DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage);
                 
                 Debug.Log("Shell has taken" + originalDamage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }

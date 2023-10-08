@@ -34,7 +34,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private List<HurtBox> hurtBoxes = new List<HurtBox>();
 		
 		[Header("Damage Number")]
-		[SerializeField] private bool showDamageNumber = true;
+		[SerializeField] protected bool showDamageNumber = true;
 		//[SerializeField] private DamageNumberInfo damageNumberInfo;
 		
 		protected override void OnStart() {
