@@ -12,6 +12,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
 using Runtime.Utilities;
+using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -23,14 +24,16 @@ namespace Runtime.Weapons.ViewControllers {
         [SerializeField] 
         private float rayDistance = 100f;
         private IEntityViewController currentPointedEntity;
+        private IHurtbox currentPointedHurtbox;
         [SerializeField]
         private LayerMask detectLayerMask;
         
         private LayerMask crossHairDetectLayerMask;
+        private LayerMask hurtboxLayerMask;
 
         public IEntityViewController CurrentPointedEntity => currentPointedEntity;
     
-        private RaycastHit[] hits = new RaycastHit[10];
+        private RaycastHit[] hits = new RaycastHit[20];
 
         [SerializeField]
         private LayerMask wallLayerMask;
@@ -40,11 +43,13 @@ namespace Runtime.Weapons.ViewControllers {
         private GameObject noweaponCrosshair;
 
         private GameObject currentCrosshair;
+        private ICrossHairViewController currentCrosshairViewController;
         private void Awake() {
             inventoryModel = this.GetModel<IInventoryModel>();
             //centerTransform = transform.Find("Center");
             mainCamera = Camera.main;
             crossHairDetectLayerMask = LayerMask.GetMask("CrossHairDetect");
+            hurtboxLayerMask = LayerMask.GetMask("Hurtbox");
             noweaponCrosshair = transform.Find("NoWeaponCrossHair").gameObject;
             noweaponCrosshair.SetActive(false);
         }
@@ -55,6 +60,7 @@ namespace Runtime.Weapons.ViewControllers {
             if (currentCrosshair) {
                 GameObjectPoolManager.Singleton.Recycle(currentCrosshair);
                 currentCrosshair = null;
+                currentCrosshairViewController = null;
             }
             if (String.IsNullOrEmpty(prefabName)) {
                 noweaponCrosshair.SetActive(true);
@@ -68,9 +74,9 @@ namespace Runtime.Weapons.ViewControllers {
             currentCrosshair.transform.localPosition = Vector3.zero;
             currentCrosshair.transform.localRotation = Quaternion.identity;
             currentCrosshair.transform.localScale = Vector3.one;
-            
-            
-            return currentCrosshair.GetComponent<ICrossHairViewController>();
+            currentCrosshairViewController = currentCrosshair.GetComponent<ICrossHairViewController>();
+
+            return currentCrosshairViewController;
         }
         
         
@@ -78,6 +84,7 @@ namespace Runtime.Weapons.ViewControllers {
             if (currentCrosshair) {
                 GameObjectPoolManager.Singleton.Recycle(currentCrosshair);
                 currentCrosshair = null;
+                currentCrosshairViewController = null;
             }
 
             noweaponCrosshair.SetActive(true);
@@ -92,6 +99,7 @@ namespace Runtime.Weapons.ViewControllers {
             
             Ray ray = mainCamera.ScreenPointToRay(new Vector2(Screen.width / 2f, Screen.height / 2f));
             bool hitEntity = false;
+            bool hitHurtBox = false;
 
             
             //clear hits
@@ -99,7 +107,7 @@ namespace Runtime.Weapons.ViewControllers {
                 hits[i] = new RaycastHit();
             }
             int numHits = Physics.RaycastNonAlloc(ray, hits, rayDistance, detectLayerMask);
-            var sortedHits = hits.OrderBy(hit => hit.distance).ToArray();
+            var sortedHits = hits.OrderBy(hit => hit.transform ? hit.distance : float.MaxValue).ToArray();
 
             for (int i = 0; i < sortedHits.Length; i++) {
                 if (!sortedHits[i].collider) {
@@ -111,8 +119,9 @@ namespace Runtime.Weapons.ViewControllers {
                     break;
                 }
                 
-                if(PhysicsUtility.IsInLayerMask(hitObj, crossHairDetectLayerMask)) {
+                if(!hitEntity && PhysicsUtility.IsInLayerMask(hitObj, crossHairDetectLayerMask)) {
                     if (hitObj.transform.parent.TryGetComponent<IEntityViewController>(out var entityViewController)){
+                        
                         if (currentPointedEntity != null && currentPointedEntity != entityViewController) {
                             currentPointedEntity.OnUnPointByCrosshair();
                             currentPointedEntity = null;
@@ -123,7 +132,23 @@ namespace Runtime.Weapons.ViewControllers {
                             entityViewController.OnPointByCrosshair();
                         }
                         hitEntity = true;
-                        break;
+                    }
+                }
+
+                if (!hitHurtBox && PhysicsUtility.IsInLayerMask(hitObj, hurtboxLayerMask)) {
+                    if (hitObj.TryGetComponent<IHurtbox>(out var hurtbox)){
+                        
+                        if (currentPointedHurtbox != null && currentPointedHurtbox != hurtbox) {
+                            currentCrosshairViewController?.OnAimHurtBoxExit(currentPointedHurtbox);
+                            currentPointedHurtbox = null;
+                        }
+
+                        if (currentPointedHurtbox == null) {
+                            currentPointedHurtbox = hurtbox;
+                            currentCrosshairViewController?.OnAimHurtBoxEnter(currentPointedHurtbox);
+                        }
+                        
+                        hitHurtBox = true;
                     }
                 }
             }
@@ -132,6 +157,13 @@ namespace Runtime.Weapons.ViewControllers {
                 if (currentPointedEntity as Object != null) {
                     currentPointedEntity.OnUnPointByCrosshair();
                     currentPointedEntity = null;
+                }
+            }
+            
+            if (!hitHurtBox) {
+                if (currentPointedHurtbox as Object != null) {
+                    currentCrosshairViewController?.OnAimHurtBoxExit(currentPointedHurtbox);
+                    currentPointedHurtbox = null;
                 }
             }
         }
