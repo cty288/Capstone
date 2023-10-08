@@ -317,7 +317,8 @@ MonoBehaviour:
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
   autoDestroyWhenEntityRemoved: 1
-  crossHairHUDToleranceTime: 0.5
+  crossHairHUDToleranceTime: 0.3
+  crossHairHUDToleranceScreenDistFactor: 0.5
   showDamageNumber: 1
   healthBarPrefabName: UIHealthBar
   animator: {fileID: 1068449055414609626}
@@ -809,7 +810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_active: 1
   m_owner: {fileID: 3191936655851726374}
-  m_damageMultiplier: 1
+  m_damageMultiplier: 2
 --- !u!114 &8368077729500272393
 MonoBehaviour:
   m_ObjectHideFlags: 0
