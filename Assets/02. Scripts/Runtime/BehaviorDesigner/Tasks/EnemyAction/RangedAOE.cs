@@ -14,10 +14,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         
         public SharedGameObject bulletPrefab;
-        public int bulletCount;
-        public float spawnInterval;
+        private int bulletCount;
+        private float spawnInterval;
         private bool ended;
-        public float bulletTravelTime;
+        private float bulletTravelTime;
         private Transform playerTrans;
 
         //some add-on variables that we can use to add juice to ranged projectile actions
@@ -38,12 +38,16 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 20, 50);
             playerTrans = GetPlayer().transform;
+            
         }
 
         public override void OnStart()
         {
             base.OnStart();
             ended = false;
+            bulletCount = enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEBulletCount");
+            spawnInterval = enemyEntity.GetCustomDataValue<float>("damages", "rangedAOEAttackSpeed");
+            bulletTravelTime = enemyEntity.GetCustomDataValue<float>("damages", "rangedAOEBulletTime");
             StartCoroutine(RF());
         }
         public override TaskStatus OnUpdate()

@@ -57,7 +57,8 @@ namespace Runtime.Enemies
             
             return new[] {
                 new AutoConfigCustomProperty("shellHealthInfo"),
-                new AutoConfigCustomProperty("damages")
+                new AutoConfigCustomProperty("damages"),
+                new AutoConfigCustomProperty("ranges")
             };
         }
         
@@ -82,6 +83,17 @@ namespace Runtime.Enemies
         
         [SerializeField] private HitBox hitbox_roll;
 
+        [BindCustomData("ranges", "closeRange")]
+        public float CloseRange { get;}
+        
+        [BindCustomData("ranges", "midRange")]
+        public float MidRange { get; }
+        
+        [BindCustomData("ranges", "longRange")]
+        public float LongRange { get;}
+
+        [BindCustomData("ranges", "meleeRange")]
+        public float MeleeRange { get; }
        
         private HitDetectorInfo hitDetectorInfo;
         private bool deathAnimationEnd = false;
