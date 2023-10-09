@@ -27,13 +27,33 @@ namespace Runtime.Weapons.ViewControllers.Base
     public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IWeaponViewController, IBelongToFaction, IHitResponder
         where T : class, IWeaponEntity, new() {
 
+        [Header("Auto Reload")]
+        public bool autoReload = true;
+        
+        [Header("Layer Hit Mask")]
+        public LayerMask layer;
+        
         private IWeaponModel weaponModel;
 
         protected IHitDetector hitDetector;
 
         private bool _isScopedIn = false;
         protected bool IsScopedIn => _isScopedIn;
+        
+        // general references
+        protected Camera cam;
+        protected DPunkInputs.PlayerActions playerActions;
         protected IGamePlayerModel playerModel;
+        public GameObject hitParticlePrefab;
+        
+        //status
+        protected bool isScopedIn = false;
+        protected bool isReloading = false;
+        
+        //timers
+        protected float lastShootTime = 0f;
+        protected float reloadTimer = 0f;
+        
         protected override void Awake() {
             base.Awake();
             weaponModel = this.GetModel<IWeaponModel>();

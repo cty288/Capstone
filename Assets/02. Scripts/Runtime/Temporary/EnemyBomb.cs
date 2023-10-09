@@ -29,8 +29,13 @@ namespace Runtime.Temporary
         {
 
         }
+
+        protected override void OnBulletReachesMaxRange() {
+            
+        }
+
         public void Init(Transform target,float tTime, Faction faction, int damage, GameObject bulletOwner) {
-            Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>());
+            Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>(), -1);
             targetPos = target.position;
             explosionDamage = damage;
             travelTime = tTime;

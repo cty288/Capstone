@@ -9,6 +9,7 @@ using Polyglot;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
@@ -47,7 +48,7 @@ namespace Runtime.Weapons
         }
 
         protected override void OnInitModifiers(int rarity) {
-            
+
         }
         
         
@@ -98,20 +99,17 @@ namespace Runtime.Weapons
                     Shoot();
 
                     BoundEntity.CurrentAmmo.Value--;
-
-                    if (autoReload)
+                }
+                
+                if (BoundEntity.CurrentAmmo == 0 && autoReload)
+                {
+                    if (IsScopedIn)
                     {
-                        if (BoundEntity.CurrentAmmo == 0)
-                        {
-                            if (IsScopedIn)
-                            {
-                                StartCoroutine(ScopeOut(true));
-                            }
-                            else
-                            {
-                                StartCoroutine(ReloadChangeModel());
-                            }
-                        }
+                        StartCoroutine(ScopeOut(true));
+                    }
+                    else
+                    {
+                        StartCoroutine(ReloadChangeModel());
                     }
                 }
             }
