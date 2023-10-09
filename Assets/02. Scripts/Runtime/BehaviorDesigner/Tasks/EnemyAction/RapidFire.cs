@@ -17,7 +17,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         public SharedGameObject bulletPrefab;
        
-        public float spawnInterval;
+        
         private bool ended;
         
         public Boss1 boss1vc;
@@ -28,6 +28,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private SafeGameObjectPool pool;
         private int bulletCount;
         private float bulletSpeed;
+        private float spawnInterval;
         public override void OnAwake() {
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 20, 50);
@@ -40,6 +41,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             ended = false;
             bulletCount = enemyEntity.GetCustomDataValue<int>("damages", "rapidFireBulletCount");
             bulletSpeed = enemyEntity.GetCustomDataValue<float>("damages", "rapidFireBulletSpeed");
+            spawnInterval = enemyEntity.GetCustomDataValue<float>("damages", "rapidFireAttackInterval");
             StartCoroutine(RF());
         }
         public override TaskStatus OnUpdate()
