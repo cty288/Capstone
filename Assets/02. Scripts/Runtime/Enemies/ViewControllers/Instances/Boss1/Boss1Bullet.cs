@@ -15,6 +15,10 @@ namespace a {
 	        
         }
 
+        protected override void OnBulletReachesMaxRange() {
+	        
+        }
+
         protected override void OnBulletRecycled() {
 			
 		}

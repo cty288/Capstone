@@ -17,7 +17,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	public interface IBulletViewController : IController, IHitResponder {
 		int Damage { get; }
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner);
+		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange);
 	}
 	
 	
@@ -44,12 +44,14 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
 		protected IEntity entity = null;
-			
+		protected float maxRange;
+		protected Vector3 origin;
+		protected bool inited = false;
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
 		}
 
-		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner) {
+		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
@@ -62,9 +64,11 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
 			}
 			this.owner = owner;
-
+			this.maxRange = maxRange;
+			origin = transform.position;
 			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
 			entity?.RetainRecycleRC();
+			inited = true;
 		}
 
 		public override void OnStartOrAllocate() {
@@ -114,6 +118,20 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		
 		protected abstract void OnHitObject(Collider other);
 
+
+		protected virtual void Update() {
+			if (!inited) {
+				return;
+			}
+			
+			if (maxRange > 0 && Vector3.Distance(transform.position, origin) > maxRange) {
+				OnBulletReachesMaxRange();
+				RecycleToCache();
+			}
+		}
+
+		protected abstract void OnBulletReachesMaxRange();
+
 		public override void OnRecycled() {
 			base.OnRecycled();
 			OnBulletRecycled();
@@ -129,8 +147,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
 				}
 			}
+			inited = false;
 
-			
 			hitBox.StopCheckingHits();
 			//this.bulletOwner = null;
 			//this.owner = null;

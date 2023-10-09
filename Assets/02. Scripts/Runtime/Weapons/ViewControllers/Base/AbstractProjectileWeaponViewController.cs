@@ -20,6 +20,8 @@ namespace Runtime.Weapons.ViewControllers.Base
             return null;
         }
         
+        
+        
         public virtual void Shoot() {}
         
         public bool CheckHit(HitData data)

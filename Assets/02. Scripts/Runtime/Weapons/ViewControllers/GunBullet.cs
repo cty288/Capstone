@@ -11,9 +11,9 @@ namespace Runtime.Weapons.ViewControllers {
 		public GameObject explosionPrefab;
 		private int explosionDamage;
 
-		public override void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner)
+		public override void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange)
 		{
-			base.Init(faction, damage, bulletOwner, owner);
+			base.Init(faction, damage, bulletOwner, owner, maxRange);
 			explosionDamage = damage;
 		}
 
@@ -23,6 +23,11 @@ namespace Runtime.Weapons.ViewControllers {
 
 		protected override void OnHitObject(Collider other) {
 		}
+
+		protected override void OnBulletReachesMaxRange() {
+			Explode();
+		}
+
 		protected override void OnBulletRecycled() {
 			
 		}

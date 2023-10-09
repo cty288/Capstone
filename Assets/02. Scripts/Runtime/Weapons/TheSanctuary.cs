@@ -130,10 +130,10 @@ namespace Runtime.Weapons
             b.transform.rotation = Quaternion.identity;
             
             b.GetComponent<Rigidbody>().velocity = shootDir * BoundEntity.GetBulletSpeed().RealValue;
-            
+
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
-                BoundEntity.GetBaseDamage().RealValue, 
-                gameObject, gameObject.GetComponent<ICanDealDamage>());
+                BoundEntity.GetBaseDamage().RealValue,
+                gameObject, gameObject.GetComponent<ICanDealDamage>(), BoundEntity.GetRange().BaseValue);
         }
         
         public override void OnItemScopePressed() {
@@ -149,8 +149,9 @@ namespace Runtime.Weapons
         }
         
 
-        public void Update()
+        protected override void Update()
         {
+            base.Update();
             if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Reload
@@ -235,6 +236,11 @@ namespace Runtime.Weapons
 
         public override void OnRecycled() {
             base.OnRecycled();
+
+        }
+
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
             isScopedIn = false;
             isReloading = false;
             

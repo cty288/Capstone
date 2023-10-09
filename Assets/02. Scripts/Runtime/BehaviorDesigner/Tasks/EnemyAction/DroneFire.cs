@@ -77,11 +77,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                                                            new Vector3(transform.position.x, transform.position.y,
                                                                transform.position.z));
 
-            
-            
+
+
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                 enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
-                gameObject, gameObject.GetComponent<ICanDealDamage>());
+                gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
             b.GetComponent<DroneBullet>().SetData(bulletSpeed);
 
         }
