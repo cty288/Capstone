@@ -24,5 +24,7 @@ public class BeeBullet : AbstractBulletViewController
         Debug.Log("shooting");
     }
 
-
+    protected override void OnBulletReachesMaxRange() {
+        
+    }
 }

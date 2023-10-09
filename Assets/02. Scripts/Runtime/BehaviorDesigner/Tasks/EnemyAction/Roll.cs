@@ -115,7 +115,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
            
             if (stun)
             {
-                Debug.Log("stunned");
+                // Debug.Log("stunned");
                     
                 pivot.transform.DORotate((Vector3)initRotation.Value, 5f).OnComplete(() =>
                 {
@@ -130,7 +130,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             if (chargeUp)
             {
-                Debug.Log("chargning");
+                // Debug.Log("chargning");
                 if (currentChargeTime < chargeTime)
                 {
                     // Gradually increase the rotation speed over the charge time
@@ -183,7 +183,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     }
                     else {
                         rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 1f * Time.deltaTime);
-                        Debug.Log("slowing down");
+                        // Debug.Log("slowing down");
                         return TaskStatus.Running;
                     }
 
@@ -197,10 +197,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     maxRotationSpeed = 260;
                     pivot.transform.Rotate(new Vector3(1,1,1)* maxRotationSpeed * Time.deltaTime);
                     dir = (localSavePlayerPosition - this.transform.position).normalized;
-                    Debug.DrawRay(this.transform.position, dir * 100, Color.green);
+                    // Debug.DrawRay(this.transform.position, dir * 100, Color.green);
                     //CheckForCollisions();
                     rb.AddForce(dir * 25f, ForceMode.Impulse);
-                    Debug.Log(Vector3.Distance(localSavePlayerPosition, this.transform.position));
+                    // Debug.Log(Vector3.Distance(localSavePlayerPosition, this.transform.position));
                     //this.gameObject.transform.Translate(dir * 20 * Time.deltaTime , Space.World);
                     timer -= Time.deltaTime;
                     return TaskStatus.Running;
@@ -246,7 +246,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override void OnCollisionEnter(Collision collision) {
             base.OnCollisionEnter(collision);
-            Debug.Log("Collision");
+            // Debug.Log("Collision");
             if (canDealDamage && collision.collider.gameObject.CompareTag("Player") && !collisionFlag) {
                 Vector3 dir = playerTrans.position - transform.position;
                 dir.y = 0;
@@ -256,7 +256,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 playerRb.AddForce(dir * forceToPlayer, ForceMode.Impulse);
                 flag = true;
                 collisionFlag = true;
-                Debug.Log("Hit player");
+                // Debug.Log("Hit player");
                 
                 
                 

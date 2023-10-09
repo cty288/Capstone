@@ -9,30 +9,10 @@ namespace Runtime.Weapons.ViewControllers.Base
     public abstract class AbstractHitScanWeaponViewController<T> : AbstractWeaponViewController<T>, IHitResponder
         where T : class, IWeaponEntity, new() {
         
-        [Header("Auto Reload")]
-        public bool autoReload = false;
-        
-        [Header("Layer Hit Mask")]
-        public LayerMask layer;
-        
         [Header("Aesthetic")]
         public TrailRenderer trailRenderer;
-        public GameObject hitParticlePrefab;
         
         private HitDetectorInfo hitDetectorInfo;
-        
-        // general references
-        protected Camera cam;
-        protected DPunkInputs.PlayerActions playerActions;
-        
-        
-        //status
-        //protected bool isScopedIn = false;
-        protected bool isReloading = false;
-        
-        //timers
-        protected float lastShootTime = 0f;
-        protected float reloadTimer = 0f;
         
         
         protected override void OnEntityStart()
