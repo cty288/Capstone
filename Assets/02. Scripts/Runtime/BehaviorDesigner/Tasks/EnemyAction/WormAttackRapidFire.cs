@@ -87,7 +87,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             b.transform.rotation *= randomRotation;
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                 enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
-                gameObject, gameObject.GetComponent<ICanDealDamage>());
+                gameObject, gameObject.GetComponent<ICanDealDamage>() , 50f);
 
             b.GetComponent<WormBullet>().SetData(bulletSpeed, player, bulletAccuracy);
         }

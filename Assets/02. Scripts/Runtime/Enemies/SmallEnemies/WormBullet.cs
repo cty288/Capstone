@@ -54,5 +54,10 @@ namespace a
         {
             
         }
+
+        protected override void OnBulletReachesMaxRange()
+        {
+            
+        }
     }
 }

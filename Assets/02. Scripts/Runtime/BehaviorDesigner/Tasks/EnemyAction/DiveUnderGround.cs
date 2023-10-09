@@ -23,11 +23,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public SharedBool underGround;
         public ReturnToGround rtg;
         public BehaviorTree tree;
+        
 
         public override void OnStart()
         {
             isMovingUnderground = false;
-        
+            tree = this.gameObject.GetComponent<BehaviorTree>();
+            SharedVector3 initialPosition = (SharedVector3)tree.GetVariable("InitialPosition");
+            initialPosition.SetValue(this.transform.position);
+
         }
 
         public override TaskStatus OnUpdate()

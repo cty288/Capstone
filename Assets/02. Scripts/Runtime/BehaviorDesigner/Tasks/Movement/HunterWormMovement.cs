@@ -18,9 +18,11 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
     {
         public float rayLength = 1000f;
         public LayerMask layerMask = 1 << 8; // Layer 8
+        private BehaviorTree tree;
 
         public override void OnStart()
         {
+            tree = this.gameObject.GetComponent<BehaviorTree>();
             this.gameObject.GetComponent<NavMeshAgent>().enabled = false;
             base.OnStart();
            
@@ -35,6 +37,8 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
             if (Physics.Raycast(ray, out hit, rayLength, layerMask))
             {
                 // If the ray hits an object on the specified layer, move the GameObject to the hit point
+                SharedVector3 initialPosition = (SharedVector3)tree.GetVariable("InitialPosition");
+                initialPosition.SetValue(this.transform.position + new Vector3(0,1,0));
                 transform.position = hit.point;
                 return TaskStatus.Running;
             }

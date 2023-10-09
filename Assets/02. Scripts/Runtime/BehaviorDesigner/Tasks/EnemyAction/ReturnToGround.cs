@@ -21,16 +21,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public float timer = 1f;
         public DiveUnderGround[] dug = new DiveUnderGround[2];
         public BehaviorTree tree;
+        public SharedVector3 returnPosition;
+        public SharedVector3 initialPosition;
         public override void OnStart()
         {
             tree = this.gameObject.GetComponent<BehaviorTree>();
             initial = true;
-            Debug.Log("dfdfdfdfdfdf");
             SharedBool isInit = (SharedBool)tree.GetVariable("Init");
-            Debug.Log("dfdfdfdfdfdf");
             isInit.SetValue(true);
-            
-           
+            SharedVector3 pos = (SharedVector3)tree.GetVariable("InitialPosition");
+            returnPosition = pos;
+
+
+
         }
 
         public override TaskStatus OnUpdate()
@@ -42,9 +45,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             if (underGround.Value == true)
             {
-                MoveUp();
+                if((this.gameObject.transform.position.y <= returnPosition.Value.y))
+                {
+                    MoveUp();
+                }
+                
                 Debug.DrawRay(headPosition.Value.position, Vector3.up * 10f, Color.red);
                 timer -= Time.deltaTime;
+                Debug.Log("asdf");
                 if (timer < 0)
                 {
                     underGround.Value = false;
@@ -73,8 +81,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         // Implement the MoveUnderground method to move the cactus underground.
         private void MoveUp()
         {
-            // Translate the cactus downward to move it underground.
-            transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
+          
+            
+                this.gameObject.transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
+            
         }
     }
 }
