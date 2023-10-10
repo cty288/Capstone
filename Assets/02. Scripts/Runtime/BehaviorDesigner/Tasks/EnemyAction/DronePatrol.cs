@@ -67,7 +67,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // Patrol around the different waypoints specified in the waypoint array. Always return a task status of running. 
             public override TaskStatus OnUpdate()
             {
-            Debug.Log("runninini");
+            //Debug.Log("runninini");
                 if (m_Waypoints.Value.Count == 0)
                 {
                     return TaskStatus.Failure;

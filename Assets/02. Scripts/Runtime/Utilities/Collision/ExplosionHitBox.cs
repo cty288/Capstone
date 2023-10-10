@@ -16,7 +16,7 @@ namespace Runtime.Utilities.Collision
         private IHitResponder m_hitResponder;
         public override IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         
-        [SerializeField] private bool showDamageNumber = true;
+       // [SerializeField] private bool showDamageNumber = true;
         private void Start()
         {
             Initialize();
@@ -47,7 +47,7 @@ namespace Runtime.Utilities.Collision
             if (hurtbox != null)
             {
 
-                float explosionMultiplier = 0.7f* Vector3.Distance(hitPoint,center)/_collider.radius+0.3f;
+                float explosionMultiplier = 0.7f* (1-Vector3.Distance(hitPoint,center)/_collider.radius)+0.3f;
                 // Debug.Log("make hitdata");
                 hitData = new HitData()
                     {
