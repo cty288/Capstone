@@ -21,8 +21,6 @@ namespace Runtime.Enemies.Model {
 		//public BindableProperty<float> GetAttackRange();
 	
 		public int GetRarity();
-
-		
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
@@ -36,7 +34,6 @@ namespace Runtime.Enemies.Model {
 			//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 			//RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			OnEnemyRegisterAdditionalProperties();
-			
 		}
 		
 		
@@ -63,6 +60,7 @@ namespace Runtime.Enemies.Model {
 
 		
 
+		
 
 		protected abstract void OnEnemyRegisterAdditionalProperties();
 

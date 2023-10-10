@@ -16,7 +16,7 @@ namespace Runtime.Utilities.Collision
         private IHitResponder m_hitResponder;
         public override IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         
-       // [SerializeField] private bool showDamageNumber = true;
+        [SerializeField] private bool showDamageNumber = true;
         private void Start()
         {
             Initialize();
