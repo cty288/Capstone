@@ -33,7 +33,7 @@ public class DamageNumberHUD : AbstractMikroController<MainGame>, ISingleton {
 
 
 	public void SpawnHUD(Vector3 worldPosition, float damage, int minSizeDamage = 5, float maxSizeDamage = 50,
-		float minSize = 1.2f, float maxSize = 3) {
+		float minSize = 1.7f, float maxSize = 3.5f) {
 		if (Vector3.Distance(worldPosition, mainCamera.transform.position) > hideDistance) {
 			return;
 		}

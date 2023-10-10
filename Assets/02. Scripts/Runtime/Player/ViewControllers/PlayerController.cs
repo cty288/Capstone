@@ -70,7 +70,7 @@ namespace Runtime.Temporary
             float damageRatio = Mathf.Clamp01((float)damage / (float)BoundEntity.GetMaxHealth());
             CameraShakeData shakeData = new CameraShakeData(
                 Mathf.Lerp(0f, 5f, damageRatio),
-                Mathf.Lerp(0.1f, 0.5f, damageRatio),
+                Mathf.Lerp(0.3f, 0.5f, damageRatio),
                  Mathf.RoundToInt(Mathf.Lerp(30, 70f, damageRatio))
             );
 
