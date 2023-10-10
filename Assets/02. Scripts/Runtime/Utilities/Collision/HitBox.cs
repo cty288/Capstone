@@ -45,12 +45,13 @@ namespace Runtime.Utilities.Collision
         public void StopCheckingHits()
         {
             // Debug.Log("stop checking hits");
-            _triggerCheck.OnEnter -= TriggerCheckHit;
+            if (_triggerCheck != null) 
+                _triggerCheck.OnEnter -= TriggerCheckHit;
         }
         
         public virtual void TriggerCheckHit(Collider c)
         {
-            // Debug.Log("trigger hit detected: " + c.name);
+             Debug.Log("trigger hit detected: " + c.name);
             HitData hitData = null;
             IHurtbox hurtbox;
             Vector3 center = _collider.transform.position;

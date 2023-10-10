@@ -47,7 +47,7 @@ namespace Runtime.Utilities.Collision
             if (hurtbox != null)
             {
 
-                float explosionMultiplier = 0.7f* Vector3.Distance(hitPoint,center)/_collider.radius+0.3f;
+                float explosionMultiplier = 0.7f* (1-Vector3.Distance(hitPoint,center)/_collider.radius)+0.3f;
                 // Debug.Log("make hitdata");
                 hitData = new HitData()
                     {
