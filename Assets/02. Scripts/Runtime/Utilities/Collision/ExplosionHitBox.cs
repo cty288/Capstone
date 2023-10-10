@@ -16,7 +16,7 @@ namespace Runtime.Utilities.Collision
         private IHitResponder m_hitResponder;
         public override IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         
-        
+        [SerializeField] private bool showDamageNumber = true;
         private void Start()
         {
             Initialize();
@@ -57,6 +57,7 @@ namespace Runtime.Utilities.Collision
                         Hurtbox = hurtbox,
                         HitDetector = this,
                         Attacker = m_hitResponder,
+                        ShowDamageNumber = showDamageNumber
                     };
                 // Debug.Log("validate: " + (hitData.Validate()));
                 if (hitData.Validate())
