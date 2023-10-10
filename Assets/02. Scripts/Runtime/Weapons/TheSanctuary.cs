@@ -103,20 +103,19 @@ namespace Runtime.Weapons
 
                     BoundEntity.CurrentAmmo.Value--;
 
-                    if (autoReload)
-                    {
-                        if (BoundEntity.CurrentAmmo == 0)
+                    
+                }
+                
+                if (autoReload && BoundEntity.CurrentAmmo <= 0)
+                {
+                    if (isScopedIn)
                         {
-                            if (isScopedIn)
-                            {
-                                StartCoroutine(ScopeOut(true));
-                            }
-                            else
-                            {
-                                StartCoroutine(ReloadChangeModel());
-                            }
+                            StartCoroutine(ScopeOut(true));
                         }
-                    }
+                        else
+                        {
+                            StartCoroutine(ReloadChangeModel());
+                        }
                 }
             }
         }
