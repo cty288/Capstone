@@ -21,6 +21,8 @@ namespace Runtime.Enemies.Model {
 		//public BindableProperty<float> GetAttackRange();
 	
 		public int GetRarity();
+
+		
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
@@ -58,9 +60,10 @@ namespace Runtime.Enemies.Model {
 			return this.healthProperty.RealValue;
 		}
 
-		
+		public IEnemyEntity OnInitEntity() {
+			throw new System.NotImplementedException();
+		}
 
-		
 
 		protected abstract void OnEnemyRegisterAdditionalProperties();
 

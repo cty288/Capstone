@@ -1,4 +1,5 @@
-﻿using Runtime.Enemies.Model;
+﻿using _02._Scripts.Runtime.Levels.Models;
+using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.GameResources.Model.Builder;
 using Runtime.Player.Builders;
@@ -36,6 +37,8 @@ namespace Runtime.DataFramework.Entities.Builders {
 				return WeaponBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}else if (typeof(TBuilder) == typeof(PlayerBuilder<TEntity>)) {
 				return PlayerBuilder<TEntity>.Allocate(rarity) as TBuilder;
+			}else if (typeof(TBuilder) == typeof(LevelBuilder<TEntity>)) {
+				return LevelBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
 			
 			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;

@@ -46,6 +46,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         public IEnemyEntity EnemyEntity { get; }
 
         IEntity IEntityViewController.Entity => EnemyEntity;
+        
+        public IEnemyEntity OnInitEntity();
     }
 
     public interface IWeaponViewController : IEntityViewController
