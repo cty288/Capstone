@@ -16,7 +16,7 @@ namespace Runtime.Utilities.Collision
         private IHitResponder m_hitResponder;
 
         public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
-        
+        [SerializeField] private bool showDamageNumber = true;
         
         
         private void Start()
@@ -71,6 +71,7 @@ namespace Runtime.Utilities.Collision
                         Hurtbox = hurtbox,
                         HitDetector = this,
                         Attacker = m_hitResponder,
+                        ShowDamageNumber = showDamageNumber
                     };
                 if (hitData.Validate())
                 {
@@ -88,6 +89,7 @@ namespace Runtime.Utilities.Collision
                     Hurtbox = null,
                     HitDetector = this,
                     Attacker = m_hitResponder,
+                    ShowDamageNumber = showDamageNumber
                 };
                 
                 HitResponder?.HitResponse(hitData);

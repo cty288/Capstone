@@ -20,6 +20,7 @@ namespace Runtime.Utilities.Collision
         public IHurtbox Hurtbox;
         public IHitDetector HitDetector;
         public ICanDealDamage Attacker;
+        public bool ShowDamageNumber = true;
 
         /// <summary>
         /// Sets the data of the hit. Used for HitScan.
@@ -29,7 +30,7 @@ namespace Runtime.Utilities.Collision
         /// <param name="hit"></param>
         /// <param name="hitDetector"></param>
         /// <returns>Returns HitData object.</returns>
-        public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector)
+        public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector, bool showDamageNumber)
         {
             Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitDetector.Damage * hurtbox.DamageMultiplier);
             HitPoint = hit.point;
@@ -37,6 +38,7 @@ namespace Runtime.Utilities.Collision
             Hurtbox = hurtbox;
             HitDetector = hitDetector;
             Attacker = hitResponder;
+            ShowDamageNumber = showDamageNumber;
             return this;
         }
 
