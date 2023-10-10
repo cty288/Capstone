@@ -164,6 +164,8 @@ namespace Runtime.Enemies
         }
         
         protected void OnShellClosedChanged(bool oldValue,bool newValue) {
+            //GetComponent<>()
+            
             Debug.Log("changed to" + newValue);
             if (CurrentShellHealth <= 0 && !newValue) {
                 animator.CrossFade("OpenImmediately", 0.1f);
