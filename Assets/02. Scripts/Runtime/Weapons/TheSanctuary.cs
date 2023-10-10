@@ -102,22 +102,21 @@ namespace Runtime.Weapons
                     Shoot();
 
                     BoundEntity.CurrentAmmo.Value--;
-
-                    if (autoReload)
+                }
+                
+           
+                if (BoundEntity.CurrentAmmo == 0 && autoReload)
+                {
+                    if (isScopedIn)
                     {
-                        if (BoundEntity.CurrentAmmo == 0)
-                        {
-                            if (isScopedIn)
-                            {
-                                StartCoroutine(ScopeOut(true));
-                            }
-                            else
-                            {
-                                StartCoroutine(ReloadChangeModel());
-                            }
-                        }
+                        StartCoroutine(ScopeOut(true));
+                    }
+                    else
+                    {
+                        StartCoroutine(ReloadChangeModel());
                     }
                 }
+                
             }
         }
 

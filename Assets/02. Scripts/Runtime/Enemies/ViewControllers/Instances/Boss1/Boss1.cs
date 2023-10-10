@@ -172,7 +172,7 @@ namespace Runtime.Enemies
             shellCollider.enabled = !newValue;
             hardCollider.enabled = newValue;
             if (CurrentShellHealth <= 0 && !newValue) {
-                animator.CrossFade("OpenImmediately", 0.1f);
+                animator.CrossFade("OpenImmediately", 0.05f);
             }
             animator.SetBool("ShellClosed",newValue);
         }

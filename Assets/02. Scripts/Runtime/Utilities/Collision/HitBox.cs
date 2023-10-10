@@ -16,7 +16,7 @@ namespace Runtime.Utilities.Collision
         private IHitResponder m_hitResponder;
 
         public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
-        [SerializeField] private bool showDamageNumber = true;
+        [SerializeField] protected bool showDamageNumber = true;
         
         
         private void Start()
