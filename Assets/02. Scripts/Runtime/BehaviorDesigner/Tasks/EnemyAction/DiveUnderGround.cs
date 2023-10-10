@@ -74,6 +74,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             
         }
+        public override void OnEnd()
+        {
+            base.OnEnd();
+            timer = 1f;
+            rtg.underGround = true;
+            underGround.Value = true;
+        }
 
         // Implement the IsUnderGround method to check if the head position is under the ground.
         private bool IsUnderGround(Transform headTransform)

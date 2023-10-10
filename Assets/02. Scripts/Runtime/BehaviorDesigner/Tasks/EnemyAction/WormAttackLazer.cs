@@ -35,6 +35,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float bulletSpeed;
         private float bulletAccuracy;
         private GameObject player;
+        private float damagePerTick;
+        private float damageInterval;
         public LineRenderer lr;
         public override void OnAwake()
         {
@@ -55,6 +57,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             bulletSpeed = enemyEntity.GetCustomDataValue<float>("attack", "bulletSpeed");
             bulletCount = enemyEntity.GetCustomDataValue<int>("attack", "bulletCount");
             bulletAccuracy = enemyEntity.GetCustomDataValue<float>("attack", "bulletAccuracy");
+            damagePerTick = enemyEntity.GetCustomDataValue<float>("attack", "damagePerTick");
+            damageInterval = enemyEntity.GetCustomDataValue<float>("attack", "damageInterval");
             StartCoroutine(RF());
         }
         public override TaskStatus OnUpdate()
@@ -77,9 +81,16 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         void SpawnLazer()
         {
             UnityEngine.GameObject b = pool.Allocate();
+            b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
+               enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
+               gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
+
+            b.GetComponent<WormLazer>().SetData(damagePerTick , damageInterval);
             lr = b.GetComponent<LineRenderer>();
             lr.SetPosition(0, this.gameObject.transform.position);
             lr.SetPosition(1, player.gameObject.transform.position);
+            b.AddComponent<BoxCollider>();
+            b.GetComponent<BoxCollider>().isTrigger = true;
         }
 
         public override void OnEnd()

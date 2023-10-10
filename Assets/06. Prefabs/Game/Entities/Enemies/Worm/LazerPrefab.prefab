@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 336867396866956824}
   - component: {fileID: 855268266750440445}
-  - component: {fileID: -4846574707502867000}
   - component: {fileID: 7409180939011000601}
   - component: {fileID: -6573812742402611837}
-  - component: {fileID: 7019019005323771819}
+  - component: {fileID: -3148997937983265432}
+  - component: {fileID: -2924250867306008624}
   m_Layer: 0
   m_Name: LazerPrefab
   m_TagString: Untagged
@@ -135,19 +135,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!65 &-4846574707502867000
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 210517240134548360}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2}
-  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!114 &7409180939011000601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
   maxDistance: 100
   detectTime: 1
 --- !u!114 &-6573812742402611837
@@ -177,7 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7019019005323771819
+  showDamageNumber: 1
+--- !u!114 &-3148997937983265432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,7 +174,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 210517240134548360}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4241329a556b422d88a452e8c94b23c7, type: 3}
+  m_Script: {fileID: 11500000, guid: e0020ad5719a2cb4894c9723d0902b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onRecycledEvent:
@@ -198,3 +186,17 @@ MonoBehaviour:
   Pool: {fileID: 0}
   autoRecycleTime: 5
   penetrateSameFaction: 0
+--- !u!136 &-2924250867306008624
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210517240134548360}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 1
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0.5}

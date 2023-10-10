@@ -47,6 +47,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected float maxRange;
 		protected Vector3 origin;
 		protected bool inited = false;
+		protected bool tickType = false;
+		
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
 		}
@@ -111,10 +113,29 @@ namespace Runtime.Weapons.ViewControllers.Base {
 						return;
 					}
 				}
+				
 				OnHitObject(other);
 				RecycleToCache();
 			}
 		}
+		/*
+		protected virtual void OnTriggerStay(Collider other)
+		{
+			Debug.Log("der");
+			if (tickType == true)
+			{
+				Debug.Log("der");
+				if (!other.isTrigger)
+				{
+					if (other.transform.root.TryGetComponent<IBelongToFaction>(out var belongToFaction))
+					{
+						OnHitObject(other);
+					}
+				}
+				//OnHitObject(other);
+			}
+		}
+		*/
 		
 		protected abstract void OnHitObject(Collider other);
 

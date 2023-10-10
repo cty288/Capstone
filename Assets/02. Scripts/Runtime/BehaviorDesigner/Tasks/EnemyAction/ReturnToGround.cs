@@ -77,6 +77,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
 
         }
+        public override void OnEnd()
+        {
+            base.OnEnd();
+            foreach (var d in dug)
+            {
+                d.underGround = false;
+            }
+
+        }
 
         // Implement the MoveUnderground method to move the cactus underground.
         private void MoveUp()

@@ -27,15 +27,24 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(explosion.Value, 20, 50);
         }
+       
 
         public override TaskStatus OnUpdate()
         {
-            Debug.Log("exploding");
-            GameObject explosion = pool.Allocate();
-            explosion.transform.position = this.gameObject.transform.position;
-            explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"), gameObject,
-                gameObject.GetComponent<ICanDealDamage>());
-            return TaskStatus.Success;
+            if((bool)this.gameObject.GetComponent<BehaviorTree>().GetVariable("Init").GetValue() == false)
+            {
+                 GameObject explosion = pool.Allocate();
+                 explosion.transform.position = this.gameObject.transform.position;
+                 explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"), gameObject,
+                     gameObject.GetComponent<ICanDealDamage>());
+                 return TaskStatus.Success;
+
+            }
+            else
+            {
+                return TaskStatus.Success;
+            }
+            
 
         }
     }
