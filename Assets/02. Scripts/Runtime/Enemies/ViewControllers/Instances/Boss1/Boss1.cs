@@ -169,10 +169,10 @@ namespace Runtime.Enemies
         
         protected void OnShellClosedChanged(bool oldValue,bool newValue) {
             Debug.Log("changed to" + newValue);
-            shellCollider.enabled = !newValue;
+            shellCollider.enabled = newValue;
             hardCollider.enabled = newValue;
             if (CurrentShellHealth <= 0 && !newValue) {
-                animator.CrossFade("OpenImmediately", 0.1f);
+                animator.CrossFade("OpenImmediately", 0.05f);
             }
             animator.SetBool("ShellClosed",newValue);
         }
@@ -196,6 +196,7 @@ namespace Runtime.Enemies
                     hitObjects.Clear();
                     break;
                 case "MeleeStart":
+                    ClearHitObjects();
                     slamHitBox.gameObject.SetActive(true);
                     slamHitBox.StartCheckingHits(BoundEntity.GetCustomDataValue<int>("damages","meleeDamage").Value);
                     break;

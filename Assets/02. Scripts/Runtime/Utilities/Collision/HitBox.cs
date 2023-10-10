@@ -38,6 +38,8 @@ namespace Runtime.Utilities.Collision
             {
                 Initialize();
             }
+            
+            _triggerCheck.Clear();
 
             _triggerCheck.OnEnter += TriggerCheckHit;
         }
