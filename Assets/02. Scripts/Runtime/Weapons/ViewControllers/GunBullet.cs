@@ -13,15 +13,17 @@ namespace Runtime.Weapons.ViewControllers {
 
 		public override void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange)
 		{
-			base.Init(faction, damage, bulletOwner, owner, maxRange);
+			base.Init(faction, 0, bulletOwner, owner, maxRange);
 			explosionDamage = damage;
 		}
 
 		protected override void OnHitResponse(HitData data) {
 			Explode();
+			RecycleToCache();
 		}
 
 		protected override void OnHitObject(Collider other) {
+			//Explode();
 		}
 
 		protected override void OnBulletReachesMaxRange() {

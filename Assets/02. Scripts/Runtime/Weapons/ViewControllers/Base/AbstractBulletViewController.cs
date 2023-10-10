@@ -149,6 +149,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			}
 			inited = false;
 
+
 			hitBox.StopCheckingHits();
 			//this.bulletOwner = null;
 			//this.owner = null;
