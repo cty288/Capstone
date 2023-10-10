@@ -1,10 +1,10 @@
 ﻿using Runtime.DataFramework.Properties;
 
 namespace Runtime.Enemies.Model.Properties {
-	public interface ISpawnCostProperty : IProperty<int>, ILoadFromConfigProperty {
+	public interface ISpawnWeightProperty : IProperty<int>, ILoadFromConfigProperty {
 		
 	}
-	public class SpawnCost : AbstractLoadFromConfigProperty<int>, ISpawnCostProperty {
+	public class SpawnWeight : AbstractLoadFromConfigProperty<int>, ISpawnCostProperty {
 		protected override IPropertyDependencyModifier<int> GetDefautModifier() {
 			return null;
 		}
