@@ -441,6 +441,7 @@ namespace Runtime.DataFramework.Entities {
 					dynamic value = targetTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
 					if (value is not null) {
 						loadFromConfigProperty.LoadFromConfig(value);
+						
 					}
 				}
 				i++;

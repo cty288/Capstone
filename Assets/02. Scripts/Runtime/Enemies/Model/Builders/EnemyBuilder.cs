@@ -29,11 +29,11 @@ namespace Runtime.Enemies.Model.Builders {
 			SetProperty<List<TasteType>>(new PropertyNameInfo(PropertyName.taste), tasteTypes.ToList());
 			return this;
 		}
-		
 
 
 
-		
+
+
 		public EnemyBuilder<T> SetAllBasics(int danger, HealthInfo healthInfo,
 			params TasteType[] tasteTypes) {
 			SetDanger(danger);

@@ -21,7 +21,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder, ICanDealDamageViewController
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
-	
+
+
 		public int Danger {  get; }
 	
 		public int MaxHealth { get; }
@@ -65,7 +66,14 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			Bind<HealthInfo, int>("MaxHealth", BoundEntity.GetHealth(), info => info.MaxHealth);
 			Bind<HealthInfo, int>("CurrentHealth", BoundEntity.GetHealth(), info => info.CurrentHealth);
 		}
-
+		
+		public IEnemyEntity OnInitEntity() {
+			if (enemyModel == null) {
+				enemyModel = this.GetModel<IEnemyEntityModel>();
+			}
+			return OnBuildNewEntity() as IEnemyEntity;
+		}
+		
 		protected override IEntity OnBuildNewEntity() {
 			EnemyBuilder<T> builder = enemyModel.GetEnemyBuilder<T>(1);
 			return OnInitEnemyEntity(builder);

@@ -17,6 +17,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             body = GetComponent<Rigidbody>();
             anim = gameObject.GetComponent<Animator>();
+            if (anim == null)
+            {
+                anim = gameObject.GetComponentInChildren<Animator>();
+            }
             enemyViewController = this.gameObject.GetComponent<IEnemyViewController>();
         }
 

@@ -1,0 +1,83 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using _02._Scripts.Runtime.Levels.Models.Properties;
+using _02._Scripts.Runtime.Levels.ViewControllers;
+using MikroFramework.Pool;
+using Polyglot;
+using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.Utilities.ConfigSheet;
+
+namespace _02._Scripts.Runtime.Levels.Models {
+	public interface ILevelEntity : IEntity, IHaveCustomProperties, IHaveTags {
+		public List<LevelSpawnCard> GetAllCardsUnderCost(int cost);
+		
+		public List<LevelSpawnCard> GetAllCards();
+
+		public List<LevelSpawnCard> GetCards(Predicate<LevelSpawnCard> predicate);
+		
+		public int GetCurrentLevelCount();
+	}
+	
+	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
+		public override string EntityName { get; set; }
+		private ISpawnCardsProperty spawnCardsProperty;
+		protected override ConfigTable GetConfigTable() {
+			return null;
+		}
+
+		protected override void OnEntityStart(bool isLoadedFromSave) {
+			
+		}
+
+		public override void OnDoRecycle() {
+			SafeObjectPool<T>.Singleton.Recycle(this as T);
+		}
+
+		protected override string OnGetDescription(string defaultLocalizationKey) {
+			return Localization.Get(defaultLocalizationKey);
+		}
+
+		public override void OnAwake() {
+			base.OnAwake();
+			spawnCardsProperty = GetProperty<ISpawnCardsProperty>();
+		}
+		
+		public List<LevelSpawnCard> GetAllCardsUnderCost(int cost) {
+			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
+			foreach (var card in spawnCardsProperty.RealValues) {
+				if (card.RealSpawnCost <= cost) {
+					cards.Add(card);
+				}
+			}
+			return cards;
+		}
+
+		public List<LevelSpawnCard> GetAllCards() {
+			return spawnCardsProperty.RealValues.ToList();
+		}
+		
+		public List<LevelSpawnCard> GetCards(Predicate<LevelSpawnCard> predicate) {
+			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
+			foreach (var card in spawnCardsProperty.RealValues) {
+				if (predicate(card)) {
+					cards.Add(card);
+				}
+			}
+			return cards;
+		}
+
+		public int GetCurrentLevelCount() {
+			return GetRarity();
+		}
+
+		protected override void OnEntityRegisterAdditionalProperties() {
+			this.RegisterInitialProperty<IMaxEnemiesProperty>(new MaxEnemies());
+			this.RegisterInitialProperty<ISpawnCardsProperty>(new SpawnCardsProperty());
+		}
+		
+	}
+}

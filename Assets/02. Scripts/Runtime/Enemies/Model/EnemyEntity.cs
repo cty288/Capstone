@@ -21,16 +21,23 @@ namespace Runtime.Enemies.Model {
 		//public BindableProperty<float> GetAttackRange();
 	
 		public int GetRarity();
+
+		public int GetRealSpawnWeight(int level);
+		
+		public int GetRealSpawnCost(int level);
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
 		protected IDangerProperty dangerProperty;
 		protected IHealthProperty healthProperty;
-		
+		protected ISpawnCostProperty spawnCostProperty;
+		protected ISpawnWeightProperty spawnWeightProperty;
 		
 		protected override void OnEntityRegisterAdditionalProperties() {
 			
 			RegisterInitialProperty<IDangerProperty>(new Danger());
+			RegisterInitialProperty<ISpawnWeightProperty>(new SpawnWeight());
+			RegisterInitialProperty<ISpawnCostProperty>(new SpawnCost());
 			//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 			//RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			OnEnemyRegisterAdditionalProperties();
@@ -44,6 +51,8 @@ namespace Runtime.Enemies.Model {
 			base.OnAwake();
 			dangerProperty = GetProperty<IDangerProperty>();
 			healthProperty = GetProperty<IHealthProperty>();
+			spawnCostProperty = GetProperty<ISpawnCostProperty>();
+			spawnWeightProperty = GetProperty<ISpawnWeightProperty>();
 		}
 
 		protected override Faction GetDefaultFaction() {
@@ -58,9 +67,22 @@ namespace Runtime.Enemies.Model {
 			return this.healthProperty.RealValue;
 		}
 
-		
+		public int GetRealSpawnWeight(int level) {
+			return OnGetRealSpawnWeight(level, spawnWeightProperty.BaseValue);
+		}
 
+		public abstract int OnGetRealSpawnWeight(int level, int baseWeight);
 		
+		public abstract int OnGetRealSpawnCost(int level, int baseCost);
+
+		public int GetRealSpawnCost(int level) {
+			return OnGetRealSpawnCost(level, spawnCostProperty.BaseValue);
+		}
+
+		public IEnemyEntity OnInitEntity() {
+			throw new System.NotImplementedException();
+		}
+
 
 		protected abstract void OnEnemyRegisterAdditionalProperties();
 

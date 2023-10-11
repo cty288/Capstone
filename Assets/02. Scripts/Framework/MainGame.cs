@@ -1,3 +1,4 @@
+using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
@@ -25,6 +26,7 @@ namespace Framework {
 			this.RegisterModel<IInventoryModel>(new InventoryModel());
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
 			this.RegisterModel<IGamePlayerModel>(new GamePlayerModel());
+			this.RegisterModel<ILevelModel>(new LevelModel());
 			
 			this.RegisterExtensibleUtility<ResLoader>(new ResLoader());
 		}

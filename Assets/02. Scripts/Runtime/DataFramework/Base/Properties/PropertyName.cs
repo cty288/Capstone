@@ -46,6 +46,10 @@ namespace Runtime.DataFramework.Properties
 		additional_gravity,
 		max_slide_time,
 		slide_force,
-		wall_run_force
+		wall_run_force,
+		spawn_cost,
+		spawn_weight,
+		max_enemies,
+		spawn_cards
 	}
 }

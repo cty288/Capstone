@@ -99,8 +99,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         protected abstract IHitDetector OnCreateHitDetector();
 
-        protected override IEntity OnBuildNewEntity()
-        {
+        protected override IEntity OnBuildNewEntity() {
             WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>();
             return OnInitWeaponEntity(builder);
         }

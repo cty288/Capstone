@@ -44,6 +44,15 @@ namespace Runtime.Enemies
         protected override void OnInitModifiers(int rarity) {
             
         }
+
+        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+            return level * baseWeight;
+        }
+
+        public override int OnGetRealSpawnCost(int level, int baseCost) {
+            return level * baseCost;
+        }
+
         protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
@@ -66,7 +75,6 @@ namespace Runtime.Enemies
             
             ShellClosed.Value = newStatus;
         }
-
         
     }
     public class Boss1 : AbstractBossViewController<Boss1Entity>
@@ -99,6 +107,7 @@ namespace Runtime.Enemies
         private bool deathAnimationEnd = false;
         
 
+        [SerializeField]
         private Collider hardCollider;
         
         [Header("Shell")]
@@ -107,7 +116,7 @@ namespace Runtime.Enemies
         
         [SerializeField] private Transform shellHealthBarSpawnTransform;
 
-      
+        [SerializeField] private HitBox slamHitBox;
         protected override MikroAction WaitingForDeathCondition() {
             transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
                 deathAnimationEnd = true;
@@ -138,10 +147,14 @@ namespace Runtime.Enemies
                 hitbox_roll.HitResponder = this;
             }
 
-            hardCollider = GetComponent<Collider>();
+            if (slamHitBox)
+            {
+                slamHitBox.HitResponder = this;
+
+            }
             hitDetectorInfo = new HitDetectorInfo();
             CurrentFaction.Value = Faction.Hostile;
-
+            
             BoundEntity.IsInvincible.Value = true;
             SpawnShellHealthBar();
         }
@@ -164,9 +177,13 @@ namespace Runtime.Enemies
         }
         
         protected void OnShellClosedChanged(bool oldValue,bool newValue) {
+            //GetComponent<>()
+            
             Debug.Log("changed to" + newValue);
+            shellCollider.enabled = newValue;
+            hardCollider.enabled = newValue;
             if (CurrentShellHealth <= 0 && !newValue) {
-                animator.CrossFade("OpenImmediately", 0.1f);
+                animator.CrossFade("OpenImmediately", 0.05f);
             }
             animator.SetBool("ShellClosed",newValue);
         }
@@ -185,6 +202,19 @@ namespace Runtime.Enemies
                 case "ShellClose":
                     BoundEntity.IsInvincible.Value = true;
                     SpawnShellHealthBar();
+                    break;
+                case "ClearHits":
+                    hitObjects.Clear();
+                    break;
+                case "MeleeStart":
+                    ClearHitObjects();
+                    slamHitBox.gameObject.SetActive(true);
+                    slamHitBox.StartCheckingHits(BoundEntity.GetCustomDataValue<int>("damages","meleeDamage").Value);
+                    break;
+                case "MeleeFinish":
+                    
+                    slamHitBox.StopCheckingHits();
+                    slamHitBox.gameObject.SetActive(false);
                     break;
                 default:
                     break;
@@ -236,10 +266,14 @@ namespace Runtime.Enemies
         public void ChangeShellStatus(bool newStatus) {
             BindableProperty<bool> shellStatus = BoundEntity.ShellClosed;
             shellStatus.Value = newStatus;
-            shellCollider.enabled = !newStatus;
-            hardCollider.enabled = newStatus;
-        }
 
+        }
+        
+        
+        public void MeleeAttack()
+        {
+            
+        }
 
         public override void OnRecycled() {
             base.OnRecycled();

@@ -42,7 +42,7 @@ public class DamageNumberViewController : DefaultPoolableGameObject {
 			Random.Range(screenYPosRange.x, screenYPosRange.y), 0);
 		
 		
-		float targetTime = duration * (-0.5f * Mathf.Clamp((damage / maxSizeDamage),0,1f) + 1);
+		float targetTime = duration * (Mathf.Clamp((damage / maxSizeDamage),0,1f) + 1);
 		text.text = damage.ToString();
 		text.color = targetColor;
 		text.DOFade(0, targetTime).OnComplete(RecycleToCache);
