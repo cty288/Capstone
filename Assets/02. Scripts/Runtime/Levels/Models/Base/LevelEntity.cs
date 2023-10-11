@@ -23,7 +23,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
-		public override string EntityName { get; set; }
+		
 		private ISpawnCardsProperty spawnCardsProperty;
 		protected override ConfigTable GetConfigTable() {
 			return null;
@@ -78,6 +78,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			this.RegisterInitialProperty<IMaxEnemiesProperty>(new MaxEnemies());
 			this.RegisterInitialProperty<ISpawnCardsProperty>(new SpawnCardsProperty());
 		}
+
+		public override void OnRecycle() {
 		
+		}
 	}
 }

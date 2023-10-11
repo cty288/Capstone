@@ -75,6 +75,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 		protected bool isPointed = false;
 		protected Camera mainCamera;
+		protected Action onEntityVCInitCallback = null;
 		
 		protected class CrossHairManagedHUDInfo {
 			public Transform originalSpawnTransform;
@@ -139,6 +140,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
 			OnBindProperty();
 			OnEntityStart();
+			onEntityVCInitCallback?.Invoke();
 		}
 
 
@@ -667,6 +669,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
+			
+		}
+
+		public IUnRegister RegisterOnEntityViewControllerInit() {
+			return null;
+		}
+
+		public void UnRegisterOnEntityViewControllerInit() {
 			
 		}
 
