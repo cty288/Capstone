@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Commands;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.Event;
 using MikroFramework.Singletons;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -19,6 +21,11 @@ namespace Runtime.Temporary
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
+            this.RegisterEvent<OnPlayerTeleport>(OnPlayerTeleport).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnPlayerTeleport(OnPlayerTeleport e) {
+            transform.position = e.targetPos;
         }
 
         public static PlayerController GetClosestPlayer(Vector3 position) {

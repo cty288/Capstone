@@ -6,6 +6,8 @@ using Runtime.DataFramework.Properties.CustomProperties;
 namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances {
 
 	public class SandStormLevelEntity : LevelEntity<SandStormLevelEntity> {
+		[field: ES3Serializable] public override string EntityName { get; set; } = "SandStormLevelEntity";
+
 		public override void OnRecycle() {
 			
 		}

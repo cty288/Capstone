@@ -12,28 +12,72 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	public class GlobalLevelManager : MonoMikroSingleton<GlobalLevelManager>, IController {
 		[SerializeField] protected List<GameObject> levels = new List<GameObject>();
 
+		private Dictionary<string, GameObject> globalPrefabList = null;
+
+		private GameObject currentLevelGo;
 		private ILevelModel levelModel;
 		private void Awake() {
 			levelModel = this.GetModel<ILevelModel>();
 			levels.Shuffle();
-			levelModel.CurrentLevelCount.RegisterWithInitValue(OnCurrentLevelNumChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+			this.RegisterEvent<OnTryToSwitchUnSpawnedLevel>(OnTryToSwitchUnSpawnedLevel).UnRegisterWhenGameObjectDestroyed(gameObject);
+		}
+		
+
+		private void Start() {
+			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+			levelModel.SwitchToLevel(levelModel.CurrentLevelCount.Value);
 		}
 
-		private void OnCurrentLevelNumChanged(int arg1, int levelCount) {
-			GameObject level = levels[0];
-			levels.RemoveAt(0);
+		public GameObject GetEnemyPrefab(string prefabName) {
+			if (globalPrefabList == null) {
+				globalPrefabList = new Dictionary<string, GameObject>();
+				FetchPrefab();
+			}
 
+			return globalPrefabList[prefabName];
+		}
+
+		private void FetchPrefab() {
+			foreach (GameObject level in levels) {
+				ILevelViewController levelViewController = level.GetComponent<ILevelViewController>();
+				foreach (GameObject enemy in levelViewController.Enemies) {
+					globalPrefabList.Add(enemy.name, enemy);
+				}
+			}
+		}
+
+		private void OnCurrentLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
+			if (currentLevelGo) {
+				Destroy(currentLevelGo);
+			}
+			
+			if (newLevel == null) {
+				return;
+			}
+
+			int levelCount = newLevel.GetCurrentLevelCount();
+			GameObject level = levels[levelCount - 1];
+			
 			GameObject spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
 			ILevelViewController levelViewController = spawnedLevel.GetComponent<ILevelViewController>();
 			levelViewController.SetLevelNumber(levelCount);
-			ILevelEntity entity = levelViewController.OnBuildNewLevel();
-			levelViewController.InitWithID(entity.UUID);
 			
-			levelModel.CurrentLevel = entity;
-			
+			levelViewController.InitWithID(newLevel.UUID);
 			levelViewController.Init();
+			
+			currentLevelGo = spawnedLevel;
 		}
 
+		private void OnTryToSwitchUnSpawnedLevel(OnTryToSwitchUnSpawnedLevel e) {
+			int levelCount = e.LevelNumber;
+
+			GameObject level = levels[levelCount - 1];
+			ILevelViewController levelViewController = level.GetComponent<ILevelViewController>();
+			ILevelEntity entity = levelViewController.OnBuildNewLevel(levelCount);
+			levelModel.AddLevel(entity);
+		}
+		
+	
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
 		}

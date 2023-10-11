@@ -1,4 +1,5 @@
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies.Model;
@@ -38,7 +39,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         /// <param name="player"></param>
         /// <param name="zone"></param>
         public void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone);
-    
+
+        public IUnRegister RegisterOnEntityViewControllerInit();
+        
+        public void UnRegisterOnEntityViewControllerInit();
+
         //public void Init(string id, IEntity entity);
     }
 

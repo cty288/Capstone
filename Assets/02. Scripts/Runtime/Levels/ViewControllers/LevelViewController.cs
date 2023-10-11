@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
+using _02._Scripts.Runtime.Utilities;
+using Framework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
@@ -14,33 +18,62 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	public interface ILevelViewController: IEntityViewController {
 		public void SetLevelNumber(int levelNumber);
-		public ILevelEntity OnBuildNewLevel();
+		public ILevelEntity OnBuildNewLevel(int levelNumber);
 
 		public void Init();
+		
+		List<GameObject> Enemies { get; }
 	}
 
-	public struct LevelSpawnCard {
-		public IEnemyEntity TemplateEntity { get; }
+	public struct LevelSpawnCard : ICanGetModel {
+		[field: ES3Serializable]
+		public string TemplateEntityUUID { get; }
+
+		public IEnemyEntity TemplateEntity {
+			get {
+				return this.GetModel<IEnemyEntityModel>().GetEntity(TemplateEntityUUID);
+			}
+		}
+		
+		[field: ES3Serializable]
 		public int RealSpawnWeight { get; }
+		[field: ES3Serializable]
 		public int RealSpawnCost { get; }
-		public GameObject Prefab { get; }
+		[field: ES3Serializable]
+		public string PrefabName { get; }
+
+		public GameObject Prefab => GlobalLevelManager.Singleton.GetEnemyPrefab(PrefabName);
 
 		public string EntityName => TemplateEntity.EntityName;
 		
-		public LevelSpawnCard(IEnemyEntity templateEntity, int realSpawnWeight, int realSpawnCost, GameObject prefab) {
-			TemplateEntity = templateEntity;
+		public LevelSpawnCard(IEnemyEntity templateEntity, int realSpawnWeight, int realSpawnCost, string prefabName) {
+			TemplateEntityUUID = templateEntity.UUID;
 			RealSpawnWeight = realSpawnWeight;
 			RealSpawnCost = realSpawnCost;
-			Prefab = prefab;
+			PrefabName = prefabName;
+		}
+		
+		
+		
+
+		public IArchitecture GetArchitecture() {
+			return MainGame.Interface;
 		}
 	}
 	public abstract class LevelViewController<T> : AbstractBasicEntityViewController<T>, ILevelViewController
-		where  T : class, ILevelEntity, new()  {
+		where  T : class, ILevelEntity, new() {
+
+		[Header("Player")] 
+		[SerializeField] protected List<Transform> playerSpawnPoints = new List<Transform>();
 		
+		[Header("Enemies")]
 		[SerializeField] protected List<GameObject> enemies = new List<GameObject>();
+
+		public List<GameObject> Enemies => enemies;
+		
 		[SerializeField] protected int maxEnemiesBaseValue = 50;
 
-		private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
+		//private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
 		private ILevelModel levelModel;
 		private int levelNumber;
 		
@@ -50,12 +83,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 
 		protected override IEntity OnBuildNewEntity() {
-			LevelBuilder<T> builder = levelModel.GetLevelBuilder<T>();
-			builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), levelNumber)
-				.SetProperty(new PropertyNameInfo(PropertyName.max_enemies), maxEnemiesBaseValue)
-				.SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies());
-			
-			return OnInitLevelEntity(builder, levelNumber);
+			return OnBuildNewLevel(levelNumber);
 		}
 
 		protected abstract IEntity OnInitLevelEntity(LevelBuilder<T> builder, int levelNumber);
@@ -65,33 +93,47 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			this.levelNumber = levelNumber;
 		}
 
-		public List<LevelSpawnCard> CreateTemplateEnemies() {
+		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
 			List<LevelSpawnCard> spawnCards = new List<LevelSpawnCard>();
 			foreach (var enemy in enemies) {
 				IEnemyViewController enemyViewController = enemy.GetComponent<IEnemyViewController>();
 				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity();
 				
-				templateEnemies.Add(enemyEntity);
+				//templateEnemies.Add(enemyEntity);
 				spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber),
-					enemyEntity.GetRealSpawnCost(levelNumber), enemy));
+					enemyEntity.GetRealSpawnCost(levelNumber), enemy.name));
 			}
 			
 			return spawnCards;
 		}
-		public ILevelEntity OnBuildNewLevel() {
-			return OnBuildNewEntity() as ILevelEntity;
+		public ILevelEntity OnBuildNewLevel(int levelNumber) {
+			if (levelModel == null) {
+				levelModel = this.GetModel<ILevelModel>();
+			}
+			LevelBuilder<T> builder = levelModel.GetLevelBuilder<T>();
+			builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), levelNumber)
+				.SetProperty(new PropertyNameInfo(PropertyName.max_enemies), maxEnemiesBaseValue)
+				.SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber));
+
+			return OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
 		}
 
 		public void Init() {
-			
+			OnSpawnPlayer();
+		}
+
+
+		protected virtual void OnSpawnPlayer() {
+			if (playerSpawnPoints.Count == 0) {
+				throw new Exception("No player spawn points found for level {gameObject.name}");
+				return;
+			}
+			this.SendCommand<TeleportPlayerCommand>(
+				TeleportPlayerCommand.Allocate(playerSpawnPoints.GetRandomElement().position));
 		}
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			foreach (var enemy in templateEnemies) {
-				enemy.RecycleToCache();
-			}
-			templateEnemies.Clear();
 		}
 	}
 }
