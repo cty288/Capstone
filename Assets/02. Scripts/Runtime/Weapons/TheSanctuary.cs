@@ -122,6 +122,7 @@ namespace Runtime.Weapons
 
         public override void Shoot()
         {
+            base.Shoot();
             Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
             
             GameObject b = pool.Allocate();
