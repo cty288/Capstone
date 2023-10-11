@@ -1,4 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Levels.ViewControllers;
 using MikroFramework.Architecture;
 using UnityEngine;
 using Runtime.DataFramework.Entities;
@@ -11,15 +14,25 @@ namespace Runtime.Spawning
 {
     public interface IDirectorViewController : IEntityViewController {
         IDirectorEntity DirectorEntity => Entity as IDirectorEntity;
+
+        public void PopulateLottery(List<LevelSpawnCard> spawnCards);
     }
     
-    public abstract class AbstractDirectorViewController<T>  : AbstractBasicEntityViewController<DirectorEntity> where  T : class, IDirectorEntity, new() 
+    public abstract class DirectorViewController<T>  : AbstractBasicEntityViewController<T>, IDirectorViewController where T : class, IDirectorEntity, new() 
     {
         protected IDirectorModel directorModel;
+        
+        protected Lottery m_lottery;
         
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
+            m_lottery = new Lottery();
+        }
+        
+        public virtual void InitDirector(ILevelEntity levelEntity)
+        {
+            BoundEntity.SetLevelEntity(levelEntity);
         }
         
         protected override IEntity OnBuildNewEntity()
@@ -29,15 +42,10 @@ namespace Runtime.Spawning
         }
         
         protected abstract IEntity OnInitDirectorEntity(DirectorBuilder<T> builder);
-
-        protected override void OnEntityStart()
+        
+        public void PopulateLottery(List<LevelSpawnCard> spawnCards)
         {
-            throw new System.NotImplementedException();
-        }
-
-        protected override void OnBindEntityProperty()
-        {
-            throw new System.NotImplementedException();
+            m_lottery.SetCards(spawnCards);
         }
     }
 }

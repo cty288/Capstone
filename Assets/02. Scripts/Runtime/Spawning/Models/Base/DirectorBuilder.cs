@@ -13,12 +13,6 @@ namespace Runtime.Spawning
             CheckEntity();
         }
         
-        // public DirectorBuilder<T> SetAllBasics(int baseDamage)
-        // {
-        //     SetBaseDamage(baseDamage);
-        //     return this;
-        // }
-        
         public override void RecycleToCache()
         {
             SafeObjectPool<DirectorBuilder<T>>.Singleton.Recycle(this);
