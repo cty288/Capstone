@@ -366,11 +366,16 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 		
+		protected new void RecycleToCache() {
+			OnEntityReadyToRecycle(BoundEntity);
+		}
+		
 		private void OnEntityReadyToRecycle(IEntity e) {
 			BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 			if (autoDestroyWhenEntityRemoved) {
 				OnReadyToRecycle();
 			}
+			StopAllCoroutines();
 		}
 		
 
