@@ -18,6 +18,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public List<LevelSpawnCard> GetAllCards();
 
 		public List<LevelSpawnCard> GetCards(Predicate<LevelSpawnCard> predicate);
+		
+		public int GetCurrentLevelCount();
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
@@ -66,6 +68,10 @@ namespace _02._Scripts.Runtime.Levels.Models {
 				}
 			}
 			return cards;
+		}
+
+		public int GetCurrentLevelCount() {
+			return GetRarity();
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
