@@ -14,6 +14,7 @@ namespace Framework {
 	public class MainGame : SavableArchitecture<MainGame> {
 		
 		protected override void Init() {
+			ES3AutoSaveMgr.Current.Load();
 			GlobalEntities.Reset();
 			GlobalGameResourceEntities.Reset();
 			

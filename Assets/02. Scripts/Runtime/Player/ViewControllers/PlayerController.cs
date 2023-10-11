@@ -4,6 +4,7 @@ using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using MikroFramework.Singletons;
+using MikroFramework.Utilities;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -17,15 +18,18 @@ namespace Runtime.Temporary
     public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
+        private TriggerCheck triggerCheck;
 
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
             this.RegisterEvent<OnPlayerTeleport>(OnPlayerTeleport).UnRegisterWhenGameObjectDestroyed(gameObject);
+            triggerCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
         }
 
         private void OnPlayerTeleport(OnPlayerTeleport e) {
             transform.position = e.targetPos;
+            triggerCheck.Clear();
         }
 
         public static PlayerController GetClosestPlayer(Vector3 position) {

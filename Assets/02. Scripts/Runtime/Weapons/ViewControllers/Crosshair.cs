@@ -56,7 +56,9 @@ namespace Runtime.Weapons.ViewControllers {
             crossHairDetectLayerMask = LayerMask.GetMask("CrossHairDetect");
             hurtboxLayerMask = LayerMask.GetMask("Hurtbox");
             noweaponCrosshair = transform.Find("NoWeaponCrossHair").gameObject;
-            noweaponCrosshair.SetActive(false);
+            noweaponCrosshair.SetActive(true);
+            
+            
         }
 
  

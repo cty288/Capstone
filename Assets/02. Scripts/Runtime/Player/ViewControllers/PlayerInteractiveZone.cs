@@ -36,7 +36,7 @@ namespace Runtime.Player {
         }
 
         private void OnExitInteractiveCheck(Collider other) {
-            if(other.TryGetComponent<IEntityViewController>(out var entityViewController)) {
+            if(other && other.TryGetComponent<IEntityViewController>(out var entityViewController)) {
                 if(entityViewControllersNotBlocked.ContainsKey(other.gameObject)) {
                     entityViewController.OnPlayerInteractiveZoneNotReachable(transform.parent.gameObject, this);
                 }

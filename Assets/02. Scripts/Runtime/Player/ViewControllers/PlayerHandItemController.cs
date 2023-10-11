@@ -16,24 +16,30 @@ using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class PlayerHandItemController : AbstractMikroController<MainGame> {
+public class PlayerHandItemController : EntityAttachedViewController<PlayerEntity> {
 	private IInventoryModel inventoryModel;
 	[SerializeField] private Transform leftHandTr;
 	[SerializeField] private Transform rightHandTr;
 
-	private Dictionary<HotBarCategory, IInHandResourceViewController> inHandResourceViewControllers =
-		new Dictionary<HotBarCategory, IInHandResourceViewController>();
+	//private Dictionary<HotBarCategory, IInHandResourceViewController> inHandResourceViewControllers =
+	//	new Dictionary<HotBarCategory, IInHandResourceViewController>();
 
+	
+	private IInHandResourceViewController currentHoldItemViewController = null;
+	
 	private IGamePlayerModel playerModel;
 	private DPunkInputs.PlayerActions playerActions;
-	private IInHandResourceViewController rightHandItemViewController = null;
+	//private IInHandResourceViewController rightHandItemViewController = null;
 	
-	private void Awake() {
+	protected override void Awake() {
+		base.Awake();
 		inventoryModel = this.GetModel<IInventoryModel>();
 		playerModel = this.GetModel<IGamePlayerModel>();
 		
 		playerActions = ClientInput.Singleton.GetPlayerActions();
-		
+	}
+
+	protected override void OnEntityFinishInit(PlayerEntity entity) {
 		//leftHandTr = transform.Find("Camera/CameraFollower/LeftHandSpawnPos");
 		//rightHandTr = transform.Find("Camera/CameraFollower/RightHandSpawnPos");
 
@@ -58,48 +64,48 @@ public class PlayerHandItemController : AbstractMikroController<MainGame> {
 			return;
 		}
 
-		if (rightHandItemViewController != null) {
+		if (currentHoldItemViewController != null) {
 			if (playerActions.Shoot.WasPressedThisFrame()) {
-				rightHandItemViewController.OnItemStartUse();
+				currentHoldItemViewController.OnItemStartUse();
 			}
 			
 			if (playerActions.Shoot.IsPressed()) {
-				rightHandItemViewController.OnItemUse();
+				currentHoldItemViewController.OnItemUse();
 			}
 			
 			if (playerActions.Shoot.WasReleasedThisFrame()) {
-				rightHandItemViewController.OnItemStopUse();
+				currentHoldItemViewController.OnItemStopUse();
 			}
 			
 			if (playerActions.Scope.WasPerformedThisFrame()) {
-				rightHandItemViewController.OnItemScopePressed();
+				currentHoldItemViewController.OnItemScopePressed();
 			}
 		}
 	}
 
 	private void SwitchHandItem(HotBarCategory category, IResourceEntity resourceEntity) {
-		inHandResourceViewControllers.TryAdd(category, null);
+		//inHandResourceViewControllers.TryAdd(category, null);
 
-		IInHandResourceViewController previousViewController = inHandResourceViewControllers[category];
+		IInHandResourceViewController previousViewController = currentHoldItemViewController;
 		if (previousViewController as Object != null) {
 			previousViewController.OnStopHold();
 		}
 		
-		inHandResourceViewControllers[category] = null;
-		rightHandItemViewController = null;
+		//inHandResourceViewControllers[category] = null;
+		currentHoldItemViewController = null;
 		
 		if (resourceEntity != null) {
 			GameObject spawnedItem = ResourceVCFactory.Singleton.SpawnInHandResourceVC(resourceEntity, true);
-			Transform targetTr = category == HotBarCategory.Left ? leftHandTr : rightHandTr;
+			Transform targetTr = rightHandTr; //category == HotBarCategory.Left ? leftHandTr : rightHandTr;
 			
 			spawnedItem.transform.SetParent(targetTr);
 			spawnedItem.transform.localPosition = Vector3.zero;
 			spawnedItem.transform.localRotation = Quaternion.identity;
 			spawnedItem.transform.localScale = Vector3.one;
 			
-			inHandResourceViewControllers[category] = spawnedItem.GetComponent<IInHandResourceViewController>();
-			inHandResourceViewControllers[category].OnStartHold(gameObject);
-			rightHandItemViewController = inHandResourceViewControllers[category];
+			currentHoldItemViewController = spawnedItem.GetComponent<IInHandResourceViewController>();
+			currentHoldItemViewController.OnStartHold(gameObject);
+			//rightHandItemViewController = inHandResourceViewControllers[category];
 		}
 		
 	}

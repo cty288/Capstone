@@ -11,6 +11,7 @@ using UnityEngine;
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	public class GlobalLevelManager : MonoMikroSingleton<GlobalLevelManager>, IController {
 		[SerializeField] protected List<GameObject> levels = new List<GameObject>();
+		[SerializeField] protected GameObject baseLevel;
 
 		private Dictionary<string, GameObject> globalPrefabList = null;
 
@@ -18,7 +19,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private ILevelModel levelModel;
 		private void Awake() {
 			levelModel = this.GetModel<ILevelModel>();
-			levels.Shuffle();
+			//levels.Shuffle();
+			levels.Insert(0, baseLevel);
 			this.RegisterEvent<OnTryToSwitchUnSpawnedLevel>(OnTryToSwitchUnSpawnedLevel).UnRegisterWhenGameObjectDestroyed(gameObject);
 		}
 		
@@ -56,7 +58,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 
 			int levelCount = newLevel.GetCurrentLevelCount();
-			GameObject level = levels[levelCount - 1];
+			GameObject level = levels[levelCount];
 			
 			GameObject spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
 			ILevelViewController levelViewController = spawnedLevel.GetComponent<ILevelViewController>();
@@ -71,7 +73,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private void OnTryToSwitchUnSpawnedLevel(OnTryToSwitchUnSpawnedLevel e) {
 			int levelCount = e.LevelNumber;
 
-			GameObject level = levels[levelCount - 1];
+			if (levelCount >= levels.Count) {
+				return;
+			}
+			
+			GameObject level = levels[levelCount];
 			ILevelViewController levelViewController = level.GetComponent<ILevelViewController>();
 			ILevelEntity entity = levelViewController.OnBuildNewLevel(levelCount);
 			levelModel.AddLevel(entity);

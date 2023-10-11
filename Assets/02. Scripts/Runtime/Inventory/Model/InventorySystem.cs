@@ -20,7 +20,12 @@ namespace Runtime.Inventory.Model {
 			{HotBarCategory.Left, 3}
 		};
 		
-		private Dictionary<HotBarCategory, ResourceSlot> currentSelectedSlot = new Dictionary<HotBarCategory, ResourceSlot>();
+		//private Dictionary<HotBarCategory, ResourceSlot> currentSelectedSlot = new Dictionary<HotBarCategory, ResourceSlot>();
+		private HotBarCategory currentSelectedCategory = HotBarCategory.Left;
+		private ResourceSlot currentSelectedSlot = null;
+		private int currentSelectedIndex = 0;
+		
+		
 		private Dictionary<ResourceSlot, HotBarCategory> slotToCategories = new Dictionary<ResourceSlot, HotBarCategory>();
 
 		protected override void OnInit() {
@@ -51,18 +56,58 @@ namespace Runtime.Inventory.Model {
 
 		private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
 			ResourceSlot slot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
-			currentSelectedSlot.TryAdd(e.Category, null);
+			//currentSelectedSlot.TryAdd(e.Category, null);
+
+			ResourceSlot previousSlot = currentSelectedSlot;
+			HotBarCategory previousCategory = currentSelectedCategory;
+			int previousIndex = currentSelectedIndex;
 			
-			ResourceSlot previousSlot = currentSelectedSlot[e.Category];
 			if (previousSlot != null) {
 				previousSlot.UnregisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
 			}
-
-			currentSelectedSlot[e.Category] = slot;
-			slotToCategories.TryAdd(slot, e.Category);
 			
-			slot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
-			OnCurrentSlotUpdate(slot, slot.GetLastItemUUID(), slot.GetUUIDList());
+			
+			//if category is left and last selected index = current selected index, then we select the right hand again
+			if ((previousCategory == HotBarCategory.Left && previousSlot == slot) || (e.Category == HotBarCategory.Left && slot.GetQuantity() <= 0)) {
+
+				HotBarCategory otherCategory = HotBarCategory.Right;
+				int otherIndex = 0;
+				
+				if (previousCategory == HotBarCategory.Left && e.Category == HotBarCategory.Left &&
+				    slot?.GetQuantity() <= 0 && previousIndex != e.SelectedIndex) {
+					otherCategory = HotBarCategory.Left;
+					otherIndex = previousIndex;
+					
+					currentSelectedCategory = HotBarCategory.Left;
+					currentSelectedIndex = e.SelectedIndex;
+					currentSelectedSlot = slot;
+
+				}
+				else {
+					otherCategory = HotBarCategory.Right;
+					otherIndex = model.GetSelectedHotBarSlotIndex(HotBarCategory.Right);
+				}
+				
+				//modify event
+				e.Category = otherCategory;
+				e.SelectedIndex = otherIndex;
+
+				/*currentSelectedSlot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
+				currentSelectedCategory = e.Category;
+				slotToCategories.TryAdd(slot, e.Category);*/
+				
+				
+				model.SelectHotBarSlot(otherCategory, otherIndex);
+			}
+			else {
+				//currentSelectedSlot[e.Category] = slot;
+				currentSelectedSlot = slot;
+				currentSelectedCategory = e.Category;
+				slotToCategories.TryAdd(slot, e.Category);
+				currentSelectedIndex = e.SelectedIndex;
+				slot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+				OnCurrentSlotUpdate(slot, slot.GetLastItemUUID(), slot.GetUUIDList());
+			}
 		}
 
 		private void OnCurrentSlotUpdate(ResourceSlot slot, string topUUID, List<string> allUUIDs) {
@@ -80,6 +125,10 @@ namespace Runtime.Inventory.Model {
 				Category = category,
 				TopItem = resourceEntity
 			});
+
+			if (category == HotBarCategory.Left && slot.GetQuantity() <= 0) {
+				model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+			}
 		}
 
 

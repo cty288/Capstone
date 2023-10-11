@@ -1,3 +1,4 @@
+using System;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities;
@@ -40,9 +41,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         /// <param name="zone"></param>
         public void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone);
 
-        public IUnRegister RegisterOnEntityViewControllerInit();
+        public IUnRegister RegisterOnEntityViewControllerInit(Action<IEntity> callback);
         
-        public void UnRegisterOnEntityViewControllerInit();
+        public void UnRegisterOnEntityViewControllerInit(Action<IEntity> callback);
 
         //public void Init(string id, IEntity entity);
     }
