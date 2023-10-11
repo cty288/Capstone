@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using MikroFramework.Architecture;
@@ -21,8 +22,14 @@ namespace Runtime.Spawning
     public abstract class DirectorViewController<T>  : AbstractBasicEntityViewController<T>, IDirectorViewController where T : class, IDirectorEntity, new() 
     {
         protected IDirectorModel directorModel;
-        
         protected Lottery m_lottery;
+        
+        protected ILevelEntity LevelEntity;
+        protected int levelNumber;
+        
+        [SerializeField] public float minSpawnRange;
+        [SerializeField] public float maxSpawnRange;
+        [ReadOnly(true)] private int currentCredits;
         
         protected override void Awake() {
             base.Awake();
@@ -32,7 +39,7 @@ namespace Runtime.Spawning
         
         public virtual void InitDirector(ILevelEntity levelEntity)
         {
-            BoundEntity.SetLevelEntity(levelEntity);
+            this.LevelEntity = levelEntity;
         }
         
         protected override IEntity OnBuildNewEntity()
@@ -46,6 +53,22 @@ namespace Runtime.Spawning
         public void PopulateLottery(List<LevelSpawnCard> spawnCards)
         {
             m_lottery.SetCards(spawnCards);
+        }
+
+        public IEnemyEntity GetNextSpawnEntity()
+        {
+            LevelSpawnCard spawnCard = m_lottery.PickNextCard();
+            IEnemyEntity enemyEntity = spawnCard.TemplateEntity;
+            
+            //get highest rarity of enemy
+            int rarity = 0;
+            for(int i = 0; i < levelNumber; i++)
+            {
+                
+            }
+
+            return null;
+            // return m_lottery.PickNextCard();
         }
     }
 }
