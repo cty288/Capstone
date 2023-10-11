@@ -29,7 +29,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances {
 
 		protected override IEntity OnInitLevelEntity(LevelBuilder<SandStormLevelEntity> builder, int levelNumber) {
 			return builder
-				.SetProperty(new PropertyNameInfo(PropertyName.rarity), levelNumber)
+				
 				.Build();
 		}
 	}

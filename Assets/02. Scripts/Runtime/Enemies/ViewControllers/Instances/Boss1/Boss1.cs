@@ -44,6 +44,15 @@ namespace Runtime.Enemies
         protected override void OnInitModifiers(int rarity) {
             
         }
+
+        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+            return level * baseWeight;
+        }
+
+        public override int OnGetRealSpawnCost(int level, int baseCost) {
+            return level * baseCost;
+        }
+
         protected override void OnEnemyRegisterAdditionalProperties() {
             
         }

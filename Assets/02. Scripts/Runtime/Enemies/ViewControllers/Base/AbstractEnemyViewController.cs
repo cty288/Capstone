@@ -68,6 +68,9 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		}
 		
 		public IEnemyEntity OnInitEntity() {
+			if (enemyModel == null) {
+				enemyModel = this.GetModel<IEnemyEntityModel>();
+			}
 			return OnBuildNewEntity() as IEnemyEntity;
 		}
 		

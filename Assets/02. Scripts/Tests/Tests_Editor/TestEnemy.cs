@@ -26,7 +26,13 @@ namespace Tests.Tests_Editor {
         internal class TestBasicEnemy : BossEntity<TestBasicEnemy> {
             [field: ES3Serializable]
             public override string EntityName { get; set; } = "TestEnemy2";
+            public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+                return level;
+            }
 
+            public override int OnGetRealSpawnCost(int level, int baseCost) {
+                return level;
+            }
             protected override string OnGetDescription(string defaultLocalizationKey) {
                 return null;
             }

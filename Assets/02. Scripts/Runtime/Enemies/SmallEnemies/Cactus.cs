@@ -36,6 +36,14 @@ namespace Runtime.Enemies.SmallEnemies
 
         }
 
+        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+            return level * baseWeight;
+        }
+
+        public override int OnGetRealSpawnCost(int level, int baseCost) {
+            return level * baseCost;
+        }
+
         protected override void OnEnemyRegisterAdditionalProperties()
         {
 
