@@ -41,6 +41,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public int RealSpawnCost { get; }
 		[field: ES3Serializable]
 		public string PrefabName { get; }
+		
+		[field: ES3Serializable]
+		public bool IsNormalEnemy { get; }
 
 		public GameObject Prefab => GlobalLevelManager.Singleton.GetEnemyPrefab(PrefabName);
 
@@ -51,6 +54,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			RealSpawnWeight = realSpawnWeight;
 			RealSpawnCost = realSpawnCost;
 			PrefabName = prefabName;
+			IsNormalEnemy = templateEntity is INormalEnemyEntity;
 		}
 		
 		
@@ -95,6 +99,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
 			List<LevelSpawnCard> spawnCards = new List<LevelSpawnCard>();
+			
 			foreach (var enemy in enemies) {
 				IEnemyViewController enemyViewController = enemy.GetComponent<IEnemyViewController>();
 				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity();

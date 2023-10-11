@@ -15,6 +15,10 @@ namespace _02._Scripts.Runtime.Levels.Models {
 	public interface ILevelEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		public List<LevelSpawnCard> GetAllCardsUnderCost(int cost);
 		
+		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost);
+
+		public List<LevelSpawnCard> GetAllBosses();
+
 		public List<LevelSpawnCard> GetAllCards();
 
 		public List<LevelSpawnCard> GetCards(Predicate<LevelSpawnCard> predicate);
@@ -54,6 +58,14 @@ namespace _02._Scripts.Runtime.Levels.Models {
 				}
 			}
 			return cards;
+		}
+
+		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost) {
+			return GetCards((card => card.RealSpawnCost <= cost && card.IsNormalEnemy));
+		}
+
+		public List<LevelSpawnCard> GetAllBosses() {
+			return GetCards((card => !card.IsNormalEnemy));
 		}
 
 		public List<LevelSpawnCard> GetAllCards() {
