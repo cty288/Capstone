@@ -118,24 +118,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				RecycleToCache();
 			}
 		}
-		/*
-		protected virtual void OnTriggerStay(Collider other)
-		{
-			Debug.Log("der");
-			if (tickType == true)
-			{
-				Debug.Log("der");
-				if (!other.isTrigger)
-				{
-					if (other.transform.root.TryGetComponent<IBelongToFaction>(out var belongToFaction))
-					{
-						OnHitObject(other);
-					}
-				}
-				//OnHitObject(other);
-			}
-		}
-		*/
+		
 		
 		protected abstract void OnHitObject(Collider other);
 
