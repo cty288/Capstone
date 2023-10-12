@@ -11,12 +11,12 @@ namespace Runtime.Utilities.Collision
     [RequireComponent(typeof(TriggerCheck))]
     public class HitBox : MonoBehaviour, IHitDetector
     {
-        private Collider _collider;
-        private TriggerCheck _triggerCheck;
+        protected Collider _collider;
+        protected TriggerCheck _triggerCheck;
         private IHitResponder m_hitResponder;
 
         public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
-        [SerializeField] private bool showDamageNumber = true;
+        [SerializeField] protected bool showDamageNumber = true;
         
         
         private void Start()
