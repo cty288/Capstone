@@ -52,12 +52,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			RealSpawnCost = realSpawnCost;
 			PrefabName = prefabName;
 		}
-		
-		
-		
 
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
+		}
+
+		public int GetSpawnCostGivenRarity(int rarity)
+		{
+			//TODO: get real function, probably turn into "baseSpawnCost * rarity"
+			return RealSpawnCost * rarity;
 		}
 	}
 	public abstract class LevelViewController<T> : AbstractBasicEntityViewController<T>, ILevelViewController

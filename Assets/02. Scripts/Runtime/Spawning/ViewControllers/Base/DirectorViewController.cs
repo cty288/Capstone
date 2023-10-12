@@ -17,6 +17,8 @@ namespace Runtime.Spawning
         IDirectorEntity DirectorEntity => Entity as IDirectorEntity;
 
         public void PopulateLottery(List<LevelSpawnCard> spawnCards);
+        
+        public void SetLevelEntity(ILevelEntity levelEntity);
     }
     
     public abstract class DirectorViewController<T>  : AbstractBasicEntityViewController<T>, IDirectorViewController where T : class, IDirectorEntity, new() 
@@ -29,19 +31,27 @@ namespace Runtime.Spawning
         
         [SerializeField] public float minSpawnRange;
         [SerializeField] public float maxSpawnRange;
-        [ReadOnly(true)] private int currentCredits;
+        [SerializeField] public float addCreditsInterval = 1f;
+        
+        [ReadOnly(true)] private float currentCredits;
+        [ReadOnly(true)] private float creditTimer = 0f;
+        [ReadOnly(true)] private float spawnTimer = 0f;
+        [ReadOnly(true)] private float packSpawnTimer = 0f;
         
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
-            m_lottery = new Lottery();
         }
-        
-        public virtual void InitDirector(ILevelEntity levelEntity)
+
+        protected override void OnEntityStart()
         {
-            this.LevelEntity = levelEntity;
+            m_lottery = new Lottery();
+            currentCredits = BoundEntity.GetStartingCredits().RealValue;
+            creditTimer = addCreditsInterval;
+            spawnTimer = BoundEntity.GetSpawnTimer().RealValue;
+            packSpawnTimer = BoundEntity.GetPackSpawnTimer().RealValue;
         }
-        
+
         protected override IEntity OnBuildNewEntity()
         {
             DirectorBuilder<T> builder = directorModel.GetDirectorBuilder<T>();
@@ -50,25 +60,64 @@ namespace Runtime.Spawning
         
         protected abstract IEntity OnInitDirectorEntity(DirectorBuilder<T> builder);
         
-        public void PopulateLottery(List<LevelSpawnCard> spawnCards)
+        public void Update()
+        {
+            DecrementTimers();
+            
+            if (creditTimer <= 0f)
+            {
+                AddCredits();
+                creditTimer = addCreditsInterval;
+            }
+
+            if(spawnTimer <= 0f)
+            {
+                Spawn();
+                
+                spawnTimer = BoundEntity.GetSpawnTimer().RealValue;
+            }
+        }
+
+        public void SetLevelEntity(ILevelEntity levelEntity)
+        {
+            LevelEntity = levelEntity;
+            levelNumber = levelEntity.GetCurrentLevelCount();
+            IEntity ent = OnBuildNewEntity();
+            InitWithID(ent.UUID);
+        }
+        
+        private void DecrementTimers()
+        {
+            creditTimer -= Time.deltaTime;
+            spawnTimer -= Time.deltaTime;
+            packSpawnTimer -= Time.deltaTime;
+        }
+        
+        public virtual void SetSpawnCards(List<LevelSpawnCard> spawnCards)
         {
             m_lottery.SetCards(spawnCards);
         }
 
-        public IEnemyEntity GetNextSpawnEntity()
+        protected virtual void Spawn()
         {
-            LevelSpawnCard spawnCard = m_lottery.PickNextCard();
-            IEnemyEntity enemyEntity = spawnCard.TemplateEntity;
+            //pick card, store the card
+            m_lottery.PickNextCard(); //check if next card is null later
             
-            //get highest rarity of enemy
-            int rarity = 0;
-            for(int i = 0; i < levelNumber; i++)
-            {
-                
-            }
+            //determine level and cost
+            //iterate through levels min to max, then decide on highest cost card that can be spawned
+            
+            
+            //pick a spot
+            //raycast down from random point within min/max range
+            //determine if can spawn
+            
+            //on fail spawn, reset timer, discard card
+            //on success, spawn(), reset timer, keep card
+        }
 
-            return null;
-            // return m_lottery.PickNextCard();
+        protected virtual void AddCredits()
+        {
+            currentCredits += BoundEntity.GetCreditsPerSecond().RealValue;
         }
     }
 }

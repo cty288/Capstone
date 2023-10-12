@@ -3,6 +3,7 @@ using _02._Scripts.Runtime.Levels.ViewControllers.Instances;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Utilities.ConfigSheet;
+using UnityEngine.PlayerLoop;
 
 namespace Runtime.Spawning.ViewControllers.Instances
 {
@@ -35,14 +36,6 @@ namespace Runtime.Spawning.ViewControllers.Instances
         {
             return builder
                 .Build();
-        }
-        
-        public void SetLevelEntity(ILevelEntity levelEntity)
-        {
-            LevelEntity = levelEntity;
-            levelNumber = levelEntity.GetCurrentLevelCount();
-            IEntity ent = OnBuildNewEntity();
-            InitWithID(ent.UUID);
         }
     }
 }
