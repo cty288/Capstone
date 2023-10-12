@@ -72,7 +72,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityStart()
         {
-         
+            Debug.Log("camel here");
         }
 
 

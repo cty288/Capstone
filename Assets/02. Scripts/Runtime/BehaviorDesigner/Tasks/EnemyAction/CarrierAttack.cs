@@ -41,6 +41,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 50, 100);
             playerTrans = GetPlayer().transform;
             player = GetPlayer();
+
         }
 
         public override void OnStart()
@@ -52,7 +53,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             bulletSpeed = enemyEntity.GetCustomDataValue<float>("attack", "bulletSpeed");
             bulletCount = enemyEntity.GetCustomDataValue<int>("attack", "bulletCount");
-            bulletAccuracy = enemyEntity.GetCustomDataValue<float>("attack", "bulletAccuracy");
+            
             StartCoroutine(RF());
         }
         public override TaskStatus OnUpdate()
@@ -68,7 +69,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             for (int i = 0; i < bulletCount; i++)
             {
                 SpawnBullet(i, bulletCount);
-                yield return null;
+                yield return new WaitForSeconds(spawnInterval);
             }
             ended = true;
         }
@@ -76,31 +77,16 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         void SpawnBullet(int bulletIndex, int totalBullets)
         {
             UnityEngine.GameObject b = pool.Allocate();
+            b.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            b.transform.rotation = Quaternion.LookRotation(playerTrans.position -
+                                                           new Vector3(transform.position.x, transform.position.y + 2,
+                                                               transform.position.z));
 
-            // Calculate the angle between each bullet
-            float angleStep = 360f / totalBullets;
-
-            // Calculate the angle for the current bullet
-            float angle = bulletIndex * angleStep;
-
-            // Convert the angle to radians
-            float angleRad = angle * Mathf.Deg2Rad;
-
-            // Specify the radius of the circle
-            float radius = 1.0f; // You can adjust the radius as needed
-
-            // Calculate the position for the bullet in a circle
-            Vector3 spawnPosition = gameObject.transform.position +
-                new Vector3(Mathf.Cos(angleRad) * radius, 0f, Mathf.Sin(angleRad) * radius);
-
-            b.transform.position = spawnPosition;
-            b.transform.rotation = gameObject.transform.rotation;
+            b.GetComponent<Rigidbody>().velocity = b.transform.forward * bulletSpeed;
 
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                 enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
-                gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
-
-            b.GetComponent<CarrierBullet>().SetData(bulletSpeed);
+                gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
         }
 
 
