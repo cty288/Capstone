@@ -13,6 +13,7 @@ using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
+using UnityEngine.AI;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 
@@ -86,6 +87,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	}
 	
 	
+	[RequireComponent(typeof(NavMeshSurface))]
 	public abstract class LevelViewController<T> : AbstractBasicEntityViewController<T>, ILevelViewController
 		where  T : class, ILevelEntity, new() {
 
@@ -102,16 +104,20 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		//private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
 		private ILevelModel levelModel;
 		private int levelNumber;
-		
+		private NavMeshSurface navMeshSurface;
 		protected override void Awake() {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();
+			navMeshSurface = GetComponent<NavMeshSurface>();
+			
+			
 		}
 
 		protected override IEntity OnBuildNewEntity() {
 			return OnBuildNewLevel(levelNumber);
 		}
-
+	
+		
 		protected abstract IEntity OnInitLevelEntity(LevelBuilder<T> builder, int levelNumber);
 
 
@@ -147,7 +153,25 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 
 		public void Init() {
+			//navMeshSurface.BuildNavMesh();
+			//navMeshSurface.navMeshData 
+			UpdateNavMesh();
+			
 			OnSpawnPlayer();
+		}
+
+		protected override void Update() {
+			base.Update();
+			if (Input.GetKeyDown(KeyCode.F6)) {
+				UpdateNavMesh();
+			}
+		}
+		
+		protected void UpdateNavMesh() {
+			NavMeshBuildSettings buildSettings = navMeshSurface.GetBuildSettings();
+			buildSettings.preserveTilesOutsideBounds = true;
+			
+			navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData, buildSettings);
 		}
 
 
