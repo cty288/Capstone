@@ -30,7 +30,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public int LevelNumber;
 	}
 	public class LevelModel: EntityModel<ILevelEntity>, ILevelModel {
-		[field: ES3Serializable] public BindableProperty<int> CurrentLevelCount { get; } = new BindableProperty<int>(1);
+		[field: ES3Serializable] public BindableProperty<int> CurrentLevelCount { get; } = new BindableProperty<int>(0);
 
 		private Dictionary<int, ILevelEntity> levelEntities = new Dictionary<int, ILevelEntity>();
 		public LevelBuilder<T> GetLevelBuilder<T>(bool addToModelOnceBuilt = true) where T : class, ILevelEntity, new() {
@@ -67,7 +67,6 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			}
 
 			if (!IsLevelSpawned(levelNumber)) {
-				Debug.LogError($"Level {levelNumber} is not spawned yet!");
 				return;
 			}
 			

@@ -26,6 +26,23 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
+	
+	public class EntityVCOnRecycledUnRegister : IUnRegister
+	{
+		private Action<IEntity> onEntityRecycled;
+
+		private IEntityViewController entity;
+		
+		public EntityVCOnRecycledUnRegister(IEntityViewController entity, Action<IEntity> onEntityRecycled) {
+			this.entity = entity;
+			this.onEntityRecycled = onEntityRecycled;
+		}
+
+		public void UnRegister() {
+			entity.UnRegisterOnEntityViewControllerInit(onEntityRecycled);
+			entity = null;
+		}
+	}
 	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController 
 		where T : class, IEntity {
 		
@@ -75,7 +92,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 		protected bool isPointed = false;
 		protected Camera mainCamera;
-		protected Action onEntityVCInitCallback = null;
+		protected Action<IEntity> onEntityVCInitCallback = null;
 		
 		protected class CrossHairManagedHUDInfo {
 			public Transform originalSpawnTransform;
@@ -140,7 +157,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
 			OnBindProperty();
 			OnEntityStart();
-			onEntityVCInitCallback?.Invoke();
+			onEntityVCInitCallback?.Invoke(this.BoundEntity);
 		}
 
 
@@ -672,12 +689,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 		}
 
-		public IUnRegister RegisterOnEntityViewControllerInit() {
-			return null;
+		public IUnRegister RegisterOnEntityViewControllerInit(Action<IEntity> callback) {
+			onEntityVCInitCallback += callback;
+			return new EntityVCOnRecycledUnRegister(this, callback);
 		}
 
-		public void UnRegisterOnEntityViewControllerInit() {
-			
+		public void UnRegisterOnEntityViewControllerInit(Action<IEntity> callback) {
+			onEntityVCInitCallback -= callback;
 		}
 
 

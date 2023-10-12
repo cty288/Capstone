@@ -30,7 +30,7 @@ namespace Tests.Tests_Editor {
                 return level;
             }
 
-            public override int OnGetRealSpawnCost(int level, int baseCost) {
+            public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
                 return level;
             }
             protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -54,7 +54,7 @@ namespace Tests.Tests_Editor {
                 RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
             }
 
-            protected override void OnInitModifiers(int rarity) {
+            protected override void OnInitModifiers(int rarity, int level) {
                 
             }
 

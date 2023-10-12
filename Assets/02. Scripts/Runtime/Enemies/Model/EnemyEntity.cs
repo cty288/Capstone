@@ -24,7 +24,7 @@ namespace Runtime.Enemies.Model {
 
 		public int GetRealSpawnWeight(int level);
 		
-		public int GetRealSpawnCost(int level);
+		public int GetRealSpawnCost(int level, int rarity);
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
@@ -32,20 +32,27 @@ namespace Runtime.Enemies.Model {
 		protected IHealthProperty healthProperty;
 		protected ISpawnCostProperty spawnCostProperty;
 		protected ISpawnWeightProperty spawnWeightProperty;
+		protected ILevelNumberProperty levelNumberProperty;
 		
 		protected override void OnEntityRegisterAdditionalProperties() {
 			
 			RegisterInitialProperty<IDangerProperty>(new Danger());
 			RegisterInitialProperty<ISpawnWeightProperty>(new SpawnWeight());
 			RegisterInitialProperty<ISpawnCostProperty>(new SpawnCost());
+			RegisterInitialProperty<ILevelNumberProperty>(new LevelNumber());
 			//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 			//RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			OnEnemyRegisterAdditionalProperties();
 		}
-		
-		
 
-	
+
+		protected override void OnInitModifiers(int rarity) {
+			OnInitModifiers(rarity, levelNumberProperty.BaseValue);
+		}
+		
+		
+		protected abstract void OnInitModifiers(int rarity, int level);
+
 
 		public override void OnAwake() {
 			base.OnAwake();
@@ -53,6 +60,8 @@ namespace Runtime.Enemies.Model {
 			healthProperty = GetProperty<IHealthProperty>();
 			spawnCostProperty = GetProperty<ISpawnCostProperty>();
 			spawnWeightProperty = GetProperty<ISpawnWeightProperty>();
+			levelNumberProperty = GetProperty<ILevelNumberProperty>();
+			
 		}
 
 		protected override Faction GetDefaultFaction() {
@@ -68,19 +77,15 @@ namespace Runtime.Enemies.Model {
 		}
 
 		public int GetRealSpawnWeight(int level) {
-			return OnGetRealSpawnWeight(level, spawnWeightProperty.BaseValue);
+			return OnGetRealSpawnWeight(level, GetProperty<ILevelNumberProperty>().BaseValue);
 		}
 
 		public abstract int OnGetRealSpawnWeight(int level, int baseWeight);
 		
-		public abstract int OnGetRealSpawnCost(int level, int baseCost);
+		public abstract int OnGetRealSpawnCost(int level, int rarity, int baseCost);
 
-		public int GetRealSpawnCost(int level) {
-			return OnGetRealSpawnCost(level, spawnCostProperty.BaseValue);
-		}
-
-		public IEnemyEntity OnInitEntity() {
-			throw new System.NotImplementedException();
+		public int GetRealSpawnCost(int level, int rarity) {
+			return OnGetRealSpawnCost(level, rarity, spawnCostProperty.BaseValue);
 		}
 
 

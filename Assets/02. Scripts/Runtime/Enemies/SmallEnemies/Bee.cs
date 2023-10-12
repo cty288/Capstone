@@ -36,7 +36,7 @@ namespace Runtime.Enemies.SmallEnemies
             return level * baseWeight * 2;
         }
 
-        public override int OnGetRealSpawnCost(int level, int baseCost) {
+        public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
             return level * baseCost * 2;
         }
 
@@ -48,8 +48,9 @@ namespace Runtime.Enemies.SmallEnemies
         {
             return null;
         }
+        
 
-        protected override void OnInitModifiers(int rarity) {
+        protected override void OnInitModifiers(int rarity, int level) {
             
         }
 

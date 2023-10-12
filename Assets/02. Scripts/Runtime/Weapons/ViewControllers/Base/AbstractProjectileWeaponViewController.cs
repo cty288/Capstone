@@ -19,10 +19,12 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected override IHitDetector OnCreateHitDetector() {
             return null;
         }
-        
-        
-        
-        public virtual void Shoot() {}
+
+
+
+        public virtual void Shoot() {
+            BoundEntity.OnRecoil(IsScopedIn);
+        }
         
         public bool CheckHit(HitData data)
         {

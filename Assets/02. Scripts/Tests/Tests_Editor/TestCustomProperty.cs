@@ -19,7 +19,7 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
             
 			}
-			protected override void OnInitModifiers(int rarity) {
+			protected override void OnInitModifiers(int rarity, int level) {
             
 			}
 			protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -38,7 +38,7 @@ namespace Tests.Tests_Editor {
 				return level;
 			}
 
-			public override int OnGetRealSpawnCost(int level, int baseCost) {
+			public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
 				return level;
 			}
 
@@ -87,7 +87,7 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
         
 			}
-			protected override void OnInitModifiers(int rarity) {
+			protected override void OnInitModifiers(int rarity, int level) {
             
 			}
 			protected override ConfigTable GetConfigTable() {
@@ -97,7 +97,7 @@ namespace Tests.Tests_Editor {
 				return level;
 			}
 
-			public override int OnGetRealSpawnCost(int level, int baseCost) {
+			public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
 				return level;
 			}
 			protected override void OnEntityStart(bool isLoadedFromSave) {
@@ -164,10 +164,10 @@ namespace Tests.Tests_Editor {
 				return level;
 			}
 
-			public override int OnGetRealSpawnCost(int level, int baseCost) {
+			public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
 				return level;
 			}
-			protected override void OnInitModifiers(int rarity) {
+			protected override void OnInitModifiers(int rarity, int level) {
 				SetPropertyModifier<int>(new PropertyNameInfo("attack1", "speed"), 
 					(val) => val + rarity * 100);
 
