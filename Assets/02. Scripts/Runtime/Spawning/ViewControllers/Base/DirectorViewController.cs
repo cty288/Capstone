@@ -16,8 +16,6 @@ namespace Runtime.Spawning
     public interface IDirectorViewController : IEntityViewController {
         IDirectorEntity DirectorEntity => Entity as IDirectorEntity;
 
-        public void PopulateLottery(List<LevelSpawnCard> spawnCards);
-        
         public void SetLevelEntity(ILevelEntity levelEntity);
     }
     
@@ -35,8 +33,11 @@ namespace Runtime.Spawning
         
         [ReadOnly(true)] private float currentCredits;
         [ReadOnly(true)] private float creditTimer = 0f;
-        [ReadOnly(true)] private float spawnTimer = 0f;
-        [ReadOnly(true)] private float packSpawnTimer = 0f;
+        [ReadOnly(true)] private float directorSpawnTimer = 0f;
+        
+        [ReadOnly(true)] private LevelSpawnCard selectedCard;
+        private bool lastSpawnSuccess = false;
+
         
         protected override void Awake() {
             base.Awake();
@@ -48,8 +49,6 @@ namespace Runtime.Spawning
             m_lottery = new Lottery();
             currentCredits = BoundEntity.GetStartingCredits().RealValue;
             creditTimer = addCreditsInterval;
-            spawnTimer = BoundEntity.GetSpawnTimer().RealValue;
-            packSpawnTimer = BoundEntity.GetPackSpawnTimer().RealValue;
         }
 
         protected override IEntity OnBuildNewEntity()
@@ -70,11 +69,11 @@ namespace Runtime.Spawning
                 creditTimer = addCreditsInterval;
             }
 
-            if(spawnTimer <= 0f)
+            if(directorSpawnTimer <= 0f)
             {
-                Spawn();
+                lastSpawnSuccess = Spawn();
                 
-                spawnTimer = BoundEntity.GetSpawnTimer().RealValue;
+                directorSpawnTimer = BoundEntity.GetSpawnTimer().RealValue;
             }
         }
 
@@ -89,8 +88,7 @@ namespace Runtime.Spawning
         private void DecrementTimers()
         {
             creditTimer -= Time.deltaTime;
-            spawnTimer -= Time.deltaTime;
-            packSpawnTimer -= Time.deltaTime;
+            directorSpawnTimer -= Time.deltaTime;
         }
         
         public virtual void SetSpawnCards(List<LevelSpawnCard> spawnCards)
@@ -98,21 +96,34 @@ namespace Runtime.Spawning
             m_lottery.SetCards(spawnCards);
         }
 
-        protected virtual void Spawn()
+        protected virtual bool Spawn()
         {
-            //pick card, store the card
-            m_lottery.PickNextCard(); //check if next card is null later
+            //check if over max enemies
             
-            //determine level and cost
-            //iterate through levels min to max, then decide on highest cost card that can be spawned
-            
-            
-            //pick a spot
-            //raycast down from random point within min/max range
-            //determine if can spawn
-            
+            if (!lastSpawnSuccess)
+            {
+                //pick card, store the card
+                LevelSpawnCard spawnCard = m_lottery.PickNextCard(); //check if next card is null later
+
+                //determine level and cost
+                for (int i = spawnCard.MinRarity; i <= spawnCard.MaxRarity; i++)
+                {
+                    float cost = spawnCard.GetRealSpawnCost(levelNumber, i);
+                    if (currentCredits >= cost)
+                    {
+                        //pick a spot
+                        //raycast down from random point within min/max range
+                        //determine if can spawn
+                        //spawn
+
+                        currentCredits -= cost;
+                        break;
+                    }
+                }
+            }
             //on fail spawn, reset timer, discard card
             //on success, spawn(), reset timer, keep card
+            return false;
         }
 
         protected virtual void AddCredits()
