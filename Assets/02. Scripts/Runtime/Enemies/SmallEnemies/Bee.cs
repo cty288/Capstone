@@ -48,8 +48,9 @@ namespace Runtime.Enemies.SmallEnemies
         {
             return null;
         }
+        
 
-        protected override void OnInitModifiers(int rarity) {
+        protected override void OnInitModifiers(int rarity, int level) {
             
         }
 

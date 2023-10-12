@@ -41,7 +41,7 @@ namespace Runtime.Enemies
         public override void OnRecycle() {
 
         }
-        protected override void OnInitModifiers(int rarity) {
+        protected override void OnInitModifiers(int rarity, int level) {
             
         }
 
