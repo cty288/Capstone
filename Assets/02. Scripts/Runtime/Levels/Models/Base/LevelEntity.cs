@@ -49,11 +49,17 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			base.OnAwake();
 			spawnCardsProperty = GetProperty<ISpawnCardsProperty>();
 		}
+
+		protected int GetMinRarity(LevelSpawnCard card) {
+			return card.MinRarity;
+		}
 		
 		public List<LevelSpawnCard> GetAllCardsUnderCost(int cost) {
 			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
+			int level = GetCurrentLevelCount();
 			foreach (var card in spawnCardsProperty.RealValues) {
-				if (card.RealSpawnCost <= cost) {
+				
+				if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost) {
 					cards.Add(card);
 				}
 			}
@@ -61,7 +67,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 
 		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost) {
-			return GetCards((card => card.RealSpawnCost <= cost && card.IsNormalEnemy));
+			return GetCards((card =>
+				card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy));
 		}
 
 		public List<LevelSpawnCard> GetAllBosses() {

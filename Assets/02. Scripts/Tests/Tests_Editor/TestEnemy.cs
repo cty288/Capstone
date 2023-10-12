@@ -30,7 +30,7 @@ namespace Tests.Tests_Editor {
                 return level;
             }
 
-            public override int OnGetRealSpawnCost(int level, int baseCost) {
+            public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
                 return level;
             }
             protected override string OnGetDescription(string defaultLocalizationKey) {
