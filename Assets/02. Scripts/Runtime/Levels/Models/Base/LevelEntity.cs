@@ -24,11 +24,14 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public List<LevelSpawnCard> GetCards(Predicate<LevelSpawnCard> predicate);
 		
 		public int GetCurrentLevelCount();
+		
+		public int GetMaxEnemyCount();
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
 		
 		private ISpawnCardsProperty spawnCardsProperty;
+		private IMaxEnemiesProperty maxEnemiesProperty;
 		protected override ConfigTable GetConfigTable() {
 			return null;
 		}
@@ -48,6 +51,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public override void OnAwake() {
 			base.OnAwake();
 			spawnCardsProperty = GetProperty<ISpawnCardsProperty>();
+			maxEnemiesProperty = GetProperty<IMaxEnemiesProperty>();
 		}
 
 		protected int GetMinRarity(LevelSpawnCard card) {
@@ -91,6 +95,10 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		public int GetCurrentLevelCount() {
 			return GetRarity();
+		}
+
+		public int GetMaxEnemyCount() {
+			return maxEnemiesProperty.RealValue;
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
