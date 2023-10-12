@@ -152,6 +152,7 @@ namespace Runtime.Inventory.ViewController {
         }
         public override void OnClosed() {
             mainSlotLayoutViewController.OnHideSlotItem();
+            mainSlotLayoutViewController.OnInventoryUIClosed();
             
             foreach (KeyValuePair<HotBarCategory,List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewController 
                      in hotBarSlotLayoutViewControllers) {
@@ -160,6 +161,7 @@ namespace Runtime.Inventory.ViewController {
                     if (!inventorySlotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
                         inventorySlotLayoutViewController.OnHideSlotItem();
                     }
+                    inventorySlotLayoutViewController.OnInventoryUIClosed();
                 }
                 
                

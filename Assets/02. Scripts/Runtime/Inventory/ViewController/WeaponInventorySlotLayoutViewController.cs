@@ -53,8 +53,11 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
             }
         }
     }
-    
-    
+
+    public override void OnInventoryUIClosed() {
+        
+    }
+
     private void OnDestroy() {
         if (currentSlot != null) {
             currentSlot.UnregisterOnSlotUpdateCallback(OnCurrentSlotUpdate);

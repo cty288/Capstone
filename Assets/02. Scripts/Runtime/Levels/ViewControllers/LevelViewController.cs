@@ -170,7 +170,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		protected void UpdateNavMesh() {
 			NavMeshBuildSettings buildSettings = navMeshSurface.GetBuildSettings();
 			buildSettings.preserveTilesOutsideBounds = true;
-			
 			navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData, buildSettings);
 		}
 
