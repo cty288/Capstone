@@ -58,7 +58,8 @@ namespace Runtime.Enemies
             return new[] {
                 new AutoConfigCustomProperty("shellHealthInfo"),
                 new AutoConfigCustomProperty("damages"),
-                new AutoConfigCustomProperty("ranges")
+                new AutoConfigCustomProperty("ranges"),
+                new AutoConfigCustomProperty("waitTimes")
             };
         }
         
@@ -94,6 +95,15 @@ namespace Runtime.Enemies
         [BindCustomData("ranges", "meleeRange")]
         public float MeleeRange { get; }
        
+        [BindCustomData("waitTimes","meleeWait")]
+        public float MeleeWait { get; }
+        [BindCustomData("waitTimes","rapidFireWait")]
+        public float RapidFireWait { get; }
+        [BindCustomData("waitTimes","rangedAOEWait")]
+        public float RangedAOEWait { get; }
+        [BindCustomData("waitTimes","rollWait")]
+        public float RollWait { get; }
+        
         private HitDetectorInfo hitDetectorInfo;
         private bool deathAnimationEnd = false;
         
