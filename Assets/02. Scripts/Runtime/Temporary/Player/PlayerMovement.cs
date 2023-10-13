@@ -91,7 +91,7 @@ namespace Runtime.Temporary.Player
     
         //todo: entity data
         [SerializeField]
-        private float airMultiplier = 0.3f;
+        private float airMultiplier = 0.5f;
     
         //temporary
         private bool readyToJump;
@@ -101,8 +101,8 @@ namespace Runtime.Temporary.Player
         private float desiredMoveSpeed;
         private float lastDesiredMoveSpeed;
         
-        private float speedIncreaseMultiplier = 1.5f;
-        private float slopeIncreaseMultiplier = 2.5f;
+        private float speedIncreaseMultiplier = 2f;
+        private float slopeIncreaseMultiplier = 3f;
         
         
         //temporary
@@ -123,6 +123,8 @@ namespace Runtime.Temporary.Player
         [Header("Slope Handling")]
         [SerializeField]
         private  float maxSlopeAngle;
+        [SerializeField]
+        private  float minSlopeAngle;
         private RaycastHit slopeHit;
         private bool exitingSlope;
         //temporary
@@ -414,7 +416,7 @@ namespace Runtime.Temporary.Player
                 sliding = true;
                 model.localScale = new Vector3(model.localScale.x, slideYScale, model.localScale.z);
                 rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-
+                rb.AddForce(moveDirection*10f,ForceMode.Impulse);
                 slideTimer = playerEntity.GetMaxSlideTime().RealValue;
 
             }
@@ -544,7 +546,7 @@ namespace Runtime.Temporary.Player
             {
                 float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
                     // Debug.Log(angle);
-                return angle < maxSlopeAngle && angle != 0;
+                return angle < maxSlopeAngle && angle >minSlopeAngle;
             }
 
             return false;
@@ -601,7 +603,7 @@ namespace Runtime.Temporary.Player
             // sliding normal
             if(!onSlope || rb.velocity.y > -0.1f)
             {
-                rb.AddForce(inputDirection.normalized * playerEntity.GetSlideForce().RealValue *0.3f, ForceMode.Force);
+                rb.AddForce(inputDirection.normalized * playerEntity.GetSlideForce().RealValue  *0.8f, ForceMode.Force);
                 rb.AddForce(-GetSlopeMoveDirection(inputDirection) * playerEntity.GetSlideForce().RealValue*0.25f, ForceMode.Force);
                 slideTimer -= Time.deltaTime;
                 
