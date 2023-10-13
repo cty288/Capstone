@@ -47,6 +47,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected float maxRange;
 		protected Vector3 origin;
 		protected bool inited = false;
+		protected bool tickType = false;
+		
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
 		}
@@ -106,15 +108,20 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 		protected virtual void OnTriggerEnter(Collider other) {
 			if (!other.isTrigger) {
+				if (other.transform.root == bulletOwner.transform.root) {
+					return;
+				}
 				if(other.transform.root.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
 					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
 						return;
 					}
 				}
+				
 				OnHitObject(other);
 				RecycleToCache();
 			}
 		}
+		
 		
 		protected abstract void OnHitObject(Collider other);
 
