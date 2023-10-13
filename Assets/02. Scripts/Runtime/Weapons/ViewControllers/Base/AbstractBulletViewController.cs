@@ -108,6 +108,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 		protected virtual void OnTriggerEnter(Collider other) {
 			if (!other.isTrigger) {
+				if (other.transform.root == bulletOwner.transform.root) {
+					return;
+				}
 				if(other.transform.root.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
 					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
 						return;

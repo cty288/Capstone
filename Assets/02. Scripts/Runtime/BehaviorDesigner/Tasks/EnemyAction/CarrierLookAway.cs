@@ -49,10 +49,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnStart();
             ended = false;
-            rb = rigObject.GetComponent<RigBuilder>();
-            mac = GameObject.FindObjectOfType<MultiAimConstraint>();
+            rb = gameObject.GetComponent<RigBuilder>();
+            mac = gameObject.GetComponentInChildren<MultiAimConstraint>();
 
-
+            mac.data.sourceObjects = new WeightedTransformArray() {new WeightedTransform(playerTrans, 1)};
+            rb.Build();
 
             StartCoroutine(DecreaseWeight());
         }
@@ -78,7 +79,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 yield return null; // Wait for the next frame
                 elapsedTime += Time.deltaTime;
             }
-
+            
             // Ensure the weight is exactly 1 at the end
             mac.weight = endWeight;
             ended = true;

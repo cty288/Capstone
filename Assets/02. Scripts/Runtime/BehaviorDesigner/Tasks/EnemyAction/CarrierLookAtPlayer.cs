@@ -49,11 +49,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnStart();
             ended = false;
-            rb = rigObject.GetComponent<RigBuilder>();
-            mac = GameObject.FindObjectOfType<MultiAimConstraint>();
+            rb = gameObject.GetComponent<RigBuilder>();
+            mac = gameObject.GetComponentInChildren<MultiAimConstraint>();
 
-
-  
+            mac.data.sourceObjects = new WeightedTransformArray() {new WeightedTransform(playerTrans, 1)};
+         
+            rb.Build();
+            
             StartCoroutine(IncreaseWeight());
         }
         public override TaskStatus OnUpdate()
