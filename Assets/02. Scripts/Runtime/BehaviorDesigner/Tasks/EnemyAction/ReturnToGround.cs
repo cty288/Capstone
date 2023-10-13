@@ -23,15 +23,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public BehaviorTree tree;
         public SharedVector3 returnPosition;
         public SharedVector3 initialPosition;
+        //private Rigidbody rb;
         public override void OnStart()
         {
+            //rb = this.gameObject.GetComponent<Rigidbody>();
             tree = this.gameObject.GetComponent<BehaviorTree>();
             initial = true;
             SharedBool isInit = (SharedBool)tree.GetVariable("Init");
             isInit.SetValue(true);
             SharedVector3 pos = (SharedVector3)tree.GetVariable("InitialPosition");
             returnPosition = pos;
-
+           // rb.isKinematic = true;
 
 
         }
@@ -49,7 +51,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 {
                     MoveUp();
                 }
-                
+               // rb.isKinematic = false;
                 Debug.DrawRay(headPosition.Value.position, Vector3.up * 10f, Color.red);
                 timer -= Time.deltaTime;
                 Debug.Log("asdf");
@@ -84,16 +86,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 d.underGround = false;
             }
-
+          //  rb.isKinematic = true;
         }
 
         // Implement the MoveUnderground method to move the cactus underground.
-        private void MoveUp()
-        {
-          
-            
-                this.gameObject.transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
-            
+        private void MoveUp() {
+            this.gameObject.transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
         }
     }
 }

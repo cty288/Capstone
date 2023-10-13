@@ -9,7 +9,7 @@ namespace a
         private float bulletSpeed;
         private GameObject player; // Reference to the player's transform
         private float rotationSpeed;
-        
+        [SerializeField] private float maxRotationAngle = 60f;
 
 
         private void Update()
@@ -18,11 +18,19 @@ namespace a
             {
                 Vector3 offset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 Vector3 directionToPlayer = (player.transform.position + offset - transform.position).normalized;
-                Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
-                // Adjust the rotation speed by multiplying with rotationSpeed
-                float t = rotationSpeed * Time.deltaTime;
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
+             
+                float angle = Vector3.Angle(transform.forward, directionToPlayer);
+
+               
+                if (angle <= maxRotationAngle)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+            
+                    // Adjust the rotation speed by multiplying with rotationSpeed
+                    float t = rotationSpeed * Time.deltaTime;
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, t);
+                }
 
                 transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
             }
