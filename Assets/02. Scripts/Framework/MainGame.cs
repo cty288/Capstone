@@ -1,3 +1,4 @@
+using _02._Scripts.Runtime.Baits.Model.Base;
 using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
@@ -28,6 +29,7 @@ namespace Framework {
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
 			this.RegisterModel<IGamePlayerModel>(new GamePlayerModel());
 			this.RegisterModel<ILevelModel>(new LevelModel());
+			this.RegisterModel<IBaitModel>(new BaitModel());
 			
 			this.RegisterExtensibleUtility<ResLoader>(new ResLoader());
 		}

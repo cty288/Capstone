@@ -377,6 +377,8 @@ namespace Tests.Tests_Editor {
 				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
 				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f)
 				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f)
+				.AddDependency(new PropertyNameInfo("attack2", "damage"),
+					new[] {new PropertyNameInfo("attack1", "speed")})
 				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 				.Build();
 			
@@ -395,14 +397,16 @@ namespace Tests.Tests_Editor {
 					.BaseValue["attack1"].BaseValue.Count);
 
 
-			
-			
-			
+
+
+
 			ent1 = model.GetEnemyBuilder<TestEntity3>(10)
 				.FromConfig()
 				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
 				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f)
 				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f)
+				.AddDependency(new PropertyNameInfo("attack2", "damage"),
+					new[] {new PropertyNameInfo("attack1", "speed")})
 				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 				.Build();
 			

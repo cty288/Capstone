@@ -265,7 +265,10 @@ namespace Runtime.Enemies
                     }
                 }
 
-                DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage);
+                if (data.ShowDamageNumber) {
+                    DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage);
+                }
+                
                 
                 Debug.Log("Shell has taken" + originalDamage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }

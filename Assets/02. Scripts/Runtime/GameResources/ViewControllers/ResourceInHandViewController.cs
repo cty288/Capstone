@@ -19,6 +19,10 @@ namespace Runtime.GameResources.ViewControllers {
 		void OnItemUse();
 
 		void OnItemScopePressed();
+		
+		Vector3 InHandLocalPosition { get; }
+		
+		Vector3 InHandLocalRotation { get; }
 	}
 	
 	
@@ -36,7 +40,14 @@ namespace Runtime.GameResources.ViewControllers {
 		protected Rigidbody rigidbody;
 		protected GameObject ownerGameObject = null;
 		protected float originalAutoRemovalTimeWhenNoAbsorb;
+		
+		[field: Header("In Hand Transform")]
+		[field: SerializeField]
+		public Vector3 InHandLocalPosition { get; protected set; } = Vector3.zero;
 
+		[field: SerializeField] 
+		public Vector3 InHandLocalRotation { get; protected set; } = Vector3.zero;
+		
 		[Header("Cross hairs")] [SerializeField]
 		private string crossHairPrefabName;
 		[CanBeNull]
@@ -116,8 +127,8 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public abstract void OnItemUse();
 		public abstract void OnItemScopePressed();
-
 		
+
 
 		public override void OnPointByCrosshair() {
 			if (isHolding) {

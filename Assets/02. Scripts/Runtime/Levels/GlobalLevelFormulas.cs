@@ -23,19 +23,21 @@ namespace _02._Scripts.Runtime.Levels {
 		public static PropertyModifier<dynamic> GetGeneralEnemyAbilityModifier(int rarity, int level){
 			return (baseVal) => {
 				if (baseVal is int || baseVal is long || baseVal is short) {
-					return Mathf.RoundToInt(baseVal + (1 + (rarity - 1) / 10f) +
-					                        (LEVEL_EXP_UPGRADE_COFF * (level - 1)) *
-					                        Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f));
-				}else if (baseVal is float || baseVal is double || baseVal is decimal) {
-					return baseVal + (1 + (rarity - 1) / 10f) +
-					       (LEVEL_EXP_UPGRADE_COFF * (level - 1)) *
-					       Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f);
+					return Mathf.RoundToInt(baseVal * ((1 + (rarity - 1) / 10f) +
+					                                   (LEVEL_EXP_UPGRADE_COFF * (level - 1)) *
+					                                   Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f)));
 					
+				}else if (baseVal is float || baseVal is double || baseVal is decimal) {
+					return baseVal * ((1 + (rarity - 1) / 10f) +
+					                  (LEVEL_EXP_UPGRADE_COFF * (level - 1)) *
+					                  Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f));
+
 				}else if (baseVal is HealthInfo) {
 					HealthInfo healthInfo = baseVal;
-					healthInfo.MaxHealth = Mathf.RoundToInt(healthInfo.MaxHealth + (1 + (rarity - 1) / 10f) +
-					                                        (LEVEL_EXP_UPGRADE_COFF * (level - 1)) *
-					                                        Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f));
+					healthInfo.MaxHealth = Mathf.RoundToInt(healthInfo.MaxHealth * ((1 + (rarity - 1) / 10f) +
+						(LEVEL_EXP_UPGRADE_COFF * (level - 1)) *
+						Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f)));
+					
 					healthInfo.CurrentHealth = healthInfo.MaxHealth;
 					return healthInfo;
 				}

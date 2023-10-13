@@ -99,11 +99,14 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			Transform targetTr = rightHandTr; //category == HotBarCategory.Left ? leftHandTr : rightHandTr;
 			
 			spawnedItem.transform.SetParent(targetTr);
-			spawnedItem.transform.localPosition = Vector3.zero;
-			spawnedItem.transform.localRotation = Quaternion.identity;
+			//spawnedItem.transform.localPosition = Vector3.zero;
+			//spawnedItem.transform.localRotation = Quaternion.identity;
 			spawnedItem.transform.localScale = Vector3.one;
 			
 			currentHoldItemViewController = spawnedItem.GetComponent<IInHandResourceViewController>();
+			spawnedItem.transform.localPosition = currentHoldItemViewController.InHandLocalPosition;
+			spawnedItem.transform.localRotation = Quaternion.Euler(currentHoldItemViewController.InHandLocalRotation);
+			
 			currentHoldItemViewController.OnStartHold(gameObject);
 			//rightHandItemViewController = inHandResourceViewControllers[category];
 		}

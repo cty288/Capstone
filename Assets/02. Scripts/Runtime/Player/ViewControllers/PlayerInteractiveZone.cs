@@ -36,13 +36,22 @@ namespace Runtime.Player {
         }
 
         private void OnExitInteractiveCheck(Collider other) {
-            if(other && other.TryGetComponent<IEntityViewController>(out var entityViewController)) {
-                if(entityViewControllersNotBlocked.ContainsKey(other.gameObject)) {
+            if (!other) {
+                return;
+            }
+            
+            Rigidbody rootRigidbody = other.attachedRigidbody;
+            GameObject hitObj =
+                rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
+            
+            if(hitObj && hitObj.TryGetComponent<IEntityViewController>(out var entityViewController)) {
+                if(entityViewControllersNotBlocked.ContainsKey(hitObj)) {
                     entityViewController.OnPlayerInteractiveZoneNotReachable(transform.parent.gameObject, this);
                 }
+
                 
-                entityViewControllersNotBlocked.Remove(other.gameObject);
-                entityViewControllersBlocked.Remove(other.gameObject);
+                entityViewControllersNotBlocked.Remove(hitObj);
+                entityViewControllersBlocked.Remove(hitObj);
                
                
                 entityViewController.OnPlayerExitInteractiveZone(transform.parent.gameObject, this);
@@ -50,9 +59,12 @@ namespace Runtime.Player {
         }
 
         private void OnEnterInteractiveCheck(Collider other) {
+            Rigidbody rootRigidbody = other.attachedRigidbody;
+            GameObject hitObj =
+                rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
             
-            if(other.TryGetComponent<IEntityViewController>(out var entityViewController)) {
-                entityViewControllersBlocked.TryAdd(other.gameObject, entityViewController);
+            if(hitObj.TryGetComponent<IEntityViewController>(out var entityViewController)) {
+                entityViewControllersBlocked.TryAdd(hitObj, entityViewController);
                 //entityViewControllersInRange.Add(entityViewController);
                 entityViewController.OnPlayerInInteractiveZone(transform.parent.gameObject, this);
                 
@@ -82,7 +94,11 @@ namespace Runtime.Player {
                         if (!sortedHits[i].collider) {
                             continue;
                         }
-                        GameObject hitObj = sortedHits[i].collider.gameObject;
+
+                        Rigidbody rootRigidbody = sortedHits[i].collider.attachedRigidbody;
+                        GameObject hitObj =
+                            rootRigidbody ? rootRigidbody.gameObject : sortedHits[i].collider.gameObject;
+                        
                         if (hitObj == gameObject) {
                             continue;
                         }
@@ -120,7 +136,9 @@ namespace Runtime.Player {
                         if (!sortedHits[i].collider) {
                             continue;
                         }
-                        GameObject hitObj = sortedHits[i].collider.gameObject;
+                        Rigidbody rootRigidbody = sortedHits[i].collider.attachedRigidbody;
+                        GameObject hitObj =
+                            rootRigidbody ? rootRigidbody.gameObject : sortedHits[i].collider.gameObject;
                         if (hitObj == gameObject) {
                             continue;
                         }

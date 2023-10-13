@@ -24,6 +24,7 @@ namespace Runtime.UI {
 			if (controlActions.Close.WasPressedThisFrame()) {
 				if (currentMainPanel != null) {
 					ClosePanel(currentMainPanel);
+					ClientInput.Singleton.EnablePlayerMaps();
 				}
 			}
 

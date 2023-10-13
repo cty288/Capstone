@@ -290,6 +290,9 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 
 						BaseValue.Add(key, bv);
 						bv.SetBaseValue(bv.OnGetBaseValueFromConfig(value[key]));
+						//bv.AddDependentProperties(new PropertyNameInfo(PropertyName.rarity),
+						//	new PropertyNameInfo(PropertyName.level_number));
+						
 						requestRegisterProperty?.Invoke(bv.GetType(), bv, GetFullName()+"."+key, true, false);
 					}
 				}

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MikroFramework.BindableProperty;
 
 namespace Runtime.DataFramework.Properties {
@@ -63,6 +64,8 @@ namespace Runtime.DataFramework.Properties {
 		public PropertyNameInfo[] GetDependentProperties();
 	
 		public void SetDependentProperties(params PropertyNameInfo[] dependentProperties);
+		
+		public void AddDependentProperties(params PropertyNameInfo[] dependentProperties);
 	
 		void Initialize(IPropertyBase[] dependencies, string parentEntityName);
 	
@@ -254,6 +257,14 @@ namespace Runtime.DataFramework.Properties {
 
 		public void SetDependentProperties(params PropertyNameInfo[] dependentProperties) {
 			this.overrideDependentProperties = dependentProperties;
+		}
+
+		public void AddDependentProperties(params PropertyNameInfo[] dependentProperties) {
+			if (overrideDependentProperties == null) {
+				overrideDependentProperties = Array.Empty<PropertyNameInfo>();
+			}
+
+			overrideDependentProperties = overrideDependentProperties.Concat(dependentProperties).ToArray();
 		}
 
 		public virtual void Initialize(IPropertyBase[] dependencies, string parentEntityName) {

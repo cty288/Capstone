@@ -387,6 +387,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		protected new void RecycleToCache() {
 			OnEntityReadyToRecycle(BoundEntity);
+			base.RecycleToCache();
 		}
 		
 		private void OnEntityReadyToRecycle(IEntity e) {
