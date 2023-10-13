@@ -1,0 +1,1 @@
+To be able to apply the material with your textures in HDRP URP renderers, use the ready-made shader "shadergraph_acs17. shadergraph".
