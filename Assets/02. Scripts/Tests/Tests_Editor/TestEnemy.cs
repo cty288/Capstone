@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels;
 using Framework;
 using JetBrains.Annotations;
 using NUnit.Framework;
@@ -298,7 +299,17 @@ namespace Tests.Tests_Editor {
             ES3.DeleteKey("test_save_hashset_entity", "test_save");
         }
         
-        
+        [Test]
+        public void TestGeneralModifier() {
+            int res1 = GlobalLevelFormulas.GetGeneralEnemyAbilityModifier(1, 2).Invoke(10);
+            
+            float res2 = GlobalLevelFormulas.GetGeneralEnemyAbilityModifier(1, 3).Invoke(5.2f);
+            
+            Debug.Log("TestGeneralModifier res1: " + res1);
+            Debug.Log("TestGeneralModifier res2: " + res2);
+            
+        }
+
         
 
 

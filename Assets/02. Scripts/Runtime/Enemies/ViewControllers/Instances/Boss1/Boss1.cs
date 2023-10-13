@@ -136,7 +136,7 @@ namespace Runtime.Enemies
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
-          
+            
         }
 
         protected override void OnEntityStart()

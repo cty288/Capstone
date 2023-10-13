@@ -15,6 +15,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 
 namespace Runtime.Enemies.SmallEnemies
 {
@@ -42,9 +43,8 @@ namespace Runtime.Enemies.SmallEnemies
             return baseCost;
         }
 
-        protected override void OnEnemyRegisterAdditionalProperties()
-        {
-
+        protected override void OnEnemyRegisterAdditionalProperties() {
+           
         }
 
         protected override string OnGetDescription(string defaultLocalizationKey)

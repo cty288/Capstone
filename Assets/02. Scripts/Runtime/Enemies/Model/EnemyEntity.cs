@@ -1,3 +1,4 @@
+using _02._Scripts.Runtime.Levels;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -47,10 +48,14 @@ namespace Runtime.Enemies.Model {
 
 
 		protected override void OnInitModifiers(int rarity) {
+			
 			OnInitModifiers(rarity, levelNumberProperty.BaseValue);
 		}
-		
-		
+
+		protected void SetGeneralEnemyAbilityModifier(PropertyNameInfo propertyName, int rarity, int level) {
+			SetPropertyModifier(propertyName, GlobalLevelFormulas.GetGeneralEnemyAbilityModifier(rarity, level));
+		}
+
 		protected abstract void OnInitModifiers(int rarity, int level);
 
 
