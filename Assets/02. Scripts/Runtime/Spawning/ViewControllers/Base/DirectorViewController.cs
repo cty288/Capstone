@@ -60,7 +60,7 @@ namespace Runtime.Spawning
         protected IEntity OnBuildNewEntity(int level) {
             DirectorBuilder<T> builder = directorModel.GetDirectorBuilder<T>();
             builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level);
-            
+            //TODO: set other property base values here
             //    .SetProperty(new PropertyNameInfo(PropertyName.spawn_timer), baseSpawnTimer)
               //  .SetProperty(new PropertyNameInfo(PropertyName.starting_credits), baseStartingCredits);
             

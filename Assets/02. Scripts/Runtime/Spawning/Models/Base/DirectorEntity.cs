@@ -38,7 +38,16 @@ namespace Runtime.Spawning
             _creditsPerSecond = GetProperty<ICreditsPerSecond>();
             _spawnTimer = GetProperty<ISpawnTimer>();
         }
+
+        protected override void OnInitModifiers(int rarity) { //rarity for directors is useless
+            int level = GetProperty<ILevelNumberProperty>().BaseValue;
+            OnInitLevelModifiers(level);
+        }
         
+        protected virtual void OnInitLevelModifiers(int level) {
+            //init modifiers here
+        }
+
         protected override void OnEntityStart(bool isLoadedFromSave) {
         }
 

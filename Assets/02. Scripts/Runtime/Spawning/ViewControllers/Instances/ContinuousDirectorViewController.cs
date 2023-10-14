@@ -13,9 +13,7 @@ namespace Runtime.Spawning.ViewControllers.Instances
         {
         }
 
-        protected override void OnInitModifiers(int rarity)
-        {
-        }
+
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
