@@ -82,7 +82,7 @@ namespace Runtime.Enemies.Model {
 		}
 
 		public int GetRealSpawnWeight(int level) {
-			return OnGetRealSpawnWeight(level, GetProperty<ILevelNumberProperty>().BaseValue);
+			return OnGetRealSpawnWeight(level, GetProperty<ISpawnWeightProperty>().BaseValue);
 		}
 
 		public abstract int OnGetRealSpawnWeight(int level, int baseWeight);
