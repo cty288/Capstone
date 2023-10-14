@@ -106,6 +106,7 @@ namespace Runtime.Inventory.Model {
 				slotToCategories.TryAdd(slot, e.Category);
 				currentSelectedIndex = e.SelectedIndex;
 				slot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+				
 				OnCurrentSlotUpdate(slot, slot.GetLastItemUUID(), slot.GetUUIDList());
 			}
 		}

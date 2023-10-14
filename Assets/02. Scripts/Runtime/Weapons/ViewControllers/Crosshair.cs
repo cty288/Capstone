@@ -18,6 +18,29 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Runtime.Weapons.ViewControllers {
+    public struct CrosshairGroundWallHitInfo {
+        public bool IsHit;
+        public Vector3 HitPoint;
+        public Vector3 HitNormal;
+        public Vector3 LookDirection;
+        public GameObject HitGameObject;
+        
+        public void Reset() {
+            IsHit = false;
+            HitPoint = Vector3.zero;
+            HitNormal = Vector3.zero;
+            LookDirection = Vector3.zero;
+            HitGameObject = null;
+        }
+        
+        public void Set(RaycastHit hit, Vector3 lookDirection, GameObject hitGameObject) {
+            IsHit = true;
+            HitPoint = hit.point;
+            HitNormal = hit.normal;
+            LookDirection = lookDirection;
+            HitGameObject = hitGameObject;
+        }
+    }
     public class Crosshair : MonoMikroSingleton<Crosshair>, IController {
        // private Transform centerTransform;
         private Camera mainCamera;  
@@ -34,6 +57,7 @@ namespace Runtime.Weapons.ViewControllers {
         public IEntityViewController CurrentPointedEntity => currentPointedEntity;
     
         private RaycastHit[] hits = new RaycastHit[20];
+        private RaycastHit[] groundWallhits = new RaycastHit[20];
 
         [SerializeField]
         private LayerMask wallLayerMask;
@@ -48,7 +72,9 @@ namespace Runtime.Weapons.ViewControllers {
         private Vector2 crossHairScreenPosition;
 
         public Vector2 CrossHairScreenPosition => crossHairScreenPosition;
-        
+
+        //public CrosshairGroundWallHitInfo GroundWallHitInfo { get; } = new CrosshairGroundWallHitInfo();
+
         private void Awake() {
             inventoryModel = this.GetModel<IInventoryModel>();
             //centerTransform = transform.Find("Center");
@@ -120,6 +146,8 @@ namespace Runtime.Weapons.ViewControllers {
             int numHits = Physics.RaycastNonAlloc(ray, hits, rayDistance, detectLayerMask);
             var sortedHits = hits.OrderBy(hit => hit.transform ? hit.distance : float.MaxValue).ToArray();
 
+            //GroundWallHitInfo.Reset();
+            
             for (int i = 0; i < sortedHits.Length; i++) {
                 if (!sortedHits[i].collider) {
                     continue;
@@ -127,6 +155,8 @@ namespace Runtime.Weapons.ViewControllers {
                 GameObject hitObj = sortedHits[i].collider.gameObject;
                 
                 if (PhysicsUtility.IsInLayerMask(hitObj, wallLayerMask)) {
+                    //add ground & wall hit info
+                    //GroundWallHitInfo.Set(sortedHits[i], ray.direction.normalized, hitObj);
                     break;
                 }
                 
@@ -177,6 +207,50 @@ namespace Runtime.Weapons.ViewControllers {
                     currentPointedHurtbox = null;
                 }
             }
+        }
+        
+        public CrosshairGroundWallHitInfo GetGroundWallHitInfoFromCrosshair(float rayDistance, LayerMask obstrustionLayerMask) {
+            CrosshairGroundWallHitInfo hitInfo = new CrosshairGroundWallHitInfo();
+            if (!mainCamera) {
+                return hitInfo;
+            }
+
+            crossHairScreenPosition = currentCrosshair
+                ? currentCrosshair.transform.position
+                : new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+
+            Ray ray = mainCamera.ScreenPointToRay(CrossHairScreenPosition);
+            bool hitEntity = false;
+            bool hitHurtBox = false;
+
+            
+            //clear hits
+            for (int i = 0; i < groundWallhits.Length; i++) {
+                groundWallhits[i] = new RaycastHit();
+            }
+            int numHits = Physics.RaycastNonAlloc(ray, groundWallhits, rayDistance, obstrustionLayerMask);
+            var sortedHits = groundWallhits.OrderBy(hit => hit.transform ? hit.distance : float.MaxValue).ToArray();
+
+            //GroundWallHitInfo.Reset();
+
+            for (int i = 0; i < sortedHits.Length; i++) {
+                if (!sortedHits[i].collider || sortedHits[i].collider.isTrigger) {
+                    continue;
+                }
+
+                GameObject hitObj = sortedHits[i].collider.gameObject;
+
+                if (PhysicsUtility.IsInLayerMask(hitObj, obstrustionLayerMask)) {
+                    //add ground & wall hit info
+                    hitInfo.Set(sortedHits[i], ray.direction.normalized, hitObj);
+                    return hitInfo;
+                }
+            }
+            
+            hitInfo.HitNormal = Vector3.up;
+            hitInfo.HitPoint = ray.origin + ray.direction * rayDistance;
+            return hitInfo;
         }
 
         public IArchitecture GetArchitecture() {

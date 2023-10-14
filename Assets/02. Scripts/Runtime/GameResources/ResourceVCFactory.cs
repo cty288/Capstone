@@ -4,6 +4,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using MikroFramework.ResKit;
 using MikroFramework.Singletons;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using UnityEngine;
@@ -47,6 +48,13 @@ namespace Runtime.GameResources {
 		public GameObject SpawnInHandResourceVC(IResourceEntity resourceEntity, bool usePool, 
 			int poolInitCount = 5, int poolMaxCount = 20) {
 			return SpawnResourceVC(resourceEntity, usePool, resourceEntity.InHandVCPrefabName, poolInitCount, poolMaxCount);
+		}
+		
+		public GameObject SpawnDeployableResourceVC(IResourceEntity resourceEntity, bool usePool, bool isPreview,
+			int poolInitCount = 5, int poolMaxCount = 20) {
+			GameObject spawnedVc = SpawnResourceVC(resourceEntity, usePool, resourceEntity.DeployedVCPrefabName, poolInitCount, poolMaxCount);
+			spawnedVc.GetComponent<IDeployableResourceViewController>().SetPreview(isPreview);
+			return spawnedVc;
 		}
 
 		private GameObject SpawnResourceVC(IResourceEntity resourceEntity, bool usePool, 

@@ -26,12 +26,18 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public int GetCurrentLevelCount();
 		
 		public int GetMaxEnemyCount();
+		
+		public bool IsInBattle();
+		
+		public void SetInBattle(bool isInBattle);
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
 		
 		private ISpawnCardsProperty spawnCardsProperty;
 		private IMaxEnemiesProperty maxEnemiesProperty;
+		[field: ES3Serializable]
+		private bool isInBattle = false;
 		protected override ConfigTable GetConfigTable() {
 			return null;
 		}
@@ -101,13 +107,21 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return maxEnemiesProperty.RealValue;
 		}
 
+		public bool IsInBattle() {
+			return isInBattle;
+		}
+
+		public void SetInBattle(bool isInBattle) {
+			this.isInBattle = isInBattle;
+		}
+
 		protected override void OnEntityRegisterAdditionalProperties() {
 			this.RegisterInitialProperty<IMaxEnemiesProperty>(new MaxEnemies());
 			this.RegisterInitialProperty<ISpawnCardsProperty>(new SpawnCardsProperty());
 		}
 
 		public override void OnRecycle() {
-		
+			isInBattle = false;
 		}
 	}
 }

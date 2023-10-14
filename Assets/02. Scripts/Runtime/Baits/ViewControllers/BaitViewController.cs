@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Baits.Commands;
 using _02._Scripts.Runtime.Baits.Model.Base;
 using _02._Scripts.Runtime.Baits.Model.Builders;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model.Properties;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
@@ -20,7 +22,7 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 	}
 	
 	
-	public class BaitViewController : AbstractPickableInHandResourceViewController<BaitEntity>, IBaitViewController {
+	public class BaitViewController : AbstractInHandDeployableResourceViewController<BaitEntity>, IBaitViewController {
 		private IBaitModel baitModel;
 		protected IGamePlayerModel playerModel;
 
@@ -39,6 +41,7 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 			return BuildBait(rarity, vigilianceBase, tastesBase);
 		}
 		
+		
 		public IBaitEntity BuildBait(int rarity, float vigilianceBase, List<TasteType> tastesBase) {
 			BaitBuilder<BaitEntity> builder = baitModel.GetBaitBuilder<BaitEntity>();
 			return builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity)
@@ -50,18 +53,7 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 		protected override void OnBindEntityProperty() {
 			
 		}
-
-		public override void OnItemStartUse() {
-			
-		}
-
-		public override void OnItemStopUse() {
-			
-		}
-
-		public override void OnItemUse() {
 		
-		}
 
 		public override void OnItemScopePressed() {
 			
@@ -69,5 +61,11 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 
 		public IBaitEntity BaitEntity => BoundEntity;
 
+		public override void OnDeployFailureReasonChanged(DeployFailureReason lastReason, DeployFailureReason currentReason) {
+			base.OnDeployFailureReasonChanged(lastReason, currentReason);
+			if (currentReason == DeployFailureReason.BaitInBattle) {
+				this.SendCommand(SetDeployStatusHintCommand.Allocate("DEPLOY_ERROR_COMBAT"));
+			}
+		}
 	}
 }
