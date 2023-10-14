@@ -51,6 +51,12 @@ namespace Runtime.Spawning
             SetPropertyModifier<float>(new PropertyNameInfo(PropertyName.spawn_timer), (base_val) => {
                 return base_val - level * 0.1f;
             });
+            SetPropertyModifier<float>(new PropertyNameInfo(PropertyName.credits_per_second), (base_val) => {
+                return base_val + level * 0.2f;
+            });
+            SetPropertyModifier<float>(new PropertyNameInfo(PropertyName.starting_credits), (base_val) => {
+                return base_val + level * 8f;
+            });
         }
 
         protected override void OnEntityStart(bool isLoadedFromSave) {

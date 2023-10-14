@@ -32,14 +32,20 @@ namespace Runtime.Spawning
         protected int levelNumber;
         
         [Header("Director Info")]
+        [SerializeField] public float baseSpawnTimer;
+        [SerializeField] public float baseStartingCredits;
+        [SerializeField] public float baseCreditsPerSecond;
+        
+        
         [SerializeField] public float minSpawnRange;
         [SerializeField] public float maxSpawnRange;
         [SerializeField] public float addCreditsInterval = 1f;
         [SerializeField] public LayerMask spawnMask;
         
-        [ReadOnly(true)] private float currentCredits;
-        [ReadOnly(true)] private float creditTimer = 0f;
-        [ReadOnly(true)] private float directorSpawnTimer = 0f;
+        [Header("Director Don't Edit")]
+        [SerializeField] private float currentCredits;
+        [SerializeField] private float creditTimer = 0f;
+        [SerializeField] private float directorSpawnTimer = 0f;
         
         protected override void Awake() {
             base.Awake();
@@ -48,9 +54,11 @@ namespace Runtime.Spawning
 
         protected override void OnEntityStart()
         {
+            Debug.Log("director start");
             m_lottery = new Lottery();
-            currentCredits = BoundEntity.GetStartingCredits().RealValue;
+            // currentCredits = BoundEntity.GetStartingCredits().RealValue;
             creditTimer = addCreditsInterval;
+            currentCredits = baseStartingCredits;
         }
 
         protected override IEntity OnBuildNewEntity() {
@@ -59,10 +67,11 @@ namespace Runtime.Spawning
         
         protected IEntity OnBuildNewEntity(int level) {
             DirectorBuilder<T> builder = directorModel.GetDirectorBuilder<T>();
-            builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level);
+            builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level)
             //TODO: set other property base values here
-            //    .SetProperty(new PropertyNameInfo(PropertyName.spawn_timer), baseSpawnTimer)
-              //  .SetProperty(new PropertyNameInfo(PropertyName.starting_credits), baseStartingCredits);
+            .SetProperty(new PropertyNameInfo(PropertyName.spawn_timer), baseSpawnTimer)
+            .SetProperty(new PropertyNameInfo(PropertyName.credits_per_second), baseCreditsPerSecond)
+            .SetProperty(new PropertyNameInfo(PropertyName.starting_credits), baseStartingCredits);
             
             return OnInitDirectorEntity(builder);
         }
@@ -103,55 +112,73 @@ namespace Runtime.Spawning
             directorSpawnTimer -= Time.deltaTime;
         }
         
-        public virtual void SetSpawnCards(List<LevelSpawnCard> spawnCards)
-        {
-            m_lottery.SetCards(spawnCards);
-        }
-
         protected virtual void AttemptToSpawn()
         {
             //TODO: check if over max enemies
 
             //pick card, store the card
-            m_lottery.SetCards(LevelEntity.GetAllCardsUnderCost(currentCredits));
-            LevelSpawnCard selectedCard = m_lottery.PickNextCard();
+            List<LevelSpawnCard> cards = LevelEntity.GetAllNormalEnemiesUnderCost(currentCredits);
+            Debug.Log("attempt to spawn, under cost cards: " + cards.Count);
 
-            bool success = true;
-            int maxPackSize = 10; // TODO: Temp to prevent lag
-            while(success && maxPackSize > 0)
+            if (cards.Count > 0)
             {
-                success = SpawnEnemy(selectedCard);
-                maxPackSize--;
+                Debug.Log("cards size: " + cards.Count);
+                Debug.Log("lottery: " + m_lottery);
+                m_lottery.SetCards(cards);
+                LevelSpawnCard selectedCard = m_lottery.PickNextCard();
+
+                bool success = true;
+                int maxPackSize = 10; // TODO: Temp to prevent lag
+                Debug.Log("spawn success: " + success + "pack size: " + (maxPackSize > 0));
+                while (success && maxPackSize > 0)
+                {
+                    Debug.Log("pack size: " + maxPackSize);
+                    success = SpawnEnemy(selectedCard);
+                    maxPackSize--;
+                }
             }
         }
 
         protected virtual bool SpawnEnemy(LevelSpawnCard card)
         {
             //determine level and cost
+            int rarity = card.MinRarity;
+            float cost = card.GetRealSpawnCost(levelNumber, card.MinRarity);
             for (int i = card.MinRarity; i <= card.MaxRarity; i++)
             {
-                float cost = card.GetRealSpawnCost(levelNumber, i);
-                if (currentCredits >= cost)
+                float checkCost = card.GetRealSpawnCost(levelNumber, i);
+                if (currentCredits > checkCost)
                 {
-                    //pick a spot
-                    Vector3 spawnPos = new Vector3(
-                        Random.Range(minSpawnRange, maxSpawnRange), 
-                        10f,  
-                        Random.Range(minSpawnRange, maxSpawnRange));
-                        
-                    //raycast down from random point within min/max range
-                    if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 30f, spawnMask))
-                    {
-                        //spawn
-                        spawnPos = hit.point;
-                        Instantiate(card.Prefab, spawnPos, Quaternion.identity);
-                        return true;
-                    }
-                        
-                    currentCredits -= cost;
+                    cost = checkCost;
+                    rarity = i;
                     break;
                 }
             }
+            Debug.Log("start spawn, cost: " + cost + "rarity: " + rarity);
+            
+            //pick a spot
+            Vector3 spawnPos = new Vector3(
+                Random.Range(minSpawnRange, maxSpawnRange), 
+                10f,  
+                Random.Range(minSpawnRange, maxSpawnRange));
+                        
+            //raycast down from random point within min/max range
+            int spawnAttempts = 20;
+            while (spawnAttempts > 0)
+            {
+                if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 30f, spawnMask))
+                {
+                    Debug.Log("spawn success");
+                    spawnPos = hit.point;
+                    //TODO: spawn enemy at certain rarity
+                    Instantiate(card.Prefab, spawnPos, Quaternion.identity);
+                    
+                    currentCredits -= cost;
+                    return true;
+                }
+                spawnAttempts--;
+            }
+            Debug.Log("spawn fail");
             return false;
         }
 

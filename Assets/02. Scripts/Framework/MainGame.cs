@@ -7,6 +7,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.RawMaterials.Model.Base;
+using Runtime.Spawning;
 using Runtime.Weapons.Model.Base;
 
 
@@ -29,6 +30,7 @@ namespace Framework {
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
 			this.RegisterModel<IGamePlayerModel>(new GamePlayerModel());
 			this.RegisterModel<ILevelModel>(new LevelModel());
+			this.RegisterModel<IDirectorModel>(new DirectorModel());
 			this.RegisterModel<IBaitModel>(new BaitModel());
 			
 			this.RegisterExtensibleUtility<ResLoader>(new ResLoader());

@@ -5,6 +5,7 @@ using Runtime.Enemies.Model.Builders;
 using Runtime.GameResources.Model.Builder;
 using Runtime.Player.Builders;
 using Runtime.RawMaterials.Model.Builder;
+using Runtime.Spawning;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 
@@ -42,6 +43,8 @@ namespace Runtime.DataFramework.Entities.Builders {
 				return LevelBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}else if (typeof(TBuilder) == typeof(BaitBuilder<TEntity>)) {
 				return BaitBuilder<TEntity>.Allocate(rarity) as TBuilder;
+			}else if (typeof(TBuilder) == typeof(DirectorBuilder<TEntity>)) {
+				return DirectorBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
 			
 			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;
