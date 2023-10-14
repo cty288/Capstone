@@ -12,9 +12,7 @@ namespace Runtime.Spawning.ViewControllers.Instances
         public override void OnRecycle()
         {
         }
-
-
-
+        
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
             return null;
@@ -24,6 +22,7 @@ namespace Runtime.Spawning.ViewControllers.Instances
     public class ContinuousDirectorViewController : DirectorViewController<ContinuousDirectorEntity> {
         protected override void OnEntityStart()
         {
+            base.OnEntityStart();
         }
 
         protected override void OnBindEntityProperty()
