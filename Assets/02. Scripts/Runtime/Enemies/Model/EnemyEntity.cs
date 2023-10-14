@@ -25,7 +25,7 @@ namespace Runtime.Enemies.Model {
 
 		public int GetRealSpawnWeight(int level);
 		
-		public int GetRealSpawnCost(int level, int rarity);
+		public float GetRealSpawnCost(int level, int rarity);
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
@@ -87,9 +87,9 @@ namespace Runtime.Enemies.Model {
 
 		public abstract int OnGetRealSpawnWeight(int level, int baseWeight);
 		
-		public abstract int OnGetRealSpawnCost(int level, int rarity, int baseCost);
+		public abstract float OnGetRealSpawnCost(int level, int rarity, float baseCost);
 
-		public int GetRealSpawnCost(int level, int rarity) {
+		public float GetRealSpawnCost(int level, int rarity) {
 			return OnGetRealSpawnCost(level, rarity, spawnCostProperty.BaseValue);
 		}
 

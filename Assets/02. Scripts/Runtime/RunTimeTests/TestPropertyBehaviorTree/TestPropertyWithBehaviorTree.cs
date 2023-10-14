@@ -31,7 +31,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             return level;
         }
 
-        public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
+        public override float OnGetRealSpawnCost(int level, int rarity, float baseCost) {
             return level;
         }
         protected override string OnGetDescription(string defaultLocalizationKey) {

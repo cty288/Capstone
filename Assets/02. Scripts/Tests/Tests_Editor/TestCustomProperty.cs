@@ -38,7 +38,7 @@ namespace Tests.Tests_Editor {
 				return level;
 			}
 
-			public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
+			public override float OnGetRealSpawnCost(int level, int rarity, float baseCost) {
 				return level;
 			}
 
@@ -97,7 +97,7 @@ namespace Tests.Tests_Editor {
 				return level;
 			}
 
-			public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
+			public override float OnGetRealSpawnCost(int level, int rarity, float baseCost) {
 				return level;
 			}
 			protected override void OnEntityStart(bool isLoadedFromSave) {
@@ -164,7 +164,7 @@ namespace Tests.Tests_Editor {
 				return level;
 			}
 
-			public override int OnGetRealSpawnCost(int level, int rarity, int baseCost) {
+			public override float OnGetRealSpawnCost(int level, int rarity, float baseCost) {
 				return level;
 			}
 			protected override void OnInitModifiers(int rarity, int level) {

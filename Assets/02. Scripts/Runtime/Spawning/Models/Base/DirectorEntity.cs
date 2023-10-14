@@ -6,10 +6,12 @@ using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.DataFramework.Properties;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Spawning.Models.Properties;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Spawning
 {
@@ -46,6 +48,9 @@ namespace Runtime.Spawning
         
         protected virtual void OnInitLevelModifiers(int level) {
             //init modifiers here
+            SetPropertyModifier<float>(new PropertyNameInfo(PropertyName.spawn_timer), (base_val) => {
+                return base_val - level * 0.1f;
+            });
         }
 
         protected override void OnEntityStart(bool isLoadedFromSave) {
