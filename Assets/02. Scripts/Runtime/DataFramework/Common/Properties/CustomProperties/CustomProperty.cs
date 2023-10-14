@@ -5,6 +5,7 @@ using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Newtonsoft.Json.Linq;
 using Runtime.DataFramework.Description;
+using Runtime.DataFramework.Entities;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 
@@ -72,7 +73,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 
 		PropertyName IPropertyBase.PropertyName => PropertyName.custom_property;
 
-		public Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value);
+		public Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value, IEntity parentEntity);
 	}
 	
 	public class CustomProperty : PropertyDictionary<string, ICustomDataProperty>, ICustomProperty {
@@ -112,12 +113,12 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		
 		//public abstract ICustomDataProperty[] GetCustomDataProperties();
 		
-		public virtual Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value) {
+		public virtual Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value, IEntity parentEntity) {
 			IEnumerable<string> keys = (value as JObject)?.Properties().Select(p => p.Name);
 			if (keys != null)
 				foreach (string key in keys) {
 					if (BaseValue.TryGetValue(key, out ICustomDataProperty val)) {
-						val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));
+						val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key], parentEntity));
 					}
 					else {
 						Debug.LogError("CustomDataProperty " + key + " not found in Custom " + GetCustomPropertyName());
@@ -265,13 +266,13 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		}
 
 		
-		public override Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value) {
+		public override Dictionary<string, ICustomDataProperty> OnGetBaseValueFromConfig(dynamic value, IEntity parentEntity) {
 			BaseValue.Clear();
 			IEnumerable<string> keys = (value as JObject)?.Properties().Select(p => p.Name);
 			if (keys != null) {
 				foreach (string key in keys) {
 					if (BaseValue.TryGetValue(key, out ICustomDataProperty val)) {
-						val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));
+						val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key], parentEntity));
 					}
 					else {
 						string type = value[key]["type"];
@@ -289,7 +290,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 						
 
 						BaseValue.Add(key, bv);
-						bv.SetBaseValue(bv.OnGetBaseValueFromConfig(value[key]));
+						bv.SetBaseValue(bv.OnGetBaseValueFromConfig(value[key], parentEntity));
 						//bv.AddDependentProperties(new PropertyNameInfo(PropertyName.rarity),
 						//	new PropertyNameInfo(PropertyName.level_number));
 						

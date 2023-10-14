@@ -52,8 +52,8 @@ namespace Runtime.Enemies.Model {
 			OnInitModifiers(rarity, levelNumberProperty.BaseValue);
 		}
 
-		protected void SetGeneralEnemyAbilityModifier(PropertyNameInfo propertyName, int rarity, int level) {
-			SetPropertyModifier(propertyName, GlobalLevelFormulas.GetGeneralEnemyAbilityModifier(rarity, level));
+		protected void SetGeneralEnemyAbilityModifier<T>(PropertyNameInfo propertyName, int rarity, int level) {
+			SetPropertyModifier<T>(propertyName, GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<T>(()=>rarity, ()=>level));
 		}
 
 		protected abstract void OnInitModifiers(int rarity, int level);
@@ -88,7 +88,7 @@ namespace Runtime.Enemies.Model {
 		public abstract int OnGetRealSpawnWeight(int level, int baseWeight);
 
 		public virtual float OnGetRealSpawnCost(int level, int rarity, float baseCost) {
-			return GlobalLevelFormulas.GetSpawnCostModifier(rarity, level).Invoke(baseCost);
+			return GlobalLevelFormulas.GetSpawnCostModifier<float>(()=>rarity, ()=>level).Invoke(baseCost);
 		}
 
 		public float GetRealSpawnCost(int level, int rarity) {

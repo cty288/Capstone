@@ -1,4 +1,5 @@
-﻿using Runtime.DataFramework.Properties;
+﻿using System;
+using Runtime.DataFramework.Properties;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
@@ -25,17 +26,18 @@ namespace _02._Scripts.Runtime.Levels {
 			        Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f));
 		}
 		
-		public static PropertyModifier<dynamic> GetGeneralEnemyAbilityModifier(int rarity, int level){
+		public static PropertyModifier<T> GetGeneralEnemyAbilityModifier<T>(Func<int> rarityGetter, Func<int> levelGetter) {
 			return (baseVal) => {
-				float y2 = Gety2(rarity, level);
+				dynamic baseValDynamic = baseVal;
+				float y2 = Gety2(rarityGetter.Invoke(), levelGetter.Invoke());
 				if (baseVal is int || baseVal is long || baseVal is short) {
-					return Mathf.RoundToInt(baseVal * y2);
+					return Mathf.RoundToInt(baseValDynamic * y2);
 					
 				}else if (baseVal is float || baseVal is double || baseVal is decimal) {
-					return baseVal * y2;
+					return baseValDynamic * y2;
 
 				}else if (baseVal is HealthInfo) {
-					HealthInfo healthInfo = baseVal;
+					dynamic healthInfo = baseValDynamic;
 					healthInfo.MaxHealth = Mathf.RoundToInt(healthInfo.MaxHealth * y2);
 					healthInfo.CurrentHealth = healthInfo.MaxHealth;
 					return healthInfo;
@@ -45,17 +47,18 @@ namespace _02._Scripts.Runtime.Levels {
 			};
 		}
 
-		public static PropertyModifier<dynamic> GetSpawnCostModifier(int rarity, int level) {
+		public static PropertyModifier<T> GetSpawnCostModifier<T>(Func<int> rarityGetter, Func<int> levelGetter) {
 			return (baseVal) => {
-				float y2 = Gety2(rarity, level);
+				dynamic baseValDynamic = baseVal;
+				float y2 = Gety2(rarityGetter.Invoke(), levelGetter.Invoke());
 				if (baseVal is int || baseVal is long || baseVal is short) {
-					return Mathf.RoundToInt(baseVal * Mathf.Sqrt(y2));
+					return Mathf.RoundToInt(baseValDynamic * Mathf.Sqrt(y2));
 					
 				}else if (baseVal is float || baseVal is double || baseVal is decimal) {
-					return baseVal * Mathf.Sqrt(y2);
+					return baseValDynamic * Mathf.Sqrt(y2);
 
 				}else if (baseVal is HealthInfo) {
-					HealthInfo healthInfo = baseVal;
+					dynamic healthInfo = baseVal;
 					healthInfo.MaxHealth = Mathf.RoundToInt(healthInfo.MaxHealth * Mathf.Sqrt(y2));
 					healthInfo.CurrentHealth = healthInfo.MaxHealth;
 					return healthInfo;

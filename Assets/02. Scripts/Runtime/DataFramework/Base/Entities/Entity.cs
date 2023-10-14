@@ -440,7 +440,7 @@ namespace Runtime.DataFramework.Entities {
 				if(property is ILoadFromConfigProperty loadFromConfigProperty) {
 					dynamic value = targetTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
 					if (value is not null) {
-						loadFromConfigProperty.LoadFromConfig(value);
+						loadFromConfigProperty.LoadFromConfig(value, this);
 						
 					}
 				}

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities;
 
 namespace Runtime.DataFramework.Properties {
 	public struct PropertyNameInfo {
@@ -83,7 +84,7 @@ namespace Runtime.DataFramework.Properties {
 
 
 	public interface ILoadFromConfigProperty: IPropertyBase {
-		void LoadFromConfig(dynamic value);
+		void LoadFromConfig(dynamic value, IEntity parentEntity);
 
 
 	}
@@ -302,7 +303,7 @@ namespace Runtime.DataFramework.Properties {
 	public abstract class AbstractLoadFromConfigProperty<T> : Property<T>, ILoadFromConfigProperty {
 	
 	
-		public void LoadFromConfig(dynamic value) {
+		public void LoadFromConfig(dynamic value, IEntity parentEntity){
 			if (value is not null) {
 				SetBaseValue(OnClone(value));
 			}
@@ -340,7 +341,7 @@ namespace Runtime.DataFramework.Properties {
 
 	public abstract class IndependentLoadFromConfigProperty<T> : IndependentProperty<T>, ILoadFromConfigProperty {
 		protected IndependentLoadFromConfigProperty():base(){}
-		public void LoadFromConfig(dynamic value) {
+		public void LoadFromConfig(dynamic value, IEntity parentEntity){
 			if (value is not null) {
 				SetBaseValue(OnClone(value));
 			}
