@@ -23,12 +23,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public SharedBool underGround;
         public ReturnToGround rtg;
         public BehaviorTree tree;
+        
 
         public override void OnStart()
         {
             isMovingUnderground = false;
-            bool init = (bool)tree.GetVariable("init").GetValue();
-            Debug.Log(init);
+            tree = this.gameObject.GetComponent<BehaviorTree>();
+            SharedVector3 initialPosition = (SharedVector3)tree.GetVariable("InitialPosition");
+            initialPosition.SetValue(this.transform.position);
+
         }
 
         public override TaskStatus OnUpdate()
@@ -70,6 +73,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             
             
+        }
+        public override void OnEnd()
+        {
+            base.OnEnd();
+            timer = 1f;
+            rtg.underGround = true;
+            underGround.Value = true;
         }
 
         // Implement the IsUnderGround method to check if the head position is under the ground.
