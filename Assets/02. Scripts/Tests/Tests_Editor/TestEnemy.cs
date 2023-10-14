@@ -299,9 +299,9 @@ namespace Tests.Tests_Editor {
         
         [Test]
         public void TestGeneralModifier() {
-            int res1 = GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<int>(()=>1, ()=>2).Invoke(10);
+            int res1 = GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<int>(()=>1, ()=>2, false).Invoke(10);
             
-            float res2 = GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<float>(()=>1, ()=>3).Invoke(5.2f);
+            float res2 = GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<float>(()=>1, ()=>3, false).Invoke(5.2f);
             
             Debug.Log("TestGeneralModifier res1: " + res1);
             Debug.Log("TestGeneralModifier res2: " + res2);

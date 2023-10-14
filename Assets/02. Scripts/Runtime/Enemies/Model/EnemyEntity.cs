@@ -52,8 +52,9 @@ namespace Runtime.Enemies.Model {
 			OnInitModifiers(rarity, levelNumberProperty.BaseValue);
 		}
 
-		protected void SetGeneralEnemyAbilityModifier<T>(PropertyNameInfo propertyName, int rarity, int level) {
-			SetPropertyModifier<T>(propertyName, GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<T>(()=>rarity, ()=>level));
+		protected void SetGeneralEnemyAbilityModifier<T>(PropertyNameInfo propertyName, int rarity, int level, bool inverse) {
+			SetPropertyModifier<T>(propertyName,
+				GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<T>(() => rarity, () => level, inverse));
 		}
 
 		protected abstract void OnInitModifiers(int rarity, int level);

@@ -91,7 +91,9 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 					}
 				}
 				
-				if(value["useDefaultModifier"] is JValue {Value: bool and true}){
+				if(value["useDefaultModifier"] is JValue {Value: bool and true}) {
+					bool inverse = value["inverse"] is JValue {Value: bool and true};
+
 					//if rarity and level are not present in default dependencies, add them
 					if (defaultDependencies == null) {
 						defaultDependencies = new PropertyNameInfo[2];
@@ -130,10 +132,10 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 							defaultDependencies = newDefaultDependencies;
 						}
 					}
-						
+
 					SetModifier<T>(GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<T>(
 						() => parentEntity.GetProperty<IRarityProperty>().BaseValue,
-						() => parentEntity.GetProperty<ILevelNumberProperty>().BaseValue));
+						() => parentEntity.GetProperty<ILevelNumberProperty>().BaseValue, inverse));
 				}
 			}
 			catch (Exception e) {

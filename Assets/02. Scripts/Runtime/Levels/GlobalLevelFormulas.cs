@@ -20,16 +20,20 @@ namespace _02._Scripts.Runtime.Levels {
 			
 		}
 
-		private static float Gety2(int rarity, int level) {
+		private static float Gety2(int rarity, int level, bool inverse = false) {
 			return ((1 + (rarity - 1) / 10f) +
 			        (LEVEL_EXP_UPGRADE_COFF * (level - 1)) *
 			        Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f));
 		}
 		
-		public static PropertyModifier<T> GetGeneralEnemyAbilityModifier<T>(Func<int> rarityGetter, Func<int> levelGetter) {
+		public static PropertyModifier<T> GetGeneralEnemyAbilityModifier<T>(Func<int> rarityGetter, Func<int> levelGetter, bool inverse = false) {
 			return (baseVal) => {
 				dynamic baseValDynamic = baseVal;
 				float y2 = Gety2(rarityGetter.Invoke(), levelGetter.Invoke());
+				if (inverse) {
+					y2 = 1 / y2;
+				}
+				
 				if (baseVal is int || baseVal is long || baseVal is short) {
 					return Mathf.RoundToInt(baseValDynamic * y2);
 					
