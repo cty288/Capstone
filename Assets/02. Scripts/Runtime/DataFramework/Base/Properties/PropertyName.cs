@@ -51,6 +51,9 @@ namespace Runtime.DataFramework.Properties
 		spawn_weight,
 		max_enemies,
 		spawn_cards,
-		level_number
+		level_number,
+		starting_credits,
+		credits_per_second,
+		spawn_timer,
 	}
 }
