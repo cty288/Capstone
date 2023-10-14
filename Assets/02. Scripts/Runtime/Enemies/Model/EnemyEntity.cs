@@ -86,8 +86,10 @@ namespace Runtime.Enemies.Model {
 		}
 
 		public abstract int OnGetRealSpawnWeight(int level, int baseWeight);
-		
-		public abstract float OnGetRealSpawnCost(int level, int rarity, float baseCost);
+
+		public virtual float OnGetRealSpawnCost(int level, int rarity, float baseCost) {
+			return GlobalLevelFormulas.GetSpawnCostModifier(rarity, level).Invoke(baseCost);
+		}
 
 		public float GetRealSpawnCost(int level, int rarity) {
 			return OnGetRealSpawnCost(level, rarity, spawnCostProperty.BaseValue);

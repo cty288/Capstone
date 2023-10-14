@@ -124,7 +124,8 @@ TTT3,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]"
     ""speed"": {
       ""type"": ""int"",
       ""value"": 100,
-      ""dependencies"": [""rarity""]
+      ""dependencies"": [""rarity"", ""level""],
+      ""useDefaultModifier"": true
     },
     ""info"": {
       ""type"": ""dynamic"",
