@@ -11,12 +11,12 @@ namespace Runtime.Utilities.Collision
     [RequireComponent(typeof(TriggerCheck))]
     public class HitBox : MonoBehaviour, IHitDetector
     {
-        private Collider _collider;
-        private TriggerCheck _triggerCheck;
+        protected Collider _collider;
+        protected TriggerCheck _triggerCheck;
         private IHitResponder m_hitResponder;
 
         public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
-        
+        [SerializeField] protected bool showDamageNumber = true;
         
         
         private void Start()
@@ -38,6 +38,8 @@ namespace Runtime.Utilities.Collision
             {
                 Initialize();
             }
+            
+            _triggerCheck.Clear();
 
             _triggerCheck.OnEnter += TriggerCheckHit;
         }
@@ -45,12 +47,13 @@ namespace Runtime.Utilities.Collision
         public void StopCheckingHits()
         {
             // Debug.Log("stop checking hits");
-            _triggerCheck.OnEnter -= TriggerCheckHit;
+            if (_triggerCheck != null) 
+                _triggerCheck.OnEnter -= TriggerCheckHit;
         }
         
         public virtual void TriggerCheckHit(Collider c)
         {
-            // Debug.Log("trigger hit detected: " + c.name);
+             Debug.Log("trigger hit detected: " + c.name);
             HitData hitData = null;
             IHurtbox hurtbox;
             Vector3 center = _collider.transform.position;
@@ -70,6 +73,7 @@ namespace Runtime.Utilities.Collision
                         Hurtbox = hurtbox,
                         HitDetector = this,
                         Attacker = m_hitResponder,
+                        ShowDamageNumber = showDamageNumber
                     };
                 if (hitData.Validate())
                 {
@@ -87,6 +91,7 @@ namespace Runtime.Utilities.Collision
                     Hurtbox = null,
                     HitDetector = this,
                     Attacker = m_hitResponder,
+                    ShowDamageNumber = showDamageNumber
                 };
                 
                 HitResponder?.HitResponse(hitData);

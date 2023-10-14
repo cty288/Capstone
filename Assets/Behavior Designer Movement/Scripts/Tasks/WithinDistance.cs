@@ -8,6 +8,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
     [TaskIcon("62dc1c328b5c4eb45a90ec7a75cfb747", "0e2ffa7c5e610214eb6d5c71613bbdec")]
     public class WithinDistance : Conditional
     {
+        
         [Tooltip("Should the 2D version be used?")]
         [UnityEngine.Serialization.FormerlySerializedAs("usePhysics2D")]
         public bool m_UsePhysics2D;
@@ -40,6 +41,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("The object variable that will be set when a object is found what the object is")]
         public SharedGameObject m_ReturnedObject;
 
+        public SharedBool m_Use2DSpace;
+
         private float m_SqrMagnitude; // distance * distance, optimization so we don't have to take the square root
         private Collider[] m_OverlapColliders;
         private Collider2D[] m_Overlap2DColliders;
@@ -47,6 +50,14 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public override void OnStart()
         {
             m_SqrMagnitude = m_Magnitude.Value * m_Magnitude.Value;
+            SharedBool use2D;
+            if(this.gameObject.GetComponent<BehaviorTree>().GetVariable("Use2D") != null)
+            {
+                use2D = (SharedBool)this.gameObject.GetComponent<BehaviorTree>().GetVariable("Use2D");
+                m_Use2DSpace = use2D.Value;
+            }
+            
+
         }
 
         /// <summary>
@@ -132,7 +143,21 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         /// </summary>
         private bool IsWithinDistance(GameObject target)
         {
-            var direction = target.transform.position - (transform.position + m_Offset.Value);
+            Vector3 direction;
+            if (m_Use2DSpace.Value)
+            {
+                
+                var targetPosition = target.transform.position;
+                 direction = new Vector3(targetPosition.x - transform.position.x, 0f, targetPosition.z - transform.position.z);
+            
+
+
+            }
+            else
+            {
+                 direction = target.transform.position - (transform.position + m_Offset.Value);
+            }
+           
             // check to see if the square magnitude is less than what is specified
             if (Vector3.SqrMagnitude(direction) < m_SqrMagnitude) {
                 // the magnitude is less. If lineOfSight is true do one more check

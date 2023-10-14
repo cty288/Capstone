@@ -11,12 +11,12 @@ namespace Runtime.Utilities.Collision
     [RequireComponent(typeof(TriggerCheck))]
     public class ExplosionHitBox : HitBox
     {
-        private SphereCollider _collider;
-        private TriggerCheck _triggerCheck;
+        private SphereCollider _sphereCollider;
+        //private TriggerCheck _triggerCheck;
         private IHitResponder m_hitResponder;
         public override IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         
-        
+        //[SerializeField] private bool showDamageNumber = true;
         private void Start()
         {
             Initialize();
@@ -28,6 +28,7 @@ namespace Runtime.Utilities.Collision
             if (_triggerCheck.TargetLayers ==0)
                 _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox"); 
             _collider = gameObject.GetComponent<SphereCollider>();
+            _sphereCollider = _collider as SphereCollider;
         }
         
         
@@ -47,7 +48,7 @@ namespace Runtime.Utilities.Collision
             if (hurtbox != null)
             {
 
-                float explosionMultiplier = 0.7f* Vector3.Distance(hitPoint,center)/_collider.radius+0.3f;
+                float explosionMultiplier = 0.7f* (1-Vector3.Distance(hitPoint,center)/_sphereCollider.radius)+0.3f;
                 // Debug.Log("make hitdata");
                 hitData = new HitData()
                     {
@@ -57,6 +58,7 @@ namespace Runtime.Utilities.Collision
                         Hurtbox = hurtbox,
                         HitDetector = this,
                         Attacker = m_hitResponder,
+                        ShowDamageNumber = showDamageNumber
                     };
                 // Debug.Log("validate: " + (hitData.Validate()));
                 if (hitData.Validate())

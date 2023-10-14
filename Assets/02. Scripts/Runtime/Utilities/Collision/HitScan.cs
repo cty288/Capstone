@@ -33,13 +33,14 @@ namespace Runtime.Utilities.Collision
         private Camera _camera;
         private LayerMask _layer;
         private IWeaponEntity _weapon;
+        private bool showDamageNumber = true;
 
-        public HitScan(IHitResponder hitResponder, Faction faction, TrailRenderer tr)
+        public HitScan(IHitResponder hitResponder, Faction faction, TrailRenderer tr, bool showDamageNumber = true)
         {
             this.hitResponder = hitResponder;
             CurrentFaction.Value = faction;
             _tr = tr;
-            
+            this.showDamageNumber = showDamageNumber;
             trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
             bulletHolesPool = new ObjectPool<GameObject>(CreateBulletHole, OnTakeFromPool, 
                 OnReturnedToPool, OnDestroyPoolObject, true, 10, 20);
@@ -87,7 +88,7 @@ namespace Runtime.Utilities.Collision
                 if (hurtbox != null)
                 {
                     Debug.Log("hurtbox make hitdata: " + hurtbox);
-                    hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this);
+                    hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this, showDamageNumber);
                     hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
                 }
 

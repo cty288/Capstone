@@ -16,17 +16,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     public class RapidFire : EnemyAction<Boss1Entity>
     {
         public SharedGameObject bulletPrefab;
-        public int bulletCount;
-        public float spawnInterval;
+       
+        
         private bool ended;
-        public int bulletSpeed;
+        
         public Boss1 boss1vc;
         
         private Transform playerTrans;
         //public SharedTransform playerTrans;
 
         private SafeGameObjectPool pool;
-
+        private int bulletCount;
+        private float bulletSpeed;
+        private float spawnInterval;
         public override void OnAwake() {
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 20, 50);
@@ -37,6 +39,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnStart();
             ended = false;
+            bulletCount = enemyEntity.GetCustomDataValue<int>("damages", "rapidFireBulletCount");
+            bulletSpeed = enemyEntity.GetCustomDataValue<float>("damages", "rapidFireBulletSpeed");
+            spawnInterval = enemyEntity.GetCustomDataValue<float>("damages", "rapidFireAttackInterval");
             StartCoroutine(RF());
         }
         public override TaskStatus OnUpdate()
@@ -66,10 +71,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                                                                transform.position.z));
 
             b.GetComponent<Rigidbody>().velocity = b.transform.forward * bulletSpeed;
-            
+
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-                enemyEntity.GetCustomDataValue<int>("damages", "rapidFireDamage"), 
-                gameObject, gameObject.GetComponent<ICanDealDamage>());
+                enemyEntity.GetCustomDataValue<int>("damages", "rapidFireDamage"),
+                gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
 
         }
     }

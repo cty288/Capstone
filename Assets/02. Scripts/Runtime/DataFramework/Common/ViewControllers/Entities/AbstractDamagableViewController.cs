@@ -34,7 +34,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private List<HurtBox> hurtBoxes = new List<HurtBox>();
 		
 		[Header("Damage Number")]
-		[SerializeField] private bool showDamageNumber = true;
+		[SerializeField] protected bool showDamageNumber = true;
 		//[SerializeField] private DamageNumberInfo damageNumberInfo;
 		
 		protected override void OnStart() {
@@ -53,7 +53,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		private void OnTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer, [CanBeNull] HitData hitData) {
 			OnEntityTakeDamage(damage, currenthealth, damagedealer);
-			if (showDamageNumber) {
+			if (showDamageNumber && (hitData == null || hitData.ShowDamageNumber)) {
 				DamageNumberHUD.Singleton.SpawnHUD(hitData?.HitPoint ?? transform.position, damage);
 			}
 			if (currenthealth <= 0) {

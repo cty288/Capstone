@@ -13,6 +13,10 @@ namespace a
 			this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
 		}
 
+        protected override void OnBulletReachesMaxRange() {
+	        
+        }
+
 
         public void SetData(float bulletSpeed) {
 	        this.bulletSpeed = bulletSpeed;

@@ -17,7 +17,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	public interface IBulletViewController : IController, IHitResponder {
 		int Damage { get; }
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner);
+		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange);
 	}
 	
 	
@@ -44,12 +44,16 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
 		protected IEntity entity = null;
-			
+		protected float maxRange;
+		protected Vector3 origin;
+		protected bool inited = false;
+		protected bool tickType = false;
+		
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
 		}
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner) {
+		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
@@ -62,9 +66,11 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
 			}
 			this.owner = owner;
-
+			this.maxRange = maxRange;
+			origin = transform.position;
 			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
 			entity?.RetainRecycleRC();
+			inited = true;
 		}
 
 		public override void OnStartOrAllocate() {
@@ -81,7 +87,6 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 
 		public bool CheckHit(HitData data) {
-
 			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;
 			}
@@ -93,8 +98,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			  if (data.Hurtbox.Owner == bulletOwner) {
 				  return;
 			  }
-        hitObjects.Add(data.Hurtbox.Owner);
-      }
+			  hitObjects.Add(data.Hurtbox.Owner);
+			}
 			OnHitResponse(data);
 			//RecycleToCache();
 		}
@@ -103,17 +108,36 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 		protected virtual void OnTriggerEnter(Collider other) {
 			if (!other.isTrigger) {
+				if (other.transform.root == bulletOwner.transform.root) {
+					return;
+				}
 				if(other.transform.root.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
 					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
 						return;
 					}
 				}
+				
 				OnHitObject(other);
 				RecycleToCache();
 			}
 		}
 		
+		
 		protected abstract void OnHitObject(Collider other);
+
+
+		protected virtual void Update() {
+			if (!inited) {
+				return;
+			}
+			
+			if (maxRange > 0 && Vector3.Distance(transform.position, origin) > maxRange) {
+				OnBulletReachesMaxRange();
+				RecycleToCache();
+			}
+		}
+
+		protected abstract void OnBulletReachesMaxRange();
 
 		public override void OnRecycled() {
 			base.OnRecycled();
@@ -130,8 +154,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
 				}
 			}
+			inited = false;
 
-			
+
 			hitBox.StopCheckingHits();
 			//this.bulletOwner = null;
 			//this.owner = null;
