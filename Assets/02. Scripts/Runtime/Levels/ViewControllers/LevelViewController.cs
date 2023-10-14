@@ -56,7 +56,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public string EntityName => TemplateEntity.EntityName;
 
-		public int GetRealSpawnCost(int level, int rarity) {
+		public float GetRealSpawnCost(int level, int rarity) {
 			return TemplateEntity.GetRealSpawnCost(level, rarity);
 		} 
 		

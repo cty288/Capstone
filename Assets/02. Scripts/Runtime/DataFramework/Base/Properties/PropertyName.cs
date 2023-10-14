@@ -55,6 +55,5 @@ namespace Runtime.DataFramework.Properties
 		starting_credits,
 		credits_per_second,
 		spawn_timer,
-		pack_spawn_timer
 	}
 }

@@ -17,7 +17,6 @@ namespace Runtime.Spawning
         public IStartingCredits GetStartingCredits();
         public ICreditsPerSecond GetCreditsPerSecond();
         public ISpawnTimer GetSpawnTimer();
-        public IPackSpawnTimer GetPackSpawnTimer();
     }
 
     public abstract class DirectorEntity<T> : AbstractBasicEntity, IDirectorEntity where T : DirectorEntity<T>, new()
@@ -27,7 +26,6 @@ namespace Runtime.Spawning
         private IStartingCredits _startingCredits;
         private ICreditsPerSecond _creditsPerSecond;
         private ISpawnTimer _spawnTimer;
-        private IPackSpawnTimer _packSpawnTimer;
 
         protected override ConfigTable GetConfigTable() {
             return null;
@@ -38,7 +36,6 @@ namespace Runtime.Spawning
             _startingCredits = GetProperty<IStartingCredits>();
             _creditsPerSecond = GetProperty<ICreditsPerSecond>();
             _spawnTimer = GetProperty<ISpawnTimer>();
-            _packSpawnTimer = GetProperty<IPackSpawnTimer>();  
         }
         
         protected override void OnEntityStart(bool isLoadedFromSave) {
@@ -57,7 +54,6 @@ namespace Runtime.Spawning
             this.RegisterInitialProperty<IStartingCredits>(new StartingCredits());
             this.RegisterInitialProperty<ICreditsPerSecond>(new CreditsPerSecond());
             this.RegisterInitialProperty<ISpawnTimer>(new SpawnTimer());
-            this.RegisterInitialProperty<IPackSpawnTimer>(new PackSpawnTimer());
         }
 
         public IStartingCredits GetStartingCredits()
@@ -73,11 +69,6 @@ namespace Runtime.Spawning
         public ISpawnTimer GetSpawnTimer()
         {
             return _spawnTimer;
-        }
-
-        public IPackSpawnTimer GetPackSpawnTimer()
-        { 
-            return _packSpawnTimer;
         }
     }
 }

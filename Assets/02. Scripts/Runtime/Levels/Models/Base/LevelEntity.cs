@@ -13,9 +13,9 @@ using Runtime.Utilities.ConfigSheet;
 
 namespace _02._Scripts.Runtime.Levels.Models {
 	public interface ILevelEntity : IEntity, IHaveCustomProperties, IHaveTags {
-		public List<LevelSpawnCard> GetAllCardsUnderCost(int cost);
+		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost);
 		
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost);
+		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost);
 
 		public List<LevelSpawnCard> GetAllBosses();
 
@@ -54,7 +54,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return card.MinRarity;
 		}
 		
-		public List<LevelSpawnCard> GetAllCardsUnderCost(int cost) {
+		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost) {
 			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
 			int level = GetCurrentLevelCount();
 			foreach (var card in spawnCardsProperty.RealValues) {
@@ -66,7 +66,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return cards;
 		}
 
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost) {
+		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost) {
 			return GetCards((card =>
 				card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy));
 		}
