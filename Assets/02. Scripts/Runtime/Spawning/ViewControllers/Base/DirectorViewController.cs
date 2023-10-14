@@ -7,10 +7,12 @@ using _02._Scripts.Runtime.Levels.ViewControllers;
 using MikroFramework.Architecture;
 using UnityEngine;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Utilities.ConfigSheet;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 using Random = UnityEngine.Random;
 
 namespace Runtime.Spawning
@@ -51,16 +53,27 @@ namespace Runtime.Spawning
             creditTimer = addCreditsInterval;
         }
 
-        protected override IEntity OnBuildNewEntity()
-        {
+        protected override IEntity OnBuildNewEntity() {
+            return OnBuildNewEntity(1);
+        }
+        
+        protected IEntity OnBuildNewEntity(int level) {
             DirectorBuilder<T> builder = directorModel.GetDirectorBuilder<T>();
+            builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level);
+            
+            //    .SetProperty(new PropertyNameInfo(PropertyName.spawn_timer), baseSpawnTimer)
+              //  .SetProperty(new PropertyNameInfo(PropertyName.starting_credits), baseStartingCredits);
+            
             return OnInitDirectorEntity(builder);
         }
         
         protected abstract IEntity OnInitDirectorEntity(DirectorBuilder<T> builder);
         
-        protected void Update()
-        {
+        protected override void Update() {
+            if (BoundEntity == null || String.IsNullOrEmpty(BoundEntity.UUID)) { //not initialized yet
+                return;
+            }
+            base.Update();
             DecrementTimers();
             
             if (creditTimer <= 0f)
@@ -80,7 +93,7 @@ namespace Runtime.Spawning
         {
             LevelEntity = levelEntity;
             levelNumber = levelEntity.GetCurrentLevelCount();
-            IEntity ent = OnBuildNewEntity();
+            IEntity ent = OnBuildNewEntity(levelNumber);
             InitWithID(ent.UUID);
         }
         

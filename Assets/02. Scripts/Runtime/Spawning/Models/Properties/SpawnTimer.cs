@@ -15,7 +15,7 @@ namespace Runtime.Spawning.Models.Properties
         }
 
         public override PropertyNameInfo[] GetDefaultDependentProperties() {
-            return new[] {new PropertyNameInfo(PropertyName.rarity)};
+            return new[] {new PropertyNameInfo(PropertyName.level_number)};
         }
     }
 }

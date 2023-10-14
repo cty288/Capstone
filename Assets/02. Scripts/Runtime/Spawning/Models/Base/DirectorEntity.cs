@@ -6,6 +6,7 @@ using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.Enemies.Model.Properties;
 using Runtime.Spawning.Models.Properties;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
@@ -54,6 +55,7 @@ namespace Runtime.Spawning
             this.RegisterInitialProperty<IStartingCredits>(new StartingCredits());
             this.RegisterInitialProperty<ICreditsPerSecond>(new CreditsPerSecond());
             this.RegisterInitialProperty<ISpawnTimer>(new SpawnTimer());
+            this.RegisterInitialProperty<ILevelNumberProperty>(new LevelNumber());
         }
 
         public IStartingCredits GetStartingCredits()

@@ -11,6 +11,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
+using Runtime.Spawning;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 using UnityEngine.AI;
@@ -153,8 +154,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
 			UpdateNavMesh();
-			
+			UpdatePreExistingDirectors();
 			OnSpawnPlayer();
+		}
+
+		private void UpdatePreExistingDirectors() {
+			IDirectorViewController[] directors = GetComponentsInChildren<IDirectorViewController>(true);
+			foreach (var directorViewController in directors) {
+				directorViewController.SetLevelEntity(BoundEntity);
+			}
 		}
 
 		protected override void Update() {
