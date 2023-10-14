@@ -154,21 +154,20 @@ namespace Runtime.Spawning
                     break;
                 }
             }
-            Debug.Log("start spawn, cost: " + cost + "rarity: " + rarity);
-            
-            //pick a spot
-            Vector3 spawnPos = new Vector3(
-                Random.Range(minSpawnRange, maxSpawnRange), 
-                10f,  
-                Random.Range(minSpawnRange, maxSpawnRange));
                         
             //raycast down from random point within min/max range
             int spawnAttempts = 20;
-            while (spawnAttempts > 0)
+            while (spawnAttempts > 0 && currentCredits > cost)
             {
+                //pick a spot
+                Vector3 spawnPos = new Vector3(
+                    transform.position.x + Random.Range(minSpawnRange, maxSpawnRange), 
+                    transform.position.y + 10f,  
+                    transform.position.z + Random.Range(minSpawnRange, maxSpawnRange));
+                
                 if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 30f, spawnMask))
                 {
-                    Debug.Log("spawn success");
+                    Debug.Log("spawn success: " + card.EntityName + ", location: " + hit.point);
                     spawnPos = hit.point;
                     //TODO: spawn enemy at certain rarity
                     Instantiate(card.Prefab, spawnPos, Quaternion.identity);
