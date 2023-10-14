@@ -60,7 +60,7 @@ namespace Runtime.Weapons
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         // For Coroutine Animation [WILL BE REPLACED]
-        public GameObject model;
+      
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
         public GameObject defaultGunModel;

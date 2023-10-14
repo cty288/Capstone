@@ -23,6 +23,8 @@ namespace Runtime.GameResources.ViewControllers {
 		Vector3 InHandLocalPosition { get; }
 		
 		Vector3 InHandLocalRotation { get; }
+		
+		Vector3 InHandLocalScale { get; }
 	}
 	
 	
@@ -47,6 +49,9 @@ namespace Runtime.GameResources.ViewControllers {
 
 		[field: SerializeField] 
 		public Vector3 InHandLocalRotation { get; protected set; } = Vector3.zero;
+		
+		[field: SerializeField]
+		public Vector3 InHandLocalScale { get; protected set; } = Vector3.one;
 		
 		[Header("Cross hairs")] [SerializeField]
 		private string crossHairPrefabName;
@@ -139,7 +144,8 @@ namespace Runtime.GameResources.ViewControllers {
 
 		protected override void OnEntityRecycled(IEntity ent) {
 			base.OnEntityRecycled(ent);
-			
+			transform.localScale = Vector3.one;
+			transform.rotation = Quaternion.identity;
 		}
 	}
 }

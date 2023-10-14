@@ -39,6 +39,8 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 	private BindableProperty<DeployFailureReason> deployFailureReason =
 		new BindableProperty<DeployFailureReason>(DeployFailureReason.NA);
 	
+	private HotBarCategory currentHand = HotBarCategory.Right;
+	
 	
 	//private IInHandResourceViewController rightHandItemViewController = null;
 	
@@ -114,12 +116,27 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			
 			if (playerActions.Shoot.WasReleasedThisFrame()) {
 				currentHoldItemViewController.OnItemStopUse();
+				
+				if (currentHoldDeployableItemViewController.Item1 != null&&
+				    currentHoldDeployableItemViewController.Item2) {
+					DeployCurrentHoldDeployableItem();
+					
+				}
 			}
 			
 			if (playerActions.Scope.WasPerformedThisFrame()) {
 				currentHoldItemViewController.OnItemScopePressed();
 			}
 		}
+	}
+
+	private void DeployCurrentHoldDeployableItem() {
+		currentHoldDeployableItemViewController.Item1.OnDeploy();
+		//currentHoldItemViewController = null;
+		currentHoldDeployableItemViewController = (null, null);
+		inventoryModel.GetSelectedHotBarSlot(currentHand).RemoveLastItem();
+		
+		
 	}
 
 	private DeployFailureReason HoldingDeployableItemStatusCheck(out Quaternion spawnRotation, out Vector3 spawnPosition){
@@ -136,6 +153,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 
 	private void SwitchHandItem(HotBarCategory category, IResourceEntity resourceEntity) {
 		//inHandResourceViewControllers.TryAdd(category, null);
+		currentHand = category;
 
 		deployFailureReason.Value = DeployFailureReason.NA;
 		IInHandResourceViewController previousViewController = currentHoldItemViewController;
@@ -143,7 +161,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			previousViewController.OnStopHold();
 		}
 		if(currentHoldDeployableItemViewController.Item1 != null){
-            currentHoldDeployableItemViewController.Item1.OnStopPreview();
+            currentHoldDeployableItemViewController.Item1.OnPreviewTerminate();
         }
 		//inHandResourceViewControllers[category] = null;
 		currentHoldItemViewController = null;
@@ -156,11 +174,12 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			spawnedItem.transform.SetParent(targetTr);
 			//spawnedItem.transform.localPosition = Vector3.zero;
 			//spawnedItem.transform.localRotation = Quaternion.identity;
-			spawnedItem.transform.localScale = Vector3.one;
+			//spawnedItem.transform.localScale = Vector3.one;
 			
 			currentHoldItemViewController = spawnedItem.GetComponent<IInHandResourceViewController>();
 			spawnedItem.transform.localPosition = currentHoldItemViewController.InHandLocalPosition;
 			spawnedItem.transform.localRotation = Quaternion.Euler(currentHoldItemViewController.InHandLocalRotation);
+			spawnedItem.transform.localScale = currentHoldItemViewController.InHandLocalScale;
 
 			if (currentHoldItemViewController is IInHandDeployableResourceViewController) {
 				GameObject deployedPrefab =

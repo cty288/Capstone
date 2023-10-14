@@ -18,8 +18,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		//public IResourceEntity OnBuildEntity(bool isPreview);
 		
 		public void SetPreview(bool isPreview);
+
+		public void OnDeploy();
 		
-		public void OnStopPreview();
+		public void OnPreviewTerminate();
 	}
 
 	public enum DeployFailureReason {
@@ -98,7 +100,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 
-		public void OnStopPreview() {
+		public void OnDeploy() {
+			SetPreview(false);
+			OnDeployed();
+		}
+
+		public abstract void OnDeployed();
+
+		public void OnPreviewTerminate() {
 			SetPreview(false);
 			RecycleToCache();
 		}

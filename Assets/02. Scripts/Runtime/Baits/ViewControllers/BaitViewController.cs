@@ -47,6 +47,7 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 			return builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity)
 				.SetBaseTastes(tastesBase)
 				.SetBaseVigiliance(vigilianceBase)
+				.SetProperty(new PropertyNameInfo(PropertyName.max_stack), 1)
 				.Build();
 		}
 

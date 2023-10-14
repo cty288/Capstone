@@ -26,7 +26,7 @@ namespace Runtime.Weapons.ViewControllers.Base
     /// <typeparam name="T"></typeparam>
     public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IWeaponViewController, IBelongToFaction, IHitResponder
         where T : class, IWeaponEntity, new() {
-
+        public GameObject model;
         [Header("Auto Reload")]
         public bool autoReload = true;
         

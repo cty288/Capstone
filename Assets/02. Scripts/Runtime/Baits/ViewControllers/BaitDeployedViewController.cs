@@ -23,6 +23,10 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 		
 	}
 
+	public override void OnDeployed() {
+		
+	}
+
 	protected override IResourceEntity OnBuildNewEntity(bool isPreview) {
 		return null;
 	}
