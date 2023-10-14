@@ -16,6 +16,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public List<LevelSpawnCard> GetAllCardsUnderCost(int cost);
 		
 		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost);
+		
+		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost, Predicate<LevelSpawnCard> furtherPredicate);
 
 		public List<LevelSpawnCard> GetAllBosses();
 
@@ -79,6 +81,12 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost) {
 			return GetCards((card =>
 				card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy));
+		}
+
+		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(int cost, Predicate<LevelSpawnCard> furtherPredicate) {
+			return GetCards((card =>
+				card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy &&
+				furtherPredicate(card)));
 		}
 
 		public List<LevelSpawnCard> GetAllBosses() {
