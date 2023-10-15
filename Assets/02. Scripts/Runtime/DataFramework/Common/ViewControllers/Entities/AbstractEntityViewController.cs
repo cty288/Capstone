@@ -144,14 +144,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (BoundEntity != null && id == BoundEntity.UUID) {
 				return;
 			}
-			ID = id;
+			
 			IEntity ent = null;
-			(ent, entityModel) = GlobalEntities.GetEntityAndModel(ID);
+			(ent, entityModel) = GlobalEntities.GetEntityAndModel(id);
 			if (ent == null) {
-				Debug.LogError("Entity with ID " + ID + " not found");
+				Debug.LogError("Entity with ID " + id + " not found");
 				return;
 			}
 
+			bool needToRecallStart = false;
 			if (BoundEntity != null) {
 				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
@@ -162,13 +163,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				
 				OnReadyToRecycle();
 				OnRecycled();
+				needToRecallStart = true;
 			}
+			ID = id;
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
 			OnBindProperty();
 			OnEntityStart();
 			onEntityVCInitCallback?.Invoke(this);
+			if (needToRecallStart) {
+				OnStart();
+			}
 		}
 
 

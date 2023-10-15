@@ -83,7 +83,7 @@ namespace Runtime.Enemies.SmallEnemies
                 waypoint.transform.SetParent(null);
             }
 
-            StartCoroutine(DelayedStart());
+            //StartCoroutine(DelayedStart());
 
 
         }

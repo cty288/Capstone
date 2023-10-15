@@ -212,6 +212,7 @@ namespace Runtime.Spawning
                      if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground")){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
                         //Debug.Log("spawn success: " + card.EntityName + ", location: " + hit.point);
                         spawnPos = hit.point;
+                        spawnPos.y += 3f;
                         NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
                         spawnPos = hitNavMesh.position;
                         //TODO: spawn enemy at certain rarity
