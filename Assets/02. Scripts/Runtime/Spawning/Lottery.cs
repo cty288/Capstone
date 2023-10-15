@@ -8,6 +8,7 @@ namespace Runtime.Spawning
     public class Lottery
     {
         private Dictionary<LevelSpawnCard, Vector2> entityWeights;
+        private float totalWeight;
         
         public Lottery()
         {
@@ -17,11 +18,6 @@ namespace Runtime.Spawning
         public void SetCards(List<LevelSpawnCard> spawnCards)
         {
             entityWeights.Clear();
-            int totalWeight = 0;
-            foreach (LevelSpawnCard entity in spawnCards)
-            {
-                totalWeight += entity.RealSpawnWeight;
-            }
             
             float currentWeight = 0f;
             foreach (LevelSpawnCard entity in spawnCards)
@@ -29,11 +25,13 @@ namespace Runtime.Spawning
                 entityWeights.Add(entity, new Vector2(currentWeight, currentWeight + entity.RealSpawnWeight));
                 currentWeight += entity.RealSpawnWeight;
             }
+
+            totalWeight = currentWeight;
         }
 
         public LevelSpawnCard PickNextCard()
         {
-            float randomWeight = Random.Range(0f, 1f);
+            float randomWeight = Random.Range(0f, 1f) * totalWeight;
             foreach (KeyValuePair<LevelSpawnCard, Vector2> entityWeight in entityWeights)
             {
                 if (entityWeight.Value.x <= randomWeight && entityWeight.Value.y >= randomWeight)

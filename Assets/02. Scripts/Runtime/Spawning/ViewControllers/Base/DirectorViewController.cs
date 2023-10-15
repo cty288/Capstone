@@ -186,7 +186,7 @@ namespace Runtime.Spawning
             //determine level and cost
             int rarity = card.MinRarity;
             float cost = card.GetRealSpawnCost(levelNumber, card.MinRarity);
-            for (int i = card.MinRarity; i <= card.MaxRarity; i++)
+            for (int i = card.MaxRarity; i <= card.MinRarity; i++)
             {
                 float checkCost = card.GetRealSpawnCost(levelNumber, i);
                 if (currentCredits > checkCost)
@@ -221,12 +221,11 @@ namespace Runtime.Spawning
                             levelNumber, true, 5, 30);
                         IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
                         onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                        Debug.Log(
-                            $"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
+                        Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
                     
                         currentCredits -= cost;
                         return true;
-                    }
+                     }
                 }
                 spawnAttempts--;
             }
