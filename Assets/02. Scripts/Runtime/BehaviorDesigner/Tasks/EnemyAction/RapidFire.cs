@@ -57,33 +57,37 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         IEnumerator RF()
         {
-            for(int i = 0; i < 1; i++)
-            {
-                SpawnBullet();
-                yield return new WaitForSeconds(spawnInterval);
-            }
-            ended = true;
+           
+                StartCoroutine(SpawnBullet());
+            yield return null;
         }
-        void SpawnBullet() {
+        IEnumerator SpawnBullet() {
 
             for(int j = 0; j < bulletPerSpawn; j++)
             {
                 Debug.Log(j);
                 UnityEngine.GameObject b = pool.Allocate();
-                float angle = j * 60; // Angle between each bullet
-                b.transform.position = this.gameObject.transform.position + new Vector3(0,4,0);
-                b.transform.Rotate(new Vector3(0, angle, 0));
-                b.transform.Translate(new Vector3(0,0,1));
+                //float angle = j * 60; // Angle between each bullet
+                //b.transform.position = this.gameObject.transform.position + new Vector3(0,4,0);
+                // b.transform.Rotate(new Vector3(0, angle, 0));
+                //b.transform.Translate(new Vector3(0,0,1));
+                b.transform.rotation = this.gameObject.transform.rotation;
+                var randomX = Random.Range(-4f, 4f);
+                var randomY = Random.Range(0f, 3f);
+                b.transform.position = this.gameObject.transform.position + this.gameObject.transform.up * randomY + this.gameObject.transform.right * randomX + new Vector3(0,6,0);
+                //b.transform.rotation = Quaternion.LookRotation(playerTrans.position - (this.transform.position + new Vector3(0, 4, 0)));
 
                 b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                     enemyEntity.GetCustomDataValue<int>("damages", "rapidFireDamage"),
                     gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
-                b.GetComponent<Boss1Bullet>().SetData(bulletSpeed);
+                b.GetComponent<Boss1Bullet>().SetData(bulletSpeed , playerTrans);
+                yield return new WaitForSeconds(spawnInterval);
+
             }
+            ended = true;
 
-       
 
-            
+
 
         }
     }
