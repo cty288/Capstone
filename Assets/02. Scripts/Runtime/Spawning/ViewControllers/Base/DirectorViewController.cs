@@ -152,16 +152,15 @@ namespace Runtime.Spawning
         
         protected virtual void AttemptToSpawn()
         {
-            //TODO: check if over max enemies
+            //check if over max enemies
+            if(LevelEntity.CurrentEnemyCount >= LevelEntity.GetMaxEnemyCount())
+                return;
 
             //pick card, store the card
             List<LevelSpawnCard> cards = LevelEntity.GetAllNormalEnemiesUnderCost(currentCredits);
-            Debug.Log("attempt to spawn, under cost cards: " + cards.Count);
 
             if (cards.Count > 0)
             {
-                Debug.Log("cards size: " + cards.Count);
-                Debug.Log("lottery: " + m_lottery);
                 m_lottery.SetCards(cards);
                 LevelSpawnCard selectedCard = m_lottery.PickNextCard();
 
@@ -170,11 +169,9 @@ namespace Runtime.Spawning
                 }
 
                 bool success = true;
-                int maxPackSize = 10; // TODO: Temp to prevent lag
-                Debug.Log("spawn success: " + success + "pack size: " + (maxPackSize > 0));
+                int maxPackSize = Random.Range(1, 5);
                 while (success && maxPackSize > 0)
                 {
-                    Debug.Log("pack size: " + maxPackSize);
                     success = SpawnEnemy(selectedCard);
                     maxPackSize--;
                 }
@@ -183,10 +180,14 @@ namespace Runtime.Spawning
 
         protected virtual bool SpawnEnemy(LevelSpawnCard card)
         {
+            //if over max, return false to stop spawning packs
+            if(LevelEntity.CurrentEnemyCount >= LevelEntity.GetMaxEnemyCount())
+                return false;
+
             //determine level and cost
             int rarity = card.MinRarity;
             float cost = card.GetRealSpawnCost(levelNumber, card.MinRarity);
-            for (int i = card.MaxRarity; i <= card.MinRarity; i++)
+            for (int i = card.MaxRarity; i >= card.MinRarity; i--)
             {
                 float checkCost = card.GetRealSpawnCost(levelNumber, i);
                 if (currentCredits > checkCost)
@@ -198,7 +199,7 @@ namespace Runtime.Spawning
             }
                         
             //raycast down from random point within min/max range
-            int spawnAttempts = 20;
+            int spawnAttempts = 10;
             while (spawnAttempts > 0 && currentCredits > cost)
             {
                 //pick a spot
@@ -209,14 +210,11 @@ namespace Runtime.Spawning
                 
                 if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
                 {
-                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground")){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
-                        //Debug.Log("spawn success: " + card.EntityName + ", location: " + hit.point);
+                     if (hit.collider.gameObject.layer == spawnMask){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
                         spawnPos = hit.point;
                         spawnPos.y += 3f;
                         NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
                         spawnPos = hitNavMesh.position;
-                        //TODO: spawn enemy at certain rarity
-                        //Instantiate(card.Prefab, spawnPos, Quaternion.identity);
                         GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, spawnPos, Quaternion.identity, null, rarity,
                             levelNumber, true, 5, 30);
                         IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
@@ -229,7 +227,6 @@ namespace Runtime.Spawning
                 }
                 spawnAttempts--;
             }
-            Debug.Log("spawn fail");
             return false;
         }
 
