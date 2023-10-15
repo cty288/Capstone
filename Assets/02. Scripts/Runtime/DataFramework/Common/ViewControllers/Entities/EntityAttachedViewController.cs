@@ -31,8 +31,8 @@ public abstract class EntityAttachedViewController<T> : AbstractMikroController<
             .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
     }
 
-    private void OnEntityInit(IEntity e) {
-        boundEntity = e as T;
+    private void OnEntityInit(IEntityViewController e) {
+        boundEntity = e.Entity as T;
         OnEntityFinishInit(boundEntity);
     }
 

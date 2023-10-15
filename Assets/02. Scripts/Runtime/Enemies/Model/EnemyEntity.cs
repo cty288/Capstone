@@ -11,6 +11,7 @@ using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.Model {
 	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage {
@@ -48,11 +49,12 @@ namespace Runtime.Enemies.Model {
 
 
 		protected override void OnInitModifiers(int rarity) {
-			
-			OnInitModifiers(rarity, levelNumberProperty.BaseValue);
+			int level = levelNumberProperty.BaseValue;
+			OnInitModifiers(rarity, level);
+			SetGeneralEnemyAbilityModifier<HealthInfo>(new PropertyNameInfo(PropertyName.health), rarity, level);
 		}
 
-		protected void SetGeneralEnemyAbilityModifier<T>(PropertyNameInfo propertyName, int rarity, int level, bool inverse) {
+		protected void SetGeneralEnemyAbilityModifier<T>(PropertyNameInfo propertyName, int rarity, int level, bool inverse = false) {
 			SetPropertyModifier<T>(propertyName,
 				GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<T>(() => rarity, () => level, inverse));
 		}

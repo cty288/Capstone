@@ -16,7 +16,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
     
         public IEntity Entity { get; }
         
-        public void InitWithID(string id);
+        public void InitWithID(string id, bool recycleIfAlreadyExist = true);
         
         public void OnPointByCrosshair();
         
@@ -41,9 +41,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         /// <param name="zone"></param>
         public void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone);
 
-        public IUnRegister RegisterOnEntityViewControllerInit(Action<IEntity> callback);
+        public IUnRegister RegisterOnEntityViewControllerInit(Action<IEntityViewController> callback);
         
-        public void UnRegisterOnEntityViewControllerInit(Action<IEntity> callback);
+        
+        public void UnRegisterOnEntityViewControllerInit(Action<IEntityViewController> callback);
 
         //public void Init(string id, IEntity entity);
     }
@@ -53,7 +54,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
         IEntity IEntityViewController.Entity => EnemyEntity;
         
-        public IEnemyEntity OnInitEntity();
+        public IEnemyEntity OnInitEntity(int level, int rarity);
+        
+        
     }
 
     public interface IWeaponViewController : IEntityViewController

@@ -53,6 +53,8 @@ namespace Runtime.GameResources.ViewControllers {
 		[field: SerializeField]
 		public Vector3 InHandLocalScale { get; protected set; } = Vector3.one;
 		
+		private Vector3 originalLocalScale;
+		
 		[Header("Cross hairs")] [SerializeField]
 		private string crossHairPrefabName;
 		[CanBeNull]
@@ -63,7 +65,7 @@ namespace Runtime.GameResources.ViewControllers {
 			originalLayer = gameObject.layer;
 			//selfColliders = new Dictionary<Collider, bool>();
 			rigidbody = GetComponent<Rigidbody>();
-			
+			originalLocalScale = transform.localScale;
 		}
 
 		protected override void OnStartAbsorb() {
@@ -72,7 +74,7 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-
+			transform.localScale = originalLocalScale;
 		}
 
 		protected override void OnReadyToRecycle() {
@@ -125,6 +127,8 @@ namespace Runtime.GameResources.ViewControllers {
 			}
 			RecycleToCache();
 		}
+		
+		
 
 		public abstract void OnItemStartUse();
 

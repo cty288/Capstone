@@ -34,6 +34,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public bool IsInBattle();
 		
 		public void SetInBattle(bool isInBattle);
+		
+		public int CurrentEnemyCount { get; set; }
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
@@ -42,6 +44,10 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		private IMaxEnemiesProperty maxEnemiesProperty;
 		[field: ES3Serializable]
 		private bool isInBattle = false;
+		
+		[field: ES3Serializable]
+		public int CurrentEnemyCount { get; set; }
+		
 		protected override ConfigTable GetConfigTable() {
 			return null;
 		}
@@ -143,6 +149,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		public override void OnRecycle() {
 			isInBattle = false;
+			CurrentEnemyCount = 0;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
@@ -15,13 +16,15 @@ using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
 using UnityEngine;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.ViewControllers.Base {
 	[RequireComponent(typeof(AnimationSMBManager))]
 	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder, ICanDealDamageViewController
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
-
+		
+		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
 
 		public int Danger {  get; }
 	
@@ -67,16 +70,19 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			Bind<HealthInfo, int>("CurrentHealth", BoundEntity.GetHealth(), info => info.CurrentHealth);
 		}
 		
-		public IEnemyEntity OnInitEntity() {
+		public IEnemyEntity OnInitEntity(int level, int rarity) {
 			if (enemyModel == null) {
 				enemyModel = this.GetModel<IEnemyEntityModel>();
 			}
-			return OnBuildNewEntity() as IEnemyEntity;
+
+			EnemyBuilder<T> builder = enemyModel.GetEnemyBuilder<T>(rarity);
+			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level);
+			return OnInitEnemyEntity(builder);
 		}
 		
 		protected override IEntity OnBuildNewEntity() {
-			EnemyBuilder<T> builder = enemyModel.GetEnemyBuilder<T>(1);
-			return OnInitEnemyEntity(builder);
+			int level = this.GetModel<ILevelModel>().CurrentLevelCount.Value;
+			return OnInitEntity(level, rarityBaseValueBuiltFromInspector);
 		}
 
 		protected abstract IEnemyEntity OnInitEnemyEntity(EnemyBuilder<T> builder);

@@ -60,6 +60,19 @@ namespace Runtime.Temporary
 
             return closestPlayer;
         }
+        
+        public static HashSet<PlayerController> GetAllPlayers() {
+            if (players.Count == 0) {
+                //try find gameobject of type playercontroller
+                var playerController = GameObject.FindObjectsOfType<PlayerController>();
+                if (playerController.Length == 0) {
+                    return null;
+                }
+                players = new HashSet<PlayerController>(playerController);
+            }
+
+            return players;
+        }
         protected override IEntity OnBuildNewEntity() {
             return this.GetModel<IGamePlayerModel>().GetPlayer();
         }

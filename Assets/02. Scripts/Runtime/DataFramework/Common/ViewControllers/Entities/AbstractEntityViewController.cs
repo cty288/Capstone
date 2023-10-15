@@ -29,11 +29,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	
 	public class EntityVCOnRecycledUnRegister : IUnRegister
 	{
-		private Action<IEntity> onEntityRecycled;
+		private Action<IEntityViewController> onEntityRecycled;
 
 		private IEntityViewController entity;
 		
-		public EntityVCOnRecycledUnRegister(IEntityViewController entity, Action<IEntity> onEntityRecycled) {
+		public EntityVCOnRecycledUnRegister(IEntityViewController entity, Action<IEntityViewController> onEntityRecycled) {
 			this.entity = entity;
 			this.onEntityRecycled = onEntityRecycled;
 		}
@@ -92,7 +92,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
 		protected bool isPointed = false;
 		protected Camera mainCamera;
-		protected Action<IEntity> onEntityVCInitCallback = null;
+		protected Action<IEntityViewController> onEntityVCInitCallback = null;
 		
 		protected class CrossHairManagedHUDInfo {
 			public Transform originalSpawnTransform;
@@ -140,7 +140,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 		}
 
-		public void InitWithID(string id) {
+		public void InitWithID(string id, bool recycleIfAlreadyExist = true) {
+			if (BoundEntity != null && id == BoundEntity.UUID) {
+				return;
+			}
 			ID = id;
 			IEntity ent = null;
 			(ent, entityModel) = GlobalEntities.GetEntityAndModel(ID);
@@ -150,14 +153,22 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 
 			if (BoundEntity != null) {
+				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+				
+				if (recycleIfAlreadyExist) {
+					entityModel.RemoveEntity(BoundEntity.UUID);
+				}
+				
+				OnReadyToRecycle();
+				OnRecycled();
 			}
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
 			OnBindProperty();
 			OnEntityStart();
-			onEntityVCInitCallback?.Invoke(this.BoundEntity);
+			onEntityVCInitCallback?.Invoke(this);
 		}
 
 
@@ -393,6 +404,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private void OnEntityReadyToRecycle(IEntity e) {
 			BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 			if (autoDestroyWhenEntityRemoved) {
+				gameObject.SetActive(false);
 				OnReadyToRecycle();
 			}
 			StopAllCoroutines();
@@ -430,7 +442,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		protected virtual void OnReadyToRecycle() {
-			gameObject.SetActive(false);
+			//gameObject.SetActive(false);
 			string[] keys = crossHairManagedHUDs.Keys.ToArray();
 			foreach (string key in keys) {
 				DespawnHUDElement(crossHairManagedHUDs[key].originalSpawnTransform,
@@ -690,12 +702,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 		}
 
-		public IUnRegister RegisterOnEntityViewControllerInit(Action<IEntity> callback) {
+		public IUnRegister RegisterOnEntityViewControllerInit(Action<IEntityViewController> callback) {
 			onEntityVCInitCallback += callback;
 			return new EntityVCOnRecycledUnRegister(this, callback);
 		}
 
-		public void UnRegisterOnEntityViewControllerInit(Action<IEntity> callback) {
+		public void UnRegisterOnEntityViewControllerInit(Action<IEntityViewController> callback) {
 			onEntityVCInitCallback -= callback;
 		}
 

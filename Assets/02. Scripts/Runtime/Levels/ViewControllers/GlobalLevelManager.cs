@@ -43,13 +43,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			foreach (GameObject level in levels) {
 				ILevelViewController levelViewController = level.GetComponent<ILevelViewController>();
 				foreach (GameObject enemy in levelViewController.Enemies) {
-					globalPrefabList.Add(enemy.name, enemy);
+					globalPrefabList.TryAdd(enemy.name, enemy);
 				}
 			}
 		}
 
 		private void OnCurrentLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
 			if (currentLevelGo) {
+				currentLevelGo.GetComponent<ILevelViewController>().OnExitLevel();
 				Destroy(currentLevelGo);
 			}
 			

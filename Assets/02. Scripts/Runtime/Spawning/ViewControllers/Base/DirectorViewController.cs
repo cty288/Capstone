@@ -5,11 +5,13 @@ using System.ComponentModel;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using UnityEngine;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.ViewControllers.Entities;
+using Runtime.Enemies;
 using Runtime.Enemies.Model;
 using Runtime.Utilities.ConfigSheet;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
@@ -17,10 +19,31 @@ using Random = UnityEngine.Random;
 
 namespace Runtime.Spawning
 {
+    public class DirectorOnSpawnEnemyUnregister : IUnRegister
+    {
+        private Action<GameObject, IDirectorViewController> onSpawnEnemy;
+
+        private IDirectorViewController director;
+		
+        public DirectorOnSpawnEnemyUnregister(IDirectorViewController director, Action<GameObject, IDirectorViewController> onSpawnEnemy) {
+            this.director = director;
+            this.onSpawnEnemy = onSpawnEnemy;
+        }
+
+        public void UnRegister() {
+            director.UnregisterOnSpawnEnemy(onSpawnEnemy);
+            director = null;
+        }
+    }
+    
     public interface IDirectorViewController : IEntityViewController {
         IDirectorEntity DirectorEntity => Entity as IDirectorEntity;
 
         public void SetLevelEntity(ILevelEntity levelEntity);
+
+        public IUnRegister RegisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy);
+        
+        public void UnregisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy);
     }
     
     public abstract class DirectorViewController<T>  : AbstractBasicEntityViewController<T>, IDirectorViewController where T : class, IDirectorEntity, new() 
@@ -30,7 +53,8 @@ namespace Runtime.Spawning
         
         protected ILevelEntity LevelEntity;
         protected int levelNumber;
-        
+        protected Action<GameObject, IDirectorViewController> onSpawnEnemy;
+
         [Header("Director Info")]
         [SerializeField] public float baseSpawnTimer;
         [SerializeField] public float baseStartingCredits;
@@ -79,7 +103,7 @@ namespace Runtime.Spawning
         protected abstract IEntity OnInitDirectorEntity(DirectorBuilder<T> builder);
         
         protected override void Update() {
-            if (BoundEntity == null || String.IsNullOrEmpty(BoundEntity.UUID)) { //not initialized yet
+            if (BoundEntity == null || String.IsNullOrEmpty(BoundEntity.UUID) || LevelEntity == null) { //not initialized yet
                 return;
             }
             base.Update();
@@ -98,14 +122,26 @@ namespace Runtime.Spawning
             }
         }
 
-        public void SetLevelEntity(ILevelEntity levelEntity)
-        {
+        public void SetLevelEntity(ILevelEntity levelEntity) {
             LevelEntity = levelEntity;
             levelNumber = levelEntity.GetCurrentLevelCount();
             IEntity ent = OnBuildNewEntity(levelNumber);
             InitWithID(ent.UUID);
+            
+            //for some reason we need to do this again
+            LevelEntity = levelEntity;
+            levelNumber = levelEntity.GetCurrentLevelCount();
         }
-        
+
+        public IUnRegister RegisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy) {
+            this.onSpawnEnemy += onSpawnEnemy;
+            return new DirectorOnSpawnEnemyUnregister(this, onSpawnEnemy);
+        }
+
+        public void UnregisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy) {
+            this.onSpawnEnemy -= onSpawnEnemy;
+        }
+
         private void DecrementTimers()
         {
             creditTimer -= Time.deltaTime;
@@ -126,6 +162,10 @@ namespace Runtime.Spawning
                 Debug.Log("lottery: " + m_lottery);
                 m_lottery.SetCards(cards);
                 LevelSpawnCard selectedCard = m_lottery.PickNextCard();
+
+                if (default(LevelSpawnCard).Equals(selectedCard)) {
+                    return;
+                }
 
                 bool success = true;
                 int maxPackSize = 10; // TODO: Temp to prevent lag
@@ -162,15 +202,21 @@ namespace Runtime.Spawning
                 //pick a spot
                 Vector3 spawnPos = new Vector3(
                     transform.position.x + Random.Range(minSpawnRange, maxSpawnRange), 
-                    transform.position.y + 10f,  
+                    transform.position.y + 100f,  
                     transform.position.z + Random.Range(minSpawnRange, maxSpawnRange));
                 
-                if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 30f, spawnMask))
+                if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 300f, spawnMask))
                 {
-                    Debug.Log("spawn success: " + card.EntityName + ", location: " + hit.point);
+                    //Debug.Log("spawn success: " + card.EntityName + ", location: " + hit.point);
                     spawnPos = hit.point;
                     //TODO: spawn enemy at certain rarity
-                    Instantiate(card.Prefab, spawnPos, Quaternion.identity);
+                    //Instantiate(card.Prefab, spawnPos, Quaternion.identity);
+                    GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, spawnPos, Quaternion.identity, null, rarity,
+                        levelNumber, true, 5, 30);
+                    IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
+                    onSpawnEnemy?.Invoke(spawnedEnemy, this);
+                    Debug.Log(
+                        $"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
                     
                     currentCredits -= cost;
                     return true;
@@ -192,6 +238,14 @@ namespace Runtime.Spawning
             Gizmos.DrawWireSphere(transform.position, minSpawnRange);
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, maxSpawnRange);
+        }
+
+
+        public override void OnRecycled() {
+            base.OnRecycled();
+            onSpawnEnemy = null;
+            m_lottery = null;
+            LevelEntity = null;
         }
     }
 }

@@ -6,12 +6,16 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Utilities;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Spawning;
+using Runtime.Temporary;
+using Runtime.Utilities;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,6 +28,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public ILevelEntity OnBuildNewLevel(int levelNumber);
 
 		public void Init();
+		
+		public void OnExitLevel();
 		
 		List<GameObject> Enemies { get; }
 	}
@@ -72,6 +78,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			MaxRarity = maxRarity;
 		}
 
+		public override bool Equals(object obj) {
+			if (obj is LevelSpawnCard other) {
+				return other.TemplateEntityUUID == TemplateEntityUUID;
+			}
+
+			return false;
+		}
+
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
 		}
@@ -95,6 +109,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[Header("Enemies")]
 		[SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
 
+		[SerializeField] protected GameObject playerSpawner;
+
+
 		public List<GameObject> Enemies => enemies.Select(e => e.prefab).ToList();
 		
 		[SerializeField] protected int maxEnemiesBaseValue = 50;
@@ -103,6 +120,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private ILevelModel levelModel;
 		private int levelNumber;
 		private NavMeshSurface navMeshSurface;
+
+		private HashSet<IDirectorViewController> playerSpawners = new HashSet<IDirectorViewController>();
+
+		private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
+
+		[Header("Debug Only")]
+		[SerializeField]
+		private int enemyCount = 0;
 		protected override void Awake() {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();
@@ -129,7 +154,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			foreach (var enemy in enemies) {
 				GameObject prefab = enemy.prefab;
 				IEnemyViewController enemyViewController = prefab.GetComponent<IEnemyViewController>();
-				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity();
+				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1);
 				
 				//templateEnemies.Add(enemyEntity);
 				spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefab.name,
@@ -154,15 +179,58 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
 			UpdateNavMesh();
+			UpdatePreExistingEnemies();
 			UpdatePreExistingDirectors();
 			OnSpawnPlayer();
 		}
 
+		
+
 		private void UpdatePreExistingDirectors() {
 			IDirectorViewController[] directors = GetComponentsInChildren<IDirectorViewController>(true);
 			foreach (var directorViewController in directors) {
-				directorViewController.SetLevelEntity(BoundEntity);
+				InitDirector(directorViewController);
 			}
+		}
+		
+		protected void InitDirector(IDirectorViewController director) {
+			director.SetLevelEntity(BoundEntity);
+			
+			
+			director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		}
+
+		private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
+			OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
+		}
+		
+		private void UpdatePreExistingEnemies() {
+			IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
+			foreach (var enemy in enemies) {
+				enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
+					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			}
+		}
+
+		private void OnExistingEnemyInit(IEntityViewController entity) {
+			entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
+			OnInitEnemy(entity as IEnemyViewController);
+		}
+
+		private void OnInitEnemy(IEnemyViewController enemyObject) {
+			IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
+			enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			enemyCount++;
+			BoundEntity.CurrentEnemyCount++;
+			currentEnemies.Add(enemyEntity);
+		}
+
+		private void OnEnemyEntityRecycled(IEntity enemy) {
+			enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
+			enemyCount--;
+			BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
+			currentEnemies.Remove(enemy);
 		}
 
 		protected override void Update() {
@@ -186,10 +254,58 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			this.SendCommand<TeleportPlayerCommand>(
 				TeleportPlayerCommand.Allocate(playerSpawnPoints.GetRandomElement().position));
+
+			if (playerSpawner) {
+				HashSet<PlayerController> players = PlayerController.GetAllPlayers();
+				SafeGameObjectPool pool = GameObjectPoolManager.Singleton.CreatePool(playerSpawner, 10, 100);
+				foreach (var player in players) {
+					GameObject spawner = pool.Allocate();
+					
+					spawner.transform.localPosition = Vector3.zero;
+					spawner.transform.localRotation = Quaternion.identity;
+					spawner.transform.localScale = Vector3.one;
+					IDirectorViewController director = spawner.GetComponent<IDirectorViewController>();
+					playerSpawners.Add(director);
+					InitDirector(director);
+					spawner.transform.SetParent(player.transform);
+				}
+			}
+			
+			
 		}
 
 		public override void OnRecycled() {
 			base.OnRecycled();
+			enemyCount = 0;
+			currentEnemies.Clear();
+			playerSpawners.Clear();
+		}
+		
+		public void OnExitLevel() {
+			BoundEntity.CurrentEnemyCount = 0;
+			IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
+			IDirectorModel directorModel = this.GetModel<IDirectorModel>();
+			
+			while (currentEnemies.Count > 0) {
+				IEntity enemy = currentEnemies.First();
+				currentEnemies.Remove(enemy);
+				
+				enemyModel.RemoveEntity(enemy.UUID);
+			}
+			
+			IDirectorViewController[] directors = GetComponentsInChildren<IDirectorViewController>(true);
+			foreach (var directorViewController in directors) {
+				directorModel.RemoveEntity(directorViewController.Entity.UUID);
+			}
+
+			foreach (IDirectorViewController spawner in playerSpawners) {
+				directorModel.RemoveEntity(spawner.Entity.UUID);
+			}
+		}
+
+		protected override void OnDestroy() {
+			base.OnDestroy();
+			OnRecycled();
 		}
 	}
 }

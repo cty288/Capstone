@@ -400,8 +400,12 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
+  rarityBaseValueBuiltFromInspector: 1
   healthBarPrefabName: EnemyHealthBar
   healthBarSpawnPoint: {fileID: 8049880894790430500}
+  autoRecycleTimeAfterFarAwayFromPlayer: 10
+  autoRecycleDistanceFromPlayer: 150
+  autoRecycleCheckTimeInterval: 5
   waypoints:
   - {fileID: 8049880895630953115}
   - {fileID: 8049880895341931480}
