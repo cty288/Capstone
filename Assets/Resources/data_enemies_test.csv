@@ -124,7 +124,7 @@ TTT3,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]"
     ""speed"": {
       ""type"": ""int"",
       ""value"": 100,
-      ""dependencies"": [""rarity""]
+      ""dependencies"": [""rarity"", ""level""]
     },
     ""info"": {
       ""type"": ""dynamic"",
@@ -147,7 +147,9 @@ TTT3,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]"
   ""attack3"": {
     ""damage"": {
       ""type"": ""int"",
-      ""value"": 50
+      ""value"": 50,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
     }
   }
 }","{
