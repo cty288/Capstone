@@ -35,7 +35,9 @@ namespace Runtime.Inventory.ViewController {
 			
 		}
 
-		
+		public override void OnInventoryUIClosed() {
+			slotViewControllers.ForEach(slot => slot.OnInventoryUIClosed());
+		}
 
 		public override void OnInventorySlotAdded(List<ResourceSlot> addedSlots, int addedCount) {
 			Awake();
@@ -82,5 +84,7 @@ namespace Runtime.Inventory.ViewController {
 		public override void OnSelected(int slotIndex) {
 			
 		}
+
+
 	}
 }

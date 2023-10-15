@@ -101,12 +101,15 @@ namespace MikroFramework.Pool
                     Debug.LogError($"{obj.name} recycled to the wrong ObjectPool!");
                 }
 
-                if (obj == null || !obj.activeInHierarchy)
+                if (obj == null)
                 {
                     return false;
                 }
 
                 PoolableGameObject poolable = obj.GetComponent<PoolableGameObject>();
+                if (poolable.IsRecycled) {
+                    return false;
+                }
                 if (CurrentCount < maxCount)
                 {
                     obj.SetActive(false);

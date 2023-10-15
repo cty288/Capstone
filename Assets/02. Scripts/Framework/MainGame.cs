@@ -1,3 +1,5 @@
+using _02._Scripts.Runtime.Baits.Model.Base;
+using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
@@ -5,6 +7,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.RawMaterials.Model.Base;
+using Runtime.Spawning;
 using Runtime.Weapons.Model.Base;
 
 
@@ -13,6 +16,7 @@ namespace Framework {
 	public class MainGame : SavableArchitecture<MainGame> {
 		
 		protected override void Init() {
+			ES3AutoSaveMgr.Current.Load();
 			GlobalEntities.Reset();
 			GlobalGameResourceEntities.Reset();
 			
@@ -25,6 +29,9 @@ namespace Framework {
 			this.RegisterModel<IInventoryModel>(new InventoryModel());
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
 			this.RegisterModel<IGamePlayerModel>(new GamePlayerModel());
+			this.RegisterModel<ILevelModel>(new LevelModel());
+			this.RegisterModel<IDirectorModel>(new DirectorModel());
+			this.RegisterModel<IBaitModel>(new BaitModel());
 			
 			this.RegisterExtensibleUtility<ResLoader>(new ResLoader());
 		}

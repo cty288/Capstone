@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Runtime.DataFramework.Entities;
 using UnityEngine;
 
 namespace Runtime.DataFramework.Properties.CustomProperties {
@@ -32,7 +33,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 		}
 		
 
-		public override Dictionary<string, ICustomProperty> OnSetBaseValueFromConfig(dynamic value) {
+		public override Dictionary<string, ICustomProperty> OnSetBaseValueFromConfig(dynamic value, IEntity parentEntity) {
 			//get all keys of value
 			_configData = value;
 			IEnumerable<string> keys = _configData.Properties().Select(p => p.Name);
@@ -41,7 +42,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 			}
 			foreach (string key in keys) {
 				if (BaseValue.TryGetValue(key, out ICustomProperty val)) {
-					val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key]));
+					val.SetBaseValue(val.OnGetBaseValueFromConfig(value[key], parentEntity));
 				}
 			}
 

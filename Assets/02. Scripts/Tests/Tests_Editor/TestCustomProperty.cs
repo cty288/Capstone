@@ -19,7 +19,7 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
             
 			}
-			protected override void OnInitModifiers(int rarity) {
+			protected override void OnInitModifiers(int rarity, int level) {
             
 			}
 			protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -34,6 +34,11 @@ namespace Tests.Tests_Editor {
 			}
 
 
+			public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+				return level;
+			}
+
+			
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
@@ -79,13 +84,17 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
         
 			}
-			protected override void OnInitModifiers(int rarity) {
+			protected override void OnInitModifiers(int rarity, int level) {
             
 			}
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
+			public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+				return level;
+			}
 
+			
 			protected override void OnEntityStart(bool isLoadedFromSave) {
 				
 			}
@@ -146,13 +155,19 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
         
 			}
+			public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+				return level;
+			}
+
 			
-			protected override void OnInitModifiers(int rarity) {
+			protected override void OnInitModifiers(int rarity, int level) {
 				SetPropertyModifier<int>(new PropertyNameInfo("attack1", "speed"), 
 					(val) => val + rarity * 100);
 
 				SetPropertyModifier<int>(new PropertyNameInfo("attack2", "damage"),
 					(val) => val + rarity * 100 + GetCustomDataValue<int>("attack1", "speed"));
+
+				//SetGeneralEnemyAbilityModifier<int>(new PropertyNameInfo("attack3", "damage"), rarity, level);
 			}
 
 			protected override ConfigTable GetConfigTable() {
@@ -357,6 +372,8 @@ namespace Tests.Tests_Editor {
 				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
 				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f)
 				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f)
+				.AddDependency(new PropertyNameInfo("attack2", "damage"),
+					new[] {new PropertyNameInfo("attack1", "speed")})
 				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 				.Build();
 			
@@ -375,14 +392,16 @@ namespace Tests.Tests_Editor {
 					.BaseValue["attack1"].BaseValue.Count);
 
 
-			
-			
-			
+
+
+
 			ent1 = model.GetEnemyBuilder<TestEntity3>(10)
 				.FromConfig()
 				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
 				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f)
 				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f)
+				.AddDependency(new PropertyNameInfo("attack2", "damage"),
+					new[] {new PropertyNameInfo("attack1", "speed")})
 				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 				.Build();
 			
@@ -451,6 +470,69 @@ namespace Tests.Tests_Editor {
 		
 			ES3.DeleteKey("test_save_ent4", "test_save");
 			
+		}
+		
+		
+		[Test]
+		public void TestUseDefaultModifier() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+			
+			TestEntity3 ent1 = model.GetEnemyBuilder<TestEntity3>(10)
+				.FromConfig()
+				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
+				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f)
+				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f)
+				.SetProperty(new PropertyNameInfo(PropertyName.level_number), 5)
+				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
+				.Build();
+			
+			Assert.AreEqual(3, ent1.GetCustomProperties().Values.Count);
+
+
+			Assert.AreEqual(1100, ent1.GetCustomDataValue<int>("attack1", "speed").Value);
+			//1100 + 1000 + 4
+			Assert.AreEqual(2104, ent1.GetCustomDataValue<int>("attack2", "damage").Value);
+
+			Assert.AreNotEqual(ent1.GetCustomDataValue<int>("attack3", "damage").Value, 50);
+			
+			ES3.Save("test_save_ent5", ent1, "test_save");
+			model.RemoveEntity(ent1.UUID);
+
+
+
+			ent1 = ES3.Load<TestEntity3>("test_save_ent5", "test_save");
+			ent1.OnLoadFromSave();
+
+			Assert.IsNotNull(ent1);
+			
+			
+
+			Assert.AreEqual(ent1.GetProperty<ICustomProperties>().BaseValue["attack1"].GetHashCode(),
+				ent1.GetProperty<ICustomProperties>().RealValues.Value["attack1"].GetHashCode());
+			
+			Debug.Log("Hash code of attack1 Base: " + ent1.GetProperty<ICustomProperties>().BaseValue["attack1"].GetHashCode());
+			Debug.Log("Hash code of attack1 Real: " +
+			          ent1.GetProperty<ICustomProperties>().RealValues.Value["attack1"].GetHashCode());
+			
+			Assert.AreEqual(ent1.GetProperty<ICustomProperties>().BaseValue["attack1"].BaseValue["info"].GetRealValue().GetHashCode(),
+				ent1.GetCustomDataValue("attack1", "info").GetHashCode());
+			
+			
+			Assert.AreEqual(3, ent1.GetCustomProperties().Values.Count);
+
+
+			Assert.AreEqual(1100, ent1.GetCustomDataValue<int>("attack1", "speed").Value);
+			//1100 + 1000 + 4
+			Assert.AreEqual(2104, ent1.GetCustomDataValue<int>("attack2", "damage").Value);
+
+			Assert.AreNotEqual(ent1.GetCustomDataValue<int>("attack3", "damage").Value, 50);
+
+			
+			
+			
+			ES3.DeleteKey("test_save_ent5", "test_save");
 		}
 	}
 }

@@ -16,6 +16,7 @@ namespace Runtime.Utilities.ConfigSheet
 		private ConfigTable weaponEntityConfigTable_test;
 		private ConfigTable playerEntityConfigTable;
 		private ConfigTable normalEnemyEntityConfigTable;
+		private ConfigTable globalDataTable;
 
 		public ConfigTable BossEntityConfigTable => bossEntityConfigTable;
 		public ConfigTable EnemyEntityConfigTable_Test => enemyEntityConfigTable_test;
@@ -29,6 +30,8 @@ namespace Runtime.Utilities.ConfigSheet
 		public ConfigTable WeaponEntityConfigTable_Test => weaponEntityConfigTable_test;
 		
 		public ConfigTable PlayerEntityConfigTable => playerEntityConfigTable;
+		
+		public ConfigTable GlobalDataTable => globalDataTable;
         
 		public override void OnSingletonInit()
 		{
@@ -57,6 +60,9 @@ namespace Runtime.Utilities.ConfigSheet
 			
 			normalEnemyEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"642644287", "data_enemies");
+			
+			globalDataTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+				"1266085510", "data_global");
 		}
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

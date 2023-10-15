@@ -41,9 +41,15 @@ namespace Runtime.Enemies
         public override void OnRecycle() {
 
         }
-        protected override void OnInitModifiers(int rarity) {
+        protected override void OnInitModifiers(int rarity, int level) {
             
         }
+
+        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+            return level * baseWeight;
+        }
+
+        
         protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
@@ -127,7 +133,7 @@ namespace Runtime.Enemies
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
-          
+            
         }
 
         protected override void OnEntityStart()
@@ -178,6 +184,8 @@ namespace Runtime.Enemies
         }
         
         protected void OnShellClosedChanged(bool oldValue,bool newValue) {
+            //GetComponent<>()
+            
             Debug.Log("changed to" + newValue);
             shellCollider.enabled = newValue;
             hardCollider.enabled = newValue;
@@ -254,7 +262,10 @@ namespace Runtime.Enemies
                     }
                 }
 
-                DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage);
+                if (data.ShowDamageNumber) {
+                    DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage);
+                }
+                
                 
                 Debug.Log("Shell has taken" + originalDamage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }
