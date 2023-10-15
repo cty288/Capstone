@@ -4,6 +4,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 
@@ -125,8 +126,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				failureReason = DeployFailureReason.InAir;
 				return false;
 			}
-
-			
 			float angle = Vector3.Angle(Vector3.up, slopeNormal);
 
 			
@@ -134,6 +133,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				failureReason = DeployFailureReason.SlopeTooSteep;
 				return false;
 			}
+			
+		
 			
 			
 			float height = heightDetectionCollider.bounds.size.y;

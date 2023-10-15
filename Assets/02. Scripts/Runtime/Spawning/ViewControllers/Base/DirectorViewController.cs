@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.Utilities;
 using UnityEngine;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
@@ -14,6 +15,7 @@ using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies;
 using Runtime.Enemies.Model;
 using Runtime.Utilities.ConfigSheet;
+using UnityEngine.AI;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 using Random = UnityEngine.Random;
 
@@ -202,24 +204,28 @@ namespace Runtime.Spawning
                 //pick a spot
                 Vector3 spawnPos = new Vector3(
                     transform.position.x + Random.Range(minSpawnRange, maxSpawnRange), 
-                    transform.position.y + 100f,  
+                    transform.position.y + 500f,  
                     transform.position.z + Random.Range(minSpawnRange, maxSpawnRange));
                 
-                if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 300f, spawnMask))
+                if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
                 {
-                    //Debug.Log("spawn success: " + card.EntityName + ", location: " + hit.point);
-                    spawnPos = hit.point;
-                    //TODO: spawn enemy at certain rarity
-                    //Instantiate(card.Prefab, spawnPos, Quaternion.identity);
-                    GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, spawnPos, Quaternion.identity, null, rarity,
-                        levelNumber, true, 5, 30);
-                    IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
-                    onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                    Debug.Log(
-                        $"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
+                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground")){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
+                        //Debug.Log("spawn success: " + card.EntityName + ", location: " + hit.point);
+                        spawnPos = hit.point;
+                        NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
+                        spawnPos = hitNavMesh.position;
+                        //TODO: spawn enemy at certain rarity
+                        //Instantiate(card.Prefab, spawnPos, Quaternion.identity);
+                        GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, spawnPos, Quaternion.identity, null, rarity,
+                            levelNumber, true, 5, 30);
+                        IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
+                        onSpawnEnemy?.Invoke(spawnedEnemy, this);
+                        Debug.Log(
+                            $"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
                     
-                    currentCredits -= cost;
-                    return true;
+                        currentCredits -= cost;
+                        return true;
+                    }
                 }
                 spawnAttempts--;
             }

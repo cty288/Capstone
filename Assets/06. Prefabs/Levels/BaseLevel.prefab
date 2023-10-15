@@ -822,7 +822,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 2304
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
@@ -879,6 +879,7 @@ MonoBehaviour:
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
   maxEnemiesBaseValue: 50
+  autoUpdateNavMeshOnStart: 1
   enemyCount: 0
 --- !u!1 &6048053586552478868
 GameObject:

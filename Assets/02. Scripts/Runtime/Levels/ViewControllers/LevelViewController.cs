@@ -64,6 +64,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public string EntityName => TemplateEntity.EntityName;
 
+	
 		public float GetRealSpawnCost(int level, int rarity) {
 			return TemplateEntity.GetRealSpawnCost(level, rarity);
 		} 
@@ -124,7 +125,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private HashSet<IDirectorViewController> playerSpawners = new HashSet<IDirectorViewController>();
 
 		private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
-
+		[SerializeField] protected bool autoUpdateNavMeshOnStart = true;
 		[Header("Debug Only")]
 		[SerializeField]
 		private int enemyCount = 0;
@@ -178,7 +179,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public void Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
-			UpdateNavMesh();
+			if (autoCreateNewEntityWhenStart) {
+				UpdateNavMesh();
+			}
 			UpdatePreExistingEnemies();
 			UpdatePreExistingDirectors();
 			OnSpawnPlayer();
@@ -241,6 +244,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 		
 		protected void UpdateNavMesh() {
+			
 			NavMeshBuildSettings buildSettings = navMeshSurface.GetBuildSettings();
 			buildSettings.preserveTilesOutsideBounds = true;
 			navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData, buildSettings);
@@ -261,13 +265,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				foreach (var player in players) {
 					GameObject spawner = pool.Allocate();
 					
-					spawner.transform.localPosition = Vector3.zero;
-					spawner.transform.localRotation = Quaternion.identity;
-					spawner.transform.localScale = Vector3.one;
+					
 					IDirectorViewController director = spawner.GetComponent<IDirectorViewController>();
 					playerSpawners.Add(director);
 					InitDirector(director);
 					spawner.transform.SetParent(player.transform);
+					spawner.transform.localPosition = Vector3.zero;
+					spawner.transform.localRotation = Quaternion.identity;
+					spawner.transform.localScale = Vector3.one;
 				}
 			}
 			
