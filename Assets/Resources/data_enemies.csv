@@ -1,5 +1,5 @@
 EntityName / Property Names,health,danger,spawn_cost,spawn_weight,custom_properties,tags,,Notes
-Types,HealthInfo,int,int,int,dynamic,"Dictionary<TagName,int>",,
+Types,HealthInfo,int,float,int,dynamic,"Dictionary<TagName,int>",,
 Notes ->,"json
 default: 
 {""maxHealth"": 100, ""currentHealth"": 100}",int,,,"Dict<string, CustomProperty>
@@ -77,7 +77,7 @@ QuadrupedCarrier,"{""maxHealth"": 150, ""currentHealth"": 150}",124,3,3,"{
   ""attack"":{
     ""bulletDamage"":{
       ""type"": ""int"",
-      ""value"": 2
+      ""value"": 5
     },
     ""ammoSize"":{
       ""type"": ""int"",
@@ -85,7 +85,7 @@ QuadrupedCarrier,"{""maxHealth"": 150, ""currentHealth"": 150}",124,3,3,"{
     },
     ""bulletSpeed"" : {
       ""type"" : ""float"",
-      ""value"": 12
+      ""value"": 15
     },
     ""spawnInterval"":{
       ""type"": ""float"",

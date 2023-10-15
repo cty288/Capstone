@@ -6,7 +6,11 @@ using UnityEngine;
 namespace a {
 	public class Boss1Bullet : AbstractBulletViewController {
 
-		
+        public float bulletSpeed;
+        private void Update()
+        {
+            //this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
+        }
         protected override void OnHitResponse(HitData data) {
 			
 		}
@@ -22,6 +26,10 @@ namespace a {
         protected override void OnBulletRecycled() {
 			
 		}
+        public void SetData(float bulletSpeed)
+        {
+            this.bulletSpeed = bulletSpeed;
+        }
         
 
     }
