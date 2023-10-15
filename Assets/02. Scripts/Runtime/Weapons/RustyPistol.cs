@@ -140,6 +140,7 @@ namespace Runtime.Weapons
                 {
                     if (IsScopedIn)
                     {
+                        
                         StartCoroutine(ScopeOut(true));
                     }
                     else

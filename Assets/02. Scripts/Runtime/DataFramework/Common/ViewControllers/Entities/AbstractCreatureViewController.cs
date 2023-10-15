@@ -30,11 +30,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			
 		}
-
-		protected override void OnEntityStart() {
-			throw new System.NotImplementedException();
-		}
-
 		protected override void OnStart() {
 			base.OnStart();
 			if (navMeshAgent) {
