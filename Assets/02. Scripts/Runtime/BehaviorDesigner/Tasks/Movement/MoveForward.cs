@@ -20,18 +20,20 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         private Rigidbody rb;
         public float speed;
         public float arrivalDistanceThreshold;
+        private Transform body;
 
         public override void OnStart()
         {
             this.gameObject.GetComponent<NavMeshAgent>().enabled = false;
             base.OnStart();
             rb = this.GetComponent<Rigidbody>();
+            body = this.gameObject.transform.GetChild(0);
         }
 
         public override TaskStatus OnUpdate()
         {
             var position = target.Value.transform.position;
-            var dir = (position - this.gameObject.transform.position).normalized;
+            var dir = (position - body.transform.position).normalized;
             rb.velocity = dir * speed;
             Debug.Log(Vector3.Distance(transform.position, position));
             // Check if the distance between the object and the target is less than the threshold

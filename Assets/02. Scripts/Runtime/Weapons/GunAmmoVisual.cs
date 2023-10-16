@@ -14,31 +14,57 @@ namespace Runtime.Weapons
     {
         //[SerializeField] private GameObject weapon;
         private IWeaponEntity _associatedWeapon;
+        [SerializeField] private Renderer[] renderers;
         [SerializeField] private Material gunBarrelIndicator;
-        private Material _instanceGunBarrelIndicator;
+        private Material[] _instanceGunBarrelIndicators;
         private static readonly int MaxAmmo = Shader.PropertyToID("_MaxAmmo");
         private static readonly int CurrentAmmo = Shader.PropertyToID("_CurrentAmmo");
 
         
-        void Awake() {
-            MeshRenderer renderer = GetComponent<MeshRenderer>();
-            if (renderer.material == null)
+        void Awake()
+        {
+            _instanceGunBarrelIndicators = new Material[renderers.Length];
+            for (int i = 0; i < renderers.Length; i++)
             {
-                renderer.material = new Material(gunBarrelIndicator);
+                if (renderers[i].material == null)
+                {
+                    renderers[i].material = new Material(gunBarrelIndicator);
+                    _instanceGunBarrelIndicators[i] = renderers[i].material;
+                }
+                else
+                {
+                    foreach (var material in renderers[i].materials)
+                    {
+                        if (material.shader.name.Equals(gunBarrelIndicator.shader.name))
+                        {
+                            _instanceGunBarrelIndicators[i] = material;
+                        }
+                    }
+                }
+                if (_instanceGunBarrelIndicators[i] == null)
+                {
+                    renderers[i].material = new Material(gunBarrelIndicator);
+                    _instanceGunBarrelIndicators[i] = renderers[i].material;
+                }
             }
-            _instanceGunBarrelIndicator = renderer.material;
         }
 
         public void Init(IWeaponEntity entity) {
             _associatedWeapon = entity;
+            foreach (var gunBarrelIndicator in _instanceGunBarrelIndicators)
+            {
+                gunBarrelIndicator.SetInteger(MaxAmmo, _associatedWeapon.GetAmmoSize().RealValue);
+            }
             _associatedWeapon.CurrentAmmo.RegisterWithInitValue(OnAmmoChanged)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(transform.parent.gameObject);
-            _instanceGunBarrelIndicator.SetInteger(MaxAmmo, _associatedWeapon.GetAmmoSize().RealValue);
         }
 
         public void OnAmmoChanged(int num)
         {
-            _instanceGunBarrelIndicator.SetFloat(CurrentAmmo, num);
+            foreach (var gunBarrelIndicator in _instanceGunBarrelIndicators)
+            {
+                gunBarrelIndicator.SetFloat(CurrentAmmo, num);
+            }
         }
         
     }

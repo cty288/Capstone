@@ -33,6 +33,7 @@ namespace Runtime.Weapons.Model.Base
         public IScopeRecoil GetScopeRecoil();
         public IBulletSpeed GetBulletSpeed();
         public IChargeSpeed GetChargeSpeed();
+        public IWeight GetWeight();
         
         public BindableProperty<int> CurrentAmmo { get; set; }
         // public GunRecoil GunRecoilScript { get; set; }
@@ -54,6 +55,8 @@ namespace Runtime.Weapons.Model.Base
         private IScopeRecoil scopeRecoilProperty;
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
+        private IWeight weightProperty;
+        
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
 
@@ -89,7 +92,7 @@ namespace Runtime.Weapons.Model.Base
             scopeRecoilProperty = GetProperty<IScopeRecoil>();
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
-
+            weightProperty = GetProperty<IWeight>();
         }
 
         public override void OnDoRecycle() {
@@ -113,6 +116,7 @@ namespace Runtime.Weapons.Model.Base
             RegisterInitialProperty<IScopeRecoil>(new ScopeRecoil());
             RegisterInitialProperty<IBulletSpeed>(new BulletSpeed());
             RegisterInitialProperty<IChargeSpeed>(new ChargeSpeed());
+            RegisterInitialProperty<IWeight>(new Weight());
         }
         
         public IBaseDamage GetBaseDamage()
@@ -169,9 +173,12 @@ namespace Runtime.Weapons.Model.Base
         {
             return chargeSpeedProperty;
         }
-
-
-
+        
+        public IWeight GetWeight()
+        {
+            return weightProperty;
+        }
+        
         public void Reload() {
             CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
         }
