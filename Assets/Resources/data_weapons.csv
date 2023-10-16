@@ -1,13 +1,13 @@
-EntityName / Property Names,base_damage,attack_speed,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,scope_recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
-Types,int,float,float,int,float,int,float,RecoilInfo,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,int,float (cooldown),float,int,float (seconds),int,float (higher means more spread),,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
+EntityName / Property Names,base_damage,weight,attack_speed,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,scope_recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
+Types,int,,float,float,int,float,int,float,RecoilInfo,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,int,float,float (cooldown),float,int,float (seconds),int,float (higher means more spread),,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,,,
-BEGIN,,,,,,,,,,,,,,,,
-RustyPistol,10,0.3,50,6,2,1,0,"{
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,,,,
+BEGIN,,,,,,,,,,,,,,,,,
+RustyPistol,10,1,0.3,50,6,2,1,0,"{
   ""recoilX"": -10,
   ""recoilY"": 5,
   ""recoilZ"": 0.5,
@@ -20,7 +20,7 @@ RustyPistol,10,0.3,50,6,2,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 6
 }",0,300,1,,,,
-TheSanctuary,50,1,30,1,4,1,0.06,"{
+TheSanctuary,50,10,1,30,1,4,1,0.06,"{
   ""recoilX"": -50,
   ""recoilY"": 10,
   ""recoilZ"": 1,
@@ -40,7 +40,7 @@ TheSanctuary,50,1,30,1,4,1,0.06,"{
     }
   }
 }",,,
-RustyPistol2,40,0.05,50,60,2,1,0,"{
+RustyPistol2,40,1,0.05,50,60,2,1,0,"{
   ""recoilX"": -10,
   ""recoilY"": 5,
   ""recoilZ"": 0.5,
