@@ -109,17 +109,14 @@ namespace Runtime.Weapons
                 
                 if (BoundEntity.CurrentAmmo == 0 && autoReload)
                 {
-                    if (IsScopedIn)
-                    {
+                    if (IsScopedIn) {
                         ChangeScopeStatus(false);
-                        this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                        //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
                         //StartCoroutine(ScopeOut(true));
                     }
-                    else
-                    {
-                        this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
-                        StartCoroutine(ReloadChangeModel());
-                    }
+                    ChangeReloadStatus(true);
+                    StartCoroutine(ReloadChangeModel());
+                    
                 }
             }
         }
@@ -131,12 +128,12 @@ namespace Runtime.Weapons
             }
             if (IsScopedIn) {
                 ChangeScopeStatus(false);
-                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS",0));
+                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS",0));
                 //StartCoroutine(ScopeOut());
             }
             else {
                 ChangeScopeStatus(true);
-                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS",1));
+                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS",1));
                 //StartCoroutine(ScopeIn());
             }
         }
@@ -154,31 +151,27 @@ namespace Runtime.Weapons
                     if (IsScopedIn)
                     {
                         ChangeScopeStatus(false);
-                        this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                        //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
                         //StartCoroutine(ScopeOut(true));
                     }
-                    else
-                    {
-                        this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
-                        StartCoroutine(ReloadChangeModel());
-                    }
+                    
+                    //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                    StartCoroutine(ReloadChangeModel());
+                    
                 }
                 
             }
         }
 
-        private IEnumerator ReloadChangeModel()
-        {
-            isReloading = true;
-
+        private IEnumerator ReloadChangeModel() {
+            //isReloading = true;
+            ChangeReloadStatus(true);
             //defaultGunModel.SetActive(false);
             //reloadGunModel.SetActive(true);
-
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-            
             //defaultGunModel.SetActive(true);
             //reloadGunModel.SetActive(false);
-            isReloading = false;
+            ChangeReloadStatus(false);
             BoundEntity.Reload();
         }
         
@@ -233,7 +226,7 @@ namespace Runtime.Weapons
         public override void OnRecycled() {
             base.OnRecycled();
             ChangeScopeStatus(false);
-            isReloading = false;
+            ChangeReloadStatus(false);
             
             defaultGunModel.SetActive(true);
             reloadGunModel.SetActive(false);
