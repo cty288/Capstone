@@ -10,6 +10,7 @@ Shader "Universal Render Pipeline/Custom/GunBarrel"
     	_CurrentAmmo ("Current Ammo", Float) = 3
     	
     	[Toggle(_RADIAL_LINEAR)] _RadialLinear ("Radial or Linear", Float) = 0
+    	[Toggle(_VERTICAL_HORIZONTAL)] _VertHor ("Vertical or Horizontal", Float) = 0
     	
     	[Toggle(_ALPHATEST_ON)] _AlphaTestToggle ("Alpha Clipping", Float) = 0
 		_Cutoff ("Alpha Cutoff", Float) = 0.5
@@ -55,6 +56,8 @@ Shader "Universal Render Pipeline/Custom/GunBarrel"
             #pragma fragment frag
 
             #pragma shader_feature _ALPHATEST_ON
+            #pragma multi_compile __ _RADIAL_LINEAR
+            #pragma multi_compile __ _VERTICAL_HORIZONTAL
 
             
 
@@ -94,16 +97,24 @@ Shader "Universal Render Pipeline/Custom/GunBarrel"
 
             half4 frag (v2f i) : SV_Target
             {
+            	#ifdef _RADIAL_LINEAR
             	float2 uv = i.uv * 2 - 1;
-
-            	
                 float2 polar = float2(atan2(uv.y, uv.x), length(uv));
                 polar.x = (frac((polar.x) / TAU + 0.75));
             	float2 outUV = polar;
+            	#else
+            	float2 outUV = i.uv;
+            	#endif
+            	
 
             	float output = _CurrentAmmo/_MaxAmmo;
 
+            	#ifdef _VERTICAL_HORIZONTAL
+            	float status = (outUV.y < output ? 1 : 0);
+            	#else
             	float status = (outUV.x < output ? 1 : 0);
+            	#endif
+            	
             	float4 col = (_BaseColor * status) + (_EmptyColor * (1-status));
                 return col;
             }
