@@ -27,6 +27,14 @@ jobs:
         targetPlatform:
           - StandaloneLinux64 # Build a Linux 64-bit standalone.
     steps:
+      - name: Free Space
+        id: one
+        run: |
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
