@@ -43,6 +43,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 Vector2 randomOffset2 = Random.insideUnitCircle * range;
                 m_Waypoints.Value[0].transform.position = new Vector3(referencePoint.x + randomOffset1.x, referencePoint.y, referencePoint.z + randomOffset1.y);
                 m_Waypoints.Value[1].transform.position = new Vector3(referencePoint.x + randomOffset2.x, referencePoint.y, referencePoint.z + randomOffset2.y);
+                foreach(GameObject o in m_Waypoints.Value)
+            {
+                o.transform.SetParent(null);
+            }
 
 
 
