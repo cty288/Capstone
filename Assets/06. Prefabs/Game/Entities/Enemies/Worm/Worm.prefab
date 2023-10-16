@@ -293,6 +293,7 @@ Transform:
   - {fileID: 7975104600774501820}
   - {fileID: 1706683244}
   - {fileID: 620764709024099739}
+  - {fileID: 4756050372487583977}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -483,6 +484,7 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
+  <SpawnSizeCollider>k__BackingField: {fileID: 4694362316103752450}
   rarityBaseValueBuiltFromInspector: 1
   healthBarPrefabName: EnemyHealthBar
   healthBarSpawnPoint: {fileID: 7975104600774501820}
@@ -558,3 +560,48 @@ MonoBehaviour:
   rotation: {x: 0, y: 0, z: 0}
   positionRelativeTo: {fileID: 7182693560717081374}
   positionOffset: {x: 0, y: 1.92, z: 0}
+--- !u!1 &9111150052188611869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4756050372487583977}
+  - component: {fileID: 4694362316103752450}
+  m_Layer: 0
+  m_Name: SpawnSizeCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4756050372487583977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111150052188611869}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7182693560717081374}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4694362316103752450
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9111150052188611869}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.0090685, z: 1}
+  m_Center: {x: 0, y: 0.0046715736, z: 0}
