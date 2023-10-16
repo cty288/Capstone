@@ -105,6 +105,16 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.OnRecycled();
            
         }
+        
+        protected void SetShootStatus(bool isShooting) {
+            if (isShooting) {
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", 2));
+            }
+            else {
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", 2));
+            }
+           
+        }
 
         protected override void OnReadyToRecycle() {
             base.OnReadyToRecycle();
