@@ -87,6 +87,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                 enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
                 gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
+            b.GetComponent<CarrierBullet>().SetData(bulletSpeed);
         }
 
 
