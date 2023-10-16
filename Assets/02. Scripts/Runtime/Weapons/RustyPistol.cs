@@ -15,6 +15,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Player;
 using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -57,6 +58,10 @@ namespace Runtime.Weapons
     }
 
 
+    public struct OnGunShoot
+    {
+        public string AnimationName;
+    }
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         // For Coroutine Animation [WILL BE REPLACED]
@@ -65,6 +70,7 @@ namespace Runtime.Weapons
         public Transform scopeInPositionTransform;
         public GameObject defaultGunModel;
         public GameObject reloadGunModel;
+        
 
         private GunAmmoVisual gunAmmoVisual;
         
@@ -87,8 +93,7 @@ namespace Runtime.Weapons
         }
         
         protected override void OnBindEntityProperty() {}
-
-
+        
 
         public override void OnItemUse() {
             if (!isReloading) {
@@ -97,6 +102,7 @@ namespace Runtime.Weapons
                     lastShootTime = Time.time;
 
                     Shoot();
+                    this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot",3));
 
                     BoundEntity.CurrentAmmo.Value--;
                 }

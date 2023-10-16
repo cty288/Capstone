@@ -7,6 +7,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Player;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Runtime.Temporary
     public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
-
+        
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
@@ -56,7 +57,10 @@ namespace Runtime.Temporary
         protected override void OnEntityStart() {
             Debug.Log("PlayerController.OnEntityStart");
             players.Add(this);
+            
         }
+
+
 
         protected override void OnBindEntityProperty() {
             

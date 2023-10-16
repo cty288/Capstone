@@ -138,7 +138,7 @@ namespace Runtime.Temporary.Player
         private float slideYScale = 0.25f;
         private float startYScale;
         
-        private bool sliding;
+        private bool sliding; 
         
         [Header("Wallrunning")]
         [SerializeField]
@@ -245,7 +245,7 @@ namespace Runtime.Temporary.Player
             if (grounded)
                 rb.drag = playerEntity.GetGroundDrag().RealValue;
             else
-                rb.drag = 0;
+                rb.drag = 2f;
             MovePlayer();
             
         }
@@ -303,6 +303,7 @@ namespace Runtime.Temporary.Player
             {
                 state = MovementState.air;
                 this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                desiredMoveSpeed = 15;
             }
 
             // check if desiredMoveSpeed has changed drastically
@@ -489,6 +490,7 @@ namespace Runtime.Temporary.Player
                 // on ground
                 else if (grounded)
                 {
+                    
                     rb.AddForce(moveDirection.normalized * playerEntity.GetAccelerationForce().RealValue, ForceMode.Force);
                     /*//stop player if no inputs
                     if (moveDirection == Vector3.zero)
@@ -503,6 +505,7 @@ namespace Runtime.Temporary.Player
                 }
             }
 
+            
             if (!grounded&&!onSlope&&!wallrunning){
                     rb.AddForce((-transform.up)* playerEntity.GetAdditionalGravity().RealValue,ForceMode.Force);
             }
