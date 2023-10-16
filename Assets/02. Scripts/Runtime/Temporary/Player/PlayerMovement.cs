@@ -10,7 +10,10 @@ using Cinemachine;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Utilities;
+using Runtime.GameResources.Model.Base;
+using Runtime.Inventory.Model;
 using Runtime.Player;
+using Runtime.Weapons.Model.Base;
 
 namespace Runtime.Temporary.Player
 {
@@ -188,6 +191,8 @@ namespace Runtime.Temporary.Player
         private DPunkInputs.PlayerActions playerActions;
         private IPlayerEntity playerEntity;
 
+        private IInventorySystem inventorySystem;
+
         private void Awake() {
             playerActions = ClientInput.Singleton.GetPlayerActions();
             groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
@@ -211,6 +216,8 @@ namespace Runtime.Temporary.Player
             playerModel = this.GetModel<IGamePlayerModel>();
 
             playerEntity = playerModel.GetPlayer();
+
+            inventorySystem = this.GetSystem<IInventorySystem>();
 
         }
 
@@ -252,13 +259,20 @@ namespace Runtime.Temporary.Player
         
         private void StateHandler()
         {
+            float weaponWeight = 1f;
+            IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
+            if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
+            {
+                weaponWeight = ((IWeaponEntity)heldEntity).GetWeight().RealValue;
+            }
+            
             // Mode - Wallrunning
             if (wallrunning)
             {
                 state = MovementState.wallrunning;
                 this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
 
-                 desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
+                 desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue * weaponWeight;
             }
             // Mode - Sliding
             else if (sliding)
@@ -267,10 +281,10 @@ namespace Runtime.Temporary.Player
                 this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
 
                 if (onSlope && rb.velocity.y < 0.1f)
-                    desiredMoveSpeed = playerEntity.GetSlideSpeed().RealValue;
+                    desiredMoveSpeed = playerEntity.GetSlideSpeed().RealValue * weaponWeight;
 
                 else
-                    desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
+                    desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue * weaponWeight;
             }
 
             // Mode - Sprinting
@@ -289,12 +303,11 @@ namespace Runtime.Temporary.Player
                 this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
                 if (this.GetModel<IGamePlayerModel>().GetPlayer().IsScopedIn())
                 {
-                    desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue * 0.5f; //TODO: set value according to gun weight
+                    desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue * 0.5f * weaponWeight;
                 }
                 else
                 {
-                    desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue;
-
+                    desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue * weaponWeight;
                 }
             }
 
