@@ -72,10 +72,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
 
             UnityEngine.GameObject b = pool.Allocate();
-            b.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-            b.transform.rotation = Quaternion.LookRotation(playerTrans.position -
-                                                           new Vector3(transform.position.x, transform.position.y,
-                                                               transform.position.z));
+            var body = this.gameObject.transform.GetChild(0);
+            b.transform.position = body.transform.position;
+            b.transform.rotation = Quaternion.LookRotation(playerTrans.position - body.transform.position
+                                                           );
 
 
 
