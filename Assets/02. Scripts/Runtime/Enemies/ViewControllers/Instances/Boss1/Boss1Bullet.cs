@@ -55,8 +55,8 @@ namespace a {
         }
 
         protected override void OnBulletRecycled() {
-			
-		}
+            timer = Random.Range(0.5f, 2f);
+        }
         public void SetData(float bulletSpeed, Transform playerTrans)
         {
             this.bulletSpeed = bulletSpeed;
