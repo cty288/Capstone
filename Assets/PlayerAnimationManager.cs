@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
 using UnityEngine;
 using Runtime.Player;
 using Runtime.Utilities.AnimatorSystem;
@@ -8,9 +9,15 @@ public class PlayerAnimationManager : EntityAttachedViewController<PlayerEntity>
 {
     [SerializeField] private Animator playerAnim;
     // Start is called before the first frame update
+    protected override void Awake()
+    {
+        base.Awake();
+        this.RegisterEvent<PlayerAnimationEvent>(OnPlayerAnimationEvent);
+    }
+
     void Start()
     {
-        this.RegisterEvent<PlayerAnimationEvent>(OnPlayerAnimationEvent);
+        
     }
 
     // Update is called once per frame
@@ -21,8 +28,10 @@ public class PlayerAnimationManager : EntityAttachedViewController<PlayerEntity>
     
     private void OnPlayerAnimationEvent(PlayerAnimationEvent e)
     {
+        Debug.Log(e.parameterName + e.flag);
         if (e.flag == 2)
         {
+            Debug.Log("shootanim");
             playerAnim.SetTrigger(e.parameterName);
         }
         else
@@ -34,5 +43,10 @@ public class PlayerAnimationManager : EntityAttachedViewController<PlayerEntity>
                 b = false;
             playerAnim.SetBool(e.parameterName,b);
         }
+    }
+
+    protected override void OnEntityFinishInit(PlayerEntity entity)
+    {
+        
     }
 }

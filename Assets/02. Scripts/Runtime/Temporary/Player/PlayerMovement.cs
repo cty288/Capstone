@@ -303,7 +303,7 @@ namespace Runtime.Temporary.Player
             {
                 state = MovementState.air;
                 this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
-                desiredMoveSpeed = 15;
+                desiredMoveSpeed = 10;
             }
 
             // check if desiredMoveSpeed has changed drastically
