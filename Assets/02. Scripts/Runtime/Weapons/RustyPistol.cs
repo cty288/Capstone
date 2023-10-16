@@ -100,10 +100,7 @@ namespace Runtime.Weapons
                 if (BoundEntity.CurrentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
-
-                    Shoot();
-                    this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot",2));
-
+                    SetShoot(true);
                     BoundEntity.CurrentAmmo.Value--;
                 }
                 
@@ -114,6 +111,7 @@ namespace Runtime.Weapons
                         //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
                         //StartCoroutine(ScopeOut(true));
                     }
+                    SetShoot(false);
                     ChangeReloadStatus(true);
                     StartCoroutine(ReloadChangeModel());
                     

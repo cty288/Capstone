@@ -22,8 +22,11 @@ namespace Runtime.Weapons.ViewControllers.Base
 
 
 
-        public virtual void Shoot() {
-            BoundEntity.OnRecoil(IsScopedIn);
+        public virtual void SetShoot(bool shouldShoot) {
+            if (shouldShoot) {
+                BoundEntity.OnRecoil(IsScopedIn);
+            }
+            SetShootStatus(shouldShoot);
         }
         
         public bool CheckHit(HitData data)
