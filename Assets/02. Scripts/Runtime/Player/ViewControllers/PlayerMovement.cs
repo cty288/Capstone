@@ -14,6 +14,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.Weapons.Model.Base;
+using Runtime.Weapons.Model.Properties;
 
 namespace Runtime.Temporary.Player
 {
@@ -263,7 +264,7 @@ namespace Runtime.Temporary.Player
             IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
             if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
             {
-                weaponWeight = ((IWeaponEntity)heldEntity).GetWeight().RealValue;
+                weaponWeight = heldEntity.GetProperty<IWeight>().RealValue;
             }
             
             // Mode - Wallrunning
