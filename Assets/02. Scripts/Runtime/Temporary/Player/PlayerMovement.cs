@@ -504,10 +504,10 @@ namespace Runtime.Temporary.Player
                     rb.AddForce(moveDirection.normalized * playerEntity.GetAccelerationForce().RealValue * airMultiplier, ForceMode.Force);
                 }
             }
-
-            
-            if (!grounded&&!onSlope&&!wallrunning){
-                    rb.AddForce((-transform.up)* playerEntity.GetAdditionalGravity().RealValue,ForceMode.Force);
+           // Debug.Log("Grounded ");
+            if (!grounded && !onSlope && !wallrunning){
+              
+                rb.AddForce((-transform.up)* playerEntity.GetAdditionalGravity().RealValue,ForceMode.Force);
             }
             
             // turn gravity off while on slope

@@ -1,3 +1,4 @@
+using System.Collections;
 using Runtime.DataFramework.ViewControllers;
 
 using Runtime.Enemies.Model;
@@ -15,6 +16,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
 
 namespace Runtime.Enemies.SmallEnemies
 {
@@ -32,6 +34,12 @@ namespace Runtime.Enemies.SmallEnemies
          
         }
 
+        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+            return level * baseWeight * 2;
+        }
+
+        
+
         protected override void OnEnemyRegisterAdditionalProperties() {
             
         }
@@ -40,8 +48,9 @@ namespace Runtime.Enemies.SmallEnemies
         {
             return null;
         }
+        
 
-        protected override void OnInitModifiers(int rarity) {
+        protected override void OnInitModifiers(int rarity, int level) {
             
         }
 
@@ -55,18 +64,45 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class Bee : AbstractNormalEnemyViewController<BeeEntity> {
         [SerializeField] private List<GameObject> waypoints;
-
+        //private BehaviorTree behaviorTree;
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
             
            
             
         }
-        
+
+        protected override void Awake() {
+            base.Awake();
+           // behaviorTree = GetComponent<BehaviorTree>();
+           // behaviorTree.enabled = false;
+        }
+
 
         protected override void OnEntityStart() {
             foreach (GameObject waypoint in waypoints) {
                 waypoint.transform.SetParent(null);
             }
+
+            //StartCoroutine(DelayedStart());
+
+
+        }
+        
+        private IEnumerator DelayedStart() {
+            yield return null;
+            yield return null;
+            Vector3 referencePoint = this.gameObject.transform.position;
+            Vector2 randomOffset1 = Random.insideUnitCircle * 15;
+            Vector2 randomOffset2 = Random.insideUnitCircle * 15;
+            waypoints[0].transform.position = new Vector3(referencePoint.x + randomOffset1.x, referencePoint.y, referencePoint.z + randomOffset1.y);
+            waypoints[1].transform.position = new Vector3(referencePoint.x + randomOffset2.x, referencePoint.y, referencePoint.z + randomOffset2.y);
+
+
+
+            
+            
+           // behaviorTree.enabled = true;
+            //behaviorTree.Start();
         }
         
 
@@ -98,6 +134,11 @@ namespace Runtime.Enemies.SmallEnemies
         protected override MikroAction WaitingForDeathCondition() {
             return null;
         }
-        
+
+        public override void OnRecycled() {
+            base.OnRecycled();
+            //behaviorTree.DisableBehavior();
+            //behaviorTree.enabled = false;
+        }
     }
 }

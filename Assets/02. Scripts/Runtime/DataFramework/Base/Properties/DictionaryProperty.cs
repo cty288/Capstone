@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities;
 using Runtime.Utilities;
 
 namespace Runtime.DataFramework.Properties {
@@ -51,7 +52,7 @@ namespace Runtime.DataFramework.Properties {
 	
 	public abstract class LoadFromConfigDictProperty<TKey, T> : DictionaryProperty<TKey, T>, ILoadFromConfigProperty {
 	
-		public void LoadFromConfig(dynamic value) {
+		public void LoadFromConfig(dynamic value, IEntity parentEntity) {
 			if (value is not  null) {
 				SetBaseValue(OnClone(value));
 			}

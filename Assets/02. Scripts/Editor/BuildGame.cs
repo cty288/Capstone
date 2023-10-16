@@ -19,7 +19,6 @@ namespace Editor {
     
         [MenuItem("DPunk/Build Game")] 
         public static void BuildGameWorkflow () {
-        
             version = Application.version;
             buildTarget = EditorUserBuildSettings.activeBuildTarget;
             //set buildpath to be located in the parent folder of the Assets folder

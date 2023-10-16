@@ -94,6 +94,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public void HitResponse(HitData data) {
+			if (gameObject.name == "GunBullet") {
+				Debug.Log("HitResponse");
+			}
 			if(data.Hurtbox!=null){
 			  if (data.Hurtbox.Owner == bulletOwner) {
 				  return;
@@ -107,11 +110,18 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected abstract void OnHitResponse(HitData data);
 
 		protected virtual void OnTriggerEnter(Collider other) {
+			if (gameObject.name == "GunBullet") {
+				Debug.Log("HitResponse");
+			}
 			if (!other.isTrigger) {
-				if (other.transform.root == bulletOwner.transform.root) {
+				Rigidbody rootRigidbody = other.attachedRigidbody;
+				GameObject hitObj =
+					rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
+				
+				if (hitObj.transform == bulletOwner.transform) {
 					return;
 				}
-				if(other.transform.root.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
+				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
 					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
 						return;
 					}

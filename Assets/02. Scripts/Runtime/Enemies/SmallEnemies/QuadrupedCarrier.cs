@@ -15,6 +15,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 
 namespace Runtime.Enemies.SmallEnemies
 {
@@ -34,9 +35,13 @@ namespace Runtime.Enemies.SmallEnemies
 
         }
 
-        protected override void OnEnemyRegisterAdditionalProperties()
-        {
+        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+            return baseWeight;
+        }
 
+        
+        protected override void OnEnemyRegisterAdditionalProperties() {
+           
         }
 
         protected override string OnGetDescription(string defaultLocalizationKey)
@@ -44,7 +49,7 @@ namespace Runtime.Enemies.SmallEnemies
             return null;
         }
 
-        protected override void OnInitModifiers(int rarity)
+        protected override void OnInitModifiers(int rarity, int level)
         {
 
         }

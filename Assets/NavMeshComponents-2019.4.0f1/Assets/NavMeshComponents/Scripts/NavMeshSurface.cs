@@ -181,7 +181,11 @@ namespace UnityEngine.AI
             }
         }
 
-        public AsyncOperation UpdateNavMesh(NavMeshData data)
+        public AsyncOperation UpdateNavMesh(NavMeshData data) {
+            return UpdateNavMesh(data, GetBuildSettings());
+        }
+        
+        public AsyncOperation UpdateNavMesh(NavMeshData data, NavMeshBuildSettings settings)
         {
             var sources = CollectSources();
 
@@ -191,7 +195,7 @@ namespace UnityEngine.AI
             if (m_CollectObjects == CollectObjects.All || m_CollectObjects == CollectObjects.Children)
                 sourcesBounds = CalculateWorldBounds(sources);
 
-            return NavMeshBuilder.UpdateNavMeshDataAsync(data, GetBuildSettings(), sources, sourcesBounds);
+            return NavMeshBuilder.UpdateNavMeshDataAsync(data, settings, sources, sourcesBounds);
         }
 
         static void Register(NavMeshSurface surface)

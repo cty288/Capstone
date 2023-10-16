@@ -72,7 +72,7 @@ namespace Runtime.Inventory.Model {
 		}
 	}
 	
-	public struct OnHotBarSlotSelectedEvent {
+	public class OnHotBarSlotSelectedEvent {
 		public HotBarCategory Category;
 		public int SelectedIndex;
 	}
@@ -221,6 +221,7 @@ namespace Runtime.Inventory.Model {
 				return;
 			}
 			info.CurrentSelectedIndex = index;
+
 			this.SendEvent<OnHotBarSlotSelectedEvent>(new OnHotBarSlotSelectedEvent() {
 				Category = category,
 				SelectedIndex = index

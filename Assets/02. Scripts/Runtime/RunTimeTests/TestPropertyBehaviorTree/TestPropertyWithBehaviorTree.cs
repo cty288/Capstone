@@ -24,9 +24,14 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         public override void OnRecycle() {
         
         }
-        protected override void OnInitModifiers(int rarity) {
+        protected override void OnInitModifiers(int rarity, int level) {
             
         }
+        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+            return level;
+        }
+
+       
         protected override string OnGetDescription(string defaultLocalizationKey) {
             return null;
         }
