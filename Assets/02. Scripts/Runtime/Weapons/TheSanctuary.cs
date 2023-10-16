@@ -99,7 +99,7 @@ namespace Runtime.Weapons
                     lastShootTime = Time.time;
                     
                     Debug.Log("Shoot");
-                    Shoot();
+                    SetShoot(true);
 
                     BoundEntity.CurrentAmmo.Value--;
 
@@ -108,6 +108,7 @@ namespace Runtime.Weapons
                 
                 if (autoReload && BoundEntity.CurrentAmmo <= 0)
                 {
+                    SetShoot(false);
                     /*if (isScopedIn) {
                         StartCoroutine(ScopeOut(true));
                     }
@@ -125,20 +126,23 @@ namespace Runtime.Weapons
             }
         }
 
-        public override void Shoot()
+        public override void SetShoot(bool shouldShoot)
         {
-            base.Shoot();
-            Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
+            base.SetShoot(shouldShoot);
+            if (shouldShoot) {
+                Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
             
-            GameObject b = pool.Allocate();
-            b.transform.position = bulletSpawnPos.position;
-            b.transform.rotation = Quaternion.identity;
+                GameObject b = pool.Allocate();
+                b.transform.position = bulletSpawnPos.position;
+                b.transform.rotation = Quaternion.identity;
             
-            b.GetComponent<Rigidbody>().velocity = shootDir * BoundEntity.GetBulletSpeed().RealValue;
+                b.GetComponent<Rigidbody>().velocity = shootDir * BoundEntity.GetBulletSpeed().RealValue;
 
-            b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
-                BoundEntity.GetBaseDamage().RealValue,
-                gameObject, gameObject.GetComponent<ICanDealDamage>(), BoundEntity.GetRange().BaseValue);
+                b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
+                    BoundEntity.GetBaseDamage().RealValue,
+                    gameObject, gameObject.GetComponent<ICanDealDamage>(), BoundEntity.GetRange().BaseValue);
+            }
+            
         }
         
         public override void OnItemScopePressed() {

@@ -1,5 +1,6 @@
 ﻿using MikroFramework.Architecture;
 using Runtime.Player;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
@@ -34,10 +35,14 @@ namespace Runtime.Weapons.ViewControllers.Base
             return new HitScan(this, CurrentFaction.Value, trailRenderer);
         }
         
-        public virtual void Shoot() {
-            crossHairViewController?.OnShoot();
-            BoundEntity.OnRecoil(IsScopedIn);
-            hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetBaseDamage().RealValue);
+        public virtual void SetShoot(bool shouldShoot) {
+            if (shouldShoot) {
+                crossHairViewController?.OnShoot();
+                BoundEntity.OnRecoil(IsScopedIn);
+                hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetBaseDamage().RealValue);
+            }
+
+            SetShootStatus(shouldShoot);
         }
         
         public bool CheckHit(HitData data)
