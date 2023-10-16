@@ -9,6 +9,7 @@ using Runtime.Enemies.Model;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
 using Runtime.Temporary.Player;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -73,8 +74,12 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
 
+        public override void OnStopHold() {
+            base.OnStopHold();
+            ChangeScopeStatus(false);
+        }
 
-        
+
         protected void ChangeScopeStatus(bool shouldScope) {
             bool previsScope = _isScopedIn;
             _isScopedIn = shouldScope;
@@ -82,8 +87,20 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (previsScope != _isScopedIn) {
                 crossHairViewController?.OnScope(_isScopedIn);
             }
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS", !_isScopedIn ? 0 : 1));
         }
-        
+
+        protected void ChangeReloadStatus(bool shouldReload) {
+            bool prevIsReloading = isReloading;
+            isReloading = shouldReload;
+            if (prevIsReloading != isReloading) {
+                //crossHairViewController?.OnReload(isReloading);
+            }
+            
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", isReloading ? 1 : 0));
+        }
+      
+
         public override void OnRecycled() {
             base.OnRecycled();
            
