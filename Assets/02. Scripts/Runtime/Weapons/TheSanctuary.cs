@@ -60,7 +60,7 @@ namespace Runtime.Weapons
     public class TheSanctuary : AbstractProjectileWeaponViewController<TheSanctuaryEntity>
     {
         // For Coroutine Animation [WILL BE REPLACED]
-        public GameObject model;
+       // public GameObject model;
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
         public GameObject defaultGunModel;

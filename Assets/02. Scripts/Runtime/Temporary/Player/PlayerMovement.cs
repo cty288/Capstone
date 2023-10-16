@@ -500,9 +500,10 @@ namespace Runtime.Temporary.Player
                     rb.AddForce(moveDirection.normalized * playerEntity.GetAccelerationForce().RealValue * airMultiplier, ForceMode.Force);
                 }
             }
-
-            if (!grounded&&!onSlope&&!wallrunning){
-                    rb.AddForce((-transform.up)* playerEntity.GetAdditionalGravity().RealValue,ForceMode.Force);
+           // Debug.Log("Grounded ");
+            if (!grounded && !onSlope && !wallrunning){
+              
+                rb.AddForce((-transform.up)* playerEntity.GetAdditionalGravity().RealValue,ForceMode.Force);
             }
             
             // turn gravity off while on slope
@@ -542,6 +543,7 @@ namespace Runtime.Temporary.Player
         {
             if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f, slopeLayerMask))
             {
+                
                 float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
                     // Debug.Log(angle);
                 return angle < maxSlopeAngle && angle != 0;

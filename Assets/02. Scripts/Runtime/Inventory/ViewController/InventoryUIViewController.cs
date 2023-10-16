@@ -134,15 +134,25 @@ namespace Runtime.Inventory.ViewController {
         
         private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
             Debug.Log("OnHotBarSlotSelected");
+            HotBarCategory otherCategory =
+                e.Category == HotBarCategory.Left ? HotBarCategory.Right : HotBarCategory.Left;
+            
+            
             if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
-                
                 foreach (InventorySlotLayoutViewController slotLayoutViewController in controller) {
                     slotLayoutViewController.OnSelected(e.SelectedIndex);
+                }
+            }
+            
+            if (hotBarSlotLayoutViewControllers.TryGetValue(otherCategory, out var otherController)) {
+                foreach (InventorySlotLayoutViewController slotLayoutViewController in otherController) {
+                    slotLayoutViewController.OnSelected(-1);
                 }
             }
         }
         public override void OnClosed() {
             mainSlotLayoutViewController.OnHideSlotItem();
+            mainSlotLayoutViewController.OnInventoryUIClosed();
             
             foreach (KeyValuePair<HotBarCategory,List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewController 
                      in hotBarSlotLayoutViewControllers) {
@@ -151,6 +161,7 @@ namespace Runtime.Inventory.ViewController {
                     if (!inventorySlotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
                         inventorySlotLayoutViewController.OnHideSlotItem();
                     }
+                    inventorySlotLayoutViewController.OnInventoryUIClosed();
                 }
                 
                

@@ -48,7 +48,7 @@ namespace MikroFramework.Utilities
                         removedColliders.Add(col);
                         OnExit?.Invoke(col);
                     }
-                    else if (col && !col.gameObject.activeInHierarchy)
+                    else if (!col || !col.gameObject.activeInHierarchy)
                     {
                         enterRC.Release();
                         removedColliders.Add(col);

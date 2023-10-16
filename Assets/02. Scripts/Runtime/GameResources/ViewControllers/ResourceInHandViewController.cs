@@ -19,6 +19,12 @@ namespace Runtime.GameResources.ViewControllers {
 		void OnItemUse();
 
 		void OnItemScopePressed();
+		
+		Vector3 InHandLocalPosition { get; }
+		
+		Vector3 InHandLocalRotation { get; }
+		
+		Vector3 InHandLocalScale { get; }
 	}
 	
 	
@@ -36,7 +42,19 @@ namespace Runtime.GameResources.ViewControllers {
 		protected Rigidbody rigidbody;
 		protected GameObject ownerGameObject = null;
 		protected float originalAutoRemovalTimeWhenNoAbsorb;
+		
+		[field: Header("In Hand Transform")]
+		[field: SerializeField]
+		public Vector3 InHandLocalPosition { get; protected set; } = Vector3.zero;
 
+		[field: SerializeField] 
+		public Vector3 InHandLocalRotation { get; protected set; } = Vector3.zero;
+		
+		[field: SerializeField]
+		public Vector3 InHandLocalScale { get; protected set; } = Vector3.one;
+		
+		private Vector3 originalLocalScale;
+		
 		[Header("Cross hairs")] [SerializeField]
 		private string crossHairPrefabName;
 		[CanBeNull]
@@ -47,7 +65,7 @@ namespace Runtime.GameResources.ViewControllers {
 			originalLayer = gameObject.layer;
 			//selfColliders = new Dictionary<Collider, bool>();
 			rigidbody = GetComponent<Rigidbody>();
-			
+			originalLocalScale = transform.localScale;
 		}
 
 		protected override void OnStartAbsorb() {
@@ -56,7 +74,7 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-
+			transform.localScale = originalLocalScale;
 		}
 
 		protected override void OnReadyToRecycle() {
@@ -109,6 +127,8 @@ namespace Runtime.GameResources.ViewControllers {
 			}
 			RecycleToCache();
 		}
+		
+		
 
 		public abstract void OnItemStartUse();
 
@@ -116,8 +136,8 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public abstract void OnItemUse();
 		public abstract void OnItemScopePressed();
-
 		
+
 
 		public override void OnPointByCrosshair() {
 			if (isHolding) {
@@ -128,7 +148,8 @@ namespace Runtime.GameResources.ViewControllers {
 
 		protected override void OnEntityRecycled(IEntity ent) {
 			base.OnEntityRecycled(ent);
-			
+			transform.localScale = Vector3.one;
+			transform.rotation = Quaternion.identity;
 		}
 	}
 }

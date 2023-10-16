@@ -450,16 +450,19 @@ MonoBehaviour:
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
   autoDestroyWhenEntityRemoved: 1
-  crossHairHUDToleranceTime: 0.5
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
   entityAutoRemovalTimeWhenNoAbsorb: 120
+  <InHandLocalPosition>k__BackingField: {x: 0, y: 0, z: 0}
+  <InHandLocalRotation>k__BackingField: {x: 0, y: 0, z: 0}
   crossHairPrefabName: DefaultCrossHair
   autoReload: 1
   layer:
     serializedVersion: 2
     m_Bits: 2177
-  trailRenderer: {fileID: 8009820199792817655}
   hitParticlePrefab: {fileID: 8833649071567523099, guid: 3ca9e3ac23d4eff4f968c25e87a681c2,
     type: 3}
+  trailRenderer: {fileID: 8009820199792817655}
   model: {fileID: 4243372108615127244}
   gunPositionTransform: {fileID: 4909081000382950346}
   scopeInPositionTransform: {fileID: 6163880320635768847}

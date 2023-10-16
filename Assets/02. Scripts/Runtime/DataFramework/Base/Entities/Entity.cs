@@ -440,7 +440,8 @@ namespace Runtime.DataFramework.Entities {
 				if(property is ILoadFromConfigProperty loadFromConfigProperty) {
 					dynamic value = targetTable?.Get(EntityName, loadFromConfigProperty.GetFullName().ToString());
 					if (value is not null) {
-						loadFromConfigProperty.LoadFromConfig(value);
+						loadFromConfigProperty.LoadFromConfig(value, this);
+						
 					}
 				}
 				i++;
@@ -565,7 +566,7 @@ namespace Runtime.DataFramework.Entities {
 					InitProperty(property);
 				}
 				else {
-					Debug.LogError($"Property with name {propertyName} not found in entity {EntityName}");
+					Debug.LogWarning($"Property with name {propertyName} not found in entity {EntityName}");
 				}
 			}
 			initialized = true;
@@ -578,8 +579,13 @@ namespace Runtime.DataFramework.Entities {
 			PropertyNameInfo[] dependencies = property.GetDependentProperties();
 			if (dependencies != null) {
 				IPropertyBase[] dependentProperties = new IPropertyBase[dependencies.Length];
+				int index = 0;
 				for (int i = 0; i < dependencies.Length; i++) {
-					dependentProperties[i] = _allProperties[dependencies[i].GetFullName()];
+					if (!_allProperties.ContainsKey(dependencies[i].GetFullName())) {
+						continue;
+					}
+					dependentProperties[index] = _allProperties[dependencies[i].GetFullName()];
+					index++;
 				}
 				property.Initialize(dependentProperties, EntityName);
 			}

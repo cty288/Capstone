@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Commands;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.Event;
 using MikroFramework.Singletons;
+using MikroFramework.Utilities;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -15,10 +18,18 @@ namespace Runtime.Temporary
     public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
+        private TriggerCheck triggerCheck;
 
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
+            this.RegisterEvent<OnPlayerTeleport>(OnPlayerTeleport).UnRegisterWhenGameObjectDestroyed(gameObject);
+            triggerCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
+        }
+
+        private void OnPlayerTeleport(OnPlayerTeleport e) {
+            transform.position = e.targetPos;
+            triggerCheck.Clear();
         }
 
         public static PlayerController GetClosestPlayer(Vector3 position) {
@@ -48,6 +59,19 @@ namespace Runtime.Temporary
             }
 
             return closestPlayer;
+        }
+        
+        public static HashSet<PlayerController> GetAllPlayers() {
+            if (players.Count == 0) {
+                //try find gameobject of type playercontroller
+                var playerController = GameObject.FindObjectsOfType<PlayerController>();
+                if (playerController.Length == 0) {
+                    return null;
+                }
+                players = new HashSet<PlayerController>(playerController);
+            }
+
+            return players;
         }
         protected override IEntity OnBuildNewEntity() {
             return this.GetModel<IGamePlayerModel>().GetPlayer();

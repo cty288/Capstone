@@ -86,6 +86,13 @@ namespace Runtime.DataFramework.Entities.Builders {
             return (TBuilder) this;
         }
         
+        
+        public TBuilder AddDependency(PropertyNameInfo propertyName, PropertyNameInfo[] dependencies) {
+            CheckEntity();
+            Entity.GetProperty(propertyName).AddDependentProperties(dependencies);
+            return (TBuilder) this;
+        }
+        
         public TBuilder AddTag(TagName tag, int level) {
             CheckEntity();
             if (Entity.HasProperty(new PropertyNameInfo(PropertyName.tags))) {

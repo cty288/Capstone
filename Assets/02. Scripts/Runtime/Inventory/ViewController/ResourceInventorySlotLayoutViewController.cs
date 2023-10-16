@@ -14,5 +14,9 @@ namespace Runtime.Inventory.ViewController {
 			base.OnSlotViewControllerSpawned(slotViewController, index);
 			(slotViewController as ShortCutResourceSlotViewController)?.SetShortCutText((index + 1).ToString());
 		}
+
+		public override void OnInventoryUIClosed() {
+			
+		}
 	}
 }

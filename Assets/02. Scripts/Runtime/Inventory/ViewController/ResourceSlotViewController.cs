@@ -80,6 +80,10 @@ namespace Runtime.Inventory.ViewController {
             Clear();
         }
 
+        private void OnEnable() {
+            StopDragImmediately();
+        }
+
         private void Start() {
             //LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
            // baseWidth = rectTransform.sizeDelta.x;
@@ -143,6 +147,8 @@ namespace Runtime.Inventory.ViewController {
             var transform1 = transform;
             spawnPoint.transform.position = transform1.position;
             spawnPoint.parent = transform1;
+            spawnPoint.offsetMin = spawnPointOriginalMinOffset;
+            spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
             startDragTriggered = false;
         }
     
@@ -322,13 +328,14 @@ namespace Runtime.Inventory.ViewController {
             
             
         }
-        
-        
 
-        private void OnDisable() {
+
+        public void OnInventoryUIClosed() {
             OnPointerExit(default);
             StopDragImmediately();
+            
         }
+       
 
         public virtual void SetSelected(bool selected) {
             if (selectedBG) {

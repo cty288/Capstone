@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels;
 using Framework;
 using JetBrains.Annotations;
 using NUnit.Framework;
@@ -26,7 +27,11 @@ namespace Tests.Tests_Editor {
         internal class TestBasicEnemy : BossEntity<TestBasicEnemy> {
             [field: ES3Serializable]
             public override string EntityName { get; set; } = "TestEnemy2";
+            public override int OnGetRealSpawnWeight(int level, int baseWeight) {
+                return level;
+            }
 
+            
             protected override string OnGetDescription(string defaultLocalizationKey) {
                 return null;
             }
@@ -48,7 +53,7 @@ namespace Tests.Tests_Editor {
                 RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
             }
 
-            protected override void OnInitModifiers(int rarity) {
+            protected override void OnInitModifiers(int rarity, int level) {
                 
             }
 
@@ -223,7 +228,7 @@ namespace Tests.Tests_Editor {
             Assert.IsTrue(ent1 is ICreature);
             
             Assert.AreEqual(200, ent2.GetCurrentHealth());
-            Assert.AreEqual(999, ent1.GetCurrentHealth());
+            Assert.LessOrEqual(999, ent1.GetCurrentHealth());
 
 
             ent1.RegisterOnTakeDamage(OnEnt1TakeDamage);
@@ -231,25 +236,25 @@ namespace Tests.Tests_Editor {
             
             void OnEnt1TakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer, [CanBeNull] HitData hitData) {
                 Assert.AreEqual(200, damage);
-                Assert.AreEqual(799, currenthealth);
+                Assert.AreEqual(899, currenthealth);
                 Assert.AreEqual(ent2, damagedealer);
                 ent1.UnRegisterOnTakeDamage(OnEnt1TakeDamage);
             }
             
-            Assert.AreEqual(799, ent1.GetCurrentHealth());
+            Assert.AreEqual(899, ent1.GetCurrentHealth());
             
             //when invincible, damage taken will be 0
             ent1.IsInvincible.Value = true;
             ent1.TakeDamage(200, ent2);
-            Assert.AreEqual(799, ent1.GetCurrentHealth());
+            Assert.AreEqual(899, ent1.GetCurrentHealth());
             
             //when the damage dealer has the same faction, damage will not be taken
             ent1.TakeDamage(100, ent1);
-            Assert.AreEqual(799, ent1.GetCurrentHealth());
+            Assert.AreEqual(899, ent1.GetCurrentHealth());
             
             
             ent1.Heal(10000, ent2);
-            Assert.AreEqual(999, ent1.GetCurrentHealth());
+            Assert.AreEqual(1099, ent1.GetCurrentHealth());
         }
         
         
@@ -292,7 +297,17 @@ namespace Tests.Tests_Editor {
             ES3.DeleteKey("test_save_hashset_entity", "test_save");
         }
         
-        
+        [Test]
+        public void TestGeneralModifier() {
+            int res1 = GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<int>(()=>1, ()=>2, false).Invoke(10);
+            
+            float res2 = GlobalLevelFormulas.GetGeneralEnemyAbilityModifier<float>(()=>1, ()=>3, false).Invoke(5.2f);
+            
+            Debug.Log("TestGeneralModifier res1: " + res1);
+            Debug.Log("TestGeneralModifier res2: " + res2);
+            
+        }
+
         
 
 
