@@ -19,8 +19,6 @@ namespace Runtime.Weapons.ViewControllers.Base
 {
     public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController {
         IWeaponEntity WeaponEntity { get; }
-
-        float GetGunWeight();
     }
     /// <summary>
     /// For both 
@@ -122,11 +120,6 @@ namespace Runtime.Weapons.ViewControllers.Base
         public int Damage => BoundEntity.GetBaseDamage().RealValue;
         public bool CheckHit(HitData data) {
             return data.Hurtbox.Owner != gameObject;
-        }
-
-        public float GetGunWeight()
-        {
-            return BoundEntity.GetWeight().RealValue;
         }
 
         public abstract void HitResponse(HitData data);
