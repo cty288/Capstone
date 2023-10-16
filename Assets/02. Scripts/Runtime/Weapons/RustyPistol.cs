@@ -15,6 +15,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Player;
 using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -57,6 +58,10 @@ namespace Runtime.Weapons
     }
 
 
+    public struct OnGunShoot
+    {
+        public string AnimationName;
+    }
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         // For Coroutine Animation [WILL BE REPLACED]
@@ -65,6 +70,7 @@ namespace Runtime.Weapons
         public Transform scopeInPositionTransform;
         public GameObject defaultGunModel;
         public GameObject reloadGunModel;
+        
 
         private GunAmmoVisual gunAmmoVisual;
         
@@ -87,8 +93,7 @@ namespace Runtime.Weapons
         }
         
         protected override void OnBindEntityProperty() {}
-
-
+        
 
         public override void OnItemUse() {
             if (!isReloading) {
@@ -97,20 +102,21 @@ namespace Runtime.Weapons
                     lastShootTime = Time.time;
 
                     Shoot();
+                    this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot",2));
 
                     BoundEntity.CurrentAmmo.Value--;
                 }
                 
                 if (BoundEntity.CurrentAmmo == 0 && autoReload)
                 {
-                    if (IsScopedIn)
-                    {
-                        StartCoroutine(ScopeOut(true));
+                    if (IsScopedIn) {
+                        ChangeScopeStatus(false);
+                        //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                        //StartCoroutine(ScopeOut(true));
                     }
-                    else
-                    {
-                        StartCoroutine(ReloadChangeModel());
-                    }
+                    ChangeReloadStatus(true);
+                    StartCoroutine(ReloadChangeModel());
+                    
                 }
             }
         }
@@ -121,10 +127,14 @@ namespace Runtime.Weapons
                 return;
             }
             if (IsScopedIn) {
-                StartCoroutine(ScopeOut());
+                ChangeScopeStatus(false);
+                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS",0));
+                //StartCoroutine(ScopeOut());
             }
             else {
-                StartCoroutine(ScopeIn());
+                ChangeScopeStatus(true);
+                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS",1));
+                //StartCoroutine(ScopeIn());
             }
         }
 
@@ -140,30 +150,28 @@ namespace Runtime.Weapons
                 {
                     if (IsScopedIn)
                     {
-                        
-                        StartCoroutine(ScopeOut(true));
+                        ChangeScopeStatus(false);
+                        //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                        //StartCoroutine(ScopeOut(true));
                     }
-                    else
-                    {
-                        StartCoroutine(ReloadChangeModel());
-                    }
+                    
+                    //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                    StartCoroutine(ReloadChangeModel());
+                    
                 }
                 
             }
         }
 
-        private IEnumerator ReloadChangeModel()
-        {
-            isReloading = true;
-
-            defaultGunModel.SetActive(false);
-            reloadGunModel.SetActive(true);
-
+        private IEnumerator ReloadChangeModel() {
+            //isReloading = true;
+            ChangeReloadStatus(true);
+            //defaultGunModel.SetActive(false);
+            //reloadGunModel.SetActive(true);
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-            
-            defaultGunModel.SetActive(true);
-            reloadGunModel.SetActive(false);
-            isReloading = false;
+            //defaultGunModel.SetActive(true);
+            //reloadGunModel.SetActive(false);
+            ChangeReloadStatus(false);
             BoundEntity.Reload();
         }
         
@@ -182,7 +190,7 @@ namespace Runtime.Weapons
                 startTime += Time.deltaTime;
                 yield return null;
             }
-            model.transform.position = scopeInPositionTransform.position;
+            //model.transform.position = scopeInPositionTransform.position;
             yield return null;
             ChangeScopeStatus(true);
         }
@@ -218,7 +226,7 @@ namespace Runtime.Weapons
         public override void OnRecycled() {
             base.OnRecycled();
             ChangeScopeStatus(false);
-            isReloading = false;
+            ChangeReloadStatus(false);
             
             defaultGunModel.SetActive(true);
             reloadGunModel.SetActive(false);

@@ -55,6 +55,7 @@ namespace Runtime.Inventory.Model {
 		}
 
 		private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
+			
 			ResourceSlot slot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
 			//currentSelectedSlot.TryAdd(e.Category, null);
 
@@ -152,6 +153,17 @@ namespace Runtime.Inventory.Model {
 
 		public override void ClearSlots() {
 			model.Clear();
+		}
+
+		public IResourceEntity GetCurrentlySelectedEntity() {
+			if (currentSelectedSlot == null) {
+				return null;
+			}
+			string uuid = currentSelectedSlot.GetLastItemUUID();
+			if (uuid == null) {
+				return null;
+			}
+			return GlobalGameResourceEntities.GetAnyResource(uuid);
 		}
 
 		private void AddInitialSlots() {

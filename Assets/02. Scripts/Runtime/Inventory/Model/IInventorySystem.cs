@@ -21,7 +21,7 @@ namespace Runtime.Inventory.Model {
 	}
 
 	public interface IInventorySystem : IResourceSlotsSystem {
-		
+		public IResourceEntity GetCurrentlySelectedEntity();
 	}
 
 	public interface IResourceSlotsSystem : ISystem {
