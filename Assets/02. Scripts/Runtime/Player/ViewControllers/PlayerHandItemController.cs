@@ -118,7 +118,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 				currentHoldItemViewController.OnItemStopUse();
 				
 				if (currentHoldDeployableItemViewController.Item1 != null&&
-				    currentHoldDeployableItemViewController.Item2) {
+				    currentHoldDeployableItemViewController.Item2 && deployFailureReason.Value == DeployFailureReason.NoFailure) {
 					DeployCurrentHoldDeployableItem();
 					
 				}
