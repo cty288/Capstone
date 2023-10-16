@@ -35,13 +35,10 @@ Transform:
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8049880896556066275}
-  - {fileID: 8049880894790430500}
   - {fileID: 8049880895630953112}
   - {fileID: 8049880895341931481}
-  - {fileID: 8049880895972565087}
   m_Father: {fileID: 8049880895992306657}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5900674649198547753
 MeshFilter:
@@ -211,8 +208,12 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
+  rarityBaseValueBuiltFromInspector: 1
   healthBarPrefabName: EnemyHealthBar
   healthBarSpawnPoint: {fileID: 8049880894790430500}
+  autoRecycleTimeAfterFarAwayFromPlayer: 10
+  autoRecycleDistanceFromPlayer: 150
+  autoRecycleCheckTimeInterval: 5
   waypoints:
   - {fileID: 8049880895630953115}
   - {fileID: 8049880895341931480}
@@ -256,12 +257,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8049880894790430503}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.41, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.411, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5900674649198547752}
+  m_Father: {fileID: 8049880895992306657}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8049880894790430501
@@ -278,7 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotation: {x: 0, y: 0, z: 0}
   positionRelativeTo: {fileID: 5900674649198547752}
-  positionOffset: {x: 0, y: 1.41, z: 0}
+  positionOffset: {x: 0, y: 3.411, z: 0}
 --- !u!1 &8049880895341931480
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +309,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5900674649198547752}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8049880895630953115
 GameObject:
@@ -339,7 +340,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5900674649198547752}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8049880895972565086
 GameObject:
@@ -366,13 +367,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8049880895972565086}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.501999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5900674649198547752}
-  m_RootOrder: 4
+  m_Father: {fileID: 8049880895992306657}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &8049880895972565085
 SphereCollider:
@@ -385,7 +386,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.56
+  m_Radius: 0.41
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8049880895972565084
 MonoBehaviour:
@@ -435,6 +436,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8049880895972565087}
+  - {fileID: 8049880894790430500}
+  - {fileID: 8049880896556066275}
   - {fileID: 5900674649198547752}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -485,8 +489,12 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
+  rarityBaseValueBuiltFromInspector: 1
   healthBarPrefabName: EnemyHealthBar
-  healthBarSpawnPoint: {fileID: 0}
+  healthBarSpawnPoint: {fileID: 8049880894790430500}
+  autoRecycleTimeAfterFarAwayFromPlayer: 10
+  autoRecycleDistanceFromPlayer: 150
+  autoRecycleCheckTimeInterval: 5
   waypoints: []
 --- !u!195 &8049880895992306660
 NavMeshAgent:
@@ -606,13 +614,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8049880896556066274}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.501999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5900674649198547752}
-  m_RootOrder: 0
+  m_Father: {fileID: 8049880895992306657}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8049880896556066273
 Rigidbody:
@@ -641,5 +649,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.09
+  m_Radius: 1.54
   m_Center: {x: 0, y: 0, z: 0}
