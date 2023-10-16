@@ -55,7 +55,6 @@ half4 SampleMetallicSpecGloss(float2 uv, half albedoAlpha)
 
 	#ifdef _METALLICSPECGLOSSMAP
 		specGloss = SAMPLE_METALLICSPECULAR(uv);
-		specGloss.a = albedoAlpha * _Smoothness;
 	#else // _METALLICSPECGLOSSMAP
 		#if _SPECULAR_SETUP
 			specGloss.rgb = _SpecColor.rgb;
