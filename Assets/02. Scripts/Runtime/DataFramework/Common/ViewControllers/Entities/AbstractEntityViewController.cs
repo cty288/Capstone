@@ -213,6 +213,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			AdjustHUD(hudInfo);
 			yield return new WaitForEndOfFrame();
 			yield return null;
+			
 			nameTag.SetActive(true);
 		}
 
