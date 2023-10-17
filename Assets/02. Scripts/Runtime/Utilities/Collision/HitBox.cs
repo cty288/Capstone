@@ -53,14 +53,21 @@ namespace Runtime.Utilities.Collision
         
         public virtual void TriggerCheckHit(Collider c)
         {
-             Debug.Log("trigger hit detected: " + c.name);
-            HitData hitData = null;
             IHurtbox hurtbox;
+            hurtbox = c.GetComponent<IHurtbox>();
+
+            if (c.isTrigger && hurtbox == null) {
+                return;
+            }
+            
+            Debug.Log("trigger hit detected: " + c.name);
+            HitData hitData = null;
+            
             Vector3 center = _collider.transform.position;
             Vector3 hitPoint = c.ClosestPoint(transform.position);
             Vector3 hitNormal = transform.position - hitPoint;
             
-            hurtbox = c.GetComponent<IHurtbox>();
+           
             // Debug.Log("hurtbox: " + hurtbox);
             if (hurtbox != null)
             {
