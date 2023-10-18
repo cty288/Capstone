@@ -10,7 +10,7 @@ namespace Runtime.Spawning {
 		public static Vector3 FindNavMeshSuitablePosition(GameObject prefab, Vector3 desiredPosition,
 			float initialSearchRadius, float increment, int maxAttempts) {
 			
-			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Ground", "Wall");
+			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
 			
 			int attempts = 0;
 			float currentSearchRadius = initialSearchRadius;
@@ -30,29 +30,34 @@ namespace Runtime.Spawning {
 				if (CheckColliders(size)) {
 					return navHit.position;
 				}
-				else {
-					return Vector3.negativeInfinity;
-				}
 			}
 
 			while (attempts < maxAttempts)
 			{
 				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
+				randomDirection.y = 0;
+				randomDirection = randomDirection.normalized * currentSearchRadius;
 				randomDirection += desiredPosition;
 
 				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, -1)) {
-					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
-						obstructionLayer);
-
-					if (size == 0) {
-						return navHit.position; 
-					}
 					
-					if (CheckColliders(size)) {
-						return navHit.position;
+					//calculate if this point is naviable to the player
+					NavMeshPath path = new NavMeshPath();
+					bool result = NavMesh.CalculatePath(desiredPosition, navHit.position, -1, path);
+					if (path.status == NavMeshPathStatus.PathComplete) {
+						var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
+							obstructionLayer);
+
+						if (size == 0) {
+							return navHit.position; 
+						}
+					
+						if (CheckColliders(size)) {
+							return navHit.position;
+						}
 					}
 					else {
-						return Vector3.negativeInfinity;
+						Debug.Log("Spawn failed: path not found. Attempt number: " + attempts);
 					}
 				}
 				

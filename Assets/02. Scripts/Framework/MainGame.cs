@@ -1,5 +1,6 @@
 using _02._Scripts.Runtime.Baits.Model.Base;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Levels.Systems;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
@@ -21,6 +22,7 @@ namespace Framework {
 			GlobalGameResourceEntities.Reset();
 			
 			this.RegisterSystem<IInventorySystem>(new InventorySystem());
+			this.RegisterSystem<ILevelSystem>(new LevelSystem());
 			
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());

@@ -33,11 +33,7 @@ namespace Tests.Tests_Editor {
 				
 			}
 
-
-			public override int OnGetRealSpawnWeight(int level, int baseWeight) {
-				return level;
-			}
-
+			
 			
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
@@ -90,11 +86,8 @@ namespace Tests.Tests_Editor {
 			protected override ConfigTable GetConfigTable() {
 				return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
 			}
-			public override int OnGetRealSpawnWeight(int level, int baseWeight) {
-				return level;
-			}
 
-			
+
 			protected override void OnEntityStart(bool isLoadedFromSave) {
 				
 			}
@@ -155,11 +148,8 @@ namespace Tests.Tests_Editor {
 			public override void OnRecycle() {
         
 			}
-			public override int OnGetRealSpawnWeight(int level, int baseWeight) {
-				return level;
-			}
 
-			
+
 			protected override void OnInitModifiers(int rarity, int level) {
 				SetPropertyModifier<int>(new PropertyNameInfo("attack1", "speed"), 
 					(val) => val + rarity * 100);

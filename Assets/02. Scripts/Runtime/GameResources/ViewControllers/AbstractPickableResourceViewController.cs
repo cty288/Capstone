@@ -48,7 +48,7 @@ namespace Runtime.GameResources.ViewControllers {
         }
 
         protected override void OnEntityStart() {
-            if (entityAutoRemovalTimeWhenNoAbsorb >= 0) {
+            if (entityAutoRemovalTimeWhenNoAbsorb > 0) {
                 entityRemovalTimerCoroutine = StartCoroutine(EntityRemovalTimer());
             }
         }
