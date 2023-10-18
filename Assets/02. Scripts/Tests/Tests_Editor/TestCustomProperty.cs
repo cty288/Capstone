@@ -36,7 +36,7 @@ namespace Tests.Tests_Editor {
 			
 			
 			protected override void OnEnemyRegisterAdditionalProperties() {
-				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+				//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
 
@@ -94,7 +94,7 @@ namespace Tests.Tests_Editor {
 
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty(new TestCustomProperty2());
-				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+				//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
 
@@ -170,7 +170,7 @@ namespace Tests.Tests_Editor {
 
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty(new TestCustomProperty2());
-				RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+				//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
 
@@ -200,6 +200,7 @@ namespace Tests.Tests_Editor {
 				.FromConfig()
 				.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
 				.SetProperty(new PropertyNameInfo(PropertyName.vigiliance), 100f, null)
+				
 				.SetProperty(new PropertyNameInfo(PropertyName.attack_range), 200f, null)
 				.SetDangerModifier(new TestBasicEntityProperty.MyNewDangerModifier())
 				.Build();
@@ -224,7 +225,7 @@ namespace Tests.Tests_Editor {
 			Assert.AreEqual(200, ent1.GetProperty<IDangerProperty>().RealValue.Value);
 			Assert.GreaterOrEqual(1000f, ent1.GetProperty<IHealthProperty>().RealValue.Value.CurrentHealth);
 			Assert.AreEqual(TasteType.Type1, ent1.GetProperty<ITasteProperty>().RealValues[0]);
-			Assert.AreEqual(1000.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
+			Assert.AreEqual(100.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
 			Assert.AreEqual(2000.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
 			Assert.IsTrue(ent1.GetCustomProperties()["attack1"].GetCustomDataProperty<int>("damage")
 				.GetDependentProperties().Length == 2);
