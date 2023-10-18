@@ -14,7 +14,6 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
-using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;

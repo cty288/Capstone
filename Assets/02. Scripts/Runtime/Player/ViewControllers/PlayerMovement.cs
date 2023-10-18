@@ -1,22 +1,17 @@
 using System;
 using System.Collections;
-using Framework;
-using Mikrocosmos;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Runtime.Controls;
 using Cinemachine;
 using DG.Tweening;
+using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Utilities;
+using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
-using Runtime.Player;
-using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Properties;
+using UnityEngine;
 
-namespace Runtime.Temporary.Player
+namespace Runtime.Player.ViewControllers
 {
     [Serializable]
     public enum MovementState
@@ -51,7 +46,13 @@ namespace Runtime.Temporary.Player
 
         [SerializeField] 
         private float defaultFOV;
+        [SerializeField]
+        private float runningFOV;        
+        [SerializeField]
+        private float slidingFOV;
 
+        private Coroutine fovWalkToRunCoroutine;
+        private Coroutine fovRunToWalkCoroutine;
 
         [Header("Headbob")] 
         [SerializeField] 
@@ -349,17 +350,25 @@ namespace Runtime.Temporary.Player
             
             if (state == MovementState.walking)
             {
+                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, defaultFOV, Time.deltaTime * 20f);
                 if (horizontalInput == 0 &&verticalInput == 0)
                     ChangeBobVars(idleBob);
                 else
                     ChangeBobVars(walkBob);
             }
+            else if (state == MovementState.sliding)
+            {
+                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, slidingFOV, Time.deltaTime * 20f);
+                ChangeBobVars(0,0);
+            }
             else if (state == MovementState.sprinting)
             {
+                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, runningFOV, Time.deltaTime * 20f);
                 ChangeBobVars(sprintBob);
             }
             else
             {
+                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, defaultFOV, Time.deltaTime * 20f);
                 ChangeBobVars(0,0);
             }
 
@@ -382,15 +391,17 @@ namespace Runtime.Temporary.Player
         }
         
         //smooth FOV transition
-        IEnumerator ChangeFOV(CinemachineVirtualCamera cam, float endFOV, float duration)
+        IEnumerator ChangeFOV(CinemachineVirtualCamera cam, float startFOV, float endFOV, float duration)
         {
-            float startFOV = cam.m_Lens.FieldOfView;
+            // float startFOV = cam.m_Lens.FieldOfView;
             float time = 0;
             while(time < duration)
             {
+                if(endFOV == 110)
+                    Debug.Log($"endFOV:{endFOV}, startFOV: {startFOV}, {time}");
                 cam.m_Lens.FieldOfView = Mathf.Lerp(startFOV, endFOV, time / duration);
-                yield return null;
                 time += Time.deltaTime;
+                yield return null;
             }
         }
         private void MyInput()
@@ -659,8 +670,8 @@ namespace Runtime.Temporary.Player
 
             // apply camera effects
 
-            if (wallLeft) DoCamTilt(-5f);
-            if (wallRight) DoCamTilt(5f);
+            if (wallLeft) DoCamTilt(-25f);
+            if (wallRight) DoCamTilt(25f);
         }
         
         private void StopWallRun()

@@ -8,7 +8,6 @@ using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
-using Runtime.Temporary.Player;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;

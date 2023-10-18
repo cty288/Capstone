@@ -790,6 +790,7 @@ MonoBehaviour:
   camHolder: {fileID: 8110311304114022759}
   vcam: {fileID: 7453984105727094038}
   defaultFOV: 90
+  runningFOV: 110
   idleBob:
     AmplitudeGain: 0.05
     FrequencyGain: 0.5
@@ -802,6 +803,7 @@ MonoBehaviour:
   jumpCooldown: 0.3
   airMultiplier: 0.3
   maxSlopeAngle: 60
+  minSlopeAngle: 0
   orientation: {fileID: 9114554745536944238}
   slopeLayerMask:
     serializedVersion: 2
@@ -843,8 +845,10 @@ MonoBehaviour:
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
   autoDestroyWhenEntityRemoved: 1
-  crossHairHUDToleranceTime: 0.5
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 0
+  <SpawnSizeCollider>k__BackingField: {fileID: 0}
 --- !u!114 &4007921578581031012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,6 +877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftHandTr: {fileID: 1356145701}
   rightHandTr: {fileID: 1781485887}
+  deployDistance: 10
 --- !u!114 &-5231921738125921161
 MonoBehaviour:
   m_ObjectHideFlags: 0

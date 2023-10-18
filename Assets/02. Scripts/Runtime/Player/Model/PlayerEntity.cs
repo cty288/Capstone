@@ -5,7 +5,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Player.Properties;
-using Runtime.Temporary.Player;
+using Runtime.Player.ViewControllers;
 using Runtime.Utilities.ConfigSheet;
 
 namespace Runtime.Player {
