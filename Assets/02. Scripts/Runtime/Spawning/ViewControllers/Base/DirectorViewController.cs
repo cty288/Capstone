@@ -204,11 +204,19 @@ namespace Runtime.Spawning
             int spawnAttempts = 10;
             while (spawnAttempts > 0 && currentCredits > cost)
             {
-                //pick a spot
+                
+                float angle = Random.Range(0, 360); 
+                float radius = Random.Range(minSpawnRange, maxSpawnRange); 
+
+
+                float x = transform.position.x + radius * Mathf.Cos(angle * Mathf.Deg2Rad);
+                float z = transform.position.z + radius * Mathf.Sin(angle * Mathf.Deg2Rad);
+
                 Vector3 spawnPos = new Vector3(
-                    transform.position.x + Random.Range(minSpawnRange, maxSpawnRange), 
+                    x, 
                     transform.position.y + 500f,  
-                    transform.position.z + Random.Range(minSpawnRange, maxSpawnRange));
+                    z
+                );
                 
                 if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
                 {
