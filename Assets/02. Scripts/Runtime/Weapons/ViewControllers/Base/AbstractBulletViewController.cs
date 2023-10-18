@@ -48,9 +48,26 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected Vector3 origin;
 		protected bool inited = false;
 		protected bool tickType = false;
+		protected TrailRenderer[] trailRenderers = null;
 		
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
+			trailRenderers = GetComponentsInChildren<TrailRenderer>(true);
+		}
+		
+		
+		protected void DisableAllTrailRenderers() {
+			foreach (TrailRenderer trailRenderer in trailRenderers) {
+				trailRenderer.Clear();
+				trailRenderer.enabled = false;
+			}
+		}
+		
+		protected void EnableAllTrailRenderers() {
+			foreach (TrailRenderer trailRenderer in trailRenderers) {
+				trailRenderer.Clear();
+				trailRenderer.enabled = true;
+			}
 		}
 
 		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange) {
@@ -71,6 +88,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
 			entity?.RetainRecycleRC();
 			inited = true;
+			EnableAllTrailRenderers();
 		}
 
 		public override void OnStartOrAllocate() {
@@ -171,8 +189,11 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			//this.bulletOwner = null;
 			//this.owner = null;
 			entity?.ReleaseRecycleRC();
+			DisableAllTrailRenderers();
 			
 		}
+		
+		
 
 		protected abstract void OnBulletRecycled();
 
