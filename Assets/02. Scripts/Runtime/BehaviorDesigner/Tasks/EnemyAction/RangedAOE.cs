@@ -60,7 +60,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         IEnumerator RF()
         {
-            for (int i = 0; i < 1; i++)
+            //parameter 3
+            for (int i = 0; i < 3 ; i++)
             {
                 SpawnBullet();
                 yield return new WaitForSeconds(spawnInterval);
@@ -72,12 +73,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         void SpawnBullet()
         {
             //to be honest these are just for visuals
+            //parameter 15
             for (int i = 0; i < 15; i++)
             {
                 GameObject b = pool.Allocate();
                 Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
 
                 // Generate a random point around the GameObject
+                //parameter 50
                 Vector3 randomDirection = Random.onUnitSphere * 50;
                 randomDirection.y = 0; // Ensure it's on the same horizontal plane
                 Vector3 randomSpawnPoint = spawnPosition + randomDirection;
@@ -95,7 +98,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                         enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), gameObject);
                 }
             }
-
+            //parameter 8
             //biased bullets which will actually kinda try to hit the player
             for (int i = 0; i < 8; i++)
             {
@@ -103,6 +106,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
 
                 // Generate a random point around the GameObject
+                //parameter 4
                 Vector3 randomDirection = playerTrans.position + Random.onUnitSphere * 4;
                 randomDirection.y = 0; // Ensure it's on the same horizontal plane
                 Vector3 randomSpawnPoint = spawnPosition + randomDirection;
