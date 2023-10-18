@@ -14,6 +14,8 @@ namespace a {
         {
 
             timer = Random.Range(0.5f, 2f);
+            var child = this.gameObject.transform.GetChild(0).GetComponent<TrailRenderer>();
+            child.enabled = true;
         }
         private void Update()
         {
@@ -56,6 +58,8 @@ namespace a {
 
         protected override void OnBulletRecycled() {
             timer = Random.Range(0.5f, 2f);
+            var child = this.gameObject.transform.GetChild(0).GetComponent<TrailRenderer>();
+            child.enabled = false;
         }
         public void SetData(float bulletSpeed, Transform playerTrans)
         {
