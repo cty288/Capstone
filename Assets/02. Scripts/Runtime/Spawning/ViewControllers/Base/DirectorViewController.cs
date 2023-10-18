@@ -72,7 +72,9 @@ namespace Runtime.Spawning
         [SerializeField] private float currentCredits;
         [SerializeField] private float creditTimer = 0f;
         [SerializeField] private float directorSpawnTimer = 0f;
-        
+
+        protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
@@ -215,14 +217,20 @@ namespace Runtime.Spawning
                         spawnPos.y += 3f;
                         NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
                         spawnPos = hitNavMesh.position;
-                        GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, spawnPos, Quaternion.identity, null, rarity,
-                            levelNumber, true, 5, 30);
-                        IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
-                        onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                        Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
+
+                        Vector3 fixedSpawnPos =
+                            SpawningUtility.FindNavMeshSuitablePosition(card.Prefab, spawnPos, 1f, 3f, 10);
+                       
+                        if (!float.IsInfinity(fixedSpawnPos.magnitude)) {
+                            GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, fixedSpawnPos, Quaternion.identity, null, rarity,
+                                levelNumber, true, 5, 30);
+                            IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
+                            onSpawnEnemy?.Invoke(spawnedEnemy, this);
+                            Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
                     
-                        currentCredits -= cost;
-                        return true;
+                            currentCredits -= cost;
+                            return true;
+                        }
                      }
                 }
                 spawnAttempts--;

@@ -63,6 +63,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private void OnCurrentLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
 			if (currentLevelGo) {
 				currentLevelGo.GetComponent<ILevelViewController>().OnExitLevel();
+				oldLevel?.OnLevelExit();
 				Destroy(currentLevelGo);
 			}
 			
@@ -111,5 +112,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
 		}
+		
+		
 	}
 }
