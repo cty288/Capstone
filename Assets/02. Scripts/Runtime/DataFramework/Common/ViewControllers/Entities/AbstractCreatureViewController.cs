@@ -4,16 +4,21 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
+
+	public interface ICreatureViewController : IDamageableViewController {
+		public BoxCollider SpawnSizeCollider { get; }
+	}
 	
 	/// <summary>
 	/// An abstract view controller for creature entity (like player, enemy, etc.)
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TEntityModel"></typeparam>
-	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>
+	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature{
 		NavMeshAgent navMeshAgent;
 		BehaviorTree behaviorTree;
@@ -54,5 +59,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			
 		}
+
+		[field: SerializeField]
+		public BoxCollider SpawnSizeCollider { get; set; }
 	}
 }

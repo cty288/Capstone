@@ -44,10 +44,7 @@ namespace Runtime.Enemies
         protected override void OnInitModifiers(int rarity, int level) {
             
         }
-
-        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
-            return level * baseWeight;
-        }
+        
 
         
         protected override void OnEnemyRegisterAdditionalProperties() {
@@ -162,12 +159,12 @@ namespace Runtime.Enemies
             hitDetectorInfo = new HitDetectorInfo();
             CurrentFaction.Value = Faction.Hostile;
             
-            BoundEntity.IsInvincible.Value = true;
+           // BoundEntity.IsInvincible.Value = true;
             SpawnShellHealthBar();
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
-            if (BoundEntity.IsInvincible) {
+            if (BoundEntity.ShellClosed) {
                 showDamageNumber = false;
             }
             else {
@@ -203,11 +200,11 @@ namespace Runtime.Enemies
             switch (eventName)
             {
                 case "ShellOpen":
-                    BoundEntity.IsInvincible.Value = false;
+                    //BoundEntity.IsInvincible.Value = false;
                     UnSpawnShellHealthBar();
                     break;
                 case "ShellClose":
-                    BoundEntity.IsInvincible.Value = true;
+                    //BoundEntity.IsInvincible.Value = true;
                     SpawnShellHealthBar();
                     break;
                 case "ClearHits":
@@ -269,8 +266,11 @@ namespace Runtime.Enemies
                 
                 Debug.Log("Shell has taken" + originalDamage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
             }
+            else {
+                BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
+            }
 
-            BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
+           
         }
 
         public void ChangeShellStatus(bool newStatus) {

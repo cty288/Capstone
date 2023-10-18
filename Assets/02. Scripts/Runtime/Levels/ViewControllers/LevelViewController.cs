@@ -110,6 +110,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[Header("Enemies")]
 		[SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
 
+		//[SerializeField] protected List<LevelEnemyPrefabConfig> bosses = new List<LevelEnemyPrefabConfig>();
+
 		[SerializeField] protected GameObject playerSpawner;
 
 
@@ -133,8 +135,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();
 			navMeshSurface = GetComponent<NavMeshSurface>();
-			
-			
+		//	enemies.AddRange(bosses);
+
 		}
 
 		protected override IEntity OnBuildNewEntity() {

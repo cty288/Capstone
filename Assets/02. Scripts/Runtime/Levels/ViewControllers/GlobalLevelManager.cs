@@ -6,14 +6,19 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Singletons;
+using Runtime.DataFramework.Entities;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	public class GlobalLevelManager : MonoMikroSingleton<GlobalLevelManager>, IController {
 		[SerializeField] protected List<GameObject> levels = new List<GameObject>();
 		[SerializeField] protected GameObject baseLevel;
+		[SerializeField] private GameObject directStartContainer;
+		[SerializeField] private int directStartLevelNumber = 1;
+		
 
 		private Dictionary<string, GameObject> globalPrefabList = null;
+		private IEntity directStartLevel = null;
 
 		private GameObject currentLevelGo;
 		private ILevelModel levelModel;
@@ -27,6 +32,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		private void Start() {
 			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+			if (directStartContainer.transform.GetChild(0)) {
+				GameObject level = directStartContainer.transform.GetChild(0).gameObject;
+				if (level.activeInHierarchy) {
+					directStartLevel = AddLevel(level, directStartLevelNumber);
+					level.gameObject.SetActive(false);
+				}
+			}
 			levelModel.SwitchToLevel(levelModel.CurrentLevelCount.Value);
 		}
 
@@ -60,8 +72,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 			int levelCount = newLevel.GetCurrentLevelCount();
 			GameObject level = levels[levelCount];
+			GameObject spawnedLevel = null;
+			if (directStartLevel != null && directStartLevel == newLevel) {
+				spawnedLevel = directStartContainer.transform.GetChild(0).gameObject;
+				spawnedLevel.gameObject.SetActive(true);
+			}
+			else {
+				spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
+			}
 			
-			GameObject spawnedLevel = Instantiate(level, Vector3.zero, Quaternion.identity);
 			ILevelViewController levelViewController = spawnedLevel.GetComponent<ILevelViewController>();
 			levelViewController.SetLevelNumber(levelCount);
 			
@@ -73,15 +92,19 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		private void OnTryToSwitchUnSpawnedLevel(OnTryToSwitchUnSpawnedLevel e) {
 			int levelCount = e.LevelNumber;
-
 			if (levelCount >= levels.Count) {
 				return;
 			}
+			AddLevel(levels[levelCount], levelCount);
+		}
+		
+		private ILevelEntity AddLevel(GameObject levelPrefab, int levelCount) {
 			
-			GameObject level = levels[levelCount];
+			GameObject level = levelPrefab;
 			ILevelViewController levelViewController = level.GetComponent<ILevelViewController>();
 			ILevelEntity entity = levelViewController.OnBuildNewLevel(levelCount);
 			levelModel.AddLevel(entity);
+			return entity;
 		}
 		
 	

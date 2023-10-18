@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.ViewControllers;
+using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.Enemies.Model;
 using Runtime.Utilities.ConfigSheet;
+using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.Models {
 	public interface ILevelEntity : IEntity, IHaveCustomProperties, IHaveTags {
@@ -20,6 +23,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost);
 		
 		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate);
+		
+		public List<LevelSpawnCard> GetAllBosses(Predicate<IEnemyEntity> furtherPredicate);
 
 		public List<LevelSpawnCard> GetAllBosses();
 
@@ -31,7 +36,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		public int GetMaxEnemyCount();
 		
-		public bool IsInBattle();
+		public BindableProperty<bool> IsInBossFight { get; }
 		
 		public void SetInBattle(bool isInBattle);
 		
@@ -108,6 +113,13 @@ namespace _02._Scripts.Runtime.Levels.Models {
 				furtherPredicate(card)));
 		}
 
+		public List<LevelSpawnCard> GetAllBosses(Predicate<IEnemyEntity> templateEntityFurtherPredicate) {
+			if (templateEntityFurtherPredicate == null) {
+				return GetCards((card => !card.IsNormalEnemy));
+			}
+			return GetCards((card => !card.IsNormalEnemy && templateEntityFurtherPredicate(card.TemplateEntity)));
+		}
+
 		public List<LevelSpawnCard> GetAllBosses() {
 			return GetCards((card => !card.IsNormalEnemy));
 		}
@@ -133,9 +145,14 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public int GetMaxEnemyCount() {
 			return maxEnemiesProperty.RealValue;
 		}
+		
+		
+		[field: SerializeField]
+		public BindableProperty<bool> IsInBossFight { get; } = new BindableProperty<bool>();
 
-		public bool IsInBattle() {
-			return isInBattle;
+
+		public void SetInBossFight(IEnemyEntity boss) {
+			throw new NotImplementedException();
 		}
 
 		public void SetInBattle(bool isInBattle) {

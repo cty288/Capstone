@@ -213,6 +213,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			AdjustHUD(hudInfo);
 			yield return new WaitForEndOfFrame();
 			yield return null;
+			
 			nameTag.SetActive(true);
 		}
 
@@ -408,7 +409,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 		
 		private void OnEntityReadyToRecycle(IEntity e) {
-			BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
+				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 			if (autoDestroyWhenEntityRemoved) {
 				gameObject.SetActive(false);
 				OnReadyToRecycle();

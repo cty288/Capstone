@@ -55,6 +55,7 @@ namespace Runtime.Inventory.Model {
 		}
 
 		private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
+			
 			ResourceSlot slot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
 			//currentSelectedSlot.TryAdd(e.Category, null);
 

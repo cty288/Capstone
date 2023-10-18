@@ -33,11 +33,7 @@ namespace Runtime.Enemies.SmallEnemies
         public override void OnRecycle() {
          
         }
-
-        public override int OnGetRealSpawnWeight(int level, int baseWeight) {
-            return level * baseWeight * 2;
-        }
-
+        
         
 
         protected override void OnEnemyRegisterAdditionalProperties() {
