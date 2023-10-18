@@ -39,7 +39,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (shouldShoot) {
                 crossHairViewController?.OnShoot();
                 BoundEntity.OnRecoil(IsScopedIn);
-                hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetBaseDamage().RealValue);
+                hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetRealDamageValue());
             }
 
             SetShootStatus(shouldShoot);
