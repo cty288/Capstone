@@ -29,6 +29,7 @@ namespace Runtime.GameResources.ViewControllers {
         //protected PoolableGameObject poolable;
         protected IInventoryModel inventoryModel;
         protected bool isAbsorbing = false;
+        protected bool isAbsorbWaiting = false;
         protected Dictionary<Collider, bool> selfColliders = new Dictionary<Collider, bool>();
         
         [Header("Entity Recycle Logic")]
@@ -46,6 +47,8 @@ namespace Runtime.GameResources.ViewControllers {
                 selfColliders.Add(selfCollider, selfCollider.isTrigger);
             }
         }
+
+        protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = true;
 
         protected override void OnEntityStart() {
             if (entityAutoRemovalTimeWhenNoAbsorb > 0) {
@@ -71,7 +74,14 @@ namespace Runtime.GameResources.ViewControllers {
         }
 
         protected virtual void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
-            if (!player || !Camera.main || isAbsorbing) return;
+            if (!player || !Camera.main || isAbsorbing || isAbsorbWaiting) return;
+            StartCoroutine(AbsorbWait(player, zone));
+        }
+
+        private IEnumerator AbsorbWait(GameObject player, PlayerInteractiveZone zone) {
+            isAbsorbWaiting = true;
+            yield return new WaitForSeconds(0.3f);
+            isAbsorbWaiting = false;
             if(inventoryModel.AddItem(BoundEntity)) {
                 isAbsorbing = true;
                 if (entityRemovalTimerCoroutine != null) {
@@ -111,6 +121,7 @@ namespace Runtime.GameResources.ViewControllers {
         protected override void OnReadyToRecycle() {
             base.OnReadyToRecycle();
             isAbsorbing = false;
+            isAbsorbWaiting = false;
             if (entityRemovalTimerCoroutine != null) {
                 StopCoroutine(entityRemovalTimerCoroutine);
                 entityRemovalTimerCoroutine = null;

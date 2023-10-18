@@ -69,8 +69,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Entity Recycle Logic")]
 		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
-		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenLevelEnd = false;
-		
+		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenLevelEnd = false;
+		protected abstract bool CanAutoRemoveEntityWhenLevelEnd { get; }
 		
 		[Header("HUD Related")]
 		[Tooltip("This is the tolerance time for the cross hair HUD to disappear after the entity is not pointed.")] 
@@ -164,7 +164,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (BoundEntity != null) {
 				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
-				levelModel.CurrentLevel.UnRegisterOnValueChanged(OnLevelChanged);
+				//levelModel.CurrentLevel.UnRegisterOnValueChanged(OnLevelChange);
 				if (recycleIfAlreadyExist) {
 					entityModel.RemoveEntity(BoundEntity.UUID);
 				}
@@ -177,7 +177,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
-			levelModel.CurrentLevel.RegisterOnValueChanged(OnLevelChanged)
+			levelModel.CurrentLevel.RegisterOnValueChanged(OnLevelChange)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
 			OnBindProperty();
@@ -188,11 +188,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 
-		private void OnLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
-			if (autoRemoveEntityWhenLevelEnd && newLevel.UUID != oldLevel.UUID) {
+		private void OnLevelChange(ILevelEntity oldLevel, ILevelEntity newLevel) {
+			if (CanAutoRemoveEntityWhenLevelEnd && oldLevel!=null && newLevel!= null && newLevel.UUID != oldLevel.UUID) {
 				entityModel.RemoveEntity(BoundEntity.UUID);
 			}
 		}
+		
 
 		
 

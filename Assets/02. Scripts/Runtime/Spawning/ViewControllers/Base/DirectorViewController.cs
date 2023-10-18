@@ -72,7 +72,9 @@ namespace Runtime.Spawning
         [SerializeField] private float currentCredits;
         [SerializeField] private float creditTimer = 0f;
         [SerializeField] private float directorSpawnTimer = 0f;
-        
+
+        protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();

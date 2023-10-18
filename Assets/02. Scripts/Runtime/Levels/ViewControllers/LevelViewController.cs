@@ -131,6 +131,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[Header("Debug Only")]
 		[SerializeField]
 		private int enemyCount = 0;
+ 
+		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+
 		protected override void Awake() {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();

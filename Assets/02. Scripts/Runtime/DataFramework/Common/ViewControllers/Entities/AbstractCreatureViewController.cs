@@ -33,8 +33,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (behaviorTree) {
 				behaviorTree.enabled = false;
 			}
-			
+
 		}
+
+		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+
 		protected override void OnStart() {
 			base.OnStart();
 			if (navMeshAgent) {

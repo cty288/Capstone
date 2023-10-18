@@ -112,5 +112,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
 		}
+		
+		
 	}
 }

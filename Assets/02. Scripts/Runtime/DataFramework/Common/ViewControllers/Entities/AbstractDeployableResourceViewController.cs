@@ -83,6 +83,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			return OnBuildNewEntity(this.isPreview);
 		}
 
+		protected override bool CanAutoRemoveEntityWhenLevelEnd => !isPreview;
+
 		public void SetPreview(bool isPreview) {
 			//ILevelEntity levelEntity = levelModel.CurrentLevel.Value;
 			this.isPreview = isPreview;
@@ -95,7 +97,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					meshRenderer.material.color = canDeployColor;
 				}
 				
-				autoRemoveEntityWhenLevelEnd = false;
+				//removeEntityWhenLevelEnd = false;
 			}else {
 				foreach (var col in selfColliders.Keys) {
 					col.isTrigger = selfColliders[col];
@@ -105,7 +107,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					meshRenderer.material.color = Color.white;
 				}
 				
-				autoRemoveEntityWhenLevelEnd = true;
+				//removeEntityWhenLevelEnd = true;
 			}
 		}
 
