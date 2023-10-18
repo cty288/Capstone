@@ -42,6 +42,15 @@ namespace Runtime.Temporary
             start = transform.position;
             StartCoroutine(Curve());
         }
+        public void Init(Vector3 target, float tTime, Faction faction, int damage, GameObject bulletOwner)
+        {
+            Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>(), -1);
+            targetPos = target ;
+            explosionDamage = damage;
+            travelTime = tTime;
+            start = transform.position;
+            StartCoroutine(Curve());
+        }
 
         IEnumerator Curve()
         {
