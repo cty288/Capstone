@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using _02._Scripts.Runtime.Levels.Models;
 using Framework;
 using Mikrocosmos;
 using MikroFramework;
@@ -68,6 +69,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Entity Recycle Logic")]
 		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
+		[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenLevelEnd = false;
 		
 		
 		[Header("HUD Related")]
@@ -78,6 +80,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField] protected float crossHairHUDToleranceScreenDistanceFactor = 0.5f;
 		
 		protected float crossHairHUDTimer = 0f;
+		private bool readyToRecycled = false;
 		
 
 		IEntity IEntityViewController.Entity => BoundEntity;
@@ -152,11 +155,16 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				return;
 			}
 
+			//ILevelEntity levelEntity = this.GetModel<ILevelModel>().CurrentLevel.Value;
+			ILevelModel levelModel = this.GetModel<ILevelModel>();
+			
+			
+			
 			bool needToRecallStart = false;
 			if (BoundEntity != null) {
 				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
-				
+				levelModel.CurrentLevel.UnRegisterOnValueChanged(OnLevelChanged);
 				if (recycleIfAlreadyExist) {
 					entityModel.RemoveEntity(BoundEntity.UUID);
 				}
@@ -169,6 +177,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
+			levelModel.CurrentLevel.RegisterOnValueChanged(OnLevelChanged)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
 			OnBindProperty();
 			OnEntityStart();
 			onEntityVCInitCallback?.Invoke(this);
@@ -177,6 +188,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 
+		private void OnLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
+			if (autoRemoveEntityWhenLevelEnd && newLevel.UUID != oldLevel.UUID) {
+				entityModel.RemoveEntity(BoundEntity.UUID);
+			}
+		}
+
+		
 
 
 		public virtual void OnPointByCrosshair() {
@@ -396,6 +414,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			//}
 		}
 
+		private void ReadyToRecycle() {
+			readyToRecycled = true;
+			gameObject.SetActive(false);
+			StopAllCoroutines();
+			BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
+			OnReadyToRecycle();
+		}
 
 		protected virtual void OnEntityRecycled(IEntity ent) {
 			if (autoDestroyWhenEntityRemoved) {
@@ -404,17 +429,16 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 		
 		protected new void RecycleToCache() {
-			OnEntityReadyToRecycle(BoundEntity);
+			if (!readyToRecycled) {
+				ReadyToRecycle();
+			}
 			base.RecycleToCache();
 		}
 		
 		private void OnEntityReadyToRecycle(IEntity e) {
-				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 			if (autoDestroyWhenEntityRemoved) {
-				gameObject.SetActive(false);
-				OnReadyToRecycle();
+				ReadyToRecycle();
 			}
-			StopAllCoroutines();
 		}
 		
 
@@ -446,6 +470,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity = null;
 			propertyBindings.Clear();
 			crossHairHUDTimer = 0;
+			readyToRecycled = false;
 		}
 
 		protected virtual void OnReadyToRecycle() {

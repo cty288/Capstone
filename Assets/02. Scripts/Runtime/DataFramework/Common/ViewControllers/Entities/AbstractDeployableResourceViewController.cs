@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
 using DG.Tweening;
+using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
@@ -53,9 +55,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		protected bool isPreview = false;
 		protected Dictionary<Collider, bool> selfColliders;
+		protected ILevelModel levelModel;
 
 		protected override void Awake() {
 			base.Awake();
+			levelModel = this.GetModel<ILevelModel>();
 			obstructionLayer = LayerMask.GetMask("Default", "Ground", "Wall");
 			selfColliders = new Dictionary<Collider, bool>();
 			
@@ -80,6 +84,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		public void SetPreview(bool isPreview) {
+			//ILevelEntity levelEntity = levelModel.CurrentLevel.Value;
 			this.isPreview = isPreview;
 			if (isPreview) {
 				foreach (var col in selfColliders.Keys) {
@@ -90,6 +95,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					meshRenderer.material.color = canDeployColor;
 				}
 				
+				autoRemoveEntityWhenLevelEnd = false;
 			}else {
 				foreach (var col in selfColliders.Keys) {
 					col.isTrigger = selfColliders[col];
@@ -98,6 +104,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				foreach (MeshRenderer meshRenderer in deployStatusRenderers) {
 					meshRenderer.material.color = Color.white;
 				}
+				
+				autoRemoveEntityWhenLevelEnd = true;
 			}
 		}
 
