@@ -1,11 +1,13 @@
 using Runtime.DataFramework.Properties;
+using UnityEngine;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Weapons.Model.Properties
 {
-    public interface IBaseDamage : IProperty<int>, ILoadFromConfigProperty { }
-    public class BaseDamage : AbstractLoadFromConfigProperty<int>, IBaseDamage
+    public interface IBaseDamage : IProperty<Vector2Int>, ILoadFromConfigProperty { }
+    public class BaseDamage : AbstractLoadFromConfigProperty<Vector2Int>, IBaseDamage
     {
-        protected override IPropertyDependencyModifier<int> GetDefautModifier() {
+        protected override IPropertyDependencyModifier<Vector2Int> GetDefautModifier() {
             return new BaseDamageDefaultModifier();
         }
 
@@ -20,9 +22,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class BaseDamageDefaultModifier : PropertyDependencyModifierWithRarity<int>
+    public class BaseDamageDefaultModifier : PropertyDependencyModifierWithRarity<Vector2Int>
     {
-        protected override int OnModify(int propertyValue, int rarity)
+        protected override Vector2Int OnModify(Vector2Int propertyValue, int rarity)
         {
             return propertyValue;
         }

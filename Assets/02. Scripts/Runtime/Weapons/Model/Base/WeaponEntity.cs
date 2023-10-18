@@ -41,6 +41,8 @@ namespace Runtime.Weapons.Model.Base
         public void Reload();
 
         public void OnRecoil(bool isScopedIn);
+
+        public int GetRealDamageValue();
     }
     
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
@@ -177,6 +179,10 @@ namespace Runtime.Weapons.Model.Base
         public IWeight GetWeight()
         {
             return weightProperty;
+        }
+        
+        public int GetRealDamageValue() {
+            return Random.Range(baseDamageProperty.RealValue.Value.x, baseDamageProperty.RealValue.Value.y + 1);
         }
         
         public void Reload() {
