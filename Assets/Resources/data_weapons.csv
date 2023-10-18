@@ -1,6 +1,6 @@
 EntityName / Property Names,base_damage,weight,attack_speed,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,scope_recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
 Types,Vector2Int,float,float,float,int,float,int,float,RecoilInfo,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,int,modifier on movement speed,float (cooldown),float,int,float (seconds),int,float (higher means more spread),,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
+Notes ->,Vector2Int,modifier on movement speed,float (cooldown),float,int,float (seconds),int,float (higher means more spread),,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
