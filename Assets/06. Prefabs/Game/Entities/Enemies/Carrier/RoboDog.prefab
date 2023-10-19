@@ -2084,9 +2084,22 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
-  itemDropCollections: []
-  <SpawnSizeCollider>k__BackingField: {fileID: 4712594492777919005}
+  baseItemDropCollections:
+  - Rarity: 1
+    TotalDropCountRange: {x: 2, y: 4}
+    ItemDropInfos:
+    - prefabName: CarbonFiber
+      batchCountRange: {x: 1, y: 2}
+      dropWeight: 2
+      setRarity: 0
+      rarityRange: {x: 0, y: 0}
+    - prefabName: ReinforcedSteel
+      batchCountRange: {x: 1, y: 2}
+      dropWeight: 1
+      setRarity: 0
+      rarityRange: {x: 0, y: 0}
   rarityBaseValueBuiltFromInspector: 1
+  <SpawnSizeCollider>k__BackingField: {fileID: 4712594492777919005}
   healthBarPrefabName: EnemyHealthBar
   healthBarSpawnPoint: {fileID: 5399833199182467480}
   autoRecycleTimeAfterFarAwayFromPlayer: 10

@@ -71,15 +71,14 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			Bind<HealthInfo, int>("CurrentHealth", BoundEntity.GetHealth(), info => info.CurrentHealth);
 		}
 		
-		protected override ICreature OnInitEntity(int level, int rarity, Dictionary<int,ItemDropCollection> itemDropCollections){
+		public override ICreature OnInitEntity(int level, int rarity){
 			if (enemyModel == null) {
 				enemyModel = this.GetModel<IEnemyEntityModel>();
 			}
 
 			EnemyBuilder<T> builder = enemyModel.GetEnemyBuilder<T>(rarity);
-			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level)
-				.SetProperty(new PropertyNameInfo(PropertyName.item_drop_collections), itemDropCollections);
-			
+			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level);
+
 			return OnInitEnemyEntity(builder);
 		}
 		
@@ -94,7 +93,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			return info.CurrentHealth;
 		}
 
-		protected override void OnEntityDie(IBelongToFaction damagedealer) {
+		protected override void OnEntityDie(ICanDealDamage damagedealer) {
+			base.OnEntityDie(damagedealer);
 			MikroAction action = WaitingForDeathCondition();
 			if (action != null) {
 				action.OnEndedCallback += () => {

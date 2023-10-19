@@ -50,7 +50,7 @@ namespace Runtime.GameResources {
 		}
 
 		public GameObject SpawnNewPickableResourceVC(string prefabName, bool usePool, bool setRarity = false, int rarity = 1, int poolInitCount = 5,
-			int poolMaxCount = 2) {
+			int poolMaxCount = 20) {
 
 			GameObject vc = null;
 			if (usePool) {

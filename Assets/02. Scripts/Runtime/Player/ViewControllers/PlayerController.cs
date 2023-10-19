@@ -78,7 +78,7 @@ namespace Runtime.Temporary
             return this.GetModel<IGamePlayerModel>().GetPlayer();
         }
 
-        protected override ICreature OnInitEntity(int level, int rarity, Dictionary<int,ItemDropCollection> itemDropCollections){
+        public override ICreature OnInitEntity(int level, int rarity){
             return OnBuildNewEntity() as ICreature;
         }
 
@@ -91,11 +91,11 @@ namespace Runtime.Temporary
             
         }
 
-        protected override void OnEntityDie(IBelongToFaction damagedealer) {
-            
+        protected override void OnEntityDie(ICanDealDamage damagedealer) {
+            base.OnEntityDie(damagedealer);
         }
 
-        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
             float damageRatio = Mathf.Clamp01((float)damage / (float)BoundEntity.GetMaxHealth());
             CameraShakeData shakeData = new CameraShakeData(
                 Mathf.Lerp(0f, 5f, damageRatio),

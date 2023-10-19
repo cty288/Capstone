@@ -17,6 +17,7 @@ using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 
 namespace Runtime.Enemies.SmallEnemies
 {
@@ -109,7 +110,7 @@ namespace Runtime.Enemies.SmallEnemies
             }
         }
 
-        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
             Debug.Log($"bee 1 Take damage: {damage}. bee 1 current health: {currenthealth}");
         }

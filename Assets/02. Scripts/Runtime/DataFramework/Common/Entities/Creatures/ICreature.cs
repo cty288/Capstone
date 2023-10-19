@@ -9,6 +9,10 @@ namespace Runtime.DataFramework.Entities.Creatures {
 	
 	
 	public interface ICreature : IDamageable, IHaveCustomProperties, IHaveTags {
-		public ItemDropInfo GetRandomDropItem(int rarity);
+		public ItemDropInfo GetRandomDropItem();
+		
+		public ItemDropInfo[] GetRequiredDropItems();
+
+		public ItemDropCollection GetItemDropCollection();
 	}
 }

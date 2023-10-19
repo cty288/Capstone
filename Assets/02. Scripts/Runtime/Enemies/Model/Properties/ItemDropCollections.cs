@@ -5,7 +5,7 @@ namespace Runtime.Enemies.Model.Properties {
 	public interface IItemDropCollectionsProperty : IDictionaryProperty<int, ItemDropCollection> {
 		
 	}
-	public class ItemDropCollections : DictionaryProperty<int, ItemDropCollection>, IItemDropCollectionsProperty {
+	public class ItemDropCollections : LoadFromConfigDictProperty<int, ItemDropCollection>, IItemDropCollectionsProperty {
 		protected override PropertyName GetPropertyName() {
 			return PropertyName.item_drop_collections;
 		}
