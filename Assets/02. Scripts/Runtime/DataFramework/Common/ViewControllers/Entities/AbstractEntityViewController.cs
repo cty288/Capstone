@@ -23,6 +23,7 @@ using Runtime.Player;
 using Runtime.UI.NameTags;
 using Runtime.Utilities;
 using Runtime.Weapons.ViewControllers;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -49,6 +50,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		[field: ES3Serializable]
 		public string ID { get; set; }
+
+		[field: SerializeField]
+		public string PrefabID { get; set; }
+
 		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]
 		[Tooltip("If not, you must manually call InitWithID() to initialize the entity.")]
 		[SerializeField] protected bool autoCreateNewEntityWhenStart = false;
@@ -96,6 +101,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected bool isPointed = false;
 		protected Camera mainCamera;
 		protected Action<IEntityViewController> onEntityVCInitCallback = null;
+		//[SerializeField][ReadOnly] protected string prefabID = null;
 		
 		protected class CrossHairManagedHUDInfo {
 			public Transform originalSpawnTransform;

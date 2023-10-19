@@ -90,6 +90,7 @@ namespace Tests.Tests_Editor {
             }
             
             protected override void OnEntityRegisterAdditionalProperties() {
+                base.OnEntityRegisterAdditionalProperties();
                // RegisterInitialProperty(new TestVigiliance());
                 RegisterInitialProperty(new TestAttackRange());
             }
@@ -109,6 +110,8 @@ namespace Tests.Tests_Editor {
             public void OnDealDamage(IDamageable damageable, int damage) {
                 
             }
+
+            public ICanDealDamageRootEntity RootDamageDealer { get; }
         }
     
         //===============================Start writing your tests here===============================

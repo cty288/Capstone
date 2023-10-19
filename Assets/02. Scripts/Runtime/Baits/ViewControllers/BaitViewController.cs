@@ -7,6 +7,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model.Properties;
+using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
 using Runtime.Weapons.Model.Builders;
@@ -37,6 +38,13 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 			playerModel = this.GetModel<IGamePlayerModel>();
 		}
 
+		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+			if (setRarity) {
+				return BuildBait(rarity, vigilianceBase, tastesBase);
+			}
+
+			return OnBuildNewEntity() as IResourceEntity;
+		}
 		protected override IEntity OnBuildNewEntity() {
 			return BuildBait(rarity, vigilianceBase, tastesBase);
 		}

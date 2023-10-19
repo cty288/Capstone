@@ -159,11 +159,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			foreach (var enemy in enemies) {
 				GameObject prefab = enemy.prefab;
-				IEnemyViewController enemyViewController = prefab.GetComponent<IEnemyViewController>();
-				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1);
+				ICreatureViewController enemyViewController = prefab.GetComponent<ICreatureViewController>();
+				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
 				
 				//templateEnemies.Add(enemyEntity);
-				spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefab.name,
+				 spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefab.name,
 					enemy.minRarity, enemy.maxRarity));
 			}
 			

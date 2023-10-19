@@ -8,6 +8,7 @@ using MikroFramework.Utilities;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Player;
 using Runtime.Utilities.Collision;
@@ -75,6 +76,10 @@ namespace Runtime.Temporary
         }
         protected override IEntity OnBuildNewEntity() {
             return this.GetModel<IGamePlayerModel>().GetPlayer();
+        }
+
+        protected override ICreature OnInitEntity(int level, int rarity, Dictionary<int,ItemDropCollection> itemDropCollections){
+            return OnBuildNewEntity() as ICreature;
         }
 
         protected override void OnEntityStart() {

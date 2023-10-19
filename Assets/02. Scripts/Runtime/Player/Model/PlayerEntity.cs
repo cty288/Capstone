@@ -7,9 +7,10 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Player.Properties;
 using Runtime.Player.ViewControllers;
 using Runtime.Utilities.ConfigSheet;
+using UnityEngine;
 
 namespace Runtime.Player {
-	public interface IPlayerEntity : ICreature, IEntity {
+	public interface IPlayerEntity : ICreature, IEntity, ICanDealDamageRootEntity {
 		IAccelerationForce GetAccelerationForce();
 		IWalkSpeed GetWalkSpeed();
 		ISprintSpeed GetSprintSpeed();
@@ -64,6 +65,7 @@ namespace Runtime.Player {
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
+			base.OnEntityRegisterAdditionalProperties();
 			RegisterInitialProperty<IAccelerationForce>(new AccelerationForce());
 			RegisterInitialProperty<IWalkSpeed>(new WalkSpeed());
 			RegisterInitialProperty<ISprintSpeed>(new SprintSpeed());
@@ -167,11 +169,13 @@ namespace Runtime.Player {
 		}
 
 		public void OnKillDamageable(IDamageable damageable) {
-			
+			Debug.Log($"Player kill damageable {damageable.EntityName}");
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			
+			Debug.Log($"Player deal damage {damage} to {damageable.EntityName}");
 		}
+
+		public ICanDealDamageRootEntity RootDamageDealer => this;
 	}
 }

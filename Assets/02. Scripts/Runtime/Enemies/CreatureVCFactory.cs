@@ -4,6 +4,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using MikroFramework.ResKit;
 using MikroFramework.Singletons;
+using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources;
@@ -12,7 +13,7 @@ using Runtime.GameResources.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Enemies {
-	public class EnemyVCFactory: MikroSingleton<EnemyVCFactory>, ISingleton, ICanGetUtility {
+	public class CreatureVCFactory: MikroSingleton<CreatureVCFactory>, ISingleton, ICanGetUtility {
 		
 		private ResLoader resLoader;
 		public override void OnSingletonInit() {
@@ -20,14 +21,14 @@ namespace Runtime.Enemies {
 			resLoader = this.GetUtility<ResLoader>();
 		}
 
-		private EnemyVCFactory() {
+		private CreatureVCFactory() {
 			
 		}
 		
 
-		public GameObject SpawnEnemyVC(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent, int rarity, int level, bool usePool, int poolInitCount, int poolMaxCount) {
-			IEnemyViewController prefabComponent = prefab.GetComponent<IEnemyViewController>();
-			IEnemyEntity entity = prefabComponent.OnInitEntity(level, rarity);
+		public GameObject SpawnCreatureVC(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent, int rarity, int level, bool usePool, int poolInitCount, int poolMaxCount) {
+			ICreatureViewController prefabComponent = prefab.GetComponent<ICreatureViewController>();
+			ICreature entity = prefabComponent.OnInitEntity(level, rarity);
 				
 				
 			GameObject vc = null;
@@ -45,7 +46,7 @@ namespace Runtime.Enemies {
 				vc = GameObject.Instantiate(prefab);
 			}
 			
-			IEnemyViewController vcComponent = vc.GetComponent<IEnemyViewController>();
+			ICreatureViewController vcComponent = vc.GetComponent<ICreatureViewController>();
 			vcComponent.InitWithID(entity.UUID);
 			
 			return vc;

@@ -230,7 +230,7 @@ namespace Runtime.Spawning
                             SpawningUtility.FindNavMeshSuitablePosition(card.Prefab, spawnPos, 1f, 3f, 10);
                        
                         if (!float.IsInfinity(fixedSpawnPos.magnitude)) {
-                            GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, fixedSpawnPos, Quaternion.identity, null, rarity,
+                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, fixedSpawnPos, Quaternion.identity, null, rarity,
                                 levelNumber, true, 5, 30);
                             IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);

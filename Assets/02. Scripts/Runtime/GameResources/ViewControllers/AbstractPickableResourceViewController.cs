@@ -5,6 +5,7 @@ using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Player;
@@ -15,6 +16,8 @@ using Sequence = MikroFramework.ActionKit.Sequence;
 namespace Runtime.GameResources.ViewControllers {
     public interface IPickableResourceViewController : IResourceViewController {
         public bool HoldAbsorb { get; set; }
+        
+        public IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity);
     }
 
     /// <summary>
@@ -47,6 +50,8 @@ namespace Runtime.GameResources.ViewControllers {
                 selfColliders.Add(selfCollider, selfCollider.isTrigger);
             }
         }
+        
+        
 
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = true;
 
@@ -142,5 +147,11 @@ namespace Runtime.GameResources.ViewControllers {
         /// Hold absorb when the item is just thrown
         /// </summary>
         public bool HoldAbsorb { get; set; }
+
+        public abstract IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity);
+
+        protected override IEntity OnBuildNewEntity() {
+            return OnBuildNewPickableResourceEntity(false, 1);
+        }
     }
 }

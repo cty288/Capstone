@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
 using BehaviorDesigner.Runtime;
+using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -12,6 +15,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 	public interface ICreatureViewController : IDamageableViewController {
 		public BoxCollider SpawnSizeCollider { get; }
+		
+		public ICreature OnInitEntity(int level, int rarity);
 	}
 
 	[Serializable]
@@ -22,9 +27,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	
 	[Serializable]
 	public struct ItemDropInfo {
-		public GameObject prefab;
+		public string prefabName;
 		public Vector2Int dropCountRange;
 		public float dropChance;
+		public bool setRarity;
+		public Vector2Int rarityRange;
 	}
 	
 	/// <summary>
@@ -34,9 +41,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	/// <typeparam name="TEntityModel"></typeparam>
 	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature {
-		[SerializeField] protected ItemDropCollection[] itemDropCollections;
+		[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
 		
-			
+		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
 		NavMeshAgent navMeshAgent;
 		BehaviorTree behaviorTree;
 		protected override void Awake() {
@@ -50,7 +57,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (behaviorTree) {
 				behaviorTree.enabled = false;
 			}
-
 		}
 
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
@@ -65,8 +71,26 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				behaviorTree.enabled = true;
 				behaviorTree.Start();
 			}
-			
+
 		}
+
+		protected override IEntity OnBuildNewEntity() {
+			int level = this.GetModel<ILevelModel>().CurrentLevelCount.Value;
+			return OnInitEntity(level, rarityBaseValueBuiltFromInspector, ProcessItemDropCollections(baseItemDropCollections));
+		}
+		
+		private Dictionary<int, ItemDropCollection> ProcessItemDropCollections(List<ItemDropCollection> itemDropCollections) {
+			Dictionary<int, ItemDropCollection> result = new Dictionary<int, ItemDropCollection>();
+			itemDropCollections.Sort((x, y) => x.Rarity.CompareTo(y.Rarity)); // sort in ascending order
+			
+			foreach (var itemDropCollection in itemDropCollections) {
+				result.TryAdd(itemDropCollection.Rarity, itemDropCollection);
+			}
+
+			return result;
+		}
+
+		protected abstract ICreature OnInitEntity(int level, int rarity, Dictionary<int,ItemDropCollection> itemDropCollections);
 
 		public override void OnRecycled() {
 			base.OnRecycled();
@@ -82,5 +106,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; set; }
+
+		public ICreature OnInitEntity(int level, int rarity) {
+			return OnInitEntity(level, rarity, ProcessItemDropCollections(baseItemDropCollections));
+		}
 	}
 }

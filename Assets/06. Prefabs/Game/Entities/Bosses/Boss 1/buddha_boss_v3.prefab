@@ -316,6 +316,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
+  <PrefabID>k__BackingField: d8953d08-9ba5-453f-8ab3-d67a5b77b900
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -327,12 +328,17 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
+  itemDropCollections: []
+  <SpawnSizeCollider>k__BackingField: {fileID: 0}
+  rarityBaseValueBuiltFromInspector: 1
   healthBarPrefabName: UIHealthBar
   animator: {fileID: 1068449055414609626}
   agent: {fileID: 549510903123656328}
   hitbox_roll: {fileID: 2028803062498874570}
+  hardCollider: {fileID: 0}
   shellCollider: {fileID: 7380894127950645543}
   shellHealthBarSpawnTransform: {fileID: 2104895129523660379}
+  slamHitBox: {fileID: 0}
 --- !u!135 &5255244314989206014
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -803,6 +809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDamageNumber: 1
 --- !u!114 &5021637339241231093
 MonoBehaviour:
   m_ObjectHideFlags: 0

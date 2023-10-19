@@ -346,6 +346,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
+  <PrefabID>k__BackingField: 19c89084-2a36-458a-b740-dce1d9b1367f
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -357,9 +358,16 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
-  itemDropCollections: []
-  <SpawnSizeCollider>k__BackingField: {fileID: 3424044716484302364}
+  baseItemDropCollections:
+  - Rarity: 1
+    ItemDropInfos:
+    - prefabName: RawMaterial_OnGround
+      dropCountRange: {x: 1, y: 20}
+      dropChance: 5
+      setRarity: 1
+      rarityRange: {x: 2, y: 5}
   rarityBaseValueBuiltFromInspector: 1
+  <SpawnSizeCollider>k__BackingField: {fileID: 3424044716484302364}
   healthBarPrefabName: EnemyHealthBar
   healthBarSpawnPoint: {fileID: 8049880894790430500}
   autoRecycleTimeAfterFarAwayFromPlayer: 10

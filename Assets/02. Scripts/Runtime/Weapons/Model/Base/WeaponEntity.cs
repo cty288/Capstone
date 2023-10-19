@@ -43,6 +43,8 @@ namespace Runtime.Weapons.Model.Base
         public void OnRecoil(bool isScopedIn);
 
         public int GetRealDamageValue();
+        
+        public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer);
     }
     
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
@@ -58,6 +60,7 @@ namespace Runtime.Weapons.Model.Base
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
         private IWeight weightProperty;
+        protected ICanDealDamageRootEntity rootDamageDealer;
         
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
@@ -102,6 +105,7 @@ namespace Runtime.Weapons.Model.Base
         }
 
         public override void OnRecycle() {
+            rootDamageDealer = null;
             CurrentAmmo.UnRegisterAll();
         }
 
@@ -184,7 +188,11 @@ namespace Runtime.Weapons.Model.Base
         public int GetRealDamageValue() {
             return Random.Range(baseDamageProperty.RealValue.Value.x, baseDamageProperty.RealValue.Value.y + 1);
         }
-        
+
+        public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer) {
+            this.rootDamageDealer = rootDamageDealer;
+        }
+
         public void Reload() {
             CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
         }
@@ -222,5 +230,7 @@ namespace Runtime.Weapons.Model.Base
         public void OnDealDamage(IDamageable damageable, int damage) {
             Debug.Log($"Dealt {damage} damage to {damageable}");
         }
+
+         ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
     }
 }

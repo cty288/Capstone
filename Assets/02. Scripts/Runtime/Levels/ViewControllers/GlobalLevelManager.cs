@@ -23,6 +23,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private GameObject currentLevelGo;
 		private ILevelModel levelModel;
 		private void Awake() {
+			
 			levelModel = this.GetModel<ILevelModel>();
 			//levels.Shuffle();
 			levels.Insert(0, baseLevel);
@@ -31,6 +32,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 
 		private void Start() {
+			
 			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
 			if (directStartContainer.transform.GetChild(0)) {
 				GameObject level = directStartContainer.transform.GetChild(0).gameObject;

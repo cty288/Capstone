@@ -251,6 +251,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
+  <PrefabID>k__BackingField: 13010972-6905-43e5-b91d-83a19016b9ce
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -259,11 +260,20 @@ MonoBehaviour:
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
   autoDestroyWhenEntityRemoved: 1
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
+  showDamageNumber: 1
+  itemDropCollections: []
+  <SpawnSizeCollider>k__BackingField: {fileID: 0}
+  rarityBaseValueBuiltFromInspector: 1
   healthBarPrefabName: UIHealthBar
   animator: {fileID: 1968884714092038701}
-  animationSMBManager: {fileID: 1540264863053179584}
   agent: {fileID: 1540264863053179585}
   hitbox_roll: {fileID: 4985117246712936659}
+  hardCollider: {fileID: 0}
+  shellCollider: {fileID: 0}
+  shellHealthBarSpawnTransform: {fileID: 0}
+  slamHitBox: {fileID: 0}
 --- !u!135 &4521280748581883068
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -697,6 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDamageNumber: 1
 --- !u!1 &8452137337196934469 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6242702292531148292, guid: bf242131a7df0f44e8b3268e884d5ef4,
