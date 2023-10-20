@@ -51,6 +51,8 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 		
 		
 		public IBaitEntity BuildBait(int rarity, float vigilianceBase, List<TasteType> tastesBase) {
+			if(baitModel == null)
+				baitModel = this.GetModel<IBaitModel>();
 			BaitBuilder<BaitEntity> builder = baitModel.GetBaitBuilder<BaitEntity>();
 			return builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity)
 				.SetBaseTastes(tastesBase)

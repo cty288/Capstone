@@ -2,6 +2,7 @@
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
+using Runtime.Utilities;
 
 namespace _02._Scripts.Runtime.Levels.Systems {
 	public interface ILevelSystem : ISystem {
@@ -9,9 +10,18 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 	}
 	public class LevelSystem : AbstractSystem, ILevelSystem {
 		private ILevelModel levelModel;
+		private LevelSystemExitEventHandler levelSystemExitEventHandler;
 		
 		protected override void OnInit() {
 			levelModel = this.GetModel<ILevelModel>();
+			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged);
+			levelSystemExitEventHandler = new LevelSystemExitEventHandler();
+			levelSystemExitEventHandler.Init();
+			//CoroutineRunner.Singleton.st
+		}
+
+		private void OnCurrentLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
+			levelSystemExitEventHandler.SetLevelEntity(newLevel);
 		}
 
 		public void SetBossFight(IEnemyEntity bossEntity) {

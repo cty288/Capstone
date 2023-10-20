@@ -134,6 +134,9 @@ namespace Runtime.Weapons.ViewControllers.Base
 
        
         public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+            if(weaponModel == null) {
+                weaponModel = this.GetModel<IWeaponModel>();
+            }
             WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>();
             if (setRarity) {
                 builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);

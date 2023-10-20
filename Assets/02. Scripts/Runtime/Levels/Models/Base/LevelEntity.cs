@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using MikroFramework.BindableProperty;
@@ -65,6 +66,10 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public IUnRegister RegisterOnLevelExit(Action<ILevelEntity> onLevelExit);
 		
 		public void UnRegisterOnLevelExit(Action<ILevelEntity> onLevelExit);
+		
+		public List<LevelExitCondition> LevelExitConditions { get; set; }
+		
+		
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
@@ -89,6 +94,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public void UnRegisterOnLevelExit(Action<ILevelEntity> onLevelExit) {
 			this.onLevelExit -= onLevelExit;
 		}
+
+		[field: ES3Serializable]
+		public List<LevelExitCondition> LevelExitConditions { get; set; } = new List<LevelExitCondition>();
 
 		protected Action<ILevelEntity> onLevelExit;
 

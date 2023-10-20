@@ -34,7 +34,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private void Start() {
 			
 			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
-			if (directStartContainer.transform.GetChild(0)) {
+			if (directStartContainer.transform.childCount > 0) {
 				GameObject level = directStartContainer.transform.GetChild(0).gameObject;
 				if (level.activeInHierarchy) {
 					directStartLevel = AddLevel(level, directStartLevelNumber);

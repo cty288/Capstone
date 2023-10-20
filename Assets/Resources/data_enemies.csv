@@ -2,7 +2,42 @@ EntityName / Property Names,health,danger,spawn_cost,item_drop_collections,spawn
 Types,HealthInfo,int,float,"Dictionary<int,ItemDropCollection>",int,dynamic,"Dictionary<TagName,int>",,
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}",int,,,,"Dict<string, CustomProperty>
+{""maxHealth"": 100, ""currentHealth"": 100}",int,,"{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 3,
+      ""y"": 5
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ...
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ...
+    },
+    
+    ""ItemDropInfos"": [
+      ...
+    ]
+  }
+}",,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 

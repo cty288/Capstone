@@ -85,7 +85,7 @@ namespace Runtime.GameResources.ViewControllers {
 
         private IEnumerator AbsorbWait(GameObject player, PlayerInteractiveZone zone) {
             isAbsorbWaiting = true;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
             isAbsorbWaiting = false;
             if(inventoryModel.AddItem(BoundEntity)) {
                 isAbsorbing = true;
