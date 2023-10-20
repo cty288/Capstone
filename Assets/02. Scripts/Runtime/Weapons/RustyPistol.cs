@@ -80,7 +80,7 @@ namespace Runtime.Weapons
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
-            gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>();
+            gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
         }
 
         protected override void OnEntityStart() {
