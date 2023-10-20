@@ -310,7 +310,7 @@ namespace Runtime.Player.ViewControllers
             {
                 if (slidingAudioSource == null)
                 {
-                    slidingAudioSource = AudioSystem.Singleton.Play2DSound("slide_3", 1f, true);
+                    slidingAudioSource = AudioSystem.Singleton.Play2DSound("slide_3", 1f, false);
                 }
             }
             else

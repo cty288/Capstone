@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
 using Framework;
@@ -15,7 +16,9 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		private ILevelEntity levelEntity;
 		private bool levelSatisfiedTriggeredBefore = false;
 		private Action onCurrentLevelExitSatisfied;
-		
+		private HashSet<LevelExitCondition> satisfiedConditions = new HashSet<LevelExitCondition>();
+		private Action<LevelExitCondition> onLevelExitConditionSatisfied;
+
 		public void Init() {
 			this.RegisterEvent<OnPlayerKillEnemy>(OnPlayerKillEnemy);
 		}
@@ -24,6 +27,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 
 		public void SetLevelEntity(ILevelEntity levelEntity) {
 			this.levelEntity = levelEntity;
+			satisfiedConditions.Clear();
 			levelSatisfiedTriggeredBefore = false;
 		}
 		
@@ -32,14 +36,14 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 
 		public void OnOneSecondPassed() {
 			if(TryGetLevelExitCondition(out LevelExplorationCondition levelExplorationCondition)) {
-				levelExplorationCondition.CurrentValue += levelExplorationCondition.ExplorationValuePerSecond;
+				levelExplorationCondition.CurrentValue.Value += levelExplorationCondition.ExplorationValuePerSecond;
 				CheckLevelExitCondition();
 			}
 		}
 		
 		private void OnPlayerKillEnemy(OnPlayerKillEnemy e) {
 			if(TryGetLevelExitCondition(out LevelExplorationCondition levelExplorationCondition)) {
-				levelExplorationCondition.CurrentValue += e.Enemy.GetMaxHealth() * (e.IsBoss
+				levelExplorationCondition.CurrentValue.Value += e.Enemy.GetMaxHealth() * (e.IsBoss
 					? levelExplorationCondition.BossExplorationMultiplier
 					: levelExplorationCondition.NormalExplorationMultiplier);
 				
@@ -87,7 +91,12 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 			foreach (LevelExitCondition exitCondition in levelEntity.LevelExitConditions.Values) {
 				if (!exitCondition.IsSatisfied()) {
 					allSatisfied = false;
-					break;
+				}
+				else {
+					if(!satisfiedConditions.Contains(exitCondition)) {
+						satisfiedConditions.Add(exitCondition);
+						onLevelExitConditionSatisfied?.Invoke(exitCondition);
+					}
 				}
 				
 			}
@@ -101,6 +110,10 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		
 		public void RegisterOnCurrentLevelExitSatisfied(Action onCurrentLevelExitSatisfied) {
 			this.onCurrentLevelExitSatisfied += onCurrentLevelExitSatisfied;
+		}
+		
+		public void RegisterOnCurrentLevelConditionSatisfied(Action<LevelExitCondition> onCurrentLevelConditionSatisfied) {
+			onLevelExitConditionSatisfied += onCurrentLevelConditionSatisfied;
 		}
 		
 		

@@ -119,7 +119,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected void SetShootStatus(bool isShooting) {
             if (isShooting) {
-                AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot");
+                AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 0.3f);
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", 2));
             }
             else {

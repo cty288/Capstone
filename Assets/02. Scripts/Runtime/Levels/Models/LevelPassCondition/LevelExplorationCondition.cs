@@ -1,12 +1,15 @@
-﻿using Polyglot;
+﻿using MikroFramework.BindableProperty;
+using Polyglot;
+using Runtime.Utilities;
 
 namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 	public class LevelExplorationCondition : LevelExitCondition {
 		
 		[field: ES3Serializable]
 		public float TotalValue { get; protected set; }
+
 		[field: ES3Serializable]
-		public float CurrentValue { get; set; }
+		public BindableProperty<float> CurrentValue { get; set; } = new BindableProperty<float>();
 		
 		[field: ES3Serializable]
 		public float BossExplorationMultiplier { get; set; }
@@ -18,7 +21,7 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 		
 		public LevelExplorationCondition(float totalValue, float bossExplorationMultiplier, float normalExplorationMultiplier, float explorationValuePerSecond) {
 			this.TotalValue = totalValue;
-			CurrentValue = 0;
+			CurrentValue.Value = 0;
 			this.BossExplorationMultiplier = bossExplorationMultiplier;
 			this.NormalExplorationMultiplier = normalExplorationMultiplier;
 			this.ExplorationValuePerSecond = explorationValuePerSecond;

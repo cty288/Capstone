@@ -8,14 +8,16 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Polyglot;
 using Runtime.UI.NameTags;
+using Runtime.Weapons.ViewControllers.CrossHairs;
 using UnityEngine;
 
-public class LevelExitDoorController : AbstractMikroController<MainGame> {
+public class LevelExitDoorController : AbstractMikroController<MainGame>, ICrossHairDetectable {
     private GameObject exitDoorGameObject;
     private ILevelSystem levelSystem;
     private ILevelModel levelModel;
     private Transform hudSpawnPoint;
     private INameTag spawnedNameTag;
+    private GameObject spawnedNameTagGameObject;
 
     private void Awake() {
         exitDoorGameObject = transform.Find("ExitDoor").gameObject;
@@ -23,8 +25,10 @@ public class LevelExitDoorController : AbstractMikroController<MainGame> {
         exitDoorGameObject.SetActive(false);
         levelSystem = this.GetSystem<ILevelSystem>();
         levelModel = this.GetModel<ILevelModel>();
-        spawnedNameTag = HUDManager.Singleton.SpawnHUDElement(hudSpawnPoint, "NameTag_General", HUDCategory.Exit, true)
-            .GetComponent<INameTag>();
+        spawnedNameTagGameObject =
+            HUDManager.Singleton.SpawnHUDElement(hudSpawnPoint, "NameTag_General", HUDCategory.Exit, true);
+        
+        spawnedNameTag = spawnedNameTagGameObject.GetComponent<INameTag>();
         
         
         levelSystem.IsLevelExitSatisfied.RegisterWithInitValue(OnLevelExitSatisfied)
@@ -33,7 +37,7 @@ public class LevelExitDoorController : AbstractMikroController<MainGame> {
             .UnRegisterWhenGameObjectDestroyed(gameObject);
 
 
-      
+       spawnedNameTagGameObject.SetActive(false);
 
     }
 
@@ -85,5 +89,21 @@ public class LevelExitDoorController : AbstractMikroController<MainGame> {
 
     private void OnDestroy() {
         HUDManager.Singleton.DespawnHUDElement(hudSpawnPoint, HUDCategory.Exit);
+    }
+
+    public void OnUnPointByCrosshair() {
+        spawnedNameTagGameObject.SetActive(false);
+    }
+
+    public void OnPointByCrosshair() {
+        spawnedNameTagGameObject.SetActive(true);
+        spawnedNameTag.Refresh();
+        StartCoroutine(RebuildLayout());
+    }
+    
+    private IEnumerator RebuildLayout() {
+        spawnedNameTag.Refresh();
+        yield return null;
+        spawnedNameTag.Refresh();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
@@ -13,6 +14,11 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		
 		public BindableProperty<bool> IsLevelExitSatisfied { get; }
 	}
+
+	public struct OnCurrentLevelExitContitionSatisfied {
+		public LevelExitCondition Condition;
+	}
+	
 	public class LevelSystem : AbstractSystem, ILevelSystem {
 		private ILevelModel levelModel;
 		private LevelSystemExitEventHandler levelSystemExitEventHandler;
@@ -24,7 +30,14 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 			levelSystemExitEventHandler.Init();
 			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged);
 			levelSystemExitEventHandler.RegisterOnCurrentLevelExitSatisfied(OnCurrentLevelExitSatisfied);
+			levelSystemExitEventHandler.RegisterOnCurrentLevelConditionSatisfied(OnCurrentLevelConditionSatisfied);
 			//CoroutineRunner.Singleton
+		}
+
+		private void OnCurrentLevelConditionSatisfied(LevelExitCondition condition) {
+			this.SendEvent<OnCurrentLevelExitContitionSatisfied>(new OnCurrentLevelExitContitionSatisfied() {
+				Condition = condition
+			});
 		}
 
 		private void OnCurrentLevelExitSatisfied() {

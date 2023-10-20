@@ -74,6 +74,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
             // throw exception, return false, retry, some other way to handle failed sample
             NavMeshPath path = new NavMeshPath();
+            if (float.IsInfinity(hit.position.magnitude)) {
+                return false;
+            }
             this.m_NavMeshAgent.CalculatePath(hit.position, path);
             bool canReachPoint = path.status == NavMeshPathStatus.PathComplete;
             if (canReachPoint)

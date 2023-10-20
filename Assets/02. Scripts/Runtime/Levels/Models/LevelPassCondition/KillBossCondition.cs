@@ -18,7 +18,7 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 		}
 
 		public override string GetDescription() {
-			return Localization.Get("WIN_CONDITION_KILL_BOSS");
+			return Localization.GetFormat("WIN_CONDITION_KILL_BOSS", RequiredNumber);
 		}
 
 		public override bool IsSatisfied() {

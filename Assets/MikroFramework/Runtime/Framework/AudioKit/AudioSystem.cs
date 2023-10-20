@@ -146,6 +146,7 @@ namespace MikroFramework.AudioKit
 
             maxVolume = MusicVolume * relativeVolume * MasterVolume;
             timer = 0f;
+            bgm.Play();
             while (timer < duration)
             {
                 bgm.volume = Mathf.Lerp(bgm.volume, maxVolume, timer / duration);

@@ -131,6 +131,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
 		[SerializeField] protected bool autoUpdateNavMeshOnStart = true;
+		
+		[Header("Audio Settings")]
+		[SerializeField] private AudioClip ambientMusic;
+		[SerializeField] private float relativeVolume = 1f;
+		
 		[Header("Debug Only")]
 		[SerializeField]
 		private int enemyCount = 0;
@@ -198,11 +203,18 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			UpdatePreExistingDirectors();
 			OnSpawnPlayer();
 			StartCoroutine(UpdateLevelSystemTime());
+			if (ambientMusic) {
+				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
+			}
 		}
+		
+		
 
 		private IEnumerator UpdateLevelSystemTime() {
-			yield return new WaitForSeconds(1f);
-			levelSystem.OnOneSecondPassed();
+			while (true) {
+				yield return new WaitForSeconds(1f);
+				levelSystem.OnOneSecondPassed();
+			}
 		}
 
 		
@@ -302,6 +314,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			enemyCount = 0;
 			currentEnemies.Clear();
 			playerSpawners.Clear();
+			if (ambientMusic) {
+				//AudioSystem.Singleton.StopMusic();
+			}
 		}
 		
 		public void OnExitLevel() {
