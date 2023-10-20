@@ -13,6 +13,7 @@ using Runtime.Utilities.Collision;
 using UnityEngine;
 using UnityEngine.AI;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using MikroFramework.AudioKit;
 using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
@@ -79,7 +80,7 @@ namespace Runtime.Enemies.SmallEnemies
             foreach (GameObject waypoint in waypoints) {
                 waypoint.transform.SetParent(null);
             }
-
+            AudioSystem.Singleton.Play3DSound("Surveillance Drone_Spawn", this.gameObject.transform.position, 0.3f);
             //StartCoroutine(DelayedStart());
 
 
@@ -112,6 +113,10 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
+            if(currenthealth <= 0)
+            {
+                AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position, 0.3f);
+            }
             Debug.Log($"bee 1 Take damage: {damage}. bee 1 current health: {currenthealth}");
         }
 
@@ -129,10 +134,12 @@ namespace Runtime.Enemies.SmallEnemies
         
 
         protected override MikroAction WaitingForDeathCondition() {
+            
             return null;
         }
 
         public override void OnRecycled() {
+            //AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position , 0.4f);
             base.OnRecycled();
             //behaviorTree.DisableBehavior();
             //behaviorTree.enabled = false;

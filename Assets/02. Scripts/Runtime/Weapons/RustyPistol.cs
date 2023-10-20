@@ -4,6 +4,7 @@ using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.Controls;
@@ -163,12 +164,12 @@ namespace Runtime.Weapons
         private IEnumerator ReloadChangeModel() {
             //isReloading = true;
             ChangeReloadStatus(true);
-            //defaultGunModel.SetActive(false);
-            //reloadGunModel.SetActive(true);
+            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-            //defaultGunModel.SetActive(true);
-            //reloadGunModel.SetActive(false);
+
             ChangeReloadStatus(false);
+            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
             BoundEntity.Reload();
         }
         

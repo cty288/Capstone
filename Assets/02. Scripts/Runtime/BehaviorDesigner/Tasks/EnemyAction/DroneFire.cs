@@ -12,7 +12,7 @@ using UnityEngine;
 using Runtime.Temporary.Weapon;
 using Runtime.Weapons.ViewControllers.Base;
 using Runtime.Enemies.SmallEnemies;
-
+using MikroFramework.AudioKit;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -83,7 +83,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
                 gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
             b.GetComponent<DroneBullet>().SetData(bulletSpeed);
-
+            AudioSystem.Singleton.Play3DSound("Drone_MachineGun", this.gameObject.transform.position , 0.3f);
         }
 
         public override void OnEnd() {

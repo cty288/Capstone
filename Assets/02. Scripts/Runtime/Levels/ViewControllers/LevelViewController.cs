@@ -145,8 +145,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			navMeshSurface = GetComponent<NavMeshSurface>();
 			levelSystem = this.GetSystem<ILevelSystem>();
 		//	enemies.AddRange(bosses);
-			//AudioSystem.Singleton.Initialize(null);
-			//AudioSystem.Singleton.Play2DSound("enemy_Spider_AlertSound", 1f, true);
+
 
 		}
 
