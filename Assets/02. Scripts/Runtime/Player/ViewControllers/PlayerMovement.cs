@@ -196,11 +196,17 @@ namespace Runtime.Player.ViewControllers
 
         private IInventorySystem inventorySystem;
         
-        private float walkingTime = 0.5f;
-        private float walkingTimer = 0f;
+        //Audio
+        private float walkingAudioTime = 0.5f;
+        private float walkingAudioTimer = 0f;
         
-        private float runningTime = 0.35f;
-        private float runningTimer = 0f;
+        private float runningAudioTime = 0.35f;
+        private float runningAudioTimer = 0f;
+        
+        private float wallRunAudioTime = 0.2f;
+        private float wallRunAudioTimer = 0f;
+        
+        private AudioSource slidingAudioSource = null;
 
         private void Awake() {
             AudioSystem.Singleton.Initialize(null); //TODO: move to better spot
@@ -271,44 +277,47 @@ namespace Runtime.Player.ViewControllers
 
         private void HandleAudio()
         {
-            if (grounded && rb.velocity.magnitude > 0.1f && !sprinting)
+            if (grounded && rb.velocity.magnitude > 0.1f && !sprinting && !sliding && !wallrunning)
             {
-                walkingTimer += Time.deltaTime;
-                if (walkingTimer >= walkingTime)
+                walkingAudioTimer += Time.deltaTime;
+                if (walkingAudioTimer >= walkingAudioTime)
                 {
-                    print("WALK");
                     AudioSystem.Singleton.Play2DSound("FootSteps");
-                    walkingTimer = 0f;
+                    walkingAudioTimer = 0f;
                 }
             }
             else if (grounded && sprinting)
             {
-                runningTimer += Time.deltaTime;
-                if (runningTimer >= runningTime)
+                runningAudioTimer += Time.deltaTime;
+                if (runningAudioTimer >= runningAudioTime)
                 {
-                    print("RUN");
                     AudioSystem.Singleton.Play2DSound("FootSteps");
-                    runningTimer = 0f;
+                    runningAudioTimer = 0f;
                 }
             }
             
-            // if (state == MovementState.wallrunning)
-            // {
-            //     AudioSystem.Singleton.Play2DSound("WallRun_FootSteps", 1f, true);
-            // }
-            // else
-            // {
-            //     AudioSystem.Singleton.StopSound("WallRun_FootSteps");
-            // }
-            //
-            // if (state == MovementState.sliding)
-            // {
-            //     AudioSystem.Singleton.Play2DSound("slide (3)", 1f, true);
-            // }
-            // else
-            // {
-            //     AudioSystem.Singleton.StopSound("slide (3)");
-            // }
+            if (wallrunning)
+            {
+                wallRunAudioTimer += Time.deltaTime;
+                if (wallRunAudioTimer >= wallRunAudioTime)
+                {
+                    AudioSystem.Singleton.Play2DSound("FootSteps");
+                    wallRunAudioTimer = 0f;
+                }
+            }
+            
+            if (sliding)
+            {
+                if (slidingAudioSource == null)
+                {
+                    slidingAudioSource = AudioSystem.Singleton.Play2DSound("slide_3", 1f, true);
+                }
+            }
+            else
+            {
+                slidingAudioSource = null;
+                AudioSystem.Singleton.StopSound("slide_3");
+            }
         }
         
         private void StateHandler()

@@ -1,5 +1,6 @@
 using System;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -95,6 +96,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (previsScope != _isScopedIn) {
                 crossHairViewController?.OnScope(_isScopedIn);
             }
+            AudioSystem.Singleton.Play2DSound("Pistol_Aim");
             this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS", !_isScopedIn ? 0 : 1));
         }
 
@@ -116,6 +118,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected void SetShootStatus(bool isShooting) {
             if (isShooting) {
+                AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot");
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", 2));
             }
             else {
