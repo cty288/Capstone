@@ -80,7 +80,7 @@ namespace Runtime.Enemies.SmallEnemies
             foreach (GameObject waypoint in waypoints) {
                 waypoint.transform.SetParent(null);
             }
-            AudioSystem.Singleton.Play3DSound("Surveillance Drone_Spawn", this.gameObject.transform.position, 0.5f);
+            AudioSystem.Singleton.Play3DSound("Surveillance Drone_Spawn", this.gameObject.transform.position, 0.3f);
             //StartCoroutine(DelayedStart());
 
 
@@ -113,6 +113,10 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
+            if(currenthealth <= 0)
+            {
+                AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position, 0.3f);
+            }
             Debug.Log($"bee 1 Take damage: {damage}. bee 1 current health: {currenthealth}");
         }
 
@@ -130,6 +134,7 @@ namespace Runtime.Enemies.SmallEnemies
         
 
         protected override MikroAction WaitingForDeathCondition() {
+            
             return null;
         }
 
