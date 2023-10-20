@@ -11,6 +11,7 @@ using UnityEngine;
 using Runtime.Temporary.Weapon;
 using Runtime.Weapons.ViewControllers.Base;
 using Runtime.Enemies.SmallEnemies;
+using MikroFramework.AudioKit;
 
 
 
@@ -30,7 +31,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override TaskStatus OnUpdate()
         {
-            Debug.Log("exploding");
+            AudioSource audio = AudioSystem.Singleton.Play3DSound("Drone_Explosion", this.gameObject.transform.position);
+            audio.volume = 0.5f;
+            Debug.Log(audio.volume);
             GameObject explosion = pool.Allocate();
             explosion.transform.position = this.gameObject.transform.position;
             explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"), gameObject,
