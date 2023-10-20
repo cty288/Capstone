@@ -4,6 +4,7 @@ using Cinemachine;
 using DG.Tweening;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Utilities;
 using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
@@ -194,8 +195,16 @@ namespace Runtime.Player.ViewControllers
         private IPlayerEntity playerEntity;
 
         private IInventorySystem inventorySystem;
+        
+        private float walkingTime = 0.5f;
+        private float walkingTimer = 0f;
+        
+        private float runningTime = 0.35f;
+        private float runningTimer = 0f;
 
         private void Awake() {
+            AudioSystem.Singleton.Initialize(null); //TODO: move to better spot
+            
             playerActions = ClientInput.Singleton.GetPlayerActions();
             groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
         }
@@ -233,6 +242,7 @@ namespace Runtime.Player.ViewControllers
             else
             {
                 HandleCamera();
+                HandleAudio();
                 MyInput();
                 StateHandler();
                 CheckForWall();
@@ -257,6 +267,48 @@ namespace Runtime.Player.ViewControllers
                 rb.drag = 2f;
             MovePlayer();
             
+        }
+
+        private void HandleAudio()
+        {
+            if (grounded && rb.velocity.magnitude > 0.1f && !sprinting)
+            {
+                walkingTimer += Time.deltaTime;
+                if (walkingTimer >= walkingTime)
+                {
+                    print("WALK");
+                    AudioSystem.Singleton.Play2DSound("FootSteps");
+                    walkingTimer = 0f;
+                }
+            }
+            else if (grounded && sprinting)
+            {
+                runningTimer += Time.deltaTime;
+                if (runningTimer >= runningTime)
+                {
+                    print("RUN");
+                    AudioSystem.Singleton.Play2DSound("FootSteps");
+                    runningTimer = 0f;
+                }
+            }
+            
+            // if (state == MovementState.wallrunning)
+            // {
+            //     AudioSystem.Singleton.Play2DSound("WallRun_FootSteps", 1f, true);
+            // }
+            // else
+            // {
+            //     AudioSystem.Singleton.StopSound("WallRun_FootSteps");
+            // }
+            //
+            // if (state == MovementState.sliding)
+            // {
+            //     AudioSystem.Singleton.Play2DSound("slide (3)", 1f, true);
+            // }
+            // else
+            // {
+            //     AudioSystem.Singleton.StopSound("slide (3)");
+            // }
         }
         
         private void StateHandler()

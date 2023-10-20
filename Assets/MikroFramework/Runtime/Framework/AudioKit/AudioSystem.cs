@@ -102,7 +102,7 @@ namespace MikroFramework.AudioKit
                 GameObjectPoolManager.AutoCreatePoolWhenAllocating = true;
 
                 DontDestroyOnLoad(gameObject);
-                bgm.volume = MusicVolume * MasterVolume;
+                // bgm.volume = MusicVolume * MasterVolume;
                 //sound2D.volume = SoundVolume;
 
 #if UNITY_EDITOR
