@@ -7,6 +7,8 @@ using Runtime.Utilities;
 namespace _02._Scripts.Runtime.Levels.Systems {
 	public interface ILevelSystem : ISystem {
 		public void SetBossFight(IEnemyEntity bossEntity);
+		
+		public void OnOneSecondPassed();
 	}
 	public class LevelSystem : AbstractSystem, ILevelSystem {
 		private ILevelModel levelModel;
@@ -14,14 +16,15 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		
 		protected override void OnInit() {
 			levelModel = this.GetModel<ILevelModel>();
-			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged);
+			
 			levelSystemExitEventHandler = new LevelSystemExitEventHandler();
 			levelSystemExitEventHandler.Init();
-			//CoroutineRunner.Singleton.st
+			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged);
+			//CoroutineRunner.Singleton
 		}
 
 		private void OnCurrentLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
-			//levelSystemExitEventHandler.SetLevelEntity(newLevel);
+			levelSystemExitEventHandler.SetLevelEntity(newLevel);
 		}
 
 		public void SetBossFight(IEnemyEntity bossEntity) {
@@ -31,6 +34,10 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 			
 			levelModel.CurrentLevel.Value.IsInBossFight.Value = true;
 			bossEntity.RegisterOnEntityRecycled(OnBossRecycled);
+		}
+
+		public void OnOneSecondPassed() {
+			levelSystemExitEventHandler.OnOneSecondPassed();
 		}
 
 		private void OnBossRecycled(IEntity e) {

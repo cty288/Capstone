@@ -6,11 +6,15 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 		public int RequiredNumber { get; protected set; }
 		
 		[field: ES3Serializable]
-		public int KilledNumber { get; protected set; }
+		public int KilledNumber { get; set; }
 		
 		public KillBossCondition(int requiredNumber) {
 			this.RequiredNumber = requiredNumber;
 			KilledNumber = 0;
+		}
+		
+		public KillBossCondition() {
+			
 		}
 
 		public override string GetDescription() {

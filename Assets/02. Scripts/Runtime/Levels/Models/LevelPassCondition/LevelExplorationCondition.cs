@@ -6,7 +6,7 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 		[field: ES3Serializable]
 		public float TotalValue { get; protected set; }
 		[field: ES3Serializable]
-		public float CurrentValue { get; protected set; }
+		public float CurrentValue { get; set; }
 		
 		[field: ES3Serializable]
 		public float BossExplorationMultiplier { get; set; }
@@ -23,13 +23,17 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 			this.NormalExplorationMultiplier = normalExplorationMultiplier;
 			this.ExplorationValuePerSecond = explorationValuePerSecond;
 		}
+		
+		public LevelExplorationCondition() {
+			
+		}
 
 		public override string GetDescription() {
 			return Localization.Get("WIN_CONDITION_EXPLORATION");
 		}
 
 		public override bool IsSatisfied() {
-			return TotalValue >= CurrentValue;
+			return  CurrentValue >= TotalValue;
 		}
 	}
 }

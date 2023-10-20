@@ -67,7 +67,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		public void UnRegisterOnLevelExit(Action<ILevelEntity> onLevelExit);
 		
-		public List<LevelExitCondition> LevelExitConditions { get; set; }
+		public Dictionary<Type, LevelExitCondition> LevelExitConditions { get;}
+		
+		public void AddLevelExitCondition(LevelExitCondition levelExitCondition);
 		
 		
 	}
@@ -96,7 +98,12 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 
 		[field: ES3Serializable]
-		public List<LevelExitCondition> LevelExitConditions { get; set; } = new List<LevelExitCondition>();
+		public Dictionary<Type, LevelExitCondition> LevelExitConditions { get; protected set; } 
+			= new Dictionary<Type, LevelExitCondition>();
+
+		public void AddLevelExitCondition(LevelExitCondition levelExitCondition) {
+			LevelExitConditions.TryAdd(levelExitCondition.GetType(), levelExitCondition);
+		}
 
 		protected Action<ILevelEntity> onLevelExit;
 
