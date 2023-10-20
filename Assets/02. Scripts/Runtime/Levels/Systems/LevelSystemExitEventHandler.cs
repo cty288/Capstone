@@ -13,6 +13,8 @@ using UnityEngine;
 namespace _02._Scripts.Runtime.Levels.Systems {
 	public class LevelSystemExitEventHandler : ICanRegisterEvent {
 		private ILevelEntity levelEntity;
+		private bool levelSatisfiedTriggeredBefore = false;
+		private Action onCurrentLevelExitSatisfied;
 		
 		public void Init() {
 			this.RegisterEvent<OnPlayerKillEnemy>(OnPlayerKillEnemy);
@@ -22,7 +24,9 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 
 		public void SetLevelEntity(ILevelEntity levelEntity) {
 			this.levelEntity = levelEntity;
+			levelSatisfiedTriggeredBefore = false;
 		}
+		
 
 
 
@@ -71,7 +75,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		}
 		
 		private void CheckLevelExitCondition() {
-			if (levelEntity == null) {
+			if (levelEntity == null || levelSatisfiedTriggeredBefore) {
 				return;
 			}
 
@@ -90,7 +94,13 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 
 			if (allSatisfied) {
 				Debug.Log("Level Exit Condition Satisfied");
+				levelSatisfiedTriggeredBefore = true;
+				onCurrentLevelExitSatisfied?.Invoke();
 			}
+		}
+		
+		public void RegisterOnCurrentLevelExitSatisfied(Action onCurrentLevelExitSatisfied) {
+			this.onCurrentLevelExitSatisfied += onCurrentLevelExitSatisfied;
 		}
 		
 		

@@ -23,6 +23,7 @@ using Runtime.Player;
 using Runtime.UI.NameTags;
 using Runtime.Utilities;
 using Runtime.Weapons.ViewControllers;
+using Runtime.Weapons.ViewControllers.CrossHairs;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -45,7 +46,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			entity = null;
 		}
 	}
-	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController 
+	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController, ICrossHairDetectable
 		where T : class, IEntity {
 		
 		[field: ES3Serializable]
@@ -208,7 +209,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			bool isPointPreviously = isPointed;
 			isPointed = true;
 			
-			if (showNameTagWhenPointed) {
+			if (showNameTagWhenPointed && !String.IsNullOrEmpty(nameTagPrefabName)) {
 				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
 					(GameObject, CrossHairManagedHUDInfo) nameTagInfo =
 						SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName,
@@ -251,7 +252,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
 				hudInfo.spawnedHUD.SetActive(false);
 			}
-			if (showNameTagWhenPointed && nameTagFollowTransform) {
+			if (showNameTagWhenPointed && nameTagFollowTransform && !String.IsNullOrEmpty(nameTagPrefabName)) {
 				DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
 			}
 		}

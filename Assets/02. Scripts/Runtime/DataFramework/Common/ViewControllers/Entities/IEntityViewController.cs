@@ -19,10 +19,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         
         public void InitWithID(string id, bool recycleIfAlreadyExist = true);
         
-        public void OnPointByCrosshair();
-        
-        public void OnUnPointByCrosshair();
-        
+
         public void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone);
         
         public void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone);
