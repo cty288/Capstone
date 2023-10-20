@@ -21,7 +21,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		}
 
 		private void OnCurrentLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
-			levelSystemExitEventHandler.SetLevelEntity(newLevel);
+			//levelSystemExitEventHandler.SetLevelEntity(newLevel);
 		}
 
 		public void SetBossFight(IEnemyEntity bossEntity) {
