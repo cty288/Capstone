@@ -84,11 +84,19 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 				hitData.Damage = damageAmount;
 			}
 			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer, hitData);
+			OnTakeDamage(damageAmount, damageDealer, hitData);
 			damageDealer?.OnDealDamage(this, damageAmount);
 			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
 				damageDealer?.OnKillDamageable(this);
 			}
 		}
+		
+		
+		public virtual void OnTakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null) {
+			
+		}
+		
+		
 		
 		
 		public virtual int OnTakeDamageAdditionalCheck(int damage, [CanBeNull] IBelongToFaction damageDealer) {
@@ -129,6 +137,11 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth + healAmountClamped);
 
 			onHeal?.Invoke(healAmountClamped, HealthProperty.RealValue.Value.CurrentHealth, healer);
+			OnHeal(healAmountClamped, healer);
+		}
+		
+		public virtual void OnHeal(int healAmount, [CanBeNull] IBelongToFaction healer) {
+			
 		}
 
 		public IUnRegister RegisterOnHeal(OnHeal onHeal) {

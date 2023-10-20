@@ -117,6 +117,8 @@ namespace Runtime.Enemies.Model {
 		public void OnDealDamage(IDamageable damageable, int damage) {
 			
 		}
+		
+		
 
 		public ICanDealDamageRootEntity RootDamageDealer => this;
 	}

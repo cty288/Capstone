@@ -1,9 +1,11 @@
-﻿using MikroFramework.Pool;
+﻿using MikroFramework.Architecture;
+using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.Enemies.Model;
 using Runtime.Player.Properties;
 using Runtime.Player.ViewControllers;
 using Runtime.Utilities.ConfigSheet;
@@ -27,6 +29,12 @@ namespace Runtime.Player {
 		
 		bool IsScopedIn();
 		void SetScopedIn(bool state);
+	}
+
+	public struct OnPlayerKillEnemy {
+		public int DamageDealt;
+		public bool IsBoss;
+		public IEnemyEntity Enemy;
 	}
 	
 	public class PlayerEntity : AbstractCreature, IPlayerEntity, ICanDealDamage {
@@ -169,11 +177,25 @@ namespace Runtime.Player {
 		}
 
 		public void OnKillDamageable(IDamageable damageable) {
-			Debug.Log($"Player kill damageable {damageable.EntityName}");
+			
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			Debug.Log($"Player deal damage {damage} to {damageable.EntityName}");
+			if (damageable.GetCurrentHealth() <= 0) {
+				if (damageable is IBossEntity boss) {
+					this.SendEvent<OnPlayerKillEnemy>(new OnPlayerKillEnemy() {
+						DamageDealt = damage,
+						Enemy = boss,
+						IsBoss = true
+					});
+				}else if (damageable is IEnemyEntity enemy) {
+					this.SendEvent<OnPlayerKillEnemy>(new OnPlayerKillEnemy() {
+						DamageDealt = damage,
+						Enemy = enemy,
+						IsBoss = false
+					});
+				}
+			}
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => this;

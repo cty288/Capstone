@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
+using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Utilities;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
@@ -131,6 +134,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[Header("Debug Only")]
 		[SerializeField]
 		private int enemyCount = 0;
+		
+		private ILevelSystem levelSystem;
  
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
 
@@ -138,7 +143,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();
 			navMeshSurface = GetComponent<NavMeshSurface>();
+			levelSystem = this.GetSystem<ILevelSystem>();
 		//	enemies.AddRange(bosses);
+			AudioSystem.Singleton.Play2DSound("enemy_Spider_AlertSound", 1f, true);
 
 		}
 
@@ -169,7 +176,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			return spawnCards;
 		}
-		public ILevelEntity OnBuildNewLevel(int levelNumber) {
+		public virtual ILevelEntity OnBuildNewLevel(int levelNumber) {
 			if (levelModel == null) {
 				levelModel = this.GetModel<ILevelModel>();
 			}
@@ -190,6 +197,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			UpdatePreExistingEnemies();
 			UpdatePreExistingDirectors();
 			OnSpawnPlayer();
+			StartCoroutine(UpdateLevelSystemTime());
+		}
+
+		private IEnumerator UpdateLevelSystemTime() {
+			yield return new WaitForSeconds(1f);
+			levelSystem.OnOneSecondPassed();
 		}
 
 		
@@ -311,6 +324,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			foreach (IDirectorViewController spawner in playerSpawners) {
 				directorModel.RemoveEntity(spawner.Entity.UUID);
 			}
+			StopAllCoroutines();
 		}
 
 		protected override void OnDestroy() {

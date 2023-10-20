@@ -15,6 +15,10 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 			ElapsedTime = 0;
 		}
 
+		public TimeElapseCondition() {
+			
+		}
+		
 		public override string GetDescription() {
 			return Localization.Get("WIN_CONDITION_EXPLORATION");
 		}

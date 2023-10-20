@@ -15,14 +15,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] private float explorationValuePerSecond = 1f;
 		[SerializeField] private int killBossRequired = 1;
 		
-		protected override IEntity OnBuildNewEntity() {
-			ILevelEntity levelEntity = base.OnBuildNewEntity() as ILevelEntity;
+		
 
-			levelEntity.LevelExitConditions = new List<LevelExitCondition>() {
-				new KillBossCondition(killBossRequired),
-				new LevelExplorationCondition(totalExplortionValueRequired, bossExplorationMultiplier,
-					normalEnemyExplorationMultiplier, explorationValuePerSecond)
-			};
+		public override ILevelEntity OnBuildNewLevel(int levelNumber) {
+			ILevelEntity levelEntity = base.OnBuildNewLevel(levelNumber);
+			levelEntity?.AddLevelExitCondition(new KillBossCondition(killBossRequired));
+			levelEntity?.AddLevelExitCondition(new LevelExplorationCondition(totalExplortionValueRequired,
+				bossExplorationMultiplier,
+				normalEnemyExplorationMultiplier, explorationValuePerSecond));
 			
 			return levelEntity;
 		}
