@@ -20,7 +20,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     public class WormReturnGround : EnemyAction<HunterWormEntity>
     {
         NavMeshAgent agent;
+        private float timer = 1.5f;
         public BehaviorTree tree;
+        private float elapsedTime;
+        bool done;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -30,23 +33,49 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override void OnStart()
         {
-            agent.baseOffset = 3.5f;
+            //agent.baseOffset = 3.5f;
             tree = this.gameObject.GetComponent<BehaviorTree>();
+            StartCoroutine(ChangeOffset());
         }
         public override TaskStatus OnUpdate()
         {
-            return TaskStatus.Success;
+            if (done)
+            {
+                return TaskStatus.Success;
+            }
+            else
+            {
+                return TaskStatus.Running;
+            }
 
         }
 
+        private IEnumerator ChangeOffset()
+        {
+            while(elapsedTime < 1.5f)
+            {
+                // Interpolate the offset value over time.
+                float t = elapsedTime / 1.5f;
+                float newOffset = Mathf.Lerp(1.25f, 3.5f, t);
 
+                // Set the new offset value for the NavMeshAgent.
+                agent.baseOffset = newOffset;
 
+                // Update elapsed time.
+                elapsedTime += Time.deltaTime;
+
+                yield return null;
+            }
+            done = true;
+        }
         public override void OnEnd()
         {
             SharedBool isGround = (SharedBool)tree.GetVariable("InGround");
             isGround = false;
             base.OnEnd();
             StopAllCoroutines();
+            done = false;
+            elapsedTime = 0;
         }
     }
 }

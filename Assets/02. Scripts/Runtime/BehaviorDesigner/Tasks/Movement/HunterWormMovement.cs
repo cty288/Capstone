@@ -17,6 +17,7 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
     public class HunterWormMovement : Action
     {
         NavMeshAgent agent;
+        public Transform head;
         public float rotationSpeed = 5.0f; // Adjust the speed as needed
 
         private Quaternion targetRotation;
@@ -42,7 +43,8 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
             }
 
             // Smoothly rotate the head
-            var head = this.gameObject.transform.GetChild(0);
+            head = this.gameObject.transform.GetChild(0);
+            Debug.Log(targetDirection);
             head.transform.rotation = Quaternion.Slerp(head.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
         /*
