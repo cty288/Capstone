@@ -32,6 +32,8 @@ namespace Runtime.Enemies
             
         }
 
+        public ICanDealDamageRootEntity RootDamageDealer { get; }
+
         public int Damage => m_damage;
         public List<GameObject> hitObjects= new List<GameObject>();
         public bool CheckHit(HitData data) {

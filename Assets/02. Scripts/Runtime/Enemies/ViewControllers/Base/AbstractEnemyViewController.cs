@@ -8,6 +8,7 @@ using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
@@ -24,7 +25,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
 		
-		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
+
 
 		public int Danger {  get; }
 	
@@ -70,20 +71,17 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			Bind<HealthInfo, int>("CurrentHealth", BoundEntity.GetHealth(), info => info.CurrentHealth);
 		}
 		
-		public IEnemyEntity OnInitEntity(int level, int rarity) {
+		public override ICreature OnInitEntity(int level, int rarity){
 			if (enemyModel == null) {
 				enemyModel = this.GetModel<IEnemyEntityModel>();
 			}
 
 			EnemyBuilder<T> builder = enemyModel.GetEnemyBuilder<T>(rarity);
 			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level);
+
 			return OnInitEnemyEntity(builder);
 		}
 		
-		protected override IEntity OnBuildNewEntity() {
-			int level = this.GetModel<ILevelModel>().CurrentLevelCount.Value;
-			return OnInitEntity(level, rarityBaseValueBuiltFromInspector);
-		}
 
 		protected abstract IEnemyEntity OnInitEnemyEntity(EnemyBuilder<T> builder);
 
@@ -95,7 +93,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			return info.CurrentHealth;
 		}
 
-		protected override void OnEntityDie(IBelongToFaction damagedealer) {
+		protected override void OnEntityDie(ICanDealDamage damagedealer) {
+			base.OnEntityDie(damagedealer);
 			MikroAction action = WaitingForDeathCondition();
 			if (action != null) {
 				action.OnEndedCallback += () => {
@@ -152,6 +151,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		public void OnDealDamage(IDamageable damageable, int damage) {
 			BoundEntity?.OnDealDamage(damageable, damage);
 		}
+
+		public ICanDealDamageRootEntity RootDamageDealer => BoundEntity?.RootDamageDealer;
 
 		public ICanDealDamage CanDealDamageEntity => BoundEntity;
 	}

@@ -20,7 +20,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances {
 			return null;
 		}
 	}
-	public class SandStormLevelViewController : LevelViewController<SandStormLevelEntity> {
+	public class SandStormLevelViewController : NormalLevelViewController<SandStormLevelEntity> {
 		protected override void OnEntityStart() {
 			
 		}
@@ -31,7 +31,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances {
 
 		protected override IEntity OnInitLevelEntity(LevelBuilder<SandStormLevelEntity> builder, int levelNumber) {
 			return builder
-				
 				.Build();
 		}
 	}

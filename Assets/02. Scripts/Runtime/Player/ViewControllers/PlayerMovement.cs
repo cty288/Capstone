@@ -1,22 +1,18 @@
 using System;
 using System.Collections;
-using Framework;
-using Mikrocosmos;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Runtime.Controls;
 using Cinemachine;
 using DG.Tweening;
+using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Utilities;
+using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
-using Runtime.Player;
-using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Properties;
+using UnityEngine;
 
-namespace Runtime.Temporary.Player
+namespace Runtime.Player.ViewControllers
 {
     [Serializable]
     public enum MovementState
@@ -51,7 +47,13 @@ namespace Runtime.Temporary.Player
 
         [SerializeField] 
         private float defaultFOV;
+        [SerializeField]
+        private float runningFOV;        
+        [SerializeField]
+        private float slidingFOV;
 
+        private Coroutine fovWalkToRunCoroutine;
+        private Coroutine fovRunToWalkCoroutine;
 
         [Header("Headbob")] 
         [SerializeField] 
@@ -193,8 +195,22 @@ namespace Runtime.Temporary.Player
         private IPlayerEntity playerEntity;
 
         private IInventorySystem inventorySystem;
+        
+        //Audio
+        private float walkingAudioTime = 0.5f;
+        private float walkingAudioTimer = 0f;
+        
+        private float runningAudioTime = 0.35f;
+        private float runningAudioTimer = 0f;
+        
+        private float wallRunAudioTime = 0.2f;
+        private float wallRunAudioTimer = 0f;
+        
+        private AudioSource slidingAudioSource = null;
 
         private void Awake() {
+            AudioSystem.Singleton.Initialize(null); //TODO: move to better spot
+            
             playerActions = ClientInput.Singleton.GetPlayerActions();
             groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
         }
@@ -232,6 +248,7 @@ namespace Runtime.Temporary.Player
             else
             {
                 HandleCamera();
+                HandleAudio();
                 MyInput();
                 StateHandler();
                 CheckForWall();
@@ -256,6 +273,51 @@ namespace Runtime.Temporary.Player
                 rb.drag = 2f;
             MovePlayer();
             
+        }
+
+        private void HandleAudio()
+        {
+            if (grounded && rb.velocity.magnitude > 0.1f && !sprinting && !sliding && !wallrunning)
+            {
+                walkingAudioTimer += Time.deltaTime;
+                if (walkingAudioTimer >= walkingAudioTime)
+                {
+                    AudioSystem.Singleton.Play2DSound("FootSteps");
+                    walkingAudioTimer = 0f;
+                }
+            }
+            else if (grounded && sprinting)
+            {
+                runningAudioTimer += Time.deltaTime;
+                if (runningAudioTimer >= runningAudioTime)
+                {
+                    AudioSystem.Singleton.Play2DSound("FootSteps");
+                    runningAudioTimer = 0f;
+                }
+            }
+            
+            if (wallrunning)
+            {
+                wallRunAudioTimer += Time.deltaTime;
+                if (wallRunAudioTimer >= wallRunAudioTime)
+                {
+                    AudioSystem.Singleton.Play2DSound("FootSteps");
+                    wallRunAudioTimer = 0f;
+                }
+            }
+            
+            if (sliding)
+            {
+                if (slidingAudioSource == null)
+                {
+                    slidingAudioSource = AudioSystem.Singleton.Play2DSound("slide_3", 1f, false);
+                }
+            }
+            else
+            {
+                slidingAudioSource = null;
+                AudioSystem.Singleton.StopSound("slide_3");
+            }
         }
         
         private void StateHandler()
@@ -349,17 +411,25 @@ namespace Runtime.Temporary.Player
             
             if (state == MovementState.walking)
             {
+                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, defaultFOV, Time.deltaTime * 20f);
                 if (horizontalInput == 0 &&verticalInput == 0)
                     ChangeBobVars(idleBob);
                 else
                     ChangeBobVars(walkBob);
             }
+            else if (state == MovementState.sliding)
+            {
+                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, slidingFOV, Time.deltaTime * 20f);
+                ChangeBobVars(0,0);
+            }
             else if (state == MovementState.sprinting)
             {
+                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, runningFOV, Time.deltaTime * 20f);
                 ChangeBobVars(sprintBob);
             }
             else
             {
+                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, defaultFOV, Time.deltaTime * 20f);
                 ChangeBobVars(0,0);
             }
 
@@ -382,15 +452,17 @@ namespace Runtime.Temporary.Player
         }
         
         //smooth FOV transition
-        IEnumerator ChangeFOV(CinemachineVirtualCamera cam, float endFOV, float duration)
+        IEnumerator ChangeFOV(CinemachineVirtualCamera cam, float startFOV, float endFOV, float duration)
         {
-            float startFOV = cam.m_Lens.FieldOfView;
+            // float startFOV = cam.m_Lens.FieldOfView;
             float time = 0;
             while(time < duration)
             {
+                if(endFOV == 110)
+                    Debug.Log($"endFOV:{endFOV}, startFOV: {startFOV}, {time}");
                 cam.m_Lens.FieldOfView = Mathf.Lerp(startFOV, endFOV, time / duration);
-                yield return null;
                 time += Time.deltaTime;
+                yield return null;
             }
         }
         private void MyInput()
@@ -659,8 +731,8 @@ namespace Runtime.Temporary.Player
 
             // apply camera effects
 
-            if (wallLeft) DoCamTilt(-5f);
-            if (wallRight) DoCamTilt(5f);
+            if (wallLeft) DoCamTilt(-25f);
+            if (wallRight) DoCamTilt(25f);
         }
         
         private void StopWallRun()

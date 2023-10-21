@@ -1,4 +1,5 @@
 ﻿using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using Runtime.Player;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
@@ -39,7 +40,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (shouldShoot) {
                 crossHairViewController?.OnShoot();
                 BoundEntity.OnRecoil(IsScopedIn);
-                hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetBaseDamage().RealValue);
+                hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetRealDamageValue());
             }
 
             SetShootStatus(shouldShoot);

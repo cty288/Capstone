@@ -37,7 +37,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         private float currentRotationSpeed = 0.0f;
         public GameObject pivot;
-        public bool stun;
+       
         private SharedVector3 initRotation;
         private float chargeTime = 3.0f;  // Total charge time in seconds
         private float currentChargeTime = 0.0f;
@@ -65,14 +65,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             playerTrans = GetPlayer().transform;
             playerRb = playerTrans.GetComponent<Rigidbody>();
             bossCollider = GetComponent<Collider>();
-            /*
-            targetLocation = playerTrans.Value.position + transform.forward * 3;
-            navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-            ogSpeed = navMeshAgent.speed;
-            navMeshAgent.CalculatePath(targetLocation, path);
-            corners = path.corners;
-            */
-
+         
 
             HitBox.GetComponentInParent<Boss1>().ClearHitObjects();
             
@@ -83,51 +76,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             bossCollider.enabled = true;
             
         }
-        // public override TaskStatus OnUpdate()
-        // {
-        //     if (Time.time >= timeStart + dashTime.Value){
-        //         // Debug.Log("Done");
-        //         rb.velocity = Vector3.zero;
-        //         navMeshAgent.speed = ogSpeed;
-        //         return TaskStatus.Success;
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("moving");
-        //         if (corners != null && currentCorner < corners.Length)
-        //         {
-        //             Vector3 direction = corners[currentCorner] - transform.position;
-        //             if (direction.magnitude < 0.5f)
-        //             {
-        //                 currentCorner++;
-        //             }
-        //             else
-        //             {
-        //                 rb.AddForce(direction.normalized * dashVelocity * 100 * Time.deltaTime);
-        //             }
-        //         }
-        //         return TaskStatus.Running;
-        //     }
-        // }
-        
+       
         public override TaskStatus OnUpdate()
         {
            
-            if (stun)
-            {
-                // Debug.Log("stunned");
-                    
-                pivot.transform.DORotate((Vector3)initRotation.Value, 5f).OnComplete(() =>
-                {
-                    NavMeshAgent navMeshComponent = GetComponent<NavMeshAgent>();
-                    if (navMeshComponent != null)
-                    {
-                        navMeshComponent.enabled = true;
-                    }
-                   
-                });
-                return TaskStatus.Running;
-            }
+           
             if (chargeUp)
             {
                 // Debug.Log("chargning");
@@ -155,22 +108,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 if(flag)
                 {
-                    
-                   /*
-                   // dir = this.transform.forward;
-                    //Vector3 dragForce = -rb.velocity * 0.005f;
-                    //rb.AddForce(dragForce, ForceMode.Impulse);
-                    
-                        
-                    maxRotationSpeed -= rotationDecreaseRate * Time.deltaTime;
-                    pivot.transform.Rotate(new Vector3(1, 1, 1) * maxRotationSpeed * Time.deltaTime);
-                    if(maxRotationSpeed < 0)
-                    {
-                        chargeUp = true;
-                        return TaskStatus.Success;*/
-                    //}
-                    
-                    //lerp velocity to 0
+               
                     
                     if (rb.velocity.magnitude <= 2f && canDealDamage) {
                         HitBox.StopCheckingHits();
@@ -208,23 +146,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                
             }
             
-            /*
-            if (corners != null && currentCorner < corners.Length)
-            {
-                Vector3 direction = corners[currentCorner] - transform.position;
-                if (direction.magnitude < 0.5f)
-                {
-                    currentCorner++;
-                    return TaskStatus.Running;
-                }
-                else
-                {
-                    rb.AddForce(direction.normalized * dashVelocity * 20 * Time.deltaTime);
-                    return TaskStatus.Running;
-                }
-            }
-            return TaskStatus.Success;
-            */
+          
         }
 
 

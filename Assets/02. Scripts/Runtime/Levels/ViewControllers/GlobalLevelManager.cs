@@ -23,6 +23,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private GameObject currentLevelGo;
 		private ILevelModel levelModel;
 		private void Awake() {
+			
 			levelModel = this.GetModel<ILevelModel>();
 			//levels.Shuffle();
 			levels.Insert(0, baseLevel);
@@ -31,8 +32,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 
 		private void Start() {
+			
 			levelModel.CurrentLevel.RegisterWithInitValue(OnCurrentLevelChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
-			if (directStartContainer.transform.GetChild(0)) {
+			if (directStartContainer.transform.childCount > 0) {
 				GameObject level = directStartContainer.transform.GetChild(0).gameObject;
 				if (level.activeInHierarchy) {
 					directStartLevel = AddLevel(level, directStartLevelNumber);
@@ -63,6 +65,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private void OnCurrentLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
 			if (currentLevelGo) {
 				currentLevelGo.GetComponent<ILevelViewController>().OnExitLevel();
+				oldLevel?.OnLevelExit();
 				Destroy(currentLevelGo);
 			}
 			
@@ -111,5 +114,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
 		}
+		
+		
 	}
 }

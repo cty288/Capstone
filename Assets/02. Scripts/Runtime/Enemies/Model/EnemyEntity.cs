@@ -14,7 +14,7 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.Model {
-	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage {
+	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage, ICanDealDamageRootEntity {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
 		
@@ -37,7 +37,7 @@ namespace Runtime.Enemies.Model {
 		protected ILevelNumberProperty levelNumberProperty;
 		
 		protected override void OnEntityRegisterAdditionalProperties() {
-			
+			base.OnEntityRegisterAdditionalProperties();
 			RegisterInitialProperty<IDangerProperty>(new Danger());
 			RegisterInitialProperty<ISpawnWeightProperty>(new SpawnWeight());
 			RegisterInitialProperty<ISpawnCostProperty>(new SpawnCost());
@@ -117,5 +117,9 @@ namespace Runtime.Enemies.Model {
 		public void OnDealDamage(IDamageable damageable, int damage) {
 			
 		}
+		
+		
+
+		public ICanDealDamageRootEntity RootDamageDealer => this;
 	}
 }

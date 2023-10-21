@@ -6,5 +6,11 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		void OnKillDamageable(IDamageable damageable);
 		
 		void OnDealDamage(IDamageable damageable, int damage);
+		
+		ICanDealDamageRootEntity RootDamageDealer { get; }
+	}
+	
+	public interface ICanDealDamageRootEntity : ICanDealDamage, IEntity {
+		
 	}
 }

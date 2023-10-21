@@ -68,6 +68,8 @@ namespace Runtime.GameResources.ViewControllers {
 			originalLocalScale = transform.localScale;
 		}
 
+		protected override bool CanAutoRemoveEntityWhenLevelEnd => !(isHolding || isAbsorbing || isAbsorbWaiting);
+
 		protected override void OnStartAbsorb() {
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 		}

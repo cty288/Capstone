@@ -46,6 +46,8 @@ namespace Runtime.RunTimeTests.TestCollision
             
         }
 
+        public ICanDealDamageRootEntity RootDamageDealer { get; }
+
 
         public void Start()
         {

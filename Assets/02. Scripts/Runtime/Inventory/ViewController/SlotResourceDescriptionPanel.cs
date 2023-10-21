@@ -55,6 +55,7 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
     public void Show() {
         gameObject.SetActive(true);
         isShowing = true;
+        StartCoroutine(RebuildLayout());
     }
     public void Hide() {
         gameObject.SetActive(false);

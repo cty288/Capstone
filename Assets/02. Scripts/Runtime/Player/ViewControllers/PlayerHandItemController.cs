@@ -5,6 +5,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using Newtonsoft.Json;
 using Runtime.Controls;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources;
@@ -52,6 +53,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		deployFailureReason.RegisterWithInitValue(OnDeployFailureReasonChanged)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		deployGroundLayerMask = LayerMask.GetMask("Default", "Ground", "Wall");
+		Debug.Log(JsonConvert.DeserializeObject<Vector2Int>("{\"x\":1,\"y\":2}"));
 	}
 
 	private void OnDeployFailureReasonChanged(DeployFailureReason lastReason, DeployFailureReason currentReason) {

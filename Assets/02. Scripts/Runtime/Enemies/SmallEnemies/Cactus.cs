@@ -15,6 +15,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 
 namespace Runtime.Enemies.SmallEnemies
 {
@@ -72,7 +73,7 @@ namespace Runtime.Enemies.SmallEnemies
             Debug.Log("cactus created");
         }
 
-        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
             Debug.Log($"cactus 1 Take damage: {damage}. cactus 1 current health: {currenthealth}");
         }

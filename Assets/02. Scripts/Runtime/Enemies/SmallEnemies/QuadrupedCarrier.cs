@@ -16,6 +16,7 @@ using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 
 namespace Runtime.Enemies.SmallEnemies
 {
@@ -84,7 +85,7 @@ namespace Runtime.Enemies.SmallEnemies
           
         }
 
-        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer)
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
             Debug.Log($"carrier 1 Take damage: {damage}. carrier 1 current health: {currenthealth}");
         }

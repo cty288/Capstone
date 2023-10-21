@@ -121,7 +121,7 @@ namespace MikroFramework.BindableProperty
         {
             this.onValueChanged2 += onValueChanged;
 
-            return new BindablePropertyUnRegister2<T>(this, onValueChanged2);
+            return new BindablePropertyUnRegister2<T>(this, onValueChanged);
 
         }
 
@@ -132,6 +132,7 @@ namespace MikroFramework.BindableProperty
         [Obsolete("Use the one with two parameters (new and old) instead")]
         public void UnRegisterOnValueChanged(Action<T> onValueChanged)
         {
+            
             this.onValueChanged -= onValueChanged;
         }
 

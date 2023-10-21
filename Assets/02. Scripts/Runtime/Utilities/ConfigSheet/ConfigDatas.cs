@@ -59,7 +59,7 @@ namespace Runtime.Utilities.ConfigSheet
 				"231118994", "data_player");
 			
 			normalEnemyEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"642644287", "data_enemies");
+				"642644287", "data_normal_enemies");
 			
 			globalDataTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"1266085510", "data_global");

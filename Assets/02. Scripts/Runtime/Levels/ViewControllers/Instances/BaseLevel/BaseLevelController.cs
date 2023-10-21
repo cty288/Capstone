@@ -1,6 +1,8 @@
 ﻿using _02._Scripts.Runtime.Levels.Models;
+using MikroFramework.AudioKit;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
+using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel {
 	public class BaseLevelEntity : LevelEntity<BaseLevelEntity> {
@@ -20,10 +22,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel {
 	}
 	
 	public class BaseLevelController : LevelViewController<BaseLevelEntity> {
+		
 		protected override void OnEntityStart() {
-				
+			
+		
 		}
-
+		
 		protected override void OnBindEntityProperty() {
 			
 		}

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using _02._Scripts.Runtime.Levels.Models;
 using Framework;
 using Mikrocosmos;
 using MikroFramework;
@@ -22,6 +23,8 @@ using Runtime.Player;
 using Runtime.UI.NameTags;
 using Runtime.Utilities;
 using Runtime.Weapons.ViewControllers;
+using Runtime.Weapons.ViewControllers.CrossHairs;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -43,11 +46,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			entity = null;
 		}
 	}
-	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController 
+	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController, ICrossHairDetectable
 		where T : class, IEntity {
 		
 		[field: ES3Serializable]
 		public string ID { get; set; }
+
+		[field: SerializeField]
+		public string PrefabID { get; set; }
+
 		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]
 		[Tooltip("If not, you must manually call InitWithID() to initialize the entity.")]
 		[SerializeField] protected bool autoCreateNewEntityWhenStart = false;
@@ -68,7 +75,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Entity Recycle Logic")]
 		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
-		
+		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenLevelEnd = false;
+		protected abstract bool CanAutoRemoveEntityWhenLevelEnd { get; }
 		
 		[Header("HUD Related")]
 		[Tooltip("This is the tolerance time for the cross hair HUD to disappear after the entity is not pointed.")] 
@@ -78,6 +86,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField] protected float crossHairHUDToleranceScreenDistanceFactor = 0.5f;
 		
 		protected float crossHairHUDTimer = 0f;
+		private bool readyToRecycled = false;
 		
 
 		IEntity IEntityViewController.Entity => BoundEntity;
@@ -93,6 +102,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected bool isPointed = false;
 		protected Camera mainCamera;
 		protected Action<IEntityViewController> onEntityVCInitCallback = null;
+		//[SerializeField][ReadOnly] protected string prefabID = null;
 		
 		protected class CrossHairManagedHUDInfo {
 			public Transform originalSpawnTransform;
@@ -152,11 +162,16 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				return;
 			}
 
+			//ILevelEntity levelEntity = this.GetModel<ILevelModel>().CurrentLevel.Value;
+			ILevelModel levelModel = this.GetModel<ILevelModel>();
+			
+			
+			
 			bool needToRecallStart = false;
 			if (BoundEntity != null) {
 				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
-				
+				//levelModel.CurrentLevel.UnRegisterOnValueChanged(OnLevelChange);
 				if (recycleIfAlreadyExist) {
 					entityModel.RemoveEntity(BoundEntity.UUID);
 				}
@@ -169,6 +184,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
+			levelModel.CurrentLevel.RegisterOnValueChanged(OnLevelChange)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
 			OnBindProperty();
 			OnEntityStart();
 			onEntityVCInitCallback?.Invoke(this);
@@ -177,13 +195,21 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 
+		private void OnLevelChange(ILevelEntity oldLevel, ILevelEntity newLevel) {
+			if (CanAutoRemoveEntityWhenLevelEnd && oldLevel!=null && newLevel!= null && newLevel.UUID != oldLevel.UUID) {
+				entityModel.RemoveEntity(BoundEntity.UUID);
+			}
+		}
+		
+
+		
 
 
 		public virtual void OnPointByCrosshair() {
 			bool isPointPreviously = isPointed;
 			isPointed = true;
 			
-			if (showNameTagWhenPointed) {
+			if (showNameTagWhenPointed && !String.IsNullOrEmpty(nameTagPrefabName)) {
 				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
 					(GameObject, CrossHairManagedHUDInfo) nameTagInfo =
 						SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName,
@@ -226,7 +252,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
 				hudInfo.spawnedHUD.SetActive(false);
 			}
-			if (showNameTagWhenPointed && nameTagFollowTransform) {
+			if (showNameTagWhenPointed && nameTagFollowTransform && !String.IsNullOrEmpty(nameTagPrefabName)) {
 				DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
 			}
 		}
@@ -396,6 +422,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			//}
 		}
 
+		private void ReadyToRecycle() {
+			readyToRecycled = true;
+			gameObject.SetActive(false);
+			StopAllCoroutines();
+			BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
+			OnReadyToRecycle();
+		}
 
 		protected virtual void OnEntityRecycled(IEntity ent) {
 			if (autoDestroyWhenEntityRemoved) {
@@ -404,17 +437,16 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 		
 		protected new void RecycleToCache() {
-			OnEntityReadyToRecycle(BoundEntity);
+			if (!readyToRecycled) {
+				ReadyToRecycle();
+			}
 			base.RecycleToCache();
 		}
 		
 		private void OnEntityReadyToRecycle(IEntity e) {
-				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 			if (autoDestroyWhenEntityRemoved) {
-				gameObject.SetActive(false);
-				OnReadyToRecycle();
+				ReadyToRecycle();
 			}
-			StopAllCoroutines();
 		}
 		
 
@@ -446,6 +478,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity = null;
 			propertyBindings.Clear();
 			crossHairHUDTimer = 0;
+			readyToRecycled = false;
 		}
 
 		protected virtual void OnReadyToRecycle() {

@@ -5,6 +5,7 @@ using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Player;
@@ -15,6 +16,8 @@ using Sequence = MikroFramework.ActionKit.Sequence;
 namespace Runtime.GameResources.ViewControllers {
     public interface IPickableResourceViewController : IResourceViewController {
         public bool HoldAbsorb { get; set; }
+        
+        public IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity);
     }
 
     /// <summary>
@@ -29,6 +32,7 @@ namespace Runtime.GameResources.ViewControllers {
         //protected PoolableGameObject poolable;
         protected IInventoryModel inventoryModel;
         protected bool isAbsorbing = false;
+        protected bool isAbsorbWaiting = false;
         protected Dictionary<Collider, bool> selfColliders = new Dictionary<Collider, bool>();
         
         [Header("Entity Recycle Logic")]
@@ -46,6 +50,10 @@ namespace Runtime.GameResources.ViewControllers {
                 selfColliders.Add(selfCollider, selfCollider.isTrigger);
             }
         }
+        
+        
+
+        protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = true;
 
         protected override void OnEntityStart() {
             if (entityAutoRemovalTimeWhenNoAbsorb > 0) {
@@ -71,7 +79,14 @@ namespace Runtime.GameResources.ViewControllers {
         }
 
         protected virtual void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
-            if (!player || !Camera.main || isAbsorbing) return;
+            if (!player || !Camera.main || isAbsorbing || isAbsorbWaiting) return;
+            StartCoroutine(AbsorbWait(player, zone));
+        }
+
+        private IEnumerator AbsorbWait(GameObject player, PlayerInteractiveZone zone) {
+            isAbsorbWaiting = true;
+            yield return new WaitForSeconds(0.2f);
+            isAbsorbWaiting = false;
             if(inventoryModel.AddItem(BoundEntity)) {
                 isAbsorbing = true;
                 if (entityRemovalTimerCoroutine != null) {
@@ -111,6 +126,7 @@ namespace Runtime.GameResources.ViewControllers {
         protected override void OnReadyToRecycle() {
             base.OnReadyToRecycle();
             isAbsorbing = false;
+            isAbsorbWaiting = false;
             if (entityRemovalTimerCoroutine != null) {
                 StopCoroutine(entityRemovalTimerCoroutine);
                 entityRemovalTimerCoroutine = null;
@@ -131,5 +147,11 @@ namespace Runtime.GameResources.ViewControllers {
         /// Hold absorb when the item is just thrown
         /// </summary>
         public bool HoldAbsorb { get; set; }
+
+        public abstract IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity);
+
+        protected override IEntity OnBuildNewEntity() {
+            return OnBuildNewPickableResourceEntity(false, 1);
+        }
     }
 }

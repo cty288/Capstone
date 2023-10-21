@@ -14,14 +14,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
     public interface IEntityViewController : IController{
         public string ID { get; }
     
+        public string PrefabID { get; set; }
         public IEntity Entity { get; }
         
         public void InitWithID(string id, bool recycleIfAlreadyExist = true);
         
-        public void OnPointByCrosshair();
-        
-        public void OnUnPointByCrosshair();
-        
+
         public void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone);
         
         public void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone);
@@ -54,7 +52,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
         IEntity IEntityViewController.Entity => EnemyEntity;
         
-        public IEnemyEntity OnInitEntity(int level, int rarity);
+  //      public IEnemyEntity OnInitEntity(int level, int rarity);
         
         
     }

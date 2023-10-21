@@ -22,6 +22,7 @@ namespace MikroFramework.Event
             foreach (IUnRegister unRegister in unRegisters.Keys) {
                 unRegister.UnRegister();
             }
+
             unRegisters.Clear();
         }
         

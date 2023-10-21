@@ -9,9 +9,19 @@ namespace MikroFramework.AudioKit
     public class AudioInstance<T> : MonoBehaviour, ISingleton where T : AudioInstance<T> {
 
         private AudioSource audioSource;
+        
+        public AudioSource AudioSource {
+            get {
+                if (audioSource == null) {
+                    audioSource = GetComponent<AudioSource>();
+                }
+                return audioSource;
+            }
+        }
+        
         public static AudioSource Singleton {
             get {
-                return SingletonProperty<AudioInstance<T>>.Singleton.audioSource;
+                return SingletonProperty<AudioInstance<T>>.Singleton.AudioSource;
             }
         }
 
@@ -28,7 +38,6 @@ namespace MikroFramework.AudioKit
                 DontDestroyOnLoad(gameObject);
             }
 
-         
         }
 
         public void OnSingletonInit() {

@@ -24,6 +24,8 @@ namespace Runtime.GameResources.ViewControllers {
             return null;
         }
 
+        protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+
         protected override void OnEntityStart() {
             icon.sprite = InventorySpriteFactory.Singleton.GetSprite(BoundEntity.IconSpriteName);
         }

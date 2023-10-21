@@ -30,7 +30,7 @@ namespace Tests.Tests_Editor {
 
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
-			return new[] {
+			return new[] { 
 				new AutoConfigCustomProperty("explosion"),
 				new AutoConfigCustomProperty("shield"),
 			};
@@ -58,7 +58,7 @@ namespace Tests.Tests_Editor {
 			TestBasicWeapon ent = model.GetWeaponBuilder<TestBasicWeapon>()
 				.FromConfig()
 				.Build();
-			Assert.AreEqual(10, ent.GetBaseDamage().RealValue.Value);
+			Assert.AreEqual(10, ent.GetBaseDamage().RealValue.Value.x);
 			Assert.AreEqual(0.5f, ent.GetAttackSpeed().RealValue.Value);
 			Assert.AreEqual(-60.0f, ent.GetCustomDataValue<float[]>("shield", "angle").Value[0]);
 
@@ -70,7 +70,7 @@ namespace Tests.Tests_Editor {
 			
 			Assert.IsNotNull(ent);
             
-			Assert.AreEqual(10, ent.GetBaseDamage().RealValue.Value);
+			Assert.AreEqual(10, ent.GetBaseDamage().RealValue.Value.x);
 			Assert.AreEqual(0.5f, ent.GetAttackSpeed().RealValue.Value);
 			Assert.AreEqual(-60.0f, ent.GetCustomDataValue<float[]>("shield", "angle").Value[0]);
             

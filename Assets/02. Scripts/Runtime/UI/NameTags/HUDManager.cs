@@ -46,6 +46,7 @@ namespace Runtime.UI.NameTags {
         InteractiveTag,
         SlotDescription,
         HealthBar,
+        Exit
     }
     
     public class HUDManager : MonoBehaviour, ISingleton {

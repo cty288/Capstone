@@ -21,11 +21,31 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    [SerializeField] private GameObject throwPoint;
    [SerializeField] private float throwForce = 10f;
    
+   [SerializeField] private List<GameObject> initialItems;
+
    private DPunkInputs.SharedActions sharedActions;
+   private IInventoryModel inventoryModel;
    
    private void Awake() {
       sharedActions = ClientInput.Singleton.GetSharedActions();
       this.RegisterEvent<OnPlayerThrowResource>(OnPlayerThrowResource).UnRegisterWhenGameObjectDestroyed(gameObject);
+      inventoryModel = this.GetModel<IInventoryModel>();
+   }
+
+   private void Start() {
+      if (inventoryModel.IsFirstTimeCreated) {
+         AssignInitialItems();
+      }
+      
+   }
+
+   private void AssignInitialItems() {
+      foreach (GameObject item in initialItems) {
+         IPickableResourceViewController resourceViewController = item.GetComponent<IPickableResourceViewController>();
+         IResourceEntity resourceEntity = resourceViewController.OnBuildNewPickableResourceEntity(false, 1);
+
+         inventoryModel.AddItem(resourceEntity);
+      }
    }
 
 

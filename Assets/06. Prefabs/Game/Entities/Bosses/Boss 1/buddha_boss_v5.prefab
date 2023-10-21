@@ -347,7 +347,7 @@ Transform:
   m_GameObject: {fileID: 6650552046845013979}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.2878065, y: -40.47, z: 73.552055}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3154914608776150191}
@@ -560,6 +560,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
+  <PrefabID>k__BackingField: 765934ea-916b-479d-b7d8-290980ade7d2
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -571,6 +572,14 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
+  itemDropCollections:
+  - Rarity: 0
+    ItemDropInfos:
+    - prefabName: 
+      dropCountRange: {x: 0, y: 0}
+      dropChance: 0
+      setRarity: 0
+      rarityRange: {x: 0, y: 0}
   <SpawnSizeCollider>k__BackingField: {fileID: 3233925990820170954}
   rarityBaseValueBuiltFromInspector: 1
   healthBarPrefabName: UIHealthBar
