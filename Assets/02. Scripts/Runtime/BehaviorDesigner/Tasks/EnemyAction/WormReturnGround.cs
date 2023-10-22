@@ -24,6 +24,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public BehaviorTree tree;
         private float elapsedTime;
         bool done;
+        public SharedGameObject player;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -34,11 +35,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override void OnStart()
         {
             //agent.baseOffset = 3.5f;
+          
             tree = this.gameObject.GetComponent<BehaviorTree>();
-            StartCoroutine(ChangeOffset());
+            if(agent.baseOffset < 3.4f)
+            {
+                StartCoroutine(ChangeOffset());
+            }
+           
         }
         public override TaskStatus OnUpdate()
         {
+            if (agent.baseOffset > 3.4f)
+            {
+                return TaskStatus.Success;
+            }
             if (done)
             {
                 return TaskStatus.Success;
@@ -52,17 +62,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private IEnumerator ChangeOffset()
         {
-            while(elapsedTime < 1.5f)
+            while(elapsedTime < 0.4f)
             {
                 // Interpolate the offset value over time.
-                float t = elapsedTime / 1.5f;
-                float newOffset = Mathf.Lerp(1.25f, 3.5f, t);
+                float t = elapsedTime / 0.4f;
+                float newOffset = Mathf.Lerp(0.8f, 2.2f, t);
 
                 // Set the new offset value for the NavMeshAgent.
                 agent.baseOffset = newOffset;
 
                 // Update elapsed time.
                 elapsedTime += Time.deltaTime;
+                var position = player.Value.transform.position;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(position - transform.position), 360f);
 
                 yield return null;
             }

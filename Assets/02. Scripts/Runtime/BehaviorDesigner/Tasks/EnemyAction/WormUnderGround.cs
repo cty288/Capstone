@@ -21,6 +21,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         NavMeshAgent agent;
         public BehaviorTree tree;
+        float elapsedTime;
+        bool done;
+        public SharedGameObject player;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -30,16 +33,47 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override void OnStart()
         {
-            agent.baseOffset = 1.25f;
+            StartCoroutine(ChangeOffset());
             tree = this.gameObject.GetComponent<BehaviorTree>();
         }
         public override TaskStatus OnUpdate()
         {
-           
-            return TaskStatus.Success;
+
+            if (done)
+            {
+                return TaskStatus.Success;
+            }
+            else
+            {
+                return TaskStatus.Running;
+            }
 
         }
-       
+        private IEnumerator ChangeOffset()
+        {
+            while (elapsedTime < 1f)
+            {
+                // Interpolate the offset value over time.
+                float t = elapsedTime / 1f;
+                float newOffset = Mathf.Lerp(2.2f, 0.8f, t);
+
+                // Set the new offset value for the NavMeshAgent.
+                agent.baseOffset = newOffset;
+
+                // Update elapsed time.
+                elapsedTime += Time.deltaTime;
+                if(player.Value != null)
+                {
+                    var position = player.Value.transform.position;
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(position - transform.position), 360f);
+                }
+                
+
+                yield return null;
+            }
+            done = true;
+        }
+
 
 
         public override void OnEnd()
@@ -48,6 +82,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             isGround = true;
             base.OnEnd();
             StopAllCoroutines();
+            done = false;
+            elapsedTime = 0;
         }
     }
 }

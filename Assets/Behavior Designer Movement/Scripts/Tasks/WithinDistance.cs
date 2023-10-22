@@ -40,7 +40,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedBool m_DrawDebugRay;
         [Tooltip("The object variable that will be set when a object is found what the object is")]
         public SharedGameObject m_ReturnedObject;
-
+        
         public SharedBool m_Use2DSpace;
 
         private float m_SqrMagnitude; // distance * distance, optimization so we don't have to take the square root

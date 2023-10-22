@@ -19,7 +19,7 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         NavMeshAgent agent;
         public Transform head;
         public float rotationSpeed = 5.0f; // Adjust the speed as needed
-
+        public bool headSpin;
         private Quaternion targetRotation;
         public override void OnStart()
         {
@@ -30,6 +30,14 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         }
         public override TaskStatus OnUpdate()
         {
+            if (headSpin)
+            {
+                var head = this.gameObject.transform.GetChild(0);
+                float rotationSpeed = 70f; 
+
+               
+                head.transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+            }
             return TaskStatus.Running;
         }
 
