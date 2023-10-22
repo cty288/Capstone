@@ -324,6 +324,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 			
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+				if (!hudInfo.AutoAdjust) {
+					continue;
+				}
 				AdjustHUD(hudInfo);
 			}
 		}
@@ -403,16 +406,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					Vector3 direction = (position - transform.position).normalized;
 					hudInfo.targetPos += direction * distanceToMove;
 				}
+				
+				if (!needAdjust) {
+					hudInfo.targetPos = hudInfo.originalSpawnPositionOffset.PositionOffset;
+				}
+
+				hudInfo.realSpawnPositionOffset.PositionOffset = hudInfo.targetPos; 
 
 			}
 
 
 
-			if (!needAdjust) {
-				hudInfo.targetPos = hudInfo.originalSpawnPositionOffset.PositionOffset;
-			}
-
-			hudInfo.realSpawnPositionOffset.PositionOffset = hudInfo.targetPos; 
+	
 			//Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 3 * Time.fixedDeltaTime);
 		}
 		

@@ -16,6 +16,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		where T : class, IEnemyEntity, new()  {
 		[SerializeField] private string healthBarPrefabName = "EnemyHealthBar";
 		[SerializeField] private Transform healthBarSpawnPoint = null;
+		[SerializeField] private bool healthBarUIPositionAutoAdjust = true;
 		
 		[Header("Enemy Recycle Logic")]
 		[SerializeField]
@@ -64,7 +65,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 		protected override HealthBar OnSpawnHealthBar() {
 			HealthBar bar =
-				SpawnCrosshairResponseHUDElement(healthBarSpawnPoint, healthBarPrefabName, HUDCategory.HealthBar)
+				SpawnCrosshairResponseHUDElement(healthBarSpawnPoint, healthBarPrefabName, HUDCategory.HealthBar, healthBarUIPositionAutoAdjust)
 					.Item1.GetComponent<HealthBar>();
 			return bar;
 		}
