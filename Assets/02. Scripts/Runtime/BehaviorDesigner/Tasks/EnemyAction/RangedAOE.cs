@@ -1,6 +1,8 @@
 using System.Collections;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using MikroFramework;
+using MikroFramework.Pool;
 using Runtime.Temporary;
 using UnityEngine;
 using Runtime.Enemies;
@@ -8,14 +10,15 @@ using Runtime.Utilities.Collision;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class RangedAOE : EnemyAction
+    public class RangedAOE : EnemyAction<Boss1Entity>
     {
-        public Boss1 bossVC;
+        
         public SharedGameObject bulletPrefab;
-        public int bulletCount;
-        public float spawnInterval;
+        private int bulletCount;
+        private float spawnInterval;
         private bool ended;
-        public float bulletTravelTime;
+        private float bulletTravelTime;
+        private Transform playerTrans;
 
         //some add-on variables that we can use to add juice to ranged projectile actions
         //will have to make a new RangedAction class to contain all these later
@@ -28,12 +31,23 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         // Quaternion rotation;
         // ParticleSystem loopFX, impactFX;
 
+        private SafeGameObjectPool pool;
+        //public SharedTransform playerTrans;
 
-        public SharedTransform playerTrans;
+        public override void OnAwake() {
+            base.OnAwake();
+            pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 30, 50);
+            playerTrans = GetPlayer().transform;
+            
+        }
 
         public override void OnStart()
         {
+            base.OnStart();
             ended = false;
+            bulletCount = enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEBulletCount");
+            spawnInterval = enemyEntity.GetCustomDataValue<float>("damages", "rangedAOEAttackSpeed");
+            bulletTravelTime = enemyEntity.GetCustomDataValue<float>("damages", "rangedAOEBulletTime");
             StartCoroutine(RF());
         }
         public override TaskStatus OnUpdate()
@@ -46,27 +60,71 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         IEnumerator RF()
         {
-            for (int i = 0; i < bulletCount; i++)
+            //parameter 3
+            for (int i = 0; i < 3 ; i++)
             {
                 SpawnBullet();
                 yield return new WaitForSeconds(spawnInterval);
             }
+
+            yield return new WaitForSeconds(bulletTravelTime - spawnInterval);
             ended = true;
         }
         void SpawnBullet()
         {
-            Debug.Log("start");
-            GameObject b = Object.Instantiate(bulletPrefab.Value, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), Quaternion.identity);
-            b.GetComponent<Temporary.EnemyBomb>().Init(playerTrans.Value, bulletTravelTime);
-            //HitBox bHitBox = b.GetComponent<HitBox>();
-            //bHitBox.HitResponder = bossVC;
-            //bHitBox.StartCheckingHits();
-            // Debug.Log("b.GetComponent<HitBox>().HitResponder: " + bossVC);
-            
-            // Debug.Log("b hit responder: " + b.GetComponent<Temp_BulletHitResponder>());
-            // Debug.Log("boss1: " + b.GetComponent<Temp_BulletHitResponder>().boss1);
-            // Debug.Log("bossvc: " + bossVC);
-            b.GetComponent<Temp_BulletHitResponder>().boss1 = bossVC.gameObject;
+            //to be honest these are just for visuals
+            //parameter 15
+            for (int i = 0; i < 15; i++)
+            {
+                GameObject b = pool.Allocate();
+                Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+
+                // Generate a random point around the GameObject
+                //parameter 50
+                Vector3 randomDirection = Random.onUnitSphere * 50;
+                randomDirection.y = 0; // Ensure it's on the same horizontal plane
+                Vector3 randomSpawnPoint = spawnPosition + randomDirection;
+
+                // Perform a raycast from the random point to find a target point on the ground
+                RaycastHit hit;
+                if (Physics.Raycast(randomSpawnPoint + Vector3.up * 50f, Vector3.down, out hit, Mathf.Infinity))
+                {
+                    Vector3 randomDestination = hit.point;
+
+                    b.transform.position = spawnPosition;
+                    b.transform.rotation = Quaternion.LookRotation(randomDestination - randomSpawnPoint);
+
+                    b.GetComponent<Temporary.EnemyBomb>().Init(randomDestination, bulletTravelTime, enemyEntity.CurrentFaction,
+                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), gameObject);
+                }
+            }
+            //parameter 8
+            //biased bullets which will actually kinda try to hit the player
+            for (int i = 0; i < 8; i++)
+            {
+                GameObject b = pool.Allocate();
+                Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+
+                // Generate a random point around the GameObject
+                //parameter 4
+                Vector3 randomDirection = playerTrans.position + Random.onUnitSphere * 4;
+                randomDirection.y = 0; // Ensure it's on the same horizontal plane
+                Vector3 randomSpawnPoint = spawnPosition + randomDirection;
+
+                // Perform a raycast from the random point to find a target point on the ground
+                RaycastHit hit;
+                if (Physics.Raycast(randomSpawnPoint + Vector3.up * 50f, Vector3.down, out hit, Mathf.Infinity))
+                {
+                    Vector3 randomDestination = hit.point;
+
+                    b.transform.position = spawnPosition;
+                    b.transform.rotation = Quaternion.LookRotation(randomDestination - randomSpawnPoint);
+
+                    b.GetComponent<Temporary.EnemyBomb>().Init(randomDestination, bulletTravelTime, enemyEntity.CurrentFaction,
+                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), gameObject);
+                }
+            }
+          
 
         }
     }

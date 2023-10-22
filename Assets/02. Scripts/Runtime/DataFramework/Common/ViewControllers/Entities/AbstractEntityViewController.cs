@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using _02._Scripts.Runtime.Levels.Models;
 using Framework;
+using Mikrocosmos;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -19,15 +22,39 @@ using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
 using Runtime.UI.NameTags;
 using Runtime.Utilities;
+using Runtime.Weapons.ViewControllers;
+using Runtime.Weapons.ViewControllers.CrossHairs;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
-	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController 
+	
+	public class EntityVCOnRecycledUnRegister : IUnRegister
+	{
+		private Action<IEntityViewController> onEntityRecycled;
+
+		private IEntityViewController entity;
+		
+		public EntityVCOnRecycledUnRegister(IEntityViewController entity, Action<IEntityViewController> onEntityRecycled) {
+			this.entity = entity;
+			this.onEntityRecycled = onEntityRecycled;
+		}
+
+		public void UnRegister() {
+			entity.UnRegisterOnEntityViewControllerInit(onEntityRecycled);
+			entity = null;
+		}
+	}
+	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController, ICrossHairDetectable
 		where T : class, IEntity {
 		
 		[field: ES3Serializable]
 		public string ID { get; set; }
+
+		[field: SerializeField]
+		public string PrefabID { get; set; }
+
 		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]
 		[Tooltip("If not, you must manually call InitWithID() to initialize the entity.")]
 		[SerializeField] protected bool autoCreateNewEntityWhenStart = false;
@@ -48,6 +75,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Entity Recycle Logic")]
 		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenDestroyedOrRecycled = false;
 		[SerializeField, ES3Serializable] protected bool autoDestroyWhenEntityRemoved = true;
+		//[SerializeField, ES3Serializable] protected bool autoRemoveEntityWhenLevelEnd = false;
+		protected abstract bool CanAutoRemoveEntityWhenLevelEnd { get; }
+		
+		[Header("HUD Related")]
+		[Tooltip("This is the tolerance time for the cross hair HUD to disappear after the entity is not pointed.")] 
+		[SerializeField] 
+		protected float crossHairHUDToleranceMaxTime = 0.3f;
+
+		[SerializeField] protected float crossHairHUDToleranceScreenDistanceFactor = 0.5f;
+		
+		protected float crossHairHUDTimer = 0f;
+		private bool readyToRecycled = false;
 		
 
 		IEntity IEntityViewController.Entity => BoundEntity;
@@ -60,11 +99,45 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private Dictionary<PropertyInfo, Func<dynamic>> propertyBindings = new Dictionary<PropertyInfo, Func<dynamic>>();
 		private Dictionary<PropertyInfo, FieldInfo> propertyFields = new Dictionary<PropertyInfo, FieldInfo>();
 		protected List<PropertyInfo> properties = new List<PropertyInfo>();
+		protected bool isPointed = false;
+		protected Camera mainCamera;
+		protected Action<IEntityViewController> onEntityVCInitCallback = null;
+		//[SerializeField][ReadOnly] protected string prefabID = null;
 		
+		protected class CrossHairManagedHUDInfo {
+			public Transform originalSpawnTransform;
+			public KeepGlobalRotation originalSpawnPositionOffset;
+			public KeepGlobalRotation realSpawnPositionOffset;
+			public GameObject spawnedHUD;
+			public HUDCategory hudCategory;
+			public Vector3 targetPos;
+			public bool AutoAdjust;
+			
+			public CrossHairManagedHUDInfo(Transform originalSpawnTransform, KeepGlobalRotation originalSpawnPositionOffset,
+				KeepGlobalRotation realSpawnPositionOffset, GameObject spawnedHUD, HUDCategory hudCategory, bool autoAdjust) {
+				this.originalSpawnTransform = originalSpawnTransform;
+				this.originalSpawnPositionOffset = originalSpawnPositionOffset;
+				this.realSpawnPositionOffset = realSpawnPositionOffset;
+				this.spawnedHUD = spawnedHUD;
+				this.hudCategory = hudCategory;
+				this.targetPos = this.originalSpawnPositionOffset.PositionOffset;
+				this.AutoAdjust = autoAdjust;
+			}
+		}
+
+
+		private Dictionary<string, CrossHairManagedHUDInfo> crossHairManagedHUDs =
+			new Dictionary<string, CrossHairManagedHUDInfo>();
 		
+		private LayerMask crossHairHUDManagedDetectLayerMask;
+
 		protected override void Awake() {
 			base.Awake();
+			crossHairHUDManagedDetectLayerMask = LayerMask.GetMask("CrossHairDetect");
+			//get all layers except for the crosshair detect layer
+			crossHairHUDManagedDetectLayerMask = ~crossHairHUDManagedDetectLayerMask;
 			CheckProperties();
+			mainCamera = Camera.main;
 		}
 
 		
@@ -77,52 +150,303 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 		}
 
-		public void InitWithID(string id) {
-			ID = id;
+		public void InitWithID(string id, bool recycleIfAlreadyExist = true) {
+			if (BoundEntity != null && id == BoundEntity.UUID) {
+				return;
+			}
+			
 			IEntity ent = null;
-			(ent, entityModel) = GlobalEntities.GetEntityAndModel(ID);
+			(ent, entityModel) = GlobalEntities.GetEntityAndModel(id);
 			if (ent == null) {
-				Debug.LogError("Entity with ID " + ID + " not found");
+				Debug.LogError("Entity with ID " + id + " not found");
 				return;
 			}
 
+			//ILevelEntity levelEntity = this.GetModel<ILevelModel>().CurrentLevel.Value;
+			ILevelModel levelModel = this.GetModel<ILevelModel>();
+			
+			
+			
+			bool needToRecallStart = false;
 			if (BoundEntity != null) {
+				BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+				//levelModel.CurrentLevel.UnRegisterOnValueChanged(OnLevelChange);
+				if (recycleIfAlreadyExist) {
+					entityModel.RemoveEntity(BoundEntity.UUID);
+				}
+				
+				OnReadyToRecycle();
+				OnRecycled();
+				needToRecallStart = true;
 			}
+			ID = id;
 			BoundEntity = ent as T;
 			BoundEntity.RegisterOnEntityRecycled(OnEntityRecycled).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			BoundEntity.RegisterReadyToRecycle(OnEntityReadyToRecycle);
+			levelModel.CurrentLevel.RegisterOnValueChanged(OnLevelChange)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
 			OnBindProperty();
 			OnEntityStart();
+			onEntityVCInitCallback?.Invoke(this);
+			if (needToRecallStart) {
+				OnStart();
+			}
 		}
 
+		private void OnLevelChange(ILevelEntity oldLevel, ILevelEntity newLevel) {
+			if (CanAutoRemoveEntityWhenLevelEnd && oldLevel!=null && newLevel!= null && newLevel.UUID != oldLevel.UUID) {
+				entityModel.RemoveEntity(BoundEntity.UUID);
+			}
+		}
+		
+
+		
+
+
 		public virtual void OnPointByCrosshair() {
-			if (showNameTagWhenPointed) {
-				if(nameTagFollowTransform) {
-					GameObject nameTag = HUDManager.Singleton.SpawnHUDElement(nameTagFollowTransform, nameTagPrefabName, HUDCategory.NameTag, true);
+			bool isPointPreviously = isPointed;
+			isPointed = true;
+			
+			if (showNameTagWhenPointed && !String.IsNullOrEmpty(nameTagPrefabName)) {
+				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
+					(GameObject, CrossHairManagedHUDInfo) nameTagInfo =
+						SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName,
+							HUDCategory.NameTag);
+					GameObject
+						nameTag = nameTagInfo.Item1;
+					
 					if (nameTag) {
 						INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
 						if (nameTagComponent != null) {
 							nameTagComponent.SetName(BoundEntity.GetDisplayName());
 						}
+						nameTag.gameObject.SetActive(false);
+						StartCoroutine(ShowNameTagDelayed(nameTag,nameTagInfo.Item2));
 					}
 				}
 			}
+
+			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+				hudInfo.spawnedHUD.SetActive(true);
+			}
+			
+			crossHairHUDTimer = 0f;
+		}
+		
+		private IEnumerator ShowNameTagDelayed(GameObject nameTag, CrossHairManagedHUDInfo hudInfo) {
+			AdjustHUD(hudInfo);
+			yield return new WaitForEndOfFrame();
+			yield return null;
+			
+			nameTag.SetActive(true);
 		}
 
 		public virtual void OnUnPointByCrosshair() {
-			if (showNameTagWhenPointed && nameTagFollowTransform) {
-				HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
+			isPointed = false;
+			unPointTriggered = false;
+		}
+
+		private void OnHUDUnpointedTorlanceTimeEnds() {
+			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+				hudInfo.spawnedHUD.SetActive(false);
+			}
+			if (showNameTagWhenPointed && nameTagFollowTransform && !String.IsNullOrEmpty(nameTagPrefabName)) {
+				DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
+			}
+		}
+		
+		
+		
+		/// <summary>
+		/// Spawb a UI HUD element that automatically follows the transform when pointed by crosshair
+		/// It will automatically adjust its position if it blocks the view
+		/// </summary>
+		/// <param name="followTransform"></param>
+		/// <param name="prefabName"></param>
+		/// <param name="category"></param>
+		/// <returns></returns>
+		protected (GameObject, CrossHairManagedHUDInfo) SpawnCrosshairResponseHUDElement(Transform followTransform, string prefabName, HUDCategory category, bool autoAdjust = true) {
+			if(followTransform.TryGetComponent<KeepGlobalRotation>(out var keepGlobalRotation)) {
+				
+				
+				KeepGlobalRotation realHealthBarPositionOffset = Instantiate(followTransform, followTransform.parent)
+					.GetComponent<KeepGlobalRotation>();
+				
+				GameObject spawnedElement = HUDManager.Singleton.SpawnHUDElement(realHealthBarPositionOffset.transform, prefabName, category, true);
+				spawnedElement.transform.localScale = followTransform.localScale;
+				spawnedElement.SetActive(isPointed);
+
+
+				string id = followTransform.GetHashCode().ToString() + category.ToString();
+				
+				crossHairManagedHUDs.Add(id,
+					new CrossHairManagedHUDInfo(followTransform, keepGlobalRotation, realHealthBarPositionOffset,
+						spawnedElement, category, autoAdjust));
+
+				return (spawnedElement, crossHairManagedHUDs[id]);
+			}else {
+				throw new Exception("The transform must have a KeepGlobalRotation component");
+			}
+		}
+		
+		protected void DespawnHUDElement(Transform followTransform, HUDCategory category) {
+			string id = followTransform.GetHashCode().ToString() + category.ToString();
+			if (crossHairManagedHUDs.TryGetValue(id, out var info)) {
+				HUDManager.Singleton.DespawnHUDElement(info.realSpawnPositionOffset.transform, category);
+				Destroy(info.realSpawnPositionOffset);
+				crossHairManagedHUDs.Remove(id);
 			}
 			
 		}
 
+		private bool unPointTriggered = false;
 
+		protected virtual void Update() {
+			if (crossHairHUDTimer < crossHairHUDToleranceMaxTime && !isPointed && !unPointTriggered) {
+				crossHairHUDTimer += Time.deltaTime;
+				//if the screen distance between crosshair and this game obj is too far, then directly set timer to tolerance time
+
+				Vector3 crossHairScreenPos = Crosshair.Singleton.CrossHairScreenPosition;
+				Vector3 thisScreenPos = mainCamera.WorldToScreenPoint(transform.position);
+				float distance = Vector3.Distance(crossHairScreenPos, thisScreenPos);
+				if (distance >= crossHairHUDToleranceScreenDistanceFactor * Screen.width) {
+					crossHairHUDTimer = crossHairHUDToleranceMaxTime;
+				}
+				
+				if (crossHairHUDTimer >= crossHairHUDToleranceMaxTime) {
+					crossHairHUDTimer = 0;
+					unPointTriggered = true;
+					OnHUDUnpointedTorlanceTimeEnds();
+				}
+			}
+			
+			
+			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+				AdjustHUD(hudInfo);
+			}
+		}
+
+
+		private void AdjustHUD(CrossHairManagedHUDInfo hudInfo) {
+			var camTr = mainCamera.transform;
+			if (!hudInfo.spawnedHUD) {
+				return;
+			}
+
+
+
+			RaycastHit hit;
+			bool needAdjust = false;
+			if (hudInfo.AutoAdjust) {
+				//get the screen pos of this game obj and original target. If they are too close, then adjust original target pos
+				//by extending it further from this game obj targetPos + (targetPos - this game obj pos) until their distance on screen is larger than 100
+				//hudInfo.originalSpawnPositionOffset.PositionOffset is the local position of the original target
+
+				Vector2 thisGameObjScreenPos = mainCamera.WorldToScreenPoint(transform.position);
+				Vector2 targetScreenPos = mainCamera.WorldToScreenPoint(transform.position + hudInfo.targetPos);
+				Vector2 originalTargetScreenPos =
+					mainCamera.WorldToScreenPoint(hudInfo.originalSpawnTransform.transform.position);
+
+
+				if (Physics.Raycast(camTr.position, hudInfo.originalSpawnTransform.transform.position - camTr.position,
+					    out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+					if (!hit.collider.isTrigger && hit.collider.attachedRigidbody &&
+					    hit.collider.attachedRigidbody.gameObject == gameObject) {
+						needAdjust = true;
+
+						Transform realHealthBarSpawnPoint = hudInfo.realSpawnPositionOffset.transform;
+						if (Physics.Raycast(camTr.position, transform.position + hudInfo.targetPos - camTr.position,
+							    out hit, 100f, crossHairHUDManagedDetectLayerMask)) {
+							if (hit.collider.attachedRigidbody &&
+							    hit.collider.attachedRigidbody.gameObject == gameObject) {
+								hudInfo.targetPos += Vector3.up * 0.5f;
+								//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
+								if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.position.x) < 10f &&
+								    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.position.z) < 10f) {
+									hudInfo.targetPos += new Vector3(0.5f, 0.5f, 0);
+								}
+
+							}
+						}
+					}
+				}
+
+
+				float originalToScreenDistance =
+					Vector2.Distance(thisGameObjScreenPos, originalTargetScreenPos);
+
+
+
+
+				if (originalToScreenDistance < 40f) {
+					needAdjust = true;
+					float distance = Vector2.Distance(thisGameObjScreenPos, targetScreenPos);
+					var position = transform.position + hudInfo.targetPos;
+					float realWorldDistance = Vector3.Distance(position, transform.position);
+					/*if (distance < 40f) {
+
+						float requiredRealWorldDistance = (realWorldDistance * 40f) / distance;
+
+				
+						float distanceToMove = requiredRealWorldDistance - realWorldDistance;
+
+						Vector3 direction = (position - transform.position).normalized;
+				
+						hudInfo.targetPos += direction * distanceToMove;
+					}*/
+
+					//always make the screen distance equal to 40
+					float requiredRealWorldDistance = (realWorldDistance * 40f) / distance;
+					float distanceToMove = requiredRealWorldDistance - realWorldDistance;
+					Vector3 direction = (position - transform.position).normalized;
+					hudInfo.targetPos += direction * distanceToMove;
+				}
+
+			}
+
+
+
+			if (!needAdjust) {
+				hudInfo.targetPos = hudInfo.originalSpawnPositionOffset.PositionOffset;
+			}
+
+			hudInfo.realSpawnPositionOffset.PositionOffset = hudInfo.targetPos; 
+			//Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 3 * Time.fixedDeltaTime);
+		}
+		
+		protected virtual void FixedUpdate() {
+			//if (true) {
+			
+			//}
+		}
+
+		private void ReadyToRecycle() {
+			readyToRecycled = true;
+			gameObject.SetActive(false);
+			StopAllCoroutines();
+			BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
+			OnReadyToRecycle();
+		}
 
 		protected virtual void OnEntityRecycled(IEntity ent) {
 			if (autoDestroyWhenEntityRemoved) {
 				RecycleToCache();
 			}
-			
+		}
+		
+		protected new void RecycleToCache() {
+			if (!readyToRecycled) {
+				ReadyToRecycle();
+			}
+			base.RecycleToCache();
+		}
+		
+		private void OnEntityReadyToRecycle(IEntity e) {
+			if (autoDestroyWhenEntityRemoved) {
+				ReadyToRecycle();
+			}
 		}
 		
 
@@ -153,7 +477,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			ID = null;
 			BoundEntity = null;
 			propertyBindings.Clear();
-			
+			crossHairHUDTimer = 0;
+			readyToRecycled = false;
+		}
+
+		protected virtual void OnReadyToRecycle() {
+			//gameObject.SetActive(false);
+			string[] keys = crossHairManagedHUDs.Keys.ToArray();
+			foreach (string key in keys) {
+				DespawnHUDElement(crossHairManagedHUDs[key].originalSpawnTransform,
+					crossHairManagedHUDs[key].hudCategory);
+			}
+			crossHairManagedHUDs.Clear();
+			isPointed = false;
 		}
 
 		protected abstract IEntity OnBuildNewEntity();
@@ -404,6 +740,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
 			
+		}
+
+		public IUnRegister RegisterOnEntityViewControllerInit(Action<IEntityViewController> callback) {
+			onEntityVCInitCallback += callback;
+			return new EntityVCOnRecycledUnRegister(this, callback);
+		}
+
+		public void UnRegisterOnEntityViewControllerInit(Action<IEntityViewController> callback) {
+			onEntityVCInitCallback -= callback;
 		}
 
 

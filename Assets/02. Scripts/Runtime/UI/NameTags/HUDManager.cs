@@ -46,6 +46,7 @@ namespace Runtime.UI.NameTags {
         InteractiveTag,
         SlotDescription,
         HealthBar,
+        Exit
     }
     
     public class HUDManager : MonoBehaviour, ISingleton {
@@ -116,6 +117,8 @@ namespace Runtime.UI.NameTags {
                         else {
                             screenPos = position;
                         }
+                        //set screen pos z to 0
+                        screenPos.z = 0;
                        
                         ele.Value.Item1.transform.position = screenPos;
                     }

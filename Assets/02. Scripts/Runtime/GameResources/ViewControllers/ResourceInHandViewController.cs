@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
+using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.GameResources.ViewControllers {
@@ -9,6 +11,20 @@ namespace Runtime.GameResources.ViewControllers {
 		void OnStartHold(GameObject ownerGameObject);
 		
 		void OnStopHold();
+
+		void OnItemStartUse();
+
+		void OnItemStopUse();
+
+		void OnItemUse();
+
+		void OnItemScopePressed();
+		
+		Vector3 InHandLocalPosition { get; }
+		
+		Vector3 InHandLocalRotation { get; }
+		
+		Vector3 InHandLocalScale { get; }
 	}
 	
 	
@@ -26,14 +42,33 @@ namespace Runtime.GameResources.ViewControllers {
 		protected Rigidbody rigidbody;
 		protected GameObject ownerGameObject = null;
 		protected float originalAutoRemovalTimeWhenNoAbsorb;
+		
+		[field: Header("In Hand Transform")]
+		[field: SerializeField]
+		public Vector3 InHandLocalPosition { get; protected set; } = Vector3.zero;
+
+		[field: SerializeField] 
+		public Vector3 InHandLocalRotation { get; protected set; } = Vector3.zero;
+		
+		[field: SerializeField]
+		public Vector3 InHandLocalScale { get; protected set; } = Vector3.one;
+		
+		private Vector3 originalLocalScale;
+		
+		[Header("Cross hairs")] [SerializeField]
+		private string crossHairPrefabName;
+		[CanBeNull]
+		protected ICrossHairViewController crossHairViewController;
 
 		protected override void Awake() {
 			base.Awake();
 			originalLayer = gameObject.layer;
 			//selfColliders = new Dictionary<Collider, bool>();
 			rigidbody = GetComponent<Rigidbody>();
-			
+			originalLocalScale = transform.localScale;
 		}
+
+		protected override bool CanAutoRemoveEntityWhenLevelEnd => !(isHolding || isAbsorbing || isAbsorbWaiting);
 
 		protected override void OnStartAbsorb() {
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
@@ -41,15 +76,19 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			
+			transform.localScale = originalLocalScale;
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
+						
 			gameObject.layer = originalLayer;
 			isHolding = false;
 			rigidbody.isKinematic = false;
 			this.ownerGameObject = null;
 			entityAutoRemovalTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
 		}
-		
-		
+
 
 		protected override void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
 			if (isHolding) {
@@ -71,13 +110,36 @@ namespace Runtime.GameResources.ViewControllers {
 			this.ownerGameObject = ownerGameObject;
 			gameObject.layer = LayerMask.NameToLayer("PickableResource");
 			OnUnPointByCrosshair();
+
+			crossHairViewController = Crosshair.Singleton.SpawnCrossHair(crossHairPrefabName);
+			if (crossHairViewController != null) {
+				crossHairViewController.OnStart(BoundEntity, gameObject);
+			}
 		}
 		
 		public virtual void OnStopHold() {
-			
+			rigidbody.isKinematic = false;
+			foreach (Collider selfCollider in selfColliders.Keys) {
+				selfCollider.isTrigger = selfColliders[selfCollider];
+			}
 			//gameObject.layer = originalLayer;
+			if (crossHairViewController != null) {
+				crossHairViewController.OnStopHold();
+				Crosshair.Singleton.DespawnCrossHair();
+			}
 			RecycleToCache();
 		}
+		
+		
+
+		public abstract void OnItemStartUse();
+
+		public abstract void OnItemStopUse();
+
+		public abstract void OnItemUse();
+		public abstract void OnItemScopePressed();
+		
+
 
 		public override void OnPointByCrosshair() {
 			if (isHolding) {
@@ -86,6 +148,10 @@ namespace Runtime.GameResources.ViewControllers {
 			base.OnPointByCrosshair();
 		}
 
-
+		protected override void OnEntityRecycled(IEntity ent) {
+			base.OnEntityRecycled(ent);
+			transform.localScale = Vector3.one;
+			transform.rotation = Quaternion.identity;
+		}
 	}
 }

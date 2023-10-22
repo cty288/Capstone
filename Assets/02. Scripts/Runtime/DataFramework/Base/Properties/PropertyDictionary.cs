@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities;
 using Runtime.Utilities;
 
 namespace Runtime.DataFramework.Properties {
@@ -185,13 +186,13 @@ namespace Runtime.DataFramework.Properties {
 	
 	public abstract class PropertyDictionaryLoadFromConfig<TKey,T> : PropertyDictionary<TKey,T>, ILoadFromConfigProperty where T: IPropertyBase {
 		
-		public void LoadFromConfig(dynamic value) {
+		public void LoadFromConfig(dynamic value, IEntity parentEntity){
 			if (value != null) {
-				SetBaseValue(OnSetBaseValueFromConfig(value));
+				SetBaseValue(OnSetBaseValueFromConfig(value, parentEntity));
 			}
 		}
 	
-		public abstract Dictionary<TKey, T> OnSetBaseValueFromConfig(dynamic value);
+		public abstract Dictionary<TKey, T> OnSetBaseValueFromConfig(dynamic value, IEntity parentEntity);
 	
 		public PropertyDictionaryLoadFromConfig() : base() {
 		

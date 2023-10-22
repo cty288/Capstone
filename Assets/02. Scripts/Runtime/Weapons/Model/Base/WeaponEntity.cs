@@ -3,6 +3,8 @@ using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
 using Runtime.Utilities.ConfigSheet;
@@ -19,7 +21,7 @@ namespace Runtime.Weapons.Model.Base
         public float returnSpeed;
     }
     
-    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
+    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
         public IRange GetRange();
@@ -31,6 +33,7 @@ namespace Runtime.Weapons.Model.Base
         public IScopeRecoil GetScopeRecoil();
         public IBulletSpeed GetBulletSpeed();
         public IChargeSpeed GetChargeSpeed();
+        public IWeight GetWeight();
         
         public BindableProperty<int> CurrentAmmo { get; set; }
         // public GunRecoil GunRecoilScript { get; set; }
@@ -38,6 +41,10 @@ namespace Runtime.Weapons.Model.Base
         public void Reload();
 
         public void OnRecoil(bool isScopedIn);
+
+        public int GetRealDamageValue();
+        
+        public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer);
     }
     
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
@@ -52,8 +59,14 @@ namespace Runtime.Weapons.Model.Base
         private IScopeRecoil scopeRecoilProperty;
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
+        private IWeight weightProperty;
+        protected ICanDealDamageRootEntity rootDamageDealer;
+        
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
+
+        
+        public abstract int Width { get; }
 
         protected override ConfigTable GetConfigTable() {
             
@@ -66,7 +79,13 @@ namespace Runtime.Weapons.Model.Base
         }
 
         protected override void OnEntityStart(bool isLoadedFromSave) {
-            base.OnEntityStart(isLoadedFromSave);
+            if (!isLoadedFromSave) { //otherwise it is managed by es3
+                CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
+            }
+        }
+
+        public override void OnAwake() {
+            base.OnAwake();
             baseDamageProperty = GetProperty<IBaseDamage>();
             attackSpeedProperty = GetProperty<IAttackSpeed>();
             rangeProperty = GetProperty<IRange>();
@@ -78,18 +97,15 @@ namespace Runtime.Weapons.Model.Base
             scopeRecoilProperty = GetProperty<IScopeRecoil>();
             bulletSpeedProperty = GetProperty<IBulletSpeed>();
             chargeSpeedProperty = GetProperty<IChargeSpeed>();
-            
-            if (!isLoadedFromSave) { //otherwise it is managed by es3
-                CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
-            }
-           
+            weightProperty = GetProperty<IWeight>();
         }
-        
+
         public override void OnDoRecycle() {
             SafeObjectPool<T>.Singleton.Recycle(this as T);
         }
 
         public override void OnRecycle() {
+            rootDamageDealer = null;
             CurrentAmmo.UnRegisterAll();
         }
 
@@ -106,6 +122,7 @@ namespace Runtime.Weapons.Model.Base
             RegisterInitialProperty<IScopeRecoil>(new ScopeRecoil());
             RegisterInitialProperty<IBulletSpeed>(new BulletSpeed());
             RegisterInitialProperty<IChargeSpeed>(new ChargeSpeed());
+            RegisterInitialProperty<IWeight>(new Weight());
         }
         
         public IBaseDamage GetBaseDamage()
@@ -162,8 +179,19 @@ namespace Runtime.Weapons.Model.Base
         {
             return chargeSpeedProperty;
         }
+        
+        public IWeight GetWeight()
+        {
+            return weightProperty;
+        }
+        
+        public int GetRealDamageValue() {
+            return Random.Range(baseDamageProperty.RealValue.Value.x, baseDamageProperty.RealValue.Value.y + 1);
+        }
 
-
+        public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer) {
+            this.rootDamageDealer = rootDamageDealer;
+        }
 
         public void Reload() {
             CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
@@ -192,6 +220,17 @@ namespace Runtime.Weapons.Model.Base
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
             return "???";
         }
-        
+
+        [field: ES3Serializable]
+        public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            Debug.Log($"Dealt {damage} damage to {damageable}");
+        }
+
+         ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
     }
 }

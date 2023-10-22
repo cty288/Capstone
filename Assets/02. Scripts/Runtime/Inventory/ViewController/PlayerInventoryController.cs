@@ -2,8 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Event;
+using MikroFramework.Pool;
+using MikroFramework.ResKit;
 using Runtime.Controls;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
@@ -17,18 +21,37 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    [SerializeField] private GameObject throwPoint;
    [SerializeField] private float throwForce = 10f;
    
+   [SerializeField] private List<GameObject> initialItems;
+
    private DPunkInputs.SharedActions sharedActions;
+   private IInventoryModel inventoryModel;
    
    private void Awake() {
       sharedActions = ClientInput.Singleton.GetSharedActions();
       this.RegisterEvent<OnPlayerThrowResource>(OnPlayerThrowResource).UnRegisterWhenGameObjectDestroyed(gameObject);
+      inventoryModel = this.GetModel<IInventoryModel>();
+   }
+
+   private void Start() {
+      if (inventoryModel.IsFirstTimeCreated) {
+         AssignInitialItems();
+      }
+      
+   }
+
+   private void AssignInitialItems() {
+      foreach (GameObject item in initialItems) {
+         IPickableResourceViewController resourceViewController = item.GetComponent<IPickableResourceViewController>();
+         IResourceEntity resourceEntity = resourceViewController.OnBuildNewPickableResourceEntity(false, 1);
+
+         inventoryModel.AddItem(resourceEntity);
+      }
    }
 
 
    private void Update() {
       //Alpha1 -> 49, Alpha9 -> 57
       //map Alpha1 -> 49 to index 0, Alpha9 -> 57 to index 8
-      
       InputAction leftNavigate = sharedActions.HotBarLeftNavigate;
       float leftNavigation = leftNavigate.ReadValue<float>();
       if (leftNavigation != 0 && leftNavigate.WasPressedThisFrame()) {
@@ -62,6 +85,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
             break;
          }
       }
+      
    }
 
    private void OnPlayerThrowResource(OnPlayerThrowResource e) {

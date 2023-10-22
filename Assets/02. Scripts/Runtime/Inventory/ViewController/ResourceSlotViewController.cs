@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Framework;
@@ -23,8 +24,12 @@ namespace Runtime.Inventory.ViewController {
         IEndDragHandler, IDragHandler, IBeginDragHandler {
         private TMP_Text numberText;
         private GameObject topVC = null;
-        private Transform spawnPoint;
+        private RectTransform spawnPoint;
+        private Vector2 spawnPointOriginalMinOffset;
+        private Vector2 spawnPointOriginalMaxOffset;
+        
         private ResourceSlot slot;
+        
 
         public ResourceSlot Slot => slot;
         private Vector2 dragStartPos;
@@ -33,9 +38,11 @@ namespace Runtime.Inventory.ViewController {
         private Image slotHoverBG;
         private SlotResourceDescriptionPanel currentDescriptionPanel;
         private Transform descriptionPanelFollowTr;
-        private Image selectedBG;
+        //private Image selectedBG;
         protected bool isSelected = false;
-
+        private float baseWidth;
+        protected RectTransform rectTransform;
+        protected bool isRightSide = false;
         protected Image slotBG;
         public static GameObject pointerDownObject = null;
 
@@ -43,26 +50,43 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private Sprite unfilledSlotBG;
         [SerializeField] private float hoverBGAlpha = 1f;
         [SerializeField] private bool turnUnSelectedBGOffWhenSelected = true;
+        [SerializeField] private Image selectedBG;
+        [SerializeField] private bool expandWithItemWidth = false;
+        [SerializeField] private float expandAdditionWidth = 0f;
         protected virtual void Awake() {
             numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
-            spawnPoint = transform.Find("InventoryItemSpawnPos");
+            spawnPoint = transform.Find("InventoryItemSpawnPos")?.GetComponent<RectTransform>();
+            if (spawnPoint) {
+                spawnPointOriginalMinOffset = spawnPoint.offsetMin;
+                spawnPointOriginalMaxOffset = spawnPoint.offsetMax;
+            }
             slotBG = transform.Find("SlotBG").GetComponent<Image>();
             slotHoverBG = transform.Find("SlotHoverBG")?.GetComponent<Image>();
             //descriptionPanel = transform.Find("DescriptionTag").GetComponent<SlotResourceDescriptionPanel>();
             button = GetComponent<Button>();
             descriptionPanelFollowTr = transform.Find("DescriptionFollowTr");
-            currentDescriptionPanel = HUDManagerUI.Singleton
-                .SpawnHUDElement(descriptionPanelFollowTr, "DescriptionTag", HUDCategory.SlotDescription, false)
-                .GetComponent<SlotResourceDescriptionPanel>();
-            selectedBG = transform.Find("SelectedBG")?.GetComponent<Image>();
+            //currentDescriptionPanel = HUDManagerUI.Singleton
+               // .SpawnHUDElement(descriptionPanelFollowTr, "DescriptionTag", HUDCategory.SlotDescription, false)
+                //.GetComponent<SlotResourceDescriptionPanel>();
+            //selectedBG = transform.Find("SelectedBG")?.GetComponent<Image>();
             if (selectedBG) {
                 selectedBG.gameObject.SetActive(false);
             }
+            rectTransform = GetComponent<RectTransform>();
             
-            
-            currentDescriptionPanel.Hide();
+            baseWidth = rectTransform.sizeDelta.x;
+            //currentDescriptionPanel.Hide();
             //descriptionPanel.Awake();
             Clear();
+        }
+
+        private void OnEnable() {
+            StopDragImmediately();
+        }
+
+        private void Start() {
+            //LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+           // baseWidth = rectTransform.sizeDelta.x;
         }
 
         public void OnPointerClick() {
@@ -123,6 +147,8 @@ namespace Runtime.Inventory.ViewController {
             var transform1 = transform;
             spawnPoint.transform.position = transform1.position;
             spawnPoint.parent = transform1;
+            spawnPoint.offsetMin = spawnPointOriginalMinOffset;
+            spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
             startDragTriggered = false;
         }
     
@@ -141,8 +167,9 @@ namespace Runtime.Inventory.ViewController {
             }
 
             if (currentDescriptionPanel) {
-                currentDescriptionPanel.SetContent("", "");
+                currentDescriptionPanel.SetContent("", "", null, true);
             }
+            DespawnDescriptionPanel();  
             
           
         }
@@ -159,6 +186,8 @@ namespace Runtime.Inventory.ViewController {
             int totalCount = slot.GetQuantity();
             if (topItem == null || totalCount == 0) {
                 slotBG.sprite = unfilledSlotBG;
+                this.rectTransform.sizeDelta = new Vector2(baseWidth, baseWidth);
+                StartCoroutine(RebuildLayout());
                 return;
             }
 
@@ -185,23 +214,61 @@ namespace Runtime.Inventory.ViewController {
             numberText.text = totalCount.ToString();
             slotBG.sprite = filledSlotBG;
 
+            SpawnDescriptionPanel(topItem);
             if (currentDescriptionPanel) {
-                currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription());
+                currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
+                    InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide);
                 
                 if (ResourceSlot.currentHoveredSlot == this) {
                     currentDescriptionPanel.Show();
                 }
             }
-            
-            
 
+            if (expandWithItemWidth) {
+                float width = (baseWidth) * topItem.Width + expandAdditionWidth * (topItem.Width - 1);
+                this.rectTransform.sizeDelta = new Vector2(width, baseWidth);
+                StartCoroutine(RebuildLayout());
+            }
+        }
+        
+        private void SpawnDescriptionPanel(IResourceEntity topItem) {
+            if (currentDescriptionPanel) {
+                DespawnDescriptionPanel();
+            }
+           
+            currentDescriptionPanel = HUDManagerUI.Singleton
+                .SpawnHUDElement(descriptionPanelFollowTr, topItem.Width <= 1 ? "DescriptionTag" : "DescriptionTag_Long"
+                    , HUDCategory.SlotDescription, false)
+                .GetComponent<SlotResourceDescriptionPanel>();
+            currentDescriptionPanel.Hide();
+            
+        }
+        
+        private void DespawnDescriptionPanel() {
+            if (currentDescriptionPanel) {
+                currentDescriptionPanel.Hide();
+                HUDManagerUI.Singleton.DespawnHUDElement(descriptionPanelFollowTr, HUDCategory.SlotDescription);
+            }
+            currentDescriptionPanel = null;
+        }
+        
+        private IEnumerator RebuildLayout() {
+            //set left right top bottom to 0
+            spawnPoint.GetComponent<RectTransform>().offsetMin = spawnPointOriginalMinOffset;
+            spawnPoint.GetComponent<RectTransform>().offsetMax = spawnPointOriginalMaxOffset;
+            
+            RectTransform parent = rectTransform.parent as RectTransform;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(parent);
+            yield return new WaitForEndOfFrame();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(parent);
         }
         
         /// <summary>
         /// Only when the slot is active, the slot can show and update the item
         /// </summary>
         /// <param name="active"></param>
-        public void Activate(bool active) {
+        public void Activate(bool active, bool isRightSideSlot) {
+            this.isRightSide = isRightSideSlot;
             if (active) {
                 ShowItem();
                 slot.RegisterOnSlotUpdateCallback(OnSlotUpdate);
@@ -218,9 +285,7 @@ namespace Runtime.Inventory.ViewController {
 
         private void OnDestroy() {
             slot?.UnregisterOnSlotUpdateCallback(OnSlotUpdate);
-            if (currentDescriptionPanel) {
-                HUDManagerUI.Singleton.DespawnHUDElement(descriptionPanelFollowTr, HUDCategory.SlotDescription);
-            }
+            DespawnDescriptionPanel();
         }
 
 
@@ -231,12 +296,14 @@ namespace Runtime.Inventory.ViewController {
             
             ResourceSlot.currentHoveredSlot = this;
             if (slot.GetQuantity() > 0) {
+                IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+                if(topItem == null) {
+                    return;
+                }
+                SpawnDescriptionPanel(topItem);
                 if (currentDescriptionPanel) {
-                    IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
-                    if (topItem == null) {
-                        return;
-                    }
-                    currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription());
+                    currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
+                        InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide);
                     currentDescriptionPanel.Show();
                 }
             }
@@ -250,6 +317,7 @@ namespace Runtime.Inventory.ViewController {
            ResourceSlot.currentHoveredSlot = null;
            if (currentDescriptionPanel) {
                currentDescriptionPanel.Hide();
+               DespawnDescriptionPanel();
            }
         }
 
@@ -260,13 +328,14 @@ namespace Runtime.Inventory.ViewController {
             
             
         }
-        
-        
 
-        private void OnDisable() {
+
+        public void OnInventoryUIClosed() {
             OnPointerExit(default);
             StopDragImmediately();
+            
         }
+       
 
         public virtual void SetSelected(bool selected) {
             if (selectedBG) {

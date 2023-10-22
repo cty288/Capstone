@@ -46,19 +46,14 @@ namespace Runtime.Enemies.Model.Properties {
 		public int GetCurrentHealth() {
 			return RealValue.Value.CurrentHealth;
 		}
-
 		
-
-		protected override IPropertyDependencyModifier<HealthInfo> GetDefautModifier() {
-			return null;
-		}
 
 		protected override PropertyName GetPropertyName() {
 			return PropertyName.health;
 		}
 
 		public override PropertyNameInfo[] GetDefaultDependentProperties() {
-			return new[] {new PropertyNameInfo(PropertyName.rarity)};
+			return new[] {new PropertyNameInfo(PropertyName.rarity), new PropertyNameInfo(PropertyName.level_number)};
 		}
 		
 		

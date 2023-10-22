@@ -8,16 +8,20 @@ namespace Runtime.Utilities.ConfigSheet
 	{
 		private ConfigDatas() { }
 
-		private ConfigTable enemyEntityConfigTable;
+		private ConfigTable bossEntityConfigTable;
 		private ConfigTable enemyEntityConfigTable_test;
 		private ConfigTable rawMaterialEntityConfigTable;
 		private ConfigTable rawMaterialEntityConfigTable_test;
 		private ConfigTable weaponEntityConfigTable;
 		private ConfigTable weaponEntityConfigTable_test;
 		private ConfigTable playerEntityConfigTable;
+		private ConfigTable normalEnemyEntityConfigTable;
+		private ConfigTable globalDataTable;
 
-		public ConfigTable EnemyEntityConfigTable => enemyEntityConfigTable;
+		public ConfigTable BossEntityConfigTable => bossEntityConfigTable;
 		public ConfigTable EnemyEntityConfigTable_Test => enemyEntityConfigTable_test;
+		
+		public ConfigTable NormalEnemyEntityConfigTable => normalEnemyEntityConfigTable;
 
 		public ConfigTable RawMaterialEntityConfigTable => rawMaterialEntityConfigTable;
 		public ConfigTable RawMaterialEntityConfigTable_Test => rawMaterialEntityConfigTable_test;
@@ -26,12 +30,14 @@ namespace Runtime.Utilities.ConfigSheet
 		public ConfigTable WeaponEntityConfigTable_Test => weaponEntityConfigTable_test;
 		
 		public ConfigTable PlayerEntityConfigTable => playerEntityConfigTable;
+		
+		public ConfigTable GlobalDataTable => globalDataTable;
         
 		public override void OnSingletonInit()
 		{
 			base.OnSingletonInit();
 			//Debug.Log("ConfigDatas Singleton Init");
-			enemyEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+			bossEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"1697603466", "data_enemies");
 
 			enemyEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
@@ -51,6 +57,12 @@ namespace Runtime.Utilities.ConfigSheet
 			
 			playerEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"231118994", "data_player");
+			
+			normalEnemyEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+				"642644287", "data_normal_enemies");
+			
+			globalDataTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+				"1266085510", "data_global");
 		}
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

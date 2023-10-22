@@ -13,6 +13,6 @@ public class FaceCamera : MonoBehaviour
     }
 
     private void LateUpdate() {
-        transform.rotation = Quaternion.LookRotation(transform.position - mainCamera.transform.position);
+        transform.rotation = mainCamera.transform.rotation;
     }
 }

@@ -48,7 +48,7 @@ namespace Runtime.Utilities.AnimationEvents
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             hasMotionTimeParam = HasParameter(animator, motionTime);
-            animationSMBManager = animator.gameObject.transform.root.GetComponent<AnimationSMBManager>();
+            animationSMBManager = animator.GetComponentInParent<AnimationSMBManager>();
             totalFrames = GetTotalFrames(animator, layerIndex);
             normalizedTimeUncapped = stateInfo.normalizedTime;
             normalizedTime = hasMotionTimeParam ? animator.GetFloat(motionTime) : GetNormalizedTime(stateInfo);

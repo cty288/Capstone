@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Temporary;
 using Runtime.Utilities.AnimationEvents;
@@ -14,7 +15,6 @@ namespace Runtime.RunTimeTests.TestCollision
         //Enity Stats.
         [Header("Entity Information")]
         public NavMeshAgent agent;
-        public TestEnity entity;
         [SerializeField] private int m_damage = 10;
 
         //Animation-related.
@@ -38,11 +38,19 @@ namespace Runtime.RunTimeTests.TestCollision
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Hostile);
 
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
+
+        public ICanDealDamageRootEntity RootDamageDealer { get; }
+
 
         public void Start()
         {
-            entity = gameObject.GetComponent<TestEnity>();
-
             //Animation-related.
             // animator = GetComponent<Animator>();
             animationSMBManager = GetComponent<AnimationSMBManager>();
@@ -66,11 +74,8 @@ namespace Runtime.RunTimeTests.TestCollision
             else { return true; }
         }
 
-        public void HitResponse(HitData data)
-        {
-            Debug.Log("hit response, punching: " + punching);
+        public void HitResponse(HitData data) {
             hitObjects.Add(data.Hurtbox.Owner);
-
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
         }
 
@@ -82,7 +87,7 @@ namespace Runtime.RunTimeTests.TestCollision
                 case "PunchStart":
                     hitObjects.Clear();
                     punching = true;
-                    hitbox_RightHand.StartCheckingHits();
+                    hitbox_RightHand.StartCheckingHits(m_damage);
                     break;
                 case "PunchEnd":
                     punching = false;

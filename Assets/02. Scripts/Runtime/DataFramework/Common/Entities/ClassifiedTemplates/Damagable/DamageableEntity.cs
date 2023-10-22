@@ -3,6 +3,7 @@ using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies.Model.Properties;
+using Runtime.Utilities.Collision;
 
 namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	
@@ -28,9 +29,10 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		private IHealthProperty healthProperty;
 		public IHealthProperty HealthProperty => healthProperty;
 
+		
 
-		protected override void OnEntityStart(bool isLoadedFromSave) {
-			base.OnEntityStart(isLoadedFromSave);
+		public override void OnAwake() {
+			base.OnAwake();
 			this.healthProperty = GetProperty<IHealthProperty>();
 		}
 
@@ -62,22 +64,41 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		/// <param name="damage"></param>
 		/// <param name="damageDealer"></param>
-		public void TakeDamage(int damage, [CanBeNull] IBelongToFaction damageDealer) {
-			if(!CheckCanTakeDamage(damageDealer)) {
+		public void TakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null) {
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			if(!CheckCanTakeDamage(damageDealer) || healthInfo.CurrentHealth <= 0) {
 				return;
 			}
+			
 
 			int actualDamage = OnTakeDamageAdditionalCheck(damage, damageDealer);
 			
-			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			
 			
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage
 			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : actualDamage;
 			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
 
-			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer);
+			if (hitData != null) {
+				hitData.Damage = damageAmount;
+			}
+			OnTakeDamage(damageAmount, damageDealer, hitData);
+			damageDealer?.OnDealDamage(this, damageAmount);
+			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
+				damageDealer?.OnKillDamageable(this);
+			}
+			
+			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer, hitData);
+			
 		}
+		
+		
+		public virtual void OnTakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null) {
+			
+		}
+		
+		
 		
 		
 		public virtual int OnTakeDamageAdditionalCheck(int damage, [CanBeNull] IBelongToFaction damageDealer) {
@@ -88,7 +109,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			return damage;
 		}
 		
-		public bool CheckCanTakeDamage([CanBeNull] IBelongToFaction damageDealer) {
+		public bool CheckCanTakeDamage([CanBeNull] ICanDealDamage damageDealer) {
 			if(damageDealer != null && damageDealer.IsSameFaction(this)) {
 				return false;
 			}
@@ -118,6 +139,11 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth + healAmountClamped);
 
 			onHeal?.Invoke(healAmountClamped, HealthProperty.RealValue.Value.CurrentHealth, healer);
+			OnHeal(healAmountClamped, healer);
+		}
+		
+		public virtual void OnHeal(int healAmount, [CanBeNull] IBelongToFaction healer) {
+			
 		}
 
 		public IUnRegister RegisterOnHeal(OnHeal onHeal) {

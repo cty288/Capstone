@@ -20,10 +20,9 @@ namespace Runtime.Weapons.Model.Properties
         }
     }
 
-    public class ChargeSpeedDefaultModifier : PropertyDependencyModifier<float>
+    public class ChargeSpeedDefaultModifier : PropertyDependencyModifierWithRarity<float>
     {
-        public override float OnModify(float propertyValue)
-        {
+        protected override float OnModify(float propertyValue, int rarity) {
             return propertyValue;
         }
     }

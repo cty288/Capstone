@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -17,20 +18,25 @@ namespace Runtime.Enemies
         {
             GetComponent<HitBox>().HitResponder = this;
             Destroy(gameObject, 5f);
-            GetComponent<HitBox>().StartCheckingHits();
+            GetComponent<HitBox>().StartCheckingHits(m_damage);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+       
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Hostile);
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
+
+        public ICanDealDamageRootEntity RootDamageDealer { get; }
+
         public int Damage => m_damage;
         public List<GameObject> hitObjects= new List<GameObject>();
-        public bool CheckHit(HitData data)
-        {
+        public bool CheckHit(HitData data) {
             if (data.Hurtbox.Owner == boss1) { return false; }
             else { return true; }
         }

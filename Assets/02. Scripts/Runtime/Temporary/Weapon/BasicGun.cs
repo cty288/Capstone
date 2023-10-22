@@ -3,6 +3,7 @@ using System.Collections;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -64,6 +65,16 @@ namespace Runtime.Temporary.Weapon
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
 
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
+
+        public ICanDealDamageRootEntity RootDamageDealer { get; }
+
         public void Start()
         {
             cam = Camera.main;
@@ -116,7 +127,7 @@ namespace Runtime.Temporary.Weapon
                 GameObject p = Instantiate(projectile);
                 p.transform.rotation = transform.rotation;
                 p.transform.position = launchPoint.position;
-                p.GetComponent<Bullet>().Init(Faction.Friendly, 10); //temp
+                p.GetComponent<BulletDeprecated>().Init(Faction.Friendly, 10); //temp
                 p.GetComponent<Rigidbody>().velocity = (destination - launchPoint.position).normalized * proj.speed;
             }
         }

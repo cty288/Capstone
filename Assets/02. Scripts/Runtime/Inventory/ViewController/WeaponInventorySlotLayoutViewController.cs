@@ -22,16 +22,19 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
         for (int i = 0; i < slotViewControllers.Count; i++) {
             slotViewControllers[i].SetSelected(i == slotIndex);
         }
-
         ammoTextContainer.SetActive(false);
-
         
         if (currentSlot != null) {
             currentSlot.UnregisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
         }
-        currentSlot = slotViewControllers[slotIndex].Slot;
-        OnCurrentSlotUpdate(currentSlot, currentSlot.GetLastItemUUID(), currentSlot.GetUUIDList());
-        currentSlot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+
+
+        currentSlot = slotIndex >= 0 ? slotViewControllers[slotIndex].Slot : currentSlot;
+        if (currentSlot != null) {
+            OnCurrentSlotUpdate(currentSlot, currentSlot.GetLastItemUUID(), currentSlot.GetUUIDList());
+            currentSlot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+        }
+
     }
 
     private void OnCurrentSlotUpdate(ResourceSlot slot, string itemID, List<string> arg3) {
@@ -50,8 +53,11 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
             }
         }
     }
-    
-    
+
+    public override void OnInventoryUIClosed() {
+        
+    }
+
     private void OnDestroy() {
         if (currentSlot != null) {
             currentSlot.UnregisterOnSlotUpdateCallback(OnCurrentSlotUpdate);

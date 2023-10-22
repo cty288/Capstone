@@ -20,11 +20,10 @@ namespace Runtime.Utilities.Collision
         public IHurtResponder HurtResponder { get => m_hurtResponder; set => m_hurtResponder = value; }
         public float DamageMultiplier { get => m_damageMultiplier; set => m_damageMultiplier = value; }
 
-        private void Awake()
-        {
+        private void Awake() {
             if (m_owner == null)
-                m_owner = transform.root.gameObject;
-            
+                m_owner = GetComponent<Collider>().attachedRigidbody.gameObject;
+
         }
 
         public bool CheckHit(HitData data)

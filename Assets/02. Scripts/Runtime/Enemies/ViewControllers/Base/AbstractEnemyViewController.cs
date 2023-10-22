@@ -1,23 +1,32 @@
 using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Entities.Creatures;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
+using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
 using UnityEngine;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.ViewControllers.Base {
-	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder
+	[RequireComponent(typeof(AnimationSMBManager))]
+	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder, ICanDealDamageViewController
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
-	
+		
+
+
 		public int Danger {  get; }
 	
 		public int MaxHealth { get; }
@@ -30,16 +39,19 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 		protected HealthBar currentHealthBar = null;
 
-		public int Damage => GetCurrentHitDamage();
+		
 		protected List<GameObject> hitObjects = new List<GameObject>();
 		
 		
-		protected abstract int GetCurrentHitDamage();
-
+		protected AnimationSMBManager animationSMBManager;
 		protected override void Awake() {
 			base.Awake();
 			enemyModel = this.GetModel<IEnemyEntityModel>();
+			animationSMBManager = GetComponent<AnimationSMBManager>();
+			animationSMBManager.Event.AddListener(OnAnimationEvent);
 		}
+
+		protected abstract void OnAnimationEvent(string eventName);
 
 		protected abstract HealthBar OnSpawnHealthBar();
 
@@ -49,7 +61,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			base.OnStart();
 			currentHealthBar = OnSpawnHealthBar();
 			if (currentHealthBar != null) {
-				currentHealthBar.OnSetEntity(BoundEntity);
+				currentHealthBar.OnSetEntity(BoundEntity.HealthProperty.RealValue, BoundEntity);
 			}
 		}
 
@@ -58,11 +70,18 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			Bind<HealthInfo, int>("MaxHealth", BoundEntity.GetHealth(), info => info.MaxHealth);
 			Bind<HealthInfo, int>("CurrentHealth", BoundEntity.GetHealth(), info => info.CurrentHealth);
 		}
+		
+		public override ICreature OnInitEntity(int level, int rarity){
+			if (enemyModel == null) {
+				enemyModel = this.GetModel<IEnemyEntityModel>();
+			}
 
-		protected override IEntity OnBuildNewEntity() {
-			EnemyBuilder<T> builder = enemyModel.GetEnemyBuilder<T>(1);
+			EnemyBuilder<T> builder = enemyModel.GetEnemyBuilder<T>(rarity);
+			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level);
+
 			return OnInitEnemyEntity(builder);
 		}
+		
 
 		protected abstract IEnemyEntity OnInitEnemyEntity(EnemyBuilder<T> builder);
 
@@ -74,7 +93,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			return info.CurrentHealth;
 		}
 
-		protected override void OnEntityDie(IBelongToFaction damagedealer) {
+		protected override void OnEntityDie(ICanDealDamage damagedealer) {
+			base.OnEntityDie(damagedealer);
 			MikroAction action = WaitingForDeathCondition();
 			if (action != null) {
 				action.OnEndedCallback += () => {
@@ -100,12 +120,16 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
+			
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
 			if (currentHealthBar) {
 				currentHealthBar.OnHealthBarDestroyed();
 				OnDestroyHealthBar(currentHealthBar);
-				
 			}
-			
+			currentHealthBar = null;
 		}
 
 		public virtual bool CheckHit(HitData data) {
@@ -118,5 +142,18 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		public virtual void HitResponse(HitData data) {
 			hitObjects.Add(data.Hurtbox.Owner);
 		}
+
+
+		public void OnKillDamageable(IDamageable damageable) {
+			BoundEntity?.OnKillDamageable(damageable);
+		}
+
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			BoundEntity?.OnDealDamage(damageable, damage);
+		}
+
+		public ICanDealDamageRootEntity RootDamageDealer => BoundEntity?.RootDamageDealer;
+
+		public ICanDealDamage CanDealDamageEntity => BoundEntity;
 	}
 }

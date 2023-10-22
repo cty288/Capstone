@@ -29,7 +29,7 @@ namespace Runtime.DataFramework.Entities.Builders {
         
         public TBuilder OverrideName(string name) {
             CheckEntity();
-            Entity.EntityName = name;
+            Entity.OverrideEntityName(name);
             return (TBuilder) this;
         }
 
@@ -46,9 +46,16 @@ namespace Runtime.DataFramework.Entities.Builders {
         /// <param name="propertyName"></param>
         /// <param name="value"></param>
         /// <returns></returns>
+        [Obsolete("Use SetProperty with no modifier instead. To set modifier, do this in entity's own class.")]
         public TBuilder SetProperty<ValueType>(PropertyNameInfo propertyName, ValueType value, IPropertyDependencyModifier<ValueType> modifier = null) {
             CheckEntity();
             Entity.SetPropertyBaseValue(propertyName, value, modifier);
+            return (TBuilder) this;
+        }
+        
+        public TBuilder SetProperty<ValueType>(PropertyNameInfo propertyName, ValueType value) {
+            CheckEntity();
+            Entity.SetPropertyBaseValue(propertyName, value);
             return (TBuilder) this;
         }
     
@@ -60,6 +67,7 @@ namespace Runtime.DataFramework.Entities.Builders {
         /// <param name="modifier"></param>
         /// <typeparam name="ValueType"></typeparam>
         /// <returns></returns>
+        [Obsolete("This is obsolete. To set modifier, do this in entity's own class.")]
         public TBuilder SetModifier<ValueType>(PropertyNameInfo propertyName, IPropertyDependencyModifier<ValueType> modifier) {
             CheckEntity();
             Entity.SetPropertyModifier(propertyName, modifier);
@@ -78,6 +86,13 @@ namespace Runtime.DataFramework.Entities.Builders {
             return (TBuilder) this;
         }
         
+        
+        public TBuilder AddDependency(PropertyNameInfo propertyName, PropertyNameInfo[] dependencies) {
+            CheckEntity();
+            Entity.GetProperty(propertyName).AddDependentProperties(dependencies);
+            return (TBuilder) this;
+        }
+        
         public TBuilder AddTag(TagName tag, int level) {
             CheckEntity();
             if (Entity.HasProperty(new PropertyNameInfo(PropertyName.tags))) {
@@ -91,6 +106,7 @@ namespace Runtime.DataFramework.Entities.Builders {
             TEntity ent = this.Entity;
             this.Entity = null;
             ent.OnAllocate();
+            ent.OnAwake();
             ent.Initialize();
             onEntityCreated?.Invoke(ent);
             RecycleToCache();

@@ -28,9 +28,18 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string InventoryVCPrefabName { get; }
 		
+		public string IconSpriteName { get; }
+		
 		public string OnGroundVCPrefabName { get; }
 		
 		public string InHandVCPrefabName { get; }
+		
+		public string DeployedVCPrefabName { get; }
+		
+		/// <summary>
+		/// Width in inventory. Use only 1 or 2. Only effective for weapons.
+		/// </summary>
+		public int Width { get; }
 	}
 	
 	//3 forms
@@ -46,11 +55,10 @@ namespace Runtime.GameResources.Model.Base {
 		protected bool pickedBefore = false;
 		
 		//private IStackSize stackSizeProperty;
-		protected override void OnEntityStart(bool isLoadedFromSave) {
-			base.OnEntityStart(isLoadedFromSave);
-			
+
+		public override void OnAwake() {
+			base.OnAwake();
 			maxStackProperty = GetProperty<IMaxStack>();
-			//stackSizeProperty = GetProperty<IStackSize>();
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
@@ -109,8 +117,15 @@ namespace Runtime.GameResources.Model.Base {
 		[field: ES3Serializable]
 		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
 
+		public string IconSpriteName => $"{EntityName}_Icon";
+
 		public abstract string OnGroundVCPrefabName { get; }
 		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
+
+		public virtual string DeployedVCPrefabName { get; } = null;
+
+		[field: ES3Serializable]
+		public virtual int Width { get; } = 1;
 	}
 
 }

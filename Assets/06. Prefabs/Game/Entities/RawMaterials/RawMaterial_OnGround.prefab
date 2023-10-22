@@ -402,7 +402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7323250059836298820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.531, z: 0}
+  m_LocalPosition: {x: 0, y: 0.572, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -655,6 +655,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
+  <PrefabID>k__BackingField: b81bc29a-a2cf-44ca-ae2c-0c6b190359f1
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 7323250059836298821}
@@ -663,6 +664,8 @@ MonoBehaviour:
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
   autoDestroyWhenEntityRemoved: 1
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
   entityAutoRemovalTimeWhenNoAbsorb: 120
   entityName: TestRaw
 --- !u!135 &7603438385675746021

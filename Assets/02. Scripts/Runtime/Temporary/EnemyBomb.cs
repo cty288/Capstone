@@ -1,23 +1,26 @@
 using System.Collections;
+using MikroFramework;
+using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Utilities.Collision;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class EnemyBomb : MonoBehaviour
+    public class EnemyBomb : AbstractBulletViewController
     {
         public AnimationCurve curve;
         private Vector3 targetPos;
         public float travelTime;
         private Vector3 start;
 
-        private HitBox hb;
-        // Start is called before the first frame update
-        void Start()
-        {
-            start = transform.position;
-            StartCoroutine(Curve());
-            hb = GetComponent<HitBox>();
+
+        public GameObject explosion;
+        private int explosionDamage;
+      
+        void Start() {
 
         }
 
@@ -26,10 +29,27 @@ namespace Runtime.Temporary
         {
 
         }
-        public void Init(Transform target,float tTime)
-        {
+
+        protected override void OnBulletReachesMaxRange() {
+            
+        }
+
+        public void Init(Transform target,float tTime, Faction faction, int damage, GameObject bulletOwner) {
+            Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>(), -1);
             targetPos = target.position;
+            explosionDamage = damage;
             travelTime = tTime;
+            start = transform.position;
+            StartCoroutine(Curve());
+        }
+        public void Init(Vector3 target, float tTime, Faction faction, int damage, GameObject bulletOwner)
+        {
+            Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>(), -1);
+            targetPos = target ;
+            explosionDamage = damage;
+            travelTime = tTime;
+            start = transform.position;
+            StartCoroutine(Curve());
         }
 
         IEnumerator Curve()
@@ -51,7 +71,34 @@ namespace Runtime.Temporary
  
                 yield return null;
             }
+        }
 
+
+        protected override void OnHitResponse(HitData data) {
+           
+           //Explode();
+        }
+        
+
+        protected override void OnHitObject(Collider other) {
+            Explode();
+        }
+
+        protected override void OnBulletRecycled() {
+            StopAllCoroutines();
+        }
+
+        void Explode() {
+            SafeGameObjectPool pool = GameObjectPoolManager.Singleton.CreatePool(explosion, 10, 100);
+
+            GameObject exp = pool.Allocate();
+            
+            //Instantiate(explosion,transform.position,Quaternion.identity);
+            exp.transform.position = transform.position;
+            exp.transform.rotation = Quaternion.identity;
+            Debug.Log("IExplosionViewController: " + exp.GetComponent<IExplosionViewController>());
+            exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, bulletOwner,
+                bulletOwner.GetComponent<ICanDealDamage>());
         }
     }
 }

@@ -18,5 +18,7 @@ namespace Runtime.Inventory.ViewController {
 		public abstract void OnHideSlotItem();
 
 		public abstract void OnSelected(int slotIndex);
+		
+		public abstract void OnInventoryUIClosed();
 	}
 }

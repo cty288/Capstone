@@ -4,15 +4,18 @@ using BehaviorDesigner.Runtime.Tasks.Unity.UnityCircleCollider2D;
 using JetBrains.Annotations;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
+using Polyglot;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
-using Runtime.Temporary.Player;
 using Runtime.Temporary.Weapon;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -30,13 +33,14 @@ namespace Runtime.Weapons
     {
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
+        [field: ES3Serializable] public override int Width { get; } = 1;
+        
         public override void OnRecycle()
         {
         }
         
-        protected override string OnGetDescription(string defaultLocalizationKey)
-        {
-            return null;
+        protected override string OnGetDescription(string defaultLocalizationKey) {
+            return Localization.Get(defaultLocalizationKey);
         }
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
@@ -44,183 +48,128 @@ namespace Runtime.Weapons
             return null;
         }
 
+        protected override void OnInitModifiers(int rarity) {
 
-        public override string OnGroundVCPrefabName { get; } = "RustyPistol";
+        }
+        
+        
+        public override string OnGroundVCPrefabName => EntityName;
+
     }
 
-    public class RustyPistol : AbstractWeaponViewController<RustyPistolEntity>, IHitResponder
-    {
-        [Header("Auto Reload")]
-        public bool autoReload = false;
-        
-        [Header("HitDetector Settings")] [SerializeField]
-        [ReadOnly] private Camera cam;
-        private HitDetectorInfo hitDetectorInfo;
-        
-        [SerializeField] private GameObject hitParticlePrefab;
-        
-        // For IHitResponder.
-        
-        private DPunkInputs.PlayerActions playerActions;
 
-        protected override void Awake() {
-            base.Awake();
-            playerActions = ClientInput.Singleton.GetPlayerActions();
-            cam = Camera.main;
-            
-        }
-        
-        protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
-            return builder.FromConfig().Build();
-        }
-        
-        protected override void OnBindEntityProperty() {}
-        
-        //=====
-        public float lastShootTime = 0f;
-        public float reloadTimer = 0f;
-        public bool isReloading = false;
-        public bool isScopedIn = false;
-        public GameObject model;
+    public struct OnGunShoot
+    {
+        public string AnimationName;
+    }
+    public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
+    {
+        // For Coroutine Animation [WILL BE REPLACED]
+      
         public Transform gunPositionTransform;
         public Transform scopeInPositionTransform;
         public GameObject defaultGunModel;
         public GameObject reloadGunModel;
         
-        public TrailRenderer trailRenderer;
-        public LayerMask layer;
-        
-        //FOR CHARGE SPEED
-        // private InputAction _holdAction;
 
-        // public GunRecoil recoilScript;
-
-        private IGamePlayerModel playerModel;
+        private GunAmmoVisual gunAmmoVisual;
         
-        protected override void OnEntityStart()
-        {
-            //FOR CHARGE SPEED
-            //TODO: Set shoot action hold duration when weapon is equipped.
-            // _holdAction = playerActions.Shoot;
-            // _holdAction.started += OnHoldActionStarted;
-            
+        [Header("Debug")]
+        [SerializeField] private string overrideName = "RustyPistol";
+        protected override void Awake() {
+            base.Awake();
+            playerActions = ClientInput.Singleton.GetPlayerActions();
+            cam = Camera.main;
+            gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
+        }
+
+        protected override void OnEntityStart() {
             base.OnEntityStart();
-            
-            playerModel = this.GetModel<IGamePlayerModel>();
-            
-            hitDetectorInfo = new HitDetectorInfo
-            {
-                camera = cam,
-                layer = layer,
-                launchPoint = trailRenderer.transform,
-                weapon = BoundEntity
-            };
+            gunAmmoVisual.Init(BoundEntity);
         }
 
-        protected override IHitDetector OnCreateHitDetector() {
-            return new HitScan(this, CurrentFaction.Value, trailRenderer);
-        }
-
-        protected override void OnStartAbsorb() {
-           
+        protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
+            return builder.OverrideName(overrideName).FromConfig().Build();
         }
         
-        public void Shoot()
-        {
-            // particleSystem.Play();
-            BoundEntity.OnRecoil(isScopedIn);
-            hitDetector.CheckHit(hitDetectorInfo);
+        protected override void OnBindEntityProperty() {}
+        
+
+        public override void OnItemUse() {
+            if (!isReloading) {
+                if (BoundEntity.CurrentAmmo > 0 &&
+                    Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
+                    lastShootTime = Time.time;
+                    SetShoot(true);
+                    BoundEntity.CurrentAmmo.Value--;
+                }
+                
+                if (BoundEntity.CurrentAmmo == 0 && autoReload)
+                {
+                    if (IsScopedIn) {
+                        ChangeScopeStatus(false);
+                        //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                        //StartCoroutine(ScopeOut(true));
+                    }
+                    SetShoot(false);
+                    ChangeReloadStatus(true);
+                    StartCoroutine(ReloadChangeModel());
+                    
+                }
+            }
         }
 
-        public override void OnStartHold(GameObject ownerGameObject) {
-            base.OnStartHold(ownerGameObject);
+        
+        public override void OnItemScopePressed() {
+            if (isReloading) {
+                return;
+            }
+            if (IsScopedIn) {
+                ChangeScopeStatus(false);
+                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS",0));
+                //StartCoroutine(ScopeOut());
+            }
+            else {
+                ChangeScopeStatus(true);
+                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS",1));
+                //StartCoroutine(ScopeIn());
+            }
         }
 
-        public void Update()
+
+        protected override void Update()
         {
+            base.Update();
             if (isHolding && !playerModel.IsPlayerDead())
             {
-                //Shoot
-                if (playerActions.Shoot.IsPressed() && !isReloading)
-                {
-                    if (BoundEntity.CurrentAmmo > 0 &&
-                        Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue)
-                    {
-                        lastShootTime = Time.time;
-
-                        Shoot();
-
-                        BoundEntity.CurrentAmmo.Value--;
-
-                        if (autoReload)
-                        {
-                            if (BoundEntity.CurrentAmmo == 0)
-                            {
-                                if (isScopedIn)
-                                {
-                                    StartCoroutine(ScopeOut(true));
-                                }
-                                else
-                                {
-                                    StartCoroutine(ReloadChangeModel());
-                                }
-                            }
-                        }
-                    }
-                }
-
                 //Reload
                 if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
-                    if (isScopedIn)
+                    if (IsScopedIn)
                     {
-                        StartCoroutine(ScopeOut(true));
+                        ChangeScopeStatus(false);
+                        //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                        //StartCoroutine(ScopeOut(true));
                     }
-                    else
-                    {
-                        StartCoroutine(ReloadChangeModel());
-                    }
+                    
+                    //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
+                    StartCoroutine(ReloadChangeModel());
+                    
                 }
-
-                // Scope
-                if (playerActions.Scope.WasPerformedThisFrame() && !isReloading)
-                {
-                    if (isScopedIn)
-                    {
-                        StartCoroutine(ScopeOut());
-                    }
-                    else
-                    {
-                        StartCoroutine(ScopeIn());
-                    }
-                }
+                
             }
         }
-        
-        //FOR CHARGE SPEED
-        // void OnDisable() {
-        //     _holdAction.started -= OnHoldActionStarted;
-        // }
-        //
-        // protected void OnHoldActionStarted(InputAction.CallbackContext context) {
-        //     HoldInteraction holdInteraction = context.interaction as HoldInteraction;
-        //     holdInteraction.duration = BoundEntity.GetChargeSpeed().RealValue.Value;
-        //     Debug.Log(holdInteraction.duration);
-        // }
 
-        private IEnumerator ReloadChangeModel()
-        {
-            isReloading = true;
-
-            defaultGunModel.SetActive(false);
-            reloadGunModel.SetActive(true);
+        private IEnumerator ReloadChangeModel() {
+            //isReloading = true;
+            ChangeReloadStatus(true);
+            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
 
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-            
-            defaultGunModel.SetActive(true);
-            reloadGunModel.SetActive(false);
-            isReloading = false;
+
+            ChangeReloadStatus(false);
+            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
             BoundEntity.Reload();
         }
         
@@ -239,9 +188,9 @@ namespace Runtime.Weapons
                 startTime += Time.deltaTime;
                 yield return null;
             }
-            model.transform.position = scopeInPositionTransform.position;
+            //model.transform.position = scopeInPositionTransform.position;
             yield return null;
-            isScopedIn = true;
+            ChangeScopeStatus(true);
         }
 
         private IEnumerator ScopeOut(bool reloadAfter = false)
@@ -263,7 +212,7 @@ namespace Runtime.Weapons
             model.transform.position = gunPositionTransform.position;
 
             yield return null;
-            isScopedIn = false;
+            ChangeScopeStatus(false);
 
             if (reloadAfter)
             {
@@ -272,22 +221,14 @@ namespace Runtime.Weapons
             }
         }
 
-        public bool CheckHit(HitData data)
-        {
-            return data.Hurtbox.Owner != gameObject;
+        public override void OnRecycled() {
+            base.OnRecycled();
+            ChangeScopeStatus(false);
+            ChangeReloadStatus(false);
+            
+            defaultGunModel.SetActive(true);
+            reloadGunModel.SetActive(false);
         }
         
-        public override void HitResponse(HitData data) {
-            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-            // float positionMultiplier = 1f;
-            // float spawnX = data.HitPoint.x - data.HitNormal.x * positionMultiplier;
-            // float spawnY = data.HitPoint.y - data.HitNormal.y * positionMultiplier;
-            // float spawnZ = data.HitPoint.z - data.HitNormal.z * positionMultiplier;
-            // Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
-            //
-            // GameObject bulletHole = bulletHolesPool.Get();
-            // bulletHole.transform.position = spawnPosition;
-            // bulletHole.transform.rotation = Quaternion.LookRotation(data.HitNormal);
-        }
     }
 }

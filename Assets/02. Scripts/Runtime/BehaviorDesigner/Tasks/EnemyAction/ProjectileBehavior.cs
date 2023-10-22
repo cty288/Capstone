@@ -14,11 +14,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public string[] collisionTagsToCheck;
         public float duration, rotationSpeed, beforeTurnSpeed, afterTurnSpeed, defaultDestinationDistance, distanceBeforeTurn, destroyDelay;
 
-        Vector3 startPosition, faceDirection, goingToPosition;
-        float distance;
+        protected Vector3 startPosition, faceDirection, goingToPosition;
+        protected float distance;
 
-        Quaternion rotation;
-        ParticleSystem loopFX, impactFX;
+        protected Quaternion rotation;
+        protected ParticleSystem loopFX, impactFX;
 
         // Start is called before the first frame update
         protected virtual void Start()

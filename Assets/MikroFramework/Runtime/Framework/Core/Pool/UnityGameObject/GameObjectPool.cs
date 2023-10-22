@@ -62,14 +62,15 @@ namespace MikroFramework.Pool
         {
             if (pooledPrefab != null)
             {
-                GameObject allocatedObj;
+                GameObject allocatedObj = null;
                 if (poolState == GameObjectPoolState.NotInited || poolState == GameObjectPoolState.Initializing)
                 {
                     allocatedObj = prefabFactory.Create();
                 }
-                else
-                {
-                    allocatedObj = cachedStack.Count > 0 ? cachedStack.Pop() : prefabFactory.Create();
+                else {
+                    while (!allocatedObj) {
+                        allocatedObj = cachedStack.Count > 0 ? cachedStack.Pop() : prefabFactory.Create();
+                    }
                 }
 
                 allocatedObj.name = CommonUtility.DeleteCloneName(allocatedObj);

@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using DG.Tweening;
 using Mikrocosmos;
 using MikroFramework;
 using MikroFramework.Pool;
 using Runtime.Enemies.Model;
+using Runtime.Player;
+using Runtime.Temporary;
 using Runtime.UI.NameTags;
 using UnityEngine;
 
@@ -13,125 +17,61 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		[SerializeField] private string healthBarPrefabName = "EnemyHealthBar";
 		[SerializeField] private Transform healthBarSpawnPoint = null;
 		
-		protected KeepGlobalRotation realHealthBarSpawnPoint = null;
-		private HealthBar currentHealthBar = null;
-		private bool isPointed = false;
-
-		private Camera mainCamera = null;
-
-		protected LayerMask healthBarDetectLayerMask;
-		private Vector3 healthBarTargetPos = Vector3.zero;
-		private Vector3 originalHealthBarPos = Vector3.zero;
-		protected override void Awake() {
-			base.Awake();
-			mainCamera = Camera.main;
-			if (healthBarSpawnPoint) {
-				//make a copy of the spawn point
-				realHealthBarSpawnPoint = Instantiate(healthBarSpawnPoint, healthBarSpawnPoint.parent)
-					.GetComponent<KeepGlobalRotation>();
-				originalHealthBarPos = realHealthBarSpawnPoint.PositionOffset;
-
-			}
-			healthBarDetectLayerMask = LayerMask.GetMask("CrossHairDetect");
-			//get all layers except for the crosshair detect layer
-			
-			healthBarDetectLayerMask = ~healthBarDetectLayerMask;
-			
-		}
+		[Header("Enemy Recycle Logic")]
+		[SerializeField]
+		private float autoRecycleTimeAfterFarAwayFromPlayer = 10f;
+		[SerializeField]
+		protected float autoRecycleDistanceFromPlayer = 150f;
+		[SerializeField]
+		protected float autoRecycleCheckTimeInterval = 5f;
+		private Coroutine entityRemovalTimerCoroutine;
 
 		protected override void OnStart() {
 			base.OnStart();
-			if (currentHealthBar) {
-				healthBarTargetPos = originalHealthBarPos;
+			if (autoRecycleTimeAfterFarAwayFromPlayer >= 0 && autoRecycleDistanceFromPlayer >= 0) {
+				entityRemovalTimerCoroutine = StartCoroutine(EntityRemovalTimer());
 			}
-			
 		}
 
+		protected Transform GetPlayer() {
+			return PlayerController.GetClosestPlayer(transform.position).transform;
+		}
+		
+		private IEnumerator EntityRemovalTimer() {
+			while (true) {
+				
+				if (Vector3.Distance(GetPlayer().position, transform.position) > autoRecycleDistanceFromPlayer) {
+					yield return new WaitForSeconds(autoRecycleTimeAfterFarAwayFromPlayer);
+					
+					if (Vector3.Distance(GetPlayer().position, transform.position) > autoRecycleDistanceFromPlayer) {
+						enemyModel.RemoveEntity(BoundEntity.UUID);
+						yield break;
+					}
+				}
+				
+				yield return new WaitForSeconds(autoRecycleCheckTimeInterval);
+			}
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
+			if (entityRemovalTimerCoroutine != null) {
+				StopCoroutine(entityRemovalTimerCoroutine);
+				entityRemovalTimerCoroutine = null;
+			}
+		}
+
+
 		protected override HealthBar OnSpawnHealthBar() {
-			HealthBar bar = HUDManager.Singleton
-				.SpawnHUDElement(realHealthBarSpawnPoint.transform, healthBarPrefabName, HUDCategory.HealthBar, true)
-				.GetComponent<HealthBar>();
-			
-			//set its scale to health bar spawn point's scale
-			bar.transform.localScale = realHealthBarSpawnPoint.transform.localScale;
-			bar.gameObject.SetActive(false);
-			currentHealthBar = bar;
+			HealthBar bar =
+				SpawnCrosshairResponseHUDElement(healthBarSpawnPoint, healthBarPrefabName, HUDCategory.HealthBar)
+					.Item1.GetComponent<HealthBar>();
 			return bar;
 		}
 
-		public override void OnPointByCrosshair() {
-			isPointed = true;
-			base.OnPointByCrosshair();
-			if (currentHealthBar) {
-				currentHealthBar.gameObject.SetActive(true);
-			}
-		}
-
-		public override void OnUnPointByCrosshair() {
-			isPointed = false;
-			base.OnUnPointByCrosshair();
-			if (currentHealthBar) {
-				currentHealthBar.gameObject.SetActive(false);
-			}
-		}
-
-		private void FixedUpdate() {
-			if (currentHealthBar) {
-				
-			
-				//if it is pointed, then make sure the health bar is not blocking the view
-				//solution: raycast from the camera to realHealthBarSpawnPoint, if it hits the enemy, then move the health bar up until it doesn't hit the enemy
-				//otherwise, move the health bar down to the original position
-				if (isPointed) {
-					var camTr = mainCamera.transform;
-				
-					RaycastHit hit;
-					bool hitSelf = false;
-					
-					if (Physics.Raycast(camTr.position, healthBarSpawnPoint.transform.position - camTr.position, out hit, 100f, healthBarDetectLayerMask)) {
-						if (hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
-							hitSelf = true;
-							
-							if (Physics.Raycast(camTr.position, realHealthBarSpawnPoint.transform.position - camTr.position, out hit, 100f, healthBarDetectLayerMask)) {
-								if (hit.collider.attachedRigidbody && hit.collider.attachedRigidbody.gameObject == gameObject) {
-									healthBarTargetPos += Vector3.up * 0.5f;
-									//if the player is right below (or very close in terms of x and z) the enemy, we need to also move the health bar in both x and z axis until it doesn't hit the enemy
-									if (Math.Abs(camTr.position.x - realHealthBarSpawnPoint.transform.position.x) < 10f &&
-									    Math.Abs(camTr.position.z - realHealthBarSpawnPoint.transform.position.z) < 10f) {
-										healthBarTargetPos += new Vector3(0.5f, 0, 0.5f);
-									}
-									
-								}
-							}
-						}
-					}
-					
-					
-					
-					if (!hitSelf) {
-						healthBarTargetPos = originalHealthBarPos;
-					}
-				}
-
-				/*realHealthBarSpawnPoint.transform.position =
-					Vector3.Lerp(realHealthBarSpawnPoint.transform.position, healthBarTargetPos, 0.1f);*/
-				/*DOTween.To(() => realHealthBarSpawnPoint.PositionOffset,
-					x => realHealthBarSpawnPoint.PositionOffset = x, healthBarTargetPos, 0.1f);*/
-				
-				realHealthBarSpawnPoint.PositionOffset = Vector3.Lerp(realHealthBarSpawnPoint.PositionOffset, healthBarTargetPos, 0.1f);
-				
-			}
-			
-		}
-
 		protected override void OnDestroyHealthBar(HealthBar healthBar) {
-			HUDManager.Singleton.DespawnHUDElement(healthBarSpawnPoint, HUDCategory.HealthBar);
-			currentHealthBar = null;
+			DespawnHUDElement(healthBarSpawnPoint, HUDCategory.HealthBar);
 		}
-
-		public override void OnRecycled() {
-			base.OnRecycled();
-			isPointed = false;
-		}
+		
 	}
 }

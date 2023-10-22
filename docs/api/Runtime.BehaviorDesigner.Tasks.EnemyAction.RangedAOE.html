@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE" class="text-break">
     Class RangedAOE
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RangedAOE : EnemyAction</code></pre>
+    <pre><code class="lang-csharp hljs">public class RangedAOE : EnemyAction&lt;Boss1Entity&gt;</code></pre>
   </div>
 
 
@@ -108,6 +108,7 @@
       <div><span class="xref">Task</span></div>
       <div><span class="xref">Action</span></div>
       <div><a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.html">EnemyAction</a></div>
+      <div><a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction-1.html">EnemyAction</a>&lt;<a class="xref" href="Runtime.Enemies.Boss1Entity.html">Boss1Entity</a>&gt;</div>
       <div><span class="xref">RangedAOE</span></div>
     </dd>
   </dl>
@@ -118,13 +119,16 @@
     <dt>Inherited Members</dt>
     <dd>
     <div>
+      <a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction-1.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_1_enemyEntity">EnemyAction&lt;Boss1Entity&gt;.enemyEntity</a>
+    </div>
+    <div>
       <a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_body">EnemyAction.body</a>
     </div>
     <div>
       <a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_anim">EnemyAction.anim</a>
     </div>
     <div>
-      <a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_OnAwake">EnemyAction.OnAwake()</a>
+      <a class="xref" href="Runtime.BehaviorDesigner.Tasks.EnemyAction.EnemyAction.html#Runtime_BehaviorDesigner_Tasks_EnemyAction_EnemyAction_enemyViewController">EnemyAction.enemyViewController</a>
     </div>
     <div>
       <span class="xref">Task.gameObject</span>
@@ -291,39 +295,9 @@
 
 
 
-  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_bossVC" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.bossVC">
-  bossVC
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L13"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Boss1 bossVC</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Runtime.Enemies.Boss1.html">Boss1</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_bulletCount" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.bulletCount">
   bulletCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -353,7 +327,7 @@
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_bulletPrefab" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.bulletPrefab">
   bulletPrefab
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L16"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -383,7 +357,7 @@
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_bulletTravelTime" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.bulletTravelTime">
   bulletTravelTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -413,7 +387,7 @@
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_playerTrans" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.playerTrans">
   playerTrans
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -443,7 +417,7 @@
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_spawnInterval" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.spawnInterval">
   spawnInterval
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L18"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -474,11 +448,37 @@
 </h2>
 
 
+  <a id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_OnAwake_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.OnAwake*"></a>
+
+  <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_OnAwake" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.OnAwake">
+  OnAwake()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void OnAwake()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_OnStart_" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.OnStart*"></a>
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_OnStart" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.OnStart">
   OnStart()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -504,7 +504,7 @@
 
   <h3 id="Runtime_BehaviorDesigner_Tasks_EnemyAction_RangedAOE_OnUpdate" data-uid="Runtime.BehaviorDesigner.Tasks.EnemyAction.RangedAOE.OnUpdate">
   OnUpdate()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -535,7 +535,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L11" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/BehaviorDesigner/Tasks/EnemyAction/RangedAOE.cs/#L13" class="edit-link">Edit this page</a>
         </div>
 
         

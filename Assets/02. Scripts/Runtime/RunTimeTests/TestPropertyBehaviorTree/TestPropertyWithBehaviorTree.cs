@@ -1,6 +1,7 @@
 using Framework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -24,6 +25,10 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         public override void OnRecycle() {
         
         }
+        protected override void OnInitModifiers(int rarity, int level) {
+            
+        }
+
 
         protected override string OnGetDescription(string defaultLocalizationKey) {
             return null;
@@ -32,7 +37,11 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         protected override ConfigTable GetConfigTable() {
             return ConfigDatas.Singleton.EnemyEntityConfigTable_Test;
         }
-        
+
+        protected override void OnEntityStart(bool isLoadedFromSave) {
+            
+        }
+
         protected override void OnEnemyRegisterAdditionalProperties() {
             RegisterInitialProperty(new NewProperty());
         }
@@ -103,8 +112,8 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         }
 
 
-        protected override int GetCurrentHitDamage() {
-            return Attack1Damage;
+        protected override void OnAnimationEvent(string eventName) {
+            
         }
 
         protected override HealthBar OnSpawnHealthBar() {
@@ -205,7 +214,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             Debug.Log($"[Bind Function] Attack 1 Test Changed to: {newValue}");
         }
 
-        protected override void OnEntityDie(IBelongToFaction damagedealer) {
+        protected override void OnEntityDie(ICanDealDamage damagedealer) {
             Debug.Log("TestEntity Die");
         }
 
@@ -213,7 +222,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             return null;
         }
 
-        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
             Debug.Log($"TestEntity Take Damage, current health : {currenthealth}");
         }
 

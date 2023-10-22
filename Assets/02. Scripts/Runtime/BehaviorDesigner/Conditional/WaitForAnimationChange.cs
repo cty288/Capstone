@@ -32,7 +32,7 @@ namespace Runtime.BehaviorDesigner.Conditional
             }
             
             if (Animator.StringToHash(name.Value) ==
-                animator.GetCurrentAnimatorStateInfo(index.Value).shortNameHash)
+                animator.GetCurrentAnimatorStateInfo(index.Value).shortNameHash && !isWaiting)
             {
                 isWaiting = true;
             }
@@ -40,6 +40,9 @@ namespace Runtime.BehaviorDesigner.Conditional
                      animator.GetCurrentAnimatorStateInfo(index.Value).shortNameHash)
             {
                 return TaskStatus.Success;
+            }
+            else {
+                //return TaskStatus.Failure;
             }
             return TaskStatus.Running;
         }

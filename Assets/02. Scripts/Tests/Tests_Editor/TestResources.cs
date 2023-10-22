@@ -30,6 +30,13 @@ namespace Tests.Tests_Editor {
 			return ConfigDatas.Singleton.RawMaterialEntityConfigTable_Test;
 		}
 
+		protected override void OnEntityStart(bool isLoadedFromSave) {
+			
+		}
+
+		protected override void OnInitModifiers(int rarity) {
+                
+		}
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
@@ -50,8 +57,16 @@ namespace Tests.Tests_Editor {
 		public override void OnRecycle() {
             
 		}
+		
+		protected override void OnInitModifiers(int rarity) {
+                
+		}
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.RawMaterialEntityConfigTable_Test;
+		}
+
+		protected override void OnEntityStart(bool isLoadedFromSave) {
+			
 		}
 
 

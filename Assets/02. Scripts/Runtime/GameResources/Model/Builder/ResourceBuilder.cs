@@ -1,4 +1,5 @@
-﻿using Runtime.DataFramework.Entities;
+﻿using System;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.TagProperty;
@@ -19,6 +20,7 @@ namespace Runtime.GameResources.Model.Builder {
 			return (TBuilder) this;
 		}
 		
+		[Obsolete("This method is obsolete. To set modifier, do this in the entity's own class.")]
 		public TBuilder SetMaxStack(int maxStack, IPropertyDependencyModifier<int> modifier = null) {
 			CheckEntity();
 			SetProperty(new PropertyNameInfo(PropertyName.max_stack), maxStack, modifier);

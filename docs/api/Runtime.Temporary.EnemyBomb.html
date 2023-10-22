@@ -83,7 +83,7 @@
 
   <h1 id="Runtime_Temporary_EnemyBomb" data-uid="Runtime.Temporary.EnemyBomb" class="text-break">
     Class EnemyBomb
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -95,7 +95,7 @@
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class EnemyBomb : MonoBehaviour</code></pre>
+    <pre><code class="lang-csharp hljs">public class EnemyBomb : AbstractBulletViewController, IBulletViewController, IController, ICanSendCommand, ICanGetSystem, ICanGetModel, ICanRegisterEvent, ICanSendQuery, ICanGetUtility, IBelongToArchitecture, IHitResponder, IBelongToFaction</code></pre>
   </div>
 
 
@@ -109,15 +109,78 @@
       <div><span class="xref">Component</span></div>
       <div><span class="xref">Behaviour</span></div>
       <div><span class="xref">MonoBehaviour</span></div>
+      <div><a class="xref" href="MikroFramework.Pool.PoolableGameObject.html">PoolableGameObject</a></div>
+      <div><a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html">AbstractBulletViewController</a></div>
       <div><span class="xref">EnemyBomb</span></div>
     </dd>
   </dl>
 
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Runtime.Weapons.ViewControllers.Base.IBulletViewController.html">IBulletViewController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IController.html">IController</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanSendCommand.html">ICanSendCommand</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetSystem.html">ICanGetSystem</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetModel.html">ICanGetModel</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanRegisterEvent.html">ICanRegisterEvent</a></div>
+      <div><a class="xref" href="MikroFramework.ICanSendQuery.html">ICanSendQuery</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.ICanGetUtility.html">ICanGetUtility</a></div>
+      <div><a class="xref" href="MikroFramework.Architecture.IBelongToArchitecture.html">IBelongToArchitecture</a></div>
+      <div><a class="xref" href="Runtime.Utilities.Collision.IHitResponder.html">IHitResponder</a></div>
+      <div><a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.IBelongToFaction.html">IBelongToFaction</a></div>
+    </dd>
+  </dl>
 
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_CurrentFaction">AbstractBulletViewController.CurrentFaction</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_Damage">AbstractBulletViewController.Damage</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_hitBox">AbstractBulletViewController.hitBox</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_bulletOwner">AbstractBulletViewController.bulletOwner</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_Init_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_Faction_System_Int32_UnityEngine_GameObject_">AbstractBulletViewController.Init(Faction, int, GameObject)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_OnStartOrAllocate">AbstractBulletViewController.OnStartOrAllocate()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_CheckHit_Runtime_Utilities_Collision_HitData_">AbstractBulletViewController.CheckHit(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_HitResponse_Runtime_Utilities_Collision_HitData_">AbstractBulletViewController.HitResponse(HitData)</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_OnRecycled">AbstractBulletViewController.OnRecycled()</a>
+    </div>
+    <div>
+      <a class="xref" href="Runtime.Weapons.ViewControllers.Base.AbstractBulletViewController.html#Runtime_Weapons_ViewControllers_Base_AbstractBulletViewController_GetArchitecture">AbstractBulletViewController.GetArchitecture()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_Pool">PoolableGameObject.Pool</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_IsRecycled">PoolableGameObject.IsRecycled</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RecycleToCache">PoolableGameObject.RecycleToCache()</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnRecycledEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnRecycledEvent(UnityAction)</a>
+    </div>
+    <div>
+      <a class="xref" href="MikroFramework.Pool.PoolableGameObject.html#MikroFramework_Pool_PoolableGameObject_RegisterOnAllocateEvent_UnityEngine_Events_UnityAction_">PoolableGameObject.RegisterOnAllocateEvent(UnityAction)</a>
+    </div>
     <div>
       <span class="xref">MonoBehaviour.IsInvoking()</span>
     </div>
@@ -499,7 +562,7 @@
 
   <h3 id="Runtime_Temporary_EnemyBomb_curve" data-uid="Runtime.Temporary.EnemyBomb.curve">
   curve
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L9"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L11"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -529,7 +592,7 @@
 
   <h3 id="Runtime_Temporary_EnemyBomb_travelTime" data-uid="Runtime.Temporary.EnemyBomb.travelTime">
   travelTime
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L11"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L13"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -562,16 +625,16 @@
 
   <a id="Runtime_Temporary_EnemyBomb_Init_" data-uid="Runtime.Temporary.EnemyBomb.Init*"></a>
 
-  <h3 id="Runtime_Temporary_EnemyBomb_Init_UnityEngine_Transform_System_Single_" data-uid="Runtime.Temporary.EnemyBomb.Init(UnityEngine.Transform,System.Single)">
-  Init(Transform, float)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Runtime_Temporary_EnemyBomb_Init_UnityEngine_Transform_System_Single_Runtime_DataFramework_Entities_ClassifiedTemplates_Factions_Faction_System_Int32_UnityEngine_GameObject_" data-uid="Runtime.Temporary.EnemyBomb.Init(UnityEngine.Transform,System.Single,Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction,System.Int32,UnityEngine.GameObject)">
+  Init(Transform, float, Faction, int, GameObject)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Init(Transform target, float tTime)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Init(Transform target, float tTime, Faction faction, int damage, GameObject bulletOwner)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -579,6 +642,69 @@
     <dt><code>target</code> <span class="xref">Transform</span></dt>
     <dd></dd>
     <dt><code>tTime</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd></dd>
+    <dt><code>faction</code> <a class="xref" href="Runtime.DataFramework.Entities.ClassifiedTemplates.Factions.Faction.html">Faction</a></dt>
+    <dd></dd>
+    <dt><code>damage</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+    <dt><code>bulletOwner</code> <span class="xref">GameObject</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Temporary_EnemyBomb_OnBulletRecycled_" data-uid="Runtime.Temporary.EnemyBomb.OnBulletRecycled*"></a>
+
+  <h3 id="Runtime_Temporary_EnemyBomb_OnBulletRecycled" data-uid="Runtime.Temporary.EnemyBomb.OnBulletRecycled">
+  OnBulletRecycled()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnBulletRecycled()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Runtime_Temporary_EnemyBomb_OnHitResponse_" data-uid="Runtime.Temporary.EnemyBomb.OnHitResponse*"></a>
+
+  <h3 id="Runtime_Temporary_EnemyBomb_OnHitResponse_Runtime_Utilities_Collision_HitData_" data-uid="Runtime.Temporary.EnemyBomb.OnHitResponse(Runtime.Utilities.Collision.HitData)">
+  OnHitResponse(HitData)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnHitResponse(HitData data)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>data</code> <a class="xref" href="Runtime.Utilities.Collision.HitData.html">HitData</a></dt>
     <dd></dd>
   </dl>
 
@@ -597,7 +723,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L7" class="edit-link">Edit this page</a>
+          <a href="https://github.com/cty288/Capstone/blob/develop/Assets/02. Scripts/Runtime/Temporary/EnemyBomb.cs/#L9" class="edit-link">Edit this page</a>
         </div>
 
         

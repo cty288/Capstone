@@ -24,6 +24,8 @@ namespace Runtime.UI {
 			if (controlActions.Close.WasPressedThisFrame()) {
 				if (currentMainPanel != null) {
 					ClosePanel(currentMainPanel);
+					//Time = 1;
+					ClientInput.Singleton.EnablePlayerMaps();
 				}
 			}
 
@@ -61,12 +63,16 @@ namespace Runtime.UI {
 				if (switchUIPlayerMap) {
 					ClientInput.Singleton.EnablePlayerMaps();
 				}
+
+				//Time.timeScale = 1;
 				return null;
 			}
 		
 			if (switchUIPlayerMap) {
 				ClientInput.Singleton.EnableUIMaps();
 			}
+			
+			//Time.timeScale = 0;
 			return Open<T>(parent, message, createNewIfNotExist, assetNameIfNotExist);
 		}
 

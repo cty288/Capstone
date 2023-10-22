@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
@@ -18,7 +19,8 @@ namespace Runtime.Utilities.Collision
         public Vector3 HitDirectionNormalized;
         public IHurtbox Hurtbox;
         public IHitDetector HitDetector;
-        public IBelongToFaction Attacker;
+        public ICanDealDamage Attacker;
+        public bool ShowDamageNumber = true;
 
         /// <summary>
         /// Sets the data of the hit. Used for HitScan.
@@ -28,14 +30,15 @@ namespace Runtime.Utilities.Collision
         /// <param name="hit"></param>
         /// <param name="hitDetector"></param>
         /// <returns>Returns HitData object.</returns>
-        public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector)
+        public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector, bool showDamageNumber)
         {
-            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitResponder.Damage * hurtbox.DamageMultiplier);
+            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitDetector.Damage * hurtbox.DamageMultiplier);
             HitPoint = hit.point;
             HitNormal = hit.normal;
             Hurtbox = hurtbox;
             HitDetector = hitDetector;
             Attacker = hitResponder;
+            ShowDamageNumber = showDamageNumber;
             return this;
         }
 
@@ -55,7 +58,14 @@ namespace Runtime.Utilities.Collision
                 if (Hurtbox.CheckHit(this))
                     if (Hurtbox.HurtResponder == null || Hurtbox.HurtResponder.CheckHurt(this))
                         if (HitDetector.HitResponder == null || HitDetector.HitResponder.CheckHit(this))
-                            return true;
+                            if (HitDetector.HitResponder != null && Hurtbox.HurtResponder != null &&
+                                HitDetector.HitResponder.IsSameFaction(Hurtbox.HurtResponder)) {
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                            
             return false;
         }
 
@@ -80,9 +90,9 @@ namespace Runtime.Utilities.Collision
     /// <summary>
     /// Place one a GameObject if it will hit other objects.
     /// </summary>
-    public interface IHitResponder : IBelongToFaction
+    public interface IHitResponder : IBelongToFaction, ICanDealDamage
     {
-        int Damage { get; }
+        //int Damage { get; }
         public bool CheckHit(HitData data);
         public void HitResponse(HitData data);
     }
@@ -104,7 +114,9 @@ namespace Runtime.Utilities.Collision
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public void CheckHit(HitDetectorInfo hitDetectorInfo); //CheckHit only required for HitScan right now.
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage); //CheckHit only required for HitScan right now.
+        
+        public int Damage { get; }
     }
 
     /// <summary>

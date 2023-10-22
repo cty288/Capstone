@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using Framework;
 using MikroFramework.Architecture;
@@ -33,13 +34,15 @@ namespace Runtime.Utilities.Collision
         private Camera _camera;
         private LayerMask _layer;
         private IWeaponEntity _weapon;
+        private bool showDamageNumber = true;
 
-        public HitScan(IHitResponder hitResponder, Faction faction, TrailRenderer tr)
+        private RaycastHit[] _hits = new RaycastHit[10];
+        public HitScan(IHitResponder hitResponder, Faction faction, TrailRenderer tr, bool showDamageNumber = true)
         {
             this.hitResponder = hitResponder;
             CurrentFaction.Value = faction;
             _tr = tr;
-            
+            this.showDamageNumber = showDamageNumber;
             trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
             bulletHolesPool = new ObjectPool<GameObject>(CreateBulletHole, OnTakeFromPool, 
                 OnReturnedToPool, OnDestroyPoolObject, true, 10, 20);
@@ -50,16 +53,19 @@ namespace Runtime.Utilities.Collision
         /// Called every frame to check for Raycast collision.
         /// </summary>
         /// <returns>Returns true if hit detected.</returns>
-        public void CheckHit(HitDetectorInfo hitDetectorInfo)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage)
         {
             // Debug.Log("checkhit");
             _launchPoint = hitDetectorInfo.launchPoint;
             _camera = hitDetectorInfo.camera;
             _layer = hitDetectorInfo.layer;
             _weapon = hitDetectorInfo.weapon;
+            this.Damage = damage;
 
             ShootBullet();
         }
+
+        public int Damage { get; protected set; }
 
         //TODO: faction and IDamagable integration.
         private void ShootBullet()
@@ -74,28 +80,46 @@ namespace Runtime.Utilities.Collision
             
             
             HitData hitData = null;
-            RaycastHit hit;
+            //RaycastHit hit;
             
-            if (Physics.Raycast(_camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), out hit,
-                    _weapon.GetRange().RealValue.Value, _layer))
-            {
+            
+            for (int i = 0; i < _hits.Length; i++) {
+                _hits[i] = new RaycastHit();
+            }
+            int nums = Physics.RaycastNonAlloc(_camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), _hits,
+                _weapon.GetRange().RealValue.Value, _layer);
+            
+            var sortedHits = _hits.OrderBy(hit => hit.transform ? hit.distance : float.MaxValue).ToArray();
+
+
+            bool hitAnything = false;
+            for (int i = 0; i < nums; i++) {
+                RaycastHit hit = sortedHits[i];
+                
                 Debug.Log("hit w/ gun: " + hit.collider.name);
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
+
+                if (hurtbox == null && hit.collider.isTrigger) {
+                    continue;
+                }
+                
+                hitAnything = true;
                 if (hurtbox != null)
                 {
                     Debug.Log("hurtbox make hitdata: " + hurtbox);
-                    hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this);
+                    hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this, showDamageNumber);
                     hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
                 }
 
                 if (hurtbox != null && hitData.Validate())
                 {
+                    
                     Debug.Log("hurtbox respond: " + hurtbox);
                     // hit something with hurtbox
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
-                    
                     CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, hit));
+                    break;
                 }
                 else
                 {
@@ -114,10 +138,11 @@ namespace Runtime.Utilities.Collision
                     bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
                     bulletHole.transform.Rotate(Vector3.forward, Random.Range(0f, 360f));
                     CoroutineRunner.Singleton.StartCoroutine(FadeBullet(bulletHole));
+                    break;
                 }
             }
-            else
-            {
+
+            if (!hitAnything) {
                 //hit nothing
                 CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
             }
