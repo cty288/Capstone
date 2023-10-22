@@ -26,10 +26,33 @@ namespace a {
             }
             else
             {
+                //makes the bullet biased based on player input
+                //these should be random and not all of them should act like this
+                Vector3 directionToPlayer = playerTrans.position - transform.position;
+                if (Input.GetKey(KeyCode.W))
+                {
+                    // W key is being held down
+                    directionToPlayer += playerTrans.forward * Random.Range(8f, 10f);
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    // A key is being held down
+                    directionToPlayer += playerTrans.right * Random.Range(8f, 10f) * -1;
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+                    // S key is being held down
+                    directionToPlayer += playerTrans.forward * Random.Range(8f, 10f) * -1;
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    // D key is being held down
+                    directionToPlayer += playerTrans.right * Random.Range(8f, 10f);
+                }
                 if (playerTrans != null)
                 {
                     // Calculate the direction from the bullet to the player.
-                    Vector3 directionToPlayer = playerTrans.position - transform.position;
+                    
 
                     // Calculate the rotation needed to face the player.
                     Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
