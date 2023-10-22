@@ -72,7 +72,9 @@ namespace Runtime.Spawning
         [SerializeField] private float currentCredits;
         [SerializeField] private float creditTimer = 0f;
         [SerializeField] private float directorSpawnTimer = 0f;
-        
+
+        protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
@@ -202,11 +204,19 @@ namespace Runtime.Spawning
             int spawnAttempts = 10;
             while (spawnAttempts > 0 && currentCredits > cost)
             {
-                //pick a spot
+                
+                float angle = Random.Range(0, 360); 
+                float radius = Random.Range(minSpawnRange, maxSpawnRange); 
+
+
+                float x = transform.position.x + radius * Mathf.Cos(angle * Mathf.Deg2Rad);
+                float z = transform.position.z + radius * Mathf.Sin(angle * Mathf.Deg2Rad);
+
                 Vector3 spawnPos = new Vector3(
-                    transform.position.x + Random.Range(minSpawnRange, maxSpawnRange), 
+                    x, 
                     transform.position.y + 500f,  
-                    transform.position.z + Random.Range(minSpawnRange, maxSpawnRange));
+                    z
+                );
                 
                 if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
                 {
@@ -220,7 +230,7 @@ namespace Runtime.Spawning
                             SpawningUtility.FindNavMeshSuitablePosition(card.Prefab, spawnPos, 1f, 3f, 10);
                        
                         if (!float.IsInfinity(fixedSpawnPos.magnitude)) {
-                            GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, fixedSpawnPos, Quaternion.identity, null, rarity,
+                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, fixedSpawnPos, Quaternion.identity, null, rarity,
                                 levelNumber, true, 5, 30);
                             IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);

@@ -10,11 +10,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool slerping;
         public bool test;
         //local add-on
-        Vector3 startPosition, faceDirection, goingToPosition;
-        float distance;
+       // Vector3 startPosition, faceDirection, goingToPosition;
+        //float distance;
         bool hasTurned = false, isDead = false;
-        Quaternion rotation;
-        ParticleSystem loopFX, impactFX;
+        //Quaternion rotation;
+        //ParticleSystem loopFX, impactFX;
 
         // Start is called before the first frame update
         protected override void Start()

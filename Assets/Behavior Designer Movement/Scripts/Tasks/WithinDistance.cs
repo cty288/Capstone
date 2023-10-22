@@ -131,10 +131,12 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
 
             if (m_ReturnedObject.Value != null) {
+                Debug.Log($"dog, found: {m_ReturnedObject.Value}");
                 return TaskStatus.Success;
             }
 
             // no objects are within distance. Return failure
+            Debug.Log($"dog, not found");
             return TaskStatus.Failure;
         }
 

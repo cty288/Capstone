@@ -74,7 +74,7 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 			if (!float.IsInfinity(spawnPos.magnitude)) {
 				int baitRarity = BoundEntity.GetRarity();
 				int spawnRarity = Random.Range(baitRarity - 1, baitRarity + 2);
-				GameObject spawnedEnemy = EnemyVCFactory.Singleton.SpawnEnemyVC(card.Prefab, spawnPos, Quaternion.identity, null, spawnRarity,
+				GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, spawnPos, Quaternion.identity, null, spawnRarity,
 					levelEntity.GetCurrentLevelCount(), true, 1, 10);
 				IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
 

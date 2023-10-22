@@ -67,10 +67,11 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			}
 
 			if (!IsLevelSpawned(levelNumber)) {
-				return;
+				levelNumber = 0;
 			}
 			
 			CurrentLevel.Value = levelEntities[levelNumber];
+			CurrentLevelCount.Value = levelNumber;
 		}
 
 		public ILevelEntity GetLevel(int levelNumber) {

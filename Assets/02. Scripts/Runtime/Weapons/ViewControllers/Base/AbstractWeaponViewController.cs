@@ -1,20 +1,23 @@
 using System;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
+using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
-using Runtime.Temporary.Player;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.Model.Properties;
 using UnityEngine;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
@@ -54,6 +57,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         //timers
         protected float lastShootTime = 0f;
         protected float reloadTimer = 0f;
+
+        protected ICanDealDamageViewController ownerVc;
         
         protected override void Awake() {
             base.Awake();
@@ -71,10 +76,14 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.OnStartHold(ownerGameObject);
             if(ownerGameObject.TryGetComponent<ICanDealDamageViewController>(out var damageDealer)) {
                 BoundEntity.CurrentFaction.Value = damageDealer.CanDealDamageEntity.CurrentFaction.Value;
+                BoundEntity.SetRootDamageDealer(damageDealer.CanDealDamageEntity?.RootDamageDealer);
+                ownerVc = damageDealer;
             }
         }
 
         public override void OnStopHold() {
+            BoundEntity.CurrentFaction.Value = Faction.Neutral;
+            BoundEntity.SetRootDamageDealer(null);
             base.OnStopHold();
             ChangeScopeStatus(false);
         }
@@ -86,7 +95,9 @@ namespace Runtime.Weapons.ViewControllers.Base
             
             if (previsScope != _isScopedIn) {
                 crossHairViewController?.OnScope(_isScopedIn);
+                AudioSystem.Singleton.Play2DSound("Pistol_Aim");
             }
+           
             this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS", !_isScopedIn ? 0 : 1));
         }
 
@@ -108,6 +119,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected void SetShootStatus(bool isShooting) {
             if (isShooting) {
+                AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 0.3f);
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", 2));
             }
             else {
@@ -124,11 +136,19 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         protected abstract IHitDetector OnCreateHitDetector();
 
-        protected override IEntity OnBuildNewEntity() {
+       
+        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+            if(weaponModel == null) {
+                weaponModel = this.GetModel<IWeaponModel>();
+            }
             WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>();
-            return OnInitWeaponEntity(builder);
+            if (setRarity) {
+                builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
+            }
+
+            return OnInitWeaponEntity(builder) as IResourceEntity;
         }
-        
+
         protected abstract IEntity OnInitWeaponEntity(WeaponBuilder<T> builder);
 
         [field: ES3Serializable]
@@ -136,15 +156,21 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public void OnKillDamageable(IDamageable damageable) {
             BoundEntity.OnKillDamageable(damageable);
+            ownerVc?.CanDealDamageEntity?.OnKillDamageable(damageable);
             crossHairViewController?.OnKill(damageable);
         }
 
         public void OnDealDamage(IDamageable damageable, int damage) {
             BoundEntity.OnDealDamage(damageable, damage);
+            ownerVc?.CanDealDamageEntity?.OnDealDamage(damageable, damage);
             crossHairViewController?.OnHit(damageable, damage);
+            Debug.Log(
+                $"Weapon root owner {RootDamageDealer.RootDamageDealer.EntityName} deal damage to {damageable.EntityName} with damage {damage}");
         }
 
-        public int Damage => BoundEntity.GetBaseDamage().RealValue;
+        public ICanDealDamageRootEntity RootDamageDealer => ownerVc?.CanDealDamageEntity?.RootDamageDealer;
+
+        public int Damage => BoundEntity.GetRealDamageValue();
         public bool CheckHit(HitData data) {
             return data.Hurtbox.Owner != gameObject;
         }

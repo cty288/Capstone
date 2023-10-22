@@ -1,8 +1,8 @@
-EntityName / Property Names,health,danger,spawn_cost,item_drop_collections,spawn_weight,custom_properties,tags,,Notes
-Types,HealthInfo,int,float,"Dictionary<int,ItemDropCollection>",int,dynamic,"Dictionary<TagName,int>",,
+EntityName / Property Names,health,taste,item_drop_collections,vigiliance,danger,custom_properties,tags,,Notes
+Types,HealthInfo,List<TasteType>,"Dictionary<int,ItemDropCollection>",float,int,dynamic,"Dictionary<TagName,int>",,
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}",int,,"{
+{""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,","{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -37,54 +37,18 @@ default:
       ...
     ]
   }
-}",,"Dict<string, CustomProperty>
+}",,int,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",,
 ,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,
 BEGIN,,,,,,,,,
-Bee,"{""maxHealth"": 30, ""currentHealth"": 30}",123,1,,1,,,,
-SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
+Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]","{
   ""1"": {
     ""TotalDropCountRange"": {
-      ""x"": 0,
-      ""y"": 2
-    },
-    
-    ""ItemDropInfos"": [
-      {
-        ""prefabName"": ""CarbonFiber"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 1
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""BionicGel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 2,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      }
-    ]
-  },
-  ""2"": {
-    ""TotalDropCountRange"": {
-      ""x"": 1,
-      ""y"": 3
+      ""x"": 3,
+      ""y"": 5
     },
     
     ""ItemDropInfos"": [
@@ -94,7 +58,7 @@ SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
           ""x"": 1,
           ""y"": 2
         },
-        ""dropWeight"": 2,
+        ""dropWeight"": 5,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -102,12 +66,12 @@ SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
         }
       },
       {
-        ""prefabName"": ""BionicGel"",
+        ""prefabName"": ""HeatStoragor"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 3
+          ""y"": 2
         },
-        ""dropWeight"": 3,
+        ""dropWeight"": 6,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -118,64 +82,9 @@ SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
         ""prefabName"": ""ReinforcedSteel"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 1
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      }
-    ]
-  }
-}",1,"{
-  ""attack"":{
-    ""bulletDamage"":{
-      ""type"": ""int"",
-      ""value"": 2,
-      ""useDefaultModifier"": true
-    },
-    ""ammoSize"":{
-      ""type"": ""int"",
-      ""value"": 20,
-      ""useDefaultModifier"": true
-    },
-    ""bulletSpeed"" : {
-      ""type"" : ""float"",
-      ""value"": 12
-    },
-    ""spawnInterval"":{
-      ""type"": ""float"",
-      ""value"": 0.5
-    },
-    ""explosionDamage"":{
-      ""type"": ""int"",
-      ""value"": 15,
-      ""useDefaultModifier"": true
-    },
-    ""detectionRange"":{
-      ""type"": ""float"",
-      ""value"": 20,
-      ""useDefaultModifier"": true
-    }
-  }
-}",  ,,
-HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
-  ""1"": {
-    ""TotalDropCountRange"": {
-      ""x"": 1,
-      ""y"": 2
-    },
-    
-    ""ItemDropInfos"": [
-      {
-        ""prefabName"": ""CarbonFiber"",
-        ""batchCountRange"": {
-          ""x"": 1,
           ""y"": 2
         },
-        ""dropWeight"": 2,
+        ""dropWeight"": 5,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -183,34 +92,35 @@ HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
         }
       },
       {
-        ""prefabName"": ""HeatStoragor"",
+        ""prefabName"": ""TheSanctuary"",
         ""batchCountRange"": {
           ""x"": 1,
           ""y"": 1
         },
         ""dropWeight"": 1,
-        ""setRarity"": false,
+        ""required"": true,
+        ""setRarity"": true,
         ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
+          ""x"": 1,
+          ""y"": 1
         }
       }
     ]
   },
   ""2"": {
     ""TotalDropCountRange"": {
-      ""x"": 2,
-      ""y"": 3
+      ""x"": 4,
+      ""y"": 6
     },
     
     ""ItemDropInfos"": [
       {
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
+          ""x"": 2,
+          ""y"": 3
         },
-        ""dropWeight"": 1,
+        ""dropWeight"": 4,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -223,193 +133,154 @@ HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
           ""x"": 1,
           ""y"": 2
         },
-        ""dropWeight"": 1,
+        ""dropWeight"": 5,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
           ""y"": 0
         }
+      },
+      {
+        ""prefabName"": ""ReinforcedSteel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 3
+        },
+        ""dropWeight"": 4,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""TheSanctuary"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""required"": true,
+        ""setRarity"": true,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
       }
     ]
   }
-}",2,"{
-  ""attack"":{
-    ""bulletDamage"":{
+}",200,456,"{
+  ""shellHealthInfo"": {
+    ""info"": {
+      ""type"": ""HealthInfo"",
+      ""value"": {
+        ""maxHealth"": 100,
+        ""currentHealth"": 100
+      },
+      ""useDefaultModifier"": true
+    }
+  },
+  
+  ""damages"":{
+    ""rollDamage"":{
       ""type"": ""int"",
-      ""value"": 2,
+      ""value"": 25,
       ""useDefaultModifier"": true
     },
-    ""ammoSize"":{
+    
+     ""meleeDamage"":{
       ""type"": ""int"",
-      ""value"": 7,
+      ""value"": 20,
       ""useDefaultModifier"": true
     },
-    ""bulletSpeed"" : {
-      ""type"" : ""float"",
-      ""value"": 12
-    },
-    ""spawnInterval"":{
-      ""type"": ""float"",
-      ""value"": 0.2
-    },
-    ""explosionDamage"":{
+    
+    ""rapidFireDamage"":{
       ""type"": ""int"",
       ""value"": 10,
       ""useDefaultModifier"": true
     },
-    ""bulletCount"":{
-      ""type"": ""int"",
-      ""value"": 5,
-      ""useDefaultModifier"": true
-    },
-    ""bulletAccuracy"":{
-      ""type"": ""float"",
-      ""value"": 10
-    },
-    ""damagePerTick"":{
-      ""type"": ""float"",
-      ""value"": 1,
-      ""useDefaultModifier"": true
-    },
-    ""damageInterval"":{
-      ""type"": ""float"",
-      ""value"": 0.2
-    }
-  }
-}",,,
-QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
-  ""1"": {
-    ""TotalDropCountRange"": {
-      ""x"": 1,
-      ""y"": 3
-    },
-    
-    ""ItemDropInfos"": [
-      {
-        ""prefabName"": ""CarbonFiber"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"":
-          ""BionicGel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""ReinforcedSteel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 1
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      }
-    ]
-  },
-  ""2"": {
-    ""TotalDropCountRange"": {
-      ""x"": 2,
-      ""y"": 4
-    },
-    
-    ""ItemDropInfos"": [
-      {
-        ""prefabName"": ""CarbonFiber"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 3
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": 
-          ""BionicGel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 3
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""ReinforcedSteel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      }
-    ]
-  }
-}",3,"{
-  ""attack"":{
-    ""bulletDamage"":{
-      ""type"": ""int"",
-      ""value"": 5,
-      ""useDefaultModifier"": true
-    },
-    ""ammoSize"":{
+    ""rapidFireBulletCount"":{
       ""type"": ""int"",
       ""value"": 20,
       ""useDefaultModifier"": true
     },
-    ""bulletSpeed"" : {
-      ""type"" : ""float"",
-      ""value"": 15
-    },
-    ""spawnInterval"":{
+    ""rapidFireAttackInterval"":{
       ""type"": ""float"",
-      ""value"": 0.1
+      ""value"": 0.25
     },
-    ""explosionDamage"":{
+    ""rapidFireBulletSpeed"":{
+      ""type"": ""float"",
+      ""value"": 18
+    },
+    
+    ""rangedAOEDamage"":{
       ""type"": ""int"",
-      ""value"": 15,
+      ""value"": 40,
       ""useDefaultModifier"": true
     },
-    ""bulletCount"":{
+    ""rangedAOEBulletCount"":{
       ""type"": ""int"",
       ""value"": 5,
       ""useDefaultModifier"": true
     },
-    ""detectionRange"":{
+    ""rangedAOEAttackSpeed"":{
       ""type"": ""float"",
-      ""value"": 12,
+      ""value"": 1.5
+    },
+    ""rangedAOEBulletTime"":{
+      ""type"": ""float"",
+      ""value"": 1.25
+    },
+    ""bulletPerSpawn"":{
+      ""type"": ""int"",
+      ""value"": 6,
       ""useDefaultModifier"": true
+    }
+  },
+  
+  ""ranges"": {
+    ""meleeRange"":{
+      ""type"": ""float"",
+      ""value"": 7
+    },
+    ""closeRange"":{
+      ""type"": ""float"",
+      ""value"": 12
+    },
+    ""midRange"":{
+      ""type"": ""float"",
+      ""value"": 16
+    },
+    ""longRange"":{
+      ""type"": ""float"",
+      ""value"": 20
+    }
+  },
+  ""waitTimes"": {
+    ""meleeWait"":{
+      ""type"": ""float"",
+      ""value"": 1.5,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""rapidFireWait"":{
+      ""type"": ""float"",
+      ""value"": 2,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""rangedAOEWait"":{
+      ""type"": ""float"",
+      ""value"": 2,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""rollWait"":{
+      ""type"": ""float"",
+      ""value"": 2.5,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
     }
   }
 }",,,
+Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",,,123,,,,

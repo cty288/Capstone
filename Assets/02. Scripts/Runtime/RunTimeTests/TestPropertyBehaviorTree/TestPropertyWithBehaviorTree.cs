@@ -1,6 +1,7 @@
 using Framework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -213,7 +214,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             Debug.Log($"[Bind Function] Attack 1 Test Changed to: {newValue}");
         }
 
-        protected override void OnEntityDie(IBelongToFaction damagedealer) {
+        protected override void OnEntityDie(ICanDealDamage damagedealer) {
             Debug.Log("TestEntity Die");
         }
 
@@ -221,7 +222,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             return null;
         }
 
-        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
             Debug.Log($"TestEntity Take Damage, current health : {currenthealth}");
         }
 

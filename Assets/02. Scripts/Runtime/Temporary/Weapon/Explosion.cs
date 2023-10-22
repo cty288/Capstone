@@ -33,6 +33,8 @@ namespace Runtime.Temporary.Weapon
             
         }
 
+        public ICanDealDamageRootEntity RootDamageDealer { get; }
+
 
         public void Start()
         {

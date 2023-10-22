@@ -5,6 +5,7 @@ using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
 using Polyglot;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -163,7 +164,7 @@ namespace Runtime.Enemies
             SpawnShellHealthBar();
         }
 
-        protected override void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer) {
+        protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
             if (BoundEntity.ShellClosed) {
                 showDamageNumber = false;
             }
@@ -191,6 +192,7 @@ namespace Runtime.Enemies
             }
             animator.SetBool("ShellClosed",newValue);
         }
+        
         // private void Update()
         // {
         //

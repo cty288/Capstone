@@ -148,6 +148,10 @@ namespace Runtime.Utilities.ConfigSheet {
 
 		private static IEnumerator LoadOrDownload(string docID, string sheetID, string localBackupName, Action<string> onDone) {
 			TextAsset asset = Resources.Load<TextAsset>(localBackupName);
+			if (!Application.isEditor) {
+				onDone(asset.text);
+				yield break;
+			}
 			
 			//check if we have access to the internet and the url
 			if (Application.internetReachability == NetworkReachability.NotReachable && asset) {

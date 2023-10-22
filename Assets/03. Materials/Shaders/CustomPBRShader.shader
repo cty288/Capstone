@@ -128,8 +128,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             HLSLPROGRAM
 
             // Excludes render platforms that do not support deferred rendering //
-            #pragma exclude_renderers gles gles3 glcore
-            #pragma target 4.5
+            //#pragma exclude_renderers gles gles3 glcore
+            //#pragma target 4.5
             //TODO: If we want to support older versions of OpenGL make another subshader that excludes all other renderers
             /*
              #pragma only_renderers gles gles3 glcore d3d11
@@ -287,8 +287,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             HLSLPROGRAM
 
             // Excludes render platforms that do not support deferred rendering //
-            #pragma exclude_renderers gles gles3 glcore
-            #pragma target 4.5
+            //#pragma exclude_renderers gles gles3 glcore
+            //#pragma target 4.5
 
             // -------------------------------------
             // Material Keywords
@@ -398,8 +398,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             HLSLPROGRAM
 
             // Excludes render platforms that do not support deferred rendering //
-            #pragma exclude_renderers gles gles3 glcore
-            #pragma target 4.5
+            //#pragma exclude_renderers gles gles3 glcore
+            //#pragma target 4.5
 
             #pragma vertex DepthOnlyVertex
 			#pragma fragment DepthOnlyFragment
@@ -431,8 +431,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             HLSLPROGRAM
 
             // Excludes render platforms that do not support deferred rendering //
-            #pragma exclude_renderers gles gles3 glcore
-            #pragma target 4.5
+            //#pragma exclude_renderers gles gles3 glcore
+            //#pragma target 4.5
 
             #pragma vertex DepthNormalsVertex
             #pragma fragment DepthNormalsFragment
@@ -536,8 +536,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             HLSLPROGRAM
 
             // Excludes render platforms that do not support deferred rendering //
-            #pragma exclude_renderers gles gles3 glcore
-            #pragma target 4.5
+            //#pragma exclude_renderers gles gles3 glcore
+            //#pragma target 4.5
 
             #pragma vertex vert
             #pragma fragment frag

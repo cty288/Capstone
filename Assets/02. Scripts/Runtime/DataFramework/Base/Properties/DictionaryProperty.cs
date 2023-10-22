@@ -17,8 +17,7 @@ namespace Runtime.DataFramework.Properties {
 		/// </summary>
 		public override BindableProperty<Dictionary<TKey,T>> RealValue => RealValues;
 
-		
-
+		[field: ES3Serializable]
 		public BindableDictionary<TKey,T> RealValues { get; private set; } =
 			new BindableDictionary<TKey,T>(new Dictionary<TKey,T>());
 

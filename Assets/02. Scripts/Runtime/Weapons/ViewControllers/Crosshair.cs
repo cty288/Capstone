@@ -3,6 +3,7 @@ using System.Linq;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Pool;
 using MikroFramework.Singletons;
 using MikroFramework.Utilities;
@@ -14,6 +15,7 @@ using Runtime.Inventory.Model;
 using Runtime.Utilities;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
+using Runtime.Weapons.ViewControllers.CrossHairs;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -46,7 +48,7 @@ namespace Runtime.Weapons.ViewControllers {
         private Camera mainCamera;  
         [SerializeField] 
         private float rayDistance = 100f;
-        private IEntityViewController currentPointedEntity;
+        private ICrossHairDetectable currentPointedObject;
         private IHurtbox currentPointedHurtbox;
         [SerializeField]
         private LayerMask detectLayerMask;
@@ -54,7 +56,7 @@ namespace Runtime.Weapons.ViewControllers {
         private LayerMask crossHairDetectLayerMask;
         private LayerMask hurtboxLayerMask;
 
-        public IEntityViewController CurrentPointedEntity => currentPointedEntity;
+        public ICrossHairDetectable CurrentPointedObject => currentPointedObject;
     
         private RaycastHit[] hits = new RaycastHit[20];
         private RaycastHit[] groundWallhits = new RaycastHit[20];
@@ -139,7 +141,7 @@ namespace Runtime.Weapons.ViewControllers {
             bool hitHurtBox = false;
 
             
-            //clear hits
+            //clear hitsA
             for (int i = 0; i < hits.Length; i++) {
                 hits[i] = new RaycastHit();
             }
@@ -160,16 +162,17 @@ namespace Runtime.Weapons.ViewControllers {
                     break;
                 }
                 
+                
                 if(!hitEntity && PhysicsUtility.IsInLayerMask(hitObj, crossHairDetectLayerMask)) {
-                    if (hitObj.transform.parent.TryGetComponent<IEntityViewController>(out var entityViewController)){
+                    if (hitObj.transform.parent.TryGetComponent<ICrossHairDetectable>(out var entityViewController)){
                         
-                        if (currentPointedEntity != null && currentPointedEntity != entityViewController) {
-                            currentPointedEntity.OnUnPointByCrosshair();
-                            currentPointedEntity = null;
+                        if (currentPointedObject != null && currentPointedObject != entityViewController) {
+                            currentPointedObject.OnUnPointByCrosshair(); //TODO: change to ICrosshairDetectable
+                            currentPointedObject = null;
                         }
 
-                        if (currentPointedEntity == null) {
-                            currentPointedEntity = entityViewController;
+                        if (currentPointedObject == null) {
+                            currentPointedObject = entityViewController;
                             entityViewController.OnPointByCrosshair();
                         }
                         hitEntity = true;
@@ -195,9 +198,9 @@ namespace Runtime.Weapons.ViewControllers {
             }
             
             if (!hitEntity) {
-                if (currentPointedEntity as Object != null) {
-                    currentPointedEntity.OnUnPointByCrosshair();
-                    currentPointedEntity = null;
+                if (currentPointedObject as Object != null) {
+                    currentPointedObject.OnUnPointByCrosshair();
+                    currentPointedObject = null;
                 }
             }
             

@@ -669,6 +669,7 @@ GameObject:
   - component: {fileID: 1221970488349466402}
   - component: {fileID: 1221970488349466589}
   - component: {fileID: 1221970488349466588}
+  - component: {fileID: 851635035911859733}
   m_Layer: 7
   m_Name: RightHandCollider
   m_TagString: Untagged
@@ -716,7 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_collider: {fileID: 1221970488349466402}
+  showDamageNumber: 1
 --- !u!114 &1221970488349466588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,6 +733,23 @@ MonoBehaviour:
   m_active: 1
   m_owner: {fileID: 1221970488486451984}
   m_damageMultiplier: 1
+--- !u!114 &851635035911859733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221970488349466590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32dc96957271f284483981eb18b94c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  maxDistance: 100
+  detectTime: 1
 --- !u!1 &1221970488432293191
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1135,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
+  <PrefabID>k__BackingField: 7f67a401-9baa-43aa-897f-aefe08c32803
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -1124,16 +1143,21 @@ MonoBehaviour:
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
-  autoRemoveEntityWhenDestroyedOrRecycled: 1
   autoDestroyWhenEntityRemoved: 1
-  m_damage: 10
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
+  showDamageNumber: 1
+  itemDropCollections: []
+  <SpawnSizeCollider>k__BackingField: {fileID: 0}
+  rarityBaseValueBuiltFromInspector: 1
+  healthBarPrefabName: UIHealthBar
   animator: {fileID: 1221970487035172862}
-  animationSMBManager: {fileID: 0}
   agent: {fileID: 1221970488486451989}
   hitbox_roll: {fileID: 0}
-  hurtBoxes:
-  - {fileID: 1221970486942759672}
-  - {fileID: 1221970488432917831}
+  hardCollider: {fileID: 0}
+  shellCollider: {fileID: 0}
+  shellHealthBarSpawnTransform: {fileID: 0}
+  slamHitBox: {fileID: 0}
 --- !u!1 &1221970488512090806
 GameObject:
   m_ObjectHideFlags: 0

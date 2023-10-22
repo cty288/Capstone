@@ -51,7 +51,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			OnEntityHeal(healamount, currenthealth, healer);
 		}
 
-		private void OnTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer, [CanBeNull] HitData hitData) {
+		private void OnTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer, [CanBeNull] HitData hitData) {
 			OnEntityTakeDamage(damage, currenthealth, damagedealer);
 			if (showDamageNumber && (hitData == null || hitData.ShowDamageNumber)) {
 				DamageNumberHUD.Singleton.SpawnHUD(hitData?.HitPoint ?? transform.position, damage);
@@ -66,7 +66,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		/// When the entity dies, this method will be called
 		/// </summary>
 		/// <param name="damagedealer"></param>
-		protected abstract void OnEntityDie(IBelongToFaction damagedealer);
+		protected abstract void OnEntityDie(ICanDealDamage damagedealer);
 
 		/// <summary>
 		/// When the entity takes damage, this method will be called
@@ -74,7 +74,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		/// <param name="damage"></param>
 		/// <param name="currenthealth"></param>
 		/// <param name="damagedealer">The dealer of the damage. You can access its faction from it</param>
-		protected abstract void OnEntityTakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer);
+		protected abstract void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer);
 		
 		/// <summary>
 		/// When the entity is healed, this method will be called

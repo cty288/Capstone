@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using MikroFramework.BindableProperty;
+using MikroFramework.Event;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -15,6 +17,23 @@ using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.Models {
+	
+	public class LevelOnExitUnRegister : IUnRegister
+	{
+		private Action<ILevelEntity> onExit;
+
+		private ILevelEntity level;
+		
+		public LevelOnExitUnRegister(ILevelEntity level, Action<ILevelEntity> onExit) {
+			this.onExit = onExit;
+			this.level = level;
+		}
+
+		public void UnRegister() {
+			level.UnRegisterOnLevelExit(onExit);
+			onExit = null;
+		}
+	}
 	public interface ILevelEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost);
 		
@@ -41,6 +60,18 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public void SetInBattle(bool isInBattle);
 		
 		public int CurrentEnemyCount { get; set; }
+		
+		public void OnLevelExit();
+		
+		public IUnRegister RegisterOnLevelExit(Action<ILevelEntity> onLevelExit);
+		
+		public void UnRegisterOnLevelExit(Action<ILevelEntity> onLevelExit);
+		
+		public Dictionary<Type, LevelExitCondition> LevelExitConditions { get;}
+		
+		public void AddLevelExitCondition(LevelExitCondition levelExitCondition);
+		
+		
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
@@ -52,7 +83,30 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		[field: ES3Serializable]
 		public int CurrentEnemyCount { get; set; }
-		
+
+		public void OnLevelExit() {
+			onLevelExit?.Invoke(this);
+		}
+
+		public IUnRegister RegisterOnLevelExit(Action<ILevelEntity> onLevelExit) {
+			this.onLevelExit += onLevelExit;
+			return new LevelOnExitUnRegister(this, onLevelExit);
+		}
+
+		public void UnRegisterOnLevelExit(Action<ILevelEntity> onLevelExit) {
+			this.onLevelExit -= onLevelExit;
+		}
+
+		[field: ES3Serializable]
+		public Dictionary<Type, LevelExitCondition> LevelExitConditions { get; protected set; } 
+			= new Dictionary<Type, LevelExitCondition>();
+
+		public void AddLevelExitCondition(LevelExitCondition levelExitCondition) {
+			LevelExitConditions.TryAdd(levelExitCondition.GetType(), levelExitCondition);
+		}
+
+		protected Action<ILevelEntity> onLevelExit;
+
 		protected override ConfigTable GetConfigTable() {
 			return null;
 		}
@@ -150,10 +204,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		[field: SerializeField]
 		public BindableProperty<bool> IsInBossFight { get; } = new BindableProperty<bool>();
 
-
-		public void SetInBossFight(IEnemyEntity boss) {
-			throw new NotImplementedException();
-		}
+		
 
 		public void SetInBattle(bool isInBattle) {
 			this.isInBattle = isInBattle;

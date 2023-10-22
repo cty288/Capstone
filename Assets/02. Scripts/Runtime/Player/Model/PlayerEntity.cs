@@ -1,15 +1,18 @@
-﻿using MikroFramework.Pool;
+﻿using MikroFramework.Architecture;
+using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.Enemies.Model;
 using Runtime.Player.Properties;
-using Runtime.Temporary.Player;
+using Runtime.Player.ViewControllers;
 using Runtime.Utilities.ConfigSheet;
+using UnityEngine;
 
 namespace Runtime.Player {
-	public interface IPlayerEntity : ICreature, IEntity {
+	public interface IPlayerEntity : ICreature, IEntity, ICanDealDamageRootEntity {
 		IAccelerationForce GetAccelerationForce();
 		IWalkSpeed GetWalkSpeed();
 		ISprintSpeed GetSprintSpeed();
@@ -26,6 +29,12 @@ namespace Runtime.Player {
 		
 		bool IsScopedIn();
 		void SetScopedIn(bool state);
+	}
+
+	public struct OnPlayerKillEnemy {
+		public int DamageDealt;
+		public bool IsBoss;
+		public IEnemyEntity Enemy;
 	}
 	
 	public class PlayerEntity : AbstractCreature, IPlayerEntity, ICanDealDamage {
@@ -64,6 +73,7 @@ namespace Runtime.Player {
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
+			base.OnEntityRegisterAdditionalProperties();
 			RegisterInitialProperty<IAccelerationForce>(new AccelerationForce());
 			RegisterInitialProperty<IWalkSpeed>(new WalkSpeed());
 			RegisterInitialProperty<ISprintSpeed>(new SprintSpeed());
@@ -171,7 +181,23 @@ namespace Runtime.Player {
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			
+			if (damageable.GetCurrentHealth() <= 0) {
+				if (damageable is IBossEntity boss) {
+					this.SendEvent<OnPlayerKillEnemy>(new OnPlayerKillEnemy() {
+						DamageDealt = damage,
+						Enemy = boss,
+						IsBoss = true
+					});
+				}else if (damageable is IEnemyEntity enemy) {
+					this.SendEvent<OnPlayerKillEnemy>(new OnPlayerKillEnemy() {
+						DamageDealt = damage,
+						Enemy = enemy,
+						IsBoss = false
+					});
+				}
+			}
 		}
+
+		public ICanDealDamageRootEntity RootDamageDealer => this;
 	}
 }

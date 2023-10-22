@@ -45,7 +45,7 @@ namespace Tests.Tests_Editor {
 
 
             protected override void OnEnemyRegisterAdditionalProperties() {
-                RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+               // RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
                 RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
                 RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
             }
@@ -90,7 +90,8 @@ namespace Tests.Tests_Editor {
             }
             
             protected override void OnEntityRegisterAdditionalProperties() {
-                RegisterInitialProperty(new TestVigiliance());
+                base.OnEntityRegisterAdditionalProperties();
+               // RegisterInitialProperty(new TestVigiliance());
                 RegisterInitialProperty(new TestAttackRange());
             }
 
@@ -109,6 +110,8 @@ namespace Tests.Tests_Editor {
             public void OnDealDamage(IDamageable damageable, int damage) {
                 
             }
+
+            public ICanDealDamageRootEntity RootDamageDealer { get; }
         }
     
         //===============================Start writing your tests here===============================
@@ -128,7 +131,7 @@ namespace Tests.Tests_Editor {
             Assert.AreEqual(200, ent1.GetProperty<IDangerProperty>().RealValue.Value);
             Assert.GreaterOrEqual(1000f, ent1.GetProperty<IHealthProperty>().RealValue.Value.CurrentHealth);
             Assert.AreEqual(TasteType.Type1, ent1.GetProperty<ITasteProperty>().RealValues[0]);
-            Assert.AreEqual(1000.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
+            Assert.AreEqual(100.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
             Assert.AreEqual(2000.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
         
             //another convenient ways
@@ -156,7 +159,7 @@ namespace Tests.Tests_Editor {
             Assert.AreEqual(200, ent1.GetProperty<IDangerProperty>().RealValue.Value);
             Assert.GreaterOrEqual(1000f, ent1.GetProperty<IHealthProperty>().RealValue.Value.CurrentHealth);
             Assert.AreEqual(TasteType.Type1, ent1.GetProperty<ITasteProperty>().RealValues[0]);
-            Assert.AreEqual(1000.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
+            Assert.AreEqual(100.0f, ent1.GetProperty<IVigilianceProperty>().RealValue.Value);
             Assert.AreEqual(2000.0f, ent1.GetProperty<IAttackRangeProperty>().RealValue.Value);
         
         }
