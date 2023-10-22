@@ -19,8 +19,10 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         NavMeshAgent agent;
         public Transform head;
         public float rotationSpeed = 5.0f; // Adjust the speed as needed
+        public float bodyRotationSpeed = 20.0f; // Adjust the speed as needed
         public bool headSpin;
         private Quaternion targetRotation;
+        public SharedGameObject m_Target;
         public override void OnStart()
         {
             base.OnStart();
@@ -49,6 +51,12 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
             {
                 targetRotation = Quaternion.LookRotation(targetDirection);
             }
+
+            var bodyRotation = transform.rotation;
+            bodyRotation = Quaternion.Slerp(bodyRotation, Quaternion.RotateTowards(bodyRotation,
+                Quaternion.LookRotation(m_Target.Value.transform.position - transform.position), 360), bodyRotationSpeed * Time.deltaTime);
+            transform.rotation = bodyRotation;
+            
 
             // Smoothly rotate the head
             head = this.gameObject.transform.GetChild(0);
