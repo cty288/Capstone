@@ -38,10 +38,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Color currentEmissionColor = Color.Lerp(startEmissionColor, targetEmissionColor * intensity, Time.deltaTime / lerpSpeed);
 
             // Set the new emission color on the material.
-            mat.SetColor("_EmissionColor", targetEmissionColor * intensity);
+            mat.SetColor("_EmissionColor", currentEmissionColor);
             if(timer < 0)
             {
                 timer = 1;
+                mat.SetColor("_EmissionColor", targetEmissionColor);
+                SharedBool changeStatus = (SharedBool)this.gameObject.GetComponent<BehaviorTree>().GetVariable("ChangeStatus");
+                changeStatus = true;
                 return TaskStatus.Success;
             }
             return TaskStatus.Running;
