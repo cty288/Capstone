@@ -21,15 +21,20 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
     [SerializeField]
     private Vector2 rightPivot = new Vector2(1f, 1f);
 
+    [SerializeField] private GameObject rarityIndicator;
+    
+    private Transform rarityIndicatorTransform;
+
     public bool IsShowing => isShowing;
     public void Awake() {
         nameText = transform.Find("NameText").GetComponent<TMP_Text>();
         descriptionText = transform.Find("DescriptionText").GetComponent<TMP_Text>();
         rectTransform = GetComponent<RectTransform>();
         icon = transform.Find("Icon").GetComponent<Image>();
+        rarityIndicatorTransform = transform.Find("RarityBar");
     }
     
-    public void SetContent(string name, string description, Sprite sprite, bool isLeftPivot) {
+    public void SetContent(string name, string description, Sprite sprite, bool isLeftPivot, int rarity) {
         
         nameText.text = name;
         descriptionText.text = description;
@@ -50,6 +55,13 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         else {
             rectTransform.pivot = rightPivot;
         }
+
+        //int rarityNumToSpawn = rarity - rarityIndicatorTransform.childCount;
+        for (int i = 0; i < rarity; i++) {
+            Instantiate(rarityIndicator, rarityIndicatorTransform);
+        }
+        
+        
     }
 
     public void Show() {
@@ -60,6 +72,10 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
     public void Hide() {
         gameObject.SetActive(false);
         isShowing = false;
+        for (int i = 0; i < rarityIndicatorTransform.childCount; i++) {
+            GameObject child = rarityIndicatorTransform.GetChild(i).gameObject;
+            Destroy(child);
+        }
     }
 
 
@@ -72,7 +88,7 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
 
     public override void OnRecycled() {
         base.OnRecycled();
-        SetContent("", "", null, true);
+        SetContent("", "", null, true, 0);
     }
 
     public IArchitecture GetArchitecture() {

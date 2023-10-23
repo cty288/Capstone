@@ -8,6 +8,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Extensions;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Properties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Commands;
@@ -18,6 +19,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Inventory.ViewController {
     public class ResourceSlotViewController : AbstractMikroController<MainGame>, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler,
@@ -27,7 +29,7 @@ namespace Runtime.Inventory.ViewController {
         private RectTransform spawnPoint;
         private Vector2 spawnPointOriginalMinOffset;
         private Vector2 spawnPointOriginalMaxOffset;
-        
+
         private ResourceSlot slot;
         
 
@@ -45,6 +47,7 @@ namespace Runtime.Inventory.ViewController {
         protected bool isRightSide = false;
         protected Image slotBG;
         public static GameObject pointerDownObject = null;
+        private RectTransform rarityBar;
 
         [SerializeField] private Sprite filledSlotBG;
         [SerializeField] private Sprite unfilledSlotBG;
@@ -53,9 +56,12 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private Image selectedBG;
         [SerializeField] private bool expandWithItemWidth = false;
         [SerializeField] private float expandAdditionWidth = 0f;
+        [SerializeField] private GameObject rarityIndicatorPrefab;
+        [SerializeField] private bool showRarityIndicator = false;
         protected virtual void Awake() {
             numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
             spawnPoint = transform.Find("InventoryItemSpawnPos")?.GetComponent<RectTransform>();
+            rarityBar = transform.Find("RarityBar")?.GetComponent<RectTransform>();
             if (spawnPoint) {
                 spawnPointOriginalMinOffset = spawnPoint.offsetMin;
                 spawnPointOriginalMaxOffset = spawnPoint.offsetMax;
@@ -167,8 +173,17 @@ namespace Runtime.Inventory.ViewController {
             }
 
             if (currentDescriptionPanel) {
-                currentDescriptionPanel.SetContent("", "", null, true);
+                currentDescriptionPanel.SetContent("", "", null, true, 0);
             }
+
+            if (showRarityIndicator) {
+                for (int i = 0; i < rarityBar.childCount; i++) {
+                    GameObject go = rarityBar.GetChild(i).gameObject;
+                    Destroy(go);
+                }
+            }
+           
+
             DespawnDescriptionPanel();  
             
           
@@ -215,9 +230,19 @@ namespace Runtime.Inventory.ViewController {
             slotBG.sprite = filledSlotBG;
 
             SpawnDescriptionPanel(topItem);
+
+            int rarityLevel = 0;
+            if (showRarityIndicator && topItem.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarity)) {
+                if (rarity is IRarityProperty rarityProperty) {
+                    rarityLevel = rarityProperty.RealValue.Value;
+                    for (int i = 0; i < rarityLevel; i++) {
+                        GameObject star = Instantiate(rarityIndicatorPrefab, rarityBar);
+                    }
+                }
+            }
             if (currentDescriptionPanel) {
                 currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                    InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide);
+                    InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel);
                 
                 if (ResourceSlot.currentHoveredSlot == this) {
                     currentDescriptionPanel.Show();
@@ -302,8 +327,16 @@ namespace Runtime.Inventory.ViewController {
                 }
                 SpawnDescriptionPanel(topItem);
                 if (currentDescriptionPanel) {
+                    
+                    int rarityLevel = 0;
+                    if (topItem.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarity)) {
+                        if (rarity is IRarityProperty rarityProperty) {
+                            rarityLevel = rarityProperty.RealValue.Value;
+                        }
+                    }
+
                     currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                        InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide);
+                        InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel);
                     currentDescriptionPanel.Show();
                 }
             }
