@@ -103,6 +103,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				itemDropCollection.TotalDropCountRange.y + 1);
 			int dropCount = 0;
 
+			int attempt = 0;
 			while (dropCount < totalDropCount) {
 				ItemDropInfo info = BoundEntity.GetRandomDropItem();
 				
@@ -111,6 +112,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					                    " entity.");
 				}
 				dropCount += GenerateDropItem(info, totalDropCount);
+				attempt++;
+				if (attempt >= 100000) {
+					Debug.Log("SPAWN DROP COUNT WHILE LOOP CRASHED!");
+					break;
+				}
 			}
 		}
 

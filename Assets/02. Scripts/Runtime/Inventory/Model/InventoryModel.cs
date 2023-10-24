@@ -77,6 +77,10 @@ namespace Runtime.Inventory.Model {
 		public int SelectedIndex;
 	}
 	
+	public struct OnInventoryItemAddedEvent {
+		public IResourceEntity Item;
+	}
+	
 	public class InventoryModel: ResourceSlotsModel, IInventoryModel {
 
 		[ES3Serializable]
@@ -141,6 +145,16 @@ namespace Runtime.Inventory.Model {
 				}
 			}
 			return base.AddItem(item);
+		}
+
+		protected override bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
+			if (base.AddItemAt(item, slot)) {
+				this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
+					Item = item
+				});
+			}
+
+			return false;
 		}
 
 		public override bool RemoveItem(string uuid) {

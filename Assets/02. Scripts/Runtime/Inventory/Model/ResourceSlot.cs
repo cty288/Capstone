@@ -178,6 +178,9 @@ namespace Runtime.Inventory.Model {
 	[Serializable]
 	public class LeftHotBarSlot : ResourceSlot {
 		public override bool CanPlaceItem(IResourceEntity item) {
+			if(item == null) {
+				return false;
+			}
 			if (item.GetResourceCategory() != ResourceCategory.Bait &&
 			    item.GetResourceCategory() != ResourceCategory.Trap) {
 				return false;
