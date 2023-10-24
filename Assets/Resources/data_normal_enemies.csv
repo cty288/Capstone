@@ -413,3 +413,40 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
     }
   }
 }",,,
+SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,3,,3,"{
+  ""attack"":{
+    ""bulletDamage"":{
+      ""type"": ""int"",
+      ""value"": 5,
+      ""useDefaultModifier"": true
+    },
+    ""ammoSize"":{
+      ""type"": ""int"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""bulletSpeed"" : {
+      ""type"" : ""float"",
+      ""value"": 15
+    },
+    ""spawnInterval"":{
+      ""type"": ""float"",
+      ""value"": 0.1
+    },
+    ""explosionDamage"":{
+      ""type"": ""int"",
+      ""value"": 15,
+      ""useDefaultModifier"": true
+    },
+    ""bulletCount"":{
+      ""type"": ""int"",
+      ""value"": 5,
+      ""useDefaultModifier"": true
+    },
+    ""detectionRange"":{
+      ""type"": ""float"",
+      ""value"": 12,
+      ""useDefaultModifier"": true
+    }
+  }
+}",,,
