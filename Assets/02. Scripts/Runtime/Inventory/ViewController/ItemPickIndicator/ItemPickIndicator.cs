@@ -20,13 +20,14 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 	
 	[SerializeField] private GameObject itemNameTextPrefab;
 	private float hideTimer = 5f;
-	private float itemStakingTime = 0.2f;
+	[SerializeField]
+	private float itemStakingTime = 0.5f;
 
 	private Dictionary<string, ItemStackingInfo> itemStackingInfo = new Dictionary<string, ItemStackingInfo>();
 	private TMP_Text itemNameHUD;
 	private List<TMP_Text> itemNameTexts = new List<TMP_Text>();
 
-	private Sequence itemHUDSequence = DOTween.Sequence();
+	private Sequence itemHUDSequence;
 	private enum FadeState {
 		FadeIn,
 		FadeOut,
@@ -35,6 +36,7 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 
 	private FadeState fadeState = FadeState.Idle;
 	private void Awake() {
+		itemHUDSequence = DOTween.Sequence();
 		smoothScroller = transform.Find("ScrollView").GetComponent<SmoothScrollingVerticalLayoutGroup>();
 		itemNameHUD = transform.Find("ItemNameHUD").GetComponent<TMP_Text>();
 		this.RegisterEvent<OnInventoryItemAddedEvent>(OnInventoryItemAdded)

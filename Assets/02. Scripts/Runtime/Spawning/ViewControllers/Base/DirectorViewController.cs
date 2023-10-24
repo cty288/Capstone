@@ -202,7 +202,7 @@ namespace Runtime.Spawning
                         
             //raycast down from random point within min/max range
             int spawnAttempts = 10;
-            while (spawnAttempts > 0 && currentCredits > cost)
+            while (currentCredits > cost && spawnAttempts > 0)
             {
                 
                 float angle = Random.Range(0, 360); 
@@ -227,7 +227,10 @@ namespace Runtime.Spawning
                         spawnPos = hitNavMesh.position;
 
                         Vector3 fixedSpawnPos =
-                            SpawningUtility.FindNavMeshSuitablePosition(card.Prefab, spawnPos, 1f, 3f, 10);
+                            SpawningUtility.FindNavMeshSuitablePosition(card.Prefab, spawnPos, 1f, 3f, spawnAttempts,
+                                out int usedAttempts);
+                        
+                        spawnAttempts -= usedAttempts;
                        
                         if (!float.IsInfinity(fixedSpawnPos.magnitude)) {
                             GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, fixedSpawnPos, Quaternion.identity, null, rarity,
@@ -241,7 +244,7 @@ namespace Runtime.Spawning
                         }
                      }
                 }
-                spawnAttempts--;
+                //spawnAttempts--;
             }
             return false;
         }

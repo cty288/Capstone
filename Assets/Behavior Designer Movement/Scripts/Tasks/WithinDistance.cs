@@ -136,7 +136,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
 
             // no objects are within distance. Return failure
-            Debug.Log($"dog, not found");
+            //Debug.Log($"dog, not found");
             return TaskStatus.Failure;
         }
 

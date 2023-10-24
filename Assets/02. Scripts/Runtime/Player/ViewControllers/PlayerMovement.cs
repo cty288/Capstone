@@ -458,8 +458,8 @@ namespace Runtime.Player.ViewControllers
             float time = 0;
             while(time < duration)
             {
-                if(endFOV == 110)
-                    Debug.Log($"endFOV:{endFOV}, startFOV: {startFOV}, {time}");
+               // if(endFOV == 110)
+                    //Debug.Log($"endFOV:{endFOV}, startFOV: {startFOV}, {time}");
                 cam.m_Lens.FieldOfView = Mathf.Lerp(startFOV, endFOV, time / duration);
                 time += Time.deltaTime;
                 yield return null;

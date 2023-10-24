@@ -114,7 +114,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				dropCount += GenerateDropItem(info, totalDropCount);
 				attempt++;
 				if (attempt >= 100000) {
-					Debug.Log("SPAWN DROP COUNT WHILE LOOP CRASHED!");
+					Debug.Log("WHILE LOOP CRASHED!");
 					break;
 				}
 			}
