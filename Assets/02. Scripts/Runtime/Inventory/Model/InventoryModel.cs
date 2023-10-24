@@ -87,7 +87,7 @@ namespace Runtime.Inventory.Model {
 		private Dictionary<HotBarCategory, HotBarSlotsInfo> hotBarSlots =
 			new Dictionary<HotBarCategory, HotBarSlotsInfo>();
 
-
+		
 		
 		public static int MaxSlotCount = 32;
 		
@@ -139,8 +139,14 @@ namespace Runtime.Inventory.Model {
 			//check each hot bar first
 			foreach (var hotBarSlot in hotBarSlots) {
 				foreach (var slot in hotBarSlot.Value.Slots) {
-					if (AddItemAt(item, slot)) {
-						return true;
+					if (!slot.IsEmpty() && slot.CanPlaceItem(item)) {
+						return AddItemAt(item, slot);
+					}
+				}
+				
+				foreach (var slot in hotBarSlot.Value.Slots) {
+					if (slot.CanPlaceItem(item)) {
+						return AddItemAt(item, slot);
 					}
 				}
 			}
@@ -213,10 +219,8 @@ namespace Runtime.Inventory.Model {
 			base.OnInit();
 			if (IsFirstTimeCreated) { //not load from saved
 				slots = new List<ResourceSlot>();
-				
-				
-				
 			}
+			
 		}
 
 		public int GetHotBarSlotCount(HotBarCategory category) {

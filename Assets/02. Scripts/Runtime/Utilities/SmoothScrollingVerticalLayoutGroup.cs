@@ -16,7 +16,7 @@ public class SmoothScrollingVerticalLayoutGroup : MonoBehaviour
     private VerticalLayoutGroup verticalLayoutGroup;
     private float spacing;
 
-    [SerializeField] private GameObject testPrefab;
+    //[SerializeField] private GameObject testPrefab;
     private List<GameObject> items = new List<GameObject>();
 
     private float originalHeight;
@@ -48,6 +48,7 @@ public class SmoothScrollingVerticalLayoutGroup : MonoBehaviour
         var localPosition = newItemParent.localPosition;
         localPosition = new Vector3(localPosition.x, originalPosY, localPosition.z);
         newItemParent.localPosition = localPosition;
+        targetPosY = originalPosY;
     }
     
     private IEnumerator UpdateLayout(GameObject newItem) {

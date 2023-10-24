@@ -62,13 +62,14 @@ namespace Runtime.Inventory.Model {
 	public abstract class ResourceSlotsModel : AbstractSavableModel, IResourceSlotsModel {
 		[ES3Serializable] protected List<ResourceSlot> slots; //= new List<InventorySlot>();
 		
-		
 
-		
+
+
+
 		protected virtual bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
 			if (slot.TryAddItem(item)) {
 				RegisterInitialEntityEvents(item);
-				item.OnPicked();
+			
 				return true;
 			}
 			return false;
@@ -86,11 +87,17 @@ namespace Runtime.Inventory.Model {
 		//need to register to item recycle event. If the item is recycled, remove it from the slot.
 		public virtual bool AddItem(IResourceEntity item) {
 			for (int i = 0; i < GetSlotCount(); i++) {
-				if (CanPlaceItem(item, i)) {
-					
+				if (!slots[i].IsEmpty() && CanPlaceItem(item, i)) {
 					return AddItemAt(item, slots[i]);
 				}
 			}
+			
+			for (int i = 0; i < GetSlotCount(); i++) {
+				if (CanPlaceItem(item, i)) {
+					return AddItemAt(item, slots[i]);
+				}
+			}
+
 			return false;
 		}
 
@@ -125,7 +132,7 @@ namespace Runtime.Inventory.Model {
 		public abstract void Clear();
 		public abstract void Reset();
 
-			public List<ResourceSlot> GetAllSlots() {
+		public List<ResourceSlot> GetAllSlots() {
 			return slots;
 		}
 
