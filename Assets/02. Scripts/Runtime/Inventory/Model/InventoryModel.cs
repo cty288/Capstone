@@ -152,6 +152,7 @@ namespace Runtime.Inventory.Model {
 				this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
 					Item = item
 				});
+				return true;
 			}
 
 			return false;
