@@ -23,6 +23,7 @@ namespace Runtime.Spawning {
 
 			Transform playerTr = PlayerController.GetClosestPlayer(desiredPosition).transform;
 			NavMeshPath playerDetectPath = new NavMeshPath();
+			
 			NavMesh.CalculatePath(desiredPosition, playerTr.position, -1, playerDetectPath);
 			if (playerDetectPath.status != NavMeshPathStatus.PathComplete) {
 				usedAttempts++;
