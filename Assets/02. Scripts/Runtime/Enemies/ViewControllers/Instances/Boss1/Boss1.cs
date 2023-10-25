@@ -122,6 +122,7 @@ namespace Runtime.Enemies
         [SerializeField] private Transform shellHealthBarSpawnTransform;
 
         [SerializeField] private HitBox slamHitBox;
+        [SerializeField] private GameObject shellHurbox;
         protected override MikroAction WaitingForDeathCondition() {
             transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
                 deathAnimationEnd = true;
@@ -191,6 +192,7 @@ namespace Runtime.Enemies
                 animator.CrossFade("OpenImmediately", 0.05f);
             }
             animator.SetBool("ShellClosed",newValue);
+            shellHurbox.SetActive(newValue);
         }
         
         // private void Update()
