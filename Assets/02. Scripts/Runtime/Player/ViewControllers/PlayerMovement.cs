@@ -315,8 +315,11 @@ namespace Runtime.Player.ViewControllers
             }
             else
             {
-                slidingAudioSource = null;
-                AudioSystem.Singleton.StopSound("slide_3");
+                if (slidingAudioSource != null) {
+                    slidingAudioSource = null;
+                    AudioSystem.Singleton.StopSound("slide_3");
+                }
+                
             }
         }
         
