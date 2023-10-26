@@ -5,6 +5,7 @@ using MikroFramework.AudioKit;
 using MikroFramework.Pool;
 using MikroFramework.ResKit;
 using MikroFramework.Singletons;
+using Polyglot;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
@@ -49,6 +50,11 @@ namespace Runtime.GameResources {
 			return SpawnResourceVC(resourceEntity, usePool, resourceEntity.InHandVCPrefabName, poolInitCount, poolMaxCount);
 		}
 
+		public static string GetLocalizedResourceCategory(ResourceCategory category) {
+			return Localization.Get("NAME_" + category.ToString());
+		}
+		
+		
 		public GameObject SpawnNewPickableResourceVC(string prefabName, bool usePool, bool setRarity = false, int rarity = 1, int poolInitCount = 5,
 			int poolMaxCount = 20) {
 

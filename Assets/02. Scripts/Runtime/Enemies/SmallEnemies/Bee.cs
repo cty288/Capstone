@@ -54,7 +54,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override ICustomProperty[] OnRegisterCustomProperties() {
             return new[] {
-                new AutoConfigCustomProperty("attack", null)
+                new AutoConfigCustomProperty("attack")
             };
         }
     }

@@ -183,7 +183,7 @@ namespace Runtime.Inventory.Model {
 				return false;
 			}
 			if (item.GetResourceCategory() != ResourceCategory.Bait &&
-			    item.GetResourceCategory() != ResourceCategory.Trap) {
+			    item.GetResourceCategory() != ResourceCategory.Item) {
 				return false;
 			}
 			return base.CanPlaceItem(item);

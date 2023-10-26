@@ -7,8 +7,10 @@ using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Extensions;
 using MikroFramework.Pool;
+using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
+using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Commands;
@@ -40,6 +42,7 @@ namespace Runtime.Inventory.ViewController {
         private Image slotHoverBG;
         private SlotResourceDescriptionPanel currentDescriptionPanel;
         private Transform descriptionPanelFollowTr;
+        private RectTransform propertyDetailIconSpawnPoint;
         //private Image selectedBG;
         protected bool isSelected = false;
         private float baseWidth;
@@ -48,6 +51,7 @@ namespace Runtime.Inventory.ViewController {
         protected Image slotBG;
         public static GameObject pointerDownObject = null;
         private RectTransform rarityBar;
+        private ResLoader resLoader;
 
         [SerializeField] private Sprite filledSlotBG;
         [SerializeField] private Sprite unfilledSlotBG;
@@ -58,10 +62,14 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private float expandAdditionWidth = 0f;
         [SerializeField] private GameObject rarityIndicatorPrefab;
         [SerializeField] private bool showRarityIndicator = false;
+        [SerializeField] private bool showPropertyDetailIcon = false;
+        [SerializeField] private int maxPropertyDetailIconCount = 3;
         protected virtual void Awake() {
             numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
             spawnPoint = transform.Find("InventoryItemSpawnPos")?.GetComponent<RectTransform>();
             rarityBar = transform.Find("RarityBar")?.GetComponent<RectTransform>();
+            propertyDetailIconSpawnPoint = transform.Find("PropertyDescriptionIcon")?.GetComponent<RectTransform>();
+            resLoader = this.GetUtility<ResLoader>();
             if (spawnPoint) {
                 spawnPointOriginalMinOffset = spawnPoint.offsetMin;
                 spawnPointOriginalMaxOffset = spawnPoint.offsetMax;
@@ -173,12 +181,19 @@ namespace Runtime.Inventory.ViewController {
             }
 
             if (currentDescriptionPanel) {
-                currentDescriptionPanel.SetContent("", "", null, true, 0);
+                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null);
             }
 
             if (showRarityIndicator) {
                 for (int i = 0; i < rarityBar.childCount; i++) {
                     GameObject go = rarityBar.GetChild(i).gameObject;
+                    Destroy(go);
+                }
+            }
+            
+            if (showPropertyDetailIcon) {
+                for (int i = 0; i < propertyDetailIconSpawnPoint.childCount; i++) {
+                    GameObject go = propertyDetailIconSpawnPoint.GetChild(i).gameObject;
                     Destroy(go);
                 }
             }
@@ -240,9 +255,38 @@ namespace Runtime.Inventory.ViewController {
                     }
                 }
             }
+
+            if (showPropertyDetailIcon) {
+                List<ResourcePropertyDescription> propertyDescriptions = topItem.GetResourcePropertyDescriptions();
+                int spawnedCount = 0;
+                foreach (ResourcePropertyDescription propertyDescription in propertyDescriptions) {
+                    if (String.IsNullOrEmpty(propertyDescription.iconName)) continue;
+                    
+                    GameObject iconPrefab = resLoader.LoadSync<GameObject>(propertyDescription.iconName);
+
+                    GameObject icon = Instantiate(iconPrefab, propertyDetailIconSpawnPoint);
+                    //set icon's height = propertyDetailIconSpawnPoint's height
+                    float height = propertyDetailIconSpawnPoint.rect.height;
+                    RectTransform iconRect = icon.GetComponent<RectTransform>();
+                    iconRect.sizeDelta = new Vector2(height, height);
+                    iconRect.anchoredPosition = Vector2.zero;
+                    
+                    
+                    
+                    spawnedCount++;
+                    if (spawnedCount >= maxPropertyDetailIconCount) {
+                        break;
+                    }
+                }
+            }
+            
+            
+          
             if (currentDescriptionPanel) {
                 currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                    InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel);
+                    InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel,
+                    ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
+                topItem.GetResourcePropertyDescriptions());
                 
                 if (ResourceSlot.currentHoveredSlot == this) {
                     currentDescriptionPanel.Show();
@@ -336,7 +380,9 @@ namespace Runtime.Inventory.ViewController {
                     }
 
                     currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                        InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel);
+                        InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel,
+                        ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
+                        topItem.GetResourcePropertyDescriptions());
                     currentDescriptionPanel.Show();
                 }
             }
