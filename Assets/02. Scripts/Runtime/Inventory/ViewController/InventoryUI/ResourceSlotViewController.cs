@@ -42,7 +42,7 @@ namespace Runtime.Inventory.ViewController {
         private Image slotHoverBG;
         private SlotResourceDescriptionPanel currentDescriptionPanel;
         private Transform descriptionPanelFollowTr;
-        private RectTransform propertyDetailIconSpawnPoint;
+        private RectTransform tagDetailIconSpawnPoint;
         //private Image selectedBG;
         protected bool isSelected = false;
         private float baseWidth;
@@ -62,13 +62,13 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private float expandAdditionWidth = 0f;
         [SerializeField] private GameObject rarityIndicatorPrefab;
         [SerializeField] private bool showRarityIndicator = false;
-        [SerializeField] private bool showPropertyDetailIcon = false;
+        [SerializeField] private bool showTagDetailIcon = false;
         [SerializeField] private int maxPropertyDetailIconCount = 3;
         protected virtual void Awake() {
             numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
             spawnPoint = transform.Find("InventoryItemSpawnPos")?.GetComponent<RectTransform>();
             rarityBar = transform.Find("RarityBar")?.GetComponent<RectTransform>();
-            propertyDetailIconSpawnPoint = transform.Find("PropertyDescriptionIcon")?.GetComponent<RectTransform>();
+            tagDetailIconSpawnPoint = transform.Find("TagIcon")?.GetComponent<RectTransform>();
             resLoader = this.GetUtility<ResLoader>();
             if (spawnPoint) {
                 spawnPointOriginalMinOffset = spawnPoint.offsetMin;
@@ -191,9 +191,9 @@ namespace Runtime.Inventory.ViewController {
                 }
             }
             
-            if (showPropertyDetailIcon) {
-                for (int i = 0; i < propertyDetailIconSpawnPoint.childCount; i++) {
-                    GameObject go = propertyDetailIconSpawnPoint.GetChild(i).gameObject;
+            if (showTagDetailIcon) {
+                for (int i = 0; i < tagDetailIconSpawnPoint.childCount; i++) {
+                    GameObject go = tagDetailIconSpawnPoint.GetChild(i).gameObject;
                     Destroy(go);
                 }
             }
@@ -256,7 +256,7 @@ namespace Runtime.Inventory.ViewController {
                 }
             }
 
-            if (showPropertyDetailIcon) {
+            if (showTagDetailIcon) {
                 List<ResourcePropertyDescription> propertyDescriptions = topItem.GetResourcePropertyDescriptions();
                 int spawnedCount = 0;
                 foreach (ResourcePropertyDescription propertyDescription in propertyDescriptions) {
@@ -264,9 +264,9 @@ namespace Runtime.Inventory.ViewController {
                     
                     GameObject iconPrefab = resLoader.LoadSync<GameObject>(propertyDescription.iconName);
 
-                    GameObject icon = Instantiate(iconPrefab, propertyDetailIconSpawnPoint);
+                    GameObject icon = Instantiate(iconPrefab, tagDetailIconSpawnPoint);
                     //set icon's height = propertyDetailIconSpawnPoint's height
-                    float height = propertyDetailIconSpawnPoint.rect.height;
+                    float height = tagDetailIconSpawnPoint.rect.height;
                     RectTransform iconRect = icon.GetComponent<RectTransform>();
                     iconRect.sizeDelta = new Vector2(height, height);
                     iconRect.anchoredPosition = Vector2.zero;
