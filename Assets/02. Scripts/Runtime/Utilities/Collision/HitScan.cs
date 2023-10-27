@@ -99,9 +99,23 @@ namespace Runtime.Utilities.Collision
                 Debug.Log("hit w/ gun: " + hit.collider.name);
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
 
+                HurtboxModifier hurtboxModifier = hit.collider.GetComponent<HurtboxModifier>();
+                if (hurtboxModifier) {
+                    if (hurtboxModifier.IgnoreHurtboxCheck) {
+                        continue;
+                    }
+                    
+                    if (hurtboxModifier.RedirectActivated) {
+                        hurtbox = hurtboxModifier.Hurtbox;
+                    }
+                }
+
+
                 if (hurtbox == null && hit.collider.isTrigger) {
                     continue;
                 }
+                
+
                 
                 hitAnything = true;
                 if (hurtbox != null)

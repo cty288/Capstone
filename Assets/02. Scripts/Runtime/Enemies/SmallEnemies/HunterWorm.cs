@@ -109,6 +109,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override MikroAction WaitingForDeathCondition()
         {
+            
             return null;
         }
 
