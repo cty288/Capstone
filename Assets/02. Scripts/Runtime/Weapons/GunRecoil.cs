@@ -30,14 +30,14 @@ namespace Runtime.Weapons
 
         private void Update()
         {
-            targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+            targetRotation = Vector3.Slerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
             currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.deltaTime);
             transform.localRotation = Quaternion.Euler(currentRotation);
         }
 
         public void RecoilFire()
         {
-            Debug.Log("recoil x: " + recoilX + " recoil y: " + recoilY + " recoil z: " + recoilZ + " snappiness: " + snappiness + " return speed: " + returnSpeed);
+            // Debug.Log("recoil x: " + recoilX + " recoil y: " + recoilY + " recoil z: " + recoilZ + " snappiness: " + snappiness + " return speed: " + returnSpeed);
             // targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ)); // original
             // targetRotation += new Vector3(recoilX, Random.Range(0, recoilY), Random.Range(-recoilZ, recoilZ)); // 0 to number
             targetRotation += new Vector3(recoilX, recoilY, recoilZ); // exact numbers
@@ -45,8 +45,7 @@ namespace Runtime.Weapons
 
         private void Recoil(OnWeaponRecoilEvent e)
         {
-            Debug.Log("recoil");
-            
+            // Debug.Log("recoil");
             recoilX = e.recoilVector.x;
             recoilY = e.recoilVector.y;
             recoilZ = e.recoilVector.z;

@@ -237,7 +237,7 @@ namespace Runtime.Spawning
                                 levelNumber, true, 5, 30);
                             IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                            Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
+                            // Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
                     
                             currentCredits -= cost;
                             return true;
