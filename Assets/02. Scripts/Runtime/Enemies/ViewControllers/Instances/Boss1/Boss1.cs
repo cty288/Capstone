@@ -121,7 +121,7 @@ namespace Runtime.Enemies
         
         [SerializeField] private Transform shellHealthBarSpawnTransform;
 
-        [SerializeField] private HitBox slamHitBox;
+        [SerializeField] public HitBox slamHitBox;
         [SerializeField] private GameObject shellHurbox;
         protected override MikroAction WaitingForDeathCondition() {
             transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
