@@ -57,7 +57,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     .GetComponent<Collider>());*/
             }
         }
-        
 
+        public override void OnTriggerEnter(Collider other)
+        {
+            base.OnTriggerEnter(other);
+        }
     }
 }
