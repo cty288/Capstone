@@ -975,6 +975,34 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""65a9468d-8c20-4dfd-87ec-6c9169a6a774"",
+            ""actions"": [
+                {
+                    ""name"": ""SlowTime"",
+                    ""type"": ""Button"",
+                    ""id"": ""bb9f79a1-76cb-4cea-8d0f-4ff709420ff5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""44ad68d3-810b-4008-a83a-7c1f1de24af5"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SlowTime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1038,6 +1066,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_Shared_Close = m_Shared.FindAction("Close", throwIfNotFound: true);
         m_Shared_HotBarLeftNavigate = m_Shared.FindAction("HotBarLeftNavigate", throwIfNotFound: true);
         m_Shared_HotBarRightNavigate = m_Shared.FindAction("HotBarRightNavigate", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_SlowTime = m_Debug.FindAction("SlowTime", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1409,6 +1440,52 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         }
     }
     public SharedActions @Shared => new SharedActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
+    private readonly InputAction m_Debug_SlowTime;
+    public struct DebugActions
+    {
+        private @DPunkInputs m_Wrapper;
+        public DebugActions(@DPunkInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SlowTime => m_Wrapper.m_Debug_SlowTime;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
+            @SlowTime.started += instance.OnSlowTime;
+            @SlowTime.performed += instance.OnSlowTime;
+            @SlowTime.canceled += instance.OnSlowTime;
+        }
+
+        private void UnregisterCallbacks(IDebugActions instance)
+        {
+            @SlowTime.started -= instance.OnSlowTime;
+            @SlowTime.performed -= instance.OnSlowTime;
+            @SlowTime.canceled -= instance.OnSlowTime;
+        }
+
+        public void RemoveCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1460,5 +1537,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         void OnClose(InputAction.CallbackContext context);
         void OnHotBarLeftNavigate(InputAction.CallbackContext context);
         void OnHotBarRightNavigate(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnSlowTime(InputAction.CallbackContext context);
     }
 }

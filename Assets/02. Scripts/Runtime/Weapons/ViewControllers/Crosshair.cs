@@ -145,9 +145,12 @@ namespace Runtime.Weapons.ViewControllers {
             for (int i = 0; i < hits.Length; i++) {
                 hits[i] = new RaycastHit();
             }
-            int numHits = Physics.RaycastNonAlloc(ray, hits, rayDistance, detectLayerMask);
+
+            int numHits =
+                Physics.RaycastNonAlloc(ray, hits, rayDistance, detectLayerMask, QueryTriggerInteraction.Collide);
             var sortedHits = hits.OrderBy(hit => hit.transform ? hit.distance : float.MaxValue).ToArray();
 
+            Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
             //GroundWallHitInfo.Reset();
             
             for (int i = 0; i < sortedHits.Length; i++) {
@@ -164,7 +167,8 @@ namespace Runtime.Weapons.ViewControllers {
                 
                 
                 if(!hitEntity && PhysicsUtility.IsInLayerMask(hitObj, crossHairDetectLayerMask)) {
-                    if (hitObj.transform.parent.TryGetComponent<ICrossHairDetectable>(out var entityViewController)){
+                    ICrossHairDetectable entityViewController = hitObj.GetComponentInParent<ICrossHairDetectable>();
+                    if (entityViewController != null){
                         
                         if (currentPointedObject != null && currentPointedObject != entityViewController) {
                             currentPointedObject.OnUnPointByCrosshair(); //TODO: change to ICrosshairDetectable

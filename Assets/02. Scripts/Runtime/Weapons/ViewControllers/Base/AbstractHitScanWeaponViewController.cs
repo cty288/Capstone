@@ -23,8 +23,6 @@ namespace Runtime.Weapons.ViewControllers.Base
         {
             base.OnEntityStart();
             
-            
-            
             hitDetectorInfo = new HitDetectorInfo
             {
                 camera = cam,
