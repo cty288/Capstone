@@ -1,5 +1,4 @@
 using System;
-using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
@@ -50,7 +49,6 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected DPunkInputs.PlayerActions playerActions;
         protected IGamePlayerModel playerModel;
         public GameObject hitParticlePrefab;
-        protected CameraShaker cameraShaker;
         
         //status
         protected bool isScopedIn = false;
@@ -72,7 +70,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.OnEntityStart();
             hitDetector = OnCreateHitDetector();
             _isScopedIn = false;
-            cameraShaker = FindObjectOfType<CameraShaker>();
         }
 
         public override void OnStartHold(GameObject ownerGameObject) {

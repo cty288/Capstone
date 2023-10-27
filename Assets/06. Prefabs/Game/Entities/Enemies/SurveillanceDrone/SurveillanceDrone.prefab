@@ -284,7 +284,6 @@ GameObject:
   - component: {fileID: 8049880895992306661}
   - component: {fileID: 7389598947031679514}
   - component: {fileID: 4668014037457671041}
-  - component: {fileID: 2176123379609511025}
   m_Layer: 0
   m_Name: SurveillanceDrone
   m_TagString: Untagged
@@ -363,7 +362,6 @@ MonoBehaviour:
   <SpawnSizeCollider>k__BackingField: {fileID: 3424044716484302364}
   healthBarPrefabName: EnemyHealthBar
   healthBarSpawnPoint: {fileID: 8049880894790430500}
-  healthBarUIPositionAutoAdjust: 1
   autoRecycleTimeAfterFarAwayFromPlayer: 10
   autoRecycleDistanceFromPlayer: 150
   autoRecycleCheckTimeInterval: 5
@@ -482,19 +480,6 @@ MonoBehaviour:
   componentsToSave:
   - {fileID: 8049880895992306657}
   - {fileID: 8049880895992306686}
---- !u!135 &2176123379609511025
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8049880895992306662}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 2.51, z: 0}
 --- !u!1 &8049880896556066274
 GameObject:
   m_ObjectHideFlags: 0

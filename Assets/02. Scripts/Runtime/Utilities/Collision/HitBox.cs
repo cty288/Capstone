@@ -56,22 +56,9 @@ namespace Runtime.Utilities.Collision
             IHurtbox hurtbox;
             hurtbox = c.GetComponent<IHurtbox>();
 
-            HurtboxModifier hurtboxModifier = c.GetComponent<HurtboxModifier>();
-            if (hurtboxModifier) {
-                if (hurtboxModifier.IgnoreHurtboxCheck) {
-                    return;
-                }
-                    
-                if (hurtboxModifier.RedirectActivated) {
-                    hurtbox = hurtboxModifier.Hurtbox;
-                }
-            }
-            
-            
             if (c.isTrigger && hurtbox == null) {
                 return;
             }
-           
             
             Debug.Log("trigger hit detected: " + c.name);
             HitData hitData = null;

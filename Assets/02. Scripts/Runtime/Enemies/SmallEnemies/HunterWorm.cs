@@ -88,13 +88,6 @@ namespace Runtime.Enemies.SmallEnemies
 
         }
 
-        protected override void FixedUpdate() {
-            base.FixedUpdate();
-            if (true) { //do nothing to update physics
-              
-            }
-        }
-
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
             Debug.Log($"Worm 1 Take damage: {damage}. Worm 1 current health: {currenthealth}");
@@ -116,7 +109,6 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override MikroAction WaitingForDeathCondition()
         {
-            
             return null;
         }
 
