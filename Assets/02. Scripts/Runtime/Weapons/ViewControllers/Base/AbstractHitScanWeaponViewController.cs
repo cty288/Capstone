@@ -5,6 +5,7 @@ using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
@@ -13,6 +14,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         [Header("Aesthetic")]
         public TrailRenderer trailRenderer;
+        public VisualEffect bulletVFX;
         
         private HitDetectorInfo hitDetectorInfo;
         
@@ -27,13 +29,13 @@ namespace Runtime.Weapons.ViewControllers.Base
             {
                 camera = cam,
                 layer = layer,
-                launchPoint = trailRenderer.transform,
+                launchPoint = bulletVFX.transform,
                 weapon = BoundEntity
             };
         }
         
         protected override IHitDetector OnCreateHitDetector() {
-            return new HitScan(this, CurrentFaction.Value, trailRenderer);
+            return new HitScan(this, CurrentFaction.Value, bulletVFX);
         }
         
         public virtual void SetShoot(bool shouldShoot) {
