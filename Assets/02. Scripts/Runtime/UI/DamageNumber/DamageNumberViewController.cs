@@ -22,17 +22,31 @@ public class DamageNumberViewController : DefaultPoolableGameObject {
 		
 	}
 	
-	public void StartAnimateDamage(float damage, int minSizeDamage, float maxSizeDamage, float minSize, float maxSize) {
+	public void StartAnimateDamage(float damage, float minSizeDamage, float maxSizeDamage, float minSize, float maxSize, bool isCriticalDamage,
+		string overrideText = null, Color? overrideColor = null) {
 		Color targetColor = new Color(0.6226415f, 0.6226415f, 0.6226415f,1);
 		
 
 		damage = Mathf.Max(damage, 0);
 		float damageNormalized = Mathf.Clamp((damage - minSizeDamage) / (maxSizeDamage - minSizeDamage), 0, 1);
-		
-		
 		targetColor = new Color(1, 1f - damageNormalized, 1f- damageNormalized,1);
+		
+		if (isCriticalDamage) {
+			targetColor = new Color(1, 0, 0,1);
+		}
+		
+		if (overrideColor != null) {
+			targetColor = overrideColor.Value;
+		}
 
 		float targetSize = Mathf.Lerp(minSize, maxSize, damageNormalized);
+		
+		if (isCriticalDamage) {
+			targetSize = maxSize;
+		}
+		//target size add minus 20% 
+		targetSize = targetSize * Random.Range(0.8f, 1.2f);
+
 
 		//get posX and posY
 		Vector3 pos = rectTransform.anchoredPosition;
@@ -43,7 +57,10 @@ public class DamageNumberViewController : DefaultPoolableGameObject {
 		
 		
 		float targetTime = duration * (Mathf.Clamp((damage / maxSizeDamage),0,1f) + 1);
-		text.text = damage.ToString();
+		if(!string.IsNullOrEmpty(overrideText))
+			text.text = overrideText;
+		else
+			text.text = damage.ToString();
 		text.color = targetColor;
 		text.DOFade(0, targetTime).OnComplete(RecycleToCache);
 

@@ -105,10 +105,9 @@ namespace Runtime.Weapons
                     CameraShakeData shakeData = new CameraShakeData(
                         Mathf.Lerp(0.2f, 0.5f, isScopedIn ? 1: 0),
                         0.2f,
-                        3,
-                        0f
+                        3
                     );
-                    cameraShaker.Shake(shakeData, CameraShakeBlendType.Override);
+                    cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
                     
                     BoundEntity.CurrentAmmo.Value--;
                 }

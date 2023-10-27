@@ -6,6 +6,7 @@ using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using MikroFramework.Singletons;
+using Polyglot;
 using UnityEngine;
 
 public class DamageNumberHUD : AbstractMikroController<MainGame>, ISingleton {
@@ -32,12 +33,28 @@ public class DamageNumberHUD : AbstractMikroController<MainGame>, ISingleton {
 	}
 
 
-	public void SpawnHUD(Vector3 worldPosition, float damage, int minSizeDamage = 5, float maxSizeDamage = 50,
+	public void SpawnHUD(Vector3 worldPosition, float damage, bool isCriticalDamage, int minSizeDamage = 5, float maxSizeDamage = 50,
 		float minSize = 1.7f, float maxSize = 3.5f) {
 		if (Vector3.Distance(worldPosition, mainCamera.transform.position) > hideDistance) {
 			return;
 		}
+
+		//string overrideText = null;
+		//if (isCriticalDamage) {
+			//overrideText = $"<color=yellow>{Localization.Get("HINT_CRITICAL")}</color>\n<color=red>{damage}</color>";
+		//}
+
+		SpawnHUD(worldPosition, damage, isCriticalDamage, minSizeDamage, maxSizeDamage, minSize, maxSize, null);
 		
+		if (isCriticalDamage) {
+			//SpawnHUD(worldPosition, damage, false, minSizeDamage, maxSizeDamage, 0.5f, 0.8f, null,
+			//	Color.red);
+		}
+	}
+
+	private void SpawnHUD(Vector3 worldPosition, float damage, bool isCriticalDamage, float minSizeDamage,
+		float maxSizeDamage,
+		float minSize, float maxSize, string overrideText, Color? overrideColor = null) {
 		GameObject hud = hudPool.Allocate();
 
 		hud.transform.SetParent(transform);
@@ -47,7 +64,8 @@ public class DamageNumberHUD : AbstractMikroController<MainGame>, ISingleton {
 		
 		DamageNumberViewController hudViewController = hud.GetComponent<DamageNumberViewController>();
 		hudViewController.OnRecycledAction += OnHudRecycled;
-		hudViewController.StartAnimateDamage(damage, minSizeDamage, maxSizeDamage, minSize, maxSize);
+		hudViewController.StartAnimateDamage(damage, minSizeDamage, maxSizeDamage, minSize, maxSize, isCriticalDamage,
+			overrideText, overrideColor);
 		spawnedHuds.Add(hudViewController, worldPosition);
 	}
 
