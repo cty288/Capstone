@@ -19,6 +19,7 @@ namespace Runtime.Temporary
 
         public GameObject explosion;
         private int explosionDamage;
+        private float explosionSize;
       
         void Start() {
 
@@ -42,11 +43,12 @@ namespace Runtime.Temporary
             start = transform.position;
             StartCoroutine(Curve());
         }
-        public void Init(Vector3 target, float tTime, Faction faction, int damage, GameObject bulletOwner)
+        public void Init(Vector3 target, float tTime, Faction faction, int damage, float size ,GameObject bulletOwner)
         {
             Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>(), -1);
             targetPos = target ;
             explosionDamage = damage;
+            explosionSize = size;
             travelTime = tTime;
             start = transform.position;
             StartCoroutine(Curve());
@@ -97,7 +99,7 @@ namespace Runtime.Temporary
             exp.transform.position = transform.position;
             exp.transform.rotation = Quaternion.identity;
             Debug.Log("IExplosionViewController: " + exp.GetComponent<IExplosionViewController>());
-            exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, bulletOwner,
+            exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, explosionSize,bulletOwner,
                 bulletOwner.GetComponent<ICanDealDamage>());
         }
     }

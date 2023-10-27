@@ -95,7 +95,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     b.transform.rotation = Quaternion.LookRotation(randomDestination - randomSpawnPoint);
 
                     b.GetComponent<Temporary.EnemyBomb>().Init(randomDestination, bulletTravelTime, enemyEntity.CurrentFaction,
-                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), gameObject);
+                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), 2,gameObject);
                 }
             }
             //parameter 8
@@ -121,7 +121,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     b.transform.rotation = Quaternion.LookRotation(randomDestination - randomSpawnPoint);
 
                     b.GetComponent<Temporary.EnemyBomb>().Init(randomDestination, bulletTravelTime, enemyEntity.CurrentFaction,
-                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), gameObject);
+                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), 2,gameObject);
                 }
             }
           
