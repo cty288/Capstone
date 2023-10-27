@@ -55,7 +55,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 // Interpolate the offset value over time.
                 float t = elapsedTime / 1f;
-                float newOffset = Mathf.Lerp(2.2f, 0.8f, t);
+                float newOffset = Mathf.Lerp(0.5f, 0.15f, t);
 
                 // Set the new offset value for the NavMeshAgent.
                 agent.baseOffset = newOffset;

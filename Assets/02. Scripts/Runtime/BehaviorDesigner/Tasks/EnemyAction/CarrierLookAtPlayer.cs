@@ -92,7 +92,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnEnd();
             
-            timer = 2f;
+            timer = 0.5f;
             StopAllCoroutines();
         }
     }
