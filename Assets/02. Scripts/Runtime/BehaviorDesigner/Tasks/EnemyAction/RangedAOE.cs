@@ -77,7 +77,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             for (int i = 0; i < 15; i++)
             {
                 GameObject b = pool.Allocate();
-                Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+                Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
                 // Generate a random point around the GameObject
                 //parameter 50
