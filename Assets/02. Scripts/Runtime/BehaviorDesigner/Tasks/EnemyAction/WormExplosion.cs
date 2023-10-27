@@ -35,7 +35,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                  GameObject explosion = pool.Allocate();
                  explosion.transform.position = this.gameObject.transform.position;
-                 explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"), gameObject,
+                 explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"), 2,gameObject,
                      gameObject.GetComponent<ICanDealDamage>());
                  return TaskStatus.Success;
 
