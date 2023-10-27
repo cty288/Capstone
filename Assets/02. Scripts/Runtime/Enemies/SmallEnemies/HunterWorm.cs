@@ -57,7 +57,7 @@ namespace Runtime.Enemies.SmallEnemies
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
             return new[] {
-                new AutoConfigCustomProperty("attack", null)
+                new AutoConfigCustomProperty("attack")
             };
         }
     }
@@ -109,6 +109,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override MikroAction WaitingForDeathCondition()
         {
+            
             return null;
         }
 

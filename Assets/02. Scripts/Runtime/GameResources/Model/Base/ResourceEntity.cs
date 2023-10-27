@@ -16,9 +16,27 @@ namespace Runtime.GameResources.Model.Base {
 	public enum ResourceCategory {
 		RawMaterial,
 		Bait,
-		Trap,
+		Item,
 		Weapon
 	}
+
+	[Serializable]
+	public struct ResourcePropertyDescription {
+		public string iconName;
+		public string localizedDescription;
+		
+		public ResourcePropertyDescription(string iconName, string localizedDescription) {
+			this.iconName = iconName;
+			this.localizedDescription = localizedDescription;
+		}
+		
+		
+	}
+	
+	
+	public delegate ResourcePropertyDescription GetResourcePropertyDescriptionGetter();
+	
+	
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		public IMaxStack GetMaxStackProperty();
 
@@ -40,6 +58,8 @@ namespace Runtime.GameResources.Model.Base {
 		/// Width in inventory. Use only 1 or 2. Only effective for weapons.
 		/// </summary>
 		public int Width { get; }
+		
+		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions();
 	}
 	
 	//3 forms
@@ -55,12 +75,22 @@ namespace Runtime.GameResources.Model.Base {
 		protected bool pickedBefore = false;
 		
 		//private IStackSize stackSizeProperty;
+		protected List<GetResourcePropertyDescriptionGetter> resourcePropertyDescriptionGetters =
+			new List<GetResourcePropertyDescriptionGetter>();
+		
+		private List<ResourcePropertyDescription> resourcePropertyDescriptions = new List<ResourcePropertyDescription>();
 
 		public override void OnAwake() {
 			base.OnAwake();
 			maxStackProperty = GetProperty<IMaxStack>();
+			OnRegisterResourcePropertyDescriptionGetters(ref resourcePropertyDescriptionGetters);
 		}
 
+		public virtual void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
+			
+		}
+		
+		
 		protected override void OnEntityRegisterAdditionalProperties() {
 			RegisterInitialProperty<IMaxStack>(new MaxStack());
 			//RegisterInitialProperty<IStackSize>(new StackSize());
@@ -126,6 +156,17 @@ namespace Runtime.GameResources.Model.Base {
 
 		[field: ES3Serializable]
 		public virtual int Width { get; } = 1;
+
+		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions() {
+			resourcePropertyDescriptions.Clear();
+			foreach (var getter in resourcePropertyDescriptionGetters) {
+				resourcePropertyDescriptions.Add(getter());
+			}
+
+			return resourcePropertyDescriptions;
+		}
+		
+		
 	}
 
 }

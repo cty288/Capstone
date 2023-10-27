@@ -1,6 +1,8 @@
-﻿using MikroFramework.Architecture;
+﻿using System.Collections.Generic;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -73,6 +75,18 @@ namespace Runtime.Weapons.Model.Base
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
         }
 
+        public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
+            base.OnRegisterResourcePropertyDescriptionGetters(ref list);
+            list.Add(() => new ResourcePropertyDescription("PropertyIconDamage", Localization.GetFormat(
+                "PROPERTY_ICON_DAMAGE",
+                baseDamageProperty.RealValue.Value.x + " - " + baseDamageProperty.RealValue.Value.y)));
+
+            list.Add(() => new ResourcePropertyDescription("PropertyIconAttackSpeed", Localization.GetFormat(
+                "PROPERTY_ICON_ATTACk_SPEED", attackSpeedProperty.RealValue.Value)));
+
+            list.Add(() => new ResourcePropertyDescription("PropertyIconAmmo", Localization.GetFormat(
+                "PROPERTY_ICON_AMMO", ammoSizeProperty.RealValue.Value)));
+        }
 
         public override ResourceCategory GetResourceCategory() {
             return ResourceCategory.Weapon;

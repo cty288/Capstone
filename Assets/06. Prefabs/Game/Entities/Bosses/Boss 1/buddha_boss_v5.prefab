@@ -572,16 +572,8 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
-  itemDropCollections:
-  - Rarity: 0
-    ItemDropInfos:
-    - prefabName: 
-      dropCountRange: {x: 0, y: 0}
-      dropChance: 0
-      setRarity: 0
-      rarityRange: {x: 0, y: 0}
-  <SpawnSizeCollider>k__BackingField: {fileID: 3233925990820170954}
   rarityBaseValueBuiltFromInspector: 1
+  <SpawnSizeCollider>k__BackingField: {fileID: 3233925990820170954}
   healthBarPrefabName: UIHealthBar
   animator: {fileID: 9139048715853524775}
   agent: {fileID: 8622081988033329013}
@@ -590,6 +582,7 @@ MonoBehaviour:
   shellCollider: {fileID: 1615029444691706074}
   shellHealthBarSpawnTransform: {fileID: 7868244109642936230}
   slamHitBox: {fileID: 6312755864176034211}
+  pedalHurboxes: []
 --- !u!135 &4101064571198115843
 SphereCollider:
   m_ObjectHideFlags: 0

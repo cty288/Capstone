@@ -54,7 +54,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private void OnTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer, [CanBeNull] HitData hitData) {
 			OnEntityTakeDamage(damage, currenthealth, damagedealer);
 			if (showDamageNumber && (hitData == null || hitData.ShowDamageNumber)) {
-				DamageNumberHUD.Singleton.SpawnHUD(hitData?.HitPoint ?? transform.position, damage);
+				DamageNumberHUD.Singleton.SpawnHUD(hitData?.HitPoint ?? transform.position, damage,
+					hitData?.Hurtbox?.DamageMultiplier > 1f);
 			}
 			if (currenthealth <= 0) {
 				OnEntityDie(damagedealer);

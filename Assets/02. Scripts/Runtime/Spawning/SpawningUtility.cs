@@ -21,13 +21,19 @@ namespace Runtime.Spawning {
 			BoxCollider boxCollider = creatureViewController.SpawnSizeCollider;
 			Vector3 prefabSize = boxCollider.size;
 
-			Transform playerTr = PlayerController.GetClosestPlayer(desiredPosition).transform;
-			NavMeshPath playerDetectPath = new NavMeshPath();
-			NavMesh.CalculatePath(desiredPosition, playerTr.position, -1, playerDetectPath);
-			if (playerDetectPath.status != NavMeshPathStatus.PathComplete) {
+			/*Transform playerTr = PlayerController.GetClosestPlayer(desiredPosition).transform;
+			if (!NavMesh.SamplePosition(playerTr.position, out navHit, 20.0f, -1)) {
 				usedAttempts++;
 				return Vector3.negativeInfinity; 
 			}
+			
+			NavMeshPath playerDetectPath = new NavMeshPath();
+			
+			NavMesh.CalculatePath(desiredPosition, navHit.position, -1, playerDetectPath);
+			if (playerDetectPath.status != NavMeshPathStatus.PathComplete) {
+				usedAttempts++;
+				return Vector3.negativeInfinity; 
+			}*/
 
 			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, -1)) {
 				var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,

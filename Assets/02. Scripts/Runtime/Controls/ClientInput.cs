@@ -69,9 +69,14 @@ namespace Runtime.Controls
         public DPunkInputs.SharedActions GetSharedActions() {
             return Inputs.Shared;
         }
+        
+        public DPunkInputs.DebugActions GetDebugActions() {
+            return  Inputs.Debug;
+        }
 
         public void EnablePlayerMaps() {
             Inputs.UI.Disable();
+            Inputs.Debug.Enable();
             Inputs.Player.Enable();
             Inputs.Shared.Enable();
             if (playerInput) {
@@ -87,6 +92,7 @@ namespace Runtime.Controls
         
         public void EnableUIMaps() {
             Inputs.Player.Disable();
+            Inputs.Debug.Enable();
             Inputs.UI.Enable();
             Inputs.Shared.Enable();
             if (playerInput) {

@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Runtime.GameResources.Model.Base;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +26,11 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
     [SerializeField] private GameObject rarityIndicator;
     
     private Transform rarityIndicatorTransform;
+    private List<GameObject> spawnedPropertyDescriptions = new List<GameObject>();
+    private Transform itemPropertyDescriptionPanel;
+    private SafeGameObjectPool propertyDescriptionItemPool;
+    private TMP_Text resourceDisplayedTypeText;
+    [SerializeField] private GameObject propertyDescriptionItemPrefab;
 
     public bool IsShowing => isShowing;
     public void Awake() {
@@ -32,15 +39,19 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         rectTransform = GetComponent<RectTransform>();
         icon = transform.Find("Icon").GetComponent<Image>();
         rarityIndicatorTransform = transform.Find("RarityBar");
+        itemPropertyDescriptionPanel = transform.Find("ItemPropertyDescription");
+        resourceDisplayedTypeText = transform.Find("ResourceDisplayedTypeText").GetComponent<TMP_Text>();
+        propertyDescriptionItemPool = GameObjectPoolManager.Singleton.CreatePool(propertyDescriptionItemPrefab, 5, 8);
+        
     }
     
-    public void SetContent(string name, string description, Sprite sprite, bool isLeftPivot, int rarity) {
+    public void SetContent(string name, string description, Sprite sprite, bool isLeftPivot, int rarity,
+    string resourceDisplayedType, List<ResourcePropertyDescription> propertyDescriptions) {
         
         nameText.text = name;
         descriptionText.text = description;
-        if (gameObject.activeInHierarchy) {
-            StartCoroutine(RebuildLayout());
-        }
+        resourceDisplayedTypeText.text = resourceDisplayedType;
+
         if (sprite != null) {
             icon.gameObject.SetActive(true);
             icon.sprite = sprite;
@@ -60,15 +71,41 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         for (int i = 0; i < rarity; i++) {
             Instantiate(rarityIndicator, rarityIndicatorTransform);
         }
+
+        if (propertyDescriptions is {Count: > 0}) {
+            itemPropertyDescriptionPanel.gameObject.SetActive(true);
+            SetPropertyDescriptions(propertyDescriptions);
+        }
+        else {
+            itemPropertyDescriptionPanel.gameObject.SetActive(false);
+        }
         
+        if (gameObject.activeInHierarchy) {
+            StartCoroutine(RebuildLayout());
+        }
         
     }
 
+    
+    private void SetPropertyDescriptions(List<ResourcePropertyDescription> propertyDescriptions) {
+        foreach (ResourcePropertyDescription propertyDescription in propertyDescriptions) {
+            GameObject propertyDescriptionItem = propertyDescriptionItemPool.Allocate();
+            propertyDescriptionItem.transform.SetParent(itemPropertyDescriptionPanel);
+            propertyDescriptionItem.transform.localScale = Vector3.one;
+            propertyDescriptionItem.GetComponent<PropertyDescriptionItemViewController>()
+                .SetContent(propertyDescription.localizedDescription, propertyDescription.iconName);
+            
+            spawnedPropertyDescriptions.Add(propertyDescriptionItem);
+        }
+    }
+    
     public void Show() {
         gameObject.SetActive(true);
         isShowing = true;
         StartCoroutine(RebuildLayout());
     }
+    
+    
     public void Hide() {
         gameObject.SetActive(false);
         isShowing = false;
@@ -76,6 +113,13 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
             GameObject child = rarityIndicatorTransform.GetChild(i).gameObject;
             Destroy(child);
         }
+        
+        foreach (var propertyDescription in spawnedPropertyDescriptions) {
+            GameObjectPoolManager.Singleton.Recycle(propertyDescription.gameObject);
+        }
+        spawnedPropertyDescriptions.Clear();
+        
+        itemPropertyDescriptionPanel.gameObject.SetActive(false);
     }
 
 
@@ -88,7 +132,7 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
 
     public override void OnRecycled() {
         base.OnRecycled();
-        SetContent("", "", null, true, 0);
+        SetContent("", "", null, true, 0, "",null);
     }
 
     public IArchitecture GetArchitecture() {

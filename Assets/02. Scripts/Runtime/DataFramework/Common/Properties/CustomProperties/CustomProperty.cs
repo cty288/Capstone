@@ -87,7 +87,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		private Action<ICustomProperty> onCustomDataChanged;
 
 		[ES3Serializable] protected string propertyName;
-		[ES3Serializable] protected IDescriptionGetter<ICustomProperty> descriptionGetter;
+		//[ES3Serializable] protected IDescriptionGetter<ICustomProperty> descriptionGetter;
 
 
 		public CustomProperty() : base(){}
@@ -98,7 +98,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		/// <param name="propertyName">The name of the property. This should be the same as the one on the config file</param>
 		/// <param name="descriptionGetter">In order to serialize the description, you need to use a descriptionGetter object to do the description stuff</param>
 		/// <param name="data">Manually specify which data are included, as well as their dependencies and modifiers</param>
-		public CustomProperty(string propertyName, IDescriptionGetter<ICustomProperty> descriptionGetter,
+		public CustomProperty(string propertyName, 
 			params ICustomDataProperty[] data) : base() {
 			if (data!=null) {
 				BaseValue = data.ToDictionary(GetKey);
@@ -107,7 +107,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 				BaseValue = new Dictionary<string, ICustomDataProperty>();
 			}
 			this.propertyName = propertyName;
-			this.descriptionGetter = descriptionGetter;
+			//this.descriptionGetter = descriptionGetter;
 			
 		}
 		
@@ -166,7 +166,8 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		}
 
 		public string OnGetDescription() {
-			return descriptionGetter.GetDescription(this);
+			//return descriptionGetter.GetDescription(this);
+			return null;
 		}
 
 		public ICustomDataProperty GetCustomDataProperty(string customDataName) {
@@ -261,7 +262,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		
 		public AutoConfigCustomProperty(): base(){}
 		
-		public AutoConfigCustomProperty(string CustomName, IDescriptionGetter<ICustomProperty> descriptionGetter = null) : base(CustomName, descriptionGetter) {
+		public AutoConfigCustomProperty(string CustomName) : base(CustomName) {
 			
 		}
 

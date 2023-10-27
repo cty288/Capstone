@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using MikroFramework;
 using MikroFramework.Architecture;
@@ -380,9 +381,14 @@ namespace MikroFramework.AudioKit
 
         public void StopSound(string clipName) {
             if (playingSounds.ContainsKey(clipName)) {
-                while (playingSounds[clipName].Count > 0) {
+                AudioSource[] audioSources = playingSounds[clipName].Select(info => info.AudioSource).ToArray();
+                /*while (playingSounds[clipName].Count > 0) {
                     StopSound(playingSounds[clipName][0].AudioSource);
+                }*/
+                foreach (AudioSource audioSource in audioSources) {
+                    StopSound(audioSource);
                 }
+                playingSounds.Remove(clipName);
             }else {
                 Debug.LogWarning("No sound clip named " + clipName + " is playing.");
             }
