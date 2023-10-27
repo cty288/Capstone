@@ -13,7 +13,8 @@ using Runtime.Temporary.Weapon;
 using Runtime.Weapons.ViewControllers.Base;
 using Runtime.Enemies.SmallEnemies;
 using MikroFramework.AudioKit;
-
+using DG.Tweening;
+using UnityEngine.AI;
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class DroneFire : EnemyAction<BeeEntity>
@@ -33,7 +34,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private int bulletCount;
         private float spawnInterval;
         private float bulletSpeed;
-
+        public float strafeDuration = 2.0f;
+        public float strafeDistance = 2.0f;
+        private NavMeshAgent agent;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -45,6 +48,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnStart();
             ended = false;
+            agent = this.gameObject.GetComponent<NavMeshAgent>();
             bulletCount = enemyEntity.GetCustomDataValue<int>("attack", "ammoSize");
             spawnInterval = enemyEntity.GetCustomDataValue<float>("attack", "spawnInterval");
             bulletSpeed = enemyEntity.GetCustomDataValue<float>("attack", "bulletSpeed");
@@ -63,10 +67,39 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             for (int i = 0; i < bulletCount; i++)
             {
                 SpawnBullet();
+                // 30% chance to strafe
+                if (Random.value < 0.3f)
+                {
+                    yield return StartCoroutine(StrafeCoroutine());
+                }
                 yield return new WaitForSeconds(spawnInterval);
             }
             ended = true;
         }
+        IEnumerator StrafeCoroutine()
+        {
+            Vector3 initialPosition = transform.position;
+            Vector3 strafeDirection = Random.Range(0, 2) == 0 ? Vector3.left : Vector3.right;
+            Vector3 targetPosition = initialPosition + strafeDirection * strafeDistance;
+
+            agent.SetDestination(targetPosition);
+
+            // Wait for the NavMeshAgent to reach the destination
+            while (agent.remainingDistance > 0.1f)
+            {
+                yield return null;
+            }
+
+            // Reverse strafe back to the initial position
+            agent.SetDestination(initialPosition);
+
+            // Wait for the NavMeshAgent to reach the initial position
+            while (agent.remainingDistance > 0.1f)
+            {
+                yield return null;
+            }
+        }
+        //make a Strafe coroutine and use tweening and easing so it moves slow -> fast -> slow 
         void SpawnBullet()
         {
 
