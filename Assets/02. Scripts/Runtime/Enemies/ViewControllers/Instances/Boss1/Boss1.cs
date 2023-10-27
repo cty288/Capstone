@@ -121,7 +121,7 @@ namespace Runtime.Enemies
         
         [SerializeField] private Transform shellHealthBarSpawnTransform;
 
-        [SerializeField] private HitBox slamHitBox;
+        [SerializeField] public HitBox slamHitBox;
         //[SerializeField] private GameObject shellHurbox;
         [SerializeField] private HurtBox[] pedalHurboxes;
         private HashSet<IHurtbox> hashedPedalHurboxes = new HashSet<IHurtbox>();

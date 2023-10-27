@@ -988,6 +988,15 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Heal"",
+                    ""type"": ""Button"",
+                    ""id"": ""894bc1c6-0c9d-45fe-b6d4-bce9d8e02960"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -999,6 +1008,17 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""SlowTime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4bd96d8-443c-48b3-8009-50cfd9cdff87"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1069,6 +1089,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_SlowTime = m_Debug.FindAction("SlowTime", throwIfNotFound: true);
+        m_Debug_Heal = m_Debug.FindAction("Heal", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1445,11 +1466,13 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Debug;
     private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
     private readonly InputAction m_Debug_SlowTime;
+    private readonly InputAction m_Debug_Heal;
     public struct DebugActions
     {
         private @DPunkInputs m_Wrapper;
         public DebugActions(@DPunkInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @SlowTime => m_Wrapper.m_Debug_SlowTime;
+        public InputAction @Heal => m_Wrapper.m_Debug_Heal;
         public InputActionMap Get() { return m_Wrapper.m_Debug; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1462,6 +1485,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @SlowTime.started += instance.OnSlowTime;
             @SlowTime.performed += instance.OnSlowTime;
             @SlowTime.canceled += instance.OnSlowTime;
+            @Heal.started += instance.OnHeal;
+            @Heal.performed += instance.OnHeal;
+            @Heal.canceled += instance.OnHeal;
         }
 
         private void UnregisterCallbacks(IDebugActions instance)
@@ -1469,6 +1495,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @SlowTime.started -= instance.OnSlowTime;
             @SlowTime.performed -= instance.OnSlowTime;
             @SlowTime.canceled -= instance.OnSlowTime;
+            @Heal.started -= instance.OnHeal;
+            @Heal.performed -= instance.OnHeal;
+            @Heal.canceled -= instance.OnHeal;
         }
 
         public void RemoveCallbacks(IDebugActions instance)
@@ -1541,5 +1570,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         void OnSlowTime(InputAction.CallbackContext context);
+        void OnHeal(InputAction.CallbackContext context);
     }
 }
