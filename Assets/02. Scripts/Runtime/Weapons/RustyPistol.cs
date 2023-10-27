@@ -101,6 +101,14 @@ namespace Runtime.Weapons
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
                     SetShoot(true);
+                    
+                    CameraShakeData shakeData = new CameraShakeData(
+                        Mathf.Lerp(0.2f, 0.5f, isScopedIn ? 1: 0),
+                        0.2f,
+                        3
+                    );
+                    cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
+                    
                     BoundEntity.CurrentAmmo.Value--;
                 }
                 
@@ -171,54 +179,6 @@ namespace Runtime.Weapons
             ChangeReloadStatus(false);
             AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
             BoundEntity.Reload();
-        }
-        
-        private IEnumerator ScopeIn()
-        {
-            float startTime = 0f;
-            float amimationTime = 0.1f;
-
-            while (startTime <= amimationTime)
-            {
-                model.transform.position = Vector3.Lerp(
-                    gunPositionTransform.position,
-                    scopeInPositionTransform.position,
-                    startTime / amimationTime);
-                
-                startTime += Time.deltaTime;
-                yield return null;
-            }
-            //model.transform.position = scopeInPositionTransform.position;
-            yield return null;
-            ChangeScopeStatus(true);
-        }
-
-        private IEnumerator ScopeOut(bool reloadAfter = false)
-        {
-            float startTime = 0f;
-            float amimationTime = 0.1f;
-
-            while (startTime <= amimationTime)
-            {
-                model.transform.position = Vector3.Lerp(
-                    scopeInPositionTransform.position,
-                    gunPositionTransform.position,
-                    startTime / amimationTime);
-
-                startTime += Time.deltaTime;
-                yield return null;
-            }
-
-            model.transform.position = gunPositionTransform.position;
-
-            yield return null;
-            ChangeScopeStatus(false);
-
-            if (reloadAfter)
-            {
-                // isReloading = true;
-                StartCoroutine(ReloadChangeModel());
-            }
         }
 
         public override void OnRecycled() {

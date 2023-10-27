@@ -37,7 +37,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float bulletSpeed;
         private float bulletAccuracy;
         private GameObject player;
-        private float timer = 2f;
+        private float timer = 0.5f;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -91,7 +91,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnEnd();
 
-            timer = 2f;
+            timer = 0.5f;
             StopAllCoroutines();
         }
     }
