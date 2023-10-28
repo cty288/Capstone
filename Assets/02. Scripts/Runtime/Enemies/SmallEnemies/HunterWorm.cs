@@ -91,7 +91,7 @@ namespace Runtime.Enemies.SmallEnemies
         protected override void FixedUpdate() {
             base.FixedUpdate();
             if (true) { //do nothing to update physics
-              
+              //from unity documentation: If you move Colliders from scripting or by animation, you need to allow at least one FixedUpdate to be executed so that the physics library can update before a Raycast will hit the Collider at its new position.
             }
         }
 

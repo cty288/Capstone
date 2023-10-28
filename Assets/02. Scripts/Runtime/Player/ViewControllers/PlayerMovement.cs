@@ -270,7 +270,7 @@ namespace Runtime.Player.ViewControllers
             if (grounded)
                 rb.drag = playerEntity.GetGroundDrag().RealValue;
             else
-                rb.drag = 2f;
+                rb.drag = playerEntity.GetAirDrag().RealValue;
             MovePlayer();
             
         }
@@ -382,7 +382,7 @@ namespace Runtime.Player.ViewControllers
             {
                 state = MovementState.air;
                 this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
-                desiredMoveSpeed = 10;
+                desiredMoveSpeed = playerEntity.GetAirSpeed().RealValue;
             }
 
             // check if desiredMoveSpeed has changed drastically

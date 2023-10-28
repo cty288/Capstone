@@ -68,7 +68,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
     SubShader
     {
         
-        Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "Queue" = "Geometry" "IgnoreProjector" = "True" "ShaderModel"="4.5"}
+        Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "Queue" = "Geometry" "ShaderModel"="4.5"}
         LOD 300
         
 
