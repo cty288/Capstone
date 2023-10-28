@@ -31,6 +31,7 @@ namespace MikroFramework.Utilities
         private float timer = 0;
 
         public Action<Collider> OnEnter = (collider) => { };
+        public Action<Collider> OnUpdate = (collider) => { };
         public Action<Collider> OnExit = (collider) => { };
 
         private void Update()
@@ -78,6 +79,8 @@ namespace MikroFramework.Utilities
                 enterRC.Retain();
                 colliders.Add(other);
                 OnEnter?.Invoke(other);
+                
+                OnUpdate?.Invoke(other);
             }
         }
 

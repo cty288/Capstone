@@ -31,9 +31,6 @@ namespace Runtime.Utilities.Collision
             _sphereCollider = _collider as SphereCollider;
         }
         
-        
-
-        
         public override void TriggerCheckHit(Collider c)
         {
             // Debug.Log("trigger hit detected: " + c.name);
