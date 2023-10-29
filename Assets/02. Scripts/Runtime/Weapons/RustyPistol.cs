@@ -55,11 +55,11 @@ namespace Runtime.Weapons
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
-            gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
         }
 
         protected override void OnEntityStart() {
             base.OnEntityStart();
+            gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
             gunAmmoVisual.Init(BoundEntity);
             
             hipFireCameraPosition = new Vector3(-0.04f,-0.16f,-0.1f);
