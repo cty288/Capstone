@@ -550,7 +550,7 @@ MonoBehaviour:
   scopeInPositionTransform: {fileID: 6163880320635768847}
   defaultGunModel: {fileID: 5984395739156674630}
   reloadGunModel: {fileID: 2859793562509966043}
-  animator: {fileID: 0}
+  animator: {fileID: 6628594590863582460}
   reloadAnimationLength: 2.9
   overrideName: RustyPistol
 --- !u!54 &1634876173769045248
@@ -953,22 +953,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6903369406165173527}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3471986910280228719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5984395739156674630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cde09e9f11b35d46924efa9a360650e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderers:
-  - {fileID: 8132201018651343866}
-  - {fileID: 7834493249518167321}
-  gunBarrelIndicator: {fileID: 2100000, guid: 3f156aadd9fe9b848a447b1dcc065f17, type: 2}
 --- !u!95 &6628594590863582460
 Animator:
   serializedVersion: 5
@@ -990,6 +974,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3471986910280228719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984395739156674630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cde09e9f11b35d46924efa9a360650e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 8132201018651343866}
+  - {fileID: 7834493249518167321}
+  gunBarrelIndicator: {fileID: 2100000, guid: 3f156aadd9fe9b848a447b1dcc065f17, type: 2}
 --- !u!4 &6361062461729874684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 352395993ad9be343b7425d90f9b7088,
