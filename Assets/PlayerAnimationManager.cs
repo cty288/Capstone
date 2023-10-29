@@ -40,10 +40,10 @@ public class PlayerAnimationManager : EntityAttachedViewController<PlayerEntity>
         switch (eventName)
         {
             case "ReloadStart":
-                AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+                //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
                 break;
             case "ReloadEnd":
-                AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
+                //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
                 break;
             default:
                 break;
