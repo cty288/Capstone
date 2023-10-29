@@ -55,6 +55,8 @@ namespace Runtime.DataFramework.Properties
 		starting_credits,
 		credits_per_second,
 		spawn_timer,
-		item_drop_collections
+		item_drop_collections,
+		air_speed,
+		air_drag
 	}
 }
