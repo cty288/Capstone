@@ -58,7 +58,7 @@ namespace Runtime.Temporary
                     closestPlayer = player;
                 }
             }
-
+            
             return closestPlayer;
         }
         

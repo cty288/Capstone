@@ -17,8 +17,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	public interface IExplosionViewController : IController, IHitResponder {
 		int Damage { get; }
 		
+		float Size { get; }
 
-		public void Init(Faction faction, int damage, GameObject bulletOwnerGo, ICanDealDamage owner);
+		public void Init(Faction faction, int damage,float size, GameObject bulletOwnerGo, ICanDealDamage owner);
 	}
 	
 	
@@ -42,7 +43,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
 		
-
+		public float Size { get; protected set; }
 		[SerializeField] private float autoRecycleTime = 2f;
 		private Coroutine autoRecycleCoroutine = null;
 		
@@ -55,9 +56,11 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			particleSystems.ForEach(p => p.Stop());
 		}
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner) {
+		public void Init(Faction faction, int damage, float size,GameObject bulletOwner, ICanDealDamage owner) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
+			Size = size;
+			GetComponent<SphereCollider>().radius = size;
 			hitBox.StartCheckingHits(damage);
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());

@@ -71,9 +71,9 @@ namespace Runtime.Spawning {
 							return navHit.position;
 						}
 					}
-					else {
-						Debug.Log("Spawn failed: path not found. Attempt number: " + usedAttempts);
-					}
+					// else {
+					// 	Debug.Log("Spawn failed: path not found. Attempt number: " + usedAttempts);
+					// }
 				}
 				
 				currentSearchRadius += increment;

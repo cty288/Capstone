@@ -172,6 +172,7 @@ namespace Runtime.Utilities.Collision
                     Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
                     
                     GameObject bulletHole = bulletHolesPool.Get();
+                    // GameObject bulletHole
                     bulletHole.transform.position = spawnPosition;  
                     bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
                     bulletHole.transform.Rotate(Vector3.forward, Random.Range(0f, 360f));
@@ -192,6 +193,7 @@ namespace Runtime.Utilities.Collision
         private IEnumerator FadeBullet(GameObject bulletHole)
         {
             yield return new WaitForSeconds(bulletHoleFadeTime);
+            Debug.Log("release bullet");
             bulletHolesPool.Release(bulletHole);
         }
         
