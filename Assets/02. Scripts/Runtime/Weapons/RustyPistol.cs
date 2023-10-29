@@ -1,10 +1,17 @@
 using System.Collections;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
+using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using Polyglot;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources.Model.Base;
+using Runtime.Player;
+using Runtime.Temporary.Weapon;
+using Runtime.Utilities.AnimationEvents;
+using Runtime.Utilities.AnimatorSystem;
+using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.ViewControllers.Base;
@@ -48,13 +55,20 @@ namespace Runtime.Weapons
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         private GunAmmoVisual gunAmmoVisual;
-
+        [SerializeField] private Animator animator;
+        [SerializeField] private float reloadAnimationLength;
+        private AnimationSMBManager animationSMBManager;
+        
         [Header("Debug")]
         [SerializeField] private string overrideName = "RustyPistol";
+        
         protected override void Awake() {
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
+            gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
+            animationSMBManager = GetComponent<AnimationSMBManager>();
+            animationSMBManager.Event.AddListener(OnAnimationEvent);
         }
 
         protected override void OnEntityStart() {
@@ -73,6 +87,23 @@ namespace Runtime.Weapons
         protected override void OnBindEntityProperty() {}
         
 
+        
+        protected void OnAnimationEvent(string eventName)
+        {
+            switch (eventName)
+            {
+                case "ReloadStart":
+                    AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+                    break;
+                case "ReloadEnd":
+                    ChangeReloadStatus(false);
+                    AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
+                    BoundEntity.Reload();
+                    break;
+                default:
+                    break;
+            }
+        }
         public override void OnItemUse() {
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
@@ -147,13 +178,13 @@ namespace Runtime.Weapons
 
         private IEnumerator ReloadChangeModel() {
             ChangeReloadStatus(true);
-            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
-
+            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
+            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
+            animator.SetTrigger("Reload");
+            
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-
-            ChangeReloadStatus(false);
-            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
-            BoundEntity.Reload();
+            
         }
 
         public override void OnRecycled() {
