@@ -58,6 +58,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             GameObject charge = pool.Allocate();
             var posToSpawn = this.gameObject.transform.up * 1 + this.transform.position;
             charge.transform.position = posToSpawn;
+<<<<<<< Updated upstream
+=======
+            
+>>>>>>> Stashed changes
             yield return null;
         }
         public override void OnEnd()
