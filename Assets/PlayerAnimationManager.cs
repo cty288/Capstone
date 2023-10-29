@@ -28,10 +28,10 @@ public class PlayerAnimationManager : EntityAttachedViewController<PlayerEntity>
     
     private void OnPlayerAnimationEvent(PlayerAnimationEvent e)
     {
-        Debug.Log(e.parameterName + e.flag);
+        // Debug.Log(e.parameterName + e.flag);
         if (e.flag == 2)
         {
-            Debug.Log("shootanim");
+            // Debug.Log("shootanim");
             playerAnim.SetTrigger(e.parameterName);
         }
         else
