@@ -14,7 +14,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         [Header("Aesthetic")]
         public TrailRenderer trailRenderer;
-        public VisualEffect bulletVFX;
+        public VisualEffect[] bulletVFX;
         
         private HitDetectorInfo hitDetectorInfo;
         
@@ -27,7 +27,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             {
                 camera = cam,
                 layer = layer,
-                launchPoint = bulletVFX.transform,
+                launchPoint = bulletVFX[0].transform,
                 weapon = BoundEntity
             };
         }
