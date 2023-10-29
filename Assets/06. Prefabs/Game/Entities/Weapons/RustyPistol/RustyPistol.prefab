@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &127109117617547577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2326392153213886589}
+  m_Layer: 0
+  m_Name: GunDefaultPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2326392153213886589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127109117617547577}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8018458492895172928}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2716148643711660961
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +250,37 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &3469254702204404491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 234479337650977219}
+  m_Layer: 0
+  m_Name: GunScopedPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &234479337650977219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3469254702204404491}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.3269992, y: -0.08499998, z: -0.18700075}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8018458492895172928}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4243372108615127244
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +316,7 @@ Transform:
   - {fileID: 4453400075991989290}
   - {fileID: 6361062461729874684}
   m_Father: {fileID: 8018458492895172928}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6653641076029682702
 GameObject:
@@ -287,7 +349,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8018458492895172928}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6447683683408464643
 Rigidbody:
@@ -434,6 +496,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 234479337650977219}
+  - {fileID: 2326392153213886589}
   - {fileID: 4214410396336741472}
   - {fileID: 277017447966005168}
   - {fileID: 3620443720334071876}
@@ -484,10 +548,8 @@ MonoBehaviour:
     type: 3}
   trailRenderer: {fileID: 8009820199792817655}
   bulletVFX: {fileID: 6895374929032582147}
-  gunPositionTransform: {fileID: 4909081000382950346, guid: 00000000000000000000000000000000,
-    type: 0}
-  scopeInPositionTransform: {fileID: 6163880320635768847, guid: 00000000000000000000000000000000,
-    type: 0}
+  gunPositionTransform: {fileID: 234479337650977219}
+  scopeInPositionTransform: {fileID: 2326392153213886589}
   defaultGunModel: {fileID: 3928959025273857680}
   reloadGunModel: {fileID: 3928959025273857680}
   animator: {fileID: 9011050510399414913}
@@ -581,7 +643,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8018458492895172928}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8587109213290839777
 MonoBehaviour:
