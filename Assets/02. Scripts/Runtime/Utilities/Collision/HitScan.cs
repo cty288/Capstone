@@ -12,6 +12,7 @@ using Runtime.Weapons.Model.Base;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.VFX;
 
 namespace Runtime.Utilities.Collision
 {
@@ -25,6 +26,9 @@ namespace Runtime.Utilities.Collision
 
         private TrailRenderer _tr;
         private ObjectPool<TrailRenderer> trailPool;
+
+        private VisualEffect _vfx;
+        
         public GameObject bulletHoleDecal;
         public ObjectPool<GameObject> bulletHolesPool;
         public float bulletHoleFadeTime = 5f;
@@ -36,6 +40,8 @@ namespace Runtime.Utilities.Collision
         private IWeaponEntity _weapon;
         private bool showDamageNumber = true;
 
+        private bool _useVFX = true;
+
         private RaycastHit[] _hits = new RaycastHit[10];
         public HitScan(IHitResponder hitResponder, Faction faction, TrailRenderer tr, bool showDamageNumber = true)
         {
@@ -44,6 +50,19 @@ namespace Runtime.Utilities.Collision
             _tr = tr;
             this.showDamageNumber = showDamageNumber;
             trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
+            _useVFX = false;
+            bulletHolesPool = new ObjectPool<GameObject>(CreateBulletHole, OnTakeFromPool, 
+                OnReturnedToPool, OnDestroyPoolObject, true, 10, 20);
+            bulletHoleDecal = this.GetUtility<ResLoader>().LoadSync<GameObject>("BulletHoleDecal");
+        }
+        
+        public HitScan(IHitResponder hitResponder, Faction faction, VisualEffect vfx, bool showDamageNumber = true)
+        {
+            this.hitResponder = hitResponder;
+            CurrentFaction.Value = faction;
+            _vfx = vfx;
+            _useVFX = true;
+            this.showDamageNumber = showDamageNumber;
             bulletHolesPool = new ObjectPool<GameObject>(CreateBulletHole, OnTakeFromPool, 
                 OnReturnedToPool, OnDestroyPoolObject, true, 10, 20);
             bulletHoleDecal = this.GetUtility<ResLoader>().LoadSync<GameObject>("BulletHoleDecal");
@@ -132,15 +151,20 @@ namespace Runtime.Utilities.Collision
                     // hit something with hurtbox
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
-                    CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, hit));
+                    if(!_useVFX)
+                        CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, hit));
+                    else
+                        PlayBulletVFX(_launchPoint.position, hit.point);
                     break;
                 }
                 else
                 {
                     Debug.Log("no hurtbox");
                     // hit something without hurtbox, e.g. wall
-                    CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, new RaycastHit()));
-                    
+                    if(!_useVFX)
+                        CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, new RaycastHit()));
+                    else 
+                        PlayBulletVFX(_launchPoint.position, hit.point);
                     float positionMultiplier = 0.2f;
                     float spawnX = hit.point.x - hit.normal.x * positionMultiplier;
                     float spawnY = hit.point.y - hit.normal.y * positionMultiplier;
@@ -159,7 +183,10 @@ namespace Runtime.Utilities.Collision
 
             if (!hitAnything) {
                 //hit nothing
-                CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
+                if(!_useVFX)
+                    CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
+                else
+                    PlayBulletVFX(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue));
             }
         }
 
@@ -184,6 +211,20 @@ namespace Runtime.Utilities.Collision
         void OnDestroyPoolObject(GameObject obj)
         {
             GameObject.Destroy(obj);
+        }
+
+        protected void PlayBulletVFX(Vector3 startPoint, Vector3 endPoint)
+        {
+            Vector3 dir = endPoint - startPoint;
+            float bulletSpeed = _weapon.GetBulletSpeed().GetRealValue().Value;
+            float maxDistance = Vector3.Distance(startPoint, endPoint);
+            
+            _vfx.transform.rotation = Quaternion.identity;
+            
+            _vfx.SetVector3("FireVector", dir);
+            _vfx.SetFloat("BulletSpeed", bulletSpeed);
+            _vfx.SetFloat("MaxDistance", maxDistance);
+            _vfx.Play();
         }
         
         private IEnumerator PlayTrail(Vector3 startPoint, Vector3 endPoint, RaycastHit hit)

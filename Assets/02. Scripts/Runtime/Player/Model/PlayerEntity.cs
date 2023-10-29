@@ -24,6 +24,9 @@ namespace Runtime.Player {
 		ISlideForce GetSlideForce();
 		IWallRunForce GetWallRunForce();
 
+		IAirSpeedProperty GetAirSpeed();
+		
+		IAirDrag GetAirDrag();
 		MovementState GetMovementState();
 		void SetMovementState(MovementState state);
 		
@@ -50,6 +53,8 @@ namespace Runtime.Player {
 		private IMaxSlideTime maxSlideTime;
 		private ISlideForce slideForce;
 		private IWallRunForce wallRunForce;
+		private IAirDrag airDrag;
+		private IAirSpeedProperty airSpeed;
 
 		private MovementState movementState;
 		private bool scopedIn;
@@ -86,6 +91,8 @@ namespace Runtime.Player {
 			RegisterInitialProperty<ISlideForce>(new SlideForce());
 			
 			RegisterInitialProperty<IWallRunForce>(new WallRunForce());
+			RegisterInitialProperty<IAirSpeedProperty>(new AirSpeed());
+			RegisterInitialProperty<IAirDrag>(new AirDrag());
 		}
 
 
@@ -105,6 +112,8 @@ namespace Runtime.Player {
 			maxSlideTime = GetProperty<IMaxSlideTime>();
 			slideForce = GetProperty<ISlideForce>();
 			wallRunForce = GetProperty<IWallRunForce>();
+			airSpeed = GetProperty<IAirSpeedProperty>();
+			airDrag = GetProperty<IAirDrag>();
 		}
 
 		public IAccelerationForce GetAccelerationForce() {
@@ -146,6 +155,14 @@ namespace Runtime.Player {
 		
 		public IWallRunForce GetWallRunForce() {
 			return wallRunForce;
+		}
+
+		public IAirSpeedProperty GetAirSpeed() {
+			return airSpeed;
+		}
+
+		public IAirDrag GetAirDrag() {
+			return airDrag;
 		}
 
 		public MovementState GetMovementState()
