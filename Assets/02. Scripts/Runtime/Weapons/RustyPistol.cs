@@ -73,9 +73,12 @@ namespace Runtime.Weapons
         
 
         private GunAmmoVisual gunAmmoVisual;
+        [SerializeField] private Animator animator;
+        [SerializeField] private float reloadAnimationLength;
         
         [Header("Debug")]
         [SerializeField] private string overrideName = "RustyPistol";
+        
         protected override void Awake() {
             base.Awake();
             playerActions = ClientInput.Singleton.GetPlayerActions();
@@ -172,12 +175,15 @@ namespace Runtime.Weapons
         private IEnumerator ReloadChangeModel() {
             //isReloading = true;
             ChangeReloadStatus(true);
-            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
-
+            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
+            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
+            animator.SetTrigger("Reload");
+            
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
 
             ChangeReloadStatus(false);
-            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
+            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
             BoundEntity.Reload();
         }
 

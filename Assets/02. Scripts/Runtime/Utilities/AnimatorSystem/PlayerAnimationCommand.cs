@@ -6,20 +6,28 @@ using UnityEngine;
 
 namespace Runtime.Utilities.AnimatorSystem
 {
+    public enum AnimationEventType
+    {
+        Trigger,
+        Bool,
+        Float
+    }
     public struct PlayerAnimationEvent
     {
         public string parameterName;
-        public int flag;
-        
+        public AnimationEventType type;
+        public float flag;
+
         // flag 0 = false, 1= true, 2 = trigger
     }
     public class PlayerAnimationCommand : AbstractCommand<PlayerAnimationCommand> 
     {
         private string parameterName;
-        private int flag;
+        private AnimationEventType type;
+        private float flag;
         protected override void OnExecute()
         {
-            this.SendEvent<PlayerAnimationEvent>(new PlayerAnimationEvent(){parameterName = parameterName,flag=flag});
+            this.SendEvent<PlayerAnimationEvent>(new PlayerAnimationEvent(){parameterName = parameterName,type=type,flag=flag});
         }
 
         public PlayerAnimationCommand()
@@ -27,10 +35,11 @@ namespace Runtime.Utilities.AnimatorSystem
             
         }
 
-        public static PlayerAnimationCommand Allocate(string parameterName,int flag)
+        public static PlayerAnimationCommand Allocate(string parameterName,AnimationEventType type,float flag)
         {
             PlayerAnimationCommand command = SafeObjectPool<PlayerAnimationCommand>.Singleton.Allocate();
             command.parameterName = parameterName;
+            command.type = type;
             command.flag = flag;
             return command;
         }
