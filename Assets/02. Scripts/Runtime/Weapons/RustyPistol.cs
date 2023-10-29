@@ -15,6 +15,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
 using Runtime.Temporary.Weapon;
+using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
@@ -75,6 +76,7 @@ namespace Runtime.Weapons
         private GunAmmoVisual gunAmmoVisual;
         [SerializeField] private Animator animator;
         [SerializeField] private float reloadAnimationLength;
+        private AnimationSMBManager animationSMBManager;
         
         [Header("Debug")]
         [SerializeField] private string overrideName = "RustyPistol";
@@ -84,6 +86,8 @@ namespace Runtime.Weapons
             playerActions = ClientInput.Singleton.GetPlayerActions();
             cam = Camera.main;
             gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
+            animationSMBManager = GetComponent<AnimationSMBManager>();
+            animationSMBManager.Event.AddListener(OnAnimationEvent);
         }
 
         protected override void OnEntityStart() {
@@ -98,6 +102,20 @@ namespace Runtime.Weapons
         protected override void OnBindEntityProperty() {}
         
 
+        
+        protected void OnAnimationEvent(string eventName)
+        {
+            switch (eventName)
+            {
+                case "ReloadEnd":
+                    ChangeReloadStatus(false);
+                    //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
+                    BoundEntity.Reload();
+                    break;
+                default:
+                    break;
+            }
+        }
         public override void OnItemUse() {
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
@@ -181,10 +199,7 @@ namespace Runtime.Weapons
             animator.SetTrigger("Reload");
             
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-
-            ChangeReloadStatus(false);
-            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
-            BoundEntity.Reload();
+            
         }
 
         public override void OnRecycled() {
