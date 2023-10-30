@@ -10,11 +10,12 @@ namespace a
         private GameObject player; // Reference to the player's transform
         private float rotationSpeed;
         [SerializeField] private float maxRotationAngle = 60f;
-
+        private float timer = 0.5f;
 
         private void Update()
         {
-            if (player != null)
+            timer -= Time.deltaTime;
+            if (player != null && timer > 0)
             {
                 Vector3 offset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 Vector3 directionToPlayer = (player.transform.position + offset - transform.position).normalized;
@@ -33,6 +34,10 @@ namespace a
                 }
 
                 transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+            }
+            else
+            {
+                this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
             }
             
         }
@@ -56,7 +61,7 @@ namespace a
 
         protected override void OnBulletRecycled()
         {
-            
+            timer = 0.5f;
         }
 
         protected override void OnBulletReachesMaxRange()

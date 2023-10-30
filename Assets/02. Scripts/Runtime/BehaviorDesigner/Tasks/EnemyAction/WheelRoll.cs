@@ -3,14 +3,15 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using MikroFramework;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 using Runtime.Temporary.Weapon;
 using Runtime.Weapons.ViewControllers.Base;
-using Cinemachine;
 using Runtime.Enemies.SmallEnemies;
+using MikroFramework.AudioKit;
 using UnityEngine.AI;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
@@ -24,22 +25,37 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public float timer = 3f;
         public SharedGameObject player; // Reference to the player GameObject
         private NavMeshAgent agent;
-        private float extensionDistance;
+        private float extensionDistance = 5f;
         private bool moving;
         private Color startEmissionColor;
-
+        public SharedGameObject explosion;
+        private SafeGameObjectPool pool;
         // Start is called before the first frame update
+        private float explosionTimer = 0.4f;
         public override void OnStart()
         {
             
             agent = this.gameObject.GetComponent<NavMeshAgent>();
             agent.ResetPath();
             agent.speed = 9f;
+            pool = GameObjectPoolManager.Singleton.CreatePool(explosion.Value, 20, 50);
         }
 
         // Update is called once per frame
         public override TaskStatus OnUpdate()
         {
+            explosionTimer -= Time.deltaTime;
+            if(explosionTimer < 0)
+            {
+                explosionTimer = 0.4f;
+                AudioSource audio = AudioSystem.Singleton.Play3DSound("Drone_Explosion", this.gameObject.transform.position);
+                audio.volume = 0.5f;
+                Debug.Log(audio.volume);
+                GameObject explosion = pool.Allocate();
+                explosion.transform.position = this.gameObject.transform.position;
+                explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"), gameObject,
+                    gameObject.GetComponent<ICanDealDamage>());
+            }
             if (player != null && moving == false) // Check if the player reference is valid
             {
                 // Calculate a vector from the enemy to the player

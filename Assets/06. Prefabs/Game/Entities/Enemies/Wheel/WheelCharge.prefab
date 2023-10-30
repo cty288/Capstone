@@ -45,8 +45,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3896892641980865687}
   serializedVersion: 8
-  lengthInSec: 3
-  simulationSpeed: 8
+  lengthInSec: 3.03
+  simulationSpeed: 12
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -289,7 +289,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.8
+      scalar: 1.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -752,7 +752,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 8
+      value: 12
       mode: 0
       spread: 0
       speed:
@@ -4825,7 +4825,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3896892641980865687}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 4.9606338
   m_Height: 7.548276
@@ -4880,5 +4880,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  autoRecycleTime: 5
+  autoRecycleTime: 2
   penetrateSameFaction: 0
