@@ -1,5 +1,6 @@
 using System.Collections;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using Polyglot;
@@ -76,7 +77,7 @@ namespace Runtime.Weapons
             gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
             gunAmmoVisual.Init(BoundEntity);
             
-            hipFireCameraPosition = new Vector3(-0.04f,-0.16f,-0.1f);
+            hipFireCameraPosition = new Vector3(-0.04f,-0.13f,-0.25f);
             adsCameraPosition = new Vector3(-0.003f, -0.123f, 0f);
         }
 
@@ -144,11 +145,11 @@ namespace Runtime.Weapons
             if (IsScopedIn) {
                 ChangeScopeStatus(false);
                 //time is from animation
-                fpsCamera.transform.localPosition = Vector3.Lerp(fpsCamera.transform.localPosition, hipFireCameraPosition, 0.167f);
+                fpsCamera.transform.DOLocalMove(hipFireCameraPosition, 0.167f);
             }
             else {
                 ChangeScopeStatus(true);
-                fpsCamera.transform.localPosition = Vector3.Lerp(fpsCamera.transform.localPosition, adsCameraPosition, 0.167f);
+                fpsCamera.transform.DOLocalMove(adsCameraPosition, 0.167f);
             }
         }
 

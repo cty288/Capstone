@@ -106,7 +106,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             
             if (previsScope != _isScopedIn) {
                 crossHairViewController?.OnScope(_isScopedIn);
-                fpsCamera.transform.localPosition = _isScopedIn ? adsCameraPosition : hipFireCameraPosition;
+                // fpsCamera.transform.localPosition = _isScopedIn ? adsCameraPosition : hipFireCameraPosition;
                 AudioSystem.Singleton.Play2DSound("Pistol_Aim");
             }
            
