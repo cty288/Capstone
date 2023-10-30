@@ -95,6 +95,7 @@ namespace Runtime.Inventory.ViewController {
         }
 
         private void OnEnable() {
+            slotHoverBG.color = new Color(slotHoverBG.color.r, slotHoverBG.color.g, slotHoverBG.color.b, 0);
             StopDragImmediately();
         }
 
@@ -389,15 +390,25 @@ namespace Runtime.Inventory.ViewController {
         }
 
         public void OnPointerExit(PointerEventData eventData) {
+            PointerExit(false);
+        }
+
+        protected void PointerExit(bool closeImmediately) {
             if (slotHoverBG) {
-                slotHoverBG.DOFade(0, 0.2f);
+                if (!closeImmediately) {
+                    slotHoverBG.DOFade(0, 0.2f);
+                }
+                else {
+                    slotHoverBG.color = new Color(slotHoverBG.color.r, slotHoverBG.color.g, slotHoverBG.color.b, 0);
+                }
+                
             }
             
-           ResourceSlot.currentHoveredSlot = null;
-           if (currentDescriptionPanel) {
-               currentDescriptionPanel.Hide();
-               DespawnDescriptionPanel();
-           }
+            ResourceSlot.currentHoveredSlot = null;
+            if (currentDescriptionPanel) {
+                currentDescriptionPanel.Hide();
+                DespawnDescriptionPanel();
+            }
         }
 
         private void Update() {
@@ -410,7 +421,7 @@ namespace Runtime.Inventory.ViewController {
 
 
         public void OnInventoryUIClosed() {
-            OnPointerExit(default);
+            PointerExit(true);
             StopDragImmediately();
             
         }
