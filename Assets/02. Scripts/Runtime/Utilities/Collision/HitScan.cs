@@ -27,7 +27,8 @@ namespace Runtime.Utilities.Collision
         private TrailRenderer _tr;
         private ObjectPool<TrailRenderer> trailPool;
 
-        private VisualEffect _vfx;
+        private VisualEffect[] _vfx;
+        
         
         public GameObject bulletHoleDecal;
         public ObjectPool<GameObject> bulletHolesPool;
@@ -56,7 +57,7 @@ namespace Runtime.Utilities.Collision
             bulletHoleDecal = this.GetUtility<ResLoader>().LoadSync<GameObject>("BulletHoleDecal");
         }
         
-        public HitScan(IHitResponder hitResponder, Faction faction, VisualEffect vfx, bool showDamageNumber = true)
+        public HitScan(IHitResponder hitResponder, Faction faction, VisualEffect[] vfx, bool showDamageNumber = true)
         {
             this.hitResponder = hitResponder;
             CurrentFaction.Value = faction;
@@ -172,6 +173,7 @@ namespace Runtime.Utilities.Collision
                     Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
                     
                     GameObject bulletHole = bulletHolesPool.Get();
+                    // GameObject bulletHole
                     bulletHole.transform.position = spawnPosition;  
                     bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
                     bulletHole.transform.Rotate(Vector3.forward, Random.Range(0f, 360f));
@@ -192,6 +194,7 @@ namespace Runtime.Utilities.Collision
         private IEnumerator FadeBullet(GameObject bulletHole)
         {
             yield return new WaitForSeconds(bulletHoleFadeTime);
+            Debug.Log("release bullet");
             bulletHolesPool.Release(bulletHole);
         }
         
@@ -216,13 +219,16 @@ namespace Runtime.Utilities.Collision
             Vector3 dir = endPoint - startPoint;
             float bulletSpeed = _weapon.GetBulletSpeed().GetRealValue().Value;
             float maxDistance = Vector3.Distance(startPoint, endPoint);
-            
-            _vfx.transform.rotation = Quaternion.identity;
-            
-            _vfx.SetVector3("FireVector", dir);
-            _vfx.SetFloat("BulletSpeed", bulletSpeed);
-            _vfx.SetFloat("MaxDistance", maxDistance);
-            _vfx.Play();
+
+            foreach (var vfx in _vfx)
+            {
+                vfx.transform.rotation = Quaternion.identity;
+
+                vfx.SetVector3("FireVector", dir);
+                vfx.SetFloat("BulletSpeed", bulletSpeed);
+                vfx.SetFloat("MaxDistance", maxDistance);
+                vfx.Play();
+            }
         }
         
         private IEnumerator PlayTrail(Vector3 startPoint, Vector3 endPoint, RaycastHit hit)

@@ -7,6 +7,7 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour {
 	
 	Camera mainCamera;
+	
 
 	[SerializeField] private float lerpSpeed = 0.3f;
 	private CinemachineBrain cinemachineBrain;

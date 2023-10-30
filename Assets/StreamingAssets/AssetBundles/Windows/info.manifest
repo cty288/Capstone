@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2918379811
+CRC: 926003620
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 79835ab00e7192cd086eba8553c95c1e
+    Hash: 379234f385ea8cb9869b57f6b9813aed
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8907076b7e7ea002d3ee71638966df50
+    Hash: 47e327a7920089f898771226b1ca73fa
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -26,13 +26,13 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2580a31b8d584dc4689b886251805906, type: 3}
 - Class: 114
@@ -63,6 +63,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 7ba45b8ea41774a4b9c66b99f1f47eba, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 5e56e207168e1554596b32f4f04c26ad, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b724da0bd1f4db4419b5da8844f9b4a3, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -102,6 +104,7 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair7_FullBody.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Exit button selected_1.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconAmmo.prefab
 - Assets/06. Prefabs/Game/CrossHairs/DefaultCrossHair/DefaultCrossHair.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair10_Aim.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Trash box selected_1.png
@@ -139,6 +142,7 @@ Assets:
 - Assets/05. Sprites/UI/Crosshairs/Crosshair6_Aim.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout attributes box_1.png
 - Assets/05. Sprites/UI/LevelProgress/progress bar - empty.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconAttackSpeed.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair11_Aim.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair6_FullBody.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair1_Body.png
@@ -161,6 +165,7 @@ Assets:
 - Assets/05. Sprites/UI/Crosshairs/Crosshair8_Aim.png
 - Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click4-01.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair8_Body.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconDamage.prefab
 - Assets/06 Animations/UI/EscapeHint/Mouse.anim
 - Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click3-01.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair3_FullBody.png
@@ -178,6 +183,7 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star black.png
 - Assets/05. Sprites/UI/LevelProgress/progress bar - dark.png
 - Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click7-01.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconTaste.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair_RedDot.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout description box empty.png
 - Assets/05. Sprites/UI/Inventory/Inventory - title selected bar_1.png
@@ -223,12 +229,12 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Top bar.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Bottom bar_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped Item_1.png
-- Assets/06. Prefabs/Game/UI/NameTags/NameTag_General.prefab
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconVigiliance.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair3_Aim1.png
-- Assets/05. Sprites/UI/Inventory/Inventory - Main inventory locked_1.png
+- Assets/06. Prefabs/Game/UI/NameTags/NameTag_General.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair5_Aim.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair Instruction + Reference.png
-- Assets/05. Sprites/UI/Crosshairs/Crosshair6_Body1.png
+- Assets/05. Sprites/UI/Inventory/Inventory - Main inventory locked_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair11_Aim2.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped Item.png
 - Assets/05. Sprites/UI/LevelProgress/progress bar - filling.png
@@ -237,6 +243,7 @@ Assets:
 - Assets/06. Prefabs/Game/UI/HealthBars/UIHealthBar.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory empty.png
 - Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar right decoration.png
+- Assets/05. Sprites/UI/Crosshairs/Crosshair6_Body1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair8_Body1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair_RedAnimationAim.png
 Dependencies:

@@ -18,6 +18,7 @@ using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.Model.Properties;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Weapons.ViewControllers.Base
@@ -47,6 +48,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         // general references
         protected Camera cam;
+        protected Camera fpsCamera;
         protected DPunkInputs.PlayerActions playerActions;
         protected IGamePlayerModel playerModel;
         public GameObject hitParticlePrefab;
@@ -59,6 +61,10 @@ namespace Runtime.Weapons.ViewControllers.Base
         //timers
         protected float lastShootTime = 0f;
         protected float reloadTimer = 0f;
+        
+        //scoping
+        protected Vector3 hipFireCameraPosition = new (0f, 0f, 0f);
+        protected Vector3 adsCameraPosition = new (0f, 0f, 0f);
 
         protected ICanDealDamageViewController ownerVc;
         
@@ -66,6 +72,8 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.Awake();
             weaponModel = this.GetModel<IWeaponModel>();
             playerModel = this.GetModel<IGamePlayerModel>();
+            fpsCamera = mainCamera.GetUniversalAdditionalCameraData().cameraStack[0];
+
         }
 
         protected override void OnEntityStart() {
@@ -98,10 +106,11 @@ namespace Runtime.Weapons.ViewControllers.Base
             
             if (previsScope != _isScopedIn) {
                 crossHairViewController?.OnScope(_isScopedIn);
+                fpsCamera.transform.localPosition = _isScopedIn ? adsCameraPosition : hipFireCameraPosition;
                 AudioSystem.Singleton.Play2DSound("Pistol_Aim");
             }
            
-            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS", !_isScopedIn ? 0 : 1));
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ADS", AnimationEventType.Bool,!_isScopedIn ? 0 : 1));
         }
 
         protected void ChangeReloadStatus(bool shouldReload) {
@@ -110,8 +119,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (prevIsReloading != isReloading) {
                 //crossHairViewController?.OnReload(isReloading);
             }
-            
-            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", isReloading ? 1 : 0));
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", AnimationEventType.Bool,isReloading ? 1 : 0));
         }
       
 
@@ -122,11 +130,11 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected void SetShootStatus(bool isShooting) {
             if (isShooting) {
-                AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 0.3f);
-                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", 2));
+                AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 1f);
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
             }
             else {
-                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", 2));
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", AnimationEventType.Trigger,0));
             }
            
         }
