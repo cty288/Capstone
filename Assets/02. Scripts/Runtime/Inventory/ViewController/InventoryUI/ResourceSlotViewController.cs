@@ -95,7 +95,10 @@ namespace Runtime.Inventory.ViewController {
         }
 
         private void OnEnable() {
-            slotHoverBG.color = new Color(slotHoverBG.color.r, slotHoverBG.color.g, slotHoverBG.color.b, 0);
+            if (slotHoverBG) {
+                slotHoverBG.color = new Color(slotHoverBG.color.r, slotHoverBG.color.g, slotHoverBG.color.b, 0);
+            }
+          
             StopDragImmediately();
         }
 
