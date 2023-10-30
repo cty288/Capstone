@@ -35,6 +35,7 @@ namespace Runtime.Spawning {
 				return Vector3.negativeInfinity; 
 			}*/
 
+			
 			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, -1)) {
 				var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
 					obstructionLayer);
