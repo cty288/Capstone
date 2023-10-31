@@ -92,6 +92,7 @@ namespace Runtime.Inventory.ViewController {
             //currentDescriptionPanel.Hide();
             //descriptionPanel.Awake();
             Clear();
+            
         }
 
         private void OnEnable() {
