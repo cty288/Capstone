@@ -173,7 +173,7 @@ namespace MikroFramework
         protected override void OnBeforeDestroy()
         {
             base.OnBeforeDestroy();
-            resLoader.ReleaseAllAssets();
+            resLoader?.ReleaseAllAssets();
         }
     }
 }
