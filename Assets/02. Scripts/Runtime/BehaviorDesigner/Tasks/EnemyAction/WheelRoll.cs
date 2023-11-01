@@ -34,7 +34,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float explosionTimer = 0.4f;
         public override void OnStart()
         {
-            
+            base.OnStart();
             agent = this.gameObject.GetComponent<NavMeshAgent>();
             agent.ResetPath();
             agent.speed = 9f;
@@ -53,7 +53,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 Debug.Log(audio.volume);
                 GameObject explosion = pool.Allocate();
                 explosion.transform.position = this.gameObject.transform.position;
-                explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"),2, gameObject,
+                explosion.GetComponent<IExplosionViewController>().
+                    Init(enemyEntity.CurrentFaction.Value, 
+                        enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"),2, gameObject,
                     gameObject.GetComponent<ICanDealDamage>());
             }
             if (player != null && moving == false) // Check if the player reference is valid
