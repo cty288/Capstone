@@ -57,6 +57,8 @@ namespace Runtime.DataFramework.Properties
 		spawn_timer,
 		item_drop_collections,
 		air_speed,
-		air_drag
+		air_drag,
+		armor,
+		armor_recover_speed
 	}
 }

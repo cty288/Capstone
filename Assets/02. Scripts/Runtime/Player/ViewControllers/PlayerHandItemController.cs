@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -136,9 +137,15 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		currentHoldDeployableItemViewController.Item1.OnDeploy();
 		//currentHoldItemViewController = null;
 		currentHoldDeployableItemViewController = (null, null);
-		inventoryModel.GetSelectedHotBarSlot(currentHand).RemoveLastItem();
+		ResourceSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
+		currentHotBarSlot.RemoveLastItem();
+		this.Delay(0.5f, () => {
+			inventoryModel.ReplenishHotBarSlot(currentHand, currentHotBarSlot);
+		});
 		
-		
+		//replenish the hotbar slot
+
+
 	}
 
 	private DeployFailureReason HoldingDeployableItemStatusCheck(out Quaternion spawnRotation, out Vector3 spawnPosition){

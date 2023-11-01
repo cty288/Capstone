@@ -20,12 +20,14 @@ namespace Runtime.Temporary
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
         private TriggerCheck triggerCheck;
+        //private IPlayerEntity currentPlayerEntity;
 
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
             this.RegisterEvent<OnPlayerTeleport>(OnPlayerTeleport).UnRegisterWhenGameObjectDestroyed(gameObject);
             triggerCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
+            
         }
 
         private void OnPlayerTeleport(OnPlayerTeleport e) {
@@ -61,7 +63,17 @@ namespace Runtime.Temporary
             
             return closestPlayer;
         }
-        
+
+
+        protected override void Update() {
+            base.Update();
+            if(BoundEntity.GetCurrentHealth() <= 0) {
+                return;
+            }
+            float armorReduction = BoundEntity.GetArmorRecoverSpeed().RealValue.Value;
+            BoundEntity.AddArmor(armorReduction * Time.deltaTime);
+        }
+
         public static HashSet<PlayerController> GetAllPlayers() {
             if (players.Count == 0) {
                 //try find gameobject of type playercontroller

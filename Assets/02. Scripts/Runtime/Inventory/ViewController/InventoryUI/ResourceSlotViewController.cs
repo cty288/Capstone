@@ -150,10 +150,15 @@ namespace Runtime.Inventory.ViewController {
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
                 this.SendCommand<SlotItemDragReleaseCommand>(
                     SlotItemDragReleaseCommand.Allocate(eventData.position, slot));
-               
-                spawnPoint.transform.DOMove(transform.position, 0.2f).OnComplete(() => {
+                spawnPoint.transform.position = transform.position;
+                spawnPoint.SetParent(transform);
+                spawnPoint.offsetMin = spawnPointOriginalMinOffset;
+                spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
+                /*spawnPoint.transform.DOMove(transform.position, 0.2f).OnComplete(() => {
                     spawnPoint.SetParent(transform);
-                });
+                    spawnPoint.offsetMin = spawnPointOriginalMinOffset;
+                    spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
+                });*/
                 Debug.Log("OnEndDrag");
             }
             else {
@@ -235,11 +240,18 @@ namespace Runtime.Inventory.ViewController {
             topVC = pool.Allocate();
             IInventoryResourceViewController vc = topVC.GetComponent<IInventoryResourceViewController>();
             vc.InitWithID(topItem.UUID);
+
+            if (spawnPoint) {
+                spawnPoint.offsetMin = spawnPointOriginalMinOffset;
+                spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
+            }
+
             
             topVC.transform.SetParent(spawnPoint);
             topVC.transform.localPosition = Vector3.zero;
             topVC.transform.localScale = Vector3.one;
             topVC.transform.SetAsFirstSibling();
+           
             button.targetGraphic = topVC.GetComponentInChildren<Graphic>(true);
             //set left top right bottom to 10
             RectTransform rectTransform = topVC.GetComponent<RectTransform>();
