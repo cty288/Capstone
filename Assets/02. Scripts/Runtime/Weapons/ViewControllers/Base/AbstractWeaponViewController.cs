@@ -23,7 +23,12 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
-    public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController {
+    public struct OnScopeUsedEvent
+    {
+        public bool isScopedIn;
+    }
+    
+    public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController, ICanSendEvent {
         IWeaponEntity WeaponEntity { get; }
     }
     /// <summary>
@@ -105,8 +110,14 @@ namespace Runtime.Weapons.ViewControllers.Base
             _isScopedIn = shouldScope;
             
             if (previsScope != _isScopedIn) {
+                playerModel.GetPlayer().SetScopedIn(_isScopedIn);
                 crossHairViewController?.OnScope(_isScopedIn);
-                fpsCamera.transform.localPosition = _isScopedIn ? adsCameraPosition : hipFireCameraPosition;
+                
+                this.SendEvent<OnScopeUsedEvent>(new OnScopeUsedEvent()
+                {
+                    isScopedIn = _isScopedIn
+                });
+                
                 AudioSystem.Singleton.Play2DSound("Pistol_Aim");
             }
            

@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityNavMeshAgent;
 using Cinemachine;
 using DG.Tweening;
 using Framework;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.Utilities;
@@ -10,7 +12,9 @@ using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Weapons.Model.Properties;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Player.ViewControllers
 {
@@ -38,8 +42,10 @@ namespace Runtime.Player.ViewControllers
         private Transform cameraTrans;
         [SerializeField]
         private Transform camHolder;
+        [FormerlySerializedAs("vcam")] [SerializeField] 
+        private CinemachineVirtualCamera defaultVirtualCamera;
         [SerializeField] 
-        private CinemachineVirtualCamera vcam;
+        private CinemachineVirtualCamera secondaryVirtualCamera;
     
         private float cameraPitch = 0;
         private float fpsTopClamp=90;
@@ -51,9 +57,8 @@ namespace Runtime.Player.ViewControllers
         private float runningFOV;        
         [SerializeField]
         private float slidingFOV;
-
-        private Coroutine fovWalkToRunCoroutine;
-        private Coroutine fovRunToWalkCoroutine;
+        [SerializeField] 
+        private float currentFOV;
 
         [Header("Headbob")] 
         [SerializeField] 
@@ -190,6 +195,8 @@ namespace Runtime.Player.ViewControllers
 
         [SerializeField]
         private MovementState state;
+
+        private MovementState prevState;
         
         private DPunkInputs.PlayerActions playerActions;
         private IPlayerEntity playerEntity;
@@ -208,7 +215,9 @@ namespace Runtime.Player.ViewControllers
         
         private AudioSource slidingAudioSource = null;
 
-        private void Awake() {
+        private void Awake()
+        {
+            this.RegisterEvent<OnScopeUsedEvent>(SetADSFOV);
             AudioSystem.Singleton.Initialize(null); //TODO: move to better spot
             
             playerActions = ClientInput.Singleton.GetPlayerActions();
@@ -218,7 +227,8 @@ namespace Runtime.Player.ViewControllers
         // Start is called before the first frame update
         void Start()
         {
-            vcam.m_Lens.FieldOfView = defaultFOV;
+            defaultVirtualCamera.m_Lens.FieldOfView = defaultFOV;
+            
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -335,16 +345,18 @@ namespace Runtime.Player.ViewControllers
             // Mode - Wallrunning
             if (wallrunning)
             {
+                // prevState = state;
                 state = MovementState.wallrunning;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                playerEntity.SetMovementState(state);
 
                  desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue * weaponWeight;
             }
             // Mode - Sliding
             else if (sliding)
             {
+                prevState = state;
                 state = MovementState.sliding;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                playerEntity.SetMovementState(state);
 
                 if (onSlope && rb.velocity.y < 0.1f)
                     desiredMoveSpeed = playerEntity.GetSlideSpeed().RealValue * weaponWeight;
@@ -356,8 +368,9 @@ namespace Runtime.Player.ViewControllers
             // Mode - Sprinting
             else if(grounded && sprinting)
             {
+                prevState = state;
                 state = MovementState.sprinting;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                playerEntity.SetMovementState(state);
 
                 desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
             }
@@ -365,9 +378,10 @@ namespace Runtime.Player.ViewControllers
             // Mode - Walking
             else if (grounded)
             {
+                prevState = state;
                 state = MovementState.walking;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
-                if (this.GetModel<IGamePlayerModel>().GetPlayer().IsScopedIn())
+                playerEntity.SetMovementState(state);
+                if (playerEntity.IsScopedIn())
                 {
                     desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue * 0.5f * weaponWeight;
                 }
@@ -380,8 +394,9 @@ namespace Runtime.Player.ViewControllers
             // Mode - Air
             else
             {
+                // prevState = state;
                 state = MovementState.air;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                playerEntity.SetMovementState(state);
                 desiredMoveSpeed = playerEntity.GetAirSpeed().RealValue;
             }
 
@@ -410,11 +425,12 @@ namespace Runtime.Player.ViewControllers
             cameraPitch = Mathf.Clamp(cameraPitch, fpsBotClamp, fpsTopClamp);
             camHolder.localEulerAngles = Vector3.right * cameraPitch;
             transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
-
             
             if (state == MovementState.walking)
             {
-                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, defaultFOV, Time.deltaTime * 20f);
+                if(currentFOV != defaultFOV && !playerEntity.IsScopedIn())
+                    SetFOV(defaultFOV);
+                
                 if (horizontalInput == 0 &&verticalInput == 0)
                     ChangeBobVars(idleBob);
                 else
@@ -422,32 +438,64 @@ namespace Runtime.Player.ViewControllers
             }
             else if (state == MovementState.sliding)
             {
-                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, slidingFOV, Time.deltaTime * 20f);
+                if(currentFOV != slidingFOV && !playerEntity.IsScopedIn())
+                    SetFOV(slidingFOV);
+
                 ChangeBobVars(0,0);
             }
             else if (state == MovementState.sprinting)
             {
-                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, runningFOV, Time.deltaTime * 20f);
+                if(currentFOV != runningFOV && !playerEntity.IsScopedIn())
+                    SetFOV(runningFOV);
+
                 ChangeBobVars(sprintBob);
             }
             else
             {
-                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, defaultFOV, Time.deltaTime * 20f);
+                if(currentFOV != defaultFOV && !playerEntity.IsScopedIn())
+                    SetFOV(defaultFOV);
                 ChangeBobVars(0,0);
             }
 
             
         }
 
+        private void SetFOV(float fov)
+        {
+            if (defaultVirtualCamera.Priority == 10)
+            {
+                secondaryVirtualCamera.m_Lens.FieldOfView = fov;
+                secondaryVirtualCamera.Priority = 10;
+                defaultVirtualCamera.Priority = 1;
+            }
+            else
+            {
+                defaultVirtualCamera.m_Lens.FieldOfView = fov;
+                defaultVirtualCamera.Priority = 10;
+                secondaryVirtualCamera.Priority = 1;
+            }
+            
+            currentFOV = fov;
+        }
+
+        private void SetADSFOV(OnScopeUsedEvent e)
+        {
+            IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
+            if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
+            {
+                SetFOV(e.isScopedIn ? heldEntity.GetProperty<IAdsFOV>().RealValue : currentFOV);
+            }
+        }
+
         public void ChangeBobVars(HeadBobData data)
         {
-            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
-            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
+            defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
+            defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
         }
         public void ChangeBobVars(float frequencyGain,float amplitudeGain)
         {
-            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
-            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+            defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+            defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
         }
         public void DoCamTilt(float zTilt)
         {

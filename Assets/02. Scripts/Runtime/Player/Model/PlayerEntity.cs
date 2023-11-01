@@ -6,6 +6,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Enemies.Model;
+using Runtime.Enemies.Model.Properties;
 using Runtime.Player.Properties;
 using Runtime.Player.ViewControllers;
 using Runtime.Utilities.ConfigSheet;
@@ -26,12 +27,18 @@ namespace Runtime.Player {
 
 		IAirSpeedProperty GetAirSpeed();
 		
+		IArmorProperty GetArmor();
+		
+		IArmorRecoverSpeedProperty GetArmorRecoverSpeed();
+		
 		IAirDrag GetAirDrag();
 		MovementState GetMovementState();
 		void SetMovementState(MovementState state);
 		
 		bool IsScopedIn();
 		void SetScopedIn(bool state);
+		
+		void AddArmor(float amount);
 	}
 
 	public struct OnPlayerKillEnemy {
@@ -55,6 +62,8 @@ namespace Runtime.Player {
 		private IWallRunForce wallRunForce;
 		private IAirDrag airDrag;
 		private IAirSpeedProperty airSpeed;
+		private IArmorProperty armor;
+		private IArmorRecoverSpeedProperty armorRecoverSpeed;
 
 		private MovementState movementState;
 		private bool scopedIn;
@@ -93,6 +102,9 @@ namespace Runtime.Player {
 			RegisterInitialProperty<IWallRunForce>(new WallRunForce());
 			RegisterInitialProperty<IAirSpeedProperty>(new AirSpeed());
 			RegisterInitialProperty<IAirDrag>(new AirDrag());
+			
+			RegisterInitialProperty<IArmorProperty>(new ArmorProperty());
+			RegisterInitialProperty<IArmorRecoverSpeedProperty>(new ArmorRecoverSpeedProperty());
 		}
 
 
@@ -114,6 +126,8 @@ namespace Runtime.Player {
 			wallRunForce = GetProperty<IWallRunForce>();
 			airSpeed = GetProperty<IAirSpeedProperty>();
 			airDrag = GetProperty<IAirDrag>();
+			armor = GetProperty<IArmorProperty>();
+			armorRecoverSpeed = GetProperty<IArmorRecoverSpeedProperty>();
 		}
 
 		public IAccelerationForce GetAccelerationForce() {
@@ -161,6 +175,14 @@ namespace Runtime.Player {
 			return airSpeed;
 		}
 
+		public IArmorProperty GetArmor() {
+			return armor;
+		}
+		
+		public IArmorRecoverSpeedProperty GetArmorRecoverSpeed() {
+			return armorRecoverSpeed;
+		}
+
 		public IAirDrag GetAirDrag() {
 			return airDrag;
 		}
@@ -183,6 +205,14 @@ namespace Runtime.Player {
 		public void SetScopedIn(bool state)
 		{
 			scopedIn = state;
+		}
+
+		public void AddArmor(float amount) {
+			float maxArmor = armor.InitialValue;
+			if (armor.RealValue.Value < maxArmor) {
+				float validAmount = Mathf.Min(maxArmor - armor.RealValue.Value, amount);
+				armor.RealValue.Value += validAmount;
+			}
 		}
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -216,5 +246,17 @@ namespace Runtime.Player {
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => this;
+
+		protected override void DoTakeDamage(int damageAmount) {
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			float armorToTakeDamage = Mathf.Min(armor.RealValue.Value, damageAmount);
+			float healthToTakeDamage = damageAmount - armorToTakeDamage;
+			if(armorToTakeDamage > 0)
+				armor.RealValue.Value -= armorToTakeDamage;
+
+			if (healthToTakeDamage > 0)
+				HealthProperty.RealValue.Value =
+					new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
+		}
 	}
 }
