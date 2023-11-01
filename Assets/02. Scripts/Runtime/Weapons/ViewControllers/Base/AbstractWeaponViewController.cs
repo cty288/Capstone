@@ -19,6 +19,7 @@ using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.Model.Properties;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.VFX;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Weapons.ViewControllers.Base
@@ -57,6 +58,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected DPunkInputs.PlayerActions playerActions;
         protected IGamePlayerModel playerModel;
         public GameObject hitParticlePrefab;
+        public VisualEffect hitVFXSystem;
+        protected bool isHitVFX;
         protected CameraShaker cameraShaker;
         
         //status
