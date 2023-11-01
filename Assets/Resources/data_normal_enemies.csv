@@ -413,7 +413,7 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
     }
   }
 }",,,
-SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,3,,3,"{
+SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,2,,3,"{
   ""attack"":{
     ""bulletDamage"":{
       ""type"": ""int"",
@@ -446,6 +446,16 @@ SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,3,,3,"{
     ""detectionRange"":{
       ""type"": ""float"",
       ""value"": 12,
+      ""useDefaultModifier"": true
+    },
+    ""numberOfBullets"":{
+      ""type"": ""float"",
+      ""value"": 5,
+      ""useDefaultModifier"": true
+    },
+    ""fanAngle"":{
+      ""type"": ""float"",
+      ""value"": 60,
       ""useDefaultModifier"": true
     }
   }

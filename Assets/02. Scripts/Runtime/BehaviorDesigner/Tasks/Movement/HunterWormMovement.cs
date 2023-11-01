@@ -34,6 +34,7 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         {
             if (headSpin)
             {
+                Debug.Log("why not spinning");
                 var head = this.gameObject.transform.GetChild(0);
                 float rotationSpeed = 70f; 
 
