@@ -26,6 +26,7 @@ namespace Runtime.DataFramework.Properties
 		test_interest_dict,
 		base_damage,
 		attack_speed,
+		ads_fov,
 		range,
 		ammo_size,
 		reload_speed,
