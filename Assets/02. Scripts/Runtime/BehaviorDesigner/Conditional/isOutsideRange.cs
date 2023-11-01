@@ -7,7 +7,7 @@ namespace Runtime.BehaviorDesigner.Conditional
 {
     public class IsOutsideRange : EnemyConditional
     {
-        public Transform target;
+        public SharedGameObject target;
         public float treshold;
 
         public override void OnStart()
@@ -17,13 +17,13 @@ namespace Runtime.BehaviorDesigner.Conditional
 
         public override TaskStatus OnUpdate()
         {
-            if(Vector3.Distance(target.position,this.gameObject.transform.position) > treshold)
+            if(Vector3.Distance(target.Value.transform.position,this.gameObject.transform.position) > treshold)
             {
                 return TaskStatus.Success;
             }
             else
             {
-                return TaskStatus.Running;
+                return TaskStatus.Failure;
             }
         }
     }

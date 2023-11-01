@@ -51,10 +51,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         private IEnumerator ChangeOffset()
         {
-            while (elapsedTime < 1f)
+            while (elapsedTime < 0.3f)
             {
                 // Interpolate the offset value over time.
-                float t = elapsedTime / 1f;
+                float t = elapsedTime / 0.3f;
                 float newOffset = Mathf.Lerp(0.5f, 0.15f, t);
 
                 // Set the new offset value for the NavMeshAgent.
