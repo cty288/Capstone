@@ -155,7 +155,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         protected override void OnReadyToRecycle() {
             base.OnReadyToRecycle();
-            _isScopedIn = false;
+            ChangeScopeStatus(false);
         }
 
 

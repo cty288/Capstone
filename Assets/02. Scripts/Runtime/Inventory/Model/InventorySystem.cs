@@ -16,8 +16,8 @@ namespace Runtime.Inventory.Model {
 	public class InventorySystem : AbstractResourceSlotsSystem<IInventoryModel>, IInventorySystem {
 		public static int InitialSlotCount = 8;
 		public static Dictionary<HotBarCategory, int> InitialHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
-			{HotBarCategory.Right, 2},
-			{HotBarCategory.Left, 3}
+			{HotBarCategory.Right, 3},
+			{HotBarCategory.Left, 2}
 		};
 		
 		//private Dictionary<HotBarCategory, ResourceSlot> currentSelectedSlot = new Dictionary<HotBarCategory, ResourceSlot>();

@@ -105,6 +105,29 @@ namespace Runtime.Inventory.Model {
 		}
 		
 		
+		public static bool SwapSlotItems(ResourceSlot slot1, ResourceSlot slot2) {
+			//translation
+			//other slot: slot1
+			//No . : slot 2
+			if (!slot1.IsEmpty() && !slot2.CanPlaceItem(GlobalGameResourceEntities.GetAnyResource(slot1.GetLastItemUUID()), true)) {
+				return false;
+			}
+			
+			if(!slot2.IsEmpty() && !slot1.CanPlaceItem(GlobalGameResourceEntities.GetAnyResource(slot2.GetLastItemUUID()), true)) {
+				return false;
+			}
+			
+			
+			(slot1.ItemKey, slot2.ItemKey) = (slot2.ItemKey, slot1.ItemKey);
+			//swap uuid list and uuid set
+			(slot1.UUIDList, slot2.UUIDList) = (slot2.UUIDList, slot1.UUIDList);
+			(slot1.UUIDSet, slot2.UUIDSet) = (slot2.UUIDSet, slot1.UUIDSet);
+			
+			slot1.OnSlotUpdateCallback?.Invoke(slot1, slot1.GetLastItemUUID(), slot1.UUIDList);
+			slot2.OnSlotUpdateCallback?.Invoke(slot2, slot2.GetLastItemUUID(), slot2.UUIDList);
+			return true;
+		}
+		
 		/// <summary>
 		/// Try to move all items from other slot to this slot. If this slot can not store all items, try to move as many as possible.
 		/// </summary>
@@ -120,15 +143,7 @@ namespace Runtime.Inventory.Model {
 			
 			
 			if (!IsEmpty() && ItemKey != otherSlot.ItemKey) {
-				if(!otherSlot.CanPlaceItem(GlobalGameResourceEntities.GetAnyResource(GetLastItemUUID()), true)) {
-					return;
-				}
-				(otherSlot.ItemKey, ItemKey) = (ItemKey, otherSlot.ItemKey);
-				//swap uuid list and uuid set
-				(otherSlot.UUIDList, UUIDList) = (UUIDList, otherSlot.UUIDList);
-				(otherSlot.UUIDSet, UUIDSet) = (UUIDSet, otherSlot.UUIDSet);
-
-				
+				SwapSlotItems(this, otherSlot);
 			}else {
 				if (IsEmpty()) {
 					ItemKey = otherSlot.ItemKey;
@@ -152,10 +167,11 @@ namespace Runtime.Inventory.Model {
 				if (otherSlot.IsEmpty()) {
 					otherSlot.ItemKey = null;
 				}
+				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
+				otherSlot.OnSlotUpdateCallback?.Invoke(otherSlot, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
 			}
 
-			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
-			otherSlot.OnSlotUpdateCallback?.Invoke(otherSlot, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
+			
 		}
 		
 		public bool ContainsItem(string uuid) {

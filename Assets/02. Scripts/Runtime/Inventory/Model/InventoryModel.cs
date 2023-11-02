@@ -45,6 +45,8 @@ namespace Runtime.Inventory.Model {
 		
 		void ReplenishHotBarSlot(HotBarCategory category, ResourceSlot targetSlotToReplenish);
 		
+		
+		
 	}
 	
 	public struct OnInventorySlotAddedEvent {
