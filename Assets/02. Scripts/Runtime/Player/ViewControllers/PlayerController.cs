@@ -16,7 +16,7 @@ using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController {
+    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController, ICanDealDamageRootViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
         private TriggerCheck triggerCheck;
@@ -135,5 +135,9 @@ namespace Runtime.Temporary
         }
 
         public ICanDealDamage CanDealDamageEntity => BoundEntity;
+        public ICanDealDamageRootViewController RootViewController => this;
+        public Transform GetTransform() {
+            return transform;
+        }
     }
 }

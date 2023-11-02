@@ -39,6 +39,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
 
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }

@@ -254,5 +254,6 @@ namespace Runtime.Weapons.Model.Base
         }
 
          ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
+         public ICanDealDamageRootViewController RootViewController => null;
     }
 }

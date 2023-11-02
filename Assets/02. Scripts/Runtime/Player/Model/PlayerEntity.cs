@@ -1,4 +1,5 @@
-﻿using MikroFramework.Architecture;
+﻿using JetBrains.Annotations;
+using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -9,6 +10,7 @@ using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Player.Properties;
 using Runtime.Player.ViewControllers;
+using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 
@@ -45,6 +47,13 @@ namespace Runtime.Player {
 		public int DamageDealt;
 		public bool IsBoss;
 		public IEnemyEntity Enemy;
+	}
+	
+	public struct OnPlayerTakeDamage {
+		public int DamageTaken;
+		public HealthInfo HealthInfo;
+		[CanBeNull]
+		public HitData HitData;
 	}
 	
 	public class PlayerEntity : AbstractCreature, IPlayerEntity, ICanDealDamage {
@@ -245,7 +254,17 @@ namespace Runtime.Player {
 			}
 		}
 
+		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {
+			base.OnTakeDamage(damage, damageDealer, hitData);
+			this.SendEvent<OnPlayerTakeDamage>(new OnPlayerTakeDamage() {
+				DamageTaken = damage,
+				HealthInfo = HealthProperty.RealValue.Value,
+				HitData = hitData
+			});
+		}
+
 		public ICanDealDamageRootEntity RootDamageDealer => this;
+		public ICanDealDamageRootViewController RootViewController => null;
 
 		protected override void DoTakeDamage(int damageAmount) {
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;

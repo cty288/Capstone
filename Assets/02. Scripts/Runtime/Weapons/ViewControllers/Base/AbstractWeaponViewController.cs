@@ -194,6 +194,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public ICanDealDamageRootEntity RootDamageDealer => ownerVc?.CanDealDamageEntity?.RootDamageDealer;
+        public ICanDealDamageRootViewController RootViewController => ownerVc?.CanDealDamageEntity?.RootViewController;
 
         public int Damage => BoundEntity.GetRealDamageValue();
         public bool CheckHit(HitData data) {
