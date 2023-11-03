@@ -20,6 +20,9 @@ namespace Runtime.Temporary
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
         private TriggerCheck triggerCheck;
+
+        private float recoverWaitTime = 5f;
+        protected float recoverWaitTimer = 0f;
         //private IPlayerEntity currentPlayerEntity;
 
         protected override void Awake() {
@@ -70,8 +73,11 @@ namespace Runtime.Temporary
             if(BoundEntity.GetCurrentHealth() <= 0) {
                 return;
             }
-            float armorReduction = BoundEntity.GetArmorRecoverSpeed().RealValue.Value;
-            BoundEntity.AddArmor(armorReduction * Time.deltaTime);
+            recoverWaitTimer += Time.deltaTime;
+            if (recoverWaitTimer >= recoverWaitTime) {
+                float armorRecover = BoundEntity.GetArmorRecoverSpeed().RealValue.Value;
+                BoundEntity.AddArmor(armorRecover * Time.deltaTime);
+            }
         }
 
         public static HashSet<PlayerController> GetAllPlayers() {
@@ -119,6 +125,9 @@ namespace Runtime.Temporary
             
 
             cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
+            if (damage > 0) {
+                recoverWaitTimer = 0f;
+            }
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {

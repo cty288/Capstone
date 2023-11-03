@@ -423,7 +423,91 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
     }
   }
 }",,,
-SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,2,,3,"{
+SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,2,"{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 0,
+      ""y"": 2
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""BionicGel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 2,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ""x"": 1,
+      ""y"": 3
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 2,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""BionicGel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 3
+        },
+        ""dropWeight"": 3,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""ReinforcedSteel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      }
+    ]
+  }
+}",3,"{
   ""attack"":{
     ""bulletDamage"":{
       ""type"": ""int"",
