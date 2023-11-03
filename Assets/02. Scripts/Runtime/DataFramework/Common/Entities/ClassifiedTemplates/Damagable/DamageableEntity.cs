@@ -73,12 +73,10 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 			int actualDamage = OnTakeDamageAdditionalCheck(damage, damageDealer);
 			
-			
-			
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage
 			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : actualDamage;
-			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
+			DoTakeDamage(damageAmount);
 
 			if (hitData != null) {
 				hitData.Damage = damageAmount;
@@ -91,6 +89,15 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			
 			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer, hitData);
 			
+		}
+
+		/// <summary>
+		/// Please use TakeDamage instead of this method
+		/// </summary>
+		/// <param name="damageAmount"></param>
+		protected virtual void DoTakeDamage(int damageAmount) {
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
 		}
 		
 		
