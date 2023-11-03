@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
 using DG.Tweening;
@@ -25,6 +26,10 @@ namespace Runtime.Weapons
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
         [field: ES3Serializable] public override int Width { get; } = 1;
+
+        public override string AnimLayerName { get => animLayerName; }
+        
+        public string animLayerName =  "Revolver";
         
         public override void OnRecycle()
         {
