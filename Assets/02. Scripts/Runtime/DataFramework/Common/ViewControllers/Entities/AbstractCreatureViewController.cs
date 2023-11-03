@@ -51,12 +51,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
 		NavMeshAgent navMeshAgent;
 		BehaviorTree behaviorTree;
+		
+		[Header("Nav Mesh")]
+		[SerializeField] protected bool randomizeNavMeshPriority = true;
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
 			behaviorTree = GetComponent<BehaviorTree>();
 			if (navMeshAgent) {
 				navMeshAgent.enabled = false;
+				if (randomizeNavMeshPriority) {
+					navMeshAgent.avoidancePriority = Random.Range(0, 100);
+				}
 			}
 			
 			if (behaviorTree) {

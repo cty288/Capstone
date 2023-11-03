@@ -12,6 +12,8 @@ namespace Runtime.BehaviorDesigner.Conditional
         private GameObject prevGameObject;
         
         private bool isWaiting = false;
+        [SerializeField] private float maxWaitTimeBeforeEnter = 1f;
+        private float currentWaitTime = 0f;
 
         public override void OnStart()
         {
@@ -21,6 +23,7 @@ namespace Runtime.BehaviorDesigner.Conditional
                 animator = currentGameObject.GetComponent<Animator>();
                 prevGameObject = currentGameObject;
             }
+            currentWaitTime = 0f;
         }
 
         public override TaskStatus OnUpdate()
@@ -29,6 +32,14 @@ namespace Runtime.BehaviorDesigner.Conditional
             {
                 Debug.LogWarning("Animator is null");
                 return TaskStatus.Failure;
+            }
+
+            if (!isWaiting) {
+                currentWaitTime += Time.deltaTime;
+                if (currentWaitTime >= maxWaitTimeBeforeEnter)
+                {
+                    return TaskStatus.Failure;
+                }
             }
             
             if (Animator.StringToHash(name.Value) ==
@@ -41,9 +52,7 @@ namespace Runtime.BehaviorDesigner.Conditional
             {
                 return TaskStatus.Success;
             }
-            else {
-                //return TaskStatus.Failure;
-            }
+            
             return TaskStatus.Running;
         }
     }
