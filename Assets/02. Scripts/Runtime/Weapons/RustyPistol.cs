@@ -53,11 +53,7 @@ namespace Runtime.Weapons
 
     }
 
-
-    public struct OnGunShoot
-    {
-        public string AnimationName;
-    }
+    
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         private GunAmmoVisual gunAmmoVisual;
@@ -69,7 +65,8 @@ namespace Runtime.Weapons
         [SerializeField] private string overrideName = "RustyPistol";
         
         [SerializeField] private string animLayerNameOverride = "Revolver";
-
+        [SerializeField] private Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
+        [SerializeField] private Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
         
         protected override void Awake() {
             base.Awake();
@@ -86,9 +83,9 @@ namespace Runtime.Weapons
             gunAmmoVisual.Init(BoundEntity);
 
             BoundEntity.animLayerName = animLayerNameOverride;
-            
-            hipFireCameraPosition = new Vector3(-0.04f,-0.13f,-0.25f);
-            adsCameraPosition = new Vector3(-0.003f, -0.123f, 0f);
+
+            hipFireCameraPosition = hipFireCameraPositionOverride;
+            adsCameraPosition = adsCameraPositionOverride;
         }
 
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
