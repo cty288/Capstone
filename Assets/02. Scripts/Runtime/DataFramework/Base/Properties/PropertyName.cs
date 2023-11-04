@@ -26,6 +26,7 @@ namespace Runtime.DataFramework.Properties
 		test_interest_dict,
 		base_damage,
 		attack_speed,
+		ads_fov,
 		range,
 		ammo_size,
 		reload_speed,
@@ -57,6 +58,8 @@ namespace Runtime.DataFramework.Properties
 		spawn_timer,
 		item_drop_collections,
 		air_speed,
-		air_drag
+		air_drag,
+		armor,
+		armor_recover_speed
 	}
 }

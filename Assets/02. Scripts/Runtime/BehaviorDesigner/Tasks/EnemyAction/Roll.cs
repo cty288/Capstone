@@ -1,10 +1,14 @@
+using System.Collections.Generic;
+using System.Security.Policy;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies;
 using Runtime.Utilities.Collision;
+using UnityEngine.Animations.Rigging;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -39,12 +43,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public GameObject pivot;
        
         private SharedVector3 initRotation;
-        private float chargeTime = 3.0f;  // Total charge time in seconds
+        private float chargeTime = 2.0f;  // Total charge time in seconds
         private float currentChargeTime = 0.0f;
         private float initialRotationSpeed = 0.0f;
         private float rotationDecreaseRate = 160f;
         private bool flag = false;
-        private bool collisionFlag = false;
+        //private bool collisionFlag = false;
+        private HashSet<Rigidbody> hitObjects = new HashSet<Rigidbody>();
 
         private Collider bossCollider;
         private bool canDealDamage = false;
@@ -69,7 +74,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             HitBox.GetComponentInParent<Boss1>().ClearHitObjects();
             
-            collisionFlag = false;
+            hitObjects.Clear();
+            //collisionFlag = false;
             rb.isKinematic = false;
             chargeUp = true;
             timer = 3f;
@@ -169,21 +175,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override void OnCollisionEnter(Collision collision) {
             base.OnCollisionEnter(collision);
             // Debug.Log("Collision");
-            if (canDealDamage && collision.collider.gameObject.CompareTag("Player") && !collisionFlag) {
+            Rigidbody attachedRigidbody = collision.collider.attachedRigidbody;
+            
+            if (canDealDamage && attachedRigidbody && attachedRigidbody.GetComponent<ICreatureViewController>() != null
+                && !hitObjects.Contains(collision.collider.attachedRigidbody)) {
                 Vector3 dir = playerTrans.position - transform.position;
                 dir.y = 0;
                 //make it 45 degrees from the ground
                 dir = Quaternion.AngleAxis(45, Vector3.Cross(dir, Vector3.up)) * dir;
                 dir.Normalize();
-                playerRb.AddForce(dir * forceToPlayer, ForceMode.Impulse);
+                attachedRigidbody.AddForce(dir * forceToPlayer, ForceMode.Impulse);
                 flag = true;
-                collisionFlag = true;
-                // Debug.Log("Hit player");
-                
-                
-                
-                /*HitBox.TriggerCheckHit(playerTrans.Value.GetComponentInChildren<HurtBox>(true)
-                    .GetComponent<Collider>());*/
+                hitObjects.Add(attachedRigidbody);
             }
         }
     }

@@ -26,6 +26,7 @@ namespace Runtime.Weapons.Model.Base
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
+        public IAdsFOV GetAdsFOV();
         public IRange GetRange();
         public IAmmoSize GetAmmoSize();
         public IReloadSpeed GetReloadSpeed();
@@ -52,6 +53,7 @@ namespace Runtime.Weapons.Model.Base
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
         private IBaseDamage baseDamageProperty;
         private IAttackSpeed attackSpeedProperty;
+        private IAdsFOV adsFOVProperty;
         private IRange rangeProperty;
         private IAmmoSize ammoSizeProperty;
         private IReloadSpeed reloadSpeedProperty;
@@ -127,6 +129,7 @@ namespace Runtime.Weapons.Model.Base
             base.OnEntityRegisterAdditionalProperties();
             RegisterInitialProperty<IBaseDamage>(new BaseDamage());
             RegisterInitialProperty<IAttackSpeed>(new AttackSpeed());
+            RegisterInitialProperty<IAdsFOV>(new AdsFOV());
             RegisterInitialProperty<IRange>(new Range());
             RegisterInitialProperty<IAmmoSize>(new AmmoSize());
             RegisterInitialProperty<IReloadSpeed>(new ReloadSpeed());
@@ -152,6 +155,11 @@ namespace Runtime.Weapons.Model.Base
         public IRange GetRange()
         {
             return rangeProperty;
+        }
+        
+        public IAdsFOV GetAdsFOV()
+        {
+            return adsFOVProperty;
         }
         
         public IAmmoSize GetAmmoSize()
@@ -246,5 +254,6 @@ namespace Runtime.Weapons.Model.Base
         }
 
          ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
+         public ICanDealDamageRootViewController RootViewController => null;
     }
 }

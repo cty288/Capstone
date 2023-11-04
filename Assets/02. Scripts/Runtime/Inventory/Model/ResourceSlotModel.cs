@@ -57,6 +57,7 @@ namespace Runtime.Inventory.Model {
 		public int GetSlotCurrentItemCount(int index);
 		
 		public void RegisterInitialEntityEvents(IResourceEntity entity);
+		
 
 	}
 	public abstract class ResourceSlotsModel : AbstractSavableModel, IResourceSlotsModel {
@@ -143,5 +144,7 @@ namespace Runtime.Inventory.Model {
 		public void RegisterInitialEntityEvents(IResourceEntity entity) {
 			entity.RegisterOnEntityRecycled(OnEntityRecycled);
 		}
+
+		
 	}
 }

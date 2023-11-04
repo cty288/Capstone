@@ -56,5 +56,9 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         {
             m_ArriveDistance = 0.1f;
         }
+        public override void OnEnd()
+        {
+            m_NavMeshAgent.ResetPath();
+        }
     }
 }

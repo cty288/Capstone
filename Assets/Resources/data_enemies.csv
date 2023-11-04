@@ -277,10 +277,136 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]","{
     },
     ""rollWait"":{
       ""type"": ""float"",
-      ""value"": 2.5,
+      ""value"": 0.5,
       ""useDefaultModifier"": true,
       ""inverse"": true
     }
   }
 }",,,
 Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",,,123,,,,
+BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]","{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 3,
+      ""y"": 5
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 5,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""HeatStoragor"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 6,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""ReinforcedSteel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 5,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""TheSanctuary"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""required"": true,
+        ""setRarity"": true,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ""x"": 4,
+      ""y"": 6
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 2,
+          ""y"": 3
+        },
+        ""dropWeight"": 4,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""HeatStoragor"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 5,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""ReinforcedSteel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 3
+        },
+        ""dropWeight"": 4,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""TheSanctuary"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""required"": true,
+        ""setRarity"": true,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
+      }
+    ]
+  }
+}",200,456,,,,

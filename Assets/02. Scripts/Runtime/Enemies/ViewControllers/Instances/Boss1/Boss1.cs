@@ -136,6 +136,7 @@ namespace Runtime.Enemies
             
             return UntilAction.Allocate(() => deathAnimationEnd);
         }
+        
 
         protected override void Awake() {
             base.Awake();

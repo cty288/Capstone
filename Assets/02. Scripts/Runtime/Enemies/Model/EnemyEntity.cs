@@ -7,6 +7,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
@@ -121,5 +122,6 @@ namespace Runtime.Enemies.Model {
 		
 
 		public ICanDealDamageRootEntity RootDamageDealer => this;
+		public ICanDealDamageRootViewController RootViewController => null;
 	}
 }

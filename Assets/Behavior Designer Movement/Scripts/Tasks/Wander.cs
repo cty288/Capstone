@@ -80,5 +80,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             m_MaxPauseDuration = 0;
             m_TargetRetries = 1;
         }
+        public override void OnEnd()
+        {
+            m_NavMeshAgent.ResetPath();
+        }
     }
 }

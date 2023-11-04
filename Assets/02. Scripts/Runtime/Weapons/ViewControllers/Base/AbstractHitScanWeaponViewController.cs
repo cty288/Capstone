@@ -30,6 +30,12 @@ namespace Runtime.Weapons.ViewControllers.Base
                 launchPoint = bulletVFX[0].transform,
                 weapon = BoundEntity
             };
+            
+            // TODO: Phase out old Particle System
+            if (hitVFXSystem)
+            {
+                isHitVFX = true;
+            }
         }
         
         protected override IHitDetector OnCreateHitDetector() {
@@ -52,7 +58,16 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         public override void HitResponse(HitData data) {
-            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            // TODO: Phase out old Particle System
+            if (isHitVFX)
+            {
+                hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
+                hitVFXSystem.Play();
+            }
+            else
+            {
+                Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            }
         }
         
         // Item/Holding Functions

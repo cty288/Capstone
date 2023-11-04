@@ -16,16 +16,21 @@ using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController {
+    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController, ICanDealDamageRootViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
         private TriggerCheck triggerCheck;
+
+        private float recoverWaitTime = 5f;
+        protected float recoverWaitTimer = 0f;
+        //private IPlayerEntity currentPlayerEntity;
 
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
             this.RegisterEvent<OnPlayerTeleport>(OnPlayerTeleport).UnRegisterWhenGameObjectDestroyed(gameObject);
             triggerCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
+            
         }
 
         private void OnPlayerTeleport(OnPlayerTeleport e) {
@@ -61,7 +66,20 @@ namespace Runtime.Temporary
             
             return closestPlayer;
         }
-        
+
+
+        protected override void Update() {
+            base.Update();
+            if(BoundEntity.GetCurrentHealth() <= 0) {
+                return;
+            }
+            recoverWaitTimer += Time.deltaTime;
+            if (recoverWaitTimer >= recoverWaitTime) {
+                float armorRecover = BoundEntity.GetArmorRecoverSpeed().RealValue.Value;
+                BoundEntity.AddArmor(armorRecover * Time.deltaTime);
+            }
+        }
+
         public static HashSet<PlayerController> GetAllPlayers() {
             if (players.Count == 0) {
                 //try find gameobject of type playercontroller
@@ -107,6 +125,9 @@ namespace Runtime.Temporary
             
 
             cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
+            if (damage > 0) {
+                recoverWaitTimer = 0f;
+            }
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
@@ -123,5 +144,9 @@ namespace Runtime.Temporary
         }
 
         public ICanDealDamage CanDealDamageEntity => BoundEntity;
+        public ICanDealDamageRootViewController RootViewController => this;
+        public Transform GetTransform() {
+            return transform;
+        }
     }
 }

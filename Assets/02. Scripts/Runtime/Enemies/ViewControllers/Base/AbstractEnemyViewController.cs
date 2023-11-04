@@ -21,7 +21,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.ViewControllers.Base {
 	[RequireComponent(typeof(AnimationSMBManager))]
-	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder, ICanDealDamageViewController
+	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder, ICanDealDamageViewController, ICanDealDamageRootViewController
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
 		
@@ -153,7 +153,11 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => BoundEntity?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => this;
 
 		public ICanDealDamage CanDealDamageEntity => BoundEntity;
+		public Transform GetTransform() {
+			return transform;
+		}
 	}
 }

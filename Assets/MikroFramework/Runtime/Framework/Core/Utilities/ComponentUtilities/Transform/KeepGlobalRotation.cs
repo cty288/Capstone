@@ -26,7 +26,11 @@ namespace Mikrocosmos{
         private void Update() {
             transform.rotation = Quaternion.Euler(rotation);
             if (positionRelativeTo) {
-                transform.position = positionRelativeTo.position + positionOffset;
+                Vector3 pos = positionRelativeTo.position + positionOffset;
+                if (float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z)) {
+                    return;
+                }
+                transform.position = pos;
             }
          
         }
