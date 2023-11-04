@@ -17,7 +17,8 @@ namespace Runtime.GameResources.Model.Base {
 		RawMaterial,
 		Bait,
 		Item,
-		Weapon
+		Weapon,
+		Currency
 	}
 
 	[Serializable]

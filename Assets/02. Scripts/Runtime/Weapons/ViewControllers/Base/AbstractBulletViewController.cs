@@ -140,7 +140,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				GameObject hitObj =
 					rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
-				if (hitObj!= null && hitObj.transform == bulletOwner.transform) {
+				if (hitObj && hitObj.transform == bulletOwner.transform) {
 					return;
 				}
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){

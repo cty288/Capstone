@@ -42,13 +42,14 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 		protected List<GameObject> hitObjects = new List<GameObject>();
 		
-		
+		protected ILevelModel levelModel;
 		protected AnimationSMBManager animationSMBManager;
 		protected override void Awake() {
 			base.Awake();
 			enemyModel = this.GetModel<IEnemyEntityModel>();
 			animationSMBManager = GetComponent<AnimationSMBManager>();
 			animationSMBManager.Event.AddListener(OnAnimationEvent);
+			levelModel = this.GetModel<ILevelModel>();
 		}
 
 		protected abstract void OnAnimationEvent(string eventName);
@@ -130,6 +131,16 @@ namespace Runtime.Enemies.ViewControllers.Base {
 				OnDestroyHealthBar(currentHealthBar);
 			}
 			currentHealthBar = null;
+		}
+
+		protected override int GetSpawnedCombatCurrencyAmount() {
+			int currentLevel = levelModel.CurrentLevelCount;
+			float referenceCount = BoundEntity.GetRealSpawnCost(currentLevel, BoundEntity.GetRarity());
+			//+- 10%
+			float randomCount = UnityEngine.Random.Range(-referenceCount * 0.1f, referenceCount * 0.1f);
+			int result = Mathf.RoundToInt(referenceCount + randomCount);
+			result = Mathf.Clamp(result, 1, int.MaxValue);
+			return result;
 		}
 
 		public virtual bool CheckHit(HitData data) {

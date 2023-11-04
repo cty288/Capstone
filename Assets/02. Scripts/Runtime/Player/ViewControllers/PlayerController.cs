@@ -113,6 +113,10 @@ namespace Runtime.Temporary
             base.OnEntityDie(damagedealer);
         }
 
+        protected override int GetSpawnedCombatCurrencyAmount() {
+            return 0;
+        }
+
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
             float damageRatio = Mathf.Clamp01((float)damage / (float)BoundEntity.GetMaxHealth());
             

@@ -87,7 +87,7 @@ namespace Runtime.GameResources.ViewControllers {
             isAbsorbWaiting = true;
             yield return new WaitForSeconds(0.2f);
             isAbsorbWaiting = false;
-            if(inventoryModel.AddItem(BoundEntity)) {
+            if(AbsorbHandler(BoundEntity)) {
                 isAbsorbing = true;
                 if (entityRemovalTimerCoroutine != null) {
                     StopCoroutine(entityRemovalTimerCoroutine);
@@ -113,6 +113,17 @@ namespace Runtime.GameResources.ViewControllers {
                         }
                     })).Execute();
             }
+        }
+        
+        /// <summary>
+        /// Handle the absorb logic, return true if the item is successfully absorbed
+        /// By default, it will add the item to the inventory
+        /// But you can override it to have your own logic instead of adding it to the inventory
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        protected virtual bool AbsorbHandler(T entity) {
+            return inventoryModel.AddItem(entity);
         }
 
         protected abstract void OnStartAbsorb();

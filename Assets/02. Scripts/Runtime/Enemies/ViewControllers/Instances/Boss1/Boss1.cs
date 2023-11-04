@@ -105,8 +105,12 @@ namespace Runtime.Enemies
         public float RapidFireWait { get; }
         [BindCustomData("waitTimes","rangedAOEWait")]
         public float RangedAOEWait { get; }
+        
+        
         [BindCustomData("waitTimes","rollWait")]
         public float RollWait { get; }
+        
+        
         
         private HitDetectorInfo hitDetectorInfo;
         private bool deathAnimationEnd = false;

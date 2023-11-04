@@ -94,6 +94,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		protected IEntityModel entityModel;
 		
+		
 		protected T BoundEntity { get; private set; }
 		
 		private Dictionary<PropertyInfo, Func<dynamic>> propertyBindings = new Dictionary<PropertyInfo, Func<dynamic>>();
