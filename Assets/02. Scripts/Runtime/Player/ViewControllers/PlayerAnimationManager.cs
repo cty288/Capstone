@@ -28,7 +28,6 @@ namespace Runtime.Player.ViewControllers
             animationSMBManager.Event.AddListener(OnAnimationEvent);
             this.RegisterEvent<PlayerSwitchAnimEvent>(SwitchPlayerAnimLayer)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-            ;
         }
 
         void Start()
@@ -88,6 +87,7 @@ namespace Runtime.Player.ViewControllers
         protected void SwitchPlayerAnimLayer(PlayerSwitchAnimEvent e)
         {
             int target = playerAnim.GetLayerIndex(e.entity.AnimLayerName);
+            playerAnim.SetLayerWeight(1, 1 - e.weight); // NoItem
             playerAnim.SetLayerWeight(target, e.weight);
         }
     }

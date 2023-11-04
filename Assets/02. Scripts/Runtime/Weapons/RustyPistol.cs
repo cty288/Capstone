@@ -53,11 +53,7 @@ namespace Runtime.Weapons
 
     }
 
-
-    public struct OnGunShoot
-    {
-        public string AnimationName;
-    }
+    
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         private GunAmmoVisual gunAmmoVisual;
@@ -67,6 +63,10 @@ namespace Runtime.Weapons
         
         [Header("Debug")]
         [SerializeField] private string overrideName = "RustyPistol";
+        
+        [SerializeField] private string animLayerNameOverride = "Revolver";
+        [SerializeField] private Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
+        [SerializeField] private Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
         
         protected override void Awake() {
             base.Awake();
@@ -81,9 +81,11 @@ namespace Runtime.Weapons
             base.OnEntityStart();
             gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
             gunAmmoVisual.Init(BoundEntity);
-            
-            hipFireCameraPosition = new Vector3(-0.04f,-0.13f,-0.25f);
-            adsCameraPosition = new Vector3(-0.003f, -0.123f, 0f);
+
+            BoundEntity.animLayerName = animLayerNameOverride;
+
+            hipFireCameraPosition = hipFireCameraPositionOverride;
+            adsCameraPosition = adsCameraPositionOverride;
         }
 
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
@@ -129,15 +131,9 @@ namespace Runtime.Weapons
                 
                 if (BoundEntity.CurrentAmmo == 0 && autoReload)
                 {
-                    if (IsScopedIn) {
-                        ChangeScopeStatus(false);
-                        //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
-                        //StartCoroutine(ScopeOut(true));
-                    }
                     SetShoot(false);
                     ChangeReloadStatus(true);
-                    StartCoroutine(ReloadChangeModel());
-                    
+                    StartCoroutine(ReloadAnimation());
                 }
             }
         }
@@ -176,28 +172,28 @@ namespace Runtime.Weapons
                     }
                     
                     //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
-                    StartCoroutine(ReloadChangeModel());
+                    StartCoroutine(ReloadAnimation());
                 }
                 
             }
         }
 
-        private IEnumerator ReloadChangeModel() {
+        private IEnumerator ReloadAnimation() {
             ChangeReloadStatus(true);
             //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
-            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
+                AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
             animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
             animator.SetTrigger("Reload");
             
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-            
         }
 
         public override void OnRecycled() {
             base.OnRecycled();
+            fpsCamera.transform.DOLocalMove(hipFireCameraPosition, 0.167f);
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);
         }
-        
     }
 }

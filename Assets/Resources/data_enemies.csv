@@ -1,8 +1,8 @@
-EntityName / Property Names,health,taste,item_drop_collections,vigiliance,danger,custom_properties,tags,,Notes
-Types,HealthInfo,List<TasteType>,"Dictionary<int,ItemDropCollection>",float,int,dynamic,"Dictionary<TagName,int>",,
+EntityName / Property Names,health,taste,spawn_cost,item_drop_collections,vigiliance,danger,custom_properties,tags,,Notes
+Types,HealthInfo,List<TasteType>,float,"Dictionary<int,ItemDropCollection>",float,int,dynamic,"Dictionary<TagName,int>",,
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,","{
+{""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,",,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -42,9 +42,9 @@ default:
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",,
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,
-BEGIN,,,,,,,,,
-Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]","{
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,
+BEGIN,,,,,,,,,,
+Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -283,8 +283,8 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]","{
     }
   }
 }",,,
-Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",,,123,,,,
-BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]","{
+Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",1,,,123,,,,
+BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,

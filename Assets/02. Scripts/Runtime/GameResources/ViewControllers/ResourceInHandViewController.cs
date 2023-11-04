@@ -193,6 +193,7 @@ namespace Runtime.GameResources.ViewControllers {
 				weight = 0,
 				entity = BoundEntity
 			});
+			
 			rigidbody.isKinematic = false;
 			foreach (Collider selfCollider in selfColliders.Keys) {
 				selfCollider.isTrigger = selfColliders[selfCollider];

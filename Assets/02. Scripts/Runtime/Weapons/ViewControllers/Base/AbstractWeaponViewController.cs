@@ -28,6 +28,10 @@ namespace Runtime.Weapons.ViewControllers.Base
     {
         public bool isScopedIn;
     }
+    public struct OnGunShoot
+    {
+        public string AnimationName;
+    }
     
     public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController, ICanSendEvent {
         IWeaponEntity WeaponEntity { get; }
