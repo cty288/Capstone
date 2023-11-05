@@ -118,6 +118,7 @@ namespace Runtime.Weapons
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
                     SetShoot(true);
+                    animator.SetTrigger("Shoot");
                     
                     CameraShakeData shakeData = new CameraShakeData(
                         Mathf.Lerp(0.2f, 0.5f, isScopedIn ? 1: 0),
