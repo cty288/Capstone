@@ -23,6 +23,7 @@ namespace Runtime.Temporary
 
         private float recoverWaitTime = 5f;
         protected float recoverWaitTimer = 0f;
+        [SerializeField] private AnimationCurve timeCurrencyRate = null;
         //private IPlayerEntity currentPlayerEntity;
 
         protected override void Awake() {

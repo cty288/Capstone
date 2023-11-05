@@ -76,6 +76,9 @@ public class DamageIndicatorUI : AbstractMikroController<MainGame> {
     }
 
     private void RemoveByIndicator(DamageIndicator indicator) {
+        if (!damageIndicatorToTransformMap.ContainsKey(indicator)) {
+            return;
+        }
         Transform targetTransform = damageIndicatorToTransformMap[indicator];
         damageIndicatorToTransformMap.Remove(indicator);
         transformToDamageIndicatorMap.Remove(targetTransform);

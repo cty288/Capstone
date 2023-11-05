@@ -80,7 +80,10 @@ namespace Runtime.GameResources.ViewControllers {
 
         protected virtual void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
             if (!player || !Camera.main || isAbsorbing || isAbsorbWaiting) return;
-            StartCoroutine(AbsorbWait(player, zone));
+            if (gameObject.activeInHierarchy) {
+                StartCoroutine(AbsorbWait(player, zone));
+            }
+            
         }
 
         private IEnumerator AbsorbWait(GameObject player, PlayerInteractiveZone zone) {
