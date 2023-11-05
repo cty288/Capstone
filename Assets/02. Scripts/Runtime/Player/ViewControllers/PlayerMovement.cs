@@ -10,7 +10,10 @@ using MikroFramework.AudioKit;
 using MikroFramework.Utilities;
 using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
+using Runtime.Utilities;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Weapons.Model.Properties;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
@@ -86,7 +89,7 @@ namespace Runtime.Player.ViewControllers
         [Header("Movement")] 
         
      
-        private float moveSpeed;
+        [SerializeField] private float moveSpeed;
      
     
         //temporary
@@ -197,8 +200,6 @@ namespace Runtime.Player.ViewControllers
 
         [SerializeField]
         private MovementState state;
-
-        private MovementState prevState;
         
         private DPunkInputs.PlayerActions playerActions;
         private IPlayerEntity playerEntity;
@@ -219,7 +220,8 @@ namespace Runtime.Player.ViewControllers
 
         private void Awake()
         {
-            this.RegisterEvent<OnScopeUsedEvent>(SetADSFOV);
+            this.RegisterEvent<OnScopeUsedEvent>(SetADSFOV).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            
             AudioSystem.Singleton.Initialize(null); //TODO: move to better spot
             
             playerActions = ClientInput.Singleton.GetPlayerActions();
@@ -264,6 +266,8 @@ namespace Runtime.Player.ViewControllers
                 MyInput();
                 StateHandler();
                 CheckForWall();
+                
+                HandleAnimation();
 
                 onSlope = OnSlope();
             }
@@ -298,7 +302,7 @@ namespace Runtime.Player.ViewControllers
 
         private void HandleAudio()
         {
-            if (grounded && rb.velocity.magnitude > 0.1f && !sprinting && !sliding && !wallrunning)
+            if (state == MovementState.walking && rb.velocity.magnitude >= 0.1f)
             {
                 walkingAudioTimer += Time.deltaTime;
                 if (walkingAudioTimer >= walkingAudioTime)
@@ -307,7 +311,7 @@ namespace Runtime.Player.ViewControllers
                     walkingAudioTimer = 0f;
                 }
             }
-            else if (grounded && sprinting)
+            else if (state == MovementState.sprinting && rb.velocity.magnitude >= 0.1f)
             {
                 runningAudioTimer += Time.deltaTime;
                 if (runningAudioTimer >= runningAudioTime)
@@ -316,8 +320,8 @@ namespace Runtime.Player.ViewControllers
                     runningAudioTimer = 0f;
                 }
             }
-            
-            if (wallrunning)
+
+            if (state == MovementState.wallrunning)
             {
                 wallRunAudioTimer += Time.deltaTime;
                 if (wallRunAudioTimer >= wallRunAudioTime)
@@ -327,7 +331,7 @@ namespace Runtime.Player.ViewControllers
                 }
             }
             
-            if (sliding)
+            if (state == MovementState.sliding)
             {
                 if (slidingAudioSource == null)
                 {
@@ -340,8 +344,9 @@ namespace Runtime.Player.ViewControllers
                     slidingAudioSource = null;
                     AudioSystem.Singleton.StopSound("slide_3");
                 }
-                
             }
+            
+            // JUMP
         }
         
         private void StateHandler()
@@ -356,7 +361,6 @@ namespace Runtime.Player.ViewControllers
             // Mode - Wallrunning
             if (wallrunning)
             {
-                // prevState = state;
                 state = MovementState.wallrunning;
                 playerEntity.SetMovementState(state);
 
@@ -365,7 +369,6 @@ namespace Runtime.Player.ViewControllers
             // Mode - Sliding
             else if (sliding)
             {
-                prevState = state;
                 state = MovementState.sliding;
                 playerEntity.SetMovementState(state);
 
@@ -377,9 +380,8 @@ namespace Runtime.Player.ViewControllers
             }
 
             // Mode - Sprinting
-            else if(grounded && sprinting)
+            else if(grounded && sprinting && !playerEntity.IsScopedIn())
             {
-                prevState = state;
                 state = MovementState.sprinting;
                 playerEntity.SetMovementState(state);
 
@@ -389,7 +391,6 @@ namespace Runtime.Player.ViewControllers
             // Mode - Walking
             else if (grounded)
             {
-                prevState = state;
                 state = MovementState.walking;
                 playerEntity.SetMovementState(state);
                 if (playerEntity.IsScopedIn())
@@ -405,7 +406,6 @@ namespace Runtime.Player.ViewControllers
             // Mode - Air
             else
             {
-                // prevState = state;
                 state = MovementState.air;
                 playerEntity.SetMovementState(state);
                 desiredMoveSpeed = playerEntity.GetAirSpeed().RealValue;
@@ -467,8 +467,29 @@ namespace Runtime.Player.ViewControllers
                     SetFOV(defaultFOV);
                 ChangeBobVars(0,0);
             }
+        }
 
-            
+        private void HandleAnimation()
+        {
+            if (state == MovementState.walking && rb.velocity.magnitude >= 0.1f)
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 1));
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("MoveSpeed", AnimationEventType.Float, 1.5f));
+            }
+            else if (state == MovementState.sprinting && rb.velocity.magnitude >= 0.1f)
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 1));
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("MoveSpeed", AnimationEventType.Float, 2f));
+            }
+            else
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 0));
+            }
         }
 
         private void SetFOV(float fov)
@@ -512,21 +533,7 @@ namespace Runtime.Player.ViewControllers
         {
             cameraTrans.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
         }
-        
-        //smooth FOV transition
-        IEnumerator ChangeFOV(CinemachineVirtualCamera cam, float startFOV, float endFOV, float duration)
-        {
-            // float startFOV = cam.m_Lens.FieldOfView;
-            float time = 0;
-            while(time < duration)
-            {
-               // if(endFOV == 110)
-                    //Debug.Log($"endFOV:{endFOV}, startFOV: {startFOV}, {time}");
-                cam.m_Lens.FieldOfView = Mathf.Lerp(startFOV, endFOV, time / duration);
-                time += Time.deltaTime;
-                yield return null;
-            }
-        }
+
         private void MyInput()
         {
             horizontalInput = playerActions.Move.ReadValue<Vector2>().x;

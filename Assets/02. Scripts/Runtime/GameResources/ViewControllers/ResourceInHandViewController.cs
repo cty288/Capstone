@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.GameResources.ViewControllers {
-	public interface IInHandResourceViewController : IResourceViewController {
+	public interface IInHandResourceViewController : IResourceViewController, ICanSendEvent {
 		void OnStartHold(GameObject ownerGameObject);
 		
 		void OnStopHold();
@@ -87,6 +89,16 @@ namespace Runtime.GameResources.ViewControllers {
 			InitObjectsToChangeLayerInHand();
 		}
 
+		protected override void Update() {
+			base.Update();
+			//update in hand local tr
+			if (isHolding) {
+				transform.localPosition = InHandLocalPosition;
+				transform.localEulerAngles = InHandLocalRotation;
+				transform.localScale = InHandLocalScale;
+			}
+		}
+
 		private void InitObjectsToChangeLayerInHand() {
 			if (objectToChangeLayerInHand == null) {
 				return;
@@ -161,6 +173,11 @@ namespace Runtime.GameResources.ViewControllers {
 		}
 
 		public virtual void OnStartHold(GameObject ownerGameObject) {
+			this.SendEvent<PlayerSwitchAnimEvent>(new PlayerSwitchAnimEvent()
+			{
+				weight = 1,
+				entity = BoundEntity
+			});
 			isHolding = true;
 			rigidbody.isKinematic = true;
 			foreach (Collider selfCollider in selfColliders.Keys) {
@@ -179,7 +196,14 @@ namespace Runtime.GameResources.ViewControllers {
 			}
 		}
 		
-		public virtual void OnStopHold() {
+		public virtual void OnStopHold()
+		{
+			this.SendEvent<PlayerSwitchAnimEvent>(new PlayerSwitchAnimEvent()
+			{
+				weight = 0,
+				entity = BoundEntity
+			});
+			
 			rigidbody.isKinematic = false;
 			foreach (Collider selfCollider in selfColliders.Keys) {
 				selfCollider.isTrigger = selfColliders[selfCollider];

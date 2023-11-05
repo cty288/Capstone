@@ -54,6 +54,8 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string DeployedVCPrefabName { get; }
 		
+		public string AnimLayerName { get; }
+		
 		/// <summary>
 		/// Width in inventory. Use only 1 or 2. Only effective for weapons.
 		/// </summary>
@@ -153,6 +155,8 @@ namespace Runtime.GameResources.Model.Base {
 		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
 
 		public virtual string DeployedVCPrefabName { get; } = null;
+
+		public virtual string AnimLayerName { get; } = "Base";
 
 		[field: ES3Serializable]
 		public virtual int Width { get; } = 1;
