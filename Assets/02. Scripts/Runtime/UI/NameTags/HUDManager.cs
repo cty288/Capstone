@@ -87,6 +87,14 @@ namespace Runtime.UI.NameTags {
                 info.Despawn(targetFollow);
             }
         }
+        
+        public bool HasHUDElement(Transform targetFollow, HUDCategory hudCategory) {
+            if (hudElementInfos.TryGetValue(hudCategory, out var info)) {
+                return info.followDict.ContainsKey(targetFollow);
+            }
+
+            return false;
+        }
 
   
 

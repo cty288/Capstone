@@ -134,7 +134,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			new Dictionary<string, CrossHairManagedHUDInfo>();
 		
 		private LayerMask crossHairHUDManagedDetectLayerMask;
-
+		
+		
+		protected bool playerInInteractiveZone;
+		protected bool interactable;
+		//protected bool isInteracting;
 		protected override void Awake() {
 			base.Awake();
 			crossHairHUDManagedDetectLayerMask = LayerMask.GetMask("CrossHairDetect");
@@ -308,6 +312,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private bool unPointTriggered = false;
 
 		protected virtual void Update() {
+			if (playerInInteractiveZone) {
+				if (!interactable) {
+					Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
+					if (HUDManager.Singleton.HasHUDElement(tr, HUDCategory.InteractiveTag)) {
+						HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
+					}
+				}
+				else { //can interact
+					
+				}
+			}
+			
 			if (crossHairHUDTimer < crossHairHUDToleranceMaxTime && !isPointed && !unPointTriggered) {
 				crossHairHUDTimer += Time.deltaTime;
 				//if the screen distance between crosshair and this game obj is too far, then directly set timer to tolerance time
@@ -721,9 +737,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		#endregion
 
 		
-		protected bool playerInInteractiveZone;
+
 		public virtual void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
-			if (hasInteractiveHint) {
+			if (hasInteractiveHint && interactable) {
 				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
 				
 				GameObject hud = HUDManager.Singleton.SpawnHUDElement(tr, interactiveHintPrefabName,
@@ -737,8 +753,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					}
 				}
 			}
-			
 		}
+		
+		
 		
 
 		public virtual void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone) {
