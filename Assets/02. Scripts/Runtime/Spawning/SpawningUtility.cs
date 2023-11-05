@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using MikroFramework;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Temporary;
 using UnityEngine;
@@ -9,10 +11,34 @@ using UnityEngine.UIElements;
 namespace Runtime.Spawning {
 	public static class SpawningUtility {
 		private static Collider[] results = new Collider[10];
+
+		private static Vector3 GetNormalAtPoint(Vector3 point) {
+			Vector3 normal = Vector3.zero;
+			RaycastHit hit;
+			if (Physics.Raycast(point, Vector3.down, out hit, 10.0f)) {
+				normal = hit.normal;
+			}
+			return normal;
+		}
+		
+		private static bool IsSlopeTooSteepAtPoint(Vector3 point, float maxSlopeAngle, out Quaternion rotationWithSlope) {
+			Vector3 normal = GetNormalAtPoint(point);
+			float angle = Vector3.Angle(normal, Vector3.up);
+			rotationWithSlope = Quaternion.FromToRotation(Vector3.up, normal);
+			return angle > maxSlopeAngle;
+		}
 		
 		
-		public static Vector3 FindNavMeshSuitablePosition(Func<BoxCollider> spawnSizeGetter, Vector3 desiredPosition,
-			 int areaMask, Vector3[] insideArenaRefPoints, float initialSearchRadius, float increment, int maxAttempts, out int usedAttempts) {
+		public static Vector3 FindNavMeshSuitablePosition(
+			Func<BoxCollider> spawnSizeGetter, 
+			Vector3 desiredPosition,
+			int maxAngle,
+			int areaMask, 
+			Vector3[] insideArenaRefPoints, 
+			float initialSearchRadius, 
+			float increment, int maxAttempts, 
+			out int usedAttempts,
+			out Quaternion rotationWithSlope) {
 			
 			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
 			
@@ -31,7 +57,7 @@ namespace Runtime.Spawning {
 					if (!NavMesh.SamplePosition(point, out navHit, 20.0f, areaMask)) {
 						continue;
 					}
-			
+
 					NavMeshPath insideArenaDetectPath = new NavMeshPath();
 			
 					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, insideArenaDetectPath);
@@ -43,24 +69,31 @@ namespace Runtime.Spawning {
 				
 				if(!satisfied) {
 					usedAttempts++;
+					rotationWithSlope = Quaternion.identity;
 					return Vector3.negativeInfinity;
 				}
-
 			}
 			
-
-			
+		
 			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
-				var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
-					obstructionLayer);
-				if (size == 0) {
-					return navHit.position; 
-				}
+				if(!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
+					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
+						obstructionLayer);
+					if (size == 0) {
+						return navHit.position; 
+					}
 
-				if (CheckColliders(size)) {
-					return navHit.position;
+					if (CheckColliders(size)) {
+						return navHit.position;
+					}
 				}
 			}
+			
+
+			
+
+			
+			
 
 			while (usedAttempts < maxAttempts)
 			{
@@ -70,6 +103,9 @@ namespace Runtime.Spawning {
 				randomDirection += desiredPosition;
 
 				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, areaMask)) {
+					if(IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
+						continue;
+					}
 					
 					//calculate if this point is naviable to the player
 					NavMeshPath path = new NavMeshPath();
@@ -94,7 +130,15 @@ namespace Runtime.Spawning {
 				currentSearchRadius += increment;
 				usedAttempts++;
 			}
+			
+			rotationWithSlope = Quaternion.identity;
 			return Vector3.negativeInfinity; 
+		}
+
+		public static List<GameObject> SpawnBossPillars(int targetNumber, string prefabName) {
+			var pillarPool = GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 4, 10, out _);
+			
+			return null;
 		}
 
 

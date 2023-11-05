@@ -419,7 +419,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 1089
+    m_Bits: 3137
   maxDistance: 100
   detectTime: 1
 --- !u!54 &2740637745594549901
@@ -666,7 +666,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 1024
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -886,6 +886,7 @@ MonoBehaviour:
   sprintBob:
     AmplitudeGain: 0.2
     FrequencyGain: 2
+  moveSpeed: 0
   jumpCooldown: 0.3
   airMultiplier: 2
   maxSlopeAngle: 60
@@ -928,9 +929,11 @@ MonoBehaviour:
   showNameTagWhenPointed: 0
   nameTagFollowTransform: {fileID: 0}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintFollowTransform: {fileID: 0}
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
@@ -938,6 +941,39 @@ MonoBehaviour:
   rarityBaseValueBuiltFromInspector: 1
   randomizeNavMeshPriority: 1
   <SpawnSizeCollider>k__BackingField: {fileID: 0}
+  timeCurrencyRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1.2711868
+      value: 10
+      inSlope: 0.0012441304
+      outSlope: 0.0012441304
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.42452827
+    - serializedVersion: 3
+      time: 299.1869
+      value: 5
+      inSlope: -0.017773662
+      outSlope: -0.017773662
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 600
+      value: 3
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &2740637746320070857
 MonoBehaviour:
   m_ObjectHideFlags: 0

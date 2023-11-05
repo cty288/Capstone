@@ -63,12 +63,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField] protected bool showNameTagWhenPointed = true;
 		[SerializeField] protected Transform nameTagFollowTransform;
 		[SerializeField] protected string nameTagPrefabName = "NameTag_General";
+		[SerializeField] protected bool nameTagAutoAdjustHeight = true;
 	
 		[FormerlySerializedAs("triggerCheck")]
 		[Header("Entity Interaction")]
 		[SerializeField] protected bool hasInteractiveHint = false;
 		[SerializeField] protected string interactiveHintPrefabName = "InteractHint_General";
 		[SerializeField] protected string interactiveHintLocalizedKey = "interact";
+
+		[SerializeField] protected Transform interactiveHintFollowTransform;
 		//[SerializeField] protected Transform hintCanvasFollowTransform = this.transform;
 		
 		[FormerlySerializedAs("autoRemoveEntityWhenDestroyed")]
@@ -214,7 +217,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
 					(GameObject, CrossHairManagedHUDInfo) nameTagInfo =
 						SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName,
-							HUDCategory.NameTag);
+							HUDCategory.NameTag, nameTagAutoAdjustHeight);
 					GameObject
 						nameTag = nameTagInfo.Item1;
 					
@@ -296,7 +299,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			string id = followTransform.GetHashCode().ToString() + category.ToString();
 			if (crossHairManagedHUDs.TryGetValue(id, out var info)) {
 				HUDManager.Singleton.DespawnHUDElement(info.realSpawnPositionOffset.transform, category);
-				Destroy(info.realSpawnPositionOffset);
+				Destroy(info.realSpawnPositionOffset.gameObject);
 				crossHairManagedHUDs.Remove(id);
 			}
 			
@@ -718,13 +721,17 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		#endregion
 
 		
+		protected bool playerInInteractiveZone;
 		public virtual void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
 			if (hasInteractiveHint) {
-				GameObject hud = HUDManager.Singleton.SpawnHUDElement(transform, interactiveHintPrefabName,
+				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
+				
+				GameObject hud = HUDManager.Singleton.SpawnHUDElement(tr, interactiveHintPrefabName,
 					HUDCategory.InteractiveTag, true);
 				if (hud) {
 					InteractiveHint element = hud.GetComponent<InteractiveHint>();
 					if (element != null) {
+						playerInInteractiveZone = true;
 						element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
 							Localization.Get(interactiveHintLocalizedKey));
 					}
@@ -736,7 +743,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone) {
 			if (hasInteractiveHint) {
-				HUDManager.Singleton.DespawnHUDElement(transform, HUDCategory.InteractiveTag);
+				playerInInteractiveZone = false;
+				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
+				HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
 			}
 		}
 

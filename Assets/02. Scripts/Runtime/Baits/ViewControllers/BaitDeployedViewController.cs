@@ -72,7 +72,9 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 		if (cards.Count > 0) {
 			LevelSpawnCard card = cards[Random.Range(0, cards.Count)];
 			Vector3 spawnPos =
-				SpawningUtility.FindNavMeshSuitablePosition(() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position,  NavMeshHelper.GetSpawnableAreaMask(),null ,5, 3, 20, out _);
+				SpawningUtility.FindNavMeshSuitablePosition(
+					() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
+					NavMeshHelper.GetSpawnableAreaMask(), null, 5, 3, 20, out _, out _);
 			
 			if (!float.IsInfinity(spawnPos.magnitude)) {
 				int baitRarity = BoundEntity.GetRarity();

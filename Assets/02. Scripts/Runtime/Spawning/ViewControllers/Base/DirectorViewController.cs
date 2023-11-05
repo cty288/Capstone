@@ -234,9 +234,11 @@ namespace Runtime.Spawning
                         spawnPos = hitNavMesh.position;
 
                         Vector3 fixedSpawnPos =
-                            SpawningUtility.FindNavMeshSuitablePosition(() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider,
-                                spawnPos, NavMeshHelper.GetSpawnableAreaMask(),  insideArenaCheckPoints, 1f, 3f, spawnAttempts,
-                                out int usedAttempts);
+                            SpawningUtility.FindNavMeshSuitablePosition(
+                                () => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider,
+                                spawnPos, 90, NavMeshHelper.GetSpawnableAreaMask(), insideArenaCheckPoints, 1f, 3f,
+                                spawnAttempts,
+                                out int usedAttempts, out _);
                         
                         spawnAttempts -= usedAttempts;
                        

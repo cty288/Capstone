@@ -60,6 +60,7 @@ namespace Runtime.DataFramework.Properties
 		air_speed,
 		air_drag,
 		armor,
-		armor_recover_speed
+		armor_recover_speed,
+		spawn_boss_cost,
 	}
 }

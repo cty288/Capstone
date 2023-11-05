@@ -118,7 +118,17 @@ namespace Runtime.UI.NameTags {
                             screenPos = position;
                         }
                         //set screen pos z to 0
-                        screenPos.z = 0;
+                        if (screenPos.z < 0) {
+                            //make x and y negative, so that the element will be hidden
+                            screenPos.x = -10000;
+                            screenPos.y = -10000;
+                        }
+                        else {
+                            screenPos.z = 0;
+                        }
+                        
+                       
+                       
                        
                         ele.Value.Item1.transform.position = screenPos;
                     }

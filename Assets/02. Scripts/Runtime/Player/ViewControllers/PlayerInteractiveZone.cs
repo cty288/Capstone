@@ -111,7 +111,7 @@ namespace Runtime.Player {
                         }
                         
                         if (PhysicsUtility.IsInLayerMask(hitObj, wallLayerMask)) {
-                            break;
+                             break;
                         }
                         
                     }
