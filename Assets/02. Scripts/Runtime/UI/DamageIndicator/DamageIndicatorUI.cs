@@ -12,14 +12,14 @@ using UnityEngine;
 
 public class DamageIndicatorUI : AbstractMikroController<MainGame> {
     [SerializeField] private GameObject damageIndicatorPrefab;
-    private SafeGameObjectPool damageIndicatorPool;
+    //private SafeGameObjectPool damageIndicatorPool;
     private Transform playerTransform;
     private IPlayerEntity playerEntity;
     private Dictionary<DamageIndicator, Transform> damageIndicatorToTransformMap = new Dictionary<DamageIndicator, Transform>();
     private Dictionary<Transform, DamageIndicator> transformToDamageIndicatorMap = new Dictionary<Transform, DamageIndicator>();
     List<Transform> transformsToRemove = new List<Transform>();
     private void Awake() {
-        damageIndicatorPool = GameObjectPoolManager.Singleton.GetOrCreatePool(damageIndicatorPrefab);
+       // damageIndicatorPool = GameObjectPoolManager.Singleton.GetOrCreatePool(damageIndicatorPrefab);
         
         playerTransform = PlayerController.GetClosestPlayer(Camera.main.transform.position).transform;
         playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
@@ -39,7 +39,8 @@ public class DamageIndicatorUI : AbstractMikroController<MainGame> {
             transformToDamageIndicatorMap[targetTransform].UpdateDamage(damagePower);
         }
         else {
-            DamageIndicator damageIndicator = damageIndicatorPool.Allocate().GetComponent<DamageIndicator>();
+            DamageIndicator damageIndicator =
+                GameObject.Instantiate(damageIndicatorPrefab).GetComponent<DamageIndicator>();
             Transform transform1;
             (transform1 = damageIndicator.transform).SetParent(transform);
             transform1.localPosition = Vector3.zero;
@@ -47,8 +48,8 @@ public class DamageIndicatorUI : AbstractMikroController<MainGame> {
             transform1.localRotation = Quaternion.identity;
             damageIndicator.UpdateDamage(damagePower);
             damageIndicator.RegisterFadeCompleteCallback(RemoveByIndicator);
-            damageIndicatorToTransformMap.Add(damageIndicator, targetTransform);
-            transformToDamageIndicatorMap.Add(targetTransform, damageIndicator);
+            damageIndicatorToTransformMap.TryAdd(damageIndicator, targetTransform);
+            transformToDamageIndicatorMap.TryAdd(targetTransform, damageIndicator);
         }
     }
 
@@ -82,13 +83,13 @@ public class DamageIndicatorUI : AbstractMikroController<MainGame> {
         Transform targetTransform = damageIndicatorToTransformMap[indicator];
         damageIndicatorToTransformMap.Remove(indicator);
         transformToDamageIndicatorMap.Remove(targetTransform);
-        damageIndicatorPool.Recycle(indicator.gameObject);
+       // damageIndicatorPool.Recycle(indicator.gameObject);
     }
     
     private void RemoveByTransform(Transform targetTransform) {
         DamageIndicator damageIndicator = transformToDamageIndicatorMap[targetTransform];
         transformToDamageIndicatorMap.Remove(targetTransform);
         damageIndicatorToTransformMap.Remove(damageIndicator);
-        damageIndicatorPool.Recycle(damageIndicator.gameObject);
+        //damageIndicatorPool.Recycle(damageIndicator.gameObject);
     }
 }

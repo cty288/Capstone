@@ -6,6 +6,7 @@ using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
 using Runtime.Player;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Runtime.UI {
 	public class MainUI : UIRoot, IController {
@@ -28,6 +29,7 @@ namespace Runtime.UI {
 					ClientInput.Singleton.EnablePlayerMaps();
 				}
 			}
+			
 
 			if (playerModel.IsPlayerDead()) {
 				return;

@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
+using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Utilities;
@@ -74,14 +76,19 @@ namespace Runtime.Spawning
         [SerializeField] private float directorSpawnTimer = 0f;
 
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+        protected Vector3[] insideArenaCheckPoints;
 
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
         }
 
-        protected override void OnEntityStart()
-        {
+        protected override void OnEntityStart() {
+            insideArenaCheckPoints =
+                GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
+
+            
+            
             Debug.Log("director start");
             m_lottery = new Lottery();
             // currentCredits = BoundEntity.GetStartingCredits().RealValue;
@@ -227,7 +234,8 @@ namespace Runtime.Spawning
                         spawnPos = hitNavMesh.position;
 
                         Vector3 fixedSpawnPos =
-                            SpawningUtility.FindNavMeshSuitablePosition(card.Prefab, spawnPos, 1f, 3f, spawnAttempts,
+                            SpawningUtility.FindNavMeshSuitablePosition(() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider,
+                                spawnPos, NavMeshHelper.GetSpawnableAreaMask(),  insideArenaCheckPoints, 1f, 3f, spawnAttempts,
                                 out int usedAttempts);
                         
                         spawnAttempts -= usedAttempts;

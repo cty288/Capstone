@@ -28,7 +28,7 @@ public class DamageIndicator : PoolableGameObject {
 			foreach (Image image in images) {
 				sequence.Append(image.DOFade(0, time));
 			}
-			sequence.OnComplete(RecycleToCache);
+			sequence.OnComplete(OnFadeDone);
 			sequence.Play();
 		}
 		else {
@@ -36,6 +36,15 @@ public class DamageIndicator : PoolableGameObject {
 				image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
 			}
 		}
+	}
+
+	private void OnFadeDone() {
+		cumulativeDamageStrength = initialDamageStrength;
+		sequence?.Kill();
+		sequence = null;
+		onFadeComplete?.Invoke(this);
+		onFadeComplete = null;
+		StartFade(0, true);
 	}
 
 	public void UpdateDamage(float damageStrength) {
@@ -58,12 +67,7 @@ public class DamageIndicator : PoolableGameObject {
 
 	public override void OnRecycled() {
 		base.OnRecycled();
-		cumulativeDamageStrength = initialDamageStrength;
-		sequence?.Kill();
-		sequence = null;
-		onFadeComplete?.Invoke(this);
-		onFadeComplete = null;
-		StartFade(0, true);
+		
 	}
 
 	public override void OnStartOrAllocate() {

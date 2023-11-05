@@ -1,15 +1,18 @@
-﻿using Runtime.DataFramework.ViewControllers.Entities;
+﻿using System;
+using JetBrains.Annotations;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Temporary;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 namespace Runtime.Spawning {
 	public static class SpawningUtility {
 		private static Collider[] results = new Collider[10];
 		
 		
-		public static Vector3 FindNavMeshSuitablePosition(GameObject prefab, Vector3 desiredPosition,
-			float initialSearchRadius, float increment, int maxAttempts, out int usedAttempts) {
+		public static Vector3 FindNavMeshSuitablePosition(Func<BoxCollider> spawnSizeGetter, Vector3 desiredPosition,
+			 int areaMask, Vector3[] insideArenaRefPoints, float initialSearchRadius, float increment, int maxAttempts, out int usedAttempts) {
 			
 			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
 			
@@ -17,26 +20,37 @@ namespace Runtime.Spawning {
 			float currentSearchRadius = initialSearchRadius;
 			NavMeshHit navHit;
 
-			ICreatureViewController creatureViewController = prefab.GetComponent<ICreatureViewController>();
-			BoxCollider boxCollider = creatureViewController.SpawnSizeCollider;
+			//ICreatureViewController creatureViewController = prefab.GetComponent<ICreatureViewController>();
+			BoxCollider boxCollider = spawnSizeGetter();
 			Vector3 prefabSize = boxCollider.size;
 
-			/*Transform playerTr = PlayerController.GetClosestPlayer(desiredPosition).transform;
-			if (!NavMesh.SamplePosition(playerTr.position, out navHit, 20.0f, -1)) {
-				usedAttempts++;
-				return Vector3.negativeInfinity; 
+
+			if (insideArenaRefPoints != null && insideArenaRefPoints.Length > 0) {
+				bool satisfied = false;
+				foreach (Vector3 point in insideArenaRefPoints) {
+					if (!NavMesh.SamplePosition(point, out navHit, 20.0f, areaMask)) {
+						continue;
+					}
+			
+					NavMeshPath insideArenaDetectPath = new NavMeshPath();
+			
+					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, insideArenaDetectPath);
+					if (insideArenaDetectPath.status == NavMeshPathStatus.PathComplete) {
+						satisfied = true;
+						break;
+					}
+				}
+				
+				if(!satisfied) {
+					usedAttempts++;
+					return Vector3.negativeInfinity;
+				}
+
 			}
 			
-			NavMeshPath playerDetectPath = new NavMeshPath();
-			
-			NavMesh.CalculatePath(desiredPosition, navHit.position, -1, playerDetectPath);
-			if (playerDetectPath.status != NavMeshPathStatus.PathComplete) {
-				usedAttempts++;
-				return Vector3.negativeInfinity; 
-			}*/
 
 			
-			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, -1)) {
+			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
 				var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
 					obstructionLayer);
 				if (size == 0) {
@@ -55,11 +69,11 @@ namespace Runtime.Spawning {
 				randomDirection = randomDirection.normalized * currentSearchRadius;
 				randomDirection += desiredPosition;
 
-				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, -1)) {
+				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, areaMask)) {
 					
 					//calculate if this point is naviable to the player
 					NavMeshPath path = new NavMeshPath();
-					bool result = NavMesh.CalculatePath(desiredPosition, navHit.position, -1, path);
+					bool result = NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, path);
 					if (path.status == NavMeshPathStatus.PathComplete) {
 						var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
 							obstructionLayer);

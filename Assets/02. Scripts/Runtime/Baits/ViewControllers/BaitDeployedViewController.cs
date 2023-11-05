@@ -4,6 +4,7 @@ using _02._Scripts.Runtime.Baits.Model.Base;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers;
+using _02._Scripts.Runtime.Utilities;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Properties.TestOnly;
@@ -14,6 +15,7 @@ using Runtime.Enemies.Model.Properties;
 using Runtime.GameResources.Model.Base;
 using Runtime.Spawning;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BaitDeployedViewController : AbstractDeployableResourceViewController<BaitEntity> {
 	private ILevelModel levelModel;
@@ -70,7 +72,7 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 		if (cards.Count > 0) {
 			LevelSpawnCard card = cards[Random.Range(0, cards.Count)];
 			Vector3 spawnPos =
-				SpawningUtility.FindNavMeshSuitablePosition(card.Prefab, transform.position, 5, 3, 20, out _);
+				SpawningUtility.FindNavMeshSuitablePosition(() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position,  NavMeshHelper.GetSpawnableAreaMask(),null ,5, 3, 20, out _);
 			
 			if (!float.IsInfinity(spawnPos.magnitude)) {
 				int baitRarity = BoundEntity.GetRarity();
@@ -100,6 +102,17 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 		out Quaternion spawnedRotation) {
 		if (levelModel.CurrentLevel.Value.IsInBossFight) {
 			failureReason = DeployFailureReason.BaitInBattle;
+			spawnedRotation = Quaternion.identity;
+			return false;
+		}
+		
+		//areas except NotWalkable (layer 1)
+	
+		//int notWalkableArea = NavMesh.GetAreaFromName("Not Walkable");
+		//int layerMask = ~(1 << notWalkableArea);
+
+		if (!NavMesh.SamplePosition(position, out _, 1f, NavMeshHelper.GetSpawnableAreaMask())) {
+			failureReason = DeployFailureReason.Obstructed;
 			spawnedRotation = Quaternion.identity;
 			return false;
 		}
