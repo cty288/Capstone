@@ -89,6 +89,16 @@ namespace Runtime.GameResources.ViewControllers {
 			InitObjectsToChangeLayerInHand();
 		}
 
+		protected override void Update() {
+			base.Update();
+			//update in hand local tr
+			if (isHolding) {
+				transform.localPosition = InHandLocalPosition;
+				transform.localEulerAngles = InHandLocalRotation;
+				transform.localScale = InHandLocalScale;
+			}
+		}
+
 		private void InitObjectsToChangeLayerInHand() {
 			if (objectToChangeLayerInHand == null) {
 				return;
