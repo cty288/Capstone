@@ -128,7 +128,7 @@ namespace Runtime.Player.ViewControllers
         private float airTimer = 0f;
         //public LayerMask whatIsGround;
         private bool grounded {
-            get => groundCheck.Triggered||airTimer<0.3f;
+            get => groundCheck.Triggered ||airTimer<0.3f;
         }
 
         private bool onSlope;
