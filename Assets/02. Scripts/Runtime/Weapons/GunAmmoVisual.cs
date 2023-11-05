@@ -16,6 +16,7 @@ namespace Runtime.Weapons
         private IWeaponEntity _associatedWeapon;
         [SerializeField] private Renderer[] renderers;
         [SerializeField] private Material gunBarrelIndicator;
+        [SerializeField] private bool updateIndicators = true;
         private Material[] _instanceGunBarrelIndicators;
         private static readonly int MaxAmmo = Shader.PropertyToID("_MaxAmmo");
         private static readonly int CurrentAmmo = Shader.PropertyToID("_CurrentAmmo");
@@ -23,6 +24,7 @@ namespace Runtime.Weapons
         
         void Awake()
         {
+            if(!updateIndicators) return;
             _instanceGunBarrelIndicators = new Material[renderers.Length];
             for (int i = 0; i < renderers.Length; i++)
             {
@@ -51,6 +53,7 @@ namespace Runtime.Weapons
 
         public void Init(IWeaponEntity entity) {
             _associatedWeapon = entity;
+            if(!updateIndicators) return;
             foreach (var gunBarrelIndicator in _instanceGunBarrelIndicators)
             {
                 gunBarrelIndicator.SetInteger(MaxAmmo, _associatedWeapon.GetAmmoSize().RealValue);
@@ -61,6 +64,7 @@ namespace Runtime.Weapons
 
         public void OnAmmoChanged(int num)
         {
+            if(!updateIndicators) return;
             foreach (var gunBarrelIndicator in _instanceGunBarrelIndicators)
             {
                 gunBarrelIndicator.SetFloat(CurrentAmmo, num);
