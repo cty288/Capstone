@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -23,15 +26,54 @@ namespace Runtime.Temporary
 
         private float recoverWaitTime = 5f;
         protected float recoverWaitTimer = 0f;
+        //protected float levelTimer;
         [SerializeField] private AnimationCurve timeCurrencyRate = null;
         //private IPlayerEntity currentPlayerEntity;
-
+        private Coroutine levelTimerCoroutine = null;
+        
+       // private int levelTimer = 0;
+       
+        private ILevelModel levelModel;
+        private ICurrencyModel currencyModel;
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
             this.RegisterEvent<OnPlayerTeleport>(OnPlayerTeleport).UnRegisterWhenGameObjectDestroyed(gameObject);
             triggerCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
-            
+            levelModel = this.GetModel<ILevelModel>();
+            currencyModel = this.GetModel<ICurrencyModel>();
+            levelModel.CurrentLevelCount.RegisterWithInitValue(OnCurrentLevelNumChanged)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnCurrentLevelNumChanged(int arg1, int levelNum) {
+            if (levelTimerCoroutine != null) {
+                StopCoroutine(levelTimerCoroutine);
+            }
+
+            levelTimerCoroutine = null;
+            if (levelNum > 0) {
+                levelTimerCoroutine = StartCoroutine(LevelTimer());
+            }
+        }
+        
+        private IEnumerator LevelTimer() {
+            int levelTime = 0;
+            while (true) {
+                yield return new WaitForSeconds(1f);
+                levelTime++;
+                if (levelTime % 30 == 0) {
+                    float currency = 0;
+                    if(levelTime > timeCurrencyRate.keys[timeCurrencyRate.length - 1].time) {
+                        currency = timeCurrencyRate.keys[timeCurrencyRate.length - 1].value;
+                    }
+                    else {
+                        currency = timeCurrencyRate.Evaluate(levelTime);
+                    }
+
+                    currencyModel.AddCurrency(CurrencyType.Time, Mathf.RoundToInt(currency));
+                }
+            }
         }
 
         private void OnPlayerTeleport(OnPlayerTeleport e) {
