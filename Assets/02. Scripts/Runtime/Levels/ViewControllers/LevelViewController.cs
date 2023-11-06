@@ -12,6 +12,7 @@ using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.Pool;
+using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
@@ -203,12 +204,27 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			UpdatePreExistingDirectors();
 			OnSpawnPlayer();
 			StartCoroutine(UpdateLevelSystemTime());
+			UpdateWallMaterials();
 			if (ambientMusic) {
 				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
 			}
 		}
+
 		
-		
+
+		private void UpdateWallMaterials() {
+			LayerMask wallMask = LayerMask.NameToLayer("Wall");
+			//find all colliders with wall layer
+			Collider[] colliders = gameObject.GetComponentsInChildren<Collider>(true)
+				.Where(c => c.gameObject.layer == wallMask).ToArray();
+
+			PhysicMaterial mat = this.GetUtility<ResLoader>().LoadSync<PhysicMaterial>("Nofric");
+			foreach (var collider in colliders) {
+				collider.material = mat;
+			}
+			
+		}
+
 
 		private IEnumerator UpdateLevelSystemTime() {
 			while (true) {
