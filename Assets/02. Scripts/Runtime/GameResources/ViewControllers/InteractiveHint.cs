@@ -27,18 +27,22 @@ namespace Runtime.GameResources.ViewControllers {
                     Destroy(hintIconSpawnPoint.GetChild(i).gameObject);
                 }
 
-                GameObject spawnedHint = ControlInfoFactory.Singleton.GetBindingKeyGameObject(action, out BindingInfo info,
-                    out string internalDisplayName);
+                hintIconSpawnPoint.gameObject.SetActive(action != null);
+                if (action != null) {
+                    GameObject spawnedHint = ControlInfoFactory.Singleton.GetBindingKeyGameObject(action, out BindingInfo info,
+                        out string internalDisplayName);
             
-                spawnedHint.transform.SetParent(hintIconSpawnPoint);
-                RectTransform rectTransform = spawnedHint.GetComponent<RectTransform>();
-                rectTransform.anchoredPosition3D = Vector3.zero;
-                rectTransform.localScale = Vector3.one;
-                rectTransform.localRotation = Quaternion.identity;
-                rectTransform.DOAnchorPos3D(Vector3.zero, 0);
-                if (spawnedHint) {
                     spawnedHint.transform.SetParent(hintIconSpawnPoint);
+                    RectTransform rectTransform = spawnedHint.GetComponent<RectTransform>();
+                    rectTransform.anchoredPosition3D = Vector3.zero;
+                    rectTransform.localScale = Vector3.one;
+                    rectTransform.localRotation = Quaternion.identity;
+                    rectTransform.DOAnchorPos3D(Vector3.zero, 0);
+                    if (spawnedHint) {
+                        spawnedHint.transform.SetParent(hintIconSpawnPoint);
+                    }
                 }
+               
             }
 
             if (this.hintText) {

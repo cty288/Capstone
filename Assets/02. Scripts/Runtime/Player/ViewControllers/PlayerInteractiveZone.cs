@@ -70,16 +70,18 @@ namespace Runtime.Player {
                 
             }
         }
-
+        private List<GameObject> removedVCs = new List<GameObject>();
+        //private List<>
         private void Update() {
             //check block status, check if blocked can be unblocked, or unblocked can be blocked. 
             //raycast from player to entity, if hit wall, then blocked, else unblocked
             blockCheckTimer += Time.deltaTime;
+            
             if (blockCheckTimer >= blockCheckInterval) {
                 blockCheckTimer = 0f;
                 
+                removedVCs.Clear();
                 
-                List<GameObject> removedVCs = new List<GameObject>();
                 foreach (var entityVC in entityViewControllersBlocked) {
                     if (!entityVC.Key) {
                         continue;

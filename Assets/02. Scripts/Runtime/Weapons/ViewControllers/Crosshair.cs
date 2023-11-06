@@ -158,29 +158,27 @@ namespace Runtime.Weapons.ViewControllers {
                     continue;
                 }
                 GameObject hitObj = sortedHits[i].collider.gameObject;
+                ICrossHairDetectable entityViewController = hitObj.GetComponentInParent<ICrossHairDetectable>();
                 
-                if (PhysicsUtility.IsInLayerMask(hitObj, wallLayerMask)) {
+                if (PhysicsUtility.IsInLayerMask(hitObj, wallLayerMask) && entityViewController == null) {
                     //add ground & wall hit info
                     //GroundWallHitInfo.Set(sortedHits[i], ray.direction.normalized, hitObj);
                     break;
                 }
                 
-                
-                if(!hitEntity && PhysicsUtility.IsInLayerMask(hitObj, crossHairDetectLayerMask)) {
-                    ICrossHairDetectable entityViewController = hitObj.GetComponentInParent<ICrossHairDetectable>();
-                    if (entityViewController != null){
-                        
-                        if (currentPointedObject != null && currentPointedObject != entityViewController) {
-                            currentPointedObject.OnUnPointByCrosshair(); //TODO: change to ICrosshairDetectable
-                            currentPointedObject = null;
-                        }
-
-                        if (currentPointedObject == null) {
-                            currentPointedObject = entityViewController;
-                            entityViewController.OnPointByCrosshair();
-                        }
-                        hitEntity = true;
+                //PhysicsUtility.IsInLayerMask(hitObj, crossHairDetectLayerMask)
+                if(!hitEntity && entityViewController != null) {
+                   
+                    if (currentPointedObject != null && currentPointedObject != entityViewController) {
+                        currentPointedObject.OnUnPointByCrosshair(); //TODO: change to ICrosshairDetectable
+                        currentPointedObject = null;
                     }
+
+                    if (currentPointedObject == null) {
+                        currentPointedObject = entityViewController;
+                        entityViewController.OnPointByCrosshair();
+                    }
+                    hitEntity = true;
                 }
 
                 if (!hitHurtBox && PhysicsUtility.IsInLayerMask(hitObj, hurtboxLayerMask)) {

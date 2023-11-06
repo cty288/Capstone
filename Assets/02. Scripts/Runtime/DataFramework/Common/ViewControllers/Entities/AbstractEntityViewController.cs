@@ -134,11 +134,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			new Dictionary<string, CrossHairManagedHUDInfo>();
 		
 		private LayerMask crossHairHUDManagedDetectLayerMask;
-		
-		
-		protected bool playerInInteractiveZone;
 
-		protected bool interactable = true;
+
+		private bool playerCanInteract => hasInteractiveHint && canInteractRc.Value <= 0;
+
+		//protected bool interactable = true;
 		//protected bool isInteracting;
 		protected override void Awake() {
 			base.Awake();
@@ -147,9 +147,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			crossHairHUDManagedDetectLayerMask = ~crossHairHUDManagedDetectLayerMask;
 			CheckProperties();
 			mainCamera = Camera.main;
+			canInteractRc.RegisterOnValueChanged(OnCanInteractChanged)
+				.UnRegisterWhenGameObjectDestroyed(gameObject);
 		}
 
-		
+
+
 
 		public override void OnStartOrAllocate() {
 			base.OnStartOrAllocate();
@@ -214,35 +217,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 
 
-		public virtual void OnPointByCrosshair() {
-			bool isPointPreviously = isPointed;
-			isPointed = true;
-			
-			if (showNameTagWhenPointed && !String.IsNullOrEmpty(nameTagPrefabName)) {
-				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
-					(GameObject, CrossHairManagedHUDInfo) nameTagInfo =
-						SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName,
-							HUDCategory.NameTag, nameTagAutoAdjustHeight);
-					GameObject
-						nameTag = nameTagInfo.Item1;
-					
-					if (nameTag) {
-						INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
-						if (nameTagComponent != null) {
-							nameTagComponent.SetName(BoundEntity.GetDisplayName());
-						}
-						nameTag.gameObject.SetActive(false);
-						StartCoroutine(ShowNameTagDelayed(nameTag,nameTagInfo.Item2));
-					}
-				}
-			}
-
-			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
-				hudInfo.spawnedHUD.SetActive(true);
-			}
-			
-			crossHairHUDTimer = 0f;
-		}
+		
 		
 		private IEnumerator ShowNameTagDelayed(GameObject nameTag, CrossHairManagedHUDInfo hudInfo) {
 			AdjustHUD(hudInfo);
@@ -252,10 +227,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			nameTag.SetActive(true);
 		}
 
-		public virtual void OnUnPointByCrosshair() {
-			isPointed = false;
-			unPointTriggered = false;
-		}
+
 
 		private void OnHUDUnpointedTorlanceTimeEnds() {
 			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
@@ -313,16 +285,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private bool unPointTriggered = false;
 
 		protected virtual void Update() {
-			if (playerInInteractiveZone) {
-				if (!interactable) {
-					Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
-					if (HUDManager.Singleton.HasHUDElement(tr, HUDCategory.InteractiveTag)) {
-						HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
-					}
-				}
-				else { //can interact
-					
-				}
+			if (playerCanInteract) {
+				
 			}
 			
 			if (crossHairHUDTimer < crossHairHUDToleranceMaxTime && !isPointed && !unPointTriggered) {
@@ -505,6 +469,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			propertyBindings.Clear();
 			crossHairHUDTimer = 0;
 			readyToRecycled = false;
+			canInteractRc.Value = 2;
 		}
 
 		protected virtual void OnReadyToRecycle() {
@@ -737,22 +702,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		#endregion
 
-		
 
+		private BindableProperty<int> canInteractRc = new BindableProperty<int>(2);
+
+		private void ChangeInteractRC(int value) {
+			canInteractRc.Value = Mathf.Clamp(value, 0, 2);
+		}
 		public virtual void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
-			if (hasInteractiveHint && interactable) {
-				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
-				
-				GameObject hud = HUDManager.Singleton.SpawnHUDElement(tr, interactiveHintPrefabName,
-					HUDCategory.InteractiveTag, true);
-				if (hud) {
-					InteractiveHint element = hud.GetComponent<InteractiveHint>();
-					if (element != null) {
-						playerInInteractiveZone = true;
-						element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
-							Localization.Get(interactiveHintLocalizedKey));
-					}
-				}
+			if (hasInteractiveHint) {
+				ChangeInteractRC(canInteractRc.Value - 1);
 			}
 		}
 		
@@ -761,11 +719,79 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void OnPlayerInteractiveZoneNotReachable(GameObject player, PlayerInteractiveZone zone) {
 			if (hasInteractiveHint) {
-				playerInInteractiveZone = false;
+				//canInteractRc.Value++;
+				ChangeInteractRC(canInteractRc.Value + 1);
+			}
+		}
+		
+		private void OnCanInteractChanged(int oldVal, int newVal) {
+			if (!hasInteractiveHint) {
+				return;
+			}
+			if (newVal <= 0 && oldVal > 0) {
+				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
+				
+				GameObject hud = HUDManager.Singleton.SpawnHUDElement(tr, interactiveHintPrefabName,
+					HUDCategory.InteractiveTag, true);
+				if (hud) {
+					InteractiveHint element = hud.GetComponent<InteractiveHint>();
+					if (element != null) {
+						element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+							Localization.Get(interactiveHintLocalizedKey));
+					}
+				}
+			}
+			
+			if (newVal > 0 && oldVal <= 0) {
 				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
 				HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
 			}
 		}
+		public virtual void OnPointByCrosshair() {
+			bool isPointPreviously = isPointed;
+			isPointed = true;
+			
+			if (showNameTagWhenPointed && !String.IsNullOrEmpty(nameTagPrefabName)) {
+				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
+					(GameObject, CrossHairManagedHUDInfo) nameTagInfo =
+						SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName,
+							HUDCategory.NameTag, nameTagAutoAdjustHeight);
+					GameObject
+						nameTag = nameTagInfo.Item1;
+					
+					if (nameTag) {
+						INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
+						if (nameTagComponent != null) {
+							nameTagComponent.SetName(BoundEntity.GetDisplayName());
+						}
+						nameTag.gameObject.SetActive(false);
+						StartCoroutine(ShowNameTagDelayed(nameTag,nameTagInfo.Item2));
+					}
+				}
+			}
+
+			foreach (AbstractEntityViewController<T>.CrossHairManagedHUDInfo hudInfo in crossHairManagedHUDs.Values) {
+				hudInfo.spawnedHUD.SetActive(true);
+			}
+			
+			crossHairHUDTimer = 0f;
+			if (hasInteractiveHint) {
+				//canInteractRc.Value--;
+				ChangeInteractRC(canInteractRc.Value - 1);
+			}
+		}
+		
+		public virtual void OnUnPointByCrosshair() {
+			isPointed = false;
+			unPointTriggered = false;
+
+			if (hasInteractiveHint) {
+				//canInteractRc.Value++;
+				ChangeInteractRC(canInteractRc.Value + 1);
+			}
+		}
+		
+		
 
 		public virtual void OnPlayerInInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
 			

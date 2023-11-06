@@ -101,12 +101,14 @@ namespace Runtime.Spawning {
 			while (usedAttempts < maxAttempts)
 			{
 				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
+				usedAttempts++;
 				randomDirection.y = 0;
 				randomDirection = randomDirection.normalized * currentSearchRadius;
 				randomDirection += desiredPosition;
 
 				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, areaMask)) {
 					if(IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
+						currentSearchRadius += increment;
 						continue;
 					}
 					
@@ -131,7 +133,7 @@ namespace Runtime.Spawning {
 				}
 				
 				currentSearchRadius += increment;
-				usedAttempts++;
+				
 			}
 			
 			rotationWithSlope = Quaternion.identity;
@@ -150,6 +152,8 @@ namespace Runtime.Spawning {
 			var insideArenaCheckPoints =
 				GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
 
+			//create a new bounds, 20% smaller than the original
+			bounds = new Bounds(bounds.center, bounds.size * 0.8f);
 			float minDistance = bounds.size.x * 0.3f;
 			
 			for (int i = 0; i < targetNumber; i++) {
@@ -183,7 +187,7 @@ namespace Runtime.Spawning {
 					bool tooClose = false;
 					foreach (var pillar in pillars) {
 						if (Vector3.Distance(pillar.transform.position, pos) < minDistance) {
-							remainingRetry--;
+							//remainingRetry--;
 							tooClose = true;
 							break;
 						}
@@ -204,7 +208,7 @@ namespace Runtime.Spawning {
 				
 			}
 			
-			return null;
+			return pillars;
 		}
 
 
