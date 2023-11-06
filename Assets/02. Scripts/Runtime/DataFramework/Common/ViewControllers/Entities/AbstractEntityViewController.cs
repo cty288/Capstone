@@ -476,6 +476,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			crossHairHUDTimer = 0;
 			readyToRecycled = false;
 			canInteractRc.Value = 2;
+			currentInteractiveHint = null;
 		}
 
 		protected virtual void OnReadyToRecycle() {
@@ -730,8 +731,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 		
+		protected InteractiveHint currentInteractiveHint;
 		private void OnCanInteractChanged(int oldVal, int newVal) {
-			if (!hasInteractiveHint) {
+			 if (!hasInteractiveHint) {
 				return;
 			}
 			if (newVal <= 0 && oldVal > 0) {
@@ -740,9 +742,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				GameObject hud = HUDManager.Singleton.SpawnHUDElement(tr, interactiveHintPrefabName,
 					HUDCategory.InteractiveTag, true);
 				if (hud) {
-					InteractiveHint element = hud.GetComponent<InteractiveHint>();
-					if (element != null) {
-						element.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+					currentInteractiveHint = hud.GetComponent<InteractiveHint>();
+					if (currentInteractiveHint != null) {
+						currentInteractiveHint.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
 							Localization.Get(interactiveHintLocalizedKey));
 					}
 				}
@@ -751,6 +753,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (newVal > 0 && oldVal <= 0) {
 				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
 				HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
+				currentInteractiveHint = null;
 			}
 		}
 		public virtual void OnPointByCrosshair() {

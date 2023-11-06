@@ -9,17 +9,20 @@ public class CurrencyIndicatorViewController : MonoBehaviour {
     private TMP_Text amountText;
     private float targetAmount;
     private float displayAmount;
-
+    private Color normalColor;
     private void Awake() {
         titleText = transform.Find("Title").GetComponent<TMP_Text>();
         amountText = transform.Find("Num").GetComponent<TMP_Text>();
     }
 
-    public void Init(string title, int amount) {
+    public void Init(string title, int amount, Color normalColor) {
         amountText.text = amount.ToString();
         titleText.text = title;
         displayAmount = amount;
         targetAmount = amount;
+        this.normalColor = normalColor;
+        titleText.color = normalColor;
+        amountText.color = normalColor;
     }
     
     public void OnAmountChanged(int amount) {
@@ -39,7 +42,7 @@ public class CurrencyIndicatorViewController : MonoBehaviour {
             }
         }
         else {
-            amountText.color = Color.Lerp(amountText.color, Color.white, Time.deltaTime * 5f);
+            amountText.color = Color.Lerp(amountText.color, normalColor, Time.deltaTime * 5f);
         }
     }
 }

@@ -237,6 +237,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			foreach (GameObject pillar in pillars) {
 				IBossPillarViewController pillarViewController = pillar.GetComponent<IBossPillarViewController>();
 				pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
+				pillar.transform.SetParent(transform);
 			}
 		}
 		private void UpdateWallMaterials() {

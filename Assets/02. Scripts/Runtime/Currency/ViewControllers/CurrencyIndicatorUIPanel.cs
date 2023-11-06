@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.Currency.Model;
 using Framework;
 using MikroFramework.Architecture;
@@ -16,6 +17,7 @@ public class CurrencyIndicatorUIPanel : AbstractMikroController<MainGame> {
 	
 	[SerializeField] private GameObject currencyIndicatorPrefab;
 	private ICurrencyModel currencyModel;
+	[SerializeField] private Color textColor = Color.white;
 	private void Awake() {
 		currencyModel = this.GetModel<ICurrencyModel>();
 		spawnTransform = transform.Find("Panel");
@@ -28,9 +30,10 @@ public class CurrencyIndicatorUIPanel : AbstractMikroController<MainGame> {
 			BindableProperty<int> currencyAmount = currencyModel.GetCurrencyAmountProperty(currencyType);
 
 			currencyIndicatorViewController.Init(Localization.Get($"CURRENCY_{currencyType.ToString()}_name") + ":",
-				currencyAmount.Value);
+				currencyAmount.Value, textColor);
 			currencyIndicatorViewControllers.Add(currencyType, currencyIndicatorViewController);
 			
+
 		}
 
 		this.RegisterEvent<OnCurrencyAmountChangedEvent>(OnCurrencyAmountChanged)

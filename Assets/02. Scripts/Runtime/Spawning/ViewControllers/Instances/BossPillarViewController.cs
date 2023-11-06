@@ -5,9 +5,15 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.UIKit;
+using Polyglot;
+using Runtime.Controls;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
+using Runtime.Spawning.Commands;
+using Runtime.UI;
+using Runtime.Utilities;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
@@ -27,12 +33,14 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		protected int levelNumber;
 		protected Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts;
 		protected Action<GameObject, IDirectorViewController> onSpawnEnemy;
-		
+		protected ILevelModel levelModel;
 		
 		
 		protected override void Awake() {
 			base.Awake();
 			directorModel = this.GetModel<IDirectorModel>();
+			levelModel = this.GetModel<ILevelModel>();
+			
 		}
 
 		protected override IEntity OnBuildNewEntity() {
@@ -49,7 +57,21 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		}
 
 		protected override void OnEntityStart() {
-			
+			levelModel.CurrentLevel.Value.IsInBossFight.RegisterOnValueChanged(OnBossFightStatusChanged)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		}
+
+		private void OnBossFightStatusChanged(bool arg1, bool status) {
+			if (currentInteractiveHint != null) {
+				if (!status) {
+					currentInteractiveHint.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+						Localization.Get(interactiveHintLocalizedKey));
+				}
+				else {
+					currentInteractiveHint.SetHint(null, Localization.Get("DEPLOY_ERROR_COMBAT"));
+				}
+				
+			}
 		}
 
 		protected override void OnBindEntityProperty() {
@@ -92,6 +114,14 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		protected override void OnPlayerPressInteract() {
 			base.OnPlayerPressInteract();
 			//TODO: is in battle -> can't interact; ui open -> can't interact
+			if(levelModel.CurrentLevel.Value.IsInBossFight.Value || UIManager.Singleton.GetPanel<PillarUIViewController>(true) != null) {
+				return;
+			}
+
+			this.SendCommand(OpenPillarUICommand.Allocate(gameObject,
+				BoundEntity.GetProperty<ISpawnBossCost>().RealValue.Value));
+
+
 		}
 	}
 }
