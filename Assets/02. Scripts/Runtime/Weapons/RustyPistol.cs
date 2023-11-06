@@ -76,7 +76,7 @@ namespace Runtime.Weapons
 
             BoundEntity.animLayerName = animLayerNameOverride;
 
-            animLayerNameOverride = "Revolver";
+            //animLayerNameOverride = "Revolver";
             // Debug.Log($"sanctuary camera pos: {hipFireCameraPosition}, {adsCameraPosition}");
             hipFireCameraPosition = hipFireCameraPositionOverride;
             adsCameraPosition = adsCameraPositionOverride;
