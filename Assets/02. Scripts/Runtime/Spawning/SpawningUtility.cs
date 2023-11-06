@@ -150,7 +150,7 @@ namespace Runtime.Spawning {
 			var insideArenaCheckPoints =
 				GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
 
-			float minDistance = bounds.size.x * 0.15f;
+			float minDistance = bounds.size.x * 0.3f;
 			
 			for (int i = 0; i < targetNumber; i++) {
 				int remainingRetry = 1000;

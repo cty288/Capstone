@@ -263,6 +263,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			return dict;
 		}
 
+
 		private IEnumerator UpdateLevelSystemTime() {
 			while (true) {
 				yield return new WaitForSeconds(1f);
