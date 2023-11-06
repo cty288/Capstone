@@ -86,7 +86,7 @@ namespace Runtime.Player.ViewControllers
 
         protected void SwitchPlayerAnimLayer(PlayerSwitchAnimEvent e)
         {
-            int target = playerAnim.GetLayerIndex(e.entity.AnimLayerName);
+            int target = playerAnim.GetLayerIndex(e.layerName);
             playerAnim.SetLayerWeight(1, 1 - e.weight); // NoItem
             playerAnim.SetLayerWeight(target, e.weight);
         }

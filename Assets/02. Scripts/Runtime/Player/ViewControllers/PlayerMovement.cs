@@ -124,9 +124,11 @@ namespace Runtime.Player.ViewControllers
         private float playerHeight = 2;
 
         private TriggerCheck groundCheck;
+
+        private float airTimer = 0f;
         //public LayerMask whatIsGround;
         private bool grounded {
-            get => groundCheck.Triggered;
+            get => groundCheck.Triggered ||airTimer<0.3f;
         }
 
         private bool onSlope;
@@ -176,7 +178,7 @@ namespace Runtime.Player.ViewControllers
         private bool wallRight;
         
         private bool exitingWall;
-        private float exitWallTime = 0.3f;
+        private float exitWallTime = 0.8f;
         private float exitWallTimer;
         
         private bool useGravity = false;
@@ -271,6 +273,15 @@ namespace Runtime.Player.ViewControllers
             }
             if (Input.GetKeyDown(KeyCode.F5)) {
                 ((MainGame) MainGame.Interface).SaveGame();
+            }
+
+            if (groundCheck.Triggered)
+            {
+                airTimer = 0;
+            }
+            else
+            {
+                airTimer += Time.deltaTime;
             }
         }
 
@@ -576,23 +587,35 @@ namespace Runtime.Player.ViewControllers
                 DoCamTilt(0f);
             }
             
-            if((wallLeft || wallRight) && verticalInput > 0 && !grounded && !exitingWall&&playerActions.SprintHold.IsPressed())
+            if((wallLeft || wallRight) && verticalInput > 0 && !grounded && !exitingWall)
             {
-                if (!wallrunning)
-                    StartWallRun();
-
-                // wallrun timer
-                if (wallRunTimer > 0)
-                    wallRunTimer -= Time.deltaTime;
-
-                if(wallRunTimer <= 0 && wallrunning)
+                
+                if (playerActions.SprintHold.IsPressed())
                 {
-                    exitingWall = true;
-                    exitWallTimer = exitWallTime;
+                    if (playerActions.SprintHold.WasPressedThisFrame())
+                    {
+                        if (!wallrunning)
+                            StartWallRun();
+                    }
+                    
+                    // wallrun timer
+                    if (wallRunTimer > 0)
+                        wallRunTimer -= Time.deltaTime;
+                    if(wallRunTimer <= 0 && wallrunning)
+                    {
+                        exitingWall = true;
+                        exitWallTimer = exitWallTime;
+                    }
+                    
+                    // wall jump
+                    if (playerActions.Jump.WasPressedThisFrame() ) WallJump();
+                }
+                else
+                {
+                    if (wallrunning)
+                        StopWallRun();
                 }
 
-                // wall jump
-                if (playerActions.Jump.WasPressedThisFrame() ) WallJump();
             }
             else if (exitingWall)
             {
@@ -610,6 +633,7 @@ namespace Runtime.Player.ViewControllers
                 if (wallrunning)
                     StopWallRun();
             }
+
         }
 
         private void MovePlayer()
@@ -830,12 +854,15 @@ namespace Runtime.Player.ViewControllers
 
             // forward force
             rb.AddForce(wallForward * playerEntity.GetWallRunForce().RealValue, ForceMode.Force);
+            
+            if(wallRunTimer<=0.5f)
+                rb.velocity = new Vector3(rb.velocity.x, -5f, rb.velocity.z);
 
             // upwards/downwards force
             /*if (upwardsRunning)
                 rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
             if (downwardsRunning)
-                rb.velocity = new Vector3(rb.velocity.x, -wallClimbSpeed, rb.velocity.z);*/
+                */
 
             // push to wall force
             if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))

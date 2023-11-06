@@ -23,7 +23,7 @@ namespace Runtime.Utilities.AnimatorSystem
     }
     public struct PlayerSwitchAnimEvent
     {
-        public IResourceEntity entity;
+        public string layerName;
         public float weight;
     }
     public class PlayerAnimationCommand : AbstractCommand<PlayerAnimationCommand> 
