@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
@@ -12,6 +13,7 @@ using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
+using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
@@ -56,6 +58,10 @@ namespace Runtime.Weapons.ViewControllers.Base
         private bool _isScopedIn = false;
         protected bool IsScopedIn => _isScopedIn;
         
+        [SerializeField] protected string animLayerNameOverride = "Revolver";
+        [SerializeField] protected Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
+        [SerializeField] protected Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
+        
         // general references
         protected Camera cam;
         protected Camera fpsCamera;
@@ -65,9 +71,11 @@ namespace Runtime.Weapons.ViewControllers.Base
         public VisualEffect hitVFXSystem;
         protected bool isHitVFX;
         protected CameraShaker cameraShaker;
+        [SerializeField] protected Animator animator;
+        [SerializeField] protected float reloadAnimationLength;
+        protected AnimationSMBManager animationSMBManager;
         
         //status
-        protected bool isScopedIn = false;
         protected bool isReloading = false;
         
         //timers
@@ -85,7 +93,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             weaponModel = this.GetModel<IWeaponModel>();
             playerModel = this.GetModel<IGamePlayerModel>();
             fpsCamera = mainCamera.GetUniversalAdditionalCameraData().cameraStack[0];
-
         }
 
         protected override void OnEntityStart() {
@@ -155,6 +162,17 @@ namespace Runtime.Weapons.ViewControllers.Base
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", AnimationEventType.Trigger,0));
             }
            
+        }
+        
+        protected virtual IEnumerator ReloadAnimation() {
+            ChangeReloadStatus(true);
+            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
+                AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
+            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
+            animator.SetTrigger("Reload");
+            
+            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
         }
 
         protected override void OnReadyToRecycle() {
