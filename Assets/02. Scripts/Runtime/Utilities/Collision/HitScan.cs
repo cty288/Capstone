@@ -116,7 +116,7 @@ namespace Runtime.Utilities.Collision
             for (int i = 0; i < nums; i++) {
                 RaycastHit hit = sortedHits[i];
                 
-                Debug.Log("hit w/ gun: " + hit.collider.name);
+                // Debug.Log("hit w/ gun: " + hit.collider.name);
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
 
                 HurtboxModifier hurtboxModifier = hit.collider.GetComponent<HurtboxModifier>();
@@ -194,7 +194,7 @@ namespace Runtime.Utilities.Collision
         private IEnumerator FadeBullet(GameObject bulletHole)
         {
             yield return new WaitForSeconds(bulletHoleFadeTime);
-            Debug.Log("release bullet");
+            // Debug.Log("release bullet");
             bulletHolesPool.Release(bulletHole);
         }
         
