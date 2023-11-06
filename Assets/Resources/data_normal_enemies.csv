@@ -525,7 +525,7 @@ SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,2,"{
     },
     ""spawnInterval"":{
       ""type"": ""float"",
-      ""value"": 0.1
+      ""value"": 1
     },
     ""explosionDamage"":{
       ""type"": ""int"",
@@ -549,7 +549,7 @@ SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,2,"{
     },
     ""fanAngle"":{
       ""type"": ""float"",
-      ""value"": 60,
+      ""value"": 90,
       ""useDefaultModifier"": true
     },
     ""softDetectionRange"":{
@@ -560,6 +560,11 @@ SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,2,"{
     ""rangeAfterInteraction"":{
       ""type"": ""float"",
       ""value"": 25,
+      ""useDefaultModifier"": true
+    },
+    ""spawnAmount"":{
+      ""type"": ""int"",
+      ""value"": 2,
       ""useDefaultModifier"": true
     }
   }
