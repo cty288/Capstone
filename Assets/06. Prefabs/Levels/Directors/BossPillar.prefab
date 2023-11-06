@@ -100,6 +100,7 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  <SpawnSizeCollider>k__BackingField: {fileID: 9181898271395399007}
 --- !u!54 &3307318128920847460
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -395,7 +396,8 @@ GameObject:
   - component: {fileID: 5011189000602288486}
   - component: {fileID: 1701767193243295914}
   - component: {fileID: 2457367745226696002}
-  m_Layer: 11
+  - component: {fileID: 267543990942166075}
+  m_Layer: 0
   m_Name: Building_02_LOD00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -481,6 +483,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1013931135109258751, guid: 26fb7dfb19e434d4385500e8fcc125c3, type: 3}
+--- !u!208 &267543990942166075
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7056547740008843685}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.239, y: 6.3830004, z: 4.438}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 6.3830004, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8454154094084108084
 GameObject:
   m_ObjectHideFlags: 0

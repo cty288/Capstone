@@ -17,6 +17,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 	public interface IBossPillarViewController : IDirectorViewController {
 		//IEntity OnBuildNewEntity(int level, Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
 		void SetBossSpawnCosts(Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
+		
+		BoxCollider SpawnSizeCollider { get; }
 	}
 	public class BossPillarViewController : AbstractBasicEntityViewController<BossPillarEntity>, IDirectorViewController, IBossPillarViewController {
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
@@ -75,6 +77,9 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		public void SetBossSpawnCosts(Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts) {
 			this.bossSpawnCosts = bossSpawnCosts;
 		}
+
+		[field: SerializeField]
+		public BoxCollider SpawnSizeCollider { get; protected set; }
 
 		protected void SpawnBoss() {
 			

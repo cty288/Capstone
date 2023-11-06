@@ -137,7 +137,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		
 		protected bool playerInInteractiveZone;
-		protected bool interactable;
+
+		protected bool interactable = true;
 		//protected bool isInteracting;
 		protected override void Awake() {
 			base.Awake();

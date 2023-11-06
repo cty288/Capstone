@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using _02._Scripts.Runtime.Utilities;
 using JetBrains.Annotations;
 using MikroFramework;
 using Runtime.DataFramework.ViewControllers.Entities;
+using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
 using UnityEngine;
 using UnityEngine.AI;
@@ -135,8 +138,71 @@ namespace Runtime.Spawning {
 			return Vector3.negativeInfinity; 
 		}
 
-		public static List<GameObject> SpawnBossPillars(int targetNumber, string prefabName) {
-			var pillarPool = GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 4, 10, out _);
+		public static List<GameObject> SpawnBossPillars(int targetNumber, string prefabName, Bounds bounds) {
+			var pillarPool =
+				GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 4, 10, out GameObject prefab);
+			BoxCollider pillarSpawnSizeGetter() => prefab.GetComponent<IBossPillarViewController>().SpawnSizeCollider;
+			
+			List<GameObject> pillars = new List<GameObject>();
+
+			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
+			
+			var insideArenaCheckPoints =
+				GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
+
+			float minDistance = bounds.size.x * 0.15f;
+			
+			for (int i = 0; i < targetNumber; i++) {
+				int remainingRetry = 1000;
+
+				while (remainingRetry > 0) {
+					remainingRetry--;
+					//get a random point in the bounds
+					Vector3 randomPoint = new Vector3(
+						UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+						200,
+						UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
+					);
+				
+					//sample the point on the navmesh
+					NavMeshHit navHit;
+					if (!NavMesh.SamplePosition(randomPoint, out navHit, 250.0f, areaMask)) {
+						continue;
+					}
+
+					Vector3 pos = FindNavMeshSuitablePosition(pillarSpawnSizeGetter, navHit.position, 30, areaMask,
+						insideArenaCheckPoints, 10, 10, remainingRetry, out int usedAttempts,
+						out Quaternion rotationWithSlope);
+
+					if (float.IsInfinity(pos.magnitude)) {
+						remainingRetry -= usedAttempts;
+						continue;
+					}
+					
+					//if the distance to any other pillar is too small, retry
+					bool tooClose = false;
+					foreach (var pillar in pillars) {
+						if (Vector3.Distance(pillar.transform.position, pos) < minDistance) {
+							remainingRetry--;
+							tooClose = true;
+							break;
+						}
+					}
+					if (tooClose) {
+						continue;
+					}
+					
+					
+					//ok to spawn
+					GameObject pillarInstance = pillarPool.Allocate();
+					pillarInstance.transform.position = pos;
+					pillarInstance.transform.rotation = rotationWithSlope;
+					pillars.Add(pillarInstance);
+					break;
+				}
+				
+				
+			}
 			
 			return null;
 		}

@@ -118,6 +118,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] protected bool hasPillars = true;
 		[SerializeField] protected string pillarPrefabName = "BossPillar";
 		[SerializeField] protected int pillarCount = 4;
+		[SerializeField] protected BoxCollider maxExtent;
 		
 		
 		//[SerializeField] protected List<LevelEnemyPrefabConfig> bosses = new List<LevelEnemyPrefabConfig>();
@@ -227,7 +228,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				return;
 			}
 
-			List<GameObject> pillars = SpawningUtility.SpawnBossPillars(pillarCount, pillarPrefabName);
+			List<GameObject> pillars = SpawningUtility.SpawnBossPillars(pillarCount, pillarPrefabName, maxExtent.bounds);
 			if (pillars == null) {
 				return;
 			}

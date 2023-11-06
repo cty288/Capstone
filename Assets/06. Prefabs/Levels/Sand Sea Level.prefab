@@ -31,6 +31,51 @@ Transform:
   m_Father: {fileID: 7306453695133038111}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &215076592467210531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1437884526764650017}
+  - component: {fileID: 4618920208730972948}
+  m_Layer: 2
+  m_Name: MapExtent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1437884526764650017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215076592467210531}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5997115202316876740}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4618920208730972948
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215076592467210531}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 578.38434, y: 27.00486, z: 571.77966}
+  m_Center: {x: -9.692535, y: 45.45078, z: 78.460754}
 --- !u!1 &746374051452830817
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,6 +242,7 @@ Transform:
   - {fileID: 8861356561714640884}
   - {fileID: 4174941809537234062}
   - {fileID: 4071463345399236434}
+  - {fileID: 1437884526764650017}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -253,9 +299,11 @@ MonoBehaviour:
   showNameTagWhenPointed: 0
   nameTagFollowTransform: {fileID: 0}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintFollowTransform: {fileID: 0}
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
@@ -290,6 +338,10 @@ MonoBehaviour:
     Cost: 0
   - CurrencyType: 3
     Cost: 0
+  hasPillars: 1
+  pillarPrefabName: BossPillar
+  pillarCount: 4
+  maxExtent: {fileID: 4618920208730972948}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
   maxEnemiesBaseValue: 50
