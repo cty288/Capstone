@@ -27,6 +27,9 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		protected int levelNumber;
 		protected Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts;
 		protected Action<GameObject, IDirectorViewController> onSpawnEnemy;
+		
+		
+		
 		protected override void Awake() {
 			base.Awake();
 			directorModel = this.GetModel<IDirectorModel>();
@@ -84,6 +87,11 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		protected void SpawnBoss() {
 			
 			//onSpawnEnemy?.Invoke
+		}
+
+		protected override void OnPlayerPressInteract() {
+			base.OnPlayerPressInteract();
+			//TODO: is in battle -> can't interact; ui open -> can't interact
 		}
 	}
 }

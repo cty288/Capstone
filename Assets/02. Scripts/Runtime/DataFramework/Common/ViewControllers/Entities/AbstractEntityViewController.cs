@@ -286,7 +286,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		protected virtual void Update() {
 			if (playerCanInteract) {
-				
+				if (ClientInput.Singleton.GetPlayerActions().Interact.WasPressedThisFrame()) {
+					OnPlayerPressInteract();
+				}
 			}
 			
 			if (crossHairHUDTimer < crossHairHUDToleranceMaxTime && !isPointed && !unPointTriggered) {
@@ -314,6 +316,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 				AdjustHUD(hudInfo);
 			}
+		}
+
+		protected virtual void OnPlayerPressInteract() {
+			
 		}
 
 
