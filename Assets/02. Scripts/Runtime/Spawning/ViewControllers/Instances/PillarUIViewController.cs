@@ -8,6 +8,7 @@ using MikroFramework.Event;
 using MikroFramework.UIKit;
 using Polyglot;
 using Runtime.Spawning.Commands;
+using Runtime.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
@@ -40,7 +41,10 @@ public class PillarUIViewController : AbstractPanel, IController {
 	}
 
 	private void OnCurrencyAmountChanged(OnCurrencyAmountChangedEvent e) {
-		SetRarity(currentSelectedRarity);
+		if (IsOpening) {
+			SetRarity(currentSelectedRarity);
+		}
+	
 	}
 
 
@@ -63,7 +67,8 @@ public class PillarUIViewController : AbstractPanel, IController {
 		
 	}
 	private void OnSummonButtonClicked() {
-		
+		this.SendCommand(PillarSpawnBossCommand.Allocate(data.pillar, GetRequiredCurrency(), currentSelectedRarity));
+		MainUI.Singleton.OpenOrClose<PillarUIViewController>(MainUI.Singleton, null);
 	}
 	public void SetRarity(int rarity) {
 		currentSelectedRarity = rarity;

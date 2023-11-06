@@ -1,5 +1,6 @@
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.Singletons;
 using MikroFramework.UIKit;
 using Runtime.Controls;
 using Runtime.Inventory.Model;
@@ -11,7 +12,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 namespace Runtime.UI {
-	public class MainUI : UIRoot, IController {
+	public class MainUI : UIRoot, IController, ISingleton {
 		DPunkInputs.SharedActions controlActions;
 		private IGamePlayerModel playerModel;
 		protected override void Awake() {
@@ -102,5 +103,11 @@ namespace Runtime.UI {
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
 		}
+
+		public void OnSingletonInit() {
+			
+		}
+		
+		public static MainUI Singleton => SingletonProperty<MainUI>.Singleton;
 	}
 }

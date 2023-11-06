@@ -57,11 +57,14 @@ namespace _02._Scripts.Runtime.Currency.Model {
 			}
 
 			int actualChangeAmount = beforeChangeAmount - currencyAmountDict[currencyType].Value;
-			this.SendEvent<OnCurrencyAmountChangedEvent>(new OnCurrencyAmountChangedEvent() {
-				Amount = -actualChangeAmount,
-				CurrencyType = currencyType,
-				CurrentAmount = currencyAmountDict[currencyType].Value
-			});
+			if (actualChangeAmount != 0) {
+				this.SendEvent<OnCurrencyAmountChangedEvent>(new OnCurrencyAmountChangedEvent() {
+					Amount = -actualChangeAmount,
+					CurrencyType = currencyType,
+					CurrentAmount = currencyAmountDict[currencyType].Value
+				});
+			}
+			
 		}
 	}
 }

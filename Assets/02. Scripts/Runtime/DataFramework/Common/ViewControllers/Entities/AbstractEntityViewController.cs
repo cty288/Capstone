@@ -26,6 +26,7 @@ using Runtime.Weapons.ViewControllers;
 using Runtime.Weapons.ViewControllers.CrossHairs;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
@@ -744,8 +745,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				if (hud) {
 					currentInteractiveHint = hud.GetComponent<InteractiveHint>();
 					if (currentInteractiveHint != null) {
-						currentInteractiveHint.SetHint(ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
-							Localization.Get(interactiveHintLocalizedKey));
+						(InputAction action, string text) = GetInteractHintInfo();
+						currentInteractiveHint.SetHint(action, text);
 					}
 				}
 			}
@@ -755,6 +756,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
 				currentInteractiveHint = null;
 			}
+		}
+
+		protected virtual (InputAction, string) GetInteractHintInfo() {
+			return (ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+				Localization.Get(interactiveHintLocalizedKey));
 		}
 		public virtual void OnPointByCrosshair() {
 			bool isPointPreviously = isPointed;
