@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Player.Commands;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
@@ -167,8 +168,12 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		deployFailureReason.Value = DeployFailureReason.NA;
 		IInHandResourceViewController previousViewController = currentHoldItemViewController;
 		if (previousViewController as Object != null) {
+			this.SendCommand(PlayerSwitchAnimCommand.Allocate(previousViewController.ResourceEntity.AnimLayerName,
+				0));
 			previousViewController.OnStopHold();
 		}
+		
+		
 		if(currentHoldDeployableItemViewController.Item1 != null){
             currentHoldDeployableItemViewController.Item1.OnPreviewTerminate();
         }
@@ -200,6 +205,8 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			}
 			
 			currentHoldItemViewController.OnStartHold(gameObject);
+			this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.ResourceEntity.AnimLayerName,
+				currentHoldItemViewController.ResourceEntity.AnimLayerWeight));
 			//rightHandItemViewController = inHandResourceViewControllers[category];
 		}
 		
