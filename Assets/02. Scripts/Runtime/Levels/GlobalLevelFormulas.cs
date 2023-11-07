@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using _02._Scripts.Runtime.CollectableResources.Model.Properties;
 using Runtime.DataFramework.Properties;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities.ConfigSheet;
@@ -74,6 +77,14 @@ namespace _02._Scripts.Runtime.Levels {
 					vector3Int.y = Mathf.RoundToInt(vector3Int.y * y2);
 					vector3Int.z = Mathf.RoundToInt(vector3Int.z * y2);
 					return vector3Int;
+				}else if (baseVal is List<CollectableResourceCurrencyInfo>) {
+					dynamic list = baseValDynamic;
+					foreach (var item in list) {
+						item.amountRange = new Vector2Int(
+							Mathf.RoundToInt(item.amountRange.x * y2),
+							Mathf.RoundToInt(item.amountRange.y * y2));
+					}
+					return list;
 				}
 
 				throw new System.Exception(

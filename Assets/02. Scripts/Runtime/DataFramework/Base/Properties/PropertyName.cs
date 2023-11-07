@@ -62,5 +62,6 @@ namespace Runtime.DataFramework.Properties
 		armor,
 		armor_recover_speed,
 		spawn_boss_cost,
+		collectable_resource_currency_list
 	}
 }

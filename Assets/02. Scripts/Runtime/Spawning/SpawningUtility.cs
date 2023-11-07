@@ -37,11 +37,19 @@ namespace Runtime.Spawning {
 			Vector3 desiredPosition,
 			int maxAngle,
 			int areaMask, 
+			[CanBeNull]
 			Vector3[] insideArenaRefPoints, 
 			float initialSearchRadius, 
-			float increment, int maxAttempts, 
+			float increment,
+			int maxAttempts, 
 			out int usedAttempts,
-			out Quaternion rotationWithSlope) {
+			out Quaternion rotationWithSlope
+			) {
+			
+			if (insideArenaRefPoints == null) {
+				insideArenaRefPoints =
+					GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
+			}
 			
 			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
 			
@@ -92,12 +100,7 @@ namespace Runtime.Spawning {
 				}
 			}
 			
-
 			
-
-			
-			
-
 			while (usedAttempts < maxAttempts)
 			{
 				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
@@ -177,6 +180,9 @@ namespace Runtime.Spawning {
 					Vector3 pos = FindNavMeshSuitablePosition(pillarSpawnSizeGetter, navHit.position, 30, areaMask,
 						insideArenaCheckPoints, 10, 10, remainingRetry, out int usedAttempts,
 						out Quaternion rotationWithSlope);
+					
+					//rotate y axis randomly
+					rotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
 
 					if (float.IsInfinity(pos.magnitude)) {
 						remainingRetry -= usedAttempts;

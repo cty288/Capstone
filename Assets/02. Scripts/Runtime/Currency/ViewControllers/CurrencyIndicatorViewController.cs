@@ -45,4 +45,10 @@ public class CurrencyIndicatorViewController : MonoBehaviour {
             amountText.color = Color.Lerp(amountText.color, normalColor, Time.deltaTime * 5f);
         }
     }
+
+    private void OnEnable() {
+        displayAmount = targetAmount;
+        amountText.text = Mathf.RoundToInt(displayAmount).ToString();
+        amountText.color = normalColor;
+    }
 }

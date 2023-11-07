@@ -206,7 +206,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 
 		protected override void OnPlayerPressInteract() {
 			base.OnPlayerPressInteract();
-			//TODO: is in battle -> can't interact; ui open -> can't interact
+			
 			if(levelModel.CurrentLevel.Value.IsInBossFight.Value 
 			   || UIManager.Singleton.GetPanel<PillarUIViewController>(true) != null
 			   || isActivating) {

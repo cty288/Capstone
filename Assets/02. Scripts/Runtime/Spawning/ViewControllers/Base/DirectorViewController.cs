@@ -243,7 +243,9 @@ namespace Runtime.Spawning
                         spawnAttempts -= usedAttempts;
                        
                         if (!float.IsInfinity(fixedSpawnPos.magnitude)) {
-                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, fixedSpawnPos, Quaternion.identity, null, rarity,
+                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, fixedSpawnPos, 
+                                Quaternion.Euler(0, Random.Range(0, 360), 0),
+                                null, rarity,
                                 levelNumber, true, 5, 30);
                             IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);
