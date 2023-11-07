@@ -42,6 +42,9 @@ namespace Runtime.Inventory.Commands {
 						ResourceSlot.SwapSlotItems(slots[i], slots[i + 1]);
 					}
 				}
+
+				inventoryModel.SelectHotBarSlot(HotBarCategory.Right,
+					inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
 			}
 
 		}
