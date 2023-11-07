@@ -157,14 +157,14 @@ namespace Runtime.Spawning {
 			float minDistance = bounds.size.x * 0.3f;
 			
 			for (int i = 0; i < targetNumber; i++) {
-				int remainingRetry = 1000;
+				int remainingRetry = 10000;
 
 				while (remainingRetry > 0) {
 					remainingRetry--;
 					//get a random point in the bounds
 					Vector3 randomPoint = new Vector3(
 						UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
-						200,
+						UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
 						UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
 					);
 				

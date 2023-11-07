@@ -30,14 +30,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
-	
-	public class EntityVCOnRecycledUnRegister : IUnRegister
-	{
+
+	public class EntityVCOnRecycledUnRegister : IUnRegister {
 		private Action<IEntityViewController> onEntityRecycled;
 
 		private IEntityViewController entity;
-		
-		public EntityVCOnRecycledUnRegister(IEntityViewController entity, Action<IEntityViewController> onEntityRecycled) {
+
+		public EntityVCOnRecycledUnRegister(IEntityViewController entity,
+			Action<IEntityViewController> onEntityRecycled) {
 			this.entity = entity;
 			this.onEntityRecycled = onEntityRecycled;
 		}
@@ -47,6 +47,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			entity = null;
 		}
 	}
+
+	
+
 	public abstract class AbstractEntityViewController<T> : DefaultPoolableGameObjectSaved, IEntityViewController, ICrossHairDetectable
 		where T : class, IEntity {
 		
@@ -73,6 +76,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField] protected string interactiveHintLocalizedKey = "interact";
 
 		[SerializeField] protected Transform interactiveHintFollowTransform;
+
+		[Tooltip("<=0 means no hold time required (press).")]
+		[SerializeField] protected float interactiveHintHoldTime = -1;
+
+		protected float interactiveHintHoldTimer = 0f;
 		//[SerializeField] protected Transform hintCanvasFollowTransform = this.transform;
 		
 		[FormerlySerializedAs("autoRemoveEntityWhenDestroyed")]
@@ -287,8 +295,24 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		protected virtual void Update() {
 			if (playerCanInteract) {
-				if (ClientInput.Singleton.GetPlayerActions().Interact.WasPressedThisFrame()) {
-					OnPlayerPressInteract();
+				if (interactiveHintHoldTime <= 0) {
+					if (ClientInput.Singleton.GetPlayerActions().Interact.WasPressedThisFrame()) {
+						OnPlayerPressInteract();
+					}
+				}
+				else {
+					if (ClientInput.Singleton.GetPlayerActions().Interact.IsPressed()) {
+						interactiveHintHoldTimer += Time.deltaTime;
+						float progress = interactiveHintHoldTimer / interactiveHintHoldTime;
+						currentInteractiveHint.SetFiller(progress);
+						if (interactiveHintHoldTimer >= interactiveHintHoldTime) {
+							OnPlayerPressInteract();
+						}
+					}
+					else {
+						interactiveHintHoldTimer = 0;
+						currentInteractiveHint.SetFiller(0);
+					}
 				}
 			}
 			
@@ -478,6 +502,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			readyToRecycled = false;
 			canInteractRc.Value = 2;
 			currentInteractiveHint = null;
+			interactiveHintHoldTimer = 0;
 		}
 
 		protected virtual void OnReadyToRecycle() {
@@ -745,8 +770,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				if (hud) {
 					currentInteractiveHint = hud.GetComponent<InteractiveHint>();
 					if (currentInteractiveHint != null) {
-						(InputAction action, string text) = GetInteractHintInfo();
-						currentInteractiveHint.SetHint(action, text);
+						(InputAction action, string text, string control) = GetInteractHintInfo();
+						currentInteractiveHint.SetHint(action, text, control);
 					}
 				}
 			}
@@ -755,12 +780,17 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
 				HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
 				currentInteractiveHint = null;
+				interactiveHintHoldTimer = 0f;
 			}
 		}
 
-		protected virtual (InputAction, string) GetInteractHintInfo() {
+		protected virtual (InputAction, string, string) GetInteractHintInfo() {
+			string hint = interactiveHintHoldTime <= 0
+				? Localization.Get("HINT_PRESS")
+				: Localization.Get("HINT_HOLD");
+			
 			return (ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
-				Localization.Get(interactiveHintLocalizedKey));
+				Localization.Get(interactiveHintLocalizedKey), hint);
 		}
 		public virtual void OnPointByCrosshair() {
 			bool isPointPreviously = isPointed;

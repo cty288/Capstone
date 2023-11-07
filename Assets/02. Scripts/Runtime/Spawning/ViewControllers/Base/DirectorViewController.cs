@@ -221,15 +221,15 @@ namespace Runtime.Spawning
 
                 Vector3 spawnPos = new Vector3(
                     x, 
-                    transform.position.y + 500f,  
+                    transform.position.y, //+ 500f,  
                     z
                 );
                 
-                if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
-                {
-                     if (hit.collider.gameObject.layer ==  LayerMask.NameToLayer("Ground")){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
-                        spawnPos = hit.point;
-                        spawnPos.y += 3f;
+                //if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
+                //{
+                     //if (hit.collider.gameObject.layer ==  LayerMask.NameToLayer("Ground")){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
+                        //spawnPos = hit.point;
+                        //spawnPos.y += 3f;
                         NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
                         spawnPos = hitNavMesh.position;
 
@@ -252,8 +252,8 @@ namespace Runtime.Spawning
                             currentCredits -= cost;
                             return true;
                         }
-                     }
-                }
+                     //}
+                //}
                 //spawnAttempts--;
             }
             return false;

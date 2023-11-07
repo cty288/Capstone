@@ -26,6 +26,7 @@ using Runtime.UI;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 using Random = UnityEngine.Random;
 
@@ -89,22 +90,24 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			UpdateInteractHint();
 		}
 
-		protected override (InputAction, string) GetInteractHintInfo() {
+		protected override (InputAction, string, string) GetInteractHintInfo() {
+			var b = base.GetInteractHintInfo();
 			if (levelModel.CurrentLevel.Value.IsInBossFight.Value) {
-				return (null, Localization.Get("PILLAR_ERROR_COMBAT"));
+				return (null, Localization.Get("PILLAR_ERROR_COMBAT"), b.Item3);
 			}
 
 			if (isActivating) {
-				return (null, Localization.Get("DEPLOY_ERROR_ACTIVATING"));
+				return (null, Localization.Get("DEPLOY_ERROR_ACTIVATING"), b.Item3);
 			}
 			
-			return base.GetInteractHintInfo();
+			return b;
+			
 		}
 		
 		protected void UpdateInteractHint() {
 			if (currentInteractiveHint != null) {
-				(InputAction, string) hintInfo = GetInteractHintInfo();
-				currentInteractiveHint.SetHint(hintInfo.Item1, hintInfo.Item2);
+				(InputAction, string, string) hintInfo = GetInteractHintInfo();
+				currentInteractiveHint.SetHint(hintInfo.Item1, hintInfo.Item2, hintInfo.Item3);
 			}
 		}
 
