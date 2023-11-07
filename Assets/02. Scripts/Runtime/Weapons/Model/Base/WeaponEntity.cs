@@ -69,6 +69,9 @@ namespace Runtime.Weapons.Model.Base
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
 
+        public override string AnimLayerName { get => animLayerName; }
+        
+        public string animLayerName =  "Revolver";
         
         public abstract int Width { get; }
 

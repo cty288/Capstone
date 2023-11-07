@@ -92,7 +92,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 int targetLayer = LayerMask.NameToLayer("Ground");
                 if(hit.collider.gameObject.layer == targetLayer)
                 {
-                    Debug.Log("hi");
+                    // Debug.Log("hi");
                     finished = true;
                     return true;
                 }

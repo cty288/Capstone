@@ -26,10 +26,6 @@ namespace Runtime.Weapons
         [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
         
         [field: ES3Serializable] public override int Width { get; } = 1;
-
-        public override string AnimLayerName { get => animLayerName; }
-        
-        public string animLayerName =  "Revolver";
         
         public override void OnRecycle()
         {
@@ -57,16 +53,12 @@ namespace Runtime.Weapons
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         private GunAmmoVisual gunAmmoVisual;
-        [SerializeField] private Animator animator;
-        [SerializeField] private float reloadAnimationLength;
-        private AnimationSMBManager animationSMBManager;
+        // [SerializeField] private Animator animator;
+        // [SerializeField] private float reloadAnimationLength;
+        // private AnimationSMBManager animationSMBManager;
         
         [Header("Debug")]
         [SerializeField] private string overrideName = "RustyPistol";
-        
-        [SerializeField] private string animLayerNameOverride = "Revolver";
-        [SerializeField] private Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
-        [SerializeField] private Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
         
         protected override void Awake() {
             base.Awake();
@@ -84,6 +76,8 @@ namespace Runtime.Weapons
 
             BoundEntity.animLayerName = animLayerNameOverride;
 
+            //animLayerNameOverride = "Revolver";
+            // Debug.Log($"sanctuary camera pos: {hipFireCameraPosition}, {adsCameraPosition}");
             hipFireCameraPosition = hipFireCameraPositionOverride;
             adsCameraPosition = adsCameraPositionOverride;
         }
@@ -121,7 +115,7 @@ namespace Runtime.Weapons
                     animator.SetTrigger("Shoot");
                     
                     CameraShakeData shakeData = new CameraShakeData(
-                        Mathf.Lerp(0.2f, 0.5f, isScopedIn ? 1: 0),
+                        Mathf.Lerp(0.2f, 0.5f, IsScopedIn ? 1: 0),
                         0.2f,
                         3
                     );
@@ -177,17 +171,6 @@ namespace Runtime.Weapons
                 }
                 
             }
-        }
-
-        private IEnumerator ReloadAnimation() {
-            ChangeReloadStatus(true);
-            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
-            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
-                AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
-            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
-            animator.SetTrigger("Reload");
-            
-            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
         }
 
         public override void OnRecycled() {
