@@ -44,6 +44,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             pool = GameObjectPoolManager.Singleton.CreatePool(lazerPrefab.Value, 10, 20);
             playerTrans = GetPlayer().transform;
             player = GetPlayer();
+            
            
         }
 
@@ -57,8 +58,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             bulletSpeed = enemyEntity.GetCustomDataValue<float>("attack", "bulletSpeed");
             bulletCount = enemyEntity.GetCustomDataValue<int>("attack", "bulletCount");
             bulletAccuracy = enemyEntity.GetCustomDataValue<float>("attack", "bulletAccuracy");
-            damagePerTick = enemyEntity.GetCustomDataValue<float>("attack", "damagePerTick");
-            damageInterval = enemyEntity.GetCustomDataValue<float>("attack", "damageInterval");
+            //damagePerTick = enemyEntity.GetCustomDataValue<float>("attack", "damagePerTick");
+           // damageInterval = enemyEntity.GetCustomDataValue<float>("attack", "damageInterval");
             StartCoroutine(RF());
         }
         public override TaskStatus OnUpdate()
@@ -85,12 +86,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
                gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
 
-            b.GetComponent<WormLazer>().SetData(damagePerTick , damageInterval);
-            lr = b.GetComponent<LineRenderer>();
-            lr.SetPosition(0, this.gameObject.transform.position);
-            lr.SetPosition(1, player.gameObject.transform.position);
-            b.AddComponent<BoxCollider>();
-            b.GetComponent<BoxCollider>().isTrigger = true;
+            Vector3 dir = (player.transform.position - this.gameObject.transform.position).normalized;
+            Quaternion rotation = Quaternion.LookRotation(dir);
+            b.transform.position = this.gameObject.transform.position;
+            b.transform.rotation = rotation;
+            b.GetComponent<WormBulletLazer>().SetData(this.gameObject , dir);
         }
 
         public override void OnEnd()
