@@ -8,6 +8,7 @@ using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.Utilities;
+using MoreMountains.Feedbacks;
 using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
@@ -49,7 +50,9 @@ namespace Runtime.Player.ViewControllers
         private CinemachineVirtualCamera defaultVirtualCamera;
         [SerializeField] 
         private CinemachineVirtualCamera secondaryVirtualCamera;
-    
+        [SerializeField] 
+        private Camera fpsCamera;
+        
         private float cameraPitch = 0;
         private float fpsTopClamp=90;
         private float fpsBotClamp=-90;
@@ -62,6 +65,8 @@ namespace Runtime.Player.ViewControllers
         private float slidingFOV;
         [SerializeField] 
         private float currentFOV;
+        [SerializeField] 
+        private float fpsFOV;
 
         [Header("Headbob")] 
         [SerializeField] 
@@ -439,8 +444,14 @@ namespace Runtime.Player.ViewControllers
             
             if (state == MovementState.walking)
             {
-                if(currentFOV != defaultFOV && !playerEntity.IsScopedIn())
+                if (currentFOV != defaultFOV && !playerEntity.IsScopedIn())
+                {
                     SetFOV(defaultFOV);
+                }
+                
+                if(fpsCamera.fieldOfView != fpsFOV)
+                    fpsCamera.DOFieldOfView(fpsFOV, 0.1f);
+
                 
                 if (horizontalInput == 0 &&verticalInput == 0)
                     ChangeBobVars(idleBob);
@@ -449,22 +460,38 @@ namespace Runtime.Player.ViewControllers
             }
             else if (state == MovementState.sliding)
             {
-                if(currentFOV != slidingFOV && !playerEntity.IsScopedIn())
+                if (currentFOV != slidingFOV && !playerEntity.IsScopedIn())
+                {
                     SetFOV(slidingFOV);
+                }
+                
+                if(fpsCamera.fieldOfView != fpsFOV - 10)
+                    fpsCamera.DOFieldOfView(fpsFOV - 15, 0.1f);
 
                 ChangeBobVars(0,0);
             }
             else if (state == MovementState.sprinting)
             {
-                if(currentFOV != runningFOV && !playerEntity.IsScopedIn())
+                if (currentFOV != runningFOV && !playerEntity.IsScopedIn())
+                {
                     SetFOV(runningFOV);
+                }
+                
+                if(fpsCamera.fieldOfView != fpsFOV - 10)
+                    fpsCamera.DOFieldOfView(fpsFOV - 10, 0.1f);
 
                 ChangeBobVars(sprintBob);
             }
             else
             {
-                if(currentFOV != defaultFOV && !playerEntity.IsScopedIn())
+                if (currentFOV != defaultFOV && !playerEntity.IsScopedIn())
+                {
                     SetFOV(defaultFOV);
+                }
+                
+                if(fpsCamera.fieldOfView != fpsFOV)
+                    fpsCamera.DOFieldOfView(fpsFOV, 0.1f);
+                
                 ChangeBobVars(0,0);
             }
         }
@@ -484,6 +511,11 @@ namespace Runtime.Player.ViewControllers
                     PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 1));
                 this.SendCommand<PlayerAnimationCommand>(
                     PlayerAnimationCommand.Allocate("MoveSpeed", AnimationEventType.Float, 2f));
+                
+                
+                
+                // MMChannelData newData = new MMChannelData(MMChannelModes.Int, 0, null);
+                // MMCameraZoomEvent.Trigger(MMCameraZoomModes.Set, 0, 0.1f, 0.1f,  newData, false, true, false, true, null);
             }
             else
             {
