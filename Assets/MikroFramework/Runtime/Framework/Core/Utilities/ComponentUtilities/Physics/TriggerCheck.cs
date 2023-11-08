@@ -32,6 +32,7 @@ namespace MikroFramework.Utilities
 
         public Action<Collider> OnEnter = (collider) => { };
         public Action<Collider> OnExit = (collider) => { };
+        public Action<Collider> OnStay = (collider) => { };
 
         private void Update()
         {
@@ -66,20 +67,23 @@ namespace MikroFramework.Utilities
             }
 
         }
-
+        
         private void OnTriggerStay(Collider other)
         {
             if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
             {
-                // Debug.Log("stay, layer");
+                 
                 if (colliders.Contains(other)) {
                     return;
                 }
+                
                 enterRC.Retain();
                 colliders.Add(other);
                 OnEnter?.Invoke(other);
+                Debug.Log("invoked");
             }
         }
+        
 
         private void OnTriggerEnter(Collider other)
         {
