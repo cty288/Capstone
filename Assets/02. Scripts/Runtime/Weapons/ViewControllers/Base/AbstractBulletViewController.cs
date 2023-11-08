@@ -42,6 +42,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 		[SerializeField] private float autoRecycleTime = 5f;
 		[SerializeField] private bool penetrateSameFaction = false;
+		[SerializeField] private bool autoDestroyWhenOwnerDestroyed = false;
 		private Coroutine autoRecycleCoroutine = null;
 		
 		protected HitBox hitBox = null;
@@ -82,6 +83,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
+			
 			//ignore collision with bullet owner
 			Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
 			if (bulletOwnerCollider != null) {
@@ -91,9 +93,16 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			this.maxRange = maxRange;
 			origin = transform.position;
 			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
+			owner?.RootDamageDealer?.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
 			entity?.RetainRecycleRC();
 			inited = true;
 			EnableAllTrailRenderers();
+		}
+
+		private void OnOwnerReadyToRecycle(IEntity e) {
+			if (autoDestroyWhenOwnerDestroyed) {
+				RecycleToCache();
+			}
 		}
 
 		public override void OnStartOrAllocate() {
