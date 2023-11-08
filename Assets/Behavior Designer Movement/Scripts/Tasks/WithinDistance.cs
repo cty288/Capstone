@@ -131,7 +131,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
 
             if (m_ReturnedObject.Value != null) {
-                Debug.Log($"dog, found: {m_ReturnedObject.Value}");
+                //Debug.Log($"dog, found: {m_ReturnedObject.Value}");
                 return TaskStatus.Success;
             }
 
