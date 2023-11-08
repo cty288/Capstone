@@ -54,9 +54,9 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.P)) {
-            Spawn(Random.Range(0f, 10000000f));
-        }
+        //if (Input.GetKeyDown(KeyCode.P)) {
+          //  Spawn(Random.Range(0f, 10000000f));
+        //}
     }
 
     private CollectableResourceSpawnGroup GetRandomSpawnGroup(out int groupIndex) {

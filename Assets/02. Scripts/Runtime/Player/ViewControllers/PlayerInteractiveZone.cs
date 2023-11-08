@@ -89,6 +89,8 @@ namespace Runtime.Player {
                     int numHits = Physics.RaycastNonAlloc(position, entityVC.Key.transform.position - position, hits, 100f);
                     var sortedHits = hits.OrderBy(hit => hit.distance).ToArray();
                     
+                    bool hitWall = false;
+                    bool hitTarget = false;
                     for (int i = 0; i < sortedHits.Length; i++) {
                         if (!sortedHits[i].collider) {
                             continue;
@@ -106,13 +108,21 @@ namespace Runtime.Player {
                            // entityViewControllersBlocked.Remove(entityVC.Key);
                             removedVCs.Add(entityVC.Key);
                             entityVC.Value?.OnPlayerInteractiveZoneReachable(transform.parent.gameObject, this);
+                            hitTarget = true;
                             break;
                         }
                         
                         if (PhysicsUtility.IsInLayerMask(hitObj, wallLayerMask)) {
+                            hitWall = true;
                             break;
                         }
                         
+                    }
+                    
+                    if (!hitTarget && !hitWall) {
+                        entityViewControllersNotBlocked.TryAdd(entityVC.Key, entityVC.Value);
+                        removedVCs.Add(entityVC.Key);
+                        entityVC.Value?.OnPlayerInteractiveZoneReachable(transform.parent.gameObject, this);
                     }
                 }
                 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
@@ -26,6 +27,7 @@ using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 using UnityEngine.AI;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
+using Random = UnityEngine.Random;
 
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
@@ -217,11 +219,20 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			SpawnPillars();
 			UpdatePreExistingDirectors();
+			SpawnCollectableResources();
 			OnSpawnPlayer();
 			StartCoroutine(UpdateLevelSystemTime());
 			UpdateWallMaterials();
 			if (ambientMusic) {
 				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
+			}
+		}
+
+		private void SpawnCollectableResources() {
+			CollectableResourceSpawnArea[] collectableResourceViewControllers = GetComponentsInChildren<CollectableResourceSpawnArea>(true);
+			float seed = Random.Range(0, 1000000f);
+			foreach (CollectableResourceSpawnArea collectableResourceViewController in collectableResourceViewControllers) {
+				collectableResourceViewController.Spawn(seed);
 			}
 		}
 

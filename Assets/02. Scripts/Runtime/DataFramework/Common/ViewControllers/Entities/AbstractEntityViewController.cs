@@ -74,6 +74,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField] protected bool hasInteractiveHint = false;
 		[SerializeField] protected string interactiveHintPrefabName = "InteractHint_General";
 		[SerializeField] protected string interactiveHintLocalizedKey = "interact";
+		[SerializeField] 
+		protected float interactiveHintToleranceMaxTime = 0.3f;
+		protected float interactiveHintToleranceTimer = 0f;
 
 		[SerializeField] protected Transform interactiveHintFollowTransform;
 
@@ -145,7 +148,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private LayerMask crossHairHUDManagedDetectLayerMask;
 
 
-		private bool playerCanInteract => hasInteractiveHint && canInteractRc.Value <= 0;
+		private bool playerCanInteract => hasInteractiveHint && currentInteractiveHint;
 
 		//protected bool interactable = true;
 		//protected bool isInteracting;
@@ -292,6 +295,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		private bool unPointTriggered = false;
+		private bool unInteractTriggered = false;
 
 		protected virtual void Update() {
 			if (playerCanInteract) {
@@ -331,6 +335,20 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					crossHairHUDTimer = 0;
 					unPointTriggered = true;
 					OnHUDUnpointedTorlanceTimeEnds();
+				}
+			}
+
+			if (interactiveHintToleranceTimer < interactiveHintToleranceMaxTime && !isInteractiveHintActive && !unInteractTriggered) {
+				interactiveHintToleranceTimer += Time.deltaTime;
+				
+				if (interactiveHintToleranceTimer >= interactiveHintToleranceMaxTime) {
+					interactiveHintToleranceTimer = 0;
+					unInteractTriggered = true;
+					
+					Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
+					HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
+					currentInteractiveHint = null;
+					interactiveHintHoldTimer = 0f;
 				}
 			}
 			
@@ -492,6 +510,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (BoundEntity != null) {
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 			}
+
+			Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
+			HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
+
 			/*if (autoRemoveEntityWhenDestroyedOrRecycled) {
 				entityModel.RemoveEntity(ID);
 			}*/
@@ -499,6 +521,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity = null;
 			propertyBindings.Clear();
 			crossHairHUDTimer = 0;
+			interactiveHintToleranceTimer = 0;
 			readyToRecycled = false;
 			canInteractRc.Value = 2;
 			currentInteractiveHint = null;
@@ -514,6 +537,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			crossHairManagedHUDs.Clear();
 			isPointed = false;
+			isInteractiveHintActive = false;
 		}
 
 		protected abstract IEntity OnBuildNewEntity();
@@ -758,29 +782,36 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 		
 		protected InteractiveHint currentInteractiveHint;
+		protected bool isInteractiveHintActive;
 		private void OnCanInteractChanged(int oldVal, int newVal) {
 			 if (!hasInteractiveHint) {
 				return;
 			}
 			if (newVal <= 0 && oldVal > 0) {
-				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
+				bool isActivePreviously = isInteractiveHintActive;
+				isInteractiveHintActive = true;
+
+				if (interactiveHintToleranceTimer <= 0f && !isActivePreviously) {
+					Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
 				
-				GameObject hud = HUDManager.Singleton.SpawnHUDElement(tr, interactiveHintPrefabName,
-					HUDCategory.InteractiveTag, true);
-				if (hud) {
-					currentInteractiveHint = hud.GetComponent<InteractiveHint>();
-					if (currentInteractiveHint != null) {
-						(InputAction action, string text, string control) = GetInteractHintInfo();
-						currentInteractiveHint.SetHint(action, text, control);
+					GameObject hud = HUDManager.Singleton.SpawnHUDElement(tr, interactiveHintPrefabName,
+						HUDCategory.InteractiveTag, true);
+					if (hud) {
+						currentInteractiveHint = hud.GetComponent<InteractiveHint>();
+						if (currentInteractiveHint != null) {
+							(InputAction action, string text, string control) = GetInteractHintInfo();
+							currentInteractiveHint.SetHint(action, text, control);
+						}
 					}
+					interactiveHintToleranceTimer = 0f;
 				}
+
+				
 			}
 			
 			if (newVal > 0 && oldVal <= 0) {
-				Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
-				HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
-				currentInteractiveHint = null;
-				interactiveHintHoldTimer = 0f;
+				isInteractiveHintActive = false;
+				unInteractTriggered = false;
 			}
 		}
 
