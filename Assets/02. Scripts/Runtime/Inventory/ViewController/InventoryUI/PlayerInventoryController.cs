@@ -40,6 +40,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    }
 
    private void AssignInitialItems() {
+      
       foreach (GameObject item in initialItems) {
          IPickableResourceViewController resourceViewController = item.GetComponent<IPickableResourceViewController>();
          IResourceEntity resourceEntity = resourceViewController.OnBuildNewPickableResourceEntity(false, 1);
