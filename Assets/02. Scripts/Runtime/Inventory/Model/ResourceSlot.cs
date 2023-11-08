@@ -215,6 +215,17 @@ namespace Runtime.Inventory.Model {
 	}
 
 
+	public class HotBarSlot : ResourceSlot {
+		public bool GetCanSelect() {
+			if (IsEmpty()) {
+				return false;
+			}
+
+			return true;
+		}
+	}
+	
+
 	[Serializable]
 	public class LeftHotBarSlot : ResourceSlot {
 		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
