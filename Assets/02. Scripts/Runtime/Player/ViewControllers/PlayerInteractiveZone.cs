@@ -32,7 +32,6 @@ namespace Runtime.Player {
             interactiveHintTriggerCheck.OnEnter += OnEnterInteractiveCheck;
             interactiveHintTriggerCheck.OnExit += OnExitInteractiveCheck;
             
-           
         }
 
         private void OnExitInteractiveCheck(Collider other) {
@@ -48,7 +47,7 @@ namespace Runtime.Player {
                 if(entityViewControllersNotBlocked.ContainsKey(hitObj)) {
                     entityViewController.OnPlayerInteractiveZoneNotReachable(transform.parent.gameObject, this);
                 }
-
+                
                 
                 entityViewControllersNotBlocked.Remove(hitObj);
                 entityViewControllersBlocked.Remove(hitObj);
@@ -70,18 +69,16 @@ namespace Runtime.Player {
                 
             }
         }
-        private List<GameObject> removedVCs = new List<GameObject>();
-        //private List<>
+
         private void Update() {
             //check block status, check if blocked can be unblocked, or unblocked can be blocked. 
             //raycast from player to entity, if hit wall, then blocked, else unblocked
             blockCheckTimer += Time.deltaTime;
-            
             if (blockCheckTimer >= blockCheckInterval) {
                 blockCheckTimer = 0f;
                 
-                removedVCs.Clear();
                 
+                List<GameObject> removedVCs = new List<GameObject>();
                 foreach (var entityVC in entityViewControllersBlocked) {
                     if (!entityVC.Key) {
                         continue;
@@ -113,7 +110,7 @@ namespace Runtime.Player {
                         }
                         
                         if (PhysicsUtility.IsInLayerMask(hitObj, wallLayerMask)) {
-                             break;
+                            break;
                         }
                         
                     }
@@ -129,7 +126,7 @@ namespace Runtime.Player {
                     if (!entityVC.Key) {
                         continue;
                     }
-
+                    
                     var position = transform.position;
                     int numHits = Physics.RaycastNonAlloc(position, entityVC.Key.transform.position - position, hits, 100f);
                     var sortedHits = hits.OrderBy(hit => hit.distance).ToArray();

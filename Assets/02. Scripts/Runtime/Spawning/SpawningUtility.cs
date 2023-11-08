@@ -142,6 +142,46 @@ namespace Runtime.Spawning {
 			rotationWithSlope = Quaternion.identity;
 			return Vector3.negativeInfinity; 
 		}
+		
+		
+		//no advanced checks, but may spawn in walls or outside of arena
+		public static Vector3 FindNavMeshSuitablePositionFast(
+			Vector3 desiredPosition,
+			int areaMask,
+			float initialSearchRadius, 
+			float increment,
+			int maxAttempts, 
+			out int usedAttempts,
+			out Quaternion rotationWithSlope
+		) {
+			
+			usedAttempts = 0;
+			float currentSearchRadius = initialSearchRadius;
+			NavMeshHit navHit;
+			
+			while (usedAttempts < maxAttempts)
+			{
+				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
+				usedAttempts++;
+				randomDirection.y = 0;
+				randomDirection = randomDirection.normalized * currentSearchRadius;
+				randomDirection += desiredPosition;
+
+				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, areaMask)) {
+					if(IsSlopeTooSteepAtPoint(navHit.position, 90, out rotationWithSlope)) {
+						currentSearchRadius += increment;
+						continue;
+					}
+					return navHit.position;
+				}
+				
+				currentSearchRadius += increment;
+				
+			}
+
+			rotationWithSlope = Quaternion.identity;
+			return Vector3.negativeInfinity; 
+		}
 
 		public static List<GameObject> SpawnBossPillars(int targetNumber, string prefabName, Bounds bounds) {
 			var pillarPool =
