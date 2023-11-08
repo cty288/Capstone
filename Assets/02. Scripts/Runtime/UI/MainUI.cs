@@ -62,6 +62,7 @@ namespace Runtime.UI {
 			if (currentMainPanel != null) {
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
+				Time.timeScale = 0;
 			}
 			//ClientInput.Singleton.EnableUIMaps();
 			return panel;
@@ -96,6 +97,7 @@ namespace Runtime.UI {
 			if (currentMainPanel == null) {
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
+				Time.timeScale = 1;
 			}
 			//ClientInput.Singleton.EnablePlayerMaps();
 		}
