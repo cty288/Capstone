@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3783150777124001204}
   - component: {fileID: 3783150777124001205}
   - component: {fileID: 3783150777124001208}
-  - component: {fileID: 1807438145181039212}
-  - component: {fileID: 6143253354541092668}
-  - component: {fileID: 5660065465886636461}
+  - component: {fileID: 3783150777124001209}
+  - component: {fileID: 3783150777124001210}
+  - component: {fileID: 3783150777124001211}
   m_Layer: 0
   m_Name: WormLazer
   m_TagString: Untagged
@@ -79,7 +79,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 3}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -87,20 +87,29 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.04247284
-        value: 0.41004944
+        time: 0.044403076
+        value: 0.07949829
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.36422133
+        value: 0.07949791
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -128,12 +137,12 @@ LineRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 90
+    numCapVertices: 0
     alignment: 0
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
 --- !u!65 &3783150777124001208
 BoxCollider:
@@ -148,7 +157,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1807438145181039212
+--- !u!114 &3783150777124001209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,10 +171,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
   maxDistance: 100
   detectTime: 1
---- !u!114 &6143253354541092668
+--- !u!114 &3783150777124001210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDamageNumber: 1
---- !u!114 &5660065465886636461
+--- !u!114 &3783150777124001211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,7 +206,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  autoRecycleTime: 3.5
+  autoRecycleTime: 5
   penetrateSameFaction: 0
   boxCollider: {fileID: 0}
   lineRenderer: {fileID: 0}

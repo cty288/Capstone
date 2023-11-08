@@ -36,7 +36,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
 		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
 
-		protected HashSet<GameObject> hitObjects = new HashSet<GameObject>();
+		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
 
 
@@ -53,7 +53,6 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected bool inited = false;
 		protected bool tickType = false;
 		protected TrailRenderer[] trailRenderers = null;
-		protected HitData hitData;
 		
 		private void Awake() {
 			hitBox = GetComponent<HitBox>();
@@ -110,7 +109,6 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 
 		public bool CheckHit(HitData data) {
-			hitData = data;
 			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;
 			}

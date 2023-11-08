@@ -73,7 +73,7 @@ namespace Runtime.Utilities.Collision
             }
            
             
-             
+            // Debug.Log("trigger hit detected: " + c.name);
             HitData hitData = null;
             
             Vector3 center = _collider.transform.position;

@@ -12,8 +12,6 @@ using UnityEngine;
 using Runtime.Temporary.Weapon;
 using Runtime.Weapons.ViewControllers.Base;
 using Runtime.Enemies.SmallEnemies;
-using Runtime.BehaviorDesigner.Tasks.Movement;
-using UnityEngine.AI;
 
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
@@ -40,8 +38,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float damagePerTick;
         private float damageInterval;
         public LineRenderer lr;
-        private NavMeshAgent a;
-        public HunterWormMovement movement;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -54,9 +50,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override void OnStart()
         {
-            movement.attacking = true;
-            a = this.gameObject.GetComponent<NavMeshAgent>();
-            a.speed = 0;
             base.OnStart();
             ended = false;
             spawnInterval = enemyEntity.GetCustomDataValue<float>("attack", "spawnInterval");
@@ -65,7 +58,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             bulletSpeed = enemyEntity.GetCustomDataValue<float>("attack", "bulletSpeed");
             bulletCount = enemyEntity.GetCustomDataValue<int>("attack", "bulletCount");
             bulletAccuracy = enemyEntity.GetCustomDataValue<float>("attack", "bulletAccuracy");
-            
             //damagePerTick = enemyEntity.GetCustomDataValue<float>("attack", "damagePerTick");
            // damageInterval = enemyEntity.GetCustomDataValue<float>("attack", "damageInterval");
             StartCoroutine(RF());
@@ -98,12 +90,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Quaternion rotation = Quaternion.LookRotation(dir);
             b.transform.position = this.gameObject.transform.position;
             b.transform.rotation = rotation;
-            b.GetComponent<WormBulletLazer>().SetData(this.gameObject , dir , player);
+            b.GetComponent<WormBulletLazer>().SetData(this.gameObject , dir);
         }
 
         public override void OnEnd()
         {
-
             base.OnEnd();
             StopAllCoroutines();
         }
