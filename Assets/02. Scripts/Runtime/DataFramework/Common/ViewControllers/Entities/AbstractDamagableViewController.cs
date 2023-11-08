@@ -20,6 +20,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	
 	public interface ICanDealDamageViewController : IEntityViewController {
 		public ICanDealDamage CanDealDamageEntity { get; }
+		
 	}
 	
 	/// <summary>

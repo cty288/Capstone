@@ -1,4 +1,5 @@
-﻿using MikroFramework.Architecture;
+﻿using System.Collections.Generic;
+using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using Runtime.Inventory.Model;
 
@@ -21,12 +22,31 @@ namespace Runtime.Inventory.Commands {
 
 		protected override void OnExecute() {
 			IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
-			if (isNext) {
-				inventoryModel.SelectNextHotBarSlot(category);
+			if (category != HotBarCategory.Right) {
+				if (isNext) {
+					inventoryModel.SelectNextHotBarSlot(category);
+				}
+				else {
+					inventoryModel.SelectPreviousHotBarSlot(category);
+				}
 			}
 			else {
-				inventoryModel.SelectPreviousHotBarSlot(category);
+				List<ResourceSlot> slots = inventoryModel.GetHotBarSlots(HotBarCategory.Right);
+				if (isNext) {
+					for (int i = slots.Count - 1; i > 0; i--) {
+						ResourceSlot.SwapSlotItems(slots[i], slots[i - 1]);
+					}
+				}
+				else {
+					for (int i = 0; i < slots.Count - 1; i++) {
+						ResourceSlot.SwapSlotItems(slots[i], slots[i + 1]);
+					}
+				}
+
+				inventoryModel.SelectHotBarSlot(HotBarCategory.Right,
+					inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
 			}
+
 		}
 	}
 }

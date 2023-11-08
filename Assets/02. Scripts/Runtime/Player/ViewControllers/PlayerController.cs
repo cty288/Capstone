@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -16,16 +19,61 @@ using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController {
+    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController, ICanDealDamageRootViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
         private TriggerCheck triggerCheck;
 
+        private float recoverWaitTime = 5f;
+        protected float recoverWaitTimer = 0f;
+        //protected float levelTimer;
+        [SerializeField] private AnimationCurve timeCurrencyRate = null;
+        //private IPlayerEntity currentPlayerEntity;
+        private Coroutine levelTimerCoroutine = null;
+        
+       // private int levelTimer = 0;
+       
+        private ILevelModel levelModel;
+        private ICurrencyModel currencyModel;
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
             this.RegisterEvent<OnPlayerTeleport>(OnPlayerTeleport).UnRegisterWhenGameObjectDestroyed(gameObject);
             triggerCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
+            levelModel = this.GetModel<ILevelModel>();
+            currencyModel = this.GetModel<ICurrencyModel>();
+            levelModel.CurrentLevelCount.RegisterWithInitValue(OnCurrentLevelNumChanged)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnCurrentLevelNumChanged(int arg1, int levelNum) {
+            if (levelTimerCoroutine != null) {
+                StopCoroutine(levelTimerCoroutine);
+            }
+
+            levelTimerCoroutine = null;
+            if (levelNum > 0) {
+                levelTimerCoroutine = StartCoroutine(LevelTimer());
+            }
+        }
+        
+        private IEnumerator LevelTimer() {
+            int levelTime = 0;
+            while (true) {
+                yield return new WaitForSeconds(1f);
+                levelTime++;
+                if (levelTime % 30 == 0) {
+                    float currency = 0;
+                    if(levelTime > timeCurrencyRate.keys[timeCurrencyRate.length - 1].time) {
+                        currency = timeCurrencyRate.keys[timeCurrencyRate.length - 1].value;
+                    }
+                    else {
+                        currency = timeCurrencyRate.Evaluate(levelTime);
+                    }
+
+                    currencyModel.AddCurrency(CurrencyType.Time, Mathf.RoundToInt(currency));
+                }
+            }
         }
 
         private void OnPlayerTeleport(OnPlayerTeleport e) {
@@ -61,7 +109,20 @@ namespace Runtime.Temporary
             
             return closestPlayer;
         }
-        
+
+
+        protected override void Update() {
+            base.Update();
+            if(BoundEntity.GetCurrentHealth() <= 0) {
+                return;
+            }
+            recoverWaitTimer += Time.deltaTime;
+            if (recoverWaitTimer >= recoverWaitTime) {
+                float armorRecover = BoundEntity.GetArmorRecoverSpeed().RealValue.Value;
+                BoundEntity.AddArmor(armorRecover * Time.deltaTime);
+            }
+        }
+
         public static HashSet<PlayerController> GetAllPlayers() {
             if (players.Count == 0) {
                 //try find gameobject of type playercontroller
@@ -95,6 +156,10 @@ namespace Runtime.Temporary
             base.OnEntityDie(damagedealer);
         }
 
+        protected override int GetSpawnedCombatCurrencyAmount() {
+            return 0;
+        }
+
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
             float damageRatio = Mathf.Clamp01((float)damage / (float)BoundEntity.GetMaxHealth());
             
@@ -107,6 +172,9 @@ namespace Runtime.Temporary
             
 
             cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
+            if (damage > 0) {
+                recoverWaitTimer = 0f;
+            }
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
@@ -123,5 +191,9 @@ namespace Runtime.Temporary
         }
 
         public ICanDealDamage CanDealDamageEntity => BoundEntity;
+        public ICanDealDamageRootViewController RootViewController => this;
+        public Transform GetTransform() {
+            return transform;
+        }
     }
 }

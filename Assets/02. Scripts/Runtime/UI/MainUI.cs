@@ -1,14 +1,18 @@
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.Singletons;
 using MikroFramework.UIKit;
 using Runtime.Controls;
 using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
 using Runtime.Player;
+using Runtime.Spawning.Commands;
+using Runtime.Utilities;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Runtime.UI {
-	public class MainUI : UIRoot, IController {
+	public class MainUI : UIRoot, IController, ISingleton {
 		DPunkInputs.SharedActions controlActions;
 		private IGamePlayerModel playerModel;
 		protected override void Awake() {
@@ -17,6 +21,12 @@ namespace Runtime.UI {
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 			playerModel = this.GetModel<IGamePlayerModel>();
+			this.RegisterEvent<OnOpenPillarUI>(OnOpenPillarUI)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		}
+
+		private void OnOpenPillarUI(OnOpenPillarUI e) {
+			OpenOrClose<PillarUIViewController>(this, e);
 		}
 
 		private void Update() {
@@ -28,6 +38,7 @@ namespace Runtime.UI {
 					ClientInput.Singleton.EnablePlayerMaps();
 				}
 			}
+			
 
 			if (playerModel.IsPlayerDead()) {
 				return;
@@ -67,6 +78,10 @@ namespace Runtime.UI {
 				//Time.timeScale = 1;
 				return null;
 			}
+			
+			if (currentMainPanel != null) {
+				ClosePanel(currentMainPanel);
+			}
 		
 			if (switchUIPlayerMap) {
 				ClientInput.Singleton.EnableUIMaps();
@@ -88,5 +103,11 @@ namespace Runtime.UI {
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
 		}
+
+		public void OnSingletonInit() {
+			
+		}
+		
+		public static MainUI Singleton => SingletonProperty<MainUI>.Singleton;
 	}
 }

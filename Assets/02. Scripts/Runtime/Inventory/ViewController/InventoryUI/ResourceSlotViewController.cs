@@ -28,7 +28,7 @@ namespace Runtime.Inventory.ViewController {
         IEndDragHandler, IDragHandler, IBeginDragHandler {
         private TMP_Text numberText;
         private GameObject topVC = null;
-        private RectTransform spawnPoint;
+        [SerializeField] protected RectTransform spawnPoint;
         private Vector2 spawnPointOriginalMinOffset;
         private Vector2 spawnPointOriginalMaxOffset;
 
@@ -64,9 +64,16 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private bool showRarityIndicator = false;
         [SerializeField] private bool showTagDetailIcon = false;
         [SerializeField] private int maxPropertyDetailIconCount = 3;
+        
+        protected virtual RectTransform GetExpandedRect() {
+            return rectTransform;
+        }
         protected virtual void Awake() {
-            numberText = transform.Find("InventoryItemSpawnPos/NumberText").GetComponent<TMP_Text>();
-            spawnPoint = transform.Find("InventoryItemSpawnPos")?.GetComponent<RectTransform>();
+            numberText = transform.Find("InventoryItemSpawnPos/NumberText")?.GetComponent<TMP_Text>();
+            if (!spawnPoint) {
+                spawnPoint = transform.Find("InventoryItemSpawnPos")?.GetComponent<RectTransform>();
+            }
+           
             rarityBar = transform.Find("RarityBar")?.GetComponent<RectTransform>();
             tagDetailIconSpawnPoint = transform.Find("TagIcon")?.GetComponent<RectTransform>();
             resLoader = this.GetUtility<ResLoader>();
@@ -88,13 +95,18 @@ namespace Runtime.Inventory.ViewController {
             }
             rectTransform = GetComponent<RectTransform>();
             
-            baseWidth = rectTransform.sizeDelta.x;
+            baseWidth = GetExpandedRect().sizeDelta.x;
             //currentDescriptionPanel.Hide();
             //descriptionPanel.Awake();
             Clear();
+            
         }
 
         private void OnEnable() {
+            if (slotHoverBG) {
+                slotHoverBG.color = new Color(slotHoverBG.color.r, slotHoverBG.color.g, slotHoverBG.color.b, 0);
+            }
+          
             StopDragImmediately();
         }
 
@@ -145,10 +157,15 @@ namespace Runtime.Inventory.ViewController {
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
                 this.SendCommand<SlotItemDragReleaseCommand>(
                     SlotItemDragReleaseCommand.Allocate(eventData.position, slot));
-               
-                spawnPoint.transform.DOMove(transform.position, 0.2f).OnComplete(() => {
+                spawnPoint.transform.position = transform.position;
+                spawnPoint.SetParent(transform);
+                spawnPoint.offsetMin = spawnPointOriginalMinOffset;
+                spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
+                /*spawnPoint.transform.DOMove(transform.position, 0.2f).OnComplete(() => {
                     spawnPoint.SetParent(transform);
-                });
+                    spawnPoint.offsetMin = spawnPointOriginalMinOffset;
+                    spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
+                });*/
                 Debug.Log("OnEndDrag");
             }
             else {
@@ -166,7 +183,7 @@ namespace Runtime.Inventory.ViewController {
             startDragTriggered = false;
         }
     
-        private void Clear() {
+        protected virtual void Clear() {
             if (topVC) {
                 GameObjectPoolManager.Singleton.Recycle(topVC);
             }
@@ -208,7 +225,7 @@ namespace Runtime.Inventory.ViewController {
             this.slot = slot;
         }
 
-        private void ShowItem() {
+        protected virtual void ShowItem() {
             Clear();
 
             
@@ -216,7 +233,7 @@ namespace Runtime.Inventory.ViewController {
             int totalCount = slot.GetQuantity();
             if (topItem == null || totalCount == 0) {
                 slotBG.sprite = unfilledSlotBG;
-                this.rectTransform.sizeDelta = new Vector2(baseWidth, baseWidth);
+                GetExpandedRect().sizeDelta = new Vector2(baseWidth, baseWidth);
                 StartCoroutine(RebuildLayout());
                 return;
             }
@@ -230,18 +247,28 @@ namespace Runtime.Inventory.ViewController {
             topVC = pool.Allocate();
             IInventoryResourceViewController vc = topVC.GetComponent<IInventoryResourceViewController>();
             vc.InitWithID(topItem.UUID);
+
+            if (spawnPoint) {
+                spawnPoint.offsetMin = spawnPointOriginalMinOffset;
+                spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
+            }
+
             
             topVC.transform.SetParent(spawnPoint);
             topVC.transform.localPosition = Vector3.zero;
             topVC.transform.localScale = Vector3.one;
             topVC.transform.SetAsFirstSibling();
+           
             button.targetGraphic = topVC.GetComponentInChildren<Graphic>(true);
             //set left top right bottom to 10
             RectTransform rectTransform = topVC.GetComponent<RectTransform>();
             rectTransform.offsetMin = new Vector2(10, 10);
             rectTransform.offsetMax = new Vector2(-10, -10);
-        
-            numberText.text = totalCount.ToString();
+
+            if (numberText) {
+                numberText.text = totalCount.ToString();
+            }
+            
             slotBG.sprite = filledSlotBG;
 
             SpawnDescriptionPanel(topItem);
@@ -252,6 +279,10 @@ namespace Runtime.Inventory.ViewController {
                     rarityLevel = rarityProperty.RealValue.Value;
                     for (int i = 0; i < rarityLevel; i++) {
                         GameObject star = Instantiate(rarityIndicatorPrefab, rarityBar);
+                        RectTransform starRect = star.GetComponent<RectTransform>();
+                        //set height = rarityBar's height
+                        float height = rarityBar.rect.height;
+                        starRect.sizeDelta = new Vector2(height, height);
                     }
                 }
             }
@@ -295,9 +326,15 @@ namespace Runtime.Inventory.ViewController {
 
             if (expandWithItemWidth) {
                 float width = (baseWidth) * topItem.Width + expandAdditionWidth * (topItem.Width - 1);
-                this.rectTransform.sizeDelta = new Vector2(width, baseWidth);
+                GetExpandedRect().sizeDelta = new Vector2(width, baseWidth);
                 StartCoroutine(RebuildLayout());
             }
+
+            OnShow(topItem);
+        }
+
+        protected virtual void OnShow(IResourceEntity topItem) {
+            
         }
         
         private void SpawnDescriptionPanel(IResourceEntity topItem) {
@@ -339,6 +376,7 @@ namespace Runtime.Inventory.ViewController {
         public void Activate(bool active, bool isRightSideSlot) {
             this.isRightSide = isRightSideSlot;
             if (active) {
+                slot.UnregisterOnSlotUpdateCallback(OnSlotUpdate);
                 ShowItem();
                 slot.RegisterOnSlotUpdateCallback(OnSlotUpdate);
             }
@@ -389,15 +427,25 @@ namespace Runtime.Inventory.ViewController {
         }
 
         public void OnPointerExit(PointerEventData eventData) {
+            PointerExit(false);
+        }
+
+        protected void PointerExit(bool closeImmediately) {
             if (slotHoverBG) {
-                slotHoverBG.DOFade(0, 0.2f);
+                if (!closeImmediately) {
+                    slotHoverBG.DOFade(0, 0.2f);
+                }
+                else {
+                    slotHoverBG.color = new Color(slotHoverBG.color.r, slotHoverBG.color.g, slotHoverBG.color.b, 0);
+                }
+                
             }
             
-           ResourceSlot.currentHoveredSlot = null;
-           if (currentDescriptionPanel) {
-               currentDescriptionPanel.Hide();
-               DespawnDescriptionPanel();
-           }
+            ResourceSlot.currentHoveredSlot = null;
+            if (currentDescriptionPanel) {
+                currentDescriptionPanel.Hide();
+                DespawnDescriptionPanel();
+            }
         }
 
         private void Update() {
@@ -410,7 +458,7 @@ namespace Runtime.Inventory.ViewController {
 
 
         public void OnInventoryUIClosed() {
-            OnPointerExit(default);
+            PointerExit(true);
             StopDragImmediately();
             
         }

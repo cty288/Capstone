@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Player.Commands;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -136,9 +138,15 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		currentHoldDeployableItemViewController.Item1.OnDeploy();
 		//currentHoldItemViewController = null;
 		currentHoldDeployableItemViewController = (null, null);
-		inventoryModel.GetSelectedHotBarSlot(currentHand).RemoveLastItem();
+		ResourceSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
+		currentHotBarSlot.RemoveLastItem();
+		this.Delay(0.5f, () => {
+			inventoryModel.ReplenishHotBarSlot(currentHand, currentHotBarSlot);
+		});
 		
-		
+		//replenish the hotbar slot
+
+
 	}
 
 	private DeployFailureReason HoldingDeployableItemStatusCheck(out Quaternion spawnRotation, out Vector3 spawnPosition){
@@ -160,8 +168,12 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		deployFailureReason.Value = DeployFailureReason.NA;
 		IInHandResourceViewController previousViewController = currentHoldItemViewController;
 		if (previousViewController as Object != null) {
+			this.SendCommand(PlayerSwitchAnimCommand.Allocate(previousViewController.ResourceEntity.AnimLayerName,
+				0));
 			previousViewController.OnStopHold();
 		}
+		
+		
 		if(currentHoldDeployableItemViewController.Item1 != null){
             currentHoldDeployableItemViewController.Item1.OnPreviewTerminate();
         }
@@ -193,6 +205,8 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			}
 			
 			currentHoldItemViewController.OnStartHold(gameObject);
+			this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.ResourceEntity.AnimLayerName,
+				currentHoldItemViewController.ResourceEntity.AnimLayerWeight));
 			//rightHandItemViewController = inHandResourceViewControllers[category];
 		}
 		

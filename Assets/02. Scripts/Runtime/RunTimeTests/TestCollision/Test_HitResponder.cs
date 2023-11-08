@@ -10,6 +10,8 @@ using UnityEngine.AI;
 
 namespace Runtime.RunTimeTests.TestCollision
 {
+    
+    
     public class Test_HitResponder : MonoBehaviour, IHitResponder
     {
         //Enity Stats.
@@ -47,6 +49,7 @@ namespace Runtime.RunTimeTests.TestCollision
         }
 
         public ICanDealDamageRootEntity RootDamageDealer { get; }
+        public ICanDealDamageRootViewController RootViewController { get; }
 
 
         public void Start()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Runtime.GameResources.Model.Base;
 using UnityEngine;
 
 namespace Runtime.Utilities.AnimatorSystem
@@ -19,6 +20,11 @@ namespace Runtime.Utilities.AnimatorSystem
         public float flag;
 
         // flag 0 = false, 1= true, 2 = trigger
+    }
+    public struct PlayerSwitchAnimEvent
+    {
+        public string layerName;
+        public float weight;
     }
     public class PlayerAnimationCommand : AbstractCommand<PlayerAnimationCommand> 
     {

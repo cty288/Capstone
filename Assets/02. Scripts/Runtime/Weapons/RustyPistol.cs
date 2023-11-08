@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using Polyglot;
@@ -47,17 +49,13 @@ namespace Runtime.Weapons
 
     }
 
-
-    public struct OnGunShoot
-    {
-        public string AnimationName;
-    }
+    
     public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
     {
         private GunAmmoVisual gunAmmoVisual;
-        [SerializeField] private Animator animator;
-        [SerializeField] private float reloadAnimationLength;
-        private AnimationSMBManager animationSMBManager;
+        // [SerializeField] private Animator animator;
+        // [SerializeField] private float reloadAnimationLength;
+        // private AnimationSMBManager animationSMBManager;
         
         [Header("Debug")]
         [SerializeField] private string overrideName = "RustyPistol";
@@ -75,9 +73,13 @@ namespace Runtime.Weapons
             base.OnEntityStart();
             gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
             gunAmmoVisual.Init(BoundEntity);
-            
-            hipFireCameraPosition = new Vector3(-0.04f,-0.16f,-0.1f);
-            adsCameraPosition = new Vector3(-0.003f, -0.123f, 0f);
+
+            BoundEntity.animLayerName = animLayerNameOverride;
+
+            //animLayerNameOverride = "Revolver";
+            // Debug.Log($"sanctuary camera pos: {hipFireCameraPosition}, {adsCameraPosition}");
+            hipFireCameraPosition = hipFireCameraPositionOverride;
+            adsCameraPosition = adsCameraPositionOverride;
         }
 
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
@@ -110,9 +112,10 @@ namespace Runtime.Weapons
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
                     SetShoot(true);
+                    animator.SetTrigger("Shoot");
                     
                     CameraShakeData shakeData = new CameraShakeData(
-                        Mathf.Lerp(0.2f, 0.5f, isScopedIn ? 1: 0),
+                        Mathf.Lerp(0.2f, 0.5f, IsScopedIn ? 1: 0),
                         0.2f,
                         3
                     );
@@ -123,15 +126,9 @@ namespace Runtime.Weapons
                 
                 if (BoundEntity.CurrentAmmo == 0 && autoReload)
                 {
-                    if (IsScopedIn) {
-                        ChangeScopeStatus(false);
-                        //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
-                        //StartCoroutine(ScopeOut(true));
-                    }
                     SetShoot(false);
                     ChangeReloadStatus(true);
-                    StartCoroutine(ReloadChangeModel());
-                    
+                    StartCoroutine(ReloadAnimation());
                 }
             }
         }
@@ -144,11 +141,11 @@ namespace Runtime.Weapons
             if (IsScopedIn) {
                 ChangeScopeStatus(false);
                 //time is from animation
-                fpsCamera.transform.localPosition = Vector3.Lerp(fpsCamera.transform.localPosition, hipFireCameraPosition, 0.167f);
+                fpsCamera.transform.DOLocalMove(hipFireCameraPosition, 0.167f);
             }
             else {
                 ChangeScopeStatus(true);
-                fpsCamera.transform.localPosition = Vector3.Lerp(fpsCamera.transform.localPosition, adsCameraPosition, 0.167f);
+                fpsCamera.transform.DOLocalMove(adsCameraPosition, 0.167f);
             }
         }
 
@@ -170,28 +167,17 @@ namespace Runtime.Weapons
                     }
                     
                     //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload",2));
-                    StartCoroutine(ReloadChangeModel());
+                    StartCoroutine(ReloadAnimation());
                 }
                 
             }
         }
 
-        private IEnumerator ReloadChangeModel() {
-            ChangeReloadStatus(true);
-            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
-            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
-            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
-            animator.SetTrigger("Reload");
-            
-            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-            
-        }
-
         public override void OnRecycled() {
             base.OnRecycled();
+            fpsCamera.transform.DOLocalMove(hipFireCameraPosition, 0.167f);
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);
         }
-        
     }
 }

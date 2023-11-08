@@ -34,6 +34,7 @@ namespace Runtime.Temporary.Weapon
         }
 
         public ICanDealDamageRootEntity RootDamageDealer { get; }
+        public ICanDealDamageRootViewController RootViewController { get; }
 
 
         public void Start()

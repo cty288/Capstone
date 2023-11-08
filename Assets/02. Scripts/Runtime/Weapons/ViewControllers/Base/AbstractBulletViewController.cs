@@ -34,6 +34,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
 
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
@@ -115,9 +116,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public void HitResponse(HitData data) {
-			if (gameObject.name == "GunBullet") {
-				Debug.Log("HitResponse");
-			}
+			// if (gameObject.name == "GunBullet") {
+			// 	Debug.Log("HitResponse");
+			// }
 			if(data.Hurtbox!=null){
 			  if (data.Hurtbox.Owner == bulletOwner) {
 				  return;
@@ -131,15 +132,15 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected abstract void OnHitResponse(HitData data);
 
 		protected virtual void OnTriggerEnter(Collider other) {
-			if (gameObject.name == "GunBullet") {
-				Debug.Log("HitResponse");
-			}
+			// if (gameObject.name == "GunBullet") {
+			// 	Debug.Log("HitResponse");
+			// }
 			if (!other.isTrigger) {
 				Rigidbody rootRigidbody = other.attachedRigidbody;
 				GameObject hitObj =
 					rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
-				if (hitObj!= null && hitObj.transform == bulletOwner.transform) {
+				if (hitObj && bulletOwner && hitObj.transform == bulletOwner.transform) {
 					return;
 				}
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){

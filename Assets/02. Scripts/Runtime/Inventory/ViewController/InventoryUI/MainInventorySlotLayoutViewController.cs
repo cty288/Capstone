@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Runtime.Inventory.ViewController {
 	public class MainInventorySlotLayoutViewController : InventorySlotLayoutViewController {
 		
-		private RectTransform slotLayout;
+		protected RectTransform slotLayout;
 		[SerializeField] private GameObject slotPrefab;
 		protected List<ResourceSlotViewController> slotViewControllers = new List<ResourceSlotViewController>();
 		

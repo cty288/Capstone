@@ -17,20 +17,28 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public GameObject pivot;
         private float initialRotationSpeed = 0.0f;
         private float maxRotationSpeed = 0.0f;
-
+        private Vector3 targetPos;
 
         public override void OnStart()
         {
             navAgent = gameObject.GetComponent<Boss1>().agent;
             playerTrans = GetPlayer().transform;
             base.OnStart();
-            
+            targetPos = playerTrans.position + new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
+            navAgent.SetDestination(targetPos);
+
         }
 
         public override TaskStatus OnUpdate()
         {
-            maxRotationSpeed = 260;
-            pivot.transform.Rotate(new Vector3(1,1,1)* maxRotationSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetPos) <= 1f)
+            {
+                //maxRotationSpeed = 0;
+                return TaskStatus.Success;
+            }
+            else return TaskStatus.Running;
+            //maxRotationSpeed = 260;
+            //pivot.transform.Rotate(new Vector3(1,1,1)* maxRotationSpeed * Time.deltaTime);
             return base.OnUpdate();
         }
     }

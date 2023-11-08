@@ -105,8 +105,12 @@ namespace Runtime.Enemies
         public float RapidFireWait { get; }
         [BindCustomData("waitTimes","rangedAOEWait")]
         public float RangedAOEWait { get; }
+        
+        
         [BindCustomData("waitTimes","rollWait")]
         public float RollWait { get; }
+        
+        
         
         private HitDetectorInfo hitDetectorInfo;
         private bool deathAnimationEnd = false;
@@ -122,6 +126,8 @@ namespace Runtime.Enemies
         [SerializeField] private Transform shellHealthBarSpawnTransform;
 
         [SerializeField] public HitBox slamHitBox;
+
+        [SerializeField] private float meleeKnockbackForce;
         //[SerializeField] private GameObject shellHurbox;
         [SerializeField] private HurtBox[] pedalHurboxes;
         private HashSet<IHurtbox> hashedPedalHurboxes = new HashSet<IHurtbox>();
@@ -134,6 +140,7 @@ namespace Runtime.Enemies
             
             return UntilAction.Allocate(() => deathAnimationEnd);
         }
+        
 
         protected override void Awake() {
             base.Awake();
@@ -325,6 +332,20 @@ namespace Runtime.Enemies
         public void MeleeAttack()
         {
             
+        }
+
+        public override void HitResponse(HitData data)
+        {
+            base.HitResponse(data);
+            if (slamHitBox.isActiveAndEnabled&& data.Hurtbox.Owner.CompareTag("Player"))
+            {
+                Vector3 dir = data.Hurtbox.Owner.transform.position - transform.position;
+                dir.y = 0;
+                //make it 45 degrees from the ground
+                dir = Quaternion.AngleAxis(45, Vector3.Cross(dir, Vector3.up)) * dir;
+                dir.Normalize();
+                data.Hurtbox.Owner.GetComponent<Rigidbody>().AddForce(dir * meleeKnockbackForce, ForceMode.Impulse);
+            }
         }
 
         public override void OnRecycled() {

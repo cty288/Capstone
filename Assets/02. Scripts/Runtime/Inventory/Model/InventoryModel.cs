@@ -43,6 +43,10 @@ namespace Runtime.Inventory.Model {
 		
 		ResourceSlot GetSelectedHotBarSlot(HotBarCategory category);
 		
+		void ReplenishHotBarSlot(HotBarCategory category, ResourceSlot targetSlotToReplenish);
+		
+		
+		
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -152,12 +156,38 @@ namespace Runtime.Inventory.Model {
 			}
 			return base.AddItem(item);
 		}
+		
+		public void ReplenishHotBarSlot(HotBarCategory category, ResourceSlot targetSlotToReplenish) {
+			if (!targetSlotToReplenish.IsEmpty()) {
+				return;
+			}
+			foreach (ResourceSlot resourceSlot in slots) {
+				if (resourceSlot.IsEmpty()) {
+					continue;
+				}
 
+				IResourceEntity resourceEntity = GlobalGameResourceEntities.GetAnyResource(resourceSlot.GetLastItemUUID());
+				
+				if (targetSlotToReplenish.CanPlaceItem(resourceEntity)) {
+					resourceSlot.RemoveLastItem();
+					AddItemAt(resourceEntity, targetSlotToReplenish, false);
+					break;
+				}
+			}
+		}
+		
+		
 		protected override bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
+			return AddItemAt(item, slot, true);
+		}
+		
+		private bool AddItemAt(IResourceEntity item, ResourceSlot slot, bool sendEvent) {
 			if (base.AddItemAt(item, slot)) {
-				this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
-					Item = item
-				});
+				if (sendEvent) {
+					this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
+						Item = item
+					});
+				}
 				return true;
 			}
 
@@ -282,6 +312,8 @@ namespace Runtime.Inventory.Model {
 			}
 			return info.Slots[info.CurrentSelectedIndex];
 		}
+
+
 
 		public override void Clear() {
 			if (slots == null) {

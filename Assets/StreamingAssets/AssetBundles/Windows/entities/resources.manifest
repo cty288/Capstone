@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2853087268
+CRC: 792976169
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e5f52c6ca94b914d53aa94a5966d55c2
+    Hash: 047f538758a91101767e1903def5bc66
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8cd3e14ee4dd7db15c4e7d81d9401a87
+    Hash: b7839e4b61a80c2b82af6d91a8a5938b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -33,6 +33,14 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 72
   Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
 - Class: 96
   Script: {instanceID: 0}
 - Class: 108
@@ -54,6 +62,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 32dc96957271f284483981eb18b94c4c, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 334c6c2eb4266f744b27153a1175674d, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 9cde09e9f11b35d46924efa9a360650e, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
@@ -61,6 +71,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 91bf01c292414ad89480e0e3334a4195, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: db6fd81b3fc292a4c971293dad9b68b0, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 33f3949b645d72846be6194002567858, type: 3}
 - Class: 114
@@ -94,10 +106,16 @@ ClassTypes:
 - Class: 2083052967
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
+- AssemblyName: MainGame
+  ClassName: Runtime.GameResources.ViewControllers.PickableResourceLayerSettings
+- AssemblyName: MainGame
+  ClassName: Runtime.Utilities.AnimationEvents.AnimationSMB_Event/AnimationSMB_EventData
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.UnityEvent
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.UnityEvent`1[System.String]
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:

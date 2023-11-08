@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
@@ -12,6 +13,7 @@ using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
+using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
@@ -19,11 +21,21 @@ using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.Model.Properties;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.VFX;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
-    public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController {
+    public struct OnScopeUsedEvent
+    {
+        public bool isScopedIn;
+    }
+    public struct OnGunShoot
+    {
+        public string AnimationName;
+    }
+    
+    public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController, ICanSendEvent {
         IWeaponEntity WeaponEntity { get; }
     }
     /// <summary>
@@ -46,16 +58,24 @@ namespace Runtime.Weapons.ViewControllers.Base
         private bool _isScopedIn = false;
         protected bool IsScopedIn => _isScopedIn;
         
+        [SerializeField] protected string animLayerNameOverride = "Revolver";
+        [SerializeField] protected Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
+        [SerializeField] protected Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
+        
         // general references
         protected Camera cam;
         protected Camera fpsCamera;
         protected DPunkInputs.PlayerActions playerActions;
         protected IGamePlayerModel playerModel;
         public GameObject hitParticlePrefab;
+        public VisualEffect hitVFXSystem;
+        protected bool isHitVFX;
         protected CameraShaker cameraShaker;
+        [SerializeField] protected Animator animator;
+        [SerializeField] protected float reloadAnimationLength;
+        protected AnimationSMBManager animationSMBManager;
         
         //status
-        protected bool isScopedIn = false;
         protected bool isReloading = false;
         
         //timers
@@ -73,7 +93,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             weaponModel = this.GetModel<IWeaponModel>();
             playerModel = this.GetModel<IGamePlayerModel>();
             fpsCamera = mainCamera.GetUniversalAdditionalCameraData().cameraStack[0];
-
         }
 
         protected override void OnEntityStart() {
@@ -105,8 +124,14 @@ namespace Runtime.Weapons.ViewControllers.Base
             _isScopedIn = shouldScope;
             
             if (previsScope != _isScopedIn) {
+                playerModel.GetPlayer().SetScopedIn(_isScopedIn);
                 crossHairViewController?.OnScope(_isScopedIn);
-                fpsCamera.transform.localPosition = _isScopedIn ? adsCameraPosition : hipFireCameraPosition;
+                
+                this.SendEvent<OnScopeUsedEvent>(new OnScopeUsedEvent()
+                {
+                    isScopedIn = _isScopedIn
+                });
+                
                 AudioSystem.Singleton.Play2DSound("Pistol_Aim");
             }
            
@@ -138,10 +163,21 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
            
         }
+        
+        protected virtual IEnumerator ReloadAnimation() {
+            ChangeReloadStatus(true);
+            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
+                AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
+            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
+            animator.SetTrigger("Reload");
+            
+            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
+        }
 
         protected override void OnReadyToRecycle() {
             base.OnReadyToRecycle();
-            _isScopedIn = false;
+            ChangeScopeStatus(false);
         }
 
 
@@ -180,6 +216,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public ICanDealDamageRootEntity RootDamageDealer => ownerVc?.CanDealDamageEntity?.RootDamageDealer;
+        public ICanDealDamageRootViewController RootViewController => ownerVc?.CanDealDamageEntity?.RootViewController;
 
         public int Damage => BoundEntity.GetRealDamageValue();
         public bool CheckHit(HitData data) {
