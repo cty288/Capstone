@@ -23,6 +23,8 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         public bool headSpin;
         private Quaternion targetRotation;
         public SharedGameObject m_Target;
+        public bool attacking = false;
+        private float timer = 3.5f;
         public override void OnStart()
         {
             base.OnStart();
@@ -32,14 +34,14 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         }
         public override TaskStatus OnUpdate()
         {
-            if (headSpin)
+            if(attacking == true)
             {
-                Debug.Log("why not spinning");
-                var head = this.gameObject.transform.GetChild(0);
-                float rotationSpeed = 70f; 
-
-               
-                head.transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+                timer -= Time.deltaTime;
+                if(timer < 0)
+                {
+                    attacking = false;
+                    timer = 3.49f;
+                }
             }
             return TaskStatus.Running;
         }
@@ -47,22 +49,32 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         public override void OnLateUpdate()
         {
             // Calculate the target rotation based on the agent's velocity
-            Vector3 targetDirection = agent.velocity.normalized;
-            if (targetDirection != Vector3.zero)
+            Vector3 targetDirection = (agent.destination - this.gameObject.transform.position).normalized;
+            if (targetDirection != Vector3.zero && attacking == false)
             {
                 targetRotation = Quaternion.LookRotation(targetDirection);
+                var bodyRotation = transform.rotation;
+                bodyRotation = Quaternion.Slerp(bodyRotation, Quaternion.RotateTowards(bodyRotation,
+                    Quaternion.LookRotation(m_Target.Value.transform.position - transform.position), 360), bodyRotationSpeed * Time.deltaTime);
+                transform.rotation = bodyRotation;
             }
 
-            var bodyRotation = transform.rotation;
-            bodyRotation = Quaternion.Slerp(bodyRotation, Quaternion.RotateTowards(bodyRotation,
-                Quaternion.LookRotation(m_Target.Value.transform.position - transform.position), 360), bodyRotationSpeed * Time.deltaTime);
-            transform.rotation = bodyRotation;
+            
             
 
             // Smoothly rotate the head
             head = this.gameObject.transform.GetChild(0);
-            Debug.Log(targetDirection);
+            //Debug.Log(targetDirection);
             head.transform.rotation = Quaternion.Slerp(head.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            if (headSpin)
+            {
+                //Debug.Log("why not spinning");
+                var head = this.gameObject.transform.GetChild(0);
+                float rotationSpeed = 70f;
+
+
+                head.transform.Rotate(head.transform.forward* rotationSpeed * Time.deltaTime);
+            }
         }
         /*
         public float rayLength = 1000f;
