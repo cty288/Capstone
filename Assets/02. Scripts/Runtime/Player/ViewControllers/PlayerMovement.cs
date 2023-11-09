@@ -282,6 +282,7 @@ namespace Runtime.Player.ViewControllers
 
             if (groundCheck.Triggered)
             {
+                AudioSystem.Singleton.Play2DSound("Player_Land");
                 airTimer = 0;
             }
             else
@@ -555,11 +556,17 @@ namespace Runtime.Player.ViewControllers
         {
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
+            
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
         }
         public void ChangeBobVars(float frequencyGain,float amplitudeGain)
         {
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+            
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
         }
         public void DoCamTilt(float zTilt)
         {
@@ -903,6 +910,11 @@ namespace Runtime.Player.ViewControllers
             // weaken gravity
             if (useGravity)
                 rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
+        }
+        
+        public Rigidbody GetRigidBody()
+        {
+            return rb;
         }
     }
     
