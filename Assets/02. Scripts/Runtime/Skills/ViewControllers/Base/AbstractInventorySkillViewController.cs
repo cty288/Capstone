@@ -12,7 +12,10 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 	}
 	
 	
-	public abstract class AbstractSkillViewController<T> : AbstractPickableInHandResourceViewController<T>, ISkillViewController  where T : class, ISkillEntity, new() {
+	
+	public abstract class AbstractInventorySkillViewController<T> :
+		AbstractPickableInHandResourceViewController<T>, ISkillViewController  where T : class, ISkillEntity, new() {
+		
 		private ISkillModel skillModel;
 
 		protected override void Awake() {
