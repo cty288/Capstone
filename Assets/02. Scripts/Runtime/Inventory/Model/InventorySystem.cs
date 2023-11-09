@@ -31,13 +31,14 @@ namespace Runtime.Inventory.Model {
 		protected override void OnInit() {
 			base.OnInit();
 
-			this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
+			//this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
 			if (model.IsFirstTimeCreated) {
 				ResetSlots();
 			}
 			else {
 				//model.SelectHotBarSlot(HotBarCategory.Left, model.GetSelectedHotBarSlotIndex(HotBarCategory.Left));
-				model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+				//model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+				SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
 			}
 
 			List<ResourceSlot> allHotBarSlots = new List<ResourceSlot>();
@@ -54,8 +55,65 @@ namespace Runtime.Inventory.Model {
 			}
 		}
 
-		private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
+	
+		private void OnCurrentSlotUpdate(ResourceSlot slot, string topUUID, List<string> allUUIDs) {
+			if (!slotToCategories.ContainsKey(slot)) {
+				return;
+			}
+			HotBarCategory category = slotToCategories[slot];
+
+			IResourceEntity resourceEntity = null;
+			if (topUUID != null) {
+				resourceEntity = GlobalGameResourceEntities.GetAnyResource(topUUID);
+			}
 			
+			this.SendEvent<OnCurrentHotbarUpdateEvent>(new OnCurrentHotbarUpdateEvent() {
+				Category = category,
+				TopItem = resourceEntity
+			});
+
+			if (category == HotBarCategory.Left && slot.GetQuantity() <= 0) {
+				//model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+				SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+			}
+		}
+
+
+		private List<IResourceEntity> GetResourcesByIDs(List<string> uuids) {
+			List<IResourceEntity> resources = new List<IResourceEntity>();
+			foreach (string uuid in uuids) {
+				IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
+				resources.Add(entity);
+			}
+			return resources;
+		}
+
+
+		public override void ResetSlots() {
+			model.Reset();
+			AddInitialSlots();
+			//model.SelectHotBarSlot(HotBarCategory.Left, 0);
+			//model.SelectHotBarSlot(HotBarCategory.Right, 0);
+			SelectHotBarSlot(HotBarCategory.Right, 0);
+			SelectHotBarSlot(HotBarCategory.Left, 0);
+		}
+
+		public override void ClearSlots() {
+			model.Clear();
+		}
+
+		public IResourceEntity GetCurrentlySelectedEntity() {
+			if (currentSelectedSlot == null) {
+				return null;
+			}
+			string uuid = currentSelectedSlot.GetLastItemUUID();
+			if (uuid == null) {
+				return null;
+			}
+			return GlobalGameResourceEntities.GetAnyResource(uuid);
+		}
+
+		public void SelectHotBarSlot(HotBarCategory category, int index) {
 			ResourceSlot slot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
 			//currentSelectedSlot.TryAdd(e.Category, null);
 
@@ -112,58 +170,12 @@ namespace Runtime.Inventory.Model {
 			}
 		}
 
-		private void OnCurrentSlotUpdate(ResourceSlot slot, string topUUID, List<string> allUUIDs) {
-			if (!slotToCategories.ContainsKey(slot)) {
-				return;
-			}
-			HotBarCategory category = slotToCategories[slot];
-
-			IResourceEntity resourceEntity = null;
-			if (topUUID != null) {
-				resourceEntity = GlobalGameResourceEntities.GetAnyResource(topUUID);
-			}
+		public void SelectNextHotBarSlot(HotBarCategory category) {
 			
-			this.SendEvent<OnCurrentHotbarUpdateEvent>(new OnCurrentHotbarUpdateEvent() {
-				Category = category,
-				TopItem = resourceEntity
-			});
-
-			if (category == HotBarCategory.Left && slot.GetQuantity() <= 0) {
-				model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
-			}
 		}
 
-
-		private List<IResourceEntity> GetResourcesByIDs(List<string> uuids) {
-			List<IResourceEntity> resources = new List<IResourceEntity>();
-			foreach (string uuid in uuids) {
-				IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
-				resources.Add(entity);
-			}
-			return resources;
-		}
-
-
-		public override void ResetSlots() {
-			model.Reset();
-			AddInitialSlots();
-			model.SelectHotBarSlot(HotBarCategory.Left, 0);
-			model.SelectHotBarSlot(HotBarCategory.Right, 0);
-		}
-
-		public override void ClearSlots() {
-			model.Clear();
-		}
-
-		public IResourceEntity GetCurrentlySelectedEntity() {
-			if (currentSelectedSlot == null) {
-				return null;
-			}
-			string uuid = currentSelectedSlot.GetLastItemUUID();
-			if (uuid == null) {
-				return null;
-			}
-			return GlobalGameResourceEntities.GetAnyResource(uuid);
+		public void SelectPreviousHotBarSlot(HotBarCategory category) {
+			
 		}
 
 		private void AddInitialSlots() {

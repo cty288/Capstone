@@ -22,12 +22,13 @@ namespace Runtime.Inventory.Commands {
 
 		protected override void OnExecute() {
 			IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
 			if (category != HotBarCategory.Right) {
 				if (isNext) {
-					inventoryModel.SelectNextHotBarSlot(category);
+					inventorySystem.SelectNextHotBarSlot(category);
 				}
 				else {
-					inventoryModel.SelectPreviousHotBarSlot(category);
+					inventorySystem.SelectPreviousHotBarSlot(category);
 				}
 			}
 			else {
@@ -43,7 +44,7 @@ namespace Runtime.Inventory.Commands {
 					}
 				}
 
-				inventoryModel.SelectHotBarSlot(HotBarCategory.Right,
+				inventorySystem.SelectHotBarSlot(HotBarCategory.Right,
 					inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
 			}
 
