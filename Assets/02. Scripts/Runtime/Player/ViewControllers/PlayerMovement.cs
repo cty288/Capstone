@@ -867,6 +867,7 @@ namespace Runtime.Player.ViewControllers
         private void WallJump()
         {
             // enter exiting wall state
+            wasWallRunning = false;
             exitingWall = true;
             exitWallTimer = exitWallTime;
 
@@ -877,6 +878,7 @@ namespace Runtime.Player.ViewControllers
             // reset y velocity and add force
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(forceToApply, ForceMode.Impulse);
+            readyToDoubleJump = true;
         }
         
         private void WallRunningMovement()
