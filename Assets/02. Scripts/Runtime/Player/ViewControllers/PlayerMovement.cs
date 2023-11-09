@@ -130,10 +130,11 @@ namespace Runtime.Player.ViewControllers
 
         private TriggerCheck groundCheck;
 
-        private float airTimer = 0f;
+        //private float airTimer = 0f;
         //public LayerMask whatIsGround;
-        public bool grounded {
-            get => groundCheck.Triggered ||airTimer<0.3f;
+        private bool grounded
+        {
+            get => groundCheck.Triggered;
         }
 
         private bool onSlope;
@@ -172,7 +173,9 @@ namespace Runtime.Player.ViewControllers
         [SerializeField]
         private float maxWallRunTime;
         private float wallRunTimer;
-        
+
+
+        private bool wasWallRunning;
         //wallrun checks
         [SerializeField]
         private  float wallCheckDistance;
@@ -280,14 +283,7 @@ namespace Runtime.Player.ViewControllers
                 ((MainGame) MainGame.Interface).SaveGame();
             }
 
-            if (groundCheck.Triggered)
-            {
-                airTimer = 0;
-            }
-            else
-            {
-                airTimer += Time.deltaTime;
-            }
+
         }
 
         
@@ -298,7 +294,10 @@ namespace Runtime.Player.ViewControllers
             //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
             // handle drag
             if (grounded)
+            {
                 rb.drag = playerEntity.GetGroundDrag().RealValue;
+                wasWallRunning = false;
+            }
             else
                 rb.drag = playerEntity.GetAirDrag().RealValue;
             MovePlayer();
@@ -470,7 +469,7 @@ namespace Runtime.Player.ViewControllers
 
                 ChangeBobVars(0,0);
             }
-            else if (state == MovementState.sprinting)
+            else if (state == MovementState.sprinting||(state == MovementState.air&& sprinting))
             {
                 if (currentFOV != runningFOV && !playerEntity.IsScopedIn())
                 {
