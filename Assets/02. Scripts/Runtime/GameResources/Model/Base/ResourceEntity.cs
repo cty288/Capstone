@@ -18,7 +18,8 @@ namespace Runtime.GameResources.Model.Base {
 		Bait,
 		Item,
 		Weapon,
-		Currency
+		Currency,
+		Skill
 	}
 
 	[Serializable]
@@ -160,7 +161,7 @@ namespace Runtime.GameResources.Model.Base {
 		public virtual string DeployedVCPrefabName { get; } = null;
 
 		
-		public virtual string AnimLayerName => "Base";
+		public virtual string AnimLayerName => "NoItem";
 		public float AnimLayerWeight => 1;
 
 		[field: ES3Serializable]

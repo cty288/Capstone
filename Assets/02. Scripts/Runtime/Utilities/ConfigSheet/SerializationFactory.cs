@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.Singletons;
 using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.DataFramework.ViewControllers.Entities;
@@ -43,6 +44,7 @@ namespace Runtime.Utilities.ConfigSheet {
 			RegisterType("BaitAdjective", typeof(BaitAdjective));
 			RegisterType("RecoilInfo", typeof(RecoilInfo));
 			RegisterType("ItemDropCollection", typeof(ItemDropCollection));
+			RegisterType("CurrencyType", typeof(CurrencyType));
 
 		}
 		

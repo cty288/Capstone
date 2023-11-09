@@ -35,9 +35,9 @@ namespace Runtime.Inventory.Model {
 		
 		void SelectHotBarSlot(HotBarCategory category, int index);
 		
-		void SelectNextHotBarSlot(HotBarCategory category);
+		//void SelectNextHotBarSlot(HotBarCategory category);
 		
-		void SelectPreviousHotBarSlot(HotBarCategory category);
+		//void SelectPreviousHotBarSlot(HotBarCategory category);
 		
 		int GetSelectedHotBarSlotIndex(HotBarCategory category);
 		

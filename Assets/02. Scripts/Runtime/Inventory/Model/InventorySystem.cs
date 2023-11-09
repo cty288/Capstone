@@ -114,11 +114,10 @@ namespace Runtime.Inventory.Model {
 		}
 
 		public void SelectHotBarSlot(HotBarCategory category, int index) {
-			ResourceSlot slot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
-			//currentSelectedSlot.TryAdd(e.Category, null);
-
+			ResourceSlot targetSlot = model.GetHotBarSlots(category)[index];
 			ResourceSlot previousSlot = currentSelectedSlot;
 			HotBarCategory previousCategory = currentSelectedCategory;
+			
 			int previousIndex = currentSelectedIndex;
 			
 			if (previousSlot != null) {
@@ -126,56 +125,49 @@ namespace Runtime.Inventory.Model {
 			}
 			
 			
+			HotBarCategory targetCategory = category;
+			int targetIndex = index;
+			
+			
 			//if category is left and last selected index = current selected index, then we select the right hand again
-			if ((previousCategory == HotBarCategory.Left && previousSlot == slot) || (e.Category == HotBarCategory.Left && slot.GetQuantity() <= 0)) {
+			if ((previousCategory == HotBarCategory.Left && previousSlot == targetSlot) || (category == HotBarCategory.Left && targetSlot.GetQuantity() <= 0)) {
 
 				HotBarCategory otherCategory = HotBarCategory.Right;
 				int otherIndex = 0;
 				
-				if (previousCategory == HotBarCategory.Left && e.Category == HotBarCategory.Left &&
-				    slot?.GetQuantity() <= 0 && previousIndex != e.SelectedIndex) {
-					otherCategory = HotBarCategory.Left;
-					otherIndex = previousIndex;
-					
-					currentSelectedCategory = HotBarCategory.Left;
-					currentSelectedIndex = e.SelectedIndex;
-					currentSelectedSlot = slot;
+				if (previousCategory == HotBarCategory.Left && category == HotBarCategory.Left &&
+				    targetSlot?.GetQuantity() <= 0 && previousIndex != index) { //try to switch to an empty left slot
+					return;
 
 				}
 				else {
 					otherCategory = HotBarCategory.Right;
 					otherIndex = model.GetSelectedHotBarSlotIndex(HotBarCategory.Right);
+					targetSlot = model.GetHotBarSlots(otherCategory)[otherIndex];
 				}
-				
-				//modify event
-				e.Category = otherCategory;
-				e.SelectedIndex = otherIndex;
+				targetCategory = otherCategory;
+				targetIndex = otherIndex;
+			}
 
-				/*currentSelectedSlot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
-				currentSelectedCategory = e.Category;
-				slotToCategories.TryAdd(slot, e.Category);*/
-				
-				
-				model.SelectHotBarSlot(otherCategory, otherIndex);
-			}
-			else {
-				//currentSelectedSlot[e.Category] = slot;
-				currentSelectedSlot = slot;
-				currentSelectedCategory = e.Category;
-				slotToCategories.TryAdd(slot, e.Category);
-				currentSelectedIndex = e.SelectedIndex;
-				slot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
-				
-				OnCurrentSlotUpdate(slot, slot.GetLastItemUUID(), slot.GetUUIDList());
-			}
+
+			currentSelectedSlot = targetSlot;
+			currentSelectedCategory = targetCategory;
+			slotToCategories.TryAdd(targetSlot, targetCategory);
+			currentSelectedIndex = targetIndex;
+			model.SelectHotBarSlot(targetCategory, targetIndex);
+			targetSlot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+			OnCurrentSlotUpdate(targetSlot, targetSlot.GetLastItemUUID(), targetSlot.GetUUIDList());
 		}
 
 		public void SelectNextHotBarSlot(HotBarCategory category) {
-			
+			SelectHotBarSlot(category,
+				(model.GetSelectedHotBarSlotIndex(category) + 1) % model.GetHotBarSlots(category).Count);
 		}
 
 		public void SelectPreviousHotBarSlot(HotBarCategory category) {
-			
+			SelectHotBarSlot(category,
+				(model.GetSelectedHotBarSlotIndex(category) - 1 + model.GetHotBarSlots(category).Count) %
+				model.GetHotBarSlots(category).Count);
 		}
 
 		private void AddInitialSlots() {

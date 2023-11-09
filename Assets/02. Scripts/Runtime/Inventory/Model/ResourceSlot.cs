@@ -215,19 +215,15 @@ namespace Runtime.Inventory.Model {
 	}
 
 
-	public class HotBarSlot : ResourceSlot {
-		public bool GetCanSelect() {
-			if (IsEmpty()) {
-				return false;
-			}
-
+	public abstract class HotBarSlot : ResourceSlot {
+		public virtual bool GetCanSelect() {
 			return true;
 		}
 	}
 	
 
 	[Serializable]
-	public class LeftHotBarSlot : ResourceSlot {
+	public class LeftHotBarSlot : HotBarSlot {
 		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
 			if(item == null) {
 				return false;
@@ -238,11 +234,15 @@ namespace Runtime.Inventory.Model {
 			}
 			return base.CanPlaceItem(item, isSwapping);
 		}
+
+		public override bool GetCanSelect() {
+			return base.GetCanSelect();
+		}
 	}
 	
 	
 	[Serializable]
-	public class RightHotBarSlot : ResourceSlot {
+	public class RightHotBarSlot : HotBarSlot {
 		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
 			if (item.GetResourceCategory() != ResourceCategory.Weapon) {
 				return false;

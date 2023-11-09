@@ -36,7 +36,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		NA
 	}
 	
-	public abstract class AbstractDeployableResourceViewController<T> : AbstractResourceViewController<T>, IDeployableResourceViewController where T : class, IResourceEntity, new()  {
+	public abstract class AbstractDeployableResourceViewController<T> :
+		AbstractResourceViewController<T>, IDeployableResourceViewController where T : class, IResourceEntity, new()  {
 		[Header("Deploy Settings")]
 		[SerializeField] private float maxSlopeAngle = 45f;
 		[field: SerializeField] public bool DoesRotateToSlope { get; protected set; } = true;
