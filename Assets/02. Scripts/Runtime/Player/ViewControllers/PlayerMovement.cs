@@ -132,7 +132,7 @@ namespace Runtime.Player.ViewControllers
 
         private float airTimer = 0f;
         //public LayerMask whatIsGround;
-        private bool grounded {
+        public bool grounded {
             get => groundCheck.Triggered ||airTimer<0.3f;
         }
 
@@ -466,7 +466,7 @@ namespace Runtime.Player.ViewControllers
                 }
                 
                 if(fpsCamera.fieldOfView != fpsFOV - 10)
-                    fpsCamera.DOFieldOfView(fpsFOV - 15, 0.1f);
+                    fpsCamera.DOFieldOfView(fpsFOV - 5, 0.1f);
 
                 ChangeBobVars(0,0);
             }
@@ -478,7 +478,7 @@ namespace Runtime.Player.ViewControllers
                 }
                 
                 if(fpsCamera.fieldOfView != fpsFOV - 10)
-                    fpsCamera.DOFieldOfView(fpsFOV - 10, 0.1f);
+                    fpsCamera.DOFieldOfView(fpsFOV - 3, 0.1f);
 
                 ChangeBobVars(sprintBob);
             }
