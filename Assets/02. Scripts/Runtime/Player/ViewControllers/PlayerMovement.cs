@@ -465,7 +465,7 @@ namespace Runtime.Player.ViewControllers
                 }
                 
                 if(fpsCamera.fieldOfView != fpsFOV - 10)
-                    fpsCamera.DOFieldOfView(fpsFOV - 15, 0.1f);
+                    fpsCamera.DOFieldOfView(fpsFOV - 5, 0.1f);
 
                 ChangeBobVars(0,0);
             }
@@ -477,7 +477,7 @@ namespace Runtime.Player.ViewControllers
                 }
                 
                 if(fpsCamera.fieldOfView != fpsFOV - 10)
-                    fpsCamera.DOFieldOfView(fpsFOV - 10, 0.1f);
+                    fpsCamera.DOFieldOfView(fpsFOV - 3, 0.1f);
 
                 ChangeBobVars(sprintBob);
             }
@@ -575,7 +575,6 @@ namespace Runtime.Player.ViewControllers
             {
                 readyToJump = false;
                 readyToDoubleJump = true;
-                wasWallRunning = false;
 
                 Jump();
 
@@ -583,7 +582,6 @@ namespace Runtime.Player.ViewControllers
             }
             if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded)
             {
-                wasWallRunning = false;
                 readyToDoubleJump = false;
 
                 Jump();
@@ -625,10 +623,6 @@ namespace Runtime.Player.ViewControllers
                 
                 if (playerActions.SprintHold.IsPressed())
                 {
-                    if (!wasWallRunning&&!wallrunning)
-                    {
-                        StartWallRun();
-                    }
                     if (playerActions.SprintHold.WasPressedThisFrame())
                     {
                         if (!wallrunning)
@@ -857,7 +851,6 @@ namespace Runtime.Player.ViewControllers
         private void StopWallRun()
         {
             wallrunning = false;
-            wasWallRunning = true;
 
             // reset camera effects
 
@@ -867,7 +860,6 @@ namespace Runtime.Player.ViewControllers
         private void WallJump()
         {
             // enter exiting wall state
-            wasWallRunning = false;
             exitingWall = true;
             exitWallTimer = exitWallTime;
 
@@ -878,7 +870,6 @@ namespace Runtime.Player.ViewControllers
             // reset y velocity and add force
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(forceToApply, ForceMode.Impulse);
-            readyToDoubleJump = true;
         }
         
         private void WallRunningMovement()
