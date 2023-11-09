@@ -32,7 +32,7 @@ namespace Runtime.Inventory.Commands {
 				}
 			}
 			else {
-				List<ResourceSlot> slots = inventoryModel.GetHotBarSlots(HotBarCategory.Right);
+				List<HotBarSlot> slots = inventoryModel.GetHotBarSlots(HotBarCategory.Right);
 				if (isNext) {
 					for (int i = slots.Count - 1; i > 0; i--) {
 						ResourceSlot.SwapSlotItems(slots[i], slots[i - 1]);

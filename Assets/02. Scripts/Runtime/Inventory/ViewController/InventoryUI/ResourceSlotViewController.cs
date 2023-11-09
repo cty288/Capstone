@@ -64,6 +64,8 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private bool showRarityIndicator = false;
         [SerializeField] private bool showTagDetailIcon = false;
         [SerializeField] private int maxPropertyDetailIconCount = 3;
+        [SerializeField] private bool allowDrag = true;
+        [SerializeField] private RectTransform cantThrowErrorMessage;
         
         protected virtual RectTransform GetExpandedRect() {
             return rectTransform;
@@ -131,6 +133,9 @@ namespace Runtime.Inventory.ViewController {
         
         
         public void OnDrag(PointerEventData eventData) {
+            if (!allowDrag) {
+                return;
+            }
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
                 if (!startDragTriggered) {
                     startDragTriggered = true;
@@ -140,9 +145,50 @@ namespace Runtime.Inventory.ViewController {
                 }
                 spawnPoint.transform.position = eventData.position;
             }
+
+            if (startDragTriggered) {
+                CheckCanThrow();
+            }
+        }
+
+        private void CheckCanThrow() {
+            if (!ResourceSlot.currentHoveredSlot) {
+                ShowCantThrowMessage(false);
+                return;
+            }
+            
+            ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot.Slot;
+            if (currentHoveredSlot != null && currentHoveredSlot != slot) {
+                if (currentHoveredSlot is RubbishSlot) {
+                    IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+                    if (!slot.GetCanThrow(topItem)) {
+                        //show error message
+                        ShowCantThrowMessage(true);
+                        return;
+                    }
+                }
+            }
+            
+            ShowCantThrowMessage(false);
+        }
+        
+        protected void ShowCantThrowMessage(bool show) {
+            if (cantThrowErrorMessage) {
+                cantThrowErrorMessage.gameObject.SetActive(show);
+                StartCoroutine(RebuildLayout(cantThrowErrorMessage));
+            }
+        }
+        
+        private IEnumerator RebuildLayout(RectTransform rect) {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+            yield return new WaitForEndOfFrame();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
         }
 
         public void OnBeginDrag(PointerEventData eventData) {
+            if (!allowDrag) {
+                return;
+            }
             if (topVC) {
                 spawnPoint.transform.DOKill();
                 dragStartPos = eventData.position;
@@ -153,6 +199,10 @@ namespace Runtime.Inventory.ViewController {
         
 
         public void OnEndDrag(PointerEventData eventData) {
+            if (!allowDrag) {
+                return;
+            }
+            ShowCantThrowMessage(false);
             //check if pointer is on self
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
                 this.SendCommand<SlotItemDragReleaseCommand>(
@@ -181,9 +231,11 @@ namespace Runtime.Inventory.ViewController {
             spawnPoint.offsetMin = spawnPointOriginalMinOffset;
             spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
             startDragTriggered = false;
+            ShowCantThrowMessage(false);
         }
     
         protected virtual void Clear() {
+            ShowCantThrowMessage(false);
             if (topVC) {
                 GameObjectPoolManager.Singleton.Recycle(topVC);
             }

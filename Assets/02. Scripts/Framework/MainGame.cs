@@ -2,6 +2,7 @@ using _02._Scripts.Runtime.Baits.Model.Base;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
@@ -36,6 +37,7 @@ namespace Framework {
 			this.RegisterModel<IDirectorModel>(new DirectorModel());
 			this.RegisterModel<IBaitModel>(new BaitModel());
 			this.RegisterModel<ICurrencyModel>(new CurrencyModel());
+			this.RegisterModel<ISkillModel>(new SkillModel());
 			
 			this.RegisterExtensibleUtility<ResLoader>(new ResLoader());
 		}

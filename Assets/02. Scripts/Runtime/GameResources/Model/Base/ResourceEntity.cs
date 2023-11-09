@@ -66,6 +66,8 @@ namespace Runtime.GameResources.Model.Base {
 		public int Width { get; }
 		
 		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions();
+		
+		public Func<bool> CanInventorySwitchToCondition { get; }
 	}
 	
 	//3 forms
@@ -175,8 +177,8 @@ namespace Runtime.GameResources.Model.Base {
 
 			return resourcePropertyDescriptions;
 		}
-		
-		
+
+		public Func<bool> CanInventorySwitchToCondition { get; } = null;
 	}
 
 }

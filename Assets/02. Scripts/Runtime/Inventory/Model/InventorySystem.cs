@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Architecture;
+using MikroFramework.Utilities;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.Inventory.Model {
@@ -22,8 +24,10 @@ namespace Runtime.Inventory.Model {
 		
 		//private Dictionary<HotBarCategory, ResourceSlot> currentSelectedSlot = new Dictionary<HotBarCategory, ResourceSlot>();
 		private HotBarCategory currentSelectedCategory = HotBarCategory.Left;
-		private ResourceSlot currentSelectedSlot = null;
+		private HotBarSlot currentSelectedSlot = null;
 		private int currentSelectedIndex = 0;
+		private ReferenceCounter lockSwitchCounter = new ReferenceCounter();
+		
 		
 		
 		private Dictionary<ResourceSlot, HotBarCategory> slotToCategories = new Dictionary<ResourceSlot, HotBarCategory>();
@@ -114,8 +118,12 @@ namespace Runtime.Inventory.Model {
 		}
 
 		public void SelectHotBarSlot(HotBarCategory category, int index) {
-			ResourceSlot targetSlot = model.GetHotBarSlots(category)[index];
-			ResourceSlot previousSlot = currentSelectedSlot;
+			if (lockSwitchCounter.Count > 0) {
+				return;
+			}
+			
+			HotBarSlot targetSlot = model.GetHotBarSlots(category)[index];
+			HotBarSlot previousSlot = this.currentSelectedSlot;
 			HotBarCategory previousCategory = currentSelectedCategory;
 			
 			int previousIndex = currentSelectedIndex;
@@ -150,7 +158,12 @@ namespace Runtime.Inventory.Model {
 			}
 
 
-			currentSelectedSlot = targetSlot;
+			IResourceEntity resource = GlobalGameResourceEntities.GetAnyResource(targetSlot.GetLastItemUUID());
+			if (!targetSlot.GetCanSelect(resource)) {
+				return;
+			}
+			
+			this.currentSelectedSlot = targetSlot;
 			currentSelectedCategory = targetCategory;
 			slotToCategories.TryAdd(targetSlot, targetCategory);
 			currentSelectedIndex = targetIndex;
@@ -168,6 +181,14 @@ namespace Runtime.Inventory.Model {
 			SelectHotBarSlot(category,
 				(model.GetSelectedHotBarSlotIndex(category) - 1 + model.GetHotBarSlots(category).Count) %
 				model.GetHotBarSlots(category).Count);
+		}
+
+		public void RetainLockSwitch(object locker) {
+			lockSwitchCounter.Retain(locker);
+		}
+
+		public void ReleaseLockSwitch(object locker) {
+			lockSwitchCounter.Release(locker);
 		}
 
 		private void AddInitialSlots() {

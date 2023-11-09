@@ -28,6 +28,10 @@ namespace Runtime.Inventory.Model {
 		public void SelectNextHotBarSlot(HotBarCategory category);
 
 		public void SelectPreviousHotBarSlot(HotBarCategory category);
+		
+		public void RetainLockSwitch(object locker);
+		
+		public void ReleaseLockSwitch(object locker);
 	}
 
 	public interface IResourceSlotsSystem : ISystem {

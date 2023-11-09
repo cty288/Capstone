@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.ViewController;
+using Runtime.Weapons.Model.Base;
 
 namespace Runtime.Inventory.Model {
 	[Serializable]
@@ -212,12 +214,24 @@ namespace Runtime.Inventory.Model {
 		public List<string> GetUUIDList() {
 			return UUIDList;
 		}
+
+		public virtual bool GetCanThrow(IResourceEntity item) {
+			if (item == null || item is ISkillEntity) {
+				return false;
+			}
+
+			return true;
+		}
 	}
 
 
 	public abstract class HotBarSlot : ResourceSlot {
-		public virtual bool GetCanSelect() {
-			return true;
+		public virtual bool GetCanSelect(IResourceEntity topItem) {
+			if(topItem == null || topItem.CanInventorySwitchToCondition == null) {
+				return true;
+			}
+			
+			return topItem.CanInventorySwitchToCondition();
 		}
 	}
 	
@@ -234,10 +248,7 @@ namespace Runtime.Inventory.Model {
 			}
 			return base.CanPlaceItem(item, isSwapping);
 		}
-
-		public override bool GetCanSelect() {
-			return base.GetCanSelect();
-		}
+		
 	}
 	
 	

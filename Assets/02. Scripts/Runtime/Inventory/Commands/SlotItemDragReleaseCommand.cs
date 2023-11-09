@@ -25,8 +25,12 @@ namespace Runtime.Inventory.Commands {
 						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
 						currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem);
 					}else {
-						this.SendCommand<PlayerThrowAllSlotResourceCommand>(
-							PlayerThrowAllSlotResourceCommand.Allocate(fromSlot));
+						//TODO: check if it is throwable
+						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
+						if (fromSlot.GetCanThrow(topItem)) {
+							this.SendCommand<PlayerThrowAllSlotResourceCommand>(
+								PlayerThrowAllSlotResourceCommand.Allocate(fromSlot));
+						}
 					}
 				}
 			}

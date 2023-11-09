@@ -138,7 +138,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		currentHoldDeployableItemViewController.Item1.OnDeploy();
 		//currentHoldItemViewController = null;
 		currentHoldDeployableItemViewController = (null, null);
-		ResourceSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
+		HotBarSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
 		currentHotBarSlot.RemoveLastItem();
 		this.Delay(0.5f, () => {
 			inventoryModel.ReplenishHotBarSlot(currentHand, currentHotBarSlot);
