@@ -494,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c59dc48f8803d341b17a688626c606d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberText: {fileID: 0}
   spawnPoint: {fileID: 8123951637694217084}
   filledSlotBG: {fileID: 21300000, guid: 378f32e300a25e64190b08948aab6cb3, type: 3}
   unfilledSlotBG: {fileID: 21300000, guid: 378f32e300a25e64190b08948aab6cb3, type: 3}
@@ -507,6 +508,8 @@ MonoBehaviour:
   showRarityIndicator: 1
   showTagDetailIcon: 0
   maxPropertyDetailIconCount: 3
+  allowDrag: 1
+  cantThrowErrorMessage: {fileID: 0}
 --- !u!114 &3505010239103922088
 MonoBehaviour:
   m_ObjectHideFlags: 0

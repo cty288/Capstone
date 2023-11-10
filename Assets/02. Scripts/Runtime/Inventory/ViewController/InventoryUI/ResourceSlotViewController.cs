@@ -26,7 +26,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Runtime.Inventory.ViewController {
     public class ResourceSlotViewController : AbstractMikroController<MainGame>, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler,
         IEndDragHandler, IDragHandler, IBeginDragHandler {
-        private TMP_Text numberText;
+        [SerializeField] private TMP_Text numberText;
         private GameObject topVC = null;
         [SerializeField] protected RectTransform spawnPoint;
         private Vector2 spawnPointOriginalMinOffset;
@@ -43,6 +43,8 @@ namespace Runtime.Inventory.ViewController {
         private SlotResourceDescriptionPanel currentDescriptionPanel;
         private Transform descriptionPanelFollowTr;
         private RectTransform tagDetailIconSpawnPoint;
+
+        private Transform spawnPointOriginalParent;
         //private Image selectedBG;
         protected bool isSelected = false;
         private float baseWidth;
@@ -71,17 +73,21 @@ namespace Runtime.Inventory.ViewController {
             return rectTransform;
         }
         protected virtual void Awake() {
-            numberText = transform.Find("InventoryItemSpawnPos/NumberText")?.GetComponent<TMP_Text>();
+            if (!numberText) {
+                numberText = transform.Find("InventoryItemSpawnPos/NumberText")?.GetComponent<TMP_Text>();
+            }
+           
             if (!spawnPoint) {
                 spawnPoint = transform.Find("InventoryItemSpawnPos")?.GetComponent<RectTransform>();
             }
-           
+
             rarityBar = transform.Find("RarityBar")?.GetComponent<RectTransform>();
             tagDetailIconSpawnPoint = transform.Find("TagIcon")?.GetComponent<RectTransform>();
             resLoader = this.GetUtility<ResLoader>();
             if (spawnPoint) {
                 spawnPointOriginalMinOffset = spawnPoint.offsetMin;
                 spawnPointOriginalMaxOffset = spawnPoint.offsetMax;
+                spawnPointOriginalParent = spawnPoint.parent;
             }
             slotBG = transform.Find("SlotBG").GetComponent<Image>();
             slotHoverBG = transform.Find("SlotHoverBG")?.GetComponent<Image>();
@@ -208,7 +214,7 @@ namespace Runtime.Inventory.ViewController {
                 this.SendCommand<SlotItemDragReleaseCommand>(
                     SlotItemDragReleaseCommand.Allocate(eventData.position, slot));
                 spawnPoint.transform.position = transform.position;
-                spawnPoint.SetParent(transform);
+                spawnPoint.SetParent(spawnPointOriginalParent);
                 spawnPoint.offsetMin = spawnPointOriginalMinOffset;
                 spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
                 /*spawnPoint.transform.DOMove(transform.position, 0.2f).OnComplete(() => {
@@ -227,7 +233,7 @@ namespace Runtime.Inventory.ViewController {
         private void StopDragImmediately() {
             var transform1 = transform;
             spawnPoint.transform.position = transform1.position;
-            spawnPoint.parent = transform1;
+            spawnPoint.parent = spawnPointOriginalParent;
             spawnPoint.offsetMin = spawnPointOriginalMinOffset;
             spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
             startDragTriggered = false;
@@ -312,10 +318,10 @@ namespace Runtime.Inventory.ViewController {
             topVC.transform.SetAsFirstSibling();
            
             button.targetGraphic = topVC.GetComponentInChildren<Graphic>(true);
-            //set left top right bottom to 10
+           
             RectTransform rectTransform = topVC.GetComponent<RectTransform>();
-            rectTransform.offsetMin = new Vector2(10, 10);
-            rectTransform.offsetMax = new Vector2(-10, -10);
+            rectTransform.offsetMin = new Vector2(0, 0);
+            rectTransform.offsetMax = new Vector2(0, 0);
 
             if (numberText) {
                 numberText.text = totalCount.ToString();

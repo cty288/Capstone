@@ -4,31 +4,16 @@ using Runtime.DataFramework.Properties;
 using Runtime.Utilities;
 
 namespace _02._Scripts.Runtime.Skills.Model.Properties {
+	public interface ISkillLevelProperty<T> : IDictionaryProperty<int, T>, ILoadFromConfigProperty {
+		public T GetByLevel(int level);
+	}
 
-	public interface ISkillCoolDown : IDictionaryProperty<int, float>, ILoadFromConfigProperty {
-		//public float GetCooldownByLevel(int level);
-
-		public float GetMaxCooldownByLevel(int level);
-		
+	public interface ISkillCoolDown : ISkillLevelProperty<float>, ILoadFromConfigProperty {
 		
 	}
 	
-	public class SkillCooldown : LoadFromConfigDictProperty<int, float>, ISkillCoolDown {
-		protected override PropertyName GetPropertyName() {
-			return PropertyName.skill_cooldown;
-		}
-		
-		
-
-		public override PropertyNameInfo[] GetDefaultDependentProperties() {
-			return null;
-		}
-
-		/*public float GetCooldownByLevel(int level) {
-			return GetCooldownByLevel(level, RealValue.Value);
-		}*/
-
-		private float GetCooldownByLevel(int level, Dictionary<int, float> target) {
+	public abstract class SkillLevelProperty<T> : LoadFromConfigDictProperty<int, T>, ISkillLevelProperty<T> {
+		protected T GetByLevel(int level, Dictionary<int, T> target) {
 			if (target.TryGetValue(level, out var byLevel)) {
 				return byLevel;
 			}
@@ -47,12 +32,30 @@ namespace _02._Scripts.Runtime.Skills.Model.Properties {
 				return lastLevelCooldown;
 			}
 
-			return -1;
+			return default;
+		}
+		
+		
+		public T GetByLevel(int level) {
+			return GetByLevel(level, RealValue.Value);
+		}
+	}
+	
+	public class SkillCooldown : SkillLevelProperty<float>, ISkillCoolDown {
+		protected override PropertyName GetPropertyName() {
+			return PropertyName.skill_cooldown;
+		}
+		
+		
+
+		public override PropertyNameInfo[] GetDefaultDependentProperties() {
+			return null;
 		}
 
-		public float GetMaxCooldownByLevel(int level) {
+		/*public float GetCooldownByLevel(int level) {
 			return GetCooldownByLevel(level, RealValue.Value);
-		}
+		}*/
+		
 	}
 	
 }

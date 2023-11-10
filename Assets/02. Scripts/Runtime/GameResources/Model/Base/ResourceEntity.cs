@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Polyglot;
@@ -67,7 +68,7 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions();
 		
-		public Func<bool> CanInventorySwitchToCondition { get; }
+		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition { get; }
 	}
 	
 	//3 forms
@@ -178,7 +179,7 @@ namespace Runtime.GameResources.Model.Base {
 			return resourcePropertyDescriptions;
 		}
 
-		public Func<bool> CanInventorySwitchToCondition { get; } = null;
+		public Func<Dictionary<CurrencyType, int>,bool> CanInventorySwitchToCondition { get; } = null;
 	}
 
 }

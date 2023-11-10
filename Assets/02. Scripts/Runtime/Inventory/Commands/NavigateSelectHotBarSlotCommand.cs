@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 
 namespace Runtime.Inventory.Commands {
@@ -23,13 +25,31 @@ namespace Runtime.Inventory.Commands {
 		protected override void OnExecute() {
 			IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
 			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+			
 			if (category != HotBarCategory.Right) {
-				if (isNext) {
-					inventorySystem.SelectNextHotBarSlot(category);
+				ICurrencyModel currencyModel = this.GetModel<ICurrencyModel>();
+				IResourceEntity topItem = null;
+				
+				int index = inventoryModel.GetSelectedHotBarSlotIndex(category);
+				int targetIndex = index;
+				HotBarSlot slot = null;
+				do {
+					if (isNext) {
+						targetIndex = (targetIndex + 1) % inventoryModel.GetHotBarSlots(category).Count;
+					}
+					else {
+						targetIndex = (targetIndex - 1 + inventoryModel.GetHotBarSlots(category).Count) %
+						              inventoryModel.GetHotBarSlots(category).Count;
+					}
+
+					slot = inventoryModel.GetHotBarSlots(category)[targetIndex];
+					topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+				}while(targetIndex != index && (!slot.IsEmpty() && !slot.GetCanSelect(topItem, currencyModel.GetCurrencyAmountDict())));
+
+				if (targetIndex != index) {
+					inventorySystem.SelectHotBarSlot(category, targetIndex);
 				}
-				else {
-					inventorySystem.SelectPreviousHotBarSlot(category);
-				}
+				
 			}
 			else {
 				List<HotBarSlot> slots = inventoryModel.GetHotBarSlots(HotBarCategory.Right);

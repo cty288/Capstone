@@ -7,13 +7,13 @@ using Runtime.GameResources.ViewControllers;
 
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 	
-	public interface ISkillViewController : IResourceViewController, IPickableResourceViewController, IInHandResourceViewController {
+	public interface ISkillViewController : IResourceViewController {
 		ISkillEntity SkillEntity { get; }
 	}
 	
 	
 	
-	public abstract class AbstractInventorySkillViewController<T> :
+	public abstract class AbstractInHandSkillViewController<T> :
 		AbstractPickableInHandResourceViewController<T>, ISkillViewController  where T : class, ISkillEntity, new() {
 		
 		private ISkillModel skillModel;

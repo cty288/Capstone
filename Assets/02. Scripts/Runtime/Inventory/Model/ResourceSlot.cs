@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.ViewController;
@@ -226,12 +227,12 @@ namespace Runtime.Inventory.Model {
 
 
 	public abstract class HotBarSlot : ResourceSlot {
-		public virtual bool GetCanSelect(IResourceEntity topItem) {
+		public virtual bool GetCanSelect(IResourceEntity topItem, Dictionary<CurrencyType, int> currencyDict) {
 			if(topItem == null || topItem.CanInventorySwitchToCondition == null) {
 				return true;
 			}
 			
-			return topItem.CanInventorySwitchToCondition();
+			return topItem.CanInventorySwitchToCondition(currencyDict);
 		}
 	}
 	
@@ -243,7 +244,8 @@ namespace Runtime.Inventory.Model {
 				return false;
 			}
 			if (item.GetResourceCategory() != ResourceCategory.Bait &&
-			    item.GetResourceCategory() != ResourceCategory.Item) {
+			    item.GetResourceCategory() != ResourceCategory.Item &&
+			    item.GetResourceCategory() != ResourceCategory.Skill) {
 				return false;
 			}
 			return base.CanPlaceItem(item, isSwapping);

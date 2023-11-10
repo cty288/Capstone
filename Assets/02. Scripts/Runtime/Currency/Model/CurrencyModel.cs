@@ -10,6 +10,8 @@ namespace _02._Scripts.Runtime.Currency.Model {
 		public void AddCurrency(CurrencyType currencyType, int amount);
 		
 		public void RemoveCurrency(CurrencyType currencyType, int amount);
+		
+		public Dictionary<CurrencyType, int> GetCurrencyAmountDict();
 	}
 	
 	public struct OnCurrencyAmountChangedEvent {
@@ -65,6 +67,15 @@ namespace _02._Scripts.Runtime.Currency.Model {
 				});
 			}
 			
+		}
+
+		public Dictionary<CurrencyType, int> GetCurrencyAmountDict() {
+			Dictionary<CurrencyType, int> dict = new Dictionary<CurrencyType, int>();
+			foreach (var pair in currencyAmountDict) {
+				dict.Add(pair.Key, pair.Value.Value);
+			}
+
+			return dict;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Architecture;
 using MikroFramework.Utilities;
@@ -27,7 +28,7 @@ namespace Runtime.Inventory.Model {
 		private HotBarSlot currentSelectedSlot = null;
 		private int currentSelectedIndex = 0;
 		private ReferenceCounter lockSwitchCounter = new ReferenceCounter();
-		
+		private ICurrencyModel currencyModel;
 		
 		
 		private Dictionary<ResourceSlot, HotBarCategory> slotToCategories = new Dictionary<ResourceSlot, HotBarCategory>();
@@ -35,6 +36,7 @@ namespace Runtime.Inventory.Model {
 		protected override void OnInit() {
 			base.OnInit();
 
+			currencyModel = this.GetModel<ICurrencyModel>();
 			//this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
 			if (model.IsFirstTimeCreated) {
 				ResetSlots();
@@ -159,7 +161,7 @@ namespace Runtime.Inventory.Model {
 
 
 			IResourceEntity resource = GlobalGameResourceEntities.GetAnyResource(targetSlot.GetLastItemUUID());
-			if (!targetSlot.GetCanSelect(resource)) {
+			if (!targetSlot.GetCanSelect(resource, currencyModel.GetCurrencyAmountDict())) {
 				return;
 			}
 			
@@ -173,6 +175,7 @@ namespace Runtime.Inventory.Model {
 		}
 
 		public void SelectNextHotBarSlot(HotBarCategory category) {
+			
 			SelectHotBarSlot(category,
 				(model.GetSelectedHotBarSlotIndex(category) + 1) % model.GetHotBarSlots(category).Count);
 		}
