@@ -37,7 +37,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
             // We haven't reached the target yet so keep rotating towards it
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, m_MaxLookAtRotationDelta.Value);
-            Debug.Log("rotating");
+            
             return TaskStatus.Running;
         }
 

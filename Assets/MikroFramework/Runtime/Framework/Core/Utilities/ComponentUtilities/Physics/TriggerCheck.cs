@@ -5,10 +5,11 @@ using UnityEngine;
 
 namespace MikroFramework.Utilities
 {
-    public class TriggerCheck : MonoBehaviour {
+    public class TriggerCheck : MonoBehaviour
+    {
         public LayerMask TargetLayers;
 
-        
+
         private SimpleRC enterRC = new SimpleRC();
 
         [SerializeField] private float maxDistance = 100;
@@ -27,66 +28,76 @@ namespace MikroFramework.Utilities
         {
             get { return enterRC.RefCount > 0; }
         }
-
-        private float timer = 0;
-
+        public bool isDot;
+        public float dotTick;
+        private float timer;
+        public Collider excludeCollider;
+        //dot thing
         public Action<Collider> OnEnter = (collider) => { };
         public Action<Collider> OnExit = (collider) => { };
         public Action<Collider> OnStay = (collider) => { };
 
         private void Update()
         {
-            timer += Time.deltaTime;
-            if (timer >= detectTime)
+            timer -= Time.deltaTime;
+            if (timer < 0)
             {
-                List<Collider> removedColliders = new List<Collider>();
+                
+            }
+            List<Collider> removedColliders = new List<Collider>();
 
-                foreach (Collider col in colliders)
+            foreach (Collider col in colliders)
+            {
+                if (col && Vector2.Distance(col.gameObject.transform.position, transform.position)
+                    >= maxDistance)
                 {
-                    if (col && Vector2.Distance(col.gameObject.transform.position, transform.position)
-                        >= maxDistance) {
-                        enterRC.Release();
-                        removedColliders.Add(col);
-                        OnExit?.Invoke(col);
-                    }
-                    else if (!col || !col.gameObject.activeInHierarchy)
-                    {
-                        enterRC.Release();
-                        removedColliders.Add(col);
-                        OnExit?.Invoke(col);
-                    }
+                    enterRC.Release();
+                    removedColliders.Add(col);
+                    OnExit?.Invoke(col);
                 }
-
-                foreach (Collider removedCollider in removedColliders)
+                else if (!col || !col.gameObject.activeInHierarchy)
                 {
-                    colliders.Remove(removedCollider);
+                    enterRC.Release();
+                    removedColliders.Add(col);
+                    OnExit?.Invoke(col);
                 }
-                colliders.RemoveWhere((collider2D1 => collider2D1 == null));
-
-                timer = 0;
             }
 
+            foreach (Collider removedCollider in removedColliders)
+            {
+                colliders.Remove(removedCollider);
+            }
+            colliders.RemoveWhere((collider2D1 => collider2D1 == null));
+
+
+
+
         }
-        
+
         private void OnTriggerStay(Collider other)
         {
-            if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
+            
+            if (timer < 0 && isDot && other.gameObject.name == "Hurtbox")
             {
-                 
-                if (colliders.Contains(other)) {
-                    return;
+                //Debug.Log(other.gameObject.transform.parent.name);
+                OnStay?.Invoke(other);
+                //enterRC.Retain();
+                if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
+                {
+                    colliders.Remove(excludeCollider);
+                    OnStay?.Invoke(other);
+                    //OnEnter?.Invoke(other);
+
                 }
-                
-                enterRC.Retain();
-                colliders.Add(other);
-                OnEnter?.Invoke(other);
-                Debug.Log("invoked");
+                timer = dotTick;
+
             }
         }
-        
+
 
         private void OnTriggerEnter(Collider other)
         {
+            
             if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
             {
                 // Debug.Log("enter, layer");

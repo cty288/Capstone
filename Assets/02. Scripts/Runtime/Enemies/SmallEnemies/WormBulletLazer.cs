@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace a
 {
-    public class WormBulletLazer : AbstractBulletViewController
+    public class WormBulletLazer : AbstractDotBulletViewController
     {
         public BoxCollider boxCollider;
         public LineRenderer lineRenderer;
@@ -121,7 +121,7 @@ namespace a
 
         protected override void OnHitResponse(HitData data)
         {
-            Debug.Log("hi");
+            //Debug.Log("hi");
         }
 
         protected override void OnHitObject(Collider other)
