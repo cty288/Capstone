@@ -1,5 +1,6 @@
 ﻿using System;
 using Runtime.Controls;
+using Runtime.Player.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Weapons
@@ -29,6 +30,7 @@ namespace Runtime.Weapons
         private Vector2 sway;
         
         private DPunkInputs.PlayerActions playerActions;
+        private Rigidbody playerRb;
 
         private void Reset()
         {
@@ -39,6 +41,7 @@ namespace Runtime.Weapons
         private void Start()
         {
             playerActions = ClientInput.Singleton.GetPlayerActions();
+            playerRb = FindObjectOfType<PlayerMovement>().GetRigidBody();
             
             if (!weaponTransform)
                 weaponTransform = transform;
@@ -51,8 +54,16 @@ namespace Runtime.Weapons
             float mouseX = playerActions.Look.ReadValue<Vector2>().x * swayAmount;
             float mouseY = playerActions.Look.ReadValue<Vector2>().y * swayAmount;
 
+            // float horizontalMove = playerActions.Move.ReadValue<Vector2>().x * swayAmount;
+            // float verticalMove = playerActions.Move.ReadValue<Vector2>().y * swayAmount;
+            
+            Vector3 localPlayerVelocity = transform.InverseTransformDirection(playerRb.velocity);
+            float forwardMovement = localPlayerVelocity.x * swayAmount;
+            float sidewaysMovement = localPlayerVelocity.z * swayAmount;
+            float verticalMovement = localPlayerVelocity.y * swayAmount;
+            
             sway = Vector2.MoveTowards(sway, Vector2.zero, swayCurve.Evaluate(Time.deltaTime * swaySmoothCounteraction * sway.magnitude * swaySmooth));
-            sway = Vector2.ClampMagnitude(new Vector2(mouseX, mouseY) + sway, maxSwayAmount);
+            sway = Vector2.ClampMagnitude(new Vector2(mouseX + forwardMovement, mouseY + sidewaysMovement + 2 * verticalMovement) + sway, maxSwayAmount);
 
             weaponTransform.localPosition = Vector3.Lerp(weaponTransform.localPosition, new Vector3(sway.x, sway.y, 0) * positionSwayMultiplier + initialPosition, swayCurve.Evaluate(Time.deltaTime * swaySmooth));
             weaponTransform.localRotation = Quaternion.Slerp(transform.localRotation, initialRotation * Quaternion.Euler(Mathf.Rad2Deg * rotationSwayMultiplier * new Vector3(-sway.y, sway.x, 0)), swayCurve.Evaluate(Time.deltaTime * swaySmooth));
