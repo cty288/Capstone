@@ -22,6 +22,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public float GetRemainingCooldown();
 		
 		public float GetMaxCooldown();
+
+		public bool HasCooldown();
 		
 		public void SetRemainingCooldown(float remainingCooldown);
 		
@@ -75,7 +77,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 				remainingCooldown = maxCooldown;
 			}
 
-			if (maxCooldown > 0) {
+			if (maxCooldown > 0 && HasCooldown()) {
 				CoroutineRunner.Singleton.RegisterUpdate(OnUpdate);
 			}
 		}
@@ -101,16 +103,20 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		[field: ES3Serializable]
 		public string InventoryVCPrefabName { get; } = "SkillInventoryVC";
+
+
 		
-		
-		
-		
+
 		public float GetRemainingCooldown() {
 			return remainingCooldown;
 		}
 
 		public float GetMaxCooldown() {
 			return maxCooldown;
+		}
+
+		public virtual bool HasCooldown() {
+			return true;
 		}
 
 		public void SetRemainingCooldown(float remainingCooldown) {
@@ -142,7 +148,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => GetInventorySwitchCondition;
 
-		private bool GetInventorySwitchCondition(Dictionary<CurrencyType, int> currency) {
+		protected virtual bool GetInventorySwitchCondition(Dictionary<CurrencyType, int> currency) {
 			if(remainingCooldown > 0) {
 				return false;
 			}
@@ -157,6 +163,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return true;
 		}
 
+		
+		
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[levelRange];
 			for (int i = 1; i <= levelRange; i++) {

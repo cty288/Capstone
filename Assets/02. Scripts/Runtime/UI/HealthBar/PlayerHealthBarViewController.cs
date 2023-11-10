@@ -28,11 +28,11 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
     
     private Image healthBG;
     private Material healthBGMaterial;
-    //private TMP_Text healthNumberText;
+    private TMP_Text healthNumberText;
     
     private Image armorBG;
     private Material armorBGMaterial;
-    //private TMP_Text armorNumberText;
+    private TMP_Text armorNumberText;
     
     
     private float targetHealthNumber = 0;
@@ -50,8 +50,8 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
         armorSlider = transform.Find("ArmorArea/ArmorSlider").GetComponent<Slider>();
         armorHurtSlider = transform.Find("ArmorArea/ArmorSliderHurt").GetComponent<Slider>();
         
-        //healthNumberText = transform.Find("HealthBarArea/HealthSlider/HealthNum").GetComponent<TMP_Text>();
-        //armorNumberText = transform.Find("ArmorArea/ArmorSlider/ArmorNum").GetComponent<TMP_Text>();
+        healthNumberText = transform.Find("HealthBarArea/HealthSlider/HealthNum").GetComponent<TMP_Text>();
+        armorNumberText = transform.Find("ArmorArea/ArmorSlider/ArmorNum").GetComponent<TMP_Text>();
         
         playerModel = this.GetModel<IGamePlayerModel>();
 
@@ -105,7 +105,7 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
     private void Update() {
         //lerp displayed health number
         displayedHealthNumber = (int) Mathf.Lerp(displayedHealthNumber, targetHealthNumber, Time.deltaTime / 2);
-        //healthNumberText.text = displayedHealthNumber.ToString();
+        healthNumberText.text = displayedHealthNumber.ToString();
 
         displayedArmorNumber = Mathf.Lerp(displayedArmorNumber, targetArmorNumber,  Time.deltaTime * 3);
         armorHurtSliderWaitTimer -= Time.deltaTime;
@@ -113,7 +113,7 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
             armorHurtSlider.value =
                 Mathf.Lerp(armorHurtSlider.value, displayedArmorNumber / totalArmor, Time.deltaTime * 10);
         }
-        //armorNumberText.text = Mathf.RoundToInt(displayedArmorNumber).ToString();
+        armorNumberText.text = Mathf.RoundToInt(displayedArmorNumber).ToString();
         armorSlider.value = displayedArmorNumber / totalArmor;
        // armorBGMaterial.color = Color.Lerp(hurtArmorColor, healthyArmorColor, displayedArmorNumber / totalArmor);
     }

@@ -57,7 +57,7 @@ namespace Runtime.Inventory.Model {
 				}
 				UUIDList.Add(item.UUID);
 				UUIDSetMain.Add(item.UUID);
-				item.OnPicked();
+				item.OnAddedToSlot();
 				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 				return true;
 			}

@@ -43,7 +43,11 @@ namespace Runtime.GameResources.Model.Base {
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		public IMaxStack GetMaxStackProperty();
 
-		public void OnPicked();
+		public void OnAddedToSlot();
+
+		public void OnAddedToInventory();
+		
+		public void OnRemovedFromInventory();
 		
 		public ResourceCategory GetResourceCategory();
 		
@@ -81,7 +85,7 @@ namespace Runtime.GameResources.Model.Base {
 		
 
 		[field: ES3Serializable]
-		protected bool pickedBefore = false;
+		protected bool encounteredBefore = false;
 		
 		//private IStackSize stackSizeProperty;
 		protected List<GetResourcePropertyDescriptionGetter> resourcePropertyDescriptionGetters =
@@ -132,7 +136,7 @@ namespace Runtime.GameResources.Model.Base {
 
 		public override string GetDisplayName() {
 			string originalDisplayName = base.GetDisplayName();
-			if (pickedBefore) {
+			if (encounteredBefore) {
 				return originalDisplayName;
 			}
 			else {
@@ -147,8 +151,16 @@ namespace Runtime.GameResources.Model.Base {
 			return stackSizeProperty;
 		}*/
 		
-		public void OnPicked() {
-			pickedBefore = true;
+		public void OnAddedToSlot() {
+			encounteredBefore = true;
+		}
+
+		public virtual void OnAddedToInventory() {
+			
+		}
+
+		public virtual void OnRemovedFromInventory() {
+			
 		}
 
 		public abstract ResourceCategory GetResourceCategory();

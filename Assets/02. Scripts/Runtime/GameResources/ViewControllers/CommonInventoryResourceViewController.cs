@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Runtime.GameResources.ViewControllers {
     public interface IInventoryResourceViewController : IResourceViewController {
-    
+        
     }
 
     public class CommonInventoryResourceViewController : AbstractResourceViewController<IResourceEntity>, 

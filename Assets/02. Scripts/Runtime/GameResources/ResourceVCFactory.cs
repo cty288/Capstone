@@ -1,4 +1,5 @@
-﻿using _02._Scripts.Runtime.Currency.Model;
+﻿using System;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Currency.ViewControllers;
 using Framework;
 using MikroFramework;
@@ -49,6 +50,9 @@ namespace Runtime.GameResources {
 		/// <returns></returns>
 		public GameObject SpawnInHandResourceVC(IResourceEntity resourceEntity, bool usePool, 
 			int poolInitCount = 5, int poolMaxCount = 20) {
+			if (String.IsNullOrEmpty(resourceEntity.InHandVCPrefabName)) {
+				return null;
+			}
 			return SpawnResourceVC(resourceEntity, usePool, resourceEntity.InHandVCPrefabName, poolInitCount, poolMaxCount);
 		}
 

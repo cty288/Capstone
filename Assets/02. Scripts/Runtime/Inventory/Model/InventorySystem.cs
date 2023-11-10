@@ -160,10 +160,18 @@ namespace Runtime.Inventory.Model {
 			}
 
 
-			IResourceEntity resource = GlobalGameResourceEntities.GetAnyResource(targetSlot.GetLastItemUUID());
-			if (!targetSlot.GetCanSelect(resource, currencyModel.GetCurrencyAmountDict())) {
-				return;
+			string lastItemUUID = targetSlot.GetLastItemUUID();
+		
+			if (!CanSelect(targetSlot)) {
+				if (targetCategory == HotBarCategory.Left) {
+					return;
+				}
+				else {
+					lastItemUUID = null;
+				}
 			}
+			
+			
 			
 			this.currentSelectedSlot = targetSlot;
 			currentSelectedCategory = targetCategory;
@@ -171,7 +179,26 @@ namespace Runtime.Inventory.Model {
 			currentSelectedIndex = targetIndex;
 			model.SelectHotBarSlot(targetCategory, targetIndex);
 			targetSlot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
-			OnCurrentSlotUpdate(targetSlot, targetSlot.GetLastItemUUID(), targetSlot.GetUUIDList());
+			OnCurrentSlotUpdate(targetSlot, lastItemUUID, targetSlot.GetUUIDList());
+		}
+
+		public void ForceUpdateCurrentHotBarSlotCanSelect() {
+			if (currentSelectedSlot == null) {
+				return;
+			}
+
+			if (CanSelect(currentSelectedSlot)) {
+				return;
+			}
+
+			SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+		}
+		
+		
+
+		private bool CanSelect(HotBarSlot slot) {
+			IResourceEntity resource = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+			return slot.GetCanSelect(resource, currencyModel.GetCurrencyAmountDict());
 		}
 
 		public void SelectNextHotBarSlot(HotBarCategory category) {

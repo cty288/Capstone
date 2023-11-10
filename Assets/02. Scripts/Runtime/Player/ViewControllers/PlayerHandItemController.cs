@@ -183,6 +183,9 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		
 		if (resourceEntity != null) {
 			GameObject spawnedItem = ResourceVCFactory.Singleton.SpawnInHandResourceVC(resourceEntity, true);
+			if (!spawnedItem) {
+				return;
+			}
 			Transform targetTr = rightHandTr; //category == HotBarCategory.Left ? leftHandTr : rightHandTr;
 			
 			spawnedItem.transform.SetParent(targetTr);

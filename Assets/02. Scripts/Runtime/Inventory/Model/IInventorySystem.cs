@@ -25,6 +25,8 @@ namespace Runtime.Inventory.Model {
 		
 		public void SelectHotBarSlot(HotBarCategory category, int index);
 
+		public void ForceUpdateCurrentHotBarSlotCanSelect();
+		
 		public void SelectNextHotBarSlot(HotBarCategory category);
 
 		public void SelectPreviousHotBarSlot(HotBarCategory category);

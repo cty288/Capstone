@@ -188,6 +188,7 @@ namespace Runtime.Inventory.Model {
 						Item = item
 					});
 				}
+				item.OnAddedToInventory();
 				return true;
 			}
 
@@ -200,6 +201,7 @@ namespace Runtime.Inventory.Model {
 				foreach (var slot in hotBarSlot.Value.Slots) {
 					if (slot.RemoveItem(uuid)) {
 						IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
+						entity.OnRemovedFromInventory();
 						entity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 						return true;
 					}

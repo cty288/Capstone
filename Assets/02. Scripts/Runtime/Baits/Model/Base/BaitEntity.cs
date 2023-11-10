@@ -41,7 +41,7 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 		}
 
 		protected override void OnEntityStart(bool isLoadedFromSave) {
-			canSwitchTo = Random.Range(0, 2) == 0;
+			
 		}
 
 		public override void OnAwake() {
@@ -126,9 +126,9 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 			return $"{displayName} ({statusText})";
 		}
 
-		protected bool canSwitchTo = false;
 		
-		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => (curr => canSwitchTo);
+		
+		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => null;
 
 		public BaitStatus BaitStatus { get; set; }
 	} 
