@@ -575,6 +575,7 @@ namespace Runtime.Player.ViewControllers
             {
                 readyToJump = false;
                 readyToDoubleJump = true;
+                wasWallRunning = false;
 
                 Jump();
 
@@ -583,6 +584,7 @@ namespace Runtime.Player.ViewControllers
             if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded)
             {
                 readyToDoubleJump = false;
+                wasWallRunning = false;
 
                 Jump();
                 
@@ -623,6 +625,10 @@ namespace Runtime.Player.ViewControllers
                 
                 if (playerActions.SprintHold.IsPressed())
                 {
+                    if (!wasWallRunning&&!wallrunning)
+                    {
+                        StartWallRun();
+                    }
                     if (playerActions.SprintHold.WasPressedThisFrame())
                     {
                         if (!wallrunning)
@@ -851,6 +857,7 @@ namespace Runtime.Player.ViewControllers
         private void StopWallRun()
         {
             wallrunning = false;
+            wasWallRunning = true;
 
             // reset camera effects
 
