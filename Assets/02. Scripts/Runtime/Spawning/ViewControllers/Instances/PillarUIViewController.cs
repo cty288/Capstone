@@ -81,7 +81,7 @@ public class PillarUIViewController : AbstractPanel, IController {
 		foreach (CurrencyType currencyType in data.bossSpawnCosts.Keys) {
 			sb.Append($"{Localization.Get($"CURRENCY_{currencyType.ToString()}_name")}: ");
 			int currencyAmount = requiredCurrency[currencyType];
-			bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType).Value >= currencyAmount;
+			bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= currencyAmount;
 			if (!isEnough) {
 				canSummon = false;
 			}

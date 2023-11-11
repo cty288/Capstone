@@ -128,7 +128,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 				}
 			}
 			
-			if (playerActions.Scope.WasPerformedThisFrame()) {
+			if (playerActions.Scope.WasPressedThisFrame()) {
 				currentHoldItemViewController.OnItemScopePressed();
 			}
 		}

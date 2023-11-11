@@ -112,7 +112,7 @@ namespace Runtime.Weapons
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
                     SetShoot(true);
-                    animator.SetTrigger("Shoot");
+                    //animator.SetTrigger("Shoot");
                     
                     CameraShakeData shakeData = new CameraShakeData(
                         Mathf.Lerp(0.2f, 0.5f, IsScopedIn ? 1: 0),
@@ -147,6 +147,10 @@ namespace Runtime.Weapons
                 ChangeScopeStatus(true);
                 fpsCamera.transform.DOLocalMove(adsCameraPosition, 0.167f);
             }
+        }
+
+        public override void OnItemScopeReleased() {
+            
         }
 
 

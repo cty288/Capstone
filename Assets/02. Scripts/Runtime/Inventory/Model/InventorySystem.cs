@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Architecture;
 using MikroFramework.Utilities;
 using Runtime.GameResources.Model.Base;
+using Runtime.Utilities;
 
 namespace Runtime.Inventory.Model {
 	/*public struct OnInventoryReloadEvent {
@@ -59,9 +61,17 @@ namespace Runtime.Inventory.Model {
 					}
 				}
 			}
+
+			this.RegisterEvent<OnSkillUsed>(OnSkillUsed);
 		}
 
-	
+		private void OnSkillUsed(OnSkillUsed e) {
+			if (GetCurrentlySelectedEntity() == e.skillEntity) {
+				ForceUpdateCurrentHotBarSlotCanSelect();
+			}
+		}
+
+
 		private void OnCurrentSlotUpdate(ResourceSlot slot, string topUUID, List<string> allUUIDs) {
 			if (!slotToCategories.ContainsKey(slot)) {
 				return;

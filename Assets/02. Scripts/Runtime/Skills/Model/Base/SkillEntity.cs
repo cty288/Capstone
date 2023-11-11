@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Properties;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -29,6 +30,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		
 		public void StartSwapInventoryCooldown(float cooldown);
 		public BindableProperty<T> GetCustomPropertyWithLevel<T>(string propertyName, int level);
+		
+		Func<Dictionary<CurrencyType, int>, bool> GetUseCurrencySatisfiedCondition { get; }
+
+		void UseSkill();
+	}
+
+	public struct OnSkillUsed {
+		public ISkillEntity skillEntity;
 	}
 	public abstract class SkillEntity<T>:  ResourceEntity<T>, ISkillEntity  where T : SkillEntity<T>, new() {
 		protected ISkillCoolDown skillCooldownProperty;
@@ -125,9 +134,12 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		
 		public void StartSwapInventoryCooldown(float cooldown) {
+			if (!HasCooldown()) {
+				return;
+			}
 			isWaitingForSwapInventoryCooldown = true;
-			remainingCooldown = cooldown;
-			maxCooldown = cooldown;
+			remainingCooldown = Mathf.Max(remainingCooldown, cooldown);
+			maxCooldown = remainingCooldown;
 		}
 
 		public BindableProperty<T1> GetCustomPropertyWithLevel<T1>(string propertyName, int level) {
@@ -146,6 +158,16 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return null;
 		}
 
+		public Func<Dictionary<CurrencyType, int>, bool> GetUseCurrencySatisfiedCondition =>
+			UseCurrencySatisfiedCondition;
+
+		public void UseSkill() {
+			remainingCooldown = maxCooldown;
+			this.SendEvent<OnSkillUsed>(new OnSkillUsed() {
+				skillEntity = this
+			});
+		}
+
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => GetInventorySwitchCondition;
 
 		protected virtual bool GetInventorySwitchCondition(Dictionary<CurrencyType, int> currency) {
@@ -153,6 +175,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 				return false;
 			}
 
+			return UseCurrencySatisfiedCondition(currency);
+		}
+		
+		protected virtual bool UseCurrencySatisfiedCondition(Dictionary<CurrencyType, int> currency) {
 			int rarity = GetRarity();
 			foreach (CurrencyType currencyType in currency.Keys) {
 				if(skillUseCostProperty.GetByLevel(rarity, currencyType) > currency[currencyType]) {

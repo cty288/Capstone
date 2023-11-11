@@ -79,10 +79,10 @@ namespace Runtime.Inventory.ViewController {
             mainSlotLayoutViewController.OnInventorySlotAdded(
                 inventoryModel.GetAllSlots(), inventoryModel.GetSlotCount());
 
-            
-            
-            
-            rubbishSlotViewController.SetSlot(new RubbishSlot());
+
+
+
+            rubbishSlotViewController.SetSlot(new RubbishSlot(), false);
             
             foreach (KeyValuePair<HotBarCategory,List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewController in hotBarSlotLayoutViewControllers) {
 
@@ -93,7 +93,7 @@ namespace Runtime.Inventory.ViewController {
                     slotLayoutViewController.OnInventorySlotAdded(
                                        inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key).Select(slot => slot as ResourceSlot).ToList(),
                                        inventoryModel.GetHotBarSlotCount(hotBarSlotLayoutViewController.Key));
-                    if (slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (slotLayoutViewController.IsHUDSlotLayout) {
                         slotLayoutViewController.OnShowSlotItem();
                     }
                 }
@@ -123,7 +123,7 @@ namespace Runtime.Inventory.ViewController {
                     hotBarSlotLayoutViewController.Value;
                 
                 foreach (InventorySlotLayoutViewController slotLayoutViewController in slotLayoutViewControllers) {
-                    if (!slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (!slotLayoutViewController.IsHUDSlotLayout) {
                         slotLayoutViewController.OnShowSlotItem();
                     }
                 }
@@ -159,7 +159,7 @@ namespace Runtime.Inventory.ViewController {
                      in hotBarSlotLayoutViewControllers) {
 
                 foreach (InventorySlotLayoutViewController inventorySlotLayoutViewController in hotBarSlotLayoutViewController.Value) {
-                    if (!inventorySlotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (!inventorySlotLayoutViewController.IsHUDSlotLayout) {
                         inventorySlotLayoutViewController.OnHideSlotItem();
                     }
                     inventorySlotLayoutViewController.OnInventoryUIClosed();

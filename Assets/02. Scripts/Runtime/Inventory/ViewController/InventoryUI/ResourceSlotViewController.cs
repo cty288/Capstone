@@ -33,8 +33,8 @@ namespace Runtime.Inventory.ViewController {
         private Vector2 spawnPointOriginalMaxOffset;
 
         private ResourceSlot slot;
-        
 
+        private bool isHUDSlot;
         public ResourceSlot Slot => slot;
         private Vector2 dragStartPos;
         private bool startDragTriggered = false;
@@ -279,8 +279,9 @@ namespace Runtime.Inventory.ViewController {
           
         }
 
-        public void SetSlot(ResourceSlot slot) {
+        public void SetSlot(ResourceSlot slot, bool isHUDSlot) {
             this.slot = slot;
+            this.isHUDSlot = isHUDSlot;
         }
 
         protected virtual void ShowItem() {
@@ -305,6 +306,7 @@ namespace Runtime.Inventory.ViewController {
             topVC = pool.Allocate();
             IInventoryResourceViewController vc = topVC.GetComponent<IInventoryResourceViewController>();
             vc.InitWithID(topItem.UUID);
+            vc.IsHUDSlot = isHUDSlot;
 
             if (spawnPoint) {
                 spawnPoint.offsetMin = spawnPointOriginalMinOffset;
@@ -323,7 +325,7 @@ namespace Runtime.Inventory.ViewController {
             rectTransform.offsetMin = new Vector2(0, 0);
             rectTransform.offsetMax = new Vector2(0, 0);
 
-            if (numberText) {
+            if (numberText && topItem.GetMaxStackProperty().RealValue > 1) {
                 numberText.text = totalCount.ToString();
             }
             

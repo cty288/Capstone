@@ -5,7 +5,7 @@ using MikroFramework.BindableProperty;
 
 namespace _02._Scripts.Runtime.Currency.Model {
 	public interface ICurrencyModel : IModel {
-		public BindableProperty<int> GetCurrencyAmountProperty(CurrencyType currencyType);
+		public int GetCurrencyAmountProperty(CurrencyType currencyType);
 		
 		public void AddCurrency(CurrencyType currencyType, int amount);
 		
@@ -23,8 +23,8 @@ namespace _02._Scripts.Runtime.Currency.Model {
 	public class CurrencyModel : AbstractSavableModel, ICurrencyModel {
 		
 		[field: ES3Serializable]
-		private Dictionary<CurrencyType, BindableProperty<int>> currencyAmountDict =
-			new Dictionary<CurrencyType, BindableProperty<int>>();
+		private Dictionary<CurrencyType, int> currencyAmountDict =
+			new Dictionary<CurrencyType, int>();
 
 		protected override void OnInit() {
 			base.OnInit();
@@ -36,46 +36,41 @@ namespace _02._Scripts.Runtime.Currency.Model {
 		}
 
 
-		public BindableProperty<int> GetCurrencyAmountProperty(CurrencyType currencyType) {
+		public int GetCurrencyAmountProperty(CurrencyType currencyType) {
 			return currencyAmountDict[currencyType];
 		}
 
 		public void AddCurrency(CurrencyType currencyType, int amount) {
-			currencyAmountDict[currencyType].Value += amount;
+			currencyAmountDict[currencyType] += amount;
 			this.SendEvent<OnCurrencyAmountChangedEvent>(new OnCurrencyAmountChangedEvent() {
 				Amount = amount,
 				CurrencyType = currencyType,
-				CurrentAmount = currencyAmountDict[currencyType].Value
+				CurrentAmount = currencyAmountDict[currencyType]
 			});
 		}
 
 		public void RemoveCurrency(CurrencyType currencyType, int amount) {
-			int beforeChangeAmount = currencyAmountDict[currencyType].Value;
-			if (currencyAmountDict[currencyType].Value - amount < 0) {
-				currencyAmountDict[currencyType].Value = 0;
+			int beforeChangeAmount = currencyAmountDict[currencyType];
+			if (currencyAmountDict[currencyType] - amount < 0) {
+				currencyAmountDict[currencyType] = 0;
 			}
 			else {
-				currencyAmountDict[currencyType].Value -= amount;
+				currencyAmountDict[currencyType] -= amount;
 			}
 
-			int actualChangeAmount = beforeChangeAmount - currencyAmountDict[currencyType].Value;
+			int actualChangeAmount = beforeChangeAmount - currencyAmountDict[currencyType];
 			if (actualChangeAmount != 0) {
 				this.SendEvent<OnCurrencyAmountChangedEvent>(new OnCurrencyAmountChangedEvent() {
 					Amount = -actualChangeAmount,
 					CurrencyType = currencyType,
-					CurrentAmount = currencyAmountDict[currencyType].Value
+					CurrentAmount = currencyAmountDict[currencyType]
 				});
 			}
 			
 		}
 
 		public Dictionary<CurrencyType, int> GetCurrencyAmountDict() {
-			Dictionary<CurrencyType, int> dict = new Dictionary<CurrencyType, int>();
-			foreach (var pair in currencyAmountDict) {
-				dict.Add(pair.Key, pair.Value.Value);
-			}
-
-			return dict;
+			return currencyAmountDict;
 		}
 	}
 }

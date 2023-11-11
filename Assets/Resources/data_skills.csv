@@ -40,13 +40,13 @@ TestSkill,"{
         }
  }","{
         ""1"": {
-            ""Combat"": 1,
+            ""Combat"": 5,
             ""Time"": 22,
             ""Plant"": 0,
             ""Mineral"": 0
         },
         ""2"": {
-            ""Combat"": 0,
+            ""Combat"": 5,
             ""Time"": 0,
             ""Plant"": 0,
             ""Mineral"": 0
@@ -101,3 +101,94 @@ TestSkill,"{
     }
 }
 ",,,
+GrenadeSkill,,"{
+        ""2"": {
+            ""Combat"": 100,
+            ""Mineral"": 100,
+            ""Plant"": 0,
+            ""Time"": 200
+        },
+        ""3"": {
+            ""Combat"": 100,
+            ""Mineral"": 100,
+            ""Plant"": 0,
+            ""Time"": 200
+        },
+        ""4"": {
+            ""Combat"": 100,
+            ""Mineral"": 100,
+            ""Plant"": 0,
+            ""Time"": 200
+        }
+    }","{
+        ""1"": {
+            ""Combat"": 5,
+            ""Mineral"": 5,
+            ""Plant"": 0,
+            ""Time"": 0
+        },
+        ""2"": {
+            ""Combat"": 5,
+            ""Mineral"": 5,
+            ""Plant"": 0,
+            ""Time"": 0
+        },
+        ""3"": {
+            ""Combat"": 5,
+            ""Mineral"": 5,
+            ""Plant"": 0,
+            ""Time"": 0
+        },
+        ""4"": {
+            ""Combat"": 5,
+            ""Mineral"": 5,
+            ""Plant"": 0,
+            ""Time"": 0
+        }
+    }","{
+        ""1"": 10.0,
+        ""2"": 8.0,
+        ""3"": 6.0,
+        ""4"": 4.0
+    }",1,"{
+        ""level1"": {
+            ""explosion_radius"": {
+                ""type"": ""int"",
+                ""value"": 3
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 25
+            }
+        },
+        ""level2"": {
+            ""explosion_radius"": {
+                ""type"": ""int"",
+                ""value"": 3
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 50
+            }
+        },
+        ""level3"": {
+            ""explosion_radius"": {
+                ""type"": ""int"",
+                ""value"": 5
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 50
+            }
+        },
+        ""level4"": {
+            ""explosion_radius"": {
+                ""type"": ""int"",
+                ""value"": 5
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 75
+            }
+        }
+}",,,

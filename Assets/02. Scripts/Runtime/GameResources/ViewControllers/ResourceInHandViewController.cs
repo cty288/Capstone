@@ -24,6 +24,8 @@ namespace Runtime.GameResources.ViewControllers {
 
 		void OnItemScopePressed();
 		
+		void OnItemScopeReleased();
+		
 		Vector3 InHandLocalPosition { get; }
 		
 		Vector3 InHandLocalRotation { get; }
@@ -55,9 +57,10 @@ namespace Runtime.GameResources.ViewControllers {
 		protected GameObject ownerGameObject = null;
 		protected float originalAutoRemovalTimeWhenNoAbsorb;
 		protected IInventorySystem inventorySystem;
+
+
 		
-		
-		
+
 		[field: Header("In Hand Settings")]
 		[field: SerializeField]
 		public Vector3 InHandLocalPosition { get; protected set; } = Vector3.zero;
@@ -236,8 +239,8 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public abstract void OnItemUse();
 		public abstract void OnItemScopePressed();
-		
 
+		public abstract void OnItemScopeReleased();
 
 		public override void OnPointByCrosshair() {
 			if (isHolding) {

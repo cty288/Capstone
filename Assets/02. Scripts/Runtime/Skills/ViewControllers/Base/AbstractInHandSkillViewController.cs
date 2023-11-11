@@ -43,7 +43,10 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 			
 		}
 
-	
+
+		public override void OnItemScopeReleased() {
+			
+		}
 
 		public ISkillEntity SkillEntity => BoundEntity;
 	}

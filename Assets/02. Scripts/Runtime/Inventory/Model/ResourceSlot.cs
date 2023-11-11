@@ -137,16 +137,16 @@ namespace Runtime.Inventory.Model {
 		/// <param name="otherSlot"></param>
 		/// <param name="topItem"></param>
 		/// <returns></returns>
-		public void TryMoveAllItemFromSlot(ResourceSlot otherSlot, IResourceEntity topItem) {
+		public bool TryMoveAllItemFromSlot(ResourceSlot otherSlot, IResourceEntity topItem) {
 			if (otherSlot.IsEmpty() || !CanPlaceItem(topItem, true)) {
-				return;
+				return false;
 			}
 			
 
 			
 			
 			if (!IsEmpty() && ItemKey != otherSlot.ItemKey) {
-				SwapSlotItems(this, otherSlot);
+				return SwapSlotItems(this, otherSlot);
 			}else {
 				if (IsEmpty()) {
 					ItemKey = otherSlot.ItemKey;
@@ -173,8 +173,9 @@ namespace Runtime.Inventory.Model {
 				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 				otherSlot.OnSlotUpdateCallback?.Invoke(otherSlot, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
 			}
-
 			
+			return true;
+
 		}
 		
 		public bool ContainsItem(string uuid) {

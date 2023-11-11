@@ -27,10 +27,10 @@ public class CurrencyIndicatorUIPanel : AbstractMikroController<MainGame> {
 			CurrencyIndicatorViewController currencyIndicatorViewController =
 				currencyIndicator.GetComponent<CurrencyIndicatorViewController>();
 
-			BindableProperty<int> currencyAmount = currencyModel.GetCurrencyAmountProperty(currencyType);
+			int currencyAmount = currencyModel.GetCurrencyAmountProperty(currencyType);
 
 			currencyIndicatorViewController.Init(Localization.Get($"CURRENCY_{currencyType.ToString()}_name") + ":",
-				currencyAmount.Value, textColor);
+				currencyAmount, textColor);
 			currencyIndicatorViewControllers.Add(currencyType, currencyIndicatorViewController);
 			
 

@@ -15,7 +15,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance {
 
 		
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
-			throw new System.NotImplementedException();
+			return null;
 		}
 	}
 }
