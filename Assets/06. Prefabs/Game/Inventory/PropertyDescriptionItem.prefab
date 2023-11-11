@@ -34,10 +34,10 @@ RectTransform:
   m_Father: {fileID: 1754751448477219347}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 289.1115, y: -30.5}
-  m_SizeDelta: {x: 426.833, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 75.695, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3468236012288445344
 CanvasRenderer:
@@ -161,6 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2179104534990880757}
   - component: {fileID: 5743501413491458360}
+  - component: {fileID: 1946760180792079835}
   m_Layer: 5
   m_Name: PropertyIconSpawnPos
   m_TagString: Untagged
@@ -186,7 +187,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 31.625, y: 31.625}
+  m_SizeDelta: {x: 0, y: 31.625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5743501413491458360
 CanvasRenderer:
@@ -196,6 +197,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2156460222431182027}
   m_CullTransparentMesh: 1
+--- !u!114 &1946760180792079835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2156460222431182027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: 31.625
+  m_MinHeight: 31.625
+  m_PreferredWidth: 31.625
+  m_PreferredHeight: 31.625
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &7283329324909378553
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,11 +329,11 @@ MonoBehaviour:
     m_Right: 33
     m_Top: 14
     m_Bottom: 14
-  m_ChildAlignment: 4
+  m_ChildAlignment: 3
   m_Spacing: 19.07
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0

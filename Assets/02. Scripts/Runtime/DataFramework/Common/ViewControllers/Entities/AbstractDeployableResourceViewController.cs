@@ -36,7 +36,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		NA
 	}
 	
-	public abstract class AbstractDeployableResourceViewController<T> : AbstractResourceViewController<T>, IDeployableResourceViewController where T : class, IResourceEntity, new()  {
+	public abstract class AbstractDeployableResourceViewController<T> :
+		AbstractResourceViewController<T>, IDeployableResourceViewController where T : class, IResourceEntity, new()  {
 		[Header("Deploy Settings")]
 		[SerializeField] private float maxSlopeAngle = 45f;
 		[field: SerializeField] public bool DoesRotateToSlope { get; protected set; } = true;
@@ -143,26 +144,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				failureReason = DeployFailureReason.SlopeTooSteep;
 				return false;
 			}
-			
-		
-			
-			
+
 			float height = heightDetectionCollider.bounds.size.y;
 			
 			//fit the collider to the slope
 			Vector3 normal = DoesRotateToSlope ? slopeNormal : Vector3.up;
-			/*var size = Physics.RaycastNonAlloc(position, normal, results, height, obstructionLayer);
-			
-			
-        
-			
-			for (int i = 0; i < size; i++) {
-				var hit = results[i];
-				if (hit.collider != null && !selfColliders.ContainsKey(hit.collider) && !hit.collider.isTrigger) {
-					failureReason = DeployFailureReason.Obstructed;
-					return false;
-				}
-			}*/
+		
 			//use box cast instead
 			//because the object is pivoted at the bottom, we need to move the position up by half the height
 			position += normal * height / 2f;
@@ -175,8 +162,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					return false;
 				}
 			}
-
-
+			
 			spawnedRotation = Quaternion.FromToRotation(Vector3.up, slopeNormal);
 			failureReason = DeployFailureReason.NoFailure;
 			return true;

@@ -9,6 +9,10 @@ namespace _02._Scripts.Runtime.Player.Commands {
 		private string layerName;
 		private float weight;
 		protected override void OnExecute() {
+			
+			
+			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Neutral",
+				AnimationEventType.CrossFade, 0.2f));
 			this.SendEvent<PlayerSwitchAnimEvent>(new PlayerSwitchAnimEvent() {
 				layerName = layerName,
 				weight = weight

@@ -76,6 +76,13 @@ namespace Runtime.Player.ViewControllers
             else if (e.type == AnimationEventType.Float)
             {
                 playerAnim.SetFloat(e.parameterName, e.flag);
+            }else if (e.type == AnimationEventType.ResetTrigger) {
+                playerAnim.ResetTrigger(e.parameterName);
+            }else if (e.type == AnimationEventType.CrossFade) {
+                for (int i = 0; i < playerAnim.layerCount; i++) {
+                    playerAnim.CrossFade(e.parameterName, e.flag, i);
+                }
+                
             }
         }
 

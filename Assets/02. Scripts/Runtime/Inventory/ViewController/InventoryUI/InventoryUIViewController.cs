@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.UIKit;
@@ -68,7 +69,7 @@ namespace Runtime.Inventory.ViewController {
             if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
                 controller.ForEach(slotLayoutViewController => {
                     slotLayoutViewController.OnInventorySlotAdded(
-                        inventoryModel.GetHotBarSlots(e.Category),
+                        inventoryModel.GetHotBarSlots(e.Category).Select(slot => slot as ResourceSlot).ToList(),
                         inventoryModel.GetHotBarSlotCount(e.Category));
                 });
             }
@@ -78,10 +79,10 @@ namespace Runtime.Inventory.ViewController {
             mainSlotLayoutViewController.OnInventorySlotAdded(
                 inventoryModel.GetAllSlots(), inventoryModel.GetSlotCount());
 
-            
-            
-            
-            rubbishSlotViewController.SetSlot(new RubbishSlot());
+
+
+
+            rubbishSlotViewController.SetSlot(new RubbishSlot(), false);
             
             foreach (KeyValuePair<HotBarCategory,List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewController in hotBarSlotLayoutViewControllers) {
 
@@ -90,9 +91,9 @@ namespace Runtime.Inventory.ViewController {
                     
                 foreach (InventorySlotLayoutViewController slotLayoutViewController in slotLayoutViewControllers) {
                     slotLayoutViewController.OnInventorySlotAdded(
-                                       inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key),
+                                       inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key).Select(slot => slot as ResourceSlot).ToList(),
                                        inventoryModel.GetHotBarSlotCount(hotBarSlotLayoutViewController.Key));
-                    if (slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (slotLayoutViewController.IsHUDSlotLayout) {
                         slotLayoutViewController.OnShowSlotItem();
                     }
                 }
@@ -122,7 +123,7 @@ namespace Runtime.Inventory.ViewController {
                     hotBarSlotLayoutViewController.Value;
                 
                 foreach (InventorySlotLayoutViewController slotLayoutViewController in slotLayoutViewControllers) {
-                    if (!slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (!slotLayoutViewController.IsHUDSlotLayout) {
                         slotLayoutViewController.OnShowSlotItem();
                     }
                 }
@@ -158,7 +159,7 @@ namespace Runtime.Inventory.ViewController {
                      in hotBarSlotLayoutViewControllers) {
 
                 foreach (InventorySlotLayoutViewController inventorySlotLayoutViewController in hotBarSlotLayoutViewController.Value) {
-                    if (!inventorySlotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (!inventorySlotLayoutViewController.IsHUDSlotLayout) {
                         inventorySlotLayoutViewController.OnHideSlotItem();
                     }
                     inventorySlotLayoutViewController.OnInventoryUIClosed();

@@ -15,13 +15,16 @@ using UnityEngine.UI;
 public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
     private Slider healthSlider;
     private Slider armorSlider;
+    private Slider armorHurtSlider;
+    [SerializeField] private float armorHurtSliderWaitTime = 0.5f;
+    private float armorHurtSliderWaitTimer = 0;
     private IGamePlayerModel playerModel;
     
     [SerializeField] private Color healthyColor = Color.green;
     [SerializeField] private Color hurtColor = Color.red;
     
-    [SerializeField] private Color healthyArmorColor = Color.green;
-    [SerializeField] private Color hurtArmorColor = Color.red;
+    //[SerializeField] private Color healthyArmorColor = Color.green;
+    //[SerializeField] private Color hurtArmorColor = Color.red;
     
     private Image healthBG;
     private Material healthBGMaterial;
@@ -45,6 +48,7 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
     private void Awake() {
         healthSlider = transform.Find("HealthBarArea/HealthSlider").GetComponent<Slider>();
         armorSlider = transform.Find("ArmorArea/ArmorSlider").GetComponent<Slider>();
+        armorHurtSlider = transform.Find("ArmorArea/ArmorSliderHurt").GetComponent<Slider>();
         
         healthNumberText = transform.Find("HealthBarArea/HealthSlider/HealthNum").GetComponent<TMP_Text>();
         armorNumberText = transform.Find("ArmorArea/ArmorSlider/ArmorNum").GetComponent<TMP_Text>();
@@ -90,7 +94,12 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
             */
         
         targetArmorNumber = newArmor;
-
+        if (newArmor < oldArmor) {
+            armorHurtSliderWaitTimer = armorHurtSliderWaitTime;
+        }
+        else {
+            armorHurtSliderWaitTimer = 0;
+        }
     }
 
     private void Update() {
@@ -98,10 +107,15 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
         displayedHealthNumber = (int) Mathf.Lerp(displayedHealthNumber, targetHealthNumber, Time.deltaTime / 2);
         healthNumberText.text = displayedHealthNumber.ToString();
 
-        displayedArmorNumber = Mathf.Lerp(displayedArmorNumber, targetArmorNumber, 1f / 3 / Time.deltaTime);
+        displayedArmorNumber = Mathf.Lerp(displayedArmorNumber, targetArmorNumber,  Time.deltaTime * 3);
+        armorHurtSliderWaitTimer -= Time.deltaTime;
+        if (armorHurtSliderWaitTimer <= 0) {
+            armorHurtSlider.value =
+                Mathf.Lerp(armorHurtSlider.value, displayedArmorNumber / totalArmor, Time.deltaTime * 10);
+        }
         armorNumberText.text = Mathf.RoundToInt(displayedArmorNumber).ToString();
         armorSlider.value = displayedArmorNumber / totalArmor;
-        armorBGMaterial.color = Color.Lerp(hurtArmorColor, healthyArmorColor, displayedArmorNumber / totalArmor);
+       // armorBGMaterial.color = Color.Lerp(hurtArmorColor, healthyArmorColor, displayedArmorNumber / totalArmor);
     }
 
     private void OnHealthChanged(HealthInfo oldHealth, HealthInfo newHealth) {

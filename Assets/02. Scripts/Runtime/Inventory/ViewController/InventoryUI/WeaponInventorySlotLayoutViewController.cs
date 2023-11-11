@@ -58,7 +58,7 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
             }
 
             ResourceSlotViewController slotViewController = slot.GetComponent<ResourceSlotViewController>();
-            slotViewController.SetSlot(addedSlots[j++]);
+            slotViewController.SetSlot(addedSlots[j++], IsHUDSlotLayout);
             slotViewControllers.Add(slotViewController);
             OnSlotViewControllerSpawned(slotViewController, i);
         }

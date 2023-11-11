@@ -8,7 +8,7 @@ using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.Utilities;
-using MoreMountains.Feedbacks;
+//using MoreMountains.Feedbacks;
 using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
@@ -111,7 +111,9 @@ namespace Runtime.Player.ViewControllers
         //todo: entity data
         [SerializeField]
         private float airMultiplier = 0.5f;
-    
+        [SerializeField]private PhysicMaterial airMaterial;
+        [SerializeField]private PhysicMaterial groundMaterial;
+        [SerializeField] private Collider playerCollider;
         //temporary
         private bool readyToJump;
         
@@ -138,7 +140,7 @@ namespace Runtime.Player.ViewControllers
         }
 
         private bool onSlope;
-        
+   
         
 
         
@@ -297,9 +299,14 @@ namespace Runtime.Player.ViewControllers
             {
                 rb.drag = playerEntity.GetGroundDrag().RealValue;
                 wasWallRunning = false;
+                playerCollider.material = groundMaterial;
+                
             }
-            else
+            else {
                 rb.drag = playerEntity.GetAirDrag().RealValue;
+                playerCollider.material = airMaterial;
+            }
+                
             MovePlayer();
             
         }
@@ -554,11 +561,17 @@ namespace Runtime.Player.ViewControllers
         {
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
+            
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
         }
         public void ChangeBobVars(float frequencyGain,float amplitudeGain)
         {
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+            
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
         }
         public void DoCamTilt(float zTilt)
         {
@@ -575,6 +588,7 @@ namespace Runtime.Player.ViewControllers
             {
                 readyToJump = false;
                 readyToDoubleJump = true;
+                wasWallRunning = false;
 
                 Jump();
 
@@ -583,6 +597,7 @@ namespace Runtime.Player.ViewControllers
             if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded)
             {
                 readyToDoubleJump = false;
+                wasWallRunning = false;
 
                 Jump();
                 
@@ -623,6 +638,10 @@ namespace Runtime.Player.ViewControllers
                 
                 if (playerActions.SprintHold.IsPressed())
                 {
+                    if (!wasWallRunning&&!wallrunning)
+                    {
+                        StartWallRun();
+                    }
                     if (playerActions.SprintHold.WasPressedThisFrame())
                     {
                         if (!wallrunning)
@@ -683,8 +702,10 @@ namespace Runtime.Player.ViewControllers
                 else if (onSlope && !exitingSlope) {
                     rb.AddForce(GetSlopeMoveDirection(moveDirection) * playerEntity.GetAccelerationForce().RealValue, ForceMode.Force);
 
-                    //if (rb.velocity.y > 0)
-                    //  rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                    if (rb.velocity.y < 0)
+                        rb.AddForce(-slopeHit.normal * 80f, ForceMode.Force);
+                    else
+                        rb.AddForce(Vector3.down * 80f, ForceMode.Force);
                 }
                 // on ground
                 else if (grounded)
@@ -851,6 +872,7 @@ namespace Runtime.Player.ViewControllers
         private void StopWallRun()
         {
             wallrunning = false;
+            wasWallRunning = true;
 
             // reset camera effects
 
@@ -902,6 +924,11 @@ namespace Runtime.Player.ViewControllers
             // weaken gravity
             if (useGravity)
                 rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
+        }
+        
+        public Rigidbody GetRigidBody()
+        {
+            return rb;
         }
     }
     

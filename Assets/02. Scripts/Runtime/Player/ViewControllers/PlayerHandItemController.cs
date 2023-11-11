@@ -128,7 +128,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 				}
 			}
 			
-			if (playerActions.Scope.WasPerformedThisFrame()) {
+			if (playerActions.Scope.WasPressedThisFrame()) {
 				currentHoldItemViewController.OnItemScopePressed();
 			}
 		}
@@ -138,7 +138,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		currentHoldDeployableItemViewController.Item1.OnDeploy();
 		//currentHoldItemViewController = null;
 		currentHoldDeployableItemViewController = (null, null);
-		ResourceSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
+		HotBarSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
 		currentHotBarSlot.RemoveLastItem();
 		this.Delay(0.5f, () => {
 			inventoryModel.ReplenishHotBarSlot(currentHand, currentHotBarSlot);
@@ -183,6 +183,9 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		
 		if (resourceEntity != null) {
 			GameObject spawnedItem = ResourceVCFactory.Singleton.SpawnInHandResourceVC(resourceEntity, true);
+			if (!spawnedItem) {
+				return;
+			}
 			Transform targetTr = rightHandTr; //category == HotBarCategory.Left ? leftHandTr : rightHandTr;
 			
 			spawnedItem.transform.SetParent(targetTr);
@@ -207,6 +210,9 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			currentHoldItemViewController.OnStartHold(gameObject);
 			this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.ResourceEntity.AnimLayerName,
 				currentHoldItemViewController.ResourceEntity.AnimLayerWeight));
+			
+			//animator stop current state
+			
 			//rightHandItemViewController = inHandResourceViewControllers[category];
 		}
 		

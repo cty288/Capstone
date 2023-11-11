@@ -153,7 +153,11 @@ namespace Runtime.Weapons
                 fpsCamera.transform.DOLocalMove(adsCameraPosition, 0.167f);
             }
         }
-        
+
+        public override void OnItemScopeReleased() {
+            
+        }
+
 
         protected override void Update()
         {
