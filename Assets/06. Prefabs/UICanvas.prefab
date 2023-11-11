@@ -3261,8 +3261,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 163.8, y: -2.7568}
-  m_SizeDelta: {x: 24.3658, y: 11.0911}
+  m_AnchoredPosition: {x: 163.8, y: -4.1512}
+  m_SizeDelta: {x: 24.3658, y: 8.3023}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1351138263031632473
 CanvasRenderer:
@@ -3324,7 +3324,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 0.11
+  m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 4
@@ -3843,7 +3843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4261493538579687934
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3861,8 +3861,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 163.8, y: -2.7568}
-  m_SizeDelta: {x: 24.3658, y: 11.0911}
+  m_AnchoredPosition: {x: 225.1, y: -2.7568}
+  m_SizeDelta: {x: 54.8768, y: 24.9794}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4261493538579687921
 CanvasRenderer:
@@ -3920,14 +3920,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.8
+  m_fontSize: 19.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0.11
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4012,7 +4012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d4154bff9e4fde89aa955b9e0bf98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowSlotItemWhenInventoryUIClosed: 0
+  IsHUDSlotLayout: 0
   HotBarCategory: 1
   slotPrefab: {fileID: 4745751630811804764, guid: d5ff8c6f5bb86c44ea9b9f838379542a,
     type: 3}
@@ -4378,7 +4378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0}
+  m_AnchoredPosition: {x: 0.000030517578, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4261493538692428532
@@ -4867,7 +4867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d121d57ecd637b4da747d445c237a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowSlotItemWhenInventoryUIClosed: 1
+  IsHUDSlotLayout: 1
   HotBarCategory: 1
   slotPrefab: {fileID: 8123951636911846963, guid: 737cdfb2039d1514fa6fbe1fe84da2ce,
     type: 3}
@@ -4970,7 +4970,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4261493538885735848
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5019,7 +5019,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100%
+  m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 704e9cf8c3be7e343b56192e60fe9d0a, type: 2}
   m_sharedMaterial: {fileID: -7397191393735986667, guid: 704e9cf8c3be7e343b56192e60fe9d0a,
@@ -6111,7 +6111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d4154bff9e4fde89aa955b9e0bf98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowSlotItemWhenInventoryUIClosed: 1
+  IsHUDSlotLayout: 1
   HotBarCategory: 2
   slotPrefab: {fileID: 8123951636911846963, guid: c0a731dbc6bf89a40b8b58614ba94751,
     type: 3}
@@ -8968,7 +8968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf0849e60ce40d98fdea19740391cd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowSlotItemWhenInventoryUIClosed: 0
+  IsHUDSlotLayout: 0
   HotBarCategory: 0
   slotPrefab: {fileID: 8123951636911846963, guid: 118a62ec9f400d14a918c06e361d3a0f,
     type: 3}
@@ -10710,7 +10710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d4154bff9e4fde89aa955b9e0bf98b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowSlotItemWhenInventoryUIClosed: 0
+  IsHUDSlotLayout: 0
   HotBarCategory: 2
   slotPrefab: {fileID: 4745751630811804764, guid: 0cdee1e3803756e4681e41b21d16836c,
     type: 3}
