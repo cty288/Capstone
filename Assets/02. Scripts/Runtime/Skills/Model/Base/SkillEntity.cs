@@ -44,7 +44,9 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		protected ISkillUseCost skillUseCostProperty;
 		protected ISkillUpgradeCost skillUpgradeCostProperty;
 		protected ISkillPurchaseCost skillPurchaseCostProperty;
-		
+
+
+		public override string InHandVCPrefabName => EntityName;
 
 		[ES3Serializable] 
 		private float remainingCooldown = 0;

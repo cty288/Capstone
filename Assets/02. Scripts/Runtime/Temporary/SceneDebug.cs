@@ -28,9 +28,9 @@ namespace Runtime.Temporary
             }
 
             if (Input.GetKeyDown(KeyCode.M)) {
-                ISkillModel skillModel = this.GetModel<ISkillModel>();
+                /*ISkillModel skillModel = this.GetModel<ISkillModel>();
                 var skill = skillModel.GetSkillBuilder<TestSkill>(2).FromConfig().Build();
-                this.GetModel<IInventoryModel>().AddItem(skill);
+                this.GetModel<IInventoryModel>().AddItem(skill);*/
             }
         }
     }

@@ -134,6 +134,10 @@ namespace Runtime.Inventory.Model {
 				return;
 			}
 			
+			if(model.GetHotBarSlots(category).Count <= index) {
+				return;
+			}
+			
 			HotBarSlot targetSlot = model.GetHotBarSlots(category)[index];
 			HotBarSlot previousSlot = this.currentSelectedSlot;
 			HotBarCategory previousCategory = currentSelectedCategory;
@@ -210,7 +214,7 @@ namespace Runtime.Inventory.Model {
 			IResourceEntity resource = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
 			return slot.GetCanSelect(resource, currencyModel.GetCurrencyAmountDict());
 		}
-
+ 
 		public void SelectNextHotBarSlot(HotBarCategory category) {
 			
 			SelectHotBarSlot(category,

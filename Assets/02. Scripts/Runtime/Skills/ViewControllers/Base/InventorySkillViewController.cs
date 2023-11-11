@@ -116,6 +116,10 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 		}
 
 		public ISkillEntity SkillEntity => BoundEntity;
+		public ISkillEntity OnBuildNewSkillEntity() {
+			return OnBuildNewEntity() as ISkillEntity;
+		}
+
 		public bool IsHUDSlot { get; set; }
 	}
 }
