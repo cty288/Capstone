@@ -143,7 +143,11 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (prevIsReloading != isReloading) {
                 //crossHairViewController?.OnReload(isReloading);
             }
-            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", AnimationEventType.Bool,isReloading ? 1 : 0));
+
+            if (shouldReload) {
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", AnimationEventType.Trigger, 0));
+            }
+            
         }
       
 
@@ -159,7 +163,8 @@ namespace Runtime.Weapons.ViewControllers.Base
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
             }
             else {
-                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", AnimationEventType.Trigger,0));
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.ResetTrigger,0));
+                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", AnimationEventType.Trigger,0));
             }
            
         }

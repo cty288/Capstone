@@ -11,7 +11,9 @@ namespace Runtime.Utilities.AnimatorSystem
     {
         Trigger,
         Bool,
-        Float
+        Float,
+        ResetTrigger,
+        CrossFade
     }
     public struct PlayerAnimationEvent
     {

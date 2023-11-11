@@ -210,6 +210,9 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			currentHoldItemViewController.OnStartHold(gameObject);
 			this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.ResourceEntity.AnimLayerName,
 				currentHoldItemViewController.ResourceEntity.AnimLayerWeight));
+			
+			//animator stop current state
+			
 			//rightHandItemViewController = inHandResourceViewControllers[category];
 		}
 		
