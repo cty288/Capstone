@@ -51,13 +51,13 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected ExplosionHitBox hitBox = null;
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
-		private void Awake() {
+		protected virtual void Awake() {
 			hitBox = GetComponent<ExplosionHitBox>();
 			particleSystems.AddRange(GetComponentsInChildren<ParticleSystem>());
 			particleSystems.ForEach(p => p.Stop());
 		}
 
-		public void Init(Faction faction, int damage, float size,GameObject bulletOwner, ICanDealDamage owner) {
+		public virtual void Init(Faction faction, int damage, float size,GameObject bulletOwner, ICanDealDamage owner) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			Size = size;

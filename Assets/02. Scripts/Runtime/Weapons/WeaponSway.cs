@@ -25,7 +25,15 @@ namespace Runtime.Weapons
         [SerializeField] public float positionSwayMultiplier = -1f;
     
 
+        [SerializeField]
         private Vector3 initialPosition;
+
+        public Vector3 InitialPosition {
+            get => initialPosition;
+            set => initialPosition = value;
+        }
+        
+        
         private Quaternion initialRotation;
         private Vector2 sway;
         
