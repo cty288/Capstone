@@ -23,6 +23,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		private Tween materialTween;
 		private float materialOriginalAlpha;
 
+		
 		protected override void Awake() {
 			base.Awake();
 			throwPoint = transform.Find("ThrowPoint");

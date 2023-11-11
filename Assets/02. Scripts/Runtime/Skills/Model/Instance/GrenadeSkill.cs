@@ -5,6 +5,9 @@ using Runtime.DataFramework.Properties.CustomProperties;
 namespace _02._Scripts.Runtime.Skills.Model.Instance {
 	public class GrenadeSkill : SkillEntity<GrenadeSkill> {
 		public override string EntityName { get; set; } = "GrenadeSkill";
+
+		public override string AnimLayerName { get; } = "GrenadeSkill";
+
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return Localization.Get(defaultLocalizationKey);
 		}

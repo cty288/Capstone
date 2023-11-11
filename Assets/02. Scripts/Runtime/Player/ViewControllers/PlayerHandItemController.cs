@@ -16,6 +16,8 @@ using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.Utilities;
+using Runtime.Utilities.AnimatorSystem;
+using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers;
 using Runtime.Weapons.ViewControllers.Base;
@@ -27,6 +29,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 	[SerializeField] private Transform leftHandTr;
 	[SerializeField] private Transform rightHandTr;
 	[SerializeField] private float deployDistance = 10f;
+	[SerializeField] private WeaponSway armsHolder;
 	private LayerMask deployGroundLayerMask;
 
 	//private Dictionary<HotBarCategory, IInHandResourceViewController> inHandResourceViewControllers =
@@ -112,15 +115,18 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			
 			if (playerActions.Shoot.WasPressedThisFrame()) {
 				currentHoldItemViewController.OnItemStartUse();
+				this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool,1));
 			}
 			
 			if (playerActions.Shoot.IsPressed()) {
 				currentHoldItemViewController.OnItemUse();
 			}
 			
+
+			
 			if (playerActions.Shoot.WasReleasedThisFrame()) {
 				currentHoldItemViewController.OnItemStopUse();
-				
+				this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool, 0));
 				if (currentHoldDeployableItemViewController.Item1 != null&&
 				    currentHoldDeployableItemViewController.Item2 && deployFailureReason.Value == DeployFailureReason.NoFailure) {
 					DeployCurrentHoldDeployableItem();
@@ -131,8 +137,12 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			if (playerActions.Scope.WasPressedThisFrame()) {
 				currentHoldItemViewController.OnItemScopePressed();
 			}
+
+			//armsHolder.transform.localPosition = currentHoldItemViewController.HandLocalPosition;
 		}
 	}
+	
+	
 
 	private void DeployCurrentHoldDeployableItem() {
 		currentHoldDeployableItemViewController.Item1.OnDeploy();

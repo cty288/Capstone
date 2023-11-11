@@ -31,6 +31,8 @@ namespace Runtime.GameResources.ViewControllers {
 		Vector3 InHandLocalRotation { get; }
 		
 		Vector3 InHandLocalScale { get; }
+		
+		//Vector3 HandLocalPosition { get; }
 	}
 
 	[Serializable]
@@ -76,7 +78,10 @@ namespace Runtime.GameResources.ViewControllers {
 
 		[field: SerializeField]
 		public Vector3 InHandLocalScale { get; protected set; } = Vector3.one;
-		
+
+		//[field: SerializeField]
+		//public Vector3 HandLocalPosition { get; protected set;} = Vector3.zero;
+
 		private Vector3 originalLocalScale;
 		
 		[Header("Cross hairs")] [SerializeField]
