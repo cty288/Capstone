@@ -77,9 +77,9 @@ namespace Runtime.Weapons
             base.OnEntityStart();
             
             playerModel = this.GetModel<IGamePlayerModel>();
-            BoundEntity.animLayerName = animLayerNameOverride;
+           // BoundEntity.animLayerName = animLayerNameOverride;
 
-            animLayerNameOverride = "Revolver";
+           // animLayerNameOverride = "Revolver";
             // Debug.Log($"sanctuary camera pos: {hipFireCameraPosition}, {adsCameraPosition}");
             hipFireCameraPosition = hipFireCameraPositionOverride;
             adsCameraPosition = adsCameraPositionOverride;

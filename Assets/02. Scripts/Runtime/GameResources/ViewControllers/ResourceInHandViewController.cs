@@ -11,6 +11,13 @@ using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.GameResources.ViewControllers {
+	
+	[Serializable]
+	public class AnimLayerInfo {
+		public string LayerName = "NoItem";
+		public float LayerWeight = 1;
+	}
+	
 	public interface IInHandResourceViewController : IResourceViewController {
 		void OnStartHold(GameObject ownerGameObject);
 		
@@ -31,6 +38,10 @@ namespace Runtime.GameResources.ViewControllers {
 		Vector3 InHandLocalRotation { get; }
 		
 		Vector3 InHandLocalScale { get; }
+		
+		
+		public List<AnimLayerInfo> AnimLayerInfos { get; }
+		
 	}
 
 	[Serializable]
@@ -76,7 +87,10 @@ namespace Runtime.GameResources.ViewControllers {
 
 		[field: SerializeField]
 		public Vector3 InHandLocalScale { get; protected set; } = Vector3.one;
-		
+
+		[field: SerializeField]
+		public List<AnimLayerInfo> AnimLayerInfos { get; protected set; }
+
 		private Vector3 originalLocalScale;
 		
 		[Header("Cross hairs")] [SerializeField]
