@@ -213,6 +213,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		protected override void OnEntityRegisterAdditionalProperties() {
 			this.RegisterInitialProperty<IMaxEnemiesProperty>(new MaxEnemies());
 			this.RegisterInitialProperty<ISpawnCardsProperty>(new SpawnCardsProperty());
+			
 		}
 
 		public override void OnRecycle() {

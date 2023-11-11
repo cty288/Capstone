@@ -18,15 +18,22 @@ namespace Runtime.Inventory.Commands {
 				return;
 			}
 			ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot.Slot;
+			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
 			
 			if (currentHoveredSlot != null && currentHoveredSlot != fromSlot) {
 				if (currentHoveredSlot != fromSlot) {
 					if (currentHoveredSlot is not RubbishSlot) {
 						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
 						currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem);
+						inventorySystem.ForceUpdateCurrentHotBarSlotCanSelect();
+						
 					}else {
-						this.SendCommand<PlayerThrowAllSlotResourceCommand>(
-							PlayerThrowAllSlotResourceCommand.Allocate(fromSlot));
+						//TODO: check if it is throwable
+						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
+						if (fromSlot.GetCanThrow(topItem)) {
+							this.SendCommand<PlayerThrowAllSlotResourceCommand>(
+								PlayerThrowAllSlotResourceCommand.Allocate(fromSlot));
+						}
 					}
 				}
 			}

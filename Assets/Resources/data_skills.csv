@@ -1,0 +1,103 @@
+EntityName / Property Names,skill_purchase_cost,skill_upgrade_cost,skill_use_cost,skill_cooldown,max_stack,custom_properties,tags,,More Notes
+Types,SkillPurchaseCostInfo,"Dictionary<int, Dictionary<CurrencyType, int>>","Dictionary<int, Dictionary<CurrencyType, int>>","Dictionary<int,float>",int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,,,,,,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+{""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
+If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
+,,,,,,,,,
+BEGIN,,,,,,,,,
+TestSkill,"{
+        ""ResourceCost"": {
+            ""CarbonFiber"": 3,
+            ""BionicGel"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+        ""1"": {
+            ""Combat"": 5,
+            ""Time"": 8,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""2"": {
+            ""Combat"": 12,
+            ""Time"": 11,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""3"": {
+            ""Combat"": 6,
+            ""Time"": 16,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""4"": {
+            ""Combat"": 17,
+            ""Time"": 16,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        }
+ }","{
+        ""1"": {
+            ""Combat"": 1,
+            ""Time"": 22,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""2"": {
+            ""Combat"": 0,
+            ""Time"": 0,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""3"": {
+            ""Combat"": 11,
+            ""Time"": 29,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""4"": {
+            ""Combat"": 9,
+            ""Time"": 15,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        }
+ }","{
+        ""1"": 21.06,
+        ""2"": 30,
+        ""3"": 3.31,
+        ""4"": 26.08
+}",1,"{
+    ""level1"": {
+        ""speed"": {
+            ""type"": ""int"",
+            ""value"": 336
+        },
+        ""damage"": {
+            ""type"": ""int"",
+            ""value"": 627
+        }
+    },
+    ""level2"": {
+        ""speed"": {
+            ""type"": ""int"",
+            ""value"": 815
+        },
+        ""damage"": {
+            ""type"": ""int"",
+            ""value"": 538
+        }
+    },
+    ""level3"": {
+        ""speed"": {
+            ""type"": ""int"",
+            ""value"": 211
+        },
+        ""damage"": {
+            ""type"": ""int"",
+            ""value"": 716
+        }
+    }
+}
+",,,

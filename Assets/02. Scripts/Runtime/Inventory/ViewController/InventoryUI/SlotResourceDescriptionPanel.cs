@@ -132,8 +132,11 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
 
     public override void OnRecycled() {
         base.OnRecycled();
+        
         SetContent("", "", null, true, 0, "",null);
     }
+    
+    
 
     public IArchitecture GetArchitecture() {
         return MainGame.Interface;

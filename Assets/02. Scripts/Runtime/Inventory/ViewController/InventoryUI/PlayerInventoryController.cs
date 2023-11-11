@@ -81,7 +81,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
       
       
       for (int i = 0; i < 9; i++) {
-         if (Input.GetKeyDown((KeyCode) (49 + i))) {
+         if (Input.GetKeyUp((KeyCode) (49 + i))) {
             this.SendCommand(DirectSelectHotBarSlotCommand.Allocate(HotBarCategory.Left, i));
             break;
          }

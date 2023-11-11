@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.ViewController;
+using Runtime.Weapons.Model.Base;
 
 namespace Runtime.Inventory.Model {
 	[Serializable]
@@ -54,7 +57,7 @@ namespace Runtime.Inventory.Model {
 				}
 				UUIDList.Add(item.UUID);
 				UUIDSetMain.Add(item.UUID);
-				item.OnPicked();
+				item.OnAddedToSlot();
 				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 				return true;
 			}
@@ -212,26 +215,47 @@ namespace Runtime.Inventory.Model {
 		public List<string> GetUUIDList() {
 			return UUIDList;
 		}
+
+		public virtual bool GetCanThrow(IResourceEntity item) {
+			if (item == null || item is ISkillEntity) {
+				return false;
+			}
+
+			return true;
+		}
 	}
 
 
+	public abstract class HotBarSlot : ResourceSlot {
+		public virtual bool GetCanSelect(IResourceEntity topItem, Dictionary<CurrencyType, int> currencyDict) {
+			if(topItem == null || topItem.CanInventorySwitchToCondition == null) {
+				return true;
+			}
+			
+			return topItem.CanInventorySwitchToCondition(currencyDict);
+		}
+	}
+	
+
 	[Serializable]
-	public class LeftHotBarSlot : ResourceSlot {
+	public class LeftHotBarSlot : HotBarSlot {
 		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
 			if(item == null) {
 				return false;
 			}
 			if (item.GetResourceCategory() != ResourceCategory.Bait &&
-			    item.GetResourceCategory() != ResourceCategory.Item) {
+			    item.GetResourceCategory() != ResourceCategory.Item &&
+			    item.GetResourceCategory() != ResourceCategory.Skill) {
 				return false;
 			}
 			return base.CanPlaceItem(item, isSwapping);
 		}
+		
 	}
 	
 	
 	[Serializable]
-	public class RightHotBarSlot : ResourceSlot {
+	public class RightHotBarSlot : HotBarSlot {
 		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
 			if (item.GetResourceCategory() != ResourceCategory.Weapon) {
 				return false;

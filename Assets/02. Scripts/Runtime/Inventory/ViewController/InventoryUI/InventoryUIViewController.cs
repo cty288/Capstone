@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.UIKit;
@@ -68,7 +69,7 @@ namespace Runtime.Inventory.ViewController {
             if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
                 controller.ForEach(slotLayoutViewController => {
                     slotLayoutViewController.OnInventorySlotAdded(
-                        inventoryModel.GetHotBarSlots(e.Category),
+                        inventoryModel.GetHotBarSlots(e.Category).Select(slot => slot as ResourceSlot).ToList(),
                         inventoryModel.GetHotBarSlotCount(e.Category));
                 });
             }
@@ -90,7 +91,7 @@ namespace Runtime.Inventory.ViewController {
                     
                 foreach (InventorySlotLayoutViewController slotLayoutViewController in slotLayoutViewControllers) {
                     slotLayoutViewController.OnInventorySlotAdded(
-                                       inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key),
+                                       inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key).Select(slot => slot as ResourceSlot).ToList(),
                                        inventoryModel.GetHotBarSlotCount(hotBarSlotLayoutViewController.Key));
                     if (slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
                         slotLayoutViewController.OnShowSlotItem();

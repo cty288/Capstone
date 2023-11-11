@@ -525,9 +525,11 @@ MonoBehaviour:
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintFollowTransform: {fileID: 0}
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
@@ -546,6 +548,11 @@ MonoBehaviour:
       type: 3}
     minRarity: 1
     maxRarity: 2
+  bossSpawnCostInfo: []
+  hasPillars: 0
+  pillarPrefabName: BossPillar
+  pillarCount: 4
+  maxExtent: {fileID: 0}
   playerSpawner: {fileID: 0}
   maxEnemiesBaseValue: 50
   autoUpdateNavMeshOnStart: 1
