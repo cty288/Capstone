@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
+using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Weapons.ViewControllers;
@@ -22,6 +23,8 @@ namespace Runtime.GameResources.ViewControllers {
 		void OnItemUse();
 
 		void OnItemScopePressed();
+		
+		void OnItemScopeReleased();
 		
 		Vector3 InHandLocalPosition { get; }
 		
@@ -53,7 +56,11 @@ namespace Runtime.GameResources.ViewControllers {
 		protected Rigidbody rigidbody;
 		protected GameObject ownerGameObject = null;
 		protected float originalAutoRemovalTimeWhenNoAbsorb;
+		protected IInventorySystem inventorySystem;
+
+
 		
+
 		[field: Header("In Hand Settings")]
 		[field: SerializeField]
 		public Vector3 InHandLocalPosition { get; protected set; } = Vector3.zero;
@@ -86,6 +93,7 @@ namespace Runtime.GameResources.ViewControllers {
 			rigidbody = GetComponent<Rigidbody>();
 			originalLocalScale = transform.localScale;
 			pickableLayerMask = LayerMask.GetMask("PickableResource");
+			inventorySystem = this.GetSystem<IInventorySystem>();
 			InitObjectsToChangeLayerInHand();
 		}
 
@@ -97,6 +105,10 @@ namespace Runtime.GameResources.ViewControllers {
 				transform.localEulerAngles = InHandLocalRotation;
 				transform.localScale = InHandLocalScale;
 			}
+		}
+
+		protected void LockCanSwitchInventory(bool isLock) {
+			
 		}
 
 		private void InitObjectsToChangeLayerInHand() {
@@ -151,7 +163,10 @@ namespace Runtime.GameResources.ViewControllers {
 		public override void OnRecycled() {
 			base.OnRecycled();
 			transform.localScale = originalLocalScale;
+			inventorySystem.ReleaseLockSwitch(this);
 		}
+		
+		
 
 		protected override void OnReadyToRecycle() {
 			base.OnReadyToRecycle();
@@ -224,8 +239,8 @@ namespace Runtime.GameResources.ViewControllers {
 
 		public abstract void OnItemUse();
 		public abstract void OnItemScopePressed();
-		
 
+		public abstract void OnItemScopeReleased();
 
 		public override void OnPointByCrosshair() {
 			if (isHolding) {

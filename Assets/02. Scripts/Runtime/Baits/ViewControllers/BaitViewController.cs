@@ -70,6 +70,10 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 			
 		}
 
+		public override void OnItemScopeReleased() {
+			
+		}
+
 		public IBaitEntity BaitEntity => BoundEntity;
 
 		public override void OnDeployFailureReasonChanged(DeployFailureReason lastReason, DeployFailureReason currentReason) {

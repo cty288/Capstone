@@ -22,6 +22,18 @@ namespace Runtime.Inventory.Model {
 
 	public interface IInventorySystem : IResourceSlotsSystem {
 		public IResourceEntity GetCurrentlySelectedEntity();
+		
+		public void SelectHotBarSlot(HotBarCategory category, int index);
+
+		public void ForceUpdateCurrentHotBarSlotCanSelect();
+		
+		public void SelectNextHotBarSlot(HotBarCategory category);
+
+		public void SelectPreviousHotBarSlot(HotBarCategory category);
+		
+		public void RetainLockSwitch(object locker);
+		
+		public void ReleaseLockSwitch(object locker);
 	}
 
 	public interface IResourceSlotsSystem : ISystem {

@@ -38,7 +38,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 			this.SendEvent<OnCurrentLevelExitContitionSatisfied>(new OnCurrentLevelExitContitionSatisfied() {
 				Condition = condition
 			});
-		}
+		} 
 
 		private void OnCurrentLevelExitSatisfied() {
 			IsLevelExitSatisfied.Value = true;

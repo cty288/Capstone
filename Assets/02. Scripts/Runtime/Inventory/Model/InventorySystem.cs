@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Skills.Model.Base;
+using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Architecture;
+using MikroFramework.Utilities;
 using Runtime.GameResources.Model.Base;
+using Runtime.Utilities;
 
 namespace Runtime.Inventory.Model {
 	/*public struct OnInventoryReloadEvent {
@@ -22,8 +27,10 @@ namespace Runtime.Inventory.Model {
 		
 		//private Dictionary<HotBarCategory, ResourceSlot> currentSelectedSlot = new Dictionary<HotBarCategory, ResourceSlot>();
 		private HotBarCategory currentSelectedCategory = HotBarCategory.Left;
-		private ResourceSlot currentSelectedSlot = null;
+		private HotBarSlot currentSelectedSlot = null;
 		private int currentSelectedIndex = 0;
+		private ReferenceCounter lockSwitchCounter = new ReferenceCounter();
+		private ICurrencyModel currencyModel;
 		
 		
 		private Dictionary<ResourceSlot, HotBarCategory> slotToCategories = new Dictionary<ResourceSlot, HotBarCategory>();
@@ -31,13 +38,15 @@ namespace Runtime.Inventory.Model {
 		protected override void OnInit() {
 			base.OnInit();
 
-			this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
+			currencyModel = this.GetModel<ICurrencyModel>();
+			//this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
 			if (model.IsFirstTimeCreated) {
 				ResetSlots();
 			}
 			else {
-				model.SelectHotBarSlot(HotBarCategory.Left, model.GetSelectedHotBarSlotIndex(HotBarCategory.Left));
-				model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+				//model.SelectHotBarSlot(HotBarCategory.Left, model.GetSelectedHotBarSlotIndex(HotBarCategory.Left));
+				//model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+				SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
 			}
 
 			List<ResourceSlot> allHotBarSlots = new List<ResourceSlot>();
@@ -52,65 +61,16 @@ namespace Runtime.Inventory.Model {
 					}
 				}
 			}
+
+			this.RegisterEvent<OnSkillUsed>(OnSkillUsed);
 		}
 
-		private void OnHotBarSlotSelected(OnHotBarSlotSelectedEvent e) {
-			
-			ResourceSlot slot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
-			//currentSelectedSlot.TryAdd(e.Category, null);
-
-			ResourceSlot previousSlot = currentSelectedSlot;
-			HotBarCategory previousCategory = currentSelectedCategory;
-			int previousIndex = currentSelectedIndex;
-			
-			if (previousSlot != null) {
-				previousSlot.UnregisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
-			}
-			
-			
-			//if category is left and last selected index = current selected index, then we select the right hand again
-			if ((previousCategory == HotBarCategory.Left && previousSlot == slot) || (e.Category == HotBarCategory.Left && slot.GetQuantity() <= 0)) {
-
-				HotBarCategory otherCategory = HotBarCategory.Right;
-				int otherIndex = 0;
-				
-				if (previousCategory == HotBarCategory.Left && e.Category == HotBarCategory.Left &&
-				    slot?.GetQuantity() <= 0 && previousIndex != e.SelectedIndex) {
-					otherCategory = HotBarCategory.Left;
-					otherIndex = previousIndex;
-					
-					currentSelectedCategory = HotBarCategory.Left;
-					currentSelectedIndex = e.SelectedIndex;
-					currentSelectedSlot = slot;
-
-				}
-				else {
-					otherCategory = HotBarCategory.Right;
-					otherIndex = model.GetSelectedHotBarSlotIndex(HotBarCategory.Right);
-				}
-				
-				//modify event
-				e.Category = otherCategory;
-				e.SelectedIndex = otherIndex;
-
-				/*currentSelectedSlot = model.GetHotBarSlots(e.Category)[e.SelectedIndex];
-				currentSelectedCategory = e.Category;
-				slotToCategories.TryAdd(slot, e.Category);*/
-				
-				
-				model.SelectHotBarSlot(otherCategory, otherIndex);
-			}
-			else {
-				//currentSelectedSlot[e.Category] = slot;
-				currentSelectedSlot = slot;
-				currentSelectedCategory = e.Category;
-				slotToCategories.TryAdd(slot, e.Category);
-				currentSelectedIndex = e.SelectedIndex;
-				slot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
-				
-				OnCurrentSlotUpdate(slot, slot.GetLastItemUUID(), slot.GetUUIDList());
+		private void OnSkillUsed(OnSkillUsed e) {
+			if (GetCurrentlySelectedEntity() == e.skillEntity) {
+				ForceUpdateCurrentHotBarSlotCanSelect();
 			}
 		}
+
 
 		private void OnCurrentSlotUpdate(ResourceSlot slot, string topUUID, List<string> allUUIDs) {
 			if (!slotToCategories.ContainsKey(slot)) {
@@ -129,7 +89,8 @@ namespace Runtime.Inventory.Model {
 			});
 
 			if (category == HotBarCategory.Left && slot.GetQuantity() <= 0) {
-				model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+				//model.SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+				SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
 			}
 		}
 
@@ -147,8 +108,10 @@ namespace Runtime.Inventory.Model {
 		public override void ResetSlots() {
 			model.Reset();
 			AddInitialSlots();
-			model.SelectHotBarSlot(HotBarCategory.Left, 0);
-			model.SelectHotBarSlot(HotBarCategory.Right, 0);
+			//model.SelectHotBarSlot(HotBarCategory.Left, 0);
+			//model.SelectHotBarSlot(HotBarCategory.Right, 0);
+			SelectHotBarSlot(HotBarCategory.Right, 0);
+			SelectHotBarSlot(HotBarCategory.Left, 0);
 		}
 
 		public override void ClearSlots() {
@@ -164,6 +127,112 @@ namespace Runtime.Inventory.Model {
 				return null;
 			}
 			return GlobalGameResourceEntities.GetAnyResource(uuid);
+		}
+
+		public void SelectHotBarSlot(HotBarCategory category, int index) {
+			if (lockSwitchCounter.Count > 0) {
+				return;
+			}
+			
+			if(model.GetHotBarSlots(category).Count <= index) {
+				return;
+			}
+			
+			HotBarSlot targetSlot = model.GetHotBarSlots(category)[index];
+			HotBarSlot previousSlot = this.currentSelectedSlot;
+			HotBarCategory previousCategory = currentSelectedCategory;
+			
+			int previousIndex = currentSelectedIndex;
+			
+			if (previousSlot != null) {
+				previousSlot.UnregisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+			}
+			
+			
+			HotBarCategory targetCategory = category;
+			int targetIndex = index;
+			
+			
+			//if category is left and last selected index = current selected index, then we select the right hand again
+			if ((previousCategory == HotBarCategory.Left && previousSlot == targetSlot) || (category == HotBarCategory.Left && targetSlot.GetQuantity() <= 0)) {
+
+				HotBarCategory otherCategory = HotBarCategory.Right;
+				int otherIndex = 0;
+				
+				if (previousCategory == HotBarCategory.Left && category == HotBarCategory.Left &&
+				    targetSlot?.GetQuantity() <= 0 && previousIndex != index) { //try to switch to an empty left slot
+					return;
+
+				}
+				else {
+					otherCategory = HotBarCategory.Right;
+					otherIndex = model.GetSelectedHotBarSlotIndex(HotBarCategory.Right);
+					targetSlot = model.GetHotBarSlots(otherCategory)[otherIndex];
+				}
+				targetCategory = otherCategory;
+				targetIndex = otherIndex;
+			}
+
+
+			string lastItemUUID = targetSlot.GetLastItemUUID();
+		
+			if (!CanSelect(targetSlot)) {
+				if (targetCategory == HotBarCategory.Left) {
+					return;
+				}
+				else {
+					lastItemUUID = null;
+				}
+			}
+			
+			
+			
+			this.currentSelectedSlot = targetSlot;
+			currentSelectedCategory = targetCategory;
+			slotToCategories.TryAdd(targetSlot, targetCategory);
+			currentSelectedIndex = targetIndex;
+			model.SelectHotBarSlot(targetCategory, targetIndex);
+			targetSlot.RegisterOnSlotUpdateCallback(OnCurrentSlotUpdate);
+			OnCurrentSlotUpdate(targetSlot, lastItemUUID, targetSlot.GetUUIDList());
+		}
+
+		public void ForceUpdateCurrentHotBarSlotCanSelect() {
+			if (currentSelectedSlot == null) {
+				return;
+			}
+
+			if (CanSelect(currentSelectedSlot)) {
+				return;
+			}
+
+			SelectHotBarSlot(HotBarCategory.Right, model.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
+		}
+		
+		
+
+		private bool CanSelect(HotBarSlot slot) {
+			IResourceEntity resource = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+			return slot.GetCanSelect(resource, currencyModel.GetCurrencyAmountDict());
+		}
+ 
+		public void SelectNextHotBarSlot(HotBarCategory category) {
+			
+			SelectHotBarSlot(category,
+				(model.GetSelectedHotBarSlotIndex(category) + 1) % model.GetHotBarSlots(category).Count);
+		}
+
+		public void SelectPreviousHotBarSlot(HotBarCategory category) {
+			SelectHotBarSlot(category,
+				(model.GetSelectedHotBarSlotIndex(category) - 1 + model.GetHotBarSlots(category).Count) %
+				model.GetHotBarSlots(category).Count);
+		}
+
+		public void RetainLockSwitch(object locker) {
+			lockSwitchCounter.Retain(locker);
+		}
+
+		public void ReleaseLockSwitch(object locker) {
+			lockSwitchCounter.Release(locker);
 		}
 
 		private void AddInitialSlots() {
