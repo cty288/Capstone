@@ -58,9 +58,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
         }
 
-        public override void OnTriggerEnter(Collider other)
+        public override void OnTriggerEnter(Collider collider)
         {
-            base.OnTriggerEnter(other);
+            base.OnTriggerEnter(collider);
+           
         }
     }
 }
