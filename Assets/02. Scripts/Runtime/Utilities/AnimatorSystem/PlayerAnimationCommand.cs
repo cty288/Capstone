@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Utilities.AnimatorSystem
@@ -25,8 +26,7 @@ namespace Runtime.Utilities.AnimatorSystem
     }
     public struct PlayerSwitchAnimEvent
     {
-        public string layerName;
-        public float weight;
+        public List<AnimLayerInfo> layerInfos;
     }
     public class PlayerAnimationCommand : AbstractCommand<PlayerAnimationCommand> 
     {

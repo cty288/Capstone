@@ -933,9 +933,13 @@ MonoBehaviour:
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 3553269713863247883}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
@@ -954,13 +958,15 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
   <InHandLocalScale>k__BackingField: {x: 1, y: 1, z: 1}
+  <AnimLayerInfos>k__BackingField:
+  - LayerName: Revolver
+    LayerWeight: 1
   crossHairPrefabName: DefaultCrossHair
   model: {fileID: 4148560624591913091}
   autoReload: 1
   layer:
     serializedVersion: 2
     m_Bits: 2177
-  animLayerNameOverride: Revolver
   hipFireCameraPositionOverride: {x: -0.04, y: -0.13, z: -0.25}
   adsCameraPositionOverride: {x: -0.003, y: -0.123, z: 0}
   hitParticlePrefab: {fileID: 8833649071567523099, guid: 3ca9e3ac23d4eff4f968c25e87a681c2,

@@ -178,8 +178,15 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		deployFailureReason.Value = DeployFailureReason.NA;
 		IInHandResourceViewController previousViewController = currentHoldItemViewController;
 		if (previousViewController as Object != null) {
-			this.SendCommand(PlayerSwitchAnimCommand.Allocate(previousViewController.ResourceEntity.AnimLayerName,
-				0));
+			List<AnimLayerInfo> resetLayerInfos = new List<AnimLayerInfo>();
+			foreach (AnimLayerInfo layerInfo in previousViewController.AnimLayerInfos) {
+				resetLayerInfos.Add(new AnimLayerInfo() {
+					LayerName = layerInfo.LayerName,
+					LayerWeight = 0
+				});
+			}
+
+			this.SendCommand(PlayerSwitchAnimCommand.Allocate(resetLayerInfos));
 			previousViewController.OnStopHold();
 		}
 		
@@ -218,8 +225,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			}
 			
 			currentHoldItemViewController.OnStartHold(gameObject);
-			this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.ResourceEntity.AnimLayerName,
-				currentHoldItemViewController.ResourceEntity.AnimLayerWeight));
+			this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.AnimLayerInfos));
 			
 			//animator stop current state
 			

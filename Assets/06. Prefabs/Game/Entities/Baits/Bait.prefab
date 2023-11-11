@@ -186,9 +186,13 @@ MonoBehaviour:
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 7323250059836298821}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
@@ -207,6 +211,9 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
   <InHandLocalScale>k__BackingField: {x: 1, y: 1, z: 1}
+  <AnimLayerInfos>k__BackingField:
+  - LayerName: NoItem
+    LayerWeight: 1
   crossHairPrefabName: 
   rarity: 1
   vigilianceBase: 100

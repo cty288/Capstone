@@ -11,6 +11,13 @@ using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.GameResources.ViewControllers {
+	
+	[Serializable]
+	public class AnimLayerInfo {
+		public string LayerName = "NoItem";
+		public float LayerWeight = 1;
+	}
+	
 	public interface IInHandResourceViewController : IResourceViewController {
 		void OnStartHold(GameObject ownerGameObject);
 		
@@ -32,7 +39,9 @@ namespace Runtime.GameResources.ViewControllers {
 		
 		Vector3 InHandLocalScale { get; }
 		
-		//Vector3 HandLocalPosition { get; }
+		
+		public List<AnimLayerInfo> AnimLayerInfos { get; }
+		
 	}
 
 	[Serializable]
@@ -79,8 +88,8 @@ namespace Runtime.GameResources.ViewControllers {
 		[field: SerializeField]
 		public Vector3 InHandLocalScale { get; protected set; } = Vector3.one;
 
-		//[field: SerializeField]
-		//public Vector3 HandLocalPosition { get; protected set;} = Vector3.zero;
+		[field: SerializeField]
+		public List<AnimLayerInfo> AnimLayerInfos { get; protected set; }
 
 		private Vector3 originalLocalScale;
 		

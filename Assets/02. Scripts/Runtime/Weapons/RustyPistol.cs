@@ -74,7 +74,7 @@ namespace Runtime.Weapons
             gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
             gunAmmoVisual.Init(BoundEntity);
 
-            BoundEntity.animLayerName = animLayerNameOverride;
+            //BoundEntity.animLayerName = animLayerNameOverride;
 
             //animLayerNameOverride = "Revolver";
             // Debug.Log($"sanctuary camera pos: {hipFireCameraPosition}, {adsCameraPosition}");
