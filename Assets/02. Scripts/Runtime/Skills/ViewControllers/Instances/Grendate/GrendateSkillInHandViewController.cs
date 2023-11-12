@@ -39,6 +39,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		private SafeGameObjectPool previewPool;
 		private float range;
 		private LayerMask groundWallLayer;
+		protected bool usedBefore = false;
 		
 		protected override void Awake() {
 			base.Awake();
@@ -73,6 +74,10 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		}
 
 		public override void OnItemStartUse() {
+			if (usedBefore) {
+				return;
+			}
+			
 			//transform.forward
 			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool,1));
 
@@ -163,6 +168,10 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 
 		
 		public override void OnItemStopUse() {
+			if (usedBefore) {
+				return;
+			}
+			usedBefore = true;
 			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool, 0));
 
 			trajectoryLine.positionCount = 0;
@@ -219,6 +228,9 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		
 
 		public override void OnItemUse() {
+			if (usedBefore) {
+				return;
+			}
 			ShowTrajectory();
 		}
 
@@ -228,9 +240,11 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
+			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool, 0));
 			trajectoryLine.positionCount = 0;
 			DestroySpawnedHitRangePreview();
 			materialTween?.Kill();
+			usedBefore = false;
 		}
 	}
 }

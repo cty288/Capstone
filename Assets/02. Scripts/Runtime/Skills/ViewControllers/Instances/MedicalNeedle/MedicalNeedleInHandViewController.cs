@@ -11,6 +11,7 @@ using Runtime.Utilities.AnimatorSystem;
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 	public class MedicalNeedleInHandViewController  : AbstractInHandSkillViewController<MedicalNeedleSkill>  {
 		private IGamePlayerModel playerModel;
+		private bool usedBefore = false;
 		protected override void Awake() {
 			base.Awake();
 			playerModel = this.GetModel<IGamePlayerModel>();
@@ -40,10 +41,13 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 
 		public override void OnItemStartUse() {
 			//this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger, 0));
-
 		}
 
 		public override void OnItemStopUse() {
+			if (usedBefore) {
+				return;
+			}
+			usedBefore = true;
 			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger, 0));
 		}
 
@@ -57,7 +61,8 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			
+			usedBefore = false;
+			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.ResetTrigger, 0));
 		}
 	}
 }
