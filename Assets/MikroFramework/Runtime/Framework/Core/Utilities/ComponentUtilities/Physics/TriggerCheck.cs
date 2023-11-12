@@ -28,8 +28,8 @@ namespace MikroFramework.Utilities
         {
             get { return enterRC.RefCount > 0; }
         }
-        public bool isDot;
-        public float dotTick;
+        public bool IsDot { get; set; }
+        public float DotTick { get; set; }
         private float timer;
         public Collider excludeCollider;
         //dot thing
@@ -77,7 +77,7 @@ namespace MikroFramework.Utilities
         private void OnTriggerStay(Collider other)
         {
             
-            if (timer < 0 && isDot && other.gameObject.name == "Hurtbox")
+            if (timer < 0 && IsDot && other.gameObject.name == "Hurtbox")
             {
                 //Debug.Log(other.gameObject.transform.parent.name);
                 OnStay?.Invoke(other);
@@ -89,7 +89,7 @@ namespace MikroFramework.Utilities
                     //OnEnter?.Invoke(other);
 
                 }
-                timer = dotTick;
+                timer = DotTick;
 
             }
         }

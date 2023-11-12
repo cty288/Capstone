@@ -15,6 +15,7 @@ namespace Runtime.Utilities.Collision
         protected TriggerCheck _triggerCheck;
         private IHitResponder m_hitResponder;
         public Collider ColliderToBeEffected;
+        public float dotTick;
 
         public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         [SerializeField] protected bool showDamageNumber = true;
@@ -28,6 +29,8 @@ namespace Runtime.Utilities.Collision
         private void Initialize()
         {
             _triggerCheck = gameObject.GetComponent<TriggerCheck>();
+            _triggerCheck.IsDot = true;
+            _triggerCheck.DotTick = dotTick;
             if (_triggerCheck.TargetLayers == 0)
                 _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox");
             _collider = gameObject.GetComponent<Collider>();
