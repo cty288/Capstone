@@ -161,6 +161,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (isShooting) {
                 AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 1f);
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
+                animator.SetTrigger("Shoot");
             }
             else {
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.ResetTrigger,0));
