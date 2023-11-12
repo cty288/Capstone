@@ -31,6 +31,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 	[SerializeField] private float deployDistance = 10f;
 	[SerializeField] private WeaponSway armsHolder;
 	private LayerMask deployGroundLayerMask;
+	private Animator animator;
 
 	//private Dictionary<HotBarCategory, IInHandResourceViewController> inHandResourceViewControllers =
 	//	new Dictionary<HotBarCategory, IInHandResourceViewController>();
@@ -47,7 +48,13 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 	
 	private HotBarCategory currentHand = HotBarCategory.Right;
 	
-	
+	private List<string> waitingPlayerAnimStatesBeforeNextItem = null;
+	private IResourceEntity waitingEntity;
+	private HotBarCategory waitingCategory;
+	private List<int> waitingActiveLayers;
+	//private List<string> waitingPlayerAnimStatesBeforeNextItem = new List<string>();
+	//private 
+
 	//private IInHandResourceViewController rightHandItemViewController = null;
 	
 	protected override void Awake() {
@@ -59,6 +66,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		deployGroundLayerMask = LayerMask.GetMask("Default", "Ground", "Wall");
 		Debug.Log(JsonConvert.DeserializeObject<Vector2Int>("{\"x\":1,\"y\":2}"));
+		animator = transform.Find("CameraFollower/ArmsHolder").GetChild(0).GetComponent<Animator>();
 	}
 
 	private void OnDeployFailureReasonChanged(DeployFailureReason lastReason, DeployFailureReason currentReason) {
@@ -115,7 +123,6 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			
 			if (playerActions.Shoot.WasPressedThisFrame()) {
 				currentHoldItemViewController.OnItemStartUse();
-				this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool,1));
 			}
 			
 			if (playerActions.Shoot.IsPressed()) {
@@ -126,7 +133,6 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			
 			if (playerActions.Shoot.WasReleasedThisFrame()) {
 				currentHoldItemViewController.OnItemStopUse();
-				this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool, 0));
 				if (currentHoldDeployableItemViewController.Item1 != null&&
 				    currentHoldDeployableItemViewController.Item2 && deployFailureReason.Value == DeployFailureReason.NoFailure) {
 					DeployCurrentHoldDeployableItem();
@@ -173,64 +179,93 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 
 	private void SwitchHandItem(HotBarCategory category, IResourceEntity resourceEntity) {
 		//inHandResourceViewControllers.TryAdd(category, null);
-		currentHand = category;
+		
 
 		deployFailureReason.Value = DeployFailureReason.NA;
 		IInHandResourceViewController previousViewController = currentHoldItemViewController;
-		if (previousViewController as Object != null) {
-			List<AnimLayerInfo> resetLayerInfos = new List<AnimLayerInfo>();
-			foreach (AnimLayerInfo layerInfo in previousViewController.AnimLayerInfos) {
-				resetLayerInfos.Add(new AnimLayerInfo() {
-					LayerName = layerInfo.LayerName,
-					LayerWeight = 0
-				});
-			}
 
-			this.SendCommand(PlayerSwitchAnimCommand.Allocate(resetLayerInfos));
-			previousViewController.OnStopHold();
-		}
 		
+		if (previousViewController as Object != null) {
+			previousViewController.OnStopHold();
+			waitingPlayerAnimStatesBeforeNextItem = previousViewController.PlayerAnimStateToWaitWhenStopHold;
+			waitingActiveLayers = previousViewController.AnimLayerInfos.ConvertAll(layerInfo => animator.GetLayerIndex(layerInfo.LayerName));
+		}
 		
 		if(currentHoldDeployableItemViewController.Item1 != null){
             currentHoldDeployableItemViewController.Item1.OnPreviewTerminate();
         }
-		//inHandResourceViewControllers[category] = null;
+		
 		currentHoldItemViewController = null;
 		currentHoldDeployableItemViewController = (null, null);
 		
-		if (resourceEntity != null) {
-			GameObject spawnedItem = ResourceVCFactory.Singleton.SpawnInHandResourceVC(resourceEntity, true);
-			if (!spawnedItem) {
-				return;
-			}
-			Transform targetTr = rightHandTr; //category == HotBarCategory.Left ? leftHandTr : rightHandTr;
-			
-			spawnedItem.transform.SetParent(targetTr);
-			//spawnedItem.transform.localPosition = Vector3.zero;
-			//spawnedItem.transform.localRotation = Quaternion.identity;
-			//spawnedItem.transform.localScale = Vector3.one;
-			
-			currentHoldItemViewController = spawnedItem.GetComponent<IInHandResourceViewController>();
-			spawnedItem.transform.localPosition = currentHoldItemViewController.InHandLocalPosition;
-			spawnedItem.transform.localRotation = Quaternion.Euler(currentHoldItemViewController.InHandLocalRotation);
-			spawnedItem.transform.localScale = currentHoldItemViewController.InHandLocalScale;
 
-			if (currentHoldItemViewController is IInHandDeployableResourceViewController) {
-				GameObject deployedPrefab =
-					ResourceVCFactory.Singleton.SpawnDeployableResourceVC(
-						currentHoldItemViewController.ResourceEntity, true, true);
+		if (waitingPlayerAnimStatesBeforeNextItem == null || waitingPlayerAnimStatesBeforeNextItem.Count <= 0) {
+			currentHand = category;
+			if (resourceEntity != null) {
+				GameObject spawnedItem = ResourceVCFactory.Singleton.SpawnInHandResourceVC(resourceEntity, true);
+				if (!spawnedItem) {
+					return;
+				}
+				Transform targetTr = rightHandTr; //category == HotBarCategory.Left ? leftHandTr : rightHandTr;
+			
+				spawnedItem.transform.SetParent(targetTr);
+				//spawnedItem.transform.localPosition = Vector3.zero;
+				//spawnedItem.transform.localRotation = Quaternion.identity;
+				//spawnedItem.transform.localScale = Vector3.one;
+			
+				currentHoldItemViewController = spawnedItem.GetComponent<IInHandResourceViewController>();
+				spawnedItem.transform.localPosition = currentHoldItemViewController.InHandLocalPosition;
+				spawnedItem.transform.localRotation = Quaternion.Euler(currentHoldItemViewController.InHandLocalRotation);
+				spawnedItem.transform.localScale = currentHoldItemViewController.InHandLocalScale;
 
-				currentHoldDeployableItemViewController =
-					(deployedPrefab.GetComponent<IDeployableResourceViewController>(), deployedPrefab);
+				if (currentHoldItemViewController is IInHandDeployableResourceViewController) {
+					GameObject deployedPrefab =
+						ResourceVCFactory.Singleton.SpawnDeployableResourceVC(
+							currentHoldItemViewController.ResourceEntity, true, true);
+
+					currentHoldDeployableItemViewController =
+						(deployedPrefab.GetComponent<IDeployableResourceViewController>(), deployedPrefab);
+				}
+			
+				currentHoldItemViewController.OnStartHold(gameObject);
+				this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.AnimLayerInfos));
+			
+				//animator stop current state
+			
+				//rightHandItemViewController = inHandResourceViewControllers[category];
 			}
-			
-			currentHoldItemViewController.OnStartHold(gameObject);
-			this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.AnimLayerInfos));
-			
-			//animator stop current state
-			
-			//rightHandItemViewController = inHandResourceViewControllers[category];
+			else {
+				this.SendCommand(PlayerSwitchAnimCommand.Allocate(new List<AnimLayerInfo>()
+					{new AnimLayerInfo() {LayerWeight = 1, LayerName = "NoItem"}}));
+			}
 		}
-		
+		else { //wait until the player animation state is finished
+			waitingEntity = resourceEntity;
+			waitingCategory = category;
+		}
+	}
+
+	private void Update() {
+		//wait until the player animation state is finished
+		if(waitingPlayerAnimStatesBeforeNextItem != null && waitingPlayerAnimStatesBeforeNextItem.Count > 0) {
+			bool isPlaying = false;
+			foreach (int layer in waitingActiveLayers) {
+				AnimatorStateInfo currentLayerStateInfo = animator.GetCurrentAnimatorStateInfo(layer);
+				foreach (string stateName in waitingPlayerAnimStatesBeforeNextItem) {
+					if (currentLayerStateInfo.IsName(stateName)) {
+						if (currentLayerStateInfo.normalizedTime < 1) {
+							isPlaying = true;
+							break;
+						}
+					}
+				}
+			}
+
+			if (!isPlaying) {
+				waitingPlayerAnimStatesBeforeNextItem = null;
+				SwitchHandItem(waitingCategory, waitingEntity);
+				waitingEntity = null;
+			}
+		}
 	}
 }

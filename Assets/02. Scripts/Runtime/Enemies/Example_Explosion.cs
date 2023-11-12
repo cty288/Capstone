@@ -11,11 +11,11 @@ namespace Runtime.Enemies
     public class Example_Explosion : AbstractExplosionViewController
     {
         
-        ParticleSystem[] particleSystems;
+        //ParticleSystem[] particleSystems;
         protected Dictionary<ParticleSystem, Vector2> originalStartSize = new Dictionary<ParticleSystem, Vector2>();
         protected override void Awake() {
             base.Awake();
-            particleSystems = GetComponentsInChildren<ParticleSystem>(true);
+            //particleSystems = GetComponentsInChildren<ParticleSystem>(true);
             foreach (var particleSystem in particleSystems) {
                 originalStartSize.Add(particleSystem, new Vector2(particleSystem.main.startSize.constantMin, particleSystem.main.startSize.constantMax));
             }

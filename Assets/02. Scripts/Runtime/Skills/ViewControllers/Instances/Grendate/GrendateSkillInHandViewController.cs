@@ -1,8 +1,16 @@
-﻿using _02._Scripts.Runtime.Skills.Model.Builders;
+﻿using System.Collections.Generic;
+using System.Linq;
+using _02._Scripts.Runtime.Skills.Model.Builders;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using _02._Scripts.Runtime.Skills.ViewControllers.Base;
 using DG.Tweening;
+using MikroFramework;
+using MikroFramework.Architecture;
+using MikroFramework.Pool;
 using Runtime.GameResources.Model.Base;
+using Runtime.Player.ViewControllers;
+using Runtime.Utilities;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
@@ -18,11 +26,19 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		private LayerMask obstacleLayerMask;
 		[SerializeField]
 		private LineRenderer trajectoryLine;
+
+		[SerializeField] 
+		private GameObject hitRangePreviewPrefab;
+
+		private GameObject spawnedHitRangePreview;
 		private Transform throwPoint;
 		private Material trajectoryLineMaterial;
 		private Tween materialTween;
 		private float materialOriginalAlpha;
 
+		private SafeGameObjectPool previewPool;
+		private float range;
+		private LayerMask groundWallLayer;
 		
 		protected override void Awake() {
 			base.Awake();
@@ -31,14 +47,25 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 			trajectoryLineMaterial = Instantiate(trajectoryLine.material);
 			trajectoryLine.material = trajectoryLineMaterial;
 			materialOriginalAlpha = trajectoryLineMaterial.color.a;
+			previewPool = GameObjectPoolManager.Singleton.CreatePool(hitRangePreviewPrefab, 1, 5);
+			groundWallLayer = LayerMask.GetMask("Ground", "Wall");
 		}
 
 		protected override void OnEntityStart() {
 			base.OnEntityStart();
 			trajectoryLine.positionCount = 0;
+			DestroySpawnedHitRangePreview();
 			//animate line alpha to 0 and back to original alpha and loop
 			materialTween?.Kill();
+			this.RegisterEvent<OnPlayerAnimationEvent>(OnPlayerAnimationEvent)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			range = BoundEntity.GetCustomPropertyOfCurrentLevel<float>("explosion_radius");
+		}
 
+		private void OnPlayerAnimationEvent(OnPlayerAnimationEvent e) {
+			if (e.AnimationName == "OnThrowGrenade") {
+				UseSkill(ThrowGrenade);
+			}
 		}
 
 		protected override void OnBindEntityProperty() {
@@ -47,6 +74,9 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 
 		public override void OnItemStartUse() {
 			//transform.forward
+			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool,1));
+
+			DestroySpawnedHitRangePreview();
 			trajectoryLine.positionCount = 0;
 			materialTween?.Kill();
 			materialTween = DOTween.Sequence()
@@ -110,31 +140,83 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		            currentPosition = hit.point; // Set current position to the hit point
 		            trajectoryLine.positionCount = i + 1; // Set the number of positions to the current index + 1
 		            hitSomething = true; // Stop the simulation on hit
+		            if (!spawnedHitRangePreview) {
+			            spawnedHitRangePreview = SpawnPreviewHitRange(currentPosition);
+		            }
+		            
+		            spawnedHitRangePreview.transform.position = currentPosition;
+		            
+		            //rotate to normal
+		            spawnedHitRangePreview.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+
 		        }
 
 		        trajectoryLine.SetPosition(i, currentPosition);
 		    }
+
+		    if (!hitSomething) {
+			    DestroySpawnedHitRangePreview();
+		    }
+		    
 		}
 
 
+		
 		public override void OnItemStopUse() {
+			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool, 0));
+
 			trajectoryLine.positionCount = 0;
-			ThrowGrenade();
+			//ThrowGrenade();
 			materialTween.Kill();
 			materialTween = null;
+			DestroySpawnedHitRangePreview();
 			//back to 0
 			//materialTween = DOTween.Sequence().Append(trajectoryLineMaterial.DOColor(
-				//new Color(trajectoryLineMaterial.color.r, trajectoryLineMaterial.color.g,
-					//trajectoryLineMaterial.color.b, 0), 0.2f));
+			//new Color(trajectoryLineMaterial.color.r, trajectoryLineMaterial.color.g,
+			//trajectoryLineMaterial.color.b, 0), 0.2f));
 		}
 
+		private GameObject DestroySpawnedHitRangePreview() {
+			if (spawnedHitRangePreview) {
+				previewPool.Recycle(spawnedHitRangePreview);
+				spawnedHitRangePreview = null;
+			}
+			return null;
+		}
+		
+		private GameObject SpawnPreviewHitRange(Vector3 position) {
+			spawnedHitRangePreview = previewPool.Allocate();
+			spawnedHitRangePreview.transform.position = position;
+			spawnedHitRangePreview.transform.localScale = new Vector3(range, 0.01f, range);
+			return spawnedHitRangePreview;
+		}
+		
+		
 		private void ThrowGrenade() {
 			Rigidbody grenade = Instantiate(grenadePrefab, throwPoint.position, transform.rotation)
 				.GetComponent<Rigidbody>();
 
+			List<Collider> ignoredColliders = new List<Collider>();
+			ignoredColliders.AddRange(GetComponentsInChildren<Collider>(true));
+			if (ownerGameObject) {
+				ignoredColliders.AddRange(ownerGameObject.GetComponentsInChildren<Collider>(true));
+			}
+			
+			ThrownGrenadeViewController grenadeViewController = grenade.GetComponent<ThrownGrenadeViewController>();
+			grenadeViewController.Init(BoundEntity.CurrentFaction.Value,
+				BoundEntity.GetCustomPropertyOfCurrentLevel<int>("explosion_damage"),
+				range,
+				gameObject,
+				BoundEntity,
+				ignoredColliders.ToArray());
+			
+
 			Vector3 throwDirection = GetThrowDirection();
 			grenade.AddForce(throwDirection * throwForce, ForceMode.VelocityChange);
+			
+
 		}
+		
 
 		public override void OnItemUse() {
 			ShowTrajectory();
@@ -147,6 +229,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		public override void OnRecycled() {
 			base.OnRecycled();
 			trajectoryLine.positionCount = 0;
+			DestroySpawnedHitRangePreview();
 			materialTween?.Kill();
 		}
 	}

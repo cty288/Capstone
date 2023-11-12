@@ -1,4 +1,5 @@
 using _02._Scripts.Runtime.Baits.Model.Base;
+using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Currency.Model;
@@ -25,6 +26,7 @@ namespace Framework {
 			
 			this.RegisterSystem<IInventorySystem>(new InventorySystem());
 			this.RegisterSystem<ILevelSystem>(new LevelSystem());
+			this.RegisterSystem<ICurrencySystem>(new CurrencySystem());
 			
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());

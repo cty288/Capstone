@@ -32,7 +32,7 @@ namespace a
 		public float fanAngle;
 		private Faction f;
 		private int dmg;
-		private GameObject bulletOwner;
+		//private GameObject bulletOwner;
 		private ICanDealDamage owner;
 		private int what;
 

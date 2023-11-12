@@ -79,7 +79,7 @@ public class PillarUIViewController : AbstractPanel, IController {
 		Dictionary<CurrencyType, int> requiredCurrency = GetRequiredCurrency();
 		
 		foreach (CurrencyType currencyType in data.bossSpawnCosts.Keys) {
-			sb.Append($"{Localization.Get($"CURRENCY_{currencyType.ToString()}_name")}: ");
+			sb.Append($"<sprite index={(int) currencyType}>");
 			int currencyAmount = requiredCurrency[currencyType];
 			bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= currencyAmount;
 			if (!isEnough) {
@@ -88,7 +88,7 @@ public class PillarUIViewController : AbstractPanel, IController {
 			sb.Append(isEnough
 				? $"<color=black>{currencyAmount}</color>"
 				: $"<color=#FF0000>{currencyAmount}</color>");
-			sb.Append("\n");
+			sb.Append("    ");
 		}
 
 		displayCostText.text = sb.ToString();

@@ -93,10 +93,13 @@ namespace Runtime.GameResources.Model.Base {
 
 		public override void OnAwake() {
 			base.OnAwake();
+			OnResourceAwake();
 			maxStackProperty = GetProperty<IMaxStack>();
-			OnRegisterResourcePropertyDescriptionGetters(ref resourcePropertyDescriptionGetters);
 		}
 
+		public virtual void OnResourceAwake() {
+			
+		}
 		public virtual void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
 			
 		}
@@ -109,6 +112,7 @@ namespace Runtime.GameResources.Model.Base {
 
 
 		public override void OnDoRecycle() {
+			resourcePropertyDescriptionGetters?.Clear();
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
 		}
 		
@@ -173,7 +177,11 @@ namespace Runtime.GameResources.Model.Base {
 
 		public virtual string DeployedVCPrefabName { get; } = null;
 
-		
+
+		public override void OnStart(bool isLoadedFromSave) {
+			OnRegisterResourcePropertyDescriptionGetters(ref resourcePropertyDescriptionGetters);
+			base.OnStart(isLoadedFromSave);
+		}
 
 		[field: ES3Serializable]
 		public virtual int Width { get; } = 1;

@@ -44,8 +44,8 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 			
 		}
 
-		public override void OnAwake() {
-			base.OnAwake();
+		public override void OnResourceAwake() {
+			base.OnResourceAwake();
 			vigilianceProperty = GetProperty<IVigilianceProperty>();
 			tasteProperty = GetProperty<ITasteProperty>();
 		}

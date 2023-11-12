@@ -592,14 +592,23 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
   <InHandLocalScale>k__BackingField: {x: 1, y: 1, z: 1}
+  <AnimLayerInfos>k__BackingField:
+  - LayerName: GrenadeSkill
+    LayerWeight: 1
+  - LayerName: NoItem
+    LayerWeight: 1
+  <PlayerAnimStateToWaitWhenStopHold>k__BackingField:
+  - GrenadeRelease
   crossHairPrefabName: DefaultCrossHair
   grenadePrefab: {fileID: 1700704895486175575, guid: 102133342fa4f414bb70d9b5622790d7,
     type: 3}
   throwForce: 30
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 2305
+    m_Bits: 2304
   trajectoryLine: {fileID: 7702421501530400454}
+  hitRangePreviewPrefab: {fileID: 7140726745797038209, guid: 9b98c2b915643b9449bfe4ae165cffe0,
+    type: 3}
 --- !u!1 &8164146894990651878
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,11 +34,12 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public override void OnAwake() {
 			base.OnAwake();
 			this.healthProperty = GetProperty<IHealthProperty>();
+			CurrentFaction.Value = GetDefaultFaction();
 		}
 
 		public DamageableEntity() : base() {
 			//healthProperty = this.GetProperty<IHealthProperty>();
-			CurrentFaction.Value = GetDefaultFaction();
+			
 		}
 
 		protected override void OnRegisterProperties() {

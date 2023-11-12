@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3377489769004759476}
   - component: {fileID: 394076241556443065}
-  - component: {fileID: 6668566533715393236}
+  - component: {fileID: 5611816101731322027}
+  - component: {fileID: 9122600028696499727}
   m_Layer: 0
   m_Name: ThrownGrenade
   m_TagString: Untagged
@@ -43,14 +44,14 @@ Rigidbody:
   m_GameObject: {fileID: 1700704895486175575}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.5
-  m_AngularDrag: 0.05
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6668566533715393236
+--- !u!114 &5611816101731322027
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,14 +60,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1700704895486175575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dc96957271f284483981eb18b94c4c, type: 3}
+  m_Script: {fileID: 11500000, guid: a22d6f44285a21a4b85cce83f623ebc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetLayers:
+  explosionDelay: 1
+  detectionLayer:
     serializedVersion: 2
-    m_Bits: 136
-  maxDistance: 100
-  detectTime: 1
+    m_Bits: 2313
+  explosion: {fileID: 5726745796242974147, guid: e7c5c643eb3824140baf6d2c67cc7f0b,
+    type: 3}
+--- !u!135 &9122600028696499727
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700704895486175575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2259779509265399799
 GameObject:
   m_ObjectHideFlags: 0

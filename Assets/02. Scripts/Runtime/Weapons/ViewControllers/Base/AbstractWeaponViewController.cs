@@ -106,7 +106,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         public override void OnStartHold(GameObject ownerGameObject) {
             base.OnStartHold(ownerGameObject);
             if(ownerGameObject.TryGetComponent<ICanDealDamageViewController>(out var damageDealer)) {
-                BoundEntity.CurrentFaction.Value = damageDealer.CanDealDamageEntity.CurrentFaction.Value;
+                //BoundEntity.CurrentFaction.Value = damageDealer.CanDealDamageEntity.CurrentFaction.Value;
                 BoundEntity.SetRootDamageDealer(damageDealer.CanDealDamageEntity?.RootDamageDealer);
                 ownerVc = damageDealer;
             }
@@ -114,7 +114,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public override void OnStopHold() {
             BoundEntity.CurrentFaction.Value = Faction.Neutral;
-            BoundEntity.SetRootDamageDealer(null);
+            //BoundEntity.SetRootDamageDealer(null);
             base.OnStopHold();
             ChangeScopeStatus(false);
         }

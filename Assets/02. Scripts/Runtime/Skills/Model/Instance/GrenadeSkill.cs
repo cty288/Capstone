@@ -1,22 +1,37 @@
-﻿using _02._Scripts.Runtime.Skills.Model.Base;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources.Model.Base;
+using UnityEngine;
 
 namespace _02._Scripts.Runtime.Skills.Model.Instance {
 	public class GrenadeSkill : SkillEntity<GrenadeSkill> {
 		public override string EntityName { get; set; } = "GrenadeSkill";
 
-		public override string AnimLayerName { get; } = "GrenadeSkill";
+		//public override string AnimLayerName { get; } = "GrenadeSkill";
 
-		protected override string OnGetDescription(string defaultLocalizationKey) {
-			return Localization.Get(defaultLocalizationKey);
-		}
+		
 
 		protected override void OnInitModifiers(int rarity) {
 			
 		}
 
-		
+		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
+			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
+
+			list.Add(() => new ResourcePropertyDescription("PropertyIconDamage", Localization.GetFormat(
+				"PROPERTY_ICON_DAMAGE", GetCustomPropertyOfCurrentLevel<int>("explosion_damage"))));
+
+			list.Add(() => new ResourcePropertyDescription("PropertyIconRange", Localization.GetFormat(
+				"PROPERTY_ICON_RANGE", Mathf.RoundToInt(GetCustomPropertyOfCurrentLevel<float>("explosion_radius")))));
+			
+		}
+
+		protected override string GetDescription(string defaultLocalizationKey) {
+			return Localization.Get(defaultLocalizationKey);
+		}
+
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}

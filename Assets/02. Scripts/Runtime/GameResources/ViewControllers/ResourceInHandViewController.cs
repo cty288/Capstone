@@ -42,6 +42,8 @@ namespace Runtime.GameResources.ViewControllers {
 		
 		public List<AnimLayerInfo> AnimLayerInfos { get; }
 		
+		public List<string> PlayerAnimStateToWaitWhenStopHold { get; }
+
 	}
 
 	[Serializable]
@@ -90,6 +92,10 @@ namespace Runtime.GameResources.ViewControllers {
 
 		[field: SerializeField]
 		public List<AnimLayerInfo> AnimLayerInfos { get; protected set; }
+
+		[field: SerializeField] 
+		[field: Tooltip("When the player stops holding the item, the player animator will wait for these states to finish before switching to the next item")]
+		public List<string> PlayerAnimStateToWaitWhenStopHold { get; protected set; }
 
 		private Vector3 originalLocalScale;
 		

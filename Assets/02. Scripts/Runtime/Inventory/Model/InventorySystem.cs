@@ -61,17 +61,10 @@ namespace Runtime.Inventory.Model {
 					}
 				}
 			}
-
-			this.RegisterEvent<OnSkillUsed>(OnSkillUsed);
+			
 		}
 
-		private void OnSkillUsed(OnSkillUsed e) {
-			if (GetCurrentlySelectedEntity() == e.skillEntity) {
-				ForceUpdateCurrentHotBarSlotCanSelect();
-			}
-		}
-
-
+		
 		private void OnCurrentSlotUpdate(ResourceSlot slot, string topUUID, List<string> allUUIDs) {
 			if (!slotToCategories.ContainsKey(slot)) {
 				return;

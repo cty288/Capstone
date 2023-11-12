@@ -53,7 +53,7 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 	}
 
 	private void OnCurrencyAmountChanged(OnCurrencyAmountChangedEvent e) {
-		string currencyTypeLocalized = Localization.Get($"CURRENCY_{e.CurrencyType}_name");
+		string currencyTypeLocalized = $"<sprite index={(int) e.CurrencyType}>";
 		StackItem(currencyTypeLocalized, e.Amount);
 	}
 

@@ -12,8 +12,8 @@ namespace Runtime.RawMaterials.Model.Base {
 		private IBaitAdjectives baitAdjectivesProperty;
 		
 
-		public override void OnAwake() {
-			base.OnAwake();
+		public override void OnResourceAwake() {
+			base.OnResourceAwake();
 			baitAdjectivesProperty = GetProperty<IBaitAdjectives>();
 		}
 

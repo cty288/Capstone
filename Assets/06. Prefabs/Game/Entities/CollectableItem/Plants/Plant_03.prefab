@@ -178,6 +178,7 @@ MonoBehaviour:
   hasInteractiveHint: 1
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: Collect
+  interactiveHintToleranceMaxTime: 0.3
   interactiveHintFollowTransform: {fileID: 7980489418151554724}
   interactiveHintHoldTime: 0.5
   autoDestroyWhenEntityRemoved: 1
@@ -185,7 +186,7 @@ MonoBehaviour:
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   collectableResourceCurrencyInfos:
   - currencyType: 2
-    amountRange: {x: 2, y: 2}
+    amountRange: {x: 2, y: 4}
   levelBuildFromInspector: 1
   overriddenName: 
   currencyAmountPerItem: 2
