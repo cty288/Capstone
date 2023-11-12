@@ -24,7 +24,8 @@ namespace Runtime.Spawning
 
     public abstract class DirectorEntity<T> : AbstractBasicEntity, IDirectorEntity where T : DirectorEntity<T>, new()
     {
-        public override string EntityName { get; set; }
+        [field: ES3Serializable]
+        public override string EntityName { get; set; } = "Director";
         
         private IStartingCredits _startingCredits;
         private ICreditsPerSecond _creditsPerSecond;

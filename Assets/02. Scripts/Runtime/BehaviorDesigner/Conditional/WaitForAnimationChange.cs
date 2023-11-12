@@ -12,7 +12,7 @@ namespace Runtime.BehaviorDesigner.Conditional
         private GameObject prevGameObject;
         
         private bool isWaiting = false;
-        [SerializeField] private float maxWaitTimeBeforeEnter = 1f;
+        [SerializeField] private float maxWaitTimeBeforeEnt = 2f;
         private float currentWaitTime = 0f;
 
         public override void OnStart()
@@ -36,7 +36,7 @@ namespace Runtime.BehaviorDesigner.Conditional
 
             if (!isWaiting) {
                 currentWaitTime += Time.deltaTime;
-                if (currentWaitTime >= maxWaitTimeBeforeEnter)
+                if (currentWaitTime >= maxWaitTimeBeforeEnt)
                 {
                     return TaskStatus.Failure;
                 }

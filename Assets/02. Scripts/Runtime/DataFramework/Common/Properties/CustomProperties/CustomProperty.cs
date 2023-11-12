@@ -63,6 +63,10 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 
 		public BindableProperty<T> GetCustomDataValue<T>(string CustomDataName);
 		
+		public bool HasCustomData(string customDataName);
+
+		public bool TryGetCustomDataValue<T>(string customDataName, out BindableProperty<T> value);
+
 		public IUnRegister RegisterOnCustomDataChanged(string CustomDataName, Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged);
 
 		public IUnRegister RegisterOnCustomDataChanged(Action<ICustomProperty> onCustomDataChanged);
@@ -159,6 +163,20 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 			}
 
 			return RealValues[CustomDataName].GetRealValue() as BindableProperty<T>;
+		}
+
+		public bool HasCustomData(string customDataName) {
+			return RealValues.Value.ContainsKey(customDataName);
+		}
+
+		public bool TryGetCustomDataValue<T>(string customDataName, out BindableProperty<T> value) {
+			if (!RealValues.Value.ContainsKey(customDataName)) {
+				value = default;
+				return false;
+			}
+
+			value = RealValues[customDataName].GetRealValue() as BindableProperty<T>;
+			return true;
 		}
 
 		public string GetCustomPropertyName() {

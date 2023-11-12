@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
@@ -18,12 +20,14 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Spawning;
+using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
 using Runtime.Utilities;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 using UnityEngine.AI;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
+using Random = UnityEngine.Random;
 
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
@@ -113,7 +117,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		[Header("Enemies")]
 		[SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
-
+		[SerializeField] protected List<LevelBossSpawnCostInfo> bossSpawnCostInfo;
+		[SerializeField] protected bool hasPillars = true;
+		[SerializeField] protected string pillarPrefabName = "BossPillar";
+		[SerializeField] protected int pillarCount = 4;
+		[SerializeField] protected BoxCollider maxExtent;
+		
+		
 		//[SerializeField] protected List<LevelEnemyPrefabConfig> bosses = new List<LevelEnemyPrefabConfig>();
 
 		[SerializeField] protected GameObject playerSpawner;
@@ -144,6 +154,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private ILevelSystem levelSystem;
  
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+		
+	
+		
 
 		protected override void Awake() {
 			base.Awake();
@@ -151,6 +164,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			navMeshSurface = GetComponent<NavMeshSurface>();
 			levelSystem = this.GetSystem<ILevelSystem>();
 		//	enemies.AddRange(bosses);
+		
 
 
 		}
@@ -190,6 +204,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), levelNumber)
 				.SetProperty(new PropertyNameInfo(PropertyName.max_enemies), maxEnemiesBaseValue)
 				.SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber));
+				//.SetProperty(new PropertyNameInfo(PropertyName.spawn_boss_cost), GetBossSpawnCostInfoDict());
 
 			return OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
 		}
@@ -201,7 +216,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				UpdateNavMesh();
 			}
 			UpdatePreExistingEnemies();
+			
+			SpawnPillars();
 			UpdatePreExistingDirectors();
+			SpawnCollectableResources();
 			OnSpawnPlayer();
 			StartCoroutine(UpdateLevelSystemTime());
 			UpdateWallMaterials();
@@ -210,8 +228,29 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		
+		private void SpawnCollectableResources() {
+			CollectableResourceSpawnArea[] collectableResourceViewControllers = GetComponentsInChildren<CollectableResourceSpawnArea>(true);
+			float seed = Random.Range(0, 1000000f);
+			foreach (CollectableResourceSpawnArea collectableResourceViewController in collectableResourceViewControllers) {
+				collectableResourceViewController.Spawn(seed);
+			}
+		}
 
+		private void SpawnPillars() {
+			if (!hasPillars) {
+				return;
+			}
+
+			List<GameObject> pillars = SpawningUtility.SpawnBossPillars(pillarCount, pillarPrefabName, maxExtent.bounds);
+			if (pillars == null) {
+				return;
+			}
+			foreach (GameObject pillar in pillars) {
+				IBossPillarViewController pillarViewController = pillar.GetComponent<IBossPillarViewController>();
+				pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
+				pillar.transform.SetParent(transform);
+			}
+		}
 		private void UpdateWallMaterials() {
 			LayerMask wallMask = LayerMask.NameToLayer("Wall");
 			//find all colliders with wall layer
@@ -223,6 +262,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				collider.material = mat;
 			}
 			
+		}
+		private Dictionary<CurrencyType, LevelBossSpawnCostInfo> GetBossSpawnCostInfoDict() {
+			Dictionary<CurrencyType, LevelBossSpawnCostInfo> dict = new Dictionary<CurrencyType, LevelBossSpawnCostInfo>();
+			if (bossSpawnCostInfo == null) {
+				return dict;
+			}
+			foreach (var info in bossSpawnCostInfo) {
+				dict.Add(info.CurrencyType, info);
+			}
+
+			return dict;
 		}
 
 

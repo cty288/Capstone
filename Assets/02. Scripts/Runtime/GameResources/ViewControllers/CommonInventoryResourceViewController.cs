@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Runtime.GameResources.ViewControllers {
     public interface IInventoryResourceViewController : IResourceViewController {
-    
+        public bool IsHUDSlot { get; set; }
     }
 
     public class CommonInventoryResourceViewController : AbstractResourceViewController<IResourceEntity>, 
@@ -34,6 +34,7 @@ namespace Runtime.GameResources.ViewControllers {
         
         }
 
-        
+
+        public bool IsHUDSlot { get; set; }
     }
 }

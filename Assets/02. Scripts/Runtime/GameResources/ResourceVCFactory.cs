@@ -1,4 +1,7 @@
-﻿using Framework;
+﻿using System;
+using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Currency.ViewControllers;
+using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
@@ -47,6 +50,9 @@ namespace Runtime.GameResources {
 		/// <returns></returns>
 		public GameObject SpawnInHandResourceVC(IResourceEntity resourceEntity, bool usePool, 
 			int poolInitCount = 5, int poolMaxCount = 20) {
+			if (String.IsNullOrEmpty(resourceEntity.InHandVCPrefabName)) {
+				return null;
+			}
 			return SpawnResourceVC(resourceEntity, usePool, resourceEntity.InHandVCPrefabName, poolInitCount, poolMaxCount);
 		}
 
@@ -56,6 +62,16 @@ namespace Runtime.GameResources {
 		
 		
 		public GameObject SpawnNewPickableResourceVC(string prefabName, bool usePool, bool setRarity = false, int rarity = 1, int poolInitCount = 5,
+			int poolMaxCount = 20) {
+
+			GameObject vc = SpawnResourceGameObject(prefabName, usePool, poolInitCount, poolMaxCount);
+			
+			IPickableResourceViewController vcComponent = vc.GetComponent<IPickableResourceViewController>();
+			vcComponent.InitWithID(vcComponent.OnBuildNewPickableResourceEntity(setRarity, rarity).UUID);
+			return vc;
+		}
+		
+		private GameObject SpawnResourceGameObject(string prefabName, bool usePool, int poolInitCount = 5,
 			int poolMaxCount = 20) {
 
 			GameObject vc = null;
@@ -73,9 +89,13 @@ namespace Runtime.GameResources {
 				vc = GameObject.Instantiate(prefab);
 			}
 			
-			
-			IPickableResourceViewController vcComponent = vc.GetComponent<IPickableResourceViewController>();
-			vcComponent.InitWithID(vcComponent.OnBuildNewPickableResourceEntity(setRarity, rarity).UUID);
+			return vc;
+		}
+
+		public GameObject SpawnPickableCurrency(CurrencyType currencyType, int amount) {
+			GameObject vc = SpawnResourceGameObject($"{currencyType.ToString()}Currency", true);
+			IPickableCurrencyViewController vcComponent = vc.GetComponent<IPickableCurrencyViewController>();
+			vcComponent.InitWithID(vcComponent.OnBuildNewPickableCurrencyEntity(currencyType, amount).UUID);
 			return vc;
 		}
 		

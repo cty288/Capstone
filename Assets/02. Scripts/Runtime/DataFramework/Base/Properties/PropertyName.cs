@@ -60,6 +60,12 @@ namespace Runtime.DataFramework.Properties
 		air_speed,
 		air_drag,
 		armor,
-		armor_recover_speed
+		armor_recover_speed,
+		spawn_boss_cost,
+		collectable_resource_currency_list,
+		skill_cooldown,
+		skill_use_cost,
+		skill_upgrade_cost,
+		skill_purchase_cost,
 	}
 }

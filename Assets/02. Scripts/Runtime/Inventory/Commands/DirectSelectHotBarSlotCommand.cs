@@ -20,8 +20,9 @@ namespace Runtime.Inventory.Commands {
 		}
 
 		protected override void OnExecute() {
-			IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
-			inventoryModel.SelectHotBarSlot(category, index);
+			//IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+			inventorySystem.SelectHotBarSlot(category, index);
 		}
 	}
 }

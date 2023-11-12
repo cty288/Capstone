@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using DG.Tweening;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using Polyglot;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using TMPro;
@@ -17,6 +19,7 @@ public class ItemStackingInfo {
 
 public class ItemPickIndicator : AbstractMikroController<MainGame> {
 	private SmoothScrollingVerticalLayoutGroup smoothScroller;
+	private ICurrencyModel currencyModel;
 	
 	[SerializeField] private GameObject itemNameTextPrefab;
 	private float hideTimer = 5f;
@@ -39,10 +42,19 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 		itemHUDSequence = DOTween.Sequence();
 		smoothScroller = transform.Find("ScrollView").GetComponent<SmoothScrollingVerticalLayoutGroup>();
 		itemNameHUD = transform.Find("ItemNameHUD").GetComponent<TMP_Text>();
+		currencyModel = this.GetModel<ICurrencyModel>();
 		this.RegisterEvent<OnInventoryItemAddedEvent>(OnInventoryItemAdded)
 			.UnRegisterWhenGameObjectDestroyed(gameObject);
 		this.RegisterEvent<OnCurrentHotbarUpdateEvent>(OnCurrentHotbarUpdate)
 			.UnRegisterWhenGameObjectDestroyed(gameObject);
+		
+		this.RegisterEvent<OnCurrencyAmountChangedEvent>(OnCurrencyAmountChanged)
+			.UnRegisterWhenGameObjectDestroyed(gameObject);
+	}
+
+	private void OnCurrencyAmountChanged(OnCurrencyAmountChangedEvent e) {
+		string currencyTypeLocalized = Localization.Get($"CURRENCY_{e.CurrencyType}_name");
+		StackItem(currencyTypeLocalized, e.Amount);
 	}
 
 	private void OnCurrentHotbarUpdate(OnCurrentHotbarUpdateEvent e) {
@@ -75,11 +87,15 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 		if(item == null) return;
 		string displayName = item.GetDisplayName();
 
+		StackItem(displayName, 1);
+	}
+	
+	private void StackItem(string displayName, int count) {
 		if (itemStackingInfo.TryGetValue(displayName, out var info)) {
-			info.Count++;
+			info.Count += count;
 		}else {
 			itemStackingInfo.Add(displayName, new ItemStackingInfo() {
-				Count = 1,
+				Count = count,
 				RemainingTime = itemStakingTime
 			});
 		}
@@ -105,7 +121,14 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 		
 		GameObject itemNameText = Instantiate(itemNameTextPrefab);
 		TMP_Text text = itemNameText.GetComponent<TMP_Text>();
-		text.text = $"<color=green>+{count}</color> " + displayName;
+
+		if (count > 0) {
+			text.text = $"<color=green>+{count}</color> " + displayName;
+		}
+		else {
+			text.text = $"<color=red>{count}</color> " + displayName;
+		}
+		
 		smoothScroller.AddNewItem(itemNameText);
 	
 		itemNameTexts.Add(text);

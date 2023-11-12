@@ -225,8 +225,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000059128, y: 6.2}
-  m_SizeDelta: {x: 80, y: 80}
+  m_AnchoredPosition: {x: -0.0000019073, y: 4.6}
+  m_SizeDelta: {x: 65.875, y: 65.875}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3017084680857910496
 CanvasRenderer:
@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c59dc48f8803d341b17a688626c606d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberText: {fileID: 0}
   spawnPoint: {fileID: 3017084680857910497}
   filledSlotBG: {fileID: 21300000, guid: 9f11af6e87156fe4193663ca5354d37c, type: 3}
   unfilledSlotBG: {fileID: 21300000, guid: 9f11af6e87156fe4193663ca5354d37c, type: 3}
@@ -375,3 +376,5 @@ MonoBehaviour:
   showRarityIndicator: 1
   showTagDetailIcon: 0
   maxPropertyDetailIconCount: 3
+  allowDrag: 1
+  cantThrowErrorMessage: {fileID: 0}

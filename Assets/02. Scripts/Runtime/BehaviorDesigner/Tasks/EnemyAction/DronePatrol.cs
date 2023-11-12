@@ -38,20 +38,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             public override void OnStart()
             {
-                Vector3 referencePoint = this.gameObject.transform.position;
-                Vector2 randomOffset1 = Random.insideUnitCircle * range;
-                Vector2 randomOffset2 = Random.insideUnitCircle * range;
-                m_Waypoints.Value[0].transform.position = new Vector3(referencePoint.x + randomOffset1.x, referencePoint.y, referencePoint.z + randomOffset1.y);
-                m_Waypoints.Value[1].transform.position = new Vector3(referencePoint.x + randomOffset2.x, referencePoint.y, referencePoint.z + randomOffset2.y);
+                m_Waypoints.Value[0].transform.position = RandomPosition();
+                m_Waypoints.Value[1].transform.position = RandomPosition();
                 foreach(GameObject o in m_Waypoints.Value)
-            {
-                o.transform.SetParent(null);
-            }
+                {
+                    o.transform.SetParent(null);
+                }
 
-
-
-
-            base.OnStart();
+                base.OnStart();
 
                 // initially move towards the closest waypoint
                 float distance = Mathf.Infinity;
@@ -68,10 +62,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 SetDestination(Target());
             }
 
+            private Vector3 RandomPosition()
+            {
+                Vector3 referencePoint = this.gameObject.transform.position;
+                Vector2 randomOffset1 = Random.insideUnitCircle * range;
+                Vector2 randomOffset2 = Random.insideUnitCircle * range;
+                return new Vector3(referencePoint.x + randomOffset1.x, referencePoint.y,
+                    referencePoint.z + randomOffset1.y);
+            }
+
             // Patrol around the different waypoints specified in the waypoint array. Always return a task status of running. 
             public override TaskStatus OnUpdate()
             {
-            //Debug.Log("runninini");
                 if (m_Waypoints.Value.Count == 0)
                 {
                     return TaskStatus.Failure;
@@ -85,6 +87,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     // wait the required duration before switching waypoints.
                     if (m_WaypointReachedTime + m_WaypointPauseDuration.Value <= Time.time)
                     {
+                        // set new position to old drone
+                        m_Waypoints.Value[m_WaypointIndex].transform.position = RandomPosition();
+                        
                         if (m_RandomPatrol.Value)
                         {
                             if (m_Waypoints.Value.Count == 1)
@@ -99,6 +104,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                                 {
                                     newWaypointIndex = Random.Range(0, m_Waypoints.Value.Count);
                                 }
+                                
                                 m_WaypointIndex = newWaypointIndex;
                             }
                         }

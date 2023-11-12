@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Polyglot;
@@ -17,7 +18,9 @@ namespace Runtime.GameResources.Model.Base {
 		RawMaterial,
 		Bait,
 		Item,
-		Weapon
+		Weapon,
+		Currency,
+		Skill
 	}
 
 	[Serializable]
@@ -40,7 +43,11 @@ namespace Runtime.GameResources.Model.Base {
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		public IMaxStack GetMaxStackProperty();
 
-		public void OnPicked();
+		public void OnAddedToSlot();
+
+		public void OnAddedToInventory();
+		
+		public void OnRemovedFromInventory();
 		
 		public ResourceCategory GetResourceCategory();
 		
@@ -54,9 +61,7 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string DeployedVCPrefabName { get; }
 		
-		public string AnimLayerName { get; }
-		
-		public float AnimLayerWeight { get; }
+
 		
 		/// <summary>
 		/// Width in inventory. Use only 1 or 2. Only effective for weapons.
@@ -64,6 +69,8 @@ namespace Runtime.GameResources.Model.Base {
 		public int Width { get; }
 		
 		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions();
+		
+		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition { get; }
 	}
 	
 	//3 forms
@@ -76,7 +83,7 @@ namespace Runtime.GameResources.Model.Base {
 		
 
 		[field: ES3Serializable]
-		protected bool pickedBefore = false;
+		protected bool encounteredBefore = false;
 		
 		//private IStackSize stackSizeProperty;
 		protected List<GetResourcePropertyDescriptionGetter> resourcePropertyDescriptionGetters =
@@ -127,7 +134,7 @@ namespace Runtime.GameResources.Model.Base {
 
 		public override string GetDisplayName() {
 			string originalDisplayName = base.GetDisplayName();
-			if (pickedBefore) {
+			if (encounteredBefore) {
 				return originalDisplayName;
 			}
 			else {
@@ -142,8 +149,16 @@ namespace Runtime.GameResources.Model.Base {
 			return stackSizeProperty;
 		}*/
 		
-		public void OnPicked() {
-			pickedBefore = true;
+		public void OnAddedToSlot() {
+			encounteredBefore = true;
+		}
+
+		public virtual void OnAddedToInventory() {
+			
+		}
+
+		public virtual void OnRemovedFromInventory() {
+			
 		}
 
 		public abstract ResourceCategory GetResourceCategory();
@@ -159,8 +174,6 @@ namespace Runtime.GameResources.Model.Base {
 		public virtual string DeployedVCPrefabName { get; } = null;
 
 		
-		public virtual string AnimLayerName => "Base";
-		public float AnimLayerWeight => 1;
 
 		[field: ES3Serializable]
 		public virtual int Width { get; } = 1;
@@ -173,8 +186,8 @@ namespace Runtime.GameResources.Model.Base {
 
 			return resourcePropertyDescriptions;
 		}
-		
-		
+
+		public Func<Dictionary<CurrencyType, int>,bool> CanInventorySwitchToCondition { get; } = null;
 	}
 
 }

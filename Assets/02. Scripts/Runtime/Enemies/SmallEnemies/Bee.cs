@@ -63,6 +63,7 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class Bee : AbstractNormalEnemyViewController<BeeEntity> {
         [SerializeField] private List<GameObject> waypoints;
+        [SerializeField] private GameObject navMeshAgent;
         //private BehaviorTree behaviorTree;
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
             
