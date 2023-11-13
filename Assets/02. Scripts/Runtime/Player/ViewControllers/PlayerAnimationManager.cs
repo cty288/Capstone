@@ -93,15 +93,14 @@ namespace Runtime.Player.ViewControllers
         }
 
         protected void SwitchPlayerAnimLayer(PlayerSwitchAnimEvent e) {
-            playerAnim.SetLayerWeight(1, 0); // NoItem
-            
             if (e.layerInfos == null) {
                 return;
             }
-          
+            
             foreach (AnimLayerInfo layerInfo in e.layerInfos) {
+                playerAnim.SetLayerWeight(playerAnim.GetLayerIndex("NoItem"), 1 - layerInfo.LayerWeight); // NoItem
+
                 int target = playerAnim.GetLayerIndex(layerInfo.LayerName);
-               
                 playerAnim.SetLayerWeight(target, layerInfo.LayerWeight);
             }
            
