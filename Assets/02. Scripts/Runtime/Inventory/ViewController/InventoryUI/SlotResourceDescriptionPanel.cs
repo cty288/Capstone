@@ -88,6 +88,12 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
 
     
     private void SetPropertyDescriptions(List<ResourcePropertyDescription> propertyDescriptions) {
+        spawnedPropertyDescriptions.Clear();
+        foreach (Transform child in itemPropertyDescriptionPanel.transform) {
+            propertyDescriptionItemPool.Recycle(child.gameObject);
+        }
+        
+        
         foreach (ResourcePropertyDescription propertyDescription in propertyDescriptions) {
             GameObject propertyDescriptionItem = propertyDescriptionItemPool.Allocate();
             propertyDescriptionItem.transform.SetParent(itemPropertyDescriptionPanel);
@@ -130,10 +136,13 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
     }
 
+    public void Clear() {
+        SetContent("", "", null, true, 0, "",null);
+    }
     public override void OnRecycled() {
         base.OnRecycled();
         
-        SetContent("", "", null, true, 0, "",null);
+        Clear();
     }
     
     

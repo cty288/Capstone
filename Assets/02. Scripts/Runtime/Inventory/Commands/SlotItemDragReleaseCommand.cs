@@ -37,7 +37,10 @@ namespace Runtime.Inventory.Commands {
 						}
 					}else if (currentHoveredSlot is UpgradeSlot) {
 						ISkillEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID()) as ISkillEntity;
-						this.SendCommand<OpenSkillUpgradePanelCommand>(OpenSkillUpgradePanelCommand.Allocate(topItem));
+						if (currentHoveredSlot.CanPlaceItem(topItem)) {
+							this.SendCommand<OpenSkillUpgradePanelCommand>(OpenSkillUpgradePanelCommand.Allocate(topItem));
+						}
+						
 					}
 					else {
 						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
