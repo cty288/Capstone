@@ -133,7 +133,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 		public bool CheckHit(HitData data)
 		{
 			hitData = data;
-			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner))
+			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner)
 			{
 				return false;
 			}
@@ -151,7 +151,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 				{
 					return;
 				}
-				hitObjects.Add(data.Hurtbox.Owner);
+				//hitObjects.Add(data.Hurtbox.Owner);
 			}
 			OnHitResponse(data);
 			//RecycleToCache();

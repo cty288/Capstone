@@ -105,12 +105,14 @@ namespace Runtime.Utilities.Collision
                             Attacker = m_hitResponder,
                             ShowDamageNumber = showDamageNumber
                         };
-                    
-                    
+
+                        if (hitData.Validate()) {
                             Debug.Log(hitData.Hurtbox.Owner.name);
                             // Debug.Log("validate: ");
                             hitData.HitDetector.HitResponder?.HitResponse(hitData);
                             hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
+                        }
+                          
                     
 
                     }
