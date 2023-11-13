@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace a
 {
-    public class WormBulletLazer : AbstractBulletViewController
+    public class WormBulletLazer : AbstractDotBulletViewController
     {
         public BoxCollider boxCollider;
         public LineRenderer lineRenderer;
@@ -20,9 +20,11 @@ namespace a
         private float waitBeforeRotate = 1.5f;
         private float timer = 1.5f;
         private GameObject player;
+     
+        bool pause = false;
 
-        
-        
+
+
 
         private void Start()
         {
@@ -75,13 +77,17 @@ namespace a
             tick -= Time.deltaTime;
             timer -= Time.deltaTime;
             if(tick < 0) { tick = tickrate; hitObjects.Remove(hitData.Hurtbox.Owner); }
-            Vector3 nextPosition = lineRenderer.GetPosition(1) + new Vector3(0,0,1) * bulletSpeed * Time.deltaTime;
-            if(face != null)
+            if (!pause)
             {
 
-                lineRenderer.SetPosition(0, face.transform.GetChild(0).transform.localPosition);
-                lineRenderer.SetPosition(1, nextPosition);
-                AdjustBoxCollider();
+                Vector3 nextPosition = lineRenderer.GetPosition(1) + new Vector3(0,0,1) * bulletSpeed * Time.deltaTime;
+                if(face != null)
+                {
+
+                    lineRenderer.SetPosition(0, face.transform.GetChild(0).transform.localPosition);
+                    lineRenderer.SetPosition(1, nextPosition);
+                    AdjustBoxCollider();
+                }
             }
             
 
@@ -121,12 +127,12 @@ namespace a
 
         protected override void OnHitResponse(HitData data)
         {
-            Debug.Log("hi");
+            //Debug.Log("hi");
         }
 
         protected override void OnHitObject(Collider other)
         {
-
+            
         }
 
         protected override void OnBulletRecycled()
@@ -135,6 +141,10 @@ namespace a
             lineRenderer.SetPosition(0, Vector3.zero);
             lineRenderer.SetPosition(1, Vector3.zero);
             timer = 1.5f;
+            pause = false;
+            var end = lineRenderer.GetPosition(1);
+            var start = lineRenderer.GetPosition(0);
+            boxCollider.center = Vector3.zero + new Vector3(0, 0, Vector3.Magnitude(end - start) / 2);
 
         }
 
@@ -167,6 +177,22 @@ namespace a
 
                 OnHitObject(other);
                 //RecycleToCache();
+            }
+        }
+        private void OnTriggerStay(Collider collision)
+        {
+            Debug.Log(collision.gameObject.layer);
+            if(collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
+            {
+                Debug.Log("bbbbbbbbbb");
+                pause = true;
+            }
+        }
+        private void OnTriggerExit(Collider collision)
+        {
+            if (collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
+            {
+                pause = false;
             }
         }
     }

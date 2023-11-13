@@ -59,7 +59,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         private bool _isScopedIn = false;
         protected bool IsScopedIn => _isScopedIn;
         
-        [SerializeField] protected string animLayerNameOverride = "Revolver";
+        //[SerializeField] protected string animLayerNameOverride = "Revolver";
         [SerializeField] protected Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
         [SerializeField] protected Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
         
@@ -161,6 +161,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (isShooting) {
                 AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 1f);
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
+                animator.SetTrigger("Shoot");
             }
             else {
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.ResetTrigger,0));
