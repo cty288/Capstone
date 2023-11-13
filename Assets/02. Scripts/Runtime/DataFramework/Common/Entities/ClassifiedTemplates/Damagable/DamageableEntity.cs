@@ -64,7 +64,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		/// <param name="damage"></param>
 		/// <param name="damageDealer"></param>
-		public void TakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null) {
+		public void TakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null, bool nonlethal = false) {
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
 			if(!CheckCanTakeDamage(damageDealer) || healthInfo.CurrentHealth <= 0) {
 				return;
@@ -76,6 +76,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage
 			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : actualDamage;
+			damageAmount = nonlethal && healthInfo.CurrentHealth <= damage ? healthInfo.CurrentHealth - 1 : damageAmount;
 			DoTakeDamage(damageAmount);
 
 			if (hitData != null) {
