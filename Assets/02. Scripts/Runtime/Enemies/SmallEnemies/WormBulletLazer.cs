@@ -9,7 +9,7 @@ namespace a
 {
     public class WormBulletLazer : AbstractDotBulletViewController
     {
-        public BoxCollider boxCollider;
+        public GameObject parent;
         public LineRenderer lineRenderer;
         private float damage;
         private float bulletSpeed = 34f;
@@ -20,7 +20,7 @@ namespace a
         private float waitBeforeRotate = 1.5f;
         private float timer = 1.5f;
         private GameObject player;
-     
+
         bool pause = false;
 
 
@@ -28,40 +28,39 @@ namespace a
 
         private void Start()
         {
-            lineRenderer = this.gameObject.GetComponent<LineRenderer>();
-            boxCollider = this.gameObject.GetComponent<BoxCollider>();
-            boxCollider.size = new Vector3(0.3f, 0.3f, 3f);
-            lineRenderer.SetPosition(0, Vector3.zero);
-            lineRenderer.SetPosition(1, Vector3.zero);
-            
+
+
+            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+
 
 
         }
         private void OnEnable()
         {
-            lineRenderer = this.gameObject.GetComponent<LineRenderer>();
-            boxCollider = this.gameObject.GetComponent<BoxCollider>();
-            boxCollider.size = new Vector3(0.3f, 0.3f, 3f);
-            lineRenderer.SetPosition(0, Vector3.zero);
-            lineRenderer.SetPosition(1, Vector3.zero);
+
+
+            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+
+
         }
         IEnumerator RotateAttack()
         {
             float time = 2f;
-            while(time > 0)
+            while (time > 0)
             {
-                
+
                 Vector3 playerLocalPosition = transform.InverseTransformPoint(player.transform.position);
                 if (playerLocalPosition.x > 0)
                 {
                     float rotationAmount = 10.5f * Time.deltaTime;
-                    this.gameObject.transform.Rotate(0, rotationAmount, 0);
+                    transform.Rotate(0, rotationAmount, 0);
                     face.gameObject.transform.Rotate(0, rotationAmount, 0);
                 }
                 else
                 {
                     float rotationAmount = -10.5f * Time.deltaTime;
-                    this.gameObject.transform.Rotate(0, rotationAmount, 0);
+                    transform.Rotate(0, rotationAmount, 0);
                     face.gameObject.transform.Rotate(0, rotationAmount, 0);
                 }
                 time -= Time.deltaTime;
@@ -74,51 +73,45 @@ namespace a
 
         private void Update()
         {
-            tick -= Time.deltaTime;
+
+            
             timer -= Time.deltaTime;
-            if(tick < 0) { tick = tickrate; hitObjects.Remove(hitData.Hurtbox.Owner); }
+           
             if (!pause)
             {
 
-                Vector3 nextPosition = lineRenderer.GetPosition(1) + new Vector3(0,0,1) * bulletSpeed * Time.deltaTime;
-                if(face != null)
-                {
-
-                    lineRenderer.SetPosition(0, face.transform.GetChild(0).transform.localPosition);
-                    lineRenderer.SetPosition(1, nextPosition);
-                    AdjustBoxCollider();
-                }
+                transform.localScale += new Vector3(0, 0, 0.5f);
             }
-            
 
-            if(timer < 0)
+
+            if (timer < 0)
             {
                 timer = waitBeforeRotate;
                 StartCoroutine(RotateAttack());
             }
+
 
         }
         void AdjustBoxCollider()
         {
             var end = lineRenderer.GetPosition(1);
             var start = lineRenderer.GetPosition(0);
-            boxCollider.center = Vector3.zero + new Vector3(0, 0, Vector3.Magnitude(end-start)/2);
-            boxCollider.size = new Vector3(0.3f, 0.3f, Vector3.Distance(end,start));
+            //boxCollider.center = Vector3.zero + new Vector3(0, 0, Vector3.Magnitude(end - start) / 2);
+            //boxCollider.size = new Vector3(0.3f, 0.3f, Vector3.Distance(end, start));
             /*
             Bounds bounds = new Bounds(lineRenderer.GetPosition(1), Vector3.zero);
             for (int i = 0; i < lineRenderer.positionCount; i++)
             {
                 bounds.Encapsulate(lineRenderer.GetPosition(i));
             }
-
             // Set the Box Collider size and center based on the Line Renderer bounds.
             boxCollider.size = bounds.size;
             boxCollider.center = bounds.center - transform.position; // Make sure to subtract the parent's position.
         */
         }
-        
 
-        public void SetData(GameObject owner , Vector3 dir , GameObject player)
+
+        public void SetData(GameObject owner, Vector3 dir, GameObject player)
         {
             face = owner;
             this.dir = dir;
@@ -132,19 +125,15 @@ namespace a
 
         protected override void OnHitObject(Collider other)
         {
-            
+
         }
 
         protected override void OnBulletRecycled()
         {
-            boxCollider.size = new Vector3(0.3f, 0.3f, 3f);
-            lineRenderer.SetPosition(0, Vector3.zero);
-            lineRenderer.SetPosition(1, Vector3.zero);
+
             timer = 1.5f;
             pause = false;
-            var end = lineRenderer.GetPosition(1);
-            var start = lineRenderer.GetPosition(0);
-            boxCollider.center = Vector3.zero + new Vector3(0, 0, Vector3.Magnitude(end - start) / 2);
+
 
         }
 
@@ -182,7 +171,7 @@ namespace a
         private void OnTriggerStay(Collider collision)
         {
             Debug.Log(collision.gameObject.layer);
-            if(collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
+            if (collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
             {
                 Debug.Log("bbbbbbbbbb");
                 pause = true;
