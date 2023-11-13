@@ -146,14 +146,14 @@ GrenadeSkill,,"{
             ""Time"": 0
         }
     }","{
-        ""1"": 3,
+        ""1"": 10.0,
         ""2"": 8.0,
         ""3"": 6.0,
         ""4"": 4.0
     }",1,"{
         ""level1"": {
             ""explosion_radius"": {
-                ""type"": ""float"",
+                ""type"": ""int"",
                 ""value"": 3
             },
             ""explosion_damage"": {
@@ -163,7 +163,7 @@ GrenadeSkill,,"{
         },
         ""level2"": {
             ""explosion_radius"": {
-                ""type"": ""float"",
+                ""type"": ""int"",
                 ""value"": 3
             },
             ""explosion_damage"": {
@@ -173,7 +173,7 @@ GrenadeSkill,,"{
         },
         ""level3"": {
             ""explosion_radius"": {
-                ""type"": ""float"",
+                ""type"": ""int"",
                 ""value"": 5
             },
             ""explosion_damage"": {
@@ -183,7 +183,7 @@ GrenadeSkill,,"{
         },
         ""level4"": {
             ""explosion_radius"": {
-                ""type"": ""float"",
+                ""type"": ""int"",
                 ""value"": 5
             },
             ""explosion_damage"": {
@@ -192,36 +192,3 @@ GrenadeSkill,,"{
             }
         }
 }",,,
-MedicalNeedleSkill,,"{
-    ""1"": {""Combat"": 0, ""Time"": 0, ""Plant"": 50, ""Mineral"": 0},
-    ""2"": {""Combat"": 0, ""Time"": 0, ""Plant"": 50, ""Mineral"": 0},
-    ""3"": {""Combat"": 0, ""Time"": 0, ""Plant"": 50, ""Mineral"": 0},
-    ""4"": {""Combat"": 0, ""Time"": 0, ""Plant"": 50, ""Mineral"": 0}
-  }","{
-    ""1"": {""Combat"": 0, ""Time"": 0, ""Plant"": 15, ""Mineral"": 0},
-    ""2"": {""Combat"": 0, ""Time"": 0, ""Plant"": 30, ""Mineral"": 0},
-    ""3"": {""Combat"": 0, ""Time"": 0, ""Plant"": 45, ""Mineral"": 0},
-    ""4"": {""Combat"": 0, ""Time"": 0, ""Plant"": 55, ""Mineral"": 10}
-  }","{
-    ""1"": 3,
-    ""2"": 60,
-    ""3"": 60,
-    ""4"": 60
-  }",1,"{
-    ""level1"": {
-      ""healing_amount"": {""type"": ""int"", ""value"": 20}
-    },
-    ""level2"": {
-      ""healing_amount"": {""type"": ""int"", ""value"": 30}
-    },
-    ""level3"": {
-      ""healing_amount"": {""type"": ""int"", ""value"": 50},
-      ""buff_duration"": {""type"": ""int"", ""value"": 20},
-      ""buff_effect"": {""type"": ""int"", ""value"": 1}
-    },
-    ""level4"": {
-      ""healing_amount"": {""type"": ""int"", ""value"": 50},
-      ""buff_duration"": {""type"": ""int"", ""value"": 20},
-      ""buff_effect"": {""type"": ""int"", ""value"": 2}
-    }
-  }",,,
