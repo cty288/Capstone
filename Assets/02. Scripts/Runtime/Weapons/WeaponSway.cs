@@ -1,17 +1,22 @@
 ﻿using System;
+using Framework;
+using MikroFramework.Architecture;
 using Runtime.Controls;
 using Runtime.Player.ViewControllers;
+using Runtime.Utilities;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 
 namespace Runtime.Weapons
 {
-    public class WeaponSway : MonoBehaviour
+    public class WeaponSway : AbstractMikroController<MainGame>
     {
         [SerializeField] public Transform weaponTransform;
 
         [Header("Sway Properties")]
         [SerializeField]private float swayAmount = 0.01f;
-        [SerializeField] public float maxSwayAmount = 0.1f;
+        [SerializeField] public float maxSwayAmountHipfire = 0.1f;
+        [SerializeField] public float maxSwayAmountADS = 0.01f;
         [SerializeField] public float swaySmooth = 9f;
         [SerializeField] public AnimationCurve swayCurve;
 
@@ -39,6 +44,15 @@ namespace Runtime.Weapons
         
         private DPunkInputs.PlayerActions playerActions;
         private Rigidbody playerRb;
+        private IPlayerModel playerModel;
+
+        
+        public bool isADS = false;
+
+        private void Awake()
+        {
+            this.RegisterEvent<OnScopeUsedEvent>(SetADSStatus).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        }
 
         private void Reset()
         {
@@ -59,11 +73,9 @@ namespace Runtime.Weapons
 
         private void Update()
         {
+            float maxSwayAmount = isADS ? maxSwayAmountADS : maxSwayAmountHipfire;
             float mouseX = playerActions.Look.ReadValue<Vector2>().x * swayAmount;
             float mouseY = playerActions.Look.ReadValue<Vector2>().y * swayAmount;
-
-            // float horizontalMove = playerActions.Move.ReadValue<Vector2>().x * swayAmount;
-            // float verticalMove = playerActions.Move.ReadValue<Vector2>().y * swayAmount;
             
             Vector3 localPlayerVelocity = transform.InverseTransformDirection(playerRb.velocity);
             float forwardMovement = localPlayerVelocity.x * swayAmount;
@@ -75,6 +87,11 @@ namespace Runtime.Weapons
 
             weaponTransform.localPosition = Vector3.Lerp(weaponTransform.localPosition, new Vector3(sway.x, sway.y, 0) * positionSwayMultiplier + initialPosition, swayCurve.Evaluate(Time.deltaTime * swaySmooth));
             weaponTransform.localRotation = Quaternion.Slerp(transform.localRotation, initialRotation * Quaternion.Euler(Mathf.Rad2Deg * rotationSwayMultiplier * new Vector3(-sway.y, sway.x, 0)), swayCurve.Evaluate(Time.deltaTime * swaySmooth));
+        }
+        
+        private void SetADSStatus(OnScopeUsedEvent e)
+        {
+            this.isADS = e.isScopedIn;
         }
     }
 }
