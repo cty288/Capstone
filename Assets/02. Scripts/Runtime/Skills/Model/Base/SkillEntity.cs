@@ -43,6 +43,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public void SetOwner(ICanDealDamage owner);
 		
 		public Dictionary<CurrencyType, int> GetSkillUseCostOfCurrentLevel();
+
+		public int GetLevel();
+
+		public int GetMaxLevel();
 	}
 
 	public struct OnSkillUsed {
@@ -240,7 +244,15 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public Dictionary<CurrencyType, int> GetSkillUseCostOfCurrentLevel() {
 			return skillUseCostProperty.GetByLevel(GetRarity());
 		}
-		
+
+		public int GetLevel() {
+			return GetRarity();
+		}
+
+		public int GetMaxLevel() {
+			return levelRange;
+		}
+
 
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => GetInventorySwitchCondition;
 
