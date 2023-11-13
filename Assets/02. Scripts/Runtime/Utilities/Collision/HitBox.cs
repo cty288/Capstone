@@ -49,6 +49,8 @@ namespace Runtime.Utilities.Collision
             // Debug.Log("stop checking hits");
             if (_triggerCheck != null) 
                 _triggerCheck.OnEnter -= TriggerCheckHit;
+            
+            
         }
         
         public virtual void TriggerCheckHit(Collider c)

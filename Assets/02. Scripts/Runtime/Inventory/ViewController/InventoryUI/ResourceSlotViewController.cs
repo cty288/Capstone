@@ -17,6 +17,7 @@ using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
 using Runtime.RawMaterials.Model.Base;
 using Runtime.UI.NameTags;
+using Runtime.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -68,6 +69,7 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private int maxPropertyDetailIconCount = 3;
         [SerializeField] private bool allowDrag = true;
         [SerializeField] private RectTransform cantThrowErrorMessage;
+        [SerializeField] protected GameObject cantDragBG;
         
         protected virtual RectTransform GetExpandedRect() {
             return rectTransform;
@@ -104,10 +106,24 @@ namespace Runtime.Inventory.ViewController {
             rectTransform = GetComponent<RectTransform>();
             
             baseWidth = GetExpandedRect().sizeDelta.x;
+            ResourceSlot.currentDraggingSlot.RegisterWithInitValue(OnCurrentDraggingSlotChanged)
+                .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             //currentDescriptionPanel.Hide();
             //descriptionPanel.Awake();
             Clear();
             
+        }
+
+        protected virtual void OnCurrentDraggingSlotChanged(ResourceSlot oldSlot, ResourceSlot newSlot) {
+            if (cantDragBG) {
+                if (newSlot == null) {
+                    cantDragBG.SetActive(false);
+                }
+                else {
+                    IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(newSlot.GetLastItemUUID());
+                    cantDragBG.SetActive(!slot.CanPlaceItem(topItem, true));
+                }
+            }
         }
 
         private void OnEnable() {
@@ -148,6 +164,7 @@ namespace Runtime.Inventory.ViewController {
                     //set spawn point parent to parent, and set it as last sibling
                     spawnPoint.SetParent(SlotItemDragCanvas.Singleton.transform);
                     spawnPoint.SetAsLastSibling();
+                    ResourceSlot.currentDraggingSlot.Value = this.slot;
                 }
                 spawnPoint.transform.position = eventData.position;
             }
@@ -228,6 +245,7 @@ namespace Runtime.Inventory.ViewController {
                 StopDragImmediately();
             }
             startDragTriggered = false;
+            ResourceSlot.currentDraggingSlot.Value = null;
         }
 
         private void StopDragImmediately() {
@@ -458,7 +476,7 @@ namespace Runtime.Inventory.ViewController {
 
         public void OnPointerEnter(PointerEventData eventData) {
             if (slotHoverBG) {
-                slotHoverBG.DOFade(hoverBGAlpha, 0.2f);
+                slotHoverBG.DOFade(hoverBGAlpha, 0.2f).SetUpdate(true);
             }
             
             ResourceSlot.currentHoveredSlot = this;
@@ -493,7 +511,7 @@ namespace Runtime.Inventory.ViewController {
         protected void PointerExit(bool closeImmediately) {
             if (slotHoverBG) {
                 if (!closeImmediately) {
-                    slotHoverBG.DOFade(0, 0.2f);
+                    slotHoverBG.DOFade(0, 0.2f).SetUpdate(true);
                 }
                 else {
                     slotHoverBG.color = new Color(slotHoverBG.color.r, slotHoverBG.color.g, slotHoverBG.color.b, 0);

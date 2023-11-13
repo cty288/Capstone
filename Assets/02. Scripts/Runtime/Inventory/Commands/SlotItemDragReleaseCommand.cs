@@ -29,7 +29,17 @@ namespace Runtime.Inventory.Commands {
 			
 			if (currentHoveredSlot != null && currentHoveredSlot != fromSlot) {
 				if (currentHoveredSlot != fromSlot) {
-					if (currentHoveredSlot is not RubbishSlot) {
+					if (currentHoveredSlot is RubbishSlot) {
+						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
+						if (fromSlot.GetCanThrow(topItem)) {
+							this.SendCommand<PlayerThrowAllSlotResourceCommand>(
+								PlayerThrowAllSlotResourceCommand.Allocate(fromSlot));
+						}
+					}else if (currentHoveredSlot is UpgradeSlot) {
+						ISkillEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID()) as ISkillEntity;
+						this.SendCommand<OpenSkillUpgradePanelCommand>(OpenSkillUpgradePanelCommand.Allocate(topItem));
+					}
+					else {
 						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
 						if (currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem)) {
 							if (topItem != null && currentHoveredSlot is LeftHotBarSlot slot && topItem is ISkillEntity skill) {
@@ -38,15 +48,6 @@ namespace Runtime.Inventory.Commands {
 							}
 							inventorySystem.ForceUpdateCurrentHotBarSlotCanSelect();
 							
-						}
-						
-						
-					}else {
-						//TODO: check if it is throwable
-						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
-						if (fromSlot.GetCanThrow(topItem)) {
-							this.SendCommand<PlayerThrowAllSlotResourceCommand>(
-								PlayerThrowAllSlotResourceCommand.Allocate(fromSlot));
 						}
 					}
 				}

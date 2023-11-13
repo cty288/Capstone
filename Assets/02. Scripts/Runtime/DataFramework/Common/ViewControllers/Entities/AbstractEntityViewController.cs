@@ -300,12 +300,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected virtual void Update() {
 			if (playerCanInteract) {
 				if (interactiveHintHoldTime <= 0) {
-					if (ClientInput.Singleton.GetPlayerActions().Interact.WasPressedThisFrame()) {
+					if (ClientInput.Singleton.GetSharedActions().Interact.WasPressedThisFrame()) {
 						OnPlayerPressInteract();
 					}
 				}
 				else {
-					if (ClientInput.Singleton.GetPlayerActions().Interact.IsPressed()) {
+					if (ClientInput.Singleton.GetSharedActions().Interact.IsPressed()) {
 						interactiveHintHoldTimer += Time.deltaTime;
 						float progress = interactiveHintHoldTimer / interactiveHintHoldTime;
 						currentInteractiveHint.SetFiller(progress);
@@ -820,7 +820,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				? Localization.Get("HINT_PRESS")
 				: Localization.Get("HINT_HOLD");
 			
-			return (ClientInput.Singleton.FindActionInPlayerActionMap("Interact"),
+			return (ClientInput.Singleton.FindActionInSharedActionMap("Interact"),
 				Localization.Get(interactiveHintLocalizedKey), hint);
 		}
 		public virtual void OnPointByCrosshair() {

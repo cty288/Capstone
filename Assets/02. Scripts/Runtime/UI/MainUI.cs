@@ -26,16 +26,18 @@ namespace Runtime.UI {
 		}
 
 		private void OnOpenPillarUI(OnOpenPillarUI e) {
-			OpenOrClose<PillarUIViewController>(this, e);
+			OpenOrGetClose<PillarUIViewController>(this, e);
 		}
 
 		private void Update() {
 			
 			if (controlActions.Close.WasPressedThisFrame()) {
 				if (currentMainPanel != null) {
-					ClosePanel(currentMainPanel);
+					//ClosePanel(currentMainPanel);
+					//OpenOrGetClose(currentMainPanel, null);
 					//Time = 1;
-					ClientInput.Singleton.EnablePlayerMaps();
+					GetAndClose(currentMainPanel);
+					//ClientInput.Singleton.EnablePlayerMaps();
 				}
 			}
 			
@@ -45,7 +47,7 @@ namespace Runtime.UI {
 			}
 			
 			if (controlActions.Inventory.WasPressedThisFrame()) {
-				OpenOrClose<InventoryUIViewController>(this, null, true);
+				OpenOrGetClose<InventoryUIViewController>(this, null, true);
 			}
 
 			/*if (Input.GetKeyDown(KeyCode.I)) {
@@ -67,19 +69,9 @@ namespace Runtime.UI {
 			//ClientInput.Singleton.EnableUIMaps();
 			return panel;
 		}
-	
-		public T OpenOrClose<T>(IPanelContainer parent, UIMsg message, bool switchUIPlayerMap = true, 
-			bool createNewIfNotExist = true, string assetNameIfNotExist = "")  where T : class, IPanel {
-			if (currentMainPanel!=null && currentMainPanel.GetType() == typeof(T)) {
-				ClosePanel(currentMainPanel);
-				if (switchUIPlayerMap) {
-					ClientInput.Singleton.EnablePlayerMaps();
-				}
 
-				//Time.timeScale = 1;
-				return null;
-			}
-			
+		public T Open<T>(IPanelContainer parent, UIMsg message, bool switchUIPlayerMap = true,
+			bool createNewIfNotExist = true, string assetNameIfNotExist = "") where T : class, IPanel {
 			if (currentMainPanel != null) {
 				ClosePanel(currentMainPanel);
 			}
@@ -92,6 +84,30 @@ namespace Runtime.UI {
 			return Open<T>(parent, message, createNewIfNotExist, assetNameIfNotExist);
 		}
 
+		public void GetAndClose(IPanel panel, bool switchUIPlayerMap = true, bool alsoCloseChild = true) {
+			IPanel closePanel = GetToClosePanel(panel);
+			if (closePanel != null) {
+				ClosePanel(closePanel, alsoCloseChild);
+				if (switchUIPlayerMap) {
+					if (currentMainPanel == null) {
+						ClientInput.Singleton.EnablePlayerMaps();
+					}
+				}
+			}
+		}
+		
+		
+		public T OpenOrGetClose<T>(IPanelContainer parent, UIMsg message, bool switchUIPlayerMap = true, 
+			bool createNewIfNotExist = true, string assetNameIfNotExist = "")  where T : class, IPanel {
+			if (currentMainPanel!=null && currentMainPanel.GetType() == typeof(T)) {
+				GetAndClose(currentMainPanel, switchUIPlayerMap);
+				return null;
+			}
+
+
+			return Open<T>(parent, message, switchUIPlayerMap, createNewIfNotExist, assetNameIfNotExist);
+		}
+
 		public override void ClosePanel(IPanel panel, bool alsoCloseChild = true) {
 			base.ClosePanel(panel, alsoCloseChild);
 			if (currentMainPanel == null) {
@@ -100,6 +116,18 @@ namespace Runtime.UI {
 				Time.timeScale = 1;
 			}
 			//ClientInput.Singleton.EnablePlayerMaps();
+		}
+		
+		protected IPanel GetToClosePanel(IPanel panel) {
+			if (panel == null) {
+				return null;
+			}
+			
+			if(panel is IGameUIPanel gameUIPanel) {
+				return gameUIPanel.GetClosePanel();
+			}
+			
+			return panel;
 		}
 
 		public IArchitecture GetArchitecture() {

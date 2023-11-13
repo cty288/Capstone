@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
+using MikroFramework.BindableProperty;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.ViewController;
 using Runtime.Weapons.Model.Base;
@@ -10,6 +11,9 @@ namespace Runtime.Inventory.Model {
 	[Serializable]
 	public class ResourceSlot {
 		public static ResourceSlotViewController currentHoveredSlot = null;
+
+		public static BindableProperty<ResourceSlot> currentDraggingSlot =
+			new BindableProperty<ResourceSlot>(null);
 		[ES3Serializable]
 		private string ItemKey = null;
 		//public int Quantity = 0;
@@ -258,7 +262,7 @@ namespace Runtime.Inventory.Model {
 	[Serializable]
 	public class RightHotBarSlot : HotBarSlot {
 		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
-			if (item.GetResourceCategory() != ResourceCategory.Weapon) {
+			if (item!=null && item.GetResourceCategory() != ResourceCategory.Weapon) {
 				return false;
 			}
 			return base.CanPlaceItem(item, isSwapping);
@@ -267,6 +271,23 @@ namespace Runtime.Inventory.Model {
 	
 	[Serializable]
 	public class RubbishSlot : ResourceSlot {
-		
+		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
+			if (item!=null && item.GetResourceCategory() == ResourceCategory.Skill) {
+				return false;
+			}
+
+			return base.CanPlaceItem(item, isSwapping);
+		}
+	}
+	
+	[Serializable]
+	public class UpgradeSlot : ResourceSlot {
+		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
+			if (item == null || item.GetResourceCategory() != ResourceCategory.Skill) {
+				return false;
+			}
+
+			return true;
+		}
 	}
 }
