@@ -2,6 +2,7 @@
 using Framework;
 using MikroFramework.Architecture;
 using Runtime.Controls;
+using Runtime.Player;
 using Runtime.Player.ViewControllers;
 using Runtime.Utilities;
 using Runtime.Weapons.ViewControllers.Base;
@@ -36,7 +37,7 @@ namespace Runtime.Weapons
         
         private DPunkInputs.PlayerActions playerActions;
         private Rigidbody playerRb;
-        private IPlayerModel playerModel;
+        private IGamePlayerModel playerModel;
 
         
         public bool isADS = false;
@@ -44,6 +45,7 @@ namespace Runtime.Weapons
         private void Awake()
         {
             this.RegisterEvent<OnScopeUsedEvent>(SetADSStatus).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            playerModel = this.GetModel<IGamePlayerModel>();
         }
 
         private void Reset()
@@ -65,20 +67,23 @@ namespace Runtime.Weapons
 
         private void Update()
         {
-            float maxSwayAmount = isADS ? maxSwayAmountADS : maxSwayAmountHipfire;
-            float mouseX = playerActions.Look.ReadValue<Vector2>().x * swayAmount;
-            float mouseY = playerActions.Look.ReadValue<Vector2>().y * swayAmount;
+            if (!playerModel.IsPlayerDead())
+            {
+                float maxSwayAmount = isADS ? maxSwayAmountADS : maxSwayAmountHipfire;
+                float mouseX = playerActions.Look.ReadValue<Vector2>().x * swayAmount;
+                float mouseY = playerActions.Look.ReadValue<Vector2>().y * swayAmount;
             
-            Vector3 localPlayerVelocity = transform.InverseTransformDirection(playerRb.velocity);
-            float forwardMovement = localPlayerVelocity.x * swayAmount;
-            float sidewaysMovement = localPlayerVelocity.z * swayAmount;
-            float verticalMovement = localPlayerVelocity.y * swayAmount;
+                Vector3 localPlayerVelocity = transform.InverseTransformDirection(playerRb.velocity);
+                float forwardMovement = localPlayerVelocity.x * swayAmount;
+                float sidewaysMovement = localPlayerVelocity.z * swayAmount;
+                float verticalMovement = localPlayerVelocity.y * swayAmount;
             
-            sway = Vector2.MoveTowards(sway, Vector2.zero, swayCurve.Evaluate(Time.deltaTime * swaySmoothCounteraction * sway.magnitude * swaySmooth));
-            sway = Vector2.ClampMagnitude(new Vector2(mouseX + forwardMovement, mouseY + sidewaysMovement + 2 * verticalMovement) + sway, maxSwayAmount);
+                sway = Vector2.MoveTowards(sway, Vector2.zero, swayCurve.Evaluate(Time.deltaTime * swaySmoothCounteraction * sway.magnitude * swaySmooth));
+                sway = Vector2.ClampMagnitude(new Vector2(mouseX + forwardMovement, mouseY + sidewaysMovement + 2 * verticalMovement) + sway, maxSwayAmount);
 
-            weaponTransform.localPosition = Vector3.Lerp(weaponTransform.localPosition, new Vector3(sway.x, sway.y, 0) * positionSwayMultiplier + initialPosition, swayCurve.Evaluate(Time.deltaTime * swaySmooth));
-            weaponTransform.localRotation = Quaternion.Slerp(transform.localRotation, initialRotation * Quaternion.Euler(Mathf.Rad2Deg * rotationSwayMultiplier * new Vector3(-sway.y, sway.x, 0)), swayCurve.Evaluate(Time.deltaTime * swaySmooth));
+                weaponTransform.localPosition = Vector3.Lerp(weaponTransform.localPosition, new Vector3(sway.x, sway.y, 0) * positionSwayMultiplier + initialPosition, swayCurve.Evaluate(Time.deltaTime * swaySmooth));
+                weaponTransform.localRotation = Quaternion.Slerp(transform.localRotation, initialRotation * Quaternion.Euler(Mathf.Rad2Deg * rotationSwayMultiplier * new Vector3(-sway.y, sway.x, 0)), swayCurve.Evaluate(Time.deltaTime * swaySmooth));
+            }
         }
         
         private void SetADSStatus(OnScopeUsedEvent e)
