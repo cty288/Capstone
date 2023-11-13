@@ -89,9 +89,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         void SpawnLazer()
         {
-            Debug.Log("haha");
             UnityEngine.GameObject b = pool.Allocate();
-            
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
                gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
@@ -100,8 +98,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Quaternion rotation = Quaternion.LookRotation(dir);
             b.transform.position = this.gameObject.transform.position;
             b.transform.rotation = rotation;
-            
-            b.GetComponent<WormBulletLazerNew>().SetData(this.gameObject , dir , player);
+            b.GetComponent<WormBulletLazer>().SetData(this.gameObject , dir , player);
         }
 
         public override void OnEnd()
