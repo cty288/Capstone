@@ -186,6 +186,7 @@ MonoBehaviour:
   Pool: {fileID: 0}
   autoRecycleTime: 5
   penetrateSameFaction: 0
+  autoDestroyWhenOwnerDestroyed: 0
 --- !u!136 &-2924250867306008624
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -194,7 +195,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210517240134548360}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   m_Radius: 1
   m_Height: 1
