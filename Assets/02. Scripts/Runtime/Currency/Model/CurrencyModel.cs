@@ -12,6 +12,12 @@ namespace _02._Scripts.Runtime.Currency.Model {
 		public void RemoveCurrency(CurrencyType currencyType, int amount);
 		
 		public Dictionary<CurrencyType, int> GetCurrencyAmountDict();
+		
+		public bool HasEnoughCurrency(CurrencyType currencyType, int amount) {
+			return GetCurrencyAmountProperty(currencyType) >= amount;
+		}
+		
+		
 	}
 	
 	public struct OnCurrencyAmountChangedEvent {

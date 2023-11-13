@@ -68,6 +68,9 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         }
 
         //int rarityNumToSpawn = rarity - rarityIndicatorTransform.childCount;
+        foreach (Transform child in rarityIndicatorTransform.transform) {
+            Destroy(child.gameObject);
+        }
         for (int i = 0; i < rarity; i++) {
             Instantiate(rarityIndicator, rarityIndicatorTransform);
         }

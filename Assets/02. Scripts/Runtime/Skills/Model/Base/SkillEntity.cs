@@ -43,6 +43,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public void SetOwner(ICanDealDamage owner);
 		
 		public Dictionary<CurrencyType, int> GetSkillUseCostOfCurrentLevel();
+		
+		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfCurrentLevel();
 
 		public int GetLevel();
 
@@ -243,6 +245,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public Dictionary<CurrencyType, int> GetSkillUseCostOfCurrentLevel() {
 			return skillUseCostProperty.GetByLevel(GetRarity());
+		}
+
+		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfCurrentLevel() {
+			return skillUpgradeCostProperty.GetByLevel(GetRarity());
 		}
 
 		public int GetLevel() {

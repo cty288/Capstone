@@ -33,18 +33,18 @@ public class CurrencyIndicatorViewController : MonoBehaviour {
 
     private void Update() {
         if (Mathf.Abs(displayAmount - targetAmount) > 0.1f) {
-            displayAmount = Mathf.Lerp(displayAmount, targetAmount, Time.deltaTime * 5f);
+            displayAmount = Mathf.Lerp(displayAmount, targetAmount, Time.unscaledDeltaTime * 5f);
             titleText.text = $"<sprite index={(int) currencyType}> " + Mathf.RoundToInt(displayAmount).ToString();
             
             if (displayAmount > targetAmount) {
-                titleText.color = Color.Lerp(titleText.color, Color.red, Time.deltaTime * 5f);
+                titleText.color = Color.Lerp(titleText.color, Color.red, Time.unscaledDeltaTime * 5f);
             }
             else {
-                titleText.color = Color.Lerp(titleText.color, Color.green, Time.deltaTime * 5f);
+                titleText.color = Color.Lerp(titleText.color, Color.green, Time.unscaledDeltaTime * 5f);
             }
         }
         else {
-            titleText.color = Color.Lerp(titleText.color, normalColor, Time.deltaTime * 5f);
+            titleText.color = Color.Lerp(titleText.color, normalColor, Time.unscaledDeltaTime * 5f);
         }
     }
 
