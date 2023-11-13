@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 3783150777124001204}
   - component: {fileID: 3783150777124001205}
   - component: {fileID: 3783150777124001208}
-  - component: {fileID: 1807438145181039212}
-  - component: {fileID: 6143253354541092668}
-  - component: {fileID: 5660065465886636461}
+  - component: {fileID: -7791736864738634145}
+  - component: {fileID: 5438387643765507869}
   m_Layer: 0
   m_Name: WormLazer
   m_TagString: Untagged
@@ -148,7 +147,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1807438145181039212
+--- !u!114 &-7791736864738634145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,28 +156,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3783150777124001206}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dc96957271f284483981eb18b94c4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 597db6b630e603142aa446fbb8379132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 0
-  maxDistance: 100
-  detectTime: 1
---- !u!114 &6143253354541092668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3783150777124001206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+    m_Bits: 136
+  dotTick: 0.2
   showDamageNumber: 1
---- !u!114 &5660065465886636461
+--- !u!114 &5438387643765507869
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,8 +183,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  autoRecycleTime: 3.5
+  autoRecycleTime: 3.4
   penetrateSameFaction: 0
-  autoDestroyWhenOwnerDestroyed: 1
+  autoDestroyWhenOwnerDestroyed: 0
   boxCollider: {fileID: 0}
   lineRenderer: {fileID: 0}
