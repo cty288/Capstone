@@ -10,9 +10,16 @@ using UnityEngine;
 public class NextLevelDoor : AbstractMikroController<MainGame> {
 	[SerializeField]
 	private bool goToNextLevelByDefault = false;
+	
+	[SerializeField]
+	private bool isBaseDoor = false;
 	private void OnTriggerEnter(Collider other) {
 		
 		if (other.gameObject.CompareTag("Player")) {
+			if (isBaseDoor) {
+				MainUI.Singleton.Open<BasePreparationUIViewController>(MainUI.Singleton, null);
+				return;
+			}
 			if (goToNextLevelByDefault) {
 				this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
 			}

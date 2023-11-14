@@ -46,7 +46,7 @@ namespace Runtime.UI {
 				return;
 			}
 			
-			if (controlActions.Inventory.WasPressedThisFrame()) {
+			if (controlActions.Inventory.WasPressedThisFrame() && (currentMainPanel == null || UIManager.Singleton.GetPanel<InventoryUIViewController>(true))) {
 				OpenOrGetClose<InventoryUIViewController>(this, null, true);
 			}
 

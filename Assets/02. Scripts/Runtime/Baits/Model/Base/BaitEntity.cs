@@ -129,6 +129,9 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 		
 		
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => null;
+		public override IResourceEntity GetReturnToBaseEntity() {
+			return this;
+		}
 
 		public BaitStatus BaitStatus { get; set; }
 	} 

@@ -71,6 +71,8 @@ namespace Runtime.GameResources.Model.Base {
 		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions();
 		
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition { get; }
+		
+		public IResourceEntity GetReturnToBaseEntity();
 	}
 	
 	//3 forms
@@ -196,6 +198,7 @@ namespace Runtime.GameResources.Model.Base {
 		}
 
 		public Func<Dictionary<CurrencyType, int>,bool> CanInventorySwitchToCondition { get; } = null;
+		public abstract IResourceEntity GetReturnToBaseEntity();
 	}
 
 }

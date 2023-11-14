@@ -393,21 +393,26 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
 			IDirectorModel directorModel = this.GetModel<IDirectorModel>();
 			
+			ISpawnCardsProperty spawnCardsProperty = BoundEntity.GetProperty<ISpawnCardsProperty>();
+			foreach (LevelSpawnCard spawnCard in spawnCardsProperty.RealValue.Value) {
+				enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
+			}
+			
 			while (currentEnemies.Count > 0) {
 				IEntity enemy = currentEnemies.First();
 				currentEnemies.Remove(enemy);
-				enemyModel.RemoveEntity(enemy.UUID);
+				enemyModel.RemoveEntity(enemy.UUID, true);
 			}
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {
-					directorModel.RemoveEntity(directorViewController.Entity.UUID);
+					directorModel.RemoveEntity(directorViewController.Entity.UUID, true);
 				}
 			}
 		
 
 			foreach (IDirectorViewController spawner in playerSpawners) {
-				directorModel.RemoveEntity(spawner.Entity.UUID);
+				directorModel.RemoveEntity(spawner.Entity.UUID, true);
 			}
 			
 			

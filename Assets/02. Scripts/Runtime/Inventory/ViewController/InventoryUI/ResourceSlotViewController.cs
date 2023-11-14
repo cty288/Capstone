@@ -68,6 +68,13 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private bool showTagDetailIcon = false;
         [SerializeField] private int maxPropertyDetailIconCount = 3;
         [SerializeField] private bool allowDrag = true;
+        
+        private Action<ResourceSlotViewController> onSlotClickedCallback;
+
+        public bool AllowDrag {
+            get => allowDrag;
+            set => allowDrag = value;
+        }
         [SerializeField] private RectTransform cantThrowErrorMessage;
         [SerializeField] protected GameObject cantDragBG;
         
@@ -139,8 +146,16 @@ namespace Runtime.Inventory.ViewController {
            // baseWidth = rectTransform.sizeDelta.x;
         }
 
-        public void OnPointerClick() {
-           
+        public virtual void OnPointerClick() {
+           onSlotClickedCallback?.Invoke(this);
+        }
+        
+        public void RegisterOnSlotClickedCallback(Action<ResourceSlotViewController> callback) {
+            onSlotClickedCallback += callback;
+        }
+        
+        public void UnRegisterOnSlotClickedCallback(Action<ResourceSlotViewController> callback) {
+            onSlotClickedCallback -= callback;
         }
         
         public void OnPointerDown(PointerEventData eventData) {
@@ -260,6 +275,7 @@ namespace Runtime.Inventory.ViewController {
     
         protected virtual void Clear() {
             ShowCantThrowMessage(false);
+            
             if (topVC) {
                 GameObjectPoolManager.Singleton.Recycle(topVC);
             }

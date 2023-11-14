@@ -12,6 +12,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
@@ -318,5 +319,9 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public ICanDealDamageRootEntity RootDamageDealer=> owner?.RootDamageDealer;
 		public ICanDealDamageRootViewController RootViewController => null;
+		
+		public override IResourceEntity GetReturnToBaseEntity() {
+			return ResourceVCFactory.Singleton.SpawnNewResourceEntity(EntityName, true, 1);
+		}
 	}
 }

@@ -290,4 +290,9 @@ namespace Runtime.Inventory.Model {
 			return true;
 		}
 	}
+
+	[Serializable]
+	public class PreparationSlot : ResourceSlot {
+		
+	}
 }

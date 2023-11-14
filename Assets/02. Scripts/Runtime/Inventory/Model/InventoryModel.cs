@@ -45,6 +45,11 @@ namespace Runtime.Inventory.Model {
 		
 		void ReplenishHotBarSlot(HotBarCategory category, HotBarSlot targetSlotToReplenish);
 		
+		HashSet<string> GetAllItemUUIDs();
+
+		void AddToBaseStock(IResourceEntity entity);
+		
+		HashSet<PreparationSlot> GetBaseStock(ResourceCategory category);
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -89,6 +94,11 @@ namespace Runtime.Inventory.Model {
 		private Dictionary<HotBarCategory, HotBarSlotsInfo> hotBarSlots =
 			new Dictionary<HotBarCategory, HotBarSlotsInfo>();
 
+		[ES3Serializable]
+		private Dictionary<ResourceCategory, HashSet<PreparationSlot>> baseStockedItems =
+			new Dictionary<ResourceCategory, HashSet<PreparationSlot>>();
+
+		//[ES3Serializable]
 		
 		
 		public static int MaxSlotCount = 32;
@@ -173,8 +183,56 @@ namespace Runtime.Inventory.Model {
 				}
 			}
 		}
-		
-		
+
+		public HashSet<string> GetAllItemUUIDs() {
+			HashSet<string> uuids = new HashSet<string>();
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
+					uuids.UnionWith(slot.GetUUIDList());
+				}
+			}
+
+			foreach (ResourceSlot slot in slots) {
+				uuids.UnionWith(slot.GetUUIDList());
+			}
+			
+			return uuids;
+		}
+
+		public void AddToBaseStock(IResourceEntity entity) {
+			ResourceCategory category = entity.GetResourceCategory();
+			if (!baseStockedItems.ContainsKey(entity.GetResourceCategory())) {
+				baseStockedItems.Add(category, new HashSet<PreparationSlot>());
+			}
+
+			HashSet<PreparationSlot> slots = baseStockedItems[category];
+			bool addSuccess = false;
+			//see if any slot can place this item
+			foreach (PreparationSlot slot in slots) {
+				if (slot.CanPlaceItem(entity)) {
+					if (slot.TryAddItem(entity)) {
+						addSuccess = true;
+						break;
+					}
+				}
+			}
+
+			if (!addSuccess) {
+				PreparationSlot newSlot = new PreparationSlot();
+				newSlot.TryAddItem(entity);
+				slots.Add(newSlot);
+			}
+		}
+
+		public HashSet<PreparationSlot> GetBaseStock(ResourceCategory category) {
+			if (!baseStockedItems.ContainsKey(category)) {
+				return null;
+			}
+
+			return baseStockedItems[category];
+		}
+
+
 		protected override bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
 			return base.AddItemAt(item, slot);
 		}

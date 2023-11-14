@@ -50,7 +50,8 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
          IPickableResourceViewController resourceViewController = item.GetComponent<IPickableResourceViewController>();
          IResourceEntity resourceEntity = resourceViewController.OnBuildNewPickableResourceEntity(false, 1);
 
-         inventorySystem.AddItem(resourceEntity);
+         //inventorySystem.AddItem(resourceEntity);
+         inventoryModel.AddToBaseStock(resourceEntity);
       }
    }
 

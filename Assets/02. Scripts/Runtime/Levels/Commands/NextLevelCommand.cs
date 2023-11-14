@@ -1,4 +1,5 @@
 ﻿using _02._Scripts.Runtime.Levels.Models;
+using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
 
@@ -41,6 +42,8 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 			ILevelModel levelModel = this.GetModel<ILevelModel>();
 			levelModel.SwitchToLevel(0);
 			this.SendEvent<OnReturnToBase>();
+			
+			//((MainGame) MainGame.Interface).SaveGame();
 		}
 		
 		

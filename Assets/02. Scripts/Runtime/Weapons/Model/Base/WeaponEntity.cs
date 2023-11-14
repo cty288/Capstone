@@ -255,6 +255,8 @@ namespace Runtime.Weapons.Model.Base
 
          ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
          public ICanDealDamageRootViewController RootViewController => null;
-       
+         public override IResourceEntity GetReturnToBaseEntity() {
+             return this;
+         }
     }
 }

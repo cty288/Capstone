@@ -34,7 +34,9 @@ namespace Runtime.RunTimeTests.TestMaterial {
 		protected override void OnInitModifiers(int rarity) {
             
 		}
-
+		public override IResourceEntity GetReturnToBaseEntity() {
+			return this;
+		}
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
 		}
