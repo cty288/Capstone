@@ -139,6 +139,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private NavMeshSurface navMeshSurface;
 
 		private HashSet<IDirectorViewController> playerSpawners = new HashSet<IDirectorViewController>();
+		private IDirectorViewController[] bossPillars;
 
 		private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
 		[SerializeField] protected bool autoUpdateNavMeshOnStart = true;
@@ -250,6 +251,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
 				pillar.transform.SetParent(transform);
 			}
+			bossPillars = pillars.Select(p => p.GetComponent<IDirectorViewController>()).ToArray();
 		}
 		private void UpdateWallMaterials() {
 			LayerMask wallMask = LayerMask.NameToLayer("Wall");
@@ -383,6 +385,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (ambientMusic) {
 				//AudioSystem.Singleton.StopMusic();
 			}
+			bossPillars = null;
 		}
 		
 		public void OnExitLevel() {
@@ -393,18 +396,21 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			while (currentEnemies.Count > 0) {
 				IEntity enemy = currentEnemies.First();
 				currentEnemies.Remove(enemy);
-				
 				enemyModel.RemoveEntity(enemy.UUID);
 			}
-			
-			IDirectorViewController[] directors = GetComponentsInChildren<IDirectorViewController>(true);
-			foreach (var directorViewController in directors) {
-				directorModel.RemoveEntity(directorViewController.Entity.UUID);
+
+			if (bossPillars != null) {
+				foreach (var directorViewController in bossPillars) {
+					directorModel.RemoveEntity(directorViewController.Entity.UUID);
+				}
 			}
+		
 
 			foreach (IDirectorViewController spawner in playerSpawners) {
 				directorModel.RemoveEntity(spawner.Entity.UUID);
 			}
+			
+			
 			StopAllCoroutines();
 		}
 

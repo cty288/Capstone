@@ -8,6 +8,7 @@ using DG.Tweening;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,7 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 
 	private Dictionary<LevelExitCondition, TaskElementViewController> taskElements =
 		new Dictionary<LevelExitCondition, TaskElementViewController>(); 
+	private TaskElementViewController enterExitTaskElement;
 
 	[SerializeField] private GameObject taskElementPrefab;
 	private void Awake() {
@@ -30,15 +32,29 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 		taskPanel = transform.Find("TaskPanel").GetComponent<RectTransform>();
 
 		levelModel.CurrentLevel.RegisterWithInitValue(OnLevelChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+		levelSystem.IsLevelExitSatisfied.RegisterOnValueChanged(OnLevelExitSatisfied)
+			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 
 		this.RegisterEvent<OnCurrentLevelExitContitionSatisfied>(OnCurrentLevelExitContitionSatisfied)
 			.UnRegisterWhenGameObjectDestroyed(gameObject);
+	}
+
+	private void OnLevelExitSatisfied(bool arg1, bool condition) {
+		if (condition) {
+			enterExitTaskElement = SpawnTask(new EnterExitCondition());
+		}
+		else {
+			if (enterExitTaskElement) {
+				Destroy(enterExitTaskElement.gameObject);
+			}
+		}
 	}
 
 	private void OnCurrentLevelExitContitionSatisfied(OnCurrentLevelExitContitionSatisfied e) {
 		if (taskElements.TryGetValue(e.Condition, out TaskElementViewController taskElementViewController)) {
 			taskElementViewController.SetCompleted(e.Condition.IsSatisfied());
 		}
+		
 	}
 
 	private void OnLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
@@ -54,13 +70,19 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 		}
 
 		foreach (LevelExitCondition levelExitCondition in newLevel.LevelExitConditions.Values) {
-			GameObject taskObj = Instantiate(taskElementPrefab, taskPanel);
-			TaskElementViewController taskElementViewController = taskObj.GetComponent<TaskElementViewController>();
-			taskElementViewController.Init(levelExitCondition.GetDescription());
-			taskElements.Add(levelExitCondition, taskElementViewController);
+			SpawnTask(levelExitCondition);
 		}
 
+		//StartCoroutine(RebuildLayout());
+	}
+	
+	private TaskElementViewController SpawnTask(LevelExitCondition levelExitCondition) {
+		GameObject taskObj = Instantiate(taskElementPrefab, taskPanel);
+		TaskElementViewController taskElementViewController = taskObj.GetComponent<TaskElementViewController>();
+		taskElementViewController.Init(levelExitCondition.GetDescription());
+		taskElements.Add(levelExitCondition, taskElementViewController);
 		StartCoroutine(RebuildLayout());
+		return taskElementViewController;
 	}
 	
 	private IEnumerator RebuildLayout() {
@@ -108,9 +130,12 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 		taskElements.Clear();
 		explorationProgressSlider.gameObject.SetActive(false);
 		explorationProgressSlider.value = 0;
+		
 
 		for (int i = 0; i < taskPanel.childCount; i++) {
 			Destroy(taskPanel.GetChild(i).gameObject);
 		}
+
+		enterExitTaskElement = null;
 	}
 }

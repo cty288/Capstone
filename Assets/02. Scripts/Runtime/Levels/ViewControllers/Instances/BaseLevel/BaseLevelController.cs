@@ -9,7 +9,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel {
 		[field: ES3Serializable] public override string EntityName { get; set; } = "BaseLevelEntity";
 
 		public override void OnRecycle() {
-			
+			base.OnRecycle();
 		}
 
 		protected override void OnInitModifiers(int rarity) {

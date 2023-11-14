@@ -165,5 +165,6 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
+		
 	}
 }

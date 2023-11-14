@@ -44,5 +44,14 @@ public class ShortCutResourceSlotViewController : ResourceSlotViewController {
          }
       }
    }
-   
+
+   protected override void Clear() {
+      base.Clear();
+      if (currencyTexts != null) {
+         foreach (TMP_Text text in currencyTexts) {
+            text.gameObject.SetActive(false);
+         }
+      }
+      
+   }
 }

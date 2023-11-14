@@ -26,6 +26,7 @@ using Runtime.Weapons.ViewControllers;
 using Runtime.Weapons.ViewControllers.CrossHairs;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
@@ -161,6 +162,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			mainCamera = Camera.main;
 			canInteractRc.RegisterOnValueChanged(OnCanInteractChanged)
 				.UnRegisterWhenGameObjectDestroyed(gameObject);
+			//Assert.IsTrue(this.enabled);
 		}
 
 
@@ -220,7 +222,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		private void OnLevelChange(ILevelEntity oldLevel, ILevelEntity newLevel) {
-			if (CanAutoRemoveEntityWhenLevelEnd && oldLevel!=null && newLevel!= null && newLevel.UUID != oldLevel.UUID) {
+			if (CanAutoRemoveEntityWhenLevelEnd  && newLevel.UUID != oldLevel.UUID) {
+				transform.SetParent(null);
 				entityModel.RemoveEntity(BoundEntity.UUID);
 			}
 		}
@@ -261,6 +264,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		/// <param name="category"></param>
 		/// <returns></returns>
 		protected (GameObject, CrossHairManagedHUDInfo) SpawnCrosshairResponseHUDElement(Transform followTransform, string prefabName, HUDCategory category, bool autoAdjust = true) {
+			string id = followTransform.GetHashCode().ToString() + category.ToString();
+			if (crossHairManagedHUDs.ContainsKey(id)) {
+				return (crossHairManagedHUDs[id].spawnedHUD, crossHairManagedHUDs[id]);
+			}
+			
 			if(followTransform.TryGetComponent<KeepGlobalRotation>(out var keepGlobalRotation)) {
 				
 				
@@ -272,9 +280,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				spawnedElement.SetActive(isPointed);
 
 
-				string id = followTransform.GetHashCode().ToString() + category.ToString();
 				
-				crossHairManagedHUDs.Add(id,
+				
+				crossHairManagedHUDs.TryAdd(id,
 					new CrossHairManagedHUDInfo(followTransform, keepGlobalRotation, realHealthBarPositionOffset,
 						spawnedElement, category, autoAdjust));
 
@@ -511,9 +519,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				BoundEntity.UnRegisterOnEntityRecycled(OnEntityRecycled);
 			}
 
-			Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
-			HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
-
+				//HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
+			//HUDManager.Singleton.DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
+			
 			/*if (autoRemoveEntityWhenDestroyedOrRecycled) {
 				entityModel.RemoveEntity(ID);
 			}*/
@@ -526,10 +534,18 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			canInteractRc.Value = 2;
 			currentInteractiveHint = null;
 			interactiveHintHoldTimer = 0;
+			unPointTriggered = false;
+			unInteractTriggered = false;
+			
 		}
 
 		protected virtual void OnReadyToRecycle() {
 			//gameObject.SetActive(false);
+			Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
+
+			HUDManager.Singleton.DespawnHUDElement(tr, HUDCategory.InteractiveTag);
+			DespawnHUDElement(nameTagFollowTransform, HUDCategory.NameTag);
+
 			string[] keys = crossHairManagedHUDs.Keys.ToArray();
 			foreach (string key in keys) {
 				DespawnHUDElement(crossHairManagedHUDs[key].originalSpawnTransform,
@@ -538,6 +554,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			crossHairManagedHUDs.Clear();
 			isPointed = false;
 			isInteractiveHintActive = false;
+			unPointTriggered = false;
+			unInteractTriggered = false;
 		}
 
 		protected abstract IEntity OnBuildNewEntity();
@@ -796,6 +814,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				
 					GameObject hud = HUDManager.Singleton.SpawnHUDElement(tr, interactiveHintPrefabName,
 						HUDCategory.InteractiveTag, true);
+					
+					
 					if (hud) {
 						currentInteractiveHint = hud.GetComponent<InteractiveHint>();
 						if (currentInteractiveHint != null) {
@@ -829,7 +849,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 			if (showNameTagWhenPointed && !String.IsNullOrEmpty(nameTagPrefabName)) {
 				if(nameTagFollowTransform && crossHairHUDTimer <= 0f && !isPointPreviously) {
-					(GameObject, CrossHairManagedHUDInfo) nameTagInfo =
+					 (GameObject, CrossHairManagedHUDInfo) nameTagInfo =
 						SpawnCrosshairResponseHUDElement(nameTagFollowTransform, nameTagPrefabName,
 							HUDCategory.NameTag, nameTagAutoAdjustHeight);
 					GameObject

@@ -11,6 +11,7 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 		
 		protected override void OnExecute() {
 			ILevelModel levelModel = this.GetModel<ILevelModel>();
+			
 			levelModel.SwitchToLevel(levelModel.CurrentLevelCount.Value + 1);
 		}
 		

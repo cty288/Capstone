@@ -36,7 +36,7 @@ public class ThrownGrenadeViewController : MonoBehaviour
 
 
     private void OnCollisionEnter(Collision other) {
-        if (other.collider.isTrigger) {
+        if (!CheckCollider(other.collider)) {
             return;
         }
         if(PhysicsUtility.IsInLayerMask(other.collider.gameObject, detectionLayer) && !explosionDelayStarted) {
@@ -44,19 +44,27 @@ public class ThrownGrenadeViewController : MonoBehaviour
             StartCoroutine(ExplosionDelay(explosionDelay));
         }
         
-        if (other.gameObject.TryGetComponent<ICreatureViewController>(out var creatureVC)) {
+        if (other.gameObject.TryGetComponent<ICreatureViewController>(out var creatureVC) || other.collider.gameObject.layer == LayerMask.NameToLayer("Hurtbox")) {
             Explode();
         }
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.isTrigger) {
+        if (!CheckCollider(other)) {
             return;
         }
         
-        if (other.gameObject.TryGetComponent<ICreatureViewController>(out var creatureVC)) {
+        if (other.gameObject.TryGetComponent<ICreatureViewController>(out var creatureVC) || other.gameObject.layer == LayerMask.NameToLayer("Hurtbox")) {
             Explode();
         }
+    }
+
+    private bool CheckCollider(Collider other) {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Hurtbox")) {
+            return true;
+        }
+
+        return !other.isTrigger;
     }
 
 
