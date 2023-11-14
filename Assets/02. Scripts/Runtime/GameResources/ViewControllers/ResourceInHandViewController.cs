@@ -115,6 +115,7 @@ namespace Runtime.GameResources.ViewControllers {
 			pickableLayerMask = LayerMask.GetMask("PickableResource");
 			inventorySystem = this.GetSystem<IInventorySystem>();
 			InitObjectsToChangeLayerInHand();
+			originalAutoRemovalTimeWhenNoAbsorb = autoRecycleTimeWhenNoAbsorb;
 		}
 
 		protected override void Update() {
@@ -195,7 +196,7 @@ namespace Runtime.GameResources.ViewControllers {
 			isHolding = false;
 			rigidbody.isKinematic = false;
 			this.ownerGameObject = null;
-			entityAutoRemovalTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
+			autoRecycleTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
 		}
 
 
@@ -207,6 +208,7 @@ namespace Runtime.GameResources.ViewControllers {
 			base.HandleAbsorb(player, zone);
 		}
 
+		
 		public virtual void OnStartHold(GameObject ownerGameObject) {
 			/*this.SendEvent<PlayerSwitchAnimEvent>(new PlayerSwitchAnimEvent()
 			{
@@ -219,8 +221,8 @@ namespace Runtime.GameResources.ViewControllers {
 				selfCollider.isTrigger = true;
 			}
 
-			originalAutoRemovalTimeWhenNoAbsorb = entityAutoRemovalTimeWhenNoAbsorb;
-			entityAutoRemovalTimeWhenNoAbsorb = -1;
+			
+			autoRecycleTimeWhenNoAbsorb = -1;
 			this.ownerGameObject = ownerGameObject;
 			SwitchToPickableLayer();
 			OnUnPointByCrosshair();
@@ -269,6 +271,7 @@ namespace Runtime.GameResources.ViewControllers {
 			base.OnPointByCrosshair();
 		}
 
+		
 		protected override void OnEntityRecycled(IEntity ent) {
 			base.OnEntityRecycled(ent);
 			transform.localScale = Vector3.one;

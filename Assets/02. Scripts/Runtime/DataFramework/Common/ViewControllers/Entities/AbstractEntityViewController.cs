@@ -473,7 +473,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			readyToRecycled = true;
 			gameObject.SetActive(false);
 			StopAllCoroutines();
-			BoundEntity.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
+			BoundEntity?.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
 			OnReadyToRecycle();
 		}
 

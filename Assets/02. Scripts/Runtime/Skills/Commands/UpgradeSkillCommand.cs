@@ -17,7 +17,7 @@ namespace _02._Scripts.Runtime.Skills.Commands {
 				ResourceVCFactory.Singleton.SpawnNewResourceEntity(originalSkill.EntityName, true, level) as ISkillEntity;
 			ICurrencyModel currencyModel = this.GetModel<ICurrencyModel>();
 			ISkillModel skillModel = this.GetModel<ISkillModel>();
-			IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
 
 			var cost = upgradedSkill.GetSkillUpgradeCostOfCurrentLevel();
 			
@@ -33,9 +33,9 @@ namespace _02._Scripts.Runtime.Skills.Commands {
 				foreach (CurrencyType costKey in cost.Keys) {
 					currencyModel.RemoveCurrency(costKey, cost[costKey]);
 				}
-				inventoryModel.RemoveItem(originalSkill.UUID);
+				inventorySystem.RemoveItem(originalSkill);
 				skillModel.RemoveEntity(originalSkill.UUID);
-				inventoryModel.AddItem(upgradedSkill);
+				inventorySystem.AddItem(upgradedSkill);
 				onSkillUpgradeSuccessCallback?.Invoke(upgradedSkill);
 			}
 			else {

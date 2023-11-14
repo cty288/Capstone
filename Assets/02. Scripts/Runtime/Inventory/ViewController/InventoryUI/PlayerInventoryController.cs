@@ -26,12 +26,14 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
 
    private DPunkInputs.SharedActions sharedActions;
    private IInventoryModel inventoryModel;
+   private IInventorySystem inventorySystem;
    private IGamePlayerModel playerModel;
    
    private void Awake() {
       sharedActions = ClientInput.Singleton.GetSharedActions();
       this.RegisterEvent<OnPlayerThrowResource>(OnPlayerThrowResource).UnRegisterWhenGameObjectDestroyed(gameObject);
       inventoryModel = this.GetModel<IInventoryModel>();
+      inventorySystem = this.GetSystem<IInventorySystem>();
       playerModel = this.GetModel<IGamePlayerModel>();
    }
 
@@ -48,7 +50,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
          IPickableResourceViewController resourceViewController = item.GetComponent<IPickableResourceViewController>();
          IResourceEntity resourceEntity = resourceViewController.OnBuildNewPickableResourceEntity(false, 1);
 
-         inventoryModel.AddItem(resourceEntity);
+         inventorySystem.AddItem(resourceEntity);
       }
    }
 

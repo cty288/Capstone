@@ -228,6 +228,31 @@ namespace Runtime.Inventory.Model {
 			lockSwitchCounter.Release(locker);
 		}
 
+		public bool AddItem(IResourceEntity item, bool sendEvent = true) {
+			if (model.AddItem(item)) {
+				if (sendEvent) {
+					if (sendEvent) {
+						this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
+							Item = item
+						});
+					}
+					item.OnAddedToInventory();
+				}
+				return true;
+			}
+
+			return false;
+		}
+
+		public bool CanPlaceItem(IResourceEntity item) {
+			return model.CanPlaceItem(item);
+		}
+
+		public bool RemoveItem(IResourceEntity entity) {
+			return model.RemoveItem(entity?.UUID);
+		}
+
+
 		private void AddInitialSlots() {
 			model.AddSlots(InitialSlotCount);
 

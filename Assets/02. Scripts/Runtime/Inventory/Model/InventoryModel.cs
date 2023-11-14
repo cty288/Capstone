@@ -45,8 +45,6 @@ namespace Runtime.Inventory.Model {
 		
 		void ReplenishHotBarSlot(HotBarCategory category, HotBarSlot targetSlotToReplenish);
 		
-		
-		
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -170,7 +168,7 @@ namespace Runtime.Inventory.Model {
 				
 				if (targetSlotToReplenish.CanPlaceItem(resourceEntity)) {
 					resourceSlot.RemoveLastItem();
-					AddItemAt(resourceEntity, targetSlotToReplenish, false);
+					AddItemAt(resourceEntity, targetSlotToReplenish);
 					break;
 				}
 			}
@@ -178,23 +176,10 @@ namespace Runtime.Inventory.Model {
 		
 		
 		protected override bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
-			return AddItemAt(item, slot, true);
+			return base.AddItemAt(item, slot);
 		}
 		
-		private bool AddItemAt(IResourceEntity item, ResourceSlot slot, bool sendEvent) {
-			if (base.AddItemAt(item, slot)) {
-				if (sendEvent) {
-					this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
-						Item = item
-					});
-				}
-				item.OnAddedToInventory();
-				return true;
-			}
-
-			return false;
-		}
-
+	
 		public override bool RemoveItem(string uuid) {
 			//check each hot bar first
 			foreach (var hotBarSlot in hotBarSlots) {

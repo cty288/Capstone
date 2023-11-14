@@ -8,6 +8,7 @@ namespace Tests.Tests_Editor {
 	public class TestInventory {
 		
 		private IInventoryModel inventoryModel;
+		//private IInventorySystem inventorySystem;
 		private IRawMaterialModel rawMaterialModel;
 		private IInventorySystem inventorySystem;
 		
@@ -25,7 +26,7 @@ namespace Tests.Tests_Editor {
 		[Test]
 		public void AddItem_ShouldWork() {
 			IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-			bool result = inventoryModel.AddItem(item);
+			bool result = inventorySystem.AddItem(item);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, inventoryModel.GetAllSlots()[0].GetQuantity());
 		}
@@ -39,12 +40,12 @@ namespace Tests.Tests_Editor {
 			
 			for (int i = 0; i < 20; i++) {
 				IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-				inventoryModel.AddItem(item);
+				inventorySystem.AddItem(item);
 			}
 			
 			IResourceEntity newItem = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
 			bool canPlace = inventoryModel.CanPlaceItem(newItem);
-			bool result = inventoryModel.AddItem(newItem);
+			bool result = inventorySystem.AddItem(newItem);
 			
 			Assert.IsTrue(canPlace);
 			Assert.IsTrue(result);
@@ -58,11 +59,11 @@ namespace Tests.Tests_Editor {
 			
 			for (int i = 0; i < 20; i++) {
 				IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-				inventoryModel.AddItem(item);
+				inventorySystem.AddItem(item);
 			}
 			
 			IResourceEntity item2 = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-			bool result = inventoryModel.AddItem(item2);
+			bool result = inventorySystem.AddItem(item2);
     
 			Assert.IsTrue(result);
 			Assert.AreEqual(20, inventoryModel.GetSlotCurrentItemCount(0));
@@ -77,13 +78,13 @@ namespace Tests.Tests_Editor {
 			for (int i = 0; i < inventoryModel.GetSlotCount(); i++) {
 				for (int j = 0; j < 20; j++) {
 					IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-					inventoryModel.AddItem(item);
+					inventorySystem.AddItem(item);
 				}
 			}
 			
 			IResourceEntity item2 = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
 			bool canPlace = inventoryModel.CanPlaceItem(item2);
-			bool result = inventoryModel.AddItem(item2);
+			bool result = inventorySystem.AddItem(item2);
 			
 			Assert.IsFalse(canPlace);
 			Assert.IsFalse(result);
@@ -100,13 +101,13 @@ namespace Tests.Tests_Editor {
 			for (int i = 0; i < inventoryModel.GetSlotCount(); i++) {
 				for (int j = 0; j < 20; j++) {
 					IResourceEntity itemA = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-					inventoryModel.AddItem(itemA);
+					inventorySystem.AddItem(itemA);
 				}
 			}
 
 			
 			bool canPlace = inventoryModel.CanPlaceItem(itemB);
-			bool result = inventoryModel.AddItem(itemB);
+			bool result = inventorySystem.AddItem(itemB);
 
 			
 			Assert.IsFalse(canPlace);
@@ -121,10 +122,10 @@ namespace Tests.Tests_Editor {
 			IResourceEntity itemB = rawMaterialModel.GetRawMaterialBuilder<TestEmptyRawMaterial>().FromConfig().Build();
     
 			
-			inventoryModel.AddItem(itemA);
+			inventorySystem.AddItem(itemA);
 
 			
-			bool result = inventoryModel.AddItem(itemB);
+			bool result = inventorySystem.AddItem(itemB);
 			
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, inventoryModel.GetSlotCurrentItemCount(0)); 
@@ -135,9 +136,9 @@ namespace Tests.Tests_Editor {
 		public void RemoveItem_Successfully() {
 			
 			IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-			inventoryModel.AddItem(item);
+			inventorySystem.AddItem(item);
 			
-			bool result = inventoryModel.RemoveItem(item.UUID);
+			bool result = inventorySystem.RemoveItem(item);
     
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, inventoryModel.GetSlotCurrentItemCount(0));
@@ -149,11 +150,11 @@ namespace Tests.Tests_Editor {
 			IResourceEntity item1 = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
 			IResourceEntity item2 = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
     
-			inventoryModel.AddItem(item1);
-			inventoryModel.AddItem(item2);
+			inventorySystem.AddItem(item1);
+			inventorySystem.AddItem(item2);
 
 			
-			bool result = inventoryModel.RemoveItem(item1.UUID);
+			bool result = inventorySystem.RemoveItem(item1);
     
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, inventoryModel.GetSlotCurrentItemCount(0));
@@ -174,7 +175,7 @@ namespace Tests.Tests_Editor {
 		public void ResetInventory_Successfully() {
 			inventoryModel.AddSlots(5);
 			IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-			inventoryModel.AddItem(item);
+			inventorySystem.AddItem(item);
     
 			// 重置库存
 			inventorySystem.ResetSlots();
@@ -197,7 +198,7 @@ namespace Tests.Tests_Editor {
 		public void RemoveMultipleItemsFromFullSlot() {
 			for (int i = 0; i < 20; i++) {
 				IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-				inventoryModel.AddItem(item);
+				inventorySystem.AddItem(item);
 			}
 			
 			for (int i = 0; i < 10; i++) {
@@ -217,8 +218,8 @@ namespace Tests.Tests_Editor {
 			inventoryModel.GetAllSlots()[1].TryAddItem(itemB);
 
 		
-			bool resultA = inventoryModel.RemoveItem(itemA.UUID);
-			bool resultB = inventoryModel.RemoveItem(itemB.UUID);
+			bool resultA = inventorySystem.RemoveItem(itemA);
+			bool resultB = inventorySystem.RemoveItem(itemB);
 
 			Assert.IsTrue(resultA);
 			Assert.IsTrue(resultB);
@@ -253,8 +254,8 @@ namespace Tests.Tests_Editor {
 			inventoryModel.AddItem(itemB);
     
 			
-			bool resultB = inventoryModel.RemoveItem(itemB.UUID);
-			bool resultA = inventoryModel.RemoveItem(itemA.UUID);
+			bool resultB = inventorySystem.RemoveItem(itemB);
+			bool resultA = inventorySystem.RemoveItem(itemA);
 
 			Assert.IsTrue(resultB);
 			Assert.IsTrue(resultA);
