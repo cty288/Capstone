@@ -21,9 +21,10 @@ namespace a
         private float waitBeforeRotate = 1.5f;
         private float timer = 1.5f;
         private GameObject player;
-        public GameObject particlePrefab;
+        //public GameObject particlePrefab;
         private GameObject particleInstance;
         private SafeGameObjectPool pool;
+        
 
         bool pause = false;
 
@@ -35,7 +36,7 @@ namespace a
 
             
             transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-            pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 10, 20);
+           // pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 10, 20);
 
 
 
@@ -185,6 +186,7 @@ namespace a
             
             if (collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
             {
+                /*
                 if(collision.gameObject.layer == 11)
                 {
                     if (particleInstance == null)
@@ -199,7 +201,7 @@ namespace a
                     particleInstance.transform.position = (hitPoint);
                     particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
                 }
-                
+                */
 
                 pause = true;
             }
