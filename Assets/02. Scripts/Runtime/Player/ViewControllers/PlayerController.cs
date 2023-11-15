@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
@@ -34,14 +35,14 @@ namespace Runtime.Temporary
        // private int levelTimer = 0;
        
         private ILevelModel levelModel;
-        private ICurrencyModel currencyModel;
+        private ICurrencySystem currencySystem;
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
             this.RegisterEvent<OnPlayerTeleport>(OnPlayerTeleport).UnRegisterWhenGameObjectDestroyed(gameObject);
             triggerCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
             levelModel = this.GetModel<ILevelModel>();
-            currencyModel = this.GetModel<ICurrencyModel>();
+            currencySystem = this.GetSystem<ICurrencySystem>();
             levelModel.CurrentLevelCount.RegisterWithInitValue(OnCurrentLevelNumChanged)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -71,7 +72,7 @@ namespace Runtime.Temporary
                         currency = timeCurrencyRate.Evaluate(levelTime);
                     }
 
-                    currencyModel.AddCurrency(CurrencyType.Time, Mathf.RoundToInt(currency));
+                    currencySystem.AddCurrency(CurrencyType.Time, Mathf.RoundToInt(currency));
                 }
             }
         }

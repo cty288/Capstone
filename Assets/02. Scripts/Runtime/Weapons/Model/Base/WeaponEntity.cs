@@ -68,10 +68,7 @@ namespace Runtime.Weapons.Model.Base
         
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
-
-        public override string AnimLayerName { get => animLayerName; }
         
-        public string animLayerName =  "Revolver";
         
         public abstract int Width { get; }
 
@@ -103,8 +100,8 @@ namespace Runtime.Weapons.Model.Base
             }
         }
 
-        public override void OnAwake() {
-            base.OnAwake();
+        public override void OnResourceAwake() {
+            base.OnResourceAwake();
             baseDamageProperty = GetProperty<IBaseDamage>();
             attackSpeedProperty = GetProperty<IAttackSpeed>();
             rangeProperty = GetProperty<IRange>();
@@ -216,6 +213,7 @@ namespace Runtime.Weapons.Model.Base
 
         public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer) {
             this.rootDamageDealer = rootDamageDealer;
+            CurrentFaction.Value = rootDamageDealer.CurrentFaction.Value;
         }
 
         public void Reload() {
@@ -246,8 +244,7 @@ namespace Runtime.Weapons.Model.Base
             return "???";
         }
 
-        [field: ES3Serializable]
-        public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
+        [field: ES3Serializable] public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
         public void OnKillDamageable(IDamageable damageable) {
             
         }
@@ -258,5 +255,8 @@ namespace Runtime.Weapons.Model.Base
 
          ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
          public ICanDealDamageRootViewController RootViewController => null;
+         public override IResourceEntity GetReturnToBaseEntity() {
+             return this;
+         }
     }
 }

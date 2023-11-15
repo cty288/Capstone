@@ -639,13 +639,18 @@ MonoBehaviour:
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 3620443720334071876}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  entityAutoRemovalTimeWhenNoAbsorb: 120
+  autoRecycleTimeWhenNoAbsorb: 120
+  alsoRemoveEntityWhenNoAbsorb: 1
   <InHandLocalPosition>k__BackingField: {x: 0, y: 0, z: 0}
   <InHandLocalRotation>k__BackingField: {x: 0, y: 0, z: 0}
   objectToChangeLayerInHand:
@@ -685,21 +690,27 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
   <InHandLocalScale>k__BackingField: {x: 1, y: 1, z: 1}
+  <AnimLayerInfos>k__BackingField:
+  - LayerName: Revolver
+    LayerWeight: 1
+  <PlayerAnimStateToWaitWhenStopHold>k__BackingField: []
   crossHairPrefabName: DefaultCrossHair
   model: {fileID: 4243372108615127244}
   autoReload: 1
   layer:
     serializedVersion: 2
     m_Bits: 2433
+  hipFireCameraPositionOverride: {x: -0.04, y: -0.13, z: -0.25}
+  adsCameraPositionOverride: {x: -0.003, y: -0.123, z: 0}
   hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
     type: 3}
   hitVFXSystem: {fileID: 2837599302790063516}
+  animator: {fileID: 9011050510399414913}
+  reloadAnimationLength: 3
   trailRenderer: {fileID: 8009820199792817655}
   bulletVFX:
   - {fileID: 6895374929032582147}
   - {fileID: 4786992204249495899}
-  animator: {fileID: 9011050510399414913}
-  reloadAnimationLength: 3
   overrideName: RustyPistol
 --- !u!54 &1634876173769045248
 Rigidbody:
@@ -1911,6 +1922,7 @@ MonoBehaviour:
   - {fileID: 1536236409705227564}
   - {fileID: 662901352450620367}
   gunBarrelIndicator: {fileID: 2100000, guid: 3f156aadd9fe9b848a447b1dcc065f17, type: 2}
+  updateIndicators: 1
 --- !u!4 &4453400075991989290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 45ad3489be993c341ad9d44c34494cdc,

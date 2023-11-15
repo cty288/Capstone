@@ -11,7 +11,7 @@ namespace Runtime.DataFramework.Entities {
 	
 		public IEntity GetEntity(string id);
 	
-		public bool RemoveEntity(string id);
+		public bool RemoveEntity(string id, bool force = false);
 	
 		public int EntityCount { get; }
 	}
@@ -85,11 +85,11 @@ namespace Runtime.DataFramework.Entities {
 			return default;
 		}
 
-		public virtual bool RemoveEntity(string id) {
+		public virtual bool RemoveEntity(string id, bool force = false) {
 			if (entities.ContainsKey(id)) {
 				IEntity entity = entities[id];
 				entity.RegisterOnRecycleRCZeroRef(OnEntityReadyToRecycle);
-				entity.ReadyToRecycle();
+				entity.ReadyToRecycle(force);
 				return true;
 			}
 			return false;

@@ -217,8 +217,12 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 
 		public override void OnRecycle() {
+			
 			isInBattle = false;
 			CurrentEnemyCount = 0;
+			LevelExitConditions.Clear();
+			onLevelExit = null;
+			IsInBossFight.Value = false;
 		}
 	}
 }

@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Skills.Model.Base;
+using MikroFramework.BindableProperty;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.ViewController;
+using Runtime.Weapons.Model.Base;
 
 namespace Runtime.Inventory.Model {
 	[Serializable]
 	public class ResourceSlot {
 		public static ResourceSlotViewController currentHoveredSlot = null;
+
+		public static BindableProperty<ResourceSlot> currentDraggingSlot =
+			new BindableProperty<ResourceSlot>(null);
 		[ES3Serializable]
-		private string ItemKey = null;
+		protected string ItemKey = null;
 		//public int Quantity = 0;
 		[ES3Serializable]
 		private List<string> UUIDList;
@@ -54,7 +61,7 @@ namespace Runtime.Inventory.Model {
 				}
 				UUIDList.Add(item.UUID);
 				UUIDSetMain.Add(item.UUID);
-				item.OnPicked();
+				item.OnAddedToSlot();
 				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 				return true;
 			}
@@ -134,16 +141,16 @@ namespace Runtime.Inventory.Model {
 		/// <param name="otherSlot"></param>
 		/// <param name="topItem"></param>
 		/// <returns></returns>
-		public void TryMoveAllItemFromSlot(ResourceSlot otherSlot, IResourceEntity topItem) {
+		public bool TryMoveAllItemFromSlot(ResourceSlot otherSlot, IResourceEntity topItem) {
 			if (otherSlot.IsEmpty() || !CanPlaceItem(topItem, true)) {
-				return;
+				return false;
 			}
 			
 
 			
 			
 			if (!IsEmpty() && ItemKey != otherSlot.ItemKey) {
-				SwapSlotItems(this, otherSlot);
+				return SwapSlotItems(this, otherSlot);
 			}else {
 				if (IsEmpty()) {
 					ItemKey = otherSlot.ItemKey;
@@ -170,8 +177,9 @@ namespace Runtime.Inventory.Model {
 				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
 				otherSlot.OnSlotUpdateCallback?.Invoke(otherSlot, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
 			}
-
 			
+			return true;
+
 		}
 		
 		public bool ContainsItem(string uuid) {
@@ -212,28 +220,49 @@ namespace Runtime.Inventory.Model {
 		public List<string> GetUUIDList() {
 			return UUIDList;
 		}
+
+		public virtual bool GetCanThrow(IResourceEntity item) {
+			if (item == null || item is ISkillEntity) {
+				return false;
+			}
+
+			return true;
+		}
 	}
 
 
+	public abstract class HotBarSlot : ResourceSlot {
+		public virtual bool GetCanSelect(IResourceEntity topItem, Dictionary<CurrencyType, int> currencyDict) {
+			if(topItem == null || topItem.CanInventorySwitchToCondition == null) {
+				return true;
+			}
+			
+			return topItem.CanInventorySwitchToCondition(currencyDict);
+		}
+	}
+	
+
 	[Serializable]
-	public class LeftHotBarSlot : ResourceSlot {
+	public class LeftHotBarSlot : HotBarSlot {
 		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
 			if(item == null) {
 				return false;
 			}
 			if (item.GetResourceCategory() != ResourceCategory.Bait &&
-			    item.GetResourceCategory() != ResourceCategory.Item) {
+			    item.GetResourceCategory() != ResourceCategory.Item &&
+			    item.GetResourceCategory() != ResourceCategory.Skill) {
 				return false;
 			}
 			return base.CanPlaceItem(item, isSwapping);
 		}
+		
 	}
 	
 	
 	[Serializable]
-	public class RightHotBarSlot : ResourceSlot {
+	public class RightHotBarSlot : HotBarSlot {
 		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
-			if (item.GetResourceCategory() != ResourceCategory.Weapon) {
+			if (item!=null && item.GetResourceCategory() != ResourceCategory.Weapon) {
 				return false;
 			}
 			return base.CanPlaceItem(item, isSwapping);
@@ -242,6 +271,49 @@ namespace Runtime.Inventory.Model {
 	
 	[Serializable]
 	public class RubbishSlot : ResourceSlot {
-		
+		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
+			if (item!=null && item.GetResourceCategory() == ResourceCategory.Skill) {
+				return false;
+			}
+
+			return base.CanPlaceItem(item, isSwapping);
+		}
+	}
+	
+	[Serializable]
+	public class UpgradeSlot : ResourceSlot {
+		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
+			if (item == null || item.GetResourceCategory() != ResourceCategory.Skill) {
+				return false;
+			}
+
+			return true;
+		}
+	}
+
+	[Serializable]
+	public class PreparationSlot : ResourceSlot {
+		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
+			//infinite size
+			if (IsEmpty()) {
+				return true;
+			}
+
+			//int maxCount = item.GetMaxStackProperty().RealValue.Value;
+			//if (slotMaxItemCount >= 0) {
+			//	maxCount = Math.Min(maxCount, slotMaxItemCount);
+			//}
+
+			if (!isSwapping) {
+				if (ItemKey == item.EntityName && !ContainsItem(item.UUID)) {
+					return true;
+				}
+			}else {
+				return true;
+			}
+
+
+			return false;
+		}
 	}
 }

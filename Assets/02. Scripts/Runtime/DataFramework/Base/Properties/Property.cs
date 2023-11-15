@@ -286,7 +286,10 @@ namespace Runtime.DataFramework.Properties {
 	
 		protected virtual T OnClone(T value) {
 			if (typeof(T).IsClass && typeof(ICloneable).IsAssignableFrom(typeof(T))) {
-				return (T) ((ICloneable) value).Clone();
+				if (value != null) {
+					return (T) ((ICloneable) value).Clone();
+				}
+				
 			}
 		
 			return value;

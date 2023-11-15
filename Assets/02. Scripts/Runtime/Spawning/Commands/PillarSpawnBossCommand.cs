@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using MikroFramework.Architecture;
@@ -15,9 +16,9 @@ namespace Runtime.Spawning.Commands {
 		private Dictionary<CurrencyType, int> totalCosts;
 		private int rarity;
 		protected override void OnExecute() {
-			ICurrencyModel currencyModel = this.GetModel<ICurrencyModel>();
+			ICurrencySystem currencySystem = this.GetSystem<ICurrencySystem>();
 			foreach (CurrencyType currencyType in totalCosts.Keys) {
-				currencyModel.RemoveCurrency(currencyType, totalCosts[currencyType]);
+				currencySystem.RemoveCurrency(currencyType, totalCosts[currencyType]);
 			}
 			this.SendEvent<OnRequestPillarSpawnBoss>(new OnRequestPillarSpawnBoss() {
 				Pillar = pillar,

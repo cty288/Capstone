@@ -9,7 +9,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace _02._Scripts.Runtime.CollectableResources.Model.Properties {
 
 	[Serializable]
-	public class CollectableResourceCurrencyInfo : ICloneable{
+	public class CollectableResourceCurrencyInfo : ICloneable {
 		public CurrencyType currencyType;
 		public Vector2Int amountRange;
 
@@ -22,11 +22,11 @@ namespace _02._Scripts.Runtime.CollectableResources.Model.Properties {
 		}
 	}
 	
-	public interface ICollectableResourceCurrencyList : IListProperty<CollectableResourceCurrencyInfo> {
+	public interface ICollectableResourceCurrencyList : IListProperty<CollectableResourceCurrencyInfo>, ILoadFromConfigProperty {
 		
 	}
 
-	public class CollectableResourceCurrencyList : ListProperty<CollectableResourceCurrencyInfo>,
+	public class CollectableResourceCurrencyList : IndependentLoadFromConfigListProperty<CollectableResourceCurrencyInfo>,
 		ICollectableResourceCurrencyList{
 		protected override PropertyName GetPropertyName() {
 			return PropertyName.collectable_resource_currency_list;

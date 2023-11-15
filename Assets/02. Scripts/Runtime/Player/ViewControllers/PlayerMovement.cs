@@ -111,7 +111,9 @@ namespace Runtime.Player.ViewControllers
         //todo: entity data
         [SerializeField]
         private float airMultiplier = 0.5f;
-    
+        [SerializeField]private PhysicMaterial airMaterial;
+        [SerializeField]private PhysicMaterial groundMaterial;
+        [SerializeField] private Collider playerCollider;
         //temporary
         private bool readyToJump;
         
@@ -130,14 +132,15 @@ namespace Runtime.Player.ViewControllers
 
         private TriggerCheck groundCheck;
 
-        private float airTimer = 0f;
+        //private float airTimer = 0f;
         //public LayerMask whatIsGround;
-        private bool grounded {
-            get => groundCheck.Triggered ||airTimer<0.3f;
+        private bool grounded
+        {
+            get => groundCheck.Triggered;
         }
 
         private bool onSlope;
-        
+   
         
 
         
@@ -172,7 +175,9 @@ namespace Runtime.Player.ViewControllers
         [SerializeField]
         private float maxWallRunTime;
         private float wallRunTimer;
-        
+
+
+        private bool wasWallRunning;
         //wallrun checks
         [SerializeField]
         private  float wallCheckDistance;
@@ -276,18 +281,9 @@ namespace Runtime.Player.ViewControllers
 
                 onSlope = OnSlope();
             }
-            if (Input.GetKeyDown(KeyCode.F5)) {
-                ((MainGame) MainGame.Interface).SaveGame();
-            }
+            
 
-            if (groundCheck.Triggered)
-            {
-                airTimer = 0;
-            }
-            else
-            {
-                airTimer += Time.deltaTime;
-            }
+
         }
 
         
@@ -298,9 +294,17 @@ namespace Runtime.Player.ViewControllers
             //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
             // handle drag
             if (grounded)
+            {
                 rb.drag = playerEntity.GetGroundDrag().RealValue;
-            else
+                wasWallRunning = false;
+                playerCollider.material = groundMaterial;
+                
+            }
+            else {
                 rb.drag = playerEntity.GetAirDrag().RealValue;
+                playerCollider.material = airMaterial;
+            }
+                
             MovePlayer();
             
         }
@@ -466,11 +470,11 @@ namespace Runtime.Player.ViewControllers
                 }
                 
                 if(fpsCamera.fieldOfView != fpsFOV - 10)
-                    fpsCamera.DOFieldOfView(fpsFOV - 15, 0.1f);
+                    fpsCamera.DOFieldOfView(fpsFOV - 5, 0.1f);
 
                 ChangeBobVars(0,0);
             }
-            else if (state == MovementState.sprinting)
+            else if (state == MovementState.sprinting||(state == MovementState.air&& sprinting))
             {
                 if (currentFOV != runningFOV && !playerEntity.IsScopedIn())
                 {
@@ -478,7 +482,7 @@ namespace Runtime.Player.ViewControllers
                 }
                 
                 if(fpsCamera.fieldOfView != fpsFOV - 10)
-                    fpsCamera.DOFieldOfView(fpsFOV - 10, 0.1f);
+                    fpsCamera.DOFieldOfView(fpsFOV - 3, 0.1f);
 
                 ChangeBobVars(sprintBob);
             }
@@ -555,11 +559,17 @@ namespace Runtime.Player.ViewControllers
         {
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
+            
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
         }
         public void ChangeBobVars(float frequencyGain,float amplitudeGain)
         {
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
             defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+            
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
         }
         public void DoCamTilt(float zTilt)
         {
@@ -576,6 +586,7 @@ namespace Runtime.Player.ViewControllers
             {
                 readyToJump = false;
                 readyToDoubleJump = true;
+                wasWallRunning = false;
 
                 Jump();
 
@@ -584,6 +595,7 @@ namespace Runtime.Player.ViewControllers
             if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded)
             {
                 readyToDoubleJump = false;
+                wasWallRunning = false;
 
                 Jump();
                 
@@ -624,6 +636,10 @@ namespace Runtime.Player.ViewControllers
                 
                 if (playerActions.SprintHold.IsPressed())
                 {
+                    if (!wasWallRunning&&!wallrunning)
+                    {
+                        StartWallRun();
+                    }
                     if (playerActions.SprintHold.WasPressedThisFrame())
                     {
                         if (!wallrunning)
@@ -684,8 +700,10 @@ namespace Runtime.Player.ViewControllers
                 else if (onSlope && !exitingSlope) {
                     rb.AddForce(GetSlopeMoveDirection(moveDirection) * playerEntity.GetAccelerationForce().RealValue, ForceMode.Force);
 
-                    //if (rb.velocity.y > 0)
-                    //  rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                    if (rb.velocity.y < 0)
+                        rb.AddForce(-slopeHit.normal * 80f, ForceMode.Force);
+                    else
+                        rb.AddForce(Vector3.down * 80f, ForceMode.Force);
                 }
                 // on ground
                 else if (grounded)
@@ -852,6 +870,7 @@ namespace Runtime.Player.ViewControllers
         private void StopWallRun()
         {
             wallrunning = false;
+            wasWallRunning = true;
 
             // reset camera effects
 
@@ -903,6 +922,11 @@ namespace Runtime.Player.ViewControllers
             // weaken gravity
             if (useGravity)
                 rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
+        }
+        
+        public Rigidbody GetRigidBody()
+        {
+            return rb;
         }
     }
     

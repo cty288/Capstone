@@ -4,10 +4,11 @@ using Framework;
 using MikroFramework.Architecture;
 using Runtime.Inventory.Model;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Inventory.ViewController {
 	public abstract class InventorySlotLayoutViewController : AbstractMikroController<MainGame> {
-		[SerializeField] public bool ShowSlotItemWhenInventoryUIClosed = false;
+		[FormerlySerializedAs("ShowSlotItemWhenInventoryUIClosed")] [SerializeField] public bool IsHUDSlotLayout = false;
 		[SerializeField] public HotBarCategory HotBarCategory;
 		
 		public abstract void OnInventorySlotAdded(List<ResourceSlot> addedSlots, int addedCount);

@@ -19,6 +19,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using BehaviorDesigner.Runtime;
 
 namespace Runtime.Enemies.SmallEnemies
 {
@@ -62,6 +63,7 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class Bee : AbstractNormalEnemyViewController<BeeEntity> {
         [SerializeField] private List<GameObject> waypoints;
+        //[SerializeField] private GameObject navMeshAgent;
         //private BehaviorTree behaviorTree;
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
             
@@ -113,6 +115,12 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
+            if(currenthealth + damage == MaxHealth)
+            {
+                
+                SharedBool initHit = (SharedBool)this.GetComponent<BehaviorTree>().GetVariable("InitHit");
+                initHit.Value = true;
+            }
             if(currenthealth <= 0)
             {
                 AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position, 0.3f);

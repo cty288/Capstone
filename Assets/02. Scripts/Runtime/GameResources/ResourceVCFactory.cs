@@ -1,4 +1,5 @@
-﻿using _02._Scripts.Runtime.Currency.Model;
+﻿using System;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Currency.ViewControllers;
 using Framework;
 using MikroFramework;
@@ -49,6 +50,9 @@ namespace Runtime.GameResources {
 		/// <returns></returns>
 		public GameObject SpawnInHandResourceVC(IResourceEntity resourceEntity, bool usePool, 
 			int poolInitCount = 5, int poolMaxCount = 20) {
+			if (String.IsNullOrEmpty(resourceEntity.InHandVCPrefabName)) {
+				return null;
+			}
 			return SpawnResourceVC(resourceEntity, usePool, resourceEntity.InHandVCPrefabName, poolInitCount, poolMaxCount);
 		}
 
@@ -65,6 +69,12 @@ namespace Runtime.GameResources {
 			IPickableResourceViewController vcComponent = vc.GetComponent<IPickableResourceViewController>();
 			vcComponent.InitWithID(vcComponent.OnBuildNewPickableResourceEntity(setRarity, rarity).UUID);
 			return vc;
+		}
+		
+		public IResourceEntity SpawnNewResourceEntity(string pickableResourcePrefabName, bool setRarity = false, int rarity = 1) {
+			GameObject prefab = resLoader.LoadSync<GameObject>(pickableResourcePrefabName);
+			IPickableResourceViewController vcComponent = prefab.GetComponent<IPickableResourceViewController>();
+			return vcComponent.OnBuildNewPickableResourceEntity(setRarity, rarity);
 		}
 		
 		private GameObject SpawnResourceGameObject(string prefabName, bool usePool, int poolInitCount = 5,

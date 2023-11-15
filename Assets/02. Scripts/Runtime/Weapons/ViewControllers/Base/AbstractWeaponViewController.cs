@@ -16,6 +16,7 @@ using Runtime.Player;
 using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
+using Runtime.Weapons.Commands;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.Model.Properties;
@@ -35,7 +36,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         public string AnimationName;
     }
     
-    public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController, ICanSendEvent {
+    public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController, IPickableResourceViewController, IInHandResourceViewController {
         IWeaponEntity WeaponEntity { get; }
     }
     /// <summary>
@@ -58,7 +59,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         private bool _isScopedIn = false;
         protected bool IsScopedIn => _isScopedIn;
         
-        [SerializeField] protected string animLayerNameOverride = "Revolver";
+        //[SerializeField] protected string animLayerNameOverride = "Revolver";
         [SerializeField] protected Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
         [SerializeField] protected Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
         
@@ -105,7 +106,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         public override void OnStartHold(GameObject ownerGameObject) {
             base.OnStartHold(ownerGameObject);
             if(ownerGameObject.TryGetComponent<ICanDealDamageViewController>(out var damageDealer)) {
-                BoundEntity.CurrentFaction.Value = damageDealer.CanDealDamageEntity.CurrentFaction.Value;
+                //BoundEntity.CurrentFaction.Value = damageDealer.CanDealDamageEntity.CurrentFaction.Value;
                 BoundEntity.SetRootDamageDealer(damageDealer.CanDealDamageEntity?.RootDamageDealer);
                 ownerVc = damageDealer;
             }
@@ -113,11 +114,12 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public override void OnStopHold() {
             BoundEntity.CurrentFaction.Value = Faction.Neutral;
-            BoundEntity.SetRootDamageDealer(null);
+            //BoundEntity.SetRootDamageDealer(null);
             base.OnStopHold();
             ChangeScopeStatus(false);
         }
 
+        
 
         protected void ChangeScopeStatus(bool shouldScope) {
             bool previsScope = _isScopedIn;
@@ -126,11 +128,8 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (previsScope != _isScopedIn) {
                 playerModel.GetPlayer().SetScopedIn(_isScopedIn);
                 crossHairViewController?.OnScope(_isScopedIn);
-                
-                this.SendEvent<OnScopeUsedEvent>(new OnScopeUsedEvent()
-                {
-                    isScopedIn = _isScopedIn
-                });
+
+                this.SendCommand(ScopeCommand.Allocate(_isScopedIn));
                 
                 AudioSystem.Singleton.Play2DSound("Pistol_Aim");
             }
@@ -144,7 +143,11 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (prevIsReloading != isReloading) {
                 //crossHairViewController?.OnReload(isReloading);
             }
-            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", AnimationEventType.Bool,isReloading ? 1 : 0));
+
+            if (shouldReload) {
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", AnimationEventType.Trigger, 0));
+            }
+            
         }
       
 
@@ -153,13 +156,16 @@ namespace Runtime.Weapons.ViewControllers.Base
            
         }
         
+        
         protected void SetShootStatus(bool isShooting) {
             if (isShooting) {
                 AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 1f);
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
+                animator.SetTrigger("Shoot");
             }
             else {
-                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", AnimationEventType.Trigger,0));
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.ResetTrigger,0));
+                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", AnimationEventType.Trigger,0));
             }
            
         }

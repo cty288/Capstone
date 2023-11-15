@@ -19,8 +19,8 @@ namespace Runtime.Inventory {
 			atlas = resLoader.LoadSync<SpriteAtlas>("entities/resources_inventory", $"ResourceInvAtlas");
 		}
 
-		public Sprite GetSprite(string spriteName) {
-			Sprite sprite = atlas.GetSprite($"{spriteName}");
+		public Sprite GetSprite(string entityname) {
+			Sprite sprite = atlas.GetSprite($"{entityname}_Icon");
 			return sprite;
 		}
 		

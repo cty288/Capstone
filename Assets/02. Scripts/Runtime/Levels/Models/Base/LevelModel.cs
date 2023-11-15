@@ -24,6 +24,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		ILevelEntity GetLevel(int levelNumber);
 		
+	
+		
 	}
 
 	public struct OnTryToSwitchUnSpawnedLevel {
@@ -42,6 +44,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 			return builder;
 		}
+
+		public static int MAX_LEVEL = 5;
 
 		protected override void OnInit() {
 			base.OnInit();
@@ -70,8 +74,28 @@ namespace _02._Scripts.Runtime.Levels.Models {
 				levelNumber = 0;
 			}
 			
+			
 			CurrentLevel.Value = levelEntities[levelNumber];
 			CurrentLevelCount.Value = levelNumber;
+			
+			
+			if (levelNumber == 0) {
+				HashSet<int> toRemove = new HashSet<int>();
+				//remove all other levels
+				foreach (var level in levelEntities) {
+					if (level.Key == 0) {
+						continue;
+					}
+					RemoveEntity(level.Value.UUID);
+					toRemove.Add(level.Key);
+				}
+				
+				foreach (var key in toRemove) {
+					levelEntities.Remove(key);
+				}
+			}
+			
+			
 		}
 
 		public ILevelEntity GetLevel(int levelNumber) {
@@ -82,5 +106,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 			return levelEntities[levelNumber];
 		}
+
+		
 	}
 }

@@ -83,7 +83,13 @@ public class HUDManagerUI : MonoBehaviour, ISingleton
                 DespawnHUDElement(tuple.Item1, tuple.Item2);
             }
         }
+        public void ClearAll() {
+            foreach (HUDCategory category in hudElementInfos.Keys) {
+                hudElementInfos[category].ClearAll();
+            }
 
+            hudElementInfos.Clear();
+        }
         public void OnSingletonInit() {
             
         }

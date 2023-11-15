@@ -1,0 +1,146 @@
+EntityName / Property Names,item_drop_collections,collectable_resource_currency_list,custom_properties,tags,,,Notes
+Types,"Dictionary<int,ItemDropCollection>",List<CollectableResourceCurrencyInfo>,dynamic,"Dictionary<TagName,int>",,,
+Notes ->,"{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 3,
+      ""y"": 5
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ...
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ...
+    },
+    
+    ""ItemDropInfos"": [
+      ...
+    ]
+  }
+}",,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+{""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
+If no levels, use negative numbers to represent",,,
+,,,,,,,
+BEGIN,,,,,,,
+Plant,"{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 0,
+      ""y"": 2
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""BionicGel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ""x"": 0,
+      ""y"": 2
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""BionicGel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      }
+    ]
+  }
+}","[
+  {
+    ""currencyType"": ""Plant"",
+    ""amountRange"" : {""x"" : 2, ""y"" : 4}
+  }
+]",,  ,,,
+Mineral,"{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 1,
+      ""y"": 2
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""ReinforcedSteel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ""x"": 1,
+      ""y"": 2
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""ReinforcedSteel"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 2
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      }
+    ]
+  }
+}","[
+  {
+    ""currencyType"": ""Mineral"",
+    ""amountRange"" : {""x"" : 5, ""y"" : 8}
+  }
+]",,,,,

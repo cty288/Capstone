@@ -18,10 +18,12 @@ namespace _02._Scripts.Runtime.Currency.ViewControllers {
 		private ICommonEntityModel commonEntityModel;
 		[SerializeField] protected CurrencyType currencyTypeBuildFromInspector;
 		[SerializeField] protected int amountBuildFromInspector;
+		private ICurrencySystem currencySystem;
 		protected override void Awake() {
 			base.Awake();
 			currencyModel = this.GetModel<ICurrencyModel>();
 			commonEntityModel = this.GetModel<ICommonEntityModel>();
+			currencySystem = this.GetSystem<ICurrencySystem>();
 		}
 
 		protected override void OnBindEntityProperty() {
@@ -33,7 +35,7 @@ namespace _02._Scripts.Runtime.Currency.ViewControllers {
 		}
 
 		protected override bool AbsorbHandler(CurrencyEntity entity) {
-			currencyModel.AddCurrency(BoundEntity.CurrencyType, BoundEntity.Amount);
+			currencySystem.AddCurrency(BoundEntity.CurrencyType, BoundEntity.Amount);
 			return true;
 		}
 

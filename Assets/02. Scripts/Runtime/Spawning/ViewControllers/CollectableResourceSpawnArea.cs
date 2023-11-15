@@ -95,6 +95,8 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
         var insideArenaRefPoints =
             GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
         
+        HashSet<Vector3> usedPositions = new HashSet<Vector3>();
+
         for (float x = xMin; x < xMax; x += xStep) {
             for (float z = zMin; z < zMax; z += zStep) {
                 
@@ -133,9 +135,10 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 
                 
 
-                if (float.IsInfinity(spawnPos.magnitude)) {
+                if (float.IsInfinity(spawnPos.magnitude) || usedPositions.Contains(spawnPos)) {
                     continue;
                 }
+                
                 
                 //x = spawnPos.x;
                 //z = spawnPos.z;
@@ -145,6 +148,7 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                     continue;
                 }
 
+                usedPositions.Add(spawnPos);
                 GameObject spawnedInstance = safeGameObjectPools[groupIndex][prefabIndex].Allocate();
                 spawnedInstance.transform.position = spawnPos;
               

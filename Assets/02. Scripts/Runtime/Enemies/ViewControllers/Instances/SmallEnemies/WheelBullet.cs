@@ -32,7 +32,7 @@ namespace a
 		public float fanAngle;
 		private Faction f;
 		private int dmg;
-		private GameObject bulletOwner;
+		//private GameObject bulletOwner;
 		private ICanDealDamage owner;
 		private int what;
 
@@ -49,7 +49,7 @@ namespace a
 			this.transform.position = followGameObject.transform.up * 0.828f + followGameObject.right * 0.013f + followGameObject.transform.forward * 0.114f + followGameObject.position;
 			if (timer < 0)
 			{
-				for (int i = 0; i < 5; i++)
+				for (int i = 0; i < 7; i++)
 				{
 					
 					GameObject bulletInstance = pool.Allocate();

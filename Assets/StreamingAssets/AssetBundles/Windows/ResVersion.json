@@ -199,8 +199,8 @@
     },
     {
       "AssetName": "description",
-      "MD5": "6503c304ab52ba2f2a66276377bcc292",
-      "FileSize": 15.6259766,
+      "MD5": "989d4ec068071ff1e58c28e30d758128",
+      "FileSize": 15.640625,
       "assetDatas": [
         {
           "Name": "GeneralHintIcon",
@@ -226,8 +226,8 @@
     },
     {
       "AssetName": "info",
-      "MD5": "17b7df84458468e73bcf6090f2139ef7",
-      "FileSize": 4057.58887,
+      "MD5": "2bab9b242765aae45fe94c0be5250944",
+      "FileSize": 6463.6084,
       "assetDatas": [
         {
           "Name": "Crosshair Instruction + Reference",
@@ -930,6 +930,11 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "PropertyIconRarity",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "PropertyIconAmmo",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.GameObject"
@@ -940,7 +945,22 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "PropertyIconCooldown",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "PropertyIconDamage",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "PropertyIconHeal",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "PropertyIconRange",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -951,6 +971,16 @@
         },
         {
           "Name": "PropertyIconVigiliance",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "RarityIndicator",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "RarityIndicator2",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -983,8 +1013,8 @@
     },
     {
       "AssetName": "mftest",
-      "MD5": "ae422d16df32c01f6091a74b9fbbb526",
-      "FileSize": 674.5303,
+      "MD5": "25be57aa95a15e8d48149e8b4b6f673c",
+      "FileSize": 680.7471,
       "assetDatas": [
         {
           "Name": "Asteroid_1",
@@ -1032,13 +1062,33 @@
     },
     {
       "AssetName": "others",
-      "MD5": "14285b0f317fd359da83b8f901449d0c",
-      "FileSize": 68.91113,
+      "MD5": "dbc9ed83c224fb628fd412d45e9716d4",
+      "FileSize": 226.297852,
       "assetDatas": [
         {
           "Name": "PooledCube",
           "OwnerBundleName": "others",
           "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "DottedLine",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "DottedLineBigMapPath",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "DottedOutline",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Shader"
+        },
+        {
+          "Name": "Nofric",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.PhysicMaterial"
         },
         {
           "Name": "2DSound",
@@ -1285,14 +1335,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "9856ac574af938b9bc78520faf77e997",
-      "FileSize": 2.05761719,
+      "MD5": "4329de26aebed96596e395c15896a7dc",
+      "FileSize": 2.09667969,
       "assetDatas": []
     },
     {
       "AssetName": "assets/fonts",
-      "MD5": "284852d39c795e9dbb445d9ffa034b3f",
-      "FileSize": 881.7959,
+      "MD5": "63751cb687d71279ce5acccd2a7ab6b9",
+      "FileSize": 895.7207,
       "assetDatas": [
         {
           "Name": "Orbitron-Black SDF",
@@ -1358,11 +1408,16 @@
     },
     {
       "AssetName": "assets/goods_inventory",
-      "MD5": "9ce0cc9314a5d1dc2835054dcddc6a75",
-      "FileSize": 4.13769531,
+      "MD5": "25be04f4c24675c7fd4ee89f1c69f74a",
+      "FileSize": 11.7998047,
       "assetDatas": [
         {
           "Name": "RustyPistol2_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "RustyPistol3_Icon",
           "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
@@ -1379,9 +1434,21 @@
       ]
     },
     {
+      "AssetName": "entities/pillars",
+      "MD5": "338c1ae73fe58ac2e16f1e8485783b62",
+      "FileSize": 6235.40332,
+      "assetDatas": [
+        {
+          "Name": "BossPillar",
+          "OwnerBundleName": "entities/pillars",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
       "AssetName": "entities/resources",
-      "MD5": "5921966a169b196829e0ba5a6369e74b",
-      "FileSize": 19489.625,
+      "MD5": "1fed9b072e573a392bfc87c017bd337e",
+      "FileSize": 19913.7383,
       "assetDatas": [
         {
           "Name": "Bait",
@@ -1390,6 +1457,26 @@
         },
         {
           "Name": "Bait_Deployed",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "CombatCurrency",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "MineralCurrency",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "PlantCurrency",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TimeCurrency",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1419,12 +1506,32 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "GrenadeSkill",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "MedicalNeedleSkill",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "SkillInventoryVC",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "RustyPistol",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
         {
           "Name": "RustyPistol2",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "RustyPistol3",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1442,8 +1549,8 @@
     },
     {
       "AssetName": "entities/resources_inventory",
-      "MD5": "27fe587215a03ddf49b8ba46762871de",
-      "FileSize": 240.208008,
+      "MD5": "e38d2d7e653c181ed206e2205e28b057",
+      "FileSize": 899.868164,
       "assetDatas": [
         {
           "Name": "ResourceInvAtlas",
@@ -1469,13 +1576,28 @@
           "Name": "TestRaw_Icon",
           "OwnerBundleName": "entities/resources_inventory",
           "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "GrenadeSkill_Icon",
+          "OwnerBundleName": "entities/resources_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "MedicalNeedleSkill_Icon",
+          "OwnerBundleName": "entities/resources_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TestSkill_Icon",
+          "OwnerBundleName": "entities/resources_inventory",
+          "AssetType": "UnityEngine.Texture2D"
         }
       ]
     },
     {
       "AssetName": "test/scene_test.ab",
-      "MD5": "f776bb2c0dd9941cbe403b86876bb6bc",
-      "FileSize": 96.56055,
+      "MD5": "d9b54dff8654969f96be0da5d1cb55a6",
+      "FileSize": 184.097656,
       "assetDatas": [
         {
           "Name": "TestABScene",

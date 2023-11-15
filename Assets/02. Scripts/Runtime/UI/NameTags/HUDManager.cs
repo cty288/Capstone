@@ -14,6 +14,8 @@ namespace Runtime.UI.NameTags {
         public HUDElementInfo() {
             
         }
+
+        
         
         public (GameObject, bool) GetOrCreate(Transform targetFollow, Transform spawnedTransform, string prefabName, bool isWorld) {
             if (followDict.ContainsKey(targetFollow)) {
@@ -38,6 +40,13 @@ namespace Runtime.UI.NameTags {
                 GameObjectPoolManager.Singleton.Recycle(followDict[targetFollow].Item1);
                 followDict.Remove(targetFollow);
             }
+        }
+        
+        public void ClearAll() {
+            foreach (var pair in followDict) {
+                GameObjectPoolManager.Singleton.Recycle(pair.Value.Item1);
+            }
+            followDict.Clear();
         }
     }
 
@@ -87,7 +96,15 @@ namespace Runtime.UI.NameTags {
                 info.Despawn(targetFollow);
             }
         }
-        
+
+
+        public void ClearAll() {
+            foreach (HUDCategory category in hudElementInfos.Keys) {
+                hudElementInfos[category].ClearAll();
+            }
+
+            hudElementInfos.Clear();
+        }
         public bool HasHUDElement(Transform targetFollow, HUDCategory hudCategory) {
             if (hudElementInfos.TryGetValue(hudCategory, out var info)) {
                 return info.followDict.ContainsKey(targetFollow);

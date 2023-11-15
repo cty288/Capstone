@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.Baits.Model.Property;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -11,6 +13,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Base;
+using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.Baits.Model.Base {
 
@@ -31,6 +34,8 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 		protected IVigilianceProperty vigilianceProperty;
 		protected ITasteProperty tasteProperty;
 		
+		
+		
 		protected override ConfigTable GetConfigTable() {
 			return null;
 		}
@@ -39,8 +44,8 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 			
 		}
 
-		public override void OnAwake() {
-			base.OnAwake();
+		public override void OnResourceAwake() {
+			base.OnResourceAwake();
 			vigilianceProperty = GetProperty<IVigilianceProperty>();
 			tasteProperty = GetProperty<ITasteProperty>();
 		}
@@ -120,8 +125,13 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 			}
 			return $"{displayName} ({statusText})";
 		}
+
 		
 		
+		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => null;
+		public override IResourceEntity GetReturnToBaseEntity() {
+			return this;
+		}
 
 		public BaitStatus BaitStatus { get; set; }
 	} 

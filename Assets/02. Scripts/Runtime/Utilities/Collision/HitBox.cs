@@ -49,6 +49,8 @@ namespace Runtime.Utilities.Collision
             // Debug.Log("stop checking hits");
             if (_triggerCheck != null) 
                 _triggerCheck.OnEnter -= TriggerCheckHit;
+            
+            
         }
         
         public virtual void TriggerCheckHit(Collider c)
@@ -73,7 +75,7 @@ namespace Runtime.Utilities.Collision
             }
            
             
-            // Debug.Log("trigger hit detected: " + c.name);
+             
             HitData hitData = null;
             
             Vector3 center = _collider.transform.position;

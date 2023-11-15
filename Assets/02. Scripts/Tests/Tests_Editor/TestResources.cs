@@ -23,6 +23,9 @@ namespace Tests.Tests_Editor {
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return null;
 		}
+		public override IResourceEntity GetReturnToBaseEntity() {
+			return this;
+		}
 		public override void OnRecycle() {
             
 		}
@@ -50,7 +53,9 @@ namespace Tests.Tests_Editor {
 	internal class TestEmptyRawMaterial : RawMaterialEntity<TestBasicRawMaterial> {
 		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "TestRaw2";
-
+		public override IResourceEntity GetReturnToBaseEntity() {
+			return this;
+		}
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return null;
 		}

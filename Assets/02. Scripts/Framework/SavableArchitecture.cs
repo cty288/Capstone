@@ -8,11 +8,12 @@ namespace Framework {
 		protected List<AbstractSavableSystem> savableSystems = new List<AbstractSavableSystem>();
 
 		protected const bool IsSave = true;
+		protected const bool IsLoad = true;
 	
 		protected abstract string saveFileSuffix { get; }
 	
 		public void RegisterModel<T>(T defaultModel) where T: class, IModel{
-			if (defaultModel.GetType().IsSubclassOf(typeof(AbstractSavableModel)) && IsSave) {
+			if (defaultModel.GetType().IsSubclassOf(typeof(AbstractSavableModel)) && IsLoad) {
 				T model = ES3.Load("Model_" + defaultModel.GetType().Name, $"models_{saveFileSuffix}.es3", defaultModel as AbstractSavableModel) as T;
 			
 				base.RegisterModel<T>(model);
@@ -27,7 +28,7 @@ namespace Framework {
 		public void RegisterSystem<T>(T defaultSystem) where T:class, ISystem{
 		
         
-			if (defaultSystem.GetType().IsSubclassOf(typeof(AbstractSavableSystem)) && IsSave) {
+			if (defaultSystem.GetType().IsSubclassOf(typeof(AbstractSavableSystem)) && IsLoad) {
             
 				T system = ES3.Load<AbstractSavableSystem>("System_" + defaultSystem.GetType().Name, $"systems_{saveFileSuffix}.es3", defaultSystem as AbstractSavableSystem) as T;
 				base.RegisterSystem<T>(system);

@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.UIKit;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
+using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
+using Runtime.UI;
 using Runtime.Utilities;
 using UnityEngine;
 
 namespace Runtime.Inventory.ViewController {
-    public class InventoryUIViewController : AbstractPanel, IController {
+    public class InventoryUIViewController : AbstractPanelContainer, IController, IGameUIPanel {
        
         [SerializeField] private InventorySlotLayoutViewController mainSlotLayoutViewController;
         [SerializeField] private List<InventorySlotLayoutViewController> hotBarSlotLayoutViewControllersInspector;
@@ -23,6 +26,8 @@ namespace Runtime.Inventory.ViewController {
         
         
         private RubbishSlotViewController rubbishSlotViewController;
+        private UpgradeSlotViewController upgradeSlotViewController;
+        
         
         //[SerializeField] RectTransform hotbarLayout;
         private IInventoryModel inventoryModel;
@@ -44,6 +49,7 @@ namespace Runtime.Inventory.ViewController {
             }
             
             rubbishSlotViewController = GetComponentInChildren<RubbishSlotViewController>(true);
+            upgradeSlotViewController = GetComponentInChildren<UpgradeSlotViewController>(true);
 
            
             // inventorySystem.InitOnGameStart();
@@ -55,20 +61,25 @@ namespace Runtime.Inventory.ViewController {
             
             this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-            
+
+            this.RegisterEvent<OnOpenSkillUpgradePanel>(OnOpenSkillUpgradePanel)
+                .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             
             
            SetInitialSlots();
            gameObject.SetActive(false);
         }
 
+        private void OnOpenSkillUpgradePanel(OnOpenSkillUpgradePanel e) {
+            UIManager.Singleton.Open<SkillUpgradePanel>(this, e);
+        }
 
 
         private void OnInventoryHotBarSlotAdded(OnInventoryHotBarSlotAddedEvent e) {
             if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
                 controller.ForEach(slotLayoutViewController => {
                     slotLayoutViewController.OnInventorySlotAdded(
-                        inventoryModel.GetHotBarSlots(e.Category),
+                        inventoryModel.GetHotBarSlots(e.Category).Select(slot => slot as ResourceSlot).ToList(),
                         inventoryModel.GetHotBarSlotCount(e.Category));
                 });
             }
@@ -78,10 +89,11 @@ namespace Runtime.Inventory.ViewController {
             mainSlotLayoutViewController.OnInventorySlotAdded(
                 inventoryModel.GetAllSlots(), inventoryModel.GetSlotCount());
 
-            
-            
-            
-            rubbishSlotViewController.SetSlot(new RubbishSlot());
+
+
+
+            rubbishSlotViewController.SetSlot(new RubbishSlot(), false);
+            upgradeSlotViewController.SetSlot(new UpgradeSlot(), false);
             
             foreach (KeyValuePair<HotBarCategory,List<InventorySlotLayoutViewController>> hotBarSlotLayoutViewController in hotBarSlotLayoutViewControllers) {
 
@@ -90,9 +102,9 @@ namespace Runtime.Inventory.ViewController {
                     
                 foreach (InventorySlotLayoutViewController slotLayoutViewController in slotLayoutViewControllers) {
                     slotLayoutViewController.OnInventorySlotAdded(
-                                       inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key),
+                                       inventoryModel.GetHotBarSlots(hotBarSlotLayoutViewController.Key).Select(slot => slot as ResourceSlot).ToList(),
                                        inventoryModel.GetHotBarSlotCount(hotBarSlotLayoutViewController.Key));
-                    if (slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (slotLayoutViewController.IsHUDSlotLayout) {
                         slotLayoutViewController.OnShowSlotItem();
                     }
                 }
@@ -122,13 +134,14 @@ namespace Runtime.Inventory.ViewController {
                     hotBarSlotLayoutViewController.Value;
                 
                 foreach (InventorySlotLayoutViewController slotLayoutViewController in slotLayoutViewControllers) {
-                    if (!slotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (!slotLayoutViewController.IsHUDSlotLayout) {
                         slotLayoutViewController.OnShowSlotItem();
                     }
                 }
             }
             
             rubbishSlotViewController.Activate(true, true);
+            upgradeSlotViewController.Activate(true, true);
         }
         
         
@@ -158,7 +171,7 @@ namespace Runtime.Inventory.ViewController {
                      in hotBarSlotLayoutViewControllers) {
 
                 foreach (InventorySlotLayoutViewController inventorySlotLayoutViewController in hotBarSlotLayoutViewController.Value) {
-                    if (!inventorySlotLayoutViewController.ShowSlotItemWhenInventoryUIClosed) {
+                    if (!inventorySlotLayoutViewController.IsHUDSlotLayout) {
                         inventorySlotLayoutViewController.OnHideSlotItem();
                     }
                     inventorySlotLayoutViewController.OnInventoryUIClosed();
@@ -168,6 +181,7 @@ namespace Runtime.Inventory.ViewController {
             }
             
             rubbishSlotViewController.Activate(false, true);
+            upgradeSlotViewController.Activate(false, true);
         }
 
         public IArchitecture GetArchitecture() {
@@ -175,5 +189,13 @@ namespace Runtime.Inventory.ViewController {
         }
 
 
+        public IPanel GetClosePanel() {
+            IPanel openedChild = GetTopChild();
+            if (openedChild != null) {
+                return openedChild;
+            }
+            
+            return this;
+        }
     }
 }

@@ -17,6 +17,8 @@ namespace Runtime.Utilities.ConfigSheet
 		private ConfigTable playerEntityConfigTable;
 		private ConfigTable normalEnemyEntityConfigTable;
 		private ConfigTable globalDataTable;
+		private ConfigTable skillEntityConfigTable;
+		private ConfigTable collectableResourceConfigTable;
 
 		public ConfigTable BossEntityConfigTable => bossEntityConfigTable;
 		public ConfigTable EnemyEntityConfigTable_Test => enemyEntityConfigTable_test;
@@ -32,6 +34,10 @@ namespace Runtime.Utilities.ConfigSheet
 		public ConfigTable PlayerEntityConfigTable => playerEntityConfigTable;
 		
 		public ConfigTable GlobalDataTable => globalDataTable;
+
+		public ConfigTable SkillEntityConfigTable => skillEntityConfigTable;
+		
+		public ConfigTable CollectableResourceConfigTable => collectableResourceConfigTable;
         
 		public override void OnSingletonInit()
 		{
@@ -63,6 +69,12 @@ namespace Runtime.Utilities.ConfigSheet
 			
 			globalDataTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
 				"1266085510", "data_global");
+			
+			skillEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+				"509422807", "data_skills");
+			
+			collectableResourceConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
+				"1707497374", "data_collectable_resources");
 		}
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

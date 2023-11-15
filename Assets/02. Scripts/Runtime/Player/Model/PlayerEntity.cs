@@ -252,6 +252,8 @@ namespace Runtime.Player {
 					});
 				}
 			}
+
+			Debug.Log("Player Deal Damage to " + damageable.EntityName + " with damage " + damage);
 		}
 
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {

@@ -15,13 +15,16 @@ using UnityEngine.UI;
 public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
     private Slider healthSlider;
     private Slider armorSlider;
+    private Slider armorHurtSlider;
+    [SerializeField] private float armorHurtSliderWaitTime = 0.5f;
+    private float armorHurtSliderWaitTimer = 0;
     private IGamePlayerModel playerModel;
     
     [SerializeField] private Color healthyColor = Color.green;
     [SerializeField] private Color hurtColor = Color.red;
     
-    [SerializeField] private Color healthyArmorColor = Color.green;
-    [SerializeField] private Color hurtArmorColor = Color.red;
+    //[SerializeField] private Color healthyArmorColor = Color.green;
+    //[SerializeField] private Color hurtArmorColor = Color.red;
     
     private Image healthBG;
     private Material healthBGMaterial;
@@ -45,6 +48,7 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
     private void Awake() {
         healthSlider = transform.Find("HealthBarArea/HealthSlider").GetComponent<Slider>();
         armorSlider = transform.Find("ArmorArea/ArmorSlider").GetComponent<Slider>();
+        armorHurtSlider = transform.Find("ArmorArea/ArmorSliderHurt").GetComponent<Slider>();
         
         healthNumberText = transform.Find("HealthBarArea/HealthSlider/HealthNum").GetComponent<TMP_Text>();
         armorNumberText = transform.Find("ArmorArea/ArmorSlider/ArmorNum").GetComponent<TMP_Text>();
@@ -73,39 +77,36 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
     }
 
     private void OnArmorChanged(float oldArmor, float newArmor) {
-        /*
-        DOTween.Kill(armorSlider);
-        armorNumberTween?.Kill();
-        
-        armorSlider.DOValue(newArmor / totalArmor, 0.3f);
-        
-        //lerp material color (becoming redder and redder)
-        armorBGMaterial.DOColor(
-            Color.Lerp(hurtArmorColor, healthyArmorColor, newArmor / totalArmor), 0.1f);
-
-        armorNumberTween = DOTween.To(() => targetArmorNumber, x => targetArmorNumber = x, newArmor, 0.1f).OnComplete(
-            () => {
-                armorNumberTween = null;
-            });
-            */
-        
+     
         targetArmorNumber = newArmor;
-
+        if (newArmor < oldArmor) {
+            armorHurtSliderWaitTimer = armorHurtSliderWaitTime;
+        }
+        else {
+            armorHurtSliderWaitTimer = 0;
+        }
     }
 
     private void Update() {
         //lerp displayed health number
-        displayedHealthNumber = (int) Mathf.Lerp(displayedHealthNumber, targetHealthNumber, Time.deltaTime / 2);
-        healthNumberText.text = displayedHealthNumber.ToString();
+        displayedHealthNumber = Mathf.Lerp(displayedHealthNumber, targetHealthNumber, Time.deltaTime * 3);
+        healthNumberText.text = Mathf.RoundToInt(displayedHealthNumber).ToString();
+        healthSlider.value = displayedHealthNumber / playerModel.GetPlayer().HealthProperty.RealValue.Value.MaxHealth;
 
-        displayedArmorNumber = Mathf.Lerp(displayedArmorNumber, targetArmorNumber, 1f / 3 / Time.deltaTime);
+        
+        displayedArmorNumber = Mathf.Lerp(displayedArmorNumber, targetArmorNumber,  Time.deltaTime * 3);
+        armorHurtSliderWaitTimer -= Time.deltaTime;
+        if (armorHurtSliderWaitTimer <= 0) {
+            armorHurtSlider.value =
+                Mathf.Lerp(armorHurtSlider.value, displayedArmorNumber / totalArmor, Time.deltaTime * 10);
+        }
         armorNumberText.text = Mathf.RoundToInt(displayedArmorNumber).ToString();
         armorSlider.value = displayedArmorNumber / totalArmor;
-        armorBGMaterial.color = Color.Lerp(hurtArmorColor, healthyArmorColor, displayedArmorNumber / totalArmor);
+       // armorBGMaterial.color = Color.Lerp(hurtArmorColor, healthyArmorColor, displayedArmorNumber / totalArmor);
     }
 
     private void OnHealthChanged(HealthInfo oldHealth, HealthInfo newHealth) {
-        DOTween.Kill(healthSlider);
+        /*DOTween.Kill(healthSlider);
         healthNumberTween?.Kill();
         
         //int healthNumberAnim = oldHealth.MaxHealth;
@@ -120,6 +121,9 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
         
         //lerp material color (becoming redder and redder)
         healthBGMaterial.DOColor(
-            Color.Lerp(hurtColor, healthyColor, newHealth.CurrentHealth / (float) newHealth.MaxHealth), 0.3f);
+            Color.Lerp(hurtColor, healthyColor, newHealth.CurrentHealth / (float) newHealth.MaxHealth), 0.3f);*/
+        
+        
+        targetHealthNumber = newHealth.CurrentHealth;
     }
 }

@@ -77,9 +77,9 @@ namespace Runtime.Weapons
             base.OnEntityStart();
             
             playerModel = this.GetModel<IGamePlayerModel>();
-            BoundEntity.animLayerName = animLayerNameOverride;
+           // BoundEntity.animLayerName = animLayerNameOverride;
 
-            animLayerNameOverride = "Revolver";
+           // animLayerNameOverride = "Revolver";
             // Debug.Log($"sanctuary camera pos: {hipFireCameraPosition}, {adsCameraPosition}");
             hipFireCameraPosition = hipFireCameraPositionOverride;
             adsCameraPosition = adsCameraPositionOverride;
@@ -153,7 +153,11 @@ namespace Runtime.Weapons
                 fpsCamera.transform.DOLocalMove(adsCameraPosition, 0.167f);
             }
         }
-        
+
+        public override void OnItemScopeReleased() {
+            
+        }
+
 
         protected override void Update()
         {
