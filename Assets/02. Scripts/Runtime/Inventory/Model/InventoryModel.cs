@@ -50,6 +50,12 @@ namespace Runtime.Inventory.Model {
 		void AddToBaseStock(IResourceEntity entity);
 		
 		HashSet<PreparationSlot> GetBaseStock(ResourceCategory category);
+		
+		void RemoveFromBaseStock(ResourceCategory category, PreparationSlot slot);
+		
+		
+		
+		List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate);
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -230,6 +236,33 @@ namespace Runtime.Inventory.Model {
 			}
 
 			return baseStockedItems[category];
+		}
+
+		public void RemoveFromBaseStock(ResourceCategory category, PreparationSlot slot) {
+			if (!baseStockedItems.ContainsKey(category)) {
+				return;
+			}
+
+			baseStockedItems[category].Remove(slot);
+		}
+
+		public List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate) {
+			List<ResourceSlot> result = new List<ResourceSlot>();
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
+					if (predicate.Invoke(slot)) {
+						result.Add(slot);
+					}
+				}
+			}
+
+			foreach (ResourceSlot slot in slots) {
+				if (predicate.Invoke(slot)) {
+					result.Add(slot);
+				}
+			}
+
+			return result;
 		}
 
 

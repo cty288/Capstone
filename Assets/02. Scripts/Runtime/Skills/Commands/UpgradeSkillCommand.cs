@@ -1,4 +1,5 @@
 ﻿using System;
+using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using MikroFramework.Architecture;
@@ -16,6 +17,7 @@ namespace _02._Scripts.Runtime.Skills.Commands {
 			ISkillEntity upgradedSkill =
 				ResourceVCFactory.Singleton.SpawnNewResourceEntity(originalSkill.EntityName, true, level) as ISkillEntity;
 			ICurrencyModel currencyModel = this.GetModel<ICurrencyModel>();
+			ICurrencySystem currencySystem = this.GetSystem<ICurrencySystem>();
 			ISkillModel skillModel = this.GetModel<ISkillModel>();
 			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
 
@@ -31,7 +33,7 @@ namespace _02._Scripts.Runtime.Skills.Commands {
 
 			if (hasEnoughCurrency) {
 				foreach (CurrencyType costKey in cost.Keys) {
-					currencyModel.RemoveCurrency(costKey, cost[costKey]);
+					currencySystem.RemoveCurrency(costKey, cost[costKey]);
 				}
 				inventorySystem.RemoveItem(originalSkill);
 				skillModel.RemoveEntity(originalSkill.UUID);

@@ -154,9 +154,9 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
     protected void SetDescriptionPanel(ISkillEntity entity, SlotResourceDescriptionPanel panel) {
         panel.Clear();
         panel.SetContent(entity.GetDisplayName(), entity.GetDescription(),
-            InventorySpriteFactory.Singleton.GetSprite(entity.IconSpriteName), true, entity.GetLevel(),
+            InventorySpriteFactory.Singleton.GetSprite(entity.EntityName), true, entity.GetLevel(),
             ResourceVCFactory.GetLocalizedResourceCategory(entity.GetResourceCategory()),
-            entity.GetResourcePropertyDescriptions());
+            entity.GetResourcePropertyDescriptions(), entity.GetSkillUseCostOfCurrentLevel());
     }
 
     public override void OnClosed() {

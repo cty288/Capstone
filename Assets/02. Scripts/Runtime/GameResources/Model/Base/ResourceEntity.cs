@@ -53,7 +53,7 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string InventoryVCPrefabName { get; }
 		
-		public string IconSpriteName { get; }
+		//public string IconSpriteName { get; }
 		
 		public string OnGroundVCPrefabName { get; }
 		
@@ -172,7 +172,7 @@ namespace Runtime.GameResources.Model.Base {
 		[field: ES3Serializable]
 		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
 
-		public string IconSpriteName => $"{EntityName}_Icon";
+		//public string IconSpriteName => $"{EntityName}_Icon";
 
 		public abstract string OnGroundVCPrefabName { get; }
 		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;

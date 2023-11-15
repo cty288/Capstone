@@ -1,3 +1,4 @@
+using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
@@ -29,11 +30,11 @@ namespace Runtime.Temporary
             }
 
             if (Input.GetKeyDown(KeyCode.M)) {
-               ICurrencyModel currencyModel = this.GetModel<ICurrencyModel>();
-               currencyModel.AddCurrency(CurrencyType.Combat, 10);
-               currencyModel.AddCurrency(CurrencyType.Mineral, 10);
-                currencyModel.AddCurrency(CurrencyType.Plant, 10);
-                currencyModel.AddCurrency(CurrencyType.Time, 10);
+               ICurrencySystem currencySystem = this.GetSystem<ICurrencySystem>();
+               currencySystem.AddCurrency(CurrencyType.Combat, 10);
+               currencySystem.AddCurrency(CurrencyType.Mineral, 10);
+               currencySystem.AddCurrency(CurrencyType.Plant, 10);
+               currencySystem.AddCurrency(CurrencyType.Time, 10);
             }
         }
     }

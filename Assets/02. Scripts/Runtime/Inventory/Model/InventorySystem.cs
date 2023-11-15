@@ -259,6 +259,52 @@ namespace Runtime.Inventory.Model {
 			return model.RemoveItem(entity?.UUID);
 		}
 
+		public void MoveItemFromBaseStockToInventory(ResourceCategory category, PreparationSlot slot) {
+			model.RemoveFromBaseStock(category, slot);
+			if(slot.GetQuantity() > 0) {
+				foreach (string id in slot.GetUUIDList()) {
+					IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(id);
+					if (entity != null) {
+						AddItem(entity, false);
+					}
+				}
+			}
+		}
+
+		public void RemoveResourceEntityFromBaseStock(ResourceCategory category, string resourceName, int count, bool alsoRemoveEntity) {
+			HashSet<PreparationSlot> slots = model.GetBaseStock(category);
+			
+			PreparationSlot slotToRemove = null;
+			foreach (PreparationSlot slot in slots) {
+				IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+				if (entity.EntityName != resourceName) {
+					continue;
+				}
+				
+				for (int i = 0; i < count; i++) {
+					string uuid = slot.GetLastItemUUID();
+					if (uuid == null) {
+						break;
+					}
+					slot.RemoveLastItem();
+					if (alsoRemoveEntity) {
+						(_, IEntityModel model) = GlobalEntities.GetEntityAndModel(uuid);
+						model?.RemoveEntity(uuid, true);
+					}
+					
+				}
+				
+				if (slot.IsEmpty()) {
+					slotToRemove = slot;
+				}
+				break;
+			}
+			
+			if (slotToRemove != null) {
+				model.RemoveFromBaseStock(category, slotToRemove);
+			}
+		}
+
 
 		private void AddInitialSlots() {
 			model.AddSlots(InitialSlotCount);

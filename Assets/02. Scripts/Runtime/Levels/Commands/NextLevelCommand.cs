@@ -2,6 +2,7 @@
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Runtime.Player;
 
 namespace _02._Scripts.Runtime.Levels.Commands {
 
@@ -41,6 +42,12 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 		protected override void OnExecute() {
 			ILevelModel levelModel = this.GetModel<ILevelModel>();
 			levelModel.SwitchToLevel(0);
+			IGamePlayerModel playerModel = this.GetModel<IGamePlayerModel>();
+			IPlayerEntity playerEntity = playerModel.GetPlayer();
+			
+			playerEntity.Heal(playerEntity.GetMaxHealth(), null);
+			playerEntity.AddArmor(playerEntity.GetArmor().InitialValue);
+			
 			this.SendEvent<OnReturnToBase>();
 			
 			//((MainGame) MainGame.Interface).SaveGame();

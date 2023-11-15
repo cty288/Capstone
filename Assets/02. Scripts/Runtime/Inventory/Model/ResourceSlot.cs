@@ -15,7 +15,7 @@ namespace Runtime.Inventory.Model {
 		public static BindableProperty<ResourceSlot> currentDraggingSlot =
 			new BindableProperty<ResourceSlot>(null);
 		[ES3Serializable]
-		private string ItemKey = null;
+		protected string ItemKey = null;
 		//public int Quantity = 0;
 		[ES3Serializable]
 		private List<string> UUIDList;
@@ -293,6 +293,27 @@ namespace Runtime.Inventory.Model {
 
 	[Serializable]
 	public class PreparationSlot : ResourceSlot {
-		
+		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
+			//infinite size
+			if (IsEmpty()) {
+				return true;
+			}
+
+			//int maxCount = item.GetMaxStackProperty().RealValue.Value;
+			//if (slotMaxItemCount >= 0) {
+			//	maxCount = Math.Min(maxCount, slotMaxItemCount);
+			//}
+
+			if (!isSwapping) {
+				if (ItemKey == item.EntityName && !ContainsItem(item.UUID)) {
+					return true;
+				}
+			}else {
+				return true;
+			}
+
+
+			return false;
+		}
 	}
 }

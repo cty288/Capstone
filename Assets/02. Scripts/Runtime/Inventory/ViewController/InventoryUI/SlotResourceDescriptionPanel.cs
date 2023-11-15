@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using _02._Scripts.Runtime.Currency.Model;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Polyglot;
 using Runtime.GameResources.Model.Base;
 using TMPro;
 using UnityEngine;
@@ -30,7 +33,9 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
     private Transform itemPropertyDescriptionPanel;
     private SafeGameObjectPool propertyDescriptionItemPool;
     private TMP_Text resourceDisplayedTypeText;
+    private TMP_Text skillUseCostText;
     [SerializeField] private GameObject propertyDescriptionItemPrefab;
+    
 
     public bool IsShowing => isShowing;
     public void Awake() {
@@ -42,16 +47,16 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         itemPropertyDescriptionPanel = transform.Find("ItemPropertyDescription");
         resourceDisplayedTypeText = transform.Find("ResourceDisplayedTypeText").GetComponent<TMP_Text>();
         propertyDescriptionItemPool = GameObjectPoolManager.Singleton.CreatePool(propertyDescriptionItemPrefab, 5, 8);
-        
+        skillUseCostText = transform.Find("SkillUseCostText").GetComponent<TMP_Text>();
     }
     
     public void SetContent(string name, string description, Sprite sprite, bool isLeftPivot, int rarity,
-    string resourceDisplayedType, List<ResourcePropertyDescription> propertyDescriptions) {
+    string resourceDisplayedType, List<ResourcePropertyDescription> propertyDescriptions, Dictionary<CurrencyType, int> skillUseCosts) {
         
         nameText.text = name;
         descriptionText.text = description;
         resourceDisplayedTypeText.text = resourceDisplayedType;
-
+        skillUseCostText.text = null;
         if (sprite != null) {
             icon.gameObject.SetActive(true);
             icon.sprite = sprite;
@@ -86,10 +91,43 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         if (gameObject.activeInHierarchy) {
             StartCoroutine(RebuildLayout());
         }
+
+        if (skillUseCosts != null) {
+            ShowSkillUseCost(skillUseCosts);
+        }
         
     }
 
-    
+    private void ShowSkillUseCost(Dictionary<CurrencyType,int> skillUseCost) {
+        StringBuilder sb = new StringBuilder();
+        bool hasCost = false;
+        foreach (CurrencyType currencyType in skillUseCost.Keys) {
+            int cost = skillUseCost[currencyType];
+            if (cost <= 0) {
+                continue;
+            }
+            hasCost = true;
+            break;
+        }
+
+        if (!hasCost) {
+            return;
+        }
+        
+        sb.Append($"<size=120%><align=center><b>{Localization.Get("INFO_USE_COST")}</b></align></size>\n");
+        sb.Append($"<size=105%><align=center>");
+        foreach (CurrencyType currencyType in skillUseCost.Keys) {
+            int cost = skillUseCost[currencyType];
+            if (cost <= 0) {
+                continue;
+            }
+            sb.Append($"<sprite index={(int) currencyType}> {cost}    ");
+        }
+        sb.Append($"</align></size>");
+        skillUseCostText.text = sb.ToString();
+    }
+
+
     private void SetPropertyDescriptions(List<ResourcePropertyDescription> propertyDescriptions) {
         spawnedPropertyDescriptions.Clear();
         foreach (Transform child in itemPropertyDescriptionPanel.transform) {
@@ -140,7 +178,7 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
     }
 
     public void Clear() {
-        SetContent("", "", null, true, 0, "",null);
+        SetContent("", "", null, true, 0, "",null, null);
     }
     public override void OnRecycled() {
         base.OnRecycled();

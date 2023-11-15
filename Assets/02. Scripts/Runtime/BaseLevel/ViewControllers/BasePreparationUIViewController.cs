@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Commands;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.UIKit;
@@ -7,8 +8,11 @@ using Polyglot;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
+using Runtime.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class BasePreparationUIViewController  : AbstractPanel, IController, IGameUIPanel {
 	private bool canClose = false;
@@ -27,6 +31,7 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	private TMP_Text remainingSkillSlotCountText;
 	private GameObject errorText;
 	private GameObject enterButton;
+	private IInventorySystem inventorySystem;
 
 	public override void OnInit() {
 		inventoryModel = this.GetModel<IInventoryModel>();
@@ -41,12 +46,18 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 		
 		remainingSkillSlotCountText = transform.Find("RemainingSkillSpaceText").GetComponent<TMP_Text>();
 		remainingWeaponSlotCountText = transform.Find("RemainingWeaponSpaceText").GetComponent<TMP_Text>();
-		
+		inventorySystem = this.GetSystem<IInventorySystem>();
 		errorText = transform.Find("ErrorText").gameObject;
 		enterButton = transform.Find("EnterButton").gameObject;
+		
+		enterButton.GetComponent<Button>().onClick.AddListener(OnEnterButtonClicked);
+		
 	}
 
+	
+
 	public override void OnOpen(UIMsg msg) {
+		canClose = false;
 		CalculateEmptySlotCount();
 		
 		weaponSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Weapon));
@@ -152,6 +163,23 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 
 	public IArchitecture GetArchitecture() {
 		return MainGame.Interface;
+	}
+	
+	private void OnEnterButtonClicked() {
+		canClose = true;
+		List<PreparationSlot> slots = weaponSlotLayout.OnUIClosed();
+		foreach (PreparationSlot slot in slots) {
+			inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Weapon, slot);
+		}
+
+		slots = skillSlotLayout.OnUIClosed();
+		foreach (PreparationSlot slot in slots) {
+			inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Skill, slot);
+		}
+
+		MainUI.Singleton.GetAndClose(this);
+
+		this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
 	}
 
 	public IPanel GetClosePanel() {

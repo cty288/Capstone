@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using DG.Tweening;
 using Framework;
 using MikroFramework;
@@ -290,7 +292,7 @@ namespace Runtime.Inventory.ViewController {
             }
 
             if (currentDescriptionPanel) {
-                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null);
+                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null, null);
             }
 
             if (showRarityIndicator) {
@@ -408,10 +410,13 @@ namespace Runtime.Inventory.ViewController {
             
           
             if (currentDescriptionPanel) {
+                Dictionary<CurrencyType, int> useCost = topItem is ISkillEntity skillEntity
+                    ? skillEntity.GetSkillUseCostOfCurrentLevel()
+                    : null;
                 currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                    InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel,
+                    InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
                     ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
-                topItem.GetResourcePropertyDescriptions());
+                topItem.GetResourcePropertyDescriptions(),useCost);
                 
                 if (ResourceSlot.currentHoveredSlot == this) {
                     currentDescriptionPanel.Show();
@@ -510,11 +515,13 @@ namespace Runtime.Inventory.ViewController {
                             rarityLevel = rarityProperty.RealValue.Value;
                         }
                     }
-
+                    Dictionary<CurrencyType, int> useCost = topItem is ISkillEntity skillEntity
+                        ? skillEntity.GetSkillUseCostOfCurrentLevel()
+                        : null;
                     currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                        InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel,
+                        InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
                         ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
-                        topItem.GetResourcePropertyDescriptions());
+                        topItem.GetResourcePropertyDescriptions(), useCost);
                     currentDescriptionPanel.Show();
                 }
             }

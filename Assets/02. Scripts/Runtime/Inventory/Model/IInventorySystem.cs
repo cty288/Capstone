@@ -41,6 +41,9 @@ namespace Runtime.Inventory.Model {
 		
 		bool RemoveItem(IResourceEntity entity);
 		
+		void MoveItemFromBaseStockToInventory(ResourceCategory category, PreparationSlot slot);
+
+		void RemoveResourceEntityFromBaseStock(ResourceCategory category, string resourceName, int count, bool alsoRemoveEntity);
 	}
 
 	public interface IResourceSlotsSystem : ISystem {

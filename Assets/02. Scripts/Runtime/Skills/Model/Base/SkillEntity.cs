@@ -50,6 +50,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public int GetLevel();
 
 		public int GetMaxLevel();
+		
+		public SkillPurchaseCostInfo GetSkillPurchaseCost();
 	}
 
 	public struct OnSkillUsed {
@@ -217,21 +219,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 				sb.Append(Localization.Get("SKILL_PASSIVE") + "\n\n");
 			}
 
-			sb.Append(GetDescription(defaultLocalizationKey) + "\n\n");
-			sb.Append($"<size=120%><align=center><b>{Localization.Get("INFO_USE_COST")}</b></align></size>\n");
+			sb.Append(GetDescription(defaultLocalizationKey) + "\n");
 
-			sb.Append($"<size=105%><align=center>");
-			Dictionary<CurrencyType, int> skillUseCost = GetSkillUseCostOfCurrentLevel();
-			foreach (CurrencyType currencyType in skillUseCost.Keys) {
-				int cost = skillUseCost[currencyType];
-				if (cost <= 0) {
-					continue;
-				}
-
-				sb.Append($"<sprite index={(int) currencyType}> {cost}    ");
-			}
-
-			sb.Append($"</align></size>");
 			return sb.ToString();
 		}
 		
@@ -258,6 +247,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public int GetMaxLevel() {
 			return levelRange;
+		}
+
+		public SkillPurchaseCostInfo GetSkillPurchaseCost() {
+			return skillPurchaseCostProperty.RealValue.Value;
 		}
 
 

@@ -53,13 +53,27 @@ public class PreparationSlotLayoutViewController : AbstractMikroController<MainG
 				Destroy(child.gameObject);
 			}
 			
+			slotViewControllers.Clear();
 			
 			return slots;
 		}
 
 		public void OnShowItems(HashSet<PreparationSlot> slots) {
+			if(slots == null)
+				return;
+			
+			OnShowItems(slots.ToList());
+		}
+
+		public void OnShowItems(List<PreparationSlot> slots) {
+			if(slots == null)
+				return;
+			
 			Awake();
 			foreach (PreparationSlot slot in slots) {
+				if (slot.GetQuantity() == 0) {
+					continue;
+				}
 				RectTransform targetLayout = slotLayout;
 				GameObject slotObject = Instantiate(slotPrefab, targetLayout);
 				slotObject.transform.SetParent(targetLayout);
