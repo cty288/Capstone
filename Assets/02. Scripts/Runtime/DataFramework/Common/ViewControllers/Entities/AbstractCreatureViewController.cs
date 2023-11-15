@@ -52,7 +52,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		//[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
 		private static int combatCurrencyAmountPerItem = 5;
 		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
-		NavMeshAgent navMeshAgent;
+		protected NavMeshAgent navMeshAgent;
 		BehaviorTree behaviorTree;
 		
 		[Header("Nav Mesh")]

@@ -14,6 +14,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
+using Runtime.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,11 +26,15 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
 
    private DPunkInputs.SharedActions sharedActions;
    private IInventoryModel inventoryModel;
+   private IInventorySystem inventorySystem;
+   private IGamePlayerModel playerModel;
    
    private void Awake() {
       sharedActions = ClientInput.Singleton.GetSharedActions();
       this.RegisterEvent<OnPlayerThrowResource>(OnPlayerThrowResource).UnRegisterWhenGameObjectDestroyed(gameObject);
       inventoryModel = this.GetModel<IInventoryModel>();
+      inventorySystem = this.GetSystem<IInventorySystem>();
+      playerModel = this.GetModel<IGamePlayerModel>();
    }
 
    private void Start() {
@@ -45,12 +50,16 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
          IPickableResourceViewController resourceViewController = item.GetComponent<IPickableResourceViewController>();
          IResourceEntity resourceEntity = resourceViewController.OnBuildNewPickableResourceEntity(false, 1);
 
-         inventoryModel.AddItem(resourceEntity);
+         //inventorySystem.AddItem(resourceEntity);
+         inventoryModel.AddToBaseStock(resourceEntity);
       }
    }
 
 
    private void Update() {
+      if (playerModel.IsPlayerDead()) {
+         return;
+      }
       //Alpha1 -> 49, Alpha9 -> 57
       //map Alpha1 -> 49 to index 0, Alpha9 -> 57 to index 8
       InputAction leftNavigate = sharedActions.HotBarLeftNavigate;

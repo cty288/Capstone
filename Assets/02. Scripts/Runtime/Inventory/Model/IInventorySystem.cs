@@ -34,6 +34,16 @@ namespace Runtime.Inventory.Model {
 		public void RetainLockSwitch(object locker);
 		
 		public void ReleaseLockSwitch(object locker);
+
+		public bool AddItem(IResourceEntity item, bool sendEvent = true);
+		
+		bool CanPlaceItem(IResourceEntity item);
+		
+		bool RemoveItem(IResourceEntity entity);
+		
+		void MoveItemFromBaseStockToInventory(ResourceCategory category, PreparationSlot slot);
+
+		void RemoveResourceEntityFromBaseStock(ResourceCategory category, string resourceName, int count, bool alsoRemoveEntity);
 	}
 
 	public interface IResourceSlotsSystem : ISystem {

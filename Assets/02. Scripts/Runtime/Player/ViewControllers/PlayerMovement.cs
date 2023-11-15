@@ -281,9 +281,7 @@ namespace Runtime.Player.ViewControllers
 
                 onSlope = OnSlope();
             }
-            if (Input.GetKeyDown(KeyCode.F5)) {
-                ((MainGame) MainGame.Interface).SaveGame();
-            }
+            
 
 
         }

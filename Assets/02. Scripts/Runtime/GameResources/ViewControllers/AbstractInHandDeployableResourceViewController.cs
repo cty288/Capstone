@@ -3,6 +3,7 @@ using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
+using Runtime.Utilities.AnimatorSystem;
 using UnityEngine;
 
 namespace Runtime.GameResources.ViewControllers {
@@ -25,7 +26,7 @@ namespace Runtime.GameResources.ViewControllers {
 		}
 
 		public override void OnItemUse() {
-
+			
 		}
 
 		public void OnDeployed() {

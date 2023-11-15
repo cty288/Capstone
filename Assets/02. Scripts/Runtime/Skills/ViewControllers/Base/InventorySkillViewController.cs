@@ -4,6 +4,7 @@ using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory;
 using Runtime.Inventory.Model;
@@ -104,7 +105,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 		}
 
 		protected override void OnEntityStart() {
-			icon.sprite = InventorySpriteFactory.Singleton.GetSprite(BoundEntity.IconSpriteName);
+			icon.sprite = InventorySpriteFactory.Singleton.GetSprite(BoundEntity.EntityName);
 			inventoryAllSwitchCondition = BoundEntity.CanInventorySwitchToCondition;
 			useCurrencySatisfiedCondition = BoundEntity.GetUseCurrencySatisfiedCondition;
 			currencyModel = this.GetModel<ICurrencyModel>();
@@ -121,5 +122,6 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 		}
 
 		public bool IsHUDSlot { get; set; }
+		public ICanDealDamage CanDealDamageEntity => BoundEntity;
 	}
 }

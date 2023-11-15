@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Properties;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
@@ -19,7 +23,7 @@ using UnityEngine.PlayerLoop;
 using AutoConfigCustomProperty = Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty;
 
 namespace _02._Scripts.Runtime.Skills.Model.Base {
-	public interface ISkillEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
+	public interface ISkillEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
 		public float GetRemainingCooldown();
 		
 		public float GetMaxCooldown();
@@ -30,10 +34,24 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		
 		public void StartSwapInventoryCooldown(float cooldown);
 		public BindableProperty<T> GetCustomPropertyWithLevel<T>(string propertyName, int level);
-		
+
+		public BindableProperty<T> GetCustomPropertyOfCurrentLevel<T>(string propertyName);
+
 		Func<Dictionary<CurrencyType, int>, bool> GetUseCurrencySatisfiedCondition { get; }
 
 		void UseSkill();
+		
+		public void SetOwner(ICanDealDamage owner);
+		
+		public Dictionary<CurrencyType, int> GetSkillUseCostOfCurrentLevel();
+		
+		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfCurrentLevel();
+
+		public int GetLevel();
+
+		public int GetMaxLevel();
+		
+		public SkillPurchaseCostInfo GetSkillPurchaseCost();
 	}
 
 	public struct OnSkillUsed {
@@ -44,7 +62,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		protected ISkillUseCost skillUseCostProperty;
 		protected ISkillUpgradeCost skillUpgradeCostProperty;
 		protected ISkillPurchaseCost skillPurchaseCostProperty;
-
+		protected ICanDealDamage owner;
 
 		public override string InHandVCPrefabName => EntityName;
 
@@ -73,8 +91,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			RegisterInitialProperty<ISkillUseCost>(new SkillUseCost());
 		}
 
-		public override void OnAwake() {
-			base.OnAwake();
+		public override void OnResourceAwake() {
+			base.OnResourceAwake();
 			skillCooldownProperty = GetProperty<ISkillCoolDown>();
 			skillUseCostProperty = GetProperty<ISkillUseCost>();
 			skillUpgradeCostProperty = GetProperty<ISkillUpgradeCost>();
@@ -108,6 +126,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public override void OnRecycle() {
 			CoroutineRunner.Singleton.UnregisterUpdate(OnUpdate);
+			owner = null;
 		}
 
 		public override string OnGroundVCPrefabName { get; } = null;
@@ -160,6 +179,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return null;
 		}
 
+		public BindableProperty<T1> GetCustomPropertyOfCurrentLevel<T1>(string propertyName) {
+			return GetCustomPropertyWithLevel<T1>(propertyName, GetRarity());
+		}
+
 		public Func<Dictionary<CurrencyType, int>, bool> GetUseCurrencySatisfiedCondition =>
 			UseCurrencySatisfiedCondition;
 
@@ -169,6 +192,67 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 				skillEntity = this
 			});
 		}
+
+		public void SetOwner(ICanDealDamage owner) {
+			this.owner = owner;
+			if (owner != null) {
+				CurrentFaction.Value = owner.CurrentFaction.Value;
+			}
+		
+		}
+
+		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
+			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
+
+			int rarity = GetRarity();
+			float cooldown = skillCooldownProperty.GetByLevel(rarity);
+			
+			list.Add(() => new ResourcePropertyDescription("PropertyIconRarity", Localization.GetFormat(
+				"PROPERTY_ICON_LEVEL", rarity)));
+			list.Add(() => new ResourcePropertyDescription("PropertyIconCooldown", Localization.GetFormat(
+				"PROPERTY_ICON_COOLDOWN", Mathf.RoundToInt(cooldown))));
+		}
+
+		protected override string OnGetDescription(string defaultLocalizationKey) {
+			StringBuilder sb = new StringBuilder();
+			if (!HasCooldown()) {
+				sb.Append(Localization.Get("SKILL_PASSIVE") + "\n\n");
+			}
+
+			sb.Append(GetDescription(defaultLocalizationKey) + "\n");
+
+			return sb.ToString();
+		}
+		
+		//protected string GetEffectDescription() {
+			//return GetEffectDescription($"{EntityName}_desc_effect");
+		//}
+		
+		//protected abstract string GetEffectDescription(string defaultLocalizationKey);
+		
+		protected abstract string GetDescription(string defaultLocalizationKey);
+
+
+		public Dictionary<CurrencyType, int> GetSkillUseCostOfCurrentLevel() {
+			return skillUseCostProperty.GetByLevel(GetRarity());
+		}
+
+		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfCurrentLevel() {
+			return skillUpgradeCostProperty.GetByLevel(GetRarity());
+		}
+
+		public int GetLevel() {
+			return GetRarity();
+		}
+
+		public int GetMaxLevel() {
+			return levelRange;
+		}
+
+		public SkillPurchaseCostInfo GetSkillPurchaseCost() {
+			return skillPurchaseCostProperty.RealValue.Value;
+		}
+
 
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => GetInventorySwitchCondition;
 
@@ -212,6 +296,25 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return res;
 		}
 		
+		
+		
 		protected abstract ICustomProperty[] OnRegisterAdditionalCustomProperties();
+		
+		[field: ES3Serializable]
+		public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
+		public void OnKillDamageable(IDamageable damageable) {
+			owner?.OnKillDamageable(damageable);
+		}
+
+		public void OnDealDamage(IDamageable damageable, int damage) {
+			owner?.OnDealDamage(damageable, damage);
+		}
+
+		public ICanDealDamageRootEntity RootDamageDealer=> owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => null;
+		
+		public override IResourceEntity GetReturnToBaseEntity() {
+			return ResourceVCFactory.Singleton.SpawnNewResourceEntity(EntityName, true, 1);
+		}
 	}
 }

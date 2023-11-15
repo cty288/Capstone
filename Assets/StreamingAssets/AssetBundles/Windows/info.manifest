@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 32602956
+CRC: 3090865313
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1850765c4f8f8d39e3a5f2cff4e9c019
+    Hash: 00c03fb5a5b7394ef95ada139fb862b0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 811f0f9d157e780f76d753b09e6fba98
+    Hash: c3bf99692d8946eea4462df2ce13ec29
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -56,6 +56,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 4ea25bf3956944709f2f2bcd5a17420f, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 84a92b25f83d49b9bc132d206b370281, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 18658476032860a409f513d9189fcd83, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
@@ -77,6 +79,10 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_SpriteCharacter
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_SpriteGlyph
+- AssemblyName: Unity.TextMeshPro
   ClassName: TMPro.VertexGradient
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
@@ -84,6 +90,12 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.Events.UnityEvent
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.RectOffset
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.FaceInfo
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.GlyphMetrics
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.GlyphRect
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.AnimationTriggers
 - AssemblyName: UnityEngine.UI
@@ -105,9 +117,10 @@ Assets:
 - Assets/05. Sprites/UI/Crosshairs/Crosshair7_FullBody.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Exit button selected_1.png
 - Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconAmmo.prefab
+- Assets/06. Prefabs/Game/Inventory/RarityIndicator2.prefab
 - Assets/06. Prefabs/Game/CrossHairs/DefaultCrossHair/DefaultCrossHair.prefab
-- Assets/05. Sprites/UI/Crosshairs/Crosshair10_Aim.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Trash box selected_1.png
+- Assets/05. Sprites/UI/Crosshairs/Crosshair10_Aim.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory locked.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair2_Body.png
 - Assets/06. Prefabs/Game/Inventory/DescriptionTag.prefab
@@ -141,7 +154,7 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Trash box top.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory full_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair6_Aim.png
-- Assets/05. Sprites/UI/Inventory/Inventory - Popout attributes box_1.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconRange.prefab
 - Assets/05. Sprites/UI/LevelProgress/progress bar - empty.png
 - Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconAttackSpeed.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair11_Aim.png
@@ -152,10 +165,12 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout description box empty_1.png
 - Assets/06. Prefabs/Game/Entities/Bosses/Boss 1/Boss1ShellHealthBar.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair5_Body.png
+- Assets/05. Sprites/UI/Inventory/Inventory - Popout attributes box_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout line top right decoration_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair7_Aim.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory full.png
 - Assets/06. Prefabs/Game/UI/DamageIndicator/DamageNumber.prefab
+- Assets/06. Prefabs/Game/Inventory/PropertyIconRarity.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair6_Body2.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box name tag_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair11_FullBody.png
@@ -202,11 +217,13 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout line decoration beneath star.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Trash box top_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair5_Aim1.png
+- Assets/06. Prefabs/Game/Inventory/RarityIndicator.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - title selected bar.png
-- Assets/05. Sprites/UI/Inventory/Inventory - Top red bar_1.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconCooldown.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - upper left decoration.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair9_Aim.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star white_1.png
+- Assets/05. Sprites/UI/Inventory/Inventory - Top red bar_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair3_Body.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box full_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair5_FullBody.png
@@ -247,6 +264,7 @@ Assets:
 - Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar right decoration.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair6_Body1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair8_Body1.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconHeal.prefab
 - Assets/05. Sprites/UI/Crosshairs/Crosshair_RedAnimationAim.png
 Dependencies:
 - D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/assets/fonts

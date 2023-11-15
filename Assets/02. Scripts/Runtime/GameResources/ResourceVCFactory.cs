@@ -71,6 +71,12 @@ namespace Runtime.GameResources {
 			return vc;
 		}
 		
+		public IResourceEntity SpawnNewResourceEntity(string pickableResourcePrefabName, bool setRarity = false, int rarity = 1) {
+			GameObject prefab = resLoader.LoadSync<GameObject>(pickableResourcePrefabName);
+			IPickableResourceViewController vcComponent = prefab.GetComponent<IPickableResourceViewController>();
+			return vcComponent.OnBuildNewPickableResourceEntity(setRarity, rarity);
+		}
+		
 		private GameObject SpawnResourceGameObject(string prefabName, bool usePool, int poolInitCount = 5,
 			int poolMaxCount = 20) {
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using DG.Tweening;
 using Framework;
 using MikroFramework;
@@ -17,6 +19,7 @@ using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
 using Runtime.RawMaterials.Model.Base;
 using Runtime.UI.NameTags;
+using Runtime.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -67,7 +70,15 @@ namespace Runtime.Inventory.ViewController {
         [SerializeField] private bool showTagDetailIcon = false;
         [SerializeField] private int maxPropertyDetailIconCount = 3;
         [SerializeField] private bool allowDrag = true;
+        
+        private Action<ResourceSlotViewController> onSlotClickedCallback;
+
+        public bool AllowDrag {
+            get => allowDrag;
+            set => allowDrag = value;
+        }
         [SerializeField] private RectTransform cantThrowErrorMessage;
+        [SerializeField] protected GameObject cantDragBG;
         
         protected virtual RectTransform GetExpandedRect() {
             return rectTransform;
@@ -104,10 +115,24 @@ namespace Runtime.Inventory.ViewController {
             rectTransform = GetComponent<RectTransform>();
             
             baseWidth = GetExpandedRect().sizeDelta.x;
+            ResourceSlot.currentDraggingSlot.RegisterWithInitValue(OnCurrentDraggingSlotChanged)
+                .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             //currentDescriptionPanel.Hide();
             //descriptionPanel.Awake();
             Clear();
             
+        }
+
+        protected virtual void OnCurrentDraggingSlotChanged(ResourceSlot oldSlot, ResourceSlot newSlot) {
+            if (cantDragBG) {
+                if (newSlot == null) {
+                    cantDragBG.SetActive(false);
+                }
+                else {
+                    IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(newSlot.GetLastItemUUID());
+                    cantDragBG.SetActive(!slot.CanPlaceItem(topItem, true));
+                }
+            }
         }
 
         private void OnEnable() {
@@ -123,8 +148,16 @@ namespace Runtime.Inventory.ViewController {
            // baseWidth = rectTransform.sizeDelta.x;
         }
 
-        public void OnPointerClick() {
-           
+        public virtual void OnPointerClick() {
+           onSlotClickedCallback?.Invoke(this);
+        }
+        
+        public void RegisterOnSlotClickedCallback(Action<ResourceSlotViewController> callback) {
+            onSlotClickedCallback += callback;
+        }
+        
+        public void UnRegisterOnSlotClickedCallback(Action<ResourceSlotViewController> callback) {
+            onSlotClickedCallback -= callback;
         }
         
         public void OnPointerDown(PointerEventData eventData) {
@@ -148,6 +181,7 @@ namespace Runtime.Inventory.ViewController {
                     //set spawn point parent to parent, and set it as last sibling
                     spawnPoint.SetParent(SlotItemDragCanvas.Singleton.transform);
                     spawnPoint.SetAsLastSibling();
+                    ResourceSlot.currentDraggingSlot.Value = this.slot;
                 }
                 spawnPoint.transform.position = eventData.position;
             }
@@ -228,6 +262,7 @@ namespace Runtime.Inventory.ViewController {
                 StopDragImmediately();
             }
             startDragTriggered = false;
+            ResourceSlot.currentDraggingSlot.Value = null;
         }
 
         private void StopDragImmediately() {
@@ -242,6 +277,7 @@ namespace Runtime.Inventory.ViewController {
     
         protected virtual void Clear() {
             ShowCantThrowMessage(false);
+            
             if (topVC) {
                 GameObjectPoolManager.Singleton.Recycle(topVC);
             }
@@ -256,7 +292,7 @@ namespace Runtime.Inventory.ViewController {
             }
 
             if (currentDescriptionPanel) {
-                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null);
+                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null, null);
             }
 
             if (showRarityIndicator) {
@@ -374,10 +410,13 @@ namespace Runtime.Inventory.ViewController {
             
           
             if (currentDescriptionPanel) {
+                Dictionary<CurrencyType, int> useCost = topItem is ISkillEntity skillEntity
+                    ? skillEntity.GetSkillUseCostOfCurrentLevel()
+                    : null;
                 currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                    InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel,
+                    InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
                     ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
-                topItem.GetResourcePropertyDescriptions());
+                topItem.GetResourcePropertyDescriptions(),useCost);
                 
                 if (ResourceSlot.currentHoveredSlot == this) {
                     currentDescriptionPanel.Show();
@@ -458,7 +497,7 @@ namespace Runtime.Inventory.ViewController {
 
         public void OnPointerEnter(PointerEventData eventData) {
             if (slotHoverBG) {
-                slotHoverBG.DOFade(hoverBGAlpha, 0.2f);
+                slotHoverBG.DOFade(hoverBGAlpha, 0.2f).SetUpdate(true);
             }
             
             ResourceSlot.currentHoveredSlot = this;
@@ -476,11 +515,13 @@ namespace Runtime.Inventory.ViewController {
                             rarityLevel = rarityProperty.RealValue.Value;
                         }
                     }
-
+                    Dictionary<CurrencyType, int> useCost = topItem is ISkillEntity skillEntity
+                        ? skillEntity.GetSkillUseCostOfCurrentLevel()
+                        : null;
                     currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                        InventorySpriteFactory.Singleton.GetSprite(topItem.IconSpriteName), !isRightSide, rarityLevel,
+                        InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
                         ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
-                        topItem.GetResourcePropertyDescriptions());
+                        topItem.GetResourcePropertyDescriptions(), useCost);
                     currentDescriptionPanel.Show();
                 }
             }
@@ -493,7 +534,7 @@ namespace Runtime.Inventory.ViewController {
         protected void PointerExit(bool closeImmediately) {
             if (slotHoverBG) {
                 if (!closeImmediately) {
-                    slotHoverBG.DOFade(0, 0.2f);
+                    slotHoverBG.DOFade(0, 0.2f).SetUpdate(true);
                 }
                 else {
                     slotHoverBG.color = new Color(slotHoverBG.color.r, slotHoverBG.color.g, slotHoverBG.color.b, 0);

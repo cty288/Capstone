@@ -42,6 +42,8 @@ namespace Runtime.GameResources.ViewControllers {
 		
 		public List<AnimLayerInfo> AnimLayerInfos { get; }
 		
+		public List<string> PlayerAnimStateToWaitWhenStopHold { get; }
+
 	}
 
 	[Serializable]
@@ -91,6 +93,10 @@ namespace Runtime.GameResources.ViewControllers {
 		[field: SerializeField]
 		public List<AnimLayerInfo> AnimLayerInfos { get; protected set; }
 
+		[field: SerializeField] 
+		[field: Tooltip("When the player stops holding the item, the player animator will wait for these states to finish before switching to the next item")]
+		public List<string> PlayerAnimStateToWaitWhenStopHold { get; protected set; }
+
 		private Vector3 originalLocalScale;
 		
 		[Header("Cross hairs")] [SerializeField]
@@ -109,6 +115,7 @@ namespace Runtime.GameResources.ViewControllers {
 			pickableLayerMask = LayerMask.GetMask("PickableResource");
 			inventorySystem = this.GetSystem<IInventorySystem>();
 			InitObjectsToChangeLayerInHand();
+			originalAutoRemovalTimeWhenNoAbsorb = autoRecycleTimeWhenNoAbsorb;
 		}
 
 		protected override void Update() {
@@ -189,7 +196,7 @@ namespace Runtime.GameResources.ViewControllers {
 			isHolding = false;
 			rigidbody.isKinematic = false;
 			this.ownerGameObject = null;
-			entityAutoRemovalTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
+			autoRecycleTimeWhenNoAbsorb = originalAutoRemovalTimeWhenNoAbsorb;
 		}
 
 
@@ -201,6 +208,7 @@ namespace Runtime.GameResources.ViewControllers {
 			base.HandleAbsorb(player, zone);
 		}
 
+		
 		public virtual void OnStartHold(GameObject ownerGameObject) {
 			/*this.SendEvent<PlayerSwitchAnimEvent>(new PlayerSwitchAnimEvent()
 			{
@@ -213,8 +221,8 @@ namespace Runtime.GameResources.ViewControllers {
 				selfCollider.isTrigger = true;
 			}
 
-			originalAutoRemovalTimeWhenNoAbsorb = entityAutoRemovalTimeWhenNoAbsorb;
-			entityAutoRemovalTimeWhenNoAbsorb = -1;
+			
+			autoRecycleTimeWhenNoAbsorb = -1;
 			this.ownerGameObject = ownerGameObject;
 			SwitchToPickableLayer();
 			OnUnPointByCrosshair();
@@ -263,6 +271,7 @@ namespace Runtime.GameResources.ViewControllers {
 			base.OnPointByCrosshair();
 		}
 
+		
 		protected override void OnEntityRecycled(IEntity ent) {
 			base.OnEntityRecycled(ent);
 			transform.localScale = Vector3.one;

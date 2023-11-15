@@ -11,6 +11,7 @@ using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.Utilities;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Sequence = MikroFramework.ActionKit.Sequence;
 
 namespace Runtime.GameResources.ViewControllers {
@@ -30,22 +31,25 @@ namespace Runtime.GameResources.ViewControllers {
     
        // protected ResLoader resLoader;
         //protected PoolableGameObject poolable;
-        protected IInventoryModel inventoryModel;
+        protected IInventorySystem inventorySystem;
+        
         protected bool isAbsorbing = false;
         protected bool isAbsorbWaiting = false;
         protected Dictionary<Collider, bool> selfColliders = new Dictionary<Collider, bool>();
         
+        [FormerlySerializedAs("entityAutoRemovalTimeWhenNoAbsorb")]
         [Header("Entity Recycle Logic")]
         [Tooltip("The time when the entity will be recycled when it is not absorbed by the player")]
         [SerializeField] [ES3Serializable]
-        protected float entityAutoRemovalTimeWhenNoAbsorb = 120f;
+        protected float autoRecycleTimeWhenNoAbsorb = 120f;
+        [SerializeField] private bool alsoRemoveEntityWhenNoAbsorb = true;
         
         private Coroutine entityRemovalTimerCoroutine;
         protected override void Awake() {
             base.Awake();
             //poolable = GetComponent<PoolableGameObject>();
            // resLoader = this.GetUtility<ResLoader>();DescriptionTag
-            inventoryModel = this.GetModel<IInventoryModel>();
+            inventorySystem = this.GetSystem<IInventorySystem>();
             foreach (Collider selfCollider in GetComponentsInChildren<Collider>(true)) {
                 selfColliders.Add(selfCollider, selfCollider.isTrigger);
             }
@@ -56,7 +60,7 @@ namespace Runtime.GameResources.ViewControllers {
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = true;
 
         protected override void OnEntityStart() {
-            if (entityAutoRemovalTimeWhenNoAbsorb > 0) {
+            if (autoRecycleTimeWhenNoAbsorb > 0) {
                 entityRemovalTimerCoroutine = StartCoroutine(EntityRemovalTimer());
             }
         }
@@ -109,7 +113,7 @@ namespace Runtime.GameResources.ViewControllers {
                 //TODO: test it
                 Sequence.Allocate()
                     .AddAction(
-                        UntilAction.Allocate(() => inventoryModel.CanPlaceItem(BoundEntity) || zone.IsInZone(gameObject) || !this))
+                        UntilAction.Allocate(() => inventorySystem.CanPlaceItem(BoundEntity) || zone.IsInZone(gameObject) || !this))
                     .AddAction(CallbackAction.Allocate(() => {
                         if (this && zone.IsInZone(gameObject)) {
                             HandleAbsorb(player, zone);
@@ -126,7 +130,7 @@ namespace Runtime.GameResources.ViewControllers {
         /// <param name="entity"></param>
         /// <returns></returns>
         protected virtual bool AbsorbHandler(T entity) {
-            return inventoryModel.AddItem(entity);
+            return inventorySystem.AddItem(entity);
         }
 
         protected abstract void OnStartAbsorb();
@@ -151,9 +155,13 @@ namespace Runtime.GameResources.ViewControllers {
         }
 
         private IEnumerator EntityRemovalTimer() {
-            yield return new WaitForSeconds(entityAutoRemovalTimeWhenNoAbsorb);
-            if (this && entityModel!=null && entityAutoRemovalTimeWhenNoAbsorb >= 0) {
-                entityModel.RemoveEntity(BoundEntity.UUID);
+            yield return new WaitForSeconds(autoRecycleTimeWhenNoAbsorb);
+            if (this && entityModel!=null && autoRecycleTimeWhenNoAbsorb >= 0) {
+                if (alsoRemoveEntityWhenNoAbsorb) {
+                    entityModel.RemoveEntity(BoundEntity.UUID);
+                }
+                RecycleToCache();
+                
             }
         }
 

@@ -1,13 +1,18 @@
-﻿using _02._Scripts.Runtime.Skills.Model.Base;
+﻿using System;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Builders;
 using MikroFramework.Architecture;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
+using UnityEngine;
+using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 	
-	public interface ISkillViewController : IResourceViewController {
+	public interface ISkillViewController : IResourceViewController, ICanDealDamageViewController {
 		ISkillEntity SkillEntity { get; }
 	}
 	
@@ -48,6 +53,25 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 			
 		}
 
+		protected void UseSkill(Action onUseSuccess) {
+			inventorySystem.ForceUpdateCurrentHotBarSlotCanSelect();
+			if (BoundEntity == null) {
+				return;
+			}
+			
+			BoundEntity.UseSkill();
+			onUseSuccess?.Invoke();
+			inventorySystem.ForceUpdateCurrentHotBarSlotCanSelect();
+		}
+
+		public override void OnStartHold(GameObject ownerGameObject) {
+			base.OnStartHold(ownerGameObject);
+			if(ownerGameObject.TryGetComponent<ICanDealDamageViewController>(out var damageDealer)) {
+				BoundEntity.SetOwner(damageDealer.CanDealDamageEntity);
+			}
+		}
+
 		public ISkillEntity SkillEntity => BoundEntity;
+		public ICanDealDamage CanDealDamageEntity => BoundEntity;
 	}
 }

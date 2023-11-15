@@ -53,7 +53,7 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string InventoryVCPrefabName { get; }
 		
-		public string IconSpriteName { get; }
+		//public string IconSpriteName { get; }
 		
 		public string OnGroundVCPrefabName { get; }
 		
@@ -71,6 +71,8 @@ namespace Runtime.GameResources.Model.Base {
 		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions();
 		
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition { get; }
+		
+		public IResourceEntity GetReturnToBaseEntity();
 	}
 	
 	//3 forms
@@ -93,10 +95,13 @@ namespace Runtime.GameResources.Model.Base {
 
 		public override void OnAwake() {
 			base.OnAwake();
+			OnResourceAwake();
 			maxStackProperty = GetProperty<IMaxStack>();
-			OnRegisterResourcePropertyDescriptionGetters(ref resourcePropertyDescriptionGetters);
 		}
 
+		public virtual void OnResourceAwake() {
+			
+		}
 		public virtual void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
 			
 		}
@@ -109,6 +114,7 @@ namespace Runtime.GameResources.Model.Base {
 
 
 		public override void OnDoRecycle() {
+			resourcePropertyDescriptionGetters?.Clear();
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
 		}
 		
@@ -166,14 +172,18 @@ namespace Runtime.GameResources.Model.Base {
 		[field: ES3Serializable]
 		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
 
-		public string IconSpriteName => $"{EntityName}_Icon";
+		//public string IconSpriteName => $"{EntityName}_Icon";
 
 		public abstract string OnGroundVCPrefabName { get; }
 		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
 
 		public virtual string DeployedVCPrefabName { get; } = null;
 
-		
+
+		public override void OnStart(bool isLoadedFromSave) {
+			OnRegisterResourcePropertyDescriptionGetters(ref resourcePropertyDescriptionGetters);
+			base.OnStart(isLoadedFromSave);
+		}
 
 		[field: ES3Serializable]
 		public virtual int Width { get; } = 1;
@@ -188,6 +198,7 @@ namespace Runtime.GameResources.Model.Base {
 		}
 
 		public Func<Dictionary<CurrencyType, int>,bool> CanInventorySwitchToCondition { get; } = null;
+		public abstract IResourceEntity GetReturnToBaseEntity();
 	}
 
 }

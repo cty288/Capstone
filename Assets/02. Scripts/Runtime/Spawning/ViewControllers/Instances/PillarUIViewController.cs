@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.UIKit;
 using Polyglot;
+using Runtime.Controls;
 using Runtime.Spawning.Commands;
 using Runtime.UI;
 using TMPro;
@@ -14,7 +16,10 @@ using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
-public class PillarUIViewController : AbstractPanel, IController {
+public interface IGameUIPanel {
+	public IPanel GetClosePanel();
+}
+public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 	private OnOpenPillarUI data;
 	private Button lastRarityButton;
 	private Button nextRarityButton;
@@ -47,6 +52,11 @@ public class PillarUIViewController : AbstractPanel, IController {
 	
 	}
 
+	private void Update() {
+		if (ClientInput.Singleton.GetSharedActions().Interact.WasPressedThisFrame()) {
+			MainUI.Singleton.GetAndClose(this);
+		}
+	}
 
 	private void OnLastRarityButtonClicked() { 
 		int targetRarity = currentSelectedRarity <= 1 ? maxRarity : currentSelectedRarity - 1;
@@ -68,7 +78,7 @@ public class PillarUIViewController : AbstractPanel, IController {
 	}
 	private void OnSummonButtonClicked() {
 		this.SendCommand(PillarSpawnBossCommand.Allocate(data.pillar, GetRequiredCurrency(), currentSelectedRarity));
-		MainUI.Singleton.OpenOrClose<PillarUIViewController>(MainUI.Singleton, null);
+		MainUI.Singleton.OpenOrGetClose<PillarUIViewController>(MainUI.Singleton, null);
 	}
 	public void SetRarity(int rarity) {
 		currentSelectedRarity = rarity;
@@ -79,7 +89,7 @@ public class PillarUIViewController : AbstractPanel, IController {
 		Dictionary<CurrencyType, int> requiredCurrency = GetRequiredCurrency();
 		
 		foreach (CurrencyType currencyType in data.bossSpawnCosts.Keys) {
-			sb.Append($"{Localization.Get($"CURRENCY_{currencyType.ToString()}_name")}: ");
+			sb.Append($"<sprite index={(int) currencyType}>");
 			int currencyAmount = requiredCurrency[currencyType];
 			bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= currencyAmount;
 			if (!isEnough) {
@@ -88,7 +98,7 @@ public class PillarUIViewController : AbstractPanel, IController {
 			sb.Append(isEnough
 				? $"<color=black>{currencyAmount}</color>"
 				: $"<color=#FF0000>{currencyAmount}</color>");
-			sb.Append("\n");
+			sb.Append("    ");
 		}
 
 		displayCostText.text = sb.ToString();
@@ -107,5 +117,9 @@ public class PillarUIViewController : AbstractPanel, IController {
 
 	public IArchitecture GetArchitecture() {
 		return MainGame.Interface;
+	}
+
+	public IPanel GetClosePanel() {
+		return this;
 	}
 }

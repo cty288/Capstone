@@ -53,8 +53,8 @@ namespace Runtime.GameResources.Model.Base {
 			return GlobalGameResourceEntities.GetAnyResource(id);
 		}
 
-		public override bool RemoveEntity(string id) {
-			bool success = base.RemoveEntity(id);
+		public override bool RemoveEntity(string id, bool force = false) {
+			bool success = base.RemoveEntity(id, force);
 			if (success) {
 				GlobalGameResourceEntities.globalResourceOfSameType.Remove(id);
 			}

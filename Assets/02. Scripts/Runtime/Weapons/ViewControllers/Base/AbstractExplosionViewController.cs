@@ -19,14 +19,14 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		
 		float Size { get; }
 
-		public void Init(Faction faction, int damage,float size, GameObject bulletOwnerGo, ICanDealDamage owner);
+		public void Init(Faction faction, int damage, float size, GameObject bulletOwnerGo, ICanDealDamage owner);
 	}
 	
 	
 	[RequireComponent(typeof(ExplosionHitBox))]
 	public abstract class AbstractExplosionViewController : PoolableGameObject, IHitResponder, IController, IExplosionViewController {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
-		private List<ParticleSystem> particleSystems = new List<ParticleSystem>();
+		protected List<ParticleSystem> particleSystems = new List<ParticleSystem>();
 		protected IEntity entity = null;
 		
 		
@@ -51,13 +51,13 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected ExplosionHitBox hitBox = null;
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
-		private void Awake() {
+		protected virtual void Awake() {
 			hitBox = GetComponent<ExplosionHitBox>();
-			particleSystems.AddRange(GetComponentsInChildren<ParticleSystem>());
+			particleSystems.AddRange(GetComponentsInChildren<ParticleSystem>(true));
 			particleSystems.ForEach(p => p.Stop());
 		}
 
-		public void Init(Faction faction, int damage, float size,GameObject bulletOwner, ICanDealDamage owner) {
+		public virtual void Init(Faction faction, int damage, float size, GameObject bulletOwner, ICanDealDamage owner) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			Size = size;
@@ -67,7 +67,11 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
 			this.owner = owner;
-			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
+
+			if (bulletOwner) {
+				entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
+			}
+			
 			entity?.RetainRecycleRC();
 			particleSystems.ForEach(p => p.Play());
 		}

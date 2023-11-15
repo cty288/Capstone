@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.CollectableResources.Model.Properties;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Properties;
 using MikroFramework.Singletons;
@@ -47,6 +48,7 @@ namespace Runtime.Utilities.ConfigSheet {
 			RegisterType("ItemDropCollection", typeof(ItemDropCollection));
 			RegisterType("CurrencyType", typeof(CurrencyType));
 			RegisterType("SkillPurchaseCostInfo", typeof(SkillPurchaseCostInfo));
+			RegisterType("CollectableResourceCurrencyInfo", typeof(CollectableResourceCurrencyInfo));
 
 		}
 		

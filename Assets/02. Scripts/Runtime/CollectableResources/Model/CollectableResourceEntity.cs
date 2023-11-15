@@ -8,13 +8,14 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities.ConfigSheet;
 
 namespace _02._Scripts.Runtime.CollectableResources.Model {
-	public interface ICollectableEntity : IEntity, IHaveCustomProperties, IHaveTags {
+	public interface ICollectableEntity : IEntity, IHaveCustomProperties, IHaveTags, IHaveItemDropCollection {
 		ICollectableResourceCurrencyList GetCollectableResourceCurrencyList();
 	}
 	
@@ -22,14 +23,16 @@ namespace _02._Scripts.Runtime.CollectableResources.Model {
 		where T : CollectableResourceEntity<T>, new() {
 		protected ILevelNumberProperty levelNumberProperty;
 		protected ICollectableResourceCurrencyList collectableResourceCurrencyList;
+		protected IItemDropCollectionsProperty itemDropCollectionsProperty;
 		protected override ConfigTable GetConfigTable() {
-			return null;
+			return ConfigDatas.Singleton.CollectableResourceConfigTable;
 		}
 
 		public override void OnAwake() {
 			base.OnAwake();
 			levelNumberProperty = GetProperty<ILevelNumberProperty>();
 			collectableResourceCurrencyList = GetProperty<ICollectableResourceCurrencyList>();
+			itemDropCollectionsProperty = GetProperty<IItemDropCollectionsProperty>();
 		}
 
 		public ICollectableResourceCurrencyList GetCollectableResourceCurrencyList() {
@@ -61,10 +64,15 @@ namespace _02._Scripts.Runtime.CollectableResources.Model {
 		protected override void OnEntityRegisterAdditionalProperties() {
 			RegisterInitialProperty<ILevelNumberProperty>(new LevelNumber());
 			RegisterInitialProperty<ICollectableResourceCurrencyList>(new CollectableResourceCurrencyList());
+			RegisterInitialProperty<IItemDropCollectionsProperty>(new ItemDropCollections());
 		}
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
+		}
+
+		public IItemDropCollectionsProperty GetItemDropCollectionsProperty() {
+			return itemDropCollectionsProperty;
 		}
 	}
 }

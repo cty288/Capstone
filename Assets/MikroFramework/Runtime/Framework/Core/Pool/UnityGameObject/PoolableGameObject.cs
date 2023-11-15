@@ -25,6 +25,9 @@ namespace MikroFramework.Pool
         /// </summary>
         public void RecycleToCache()
         {
+            if (!this) {
+                return;
+            }
             if (Pool != null) {
                 Pool.Recycle(this.gameObject);
                 Pool = null;

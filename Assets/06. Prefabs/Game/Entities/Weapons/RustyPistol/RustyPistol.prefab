@@ -649,7 +649,8 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  entityAutoRemovalTimeWhenNoAbsorb: 120
+  autoRecycleTimeWhenNoAbsorb: 120
+  alsoRemoveEntityWhenNoAbsorb: 1
   <InHandLocalPosition>k__BackingField: {x: 0, y: 0, z: 0}
   <InHandLocalRotation>k__BackingField: {x: 0, y: 0, z: 0}
   objectToChangeLayerInHand:
@@ -692,6 +693,7 @@ MonoBehaviour:
   <AnimLayerInfos>k__BackingField:
   - LayerName: Revolver
     LayerWeight: 1
+  <PlayerAnimStateToWaitWhenStopHold>k__BackingField: []
   crossHairPrefabName: DefaultCrossHair
   model: {fileID: 4243372108615127244}
   autoReload: 1

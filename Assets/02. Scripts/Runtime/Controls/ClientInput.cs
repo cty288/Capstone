@@ -43,6 +43,19 @@ namespace Runtime.Controls
             InputAction action = playerMap.FindAction(name, false);
             return action;
         }
+        
+        public InputAction FindActionInUIActionMap(string name) {
+            InputActionMap map = PlayerInput.actions.FindActionMap("UI");
+            InputAction action = map.FindAction(name, false);
+            return action;
+        }
+        
+        public InputAction FindActionInSharedActionMap(string name) {
+            InputActionMap map = PlayerInput.actions.FindActionMap("Shared");
+            InputAction action = map.FindAction(name, false);
+            return action;
+        }
+        
         public override void OnSingletonInit() {
             base.OnSingletonInit();
             Inputs = new DPunkInputs();

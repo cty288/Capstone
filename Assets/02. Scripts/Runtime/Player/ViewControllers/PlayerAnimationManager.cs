@@ -13,17 +13,26 @@ using Runtime.Utilities;
 
 namespace Runtime.Player.ViewControllers
 {
+    public struct OnPlayerAnimationEvent {
+        public string AnimationName;
+    }
 
-    public class PlayerAnimationManager : EntityAttachedViewController<PlayerEntity>
+    public class PlayerAnimationManager : EntityAttachedViewController<PlayerEntity>, ICanSendEvent
     {
         [SerializeField] private Animator playerAnim;
 
         private AnimationSMBManager animationSMBManager;
+        private Dictionary<int, float> layerTargetWeight = new Dictionary<int, float>();
 
         // Start is called before the first frame update
         protected override void Awake()
         {
             base.Awake();
+            int layerCount = playerAnim.layerCount;
+            for (int i = 0; i < layerCount; i++) {
+                layerTargetWeight.Add(i, 0);
+            }
+            
             animationSMBManager = GetComponent<AnimationSMBManager>();
             this.RegisterEvent<PlayerAnimationEvent>(OnPlayerAnimationEvent);
             animationSMBManager.Event.AddListener(OnAnimationEvent);
@@ -31,19 +40,30 @@ namespace Runtime.Player.ViewControllers
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         }
 
-        void Start()
-        {
-
+        void Start() {
+            
         }
 
         // Update is called once per frame
-        void Update()
-        {
+        void Update() {
+            //lerp layer weight
+            int layerCount = playerAnim.layerCount;
+            //playerAnim.GetCurrentAnimatorStateInfo(0)
+           
+            for (int i = 0; i < layerCount; i++) {
+                float currentWeight = playerAnim.GetLayerWeight(i);
+                float targetWeight = layerTargetWeight[i];
+                float newWeight = Mathf.Lerp(currentWeight, targetWeight, Time.deltaTime * 20);
+                playerAnim.SetLayerWeight(i, newWeight);
+            }
 
         }
 
         protected void OnAnimationEvent(string eventName)
         {
+            this.SendEvent<OnPlayerAnimationEvent>(new OnPlayerAnimationEvent() {
+                AnimationName = eventName
+            });
             switch (eventName)
             {
                 case "ReloadStart":
@@ -86,6 +106,8 @@ namespace Runtime.Player.ViewControllers
                 
             }
         }
+        
+        
 
         protected override void OnEntityFinishInit(PlayerEntity entity)
         {
@@ -93,17 +115,30 @@ namespace Runtime.Player.ViewControllers
         }
 
         protected void SwitchPlayerAnimLayer(PlayerSwitchAnimEvent e) {
-            if (e.layerInfos == null) {
-                return;
+            //playerAnim.SetLayerWeight(1, 0); // NoItem
+            int layerCount = playerAnim.layerCount;
+            HashSet<int> layersNotInList = new HashSet<int>();
+            for (int i = 0; i < layerCount; i++) {
+                layersNotInList.Add(i);
             }
             
-            foreach (AnimLayerInfo layerInfo in e.layerInfos) {
-                playerAnim.SetLayerWeight(playerAnim.GetLayerIndex("NoItem"), 1 - layerInfo.LayerWeight); // NoItem
+            
+            if (e.layerInfos != null) {
+                foreach (AnimLayerInfo layerInfo in e.layerInfos) {
+                    int target = playerAnim.GetLayerIndex(layerInfo.LayerName);
+                    if (target == -1) {
+                        Debug.LogError("Layer " + layerInfo.LayerName + " not found");
+                        continue;
+                    }
 
-                int target = playerAnim.GetLayerIndex(layerInfo.LayerName);
-                playerAnim.SetLayerWeight(target, layerInfo.LayerWeight);
+                    layerTargetWeight[target] = layerInfo.LayerWeight;
+                    layersNotInList.Remove(target);
+                }
             }
-           
+            
+            foreach (int layer in layersNotInList) {
+                layerTargetWeight[layer] = 0;
+            }
         }
     }
 }

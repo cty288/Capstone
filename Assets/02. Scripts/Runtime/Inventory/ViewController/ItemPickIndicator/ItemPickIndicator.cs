@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using DG.Tweening;
 using Framework;
@@ -50,11 +51,28 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 		
 		this.RegisterEvent<OnCurrencyAmountChangedEvent>(OnCurrencyAmountChanged)
 			.UnRegisterWhenGameObjectDestroyed(gameObject);
+		
+		this.RegisterEvent<OnMoneyAmountChangedEvent>(OnMoneyAmountChanged)
+			.UnRegisterWhenGameObjectDestroyed(gameObject);
+	}
+
+	private void OnMoneyAmountChanged(OnMoneyAmountChangedEvent e) {
+		string currencyTypeLocalized = $"<sprite index=6>";
+		StackItem(currencyTypeLocalized, e.Amount);
 	}
 
 	private void OnCurrencyAmountChanged(OnCurrencyAmountChangedEvent e) {
-		string currencyTypeLocalized = Localization.Get($"CURRENCY_{e.CurrencyType}_name");
-		StackItem(currencyTypeLocalized, e.Amount);
+		if (!e.IsTransferToMoney) {
+			string currencyTypeLocalized = $"<sprite index={(int) e.CurrencyType}>";
+			StackItem(currencyTypeLocalized, e.Amount);
+		}
+		else {
+			//Show();
+			Show(Localization.GetFormat("HINT_CURRENCY_TRANSFER",
+				$"{e.Amount} <sprite index={(int) e.CurrencyType}>",
+				$"{e.TransferAmount} <sprite index=6>"));
+		}
+		
 	}
 
 	private void OnCurrentHotbarUpdate(OnCurrentHotbarUpdateEvent e) {
@@ -102,11 +120,26 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 	}
 	
 
-	private void ShowItem(string itemDisplayName) {
+	private void ShowStackedItem(string itemDisplayName) {
 		if (!itemStackingInfo.ContainsKey(itemDisplayName)) {
 			return;
 		}
 		
+		int count = itemStackingInfo[itemDisplayName].Count;
+		string displayName = itemDisplayName;
+		
+		string content = "";
+		if (count > 0) {
+			content = $"<color=green>+{count}</color> " + displayName;
+		}
+		else {
+			content = $"<color=red>{count}</color> " + displayName;
+		}
+		Show(content);
+		//itemStackingInfo.Remove(itemDisplayName);
+	}
+
+	private void Show(string content) {
 		if (hideTimer <= 0f && fadeState == FadeState.Idle) {
 			smoothScroller.gameObject.SetActive(true);
 			smoothScroller.Clear();
@@ -115,26 +148,12 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 			Fade(true, null);
 		}
 		
-		int count = itemStackingInfo[itemDisplayName].Count;
-		string displayName = itemDisplayName;
-		
-		
 		GameObject itemNameText = Instantiate(itemNameTextPrefab);
 		TMP_Text text = itemNameText.GetComponent<TMP_Text>();
-
-		if (count > 0) {
-			text.text = $"<color=green>+{count}</color> " + displayName;
-		}
-		else {
-			text.text = $"<color=red>{count}</color> " + displayName;
-		}
-		
 		smoothScroller.AddNewItem(itemNameText);
-	
 		itemNameTexts.Add(text);
 		hideTimer = 5f;
-
-		//itemStackingInfo.Remove(itemDisplayName);
+		text.text = content;
 	}
 
 	private void Update() {
@@ -143,7 +162,7 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 			ItemStackingInfo info = itemStackingInfo[displayName];
 			info.RemainingTime -= Time.deltaTime;
 			if (info.RemainingTime <= 0f) {
-				ShowItem(displayName);
+				ShowStackedItem(displayName);
 				keysToRemove.Add(displayName);
 			}
 		}

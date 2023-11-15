@@ -45,8 +45,17 @@ namespace Runtime.Inventory.Model {
 		
 		void ReplenishHotBarSlot(HotBarCategory category, HotBarSlot targetSlotToReplenish);
 		
+		HashSet<string> GetAllItemUUIDs();
+
+		void AddToBaseStock(IResourceEntity entity);
+		
+		HashSet<PreparationSlot> GetBaseStock(ResourceCategory category);
+		
+		void RemoveFromBaseStock(ResourceCategory category, PreparationSlot slot);
 		
 		
+		
+		List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate);
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -91,6 +100,11 @@ namespace Runtime.Inventory.Model {
 		private Dictionary<HotBarCategory, HotBarSlotsInfo> hotBarSlots =
 			new Dictionary<HotBarCategory, HotBarSlotsInfo>();
 
+		[ES3Serializable]
+		private Dictionary<ResourceCategory, HashSet<PreparationSlot>> baseStockedItems =
+			new Dictionary<ResourceCategory, HashSet<PreparationSlot>>();
+
+		//[ES3Serializable]
 		
 		
 		public static int MaxSlotCount = 32;
@@ -170,31 +184,93 @@ namespace Runtime.Inventory.Model {
 				
 				if (targetSlotToReplenish.CanPlaceItem(resourceEntity)) {
 					resourceSlot.RemoveLastItem();
-					AddItemAt(resourceEntity, targetSlotToReplenish, false);
+					AddItemAt(resourceEntity, targetSlotToReplenish);
 					break;
 				}
 			}
 		}
-		
-		
-		protected override bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
-			return AddItemAt(item, slot, true);
-		}
-		
-		private bool AddItemAt(IResourceEntity item, ResourceSlot slot, bool sendEvent) {
-			if (base.AddItemAt(item, slot)) {
-				if (sendEvent) {
-					this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
-						Item = item
-					});
+
+		public HashSet<string> GetAllItemUUIDs() {
+			HashSet<string> uuids = new HashSet<string>();
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
+					uuids.UnionWith(slot.GetUUIDList());
 				}
-				item.OnAddedToInventory();
-				return true;
 			}
 
-			return false;
+			foreach (ResourceSlot slot in slots) {
+				uuids.UnionWith(slot.GetUUIDList());
+			}
+			
+			return uuids;
 		}
 
+		public void AddToBaseStock(IResourceEntity entity) {
+			ResourceCategory category = entity.GetResourceCategory();
+			if (!baseStockedItems.ContainsKey(entity.GetResourceCategory())) {
+				baseStockedItems.Add(category, new HashSet<PreparationSlot>());
+			}
+
+			HashSet<PreparationSlot> slots = baseStockedItems[category];
+			bool addSuccess = false;
+			//see if any slot can place this item
+			foreach (PreparationSlot slot in slots) {
+				if (slot.CanPlaceItem(entity)) {
+					if (slot.TryAddItem(entity)) {
+						addSuccess = true;
+						break;
+					}
+				}
+			}
+
+			if (!addSuccess) {
+				PreparationSlot newSlot = new PreparationSlot();
+				newSlot.TryAddItem(entity);
+				slots.Add(newSlot);
+			}
+		}
+
+		public HashSet<PreparationSlot> GetBaseStock(ResourceCategory category) {
+			if (!baseStockedItems.ContainsKey(category)) {
+				return null;
+			}
+
+			return baseStockedItems[category];
+		}
+
+		public void RemoveFromBaseStock(ResourceCategory category, PreparationSlot slot) {
+			if (!baseStockedItems.ContainsKey(category)) {
+				return;
+			}
+
+			baseStockedItems[category].Remove(slot);
+		}
+
+		public List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate) {
+			List<ResourceSlot> result = new List<ResourceSlot>();
+			foreach (var hotBarSlot in hotBarSlots) {
+				foreach (var slot in hotBarSlot.Value.Slots) {
+					if (predicate.Invoke(slot)) {
+						result.Add(slot);
+					}
+				}
+			}
+
+			foreach (ResourceSlot slot in slots) {
+				if (predicate.Invoke(slot)) {
+					result.Add(slot);
+				}
+			}
+
+			return result;
+		}
+
+
+		protected override bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
+			return base.AddItemAt(item, slot);
+		}
+		
+	
 		public override bool RemoveItem(string uuid) {
 			//check each hot bar first
 			foreach (var hotBarSlot in hotBarSlots) {

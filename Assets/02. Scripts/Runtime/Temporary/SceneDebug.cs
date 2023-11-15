@@ -1,3 +1,5 @@
+using _02._Scripts.Runtime.Currency;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using Framework;
@@ -28,9 +30,11 @@ namespace Runtime.Temporary
             }
 
             if (Input.GetKeyDown(KeyCode.M)) {
-                /*ISkillModel skillModel = this.GetModel<ISkillModel>();
-                var skill = skillModel.GetSkillBuilder<TestSkill>(2).FromConfig().Build();
-                this.GetModel<IInventoryModel>().AddItem(skill);*/
+               ICurrencySystem currencySystem = this.GetSystem<ICurrencySystem>();
+               currencySystem.AddCurrency(CurrencyType.Combat, 10);
+               currencySystem.AddCurrency(CurrencyType.Mineral, 10);
+               currencySystem.AddCurrency(CurrencyType.Plant, 10);
+               currencySystem.AddCurrency(CurrencyType.Time, 10);
             }
         }
     }

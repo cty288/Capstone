@@ -29,8 +29,9 @@ public class CurrencyIndicatorUIPanel : AbstractMikroController<MainGame> {
 
 			int currencyAmount = currencyModel.GetCurrencyAmountProperty(currencyType);
 
-			currencyIndicatorViewController.Init(Localization.Get($"CURRENCY_{currencyType.ToString()}_name") + ":",
-				currencyAmount, textColor);
+			currencyIndicatorViewController.Init(
+				currencyAmount, textColor, currencyType);
+			
 			currencyIndicatorViewControllers.Add(currencyType, currencyIndicatorViewController);
 			
 

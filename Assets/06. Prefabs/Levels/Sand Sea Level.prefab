@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.13333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 75f9d11f1bc88a542a660983e197bbda, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: dfc76b319efd6c440b7481330eb6ae94, type: 2}
 --- !u!114 &4917020754344385996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,11 +381,11 @@ MonoBehaviour:
   - CurrencyType: 0
     Cost: 10
   - CurrencyType: 1
-    Cost: 10
+    Cost: 20
   - CurrencyType: 2
-    Cost: 0
+    Cost: 5
   - CurrencyType: 3
-    Cost: 0
+    Cost: 5
   hasPillars: 1
   pillarPrefabName: BossPillar
   pillarCount: 4
@@ -790,7 +790,7 @@ PrefabInstance:
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
       propertyPath: perlinNoiseThreshold
-      value: 0.9
+      value: 0.86
       objectReference: {fileID: 0}
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
@@ -1192,7 +1192,7 @@ PrefabInstance:
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
       propertyPath: perlinNoiseThreshold
-      value: 0.9
+      value: 0.86
       objectReference: {fileID: 0}
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
@@ -7830,7 +7830,7 @@ PrefabInstance:
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
       propertyPath: perlinNoiseThreshold
-      value: 0.9
+      value: 0.86
       objectReference: {fileID: 0}
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
@@ -8071,7 +8071,7 @@ MonoBehaviour:
     - {fileID: 7980489418151064196, guid: 022f5f235c04f0140899dc0627b8c226, type: 3}
     - {fileID: 7980489418151064196, guid: 2138cbc6808242d4b908ef5da23f40af, type: 3}
     maxAngle: 90
-  perlinNoiseThreshold: 0.9
+  perlinNoiseThreshold: 0.86
   minSpawnCount: 5
   maxSpawnCount: 20
   spawnNormalStepRange: {x: 0.5, y: 2}

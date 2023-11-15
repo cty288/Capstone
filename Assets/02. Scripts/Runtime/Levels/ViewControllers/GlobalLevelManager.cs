@@ -7,6 +7,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Singletons;
 using Runtime.DataFramework.Entities;
+using Runtime.UI.NameTags;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
@@ -66,8 +67,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (currentLevelGo) {
 				currentLevelGo.GetComponent<ILevelViewController>().OnExitLevel();
 				oldLevel?.OnLevelExit();
-				Destroy(currentLevelGo);
+				Destroy(currentLevelGo, 0.1f);
 			}
+			
+			HUDManager.Singleton.ClearAll();
+			HUDManagerUI.Singleton.ClearAll();
 			
 			if (newLevel == null) {
 				return;
