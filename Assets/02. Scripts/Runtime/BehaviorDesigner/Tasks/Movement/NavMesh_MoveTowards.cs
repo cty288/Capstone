@@ -23,7 +23,6 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         // cache the navmeshagent component
         private NavMeshAgent navMeshAgent;
         private GameObject prevGameObject;
-        
 
         public override void OnStart()
         {
@@ -36,7 +35,6 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         }
         public override TaskStatus OnUpdate()
         {
-            
             navMeshAgent.SetDestination(m_Target.Value.transform.position);
 
             // Return a task status of success once we've reached the target

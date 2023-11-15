@@ -42,7 +42,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public LineRenderer lr;
         private NavMeshAgent a;
         public HunterWormMovement movement;
-        float maxRange;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -66,7 +65,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             bulletSpeed = enemyEntity.GetCustomDataValue<float>("attack", "bulletSpeed");
             bulletCount = enemyEntity.GetCustomDataValue<int>("attack", "bulletCount");
             bulletAccuracy = enemyEntity.GetCustomDataValue<float>("attack", "bulletAccuracy");
-            maxRange = enemyEntity.GetCustomDataValue<float>("attack", "lazerMaxRange");
             
             //damagePerTick = enemyEntity.GetCustomDataValue<float>("attack", "damagePerTick");
            // damageInterval = enemyEntity.GetCustomDataValue<float>("attack", "damageInterval");
@@ -100,7 +98,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Quaternion rotation = Quaternion.LookRotation(dir);
             b.transform.position = this.gameObject.transform.position;
             b.transform.rotation = rotation;
-            b.GetComponent<WormBulletLazer>().SetData(this.gameObject , dir , player , maxRange);
+            b.GetComponent<WormBulletLazer>().SetData(this.gameObject , dir , player);
         }
 
         public override void OnEnd()

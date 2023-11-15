@@ -4,8 +4,7 @@ using UnityEngine;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using System.Collections;
-using MikroFramework.Pool;
-using MikroFramework;
+
 namespace a
 {
     public class WormBulletLazer : AbstractDotBulletViewController
@@ -21,22 +20,17 @@ namespace a
         private float waitBeforeRotate = 1.5f;
         private float timer = 1.5f;
         private GameObject player;
-        public GameObject particlePrefab;
-        private GameObject particleInstance;
-        private SafeGameObjectPool pool;
 
         bool pause = false;
 
 
 
-        
+
         private void Start()
         {
 
-            
-            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-            pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 10, 20);
 
+            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 
 
 
@@ -82,16 +76,11 @@ namespace a
 
             
             timer -= Time.deltaTime;
-            if(this.gameObject.transform.localScale.z >= maxRange)
-            {
-                this.gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, 30f);
-
-            }
+           
             if (!pause)
             {
 
                 transform.localScale += new Vector3(0, 0, 0.5f);
-
             }
 
 
@@ -122,22 +111,21 @@ namespace a
         }
 
 
-        public void SetData(GameObject owner, Vector3 dir, GameObject player, float maxRange)
+        public void SetData(GameObject owner, Vector3 dir, GameObject player)
         {
             face = owner;
             this.dir = dir;
             this.player = player;
-            this.maxRange = maxRange;
         }
 
         protected override void OnHitResponse(HitData data)
         {
-            Debug.Log("hi");
+            //Debug.Log("hi");
         }
 
         protected override void OnHitObject(Collider other)
         {
-            Debug.Log(other.gameObject.name);
+
         }
 
         protected override void OnBulletRecycled()
@@ -182,25 +170,10 @@ namespace a
         }
         private void OnTriggerStay(Collider collision)
         {
-            
+            Debug.Log(collision.gameObject.layer);
             if (collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
             {
-                if(collision.gameObject.layer == 11)
-                {
-                    if (particleInstance == null)
-                    {
-                        particleInstance = pool.Allocate();
-                    }
-                    Vector3 hitPoint = collision.ClosestPointOnBounds(transform.position);
-                    Vector3 hitNormal = collision.ClosestPointOnBounds(transform.position + transform.forward) - transform.position;
-
-                    // Instantiate the particle system at the hit point with the correct rotation
-
-                    particleInstance.transform.position = (hitPoint);
-                    particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
-                }
-                
-
+                Debug.Log("bbbbbbbbbb");
                 pause = true;
             }
         }
@@ -208,7 +181,6 @@ namespace a
         {
             if (collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
             {
-               
                 pause = false;
             }
         }
