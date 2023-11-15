@@ -700,13 +700,16 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hipFireCameraPositionOverride: {x: -0.04, y: -0.13, z: -0.25}
-  adsCameraPositionOverride: {x: -0.003, y: -0.123, z: 0}
   hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
     type: 3}
   hitVFXSystem: {fileID: 2837599302790063516}
   animator: {fileID: 9011050510399414913}
   reloadAnimationLength: 3
+  cameraPlacementData:
+    hipFireCameraPosition: {x: 0.05, y: -0.15, z: -0.18}
+    hipFireCameraRotation: {x: 2, y: 353.83, z: 0}
+    adsCameraPosition: {x: 0, y: -0.1, z: 0}
+    adsCameraRotation: {x: 2.2, y: 359.26, z: 1.67}
   trailRenderer: {fileID: 8009820199792817655}
   bulletVFX:
   - {fileID: 6895374929032582147}

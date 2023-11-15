@@ -15,9 +15,9 @@ namespace Runtime.Weapons
         [SerializeField] public Transform weaponTransform;
 
         [Header("Sway Properties")]
-        [SerializeField]private float swayAmount = 0.01f;
+        [SerializeField] private float swayAmount = 0.01f;
         [SerializeField] public float maxSwayAmountHipfire = 0.1f;
-        [SerializeField] public float maxSwayAmountADS = 0.01f;
+        private float maxSwayAmountADS = 0.001f;
         [SerializeField] public float swaySmooth = 9f;
         [SerializeField] public AnimationCurve swayCurve;
 

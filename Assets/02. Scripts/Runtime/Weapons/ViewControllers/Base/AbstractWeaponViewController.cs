@@ -36,6 +36,16 @@ namespace Runtime.Weapons.ViewControllers.Base
         public string AnimationName;
     }
     
+    [Serializable]
+    public struct CameraPlacementData
+    {
+        public Vector3 hipFireCameraPosition;
+        public Vector3 hipFireCameraRotation;
+
+        public Vector3 adsCameraPosition;
+        public Vector3 adsCameraRotation;
+    }
+    
     public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController, IPickableResourceViewController, IInHandResourceViewController {
         IWeaponEntity WeaponEntity { get; }
     }
@@ -60,8 +70,10 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected bool IsScopedIn => _isScopedIn;
         
         //[SerializeField] protected string animLayerNameOverride = "Revolver";
-        [SerializeField] protected Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
-        [SerializeField] protected Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
+        // [SerializeField] protected Vector3 hipFireCameraPositionOverride = new Vector3(-0.04f,-0.13f,-0.25f);
+        // [SerializeField] protected Vector3 adsCameraPositionOverride = new Vector3(-0.003f, -0.123f, 0f);
+        // [SerializeField] protected Vector3 adsCameraRotationOverride;
+
         
         // general references
         protected Camera cam;
@@ -84,8 +96,11 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected float reloadTimer = 0f;
         
         //scoping
-        protected Vector3 hipFireCameraPosition = new (0f, 0f, 0f);
-        protected Vector3 adsCameraPosition = new (0f, 0f, 0f);
+        // protected Vector3 hipFireCameraPosition;
+        // protected Vector3 adsCameraPosition;
+        // protected Vector3 adsCameraRotation;
+        [SerializeField] protected CameraPlacementData cameraPlacementData;
+
 
         protected ICanDealDamageViewController ownerVc;
         
