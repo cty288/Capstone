@@ -43,7 +43,6 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
                     timer = 3.49f;
                 }
             }
-            
             return TaskStatus.Running;
         }
 

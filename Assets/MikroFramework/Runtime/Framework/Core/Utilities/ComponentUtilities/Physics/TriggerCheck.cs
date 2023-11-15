@@ -80,7 +80,7 @@ namespace MikroFramework.Utilities
                 enterRC.Retain();
                 colliders.Add(other);
                 OnEnter?.Invoke(other);
-                
+                Debug.Log("invoked");
             }
         }
         

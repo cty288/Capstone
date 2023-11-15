@@ -35,7 +35,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             private int m_WaypointIndex;
             private float m_WaypointReachedTime;
             public float range;
-            
 
             public override void OnStart()
             {
@@ -85,11 +84,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     {
                         m_WaypointReachedTime = Time.time;
                     }
-                   
                     // wait the required duration before switching waypoints.
                     if (m_WaypointReachedTime + m_WaypointPauseDuration.Value <= Time.time)
                     {
-                       
                         // set new position to old drone
                         m_Waypoints.Value[m_WaypointIndex].transform.position = RandomPosition();
                         

@@ -72,7 +72,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 charge.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                     enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
                     gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
-                var posToSpawn = this.gameObject.transform.up * 1f + this.gameObject.transform.right * 0.013f + this.gameObject.transform.forward * 0.114f + this.transform.position;
+                var posToSpawn = this.gameObject.transform.up * 0.828f + this.gameObject.transform.right * 0.013f + this.gameObject.transform.forward * 0.114f + this.transform.position;
                 charge.transform.position = posToSpawn;
                 charge.gameObject.GetComponent<WheelBullet>().SetData(bulletSpeed, this.gameObject.transform, playerTrans, enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1, numBullets, fanAngle);
                 yield return new WaitForSeconds(spawnInterval);

@@ -293,6 +293,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 		
 		protected void DespawnHUDElement(Transform followTransform, HUDCategory category) {
+			if (!followTransform) {
+				return;
+			}
 			string id = followTransform.GetHashCode().ToString() + category.ToString();
 			if (crossHairManagedHUDs.TryGetValue(id, out var info)) {
 				HUDManager.Singleton.DespawnHUDElement(info.realSpawnPositionOffset.transform, category);

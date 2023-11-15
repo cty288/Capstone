@@ -65,7 +65,7 @@ namespace Runtime.Weapons
         private void Start()
         {
             playerActions = ClientInput.Singleton.GetPlayerActions();
-            playerRb = FindObjectOfType<PlayerMovement>().GetRigidBody();
+            playerRb = GetComponentInParent<PlayerMovement>().GetComponent<Rigidbody>();
             
             if (!weaponTransform)
                 weaponTransform = transform;
