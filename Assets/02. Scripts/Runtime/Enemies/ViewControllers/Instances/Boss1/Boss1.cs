@@ -193,6 +193,8 @@ namespace Runtime.Enemies
                 showDamageNumber = true;
             }
         }
+        
+        
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<Boss1Entity> builder)
         {
