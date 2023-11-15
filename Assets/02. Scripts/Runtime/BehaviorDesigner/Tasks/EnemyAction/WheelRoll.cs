@@ -50,7 +50,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 explosionTimer = 0.4f;
                 AudioSource audio = AudioSystem.Singleton.Play3DSound("Drone_Explosion", this.gameObject.transform.position);
                 audio.volume = 0.5f;
-                Debug.Log(audio.volume);
+           
                 GameObject explosion = pool.Allocate();
                 explosion.transform.position = this.gameObject.transform.position;
                 explosion.GetComponent<IExplosionViewController>().
@@ -58,8 +58,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                         enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"),2, gameObject,
                     gameObject.GetComponent<ICanDealDamage>());
             }
-            if (player != null && moving == false) // Check if the player reference is valid
+            if (player.Value != null && moving == false) // Check if the player reference is valid
             {
+                Debug.Log("rolling");
                 // Calculate a vector from the enemy to the player
                 Vector3 toPlayer = player.Value.transform.position - transform.position;
 
@@ -84,6 +85,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             moving = false;
             agent.speed = 2f;
+            explosionTimer = 0.4f;
+            
         }
     }
 
