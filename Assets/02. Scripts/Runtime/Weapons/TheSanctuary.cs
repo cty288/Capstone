@@ -81,8 +81,8 @@ namespace Runtime.Weapons
 
            // animLayerNameOverride = "Revolver";
             // Debug.Log($"sanctuary camera pos: {hipFireCameraPosition}, {adsCameraPosition}");
-            hipFireCameraPosition = hipFireCameraPositionOverride;
-            adsCameraPosition = adsCameraPositionOverride;
+            // hipFireCameraPosition = hipFireCameraPositionOverride;
+            // adsCameraPosition = adsCameraPositionOverride;
         }
         
         protected override void Awake() {
@@ -146,11 +146,14 @@ namespace Runtime.Weapons
             }
             if (IsScopedIn) {
                 ChangeScopeStatus(false);
-                fpsCamera.transform.DOLocalMove(hipFireCameraPosition, 0.167f);
+                //time is from animation
+                fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
+                fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
             }
             else {
                 ChangeScopeStatus(true);
-                fpsCamera.transform.DOLocalMove(adsCameraPosition, 0.167f);
+                fpsCamera.transform.DOLocalMove(cameraPlacementData.adsCameraPosition, 0.167f);
+                fpsCamera.transform.DOLocalRotate(cameraPlacementData.adsCameraRotation, 0.167f);
             }
         }
 
@@ -203,7 +206,8 @@ namespace Runtime.Weapons
 
         protected override void OnReadyToRecycle() {
             base.OnReadyToRecycle();
-            fpsCamera.transform.DOLocalMove(hipFireCameraPosition, 0.167f);
+            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
+            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);
         }
