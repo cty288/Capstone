@@ -52,7 +52,7 @@ namespace _02._Scripts.Runtime.Currency {
 		private void OnSkillUsed(OnSkillUsed e) {
 			Dictionary<CurrencyType, int> costs = e.skillEntity.GetSkillUseCostOfCurrentLevel();
 			foreach (KeyValuePair<CurrencyType, int> cost in costs) {
-				currencyModel.RemoveCurrency(cost.Key, cost.Value);
+				RemoveCurrency(cost.Key, cost.Value);
 			}
 		}
 
