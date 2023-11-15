@@ -43,6 +43,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private NavMeshAgent a;
         public HunterWormMovement movement;
         float maxRange;
+        private GameObject lazerInstance;
+        private HunterWorm worm;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -55,6 +57,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override void OnStart()
         {
+            worm = this.gameObject.GetComponent<HunterWorm>();
             movement.attacking = true;
             a = this.gameObject.GetComponent<NavMeshAgent>();
             a.speed = 0;
@@ -74,6 +77,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         public override TaskStatus OnUpdate()
         {
+            if (worm.enabled == false)
+            {
+                pool.Recycle(lazerInstance);
+            }
             if (ended)
                 return TaskStatus.Success;
             else
@@ -91,7 +98,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         void SpawnLazer()
         {
+            
             UnityEngine.GameObject b = pool.Allocate();
+            lazerInstance = b;
+            
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
                gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
@@ -102,6 +112,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             b.transform.rotation = rotation;
             b.GetComponent<WormBulletLazer>().SetData(this.gameObject , dir , player , maxRange);
         }
+       
 
         public override void OnEnd()
         {
@@ -109,5 +120,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             base.OnEnd();
             StopAllCoroutines();
         }
+        
     }
 }

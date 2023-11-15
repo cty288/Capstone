@@ -40,15 +40,8 @@ public class BulletHitResponse : AbstractBulletViewController
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        if(ps.IsAlive(true) == false)
-        {
-            if(Pool != null)
-            {
-                RecycleToCache();
-            }
-                
-        }
+        
     }
 }
