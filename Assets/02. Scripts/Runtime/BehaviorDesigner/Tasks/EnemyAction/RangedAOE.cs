@@ -58,19 +58,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 return TaskStatus.Running;
 
         }
-        IEnumerator RF()
-        {
+        IEnumerator RF() {
+            UnityEngine.GameObject bulletOwner = gameObject;
             //parameter 3
             for (int i = 0; i < 3 ; i++)
             {
-                SpawnBullet();
+                SpawnBullet(gameObject);
                 yield return new WaitForSeconds(spawnInterval);
             }
 
             yield return new WaitForSeconds(bulletTravelTime - spawnInterval);
             ended = true;
         }
-        void SpawnBullet()
+        void SpawnBullet(GameObject bulletOwner)
         {
             //to be honest these are just for visuals
             //parameter 15
@@ -95,7 +95,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     b.transform.rotation = Quaternion.LookRotation(randomDestination - randomSpawnPoint);
 
                     b.GetComponent<Temporary.EnemyBomb>().Init(randomDestination, bulletTravelTime, enemyEntity.CurrentFaction,
-                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), 2,gameObject);
+                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), 2,bulletOwner);
                 }
             }
             //parameter 8
@@ -121,7 +121,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     b.transform.rotation = Quaternion.LookRotation(randomDestination - randomSpawnPoint);
 
                     b.GetComponent<Temporary.EnemyBomb>().Init(randomDestination, bulletTravelTime, enemyEntity.CurrentFaction,
-                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), 2,gameObject);
+                        enemyEntity.GetCustomDataValue<int>("damages", "rangedAOEDamage"), 2,bulletOwner);
                 }
             }
           

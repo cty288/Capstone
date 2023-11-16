@@ -25,24 +25,12 @@ namespace Runtime.Temporary
 
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
+        
         protected override void OnBulletReachesMaxRange() {
             
         }
 
-        public void Init(Transform target,float tTime, Faction faction, int damage, GameObject bulletOwner) {
-            Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>(), -1);
-            targetPos = target.position;
-            explosionDamage = damage;
-            travelTime = tTime;
-            start = transform.position;
-            StartCoroutine(Curve());
-        }
+        
         public void Init(Vector3 target, float tTime, Faction faction, int damage, float size ,GameObject bulletOwner)
         {
             Init(faction, 0, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>(), -1);
@@ -99,6 +87,9 @@ namespace Runtime.Temporary
             exp.transform.position = transform.position;
             exp.transform.rotation = Quaternion.identity;
             Debug.Log("IExplosionViewController: " + exp.GetComponent<IExplosionViewController>());
+            if (!bulletOwner) {
+                Debug.Log("BulletOwner is null");
+            }
             exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, explosionSize,bulletOwner,
                 bulletOwner.GetComponent<ICanDealDamage>());
         }

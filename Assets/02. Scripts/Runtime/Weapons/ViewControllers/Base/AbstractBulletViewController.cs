@@ -85,9 +85,12 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			this.bulletOwner = bulletOwner;
 			
 			//ignore collision with bullet owner
-			Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
-			if (bulletOwnerCollider != null) {
-				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
+			Collider[] bulletOwnerColliders = bulletOwner.GetComponentsInChildren<Collider>(true);
+			if (bulletOwnerColliders != null) {
+				//Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
+				foreach (Collider bulletOwnerCollider in bulletOwnerColliders) {
+					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwnerCollider);
+				}
 			}
 			this.owner = owner;
 			this.maxRange = maxRange;
@@ -119,6 +122,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 
 		public bool CheckHit(HitData data) {
+			if (!inited) {
+				return false;
+			}
 			hitData = data;
 			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;
@@ -143,6 +149,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected abstract void OnHitResponse(HitData data);
 
 		protected virtual void OnTriggerEnter(Collider other) {
+			if (!inited) {
+				return;
+			}
 			// if (gameObject.name == "GunBullet") {
 			// 	Debug.Log("HitResponse");
 			// }
@@ -160,7 +169,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 					}
 				}
 				
-				OnHitObject(other);
+				 OnHitObject(other);
 				RecycleToCache();
 			}
 		}
@@ -192,11 +201,16 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			}
 
 			if (bulletOwner) {
-				Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
-				if (bulletOwnerCollider != null) {
-					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
+				Collider[] bulletOwnerColliders = bulletOwner.GetComponentsInChildren<Collider>(true);
+				if (bulletOwnerColliders != null) {
+					//Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
+					foreach (Collider bulletOwnerCollider in bulletOwnerColliders) {
+						Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwnerCollider, false);
+					}
 				}
 			}
+			
+			
 			inited = false;
 
 
