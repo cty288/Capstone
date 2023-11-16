@@ -19,6 +19,10 @@ namespace a
 			base.Update();
 			this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
 		}
+		private void Start()
+		{
+			pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 50, 100);
+		}
 
 		protected override void OnBulletReachesMaxRange()
 		{
@@ -39,7 +43,8 @@ namespace a
 		protected override void OnHitObject(Collider other)
 		{
 			
-			if (particlePrefab = null)
+			
+			if (particlePrefab != null)
 			{
 				// Get the hit point and normal
 				Vector3 hitPoint = other.ClosestPointOnBounds(transform.position);

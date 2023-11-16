@@ -12,7 +12,7 @@ public class BulletHitResponse : AbstractBulletViewController
    
     protected override void OnBulletReachesMaxRange()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     protected override void OnBulletRecycled()
@@ -33,7 +33,17 @@ public class BulletHitResponse : AbstractBulletViewController
     // Start is called before the first frame update
     void Start()
     {
+        
         ps = this.gameObject.GetComponent<ParticleSystem>();
+    }
+    protected override void Update()
+    {
+        base.Update();
+        if(ps.IsAlive(true) == false)
+        {
+            RecycleToCache();
+        }
+
     }
 
 }
