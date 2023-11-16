@@ -42,9 +42,9 @@ namespace a
 			pool = GameObjectPoolManager.Singleton.CreatePool(bullet.Value, 30, 50);
 			
 		}
-        private void Update()
+        protected override void Update()
 		{
-			
+			base.Update();
 			timer -= Time.deltaTime;
 			this.transform.position = followGameObject.transform.up * 0.828f + followGameObject.right * 0.013f + followGameObject.transform.forward * 0.114f + followGameObject.position;
 			if (timer < 0)

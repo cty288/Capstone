@@ -19,7 +19,8 @@ namespace a
             pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 50, 100);
         }
 
-        private void Update() {
+        protected override void Update() {
+            base.Update();
 			this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
 		}
 

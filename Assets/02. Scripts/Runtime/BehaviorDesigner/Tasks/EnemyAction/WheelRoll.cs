@@ -28,7 +28,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float extensionDistance = 5f;
         private bool moving;
         private Color startEmissionColor;
-        public SharedGameObject explosion;
+        public SharedGameObject e;
         private SafeGameObjectPool pool;
         // Start is called before the first frame update
         private float explosionTimer = 0.4f;
@@ -38,7 +38,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             agent = this.gameObject.GetComponent<NavMeshAgent>();
             agent.ResetPath();
             agent.speed = 9f;
-            pool = GameObjectPoolManager.Singleton.CreatePool(explosion.Value, 20, 50);
+            pool = GameObjectPoolManager.Singleton.CreatePool(e.Value, 20, 50);
         }
 
         // Update is called once per frame
