@@ -526,6 +526,16 @@ namespace Runtime.Player.ViewControllers
                 this.SendCommand<PlayerAnimationCommand>(
                     PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 0));
             }
+            
+            if (state == MovementState.sliding && rb.velocity.magnitude >= 0.1f)
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Sliding", AnimationEventType.Bool, 1));
+            } else
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Sliding", AnimationEventType.Bool, 0));
+            }
         }
 
         private void SetFOV(float fov)
