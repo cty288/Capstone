@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.MemoryMappedFiles;
 using _02._Scripts.Runtime.Utilities;
 using BehaviorDesigner.Runtime.Tasks;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies;
 using Runtime.Enemies.Model;
+using Runtime.Spawning;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,33 +22,59 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float initialRotationSpeed = 0.0f;
         private float maxRotationSpeed = 0.0f;
         private Vector3 targetPos;
+        float pathfindTimeOutTime = 8f;
+        float roamRange = 8f;
+        private float timer;
+        private NavMeshPath path;
+        private Vector3 finalPosition;
+        BoxCollider spawnsizeCollider() => gameObject.GetComponent<ICreatureViewController>().SpawnSizeCollider;
 
         public override void OnStart()
         {
             navAgent = gameObject.GetComponent<Boss1>().agent;
             playerTrans = GetPlayer().transform;
             base.OnStart();
-            targetPos = playerTrans.position + new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
-            navAgent.SetDestination(targetPos);
+            Vector3 randomSide = new Vector3(Random.insideUnitCircle.normalized.x, 0,
+                Random.insideUnitCircle.normalized.y);
+            Vector3 targetPos = playerTrans.position + randomSide * 5f;
+            path = new NavMeshPath();
+
+            NavMeshHit hit;
+            
+            navAgent.isStopped = false;
+            NavMesh.SamplePosition(targetPos,out hit,40f,NavMeshHelper.GetSpawnableAreaMask());
+            int used;
+            Quaternion quaternion;
+            finalPosition = SpawningUtility.FindNavMeshSuitablePosition(spawnsizeCollider,
+                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 5, 50, out used,out quaternion
+            );
+            NavMesh.CalculatePath(transform.position, finalPosition, NavMeshHelper.GetSpawnableAreaMask(), path);
+            //navAgent.speed = 5f;
+            navAgent.SetPath(path);
 
         }
 
         public override TaskStatus OnUpdate()
         {
-            NavMeshPath path = new NavMeshPath();
-
-            NavMesh.CalculatePath(transform.position, playerTrans.position, NavMeshHelper.GetSpawnableAreaMask(), path);
-            if (Vector3.Distance(transform.position, targetPos) <= 1f)
+            
+            if (Vector3.Distance(finalPosition,transform.position)<=1f)
             {
-                //maxRotationSpeed = 0;
                 return TaskStatus.Success;
             }
 
-
-            if (path.status != NavMeshPathStatus.PathComplete)
+            timer += Time.deltaTime;
+            if (timer > pathfindTimeOutTime)
             {
+                navAgent.isStopped = true;
                 return TaskStatus.Failure;
             }
+
+            if (Vector3.Distance(transform.position, playerTrans.position) >= 30f)
+            {
+                navAgent.isStopped = true;
+                return TaskStatus.Failure;
+            }
+            
              
             return TaskStatus.Running;
             //maxRotationSpeed = 260;

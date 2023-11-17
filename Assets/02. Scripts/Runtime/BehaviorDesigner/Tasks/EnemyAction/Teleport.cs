@@ -25,7 +25,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
             base.OnStart();
             
             finished = false;
-
+            
             StartCoroutine(StarTele());
         }
 
