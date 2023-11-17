@@ -263,6 +263,8 @@ namespace Runtime.Player {
 				HealthInfo = HealthProperty.RealValue.Value,
 				HitData = hitData
 			});
+
+			Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => this;
