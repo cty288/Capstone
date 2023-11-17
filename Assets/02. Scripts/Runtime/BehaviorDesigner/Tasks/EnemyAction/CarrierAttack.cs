@@ -20,10 +20,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     public class CarrierAttack : EnemyAction<QuadrupedCarrierEntity>
     {
         public SharedGameObject bulletPrefab;
+        public GameObject muzzleFlash;
+        
         //public int bulletCount;
         //public float spawnInterval;
         private bool ended;
         //public int bulletSpeed;
+        public Transform shootPos;
 
 
 
@@ -31,6 +34,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         //public SharedTransform playerTrans;
 
         private SafeGameObjectPool pool;
+        private SafeGameObjectPool pool2;
         private int bulletCount;
         private float spawnInterval;
         private float bulletSpeed;
@@ -40,6 +44,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 50, 100);
+            pool2 = GameObjectPoolManager.Singleton.CreatePool(muzzleFlash, 50, 100);
             playerTrans = GetPlayer().transform;
             player = GetPlayer();
 
@@ -77,8 +82,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         void SpawnBullet(int bulletIndex, int totalBullets)
         {
+            if (muzzleFlash != null)
+            {
+                
+                muzzleFlash = pool2.Allocate();
+                muzzleFlash.transform.position = (shootPos.position);
+                
+
+
+            }
             UnityEngine.GameObject b = pool.Allocate();
-            b.transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            b.transform.position = shootPos.position;
             b.transform.rotation = Quaternion.LookRotation(playerTrans.position -
                                                            new Vector3(transform.position.x, transform.position.y + 2,
                                                                transform.position.z));

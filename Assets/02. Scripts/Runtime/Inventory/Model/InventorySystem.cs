@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Player.Commands;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Architecture;
@@ -67,6 +68,7 @@ namespace Runtime.Inventory.Model {
 			}
 			
 			this.RegisterEvent<OnReturnToBase>(OnPlayerReturnToBase);
+			this.RegisterEvent<OnPlayerRespawn>(OnPlayerRespawn);
 		}
 
 		
@@ -315,7 +317,29 @@ namespace Runtime.Inventory.Model {
 			model.AddHotBarSlots(HotBarCategory.Right, InitialHotBarSlotCount[HotBarCategory.Right],
 				()=>new RightHotBarSlot());
 		}
-		
+		private void OnPlayerRespawn(OnPlayerRespawn obj) {
+			HashSet<string> allItems = model.GetAllItemUUIDs();
+			bool hasDefaultWeapon = false;
+			foreach (string item in allItems) {
+				IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(item);
+				if (entity.GetResourceCategory() == ResourceCategory.Skill) { //skills are preserved; other items are removed
+					IResourceEntity returnToBaseEntity = entity.GetReturnToBaseEntity();
+					model.AddToBaseStock(returnToBaseEntity);
+				}
+				
+				model.RemoveItem(item);
+				if (entity.EntityName == "RustyPistol") {
+					hasDefaultWeapon = true;
+				}
+				(_, IEntityModel entityModel) = GlobalEntities.GetEntityAndModel(entity.UUID);
+				entityModel.RemoveEntity(entity.UUID, true);
+			}
+
+			if (hasDefaultWeapon) {
+				IResourceEntity defaultWeapon = ResourceVCFactory.Singleton.SpawnNewResourceEntity("RustyPistol");
+				model.AddToBaseStock(defaultWeapon);
+			}
+		}
 		
 		private void OnPlayerReturnToBase(OnReturnToBase e) {
 			//remove all items in the inventory; call their GetReturnToBaseEntity() to get the entity when the player returns to base
@@ -344,8 +368,10 @@ namespace Runtime.Inventory.Model {
 			}
 
 			if (!hasDefaultWeapon) {
-				IResourceEntity defaultWeapon = ResourceVCFactory.Singleton.SpawnNewResourceEntity("RustyPistol");
-				model.AddToBaseStock(defaultWeapon);
+				if (!model.HasEntityInBaseStockByName(ResourceCategory.Weapon ,"RustyPistol")) {
+					IResourceEntity defaultWeapon = ResourceVCFactory.Singleton.SpawnNewResourceEntity("RustyPistol");
+					model.AddToBaseStock(defaultWeapon);
+				}
 			}
 
 			this.SendEvent<OnShowGameHint>(new OnShowGameHint() {

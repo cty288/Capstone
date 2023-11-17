@@ -78,7 +78,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			//else damage amount = damage
 			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : actualDamage;
 			damageAmount = nonlethal && healthInfo.CurrentHealth <= damage ? healthInfo.CurrentHealth - 1 : damageAmount;
-			DoTakeDamage(damageAmount);
+			DoTakeDamage(damageAmount, damageDealer, hitData);
 
 			if (hitData != null) {
 				hitData.Damage = damageAmount;
@@ -97,7 +97,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// Please use TakeDamage instead of this method
 		/// </summary>
 		/// <param name="damageAmount"></param>
-		protected virtual void DoTakeDamage(int damageAmount) {
+		protected virtual void DoTakeDamage(int damageAmount, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData) {
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
 			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
 		}

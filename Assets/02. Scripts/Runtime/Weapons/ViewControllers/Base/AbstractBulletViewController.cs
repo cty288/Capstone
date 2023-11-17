@@ -56,7 +56,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected TrailRenderer[] trailRenderers = null;
 		protected HitData hitData;
 		
-		private void Awake() {
+		protected virtual void Awake() {
 			hitBox = GetComponent<HitBox>();
 			trailRenderers = GetComponentsInChildren<TrailRenderer>(true);
 		}

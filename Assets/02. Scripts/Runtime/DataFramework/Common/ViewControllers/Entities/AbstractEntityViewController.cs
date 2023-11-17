@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Utilities;
 using Framework;
 using Mikrocosmos;
 using MikroFramework;
@@ -20,6 +21,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
+using Runtime.Spawning;
 using Runtime.UI.NameTags;
 using Runtime.Utilities;
 using Runtime.Weapons.ViewControllers;
@@ -308,8 +310,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private bool unPointTriggered = false;
 		private bool unInteractTriggered = false;
 
+		private bool isHoldingInteract = false;
 		protected virtual void Update() {
-			if (playerCanInteract) {
+			if (playerCanInteract || isHoldingInteract) {
 				if (interactiveHintHoldTime <= 0) {
 					if (ClientInput.Singleton.GetSharedActions().Interact.WasPressedThisFrame()) {
 						OnPlayerPressInteract();
@@ -317,16 +320,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 				else {
 					if (ClientInput.Singleton.GetSharedActions().Interact.IsPressed()) {
+						isHoldingInteract = true;
 						interactiveHintHoldTimer += Time.deltaTime;
 						float progress = interactiveHintHoldTimer / interactiveHintHoldTime;
 						currentInteractiveHint.SetFiller(progress);
 						if (interactiveHintHoldTimer >= interactiveHintHoldTime) {
 							OnPlayerPressInteract();
+							isHoldingInteract = false;
 						}
 					}
 					else {
 						interactiveHintHoldTimer = 0;
 						currentInteractiveHint.SetFiller(0);
+						isHoldingInteract = false;
 					}
 				}
 			}
@@ -349,7 +355,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 			}
 
-			if (interactiveHintToleranceTimer < interactiveHintToleranceMaxTime && !isInteractiveHintActive && !unInteractTriggered) {
+			if (interactiveHintToleranceTimer < interactiveHintToleranceMaxTime && !isInteractiveHintActive && !unInteractTriggered && !isHoldingInteract) {
 				interactiveHintToleranceTimer += Time.deltaTime;
 				
 				if (interactiveHintToleranceTimer >= interactiveHintToleranceMaxTime) {
@@ -539,7 +545,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			interactiveHintHoldTimer = 0;
 			unPointTriggered = false;
 			unInteractTriggered = false;
-			
+			isHoldingInteract = false;
 		}
 
 		protected virtual void OnReadyToRecycle() {
@@ -784,6 +790,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private BindableProperty<int> canInteractRc = new BindableProperty<int>(2);
 
 		private void ChangeInteractRC(int value) {
+			
 			canInteractRc.Value = Mathf.Clamp(value, 0, 2);
 		}
 		public virtual void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
@@ -810,7 +817,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			if (newVal <= 0 && oldVal > 0) {
 				bool isActivePreviously = isInteractiveHintActive;
-				isInteractiveHintActive = true;
+				
 
 				if (interactiveHintToleranceTimer <= 0f && !isActivePreviously) {
 					Transform tr = interactiveHintFollowTransform ? interactiveHintFollowTransform : transform;
@@ -828,15 +835,27 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					}
 					interactiveHintToleranceTimer = 0f;
 				}
-
+				UpdateIsInteractiveHintActive();
 				
 			}
 			
 			if (newVal > 0 && oldVal <= 0) {
+				UpdateIsInteractiveHintActive();
+			}
+		}
+		
+		private void UpdateIsInteractiveHintActive() {
+			if (canInteractRc.Value <= 0) {
+				isInteractiveHintActive = true;
+			}
+			else {
 				isInteractiveHintActive = false;
 				unInteractTriggered = false;
 			}
+			
 		}
+		
+		
 
 		protected virtual (InputAction, string, string) GetInteractHintInfo() {
 			string hint = interactiveHintHoldTime <= 0

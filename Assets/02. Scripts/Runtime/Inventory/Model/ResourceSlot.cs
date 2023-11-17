@@ -16,6 +16,8 @@ namespace Runtime.Inventory.Model {
 			new BindableProperty<ResourceSlot>(null);
 		[ES3Serializable]
 		protected string ItemKey = null;
+
+		public string EntityKey => ItemKey;
 		//public int Quantity = 0;
 		[ES3Serializable]
 		private List<string> UUIDList;

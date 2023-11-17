@@ -53,7 +53,7 @@ namespace Runtime.Inventory.Model {
 		
 		void RemoveFromBaseStock(ResourceCategory category, PreparationSlot slot);
 		
-		
+		bool HasEntityInBaseStockByName(ResourceCategory category, string entityName);
 		
 		List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate);
 	}
@@ -244,6 +244,20 @@ namespace Runtime.Inventory.Model {
 			}
 
 			baseStockedItems[category].Remove(slot);
+		}
+
+		public bool HasEntityInBaseStockByName(ResourceCategory category, string entityName) {
+			if (!baseStockedItems.ContainsKey(category)) {
+				return false;
+			}
+
+			foreach (PreparationSlot slot in baseStockedItems[category]) {
+				if (slot.EntityKey == entityName) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		public List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate) {

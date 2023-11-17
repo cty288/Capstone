@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using _02._Scripts.Runtime.Player.Commands;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityNavMeshAgent;
 using Cinemachine;
 using DG.Tweening;
@@ -231,12 +232,14 @@ namespace Runtime.Player.ViewControllers
         private void Awake()
         {
             this.RegisterEvent<OnScopeUsedEvent>(SetADSFOV).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-            
+            this.RegisterEvent<OnPlayerRespawn>(OnRespawn).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             AudioSystem.Singleton.Initialize(null); //TODO: move to better spot
             
             playerActions = ClientInput.Singleton.GetPlayerActions();
             groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
         }
+
+       
 
         // Start is called before the first frame update
         void Start()
@@ -261,12 +264,14 @@ namespace Runtime.Player.ViewControllers
             inventorySystem = this.GetSystem<IInventorySystem>();
 
         }
-
+        private void OnRespawn(OnPlayerRespawn obj) {
+            rb.freezeRotation = true;
+            gameObject.transform.rotation = Quaternion.identity;
+        }
         // Update is called once per frame
         void Update()
         {
-            if (playerModel.IsPlayerDead())
-            {
+            if (playerModel.IsPlayerDead()) {
                 rb.freezeRotation = false;
             }
             else
@@ -525,6 +530,16 @@ namespace Runtime.Player.ViewControllers
             {
                 this.SendCommand<PlayerAnimationCommand>(
                     PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 0));
+            }
+            
+            if (state == MovementState.sliding && rb.velocity.magnitude >= 0.1f)
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Sliding", AnimationEventType.Bool, 1));
+            } else
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Sliding", AnimationEventType.Bool, 0));
             }
         }
 

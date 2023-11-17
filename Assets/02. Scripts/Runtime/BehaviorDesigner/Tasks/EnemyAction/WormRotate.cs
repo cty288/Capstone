@@ -44,7 +44,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             // Smoothly interpolate the rotation using Slerp
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
 
-            Debug.Log("rotating");
+            
             return TaskStatus.Running;
         }
 

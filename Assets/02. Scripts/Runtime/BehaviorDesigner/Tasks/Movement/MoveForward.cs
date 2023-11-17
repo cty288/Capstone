@@ -35,7 +35,7 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
             var position = target.Value.transform.position;
             var dir = (position - body.transform.position).normalized;
             rb.velocity = dir * speed;
-            Debug.Log(Vector3.Distance(transform.position, position));
+           
             this.gameObject.transform.LookAt(position);
             // Check if the distance between the object and the target is less than the threshold
            if (Vector3.Distance(transform.position, target.Value.transform.position) < 2)

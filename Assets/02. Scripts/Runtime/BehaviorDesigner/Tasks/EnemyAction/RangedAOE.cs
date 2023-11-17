@@ -77,7 +77,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             for (int i = 0; i < 15; i++)
             {
                 GameObject b = pool.Allocate();
-                Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
 
                 // Generate a random point around the GameObject
                 //parameter 50
@@ -90,7 +90,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 if (Physics.Raycast(randomSpawnPoint + Vector3.up * 50f, Vector3.down, out hit, Mathf.Infinity))
                 {
                     Vector3 randomDestination = hit.point;
-
+                    Debug.DrawLine(randomSpawnPoint, randomDestination, Color.red, 100.0f);
                     b.transform.position = spawnPosition;
                     b.transform.rotation = Quaternion.LookRotation(randomDestination - randomSpawnPoint);
 
