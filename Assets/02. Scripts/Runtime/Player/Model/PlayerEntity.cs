@@ -12,6 +12,7 @@ using Runtime.Player.Properties;
 using Runtime.Player.ViewControllers;
 using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
+using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Player {
@@ -263,6 +264,7 @@ namespace Runtime.Player {
 				HealthInfo = HealthProperty.RealValue.Value,
 				HitData = hitData
 			});
+			//Crosshair.Singleton.CurrentPointedObject
 
 			Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
 		}

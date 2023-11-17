@@ -9,6 +9,7 @@ using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
+using Runtime.Weapons.ViewControllers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -88,9 +89,9 @@ namespace Runtime.Utilities.Collision
         public int Damage { get; protected set; }
 
         //TODO: faction and IDamagable integration.
-        private void ShootBullet()
-        {
-            Vector3 shootDir = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
+        private void ShootBullet() {
+            Vector2 crossHairScreenPos = Crosshair.Singleton.CrossHairScreenPosition;
+            Vector3 shootDir =  _camera.ViewportPointToRay(new Vector3(crossHairScreenPos.x, crossHairScreenPos.y, 0)).direction;
             float spread = _weapon.GetSpread().RealValue.Value;
             shootDir += new Vector3(
                 Random.Range(-spread, spread),
