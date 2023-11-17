@@ -36,7 +36,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             base.OnStart();
             Vector3 randomSide = new Vector3(Random.insideUnitCircle.normalized.x, 0,
                 Random.insideUnitCircle.normalized.y);
-            Vector3 targetPos = playerTrans.position + randomSide * 5f;
+            Vector3 targetPos = playerTrans.position + randomSide * Random.Range(2f,12f);
             path = new NavMeshPath();
 
             NavMeshHit hit;
@@ -46,7 +46,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             int used;
             Quaternion quaternion;
             finalPosition = SpawningUtility.FindNavMeshSuitablePosition(spawnsizeCollider,
-                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 5, 50, out used,out quaternion
+                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 3, 50, out used,out quaternion
             );
             NavMesh.CalculatePath(transform.position, finalPosition, NavMeshHelper.GetSpawnableAreaMask(), path);
             //navAgent.speed = 5f;

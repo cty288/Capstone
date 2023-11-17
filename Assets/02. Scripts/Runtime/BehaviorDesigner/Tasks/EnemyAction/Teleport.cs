@@ -64,7 +64,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
             Quaternion quaternion;
 
             teleportLocation = SpawningUtility.FindNavMeshSuitablePosition(spawnsizeCollider,
-                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 5, 50, out used,out quaternion
+                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 3, 50, out used,out quaternion
             );
            /* while(float.IsInfinity(teleportLocation.magnitude)) {
 
