@@ -1,6 +1,7 @@
 using System.Collections;
 using Runtime.DataFramework.ViewControllers;
-
+using MikroFramework;
+using MikroFramework.Pool;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
@@ -63,6 +64,8 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class Bee : AbstractNormalEnemyViewController<BeeEntity> {
         [SerializeField] private List<GameObject> waypoints;
+        [SerializeField] private GameObject deathEffect;
+        [SerializeField] private SafeGameObjectPool pool;
         //[SerializeField] private GameObject navMeshAgent;
         //private BehaviorTree behaviorTree;
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
@@ -79,6 +82,7 @@ namespace Runtime.Enemies.SmallEnemies
 
 
         protected override void OnEntityStart() {
+            pool = GameObjectPoolManager.Singleton.CreatePool(deathEffect, 10, 15);
             foreach (GameObject waypoint in waypoints) {
                 waypoint.transform.SetParent(null);
             }
@@ -123,6 +127,9 @@ namespace Runtime.Enemies.SmallEnemies
             }
             if(currenthealth <= 0)
             {
+                Debug.Log("asdf");
+                GameObject a = pool.Allocate();
+                a.transform.position = this.transform.GetChild(0).position;
                 AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position, 0.3f);
             }
             Debug.Log($"bee 1 Take damage: {damage}. bee 1 current health: {currenthealth}");
