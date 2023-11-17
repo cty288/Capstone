@@ -39,7 +39,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         protected override IHitDetector OnCreateHitDetector() {
-            return new HitScan(this, CurrentFaction.Value, bulletVFX);
+            return new HitScan(this, CurrentFaction.Value, bulletVFX, fpsCamera);
         }
         
         public virtual void SetShoot(bool shouldShoot) {
