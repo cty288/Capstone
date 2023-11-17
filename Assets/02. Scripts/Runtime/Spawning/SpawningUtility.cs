@@ -148,6 +148,7 @@ namespace Runtime.Spawning {
 		//no advanced checks, but may spawn in walls or outside of arena
 		public static Vector3 FindNavMeshSuitablePositionFast(
 			Vector3 desiredPosition,
+			Func<BoxCollider> spawnSizeGetter,
 			int areaMask,
 			float initialSearchRadius, 
 			float increment,
@@ -159,7 +160,8 @@ namespace Runtime.Spawning {
 			usedAttempts = 0;
 			float currentSearchRadius = initialSearchRadius;
 			NavMeshHit navHit;
-			
+			BoxCollider boxCollider = spawnSizeGetter();
+			Vector3 prefabSize = boxCollider.size;
 			while (usedAttempts < maxAttempts)
 			{
 				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
@@ -173,7 +175,18 @@ namespace Runtime.Spawning {
 						currentSearchRadius += increment;
 						continue;
 					}
-					return navHit.position;
+					LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
+					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
+						obstructionLayer);
+
+					if (size == 0) {
+						return navHit.position; 
+					}
+					
+					if (CheckColliders(size)) {
+						return navHit.position;
+					}
+					
 				}
 				
 				currentSearchRadius += increment;
@@ -244,6 +257,7 @@ namespace Runtime.Spawning {
 					}
 					
 					
+					
 					//ok to spawn
 					GameObject pillarInstance = pillarPool.Allocate();
 					pillarInstance.transform.position = pos;
@@ -262,7 +276,7 @@ namespace Runtime.Spawning {
 		private static bool CheckColliders(int size) {
 			for (int i = 0; i < size; i++) {
 				var hit = results[i];
-				if (hit && !hit.isTrigger) {
+				if (hit && (!hit.isTrigger || hit.gameObject.CompareTag("SpawnSizeCollider"))) {
 					return false;
 				}
 			}
