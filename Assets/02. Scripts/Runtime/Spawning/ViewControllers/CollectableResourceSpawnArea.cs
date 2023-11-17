@@ -125,6 +125,7 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
 
                 Vector3 spawnPos = SpawningUtility.FindNavMeshSuitablePositionFast(
                     new Vector3(x, y, z),
+                    () => collectableResourceViewController.SpawnSizeCollider,
                     NavMeshHelper.GetSpawnableAreaMask(),
                     accuracyTolerance,
                     1f,
@@ -200,6 +201,7 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 );*/
                 Vector3 spawnPos = SpawningUtility.FindNavMeshSuitablePositionFast(
                     randomPos,
+                    () => collectableResourceViewController.SpawnSizeCollider,
                     NavMeshHelper.GetSpawnableAreaMask(),
                     accuracyTolerance,
                     1f,

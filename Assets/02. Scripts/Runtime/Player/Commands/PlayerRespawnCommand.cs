@@ -14,6 +14,7 @@ namespace _02._Scripts.Runtime.Player.Commands {
 		protected override void OnExecute() {
 			ILevelModel levelModel = this.GetModel<ILevelModel>();
 			levelModel.SwitchToLevel(0);
+			
 			IGamePlayerModel playerModel = this.GetModel<IGamePlayerModel>();
 			IPlayerEntity playerEntity = playerModel.GetPlayer();
 			playerEntity.Heal(playerEntity.GetMaxHealth(), null);

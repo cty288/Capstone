@@ -137,7 +137,9 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 			materialPropertyInitialValues[material].Add(propertyName, material.GetFloat(propertyName));
 		}
 
-		return DOTween.To(() => material.GetFloat(propertyName), x => material.SetFloat(propertyName, x), value, time);
+		material.DOKill();
+		return material.DOFloat(value, propertyName, time);
+		//return DOTween.To(() => material.GetFloat(propertyName), x => material.SetFloat(propertyName, x), value, time);
 	}
 	
 	private Tween SetColor(Material material, string propertyName, Color value, float time) {
@@ -149,7 +151,10 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 			materialPropertyInitialColors[material].Add(propertyName, material.GetColor(propertyName));
 		}
 
-		return DOTween.To(() => material.GetColor(propertyName), x => material.SetColor(propertyName, x), value, time);
+		material.DOKill();
+		return material.DOColor(value, propertyName, time);
+		
+		//return DOTween.To(() => material.GetColor(propertyName), x => material.SetColor(propertyName, x), value, time);
 	}
 
 	private void OnDestroy() {
