@@ -1,0 +1,60 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Framework;
+using MikroFramework.Architecture;
+using MikroFramework.Event;
+using Polyglot;
+using Runtime.Controls;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.Player;
+using Runtime.UI;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PlayerDieCanvas : AbstractMikroController<MainGame> {
+	private GameObject panel;
+	private TMP_Text deathReasonText;
+	private Button restartButton;
+	private void Awake() {
+		this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+		panel = transform.Find("Panel").gameObject;
+		deathReasonText = panel.transform.Find("DeathReasonText").GetComponent<TMP_Text>();
+		restartButton = panel.transform.Find("BackButton").GetComponent<Button>();
+
+		restartButton.onClick.AddListener(OnRestartClicked);
+	}
+
+	private void OnRestartClicked() {
+		ClientInput.Singleton.EnablePlayerMaps();
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
+	}
+
+	private void OnPlayerDie(OnPlayerDie e) {
+		ClientInput.Singleton.EnableUIMaps();
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+		
+		
+		panel.SetActive(true);
+
+		ICanDealDamage damageDealer = e.damageDealer;
+		if (damageDealer == null) {
+			return;
+		}
+		
+		ICanDealDamageRootEntity rootEntity = damageDealer.RootDamageDealer;
+		if (rootEntity == null) {
+			return;
+		}
+
+		if (rootEntity is IPlayerEntity) {
+			deathReasonText.text = Localization.Get("DIE_PAGE_REASON_2");
+		}
+		else {
+			deathReasonText.text = Localization.GetFormat("DIE_PAGE_REASON_1", rootEntity.GetDisplayName());
+		}
+	}
+}

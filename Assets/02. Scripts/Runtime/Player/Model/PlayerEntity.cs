@@ -52,11 +52,16 @@ namespace Runtime.Player {
 	
 	public struct OnPlayerTakeDamage {
 		public int DamageTaken;
+		public float DamageToHealth;
 		public HealthInfo HealthInfo;
 		[CanBeNull]
 		public HitData HitData;
 	}
-	
+
+	public struct OnPlayerDie {
+		public ICanDealDamage damageDealer;
+		public HitData hitData;
+	}
 	public class PlayerEntity : AbstractCreature, IPlayerEntity, ICanDealDamage {
 		public override string EntityName { get; set; } = "Player";
 		
@@ -259,12 +264,12 @@ namespace Runtime.Player {
 
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {
 			base.OnTakeDamage(damage, damageDealer, hitData);
-			this.SendEvent<OnPlayerTakeDamage>(new OnPlayerTakeDamage() {
-				DamageTaken = damage,
-				HealthInfo = HealthProperty.RealValue.Value,
-				HitData = hitData
-			});
-			//Crosshair.Singleton.CurrentPointedObject
+			if (GetCurrentHealth() <= 0) {
+				this.SendEvent<OnPlayerDie>(new OnPlayerDie() {
+					damageDealer = damageDealer,
+					hitData = hitData
+				});
+			}
 
 			Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
 		}
@@ -272,16 +277,29 @@ namespace Runtime.Player {
 		public ICanDealDamageRootEntity RootDamageDealer => this;
 		public ICanDealDamageRootViewController RootViewController => null;
 
-		protected override void DoTakeDamage(int damageAmount) {
+		protected override void DoTakeDamage(int damageAmount, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData) {
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
 			float armorToTakeDamage = Mathf.Min(armor.RealValue.Value, damageAmount);
 			float healthToTakeDamage = damageAmount - armorToTakeDamage;
-			if(armorToTakeDamage > 0)
+			
+			if (armorToTakeDamage > 0) {
 				armor.RealValue.Value -= armorToTakeDamage;
+			}
+				
 
-			if (healthToTakeDamage > 0)
+			if (healthToTakeDamage > 0) {
 				HealthProperty.RealValue.Value =
 					new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
+				
+			}
+			
+			this.SendEvent<OnPlayerTakeDamage>(new OnPlayerTakeDamage() {
+				DamageTaken = damageAmount,
+				HealthInfo = HealthProperty.RealValue.Value,
+				HitData = hitData,
+				DamageToHealth = healthToTakeDamage
+			});
+				
 		}
 	}
 }

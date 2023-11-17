@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Utilities;
 using Framework;
 using Mikrocosmos;
 using MikroFramework;
@@ -20,6 +21,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Player;
+using Runtime.Spawning;
 using Runtime.UI.NameTags;
 using Runtime.Utilities;
 using Runtime.Weapons.ViewControllers;
@@ -850,7 +852,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				isInteractiveHintActive = false;
 				unInteractTriggered = false;
 			}
+			
 		}
+		
+		
 
 		protected virtual (InputAction, string, string) GetInteractHintInfo() {
 			string hint = interactiveHintHoldTime <= 0

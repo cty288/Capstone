@@ -4,6 +4,7 @@ using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
+using Mikrocosmos;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -121,6 +122,10 @@ namespace Runtime.Temporary
             if (recoverWaitTimer >= recoverWaitTime) {
                 float armorRecover = BoundEntity.GetArmorRecoverSpeed().RealValue.Value;
                 BoundEntity.AddArmor(armorRecover * Time.deltaTime);
+            }
+
+            if (Input.GetKeyDown(KeyCode.C)) {
+                ImageEffectController.Singleton.DisableAllFeatures();
             }
         }
 

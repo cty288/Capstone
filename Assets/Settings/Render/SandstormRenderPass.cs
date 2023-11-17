@@ -10,7 +10,8 @@ class SandstormRenderPass : ScriptableRenderPass
     // Used to render from camera to post processings
 	// back and forth, until we render the final image to
 	// the camera
-    RenderTargetIdentifier source;
+    public RenderTargetIdentifier source;
+    
     RenderTargetIdentifier destinationA;
     RenderTargetIdentifier destinationB;
     RenderTargetIdentifier latestDest;

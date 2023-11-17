@@ -21,6 +21,7 @@ namespace Runtime.UI {
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 			playerModel = this.GetModel<IGamePlayerModel>();
+			ClientInput.Singleton.EnablePlayerMaps();
 			this.RegisterEvent<OnOpenPillarUI>(OnOpenPillarUI)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		}
