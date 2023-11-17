@@ -70,7 +70,8 @@ namespace Runtime.Spawning {
 					}
 
 					NavMeshPath insideArenaDetectPath = new NavMeshPath();
-			
+					
+					
 					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, insideArenaDetectPath);
 					if (insideArenaDetectPath.status == NavMeshPathStatus.PathComplete) {
 						satisfied = true;

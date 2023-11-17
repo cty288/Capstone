@@ -186,7 +186,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 					Vector3 spawnScale = spawnedEnemy.transform.localScale;
 					spawnedEnemy.gameObject.transform.localScale = Vector3.zero;
 					spawnedEnemy.transform.DOScale(spawnScale, 1f).SetEase(Ease.OutBack);
-				
+
+					onSpawnEnemy?.Invoke(spawnedEnemy, this);
 					Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity}");
 				}
 			}
