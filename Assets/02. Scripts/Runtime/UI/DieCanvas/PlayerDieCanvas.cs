@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Player.Commands;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -30,13 +32,17 @@ public class PlayerDieCanvas : AbstractMikroController<MainGame> {
 		ClientInput.Singleton.EnablePlayerMaps();
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
+		panel.SetActive(false);
+
+		this.SendCommand<PlayerRespawnCommand>();
+
 	}
 
 	private void OnPlayerDie(OnPlayerDie e) {
 		ClientInput.Singleton.EnableUIMaps();
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
-		
+		deathReasonText.text = "";
 		
 		panel.SetActive(true);
 

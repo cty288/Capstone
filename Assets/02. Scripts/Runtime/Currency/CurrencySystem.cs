@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Player.Commands;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using MikroFramework.Architecture;
 using Runtime.Utilities.ConfigSheet;
@@ -44,10 +45,10 @@ namespace _02._Scripts.Runtime.Currency {
 			
 			
 			this.RegisterEvent<OnReturnToBase>(OnReturnToBase);
+			this.RegisterEvent<OnPlayerRespawn>(OnPlayerRespawn);
 		}
 
 		
-
 
 		private void OnSkillUsed(OnSkillUsed e) {
 			Dictionary<CurrencyType, int> costs = e.skillEntity.GetSkillUseCostOfCurrentLevel();
@@ -98,7 +99,14 @@ namespace _02._Scripts.Runtime.Currency {
 			}
 		}
 		
-		
+		private void OnPlayerRespawn(OnPlayerRespawn obj) {
+			foreach (CurrencyType currencyType in Enum.GetValues(typeof(CurrencyType))) {
+				int amount = currencyModel.GetCurrencyAmountProperty(currencyType);
+				if(amount <= 0) continue;
+				currencyModel.RemoveCurrency(currencyType, amount);
+			}
+		}
+
 		private void SendCurrencyChangedEvent(CurrencyType currencyType, int amount, int currentAmount, bool isTransferToMoney, int moneyAmount = 0) {
 			this.SendEvent<OnCurrencyAmountChangedEvent>(new OnCurrencyAmountChangedEvent() {
 				Amount = amount,

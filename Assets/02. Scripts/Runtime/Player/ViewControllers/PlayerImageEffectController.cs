@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Player.Commands;
 using DG.Tweening;
 using Mikrocosmos;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Runtime.Player;
+using Runtime.Utilities;
 using UnityEngine;
 
 public class PlayerImageEffectController : EntityAttachedViewController<PlayerEntity> {
@@ -42,9 +44,12 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 		
 		this.RegisterEvent<OnPlayerTakeDamage>(OnPlayerTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
 		this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+		this.RegisterEvent<OnPlayerRespawn>(OnPlayerRespawn)
+			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 	}
 
 	
+
 
 	private void OnPlayerTakeDamage(OnPlayerTakeDamage e) {
 		
@@ -113,6 +118,14 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 		
 		SetValue(bloodMaterial, "_TotalPower", 5f, 8f);
 		SetColor(bloodMaterial, "_VignetteColor", Color.black,  8f);
+	}
+	
+	private void OnPlayerRespawn(OnPlayerRespawn obj) {
+		SetValue(glitchMaterial, "_Intensity", 0, 2f);
+		SetValue(glitchMaterial, "_RGBGlichingIntensity", 0f, 2f);
+		
+		SetValue(bloodMaterial, "_TotalPower", 1f, 2f);
+		SetColor(bloodMaterial, "_VignetteColor", Color.red,  2f);
 	}
 	
 	private Tween SetValue(Material material, string propertyName, float value, float time) {

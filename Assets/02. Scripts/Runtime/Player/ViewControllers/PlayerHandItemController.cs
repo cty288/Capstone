@@ -67,7 +67,10 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		deployGroundLayerMask = LayerMask.GetMask("Default", "Ground", "Wall");
 		Debug.Log(JsonConvert.DeserializeObject<Vector2Int>("{\"x\":1,\"y\":2}"));
 		animator = transform.Find("CameraFollower/ArmsHolder").GetChild(0).GetComponent<Animator>();
+		
 	}
+
+	
 
 	private void OnDeployFailureReasonChanged(DeployFailureReason lastReason, DeployFailureReason currentReason) {
 		if (currentReason == DeployFailureReason.NA || currentHoldDeployableItemViewController.Item1 == null ||
