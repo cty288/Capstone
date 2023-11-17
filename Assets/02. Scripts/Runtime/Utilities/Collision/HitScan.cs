@@ -12,6 +12,7 @@ using Runtime.Weapons.Model.Base;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.VFX;
 
 namespace Runtime.Utilities.Collision
@@ -37,6 +38,7 @@ namespace Runtime.Utilities.Collision
         private Vector3 offset = Vector3.zero;
         private Transform _launchPoint;
         private Camera _camera;
+        private Camera _fpsCamera;
         private LayerMask _layer;
         private IWeaponEntity _weapon;
         private bool showDamageNumber = true;
@@ -57,11 +59,12 @@ namespace Runtime.Utilities.Collision
             bulletHoleDecal = this.GetUtility<ResLoader>().LoadSync<GameObject>("BulletHoleDecal");
         }
         
-        public HitScan(IHitResponder hitResponder, Faction faction, VisualEffect[] vfx, bool showDamageNumber = true)
+        public HitScan(IHitResponder hitResponder, Faction faction, VisualEffect[] vfx, Camera fpsCam, bool showDamageNumber = true)
         {
             this.hitResponder = hitResponder;
             CurrentFaction.Value = faction;
             _vfx = vfx;
+            _fpsCamera = fpsCam;
             _useVFX = true;
             this.showDamageNumber = showDamageNumber;
             bulletHolesPool = new ObjectPool<GameObject>(CreateBulletHole, OnTakeFromPool, 
@@ -216,17 +219,26 @@ namespace Runtime.Utilities.Collision
 
         protected void PlayBulletVFX(Vector3 startPoint, Vector3 endPoint)
         {
+            // Camera calculations
+            var conversion = _camera.ScreenToWorldPoint(_fpsCamera.WorldToScreenPoint(startPoint));
+            //var newStartPos = _vfx[0].transform.InverseTransformPoint(conversion);
+            startPoint = conversion;
+            
             Vector3 dir = endPoint - startPoint;
-            float bulletSpeed = _weapon.GetBulletSpeed().GetRealValue().Value;
+            float bulletSpeed = _weapon.GetBulletSpeed().GetRealValue().Value * 0.5f;
             float maxDistance = Vector3.Distance(startPoint, endPoint);
+            float lifeTime = maxDistance / bulletSpeed;
 
             foreach (var vfx in _vfx)
             {
                 vfx.transform.rotation = Quaternion.identity;
 
+                vfx.SetVector3("StartPos", startPoint);
+                //vfx.SetVector3("EndPos", endPoint);
                 vfx.SetVector3("FireVector", dir);
                 vfx.SetFloat("BulletSpeed", bulletSpeed);
                 vfx.SetFloat("MaxDistance", maxDistance);
+                vfx.SetFloat("LifeTime", lifeTime);
                 vfx.Play();
             }
         }
