@@ -24,7 +24,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 targetPos;
         float pathfindTimeOutTime = 8f;
         float roamRange = 8f;
-        private float timer;
+        private float timer = 0f;
         private NavMeshPath path;
         private Vector3 finalPosition;
         BoxCollider spawnsizeCollider() => gameObject.GetComponent<ICreatureViewController>().SpawnSizeCollider;
@@ -33,6 +33,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             navAgent = gameObject.GetComponent<Boss1>().agent;
             playerTrans = GetPlayer().transform;
+            timer = 0f;
             base.OnStart();
             Vector3 randomSide = new Vector3(Random.insideUnitCircle.normalized.x, 0,
                 Random.insideUnitCircle.normalized.y);
@@ -63,7 +64,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
 
             timer += Time.deltaTime;
-            if (timer > pathfindTimeOutTime)
+            if (timer > pathfindTimeOutTime&&Vector3.Distance(transform.position, finalPosition) >= 10f)
             {
                 navAgent.isStopped = true;
                 return TaskStatus.Failure;
