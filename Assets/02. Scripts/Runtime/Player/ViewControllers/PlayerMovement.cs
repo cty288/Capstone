@@ -592,7 +592,7 @@ namespace Runtime.Player.ViewControllers
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded)
+            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded&&!wallrunning)
             {
                 readyToDoubleJump = false;
                 wasWallRunning = false;
@@ -605,7 +605,7 @@ namespace Runtime.Player.ViewControllers
                 sprinting = true;
                 //Debug.Log("Sprinting");
             }
-            if (playerActions.SprintHold.WasReleasedThisFrame())
+            else
             {
                 sprinting = false;
             }
@@ -882,6 +882,7 @@ namespace Runtime.Player.ViewControllers
             // enter exiting wall state
             exitingWall = true;
             exitWallTimer = exitWallTime;
+            readyToDoubleJump = true;
 
             Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
 
