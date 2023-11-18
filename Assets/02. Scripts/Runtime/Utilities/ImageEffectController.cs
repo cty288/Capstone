@@ -13,17 +13,30 @@ namespace Mikrocosmos
 {
     public class ImageEffectController : MonoMikroSingleton<ImageEffectController>, IController {
        
+        
         private UniversalRendererData renderData;
+
+        public UniversalRendererData RenderData => renderData;
+        
+       
+        private UniversalRendererData fpsRendererData;
+
+        public UniversalRendererData FPSRendererData => fpsRendererData;
         private ResLoader resLoader;
 
         private Dictionary<ScriptableRendererFeature, bool> isOnByDefault =
             new Dictionary<ScriptableRendererFeature, bool>();
         private void Awake() {
+          
             resLoader = this.GetUtility<ResLoader>();
-            renderData = resLoader.LoadSync<UniversalRendererData>("URP-HighFidelity-Renderer");
+            renderData = resLoader.LoadSync<UniversalRendererData>("resources://Settings/URP-HighFidelity-Renderer");
+            fpsRendererData = resLoader.LoadSync<UniversalRendererData>("resources://Settings/FPSArm-Renderer");
+            //fpsRendererData = resLoader.LoadSync<UniversalRendererData>("FPSArm-Renderer");
+
+
             var features = renderData.rendererFeatures;
             foreach (ScriptableRendererFeature feature in features) {
-                
+               // SandstormRendererFeature sandstormRendererFeature = feature as SandstormRendererFeature;
                 isOnByDefault.TryAdd(feature, feature.isActive);
             }
         }
@@ -41,13 +54,16 @@ namespace Mikrocosmos
    
 
         public SandstormRendererFeature GetScriptableRendererFeature(int index) {
+            Awake();
             return renderData.rendererFeatures[index] as SandstormRendererFeature;
         }
         public Material GetScriptableRendererFeatureMaterial(int index) {
+            Awake();
             SandstormRendererFeature feature = renderData.rendererFeatures[index] as SandstormRendererFeature;
             return feature.Material;
         }
         public Material TurnOnScriptableRendererFeature(int index) {
+            Awake();
             SandstormRendererFeature feature = renderData.rendererFeatures[index] as SandstormRendererFeature;
             feature.SetActive(true);
             return feature.Material;
