@@ -394,7 +394,7 @@ namespace Runtime.Player.ViewControllers
             }
 
             // Mode - Sprinting
-            else if(grounded && sprinting && !playerEntity.IsScopedIn())
+            else if(grounded && sprinting)
             {
                 state = MovementState.sprinting;
                 playerEntity.SetMovementState(state);
