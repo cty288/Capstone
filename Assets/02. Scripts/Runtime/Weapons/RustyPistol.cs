@@ -134,7 +134,7 @@ namespace Runtime.Weapons
 
         
         public override void OnItemScopePressed() {
-            if (isReloading) {
+            if (isReloading || playerModel.IsPlayerSprinting()) {
                 return;
             }
             if (IsScopedIn) {
@@ -175,6 +175,12 @@ namespace Runtime.Weapons
                     StartCoroutine(ReloadAnimation());
                 }
                 
+                if(playerActions.SprintHold.WasPerformedThisFrame() && IsScopedIn)
+                {
+                    ChangeScopeStatus(false);
+                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
+                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
+                }
             }
         }
 
