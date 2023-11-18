@@ -181,6 +181,7 @@ namespace Runtime.GameResources.Model.Base {
 
 
 		public override void OnStart(bool isLoadedFromSave) {
+			resourcePropertyDescriptionGetters?.Clear();
 			OnRegisterResourcePropertyDescriptionGetters(ref resourcePropertyDescriptionGetters);
 			base.OnStart(isLoadedFromSave);
 		}

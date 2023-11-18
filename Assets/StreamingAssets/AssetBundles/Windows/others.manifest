@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2180039137
+CRC: 3850930020
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ed73833dc001d51cd42aec10a2d64bef
+    Hash: c509dea2be2e879601314cec5dec6f52
   TypeTreeHash:
     serializedVersion: 2
-    Hash: fdfaa98ffb2c4536dc42e41aae4f9258
+    Hash: 29c11ce774736909360a44078d9aab9e
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -30,6 +30,16 @@ ClassTypes:
 - Class: 82
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 11500000, guid: 307a736764ebbce44b54d72f8467b6fd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a1614fc811f8f184697d9bee70ab9fe5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8d7e06ca6767be245b8c31165e7886b0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f62c9c65cf3354c93be831c8bc075510, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: f5f870245e7796642b3a38ae058342c6, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 9cfcc9ceea0bf419cb3bcaf548c2600d, type: 3}
@@ -37,6 +47,10 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 607a27845b3911f42a2d3e9c037de457, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: baff8732cd3074ef88b34f9cc487846d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c3777555d275858418bd4d255cc657a8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 572910c10080c0945a0ef731ccedc739, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 134
@@ -46,6 +60,26 @@ ClassTypes:
 SerializeReferenceClassIdentifiers:
 - AssemblyName: EasySave3
   ClassName: ES3Internal.ES3RefIdDictionary
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.DBufferSettings
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.DecalScreenSpaceSettings
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.DecalSettings
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.PostProcessData/ShaderResources
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.PostProcessData/TextureResources
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusionSettings
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.ScriptableRendererData/DebugShaderResources
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.StencilStateData
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.UniversalRendererData/ShaderResources
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.XRSystemData/ShaderResources
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
 - AssemblyName: UnityEngine.CoreModule
@@ -57,5 +91,6 @@ Assets:
 - Assets/10. Physics/Nofric.physicMaterial
 - Assets/MikroFramework/Runtime/Framework/AudioKit/3DSound.prefab
 - Assets/03. Materials/DottedLines/DottedOutline.shader
+- Assets/Settings/URP-HighFidelity-Renderer.asset
 - Assets/03. Materials/DottedLines/DottedLine.png
 Dependencies: []

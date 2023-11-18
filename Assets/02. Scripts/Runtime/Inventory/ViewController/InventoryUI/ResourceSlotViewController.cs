@@ -451,6 +451,7 @@ namespace Runtime.Inventory.ViewController {
         
         private void DespawnDescriptionPanel() {
             if (currentDescriptionPanel) {
+                currentDescriptionPanel.Clear();
                 currentDescriptionPanel.Hide();
                 HUDManagerUI.Singleton.DespawnHUDElement(descriptionPanelFollowTr, HUDCategory.SlotDescription);
             }

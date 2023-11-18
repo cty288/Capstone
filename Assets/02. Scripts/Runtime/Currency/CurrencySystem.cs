@@ -104,6 +104,8 @@ namespace _02._Scripts.Runtime.Currency {
 				int amount = currencyModel.GetCurrencyAmountProperty(currencyType);
 				if(amount <= 0) continue;
 				currencyModel.RemoveCurrency(currencyType, amount);
+				SendCurrencyChangedEvent(currencyType, -amount, currencyModel.GetCurrencyAmountProperty(currencyType),
+					false, -amount);
 			}
 		}
 
