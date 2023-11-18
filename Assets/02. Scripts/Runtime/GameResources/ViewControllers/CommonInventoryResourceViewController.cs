@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Runtime.GameResources.ViewControllers {
     public interface IInventoryResourceViewController : IResourceViewController {
-    
+        public bool IsHUDSlot { get; set; }
     }
 
     public class CommonInventoryResourceViewController : AbstractResourceViewController<IResourceEntity>, 
@@ -27,13 +27,14 @@ namespace Runtime.GameResources.ViewControllers {
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
 
         protected override void OnEntityStart() {
-            icon.sprite = InventorySpriteFactory.Singleton.GetSprite(BoundEntity.IconSpriteName);
+            icon.sprite = InventorySpriteFactory.Singleton.GetSprite(BoundEntity.EntityName);
         }
 
         protected override void OnBindEntityProperty() {
         
         }
 
-        
+
+        public bool IsHUDSlot { get; set; }
     }
 }

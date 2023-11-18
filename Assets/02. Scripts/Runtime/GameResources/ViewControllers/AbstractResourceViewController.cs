@@ -33,9 +33,5 @@ namespace Runtime.GameResources.ViewControllers {
 		protected abstract void OnDisplayNameUpdate(string displayName);*/
 
 		//protected abstract IResourceEntity OnInitEntityInternal();
-
-		
-		
-		
 	}
 }

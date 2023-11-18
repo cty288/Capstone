@@ -33,10 +33,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             AudioSource audio = AudioSystem.Singleton.Play3DSound("Drone_Explosion", this.gameObject.transform.position);
             audio.volume = 0.5f;
-            Debug.Log(audio.volume);
+            // Debug.Log(audio.volume);
             GameObject explosion = pool.Allocate();
             explosion.transform.position = this.gameObject.transform.position;
-            explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"), gameObject,
+            explosion.GetComponent<AbstractExplosionViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("attack", "explosionDamage"), 2,gameObject,
                 gameObject.GetComponent<ICanDealDamage>());
             return TaskStatus.Success;
            

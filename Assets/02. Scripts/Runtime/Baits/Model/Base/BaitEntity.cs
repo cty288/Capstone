@@ -1,4 +1,7 @@
-﻿using _02._Scripts.Runtime.Baits.Model.Property;
+﻿using System;
+using System.Collections.Generic;
+using _02._Scripts.Runtime.Baits.Model.Property;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -10,6 +13,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Base;
+using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.Baits.Model.Base {
 
@@ -30,6 +34,8 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 		protected IVigilianceProperty vigilianceProperty;
 		protected ITasteProperty tasteProperty;
 		
+		
+		
 		protected override ConfigTable GetConfigTable() {
 			return null;
 		}
@@ -38,8 +44,8 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 			
 		}
 
-		public override void OnAwake() {
-			base.OnAwake();
+		public override void OnResourceAwake() {
+			base.OnResourceAwake();
 			vigilianceProperty = GetProperty<IVigilianceProperty>();
 			tasteProperty = GetProperty<ITasteProperty>();
 		}
@@ -50,7 +56,26 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 			RegisterInitialProperty<ITasteProperty>(new Taste());
 		}
 
-		
+		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
+			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
+			list.Add(new GetResourcePropertyDescriptionGetter(() => new ResourcePropertyDescription("PropertyIconVigiliance", Localization.GetFormat(
+				"PROPERTY_VIGILIANCE",
+				vigilianceProperty.RealValue.Value.ToString("0.0")))));
+
+			list.Add(new GetResourcePropertyDescriptionGetter(() => {
+				string taste = Localization.Get("PROPERTY_TASTE");
+				List<TasteType> tastes = tasteProperty.RealValues;
+				for (int i = 0; i < tastes.Count; i++) {
+					taste += Localization.Get($"TASTE_{tastes[i].ToString()}");
+					if (i != tastes.Count - 1) {
+						taste += Localization.Get("COMMA");
+					}
+				}
+				return new ResourcePropertyDescription("PropertyIconTaste",taste);
+			}));
+
+		}
+
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return Localization.Get(defaultLocalizationKey);
@@ -100,8 +125,13 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 			}
 			return $"{displayName} ({statusText})";
 		}
+
 		
 		
+		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => null;
+		public override IResourceEntity GetReturnToBaseEntity() {
+			return this;
+		}
 
 		public BaitStatus BaitStatus { get; set; }
 	} 

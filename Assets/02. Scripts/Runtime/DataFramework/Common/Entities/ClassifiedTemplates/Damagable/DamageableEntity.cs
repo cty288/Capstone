@@ -34,11 +34,12 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public override void OnAwake() {
 			base.OnAwake();
 			this.healthProperty = GetProperty<IHealthProperty>();
+			CurrentFaction.Value = GetDefaultFaction();
 		}
 
 		public DamageableEntity() : base() {
 			//healthProperty = this.GetProperty<IHealthProperty>();
-			CurrentFaction.Value = GetDefaultFaction();
+			
 		}
 
 		protected override void OnRegisterProperties() {
@@ -64,7 +65,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		/// <param name="damage"></param>
 		/// <param name="damageDealer"></param>
-		public void TakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null) {
+		public void TakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null, bool nonlethal = false) {
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
 			if(!CheckCanTakeDamage(damageDealer) || healthInfo.CurrentHealth <= 0) {
 				return;
@@ -73,12 +74,11 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 			int actualDamage = OnTakeDamageAdditionalCheck(damage, damageDealer);
 			
-			
-			
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage
 			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : actualDamage;
-			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
+			damageAmount = nonlethal && healthInfo.CurrentHealth <= damage ? healthInfo.CurrentHealth - 1 : damageAmount;
+			DoTakeDamage(damageAmount, damageDealer, hitData);
 
 			if (hitData != null) {
 				hitData.Damage = damageAmount;
@@ -91,6 +91,15 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			
 			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer, hitData);
 			
+		}
+
+		/// <summary>
+		/// Please use TakeDamage instead of this method
+		/// </summary>
+		/// <param name="damageAmount"></param>
+		protected virtual void DoTakeDamage(int damageAmount, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData) {
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
 		}
 		
 		

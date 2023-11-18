@@ -1,5 +1,6 @@
 using Runtime.DataFramework.ViewControllers;
-
+using MikroFramework;
+using MikroFramework.Pool;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
@@ -32,7 +33,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         public override void OnRecycle()
         {
-
+            
         }
 
 
@@ -57,7 +58,7 @@ namespace Runtime.Enemies.SmallEnemies
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
             return new[] {
-                new AutoConfigCustomProperty("attack", null)
+                new AutoConfigCustomProperty("attack")
             };
         }
     }
@@ -65,8 +66,8 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class HunterWorm : AbstractNormalEnemyViewController<HunterWormEntity>
     {
-
-
+        [SerializeField] private GameObject deathEffect;
+        [SerializeField] private SafeGameObjectPool pool;
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
         {
 
@@ -78,7 +79,7 @@ namespace Runtime.Enemies.SmallEnemies
         protected override void OnEntityStart()
         {
 
-
+            pool = GameObjectPoolManager.Singleton.CreatePool(deathEffect, 10, 15);
         }
 
 
@@ -88,8 +89,22 @@ namespace Runtime.Enemies.SmallEnemies
 
         }
 
+        protected override void FixedUpdate() {
+            base.FixedUpdate();
+            if (true) { //do nothing to update physics
+              //from unity documentation: If you move Colliders from scripting or by animation, you need to allow at least one FixedUpdate to be executed so that the physics library can update before a Raycast will hit the Collider at its new position.
+            }
+        }
+
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
+            if (currenthealth <= 0)
+            {
+               
+                GameObject a = pool.Allocate();
+                a.transform.position = this.transform.GetChild(2).position;
+               
+            }
             Debug.Log($"Worm 1 Take damage: {damage}. Worm 1 current health: {currenthealth}");
         }
 
@@ -97,6 +112,7 @@ namespace Runtime.Enemies.SmallEnemies
         {
 
         }
+        
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<HunterWormEntity> builder)
         {
@@ -109,6 +125,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override MikroAction WaitingForDeathCondition()
         {
+            
             return null;
         }
 

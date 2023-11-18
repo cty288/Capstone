@@ -55,11 +55,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             mac.data.sourceObjects = new WeightedTransformArray() {new WeightedTransform(playerTrans, 1)};
          
             rb.Build();
+            if(mac.weight != 1)
+            {
+                StartCoroutine(IncreaseWeight());
+            }
             
-            StartCoroutine(IncreaseWeight());
         }
         public override TaskStatus OnUpdate()
         {
+            if(mac.weight == 1)
+            {
+                return TaskStatus.Success;
+            }
             if (ended)
                 return TaskStatus.Success;
             else
@@ -92,7 +99,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnEnd();
             
-            timer = 2f;
+            timer = 0.5f;
             StopAllCoroutines();
         }
     }

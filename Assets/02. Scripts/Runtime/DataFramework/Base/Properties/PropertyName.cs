@@ -26,6 +26,7 @@ namespace Runtime.DataFramework.Properties
 		test_interest_dict,
 		base_damage,
 		attack_speed,
+		ads_fov,
 		range,
 		ammo_size,
 		reload_speed,
@@ -55,6 +56,16 @@ namespace Runtime.DataFramework.Properties
 		starting_credits,
 		credits_per_second,
 		spawn_timer,
-		item_drop_collections
+		item_drop_collections,
+		air_speed,
+		air_drag,
+		armor,
+		armor_recover_speed,
+		spawn_boss_cost,
+		collectable_resource_currency_list,
+		skill_cooldown,
+		skill_use_cost,
+		skill_upgrade_cost,
+		skill_purchase_cost,
 	}
 }

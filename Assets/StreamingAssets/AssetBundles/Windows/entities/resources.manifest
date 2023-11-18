@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1213887200
+CRC: 3525996629
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f5024f79754809bd0b4b205ffc33eeb2
+    Hash: 8495a41fbde9844e841af55f0d3906c6
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8cd3e14ee4dd7db15c4e7d81d9401a87
+    Hash: 200b47d9429cc5e1afe6bd5bf918ebcc
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -33,12 +33,22 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 72
   Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
 - Class: 96
   Script: {instanceID: 0}
 - Class: 108
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e5825cde73a147bab19ad65c7aa05215, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3de6923c0c6c4164193436b82af45485, type: 3}
 - Class: 114
@@ -52,7 +62,13 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: e57b8bc811999ab40a753b421661045a, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: a22d6f44285a21a4b85cce83f623ebc3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 32bfc0afe1424d6badaeca87feed64d7, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 32dc96957271f284483981eb18b94c4c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 334c6c2eb4266f744b27153a1175674d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 9cde09e9f11b35d46924efa9a360650e, type: 3}
 - Class: 114
@@ -60,7 +76,13 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: edaf2f99cc1a48fe82bb76d5b9da3e6e, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 91bf01c292414ad89480e0e3334a4195, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f5f870245e7796642b3a38ae058342c6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: db6fd81b3fc292a4c971293dad9b68b0, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 33f3949b645d72846be6194002567858, type: 3}
 - Class: 114
@@ -68,8 +90,14 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 18658476032860a409f513d9189fcd83, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 800c67950b0343488382774e8420e753, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 206f5d07aa864e0392045f714ccb2adf, type: 3}
 - Class: 115
+  Script: {instanceID: 0}
+- Class: 120
+  Script: {instanceID: 0}
+- Class: 134
   Script: {instanceID: 0}
 - Class: 135
   Script: {instanceID: 0}
@@ -94,19 +122,37 @@ ClassTypes:
 - Class: 2083052967
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
+- AssemblyName: MainGame
+  ClassName: Runtime.GameResources.ViewControllers.AnimLayerInfo
+- AssemblyName: MainGame
+  ClassName: Runtime.GameResources.ViewControllers.PickableResourceLayerSettings
+- AssemblyName: MainGame
+  ClassName: Runtime.Utilities.AnimationEvents.AnimationSMB_Event/AnimationSMB_EventData
+- AssemblyName: MainGame
+  ClassName: Runtime.Weapons.ViewControllers.Base.CameraPlacementData
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.UnityEvent
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.UnityEvent`1[System.String]
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
 - Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol2.prefab
+- Assets/06. Prefabs/Game/Entities/Currency/MineralCurrency.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/BionicGel.prefab
+- Assets/06. Prefabs/Game/Entities/Currency/CombatCurrency.prefab
+- Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol3.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/CarbonFiber.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/GrenadeSkill/GrenadeSkill.prefab
+- Assets/06. Prefabs/Game/Entities/Currency/PlantCurrency.prefab
 - Assets/06. Prefabs/Game/Inventory/EntityInventoryVC_Common.prefab
+- Assets/06. Prefabs/Game/Entities/Currency/TimeCurrency.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/HeatStoragor.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/SkillInventoryVC.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/MedicalNeedle/MedicalNeedleSkill.prefab
 - Assets/06. Prefabs/Game/Entities/Baits/Bait_Deployed.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/RawMaterial_OnGround.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/ReinforcedSteel.prefab
@@ -114,3 +160,4 @@ Assets:
 - Assets/06. Prefabs/Game/Entities/Weapons/TheSancturary/TheSanctuary.prefab
 Dependencies:
 - D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/mftest
+- D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/others

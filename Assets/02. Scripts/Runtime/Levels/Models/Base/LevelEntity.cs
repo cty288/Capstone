@@ -213,11 +213,16 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		protected override void OnEntityRegisterAdditionalProperties() {
 			this.RegisterInitialProperty<IMaxEnemiesProperty>(new MaxEnemies());
 			this.RegisterInitialProperty<ISpawnCardsProperty>(new SpawnCardsProperty());
+			
 		}
 
 		public override void OnRecycle() {
+			
 			isInBattle = false;
 			CurrentEnemyCount = 0;
+			LevelExitConditions.Clear();
+			onLevelExit = null;
+			IsInBossFight.Value = false;
 		}
 	}
 }

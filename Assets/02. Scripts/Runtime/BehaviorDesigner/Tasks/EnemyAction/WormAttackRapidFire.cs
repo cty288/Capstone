@@ -41,6 +41,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 50, 100);
             playerTrans = GetPlayer().transform;
             player = GetPlayer();
+            Faction faction = enemyEntity.CurrentFaction;
         }
 
         public override void OnStart()
@@ -75,9 +76,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         void SpawnBullet()
         {
             UnityEngine.GameObject b = pool.Allocate();
-
-            b.transform.position = gameObject.transform.position;
-            b.transform.rotation = gameObject.transform.rotation;
+            var head = this.gameObject.transform.GetChild(0);
+            b.transform.position = head.transform.position;
+            b.transform.rotation = head.transform.rotation;
             
             
             // Calculate a random rotation offset within a specified range

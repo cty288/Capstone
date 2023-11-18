@@ -1,6 +1,8 @@
-﻿using MikroFramework.Architecture;
+﻿using System.Collections.Generic;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -24,6 +26,7 @@ namespace Runtime.Weapons.Model.Base
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
+        public IAdsFOV GetAdsFOV();
         public IRange GetRange();
         public IAmmoSize GetAmmoSize();
         public IReloadSpeed GetReloadSpeed();
@@ -50,6 +53,7 @@ namespace Runtime.Weapons.Model.Base
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
         private IBaseDamage baseDamageProperty;
         private IAttackSpeed attackSpeedProperty;
+        private IAdsFOV adsFOVProperty;
         private IRange rangeProperty;
         private IAmmoSize ammoSizeProperty;
         private IReloadSpeed reloadSpeedProperty;
@@ -64,7 +68,7 @@ namespace Runtime.Weapons.Model.Base
         
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
-
+        
         
         public abstract int Width { get; }
 
@@ -73,6 +77,18 @@ namespace Runtime.Weapons.Model.Base
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
         }
 
+        public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
+            base.OnRegisterResourcePropertyDescriptionGetters(ref list);
+            list.Add(() => new ResourcePropertyDescription("PropertyIconDamage", Localization.GetFormat(
+                "PROPERTY_ICON_DAMAGE",
+                baseDamageProperty.RealValue.Value.x + " - " + baseDamageProperty.RealValue.Value.y)));
+
+            list.Add(() => new ResourcePropertyDescription("PropertyIconAttackSpeed", Localization.GetFormat(
+                "PROPERTY_ICON_ATTACk_SPEED", attackSpeedProperty.RealValue.Value)));
+
+            list.Add(() => new ResourcePropertyDescription("PropertyIconAmmo", Localization.GetFormat(
+                "PROPERTY_ICON_AMMO", ammoSizeProperty.RealValue.Value)));
+        }
 
         public override ResourceCategory GetResourceCategory() {
             return ResourceCategory.Weapon;
@@ -84,8 +100,8 @@ namespace Runtime.Weapons.Model.Base
             }
         }
 
-        public override void OnAwake() {
-            base.OnAwake();
+        public override void OnResourceAwake() {
+            base.OnResourceAwake();
             baseDamageProperty = GetProperty<IBaseDamage>();
             attackSpeedProperty = GetProperty<IAttackSpeed>();
             rangeProperty = GetProperty<IRange>();
@@ -113,6 +129,7 @@ namespace Runtime.Weapons.Model.Base
             base.OnEntityRegisterAdditionalProperties();
             RegisterInitialProperty<IBaseDamage>(new BaseDamage());
             RegisterInitialProperty<IAttackSpeed>(new AttackSpeed());
+            RegisterInitialProperty<IAdsFOV>(new AdsFOV());
             RegisterInitialProperty<IRange>(new Range());
             RegisterInitialProperty<IAmmoSize>(new AmmoSize());
             RegisterInitialProperty<IReloadSpeed>(new ReloadSpeed());
@@ -138,6 +155,11 @@ namespace Runtime.Weapons.Model.Base
         public IRange GetRange()
         {
             return rangeProperty;
+        }
+        
+        public IAdsFOV GetAdsFOV()
+        {
+            return adsFOVProperty;
         }
         
         public IAmmoSize GetAmmoSize()
@@ -191,6 +213,7 @@ namespace Runtime.Weapons.Model.Base
 
         public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer) {
             this.rootDamageDealer = rootDamageDealer;
+            CurrentFaction.Value = rootDamageDealer.CurrentFaction.Value;
         }
 
         public void Reload() {
@@ -221,8 +244,7 @@ namespace Runtime.Weapons.Model.Base
             return "???";
         }
 
-        [field: ES3Serializable]
-        public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
+        [field: ES3Serializable] public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
         public void OnKillDamageable(IDamageable damageable) {
             
         }
@@ -232,5 +254,9 @@ namespace Runtime.Weapons.Model.Base
         }
 
          ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
+         public ICanDealDamageRootViewController RootViewController => null;
+         public override IResourceEntity GetReturnToBaseEntity() {
+             return this;
+         }
     }
 }

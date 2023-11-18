@@ -1,4 +1,5 @@
-﻿using MikroFramework.Architecture;
+﻿using JetBrains.Annotations;
+using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -6,9 +7,12 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Enemies.Model;
+using Runtime.Enemies.Model.Properties;
 using Runtime.Player.Properties;
 using Runtime.Player.ViewControllers;
+using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
+using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Player {
@@ -24,11 +28,20 @@ namespace Runtime.Player {
 		ISlideForce GetSlideForce();
 		IWallRunForce GetWallRunForce();
 
+		IAirSpeedProperty GetAirSpeed();
+		
+		IArmorProperty GetArmor();
+		
+		IArmorRecoverSpeedProperty GetArmorRecoverSpeed();
+		
+		IAirDrag GetAirDrag();
 		MovementState GetMovementState();
 		void SetMovementState(MovementState state);
 		
 		bool IsScopedIn();
 		void SetScopedIn(bool state);
+		
+		void AddArmor(float amount);
 	}
 
 	public struct OnPlayerKillEnemy {
@@ -37,6 +50,18 @@ namespace Runtime.Player {
 		public IEnemyEntity Enemy;
 	}
 	
+	public struct OnPlayerTakeDamage {
+		public int DamageTaken;
+		public float DamageToHealth;
+		public HealthInfo HealthInfo;
+		[CanBeNull]
+		public HitData HitData;
+	}
+
+	public struct OnPlayerDie {
+		public ICanDealDamage damageDealer;
+		public HitData hitData;
+	}
 	public class PlayerEntity : AbstractCreature, IPlayerEntity, ICanDealDamage {
 		public override string EntityName { get; set; } = "Player";
 		
@@ -50,6 +75,10 @@ namespace Runtime.Player {
 		private IMaxSlideTime maxSlideTime;
 		private ISlideForce slideForce;
 		private IWallRunForce wallRunForce;
+		private IAirDrag airDrag;
+		private IAirSpeedProperty airSpeed;
+		private IArmorProperty armor;
+		private IArmorRecoverSpeedProperty armorRecoverSpeed;
 
 		private MovementState movementState;
 		private bool scopedIn;
@@ -86,6 +115,11 @@ namespace Runtime.Player {
 			RegisterInitialProperty<ISlideForce>(new SlideForce());
 			
 			RegisterInitialProperty<IWallRunForce>(new WallRunForce());
+			RegisterInitialProperty<IAirSpeedProperty>(new AirSpeed());
+			RegisterInitialProperty<IAirDrag>(new AirDrag());
+			
+			RegisterInitialProperty<IArmorProperty>(new ArmorProperty());
+			RegisterInitialProperty<IArmorRecoverSpeedProperty>(new ArmorRecoverSpeedProperty());
 		}
 
 
@@ -105,6 +139,10 @@ namespace Runtime.Player {
 			maxSlideTime = GetProperty<IMaxSlideTime>();
 			slideForce = GetProperty<ISlideForce>();
 			wallRunForce = GetProperty<IWallRunForce>();
+			airSpeed = GetProperty<IAirSpeedProperty>();
+			airDrag = GetProperty<IAirDrag>();
+			armor = GetProperty<IArmorProperty>();
+			armorRecoverSpeed = GetProperty<IArmorRecoverSpeedProperty>();
 		}
 
 		public IAccelerationForce GetAccelerationForce() {
@@ -148,6 +186,22 @@ namespace Runtime.Player {
 			return wallRunForce;
 		}
 
+		public IAirSpeedProperty GetAirSpeed() {
+			return airSpeed;
+		}
+
+		public IArmorProperty GetArmor() {
+			return armor;
+		}
+		
+		public IArmorRecoverSpeedProperty GetArmorRecoverSpeed() {
+			return armorRecoverSpeed;
+		}
+
+		public IAirDrag GetAirDrag() {
+			return airDrag;
+		}
+
 		public MovementState GetMovementState()
 		{
 			return movementState;
@@ -166,6 +220,14 @@ namespace Runtime.Player {
 		public void SetScopedIn(bool state)
 		{
 			scopedIn = state;
+		}
+
+		public void AddArmor(float amount) {
+			float maxArmor = armor.InitialValue;
+			if (armor.RealValue.Value < maxArmor) {
+				float validAmount = Mathf.Min(maxArmor - armor.RealValue.Value, amount);
+				armor.RealValue.Value += validAmount;
+			}
 		}
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -196,8 +258,48 @@ namespace Runtime.Player {
 					});
 				}
 			}
+
+			Debug.Log("Player Deal Damage to " + damageable.EntityName + " with damage " + damage);
+		}
+
+		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {
+			base.OnTakeDamage(damage, damageDealer, hitData);
+			if (GetCurrentHealth() <= 0) {
+				this.SendEvent<OnPlayerDie>(new OnPlayerDie() {
+					damageDealer = damageDealer,
+					hitData = hitData
+				});
+			}
+
+			Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => this;
+		public ICanDealDamageRootViewController RootViewController => null;
+
+		protected override void DoTakeDamage(int damageAmount, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData) {
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			float armorToTakeDamage = Mathf.Min(armor.RealValue.Value, damageAmount);
+			float healthToTakeDamage = damageAmount - armorToTakeDamage;
+			
+			if (armorToTakeDamage > 0) {
+				armor.RealValue.Value -= armorToTakeDamage;
+			}
+				
+
+			if (healthToTakeDamage > 0) {
+				HealthProperty.RealValue.Value =
+					new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
+				
+			}
+			
+			this.SendEvent<OnPlayerTakeDamage>(new OnPlayerTakeDamage() {
+				DamageTaken = damageAmount,
+				HealthInfo = HealthProperty.RealValue.Value,
+				HitData = hitData,
+				DamageToHealth = healthToTakeDamage
+			});
+				
+		}
 	}
 }

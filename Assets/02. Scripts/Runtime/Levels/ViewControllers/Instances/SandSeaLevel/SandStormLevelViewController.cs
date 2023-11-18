@@ -9,7 +9,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances {
 		[field: ES3Serializable] public override string EntityName { get; set; } = "SandStormLevelEntity";
 
 		public override void OnRecycle() {
-			
+			base.OnRecycle();
 		}
 
 		protected override void OnInitModifiers(int rarity) {

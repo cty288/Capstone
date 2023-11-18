@@ -5,6 +5,7 @@ using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Runtime.Weapons.ViewControllers.Base
 {
@@ -13,6 +14,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         [Header("Aesthetic")]
         public TrailRenderer trailRenderer;
+        public VisualEffect[] bulletVFX;
         
         private HitDetectorInfo hitDetectorInfo;
         
@@ -21,19 +23,23 @@ namespace Runtime.Weapons.ViewControllers.Base
         {
             base.OnEntityStart();
             
-            
-            
             hitDetectorInfo = new HitDetectorInfo
             {
                 camera = cam,
                 layer = layer,
-                launchPoint = trailRenderer.transform,
+                launchPoint = bulletVFX[0].transform,
                 weapon = BoundEntity
             };
+            
+            // TODO: Phase out old Particle System
+            if (hitVFXSystem)
+            {
+                isHitVFX = true;
+            }
         }
         
         protected override IHitDetector OnCreateHitDetector() {
-            return new HitScan(this, CurrentFaction.Value, trailRenderer);
+            return new HitScan(this, CurrentFaction.Value, bulletVFX, fpsCamera);
         }
         
         public virtual void SetShoot(bool shouldShoot) {
@@ -52,7 +58,16 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         public override void HitResponse(HitData data) {
-            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            // TODO: Phase out old Particle System
+            if (isHitVFX)
+            {
+                hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
+                hitVFXSystem.Play();
+            }
+            else
+            {
+                Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            }
         }
         
         // Item/Holding Functions

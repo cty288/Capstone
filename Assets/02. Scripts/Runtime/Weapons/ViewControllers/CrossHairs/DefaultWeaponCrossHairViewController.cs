@@ -50,6 +50,7 @@ public class DefaultWeaponCrossHairViewController : WeaponCrossHairViewControlle
 	private Animator aimAnimator;
 	
 	[SerializeField] private Image[] crossHairImages;
+	[SerializeField] private Image[] scopeImages;
 	[SerializeField] private Color normalColor;
 	[SerializeField] private Color aimWeakPointColor;
 	[SerializeField] private Color shootWeakPointColor;
@@ -142,7 +143,9 @@ public class DefaultWeaponCrossHairViewController : WeaponCrossHairViewControlle
 	}
 
 	public override void OnWeaponScope(bool isScoped) {
-		
+		foreach (Image scopeImage in scopeImages) {
+			scopeImage.gameObject.SetActive(isScoped);
+		}
 	}
 
 	public override void OnWeaponShoot() {

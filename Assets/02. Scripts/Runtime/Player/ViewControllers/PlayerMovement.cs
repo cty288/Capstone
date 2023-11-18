@@ -1,16 +1,25 @@
 using System;
 using System.Collections;
+using _02._Scripts.Runtime.Player.Commands;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityNavMeshAgent;
 using Cinemachine;
 using DG.Tweening;
 using Framework;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.Utilities;
+//using MoreMountains.Feedbacks;
 using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
+using Runtime.Utilities;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Weapons.Model.Properties;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Player.ViewControllers
 {
@@ -38,9 +47,13 @@ namespace Runtime.Player.ViewControllers
         private Transform cameraTrans;
         [SerializeField]
         private Transform camHolder;
+        [FormerlySerializedAs("vcam")] [SerializeField] 
+        private CinemachineVirtualCamera defaultVirtualCamera;
         [SerializeField] 
-        private CinemachineVirtualCamera vcam;
-    
+        private CinemachineVirtualCamera secondaryVirtualCamera;
+        [SerializeField] 
+        private Camera fpsCamera;
+        
         private float cameraPitch = 0;
         private float fpsTopClamp=90;
         private float fpsBotClamp=-90;
@@ -51,9 +64,10 @@ namespace Runtime.Player.ViewControllers
         private float runningFOV;        
         [SerializeField]
         private float slidingFOV;
-
-        private Coroutine fovWalkToRunCoroutine;
-        private Coroutine fovRunToWalkCoroutine;
+        [SerializeField] 
+        private float currentFOV;
+        [SerializeField] 
+        private float fpsFOV;
 
         [Header("Headbob")] 
         [SerializeField] 
@@ -81,7 +95,7 @@ namespace Runtime.Player.ViewControllers
         [Header("Movement")] 
         
      
-        private float moveSpeed;
+        [SerializeField] private float moveSpeed;
      
     
         //temporary
@@ -98,7 +112,9 @@ namespace Runtime.Player.ViewControllers
         //todo: entity data
         [SerializeField]
         private float airMultiplier = 0.5f;
-    
+        [SerializeField]private PhysicMaterial airMaterial;
+        [SerializeField]private PhysicMaterial groundMaterial;
+        [SerializeField] private Collider playerCollider;
         //temporary
         private bool readyToJump;
         
@@ -116,13 +132,16 @@ namespace Runtime.Player.ViewControllers
         private float playerHeight = 2;
 
         private TriggerCheck groundCheck;
+
+        //private float airTimer = 0f;
         //public LayerMask whatIsGround;
-        private bool grounded {
+        private bool grounded
+        {
             get => groundCheck.Triggered;
         }
 
         private bool onSlope;
-        
+   
         
 
         
@@ -157,7 +176,9 @@ namespace Runtime.Player.ViewControllers
         [SerializeField]
         private float maxWallRunTime;
         private float wallRunTimer;
-        
+
+
+        private bool wasWallRunning;
         //wallrun checks
         [SerializeField]
         private  float wallCheckDistance;
@@ -168,7 +189,7 @@ namespace Runtime.Player.ViewControllers
         private bool wallRight;
         
         private bool exitingWall;
-        private float exitWallTime = 0.3f;
+        private float exitWallTime = 0.8f;
         private float exitWallTimer;
         
         private bool useGravity = false;
@@ -208,17 +229,23 @@ namespace Runtime.Player.ViewControllers
         
         private AudioSource slidingAudioSource = null;
 
-        private void Awake() {
+        private void Awake()
+        {
+            this.RegisterEvent<OnScopeUsedEvent>(SetADSFOV).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            this.RegisterEvent<OnPlayerRespawn>(OnRespawn).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             AudioSystem.Singleton.Initialize(null); //TODO: move to better spot
             
             playerActions = ClientInput.Singleton.GetPlayerActions();
             groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
         }
 
+       
+
         // Start is called before the first frame update
         void Start()
         {
-            vcam.m_Lens.FieldOfView = defaultFOV;
+            defaultVirtualCamera.m_Lens.FieldOfView = defaultFOV;
+            
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -237,12 +264,14 @@ namespace Runtime.Player.ViewControllers
             inventorySystem = this.GetSystem<IInventorySystem>();
 
         }
-
+        private void OnRespawn(OnPlayerRespawn obj) {
+            rb.freezeRotation = true;
+            gameObject.transform.rotation = Quaternion.identity;
+        }
         // Update is called once per frame
         void Update()
         {
-            if (playerModel.IsPlayerDead())
-            {
+            if (playerModel.IsPlayerDead()) {
                 rb.freezeRotation = false;
             }
             else
@@ -252,12 +281,14 @@ namespace Runtime.Player.ViewControllers
                 MyInput();
                 StateHandler();
                 CheckForWall();
+                
+                HandleAnimation();
 
                 onSlope = OnSlope();
             }
-            if (Input.GetKeyDown(KeyCode.F5)) {
-                ((MainGame) MainGame.Interface).SaveGame();
-            }
+            
+
+
         }
 
         
@@ -268,16 +299,24 @@ namespace Runtime.Player.ViewControllers
             //grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
             // handle drag
             if (grounded)
+            {
                 rb.drag = playerEntity.GetGroundDrag().RealValue;
-            else
-                rb.drag = 2f;
+                wasWallRunning = false;
+                playerCollider.material = groundMaterial;
+                
+            }
+            else {
+                rb.drag = playerEntity.GetAirDrag().RealValue;
+                playerCollider.material = airMaterial;
+            }
+                
             MovePlayer();
             
         }
 
         private void HandleAudio()
         {
-            if (grounded && rb.velocity.magnitude > 0.1f && !sprinting && !sliding && !wallrunning)
+            if (state == MovementState.walking && rb.velocity.magnitude >= 0.1f)
             {
                 walkingAudioTimer += Time.deltaTime;
                 if (walkingAudioTimer >= walkingAudioTime)
@@ -286,7 +325,7 @@ namespace Runtime.Player.ViewControllers
                     walkingAudioTimer = 0f;
                 }
             }
-            else if (grounded && sprinting)
+            else if (state == MovementState.sprinting && rb.velocity.magnitude >= 0.1f)
             {
                 runningAudioTimer += Time.deltaTime;
                 if (runningAudioTimer >= runningAudioTime)
@@ -295,8 +334,8 @@ namespace Runtime.Player.ViewControllers
                     runningAudioTimer = 0f;
                 }
             }
-            
-            if (wallrunning)
+
+            if (state == MovementState.wallrunning)
             {
                 wallRunAudioTimer += Time.deltaTime;
                 if (wallRunAudioTimer >= wallRunAudioTime)
@@ -306,7 +345,7 @@ namespace Runtime.Player.ViewControllers
                 }
             }
             
-            if (sliding)
+            if (state == MovementState.sliding)
             {
                 if (slidingAudioSource == null)
                 {
@@ -315,9 +354,13 @@ namespace Runtime.Player.ViewControllers
             }
             else
             {
-                slidingAudioSource = null;
-                AudioSystem.Singleton.StopSound("slide_3");
+                if (slidingAudioSource != null) {
+                    slidingAudioSource = null;
+                    AudioSystem.Singleton.StopSound("slide_3");
+                }
             }
+            
+            // JUMP
         }
         
         private void StateHandler()
@@ -333,7 +376,7 @@ namespace Runtime.Player.ViewControllers
             if (wallrunning)
             {
                 state = MovementState.wallrunning;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                playerEntity.SetMovementState(state);
 
                  desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue * weaponWeight;
             }
@@ -341,7 +384,7 @@ namespace Runtime.Player.ViewControllers
             else if (sliding)
             {
                 state = MovementState.sliding;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                playerEntity.SetMovementState(state);
 
                 if (onSlope && rb.velocity.y < 0.1f)
                     desiredMoveSpeed = playerEntity.GetSlideSpeed().RealValue * weaponWeight;
@@ -354,7 +397,7 @@ namespace Runtime.Player.ViewControllers
             else if(grounded && sprinting)
             {
                 state = MovementState.sprinting;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
+                playerEntity.SetMovementState(state);
 
                 desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue;
             }
@@ -363,8 +406,8 @@ namespace Runtime.Player.ViewControllers
             else if (grounded)
             {
                 state = MovementState.walking;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
-                if (this.GetModel<IGamePlayerModel>().GetPlayer().IsScopedIn())
+                playerEntity.SetMovementState(state);
+                if (playerEntity.IsScopedIn())
                 {
                     desiredMoveSpeed = playerEntity.GetWalkSpeed().RealValue * 0.5f * weaponWeight;
                 }
@@ -378,8 +421,8 @@ namespace Runtime.Player.ViewControllers
             else
             {
                 state = MovementState.air;
-                this.GetModel<IGamePlayerModel>().GetPlayer().SetMovementState(state);
-                desiredMoveSpeed = 10;
+                playerEntity.SetMovementState(state);
+                desiredMoveSpeed = playerEntity.GetAirSpeed().RealValue;
             }
 
             // check if desiredMoveSpeed has changed drastically
@@ -407,11 +450,18 @@ namespace Runtime.Player.ViewControllers
             cameraPitch = Mathf.Clamp(cameraPitch, fpsBotClamp, fpsTopClamp);
             camHolder.localEulerAngles = Vector3.right * cameraPitch;
             transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
-
             
             if (state == MovementState.walking)
             {
-                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, defaultFOV, Time.deltaTime * 20f);
+                if (currentFOV != defaultFOV && !playerEntity.IsScopedIn())
+                {
+                    SetFOV(defaultFOV);
+                }
+                
+                if(fpsCamera.fieldOfView != fpsFOV)
+                    fpsCamera.DOFieldOfView(fpsFOV, 0.1f);
+
+                
                 if (horizontalInput == 0 &&verticalInput == 0)
                     ChangeBobVars(idleBob);
                 else
@@ -419,52 +469,128 @@ namespace Runtime.Player.ViewControllers
             }
             else if (state == MovementState.sliding)
             {
-                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, slidingFOV, Time.deltaTime * 20f);
+                if (currentFOV != slidingFOV && !playerEntity.IsScopedIn())
+                {
+                    SetFOV(slidingFOV);
+                }
+                
+                if(fpsCamera.fieldOfView != fpsFOV - 10)
+                    fpsCamera.DOFieldOfView(fpsFOV - 5, 0.1f);
+
                 ChangeBobVars(0,0);
             }
-            else if (state == MovementState.sprinting)
+            else if (state == MovementState.sprinting||(state == MovementState.air&& sprinting))
             {
-                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, runningFOV, Time.deltaTime * 20f);
+                if (currentFOV != runningFOV && !playerEntity.IsScopedIn())
+                {
+                    SetFOV(runningFOV);
+                }
+                
+                if(fpsCamera.fieldOfView != fpsFOV - 10)
+                    fpsCamera.DOFieldOfView(fpsFOV - 3, 0.1f);
+
                 ChangeBobVars(sprintBob);
             }
             else
             {
-                vcam.m_Lens.FieldOfView = Mathf.Lerp(vcam.m_Lens.FieldOfView, defaultFOV, Time.deltaTime * 20f);
+                if (currentFOV != defaultFOV && !playerEntity.IsScopedIn())
+                {
+                    SetFOV(defaultFOV);
+                }
+                
+                if(fpsCamera.fieldOfView != fpsFOV)
+                    fpsCamera.DOFieldOfView(fpsFOV, 0.1f);
+                
                 ChangeBobVars(0,0);
             }
+        }
 
+        private void HandleAnimation()
+        {
+            if (state == MovementState.walking && rb.velocity.magnitude >= 0.1f)
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 1));
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("MoveSpeed", AnimationEventType.Float, 1.5f));
+            }
+            else if (state == MovementState.sprinting && rb.velocity.magnitude >= 0.1f)
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 1));
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("MoveSpeed", AnimationEventType.Float, 2f));
+                
+                
+                
+                // MMChannelData newData = new MMChannelData(MMChannelModes.Int, 0, null);
+                // MMCameraZoomEvent.Trigger(MMCameraZoomModes.Set, 0, 0.1f, 0.1f,  newData, false, true, false, true, null);
+            }
+            else
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Moving", AnimationEventType.Bool, 0));
+            }
             
+            if (state == MovementState.sliding && rb.velocity.magnitude >= 0.1f)
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Sliding", AnimationEventType.Bool, 1));
+            } else
+            {
+                this.SendCommand<PlayerAnimationCommand>(
+                    PlayerAnimationCommand.Allocate("Sliding", AnimationEventType.Bool, 0));
+            }
+        }
+
+        private void SetFOV(float fov)
+        {
+            if (defaultVirtualCamera.Priority == 10)
+            {
+                secondaryVirtualCamera.m_Lens.FieldOfView = fov;
+                secondaryVirtualCamera.Priority = 10;
+                defaultVirtualCamera.Priority = 1;
+            }
+            else
+            {
+                defaultVirtualCamera.m_Lens.FieldOfView = fov;
+                defaultVirtualCamera.Priority = 10;
+                secondaryVirtualCamera.Priority = 1;
+            }
+            
+            currentFOV = fov;
+        }
+
+        private void SetADSFOV(OnScopeUsedEvent e)
+        {
+            IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
+            if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
+            {
+                SetFOV(e.isScopedIn ? heldEntity.GetProperty<IAdsFOV>().RealValue : currentFOV);
+            }
         }
 
         public void ChangeBobVars(HeadBobData data)
         {
-            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
-            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
+            defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
+            defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
+            
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = data.FrequencyGain;
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = data.AmplitudeGain;
         }
         public void ChangeBobVars(float frequencyGain,float amplitudeGain)
         {
-            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
-            vcam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+            defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+            defaultVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
+            
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequencyGain;
+            secondaryVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitudeGain;
         }
         public void DoCamTilt(float zTilt)
         {
             cameraTrans.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
         }
-        
-        //smooth FOV transition
-        IEnumerator ChangeFOV(CinemachineVirtualCamera cam, float startFOV, float endFOV, float duration)
-        {
-            // float startFOV = cam.m_Lens.FieldOfView;
-            float time = 0;
-            while(time < duration)
-            {
-                if(endFOV == 110)
-                    Debug.Log($"endFOV:{endFOV}, startFOV: {startFOV}, {time}");
-                cam.m_Lens.FieldOfView = Mathf.Lerp(startFOV, endFOV, time / duration);
-                time += Time.deltaTime;
-                yield return null;
-            }
-        }
+
         private void MyInput()
         {
             horizontalInput = playerActions.Move.ReadValue<Vector2>().x;
@@ -475,14 +601,16 @@ namespace Runtime.Player.ViewControllers
             {
                 readyToJump = false;
                 readyToDoubleJump = true;
+                wasWallRunning = false;
 
                 Jump();
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded)
+            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded&&!wallrunning)
             {
                 readyToDoubleJump = false;
+                wasWallRunning = false;
 
                 Jump();
                 
@@ -492,7 +620,7 @@ namespace Runtime.Player.ViewControllers
                 sprinting = true;
                 //Debug.Log("Sprinting");
             }
-            if (playerActions.SprintHold.WasReleasedThisFrame())
+            else
             {
                 sprinting = false;
             }
@@ -518,23 +646,39 @@ namespace Runtime.Player.ViewControllers
                 DoCamTilt(0f);
             }
             
-            if((wallLeft || wallRight) && verticalInput > 0 && !grounded && !exitingWall&&playerActions.SprintHold.IsPressed())
+            if((wallLeft || wallRight) && verticalInput > 0 && !grounded && !exitingWall)
             {
-                if (!wallrunning)
-                    StartWallRun();
-
-                // wallrun timer
-                if (wallRunTimer > 0)
-                    wallRunTimer -= Time.deltaTime;
-
-                if(wallRunTimer <= 0 && wallrunning)
+                
+                if (playerActions.SprintHold.IsPressed())
                 {
-                    exitingWall = true;
-                    exitWallTimer = exitWallTime;
+                    if (!wasWallRunning&&!wallrunning)
+                    {
+                        StartWallRun();
+                    }
+                    if (playerActions.SprintHold.WasPressedThisFrame())
+                    {
+                        if (!wallrunning)
+                            StartWallRun();
+                    }
+                    
+                    // wallrun timer
+                    if (wallRunTimer > 0)
+                        wallRunTimer -= Time.deltaTime;
+                    if(wallRunTimer <= 0 && wallrunning)
+                    {
+                        exitingWall = true;
+                        exitWallTimer = exitWallTime;
+                    }
+                    
+                    // wall jump
+                    if (playerActions.Jump.WasPressedThisFrame() ) WallJump();
+                }
+                else
+                {
+                    if (wallrunning)
+                        StopWallRun();
                 }
 
-                // wall jump
-                if (playerActions.Jump.WasPressedThisFrame() ) WallJump();
             }
             else if (exitingWall)
             {
@@ -552,6 +696,7 @@ namespace Runtime.Player.ViewControllers
                 if (wallrunning)
                     StopWallRun();
             }
+
         }
 
         private void MovePlayer()
@@ -570,8 +715,10 @@ namespace Runtime.Player.ViewControllers
                 else if (onSlope && !exitingSlope) {
                     rb.AddForce(GetSlopeMoveDirection(moveDirection) * playerEntity.GetAccelerationForce().RealValue, ForceMode.Force);
 
-                    //if (rb.velocity.y > 0)
-                    //  rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                    if (rb.velocity.y < 0)
+                        rb.AddForce(-slopeHit.normal * 80f, ForceMode.Force);
+                    else
+                        rb.AddForce(Vector3.down * 80f, ForceMode.Force);
                 }
                 // on ground
                 else if (grounded)
@@ -738,6 +885,7 @@ namespace Runtime.Player.ViewControllers
         private void StopWallRun()
         {
             wallrunning = false;
+            wasWallRunning = true;
 
             // reset camera effects
 
@@ -749,6 +897,7 @@ namespace Runtime.Player.ViewControllers
             // enter exiting wall state
             exitingWall = true;
             exitWallTimer = exitWallTime;
+            readyToDoubleJump = true;
 
             Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
 
@@ -772,12 +921,15 @@ namespace Runtime.Player.ViewControllers
 
             // forward force
             rb.AddForce(wallForward * playerEntity.GetWallRunForce().RealValue, ForceMode.Force);
+            
+            if(wallRunTimer<=0.5f)
+                rb.velocity = new Vector3(rb.velocity.x, -5f, rb.velocity.z);
 
             // upwards/downwards force
             /*if (upwardsRunning)
                 rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
             if (downwardsRunning)
-                rb.velocity = new Vector3(rb.velocity.x, -wallClimbSpeed, rb.velocity.z);*/
+                */
 
             // push to wall force
             if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))
@@ -786,6 +938,11 @@ namespace Runtime.Player.ViewControllers
             // weaken gravity
             if (useGravity)
                 rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
+        }
+        
+        public Rigidbody GetRigidBody()
+        {
+            return rb;
         }
     }
     

@@ -186,16 +186,34 @@ MonoBehaviour:
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 7323250059836298821}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   entityAutoRemovalTimeWhenNoAbsorb: 120
   <InHandLocalPosition>k__BackingField: {x: -0.082, y: -0.492, z: -0.211}
   <InHandLocalRotation>k__BackingField: {x: 0, y: 0, z: 0}
+  objectToChangeLayerInHand:
+  - includeChildren: 1
+    ownerGameObject: {fileID: 6588825577800597007}
+    originalLayer:
+      serializedVersion: 2
+      m_Bits: 0
+  - includeChildren: 0
+    ownerGameObject: {fileID: 7603438385675746016}
+    originalLayer:
+      serializedVersion: 2
+      m_Bits: 0
   <InHandLocalScale>k__BackingField: {x: 1, y: 1, z: 1}
+  <AnimLayerInfos>k__BackingField:
+  - LayerName: NoItem
+    LayerWeight: 1
   crossHairPrefabName: 
   rarity: 1
   vigilianceBase: 100
@@ -315,6 +333,12 @@ PrefabInstance:
 --- !u!4 &6586083393340605715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4731941170816802, guid: 5573fbbed95ad6048a1584290e3b5b10,
+    type: 3}
+  m_PrefabInstance: {fileID: 6590657824101966385}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6588825577800597007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1844617493404734, guid: 5573fbbed95ad6048a1584290e3b5b10,
     type: 3}
   m_PrefabInstance: {fileID: 6590657824101966385}
   m_PrefabAsset: {fileID: 0}

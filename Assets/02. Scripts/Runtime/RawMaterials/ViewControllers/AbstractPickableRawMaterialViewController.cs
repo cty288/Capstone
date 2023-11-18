@@ -7,6 +7,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.RawMaterials.Model.Base;
 using Runtime.RawMaterials.Model.Builder;
+using Runtime.Temporary;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
@@ -21,11 +22,17 @@ namespace Runtime.RawMaterials.ViewControllers {
 		where  T : class, IRawMaterialEntity, new(){
 		
 		protected IRawMaterialModel rawMaterialModel;
-		protected Collider[] selfColliders;
+		//protected Collider[] selfColliders;
 		protected override void Awake() {
 			base.Awake();
 			rawMaterialModel = this.GetModel<IRawMaterialModel>();
-			selfColliders = GetComponents<Collider>();
+			//selfColliders = GetComponents<Collider>();
+			var players = PlayerController.GetAllPlayers();
+			foreach (var player in players) {
+				foreach (Collider collider in selfColliders.Keys) {
+					Physics.IgnoreCollision(collider, player.transform.Find("Model").GetComponent<Collider>(), true);
+				}
+			}
 		}
 
 		

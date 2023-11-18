@@ -1,5 +1,6 @@
 using Runtime.DataFramework.ViewControllers;
-
+using MikroFramework;
+using MikroFramework.Pool;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
@@ -33,7 +34,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         public override void OnRecycle()
         {
-
+            
         }
         
 
@@ -55,7 +56,7 @@ namespace Runtime.Enemies.SmallEnemies
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
             return new[] {
-                new AutoConfigCustomProperty("attack", null)
+                new AutoConfigCustomProperty("attack")
             };
         }
     }
@@ -63,8 +64,9 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class QuadrupedCarrier : AbstractNormalEnemyViewController<QuadrupedCarrierEntity>
     {
-        
 
+        [SerializeField] private GameObject deathEffect;
+        [SerializeField] private SafeGameObjectPool pool;
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
         {
 
@@ -75,7 +77,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityStart()
         {
-            Debug.Log("camel here");
+            pool = GameObjectPoolManager.Singleton.CreatePool(deathEffect, 10, 15);
         }
 
 
@@ -87,6 +89,13 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
+            if (currenthealth <= 0)
+            {
+
+                GameObject a = pool.Allocate();
+                a.transform.position = this.transform.position + new Vector3(0, 2, 0);
+
+            }
             Debug.Log($"carrier 1 Take damage: {damage}. carrier 1 current health: {currenthealth}");
         }
 

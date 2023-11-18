@@ -63,6 +63,10 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 
 		public BindableProperty<T> GetCustomDataValue<T>(string CustomDataName);
 		
+		public bool HasCustomData(string customDataName);
+
+		public bool TryGetCustomDataValue<T>(string customDataName, out BindableProperty<T> value);
+
 		public IUnRegister RegisterOnCustomDataChanged(string CustomDataName, Action<ICustomDataProperty, dynamic, dynamic> onCustomDataChanged);
 
 		public IUnRegister RegisterOnCustomDataChanged(Action<ICustomProperty> onCustomDataChanged);
@@ -87,7 +91,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		private Action<ICustomProperty> onCustomDataChanged;
 
 		[ES3Serializable] protected string propertyName;
-		[ES3Serializable] protected IDescriptionGetter<ICustomProperty> descriptionGetter;
+		//[ES3Serializable] protected IDescriptionGetter<ICustomProperty> descriptionGetter;
 
 
 		public CustomProperty() : base(){}
@@ -98,7 +102,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		/// <param name="propertyName">The name of the property. This should be the same as the one on the config file</param>
 		/// <param name="descriptionGetter">In order to serialize the description, you need to use a descriptionGetter object to do the description stuff</param>
 		/// <param name="data">Manually specify which data are included, as well as their dependencies and modifiers</param>
-		public CustomProperty(string propertyName, IDescriptionGetter<ICustomProperty> descriptionGetter,
+		public CustomProperty(string propertyName, 
 			params ICustomDataProperty[] data) : base() {
 			if (data!=null) {
 				BaseValue = data.ToDictionary(GetKey);
@@ -107,7 +111,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 				BaseValue = new Dictionary<string, ICustomDataProperty>();
 			}
 			this.propertyName = propertyName;
-			this.descriptionGetter = descriptionGetter;
+			//this.descriptionGetter = descriptionGetter;
 			
 		}
 		
@@ -161,12 +165,27 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 			return RealValues[CustomDataName].GetRealValue() as BindableProperty<T>;
 		}
 
+		public bool HasCustomData(string customDataName) {
+			return RealValues.Value.ContainsKey(customDataName);
+		}
+
+		public bool TryGetCustomDataValue<T>(string customDataName, out BindableProperty<T> value) {
+			if (!RealValues.Value.ContainsKey(customDataName)) {
+				value = default;
+				return false;
+			}
+
+			value = RealValues[customDataName].GetRealValue() as BindableProperty<T>;
+			return true;
+		}
+
 		public string GetCustomPropertyName() {
 			return propertyName;
 		}
 
 		public string OnGetDescription() {
-			return descriptionGetter.GetDescription(this);
+			//return descriptionGetter.GetDescription(this);
+			return null;
 		}
 
 		public ICustomDataProperty GetCustomDataProperty(string customDataName) {
@@ -261,7 +280,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties{
 		
 		public AutoConfigCustomProperty(): base(){}
 		
-		public AutoConfigCustomProperty(string CustomName, IDescriptionGetter<ICustomProperty> descriptionGetter = null) : base(CustomName, descriptionGetter) {
+		public AutoConfigCustomProperty(string CustomName) : base(CustomName) {
 			
 		}
 

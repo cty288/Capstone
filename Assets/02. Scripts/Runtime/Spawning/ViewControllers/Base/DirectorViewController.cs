@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
+using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Utilities;
@@ -74,14 +76,19 @@ namespace Runtime.Spawning
         [SerializeField] private float directorSpawnTimer = 0f;
 
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+        protected Vector3[] insideArenaCheckPoints;
 
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
         }
 
-        protected override void OnEntityStart()
-        {
+        protected override void OnEntityStart() {
+            insideArenaCheckPoints =
+                GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
+
+            
+            
             Debug.Log("director start");
             m_lottery = new Lottery();
             // currentCredits = BoundEntity.GetStartingCredits().RealValue;
@@ -202,7 +209,7 @@ namespace Runtime.Spawning
                         
             //raycast down from random point within min/max range
             int spawnAttempts = 10;
-            while (spawnAttempts > 0 && currentCredits > cost)
+            while (currentCredits > cost && spawnAttempts > 0)
             {
                 
                 float angle = Random.Range(0, 360); 
@@ -214,34 +221,42 @@ namespace Runtime.Spawning
 
                 Vector3 spawnPos = new Vector3(
                     x, 
-                    transform.position.y + 500f,  
+                    transform.position.y, //+ 500f,  
                     z
                 );
                 
-                if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
-                {
-                     if (hit.collider.gameObject.layer ==  LayerMask.NameToLayer("Ground")){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
-                        spawnPos = hit.point;
-                        spawnPos.y += 3f;
+                //if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
+                //{
+                     //if (hit.collider.gameObject.layer ==  LayerMask.NameToLayer("Ground")){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
+                        //spawnPos = hit.point;
+                        //spawnPos.y += 3f;
                         NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
                         spawnPos = hitNavMesh.position;
 
                         Vector3 fixedSpawnPos =
-                            SpawningUtility.FindNavMeshSuitablePosition(card.Prefab, spawnPos, 1f, 3f, 10);
+                            SpawningUtility.FindNavMeshSuitablePosition(
+                                () => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider,
+                                spawnPos, 90, NavMeshHelper.GetSpawnableAreaMask(), insideArenaCheckPoints, 1f, 3f,
+                                spawnAttempts,
+                                out int usedAttempts, out _);
+                        
+                        spawnAttempts -= usedAttempts;
                        
                         if (!float.IsInfinity(fixedSpawnPos.magnitude)) {
-                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, fixedSpawnPos, Quaternion.identity, null, rarity,
+                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, fixedSpawnPos, 
+                                Quaternion.Euler(0, Random.Range(0, 360), 0),
+                                null, rarity,
                                 levelNumber, true, 5, 30);
                             IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                            Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
+                            // Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
                     
                             currentCredits -= cost;
                             return true;
                         }
-                     }
-                }
-                spawnAttempts--;
+                     //}
+                //}
+                //spawnAttempts--;
             }
             return false;
         }

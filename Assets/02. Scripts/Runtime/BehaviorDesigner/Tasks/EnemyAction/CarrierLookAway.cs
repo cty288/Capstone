@@ -37,7 +37,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float bulletSpeed;
         private float bulletAccuracy;
         private GameObject player;
-        private float timer = 2f;
+        private float timer = 0.5f;
         public override void OnAwake()
         {
             base.OnAwake();
@@ -54,11 +54,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             mac.data.sourceObjects = new WeightedTransformArray() {new WeightedTransform(playerTrans, 1)};
             rb.Build();
+            if(mac.weight != 0)
+            {
 
-            StartCoroutine(DecreaseWeight());
+                StartCoroutine(DecreaseWeight());
+            }
         }
         public override TaskStatus OnUpdate()
         {
+            if(mac.weight == 0)
+            {
+                return TaskStatus.Success;
+            }
             if (ended)
                 return TaskStatus.Success;
             else
@@ -91,7 +98,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnEnd();
 
-            timer = 2f;
+            timer = 0.5f;
             StopAllCoroutines();
         }
     }

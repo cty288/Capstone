@@ -49,30 +49,17 @@ SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 0,
-      ""y"": 2
+      ""y"": 0
     },
     
     ""ItemDropInfos"": [
       {
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 1
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
           ""x"": 0,
           ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""BionicGel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
         },
-        ""dropWeight"": 2,
+        ""dropWeight"": 1,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -83,8 +70,8 @@ SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
   },
   ""2"": {
     ""TotalDropCountRange"": {
-      ""x"": 1,
-      ""y"": 3
+      ""x"": 0,
+      ""y"": 1
     },
     
     ""ItemDropInfos"": [
@@ -92,9 +79,9 @@ SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 2
+          ""y"": 1
         },
-        ""dropWeight"": 2,
+        ""dropWeight"": 4,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -102,20 +89,7 @@ SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
         }
       },
       {
-        ""prefabName"": ""BionicGel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 3
-        },
-        ""dropWeight"": 3,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""ReinforcedSteel"",
+        ""prefabName"": ""HeatStoragor"",
         ""batchCountRange"": {
           ""x"": 1,
           ""y"": 1
@@ -158,35 +132,27 @@ SurveillanceDrone,"{""maxHealth"": 10, ""currentHealth"": 10}",123,1,"{
       ""type"": ""float"",
       ""value"": 20,
       ""useDefaultModifier"": true
+    },
+    ""rangeAfterInteraction"":{
+      ""type"": ""float"",
+      ""value"": 50,
+      ""useDefaultModifier"": true
     }
   }
 }",  ,,
 HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
   ""1"": {
     ""TotalDropCountRange"": {
-      ""x"": 1,
-      ""y"": 2
+      ""x"": 0,
+      ""y"": 0
     },
     
     ""ItemDropInfos"": [
       {
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 2,
-        ""setRarity"": false,
-        ""rarityRange"": {
           ""x"": 0,
           ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""HeatStoragor"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 1
         },
         ""dropWeight"": 1,
         ""setRarity"": false,
@@ -199,8 +165,8 @@ HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
   },
   ""2"": {
     ""TotalDropCountRange"": {
-      ""x"": 2,
-      ""y"": 3
+      ""x"": 0,
+      ""y"": 1
     },
     
     ""ItemDropInfos"": [
@@ -208,9 +174,9 @@ HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 2
+          ""y"": 1
         },
-        ""dropWeight"": 1,
+        ""dropWeight"": 4,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -221,7 +187,7 @@ HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
         ""prefabName"": ""HeatStoragor"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 2
+          ""y"": 1
         },
         ""dropWeight"": 1,
         ""setRarity"": false,
@@ -268,55 +234,43 @@ HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
     },
     ""damagePerTick"":{
       ""type"": ""float"",
-      ""value"": 1,
+      ""value"": 0.25,
       ""useDefaultModifier"": true
     },
     ""damageInterval"":{
       ""type"": ""float"",
       ""value"": 0.2
+    },
+    ""softDetectionRange"":{
+      ""type"": ""float"",
+      ""value"": 11,
+      ""useDefaultModifier"": true
+    },
+    ""rangeAfterInteraction"":{
+      ""type"": ""float"",
+      ""value"": 30,
+      ""useDefaultModifier"": true
+    },
+    ""lazerMaxRange"":{
+      ""type"": ""float"",
+      ""value"": 50,
+      ""useDefaultModifier"": true
     }
   }
 }",,,
 QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
   ""1"": {
     ""TotalDropCountRange"": {
-      ""x"": 1,
-      ""y"": 3
+      ""x"": 0,
+      ""y"": 1
     },
     
     ""ItemDropInfos"": [
       {
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
           ""x"": 0,
           ""y"": 0
-        }
-      },
-      {
-        ""prefabName"":
-          ""BionicGel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 1,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""ReinforcedSteel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 1
         },
         ""dropWeight"": 1,
         ""setRarity"": false,
@@ -329,8 +283,8 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
   },
   ""2"": {
     ""TotalDropCountRange"": {
-      ""x"": 2,
-      ""y"": 4
+      ""x"": 1,
+      ""y"": 2
     },
     
     ""ItemDropInfos"": [
@@ -338,9 +292,9 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 3
+          ""y"": 1
         },
-        ""dropWeight"": 1,
+        ""dropWeight"": 4,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -348,11 +302,10 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
         }
       },
       {
-        ""prefabName"": 
-          ""BionicGel"",
+        ""prefabName"": ""HeatStoragor"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 3
+          ""y"": 1
         },
         ""dropWeight"": 1,
         ""setRarity"": false,
@@ -360,12 +313,94 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
           ""x"": 0,
           ""y"": 0
         }
-      },
+      }
+    ]
+  }
+}",3,"{
+  ""attack"":{
+    ""bulletDamage"":{
+      ""type"": ""int"",
+      ""value"": 5,
+      ""useDefaultModifier"": true
+    },
+    ""ammoSize"":{
+      ""type"": ""int"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""bulletSpeed"" : {
+      ""type"" : ""float"",
+      ""value"": 12
+    },
+    ""spawnInterval"":{
+      ""type"": ""float"",
+      ""value"": 0.1
+    },
+    ""explosionDamage"":{
+      ""type"": ""int"",
+      ""value"": 15,
+      ""useDefaultModifier"": true
+    },
+    ""bulletCount"":{
+      ""type"": ""int"",
+      ""value"": 5,
+      ""useDefaultModifier"": true
+    },
+    ""detectionRange"":{
+      ""type"": ""float"",
+      ""value"": 12,
+      ""useDefaultModifier"": true
+    }
+  }
+}",,,
+SpineWheel,"{""maxHealth"": 20, ""currentHealth"": 20}",123,2,"{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 0,
+      ""y"": 0
+    },
+    
+    ""ItemDropInfos"": [
       {
-        ""prefabName"": ""ReinforcedSteel"",
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 0,
+          ""y"": 0
+        },
+        ""dropWeight"": 1,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ""x"": 0,
+      ""y"": 1
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 2
+          ""y"": 1
+        },
+        ""dropWeight"": 4,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""HeatStoragor"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
         },
         ""dropWeight"": 1,
         ""setRarity"": false,
@@ -394,7 +429,7 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
     },
     ""spawnInterval"":{
       ""type"": ""float"",
-      ""value"": 0.1
+      ""value"": 1
     },
     ""explosionDamage"":{
       ""type"": ""int"",
@@ -410,6 +445,87 @@ QuadrupedCarrier,"{""maxHealth"": 50, ""currentHealth"": 50}",124,3,"{
       ""type"": ""float"",
       ""value"": 12,
       ""useDefaultModifier"": true
+    },
+    ""numberOfBullets"":{
+      ""type"": ""float"",
+      ""value"": 5,
+      ""useDefaultModifier"": true
+    },
+    ""fanAngle"":{
+      ""type"": ""float"",
+      ""value"": 90,
+      ""useDefaultModifier"": true
+    },
+    ""softDetectionRange"":{
+      ""type"": ""float"",
+      ""value"": 15,
+      ""useDefaultModifier"": true
+    },
+    ""rangeAfterInteraction"":{
+      ""type"": ""float"",
+      ""value"": 25,
+      ""useDefaultModifier"": true
+    },
+    ""spawnAmount"":{
+      ""type"": ""int"",
+      ""value"": 2,
+      ""useDefaultModifier"": true
     }
   }
 }",,,
+,,,,"x: 0,",,,,,
+,,,,y: 2,,,,,
+,,,,"},",,,,,
+,,,,,,,,,
+,,,,ItemDropInfos: [,,,,,
+,,,,{,,,,,
+,,,,"prefabName: ""CarbonFiber"",",,,,,
+,,,,batchCountRange: {,,,,,
+,,,,"x: 1,",,,,,
+,,,,y: 1,,,,,
+,,,,"},",,,,,
+,,,,"dropWeight: 1,",,,,,
+,,,,"setRarity: false,",,,,,
+,,,,rarityRange: {,,,,,
+,,,,"x: 0,",,,,,
+,,,,y: 0,,,,,
+,,,,},,,,,
+,,,,},,,,,
+,,,,],,,,,
+,,,,"},",,,,,
+,,,,2: {,,,,,
+,,,,TotalDropCountRange: {,,,,,
+,,,,"x: 1,",,,,,
+,,,,y: 3,,,,,
+,,,,"},",,,,,
+,,,,,,,,,
+,,,,ItemDropInfos: [,,,,,
+,,,,{,,,,,
+,,,,"prefabName: ""CarbonFiber"",",,,,,
+,,,,batchCountRange: {,,,,,
+,,,,"x: 1,",,,,,
+,,,,y: 2,,,,,
+,,,,"},",,,,,
+,,,,"dropWeight: 1,",,,,,
+,,,,"setRarity: false,",,,,,
+,,,,rarityRange: {,,,,,
+,,,,"x: 0,",,,,,
+,,,,y: 0,,,,,
+,,,,},,,,,
+,,,,"},",,,,,
+,,,,{,,,,,
+,,,,"prefabName: ""HeatStoragor"",",,,,,
+,,,,batchCountRange: {,,,,,
+,,,,"x: 1,",,,,,
+,,,,y: 2,,,,,
+,,,,"},",,,,,
+,,,,"dropWeight: 2,",,,,,
+,,,,"setRarity: false,",,,,,
+,,,,rarityRange: {,,,,,
+,,,,"x: 0,",,,,,
+,,,,y: 0,,,,,
+,,,,},,,,,
+,,,,},,,,,
+,,,,],,,,,
+,,,,},,,,,
+,,,,},,,,,

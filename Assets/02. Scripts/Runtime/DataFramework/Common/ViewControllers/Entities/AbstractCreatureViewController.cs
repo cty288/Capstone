@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using BehaviorDesigner.Runtime;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.GameResources;
@@ -26,6 +28,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	public struct ItemDropCollection {
 		//public int Rarity;
 		public Vector2Int TotalDropCountRange;
+		//public Vector2Int CombatCurrencyDropCountRange;
 		public ItemDropInfo[] ItemDropInfos;
 	}
 	
@@ -47,16 +50,22 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature {
 		//[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
-		
+		private static int combatCurrencyAmountPerItem = 5;
 		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
-		NavMeshAgent navMeshAgent;
+		protected NavMeshAgent navMeshAgent;
 		BehaviorTree behaviorTree;
+		
+		[Header("Nav Mesh")]
+		[SerializeField] protected bool randomizeNavMeshPriority = true;
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
 			behaviorTree = GetComponent<BehaviorTree>();
 			if (navMeshAgent) {
 				navMeshAgent.enabled = false;
+				if (randomizeNavMeshPriority) {
+					navMeshAgent.avoidancePriority = Random.Range(0, 100);
+				}
 			}
 			
 			if (behaviorTree) {
@@ -103,6 +112,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				itemDropCollection.TotalDropCountRange.y + 1);
 			int dropCount = 0;
 
+			int attempt = 0;
 			while (dropCount < totalDropCount) {
 				ItemDropInfo info = BoundEntity.GetRandomDropItem();
 				
@@ -111,7 +121,56 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					                    " entity.");
 				}
 				dropCount += GenerateDropItem(info, totalDropCount);
+				attempt++;
+				if (attempt >= 100000) {
+					Debug.Log("WHILE LOOP CRASHED!");
+					break;
+				}
 			}
+
+			if (damagedealer.RootDamageDealer.CurrentFaction.Value == Faction.Friendly) { //killed by the player or friendly
+				int combatCurrencyDropCount = GetSpawnedCombatCurrencyAmount();
+				if (combatCurrencyDropCount > 0) {
+					GeneratePickableCombatCurrency(combatCurrencyDropCount);
+				}
+			}
+
+		}
+		
+		protected abstract int GetSpawnedCombatCurrencyAmount();
+
+		protected void GeneratePickableCombatCurrency(int totalCount) {
+			//drop num = totalCount / combatCurrencyAmountPerItem
+			//if mod != 0, drop num += 1, and drop mod
+			int dropCount = totalCount / combatCurrencyAmountPerItem;
+			
+			Vector3 spawnBasePosition = transform.position;
+			spawnBasePosition.y = SpawnSizeCollider.bounds.max.y;
+			
+			Vector3 FindSpawnPosition() {
+				Vector3 spawnPosition = spawnBasePosition;
+				spawnPosition.x += Random.Range(-SpawnSizeCollider.bounds.extents.x/2, SpawnSizeCollider.bounds.extents.x/2);
+				spawnPosition.z += Random.Range(-SpawnSizeCollider.bounds.extents.z/2, SpawnSizeCollider.bounds.extents.z/2);
+				return spawnPosition;
+			}
+			
+			for (int i = 0; i < dropCount; i++) {
+				GameObject spawnedResource =
+					ResourceVCFactory.Singleton.SpawnPickableCurrency(CurrencyType.Combat, combatCurrencyAmountPerItem);
+				
+				Vector3 spawnPosition = FindSpawnPosition();
+				spawnedResource.transform.position = spawnPosition;
+				totalCount -= combatCurrencyAmountPerItem;
+			}
+			
+			if (totalCount > 0) {
+				GameObject spawnedResource =
+					ResourceVCFactory.Singleton.SpawnPickableCurrency(CurrencyType.Combat, totalCount);
+				
+				Vector3 spawnPosition = FindSpawnPosition();
+				spawnedResource.transform.position = spawnPosition;
+			}
+
 		}
 
 		protected int GenerateDropItem(ItemDropInfo info, int totalDropCount) {

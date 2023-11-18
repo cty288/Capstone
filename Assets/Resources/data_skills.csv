@@ -1,0 +1,238 @@
+EntityName / Property Names,skill_purchase_cost,skill_upgrade_cost,skill_use_cost,skill_cooldown,max_stack,custom_properties,tags,,More Notes
+Types,SkillPurchaseCostInfo,"Dictionary<int, Dictionary<CurrencyType, int>>","Dictionary<int, Dictionary<CurrencyType, int>>","Dictionary<int,float>",int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,,,,,,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+{""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
+If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
+,,,,,,,,,
+BEGIN,,,,,,,,,
+TestSkill,"{
+        ""ResourceCost"": {
+            ""CarbonFiber"": 3,
+            ""BionicGel"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+        ""1"": {
+            ""Combat"": 5,
+            ""Time"": 8,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""2"": {
+            ""Combat"": 12,
+            ""Time"": 11,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""3"": {
+            ""Combat"": 6,
+            ""Time"": 16,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""4"": {
+            ""Combat"": 17,
+            ""Time"": 16,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        }
+ }","{
+        ""1"": {
+            ""Combat"": 5,
+            ""Time"": 22,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""2"": {
+            ""Combat"": 5,
+            ""Time"": 0,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""3"": {
+            ""Combat"": 11,
+            ""Time"": 29,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        },
+        ""4"": {
+            ""Combat"": 9,
+            ""Time"": 15,
+            ""Plant"": 0,
+            ""Mineral"": 0
+        }
+ }","{
+        ""1"": 21.06,
+        ""2"": 30,
+        ""3"": 3.31,
+        ""4"": 26.08
+}",1,"{
+    ""level1"": {
+        ""speed"": {
+            ""type"": ""int"",
+            ""value"": 336
+        },
+        ""damage"": {
+            ""type"": ""int"",
+            ""value"": 627
+        }
+    },
+    ""level2"": {
+        ""speed"": {
+            ""type"": ""int"",
+            ""value"": 815
+        },
+        ""damage"": {
+            ""type"": ""int"",
+            ""value"": 538
+        }
+    },
+    ""level3"": {
+        ""speed"": {
+            ""type"": ""int"",
+            ""value"": 211
+        },
+        ""damage"": {
+            ""type"": ""int"",
+            ""value"": 716
+        }
+    }
+}
+",,,
+GrenadeSkill,"{
+        ""ResourceCost"": {
+            ""CarbonFiber"": 5,
+            ""BionicGel"": 5
+        },
+        ""MoneyCost"": 100
+}","{
+        ""2"": {
+            ""Combat"": 50,
+            ""Mineral"": 20,
+            ""Plant"": 0,
+            ""Time"": 50
+        },
+        ""3"": {
+            ""Combat"": 75,
+            ""Mineral"": 25,
+            ""Plant"": 0,
+            ""Time"": 70
+        },
+        ""4"": {
+            ""Combat"": 100,
+            ""Mineral"": 50,
+            ""Plant"": 0,
+            ""Time"": 90
+        }
+    }","{
+        ""1"": {
+            ""Combat"": 10,
+            ""Mineral"": 5,
+            ""Plant"": 0,
+            ""Time"": 0
+        },
+        ""2"": {
+            ""Combat"": 10,
+            ""Mineral"": 5,
+            ""Plant"": 0,
+            ""Time"": 0
+        },
+        ""3"": {
+            ""Combat"": 10,
+            ""Mineral"": 5,
+            ""Plant"": 0,
+            ""Time"": 0
+        },
+        ""4"": {
+            ""Combat"": 10,
+            ""Mineral"": 5,
+            ""Plant"": 0,
+            ""Time"": 0
+        }
+    }","{
+        ""1"": 10,
+        ""2"": 8.0,
+        ""3"": 6.0,
+        ""4"": 4.0
+    }",1,"{
+        ""level1"": {
+            ""explosion_radius"": {
+                ""type"": ""float"",
+                ""value"": 6
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 50
+            }
+        },
+        ""level2"": {
+            ""explosion_radius"": {
+                ""type"": ""float"",
+                ""value"": 6
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 75
+            }
+        },
+        ""level3"": {
+            ""explosion_radius"": {
+                ""type"": ""float"",
+                ""value"": 9
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 100
+            }
+        },
+        ""level4"": {
+            ""explosion_radius"": {
+                ""type"": ""float"",
+                ""value"": 9
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 125
+            }
+        }
+}",,,
+MedicalNeedleSkill,"{
+        ""ResourceCost"": {
+            ""CarbonFiber"": 5,
+            ""BionicGel"": 5
+        },
+        ""MoneyCost"": 100
+}","{
+    ""2"": {""Combat"": 0, ""Time"": 30, ""Plant"": 20, ""Mineral"": 0},
+    ""3"": {""Combat"": 0, ""Time"": 40, ""Plant"": 30, ""Mineral"": 0},
+    ""4"": {""Combat"": 0, ""Time"": 50, ""Plant"": 40, ""Mineral"": 0}
+  }","{
+    ""1"": {""Combat"": 0, ""Time"": 0, ""Plant"": 5, ""Mineral"": 0},
+    ""2"": {""Combat"": 0, ""Time"": 0, ""Plant"": 5, ""Mineral"": 0},
+    ""3"": {""Combat"": 0, ""Time"": 0, ""Plant"": 5, ""Mineral"": 0},
+    ""4"": {""Combat"": 0, ""Time"": 0, ""Plant"": 5, ""Mineral"": 10}
+  }","{
+    ""1"": 30,
+    ""2"": 30,
+    ""3"": 25,
+    ""4"": 25
+  }",1,"{
+    ""level1"": {
+      ""healing_amount"": {""type"": ""int"", ""value"": 20}
+    },
+    ""level2"": {
+      ""healing_amount"": {""type"": ""int"", ""value"": 30}
+    },
+    ""level3"": {
+      ""healing_amount"": {""type"": ""int"", ""value"": 50},
+      ""buff_duration"": {""type"": ""int"", ""value"": 20},
+      ""buff_effect"": {""type"": ""int"", ""value"": 1}
+    },
+    ""level4"": {
+      ""healing_amount"": {""type"": ""int"", ""value"": 50},
+      ""buff_duration"": {""type"": ""int"", ""value"": 20},
+      ""buff_effect"": {""type"": ""int"", ""value"": 2}
+    }
+  }",,,

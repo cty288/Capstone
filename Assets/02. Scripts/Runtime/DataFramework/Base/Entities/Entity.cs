@@ -143,7 +143,7 @@ namespace Runtime.DataFramework.Entities {
 		
 		public void UnRegisterOnRecycleRCZeroRef(Action<IEntity> onZeroRef);
 		
-		public void ReadyToRecycle();
+		public void ReadyToRecycle(bool force = false);
 		
 		public void RetainRecycleRC();
 		
@@ -478,10 +478,10 @@ namespace Runtime.DataFramework.Entities {
 			this.onRecycleRCZeroRef -= onZeroRef;
 		}
 
-		public void ReadyToRecycle() {
+		public void ReadyToRecycle(bool force = false) {
 			readyToRecycle = true;
 			this.onReadyToRecycleEvent?.Invoke(this);
-			if (recycleRC.RefCount == 0) {
+			if (recycleRC.RefCount == 0 || force) {
 				this.onRecycleRCZeroRef?.Invoke(this);
 			}
 		}
@@ -599,6 +599,9 @@ namespace Runtime.DataFramework.Entities {
 
 		public void OnRecycled() {
 			OnRecycle();
+			
+			onRecycleRCZeroRef = null;
+			recycleRC.RefCount = 0;
 			foreach (IPropertyBase property in _allProperties.Values) {
 				property.OnRecycled();
 			}

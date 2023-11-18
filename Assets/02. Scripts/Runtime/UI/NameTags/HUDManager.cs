@@ -14,6 +14,8 @@ namespace Runtime.UI.NameTags {
         public HUDElementInfo() {
             
         }
+
+        
         
         public (GameObject, bool) GetOrCreate(Transform targetFollow, Transform spawnedTransform, string prefabName, bool isWorld) {
             if (followDict.ContainsKey(targetFollow)) {
@@ -38,6 +40,13 @@ namespace Runtime.UI.NameTags {
                 GameObjectPoolManager.Singleton.Recycle(followDict[targetFollow].Item1);
                 followDict.Remove(targetFollow);
             }
+        }
+        
+        public void ClearAll() {
+            foreach (var pair in followDict) {
+                GameObjectPoolManager.Singleton.Recycle(pair.Value.Item1);
+            }
+            followDict.Clear();
         }
     }
 
@@ -88,6 +97,22 @@ namespace Runtime.UI.NameTags {
             }
         }
 
+
+        public void ClearAll() {
+            foreach (HUDCategory category in hudElementInfos.Keys) {
+                hudElementInfos[category].ClearAll();
+            }
+
+            hudElementInfos.Clear();
+        }
+        public bool HasHUDElement(Transform targetFollow, HUDCategory hudCategory) {
+            if (hudElementInfos.TryGetValue(hudCategory, out var info)) {
+                return info.followDict.ContainsKey(targetFollow);
+            }
+
+            return false;
+        }
+
   
 
         private void Update() {
@@ -118,7 +143,17 @@ namespace Runtime.UI.NameTags {
                             screenPos = position;
                         }
                         //set screen pos z to 0
-                        screenPos.z = 0;
+                        if (screenPos.z < 0) {
+                            //make x and y negative, so that the element will be hidden
+                            screenPos.x = -10000;
+                            screenPos.y = -10000;
+                        }
+                        else {
+                            screenPos.z = 0;
+                        }
+                        
+                       
+                       
                        
                         ele.Value.Item1.transform.position = screenPos;
                     }

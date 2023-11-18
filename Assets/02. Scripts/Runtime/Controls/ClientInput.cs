@@ -43,6 +43,19 @@ namespace Runtime.Controls
             InputAction action = playerMap.FindAction(name, false);
             return action;
         }
+        
+        public InputAction FindActionInUIActionMap(string name) {
+            InputActionMap map = PlayerInput.actions.FindActionMap("UI");
+            InputAction action = map.FindAction(name, false);
+            return action;
+        }
+        
+        public InputAction FindActionInSharedActionMap(string name) {
+            InputActionMap map = PlayerInput.actions.FindActionMap("Shared");
+            InputAction action = map.FindAction(name, false);
+            return action;
+        }
+        
         public override void OnSingletonInit() {
             base.OnSingletonInit();
             Inputs = new DPunkInputs();
@@ -69,9 +82,14 @@ namespace Runtime.Controls
         public DPunkInputs.SharedActions GetSharedActions() {
             return Inputs.Shared;
         }
+        
+        public DPunkInputs.DebugActions GetDebugActions() {
+            return  Inputs.Debug;
+        }
 
         public void EnablePlayerMaps() {
             Inputs.UI.Disable();
+            Inputs.Debug.Enable();
             Inputs.Player.Enable();
             Inputs.Shared.Enable();
             if (playerInput) {
@@ -87,6 +105,7 @@ namespace Runtime.Controls
         
         public void EnableUIMaps() {
             Inputs.Player.Disable();
+            Inputs.Debug.Enable();
             Inputs.UI.Enable();
             Inputs.Shared.Enable();
             if (playerInput) {

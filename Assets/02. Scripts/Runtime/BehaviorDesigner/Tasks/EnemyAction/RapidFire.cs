@@ -63,9 +63,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         IEnumerator SpawnBullet() {
 
-            for(int j = 0; j < bulletPerSpawn; j++)
+            for(int j = 0; j < bulletCount; j++)
             {
-                Debug.Log(j);
+                // Debug.Log(j);
                 UnityEngine.GameObject b = pool.Allocate();
                 //float angle = j * 60; // Angle between each bullet
                 //b.transform.position = this.gameObject.transform.position + new Vector3(0,4,0);

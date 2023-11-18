@@ -82,15 +82,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""b8cb01e9-e78a-4313-b77e-4d66672d9dc8"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""SprintHold"",
                     ""type"": ""Button"",
                     ""id"": ""3d4e2c31-eb1c-45b1-bc15-4eea515134fe"",
@@ -312,28 +303,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d7e18029-5e87-49d7-a3db-f93dbba2c0db"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f33e12c1-db14-4a89-a45c-86794e84bf26"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -814,6 +783,15 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6cd9757-74be-4bb6-bf9d-0b06700272f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Close"",
                     ""type"": ""Button"",
                     ""id"": ""05c770fc-f842-4974-b813-e11f1d58d48f"",
@@ -910,6 +888,39 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""1D Axis"",
+                    ""id"": ""4c40eab4-b9c7-4af3-97d2-712759526258"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HotBarLeftNavigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""ba04888c-b9a8-44fa-91e0-f35bc79a354d"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HotBarLeftNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""b739abff-3ef8-4a4a-a35f-6f0999c401fd"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""HotBarLeftNavigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
                     ""id"": ""6ac2143d-f9fb-417c-8605-ff793388fbbc"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
@@ -973,6 +984,76 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
                     ""action"": ""HotBarRightNavigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3146bc50-02f5-4cb9-af30-15ebf18d70f1"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d43e276d-c312-4ab9-a199-e30eb742d39b"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""65a9468d-8c20-4dfd-87ec-6c9169a6a774"",
+            ""actions"": [
+                {
+                    ""name"": ""SlowTime"",
+                    ""type"": ""Button"",
+                    ""id"": ""bb9f79a1-76cb-4cea-8d0f-4ff709420ff5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Heal"",
+                    ""type"": ""Button"",
+                    ""id"": ""894bc1c6-0c9d-45fe-b6d4-bce9d8e02960"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""44ad68d3-810b-4008-a83a-7c1f1de24af5"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SlowTime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4bd96d8-443c-48b3-8009-50cfd9cdff87"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1015,7 +1096,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SprintTap = m_Player.FindAction("SprintTap", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_SprintHold = m_Player.FindAction("SprintHold", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
@@ -1035,9 +1115,14 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         // Shared
         m_Shared = asset.FindActionMap("Shared", throwIfNotFound: true);
         m_Shared_Inventory = m_Shared.FindAction("Inventory", throwIfNotFound: true);
+        m_Shared_Interact = m_Shared.FindAction("Interact", throwIfNotFound: true);
         m_Shared_Close = m_Shared.FindAction("Close", throwIfNotFound: true);
         m_Shared_HotBarLeftNavigate = m_Shared.FindAction("HotBarLeftNavigate", throwIfNotFound: true);
         m_Shared_HotBarRightNavigate = m_Shared.FindAction("HotBarRightNavigate", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_SlowTime = m_Debug.FindAction("SlowTime", throwIfNotFound: true);
+        m_Debug_Heal = m_Debug.FindAction("Heal", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1105,7 +1190,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SprintTap;
     private readonly InputAction m_Player_Shoot;
-    private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_SprintHold;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Scope;
@@ -1120,7 +1204,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SprintTap => m_Wrapper.m_Player_SprintTap;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @SprintHold => m_Wrapper.m_Player_SprintHold;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Scope => m_Wrapper.m_Player_Scope;
@@ -1152,9 +1235,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
             @SprintHold.started += instance.OnSprintHold;
             @SprintHold.performed += instance.OnSprintHold;
             @SprintHold.canceled += instance.OnSprintHold;
@@ -1189,9 +1269,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
             @SprintHold.started -= instance.OnSprintHold;
             @SprintHold.performed -= instance.OnSprintHold;
             @SprintHold.canceled -= instance.OnSprintHold;
@@ -1344,6 +1421,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Shared;
     private List<ISharedActions> m_SharedActionsCallbackInterfaces = new List<ISharedActions>();
     private readonly InputAction m_Shared_Inventory;
+    private readonly InputAction m_Shared_Interact;
     private readonly InputAction m_Shared_Close;
     private readonly InputAction m_Shared_HotBarLeftNavigate;
     private readonly InputAction m_Shared_HotBarRightNavigate;
@@ -1352,6 +1430,7 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         private @DPunkInputs m_Wrapper;
         public SharedActions(@DPunkInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Inventory => m_Wrapper.m_Shared_Inventory;
+        public InputAction @Interact => m_Wrapper.m_Shared_Interact;
         public InputAction @Close => m_Wrapper.m_Shared_Close;
         public InputAction @HotBarLeftNavigate => m_Wrapper.m_Shared_HotBarLeftNavigate;
         public InputAction @HotBarRightNavigate => m_Wrapper.m_Shared_HotBarRightNavigate;
@@ -1367,6 +1446,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
             @Close.started += instance.OnClose;
             @Close.performed += instance.OnClose;
             @Close.canceled += instance.OnClose;
@@ -1383,6 +1465,9 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
             @Close.started -= instance.OnClose;
             @Close.performed -= instance.OnClose;
             @Close.canceled -= instance.OnClose;
@@ -1409,6 +1494,60 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         }
     }
     public SharedActions @Shared => new SharedActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
+    private readonly InputAction m_Debug_SlowTime;
+    private readonly InputAction m_Debug_Heal;
+    public struct DebugActions
+    {
+        private @DPunkInputs m_Wrapper;
+        public DebugActions(@DPunkInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SlowTime => m_Wrapper.m_Debug_SlowTime;
+        public InputAction @Heal => m_Wrapper.m_Debug_Heal;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
+            @SlowTime.started += instance.OnSlowTime;
+            @SlowTime.performed += instance.OnSlowTime;
+            @SlowTime.canceled += instance.OnSlowTime;
+            @Heal.started += instance.OnHeal;
+            @Heal.performed += instance.OnHeal;
+            @Heal.canceled += instance.OnHeal;
+        }
+
+        private void UnregisterCallbacks(IDebugActions instance)
+        {
+            @SlowTime.started -= instance.OnSlowTime;
+            @SlowTime.performed -= instance.OnSlowTime;
+            @SlowTime.canceled -= instance.OnSlowTime;
+            @Heal.started -= instance.OnHeal;
+            @Heal.performed -= instance.OnHeal;
+            @Heal.canceled -= instance.OnHeal;
+        }
+
+        public void RemoveCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -1435,7 +1574,6 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprintTap(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
         void OnSprintHold(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
@@ -1457,8 +1595,14 @@ public partial class @DPunkInputs: IInputActionCollection2, IDisposable
     public interface ISharedActions
     {
         void OnInventory(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
         void OnClose(InputAction.CallbackContext context);
         void OnHotBarLeftNavigate(InputAction.CallbackContext context);
         void OnHotBarRightNavigate(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnSlowTime(InputAction.CallbackContext context);
+        void OnHeal(InputAction.CallbackContext context);
     }
 }

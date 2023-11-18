@@ -105,8 +105,12 @@ namespace Runtime.Enemies
         public float RapidFireWait { get; }
         [BindCustomData("waitTimes","rangedAOEWait")]
         public float RangedAOEWait { get; }
+        
+        
         [BindCustomData("waitTimes","rollWait")]
         public float RollWait { get; }
+        
+        
         
         private HitDetectorInfo hitDetectorInfo;
         private bool deathAnimationEnd = false;
@@ -121,13 +125,30 @@ namespace Runtime.Enemies
         
         [SerializeField] private Transform shellHealthBarSpawnTransform;
 
-        [SerializeField] private HitBox slamHitBox;
+        [SerializeField] public HitBox slamHitBox;
+
+        [SerializeField] private float meleeKnockbackForce;
+        //[SerializeField] private GameObject shellHurbox;
+        [SerializeField] private HurtBox[] pedalHurboxes;
+        private HashSet<IHurtbox> hashedPedalHurboxes = new HashSet<IHurtbox>();
+        
+        private HurtboxModifier _innerShellHurtboxModifier;
         protected override MikroAction WaitingForDeathCondition() {
             transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
                 deathAnimationEnd = true;
             });
             
             return UntilAction.Allocate(() => deathAnimationEnd);
+        }
+        
+
+        protected override void Awake() {
+            base.Awake();
+            hashedPedalHurboxes.Clear();
+            foreach (var pedalHurbox in pedalHurboxes) {
+                hashedPedalHurboxes.Add(pedalHurbox);
+            }
+            _innerShellHurtboxModifier = GetComponent<HurtboxModifier>();
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
@@ -165,13 +186,15 @@ namespace Runtime.Enemies
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
-            if (BoundEntity.ShellClosed) {
+            if (BoundEntity.ShellClosed &&  damage <= 0) {
                 showDamageNumber = false;
             }
             else {
                 showDamageNumber = true;
             }
         }
+        
+        
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<Boss1Entity> builder)
         {
@@ -191,6 +214,11 @@ namespace Runtime.Enemies
                 animator.CrossFade("OpenImmediately", 0.05f);
             }
             animator.SetBool("ShellClosed",newValue);
+            _innerShellHurtboxModifier.IgnoreHurtboxCheck = !newValue;
+            /*foreach (var pedalHurbox in pedalHurboxes) {
+                pedalHurbox.DamageMultiplier = 1;
+            }*/
+           // shellHurbox.SetActive(newValue);
         }
         
         // private void Update()
@@ -204,10 +232,12 @@ namespace Runtime.Enemies
                 case "ShellOpen":
                     //BoundEntity.IsInvincible.Value = false;
                     UnSpawnShellHealthBar();
+                   // shellHurbox.SetActive(false);
                     break;
                 case "ShellClose":
                     //BoundEntity.IsInvincible.Value = true;
                     SpawnShellHealthBar();
+                    //shellHurbox.SetActive(true);
                     break;
                 case "ClearHits":
                     hitObjects.Clear();
@@ -216,11 +246,22 @@ namespace Runtime.Enemies
                     ClearHitObjects();
                     slamHitBox.gameObject.SetActive(true);
                     slamHitBox.StartCheckingHits(BoundEntity.GetCustomDataValue<int>("damages","meleeDamage").Value);
+                   // shellHurbox.SetActive(false);
+                    /*foreach (var pedalHurbox in pedalHurboxes) {
+                        pedalHurbox.DamageMultiplier = 0;
+                    }*/
+
+                    //BoundEntity.ChangeShellStatus(false);
+                    _innerShellHurtboxModifier.IgnoreHurtboxCheck = true;
                     break;
                 case "MeleeFinish":
-                    
                     slamHitBox.StopCheckingHits();
                     slamHitBox.gameObject.SetActive(false);
+                    break;
+                case "MeleeShellClose":
+                    //shellHurbox.SetActive(true);
+                    //BoundEntity.ChangeShellStatus(true);
+                    _innerShellHurtboxModifier.IgnoreHurtboxCheck = false;
                     break;
                 default:
                     break;
@@ -250,23 +291,31 @@ namespace Runtime.Enemies
             Debug.Log("hurt response");
             if (BoundEntity.ShellClosed)
             {
-                IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
+                
+                if(hashedPedalHurboxes.Contains(data.Hurtbox)) {
+                    IBindableProperty shellHp = BoundEntity.GetCustomDataValue("shellHealthInfo", "info");
                
-                if (shellHp.Value.CurrentHealth > 0) {
-                    if (shellHp.Value.CurrentHealth -originalDamage <= 0) {
-                        shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,0);
+                    if (shellHp.Value.CurrentHealth > 0) {
+                        if (shellHp.Value.CurrentHealth -originalDamage <= 0) {
+                            shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth,0);
+                        }
+                        else {
+                            shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth, shellHp.Value.CurrentHealth - originalDamage);
+                        }
                     }
-                    else {
-                        shellHp.Value = new HealthInfo(shellHp.Value.MaxHealth, shellHp.Value.CurrentHealth - originalDamage);
+                    Debug.Log("Shell has taken" + originalDamage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
+                    
+                    if (data.ShowDamageNumber) {
+                        DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage,
+                            data?.Hurtbox?.DamageMultiplier > 1);
                     }
                 }
-
-                if (data.ShowDamageNumber) {
-                    DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage);
+                else {
+                    BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
                 }
                 
                 
-                Debug.Log("Shell has taken" + originalDamage +"damage" + " Shell now has" + shellHp.Value.CurrentHealth + "hp");
+               
             }
             else {
                 BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
@@ -287,12 +336,30 @@ namespace Runtime.Enemies
             
         }
 
+        public override void HitResponse(HitData data)
+        {
+            base.HitResponse(data);
+            if (slamHitBox.isActiveAndEnabled&& data.Hurtbox.Owner.CompareTag("Player"))
+            {
+                Vector3 dir = data.Hurtbox.Owner.transform.position - transform.position;
+                dir.y = 0;
+                //make it 45 degrees from the ground
+                dir = Quaternion.AngleAxis(45, Vector3.Cross(dir, Vector3.up)) * dir;
+                dir.Normalize();
+                data.Hurtbox.Owner.GetComponent<Rigidbody>().AddForce(dir * meleeKnockbackForce, ForceMode.Impulse);
+            }
+        }
+
         public override void OnRecycled() {
             base.OnRecycled();
             transform.localScale = Vector3.one;
             deathAnimationEnd = false;
             shellCollider.enabled = true;
             hardCollider.enabled = true;
+            /*foreach (var pedalHurbox in pedalHurboxes) {
+                pedalHurbox.DamageMultiplier = 1;
+            }*/
+            _innerShellHurtboxModifier.RedirectActivated = true;
         }
     }
 }

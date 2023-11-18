@@ -1,8 +1,8 @@
-EntityName / Property Names,health,taste,item_drop_collections,vigiliance,danger,custom_properties,tags,,Notes
-Types,HealthInfo,List<TasteType>,"Dictionary<int,ItemDropCollection>",float,int,dynamic,"Dictionary<TagName,int>",,
+EntityName / Property Names,health,taste,spawn_cost,item_drop_collections,vigiliance,danger,custom_properties,tags,,Notes
+Types,HealthInfo,List<TasteType>,float,"Dictionary<int,ItemDropCollection>",float,int,dynamic,"Dictionary<TagName,int>",,
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,","{
+{""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,",,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -42,9 +42,223 @@ default:
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",,
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,
-BEGIN,,,,,,,,,
-Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]","{
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,
+BEGIN,,,,,,,,,,
+Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20,"{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 3,
+      ""y"": 5
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 6,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""HeatStoragor"",
+        ""batchCountRange"": {
+          ""x"": 0,
+          ""y"": 1
+        },
+        ""dropWeight"": 3,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
+      },
+      {
+        ""prefabName"": ""TheSanctuary"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""required"": true,
+        ""setRarity"": true,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ""x"": 4,
+      ""y"": 6
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""CarbonFiber"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 5,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""HeatStoragor"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 3,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""TheSanctuary"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 2,
+        ""required"": true,
+        ""setRarity"": true,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
+      }
+    ]
+  }
+}",200,456,"{
+  ""shellHealthInfo"": {
+    ""info"": {
+      ""type"": ""HealthInfo"",
+      ""value"": {
+        ""maxHealth"": 100,
+        ""currentHealth"": 100
+      },
+      ""useDefaultModifier"": true
+    }
+  },
+  
+  ""damages"":{
+    ""rollDamage"":{
+      ""type"": ""int"",
+      ""value"": 25,
+      ""useDefaultModifier"": true
+    },
+    
+     ""meleeDamage"":{
+      ""type"": ""int"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    
+    ""rapidFireDamage"":{
+      ""type"": ""int"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""rapidFireBulletCount"":{
+      ""type"": ""int"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""rapidFireAttackInterval"":{
+      ""type"": ""float"",
+      ""value"": 0.25
+    },
+    ""rapidFireBulletSpeed"":{
+      ""type"": ""float"",
+      ""value"": 18
+    },
+    
+    ""rangedAOEDamage"":{
+      ""type"": ""int"",
+      ""value"": 40,
+      ""useDefaultModifier"": true
+    },
+    ""rangedAOEBulletCount"":{
+      ""type"": ""int"",
+      ""value"": 5,
+      ""useDefaultModifier"": true
+    },
+    ""rangedAOEAttackSpeed"":{
+      ""type"": ""float"",
+      ""value"": 1.5
+    },
+    ""rangedAOEBulletTime"":{
+      ""type"": ""float"",
+      ""value"": 1.25
+    },
+    ""bulletPerSpawn"":{
+      ""type"": ""int"",
+      ""value"": 6,
+      ""useDefaultModifier"": true
+    }
+  },
+  
+  ""ranges"": {
+    ""meleeRange"":{
+      ""type"": ""float"",
+      ""value"": 8
+    },
+    ""closeRange"":{
+      ""type"": ""float"",
+      ""value"": 15
+    },
+    ""midRange"":{
+      ""type"": ""float"",
+      ""value"": 30
+    },
+    ""longRange"":{
+      ""type"": ""float"",
+      ""value"": 50
+    }
+  },
+  ""waitTimes"": {
+    ""meleeWait"":{
+      ""type"": ""float"",
+      ""value"": 1.5,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""rapidFireWait"":{
+      ""type"": ""float"",
+      ""value"": 2,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""rangedAOEWait"":{
+      ""type"": ""float"",
+      ""value"": 2,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""rollWait"":{
+      ""type"": ""float"",
+      ""value"": 0.5,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    }
+  }
+}",,,
+Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",1,,,123,,,,
+BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -169,118 +383,4 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]","{
       }
     ]
   }
-}",200,456,"{
-  ""shellHealthInfo"": {
-    ""info"": {
-      ""type"": ""HealthInfo"",
-      ""value"": {
-        ""maxHealth"": 100,
-        ""currentHealth"": 100
-      },
-      ""useDefaultModifier"": true
-    }
-  },
-  
-  ""damages"":{
-    ""rollDamage"":{
-      ""type"": ""int"",
-      ""value"": 25,
-      ""useDefaultModifier"": true
-    },
-    
-     ""meleeDamage"":{
-      ""type"": ""int"",
-      ""value"": 20,
-      ""useDefaultModifier"": true
-    },
-    
-    ""rapidFireDamage"":{
-      ""type"": ""int"",
-      ""value"": 10,
-      ""useDefaultModifier"": true
-    },
-    ""rapidFireBulletCount"":{
-      ""type"": ""int"",
-      ""value"": 20,
-      ""useDefaultModifier"": true
-    },
-    ""rapidFireAttackInterval"":{
-      ""type"": ""float"",
-      ""value"": 0.25
-    },
-    ""rapidFireBulletSpeed"":{
-      ""type"": ""float"",
-      ""value"": 18
-    },
-    
-    ""rangedAOEDamage"":{
-      ""type"": ""int"",
-      ""value"": 40,
-      ""useDefaultModifier"": true
-    },
-    ""rangedAOEBulletCount"":{
-      ""type"": ""int"",
-      ""value"": 5,
-      ""useDefaultModifier"": true
-    },
-    ""rangedAOEAttackSpeed"":{
-      ""type"": ""float"",
-      ""value"": 1.5
-    },
-    ""rangedAOEBulletTime"":{
-      ""type"": ""float"",
-      ""value"": 1.25
-    },
-    ""bulletPerSpawn"":{
-      ""type"": ""int"",
-      ""value"": 6,
-      ""useDefaultModifier"": true
-    }
-  },
-  
-  ""ranges"": {
-    ""meleeRange"":{
-      ""type"": ""float"",
-      ""value"": 7
-    },
-    ""closeRange"":{
-      ""type"": ""float"",
-      ""value"": 12
-    },
-    ""midRange"":{
-      ""type"": ""float"",
-      ""value"": 16
-    },
-    ""longRange"":{
-      ""type"": ""float"",
-      ""value"": 20
-    }
-  },
-  ""waitTimes"": {
-    ""meleeWait"":{
-      ""type"": ""float"",
-      ""value"": 1.5,
-      ""useDefaultModifier"": true,
-      ""inverse"": true
-    },
-    ""rapidFireWait"":{
-      ""type"": ""float"",
-      ""value"": 2,
-      ""useDefaultModifier"": true,
-      ""inverse"": true
-    },
-    ""rangedAOEWait"":{
-      ""type"": ""float"",
-      ""value"": 2,
-      ""useDefaultModifier"": true,
-      ""inverse"": true
-    },
-    ""rollWait"":{
-      ""type"": ""float"",
-      ""value"": 2.5,
-      ""useDefaultModifier"": true,
-      ""inverse"": true
-    }
-  }
-}",,,
-Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",,,123,,,,
+}",200,456,,,,

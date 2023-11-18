@@ -79,7 +79,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// <param name="damage">the amount of damage</param>
 		/// <param name="damageDealer">the damage dealer entity</param>
 		
-		public void TakeDamage(int damage, ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null);
+		public void TakeDamage(int damage, ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null, bool nonlethal = false);
 
 
 		/// <summary>

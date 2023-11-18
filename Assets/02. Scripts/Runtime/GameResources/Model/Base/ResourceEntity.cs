@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Polyglot;
@@ -16,19 +17,43 @@ namespace Runtime.GameResources.Model.Base {
 	public enum ResourceCategory {
 		RawMaterial,
 		Bait,
-		Trap,
-		Weapon
+		Item,
+		Weapon,
+		Currency,
+		Skill
 	}
+
+	[Serializable]
+	public struct ResourcePropertyDescription {
+		public string iconName;
+		public string localizedDescription;
+		
+		public ResourcePropertyDescription(string iconName, string localizedDescription) {
+			this.iconName = iconName;
+			this.localizedDescription = localizedDescription;
+		}
+		
+		
+	}
+	
+	
+	public delegate ResourcePropertyDescription GetResourcePropertyDescriptionGetter();
+	
+	
 	public interface IResourceEntity : IEntity, IHaveCustomProperties, IHaveTags {
 		public IMaxStack GetMaxStackProperty();
 
-		public void OnPicked();
+		public void OnAddedToSlot();
+
+		public void OnAddedToInventory();
+		
+		public void OnRemovedFromInventory();
 		
 		public ResourceCategory GetResourceCategory();
 		
 		public string InventoryVCPrefabName { get; }
 		
-		public string IconSpriteName { get; }
+		//public string IconSpriteName { get; }
 		
 		public string OnGroundVCPrefabName { get; }
 		
@@ -36,10 +61,18 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string DeployedVCPrefabName { get; }
 		
+
+		
 		/// <summary>
 		/// Width in inventory. Use only 1 or 2. Only effective for weapons.
 		/// </summary>
 		public int Width { get; }
+		
+		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions();
+		
+		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition { get; }
+		
+		public IResourceEntity GetReturnToBaseEntity();
 	}
 	
 	//3 forms
@@ -52,15 +85,28 @@ namespace Runtime.GameResources.Model.Base {
 		
 
 		[field: ES3Serializable]
-		protected bool pickedBefore = false;
+		protected bool encounteredBefore = false;
 		
 		//private IStackSize stackSizeProperty;
+		protected List<GetResourcePropertyDescriptionGetter> resourcePropertyDescriptionGetters =
+			new List<GetResourcePropertyDescriptionGetter>();
+		
+		private List<ResourcePropertyDescription> resourcePropertyDescriptions = new List<ResourcePropertyDescription>();
 
 		public override void OnAwake() {
 			base.OnAwake();
+			OnResourceAwake();
 			maxStackProperty = GetProperty<IMaxStack>();
 		}
 
+		public virtual void OnResourceAwake() {
+			
+		}
+		public virtual void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
+			
+		}
+		
+		
 		protected override void OnEntityRegisterAdditionalProperties() {
 			RegisterInitialProperty<IMaxStack>(new MaxStack());
 			//RegisterInitialProperty<IStackSize>(new StackSize());
@@ -68,6 +114,7 @@ namespace Runtime.GameResources.Model.Base {
 
 
 		public override void OnDoRecycle() {
+			resourcePropertyDescriptionGetters?.Clear();
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
 		}
 		
@@ -93,7 +140,7 @@ namespace Runtime.GameResources.Model.Base {
 
 		public override string GetDisplayName() {
 			string originalDisplayName = base.GetDisplayName();
-			if (pickedBefore) {
+			if (encounteredBefore) {
 				return originalDisplayName;
 			}
 			else {
@@ -108,8 +155,16 @@ namespace Runtime.GameResources.Model.Base {
 			return stackSizeProperty;
 		}*/
 		
-		public void OnPicked() {
-			pickedBefore = true;
+		public void OnAddedToSlot() {
+			encounteredBefore = true;
+		}
+
+		public virtual void OnAddedToInventory() {
+			
+		}
+
+		public virtual void OnRemovedFromInventory() {
+			
 		}
 
 		public abstract ResourceCategory GetResourceCategory();
@@ -117,15 +172,34 @@ namespace Runtime.GameResources.Model.Base {
 		[field: ES3Serializable]
 		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
 
-		public string IconSpriteName => $"{EntityName}_Icon";
+		//public string IconSpriteName => $"{EntityName}_Icon";
 
 		public abstract string OnGroundVCPrefabName { get; }
 		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
 
 		public virtual string DeployedVCPrefabName { get; } = null;
 
+
+		public override void OnStart(bool isLoadedFromSave) {
+			resourcePropertyDescriptionGetters?.Clear();
+			OnRegisterResourcePropertyDescriptionGetters(ref resourcePropertyDescriptionGetters);
+			base.OnStart(isLoadedFromSave);
+		}
+
 		[field: ES3Serializable]
 		public virtual int Width { get; } = 1;
+
+		public List<ResourcePropertyDescription> GetResourcePropertyDescriptions() {
+			resourcePropertyDescriptions.Clear();
+			foreach (var getter in resourcePropertyDescriptionGetters) {
+				resourcePropertyDescriptions.Add(getter());
+			}
+
+			return resourcePropertyDescriptions;
+		}
+
+		public Func<Dictionary<CurrencyType, int>,bool> CanInventorySwitchToCondition { get; } = null;
+		public abstract IResourceEntity GetReturnToBaseEntity();
 	}
 
 }

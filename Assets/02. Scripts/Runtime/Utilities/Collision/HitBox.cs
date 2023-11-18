@@ -49,6 +49,8 @@ namespace Runtime.Utilities.Collision
             // Debug.Log("stop checking hits");
             if (_triggerCheck != null) 
                 _triggerCheck.OnEnter -= TriggerCheckHit;
+            
+            
         }
         
         public virtual void TriggerCheckHit(Collider c)
@@ -56,11 +58,24 @@ namespace Runtime.Utilities.Collision
             IHurtbox hurtbox;
             hurtbox = c.GetComponent<IHurtbox>();
 
+            HurtboxModifier hurtboxModifier = c.GetComponent<HurtboxModifier>();
+            if (hurtboxModifier) {
+                if (hurtboxModifier.IgnoreHurtboxCheck) {
+                    return;
+                }
+                    
+                if (hurtboxModifier.RedirectActivated) {
+                    hurtbox = hurtboxModifier.Hurtbox;
+                }
+            }
+            
+            
             if (c.isTrigger && hurtbox == null) {
                 return;
             }
+           
             
-            Debug.Log("trigger hit detected: " + c.name);
+             
             HitData hitData = null;
             
             Vector3 center = _collider.transform.position;

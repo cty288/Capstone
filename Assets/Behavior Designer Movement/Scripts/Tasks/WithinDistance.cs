@@ -40,7 +40,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         public SharedBool m_DrawDebugRay;
         [Tooltip("The object variable that will be set when a object is found what the object is")]
         public SharedGameObject m_ReturnedObject;
-
+        
         public SharedBool m_Use2DSpace;
 
         private float m_SqrMagnitude; // distance * distance, optimization so we don't have to take the square root
@@ -131,12 +131,12 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
 
             if (m_ReturnedObject.Value != null) {
-                Debug.Log($"dog, found: {m_ReturnedObject.Value}");
+                //Debug.Log($"dog, found: {m_ReturnedObject.Value}");
                 return TaskStatus.Success;
             }
 
             // no objects are within distance. Return failure
-            Debug.Log($"dog, not found");
+            //Debug.Log($"dog, not found");
             return TaskStatus.Failure;
         }
 

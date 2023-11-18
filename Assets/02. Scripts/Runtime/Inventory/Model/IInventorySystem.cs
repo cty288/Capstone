@@ -22,6 +22,28 @@ namespace Runtime.Inventory.Model {
 
 	public interface IInventorySystem : IResourceSlotsSystem {
 		public IResourceEntity GetCurrentlySelectedEntity();
+		
+		public void SelectHotBarSlot(HotBarCategory category, int index);
+
+		public void ForceUpdateCurrentHotBarSlotCanSelect();
+		
+		public void SelectNextHotBarSlot(HotBarCategory category);
+
+		public void SelectPreviousHotBarSlot(HotBarCategory category);
+		
+		public void RetainLockSwitch(object locker);
+		
+		public void ReleaseLockSwitch(object locker);
+
+		public bool AddItem(IResourceEntity item, bool sendEvent = true);
+		
+		bool CanPlaceItem(IResourceEntity item);
+		
+		bool RemoveItem(IResourceEntity entity);
+		
+		void MoveItemFromBaseStockToInventory(ResourceCategory category, PreparationSlot slot);
+
+		void RemoveResourceEntityFromBaseStock(ResourceCategory category, string resourceName, int count, bool alsoRemoveEntity);
 	}
 
 	public interface IResourceSlotsSystem : ISystem {

@@ -105,14 +105,14 @@ namespace Tests.Tests_Editor {
 				return new ICustomProperty[] {
 					new AutoConfigCustomProperty("attack1"),
 					
-					new CustomProperty("attack2", null,
+					new CustomProperty("attack2",
 						new CustomDataProperty<int>("damage", new Attack2Modifier(),
 							new[] {
 								new PropertyNameInfo("custom_properties.attack1.speed"),
 								new PropertyNameInfo(PropertyName.rarity)
 							})),
 					
-					new CustomProperty("attack3", null, new CustomDataProperty<int>("damage"))
+					new CustomProperty("attack3", new CustomDataProperty<int>("damage"))
 				};
 			}
 		}

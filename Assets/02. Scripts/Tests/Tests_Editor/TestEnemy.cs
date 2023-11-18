@@ -112,6 +112,7 @@ namespace Tests.Tests_Editor {
             }
 
             public ICanDealDamageRootEntity RootDamageDealer { get; }
+            public ICanDealDamageRootViewController RootViewController { get; }
         }
     
         //===============================Start writing your tests here===============================

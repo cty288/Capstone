@@ -3,6 +3,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Player.Builders;
+using Runtime.Player.ViewControllers;
 
 namespace Runtime.Player {
 	
@@ -24,6 +25,7 @@ namespace Runtime.Player {
 		
 		bool IsPlayerDead();
 		
+		bool IsPlayerSprinting();
 	}
 	public class GamePlayerModel: EntityModel<IPlayerEntity>, IGamePlayerModel {
 
@@ -50,6 +52,11 @@ namespace Runtime.Player {
 
 		public bool IsPlayerDead() {
 			return GetPlayer().HealthProperty.RealValue.Value.CurrentHealth <= 0;
+		}
+		
+		public bool IsPlayerSprinting()
+		{
+			return GetPlayer().GetMovementState() == MovementState.sprinting;
 		}
 
 		protected override void OnEntityBuilt(IPlayerEntity entity) {

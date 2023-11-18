@@ -1,18 +1,18 @@
-EntityName / Property Names,base_damage,weight,attack_speed,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,scope_recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
-Types,Vector2Int,float,float,float,int,float,int,float,RecoilInfo,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,Vector2Int,modifier on movement speed,float (cooldown),float,int,float (seconds),int,float (higher means more spread),,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
+EntityName / Property Names,base_damage,weight,attack_speed,ads_fov,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,scope_recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
+Types,Vector2Int,float,float,float,float,int,float,int,float,RecoilInfo,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,Vector2Int,modifier on movement speed,float (cooldown),fov to set in camera,float,int,float (seconds),int,float (higher means more spread),,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,,,,
-BEGIN,,,,,,,,,,,,,,,,,
-RustyPistol,"{""x"":8,""y"":11}",1,0.3,50,6,2,1,0,"{
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,,,,,
+BEGIN,,,,,,,,,,,,,,,,,,
+RustyPistol,"{""x"":8,""y"":11}",1,0.3,80,50,6,2,1,0,"{
   ""recoilX"": -10,
   ""recoilY"": 5,
   ""recoilZ"": 0.5,
   ""snappiness"": 7,
-  ""returnSpeed"": 2
+  ""returnSpeed"": 1
 }","{
   ""recoilX"": -7,
   ""recoilY"": 3,
@@ -20,7 +20,7 @@ RustyPistol,"{""x"":8,""y"":11}",1,0.3,50,6,2,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 6
 }",0,300,1,,,,
-TheSanctuary,"{""x"":45,""y"":65}",0.3,1,30,1,4,1,0.06,"{
+TheSanctuary,"{""x"":45,""y"":65}",0.3,1,80,30,1,4,1,0.06,"{
   ""recoilX"": -50,
   ""recoilY"": 10,
   ""recoilZ"": 1,
@@ -40,16 +40,29 @@ TheSanctuary,"{""x"":45,""y"":65}",0.3,1,30,1,4,1,0.06,"{
     }
   }
 }",,,
-RustyPistol2,"{""x"":2,""y"":4}",1,0.1,50,30,2.5,1,0,"{
-  ""recoilX"": -7,
-  ""recoilY"": 3,
-  ""recoilZ"": 0.25,
+RustyPistol2,"{""x"":2,""y"":4}",1,0.1,80,50,30,2.5,1,0,"{
+  ""recoilX"": -8,
+  ""recoilY"": 2,
+  ""recoilZ"": 0.35,
   ""snappiness"": 7,
-  ""returnSpeed"": 6
+  ""returnSpeed"": 5
 }","{
-  ""recoilX"": -7,
-  ""recoilY"": 3,
-  ""recoilZ"": 0.25,
+  ""recoilX"": -5,
+  ""recoilY"": 4,
+  ""recoilZ"": 0.2,
   ""snappiness"": 7,
-  ""returnSpeed"": 6
+  ""returnSpeed"": 4.5
+}",0,300,1,,,,
+RustyPistol3,"{""x"":200,""y"":400}",1,0.1,80,50,30,2.5,1,0,"{
+  ""recoilX"": -8,
+  ""recoilY"": 2,
+  ""recoilZ"": 0.35,
+  ""snappiness"": 7,
+  ""returnSpeed"": 5
+}","{
+  ""recoilX"": -5,
+  ""recoilY"": 4,
+  ""recoilZ"": 0.2,
+  ""snappiness"": 7,
+  ""returnSpeed"": 4.5
 }",0,300,1,,,,

@@ -34,13 +34,15 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
 
-		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
+		protected HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
 
 
 		[SerializeField] private float autoRecycleTime = 5f;
 		[SerializeField] private bool penetrateSameFaction = false;
+		[SerializeField] private bool autoDestroyWhenOwnerDestroyed = false;
 		private Coroutine autoRecycleCoroutine = null;
 		
 		protected HitBox hitBox = null;
@@ -52,8 +54,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected bool inited = false;
 		protected bool tickType = false;
 		protected TrailRenderer[] trailRenderers = null;
+		protected HitData hitData;
 		
-		private void Awake() {
+		protected virtual void Awake() {
 			hitBox = GetComponent<HitBox>();
 			trailRenderers = GetComponentsInChildren<TrailRenderer>(true);
 		}
@@ -80,18 +83,29 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
+			
 			//ignore collision with bullet owner
-			Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
-			if (bulletOwnerCollider != null) {
-				Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
+			Collider[] bulletOwnerColliders = bulletOwner.GetComponentsInChildren<Collider>(true);
+			if (bulletOwnerColliders != null) {
+				//Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
+				foreach (Collider bulletOwnerCollider in bulletOwnerColliders) {
+					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwnerCollider);
+				}
 			}
 			this.owner = owner;
 			this.maxRange = maxRange;
 			origin = transform.position;
 			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
+			owner?.RootDamageDealer?.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
 			entity?.RetainRecycleRC();
 			inited = true;
 			EnableAllTrailRenderers();
+		}
+
+		private void OnOwnerReadyToRecycle(IEntity e) {
+			if (autoDestroyWhenOwnerDestroyed) {
+				RecycleToCache();
+			}
 		}
 
 		public override void OnStartOrAllocate() {
@@ -108,6 +122,10 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 
 		public bool CheckHit(HitData data) {
+			if (!inited) {
+				return false;
+			}
+			hitData = data;
 			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;
 			}
@@ -115,9 +133,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public void HitResponse(HitData data) {
-			if (gameObject.name == "GunBullet") {
-				Debug.Log("HitResponse");
-			}
+			// if (gameObject.name == "GunBullet") {
+			// 	Debug.Log("HitResponse");
+			// }
 			if(data.Hurtbox!=null){
 			  if (data.Hurtbox.Owner == bulletOwner) {
 				  return;
@@ -131,15 +149,18 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected abstract void OnHitResponse(HitData data);
 
 		protected virtual void OnTriggerEnter(Collider other) {
-			if (gameObject.name == "GunBullet") {
-				Debug.Log("HitResponse");
+			if (!inited) {
+				return;
 			}
+			// if (gameObject.name == "GunBullet") {
+			// 	Debug.Log("HitResponse");
+			// }
 			if (!other.isTrigger) {
 				Rigidbody rootRigidbody = other.attachedRigidbody;
 				GameObject hitObj =
 					rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
-				if (hitObj.transform == bulletOwner.transform) {
+				if (hitObj && bulletOwner && hitObj.transform == bulletOwner.transform) {
 					return;
 				}
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
@@ -148,7 +169,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 					}
 				}
 				
-				OnHitObject(other);
+				 OnHitObject(other);
 				RecycleToCache();
 			}
 		}
@@ -180,11 +201,16 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			}
 
 			if (bulletOwner) {
-				Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
-				if (bulletOwnerCollider != null) {
-					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>(), false);
+				Collider[] bulletOwnerColliders = bulletOwner.GetComponentsInChildren<Collider>(true);
+				if (bulletOwnerColliders != null) {
+					//Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
+					foreach (Collider bulletOwnerCollider in bulletOwnerColliders) {
+						Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwnerCollider, false);
+					}
 				}
 			}
+			
+			
 			inited = false;
 
 
