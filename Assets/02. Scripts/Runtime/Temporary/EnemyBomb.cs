@@ -90,7 +90,7 @@ namespace Runtime.Temporary
             if (!bulletOwner) {
                 Debug.Log("BulletOwner is null");
             }
-            exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, 5,bulletOwner,
+            exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, explosionSize,bulletOwner,
                 bulletOwner.GetComponent<ICanDealDamage>());
         }
     }
