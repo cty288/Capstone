@@ -59,15 +59,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         public override void HitResponse(HitData data) {
             // TODO: Phase out old Particle System
-            if (isHitVFX)
-            {
-                hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
-                hitVFXSystem.Play();
-            }
-            else
-            {
-                Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
-            }
+            hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
+            hitVFXSystem.SetVector3("HitNormal", data.HitNormal);
+            hitVFXSystem.Play();
         }
         
         // Item/Holding Functions
