@@ -212,7 +212,7 @@ HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
     },
     ""bulletSpeed"" : {
       ""type"" : ""float"",
-      ""value"": 12
+      ""value"": 14
     },
     ""spawnInterval"":{
       ""type"": ""float"",
@@ -254,6 +254,21 @@ HunterWorm,"{""maxHealth"": 25, ""currentHealth"": 25}",123,2,"{
     ""lazerMaxRange"":{
       ""type"": ""float"",
       ""value"": 50,
+      ""useDefaultModifier"": true
+    },
+    ""toxicSpawnInterval"":{
+      ""type"": ""float"",
+      ""value"": 0.3,
+      ""useDefaultModifier"": true
+    },
+    ""toxicAmmoSize"":{
+      ""type"": ""int"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""toxicBulletSpeed"":{
+      ""type"": ""float"",
+      ""value"": 10,
       ""useDefaultModifier"": true
     }
   }
