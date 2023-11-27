@@ -31,6 +31,8 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 	private float additioanlHurtEffectSize = 0f;
 	private float currentInitialHurtEffectSize = 0f;
 
+	
+
 	[SerializeField]
 	private float animSpeed = 0.5f;
 
@@ -39,16 +41,41 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 	
 	protected override void Awake() {
 		base.Awake();
+		
+
+		
+	}
+
+
+	private void Start() {
 		glitchMaterial = ImageEffectController.Singleton.GetScriptableRendererFeatureMaterial(5);
-		bloodMaterial = ImageEffectController.Singleton.GetScriptableRendererFeatureMaterial(6);
+		bloodMaterial =  ImageEffectController.Singleton.GetScriptableRendererFeatureMaterial(6);
+		
 		
 		this.RegisterEvent<OnPlayerTakeDamage>(OnPlayerTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
 		this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
 		this.RegisterEvent<OnPlayerRespawn>(OnPlayerRespawn)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-	}
+		/*glitchMaterial = Instantiate(glitchMaterial); 
+		bloodMaterial = Instantiate(bloodMaterial);
 
-	
+		((ImageEffectController.Singleton.RenderData.rendererFeatures[5]) as SandstormRendererFeature).Material =
+			glitchMaterial;
+
+		((ImageEffectController.Singleton.RenderData.rendererFeatures[6]) as SandstormRendererFeature).Material =
+			bloodMaterial;
+		
+		((ImageEffectController.Singleton.FPSRendererData.rendererFeatures[2]) as SandstormRendererFeature).Material =
+			glitchMaterial;
+
+		((ImageEffectController.Singleton.FPSRendererData.rendererFeatures[3]) as SandstormRendererFeature).Material =
+			bloodMaterial;
+		
+		this.RegisterEvent<OnPlayerTakeDamage>(OnPlayerTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
+		this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+		this.RegisterEvent<OnPlayerRespawn>(OnPlayerRespawn)
+			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);*/
+	}
 
 
 	private void OnPlayerTakeDamage(OnPlayerTakeDamage e) {

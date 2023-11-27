@@ -44,7 +44,7 @@ CustomProperty Structure:
 If no levels, use negative numbers to represent",,
 ,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,
 BEGIN,,,,,,,,,,
-Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10,"{
+Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -56,20 +56,7 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 5,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""HeatStoragor"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
+          ""y"": 1
         },
         ""dropWeight"": 6,
         ""setRarity"": false,
@@ -79,16 +66,16 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10
         }
       },
       {
-        ""prefabName"": ""ReinforcedSteel"",
+        ""prefabName"": ""HeatStoragor"",
         ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
+          ""x"": 0,
+          ""y"": 1
         },
-        ""dropWeight"": 5,
+        ""dropWeight"": 3,
         ""setRarity"": false,
         ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
+          ""x"": 1,
+          ""y"": 1
         }
       },
       {
@@ -117,10 +104,10 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10
       {
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
-          ""x"": 2,
-          ""y"": 3
+          ""x"": 1,
+          ""y"": 1
         },
-        ""dropWeight"": 4,
+        ""dropWeight"": 5,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -131,22 +118,9 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10
         ""prefabName"": ""HeatStoragor"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 2
+          ""y"": 1
         },
-        ""dropWeight"": 5,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""ReinforcedSteel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 3
-        },
-        ""dropWeight"": 4,
+        ""dropWeight"": 3,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -159,7 +133,7 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10
           ""x"": 1,
           ""y"": 1
         },
-        ""dropWeight"": 1,
+        ""dropWeight"": 2,
         ""required"": true,
         ""setRarity"": true,
         ""rarityRange"": {
