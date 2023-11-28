@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Utilities;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Properties.TestOnly;
@@ -71,10 +72,14 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 
 		if (cards.Count > 0) {
 			LevelSpawnCard card = cards[Random.Range(0, cards.Count)];
-			Vector3 spawnPos =
-				SpawningUtility.FindNavMeshSuitablePosition(
+			UniTask<NavMeshFindResult> task = SpawningUtility.FindNavMeshSuitablePosition(
+					gameObject,
 					() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
-					NavMeshHelper.GetSpawnableAreaMask(), null, 5, 3, 20, out _, out _);
+					NavMeshHelper.GetSpawnableAreaMask(), null, 5, 3, 20);
+			
+			yield return task;
+			
+			//Vector3 spawnPos = task.re
 			
 			if (!float.IsInfinity(spawnPos.magnitude)) {
 				int baitRarity = BoundEntity.GetRarity();
