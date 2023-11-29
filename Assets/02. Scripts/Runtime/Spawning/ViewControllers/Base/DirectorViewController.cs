@@ -234,16 +234,17 @@ namespace Runtime.Spawning
                         NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
                         spawnPos = hitNavMesh.position;
 
+                        GameObject prefabToSpawn = card.Prefabs[Random.Range(0, card.Prefabs.Count)];
                         NavMeshFindResult findResult =
                             await SpawningUtility.FindNavMeshSuitablePosition(
-                                gameObject, () => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider,
+                                gameObject, () => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider,
                                 spawnPos, 90, NavMeshHelper.GetSpawnableAreaMask(), insideArenaCheckPoints, 1f, 3f,
                                 spawnAttempts);
                 
                         spawnAttempts -= findResult.UsedAttempts;
                        
                         if (findResult.IsSuccess) {
-                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, findResult.TargetPosition, 
+                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(prefabToSpawn, findResult.TargetPosition, 
                                 Quaternion.Euler(0, Random.Range(0, 360), 0),
                                 null, rarity,
                                 levelNumber, true, 5, 30);

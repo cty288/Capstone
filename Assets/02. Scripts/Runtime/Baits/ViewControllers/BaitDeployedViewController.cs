@@ -77,9 +77,10 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 
 		if (cards.Count > 0) {
 			LevelSpawnCard card = cards[Random.Range(0, cards.Count)];
+			GameObject prefabToSpawn = card.Prefabs[Random.Range(0, card.Prefabs.Count)];
 			NavMeshFindResult task = await SpawningUtility.FindNavMeshSuitablePosition(
 					gameObject,
-					() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
+					() => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
 					NavMeshHelper.GetSpawnableAreaMask(), null, 5, 3, 20);
 			
 
@@ -89,7 +90,7 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 			if (!float.IsInfinity(spawnPos.magnitude)) {
 				int baitRarity = BoundEntity.GetRarity();
 				int spawnRarity = Random.Range(baitRarity - 1, baitRarity + 2);
-				GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, spawnPos, Quaternion.identity, null, spawnRarity,
+				GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(prefabToSpawn, spawnPos, Quaternion.identity, null, spawnRarity,
 					levelEntity.GetCurrentLevelCount(), true, 1, 10);
 				IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
 

@@ -27,6 +27,7 @@ using Runtime.Utilities;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 using Random = UnityEngine.Random;
 
@@ -58,7 +59,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		//[field: ES3Serializable]
 		//public int RealSpawnCost { get; }
 		[field: ES3Serializable]
-		public string PrefabName { get; }
+		public string[] PrefabNames { get; }
 		
 		[field: ES3Serializable]
 		public bool IsNormalEnemy { get; }
@@ -69,7 +70,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[field: ES3Serializable]
 		public int MaxRarity { get; }
 
-		public GameObject Prefab => GlobalLevelManager.Singleton.GetEnemyPrefab(PrefabName);
+		public List<GameObject> Prefabs =>
+			PrefabNames.Select(n => GlobalLevelManager.Singleton.GetEnemyPrefab(n)).ToList();
+		
+		//GlobalLevelManager.Singleton.GetEnemyPrefab(PrefabName);
 
 		public string EntityName => TemplateEntity.EntityName;
 
@@ -78,11 +82,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			return TemplateEntity.GetRealSpawnCost(level, rarity);
 		} 
 		
-		public LevelSpawnCard(IEnemyEntity templateEntity, int realSpawnWeight, string prefabName, int minRarity, int maxRarity) {
+		public LevelSpawnCard(IEnemyEntity templateEntity, int realSpawnWeight, string[] prefabNames, int minRarity, int maxRarity) {
 			TemplateEntityUUID = templateEntity.UUID;
 			RealSpawnWeight = realSpawnWeight;
 			//RealSpawnCost = realSpawnCost;
-			PrefabName = prefabName;
+			PrefabNames = prefabNames;
 			IsNormalEnemy = templateEntity is INormalEnemyEntity;
 			MinRarity = minRarity;
 			MaxRarity = maxRarity;
@@ -103,7 +107,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 	[Serializable]
 	public struct LevelEnemyPrefabConfig {
-		public GameObject prefab;
+		[FormerlySerializedAs("prefab")] public GameObject mainPrefab;
+		public List<GameObject> variants;
 		public int minRarity;
 		public int maxRarity;
 	}
@@ -130,8 +135,21 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] protected GameObject playerSpawner;
 
 
-		public List<GameObject> Enemies => enemies.Select(e => e.prefab).ToList();
-		
+		//mainPrefab + variants
+		public List<GameObject> Enemies {
+			get {
+				List<GameObject> enemyPrefabs = new List<GameObject>();
+				foreach (var enemy in enemies) {
+					enemyPrefabs.Add(enemy.mainPrefab);
+					if (enemy.variants != null) {
+						enemyPrefabs.AddRange(enemy.variants);
+					}
+				}
+
+				return enemyPrefabs;
+			}
+		}
+
 		[SerializeField] protected int maxEnemiesBaseValue = 50;
 
 		//private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
@@ -187,12 +205,20 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			List<LevelSpawnCard> spawnCards = new List<LevelSpawnCard>();
 			
 			foreach (var enemy in enemies) {
-				GameObject prefab = enemy.prefab;
+				GameObject prefab = enemy.mainPrefab;
 				ICreatureViewController enemyViewController = prefab.GetComponent<ICreatureViewController>();
 				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
 				
+				
+				string[] prefabNames = new string[
+					(enemy.variants?.Count ?? 0) + 1];
+				prefabNames[0] = prefab.name;
+				for (int i = 0; i < enemy.variants.Count; i++) {
+					prefabNames[i + 1] = enemy.variants[i].name;
+				}
+				
 				//templateEnemies.Add(enemyEntity);
-				 spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefab.name,
+				 spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefabNames,
 					enemy.minRarity, enemy.maxRarity));
 			}
 			

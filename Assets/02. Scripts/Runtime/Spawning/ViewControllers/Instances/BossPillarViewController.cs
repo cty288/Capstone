@@ -175,9 +175,11 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 
 			if (cards.Count > 0) {
 				LevelSpawnCard card = cards[Random.Range(0, cards.Count)];
+				GameObject prefabToSpawn = card.Prefabs[Random.Range(0, card.Prefabs.Count)];
+				
 				NavMeshFindResult res = await
 					SpawningUtility.FindNavMeshSuitablePosition(gameObject,
-						() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
+						() => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
 						NavMeshHelper.GetSpawnableAreaMask(), null, 5, 5, 200);
 			
 				 
@@ -186,7 +188,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				Vector3 spawnPos = res.TargetPosition;
 				
 				if (!float.IsInfinity(spawnPos.magnitude)) {
-					GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, spawnPos, Quaternion.identity, null, rarity,
+					GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(prefabToSpawn, spawnPos, Quaternion.identity, null, rarity,
 						levelEntity.GetCurrentLevelCount(), true, 1, 10);
 					IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
 
