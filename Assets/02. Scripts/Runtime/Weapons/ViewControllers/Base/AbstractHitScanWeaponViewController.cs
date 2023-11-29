@@ -13,11 +13,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         where T : class, IWeaponEntity, new() {
         
         [Header("Aesthetic")]
-        public TrailRenderer trailRenderer;
         public VisualEffect[] bulletVFX;
-        
         private HitDetectorInfo hitDetectorInfo;
-        
         
         protected override void OnEntityStart()
         {
@@ -41,20 +38,13 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected override IHitDetector OnCreateHitDetector() {
             return new HitScan(this, CurrentFaction.Value, bulletVFX, fpsCamera);
         }
-        
-        public virtual void SetShoot(bool shouldShoot) {
-            if (shouldShoot) {
-                crossHairViewController?.OnShoot();
-                BoundEntity.OnRecoil(IsScopedIn);
-                hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetRealDamageValue());
-            }
 
-            SetShootStatus(shouldShoot);
-        }
-        
-        public bool CheckHit(HitData data)
+        protected override void Shoot()
         {
-            return data.Hurtbox.Owner != gameObject;
+            base.Shoot();
+            crossHairViewController?.OnShoot();
+            BoundEntity.OnRecoil(IsScopedIn);
+            hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetRealDamageValue());
         }
         
         public override void HitResponse(HitData data) {
@@ -62,19 +52,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
             hitVFXSystem.SetVector3("HitNormal", data.HitNormal);
             hitVFXSystem.Play();
-        }
-        
-        // Item/Holding Functions
-        protected override void OnStartAbsorb() {
-           
-        }
-
-        public override void OnItemStartUse() {
-            
-        }
-
-        public override void OnItemStopUse() {
-            
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MikroFramework.BindableProperty;
+using UnityEngine;
 
 namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Factions {
 
@@ -17,6 +18,10 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Factions {
 		/// <param name="other"></param>
 		/// <returns></returns>
 		public bool IsSameFaction(IBelongToFaction other) {
+			if (other == null)
+			{
+				Debug.Log("is null");
+			}
 			return CurrentFaction.Value == other.CurrentFaction.Value;
 		}
 	}
