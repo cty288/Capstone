@@ -244,11 +244,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				UpdateNavMesh();
 			}
 			UpdatePreExistingEnemies();
-			
+			OnSpawnPlayer();
 			await SpawnPillars();
 			UpdatePreExistingDirectors();
 			SpawnCollectableResources();
-			OnSpawnPlayer();
+			
 			StartCoroutine(UpdateLevelSystemTime());
 			UpdateWallMaterials();
 			if (ambientMusic) {
