@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using _02._Scripts.Runtime.Baits.Model.Base;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
@@ -47,21 +48,25 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 			system.Play();
 		}
 
-		StartCoroutine(BaitSpawnBoss());
+		BaitSpawnBoss();
 	}
 
-	protected IEnumerator BaitSpawnBoss() {
+	protected async Task BaitSpawnBoss() {
 		BoundEntity.BaitStatus = BaitStatus.Baiting;
-		yield return new WaitForSeconds(Random.Range(baitWaitTimeRange.x, baitWaitTimeRange.y));
+		//yield return new WaitForSeconds(Random.Range(baitWaitTimeRange.x, baitWaitTimeRange.y));
+
+		await UniTask.WaitForSeconds(Random.Range(baitWaitTimeRange.x, baitWaitTimeRange.y));
+		
 		foreach (var system in particleSystems) {
 			system.loop = false;
 		}
-		yield return new WaitForSeconds(4f);
+		//yield return new WaitForSeconds(4f);
+		await UniTask.WaitForSeconds(4f);
 		
 		BoundEntity.BaitStatus = BaitStatus.Deactivated;
 		ILevelEntity levelEntity = levelModel.CurrentLevel.Value;
 		if (levelEntity.IsInBossFight) {
-			yield break;
+			return;
 		}
 		
 		List<LevelSpawnCard> cards = levelModel.CurrentLevel.Value.GetAllBosses((entity => {
@@ -72,14 +77,14 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 
 		if (cards.Count > 0) {
 			LevelSpawnCard card = cards[Random.Range(0, cards.Count)];
-			UniTask<NavMeshFindResult> task = SpawningUtility.FindNavMeshSuitablePosition(
+			NavMeshFindResult task = await SpawningUtility.FindNavMeshSuitablePosition(
 					gameObject,
 					() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
 					NavMeshHelper.GetSpawnableAreaMask(), null, 5, 3, 20);
 			
-			yield return task;
+
+			Vector3 spawnPos = task.TargetPosition;
 			
-			//Vector3 spawnPos = task.re
 			
 			if (!float.IsInfinity(spawnPos.magnitude)) {
 				int baitRarity = BoundEntity.GetRarity();

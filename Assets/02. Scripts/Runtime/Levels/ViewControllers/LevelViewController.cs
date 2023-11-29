@@ -9,6 +9,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Utilities;
+using Cysharp.Threading.Tasks;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
@@ -210,7 +211,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			return OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
 		}
 
-		public void Init() {
+		public async void Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
 			if (autoCreateNewEntityWhenStart) {
@@ -218,7 +219,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			UpdatePreExistingEnemies();
 			
-			SpawnPillars();
+			await SpawnPillars();
 			UpdatePreExistingDirectors();
 			SpawnCollectableResources();
 			OnSpawnPlayer();
@@ -237,12 +238,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		private void SpawnPillars() {
+		private async UniTask SpawnPillars() {
 			if (!hasPillars) {
 				return;
 			}
 
-			List<GameObject> pillars = SpawningUtility.SpawnBossPillars(pillarCount, pillarPrefabName, maxExtent.bounds);
+			List<GameObject> pillars = await SpawningUtility.SpawnBossPillars(gameObject, pillarCount, pillarPrefabName, maxExtent.bounds);
 			if (pillars == null) {
 				return;
 			}

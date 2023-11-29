@@ -94,20 +94,19 @@ namespace Runtime.Spawning {
 			if (insideArenaRefPoints != null && insideArenaRefPoints.Length > 0) {
 				bool satisfied = false;
 
-				await UniTask.RunOnThreadPool(() => {
-					foreach (Vector3 point in insideArenaRefPoints) {
-						if (!NavMesh.SamplePosition(point, out navHit, 20.0f, areaMask)) {
-							continue;
-						}
-
-						NavMeshPath insideArenaDetectPath = new NavMeshPath();
-						NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, insideArenaDetectPath);
-						if (insideArenaDetectPath.status == NavMeshPathStatus.PathComplete) {
-							satisfied = true;
-							break;
-						}
+				foreach (Vector3 point in insideArenaRefPoints) {
+					await UniTask.NextFrame();
+					if (!NavMesh.SamplePosition(point, out navHit, 20.0f, areaMask)) {
+						continue;
 					}
-				},  cancellationToken: finder.GetCancellationTokenOnDestroy());
+
+					NavMeshPath insideArenaDetectPath = new NavMeshPath();
+					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, insideArenaDetectPath);
+					if (insideArenaDetectPath.status == NavMeshPathStatus.PathComplete) {
+						satisfied = true;
+						break;
+					}
+				}
 
 
 				if (!satisfied) {
@@ -118,24 +117,24 @@ namespace Runtime.Spawning {
 			}
 
 
-			Vector3 res = await UniTask.RunOnThreadPool(() => {
-				if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
-					if (!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
-						var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
-							prefabSize / 2, results, Quaternion.identity,
-							obstructionLayer);
-						if (size == 0) {
-							return navHit.position;
-						}
+			Vector3 res = Vector3.negativeInfinity;
 
-						if (CheckColliders(size)) {
-							return navHit.position;
-						}
+			await UniTask.NextFrame();
+			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
+				if (!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
+					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
+						prefabSize / 2, results, Quaternion.identity,
+						obstructionLayer);
+					if (size == 0) {
+						res = navHit.position;
+					}
+
+					if (CheckColliders(size)) {
+						res = navHit.position;
 					}
 				}
-
-				return Vector3.negativeInfinity;
-			}, cancellationToken: finder.GetCancellationTokenOnDestroy());
+			}
+			
 
 			if (!float.IsInfinity(res.magnitude)) {
 				result.IsSuccess = true;
@@ -146,55 +145,53 @@ namespace Runtime.Spawning {
 			}
 
 
+			
 
 
-			NavMeshFindResult res2 = await UniTask.RunOnThreadPool(() => {
-				while (usedAttempts < maxAttempts) {
-					Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
-					usedAttempts++;
-					randomDirection.y = 0;
-					randomDirection = randomDirection.normalized * currentSearchRadius;
-					randomDirection += desiredPosition;
+			while (usedAttempts < maxAttempts) {
+				await UniTask.NextFrame();
+				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
+				usedAttempts++;
+				randomDirection.y = 0;
+				randomDirection = randomDirection.normalized * currentSearchRadius;
+				randomDirection += desiredPosition;
 
 
-					if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, areaMask)) {
-						if (IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
-							currentSearchRadius += increment;
-							continue;
-						}
-
-						//calculate if this point is naviable to the player
-						NavMeshPath path = new NavMeshPath();
-						NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, path);
-						if (path.status == NavMeshPathStatus.PathComplete) {
-							var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
-								prefabSize / 2, results, Quaternion.identity,
-								obstructionLayer);
-
-							if (size == 0) {
-								return new NavMeshFindResult(true, navHit.position, usedAttempts, rotationWithSlope);
-								//navHit.position;
-							}
-
-							if (CheckColliders(size)) {
-								return new NavMeshFindResult(true, navHit.position, usedAttempts, rotationWithSlope);
-								//navHit.position;
-							}
-						}
-						// else {
-						// 	Debug.Log("Spawn failed: path not found. Attempt number: " + usedAttempts);
-						// }
+				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, areaMask)) {
+					if (IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
+						currentSearchRadius += increment;
+						continue;
 					}
 
-					currentSearchRadius += increment;
+					//calculate if this point is naviable to the player
+					NavMeshPath path = new NavMeshPath();
+					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, path);
+					if (path.status == NavMeshPathStatus.PathComplete) {
+						var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
+							prefabSize / 2, results, Quaternion.identity,
+							obstructionLayer);
 
+						if (size == 0) {
+							return new NavMeshFindResult(true, navHit.position, usedAttempts, rotationWithSlope);
+							//navHit.position;
+						}
+
+						if (CheckColliders(size)) {
+							return new NavMeshFindResult(true, navHit.position, usedAttempts, rotationWithSlope);
+							//navHit.position;
+						}
+					}
+					// else {
+					// 	Debug.Log("Spawn failed: path not found. Attempt number: " + usedAttempts);
+					// }
 				}
 
-				rotationWithSlope = Quaternion.identity;
-				return new NavMeshFindResult(false, Vector3.negativeInfinity, usedAttempts, rotationWithSlope);
-			}, cancellationToken: finder.GetCancellationTokenOnDestroy());
-			
-			return res2;
+				currentSearchRadius += increment;
+
+			}
+
+			rotationWithSlope = Quaternion.identity;
+			return new NavMeshFindResult(false, Vector3.negativeInfinity, usedAttempts, rotationWithSlope);
 		}
 
 
