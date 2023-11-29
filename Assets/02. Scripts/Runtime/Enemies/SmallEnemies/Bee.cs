@@ -127,7 +127,7 @@ namespace Runtime.Enemies.SmallEnemies
             }
             if(currenthealth <= 0)
             {
-                Debug.Log("asdf");
+               
                 GameObject a = pool.Allocate();
                 a.transform.position = this.transform.GetChild(0).position;
                 AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position, 0.3f);
