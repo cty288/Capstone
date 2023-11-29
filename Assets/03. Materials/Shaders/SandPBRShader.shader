@@ -256,7 +256,8 @@ Shader "Universal Render Pipeline/Custom/Sand"
 
             	float steepness = saturate(dot(normal, float3(0, 1, 0)));
             	steepness = pow(steepness, _SteepnessPower);
-            	float3 combined = normalize(lerp(ripple1, ripple0, steepness));
+            	//float3 combined = normalize(lerp(ripple1, ripple0, steepness));
+            	float3 combined = lerp(ripple1, ripple0, steepness);
             	
 	            return combined;
             }

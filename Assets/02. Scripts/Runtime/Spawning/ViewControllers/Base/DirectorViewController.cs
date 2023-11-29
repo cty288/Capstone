@@ -6,6 +6,7 @@ using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Utilities;
+using Cysharp.Threading.Tasks;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Utilities;
@@ -159,7 +160,7 @@ namespace Runtime.Spawning
             directorSpawnTimer -= Time.deltaTime;
         }
         
-        protected virtual void AttemptToSpawn()
+        protected virtual async void AttemptToSpawn()
         {
             //check if over max enemies
             if(LevelEntity.CurrentEnemyCount >= LevelEntity.GetMaxEnemyCount())
@@ -181,13 +182,13 @@ namespace Runtime.Spawning
                 int maxPackSize = Random.Range(1, 5);
                 while (success && maxPackSize > 0)
                 {
-                    success = SpawnEnemy(selectedCard);
+                    success = await SpawnEnemy(selectedCard);
                     maxPackSize--;
                 }
             }
         }
 
-        protected virtual bool SpawnEnemy(LevelSpawnCard card)
+        protected virtual async UniTask<bool> SpawnEnemy(LevelSpawnCard card)
         {
             //if over max, return false to stop spawning packs
             if(LevelEntity.CurrentEnemyCount >= LevelEntity.GetMaxEnemyCount())
@@ -233,17 +234,16 @@ namespace Runtime.Spawning
                         NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
                         spawnPos = hitNavMesh.position;
 
-                        Vector3 fixedSpawnPos =
-                            SpawningUtility.FindNavMeshSuitablePosition(
-                                () => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider,
+                        NavMeshFindResult findResult =
+                            await SpawningUtility.FindNavMeshSuitablePosition(
+                                gameObject, () => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider,
                                 spawnPos, 90, NavMeshHelper.GetSpawnableAreaMask(), insideArenaCheckPoints, 1f, 3f,
-                                spawnAttempts,
-                                out int usedAttempts, out _);
-                        
-                        spawnAttempts -= usedAttempts;
+                                spawnAttempts);
+                
+                        spawnAttempts -= findResult.UsedAttempts;
                        
-                        if (!float.IsInfinity(fixedSpawnPos.magnitude)) {
-                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, fixedSpawnPos, 
+                        if (findResult.IsSuccess) {
+                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, findResult.TargetPosition, 
                                 Quaternion.Euler(0, Random.Range(0, 360), 0),
                                 null, rarity,
                                 levelNumber, true, 5, 30);

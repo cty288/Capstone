@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using _02._Scripts.Runtime.Utilities;
 using BehaviorDesigner.Runtime;
-using BehaviorDesigner.Runtime.Tasks;
+using Cysharp.Threading.Tasks;
 using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning;
 using UnityEngine;
 using UnityEngine.AI;
+using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
 
@@ -18,7 +20,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
         public SharedGameObject player;
         public bool finished= false;
 
-
+        private bool finishCalculatePath = false;
         BoxCollider spawnsizeCollider() => gameObject.GetComponent<ICreatureViewController>().SpawnSizeCollider;
         public override void OnStart()
         {
@@ -40,7 +42,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
             }
         }
 
-        IEnumerator StarTele()
+         IEnumerator StarTele()
         {
             float duration = 1;
             float timeElapsed = 0;
@@ -60,28 +62,31 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
             NavMeshHit hit;
             Vector3 targetPos = player.Value.transform.position + randomSide * 5f;
             NavMesh.SamplePosition(targetPos,out hit,40f,NavMeshHelper.GetSpawnableAreaMask());
-            int used = 0;
-            Quaternion quaternion;
-
-            teleportLocation = SpawningUtility.FindNavMeshSuitablePosition(spawnsizeCollider,
-                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 3, 50, out used,out quaternion
-            );
-           /* while(float.IsInfinity(teleportLocation.magnitude)) {
 
 
-            }*/
-            timeElapsed = 0;
-            transform.position = teleportLocation - new Vector3(0, height, 0) ;
-            targetPosition = teleportLocation;
-            startPosition = transform.position;
-            while (timeElapsed < duration)
-            {
-                transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-                timeElapsed += Time.deltaTime;
-                yield return null;
+            Task<NavMeshFindResult> task = (SpawningUtility.FindNavMeshSuitablePosition(gameObject, spawnsizeCollider,
+                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 3, 50)).AsTask();
+
+
+            yield return new WaitUntil(() => task.IsCompleted);
+
+            if (task.Result.IsSuccess) {
+                teleportLocation = task.Result.TargetPosition;
+            
+                timeElapsed = 0;
+                transform.position = teleportLocation - new Vector3(0, height, 0) ;
+                targetPosition = teleportLocation;
+                startPosition = transform.position;
+                while (timeElapsed < duration)
+                {
+                    transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
+                    timeElapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                transform.position = targetPosition;
             }
-
-            transform.position = targetPosition;
+            
             finished = true;
 
         }

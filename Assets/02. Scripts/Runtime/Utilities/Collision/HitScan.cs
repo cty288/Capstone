@@ -156,11 +156,7 @@ namespace Runtime.Utilities.Collision
                     // hit something with hurtbox
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
-                    if(!_useVFX)
-                        CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, hit));
-                    else
-                        PlayBulletVFX(_launchPoint.position, hit.point);
-                    break;
+                    PlayBulletVFX(_launchPoint.position, hit.point);
                 }
                 else
                 {
