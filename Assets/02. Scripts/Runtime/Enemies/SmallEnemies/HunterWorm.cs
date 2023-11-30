@@ -110,7 +110,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnAnimationEvent(string eventName)
         {
-
+            
         }
         
 

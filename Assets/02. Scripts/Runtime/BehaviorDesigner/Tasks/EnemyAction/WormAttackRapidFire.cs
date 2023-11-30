@@ -41,7 +41,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 50, 100);
             playerTrans = GetPlayer().transform;
             player = GetPlayer();
-            Faction faction = enemyEntity.CurrentFaction;
+            //Faction faction = enemyEntity.CurrentFaction;
         }
 
         public override void OnStart()

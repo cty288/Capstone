@@ -20,7 +20,7 @@ namespace Runtime.Temporary
         public GameObject explosion;
         private int explosionDamage;
         private float explosionSize;
-      
+        
         void Start() {
 
         }

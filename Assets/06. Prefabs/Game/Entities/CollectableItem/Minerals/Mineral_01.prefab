@@ -45,6 +45,67 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1825848, y: 2.5999234, z: 1.7084452}
   m_Center: {x: -0.01602906, y: 1.2557806, z: 0.02946192}
+--- !u!1 &2987769104854486341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2296165930231938933}
+  - component: {fileID: 7259573543502201179}
+  - component: {fileID: 4187950362065910027}
+  m_Layer: 7
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2296165930231938933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2987769104854486341}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7980489418151554724}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7259573543502201179
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2987769104854486341}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.9077387, y: 5.8165884, z: 3.981186}
+  m_Center: {x: -0.049053192, y: 2.4942741, z: 0.060163498}
+--- !u!114 &4187950362065910027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2987769104854486341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 7980489418151064196}
+  m_damageMultiplier: 1
 --- !u!1 &3992971485737042093
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,6 +189,7 @@ Transform:
   - {fileID: 5752035330912192348}
   - {fileID: 1530444874769374445}
   - {fileID: 2222172732798210227}
+  - {fileID: 2296165930231938933}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -192,16 +254,18 @@ MonoBehaviour:
   nameTagPrefabName: NameTag_General
   nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 1
-  interactiveHintPrefabName: InteractHint_General
-  interactiveHintLocalizedKey: Mine
+  interactiveHintPrefabName: InteractHint_Shoot
+  interactiveHintLocalizedKey: GAME_ACTION_SHOOT
   interactiveHintToleranceMaxTime: 0.3
   interactiveHintFollowTransform: {fileID: 7980489418151554724}
-  interactiveHintHoldTime: 2
+  interactiveHintHoldTime: 0
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   overriddenName: Mineral
   currencyAmountPerItem: 2
+  totalShootTime: 5
+  damageRequiredPerShoot: 10
   <SpawnSizeCollider>k__BackingField: {fileID: 1311681576522637441}
 --- !u!1 &8694768663630000990
 GameObject:
