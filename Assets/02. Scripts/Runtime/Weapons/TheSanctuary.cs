@@ -62,160 +62,41 @@ namespace Runtime.Weapons
 
     public class TheSanctuary : AbstractProjectileWeaponViewController<TheSanctuaryEntity>
     {
-        // For Coroutine Animation [WILL BE REPLACED]
-       // public GameObject model;
-        public Transform gunPositionTransform;
-        public Transform scopeInPositionTransform;
-
         public Transform bulletSpawnPos;
         public GameObject bulletPrefab;
         
         private SafeGameObjectPool pool;
         
-        protected override void OnEntityStart()
-        {
-            base.OnEntityStart();
-            
-            playerModel = this.GetModel<IGamePlayerModel>();
-           // BoundEntity.animLayerName = animLayerNameOverride;
-
-           // animLayerNameOverride = "Revolver";
-            // Debug.Log($"sanctuary camera pos: {hipFireCameraPosition}, {adsCameraPosition}");
-            // hipFireCameraPosition = hipFireCameraPositionOverride;
-            // adsCameraPosition = adsCameraPositionOverride;
-        }
-        
         protected override void Awake() {
             base.Awake();
-            playerActions = ClientInput.Singleton.GetPlayerActions();
-            cam = Camera.main;
-            
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab, 20, 50);
-            animationSMBManager = GetComponent<AnimationSMBManager>();
-            animationSMBManager.Event.AddListener(OnAnimationEvent);
         }
         
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<TheSanctuaryEntity> builder) {
             return builder.FromConfig().Build();
         }
         
-        protected override void OnBindEntityProperty() {}
-        
-        public override void OnItemUse() {
-            if (!isReloading) {
-                if (BoundEntity.CurrentAmmo > 0 &&
-                    Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
-                    lastShootTime = Time.time;
-                    
-                    SetShoot(true);
-
-                    BoundEntity.CurrentAmmo.Value--;
-                }
-                
-                if (autoReload && BoundEntity.CurrentAmmo <= 0)
-                {
-                    SetShoot(false);
-                    ChangeReloadStatus(true);
-                    StartCoroutine(ReloadAnimation());
-                }
-            }
-        }
-
         public override void SetShoot(bool shouldShoot)
         {
             base.SetShoot(shouldShoot);
             if (shouldShoot) {
-                Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
-            
-                GameObject b = pool.Allocate();
-                b.transform.position = bulletSpawnPos.position;
-                b.transform.rotation = Quaternion.identity;
-            
-                b.GetComponent<Rigidbody>().velocity = shootDir * BoundEntity.GetBulletSpeed().RealValue;
-
-                b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
-                    BoundEntity.GetRealDamageValue(),
-                    gameObject, gameObject.GetComponent<ICanDealDamage>(), BoundEntity.GetRange().BaseValue);
-            }
-            
-        }
-        
-        public override void OnItemScopePressed() {
-            if (isReloading || playerModel.IsPlayerSprinting()) {
-                return;
-            }
-            if (IsScopedIn) {
-                ChangeScopeStatus(false);
-                //time is from animation
-                fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-                fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
-            }
-            else {
-                ChangeScopeStatus(true);
-                fpsCamera.transform.DOLocalMove(cameraPlacementData.adsCameraPosition, 0.167f);
-                fpsCamera.transform.DOLocalRotate(cameraPlacementData.adsCameraRotation, 0.167f);
+                Shoot();
             }
         }
 
-        public override void OnItemScopeReleased() {
-            
-        }
-
-
-        protected override void Update()
+        protected override void Shoot()
         {
-            base.Update();
-            if (isHolding && !playerModel.IsPlayerDead())
-            {
-                //Reload
-                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
-                    BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
-                {
-                    if (IsScopedIn)
-                    {
-                        ChangeScopeStatus(false);
-                    }
-                    
-                    StartCoroutine(ReloadAnimation());
-                }
-                
-                if(playerActions.SprintHold.WasPerformedThisFrame() && IsScopedIn)
-                {
-                    ChangeScopeStatus(false);
-                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
-                }
-            }
-        }
-        
-        protected void OnAnimationEvent(string eventName)
-        {
-            switch (eventName)
-            {
-                case "ReloadStart":
-                    AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
-                    break;
-                case "ReloadEnd":
-                    ChangeReloadStatus(false);
-                    AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
-                    BoundEntity.Reload();
-                    break;
-                default:
-                    break;
-            }
-        }
+            Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
+            
+            GameObject b = pool.Allocate();
+            b.transform.position = bulletSpawnPos.position;
+            b.transform.rotation = Quaternion.identity;
+            
+            b.GetComponent<Rigidbody>().velocity = shootDir * BoundEntity.GetBulletSpeed().RealValue;
 
-        public override void OnRecycled() {
-            base.OnRecycled();
-
-        }
-
-        protected override void OnReadyToRecycle() {
-            base.OnReadyToRecycle();
-            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
-            ChangeScopeStatus(false);
-            ChangeReloadStatus(false);
+            b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
+                BoundEntity.GetRealDamageValue(),
+                gameObject, gameObject.GetComponent<ICanDealDamage>(), BoundEntity.GetRange().BaseValue);
         }
     }
 }
