@@ -28,8 +28,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private NavMeshPath path;
         private Vector3 finalPosition;
         BoxCollider spawnsizeCollider() => gameObject.GetComponent<ICreatureViewController>().SpawnSizeCollider;
-
-        public override void OnStart()
+        private bool finishCalculatePath = false;
+        public override async void OnStart()
         {
             navAgent = gameObject.GetComponent<Boss1>().agent;
             playerTrans = GetPlayer().transform;
@@ -44,11 +44,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             navAgent.isStopped = false;
             NavMesh.SamplePosition(targetPos,out hit,40f,NavMeshHelper.GetSpawnableAreaMask());
-            int used;
-            Quaternion quaternion;
-            finalPosition = SpawningUtility.FindNavMeshSuitablePosition(spawnsizeCollider,
-                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 3, 50, out used,out quaternion
-            );
+           
+            finishCalculatePath = false;
+            
+            finalPosition = (await SpawningUtility.FindNavMeshSuitablePosition(gameObject, spawnsizeCollider,
+                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 3, 50)).TargetPosition;
+
+            finishCalculatePath = true;
+            
             NavMesh.CalculatePath(transform.position, finalPosition, NavMeshHelper.GetSpawnableAreaMask(), path);
             //navAgent.speed = 5f;
             navAgent.SetPath(path);
@@ -57,6 +60,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override TaskStatus OnUpdate()
         {
+            if (!finishCalculatePath) {
+                return TaskStatus.Running;
+            }
             
             if (Vector3.Distance(finalPosition,transform.position)<=1f)
             {

@@ -87,8 +87,6 @@ namespace Runtime.Enemies.SmallEnemies
         protected override void OnEntityStart()
         {
             
-            
-
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using _02._Scripts.Runtime.Baits.Model.Base;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
@@ -8,6 +9,7 @@ using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Utilities;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -24,6 +26,7 @@ using Runtime.Enemies.Model.Properties;
 using Runtime.Spawning.Commands;
 using Runtime.UI;
 using Runtime.Utilities;
+using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms;
@@ -143,7 +146,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
 
-		protected IEnumerator SpawnBoss(int rarity) {
+		protected async UniTask SpawnBoss(int rarity) {
 			Debug.Log("Spawn boss");
 			foreach (var system in particleSystems) {
 				system.loop = true;
@@ -152,31 +155,40 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			
 			isActivating = true;
 			UpdateInteractHint();
+
+			await UniTask.WaitForSeconds(Random.Range(waitTimeRange.x, waitTimeRange.y));
 			
-			yield return new WaitForSeconds(Random.Range(waitTimeRange.x, waitTimeRange.y));
 			foreach (var system in particleSystems) {
 				system.loop = false;
 			}
-			yield return new WaitForSeconds(4f);
+
+			await UniTask.WaitForSeconds(4f);
 		
 			isActivating = false;
 			
 			ILevelEntity levelEntity = levelModel.CurrentLevel.Value;
 			if (levelEntity.IsInBossFight) {
-				yield break;
+				return;
 			}
 
 			List<LevelSpawnCard> cards = levelModel.CurrentLevel.Value.GetAllBosses();
 
 			if (cards.Count > 0) {
 				LevelSpawnCard card = cards[Random.Range(0, cards.Count)];
-				Vector3 spawnPos =
-					SpawningUtility.FindNavMeshSuitablePosition(
-						() => card.Prefab.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
-						NavMeshHelper.GetSpawnableAreaMask(), null, 5, 5, 200, out _, out _);
+				GameObject prefabToSpawn = card.Prefabs[Random.Range(0, card.Prefabs.Count)];
+				
+				NavMeshFindResult res = await
+					SpawningUtility.FindNavMeshSuitablePosition(gameObject,
+						() => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
+						NavMeshHelper.GetSpawnableAreaMask(), null, 5, 5, 200);
 			
+				 
+				
+				
+				Vector3 spawnPos = res.TargetPosition;
+				
 				if (!float.IsInfinity(spawnPos.magnitude)) {
-					GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(card.Prefab, spawnPos, Quaternion.identity, null, rarity,
+					GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(prefabToSpawn, spawnPos, Quaternion.identity, null, rarity,
 						levelEntity.GetCurrentLevelCount(), true, 1, 10);
 					IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
 
@@ -201,7 +213,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		
 		private void OnRequestPillarSpawnBoss(OnRequestPillarSpawnBoss e) {
 			if (e.Pillar == gameObject) {
-				StartCoroutine(SpawnBoss(e.Rarity));
+				SpawnBoss(e.Rarity);
 			}
 		}
 

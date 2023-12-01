@@ -87,10 +87,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected abstract void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer);
 
 		public BindableProperty<Faction> CurrentFaction => BoundEntity.CurrentFaction;
+
 		public bool CheckHurt(HitData data) {
-			// Debug.Log("check hurt: " + BoundEntity.CheckCanTakeDamage(data.Attacker));
+			// Debug.Log("check hurt: " + BoundEntity.CheckCanTakeDamage(data.Attacker));w
 			// return BoundEntity.CheckCanTakeDamage(data.Attacker);
-			return true;
+			return BoundEntity != null;
 		}
 
 		public virtual void HurtResponse(HitData data) {

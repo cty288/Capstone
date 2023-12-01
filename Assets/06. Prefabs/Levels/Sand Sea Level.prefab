@@ -361,24 +361,31 @@ MonoBehaviour:
   - {fileID: 5510856074636867583}
   - {fileID: 6309164413135760662}
   enemies:
-  - prefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
       type: 3}
+    variants: []
     minRarity: 1
     maxRarity: 2
-  - prefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
       type: 3}
+    variants: []
     minRarity: 1
     maxRarity: 2
-  - prefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
+  - mainPrefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
       type: 3}
+    variants: []
     minRarity: 1
     maxRarity: 2
-  - prefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+  - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
       type: 3}
+    variants: []
     minRarity: 1
     maxRarity: 2
-  - prefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
+  - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
       type: 3}
+    variants:
+    - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
+    - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
     minRarity: 1
     maxRarity: 2
   bossSpawnCostInfo:
@@ -404,7 +411,7 @@ MonoBehaviour:
   totalExplortionValueRequired: 1500
   bossExplorationMultiplier: 2
   normalEnemyExplorationMultiplier: 1
-  explorationValuePerSecond: 1
+  explorationValuePerSecond: 1000
   killBossRequired: 1
 --- !u!1 &6671086475095030396
 GameObject:
@@ -679,6 +686,11 @@ PrefabInstance:
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
       propertyPath: spawnNormalStepRange.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
+        type: 3}
+      propertyPath: spawnPrefabGroups.Array.data[0].prefabVariants.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6755912134853133617, guid: af59d4835272dc74f968b30b986ab3cb,
@@ -956,6 +968,11 @@ PrefabInstance:
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
       propertyPath: spawnNormalStepRange.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
+        type: 3}
+      propertyPath: spawnPrefabGroups.Array.data[0].prefabVariants.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6755912134853133617, guid: af59d4835272dc74f968b30b986ab3cb,
@@ -1306,6 +1323,11 @@ PrefabInstance:
     - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
         type: 3}
       propertyPath: spawnNormalStepRange.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755912134853133616, guid: af59d4835272dc74f968b30b986ab3cb,
+        type: 3}
+      propertyPath: spawnPrefabGroups.Array.data[0].prefabVariants.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6755912134853133617, guid: af59d4835272dc74f968b30b986ab3cb,

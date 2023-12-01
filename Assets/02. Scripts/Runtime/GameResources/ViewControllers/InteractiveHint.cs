@@ -18,8 +18,8 @@ namespace Runtime.GameResources.ViewControllers {
             controlLayout = GetComponent<RectTransform>();
             hintIconSpawnPoint = transform.Find("HintIconSpawnPoint");
             hintText = transform.Find("Text").GetComponent<TMP_Text>();
-            controlMethodText = transform.Find("ControlMethodText").GetComponent<TMP_Text>();
-            holdFiller = transform.Find("BG/HoldFiller").GetComponent<Image>();
+            controlMethodText = transform.Find("ControlMethodText")?.GetComponent<TMP_Text>();
+            holdFiller = transform.Find("BG/HoldFiller")?.GetComponent<Image>();
         }
     
 
@@ -31,8 +31,11 @@ namespace Runtime.GameResources.ViewControllers {
                     Destroy(hintIconSpawnPoint.GetChild(i).gameObject);
                 }
 
-                hintIconSpawnPoint.gameObject.SetActive(action != null);
-                controlMethodText.gameObject.SetActive(action != null && !string.IsNullOrEmpty(controlText));
+                if (hintIconSpawnPoint) {
+                    hintIconSpawnPoint.gameObject.SetActive(action != null);
+                    controlMethodText.gameObject.SetActive(action != null && !string.IsNullOrEmpty(controlText));
+                }
+               
                 holdFiller.fillAmount = 0;
                 
                 if (action != null) {

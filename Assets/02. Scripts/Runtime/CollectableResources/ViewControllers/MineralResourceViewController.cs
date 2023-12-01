@@ -18,9 +18,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers {
 		}
 	}
 	public class MineralResourceViewController : CollectableResourceViewController<MineralEntity> {
-		protected override void OnEntityStart() {
-			
-		}
+		
 
 		protected override void OnBindEntityProperty() {
 			

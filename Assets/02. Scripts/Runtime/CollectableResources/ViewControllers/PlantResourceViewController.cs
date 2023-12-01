@@ -18,10 +18,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers {
 		}
 	}
 	public class PlantResourceViewController : CollectableResourceViewController<PlantEntity> {
-		protected override void OnEntityStart() {
-			
-		}
-
+		
 		protected override void OnBindEntityProperty() {
 			
 		}
