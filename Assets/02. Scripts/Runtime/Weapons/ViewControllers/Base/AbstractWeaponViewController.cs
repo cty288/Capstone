@@ -47,6 +47,7 @@ namespace Runtime.Weapons.ViewControllers.Base
     public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController, IPickableResourceViewController, IInHandResourceViewController {
         IWeaponEntity WeaponEntity { get; }
     }
+    
     /// <summary>
     /// For both 
     /// </summary>
@@ -93,6 +94,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         public ICanDealDamageRootEntity RootDamageDealer => ownerVc?.CanDealDamageEntity?.RootDamageDealer;
         public ICanDealDamageRootViewController RootViewController => ownerVc?.CanDealDamageEntity?.RootViewController;
 
+        [field: ES3Serializable]
+        public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
+
         public int Damage => BoundEntity.GetRealDamageValue();
 
         protected override void Awake() {
@@ -107,11 +111,52 @@ namespace Runtime.Weapons.ViewControllers.Base
             animationSMBManager.Event.AddListener(OnAnimationEvent);
         }
         
+        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+            if(weaponModel == null) {
+                weaponModel = this.GetModel<IWeaponModel>();
+            }
+            WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>();
+            if (setRarity) {
+                builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
+            }
+
+            return OnInitWeaponEntity(builder) as IResourceEntity;
+        }
+        
+        protected abstract IEntity OnInitWeaponEntity(WeaponBuilder<T> builder);
+        
         protected override void OnEntityStart() {
             base.OnEntityStart();
-            hitDetector = OnCreateHitDetector();
             _isScopedIn = false;
             cameraShaker = FindObjectOfType<CameraShaker>();
+        }
+        
+        protected override void OnBindEntityProperty() {}
+        
+        protected override void Update()
+        {
+            base.Update();
+            if (isHolding && !playerModel.IsPlayerDead())
+            {
+                //Reload
+                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
+                    BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
+                {
+                    if (IsScopedIn)
+                    {
+                        ChangeScopeStatus(false);
+                    }
+                    
+                    StartCoroutine(ReloadAnimation());
+                }
+                
+                if(playerActions.SprintHold.WasPerformedThisFrame() && IsScopedIn)
+                {
+                    ChangeScopeStatus(false);
+                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
+                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
+                }
+            }
         }
 
         protected virtual void OnAnimationEvent(string eventName)
@@ -132,6 +177,17 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected virtual void OnReloadAnimationStart()
         {
             AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+        }
+        
+        protected virtual IEnumerator ReloadAnimation() {
+            ChangeReloadStatus(true);
+            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
+                AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
+            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
+            animator.SetTrigger("Reload");
+            
+            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
         }
 
         protected virtual void OnReloadAnimationEnd()
@@ -192,80 +248,27 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
             else {
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.ResetTrigger,0));
-                //this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ShootEnd", AnimationEventType.Trigger,0));
             }
         }
         
-        protected virtual IEnumerator ReloadAnimation() {
-            ChangeReloadStatus(true);
-            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
-            this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
-                AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
-            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
-            animator.SetTrigger("Reload");
-            
-            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
-        }
-
-        protected override void OnReadyToRecycle() {
-            base.OnReadyToRecycle();
-            ChangeScopeStatus(false);
-        }
-
-
-        protected abstract IHitDetector OnCreateHitDetector();
-
-       
-        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
-            if(weaponModel == null) {
-                weaponModel = this.GetModel<IWeaponModel>();
+        public virtual void SetShoot(bool shouldShoot) {
+            if (shouldShoot) {
+                Shoot();
             }
-            WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>();
-            if (setRarity) {
-                builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
-            }
-
-            return OnInitWeaponEntity(builder) as IResourceEntity;
+            SetShootStatus(shouldShoot);
         }
 
-        protected override void OnBindEntityProperty() {}
-        
-        protected abstract IEntity OnInitWeaponEntity(WeaponBuilder<T> builder);
-
-        [field: ES3Serializable]
-        public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
-
-        public void OnKillDamageable(IDamageable damageable) {
-            BoundEntity.OnKillDamageable(damageable);
-            ownerVc?.CanDealDamageEntity?.OnKillDamageable(damageable);
-            crossHairViewController?.OnKill(damageable);
-        }
-
-        public void OnDealDamage(IDamageable damageable, int damage) {
-            BoundEntity.OnDealDamage(damageable, damage);
-            ownerVc?.CanDealDamageEntity?.OnDealDamage(damageable, damage);
-            crossHairViewController?.OnHit(damageable, damage);
-            Debug.Log(
-                $"Weapon root owner {RootDamageDealer.RootDamageDealer.EntityName} deal damage to {damageable.EntityName} with damage {damage}");
+        protected virtual void Shoot()
+        {
+            BoundEntity.OnRecoil(IsScopedIn);
         }
         
-        public virtual bool CheckHit(HitData data) {
-            return data.Hurtbox.Owner != gameObject;
-        }
-
-        public abstract void HitResponse(HitData data);
+        protected virtual void ShootEffects() {}
         
-        // Item/Holding Functions
         protected override void OnStartAbsorb() {}
 
         public override void OnItemStartUse() {}
-
-        public override void OnItemStopUse() {}
         
-        public override void OnItemScopeReleased() {
-            
-        }
-
         public override void OnItemUse()
         {
             if (!isReloading) {
@@ -288,6 +291,8 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
 
+        public override void OnItemStopUse() {}
+        
         public override void OnItemScopePressed() {
             if (isReloading || playerModel.IsPlayerSprinting()) {
                 return;
@@ -305,44 +310,33 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
         
-        protected virtual void ShootEffects() {}
+        public override void OnItemScopeReleased() {
+            
+        }
         
-        public virtual void SetShoot(bool shouldShoot) {
-            if (shouldShoot) {
-                Shoot();
-            }
-            SetShootStatus(shouldShoot);
+        public void OnKillDamageable(IDamageable damageable) {
+            BoundEntity.OnKillDamageable(damageable);
+            ownerVc?.CanDealDamageEntity?.OnKillDamageable(damageable);
+            crossHairViewController?.OnKill(damageable);
         }
 
-        protected virtual void Shoot()
-        {
-            BoundEntity.OnRecoil(IsScopedIn);
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            BoundEntity.OnDealDamage(damageable, damage);
+            ownerVc?.CanDealDamageEntity?.OnDealDamage(damageable, damage);
+            crossHairViewController?.OnHit(damageable, damage);
+            Debug.Log(
+                $"Weapon root owner {RootDamageDealer.RootDamageDealer.EntityName} deal damage to {damageable.EntityName} with damage {damage}");
         }
         
-        protected override void Update()
-        {
-            base.Update();
-            if (isHolding && !playerModel.IsPlayerDead())
-            {
-                //Reload
-                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
-                    BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
-                {
-                    if (IsScopedIn)
-                    {
-                        ChangeScopeStatus(false);
-                    }
-                    
-                    StartCoroutine(ReloadAnimation());
-                }
-                
-                if(playerActions.SprintHold.WasPerformedThisFrame() && IsScopedIn)
-                {
-                    ChangeScopeStatus(false);
-                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
-                }
-            }
+        public virtual bool CheckHit(HitData data) {
+            return data.Hurtbox.Owner != gameObject;
+        }
+
+        public abstract void HitResponse(HitData data);
+        
+        protected override void OnReadyToRecycle() {
+            base.OnReadyToRecycle();
+            ChangeScopeStatus(false);
         }
         
         public override void OnRecycled() {
