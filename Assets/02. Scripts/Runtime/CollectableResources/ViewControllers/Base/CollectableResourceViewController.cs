@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.CollectableResources.Model;
 using _02._Scripts.Runtime.CollectableResources.Model.Properties;
 using _02._Scripts.Runtime.Currency.Model;
+using AYellowpaper.SerializedCollections;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
@@ -36,7 +37,16 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 
 		[SerializeField] private int totalShootTime = 3;
 		[SerializeField] private int damageRequiredPerShoot = 10;
+
+		[SerializeField]
+		[SerializedDictionary("Rarity", "Item Drop Collections")]
+		private SerializedDictionary<int, ItemDropCollection> overriddenItemDropCollections;
 		
+		
+		
+		
+		public List<CollectableResourceCurrencyInfo> overriddenCollectableResourceCurrencyInfos;
+
 		private int accumulatedDamage = 0;
 		private int realTotalShootTime;
 		private int totalSpawnAmount = 0;
@@ -60,6 +70,16 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			}
 
 			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level).FromConfig();
+			if (overriddenItemDropCollections != null && overriddenItemDropCollections.Count > 0) {
+				builder.SetProperty<Dictionary<int, ItemDropCollection>>
+					(new PropertyNameInfo(PropertyName.item_drop_collections), overriddenItemDropCollections);
+			}
+			
+			if (overriddenCollectableResourceCurrencyInfos != null && overriddenCollectableResourceCurrencyInfos.Count > 0) {
+				builder.SetProperty(new PropertyNameInfo(PropertyName.collectable_resource_currency_list),
+					overriddenCollectableResourceCurrencyInfos);
+			}
+			
 			return builder.Build();
 		}
 
