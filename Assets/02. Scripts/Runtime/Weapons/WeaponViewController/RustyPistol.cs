@@ -66,6 +66,38 @@ namespace Runtime.Weapons
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
             return builder.OverrideName(overrideName).FromConfig().Build();
         }
+
+        #region Item Use
+
+        public override void OnItemStartUse()
+        {
+            if (!isReloading) {
+                if (BoundEntity.CurrentAmmo > 0 &&
+                    Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
+                    lastShootTime = Time.time;
+                    
+                    SetShoot(true);
+                    ShootEffects();
+
+                    BoundEntity.CurrentAmmo.Value--;
+                }
+                
+                if (autoReload && BoundEntity.CurrentAmmo <= 0)
+                {
+                    SetShoot(false);
+                    ChangeReloadStatus(true);
+                    StartCoroutine(ReloadAnimation());
+                }
+            }
+        }
+        
+        public override void OnItemUse()
+        {
+        }
+
+        public override void OnItemStopUse() {}
+
+        #endregion
         
         
         protected override void ShootEffects()

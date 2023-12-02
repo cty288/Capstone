@@ -99,6 +99,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public int Damage => BoundEntity.GetRealDamageValue();
 
+        #region Initialization
         protected override void Awake() {
             base.Awake();
             weaponModel = this.GetModel<IWeaponModel>();
@@ -133,6 +134,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected override void OnBindEntityProperty() {}
         
+
+        #endregion
+        
         protected override void Update()
         {
             base.Update();
@@ -159,6 +163,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
 
+        #region Animation
         protected virtual void OnAnimationEvent(string eventName)
         {
             switch (eventName)
@@ -196,7 +201,9 @@ namespace Runtime.Weapons.ViewControllers.Base
             AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
             BoundEntity.Reload();
         }
+        #endregion
 
+        #region Holding
         public override void OnStartHold(GameObject ownerGameObject) {
             base.OnStartHold(ownerGameObject);
             if(ownerGameObject.TryGetComponent<ICanDealDamageViewController>(out var damageDealer)) {
@@ -210,6 +217,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.OnStopHold();
             ChangeScopeStatus(false);
         }
+        #endregion
 
         protected void ChangeScopeStatus(bool shouldScope) {
             bool previsScope = _isScopedIn;
@@ -239,6 +247,8 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
             
         }
+
+        #region Shooting
         
         protected void SetShootStatus(bool isShooting) {
             if (isShooting) {
@@ -264,7 +274,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         protected virtual void ShootEffects() {}
-        
+        #endregion
+
+        #region Item Use
         protected override void OnStartAbsorb() {}
 
         public override void OnItemStartUse() {}
@@ -313,7 +325,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         public override void OnItemScopeReleased() {
             
         }
-        
+        #endregion
+
+        #region Damage and Hit Response
         public void OnKillDamageable(IDamageable damageable) {
             BoundEntity.OnKillDamageable(damageable);
             ownerVc?.CanDealDamageEntity?.OnKillDamageable(damageable);
@@ -333,7 +347,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public abstract void HitResponse(HitData data);
-        
+        #endregion
+
+        #region Recycling
         protected override void OnReadyToRecycle() {
             base.OnReadyToRecycle();
             ChangeScopeStatus(false);
@@ -346,5 +362,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);
         }
+        #endregion
     }
 }
