@@ -706,13 +706,15 @@ MonoBehaviour:
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
   interactiveHintFollowTransform: {fileID: 0}
   interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  entityAutoRemovalTimeWhenNoAbsorb: 120
-  currencyTypeBuildFromInspector: 0
+  autoRecycleTimeWhenNoAbsorb: 120
+  alsoRemoveEntityWhenNoAbsorb: 1
+  currencyTypeBuildFromInspector: 2
   amountBuildFromInspector: 5
 --- !u!1 &8841941348137013813
 GameObject:
