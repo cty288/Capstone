@@ -53,6 +53,8 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
 public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 {
     private bool deathAnimationEnd = false;
+
+    public bool currentAnimationEnd;
     
     protected override void OnEntityStart() {
         
@@ -67,9 +69,15 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     }
 
     protected override void OnAnimationEvent(string eventName) {
-        
+        switch (eventName)
+        {
+            case "CurrentAnimationEnd":
+                currentAnimationEnd = true;
+                break;
+            default:
+                break;
+        }
     }
-
     protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<BladeSentinelEntity> builder) {
         return builder.
             FromConfig()

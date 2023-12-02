@@ -152,7 +152,7 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(498.612183,228.227661)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Log","NodeData":{"Offset":"(-1.38781738,118.227661)"},"ID":1,"Name":"Log","Instant":true,"SharedStringtext":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"Hello
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(498.612183,228.227661)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Log","NodeData":{"Offset":"(-191.387817,128.227661)"},"ID":1,"Name":"Log","Instant":true,"SharedStringtext":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":"Hello
         Boss2"},"SharedBoollogError":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedBoollogTime":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}}}'
       fieldSerializationData:
         typeName: []
@@ -189,16 +189,22 @@ MonoBehaviour:
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
   rarityBaseValueBuiltFromInspector: 1
+  randomizeNavMeshPriority: 1
   <SpawnSizeCollider>k__BackingField: {fileID: 8076686000186218928}
   healthBarPrefabName: UIHealthBar
+  currentAnimationEnd: 0
 --- !u!1 &341299096050463332
 GameObject:
   m_ObjectHideFlags: 0
