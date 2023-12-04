@@ -60,7 +60,7 @@ namespace Runtime.Weapons
 
     }
 
-    public class TheSanctuary : AbstractProjectileWeaponViewController<TheSanctuaryEntity>
+    public class TheSanctuary : AbstractWeaponViewController<TheSanctuaryEntity>
     {
         public Transform bulletSpawnPos;
         public GameObject bulletPrefab;
@@ -71,7 +71,7 @@ namespace Runtime.Weapons
             base.Awake();
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab, 20, 50);
         }
-        
+
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<TheSanctuaryEntity> builder) {
             return builder.FromConfig().Build();
         }
@@ -97,6 +97,16 @@ namespace Runtime.Weapons
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
                 BoundEntity.GetRealDamageValue(),
                 gameObject, gameObject.GetComponent<ICanDealDamage>(), BoundEntity.GetRange().BaseValue);
+        }
+        
+        public override bool CheckHit(HitData data)
+        {
+            return data.Hurtbox.Owner != gameObject;
+        }
+        
+        public override void HitResponse(HitData data) {
+            // TODO: Optimize projectile when we make one, or it might be using the old system for this.
+            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
         }
     }
 }

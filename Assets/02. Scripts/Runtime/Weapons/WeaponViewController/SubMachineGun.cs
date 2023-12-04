@@ -1,18 +1,6 @@
-using System;
-using System.Collections;
-using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
-using DG.Tweening;
-using MikroFramework.Architecture;
-using MikroFramework.AudioKit;
-using Polyglot;
-using Runtime.Controls;
+﻿using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
-using Runtime.GameResources.Model.Base;
-using Runtime.Player;
-using Runtime.Temporary.Weapon;
-using Runtime.Utilities.AnimationEvents;
-using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -21,9 +9,9 @@ using UnityEngine;
 
 namespace Runtime.Weapons
 {
-    public class RustyPistolEntity : WeaponEntity<RustyPistolEntity>
+    public class SubMachineGunEntity : WeaponEntity<SubMachineGunEntity>
     {
-        [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
+        [field: SerializeField] public override string EntityName { get; set; } = "SubMachineGun";
         
         [field: ES3Serializable] public override int Width { get; } = 1;
         
@@ -45,20 +33,24 @@ namespace Runtime.Weapons
     }
 
     
-    public class RustyPistol : AbstractHitScanWeaponViewController<RustyPistolEntity>
+    public class SubMachineGun : AbstractHitScanWeaponViewController<SubMachineGunEntity>
     {
         private GunAmmoVisual gunAmmoVisual;
         
         [Header("Debug")]
-        [SerializeField] private string overrideName = "RustyPistol";
+        [SerializeField] private string overrideName = "SubMachineGun";
         
         protected override void OnEntityStart() {
             base.OnEntityStart();
             gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
             gunAmmoVisual.Init(BoundEntity);
         }
+        protected override IHitDetector OnCreateHitDetector()
+        {
+            return new HitScan(this, CurrentFaction.Value, bulletVFX, fpsCamera);
+        }
 
-        protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {
+        protected override IEntity OnInitWeaponEntity(WeaponBuilder<SubMachineGunEntity> builder) {
             return builder.OverrideName(overrideName).FromConfig().Build();
         }
         
@@ -71,6 +63,5 @@ namespace Runtime.Weapons
             );
             cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
         }
-        
     }
 }
