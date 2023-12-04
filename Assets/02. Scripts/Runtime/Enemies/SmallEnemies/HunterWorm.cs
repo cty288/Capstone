@@ -77,20 +77,7 @@ namespace Runtime.Enemies.SmallEnemies
 
 
         }
-        protected override void Update()
-        {
-            if (!spawned)
-            {
-
-                invincibleTime -= Time.deltaTime;
-                if (invincibleTime < 0)
-                {
-                    hurtBox.SetActive(true);
-                    spawned = true;
-                }
-            }
-
-        }
+       
 
         protected override void OnEntityStart()
         {

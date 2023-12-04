@@ -106,20 +106,7 @@ namespace Runtime.Enemies.SmallEnemies
             //behaviorTree.Start();
         }
 
-        protected override void Update()
-        {
-            if (!spawned)
-            {
-
-                invincibleTime -= Time.deltaTime;
-                if (invincibleTime < 0)
-                {
-                    hurtBox.SetActive(true);
-                    spawned = true;
-                }
-            }
-
-        }
+      
         protected override void OnReadyToRecycle()
         {
             base.OnReadyToRecycle();
