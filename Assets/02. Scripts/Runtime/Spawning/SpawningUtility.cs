@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using _02._Scripts.Runtime.Utilities;
 using Cysharp.Threading.Tasks;
+using DataStructures.ViliWonka.KDTree;
 using JetBrains.Annotations;
 using MikroFramework;
 using Runtime.DataFramework.ViewControllers.Entities;
@@ -39,6 +40,7 @@ namespace Runtime.Spawning {
 	
 	public static class SpawningUtility {
 		private static Collider[] results = new Collider[10];
+		private static KDTree refPointsKDTree = null;
 
 		private static Vector3 GetNormalAtPoint(Vector3 point) {
 			Vector3 normal = Vector3.zero;
@@ -53,7 +55,16 @@ namespace Runtime.Spawning {
 			Vector3 normal = GetNormalAtPoint(point);
 			float angle = Vector3.Angle(normal, Vector3.up);
 			rotationWithSlope = Quaternion.FromToRotation(Vector3.up, normal);
+			
 			return angle > maxSlopeAngle;
+		}
+
+		public static void UpdateRefPointsKDTree() {
+			Vector3[] insideArenaRefPoints =
+				GameObject.FindGameObjectsWithTag("ArenaRefPoint").Where(x => x.gameObject.activeInHierarchy)
+					.Select(x => x.transform.position).ToArray();
+
+			refPointsKDTree = new KDTree(insideArenaRefPoints, 8);
 		}
 
 
@@ -63,18 +74,28 @@ namespace Runtime.Spawning {
 			Vector3 desiredPosition,
 			int maxAngle,
 			int areaMask,
-			[CanBeNull] Vector3[] insideArenaRefPoints,
+			[CanBeNull]
+			Bounds insideArenaBounds,
+			//[CanBeNull] Vector3[] insideArenaRefPoints,
 			float initialSearchRadius,
 			float increment,
 			int maxAttempts
 		) {
 			NavMeshFindResult result = new NavMeshFindResult();
 
-			if (insideArenaRefPoints == null) {
-				insideArenaRefPoints =
-					GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
+			if (insideArenaBounds == default) {
+				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
+					.First(o => o.gameObject.activeInHierarchy)
+					.GetComponent<Collider>().bounds;
 			}
 
+			if (refPointsKDTree == null) {
+				UpdateRefPointsKDTree();
+			}
+			
+			
+			
+			
 			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
 
 			int usedAttempts = 0;
@@ -88,18 +109,21 @@ namespace Runtime.Spawning {
 			BoxCollider boxCollider = spawnSizeGetter();
 			Vector3 prefabSize = boxCollider.size;
 
-
-
-
-			if (insideArenaRefPoints != null && insideArenaRefPoints.Length > 0) {
+			
+			
+			KDQuery query = new KDQuery();
+			List<int> resultIndices = new List<int>();
+			query.KNearest(refPointsKDTree, desiredPosition, refPointsKDTree.Count, resultIndices);
+			
+			
+			if (insideArenaBounds != default) {
 				bool satisfied = false;
-
-				foreach (Vector3 point in insideArenaRefPoints) {
-					await UniTask.NextFrame();
+				foreach (int pointIndex in resultIndices) {
+					await UniTask.Yield();
+					Vector3 point = refPointsKDTree.Points[pointIndex];
 					if (!NavMesh.SamplePosition(point, out navHit, 20.0f, areaMask)) {
 						continue;
 					}
-
 					NavMeshPath insideArenaDetectPath = new NavMeshPath();
 					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, insideArenaDetectPath);
 					if (insideArenaDetectPath.status == NavMeshPathStatus.PathComplete) {
@@ -109,7 +133,13 @@ namespace Runtime.Spawning {
 				}
 
 
-				if (!satisfied) {
+				/*if (!satisfied) {
+					usedAttempts++;
+					rotationWithSlope = Quaternion.identity;
+					return new NavMeshFindResult(false, Vector3.negativeInfinity, usedAttempts, rotationWithSlope);
+				}*/
+				
+				if(!insideArenaBounds.Contains(desiredPosition) || !satisfied) {
 					usedAttempts++;
 					rotationWithSlope = Quaternion.identity;
 					return new NavMeshFindResult(false, Vector3.negativeInfinity, usedAttempts, rotationWithSlope);
@@ -119,7 +149,8 @@ namespace Runtime.Spawning {
 
 			Vector3 res = Vector3.negativeInfinity;
 
-			await UniTask.NextFrame();
+			await UniTask.Yield();
+			
 			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
 				if (!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
 					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
@@ -149,7 +180,7 @@ namespace Runtime.Spawning {
 
 
 			while (usedAttempts < maxAttempts) {
-				await UniTask.NextFrame();
+				await UniTask.Yield();
 				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
 				usedAttempts++;
 				randomDirection.y = 0;
@@ -257,12 +288,21 @@ namespace Runtime.Spawning {
 
 			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
 			
-			var insideArenaCheckPoints =
-				GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
+			/*var insideArenaCheckPoints =
+				GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();*/
+
+			Bounds insideArenaBounds = default;
+			if (insideArenaBounds == default) {
+				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
+					.First(o => o.gameObject.activeInHierarchy)
+					.GetComponent<Collider>().bounds;
+			}
+			
+			
 
 			//create a new bounds, 20% smaller than the original
 			bounds = new Bounds(bounds.center, bounds.size * 0.8f);
-			float minDistance = bounds.size.x * 0.3f;
+			float minDistance = bounds.size.x * 0.2f;
 			
 			for (int i = 0; i < targetNumber; i++) {
 				int remainingRetry = 10000;
@@ -282,8 +322,8 @@ namespace Runtime.Spawning {
 						continue;
 					}
 
-					NavMeshFindResult res  = await FindNavMeshSuitablePosition(spawner, pillarSpawnSizeGetter, navHit.position, 30, areaMask,
-						insideArenaCheckPoints, 10, 10, remainingRetry);
+					NavMeshFindResult res  = await FindNavMeshSuitablePosition(spawner, pillarSpawnSizeGetter, navHit.position, 45, areaMask,
+						insideArenaBounds, 10, 10, remainingRetry);
 					
 					//rotate y axis randomly
 					res.RotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);

@@ -77,16 +77,17 @@ namespace Runtime.Spawning
         [SerializeField] private float directorSpawnTimer = 0f;
 
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
-        protected Vector3[] insideArenaCheckPoints;
+        //protected Vector3[] insideArenaCheckPoints;
 
+        
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
         }
 
         protected override void OnEntityStart() {
-            insideArenaCheckPoints =
-                GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
+          //  insideArenaCheckPoints =
+             //   GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
 
             
             
@@ -238,7 +239,7 @@ namespace Runtime.Spawning
                         NavMeshFindResult findResult =
                             await SpawningUtility.FindNavMeshSuitablePosition(
                                 gameObject, () => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider,
-                                spawnPos, 90, NavMeshHelper.GetSpawnableAreaMask(), insideArenaCheckPoints, 1f, 3f,
+                                spawnPos, 90, NavMeshHelper.GetSpawnableAreaMask(), default, 1f, 3f,
                                 spawnAttempts);
                 
                         spawnAttempts -= findResult.UsedAttempts;

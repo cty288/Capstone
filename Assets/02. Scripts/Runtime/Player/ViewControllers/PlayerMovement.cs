@@ -135,8 +135,7 @@ namespace Runtime.Player.ViewControllers
 
         //private float airTimer = 0f;
         //public LayerMask whatIsGround;
-        private bool grounded
-        {
+        private bool grounded {
             get => groundCheck.Triggered;
         }
 

@@ -127,7 +127,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] protected bool hasPillars = true;
 		[SerializeField] protected string pillarPrefabName = "BossPillar";
 		[SerializeField] protected int pillarCount = 4;
-		[SerializeField] protected BoxCollider maxExtent;
+		[SerializeField] protected Collider maxExtent;
 		
 		
 		//[SerializeField] protected List<LevelEnemyPrefabConfig> bosses = new List<LevelEnemyPrefabConfig>();
@@ -245,15 +245,20 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			UpdatePreExistingEnemies();
 			OnSpawnPlayer();
+			if (ambientMusic) {
+				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
+			}
+			UpdateWallMaterials();
+			await UniTask.Yield();
+			SpawningUtility.UpdateRefPointsKDTree();
 			await SpawnPillars();
 			UpdatePreExistingDirectors();
 			SpawnCollectableResources();
 			
 			StartCoroutine(UpdateLevelSystemTime());
-			UpdateWallMaterials();
-			if (ambientMusic) {
-				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
-			}
+			
+			
+			//Debug.Log("Bounds for level " + gameObject.name + " is " + maxExtent.bounds);
 		}
 
 		private void SpawnCollectableResources() {
@@ -269,6 +274,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				return;
 			}
 
+			
+			
 			List<GameObject> pillars = await SpawningUtility.SpawnBossPillars(gameObject, pillarCount, pillarPrefabName, maxExtent.bounds);
 			if (pillars == null) {
 				return;
@@ -276,9 +283,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			foreach (GameObject pillar in pillars) {
 				IBossPillarViewController pillarViewController = pillar.GetComponent<IBossPillarViewController>();
 				pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
-				pillar.transform.SetParent(transform);
+				//pillar.transform.SetParent(transform);
+				InitDirector(pillarViewController);
 			}
 			bossPillars = pillars.Select(p => p.GetComponent<IDirectorViewController>()).ToArray();
+			
 		}
 		private void UpdateWallMaterials() {
 			LayerMask wallMask = LayerMask.NameToLayer("Wall");
