@@ -20,6 +20,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         {
             base.OnEntityStart();
             
+            hitDetector = OnCreateHitDetector();
             hitDetectorInfo = new HitDetectorInfo
             {
                 camera = cam,
@@ -35,9 +36,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
         
-        protected override IHitDetector OnCreateHitDetector() {
-            return new HitScan(this, CurrentFaction.Value, bulletVFX, fpsCamera);
-        }
+        protected abstract IHitDetector OnCreateHitDetector();
 
         protected override void Shoot()
         {
