@@ -46,16 +46,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             NavMesh.SamplePosition(targetPos,out hit,40f,NavMeshHelper.GetSpawnableAreaMask());
            
             finishCalculatePath = false;
-            
-            finalPosition = (await SpawningUtility.FindNavMeshSuitablePosition(gameObject, spawnsizeCollider,
-                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 3, 50)).TargetPosition;
+
+            NavMeshFindResult res = (await SpawningUtility.FindNavMeshSuitablePosition(gameObject, spawnsizeCollider,
+                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), default, 10, 3, 50));
 
             finishCalculatePath = true;
-            
-            NavMesh.CalculatePath(transform.position, finalPosition, NavMeshHelper.GetSpawnableAreaMask(), path);
-            //navAgent.speed = 5f;
-            navAgent.SetPath(path);
 
+            if (res.IsSuccess) {
+                finalPosition = res.TargetPosition;
+                NavMesh.CalculatePath(transform.position, finalPosition, NavMeshHelper.GetSpawnableAreaMask(), path);
+                //navAgent.speed = 5f;
+                navAgent.SetPath(path);
+            }
         }
 
         public override TaskStatus OnUpdate()
