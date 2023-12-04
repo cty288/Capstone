@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.Enemies;
 using UnityEngine;
 
 
@@ -15,7 +18,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Transform playerTrans;
 
         public SharedGameObject shockWaveObj;
-        
+
+        [SerializeField] private int explosionDamage;
+        [SerializeField] private float explosionSize;
 
         [SerializeField] private float jumpHeight;
         public override void OnStart()
@@ -72,6 +77,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             GameObject shock = GameObject.Instantiate(shockWaveObj.Value);
             shock.transform.position = transform.position;
+            shock.GetComponent<Example_Explosion>().Init(Faction.Neutral, explosionDamage, explosionSize,gameObject,
+                gameObject.GetComponent<ICanDealDamage>());
         }
     }
 }
