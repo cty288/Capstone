@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using DG.Tweening;
 using Mikrocosmos;
@@ -9,6 +10,7 @@ using Runtime.Enemies.Model;
 using Runtime.Player;
 using Runtime.Temporary;
 using Runtime.UI.NameTags;
+using Runtime.Utilities.Collision;
 using UnityEngine;
 
 namespace Runtime.Enemies.ViewControllers.Base {
@@ -26,18 +28,47 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		[SerializeField]
 		protected float autoRecycleCheckTimeInterval = 5f;
 		private Coroutine entityRemovalTimerCoroutine;
+		private bool spawned;
+		private float invincibleTime = 2f;
+		protected Dictionary<HurtBox, bool> initialHurtBoxActiveState = new Dictionary<HurtBox, bool>();
+
+		protected override void Awake() {
+			base.Awake();
+			HurtBox[] hurtBoxes = GetComponentsInChildren<HurtBox>(true);
+			foreach (var hurtBox in hurtBoxes) {
+				initialHurtBoxActiveState.Add(hurtBox, hurtBox.gameObject.activeSelf);
+			}
+		}
 
 		protected override void OnStart() {
 			base.OnStart();
 			if (autoRecycleTimeAfterFarAwayFromPlayer >= 0 && autoRecycleDistanceFromPlayer >= 0) {
 				entityRemovalTimerCoroutine = StartCoroutine(EntityRemovalTimer());
 			}
+			
+			foreach (var hurtBox in initialHurtBoxActiveState.Keys) {
+				hurtBox.gameObject.SetActive(false);
+			}
 		}
 
 		protected Transform GetPlayer() {
 			return PlayerController.GetClosestPlayer(transform.position).transform;
 		}
-		
+
+
+		protected override void Update() {
+			base.Update();
+			if (!spawned) {
+				invincibleTime -= Time.deltaTime;
+				if(invincibleTime < 0) {
+					foreach (var hurtBox in initialHurtBoxActiveState.Keys) {
+						hurtBox.gameObject.SetActive(initialHurtBoxActiveState[hurtBox]);
+					}
+					spawned = true;
+				}
+			}
+		}
+
 		private IEnumerator EntityRemovalTimer() {
 			while (true) {
 				
@@ -60,6 +91,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 				StopCoroutine(entityRemovalTimerCoroutine);
 				entityRemovalTimerCoroutine = null;
 			}
+			invincibleTime = 2f;
+			spawned = false;
 		}
 
 
@@ -73,6 +106,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected override void OnDestroyHealthBar(HealthBar healthBar) {
 			DespawnHUDElement(healthBarSpawnPoint, HUDCategory.HealthBar);
 		}
+		
+		
 		
 	}
 }

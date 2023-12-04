@@ -66,8 +66,8 @@ namespace Runtime.Enemies.SmallEnemies
         [SerializeField] private List<GameObject> waypoints;
         [SerializeField] private GameObject deathEffect;
         [SerializeField] private SafeGameObjectPool pool;
-        [SerializeField] private GameObject hurtBox;
-        private float invincibleTime = 2f;
+      
+        
         private bool spawned;
         //[SerializeField] private GameObject navMeshAgent;
         //private BehaviorTree behaviorTree;
@@ -76,20 +76,7 @@ namespace Runtime.Enemies.SmallEnemies
            
             
         }
-        protected override void Update()
-        {
-            if (!spawned)
-            {
-
-                invincibleTime -= Time.deltaTime;
-                if(invincibleTime < 0)
-                {
-                    hurtBox.SetActive(true);
-                    spawned = true;
-                }
-            }
-
-        }
+       
 
         protected override void Awake() {
             base.Awake();
@@ -174,8 +161,7 @@ namespace Runtime.Enemies.SmallEnemies
         public override void OnRecycled() {
             //AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position , 0.4f);
             base.OnRecycled();
-            invincibleTime = 2f;
-            spawned = false;
+            
             //behaviorTree.DisableBehavior();
             //behaviorTree.enabled = false;
         }
