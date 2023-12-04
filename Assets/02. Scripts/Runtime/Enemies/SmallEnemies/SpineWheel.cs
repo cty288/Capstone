@@ -68,7 +68,10 @@ namespace Runtime.Enemies.SmallEnemies
     public class SpineWheel : AbstractNormalEnemyViewController<SpineWheelEntity>
     {
         [SerializeField] private List<GameObject> waypoints;
-        
+        [SerializeField] private GameObject hurtBox;
+        private float invincibleTime = 2f;
+        private bool spawned;
+
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
         {
 
@@ -103,7 +106,7 @@ namespace Runtime.Enemies.SmallEnemies
             //behaviorTree.Start();
         }
 
-
+      
         protected override void OnReadyToRecycle()
         {
             base.OnReadyToRecycle();
@@ -140,9 +143,12 @@ namespace Runtime.Enemies.SmallEnemies
 
         public override void OnRecycled()
         {
-            
+           
             base.OnRecycled();
-            
+            invincibleTime = 2f;
+            spawned = false;
+            //behaviorTree.DisableBehavior();
+            //behaviorTree.enabled = false;
         }
     }
 }
