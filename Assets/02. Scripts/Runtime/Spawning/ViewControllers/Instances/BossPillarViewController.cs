@@ -180,28 +180,30 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				NavMeshFindResult res = await
 					SpawningUtility.FindNavMeshSuitablePosition(gameObject,
 						() => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
-						NavMeshHelper.GetSpawnableAreaMask(), null, 5, 5, 200);
+						NavMeshHelper.GetSpawnableAreaMask(), default, 5, 5, 200);
 			
 				 
 				
 				
 				Vector3 spawnPos = res.TargetPosition;
 				
-				if (!float.IsInfinity(spawnPos.magnitude)) {
-					GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(prefabToSpawn, spawnPos, Quaternion.identity, null, rarity,
-						levelEntity.GetCurrentLevelCount(), true, 1, 10);
-					IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
-
-					//levelEntity.IsInBossFight.Value = true;
-					levelSystem.SetBossFight(enemyEntity);
-				
-					Vector3 spawnScale = spawnedEnemy.transform.localScale;
-					spawnedEnemy.gameObject.transform.localScale = Vector3.zero;
-					spawnedEnemy.transform.DOScale(spawnScale, 1f).SetEase(Ease.OutBack);
-
-					onSpawnEnemy?.Invoke(spawnedEnemy, this);
-					Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity}");
+				if (float.IsInfinity(spawnPos.magnitude)) {
+					spawnPos = transform.position;
 				}
+				
+				GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(prefabToSpawn, spawnPos, Quaternion.identity, null, rarity,
+					levelEntity.GetCurrentLevelCount(), true, 1, 10);
+				IEnemyEntity enemyEntity = spawnedEnemy.GetComponent<IEnemyViewController>().EnemyEntity;
+
+				//levelEntity.IsInBossFight.Value = true;
+				levelSystem.SetBossFight(enemyEntity);
+				
+				Vector3 spawnScale = spawnedEnemy.transform.localScale;
+				spawnedEnemy.gameObject.transform.localScale = Vector3.zero;
+				spawnedEnemy.transform.DOScale(spawnScale, 1f).SetEase(Ease.OutBack);
+
+				onSpawnEnemy?.Invoke(spawnedEnemy, this);
+				Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity}");
 			}
 			else {
 				UpdateInteractHint();

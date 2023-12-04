@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.CollectableResources.Model;
 using _02._Scripts.Runtime.CollectableResources.Model.Properties;
 using _02._Scripts.Runtime.Currency.Model;
+using AYellowpaper.SerializedCollections;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
@@ -36,7 +37,16 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 
 		[SerializeField] private int totalShootTime = 3;
 		[SerializeField] private int damageRequiredPerShoot = 10;
+
+		[SerializeField]
+		[SerializedDictionary("Rarity", "Item Drop Collections")]
+		private SerializedDictionary<int, ItemDropCollection> overriddenItemDropCollections;
+
+		private CurrencyType currencyType;
 		
+		
+		public List<CollectableResourceCurrencyInfo> overriddenCollectableResourceCurrencyInfos;
+
 		private int accumulatedDamage = 0;
 		private int realTotalShootTime;
 		private int totalSpawnAmount = 0;
@@ -60,6 +70,16 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			}
 
 			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level).FromConfig();
+			if (overriddenItemDropCollections != null && overriddenItemDropCollections.Count > 0) {
+				builder.SetProperty<Dictionary<int, ItemDropCollection>>
+					(new PropertyNameInfo(PropertyName.item_drop_collections), overriddenItemDropCollections);
+			}
+			
+			if (overriddenCollectableResourceCurrencyInfos != null && overriddenCollectableResourceCurrencyInfos.Count > 0) {
+				builder.SetProperty(new PropertyNameInfo(PropertyName.collectable_resource_currency_list),
+					overriddenCollectableResourceCurrencyInfos);
+			}
+			
 			return builder.Build();
 		}
 
@@ -75,6 +95,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 				currencyInfo = currencyList[level - 1];
 			}
 
+			currencyType = currencyInfo.currencyType;
 			totalSpawnAmount = Random.Range(currencyInfo.amountRange.x, currencyInfo.amountRange.y + 1);
 			
 			realTotalShootTime = Mathf.Min(totalShootTime, totalSpawnAmount);
@@ -161,7 +182,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			
 		}
 
-		protected void GeneratePickableCombatCurrency(CurrencyType type, int totalCount) {
+		protected void GeneratePickableCurrency(CurrencyType type, int totalCount) {
 			Vector3 spawnBasePosition = transform.position;
 			spawnBasePosition.y = SpawnSizeCollider.bounds.max.y;
 			
@@ -217,10 +238,10 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			
 			for (int i = spawnedTimeBefore; i < spawnedTimeAfter; i++) {
 				if (i == realTotalShootTime - 1) {
-					GeneratePickableCombatCurrency(CurrencyType.Combat, resourcesForFinalSpawnTime);
+					GeneratePickableCurrency(currencyType, resourcesForFinalSpawnTime);
 				}
 				else {
-					GeneratePickableCombatCurrency(CurrencyType.Combat, resourcePerSpawnTime);
+					GeneratePickableCurrency(currencyType, resourcePerSpawnTime);
 				}
 			}
 			

@@ -81,7 +81,7 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 			NavMeshFindResult task = await SpawningUtility.FindNavMeshSuitablePosition(
 					gameObject,
 					() => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
-					NavMeshHelper.GetSpawnableAreaMask(), null, 5, 3, 20);
+					NavMeshHelper.GetSpawnableAreaMask(), default, 5, 3, 20);
 			
 
 			Vector3 spawnPos = task.TargetPosition;

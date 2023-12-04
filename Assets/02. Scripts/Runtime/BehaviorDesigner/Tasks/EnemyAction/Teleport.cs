@@ -22,13 +22,16 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
 
         private bool finishCalculatePath = false;
         BoxCollider spawnsizeCollider() => gameObject.GetComponent<ICreatureViewController>().SpawnSizeCollider;
+        private NavMeshAgent navAgent;
         public override void OnStart()
         {
             base.OnStart();
             
             finished = false;
-            
+            navAgent = gameObject.GetComponent<NavMeshAgent>();
+            navAgent.enabled = false;
             StartCoroutine(StarTele());
+            
         }
 
         
@@ -47,7 +50,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
             float duration = 1;
             float timeElapsed = 0;
             Vector3 startPosition = transform.position;
-            float height = spawnsizeCollider().size.y;
+            float height = spawnsizeCollider().bounds.size.y;
             Vector3 targetPosition = transform.position - new Vector3(0, height, 0);
             while (timeElapsed < duration)
             {
@@ -57,39 +60,55 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
             }
             transform.position = targetPosition;
 
-            Vector3 randomSide = new Vector3(Random.insideUnitCircle.normalized.x, 0,
-                Random.insideUnitCircle.normalized.y);
-            NavMeshHit hit;
-            Vector3 targetPos = player.Value.transform.position + randomSide * 5f;
-            NavMesh.SamplePosition(targetPos,out hit,40f,NavMeshHelper.GetSpawnableAreaMask());
+            int attempts = 50;
 
 
-            Task<NavMeshFindResult> task = (SpawningUtility.FindNavMeshSuitablePosition(gameObject, spawnsizeCollider,
-                hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), null, 10, 3, 50)).AsTask();
+            while (attempts > 0) {
+                Vector3 randomSide = new Vector3(Random.insideUnitCircle.normalized.x, 0,
+                    Random.insideUnitCircle.normalized.y);
+                NavMeshHit hit;
+                Vector3 targetPos = player.Value.transform.position + randomSide * 5f;
+                NavMesh.SamplePosition(targetPos,out hit,40f,NavMeshHelper.GetSpawnableAreaMask());
 
 
-            yield return new WaitUntil(() => task.IsCompleted);
-
-            if (task.Result.IsSuccess) {
-                teleportLocation = task.Result.TargetPosition;
             
-                timeElapsed = 0;
-                transform.position = teleportLocation - new Vector3(0, height, 0) ;
-                targetPosition = teleportLocation;
-                startPosition = transform.position;
-                while (timeElapsed < duration)
-                {
-                    transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-                    timeElapsed += Time.deltaTime;
-                    yield return null;
-                }
+                Task<NavMeshFindResult> task = (SpawningUtility.FindNavMeshSuitablePosition(gameObject, spawnsizeCollider,
+                    hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), default, 10, 3, attempts)).AsTask();
 
-                transform.position = targetPosition;
+
+                yield return new WaitUntil(() => task.IsCompleted);
+
+                attempts -= task.Result.UsedAttempts;
+                
+                if (task.Result.IsSuccess) {
+                    teleportLocation = task.Result.TargetPosition;
+            
+                    timeElapsed = 0;
+                    transform.position = teleportLocation - new Vector3(0, height, 0) ;
+                    targetPosition = teleportLocation;
+                    startPosition = transform.position;
+                    while (timeElapsed < duration)
+                    {
+                        transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
+                        timeElapsed += Time.deltaTime;
+                        yield return null;
+                    }
+
+                
+                    transform.position = targetPosition;
+                    break;
+                }
             }
+           
             
             finished = true;
-
+           
         }
+
+         public override void OnEnd() {
+             base.OnEnd();
+             navAgent.enabled = true;
+         }
     }
 
 }

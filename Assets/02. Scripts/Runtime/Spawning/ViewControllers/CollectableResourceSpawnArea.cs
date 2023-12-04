@@ -5,6 +5,7 @@ using System.Linq;
 using _02._Scripts.Runtime.CollectableResources.Model.Properties;
 using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
 using _02._Scripts.Runtime.Utilities;
+using Cysharp.Threading.Tasks;
 using MikroFramework;
 using MikroFramework.Pool;
 using Runtime.GameResources;
@@ -39,6 +40,8 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
 
     [SerializeField] 
     private float accuracyTolerance = 10;
+
+    [SerializeField] private float numSpawnPerFrame = 5;
 
     private BoxCollider boxCollider;
     private List<List<SafeGameObjectPool>> safeGameObjectPools = new List<List<SafeGameObjectPool>>();
@@ -79,7 +82,7 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
         return spawnPrefabGroups[0];
     }
 
-    public void Spawn(float seed) {
+    public async UniTask Spawn(float seed) {
 
         int count = 0;
         Bounds bounds = boxCollider.bounds;
@@ -97,6 +100,7 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
         
         HashSet<Vector3> usedPositions = new HashSet<Vector3>();
 
+        int spawnedAttemptCount = 0;
         for (float x = xMin; x < xMax; x += xStep) {
             for (float z = zMin; z < zMax; z += zStep) {
                 
@@ -110,18 +114,6 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 ICollectableResourceViewController collectableResourceViewController =
                     prefab.GetComponent<ICollectableResourceViewController>();
                 
-                /*Vector3 spawnPos = SpawningUtility.FindNavMeshSuitablePosition(
-                    () => collectableResourceViewController.SpawnSizeCollider,
-                    new Vector3(x, y, z),
-                    spawnGroup.maxAngle,
-                    NavMeshHelper.GetSpawnableAreaMask(),
-                    insideArenaRefPoints,
-                    5f,
-                    1f,
-                    1,
-                    out int usedAttempts,
-                    out Quaternion rotationWithSlope
-                );*/
 
                 Vector3 spawnPos = SpawningUtility.FindNavMeshSuitablePositionFast(
                     new Vector3(x, y, z),
@@ -148,7 +140,10 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 if (noise < perlinNoiseThreshold) {
                     continue;
                 }
-
+                spawnedAttemptCount++;
+                if (spawnedAttemptCount % numSpawnPerFrame == 0) {
+                    await UniTask.Yield();
+                }
                 usedPositions.Add(spawnPos);
                 GameObject spawnedInstance = safeGameObjectPools[groupIndex][prefabIndex].Allocate();
                 spawnedInstance.transform.position = spawnPos;
