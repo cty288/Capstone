@@ -70,7 +70,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
                 Vector3 targetPos = player.Value.transform.position + randomSide * 5f;
                 NavMesh.SamplePosition(targetPos,out hit,40f,NavMeshHelper.GetSpawnableAreaMask());
 
-
+                Vector3 hitPos = hit.position;
+                if (float.IsInfinity(hitPos.magnitude)) {
+                    continue;
+                }
             
                 Task<NavMeshFindResult> task = (SpawningUtility.FindNavMeshSuitablePosition(gameObject, spawnsizeCollider,
                     hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), default, 10, 3, attempts)).AsTask();
