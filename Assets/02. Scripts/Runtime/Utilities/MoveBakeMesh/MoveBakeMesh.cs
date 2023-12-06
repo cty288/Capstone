@@ -22,6 +22,8 @@ public class MoveBakeMesh : AbstractMikroController<MainGame> {
 	private float globalScale = 1;
 	[SerializeField]
 	private Material overrideMat = null;
+
+	[SerializeField] private float minDistance = 0.1f;
 	
 	
 	private int countTime = 0;
@@ -46,11 +48,9 @@ public class MoveBakeMesh : AbstractMikroController<MainGame> {
 
 	private void BakeFun()
 	{
-		if(Vector3.Distance(this.gameObject.transform.position,oldPos)>0)
-		{
+		if(Vector3.Distance(this.gameObject.transform.position,oldPos) > minDistance) {
 			oldPos = this.gameObject.transform.position;
-			for (int i = 0; i < skinList.Length; i++)
-			{
+			for (int i = 0; i < skinList.Length; i++) {
 				Mesh mesh = new Mesh();
 				skinList[i].BakeMesh(mesh);
 				GameObject go = pool.Allocate();
