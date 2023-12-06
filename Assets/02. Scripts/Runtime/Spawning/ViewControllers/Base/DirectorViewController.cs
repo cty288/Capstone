@@ -61,9 +61,11 @@ namespace Runtime.Spawning
         protected Action<GameObject, IDirectorViewController> onSpawnEnemy;
 
         [Header("Director Info")]
-        [SerializeField] public float baseSpawnTimer;
+        [SerializeField] public float baseMinSpawnTimer;
+        [SerializeField] public float baseMaxSpawnTimer;
         [SerializeField] public float baseStartingCredits;
         [SerializeField] public float baseCreditsPerSecond;
+        [SerializeField] public float baseMaxActiveTime;
         
         
         [SerializeField] public float minSpawnRange;
@@ -75,7 +77,11 @@ namespace Runtime.Spawning
         [SerializeField] private float currentCredits;
         [SerializeField] private float creditTimer = 0f;
         [SerializeField] private float directorSpawnTimer = 0f;
+        [SerializeField] private AnimationCurve spawnCurve;
+        [SerializeField] private float totalTimeElapsedInDirector = 0f;
+        [SerializeField] private bool isOnCooldown;
 
+        
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
         //protected Vector3[] insideArenaCheckPoints;
 
@@ -89,9 +95,6 @@ namespace Runtime.Spawning
           //  insideArenaCheckPoints =
              //   GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();
 
-            
-            
-            Debug.Log("director start");
             m_lottery = new Lottery();
             // currentCredits = BoundEntity.GetStartingCredits().RealValue;
             creditTimer = addCreditsInterval;
@@ -106,9 +109,11 @@ namespace Runtime.Spawning
             DirectorBuilder<T> builder = directorModel.GetDirectorBuilder<T>();
             builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level)
             //TODO: set other property base values here
-            .SetProperty(new PropertyNameInfo(PropertyName.spawn_timer), baseSpawnTimer)
+            .SetProperty(new PropertyNameInfo(PropertyName.min_spawn_timer), baseMinSpawnTimer)
+            .SetProperty(new PropertyNameInfo(PropertyName.max_active_time), baseMaxSpawnTimer)
             .SetProperty(new PropertyNameInfo(PropertyName.credits_per_second), baseCreditsPerSecond)
-            .SetProperty(new PropertyNameInfo(PropertyName.starting_credits), baseStartingCredits);
+            .SetProperty(new PropertyNameInfo(PropertyName.starting_credits), baseStartingCredits)
+            .SetProperty(new PropertyNameInfo(PropertyName.max_active_time), baseMaxActiveTime);
             
             return OnInitDirectorEntity(builder);
         }
@@ -122,6 +127,13 @@ namespace Runtime.Spawning
             base.Update();
             DecrementTimers();
             
+            //get off cooldown
+            if (isOnCooldown && directorSpawnTimer <= 0f)
+            {
+                isOnCooldown = false;
+                totalTimeElapsedInDirector = 0f;
+            }
+
             if (creditTimer <= 0f)
             {
                 AddCredits();
@@ -131,7 +143,19 @@ namespace Runtime.Spawning
             if(directorSpawnTimer <= 0f)
             {
                 AttemptToSpawn();
-                directorSpawnTimer = BoundEntity.GetSpawnTimer().RealValue;
+
+                if (totalTimeElapsedInDirector / BoundEntity.GetMaxActiveTime().RealValue > 1f)
+                {
+                    //go on cooldown
+                    isOnCooldown = true;
+                    directorSpawnTimer = BoundEntity.GetDirectorCooldown().RealValue;
+                }
+                else
+                {
+                    directorSpawnTimer = Mathf.Lerp(BoundEntity.GetMinSpawnTimer().RealValue,
+                        BoundEntity.GetMaxSpawnTimer().RealValue,
+                        spawnCurve.Evaluate(totalTimeElapsedInDirector / BoundEntity.GetMaxActiveTime().RealValue));
+                }
             }
         }
 
