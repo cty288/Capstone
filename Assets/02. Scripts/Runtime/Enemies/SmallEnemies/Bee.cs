@@ -68,7 +68,7 @@ namespace Runtime.Enemies.SmallEnemies
         [SerializeField] private SafeGameObjectPool pool;
       
         
-        private bool spawned;
+            //private bool spawned;
         //[SerializeField] private GameObject navMeshAgent;
         //private BehaviorTree behaviorTree;
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
