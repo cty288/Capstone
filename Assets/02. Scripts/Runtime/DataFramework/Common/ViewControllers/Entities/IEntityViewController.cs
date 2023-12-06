@@ -47,7 +47,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         //public void Init(string id, IEntity entity);
     }
 
-    public interface IEnemyViewController : IEntityViewController, IBelongToFaction, IHitResponder {
+    public interface IEnemyViewController : ICreatureViewController, IBelongToFaction, IHitResponder {
         public IEnemyEntity EnemyEntity { get; }
 
         IEntity IEntityViewController.Entity => EnemyEntity;

@@ -383,4 +383,27 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
       }
     ]
   }
-}",200,456,,,,
+}",200,456,"{
+  ""dash"": {
+    ""minDistance"": {
+      ""type"": ""float"",
+      ""value"": 10
+    },
+    ""maxDistance"": {
+      ""type"": ""float"",
+      ""value"": 50
+    },
+    ""dashSpeed"": {
+      ""type"": ""float"",
+      ""value"": 100
+    },
+    ""minDistanceFromLastMove"": {
+      ""type"": ""float"",
+      ""value"": 20
+    },
+    ""dashFinishWaitTime"": {
+      ""type"": ""float"",
+      ""value"": 0.25
+    }
+  }
+}",,,

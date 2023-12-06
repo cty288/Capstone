@@ -46,6 +46,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected AnimationSMBManager animationSMBManager;
 		protected override void Awake() {
 			base.Awake();
+			
 			enemyModel = this.GetModel<IEnemyEntityModel>();
 			animationSMBManager = GetComponent<AnimationSMBManager>();
 			animationSMBManager.Event.AddListener(OnAnimationEvent);
@@ -64,6 +65,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			if (currentHealthBar != null) {
 				currentHealthBar.OnSetEntity(BoundEntity.HealthProperty.RealValue, BoundEntity);
 			}
+			
 		}
 
 		protected override void OnBindEntityProperty() {

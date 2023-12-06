@@ -46,7 +46,9 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
 
     protected override ICustomProperty[] OnRegisterCustomProperties() {
 
-        return null;
+        return new[] {
+            new AutoConfigCustomProperty("dash")
+        };
     }
 }
 

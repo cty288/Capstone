@@ -231,7 +231,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		[field: SerializeField]
-		public BoxCollider SpawnSizeCollider { get; set; }
+		public BoxCollider SpawnSizeCollider { get; protected set; }
 
 		public abstract ICreature OnInitEntity(int level, int rarity);
 	}

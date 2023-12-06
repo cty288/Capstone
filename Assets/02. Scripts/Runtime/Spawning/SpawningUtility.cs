@@ -125,6 +125,9 @@ namespace Runtime.Spawning {
 						continue;
 					}
 					NavMeshPath insideArenaDetectPath = new NavMeshPath();
+					if(float.IsInfinity(navHit.position.magnitude)) {
+						continue;
+					}
 					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, insideArenaDetectPath);
 					if (insideArenaDetectPath.status == NavMeshPathStatus.PathComplete) {
 						satisfied = true;
