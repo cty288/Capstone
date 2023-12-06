@@ -69,9 +69,7 @@ namespace Runtime.Enemies.SmallEnemies
     {
         [SerializeField] private List<GameObject> waypoints;
         [SerializeField] private GameObject hurtBox;
-        private float invincibleTime = 2f;
-        private bool spawned;
-
+      
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
         {
 
@@ -145,8 +143,7 @@ namespace Runtime.Enemies.SmallEnemies
         {
            
             base.OnRecycled();
-            invincibleTime = 2f;
-            spawned = false;
+         
             //behaviorTree.DisableBehavior();
             //behaviorTree.enabled = false;
         }
