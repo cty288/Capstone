@@ -50,7 +50,7 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
         dashPosFound = false;
         teleportLocation = Vector3.zero;
         beforeTeleportLocation = transform.position;
-        model.SetActive(false);
+        //model.SetActive(false);
         mbm.enabled = false;
         agent.enabled = false;
         rigidbody.isKinematic = true;
@@ -133,6 +133,7 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
 
         dashPosFound = true;
         mbm.enabled = true;
+        model.SetActive(false);
         Debug.Log("Find Dash Pos at " + teleportLocation);
     }
 
