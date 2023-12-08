@@ -58,6 +58,12 @@ namespace Runtime.Spawning {
 			
 			return angle > maxSlopeAngle;
 		}
+		
+		public static Quaternion GetRotationWithSlope(Vector3 point, out Quaternion rotationWithSlope) {
+			Vector3 normal = GetNormalAtPoint(point);
+			rotationWithSlope = Quaternion.FromToRotation(Vector3.up, normal);
+			return rotationWithSlope;
+		}
 
 		public static void UpdateRefPointsKDTree() {
 			Vector3[] insideArenaRefPoints =
