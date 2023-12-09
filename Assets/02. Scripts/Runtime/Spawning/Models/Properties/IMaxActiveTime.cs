@@ -12,7 +12,7 @@ namespace Runtime.Spawning.Models.Properties
         }
 
         protected override PropertyName GetPropertyName() {
-            return PropertyName.max_spawn_timer;
+            return PropertyName.max_active_time;
         }
 
         public override PropertyNameInfo[] GetDefaultDependentProperties() {

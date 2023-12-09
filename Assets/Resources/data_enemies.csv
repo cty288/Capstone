@@ -383,4 +383,70 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
       }
     ]
   }
-}",200,456,,,,
+}",200,456,"{
+  ""dash"": {
+    ""minDistance"": {
+      ""type"": ""float"",
+      ""value"": 15
+    },
+    ""maxDistance"": {
+      ""type"": ""float"",
+      ""value"": 40
+    },
+    ""dashSpeed"": {
+      ""type"": ""float"",
+      ""value"": 100
+    },
+    ""minDistanceFromLastMove"": {
+      ""type"": ""float"",
+      ""value"": 20
+    },
+    ""dashFinishWaitTime"": {
+      ""type"": ""float"",
+      ""value"": 0.25
+    }
+  },
+   ""walk"": {
+    ""minDistanceToPlayer"": {
+      ""type"": ""float"",
+      ""value"": 5
+    },
+    ""minWalkDistance"": {
+      ""type"": ""float"",
+      ""value"": 5
+    },
+    ""maxWalkDistance"": {
+      ""type"": ""float"",
+      ""value"": 15
+    },
+    ""moveSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1.5
+    }
+  },
+  ""uppercutBlades"":{
+    ""bladeInterval"":{
+      ""type"": ""float"",
+      ""value"": 2,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""bladeCount"":{
+      ""type"": ""int"",
+      ""value"": 8,
+      ""useDefaultModifier"": true
+    
+    },
+    ""bladeWaitTime"": {
+      ""type"": ""float"",
+      ""value"": 1,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""bladeDamage"":{
+      ""type"": ""int"",
+      ""value"": 15,
+      ""useDefaultModifier"": true
+    }
+  }
+}",,,

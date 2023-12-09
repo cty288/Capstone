@@ -9,6 +9,8 @@ using Runtime.DataFramework.Entities.Creatures;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model.Properties;
+using Runtime.Spawning;
+using Runtime.Spawning.Models.Properties;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
@@ -28,6 +30,9 @@ namespace Runtime.Enemies.Model {
 		public int GetRealSpawnWeight(int level);
 		
 		public float GetRealSpawnCost(int level, int rarity);
+		
+		// public void SetDirectorOwner(IDirectorEntity directorEntity);
+		// public IDirectorEntity GetDirectorOwner();
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
@@ -36,6 +41,8 @@ namespace Runtime.Enemies.Model {
 		protected ISpawnCostProperty spawnCostProperty;
 		protected ISpawnWeightProperty spawnWeightProperty;
 		protected ILevelNumberProperty levelNumberProperty;
+
+		// protected IDirectorEntity directorOwner;
 		
 		protected override void OnEntityRegisterAdditionalProperties() {
 			base.OnEntityRegisterAdditionalProperties();
@@ -102,6 +109,16 @@ namespace Runtime.Enemies.Model {
 		public float GetRealSpawnCost(int level, int rarity) {
 			return OnGetRealSpawnCost(level, rarity, spawnCostProperty.BaseValue);
 		}
+
+		// public void SetDirectorOwner(IDirectorEntity directorEntity)
+		// {
+		// 	this.directorOwner = directorEntity;
+		// }
+		//
+		// public IDirectorEntity GetDirectorOwner()
+		// {
+		// 	return directorOwner;
+		// }
 
 
 		protected abstract void OnEnemyRegisterAdditionalProperties();

@@ -35,13 +35,13 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 	}
 	public interface ILevelEntity : IEntity, IHaveCustomProperties, IHaveTags {
-		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost);
+		// public List<LevelSpawnCard> GetAllCardsUnderCost(float cost);
 		
-		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate);
+		// public List<LevelSpawnCard> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate);
 		
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost);
+		// public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost);
 		
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate);
+		// public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate);
 		
 		public List<LevelSpawnCard> GetAllBosses(Predicate<IEnemyEntity> furtherPredicate);
 
@@ -53,13 +53,13 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		public int GetCurrentLevelCount();
 		
-		public int GetMaxEnemyCount();
+		// public int GetMaxEnemyCount();
 		
 		public BindableProperty<bool> IsInBossFight { get; }
 		
 		public void SetInBattle(bool isInBattle);
 		
-		public int CurrentEnemyCount { get; set; }
+		// public int CurrentEnemyCount { get; set; }
 		
 		public void OnLevelExit();
 		
@@ -70,19 +70,19 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public Dictionary<Type, LevelExitCondition> LevelExitConditions { get;}
 		
 		public void AddLevelExitCondition(LevelExitCondition levelExitCondition);
-		
-		
+		public List<ISubAreaLevelEntity> GetAllSubAreaLevels();
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
 		
-		private ISpawnCardsProperty spawnCardsProperty;
-		private IMaxEnemiesProperty maxEnemiesProperty;
+		protected ISpawnCardsProperty spawnCardsProperty;
+		protected ISubAreaLevelsProperty subAreaLevelsProperty;
+		// protected IMaxEnemiesProperty maxEnemiesProperty;
 		[field: ES3Serializable]
 		private bool isInBattle = false;
 		
-		[field: ES3Serializable]
-		public int CurrentEnemyCount { get; set; }
+		// [field: ES3Serializable]
+		// public int CurrentEnemyCount { get; set; }
 
 		public void OnLevelExit() {
 			onLevelExit?.Invoke(this);
@@ -126,46 +126,47 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public override void OnAwake() {
 			base.OnAwake();
 			spawnCardsProperty = GetProperty<ISpawnCardsProperty>();
-			maxEnemiesProperty = GetProperty<IMaxEnemiesProperty>();
+			subAreaLevelsProperty = GetProperty<ISubAreaLevelsProperty>();
+			// maxEnemiesProperty = GetProperty<IMaxEnemiesProperty>();
 		}
 
 		protected int GetMinRarity(LevelSpawnCard card) {
 			return card.MinRarity;
 		}
 		
-		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost) {
-			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
-			int level = GetCurrentLevelCount();
-			foreach (var card in spawnCardsProperty.RealValues) {
-				
-				if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost) {
-					cards.Add(card);
-				}
-			}
-			return cards;
-		}
+		// public List<LevelSpawnCard> GetAllCardsUnderCost(float cost) {
+		// 	List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
+		// 	int level = GetCurrentLevelCount();
+		// 	foreach (var card in spawnCardsProperty.RealValues) {
+		// 		
+		// 		if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost) {
+		// 			cards.Add(card);
+		// 		}
+		// 	}
+		// 	return cards;
+		// }
 
-		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate) {
-			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
-			int level = GetCurrentLevelCount();
-			foreach (var card in spawnCardsProperty.RealValues) {
-				if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost && furtherPredicate(card)) {
-					cards.Add(card);
-				}
-			}
-			return cards;
-		}
+		// public List<LevelSpawnCard> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate) {
+		// 	List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
+		// 	int level = GetCurrentLevelCount();
+		// 	foreach (var card in spawnCardsProperty.RealValues) {
+		// 		if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost && furtherPredicate(card)) {
+		// 			cards.Add(card);
+		// 		}
+		// 	}
+		// 	return cards;
+		// }
 
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost) {
-			return GetCards((card =>
-				card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy));
-		}
-
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate) {
-			return GetCards((card =>
-				card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy &&
-				furtherPredicate(card)));
-		}
+		// public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost) {
+		// 	return GetCards((card =>
+		// 		card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy));
+		// }
+		//
+		// public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate) {
+		// 	return GetCards((card =>
+		// 		card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy &&
+		// 		furtherPredicate(card)));
+		// }
 
 		public List<LevelSpawnCard> GetAllBosses(Predicate<IEnemyEntity> templateEntityFurtherPredicate) {
 			if (templateEntityFurtherPredicate == null) {
@@ -196,11 +197,15 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return GetRarity();
 		}
 
-		public int GetMaxEnemyCount() {
-			return maxEnemiesProperty.RealValue;
+		// public int GetMaxEnemyCount() {
+		// 	return maxEnemiesProperty.RealValue;
+		// }
+		
+		public List<ISubAreaLevelEntity> GetAllSubAreaLevels() {
+			return subAreaLevelsProperty.RealValue;
 		}
-		
-		
+
+
 		[field: SerializeField]
 		public BindableProperty<bool> IsInBossFight { get; } = new BindableProperty<bool>();
 
@@ -213,13 +218,13 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		protected override void OnEntityRegisterAdditionalProperties() {
 			this.RegisterInitialProperty<IMaxEnemiesProperty>(new MaxEnemies());
 			this.RegisterInitialProperty<ISpawnCardsProperty>(new SpawnCardsProperty());
-			
+			this.RegisterInitialProperty<ISubAreaLevelsProperty>(new SubAreaLevelsProperty());
 		}
 
 		public override void OnRecycle() {
 			
 			isInBattle = false;
-			CurrentEnemyCount = 0;
+			// CurrentEnemyCount = 0;
 			LevelExitConditions.Clear();
 			onLevelExit = null;
 			IsInBossFight.Value = false;

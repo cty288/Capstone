@@ -121,7 +121,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			
+			// BoundEntity.GetDirectorOwner().DecrementCurrentActiveEnemies();
 		}
 
 		protected override void OnReadyToRecycle() {

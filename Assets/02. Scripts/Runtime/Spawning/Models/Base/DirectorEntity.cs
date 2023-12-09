@@ -23,7 +23,11 @@ namespace Runtime.Spawning
         public IMaxSpawnTimer GetMaxSpawnTimer();
         public IMaxActiveTime GetMaxActiveTime();
         public IDirectorCooldown GetDirectorCooldown();
-
+        public IMaxDirectorEnemies GetMaxDirectorEnemies();
+        
+        // public int GetCurrentActiveEnemies();
+        // public void IncrementCurrentActiveEnemies();
+        // public void DecrementCurrentActiveEnemies();
     }
 
     public abstract class DirectorEntity<T> : AbstractBasicEntity, IDirectorEntity where T : DirectorEntity<T>, new()
@@ -37,6 +41,9 @@ namespace Runtime.Spawning
         private IMaxSpawnTimer _maxSpawnTimer;
         private IMaxActiveTime _maxActiveTime;
         private IDirectorCooldown _directorCooldown;
+        private IMaxDirectorEnemies _maxDirectorEnemies;
+        
+        // protected int currentActiveEnemies;
         
         protected override ConfigTable GetConfigTable() {
             return null;
@@ -50,6 +57,7 @@ namespace Runtime.Spawning
             _maxSpawnTimer = GetProperty<IMaxSpawnTimer>();
             _maxActiveTime = GetProperty<IMaxActiveTime>();
             _directorCooldown = GetProperty<IDirectorCooldown>();
+            _maxDirectorEnemies = GetProperty<IMaxDirectorEnemies>();
         }
 
         protected override void OnInitModifiers(int rarity) { //rarity for directors is useless
@@ -70,9 +78,6 @@ namespace Runtime.Spawning
             });
             SetPropertyModifier<float>(new PropertyNameInfo(PropertyName.starting_credits), (base_val) => {
                 return base_val + level * 8f;
-            });
-            SetPropertyModifier<float>(new PropertyNameInfo(PropertyName.max_active_time), (base_val) => {
-                return base_val + level * 0.1f;
             });
         }
 
@@ -96,6 +101,7 @@ namespace Runtime.Spawning
             this.RegisterInitialProperty<ILevelNumberProperty>(new LevelNumber());
             this.RegisterInitialProperty<IMaxActiveTime>(new MaxActiveTime());
             this.RegisterInitialProperty<IDirectorCooldown>(new DirectorCooldown());
+            this.RegisterInitialProperty<IMaxDirectorEnemies>(new MaxDirectorEnemies());
         }
 
         public IStartingCredits GetStartingCredits()
@@ -126,5 +132,23 @@ namespace Runtime.Spawning
         {
             return _directorCooldown;
         }
+        
+        public IMaxDirectorEnemies GetMaxDirectorEnemies()
+        {
+            return _maxDirectorEnemies;
+        }
+
+        // public int GetCurrentActiveEnemies()
+        // {
+        //     return currentActiveEnemies;
+        // }
+
+        // public void IncrementCurrentActiveEnemies()
+        // {
+        //     currentActiveEnemies++;
+        // }
+        // public void DecrementCurrentActiveEnemies(){
+        //     currentActiveEnemies = Mathf.Max(currentActiveEnemies--, 0);
+        // }
     }
 }

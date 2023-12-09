@@ -38,10 +38,15 @@ namespace Framework {
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
 			this.RegisterModel<IGamePlayerModel>(new GamePlayerModel());
 			this.RegisterModel<ILevelModel>(new LevelModel());
+			this.RegisterModel<ISubAreaLevelModel>(new SubAreaLevelModel());
 			this.RegisterModel<IDirectorModel>(new DirectorModel());
 			this.RegisterModel<IBaitModel>(new BaitModel());
 			this.RegisterModel<ICurrencyModel>(new CurrencyModel());
 			this.RegisterModel<ISkillModel>(new SkillModel());
+			
+			
+			//???
+			this.RegisterModel<IPlayerModel>(new PlayerModel());
 			
 			this.RegisterExtensibleUtility<ResLoader>(new ResLoader());
 		}

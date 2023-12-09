@@ -19,6 +19,7 @@ using Runtime.Utilities.AnimatorSystem;
 using Runtime.Weapons.Model.Properties;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace Runtime.Player.ViewControllers
@@ -206,7 +207,8 @@ namespace Runtime.Player.ViewControllers
         [SerializeField]
         private Transform model;
 
-        private IGamePlayerModel playerModel;
+        private IGamePlayerModel gamePlayerModel;
+        private IPlayerModel playerModel;
 
         [SerializeField]
         private MovementState state;
@@ -256,9 +258,10 @@ namespace Runtime.Player.ViewControllers
             
             startYScale = model.localScale.y;
             
-            playerModel = this.GetModel<IGamePlayerModel>();
+            gamePlayerModel = this.GetModel<IGamePlayerModel>();
+            playerModel = this.GetModel<IPlayerModel>();
 
-            playerEntity = playerModel.GetPlayer();
+            playerEntity = gamePlayerModel.GetPlayer();
 
             inventorySystem = this.GetSystem<IInventorySystem>();
 
@@ -270,7 +273,7 @@ namespace Runtime.Player.ViewControllers
         // Update is called once per frame
         void Update()
         {
-            if (playerModel.IsPlayerDead()) {
+            if (gamePlayerModel.IsPlayerDead()) {
                 rb.freezeRotation = false;
             }
             else
@@ -283,13 +286,10 @@ namespace Runtime.Player.ViewControllers
                 
                 HandleAnimation();
 
+                CheckLocation();
                 onSlope = OnSlope();
             }
-            
-
-
         }
-
         
         private void FixedUpdate()
         {
@@ -938,43 +938,21 @@ namespace Runtime.Player.ViewControllers
             if (useGravity)
                 rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
         }
+
+        private void CheckLocation()
+        {
+            NavMeshHit hit;
+            NavMesh.SamplePosition(transform.position, out hit, 100f, NavMesh.AllAreas);
+            if (hit.hit)
+            {
+                playerModel.CurrentSubAreaMask.Value = hit.mask;
+            }
+        }
         
         public Rigidbody GetRigidBody()
         {
             return rb;
         }
     }
-    
-            /*private void SpeedControl()
-        {
-            // limiting speed on slope
-            if (OnSlope() && !exitingSlope)
-            {
-                //if (rb.velocity.magnitude > moveSpeed)
-                  //  rb.velocity = rb.velocity.normalized * moveSpeed;
-                //stop player if no inputs
-                if (moveDirection == Vector3.zero)
-                {
-                    
-                   // rb.velocity = new Vector3(0, rb.velocity.y, 0);
-                }
-            }
-
-            // limiting speed on ground or in air
-            else
-            {
-                Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-                // limit velocity if needed
-                if (flatVel.magnitude > moveSpeed) {
-                    
-                    //Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                    //rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-                    
-                }
-            }
-            
-
-        }*/
 }
 

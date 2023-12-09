@@ -48,6 +48,8 @@ namespace Runtime.DataFramework.Entities.Builders {
 				return DirectorBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}else if (typeof(TBuilder) == typeof(SkillBuilder<TEntity>)) {
 				return SkillBuilder<TEntity>.Allocate(rarity) as TBuilder;
+			}else if (typeof(TBuilder) == typeof(SubAreaLevelBuilder<TEntity>)) {
+				return SubAreaLevelBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
 			
 			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;

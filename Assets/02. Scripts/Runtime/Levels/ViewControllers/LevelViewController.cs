@@ -34,6 +34,7 @@ using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	public interface ILevelViewController: IEntityViewController {
+		public int GetLevelNumber();
 		public void SetLevelNumber(int levelNumber);
 		public ILevelEntity OnBuildNewLevel(int levelNumber);
 
@@ -145,22 +146,27 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 						enemyPrefabs.AddRange(enemy.variants);
 					}
 				}
-
+		
 				return enemyPrefabs;
 			}
 		}
+		
+		[Header("Sub Areas")]
+		public List<GameObject> subAreaLevels;
 
-		[SerializeField] protected int maxEnemiesBaseValue = 50;
+
+		// [SerializeField] protected int maxEnemiesBaseValue = 50;
 
 		//private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
 		private ILevelModel levelModel;
+        
 		private int levelNumber;
 		private NavMeshSurface navMeshSurface;
 
 		private HashSet<IDirectorViewController> playerSpawners = new HashSet<IDirectorViewController>();
 		private IDirectorViewController[] bossPillars;
 
-		private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
+		// private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
 		[SerializeField] protected bool autoUpdateNavMeshOnStart = true;
 		
 		[Header("Audio Settings")]
@@ -174,19 +180,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private ILevelSystem levelSystem;
  
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
-		
-	
-		
 
 		protected override void Awake() {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();
 			navMeshSurface = GetComponent<NavMeshSurface>();
 			levelSystem = this.GetSystem<ILevelSystem>();
-		//	enemies.AddRange(bosses);
-		
-
-
 		}
 
 		protected override IEntity OnBuildNewEntity() {
@@ -196,9 +195,16 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		protected abstract IEntity OnInitLevelEntity(LevelBuilder<T> builder, int levelNumber);
 
+		public int GetLevelNumber() {
+			return levelNumber;
+		}
 
 		public void SetLevelNumber(int levelNumber) {
 			this.levelNumber = levelNumber;
+			foreach (var subarea in subAreaLevels)
+			{
+				subarea.GetComponent<ISubAreaLevelViewController>().SetLevelNumber(levelNumber);
+			}
 		}
 
 		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
@@ -224,17 +230,32 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			return spawnCards;
 		}
+		
 		public virtual ILevelEntity OnBuildNewLevel(int levelNumber) {
 			if (levelModel == null) {
 				levelModel = this.GetModel<ILevelModel>();
 			}
 			LevelBuilder<T> builder = levelModel.GetLevelBuilder<T>();
 			builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), levelNumber)
-				.SetProperty(new PropertyNameInfo(PropertyName.max_enemies), maxEnemiesBaseValue)
-				.SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber));
-				//.SetProperty(new PropertyNameInfo(PropertyName.spawn_boss_cost), GetBossSpawnCostInfoDict());
+				.SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber))
+				.SetProperty(new PropertyNameInfo(PropertyName.sub_area_levels), CreateSubAreaLevels());
 
 			return OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
+		}
+		
+		public List<ISubAreaLevelEntity> CreateSubAreaLevels() {
+			List<ISubAreaLevelEntity> subAreaLevels = new List<ISubAreaLevelEntity>();
+			
+			foreach (var subLevel in this.subAreaLevels) {
+				ISubAreaLevelViewController subLevelVC = subLevel.GetComponent<ISubAreaLevelViewController>();
+				ISubAreaLevelEntity levelEntity = subLevelVC.OnInitEntity();
+
+				//templateEnemies.Add(enemyEntity);
+				print($"{subLevel.name} levelVC: {subLevelVC}");
+				subAreaLevels.Add(levelEntity);
+			}
+			
+			return subAreaLevels;
 		}
 
 		public async void Init() {
@@ -243,7 +264,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (autoCreateNewEntityWhenStart) {
 				UpdateNavMesh();
 			}
-			UpdatePreExistingEnemies();
+			// UpdatePreExistingEnemies();
 			OnSpawnPlayer();
 			if (ambientMusic) {
 				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
@@ -334,41 +355,41 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			director.SetLevelEntity(BoundEntity);
 			
 			
-			director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			// director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		}
 
-		private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
-			OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
-		}
+		// private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
+		// 	OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
+		// }
+		//
+		// private void UpdatePreExistingEnemies() {
+		// 	IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
+		// 	foreach (var enemy in enemies) {
+		// 		enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
+		// 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		// 	}
+		// }
+
+		// private void OnExistingEnemyInit(IEntityViewController entity) {
+		// 	entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
+		// 	OnInitEnemy(entity as IEnemyViewController);
+		// }
 		
-		private void UpdatePreExistingEnemies() {
-			IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
-			foreach (var enemy in enemies) {
-				enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
-					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-			}
-		}
-
-		private void OnExistingEnemyInit(IEntityViewController entity) {
-			entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
-			OnInitEnemy(entity as IEnemyViewController);
-		}
-
-		private void OnInitEnemy(IEnemyViewController enemyObject) {
-			IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
-			enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
-				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-			enemyCount++;
-			BoundEntity.CurrentEnemyCount++;
-			currentEnemies.Add(enemyEntity);
-		}
-
-		private void OnEnemyEntityRecycled(IEntity enemy) {
-			enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
-			enemyCount--;
-			BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
-			currentEnemies.Remove(enemy);
-		}
+		// private void OnInitEnemy(IEnemyViewController enemyObject) {
+		// 	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
+		// 	enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
+		// 		.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		// 	enemyCount++;
+		// 	BoundEntity.CurrentEnemyCount++;
+		// 	currentEnemies.Add(enemyEntity);
+		// }
+		//
+		// private void OnEnemyEntityRecycled(IEntity enemy) {
+		// 	enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
+		// 	enemyCount--;
+		// 	BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
+		// 	currentEnemies.Remove(enemy);
+		// }
 
 		protected override void Update() {
 			base.Update();
@@ -416,7 +437,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public override void OnRecycled() {
 			base.OnRecycled();
 			enemyCount = 0;
-			currentEnemies.Clear();
+			// currentEnemies.Clear();
 			playerSpawners.Clear();
 			if (ambientMusic) {
 				//AudioSystem.Singleton.StopMusic();
@@ -425,7 +446,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 		
 		public void OnExitLevel() {
-			BoundEntity.CurrentEnemyCount = 0;
+			// BoundEntity.CurrentEnemyCount = 0;
 			IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
 			IDirectorModel directorModel = this.GetModel<IDirectorModel>();
 			
@@ -434,11 +455,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
 			}
 			
-			while (currentEnemies.Count > 0) {
-				IEntity enemy = currentEnemies.First();
-				currentEnemies.Remove(enemy);
-				enemyModel.RemoveEntity(enemy.UUID, true);
-			}
+			// while (currentEnemies.Count > 0) {
+			// 	IEntity enemy = currentEnemies.First();
+			// 	currentEnemies.Remove(enemy);
+			// 	enemyModel.RemoveEntity(enemy.UUID, true);
+			// }
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {

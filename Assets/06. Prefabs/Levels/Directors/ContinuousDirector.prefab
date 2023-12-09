@@ -66,17 +66,21 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  baseMinSpawnTimer: 1
-  baseMaxSpawnTimer: 15
+  baseMinSpawnTimer: 5
+  baseMaxSpawnTimer: 25
   baseStartingCredits: 10
   baseCreditsPerSecond: 0.2
-  baseMaxActiveTime: 0
+  baseMaxActiveTime: 360
+  baseDirectorCooldown: 600
+  baseMaxDirectorEnemies: 20
   minSpawnRange: 15
   maxSpawnRange: 30
   addCreditsInterval: 1
   spawnMask:
     serializedVersion: 2
     m_Bits: 2305
+  enemyCount: 0
+  totalSpawnsSinceOffCooldown: 0
   currentCredits: 0
   creditTimer: 0
   directorSpawnTimer: 0
@@ -95,15 +99,6 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1.9975175
-      value: 0.0047092997
       inSlope: 0
       outSlope: 0
       tangentMode: 0
