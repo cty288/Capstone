@@ -39,8 +39,9 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 	public async UniTask SkillExecute() {
 		await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Skill_Hold"));
 		//start spawning blades
-		for (int i = 0; i < bladeCount; i++) {
-			SpawningUtility.SpawnBossPillars()
+		for (int i = 0; i < bladeCount; i++)
+		{
+			//SpawningUtility.SpawnBossPillars()
 			await UniTask.Delay((int) (bladeWaitTime * 1000));
 			//spawn blade
 		}
