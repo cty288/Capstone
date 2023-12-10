@@ -24,15 +24,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances {
 	public class CactusDesertViewController : SubAreaLevelViewController<CactusDesertEntity> {
 		protected override ISubAreaLevelEntity OnInitSubLevelEntity(SubAreaLevelBuilder<CactusDesertEntity> builder)
 		{
-			print($"building Cactus Desert VC entity");
-
 			return builder
 				.Build();
 		}
 
 		protected override void OnEntityStart()
 		{
-			print($"{BoundEntity.EntityName} is starting in Cactus Desert VC");
 		}
 
 		protected override void OnBindEntityProperty()

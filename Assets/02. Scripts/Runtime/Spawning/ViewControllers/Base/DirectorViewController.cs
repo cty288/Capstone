@@ -162,19 +162,10 @@ namespace Runtime.Spawning
             if(directorSpawnTimer <= 0f)
             {
                 AttemptToSpawn();
-
-                // if (totalSpawnsSinceOffCooldown >= BoundEntity.GetMaxDirectorEnemies().RealValue)
-                // {
-                //     //go on cooldown
-                //     isOnCooldown = true;
-                //     directorSpawnTimer = BoundEntity.GetDirectorCooldown().RealValue;
-                // }
-                // else
-                // {
-                    directorSpawnTimer = Mathf.Lerp(BoundEntity.GetMaxSpawnTimer().RealValue,
-                        BoundEntity.GetMinSpawnTimer().RealValue,
-                        spawnCurve.Evaluate(totalTimeElapsedInDirector / BoundEntity.GetMaxActiveTime().RealValue));
-                // }
+                
+                directorSpawnTimer = Mathf.Lerp(BoundEntity.GetMaxSpawnTimer().RealValue,
+                    BoundEntity.GetMinSpawnTimer().RealValue,
+                    spawnCurve.Evaluate(totalTimeElapsedInDirector / BoundEntity.GetMaxActiveTime().RealValue));
             }
         }
 
@@ -225,8 +216,11 @@ namespace Runtime.Spawning
             }
             
             //check if area is still active
-            if(!subArea.IsActiveSpawner)
+            if (!subArea.IsActiveSpawner)
+            {
+                print($"subarea is not actively spawning");
                 return;
+            }
             
             //if over max, return to stop spawning in area
             // if(enemyCount >= subArea.GetMaxEnemyCount())
@@ -247,13 +241,13 @@ namespace Runtime.Spawning
                 int maxPackSize = Random.Range(1, 5);
                 while (success && maxPackSize > 0)
                 {
-                    success = await SpawnEnemy(selectedCard);
+                    success = await SpawnEnemy(selectedCard, areaMask);
                     maxPackSize--;
                 }
             }
         }
 
-        protected virtual async UniTask<bool> SpawnEnemy(LevelSpawnCard card)
+        protected virtual async UniTask<bool> SpawnEnemy(LevelSpawnCard card, int areaMask)
         {
             //determine level and cost
             int rarity = card.MinRarity;
@@ -309,8 +303,9 @@ namespace Runtime.Spawning
                                 levelNumber, true, 5, 30);
                             IEnemyViewController enemyVC = spawnedEnemy.GetComponent<IEnemyViewController>();
                             IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
+                            enemyEntity.SpawnedAreaIndex = areaMask;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                            Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
+                            // Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
                             
                             // totalSpawnsSinceOffCooldown++;
                             currentCredits -= cost;

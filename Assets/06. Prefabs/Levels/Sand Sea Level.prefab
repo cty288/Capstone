@@ -336,7 +336,11 @@ MonoBehaviour:
   maxExtent: {fileID: 4174941809537234053}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
-  subAreaLevels: []
+  subAreaLevelPrefabs:
+  - {fileID: 5997115203119007213}
+  - {fileID: 5997115203908220490}
+  - {fileID: 5997115203767806034}
+  - {fileID: 5997115202017390099}
   autoUpdateNavMeshOnStart: 1
   ambientMusic: {fileID: 8300000, guid: da3ed51b963c68748a9d645c14752ec5, type: 3}
   relativeVolume: 1
@@ -4551,7 +4555,7 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   maxEnemiesPerArea: 5
-  areaSpawningCooldown: 360
+  areaSpawningCooldown: 5
   subAreaLevelModifier: {fileID: 4308668825488644635}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
@@ -10015,7 +10019,7 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   maxEnemiesPerArea: 5
-  areaSpawningCooldown: 360
+  areaSpawningCooldown: 5
   subAreaLevelModifier: {fileID: 1045219877315657789}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
@@ -14683,7 +14687,7 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   maxEnemiesPerArea: 5
-  areaSpawningCooldown: 360
+  areaSpawningCooldown: 5
   subAreaLevelModifier: {fileID: 2559758980679965766}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
@@ -23085,7 +23089,7 @@ MonoBehaviour:
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   maxEnemiesPerArea: 5
-  areaSpawningCooldown: 360
+  areaSpawningCooldown: 5
   subAreaLevelModifier: {fileID: 646451224746513326}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,

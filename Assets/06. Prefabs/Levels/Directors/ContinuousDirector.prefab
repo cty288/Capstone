@@ -68,7 +68,7 @@ MonoBehaviour:
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   baseMinSpawnTimer: 5
   baseMaxSpawnTimer: 25
-  baseStartingCredits: 10
+  baseStartingCredits: 0
   baseCreditsPerSecond: 0.2
   baseMaxActiveTime: 360
   baseDirectorCooldown: 600
@@ -79,8 +79,6 @@ MonoBehaviour:
   spawnMask:
     serializedVersion: 2
     m_Bits: 2305
-  enemyCount: 0
-  totalSpawnsSinceOffCooldown: 0
   currentCredits: 0
   creditTimer: 0
   directorSpawnTimer: 0
@@ -109,4 +107,3 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   totalTimeElapsedInDirector: 0
-  isOnCooldown: 0

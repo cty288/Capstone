@@ -35,6 +35,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
 
         public void StartSpawningCooldown();
 
+        public void InitDirector(IDirectorViewController director);
+
         public void InitDirectors();
     }
     
@@ -48,9 +50,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         [SerializeField] protected int maxEnemiesPerArea = 20;
         [SerializeField] protected float areaSpawningCooldown = 360f;
         protected float cooldownTimer = 0f;
-        protected int enemyCount = 0;
-        private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
-        
         
         [FormerlySerializedAs("subAreaLevelModifierMask")]
         [Header("SubArea Modifier")]
@@ -58,6 +57,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         
         [Header("Enemies")]
         [SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
+        [SerializeField] protected int enemyCount = 0;
+        private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
         
         public List<GameObject> Enemies {
             get {
@@ -126,16 +127,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         {
             base.Update();
             
-            //wait for initialization
-            if (BoundEntity == null)
-            {
-                print("BOUND SUB AREA NULL");
-
-                return;
-            }
-            
-            if (BoundEntity.IsActiveSpawner) {
-                print("BOUND SUB AREA ENTITY");
+            if (!BoundEntity.IsActiveSpawner) {
                 if (cooldownTimer <= areaSpawningCooldown)
                 {
                     cooldownTimer += Time.deltaTime;
@@ -143,11 +135,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
                 else
                 {
                     //off cooldown
-                    print($"SUBAREA {BoundEntity.EntityName} IS ACTIVE AGAIN");
                     BoundEntity.IsActiveSpawner = true;
                     BoundEntity.TotalEnemiesSpawnedSinceOffCooldown = 0;
                 }
             }
+        }
+
+        public void InitDirector(IDirectorViewController director)
+        {
+            director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         }
 
         public void InitDirectors()
@@ -155,10 +151,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             //director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
             UpdatePreExistingEnemies();
             //Tim update: get all directors in children and init
+            
         }
         
         private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
-        	OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
+            IEnemyViewController enemyViewController = enemyObject.GetComponent<IEnemyViewController>();
+
+            if(enemyViewController.EnemyEntity.SpawnedAreaIndex == CalculateSubAreaMaskIndex()) {
+                OnInitEnemy(enemyViewController);
+            }
         }
         
         private void UpdatePreExistingEnemies() {
@@ -183,8 +184,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             BoundEntity.TotalEnemiesSpawnedSinceOffCooldown++;
         	currentEnemies.Add(enemyEntity);
             
-            if(BoundEntity.CurrentEnemyCount >= BoundEntity.GetMaxEnemyCount()) {
-                print($"SUBAREA {BoundEntity.EntityName} IS ON COOLDOWN");
+            if(BoundEntity.TotalEnemiesSpawnedSinceOffCooldown >= BoundEntity.GetMaxEnemyCount()) {
                 StartSpawningCooldown();
             }
         }

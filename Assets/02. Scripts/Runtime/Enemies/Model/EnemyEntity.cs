@@ -33,6 +33,8 @@ namespace Runtime.Enemies.Model {
 		
 		// public void SetDirectorOwner(IDirectorEntity directorEntity);
 		// public IDirectorEntity GetDirectorOwner();
+		
+		public int SpawnedAreaIndex { get; set; }
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
@@ -43,6 +45,7 @@ namespace Runtime.Enemies.Model {
 		protected ILevelNumberProperty levelNumberProperty;
 
 		// protected IDirectorEntity directorOwner;
+		public int SpawnedAreaIndex { get; set; }
 		
 		protected override void OnEntityRegisterAdditionalProperties() {
 			base.OnEntityRegisterAdditionalProperties();

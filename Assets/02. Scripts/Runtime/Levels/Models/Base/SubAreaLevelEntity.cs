@@ -58,7 +58,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		protected override void OnEntityStart(bool isLoadedFromSave)
 		{
-			IsActiveSpawner = false;
+			IsActiveSpawner = true;
 		}
 		
 		protected override string OnGetDescription(string defaultLocalizationKey) {

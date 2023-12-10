@@ -252,6 +252,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 				subLevelVC.InitWithID(levelEntity.UUID);
 				subLevelVC.InitDirectors();
+				// print($"number of directors in playerSpawners: {playerSpawners.Count}");
+				// foreach (var director in playerSpawners)
+				// {
+				// 	print($"add director to {levelEntity.EntityName}: {director.Entity.EntityName}");
+				// 	subLevelVC.InitDirector(director);
+				// }
 				//templateEnemies.Add(enemyEntity);
 				subAreaLevels.Add(subLevelVC);
 				BoundEntity.AddSubArea(levelEntity.UUID);
@@ -349,8 +355,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		
-
 		private void UpdatePreExistingDirectors() {
 			IDirectorViewController[] directors = GetComponentsInChildren<IDirectorViewController>(true);
 			foreach (var directorViewController in directors) {
@@ -432,6 +436,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					spawner.transform.localPosition = Vector3.zero;
 					spawner.transform.localRotation = Quaternion.identity;
 					spawner.transform.localScale = Vector3.one;
+					
+					foreach (var subArea in subAreaLevels)
+					{
+						subArea.InitDirector(director);
+					}
 				}
 			}
 			

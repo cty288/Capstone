@@ -945,7 +945,7 @@ namespace Runtime.Player.ViewControllers
             NavMesh.SamplePosition(transform.position, out hit, 100f, NavMesh.AllAreas);
             if (hit.hit)
             {
-                print($"player current area: {hit.mask}");
+                // print($"player current area: {hit.mask}");
                 playerModel.CurrentSubAreaMask.Value = hit.mask;
             }
         }
