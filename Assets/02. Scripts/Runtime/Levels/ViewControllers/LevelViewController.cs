@@ -151,8 +151,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 		
-		[Header("Sub Areas")]
-		public List<GameObject> subAreaLevels;
+		[FormerlySerializedAs("subAreaLevels")] [Header("Sub Areas")]
+		public List<GameObject> subAreaLevelPrefabs;
+
+		private List<ISubAreaLevelViewController> subAreaLevels = new List<ISubAreaLevelViewController>();
 
 
 		// [SerializeField] protected int maxEnemiesBaseValue = 50;
@@ -201,10 +203,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public void SetLevelNumber(int levelNumber) {
 			this.levelNumber = levelNumber;
-			foreach (var subarea in subAreaLevels)
-			{
-				subarea.GetComponent<ISubAreaLevelViewController>().SetLevelNumber(levelNumber);
-			}
+			
 		}
 
 		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
@@ -237,21 +236,25 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			LevelBuilder<T> builder = levelModel.GetLevelBuilder<T>();
 			builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), levelNumber)
-				.SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber))
-				.SetProperty(new PropertyNameInfo(PropertyName.sub_area_levels), CreateSubAreaLevels());
+				.SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber));
+				//.SetProperty(new PropertyNameInfo(PropertyName.sub_area_levels), CreateSubAreaLevels());
 
-			return OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
+			ILevelEntity levelEnity = OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
+			return levelEnity;
 		}
 		
-		public List<ISubAreaLevelEntity> CreateSubAreaLevels() {
-			List<ISubAreaLevelEntity> subAreaLevels = new List<ISubAreaLevelEntity>();
+		public List<ISubAreaLevelViewController> CreateSubAreaLevels() {
+			List<ISubAreaLevelViewController> subAreaLevels = new List<ISubAreaLevelViewController>();
 			
-			foreach (var subLevel in this.subAreaLevels) {
+			foreach (var subLevel in this.subAreaLevelPrefabs) {
 				ISubAreaLevelViewController subLevelVC = subLevel.GetComponent<ISubAreaLevelViewController>();
 				ISubAreaLevelEntity levelEntity = subLevelVC.OnInitEntity();
 
+				subLevelVC.InitWithID(levelEntity.UUID);
+				subLevelVC.InitDirectors();
 				//templateEnemies.Add(enemyEntity);
-				subAreaLevels.Add(levelEntity);
+				subAreaLevels.Add(subLevelVC);
+				BoundEntity.AddSubArea(levelEntity.UUID);
 			}
 			
 			return subAreaLevels;
@@ -260,9 +263,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public async void Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
+			subAreaLevels = CreateSubAreaLevels();
 			if (autoCreateNewEntityWhenStart) {
 				UpdateNavMesh();
 			}
+			foreach (var subarea in subAreaLevels) {
+				subarea.SetLevelNumber(levelNumber);
+			}
+			
 			// UpdatePreExistingEnemies();
 			OnSpawnPlayer();
 			if (ambientMusic) {
@@ -352,15 +360,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		protected void InitDirector(IDirectorViewController director) {
 			director.SetLevelEntity(BoundEntity);
-            
-			
-			foreach (var subLevel in subAreaLevels) {
-
-				subLevel.GetComponent<ISubAreaLevelViewController>().InitDirector(director);
-			}
-
-			
-			// director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		}
 
 		// private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
@@ -448,16 +447,24 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				//AudioSystem.Singleton.StopMusic();
 			}
 			bossPillars = null;
+			subAreaLevels.Clear();
 		}
 		
 		public void OnExitLevel() {
 			// BoundEntity.CurrentEnemyCount = 0;
 			IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
 			IDirectorModel directorModel = this.GetModel<IDirectorModel>();
+			ISubAreaLevelModel subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
 			
 			ISpawnCardsProperty spawnCardsProperty = BoundEntity.GetProperty<ISpawnCardsProperty>();
 			foreach (LevelSpawnCard spawnCard in spawnCardsProperty.RealValue.Value) {
 				enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
+			}
+
+
+			foreach (ISubAreaLevelViewController subAreaLevel in subAreaLevels) {
+				subAreaLevelModel.RemoveEntity(subAreaLevel.Entity.UUID,
+					true);
 			}
 			
 			// while (currentEnemies.Count > 0) {
@@ -471,6 +478,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					directorModel.RemoveEntity(directorViewController.Entity.UUID, true);
 				}
 			}
+			
 		
 
 			foreach (IDirectorViewController spawner in playerSpawners) {

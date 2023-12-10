@@ -35,7 +35,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
 
         public void StartSpawningCooldown();
 
-        public void InitDirector(IDirectorViewController director);
+        public void InitDirectors();
     }
     
     public abstract class SubAreaLevelViewController<T> : AbstractBasicEntityViewController<T>, ISubAreaLevelViewController  where  T : class, ISubAreaLevelEntity, new()  {
@@ -150,9 +150,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             }
         }
 
-        public void InitDirector(IDirectorViewController director)
+        public void InitDirectors()
         {
-            director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            //director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            UpdatePreExistingEnemies();
+            //Tim update: get all directors in children and init
         }
         
         private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {

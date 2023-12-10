@@ -52,7 +52,7 @@ namespace Runtime.DataFramework.Properties
 		spawn_weight,
 		max_enemies,
 		spawn_cards,
-		sub_area_levels,
+		//sub_area_levels,
 		sub_area_nav_mesh_modifier,
 		level_number,
 		starting_credits,

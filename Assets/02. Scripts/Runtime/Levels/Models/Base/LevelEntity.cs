@@ -70,17 +70,24 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public Dictionary<Type, LevelExitCondition> LevelExitConditions { get;}
 		
 		public void AddLevelExitCondition(LevelExitCondition levelExitCondition);
-		public List<ISubAreaLevelEntity> GetAllSubAreaLevels();
+		public HashSet<ISubAreaLevelEntity> GetAllSubAreaLevels();
+
+		public void AddSubArea(string uuid);
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
 		
 		protected ISpawnCardsProperty spawnCardsProperty;
-		protected ISubAreaLevelsProperty subAreaLevelsProperty;
+		//protected ISubAreaLevelsProperty subAreaLevelsProperty;
 		// protected IMaxEnemiesProperty maxEnemiesProperty;
 		[field: ES3Serializable]
 		private bool isInBattle = false;
 		
+		[field: ES3Serializable]
+		private HashSet<string> SubAreaUUIDs { get; set; } = new HashSet<string>();
+		
+		private HashSet<ISubAreaLevelEntity> subAreaLevelEntities = new HashSet<ISubAreaLevelEntity>();
+
 		// [field: ES3Serializable]
 		// public int CurrentEnemyCount { get; set; }
 
@@ -126,7 +133,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public override void OnAwake() {
 			base.OnAwake();
 			spawnCardsProperty = GetProperty<ISpawnCardsProperty>();
-			subAreaLevelsProperty = GetProperty<ISubAreaLevelsProperty>();
+			//subAreaLevelsProperty = GetProperty<ISubAreaLevelsProperty>();
 			// maxEnemiesProperty = GetProperty<IMaxEnemiesProperty>();
 		}
 
@@ -201,8 +208,21 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		// 	return maxEnemiesProperty.RealValue;
 		// }
 		
-		public List<ISubAreaLevelEntity> GetAllSubAreaLevels() {
-			return subAreaLevelsProperty.RealValue;
+		public HashSet<ISubAreaLevelEntity> GetAllSubAreaLevels() {
+			if (subAreaLevelEntities.Count != SubAreaUUIDs.Count) {
+				subAreaLevelEntities.Clear();
+				
+				foreach (var uuid in SubAreaUUIDs) {
+					subAreaLevelEntities.Add(GlobalEntities.GetEntityAndModel(uuid).Item1 as ISubAreaLevelEntity);
+				}
+			}
+
+			return subAreaLevelEntities;
+		}
+
+		public void AddSubArea(string uuid) {
+			SubAreaUUIDs.Add(uuid);
+			subAreaLevelEntities.Add(GlobalEntities.GetEntityAndModel(uuid).Item1 as ISubAreaLevelEntity);
 		}
 
 
@@ -218,7 +238,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		protected override void OnEntityRegisterAdditionalProperties() {
 			this.RegisterInitialProperty<IMaxEnemiesProperty>(new MaxEnemies());
 			this.RegisterInitialProperty<ISpawnCardsProperty>(new SpawnCardsProperty());
-			this.RegisterInitialProperty<ISubAreaLevelsProperty>(new SubAreaLevelsProperty());
+		
 		}
 
 		public override void OnRecycle() {
@@ -228,6 +248,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			LevelExitConditions.Clear();
 			onLevelExit = null;
 			IsInBossFight.Value = false;
+			SubAreaUUIDs.Clear();
+			subAreaLevelEntities.Clear();
 		}
 	}
 }
