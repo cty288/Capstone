@@ -275,7 +275,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.13333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 9df32fdd66cef04459a4926414b2ed42, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: e9f692325c34db5438a209ff7ef0f679, type: 2}
 --- !u!114 &4917020754344385996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,26 +316,9 @@ MonoBehaviour:
   - {fileID: 5510856074636867583}
   - {fileID: 6309164413135760662}
   enemies:
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
   - mainPrefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
       type: 3}
     variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
-      type: 3}
-    variants:
-    - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
-    - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
     minRarity: 1
     maxRarity: 2
   bossSpawnCostInfo:
@@ -355,6 +338,9 @@ MonoBehaviour:
     type: 3}
   subAreaLevels:
   - {fileID: 5997115203119007213}
+  - {fileID: 5997115203908220490}
+  - {fileID: 5997115203767806034}
+  - {fileID: 5997115202017390099}
   autoUpdateNavMeshOnStart: 1
   ambientMusic: {fileID: 8300000, guid: da3ed51b963c68748a9d645c14752ec5, type: 3}
   relativeVolume: 1
@@ -4534,6 +4520,60 @@ MonoBehaviour:
   m_Area: 5
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &4925562438467678522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997115203767806034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 815d0326fab34777803f813366d3797e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
+  <PrefabID>k__BackingField: 
+  autoCreateNewEntityWhenStart: 0
+  showNameTagWhenPointed: 1
+  nameTagFollowTransform: {fileID: 0}
+  nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
+  hasInteractiveHint: 0
+  interactiveHintPrefabName: InteractHint_General
+  interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
+  autoDestroyWhenEntityRemoved: 1
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
+  maxEnemiesPerArea: 5
+  areaSpawningCooldown: 360
+  subAreaLevelModifier: {fileID: 4308668825488644635}
+  enemies:
+  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+      type: 3}
+    variants: []
+    minRarity: 1
+    maxRarity: 2
+  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+      type: 3}
+    variants: []
+    minRarity: 1
+    maxRarity: 2
+  - mainPrefab: {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0,
+      type: 3}
+    variants:
+    - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
+    minRarity: 1
+    maxRarity: 2
 --- !u!1001 &6740914133432436796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9944,22 +9984,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6740914133432436796}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1045219877315657789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997115203119007213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 3
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
 --- !u!114 &202722522625978750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9994,13 +10018,48 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  subAreaLevelModifierMask: {fileID: 1045219877315657789}
+  maxEnemiesPerArea: 5
+  areaSpawningCooldown: 360
+  subAreaLevelModifier: {fileID: 1045219877315657789}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
       type: 3}
     variants: []
     minRarity: 1
     maxRarity: 2
+  - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+      type: 3}
+    variants: []
+    minRarity: 1
+    maxRarity: 2
+  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+      type: 3}
+    variants: []
+    minRarity: 1
+    maxRarity: 2
+  - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
+      type: 3}
+    variants:
+    - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
+    - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
+    minRarity: 1
+    maxRarity: 2
+--- !u!114 &1045219877315657789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997115203119007213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 3
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &6047431461541857959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1035902058921706139, guid: 18dea5d9da6f99048bf5066b5145f0d6,
@@ -14593,6 +14652,54 @@ MonoBehaviour:
   m_Area: 6
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &8169805213568983073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997115202017390099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce1fe6cdeffd48ca8bc2a32224c2e919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
+  <PrefabID>k__BackingField: 
+  autoCreateNewEntityWhenStart: 0
+  showNameTagWhenPointed: 1
+  nameTagFollowTransform: {fileID: 0}
+  nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
+  hasInteractiveHint: 0
+  interactiveHintPrefabName: InteractHint_General
+  interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
+  autoDestroyWhenEntityRemoved: 1
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
+  maxEnemiesPerArea: 5
+  areaSpawningCooldown: 360
+  subAreaLevelModifier: {fileID: 2559758980679965766}
+  enemies:
+  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+      type: 3}
+    variants: []
+    minRarity: 1
+    maxRarity: 2
+  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+      type: 3}
+    variants: []
+    minRarity: 1
+    maxRarity: 2
 --- !u!1001 &8872873331152879493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22947,3 +23054,51 @@ MonoBehaviour:
   m_Area: 4
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &4835377749630309017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997115203908220490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da57ac5fc2e5444687301e84379d621d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
+  <PrefabID>k__BackingField: 
+  autoCreateNewEntityWhenStart: 0
+  showNameTagWhenPointed: 1
+  nameTagFollowTransform: {fileID: 0}
+  nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
+  hasInteractiveHint: 0
+  interactiveHintPrefabName: InteractHint_General
+  interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
+  autoDestroyWhenEntityRemoved: 1
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
+  maxEnemiesPerArea: 5
+  areaSpawningCooldown: 360
+  subAreaLevelModifier: {fileID: 646451224746513326}
+  enemies:
+  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+      type: 3}
+    variants: []
+    minRarity: 1
+    maxRarity: 2
+  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+      type: 3}
+    variants: []
+    minRarity: 1
+    maxRarity: 2

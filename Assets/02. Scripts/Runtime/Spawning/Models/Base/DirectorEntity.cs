@@ -23,7 +23,7 @@ namespace Runtime.Spawning
         public IMaxSpawnTimer GetMaxSpawnTimer();
         public IMaxActiveTime GetMaxActiveTime();
         public IDirectorCooldown GetDirectorCooldown();
-        public IMaxDirectorEnemies GetMaxDirectorEnemies();
+        // public IMaxDirectorEnemies GetMaxDirectorEnemies();
         
         // public int GetCurrentActiveEnemies();
         // public void IncrementCurrentActiveEnemies();
@@ -41,7 +41,7 @@ namespace Runtime.Spawning
         private IMaxSpawnTimer _maxSpawnTimer;
         private IMaxActiveTime _maxActiveTime;
         private IDirectorCooldown _directorCooldown;
-        private IMaxDirectorEnemies _maxDirectorEnemies;
+        // private IMaxDirectorEnemies _maxDirectorEnemies;
         
         // protected int currentActiveEnemies;
         
@@ -57,7 +57,7 @@ namespace Runtime.Spawning
             _maxSpawnTimer = GetProperty<IMaxSpawnTimer>();
             _maxActiveTime = GetProperty<IMaxActiveTime>();
             _directorCooldown = GetProperty<IDirectorCooldown>();
-            _maxDirectorEnemies = GetProperty<IMaxDirectorEnemies>();
+            // _maxDirectorEnemies = GetProperty<IMaxDirectorEnemies>();
         }
 
         protected override void OnInitModifiers(int rarity) { //rarity for directors is useless
@@ -133,10 +133,10 @@ namespace Runtime.Spawning
             return _directorCooldown;
         }
         
-        public IMaxDirectorEnemies GetMaxDirectorEnemies()
-        {
-            return _maxDirectorEnemies;
-        }
+        // public IMaxDirectorEnemies GetMaxDirectorEnemies()
+        // {
+        //     return _maxDirectorEnemies;
+        // }
 
         // public int GetCurrentActiveEnemies()
         // {

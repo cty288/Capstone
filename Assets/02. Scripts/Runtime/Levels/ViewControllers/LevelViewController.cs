@@ -251,7 +251,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				ISubAreaLevelEntity levelEntity = subLevelVC.OnInitEntity();
 
 				//templateEnemies.Add(enemyEntity);
-				print($"{subLevel.name} levelVC: {subLevelVC}");
 				subAreaLevels.Add(levelEntity);
 			}
 			
@@ -353,7 +352,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		protected void InitDirector(IDirectorViewController director) {
 			director.SetLevelEntity(BoundEntity);
+            
 			
+			foreach (var subLevel in subAreaLevels) {
+
+				subLevel.GetComponent<ISubAreaLevelViewController>().InitDirector(director);
+			}
+
 			
 			// director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		}

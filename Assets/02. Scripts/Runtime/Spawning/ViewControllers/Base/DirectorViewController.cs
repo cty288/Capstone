@@ -80,15 +80,15 @@ namespace Runtime.Spawning
         [SerializeField] public LayerMask spawnMask;
         
         [Header("Director Don't Edit")]
-        [SerializeField] private int enemyCount;
+        // [SerializeField] private int enemyCount;
         private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
-        [SerializeField] private int totalSpawnsSinceOffCooldown;
+        // [SerializeField] private int totalSpawnsSinceOffCooldown;
         [SerializeField] private float currentCredits;
         [SerializeField] private float creditTimer = 0f;
         [SerializeField] private float directorSpawnTimer = 0f;
         [SerializeField] private AnimationCurve spawnCurve;
         [SerializeField] private float totalTimeElapsedInDirector = 0f;
-        [SerializeField] private bool isOnCooldown;
+        // [SerializeField] private bool isOnCooldown;
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
         //protected Vector3[] insideArenaCheckPoints;
 
@@ -137,21 +137,21 @@ namespace Runtime.Spawning
             base.Update();
             UpdateTimers();
             
-            if (isOnCooldown)
-            {
-                //get off cooldown
-                if (directorSpawnTimer <= 0f)
-                {
-                    isOnCooldown = false;
-                    totalTimeElapsedInDirector = 0f;
-                    totalSpawnsSinceOffCooldown = enemyCount;
-                    // print($"director OFF cooldown, enemies remaining: {totalSpawnsSinceOffCooldown}");
-                }
-                else
-                {
-                    return;
-                }
-            }
+            // if (isOnCooldown)
+            // {
+            //     //get off cooldown
+            //     if (directorSpawnTimer <= 0f)
+            //     {
+            //         isOnCooldown = false;
+            //         totalTimeElapsedInDirector = 0f;
+            //         totalSpawnsSinceOffCooldown = enemyCount;
+            //         // print($"director OFF cooldown, enemies remaining: {totalSpawnsSinceOffCooldown}");
+            //     }
+            //     else
+            //     {
+            //         return;
+            //     }
+            // }
 
             if (creditTimer <= 0f)
             {
@@ -163,20 +163,18 @@ namespace Runtime.Spawning
             {
                 AttemptToSpawn();
 
-                if (totalSpawnsSinceOffCooldown >= BoundEntity.GetMaxDirectorEnemies().RealValue)
-                {
-                    //go on cooldown
-                    isOnCooldown = true;
-                    directorSpawnTimer = BoundEntity.GetDirectorCooldown().RealValue;
-                    // print($"director on cooldown: {directorSpawnTimer}");
-                }
-                else
-                {
+                // if (totalSpawnsSinceOffCooldown >= BoundEntity.GetMaxDirectorEnemies().RealValue)
+                // {
+                //     //go on cooldown
+                //     isOnCooldown = true;
+                //     directorSpawnTimer = BoundEntity.GetDirectorCooldown().RealValue;
+                // }
+                // else
+                // {
                     directorSpawnTimer = Mathf.Lerp(BoundEntity.GetMaxSpawnTimer().RealValue,
                         BoundEntity.GetMinSpawnTimer().RealValue,
                         spawnCurve.Evaluate(totalTimeElapsedInDirector / BoundEntity.GetMaxActiveTime().RealValue));
-                    // print($"director spawn timer: {directorSpawnTimer}");
-                }
+                // }
             }
         }
 
@@ -190,7 +188,7 @@ namespace Runtime.Spawning
             LevelEntity = levelEntity;
             levelNumber = levelEntity.GetCurrentLevelCount();
             
-            RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            // RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         }
 
         public IUnRegister RegisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy) {
@@ -211,26 +209,31 @@ namespace Runtime.Spawning
         
         protected virtual async void AttemptToSpawn()
         {
-            //check if over max enemies
-            // if(LevelEntity.CurrentEnemyCount >= LevelEntity.GetMaxEnemyCount())
-            //     return;
-
             //pick card, store the card
-            // TODO: get card from where player is standing
             // get subarea index where player is standing
             int areaMask = playerModel.CurrentSubAreaMask.Value;
+            
             // get subarea from level entity
             ISubAreaLevelEntity subArea = LevelEntity.GetAllSubAreaLevels().FirstOrDefault(x => 
                 x.GetSubAreaNavMeshModifier() == areaMask);
+            
             //get cards under cost from subarea
             if (subArea == null)
             {
-                print($"subarea {areaMask} is null");
+                print($"subarea is null");
                 return;
             }
             
-            List<LevelSpawnCard> cards = subArea.GetAllNormalEnemiesUnderCost(currentCredits);
+            //check if area is still active
+            if(!subArea.IsActiveSpawner)
+                return;
             
+            //if over max, return to stop spawning in area
+            // if(enemyCount >= subArea.GetMaxEnemyCount())
+            //     return;
+            
+            List<LevelSpawnCard> cards = subArea.GetAllNormalEnemiesUnderCost(currentCredits);
+     
             if (cards.Count > 0)
             {
                 m_lottery.SetCards(cards);
@@ -252,10 +255,6 @@ namespace Runtime.Spawning
 
         protected virtual async UniTask<bool> SpawnEnemy(LevelSpawnCard card)
         {
-            //if over max, return false to stop spawning packs
-            if(enemyCount >= BoundEntity.GetMaxDirectorEnemies().RealValue)
-                return false;
-
             //determine level and cost
             int rarity = card.MinRarity;
             float cost = card.GetRealSpawnCost(levelNumber, card.MinRarity);
@@ -312,11 +311,8 @@ namespace Runtime.Spawning
                             IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);
                             Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
-                            //
-                            // enemyEntity.SetDirectorOwner(BoundEntity);
-                            // BoundEntity.IncrementCurrentActiveEnemies();
                             
-                            totalSpawnsSinceOffCooldown++;
+                            // totalSpawnsSinceOffCooldown++;
                             currentCredits -= cost;
                             return true;
                         }
@@ -326,29 +322,29 @@ namespace Runtime.Spawning
             return false;
         }
 
-        #region testing
-
-        private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
-            OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
-        }
-        
-        private void OnInitEnemy(IEnemyViewController enemyObject) {
-            IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
-            enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
-                .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-            enemyCount++;
-            // BoundEntity.CurrentEnemyCount++;
-            currentEnemies.Add(enemyEntity);
-        }
-
-        private void OnEnemyEntityRecycled(IEntity enemy) {
-            enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
-            enemyCount = Mathf.Max(0, enemyCount - 1);
-            // BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
-            currentEnemies.Remove(enemy);
-        }
-        
-        #endregion
+        // #region testing
+        //
+        // private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
+        //     OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
+        // }
+        //
+        // private void OnInitEnemy(IEnemyViewController enemyObject) {
+        //     IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
+        //     enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
+        //         .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        //     enemyCount++;
+        //     // BoundEntity.CurrentEnemyCount++;
+        //     currentEnemies.Add(enemyEntity);
+        // }
+        //
+        // private void OnEnemyEntityRecycled(IEntity enemy) {
+        //     enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
+        //     enemyCount = Mathf.Max(0, enemyCount - 1);
+        //     // BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
+        //     currentEnemies.Remove(enemy);
+        // }
+        //
+        // #endregion
 
         protected virtual void AddCredits()
         {

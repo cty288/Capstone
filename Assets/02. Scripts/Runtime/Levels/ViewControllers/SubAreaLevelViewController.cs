@@ -8,9 +8,12 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.Enemies.Model;
+using Runtime.Spawning;
+using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers
@@ -29,6 +32,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         public int GetSubAreaLevelModifierAreaMask();
 
         public ISubAreaLevelEntity OnInitEntity();
+
+        public void StartSpawningCooldown();
+
+        public void InitDirector(IDirectorViewController director);
     }
     
     public abstract class SubAreaLevelViewController<T> : AbstractBasicEntityViewController<T>, ISubAreaLevelViewController  where  T : class, ISubAreaLevelEntity, new()  {
@@ -37,8 +44,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         private ILevelEntity parentLevelEntity;
         private int levelNumber;
         
-        [Header("SubArea Modifier Mask")]
-        [SerializeField] private NavMeshModifier subAreaLevelModifierMask;
+        [Header("Enemy Spawning Info")]
+        [SerializeField] protected int maxEnemiesPerArea = 20;
+        [SerializeField] protected float areaSpawningCooldown = 360f;
+        protected float cooldownTimer = 0f;
+        protected int enemyCount = 0;
+        private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
+        
+        
+        [FormerlySerializedAs("subAreaLevelModifierMask")]
+        [Header("SubArea Modifier")]
+        [SerializeField] private NavMeshModifier subAreaLevelModifier;
         
         [Header("Enemies")]
         [SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
@@ -64,9 +80,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             SubAreaLevelBuilder<T> builder = subAreaLevelModel.GetSubAreaLevelBuilder<T>();
             builder
                 .SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber))
-                .SetProperty(new PropertyNameInfo(PropertyName.sub_area_nav_mesh_modifier), subAreaLevelModifierMask.area);
+                .SetProperty(new PropertyNameInfo(PropertyName.max_enemies), maxEnemiesPerArea)
+                .SetProperty(new PropertyNameInfo(PropertyName.sub_area_nav_mesh_modifier), CalculateSubAreaMaskIndex());
 
             return OnInitSubLevelEntity(builder);
+        }
+
+        protected int CalculateSubAreaMaskIndex()
+        {
+            return (int) Mathf.Pow(2, subAreaLevelModifier.area);
         }
         
         protected abstract ISubAreaLevelEntity OnInitSubLevelEntity(SubAreaLevelBuilder<T> builder);
@@ -100,6 +122,83 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             return OnInitEntity();
         }
 
+        protected override void Update()
+        {
+            base.Update();
+            
+            //wait for initialization
+            if (BoundEntity == null)
+            {
+                print("BOUND SUB AREA NULL");
+
+                return;
+            }
+            
+            if (BoundEntity.IsActiveSpawner) {
+                print("BOUND SUB AREA ENTITY");
+                if (cooldownTimer <= areaSpawningCooldown)
+                {
+                    cooldownTimer += Time.deltaTime;
+                }
+                else
+                {
+                    //off cooldown
+                    print($"SUBAREA {BoundEntity.EntityName} IS ACTIVE AGAIN");
+                    BoundEntity.IsActiveSpawner = true;
+                    BoundEntity.TotalEnemiesSpawnedSinceOffCooldown = 0;
+                }
+            }
+        }
+
+        public void InitDirector(IDirectorViewController director)
+        {
+            director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        }
+        
+        private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
+        	OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
+        }
+        
+        private void UpdatePreExistingEnemies() {
+        	IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
+        	foreach (var enemy in enemies) {
+        		enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
+        			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        	}
+        }
+
+        private void OnExistingEnemyInit(IEntityViewController entity) {
+        	entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
+        	OnInitEnemy(entity as IEnemyViewController);
+        }
+        
+        private void OnInitEnemy(IEnemyViewController enemyObject) {
+        	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
+        	enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
+        		.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        	enemyCount++;
+        	BoundEntity.CurrentEnemyCount++;
+            BoundEntity.TotalEnemiesSpawnedSinceOffCooldown++;
+        	currentEnemies.Add(enemyEntity);
+            
+            if(BoundEntity.CurrentEnemyCount >= BoundEntity.GetMaxEnemyCount()) {
+                print($"SUBAREA {BoundEntity.EntityName} IS ON COOLDOWN");
+                StartSpawningCooldown();
+            }
+        }
+        
+        private void OnEnemyEntityRecycled(IEntity enemy) {
+        	enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
+        	enemyCount--;
+        	BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
+        	currentEnemies.Remove(enemy);
+        }
+        
+        public void StartSpawningCooldown()
+        {
+            cooldownTimer = 0f;
+            BoundEntity.IsActiveSpawner = false;
+        }
 
         public void SetLevelNumber(int levelNumber) {
             this.levelNumber = levelNumber;
@@ -107,12 +206,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
 
         public NavMeshModifier GetSubAreaLevelModifierMask()
         {
-            return subAreaLevelModifierMask;
+            return subAreaLevelModifier;
         }
         
         public int GetSubAreaLevelModifierAreaMask()
         {
-            return subAreaLevelModifierMask.area;
+            return subAreaLevelModifier.area;
         }
     }
 }

@@ -35,7 +35,11 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public int GetMaxEnemyCount();
 		
 		public int GetSubAreaNavMeshModifier();
-		// public void SetLevelEntityParent(ILevelEntity parent);
+		
+		public bool IsActiveSpawner { get; set; }
+		
+		public int CurrentEnemyCount { get; set; }
+		public int TotalEnemiesSpawnedSinceOffCooldown { get; set; }
 	}
 	
 	public abstract class SubAreaLevelEntity<T> : AbstractBasicEntity, ISubAreaLevelEntity where T : SubAreaLevelEntity<T>, new() {
@@ -43,14 +47,18 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		private ISpawnCardsProperty spawnCardsProperty;
 		private IMaxEnemiesProperty maxEnemiesProperty;
 		private ISubAreaNavMeshModifier subAreaNavMeshModifier;
-		[field: ES3Serializable]
-		private bool isActive = false;
+		
+		public bool IsActiveSpawner { get; set; }
 		
 		[field: ES3Serializable]
 		public int CurrentEnemyCount { get; set; }
 		
+		[field: ES3Serializable]
+		public int TotalEnemiesSpawnedSinceOffCooldown { get; set; }
+		
 		protected override void OnEntityStart(bool isLoadedFromSave)
 		{
+			IsActiveSpawner = false;
 		}
 		
 		protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -136,12 +144,12 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		{
 			return subAreaNavMeshModifier.RealValue;
 		}
-
+        
 		protected override void OnEntityRegisterAdditionalProperties() {
 			this.RegisterInitialProperty<IMaxEnemiesProperty>(new MaxEnemies());
 			this.RegisterInitialProperty<ISpawnCardsProperty>(new SpawnCardsProperty());
 			this.RegisterInitialProperty<ISubAreaNavMeshModifier>(new SubAreaNavMeshModifier());
-			
+			// this.RegisterInitialProperty<ISpawnCooldown>(new SpawnCooldown());
 		}
 
 		public override void OnRecycle() {
