@@ -23,7 +23,7 @@ namespace Runtime.Weapons
 {
     public class RustyPistolEntity : WeaponEntity<RustyPistolEntity>
     {
-        [field: SerializeField] public override string EntityName { get; set; } = "RustyPistol";
+        [field: ES3Serializable] public override string EntityName { get; set; } = "RustyPistol";
         
         [field: ES3Serializable] public override int Width { get; } = 1;
         

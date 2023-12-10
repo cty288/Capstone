@@ -11,7 +11,7 @@ namespace Runtime.Weapons
 {
     public class SubMachineGunEntity : WeaponEntity<SubMachineGunEntity>
     {
-        [field: SerializeField] public override string EntityName { get; set; } = "SubMachineGun";
+        [field: ES3Serializable] public override string EntityName { get; set; } = "SubMachineGun";
         
         [field: ES3Serializable] public override int Width { get; } = 1;
         
