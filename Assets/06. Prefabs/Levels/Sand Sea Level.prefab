@@ -4554,8 +4554,8 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 0
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  maxEnemiesPerArea: 5
-  areaSpawningCooldown: 5
+  maxEnemiesPerArea: 20
+  areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 4308668825488644635}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
@@ -4574,6 +4574,7 @@ MonoBehaviour:
     - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
     minRarity: 1
     maxRarity: 2
+  enemyCount: 0
 --- !u!1001 &6740914133432436796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10018,8 +10019,8 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 0
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  maxEnemiesPerArea: 5
-  areaSpawningCooldown: 5
+  maxEnemiesPerArea: 20
+  areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 1045219877315657789}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
@@ -10044,6 +10045,7 @@ MonoBehaviour:
     - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
     minRarity: 1
     maxRarity: 2
+  enemyCount: 0
 --- !u!114 &1045219877315657789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14686,8 +14688,8 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 0
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  maxEnemiesPerArea: 5
-  areaSpawningCooldown: 5
+  maxEnemiesPerArea: 20
+  areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 2559758980679965766}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
@@ -14700,6 +14702,7 @@ MonoBehaviour:
     variants: []
     minRarity: 1
     maxRarity: 2
+  enemyCount: 0
 --- !u!1001 &8872873331152879493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23088,8 +23091,8 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 0
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  maxEnemiesPerArea: 5
-  areaSpawningCooldown: 5
+  maxEnemiesPerArea: 20
+  areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 646451224746513326}
   enemies:
   - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
@@ -23102,3 +23105,4 @@ MonoBehaviour:
     variants: []
     minRarity: 1
     maxRarity: 2
+  enemyCount: 0
