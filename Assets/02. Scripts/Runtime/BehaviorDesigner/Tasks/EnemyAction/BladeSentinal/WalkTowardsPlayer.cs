@@ -54,7 +54,6 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 				  targetWalkDistance = Random.Range(minDistance, Mathf.Min(maxDistance, distanceToPlayer));
 
 				  
-				  
 				  lastPosition = gameObject.transform.position;
 
 
