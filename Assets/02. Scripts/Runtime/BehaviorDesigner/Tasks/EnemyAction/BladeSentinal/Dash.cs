@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using _02._Scripts.Runtime.Utilities;
+using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using BehaviorDesigner.Runtime;
 using Cysharp.Threading.Tasks;
 using Runtime.BehaviorDesigner.Tasks.EnemyAction;
@@ -14,6 +15,7 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
     private GameObject model;
     private MoveBakeMesh mbm;
     private NavMeshAgent agent;
+    private Animator animator;
     
     [SerializeField]
     private SharedGameObject player;
@@ -36,6 +38,7 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
         mbm = gameObject.GetComponent<MoveBakeMesh>();
         agent = GetComponent<NavMeshAgent>();
         rigidbody = GetComponent<Rigidbody>();
+        animator = gameObject.GetComponentInChildren<Animator>(true);
     }
 
     public override void OnStart() {
@@ -129,6 +132,10 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
         
         if (teleportLocation == Vector3.zero) {
             teleportLocation = beforeTeleportLocation;
+        }else {
+            animator.CrossFadeInFixedTime("Teleport", 0.1f);
+            await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
+                gameObject.GetCancellationTokenOnDestroyOrRecycle());
         }
 
         dashPosFound = true;

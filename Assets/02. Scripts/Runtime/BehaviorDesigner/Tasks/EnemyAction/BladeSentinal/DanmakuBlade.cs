@@ -57,7 +57,9 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
             GameObject blade = pool.Allocate();
             blade.transform.position = spawnPosition;
             blade.transform.rotation = spawnRotation;
-            blade.GetComponent<AbstractBulletViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("danmaku", "danmakuDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
+            
+            
+            blade.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("danmaku", "danmakuDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
             blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5 , initRotationTime , 30 , 160 , this.gameObject.transform , playerTrans);
 
         }

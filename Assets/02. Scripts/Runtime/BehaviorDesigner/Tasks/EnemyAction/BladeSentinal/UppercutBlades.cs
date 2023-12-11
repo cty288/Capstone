@@ -37,7 +37,7 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 		base.OnStart();
 		agent.enabled = false;
 		rb.isKinematic = true;
-		animator.CrossFadeInFixedTime("Skill_Start", 0.2f);
+		animator.CrossFadeInFixedTime("Skill_SingleHand_Start", 0.2f);
 		
 		bladeInterval = enemyEntity.GetCustomDataValue<float>("uppercutBlades", "bladeInterval");
 		bladeCount = enemyEntity.GetCustomDataValue<int>("uppercutBlades", "bladeCount");
@@ -50,12 +50,22 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 	}
 
 	public override TaskStatus OnUpdate() {
+		Transform playerTr = GetPlayer().transform;
+		Vector3 direction = playerTr.position - gameObject.transform.position;
+		direction.y = 0;
+		Quaternion lookRotation = Quaternion.LookRotation(direction);
+		//look rotation.y - 48
+		
+		lookRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y - 48, 0);
+		
+		gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 10f);
+		
 		return taskStatus;
 	}
 
 	public async UniTask SkillExecute() {
 
-		await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Skill_Hold"),
+		await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Skill_SingleHand_Hold"),
 			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
 
 
