@@ -45,6 +45,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             pool = GameObjectPoolManager.Singleton.CreatePool(bulletPrefab.Value, 50, 100);
             playerTrans = GetPlayer().transform;
         }
+        
 
         public override void OnStart()
         {
