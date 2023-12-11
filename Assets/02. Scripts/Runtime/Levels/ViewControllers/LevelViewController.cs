@@ -472,6 +472,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 
 			foreach (ISubAreaLevelViewController subAreaLevel in subAreaLevels) {
+				subAreaLevel.OnExitLevel(); // will also remove all enemies
 				subAreaLevelModel.RemoveEntity(subAreaLevel.Entity.UUID,
 					true);
 			}

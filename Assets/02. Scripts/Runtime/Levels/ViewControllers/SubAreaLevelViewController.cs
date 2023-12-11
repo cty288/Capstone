@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using BehaviorDesigner.Runtime.Tasks;
 using MikroFramework.Architecture;
@@ -38,6 +39,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         public void InitDirector(IDirectorViewController director);
 
         public void InitDirectors();
+
+        public void OnExitLevel();
     }
     
     public abstract class SubAreaLevelViewController<T> : AbstractBasicEntityViewController<T>, ISubAreaLevelViewController  where  T : class, ISubAreaLevelEntity, new()  {
@@ -196,6 +199,24 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         	currentEnemies.Remove(enemy);
         }
         
+        public void OnExitLevel() {
+            IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
+            
+            while (currentEnemies.Count > 0) {
+            	IEntity enemy = currentEnemies.First();
+            	currentEnemies.Remove(enemy);
+            	enemyModel.RemoveEntity(enemy.UUID, true);
+            }
+            currentEnemies.Clear();
+        }
+
+        public override void OnRecycled()
+        {
+            base.OnRecycled();
+            enemyCount = 0;
+            currentEnemies.Clear();
+        }
+
         public void StartSpawningCooldown()
         {
             cooldownTimer = 0f;
