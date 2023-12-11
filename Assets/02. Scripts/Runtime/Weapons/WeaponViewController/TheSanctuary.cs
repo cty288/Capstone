@@ -34,7 +34,7 @@ namespace Runtime.Weapons
 {
     public class TheSanctuaryEntity : WeaponEntity<TheSanctuaryEntity>
     {
-        [field: SerializeField] public override string EntityName { get; set; } = "TheSanctuary";
+        [field: ES3Serializable] public override string EntityName { get; set; } = "TheSanctuary";
         
         [field: ES3Serializable] public override int Width { get; } = 2;
         

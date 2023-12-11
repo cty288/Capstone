@@ -38,7 +38,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         IEnumerator DoAttack()
         {
-            anim.CrossFade("shockwave_jump",0f);
+            anim.CrossFadeInFixedTime("Shockwave_Jump", 0.2f);
             yield return new WaitUntil(() => bossVC.currentAnimationEnd);
             bossVC.currentAnimationEnd = false;
 
@@ -57,7 +57,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             
             
-            anim.CrossFade("shockwave_air",0f);
+            anim.CrossFade("Shockwave_Air",0f);
             yield return new WaitUntil(() => bossVC.currentAnimationEnd);
             bossVC.currentAnimationEnd = false;
             
