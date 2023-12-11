@@ -50,7 +50,8 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
             new AutoConfigCustomProperty("dash"),
             new AutoConfigCustomProperty("walk"),
             new AutoConfigCustomProperty("uppercutBlades"),
-            new AutoConfigCustomProperty("honingBlades")
+            new AutoConfigCustomProperty("honingBlades"),
+            new AutoConfigCustomProperty("shockWave")
         };
     }
 }

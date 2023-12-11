@@ -21,19 +21,25 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         private TaskStatus taskStatus;
 
-        [SerializeField] private int explosionDamage;
-        [SerializeField] private float explosionSize;
+        private int explosionDamage;
+        private float explosionSize;
 
-        [SerializeField] private float jumpHeight;
-        [SerializeField] private float holdTime;
-        [SerializeField] private float chargeUpTime;
+        private float jumpHeight;
+        private float holdTime;
+        private float chargeUpTime;
         public override void OnStart()
         {
             base.OnStart();
             bossVC = GetComponent<BladeSentinel>();
             playerTrans = GetPlayer().transform;
+            explosionSize = enemyEntity.GetCustomDataValue<float>("shockWave", "explosionSize");
+            explosionDamage = enemyEntity.GetCustomDataValue<int>("shockWave", "explosionDamage");
+            jumpHeight = enemyEntity.GetCustomDataValue<float>("shockWave", "jumpHeight");
+            chargeUpTime = enemyEntity.GetCustomDataValue<float>("shockWave", "chargeUpTime");
+            holdTime = enemyEntity.GetCustomDataValue<float>("shockWave", "holdTime");
             taskStatus = TaskStatus.Running;
             StartCoroutine(DoAttack());
+            
             
         }
         public override TaskStatus OnUpdate()
