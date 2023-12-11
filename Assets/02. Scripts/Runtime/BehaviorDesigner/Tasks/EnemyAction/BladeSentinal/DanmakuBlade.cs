@@ -11,6 +11,8 @@ using UnityEngine.AI;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 using MikroFramework;
 using MikroFramework.Pool;
+using Runtime.Weapons.ViewControllers.Base;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
 {
     public SharedGameObject bladePrefab;
@@ -19,12 +21,13 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
     private int bladeAmount;
     private float bladeTravelSpeed;
     private float initRotationTime = 4f;
+    private Transform playerTrans;
 
     public override void OnAwake()
     {
         base.OnAwake();
         pool = GameObjectPoolManager.Singleton.CreatePool(bladePrefab.Value, 20, 30);
-       
+        playerTrans = GetPlayer().transform;
         
     }
 
@@ -48,13 +51,14 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
             float x = Mathf.Sin(Mathf.Deg2Rad * angle) * rad;
             float z = Mathf.Cos(Mathf.Deg2Rad * angle) * rad;
 
-            Vector3 spawnPosition = new Vector3(x, 4, z) + this.gameObject.transform.position;
+            Vector3 spawnPosition = new Vector3(x, 2, z) + this.gameObject.transform.position;
             Quaternion spawnRotation = Quaternion.Euler(0f, angle, 0f);
 
             GameObject blade = pool.Allocate();
             blade.transform.position = spawnPosition;
             blade.transform.rotation = spawnRotation;
-            blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5 , initRotationTime , 30 , 160 , this.gameObject.transform);
+            blade.GetComponent<AbstractBulletViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("danmaku", "danmakuDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
+            blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5 , initRotationTime , 30 , 160 , this.gameObject.transform , playerTrans);
 
         }
     }

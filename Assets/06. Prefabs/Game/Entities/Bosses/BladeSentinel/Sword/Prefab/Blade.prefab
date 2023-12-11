@@ -38865,7 +38865,7 @@ Transform:
   m_GameObject: {fileID: 5556029872014759846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8700884457025914944}
@@ -38882,7 +38882,7 @@ BoxCollider:
   m_GameObject: {fileID: 5556029872014759846}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.3259669, y: 0.056347705, z: 0.32997194}
   m_Center: {x: 0.030839372, y: -0.021826196, z: 0.0005676985}
@@ -38916,7 +38916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 0
   maxDistance: 100
   detectTime: 1
 --- !u!114 &340286228519240055
@@ -38951,7 +38951,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  autoRecycleTime: 5
+  autoRecycleTime: 50
   penetrateSameFaction: 0
   autoDestroyWhenOwnerDestroyed: 0
   particlePrefab: {fileID: 0}

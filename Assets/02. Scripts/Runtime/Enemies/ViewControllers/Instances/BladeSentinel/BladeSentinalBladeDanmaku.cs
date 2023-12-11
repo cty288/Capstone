@@ -4,6 +4,8 @@ using MikroFramework.Pool;
 using MikroFramework;
 using UnityEngine;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using System.Collections;
+using System.Collections.Generic;
 
 
 public class BladeSentinalBladeDanmaku : AbstractBulletViewController
@@ -19,6 +21,10 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     private bool secondPhase = false;
     private Rigidbody rb;
     private Transform rotateAroundPoint;
+    private bool thirdPhase = false;
+    private Transform playerTrans;
+    private bool canAttack = false;
+    private Vector3 playerTarget;
     protected override void OnBulletReachesMaxRange()
     {
         
@@ -26,7 +32,9 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
 
     protected override void OnBulletRecycled()
     {
+        thirdPhase = false;
         secondPhase = false;
+        canAttack = false;
     }
 
     protected override void OnHitObject(Collider other)
@@ -38,7 +46,7 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     {
        
     }
-    public void SetData(float bulletSpeed , float initTime, float afterBulletSpeed , float afterRotationSpeed , Transform origin)
+    public void SetData(float bulletSpeed , float initTime, float afterBulletSpeed , float afterRotationSpeed , Transform origin , Transform player)
     {
      
         
@@ -47,8 +55,10 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
         this.afterBulletSpeed = afterBulletSpeed;
         Invoke("SetSpeed", initTime);
         Invoke("SetRotationSpeed", initTime);
-        Invoke("SetPhase", 6.45f);
+        Invoke("SetPhase", 6f);
+        Invoke("FinalPhase", 10f);
         rotateAroundPoint = origin;
+        playerTrans = player;
 
     }
 
@@ -57,13 +67,14 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
         childToRotate = this.gameObject.transform.GetChild(0).gameObject;
+        
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        if (!secondPhase)
+        if (!secondPhase && !thirdPhase)
         {
 
             this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
@@ -81,7 +92,7 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     {
         if (secondPhase)
         {
-
+            this.gameObject.transform.localScale = new Vector3(10, 10, 10);
             this.gameObject.transform.RotateAround(rotateAroundPoint.position, Vector3.up, 20 * Time.deltaTime);
 
 
@@ -108,6 +119,39 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
 
             float adjustFactor = 0.5f; // this value requires tuning
             rb.AddTorque(axis.normalized * angle * adjustFactor, ForceMode.Acceleration);
+
+            
+        }
+        if (thirdPhase)
+        {
+            if (canAttack)
+            {
+                Vector3 directionToPlayer = playerTrans.position - transform.position;
+                this.gameObject.GetComponent<Rigidbody>().velocity = directionToPlayer * bulletSpeed;
+                if(Vector3.Distance(this.gameObject.transform.position, playerTrans.position) < 1)
+                {
+                    Destroy(this.gameObject);
+                    //debug
+                }
+
+            }
+            else
+            {
+
+                secondPhase = false;
+                Vector3 directionToPlayer = playerTrans.position - transform.position;
+
+                // Create a rotation that points in the calculated direction
+                Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+                // Smoothly interpolate between the current rotation and the target rotation
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
+
+                if (Quaternion.Angle(transform.rotation, targetRotation) < 5f)
+                {
+                    canAttack = true;
+                }
+            }
         }
     }
     private void SetSpeed()
@@ -122,4 +166,14 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     {
         secondPhase = true;
     }
+    private void FinalPhase()
+    {
+        playerTarget = playerTrans.position;
+        thirdPhase = true;
+    }
+    private void GetPlayerTransform()
+    {
+        playerTarget = playerTrans.position + new Vector3(0,2,0);
+    }
+
 }
