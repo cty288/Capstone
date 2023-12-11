@@ -26,6 +26,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         [SerializeField] private float jumpHeight;
         [SerializeField] private float holdTime;
+        [SerializeField] private float chargeUpTime;
         public override void OnStart()
         {
             base.OnStart();
@@ -43,10 +44,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         IEnumerator DoAttack()
         {
             anim.CrossFadeInFixedTime("Jump_Start", 0.2f);
+            yield return new WaitForSeconds(chargeUpTime);
+            anim.SetTrigger("Jump");
             yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"));
 
             //Jump
-            float duration = 1;
+            float duration = 0.5f;
             float timeElapsed = 0;
             Vector3 startPosition = transform.position;
             Vector3 targetPosition = transform.position + new Vector3(0, jumpHeight, 0);
@@ -57,13 +60,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 yield return null;
             }
             transform.position = targetPosition;
-
-            yield return new WaitForSeconds(holdTime);
             
             anim.CrossFade("GroundSlash_Attack",0f);
+            yield return new WaitForSeconds(holdTime);
             
             //Crashdown
-            duration = 1;
+            
+            var lookPos = playerTrans.position - transform.position;
+            lookPos.y = 0;
+            var rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = rotation;
+            duration = 0.5f;
             timeElapsed = 0;
             startPosition = transform.position;
             targetPosition = playerTrans.position;
@@ -79,7 +86,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             shock.transform.position = transform.position;
             shock.GetComponent<Example_Explosion>().Init(Faction.Neutral, explosionDamage, explosionSize,gameObject,
                 gameObject.GetComponent<ICanDealDamage>());
-            yield return new WaitForSeconds(3f);
+            anim.SetTrigger("SlamAttackEnd");
+            yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
             taskStatus = TaskStatus.Success;
         }
     }
