@@ -22,15 +22,18 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 	private Vector3 lastPosition = Vector3.zero;
 	private float totalWalkedDistance = 0f;
 	private Animator animator;
+	//private Rigidbody rb;
 	public override void OnAwake() {
 		base.OnAwake();
 		agent = GetComponent<NavMeshAgent>();
 		animator = gameObject.GetComponentInChildren<Animator>();
+		//rb = gameObject.GetComponent<Rigidbody>();
 	}
 
 	public override void OnStart() {
 		base.OnStart();
 		agent.enabled = true;
+		//rb.isKinematic = true;
 		minDistance = enemyEntity.GetCustomDataValue<float>("walk", "minWalkDistance");
 		maxDistance = enemyEntity.GetCustomDataValue<float>("walk", "maxWalkDistance");
 		minDistanceToPlayer = enemyEntity.GetCustomDataValue<float>("walk", "minDistanceToPlayer");
@@ -50,7 +53,7 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 				  agent.speed = moveSpeed;
 				  targetWalkDistance = Random.Range(minDistance, Mathf.Min(maxDistance, distanceToPlayer));
 
-				  agent.SetDestination(player.Value.transform.position);
+				  
 				  
 				  lastPosition = gameObject.transform.position;
 
@@ -76,11 +79,14 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 			return TaskStatus.Success;
 		}
 		else {
-			//face the player
-			Vector3 direction = (player.Value.transform.position - gameObject.transform.position).normalized;
+			//face the path
+			//rb.isKinematic = false;
+			agent.SetDestination(player.Value.transform.position);
+			Vector3 direction = agent.steeringTarget - gameObject.transform.position;
 			direction.y = 0;
 			Quaternion lookRotation = Quaternion.LookRotation(direction);
 			gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 30f);
+			
 			
 			
 			return TaskStatus.Running;
@@ -90,5 +96,6 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 	public override void OnEnd() {
 		base.OnEnd();
 		agent.enabled = false;
+		//rb.isKinematic = false;
 	}
 }
