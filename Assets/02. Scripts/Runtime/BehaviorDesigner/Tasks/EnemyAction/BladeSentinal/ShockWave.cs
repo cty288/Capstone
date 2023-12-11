@@ -18,29 +18,32 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Transform playerTrans;
 
         public SharedGameObject shockWaveObj;
+        
+        private TaskStatus taskStatus;
 
         [SerializeField] private int explosionDamage;
         [SerializeField] private float explosionSize;
 
         [SerializeField] private float jumpHeight;
+        [SerializeField] private float holdTime;
         public override void OnStart()
         {
             base.OnStart();
             bossVC = GetComponent<BladeSentinel>();
             playerTrans = GetPlayer().transform;
+            taskStatus = TaskStatus.Running;
             StartCoroutine(DoAttack());
+            
         }
         public override TaskStatus OnUpdate()
         {
-
-            return TaskStatus.Running;
+            return taskStatus;
         }
 
         IEnumerator DoAttack()
         {
-            anim.CrossFadeInFixedTime("Shockwave_Jump", 0.2f);
-            yield return new WaitUntil(() => bossVC.currentAnimationEnd);
-            bossVC.currentAnimationEnd = false;
+            anim.CrossFadeInFixedTime("Jump_Start", 0.2f);
+            yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"));
 
             //Jump
             float duration = 1;
@@ -54,13 +57,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 yield return null;
             }
             transform.position = targetPosition;
+
+            yield return new WaitForSeconds(holdTime);
             
-            
-            
-            anim.CrossFade("Shockwave_Air",0f);
-            yield return new WaitUntil(() => bossVC.currentAnimationEnd);
-            bossVC.currentAnimationEnd = false;
-            
+            anim.CrossFade("GroundSlash_Attack",0f);
             
             //Crashdown
             duration = 1;
@@ -79,6 +79,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             shock.transform.position = transform.position;
             shock.GetComponent<Example_Explosion>().Init(Faction.Neutral, explosionDamage, explosionSize,gameObject,
                 gameObject.GetComponent<ICanDealDamage>());
+            yield return new WaitForSeconds(3f);
+            taskStatus = TaskStatus.Success;
         }
     }
 }
