@@ -448,5 +448,53 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
       ""value"": 15,
       ""useDefaultModifier"": true
     }
+  },
+  ""honingBlades"":{
+    ""bladeInterval"":{
+      ""type"": ""float"",
+      ""value"": 0.4,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""bladeCount"":{
+      ""type"": ""int"",
+      ""value"": 8,
+      ""useDefaultModifier"": true
+    
+    },
+    ""bladeWaitTime"": {
+      ""type"": ""float"",
+      ""value"": 1,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""bladeDamage"":{
+      ""type"": ""int"",
+      ""value"": 15,
+      ""useDefaultModifier"": true
+    }
+  },
+  ""shockWave"":{
+    ""explosionSize"":{
+      ""type"": ""float"",
+      ""value"": 7
+    },
+    ""explosionDamage"":{
+      ""type"": ""int"",
+      ""value"": 20
+  
+    },
+    ""jumpHeight"": {
+      ""type"": ""float"",
+      ""value"": 20
+    },
+    ""chargeUpTime"": {
+      ""type"": ""float"",
+      ""value"": 1
+    },
+    ""holdTime"": {
+      ""type"": ""float"",
+      ""value"": 1.5
+    }
   }
 }",,,

@@ -18,6 +18,7 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
     private float rad;
     private int bladeAmount;
     private float bladeTravelSpeed;
+    private float initRotationTime = 4f;
 
     public override void OnAwake()
     {
@@ -47,13 +48,13 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
             float x = Mathf.Sin(Mathf.Deg2Rad * angle) * rad;
             float z = Mathf.Cos(Mathf.Deg2Rad * angle) * rad;
 
-            Vector3 spawnPosition = new Vector3(x, 8, z) + this.gameObject.transform.position;
+            Vector3 spawnPosition = new Vector3(x, 4, z) + this.gameObject.transform.position;
             Quaternion spawnRotation = Quaternion.Euler(0f, angle, 0f);
 
             GameObject blade = pool.Allocate();
             blade.transform.position = spawnPosition;
             blade.transform.rotation = spawnRotation;
-            blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5);
+            blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5 , initRotationTime , 30 , 160 , this.gameObject.transform);
 
         }
     }
