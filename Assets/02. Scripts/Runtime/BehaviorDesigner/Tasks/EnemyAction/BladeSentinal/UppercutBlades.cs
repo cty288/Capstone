@@ -69,6 +69,9 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 		}
 
 		await UniTask.WhenAll(tasks);
+		anim.SetTrigger("SkillEnd");
+		await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),
+			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
 		taskStatus = TaskStatus.Success;
 	}
 
