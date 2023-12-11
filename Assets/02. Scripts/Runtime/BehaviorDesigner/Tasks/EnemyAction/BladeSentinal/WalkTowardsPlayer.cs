@@ -30,6 +30,7 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 
 	public override void OnStart() {
 		base.OnStart();
+		agent.enabled = true;
 		minDistance = enemyEntity.GetCustomDataValue<float>("walk", "minWalkDistance");
 		maxDistance = enemyEntity.GetCustomDataValue<float>("walk", "maxWalkDistance");
 		minDistanceToPlayer = enemyEntity.GetCustomDataValue<float>("walk", "minDistanceToPlayer");
@@ -79,11 +80,15 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 			Vector3 direction = (player.Value.transform.position - gameObject.transform.position).normalized;
 			direction.y = 0;
 			Quaternion lookRotation = Quaternion.LookRotation(direction);
-			gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 5f);
+			gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 30f);
 			
 			
 			return TaskStatus.Running;
 		}
 	}
-	
+
+	public override void OnEnd() {
+		base.OnEnd();
+		agent.enabled = false;
+	}
 }

@@ -169,7 +169,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 					}
 				}
 				
-				 OnHitObject(other);
+				OnHitObject(other);
 				RecycleToCache();
 			}
 		}

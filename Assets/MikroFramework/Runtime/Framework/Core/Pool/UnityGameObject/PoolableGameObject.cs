@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,6 +21,9 @@ namespace MikroFramework.Pool
 
         public virtual bool IsRecycled { get; set; } = false;
         
+        private CancellationTokenSource cts 
+            = new CancellationTokenSource();
+        
         /// <summary>
         /// Call this method to recycle this gameobject back to its pool
         /// </summary>
@@ -28,6 +32,8 @@ namespace MikroFramework.Pool
             if (!this) {
                 return;
             }
+            
+            cts.Cancel();
             if (Pool != null) {
                 Pool.Recycle(this.gameObject);
                 Pool = null;
@@ -45,7 +51,12 @@ namespace MikroFramework.Pool
         }
 
         public virtual void OnStartOrAllocate() {
+            cts = new CancellationTokenSource();
             onAllocateEvent?.Invoke();
+        }
+        
+        public CancellationToken GetCancellationTokenOnRecycle() {
+            return cts.Token;
         }
 
 

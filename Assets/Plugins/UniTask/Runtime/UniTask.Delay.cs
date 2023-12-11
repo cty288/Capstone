@@ -758,10 +758,12 @@ namespace Cysharp.Threading.Tasks
                 }
 
                 elapsed += Time.deltaTime;
-                if (elapsed >= delayTimeSpan)
+                if (elapsed >= delayTimeSpan && delayTimeSpan > 0)
                 {
-                    core.TrySetResult(null);
-                    return false;
+                    if (delayTimeSpan > 0) {
+                        core.TrySetResult(null);
+                        return false;
+                    }
                 }
 
                 return true;

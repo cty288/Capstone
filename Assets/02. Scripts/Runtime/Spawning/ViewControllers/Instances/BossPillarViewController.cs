@@ -9,6 +9,7 @@ using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Utilities;
+using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MikroFramework.Architecture;
@@ -156,13 +157,15 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			isActivating = true;
 			UpdateInteractHint();
 
-			await UniTask.WaitForSeconds(Random.Range(waitTimeRange.x, waitTimeRange.y));
+			await UniTask.WaitForSeconds(Random.Range(waitTimeRange.x, waitTimeRange.y),false,
+				PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
 			
 			foreach (var system in particleSystems) {
 				system.loop = false;
 			}
 
-			await UniTask.WaitForSeconds(4f);
+			await UniTask.WaitForSeconds(4f,false,
+				PlayerLoopTiming.Update,gameObject.GetCancellationTokenOnDestroyOrRecycle());
 		
 			isActivating = false;
 			
