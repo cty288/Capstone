@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Utilities;
+using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MikroFramework.Architecture;
@@ -55,13 +56,15 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 		BoundEntity.BaitStatus = BaitStatus.Baiting;
 		//yield return new WaitForSeconds(Random.Range(baitWaitTimeRange.x, baitWaitTimeRange.y));
 
-		await UniTask.WaitForSeconds(Random.Range(baitWaitTimeRange.x, baitWaitTimeRange.y));
+		await UniTask.WaitForSeconds(Random.Range(baitWaitTimeRange.x, baitWaitTimeRange.y), false,
+			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle() );
 		
 		foreach (var system in particleSystems) {
 			system.loop = false;
 		}
 		//yield return new WaitForSeconds(4f);
-		await UniTask.WaitForSeconds(4f);
+		await UniTask.WaitForSeconds(4f,false,
+			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
 		
 		BoundEntity.BaitStatus = BaitStatus.Deactivated;
 		ILevelEntity levelEntity = levelModel.CurrentLevel.Value;

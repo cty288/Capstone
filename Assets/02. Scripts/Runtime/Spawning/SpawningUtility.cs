@@ -42,22 +42,32 @@ namespace Runtime.Spawning {
 		private static Collider[] results = new Collider[10];
 		private static KDTree refPointsKDTree = null;
 
-		private static Vector3 GetNormalAtPoint(Vector3 point) {
-			Vector3 normal = Vector3.zero;
+		private static bool GetNormalAtPoint(Vector3 point, int layerMask, out Vector3 normal, out Vector3 hitPos) {
+			normal = Vector3.zero;
+			hitPos = Vector3.zero;
 			RaycastHit hit;
-			if (Physics.Raycast(point, Vector3.down, out hit, 10.0f)) {
+			if (Physics.Raycast(point, Vector3.down, out hit, 10.0f, layerMask)) {
 				normal = hit.normal;
+				hitPos = hit.point;
+				return true;
 			}
-			return normal;
+
+			return false;
 		}
 		
-		private static bool IsSlopeTooSteepAtPoint(Vector3 point, float maxSlopeAngle, out Quaternion rotationWithSlope) {
-			Vector3 normal = GetNormalAtPoint(point);
-			float angle = Vector3.Angle(normal, Vector3.up);
-			rotationWithSlope = Quaternion.FromToRotation(Vector3.up, normal);
-			
-			return angle > maxSlopeAngle;
+		public static bool IsSlopeTooSteepAtPoint(Vector3 point, float maxSlopeAngle, out Quaternion rotationWithSlope, out Vector3 groundPos) {
+			LayerMask layerMask = LayerMask.GetMask("Default", "Wall", "Ground");
+			rotationWithSlope = Quaternion.identity;
+			groundPos = Vector3.zero;
+			if (GetNormalAtPoint(point, layerMask, out Vector3 normal, out groundPos)) {
+				float angle = Vector3.Angle(normal, Vector3.up);
+				rotationWithSlope = Quaternion.FromToRotation(Vector3.up, normal);
+				return angle > maxSlopeAngle;
+			}
+			return false;
 		}
+		
+		
 
 		public static void UpdateRefPointsKDTree() {
 			Vector3[] insideArenaRefPoints =
@@ -79,10 +89,15 @@ namespace Runtime.Spawning {
 			//[CanBeNull] Vector3[] insideArenaRefPoints,
 			float initialSearchRadius,
 			float increment,
-			int maxAttempts
+			int maxAttempts,
+			int operationPerFrame = 10
 		) {
 			NavMeshFindResult result = new NavMeshFindResult();
 
+			if(float.IsInfinity(desiredPosition.magnitude)) {
+				return new NavMeshFindResult(false, Vector3.negativeInfinity, 1, Quaternion.identity);
+			}
+			
 			if (insideArenaBounds == default) {
 				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
 					.First(o => o.gameObject.activeInHierarchy)
@@ -114,17 +129,21 @@ namespace Runtime.Spawning {
 			KDQuery query = new KDQuery();
 			List<int> resultIndices = new List<int>();
 			query.KNearest(refPointsKDTree, desiredPosition, refPointsKDTree.Count, resultIndices);
-			
+
+			int operations = 0;
 			
 			if (insideArenaBounds != default) {
 				bool satisfied = false;
 				foreach (int pointIndex in resultIndices) {
-					await UniTask.Yield();
+					//await UniTask.Yield();
 					Vector3 point = refPointsKDTree.Points[pointIndex];
 					if (!NavMesh.SamplePosition(point, out navHit, 20.0f, areaMask)) {
 						continue;
 					}
 					NavMeshPath insideArenaDetectPath = new NavMeshPath();
+					if(float.IsInfinity(navHit.position.magnitude)) {
+						continue;
+					}
 					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, insideArenaDetectPath);
 					if (insideArenaDetectPath.status == NavMeshPathStatus.PathComplete) {
 						satisfied = true;
@@ -149,10 +168,10 @@ namespace Runtime.Spawning {
 
 			Vector3 res = Vector3.negativeInfinity;
 
-			await UniTask.Yield();
+			//await UniTask.Yield();
 			
 			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
-				if (!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
+				if (!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope, out _)) {
 					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
 						prefabSize / 2, results, Quaternion.identity,
 						obstructionLayer);
@@ -180,7 +199,12 @@ namespace Runtime.Spawning {
 
 
 			while (usedAttempts < maxAttempts) {
-				await UniTask.Yield();
+				if(operations % operationPerFrame == 0)
+					await UniTask.Yield();
+
+				operations++;
+				
+				//await UniTask.Yield();
 				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
 				usedAttempts++;
 				randomDirection.y = 0;
@@ -189,7 +213,7 @@ namespace Runtime.Spawning {
 
 
 				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, areaMask)) {
-					if (IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
+					if (IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope, out _)) {
 						currentSearchRadius += increment;
 						continue;
 					}
@@ -253,7 +277,7 @@ namespace Runtime.Spawning {
 				randomDirection += desiredPosition;
 
 				if (NavMesh.SamplePosition(randomDirection, out navHit, currentSearchRadius, areaMask)) {
-					if(IsSlopeTooSteepAtPoint(navHit.position, 90, out rotationWithSlope)) {
+					if(IsSlopeTooSteepAtPoint(navHit.position, 90, out rotationWithSlope, out _)) {
 						currentSearchRadius += increment;
 						continue;
 					}
@@ -305,7 +329,7 @@ namespace Runtime.Spawning {
 			float minDistance = bounds.size.x * 0.2f;
 			
 			for (int i = 0; i < targetNumber; i++) {
-				int remainingRetry = 10000;
+				int remainingRetry = 1000;
 
 				while (remainingRetry > 0) {
 					remainingRetry--;
@@ -322,8 +346,9 @@ namespace Runtime.Spawning {
 						continue;
 					}
 
-					NavMeshFindResult res  = await FindNavMeshSuitablePosition(spawner, pillarSpawnSizeGetter, navHit.position, 45, areaMask,
-						insideArenaBounds, 10, 10, remainingRetry);
+					NavMeshFindResult res = await FindNavMeshSuitablePosition(spawner, pillarSpawnSizeGetter,
+						navHit.position, 45, areaMask,
+						insideArenaBounds, 10, 10, remainingRetry, 500);
 					
 					//rotate y axis randomly
 					res.RotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);

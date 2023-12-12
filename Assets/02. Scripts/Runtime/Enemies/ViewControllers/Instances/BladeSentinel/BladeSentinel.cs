@@ -8,12 +8,13 @@ using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.DataFramework.ViewControllers;
 using Runtime.Enemies;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.ViewControllers.Base;
 using UnityEngine;
-
+using UnityEngine.AI;
 
 
 public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
@@ -46,16 +47,43 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
 
     protected override ICustomProperty[] OnRegisterCustomProperties() {
 
-        return null;
+        return new[] {
+            new AutoConfigCustomProperty("dash"),
+            new AutoConfigCustomProperty("walk"),
+            new AutoConfigCustomProperty("uppercutBlades"),
+            new AutoConfigCustomProperty("honingBlades"),
+            new AutoConfigCustomProperty("shockWave"),
+            new AutoConfigCustomProperty("danmaku"),
+            new AutoConfigCustomProperty("ranges")
+        };
     }
 }
 
 public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 {
     private bool deathAnimationEnd = false;
+
+   // public bool currentAnimationEnd;
     
-    protected override void OnEntityStart() {
+    [BindCustomData("ranges", "closeRange")]
+    public float CloseRange { get;}
         
+    [BindCustomData("ranges", "midRange")]
+    public float MidRange { get; }
+
+    private Animator animator;
+    private Rigidbody rb;
+    private NavMeshAgent agent;
+
+    protected override void Awake() {
+        base.Awake();
+        animator = GetComponentInChildren<Animator>(true);
+        rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    protected override void OnEntityStart() {
+
     }
 
     protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
@@ -67,9 +95,15 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     }
 
     protected override void OnAnimationEvent(string eventName) {
-        
+        switch (eventName)
+        {
+            case "CurrentAnimationEnd":
+               // currentAnimationEnd = true;
+                break;
+            default:
+                break;
+        }
     }
-
     protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<BladeSentinelEntity> builder) {
         return builder.
             FromConfig()
@@ -77,16 +111,29 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     }
 
     protected override MikroAction WaitingForDeathCondition() {
-        transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
-            deathAnimationEnd = true;
-        });
-            
-        return UntilAction.Allocate(() => deathAnimationEnd);
+        
+        return UntilAction.Allocate(() =>
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Die") &&
+            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
     }
-    
+
+    protected override void OnEntityDie(ICanDealDamage damagedealer) {
+        base.OnEntityDie(damagedealer);
+
+        behaviorTree.enabled = false;
+        animator.CrossFadeInFixedTime("Die", 0.1f);
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        agent.enabled = false;
+    }
+
     public override void OnRecycled() {
         base.OnRecycled();
         transform.localScale = Vector3.one;
         deathAnimationEnd = false;
+        rb.isKinematic = false;
+        rb.useGravity = false;
+        agent.enabled = true;
+        behaviorTree.enabled = true;
     }
 }

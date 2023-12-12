@@ -128,7 +128,6 @@ namespace Runtime.Enemies.SmallEnemies
         {
             //AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position , 0.4f);
             base.OnRecycled();
-         
         }
         protected override MikroAction WaitingForDeathCondition()
         {

@@ -168,16 +168,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private HashSet<IDirectorViewController> playerSpawners = new HashSet<IDirectorViewController>();
 		private IDirectorViewController[] bossPillars;
 
-		// private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
+		 private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
 		[SerializeField] protected bool autoUpdateNavMeshOnStart = true;
 		
 		[Header("Audio Settings")]
 		[SerializeField] private AudioClip ambientMusic;
 		[SerializeField] private float relativeVolume = 1f;
 		
-		[Header("Debug Only")]
-		[SerializeField]
-		private int enemyCount = 0;
 		
 		private ILevelSystem levelSystem;
  
@@ -277,7 +274,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				subarea.SetLevelNumber(levelNumber);
 			}
 			
-			// UpdatePreExistingEnemies();
+			UpdatePreExistingEnemies();
 			OnSpawnPlayer();
 			if (ambientMusic) {
 				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
@@ -319,6 +316,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
 				//pillar.transform.SetParent(transform);
 				InitDirector(pillarViewController);
+				RegisterOnSpawnEnemy(pillarViewController);
 			}
 			bossPillars = pillars.Select(p => p.GetComponent<IDirectorViewController>()).ToArray();
 			
@@ -365,39 +363,40 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		protected void InitDirector(IDirectorViewController director) {
 			director.SetLevelEntity(BoundEntity);
 		}
-
-		// private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
-		// 	OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
-		// }
-		//
-		// private void UpdatePreExistingEnemies() {
-		// 	IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
-		// 	foreach (var enemy in enemies) {
-		// 		enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
-		// 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-		// 	}
-		// }
-
-		// private void OnExistingEnemyInit(IEntityViewController entity) {
-		// 	entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
-		// 	OnInitEnemy(entity as IEnemyViewController);
-		// }
 		
-		// private void OnInitEnemy(IEnemyViewController enemyObject) {
-		// 	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
-		// 	enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
-		// 		.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-		// 	enemyCount++;
-		// 	BoundEntity.CurrentEnemyCount++;
-		// 	currentEnemies.Add(enemyEntity);
-		// }
-		//
-		// private void OnEnemyEntityRecycled(IEntity enemy) {
-		// 	enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
-		// 	enemyCount--;
-		// 	BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
-		// 	currentEnemies.Remove(enemy);
-		// }
+		protected void RegisterOnSpawnEnemy(IDirectorViewController director) {
+			director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		}
+
+		 private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
+		 	OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
+		 }
+		
+		 private void UpdatePreExistingEnemies() {
+		 	IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
+		 	foreach (var enemy in enemies) {
+		 		enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
+		 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		 	}
+		 }
+
+		 private void OnExistingEnemyInit(IEntityViewController entity) {
+		 	entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
+		 	OnInitEnemy(entity as IEnemyViewController);
+		 }
+		
+		 private void OnInitEnemy(IEnemyViewController enemyObject) {
+		 	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
+		 	enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
+		 		.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		    currentEnemies.Add(enemyEntity);
+		 }
+		
+		 private void OnEnemyEntityRecycled(IEntity enemy) {
+		 	enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
+		 	
+		    currentEnemies.Remove(enemy);
+		 }
 
 		protected override void Update() {
 			base.Update();
@@ -449,8 +448,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			enemyCount = 0;
-			// currentEnemies.Clear();
+			currentEnemies.Clear();
 			playerSpawners.Clear();
 			if (ambientMusic) {
 				//AudioSystem.Singleton.StopMusic();
@@ -477,11 +475,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					true);
 			}
 			
-			// while (currentEnemies.Count > 0) {
-			// 	IEntity enemy = currentEnemies.First();
-			// 	currentEnemies.Remove(enemy);
-			// 	enemyModel.RemoveEntity(enemy.UUID, true);
-			// }
+			 while (currentEnemies.Count > 0) {
+			 	IEntity enemy = currentEnemies.First();
+			 	currentEnemies.Remove(enemy);
+			 	enemyModel.RemoveEntity(enemy.UUID, true);
+			 }
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {

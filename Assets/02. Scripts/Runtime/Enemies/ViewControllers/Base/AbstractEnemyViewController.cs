@@ -46,6 +46,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected AnimationSMBManager animationSMBManager;
 		protected override void Awake() {
 			base.Awake();
+			
 			enemyModel = this.GetModel<IEnemyEntityModel>();
 			animationSMBManager = GetComponent<AnimationSMBManager>();
 			animationSMBManager.Event.AddListener(OnAnimationEvent);
@@ -64,6 +65,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			if (currentHealthBar != null) {
 				currentHealthBar.OnSetEntity(BoundEntity.HealthProperty.RealValue, BoundEntity);
 			}
+			
 		}
 
 		protected override void OnBindEntityProperty() {
@@ -94,35 +96,14 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			return info.CurrentHealth;
 		}
 
-		protected override void OnEntityDie(ICanDealDamage damagedealer) {
-			base.OnEntityDie(damagedealer);
-			MikroAction action = WaitingForDeathCondition();
-			if (action != null) {
-				action.OnEndedCallback += () => {
-					OnDieWaitEnd();
-				};
-				action.Execute();
-			}
-			else {
-				OnDieWaitEnd();
-			}
-		}
-
-		private void OnDieWaitEnd() {
-			enemyModel.RemoveEntity(BoundEntity.UUID);
-		}
-
-		protected abstract MikroAction WaitingForDeathCondition();
+		
 
 		protected void OnCurrentHealthChanged(int oldValue, int newValue) {
 			Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
 			
 		}
 
-		public override void OnRecycled() {
-			base.OnRecycled();
-			// BoundEntity.GetDirectorOwner().DecrementCurrentActiveEnemies();
-		}
+	
 
 		protected override void OnReadyToRecycle() {
 			base.OnReadyToRecycle();

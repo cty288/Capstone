@@ -305,8 +305,8 @@ namespace Runtime.Spawning
                             IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
                             enemyEntity.SpawnedAreaIndex = areaMask;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                            // Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
-                            
+                            Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
+                            //currentEnemies.Add(enemyEntity);
                             // totalSpawnsSinceOffCooldown++;
                             currentCredits -= cost;
                             return true;
@@ -314,32 +314,9 @@ namespace Runtime.Spawning
                 //}
                 //spawnAttempts--;
             }
+            Debug.Log("spawn failed");
             return false;
         }
-
-        // #region testing
-        //
-        // private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
-        //     OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
-        // }
-        //
-        // private void OnInitEnemy(IEnemyViewController enemyObject) {
-        //     IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
-        //     enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
-        //         .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-        //     enemyCount++;
-        //     // BoundEntity.CurrentEnemyCount++;
-        //     currentEnemies.Add(enemyEntity);
-        // }
-        //
-        // private void OnEnemyEntityRecycled(IEntity enemy) {
-        //     enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
-        //     enemyCount = Mathf.Max(0, enemyCount - 1);
-        //     // BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
-        //     currentEnemies.Remove(enemy);
-        // }
-        //
-        // #endregion
 
         protected virtual void AddCredits()
         {

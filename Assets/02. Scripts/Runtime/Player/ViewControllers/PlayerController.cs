@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
 using Mikrocosmos;
+using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -156,6 +157,10 @@ namespace Runtime.Temporary
 
         protected override void OnBindEntityProperty() {
             
+        }
+
+        protected override MikroAction WaitingForDeathCondition() {
+            return null;
         }
 
         protected override void OnEntityDie(ICanDealDamage damagedealer) {

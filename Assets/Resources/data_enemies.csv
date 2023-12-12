@@ -258,7 +258,7 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20
   }
 }",,,
 Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",1,,,123,,,,
-BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",10,"{
+BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type2""]",10,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -384,6 +384,16 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
     ]
   }
 }",200,456,"{
+  ""ranges"":{
+    ""closeRange"": {
+      ""type"": ""float"",
+      ""value"": 20
+    },
+    ""midRange"": {
+      ""type"": ""float"",
+      ""value"": 50
+    }
+  },
   ""dash"": {
     ""minDistance"": {
       ""type"": ""float"",
@@ -406,7 +416,7 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
       ""value"": 0.25
     }
   },
-   ""walk"": {
+  ""walk"": {
     ""minDistanceToPlayer"": {
       ""type"": ""float"",
       ""value"": 5
@@ -424,18 +434,17 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
       ""value"": 1.5
     }
   },
-  ""uppercutBlades"":{
-    ""bladeInterval"":{
+  ""uppercutBlades"": {
+    ""bladeInterval"": {
       ""type"": ""float"",
       ""value"": 0.4,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
-    ""bladeCount"":{
+    ""bladeCount"": {
       ""type"": ""int"",
       ""value"": 8,
       ""useDefaultModifier"": true
-    
     },
     ""bladeWaitTime"": {
       ""type"": ""float"",
@@ -443,24 +452,23 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
-    ""bladeDamage"":{
+    ""bladeDamage"": {
       ""type"": ""int"",
       ""value"": 15,
       ""useDefaultModifier"": true
     }
   },
-  ""honingBlades"":{
-    ""bladeInterval"":{
+  ""honingBlades"": {
+    ""bladeInterval"": {
       ""type"": ""float"",
       ""value"": 0.4,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
-    ""bladeCount"":{
+    ""bladeCount"": {
       ""type"": ""int"",
       ""value"": 8,
       ""useDefaultModifier"": true
-    
     },
     ""bladeWaitTime"": {
       ""type"": ""float"",
@@ -468,21 +476,22 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
-    ""bladeDamage"":{
+    ""bladeDamage"": {
       ""type"": ""int"",
       ""value"": 15,
       ""useDefaultModifier"": true
     }
   },
-  ""shockWave"":{
-    ""explosionSize"":{
+  ""shockWave"": {
+    ""explosionSize"": {
       ""type"": ""float"",
-      ""value"": 7
+      ""value"": 7,
+      ""useDefaultModifier"": true
     },
-    ""explosionDamage"":{
+    ""explosionDamage"": {
       ""type"": ""int"",
-      ""value"": 20
-  
+      ""value"": 20,
+      ""useDefaultModifier"": true
     },
     ""jumpHeight"": {
       ""type"": ""float"",
@@ -490,17 +499,22 @@ BladeSentinel,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type
     },
     ""chargeUpTime"": {
       ""type"": ""float"",
-      ""value"": 1
+      ""value"": 1,
+      ""useDefaultModifier"": true,
+      ""inverse"" : true
     },
     ""holdTime"": {
       ""type"": ""float"",
-      ""value"": 1.5
-    } 
-   
-  }, ""danmaku"": {
-    ""danmakuDamage"":{
+      ""value"": 1.5,
+      ""useDefaultModifier"": true,
+      ""inverse"" : true
+    }
+  },
+  ""danmaku"": {
+    ""danmakuDamage"": {
       ""type"": ""int"",
-      ""value"": 25
+      ""value"": 25,
+      ""useDefaultModifier"": true
     }
   }
 }",,,
