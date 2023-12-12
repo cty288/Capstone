@@ -6,6 +6,8 @@ using UnityEngine;
 
 public interface IPlayerModel : IModel {
     BindableProperty<int> HP { get; }
+    
+    BindableProperty<int> CurrentSubAreaMask { get; }
 }
 
 public class PlayerModel : AbstractModel, IPlayerModel {
@@ -14,4 +16,5 @@ public class PlayerModel : AbstractModel, IPlayerModel {
     }
 
     public BindableProperty<int> HP { get; } = new BindableProperty<int>() {Value = 3};
+    public BindableProperty<int> CurrentSubAreaMask { get; } = new BindableProperty<int>() {Value = -1};
 }

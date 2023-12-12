@@ -34,6 +34,7 @@ using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	public interface ILevelViewController: IEntityViewController {
+		public int GetLevelNumber();
 		public void SetLevelNumber(int levelNumber);
 		public ILevelEntity OnBuildNewLevel(int levelNumber);
 
@@ -145,22 +146,29 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 						enemyPrefabs.AddRange(enemy.variants);
 					}
 				}
-
+		
 				return enemyPrefabs;
 			}
 		}
+		
+		[FormerlySerializedAs("subAreaLevels")] [Header("Sub Areas")]
+		public List<GameObject> subAreaLevelPrefabs;
 
-		[SerializeField] protected int maxEnemiesBaseValue = 50;
+		private List<ISubAreaLevelViewController> subAreaLevels = new List<ISubAreaLevelViewController>();
+
+
+		// [SerializeField] protected int maxEnemiesBaseValue = 50;
 
 		//private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
 		private ILevelModel levelModel;
+        
 		private int levelNumber;
 		private NavMeshSurface navMeshSurface;
 
 		private HashSet<IDirectorViewController> playerSpawners = new HashSet<IDirectorViewController>();
 		private IDirectorViewController[] bossPillars;
 
-		private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
+		// private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
 		[SerializeField] protected bool autoUpdateNavMeshOnStart = true;
 		
 		[Header("Audio Settings")]
@@ -174,19 +182,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private ILevelSystem levelSystem;
  
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
-		
-	
-		
 
 		protected override void Awake() {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();
 			navMeshSurface = GetComponent<NavMeshSurface>();
 			levelSystem = this.GetSystem<ILevelSystem>();
-		//	enemies.AddRange(bosses);
-		
-
-
 		}
 
 		protected override IEntity OnBuildNewEntity() {
@@ -196,9 +197,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		protected abstract IEntity OnInitLevelEntity(LevelBuilder<T> builder, int levelNumber);
 
+		public int GetLevelNumber() {
+			return levelNumber;
+		}
 
 		public void SetLevelNumber(int levelNumber) {
 			this.levelNumber = levelNumber;
+			
 		}
 
 		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
@@ -224,26 +229,55 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			return spawnCards;
 		}
+		
 		public virtual ILevelEntity OnBuildNewLevel(int levelNumber) {
 			if (levelModel == null) {
 				levelModel = this.GetModel<ILevelModel>();
 			}
 			LevelBuilder<T> builder = levelModel.GetLevelBuilder<T>();
 			builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), levelNumber)
-				.SetProperty(new PropertyNameInfo(PropertyName.max_enemies), maxEnemiesBaseValue)
 				.SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber));
-				//.SetProperty(new PropertyNameInfo(PropertyName.spawn_boss_cost), GetBossSpawnCostInfoDict());
+				//.SetProperty(new PropertyNameInfo(PropertyName.sub_area_levels), CreateSubAreaLevels());
 
-			return OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
+			ILevelEntity levelEnity = OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
+			return levelEnity;
+		}
+		
+		public List<ISubAreaLevelViewController> CreateSubAreaLevels() {
+			List<ISubAreaLevelViewController> subAreaLevels = new List<ISubAreaLevelViewController>();
+			
+			foreach (var subLevel in this.subAreaLevelPrefabs) {
+				ISubAreaLevelViewController subLevelVC = subLevel.GetComponent<ISubAreaLevelViewController>();
+				ISubAreaLevelEntity levelEntity = subLevelVC.OnInitEntity();
+
+				subLevelVC.InitWithID(levelEntity.UUID);
+				subLevelVC.InitDirectors();
+				// print($"number of directors in playerSpawners: {playerSpawners.Count}");
+				// foreach (var director in playerSpawners)
+				// {
+				// 	print($"add director to {levelEntity.EntityName}: {director.Entity.EntityName}");
+				// 	subLevelVC.InitDirector(director);
+				// }
+				//templateEnemies.Add(enemyEntity);
+				subAreaLevels.Add(subLevelVC);
+				BoundEntity.AddSubArea(levelEntity.UUID);
+			}
+			
+			return subAreaLevels;
 		}
 
 		public async void Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
+			subAreaLevels = CreateSubAreaLevels();
 			if (autoCreateNewEntityWhenStart) {
 				UpdateNavMesh();
 			}
-			UpdatePreExistingEnemies();
+			foreach (var subarea in subAreaLevels) {
+				subarea.SetLevelNumber(levelNumber);
+			}
+			
+			// UpdatePreExistingEnemies();
 			OnSpawnPlayer();
 			if (ambientMusic) {
 				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
@@ -321,8 +355,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		
-
 		private void UpdatePreExistingDirectors() {
 			IDirectorViewController[] directors = GetComponentsInChildren<IDirectorViewController>(true);
 			foreach (var directorViewController in directors) {
@@ -332,43 +364,40 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		protected void InitDirector(IDirectorViewController director) {
 			director.SetLevelEntity(BoundEntity);
-			
-			
-			director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		}
 
-		private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
-			OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
-		}
+		// private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
+		// 	OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
+		// }
+		//
+		// private void UpdatePreExistingEnemies() {
+		// 	IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
+		// 	foreach (var enemy in enemies) {
+		// 		enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
+		// 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		// 	}
+		// }
+
+		// private void OnExistingEnemyInit(IEntityViewController entity) {
+		// 	entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
+		// 	OnInitEnemy(entity as IEnemyViewController);
+		// }
 		
-		private void UpdatePreExistingEnemies() {
-			IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
-			foreach (var enemy in enemies) {
-				enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
-					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-			}
-		}
-
-		private void OnExistingEnemyInit(IEntityViewController entity) {
-			entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
-			OnInitEnemy(entity as IEnemyViewController);
-		}
-
-		private void OnInitEnemy(IEnemyViewController enemyObject) {
-			IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
-			enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
-				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-			enemyCount++;
-			BoundEntity.CurrentEnemyCount++;
-			currentEnemies.Add(enemyEntity);
-		}
-
-		private void OnEnemyEntityRecycled(IEntity enemy) {
-			enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
-			enemyCount--;
-			BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
-			currentEnemies.Remove(enemy);
-		}
+		// private void OnInitEnemy(IEnemyViewController enemyObject) {
+		// 	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
+		// 	enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
+		// 		.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		// 	enemyCount++;
+		// 	BoundEntity.CurrentEnemyCount++;
+		// 	currentEnemies.Add(enemyEntity);
+		// }
+		//
+		// private void OnEnemyEntityRecycled(IEntity enemy) {
+		// 	enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
+		// 	enemyCount--;
+		// 	BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
+		// 	currentEnemies.Remove(enemy);
+		// }
 
 		protected override void Update() {
 			base.Update();
@@ -407,6 +436,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					spawner.transform.localPosition = Vector3.zero;
 					spawner.transform.localRotation = Quaternion.identity;
 					spawner.transform.localScale = Vector3.one;
+					
+					foreach (var subArea in subAreaLevels)
+					{
+						subArea.InitDirector(director);
+					}
 				}
 			}
 			
@@ -416,35 +450,45 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public override void OnRecycled() {
 			base.OnRecycled();
 			enemyCount = 0;
-			currentEnemies.Clear();
+			// currentEnemies.Clear();
 			playerSpawners.Clear();
 			if (ambientMusic) {
 				//AudioSystem.Singleton.StopMusic();
 			}
 			bossPillars = null;
+			subAreaLevels.Clear();
 		}
 		
 		public void OnExitLevel() {
-			BoundEntity.CurrentEnemyCount = 0;
+			// BoundEntity.CurrentEnemyCount = 0;
 			IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
 			IDirectorModel directorModel = this.GetModel<IDirectorModel>();
+			ISubAreaLevelModel subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
 			
 			ISpawnCardsProperty spawnCardsProperty = BoundEntity.GetProperty<ISpawnCardsProperty>();
 			foreach (LevelSpawnCard spawnCard in spawnCardsProperty.RealValue.Value) {
 				enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
 			}
-			
-			while (currentEnemies.Count > 0) {
-				IEntity enemy = currentEnemies.First();
-				currentEnemies.Remove(enemy);
-				enemyModel.RemoveEntity(enemy.UUID, true);
+
+
+			foreach (ISubAreaLevelViewController subAreaLevel in subAreaLevels) {
+				subAreaLevel.OnExitLevel(); // will also remove all enemies
+				subAreaLevelModel.RemoveEntity(subAreaLevel.Entity.UUID,
+					true);
 			}
+			
+			// while (currentEnemies.Count > 0) {
+			// 	IEntity enemy = currentEnemies.First();
+			// 	currentEnemies.Remove(enemy);
+			// 	enemyModel.RemoveEntity(enemy.UUID, true);
+			// }
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {
 					directorModel.RemoveEntity(directorViewController.Entity.UUID, true);
 				}
 			}
+			
 		
 
 			foreach (IDirectorViewController spawner in playerSpawners) {

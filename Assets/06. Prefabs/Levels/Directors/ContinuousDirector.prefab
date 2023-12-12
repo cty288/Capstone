@@ -56,15 +56,23 @@ MonoBehaviour:
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  baseSpawnTimer: 5
-  baseStartingCredits: 10
+  baseMinSpawnTimer: 5
+  baseMaxSpawnTimer: 25
+  baseStartingCredits: 0
   baseCreditsPerSecond: 0.2
+  baseMaxActiveTime: 360
+  baseDirectorCooldown: 600
+  baseMaxDirectorEnemies: 20
   minSpawnRange: 15
   maxSpawnRange: 30
   addCreditsInterval: 1
@@ -74,3 +82,28 @@ MonoBehaviour:
   currentCredits: 0
   creditTimer: 0
   directorSpawnTimer: 0
+  spawnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  totalTimeElapsedInDirector: 0
