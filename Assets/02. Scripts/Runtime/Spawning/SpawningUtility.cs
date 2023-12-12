@@ -79,10 +79,15 @@ namespace Runtime.Spawning {
 			//[CanBeNull] Vector3[] insideArenaRefPoints,
 			float initialSearchRadius,
 			float increment,
-			int maxAttempts
+			int maxAttempts,
+			int operationPerFrame = 10
 		) {
 			NavMeshFindResult result = new NavMeshFindResult();
 
+			if(float.IsInfinity(desiredPosition.magnitude)) {
+				return new NavMeshFindResult(false, Vector3.negativeInfinity, 1, Quaternion.identity);
+			}
+			
 			if (insideArenaBounds == default) {
 				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
 					.First(o => o.gameObject.activeInHierarchy)
@@ -114,12 +119,13 @@ namespace Runtime.Spawning {
 			KDQuery query = new KDQuery();
 			List<int> resultIndices = new List<int>();
 			query.KNearest(refPointsKDTree, desiredPosition, refPointsKDTree.Count, resultIndices);
-			
+
+			int operations = 0;
 			
 			if (insideArenaBounds != default) {
 				bool satisfied = false;
 				foreach (int pointIndex in resultIndices) {
-					await UniTask.Yield();
+					//await UniTask.Yield();
 					Vector3 point = refPointsKDTree.Points[pointIndex];
 					if (!NavMesh.SamplePosition(point, out navHit, 20.0f, areaMask)) {
 						continue;
@@ -149,7 +155,7 @@ namespace Runtime.Spawning {
 
 			Vector3 res = Vector3.negativeInfinity;
 
-			await UniTask.Yield();
+			//await UniTask.Yield();
 			
 			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
 				if (!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope)) {
@@ -180,7 +186,12 @@ namespace Runtime.Spawning {
 
 
 			while (usedAttempts < maxAttempts) {
-				await UniTask.Yield();
+				if(operations % operationPerFrame == 0)
+					await UniTask.Yield();
+
+				operations++;
+				
+				//await UniTask.Yield();
 				Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * currentSearchRadius;
 				usedAttempts++;
 				randomDirection.y = 0;
@@ -305,7 +316,7 @@ namespace Runtime.Spawning {
 			float minDistance = bounds.size.x * 0.2f;
 			
 			for (int i = 0; i < targetNumber; i++) {
-				int remainingRetry = 10000;
+				int remainingRetry = 1000;
 
 				while (remainingRetry > 0) {
 					remainingRetry--;
@@ -322,8 +333,9 @@ namespace Runtime.Spawning {
 						continue;
 					}
 
-					NavMeshFindResult res  = await FindNavMeshSuitablePosition(spawner, pillarSpawnSizeGetter, navHit.position, 45, areaMask,
-						insideArenaBounds, 10, 10, remainingRetry);
+					NavMeshFindResult res = await FindNavMeshSuitablePosition(spawner, pillarSpawnSizeGetter,
+						navHit.position, 45, areaMask,
+						insideArenaBounds, 10, 10, remainingRetry, 500);
 					
 					//rotate y axis randomly
 					res.RotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
