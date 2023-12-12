@@ -167,7 +167,8 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 			if (bulletOwnerColliders != null) {
 				//Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
 				foreach (Collider bulletOwnerCollider in bulletOwnerColliders) {
-					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwnerCollider, false);
+					Collider selfCollider = GetComponentInChildren<Collider>(true);
+					Physics.IgnoreCollision(selfCollider, bulletOwnerCollider, false);
 				}
 			}
 		}

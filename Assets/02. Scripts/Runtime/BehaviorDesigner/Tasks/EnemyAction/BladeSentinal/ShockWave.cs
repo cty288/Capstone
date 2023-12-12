@@ -7,6 +7,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
@@ -27,6 +28,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float jumpHeight;
         private float holdTime;
         private float chargeUpTime;
+        private NavMeshAgent agent;
         public override void OnStart()
         {
             base.OnStart();
@@ -39,7 +41,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             holdTime = enemyEntity.GetCustomDataValue<float>("shockWave", "holdTime");
             taskStatus = TaskStatus.Running;
             StartCoroutine(DoAttack());
-            
+            agent = GetComponent<NavMeshAgent>();
+            agent.enabled = false;
             
         }
         public override TaskStatus OnUpdate()
@@ -58,6 +61,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             float duration = 0.5f;
             float timeElapsed = 0;
             Vector3 startPosition = transform.position;
+            
+            //raycast up 
+            RaycastHit hit;
+            
+            LayerMask mask = LayerMask.GetMask("Ground", "Wall");
+            if (Physics.Raycast(transform.position, Vector3.up, out hit, jumpHeight, mask, QueryTriggerInteraction.Ignore)) {
+                jumpHeight = hit.point.y - transform.position.y - enemyViewController.SpawnSizeCollider.bounds.size.y;
+            }
+
             Vector3 targetPosition = transform.position + new Vector3(0, jumpHeight, 0);
             while (timeElapsed < duration)
             {
@@ -88,6 +100,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             transform.position = targetPosition;
 
+            agent.enabled = true;
             GameObject shock = GameObject.Instantiate(shockWaveObj.Value);
             shock.transform.position = transform.position;
             shock.GetComponent<Example_Explosion>().Init(Faction.Neutral, explosionDamage, explosionSize,gameObject,
@@ -95,6 +108,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             anim.SetTrigger("SlamAttackEnd");
             yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
             taskStatus = TaskStatus.Success;
+        }
+
+        public override void OnEnd() {
+            base.OnEnd();
+            agent.enabled = true;
+            StopAllCoroutines();
         }
     }
 }

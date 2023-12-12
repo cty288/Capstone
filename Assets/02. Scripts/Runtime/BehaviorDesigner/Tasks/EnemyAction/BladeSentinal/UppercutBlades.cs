@@ -16,19 +16,23 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 	[SerializeField] private GameObject indicatorPrefab;
 	[SerializeField] private GameObject uppercutBladePrefab;
 	
-	private Animator animator;
+	
 	private TaskStatus taskStatus;
 	private float bladeInterval;
 	private float bladeCount;
 	private float bladeWaitTime;
 	private float bladeDamage;
 	private SafeGameObjectPool bladePool;
+	
+	private Animator animator;
 	private NavMeshAgent agent;
 	private Rigidbody rb;
 	public override void OnAwake() {
 		base.OnAwake();
-		animator = gameObject.GetComponentInChildren<Animator>(true);
+		
 		bladePool = GameObjectPoolManager.Singleton.CreatePool(uppercutBladePrefab, 10, 20);
+		
+		animator = gameObject.GetComponentInChildren<Animator>(true);
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		rb = gameObject.GetComponent<Rigidbody>();
 	}

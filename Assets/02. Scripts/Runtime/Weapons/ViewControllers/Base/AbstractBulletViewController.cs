@@ -55,7 +55,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected bool tickType = false;
 		protected TrailRenderer[] trailRenderers = null;
 		protected HitData hitData;
-		
+		[SerializeField] private bool autoRecycleWhenHit = true;
 		protected virtual void Awake() {
 			hitBox = GetComponent<HitBox>();
 			trailRenderers = GetComponentsInChildren<TrailRenderer>(true);
@@ -143,7 +143,6 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			  hitObjects.Add(data.Hurtbox.Owner);
 			}
 			OnHitResponse(data);
-			//RecycleToCache();
 		}
 
 		protected abstract void OnHitResponse(HitData data);
@@ -170,7 +169,10 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				}
 				
 				OnHitObject(other);
-				RecycleToCache();
+				if (autoRecycleWhenHit) {
+					RecycleToCache();
+				}
+				
 			}
 		}
 		

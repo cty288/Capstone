@@ -1,3 +1,4 @@
+using System;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
 using MikroFramework.Pool;
@@ -6,6 +7,7 @@ using UnityEngine;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using System.Collections;
 using System.Collections.Generic;
+using Runtime.DataFramework.ViewControllers.Entities;
 
 
 public class BladeSentinalBladeDanmaku : AbstractBulletViewController
@@ -25,6 +27,7 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     private Transform playerTrans;
     private bool canAttack = false;
     private Vector3 playerTarget;
+    private Action onBulletRecycled;
     protected override void OnBulletReachesMaxRange()
     {
         
@@ -37,16 +40,18 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
         canAttack = false;
     }
 
-    protected override void OnHitObject(Collider other)
-    {
-        
+    protected override void OnHitObject(Collider other) {
+        if (other.gameObject.GetComponent<IDamageableViewController>() != null) {
+            RecycleToCache();
+        }
     }
 
     protected override void OnHitResponse(HitData data)
     {
        
     }
-    public void SetData(float bulletSpeed , float initTime, float afterBulletSpeed , float afterRotationSpeed , Transform origin , Transform player)
+    public void SetData(float bulletSpeed , float initTime, float afterBulletSpeed , float afterRotationSpeed , Transform origin , Transform player,
+        Action onBulletRecycled)
     {
      
         
@@ -59,7 +64,7 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
         Invoke("FinalPhase", 10f);
         rotateAroundPoint = origin;
         playerTrans = player;
-
+        this.onBulletRecycled += onBulletRecycled;
     }
 
     // Start is called before the first frame update
@@ -128,10 +133,8 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
             {
                 Vector3 directionToPlayer = playerTrans.position - transform.position;
                 this.gameObject.GetComponent<Rigidbody>().velocity = directionToPlayer * bulletSpeed;
-                if(Vector3.Distance(this.gameObject.transform.position, playerTrans.position) < 1)
-                {
-                    Destroy(this.gameObject);
-                    //debug
+                if(Vector3.Distance(this.gameObject.transform.position, playerTrans.position) < 1) {
+                    RecycleToCache();
                 }
 
             }
@@ -154,6 +157,13 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
             }
         }
     }
+
+    public override void OnRecycled() {
+        base.OnRecycled();
+        onBulletRecycled?.Invoke();
+        onBulletRecycled = null;
+    }
+
     private void SetSpeed()
     {
         this.bulletSpeed = afterBulletSpeed;
