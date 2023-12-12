@@ -55,6 +55,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		protected bool isActivating = false;
 		protected ILevelSystem levelSystem;
 		[SerializeField] private Vector2 waitTimeRange = new Vector2(10, 20);
+		[SerializeField] private GameObject normalTrail;
 		
 		protected override void Awake() {
 			base.Awake();
@@ -86,12 +87,15 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			foreach (var system in particleSystems) {
 				system.Stop();
 			}
+			
+			normalTrail.gameObject.SetActive(true);
 		}
 
 
 
 		private void OnBossFightStatusChanged(bool arg1, bool status) {
 			UpdateInteractHint();
+			normalTrail.gameObject.SetActive(!status);
 		}
 
 		protected override (InputAction, string, string) GetInteractHintInfo() {
@@ -153,7 +157,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				system.loop = true;
 				system.Play();
 			}
-			
+			normalTrail.gameObject.SetActive(false);
 			isActivating = true;
 			UpdateInteractHint();
 
