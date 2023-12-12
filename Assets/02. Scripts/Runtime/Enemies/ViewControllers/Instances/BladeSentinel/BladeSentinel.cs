@@ -119,10 +119,9 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 
     protected override void OnEntityDie(ICanDealDamage damagedealer) {
         base.OnEntityDie(damagedealer);
-        animator.SetLayerWeight(0, 0);
-        animator.SetLayerWeight(1, 0);
-        
-        animator.CrossFadeInFixedTime("Die", 0.1f, 1);
+
+        behaviorTree.enabled = false;
+        animator.CrossFadeInFixedTime("Die", 0.1f);
         rb.isKinematic = false;
         rb.useGravity = true;
         agent.enabled = false;
@@ -132,10 +131,9 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
         base.OnRecycled();
         transform.localScale = Vector3.one;
         deathAnimationEnd = false;
-        animator.SetLayerWeight(0, 1);
-        animator.SetLayerWeight(1, 0);
         rb.isKinematic = false;
         rb.useGravity = false;
         agent.enabled = true;
+        behaviorTree.enabled = true;
     }
 }

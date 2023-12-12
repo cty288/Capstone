@@ -95,6 +95,9 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     }
     private void FixedUpdate()
     {
+        if (!rotateAroundPoint) {
+            return;
+        }
         if (secondPhase)
         {
             this.gameObject.transform.localScale = new Vector3(10, 10, 10);

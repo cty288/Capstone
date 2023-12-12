@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using BehaviorDesigner.Runtime;
+using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -53,10 +54,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		private static int combatCurrencyAmountPerItem = 5;
 		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
 		protected NavMeshAgent navMeshAgent;
-		BehaviorTree behaviorTree;
+		protected BehaviorTree behaviorTree;
 		
 		[Header("Nav Mesh")]
 		[SerializeField] protected bool randomizeNavMeshPriority = true;
+		
+		[Header("Creature Recycle Settings")]
+		[SerializeField]
+		private bool autoRemoveEntityWhenDie = true;
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
@@ -87,8 +92,16 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 
 		}
+		protected abstract MikroAction WaitingForDeathCondition();
+		protected virtual void OnDieWaitEnd(ICanDealDamage damagedealer) {
+			SpawnDeathDroppedItemsAndCurrency(damagedealer);
+			if (autoRemoveEntityWhenDie) {
+				GlobalEntities.GetEntityAndModel(BoundEntity.UUID).Item2.RemoveEntity(BoundEntity.UUID);
+			}
+		
+		}
 
-		protected override void OnEntityDie(ICanDealDamage damagedealer) {
+		private void SpawnDeathDroppedItemsAndCurrency(ICanDealDamage damagedealer) {
 			if (damagedealer == null || damagedealer.RootDamageDealer == null ||
 			    damagedealer.RootDamageDealer.IsSameFaction(this)) {
 				return;
@@ -135,6 +148,20 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 			}
 
+		}
+
+		protected override void OnEntityDie(ICanDealDamage damagedealer) {
+			MikroAction action = WaitingForDeathCondition();
+			if (action != null) {
+				action.OnEndedCallback += () => {
+					OnDieWaitEnd(damagedealer);
+				};
+				action.Execute();
+			}
+			else {
+				OnDieWaitEnd(damagedealer);
+			}
+			
 		}
 		
 		protected abstract int GetSpawnedCombatCurrencyAmount();

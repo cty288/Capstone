@@ -151,8 +151,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
 
         public void InitDirectors()
         {
-            //director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-            UpdatePreExistingEnemies();
+            //director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);();
             //Tim update: get all directors in children and init
             
         }
@@ -165,18 +164,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             }
         }
         
-        private void UpdatePreExistingEnemies() {
-        	IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
-        	foreach (var enemy in enemies) {
-        		enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
-        			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-        	}
-        }
-
-        private void OnExistingEnemyInit(IEntityViewController entity) {
-        	entity.UnRegisterOnEntityViewControllerInit(OnExistingEnemyInit);
-        	OnInitEnemy(entity as IEnemyViewController);
-        }
+    
+        
         
         private void OnInitEnemy(IEnemyViewController enemyObject) {
         	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;

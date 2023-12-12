@@ -71,8 +71,10 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
         if (timer >= maxTime && status == TaskStatus.Running) {
             status = TaskStatus.Success;
         }
-        
-        
+
+        if (status == TaskStatus.Success) {
+            anim.CrossFadeInFixedTime("Skill_SingleHand_End", 0.1f);
+        }
         
         return status;
     }
@@ -113,9 +115,5 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
             status = TaskStatus.Success;
         }
     }
-
-    public override void OnEnd() {
-        base.OnEnd();
-        anim.CrossFadeInFixedTime("Skill_SingleHand_End", 0.1f);
-    }
+    
 }

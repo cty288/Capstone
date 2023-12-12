@@ -306,7 +306,7 @@ namespace Runtime.Spawning
                             enemyEntity.SpawnedAreaIndex = areaMask;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);
                             Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
-                            
+                            //currentEnemies.Add(enemyEntity);
                             // totalSpawnsSinceOffCooldown++;
                             currentCredits -= cost;
                             return true;

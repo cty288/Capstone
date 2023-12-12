@@ -96,35 +96,14 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			return info.CurrentHealth;
 		}
 
-		protected override void OnEntityDie(ICanDealDamage damagedealer) {
-			base.OnEntityDie(damagedealer);
-			MikroAction action = WaitingForDeathCondition();
-			if (action != null) {
-				action.OnEndedCallback += () => {
-					OnDieWaitEnd();
-				};
-				action.Execute();
-			}
-			else {
-				OnDieWaitEnd();
-			}
-		}
-
-		private void OnDieWaitEnd() {
-			enemyModel.RemoveEntity(BoundEntity.UUID);
-		}
-
-		protected abstract MikroAction WaitingForDeathCondition();
+		
 
 		protected void OnCurrentHealthChanged(int oldValue, int newValue) {
 			Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
 			
 		}
 
-		public override void OnRecycled() {
-			base.OnRecycled();
-			// BoundEntity.GetDirectorOwner().DecrementCurrentActiveEnemies();
-		}
+	
 
 		protected override void OnReadyToRecycle() {
 			base.OnReadyToRecycle();
