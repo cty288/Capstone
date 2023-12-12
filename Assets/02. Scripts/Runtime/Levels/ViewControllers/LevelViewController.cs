@@ -140,6 +140,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public List<GameObject> Enemies {
 			get {
 				List<GameObject> enemyPrefabs = new List<GameObject>();
+				
+				
+				ISubAreaLevelViewController[] subAreas = GetComponentsInChildren<ISubAreaLevelViewController>(true);
+				if (subAreas != null) {
+					foreach (var subArea in subAreas) {
+						enemyPrefabs.AddRange(subArea.Enemies);
+					}
+				}
+				
 				foreach (var enemy in enemies) {
 					enemyPrefabs.Add(enemy.mainPrefab);
 					if (enemy.variants != null) {
