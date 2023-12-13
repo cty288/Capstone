@@ -483,7 +483,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				return;
 			}
 			readyToRecycled = true;
-			
+			gameObject.SetActive(false);
 			
 			StopAllCoroutines();
 			BoundEntity?.UnRegisterReadyToRecycle(OnEntityReadyToRecycle);
