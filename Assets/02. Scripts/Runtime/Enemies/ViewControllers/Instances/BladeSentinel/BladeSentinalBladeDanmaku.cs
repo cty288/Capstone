@@ -28,6 +28,7 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     private bool canAttack = false;
     private Vector3 playerTarget;
     private Action onBulletRecycled;
+    private int attackVersion;
     protected override void OnBulletReachesMaxRange()
     {
         
@@ -55,20 +56,30 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
        
     }
     public void SetData(float bulletSpeed , float initTime, float afterBulletSpeed , float afterRotationSpeed , Transform origin , Transform player,
-        Action onBulletRecycled)
+        Action onBulletRecycled , int attackVersion)
     {
      
         
         this.bulletSpeed = bulletSpeed;
         this.afterRotationSpeed = afterRotationSpeed;
         this.afterBulletSpeed = afterBulletSpeed;
-        Invoke("SetSpeed", initTime);
-        Invoke("SetRotationSpeed", initTime);
-        Invoke("SetPhase", 6f);
-        Invoke("FinalPhase", 10f);
+        if(attackVersion == 0)
+        {
+            Invoke("SetSpeed", initTime);
+            Invoke("SetRotationSpeed", initTime);
+        }
+        if(attackVersion == 1)
+        {
+
+            Invoke("SetSpeed", initTime);
+            Invoke("SetRotationSpeed", initTime);
+        }
+        //Invoke("SetPhase", 6f);
+        //Invoke("FinalPhase", 10f);
         rotateAroundPoint = origin;
         playerTrans = player;
         this.onBulletRecycled += onBulletRecycled;
+        this.attackVersion = attackVersion;
     }
 
     // Start is called before the first frame update
@@ -83,9 +94,15 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
     protected override void Update()
     {
         base.Update();
-        if (!secondPhase && !thirdPhase)
+        if (!secondPhase && !thirdPhase && attackVersion == 1)
         {
 
+            this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
+            childToRotate.transform.Rotate(0, 360 * Time.deltaTime, 0);
+            this.gameObject.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+        }
+        else if(!secondPhase && !thirdPhase && attackVersion == 1)
+        {
             this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
             childToRotate.transform.Rotate(0, 360 * Time.deltaTime, 0);
             this.gameObject.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
