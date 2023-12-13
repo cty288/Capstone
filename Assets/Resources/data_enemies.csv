@@ -44,7 +44,7 @@ CustomProperty Structure:
 If no levels, use negative numbers to represent",,
 ,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,
 BEGIN,,,,,,,,,,
-Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20,"{
+Boss1,"{""maxHealth"": 1000, ""currentHealth"": 1000}","[""Type1"", ""Type2""]",20,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -134,7 +134,6 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20
           ""y"": 1
         },
         ""dropWeight"": 2,
-        ""required"": true,
         ""setRarity"": true,
         ""rarityRange"": {
           ""x"": 1,
@@ -148,8 +147,8 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20
     ""info"": {
       ""type"": ""HealthInfo"",
       ""value"": {
-        ""maxHealth"": 150,
-        ""currentHealth"": 150
+        ""maxHealth"": 300,
+        ""currentHealth"": 300
       },
       ""useDefaultModifier"": true
     }
@@ -258,7 +257,7 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20
   }
 }",,,
 Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",1,,,123,,,,
-BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type2""]",10,"{
+BladeSentinel,"{""maxHealth"": 1200, ""currentHealth"": 1200}","[""Type1"", ""Type2""]",10,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -374,7 +373,6 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
           ""y"": 1
         },
         ""dropWeight"": 1,
-        ""required"": true,
         ""setRarity"": true,
         ""rarityRange"": {
           ""x"": 1,
