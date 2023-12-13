@@ -11,17 +11,19 @@ namespace Runtime.Utilities.ConfigSheet {
 		private string docID;
 		private string sheetID;
 		private string localBackupName;
+		private bool isDownload = true;
 		
-		public ConfigTable(string docID, string sheetID, string localBackupName) {
+		public ConfigTable(string docID, string sheetID, string localBackupName, bool isDownload) {
 			this.docID = docID;
 			this.sheetID = sheetID;
 			this.localBackupName = localBackupName;
+			this.isDownload = isDownload;
 			Init();
 		}
 
 		private void Init() {
 			string result = "";
-			var enumerator = LoadOrDownload(docID, sheetID, localBackupName, s => {
+			var enumerator = LoadOrDownload(docID, sheetID, localBackupName, isDownload, s => {
 				result = s;
 			});
 			while (enumerator.MoveNext()) {
@@ -146,9 +148,9 @@ namespace Runtime.Utilities.ConfigSheet {
 			       || currentString.Length == 2 && currentString.Equals(Environment.NewLine);
 		}
 
-		private static IEnumerator LoadOrDownload(string docID, string sheetID, string localBackupName, Action<string> onDone) {
+		private static IEnumerator LoadOrDownload(string docID, string sheetID, string localBackupName, bool isDownload, Action<string> onDone) {
 			TextAsset asset = Resources.Load<TextAsset>(localBackupName);
-			if (!Application.isEditor) {
+			if (!isDownload) {
 				onDone(asset.text);
 				yield break;
 			}
