@@ -38,6 +38,8 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
         thirdPhase = false;
         secondPhase = false;
         canAttack = false;
+        transform.rotation = Quaternion.identity;
+        rotateAroundPoint = null;
     }
 
     protected override void OnHitObject(Collider other) {

@@ -8,6 +8,8 @@ using MikroFramework.Pool;
 
 using MikroFramework.Pool;
 using MikroFramework;
+using Runtime.Temporary;
+
 namespace a
 {
     public class WormBulletLazer : AbstractDotBulletViewController
@@ -40,7 +42,7 @@ namespace a
             transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
            // pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 10, 20);
 
-
+           player = PlayerController.GetClosestPlayer(transform.position).transform.gameObject;
 
 
 
@@ -55,6 +57,7 @@ namespace a
         }
         IEnumerator RotateAttack()
         {
+            
             float time = 2f;
             while (time > 0)
             {
@@ -84,6 +87,9 @@ namespace a
         {
 
             base.Update();
+            if (!face) {
+                return;
+            }
             timer -= Time.deltaTime;
             if(this.gameObject.transform.localScale.z >= maxRange)
             {

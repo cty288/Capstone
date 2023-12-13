@@ -113,7 +113,7 @@ namespace Runtime.GameResources.ViewControllers {
                 //TODO: test it
                 Sequence.Allocate()
                     .AddAction(
-                        UntilAction.Allocate(() => inventorySystem.CanPlaceItem(BoundEntity) || zone.IsInZone(gameObject) || !this))
+                        UntilAction.Allocate(() => BoundEntity == null ||  inventorySystem.CanPlaceItem(BoundEntity) || zone.IsInZone(gameObject) || !this))
                     .AddAction(CallbackAction.Allocate(() => {
                         if (this && zone.IsInZone(gameObject)) {
                             HandleAbsorb(player, zone);

@@ -148,8 +148,8 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20
     ""info"": {
       ""type"": ""HealthInfo"",
       ""value"": {
-        ""maxHealth"": 100,
-        ""currentHealth"": 100
+        ""maxHealth"": 150,
+        ""currentHealth"": 150
       },
       ""useDefaultModifier"": true
     }
@@ -387,21 +387,21 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
   ""ranges"":{
     ""closeRange"": {
       ""type"": ""float"",
-      ""value"": 20
+      ""value"": 10
     },
     ""midRange"": {
       ""type"": ""float"",
-      ""value"": 50
+      ""value"": 30
     }
   },
   ""dash"": {
     ""minDistance"": {
       ""type"": ""float"",
-      ""value"": 15
+      ""value"": 10
     },
     ""maxDistance"": {
       ""type"": ""float"",
-      ""value"": 40
+      ""value"": 20
     },
     ""dashSpeed"": {
       ""type"": ""float"",
@@ -427,7 +427,7 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
     },
     ""maxWalkDistance"": {
       ""type"": ""float"",
-      ""value"": 15
+      ""value"": 10
     },
     ""moveSpeed"": {
       ""type"": ""float"",
@@ -437,7 +437,7 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
   ""uppercutBlades"": {
     ""bladeInterval"": {
       ""type"": ""float"",
-      ""value"": 0.4,
+      ""value"": 0.45,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
@@ -448,7 +448,7 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
     },
     ""bladeWaitTime"": {
       ""type"": ""float"",
-      ""value"": 1,
+      ""value"": 0.75,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
@@ -478,19 +478,19 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
     },
     ""bladeDamage"": {
       ""type"": ""int"",
-      ""value"": 15,
+      ""value"": 10,
       ""useDefaultModifier"": true
     }
   },
   ""shockWave"": {
     ""explosionSize"": {
       ""type"": ""float"",
-      ""value"": 7,
+      ""value"": 5,
       ""useDefaultModifier"": true
     },
     ""explosionDamage"": {
       ""type"": ""int"",
-      ""value"": 20,
+      ""value"": 25,
       ""useDefaultModifier"": true
     },
     ""jumpHeight"": {
@@ -513,7 +513,7 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
   ""danmaku"": {
     ""danmakuDamage"": {
       ""type"": ""int"",
-      ""value"": 25,
+      ""value"": 1,
       ""useDefaultModifier"": true
     }
   }
