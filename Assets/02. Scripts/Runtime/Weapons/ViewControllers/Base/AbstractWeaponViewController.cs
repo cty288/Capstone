@@ -245,7 +245,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (shouldReload) {
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", AnimationEventType.Trigger, 0));
             }
-            
         }
 
         #region Shooting
