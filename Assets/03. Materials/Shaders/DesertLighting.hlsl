@@ -189,15 +189,15 @@ half3 DeferredDesertGlobalIllumination(BRDFData brdfData, BRDFData brdfDataClear
     #endif
 }
 
-float CalculateFresnel(Varyings IN, float fresnelPower, float fresnelCutOffOut, float fresnelCutOffIn)
+float CalculateFresnel(InputData IN, float fresnelPower, float fresnelCutOffOut, float fresnelCutOffIn)
 {
     #ifdef _NORMALMAP
-    float fresnel = 1 - saturate(dot(IN.normalWS.xyz, IN.viewDirWS.xyz));
+    float fresnel = 1 - saturate(dot(IN.normalWS.xyz, IN.viewDirectionWS.xyz));
     #else
     float fresnel = 1 - saturate(dot(IN.normalWS.xyz, normalize(_WorldSpaceCameraPos.xyz - IN.positionWS.xyz)));
     #endif
     fresnel = pow(fresnel, fresnelPower);
-    fresnel = fresnel > fresnelCutOffOut ? fresnel > fresnelCutOffOut + fresnelCutOffIn ? 1 :
+    fresnel = fresnel > fresnelCutOffOut ? fresnel > fresnelCutOffOut + fresnelCutOffIn ? fresnel :
     (fresnel - fresnelCutOffOut) / fresnelCutOffIn
     : 0;
 
