@@ -20,7 +20,7 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
     private SafeGameObjectPool pool;
     private float rad;
     private const int bladeAmount = 8;
-    private const float maxTime = 30f;
+    private const float maxTime = 15f;
     private float timer = 0;
     private float bladeTravelSpeed;
     private float initRotationTime = 4f;
