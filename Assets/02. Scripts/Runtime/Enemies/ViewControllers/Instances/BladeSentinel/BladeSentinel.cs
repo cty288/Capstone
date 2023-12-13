@@ -75,6 +75,7 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     private Rigidbody rb;
     private NavMeshAgent agent;
 
+    [SerializeField] private GameObject model;
     protected override void Awake() {
         base.Awake();
         animator = GetComponentInChildren<Animator>(true);
@@ -111,15 +112,16 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     }
 
     protected override MikroAction WaitingForDeathCondition() {
-        
-        return UntilAction.Allocate(() =>
-            animator.GetCurrentAnimatorStateInfo(0).IsName("Die") &&
-            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        return UntilAction.Allocate(() => !model.gameObject.activeInHierarchy ||
+                                          (animator.GetCurrentAnimatorStateInfo(0).IsName("Die") &&
+                                           animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f));
     }
 
     protected override void OnEntityDie(ICanDealDamage damagedealer) {
         base.OnEntityDie(damagedealer);
 
+        model.gameObject.SetActive(true);
         behaviorTree.enabled = false;
         animator.CrossFadeInFixedTime("Die", 0.1f);
         rb.isKinematic = false;
@@ -135,5 +137,6 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
         rb.useGravity = false;
         agent.enabled = true;
         behaviorTree.enabled = true;
+        model.gameObject.SetActive(true);
     }
 }
