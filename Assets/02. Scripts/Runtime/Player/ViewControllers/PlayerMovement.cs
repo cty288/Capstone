@@ -606,7 +606,7 @@ namespace Runtime.Player.ViewControllers
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded&&!wallrunning)
+            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded && !wallrunning)
             {
                 readyToDoubleJump = false;
                 wasWallRunning = false;
@@ -615,15 +615,31 @@ namespace Runtime.Player.ViewControllers
                 
             }
             
-            if (playerActions.SprintHold.IsPressed()) {
-                sprinting = true;
-                //Debug.Log("Sprinting");
+            //while sprinting
+            if (sprinting)
+            {
+                //TODO: if ads, stop sprinting
+                IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
+                if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
+                {
+                    if (playerActions.Scope.WasPressedThisFrame())
+                    {
+                        sprinting = false;
+                    }
+                }
             }
-            else
+            
+            //start sprint
+            if (!sprinting && playerActions.SprintHold.WasPressedThisFrame()) {
+                sprinting = true;
+                // Debug.Log("Sprinting");
+            }
+
+            //stop sprint
+            if (sprinting && playerActions.SprintHold.WasReleasedThisFrame())
             {
                 sprinting = false;
             }
-            
 
             if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
             {
@@ -647,7 +663,6 @@ namespace Runtime.Player.ViewControllers
             
             if((wallLeft || wallRight) && verticalInput > 0 && !grounded && !exitingWall)
             {
-                
                 if (playerActions.SprintHold.IsPressed())
                 {
                     if (!wasWallRunning&&!wallrunning)
@@ -705,8 +720,6 @@ namespace Runtime.Player.ViewControllers
             
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             if (flatVel.magnitude < moveSpeed) {
- 
-                
                 if (sliding)
                     SlidingMovement();
                 else if (wallrunning)
@@ -755,9 +768,7 @@ namespace Runtime.Player.ViewControllers
             lastMoveDirection = moveDirection;
 
         }
-
-
-
+        
         private void Jump()
         {
             exitingSlope = true;
@@ -858,7 +869,6 @@ namespace Runtime.Player.ViewControllers
                 //camera
                 DoCamTilt(0f);
             }
-            
         }
         
         private void CheckForWall()
