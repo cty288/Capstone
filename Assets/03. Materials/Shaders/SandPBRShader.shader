@@ -335,7 +335,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
 
 				half4 color = DesertFragmentPBR(inputData, surfaceData, IN.normalWS);
 
-				float fresnel = CalculateFresnel(IN, _FresnelPower, _FresnelCutOffOut, _FresnelCutOffIn);
+				float fresnel = CalculateFresnel(inputData, _FresnelPower, _FresnelCutOffOut, _FresnelCutOffIn);
 
 				float4 highlightColor = color <= 0.5 ? 2 * color * _HighlightColor : 1 - 2 * (1 - color) * (1 - _HighlightColor);
 
