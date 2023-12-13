@@ -21,7 +21,7 @@ namespace a
         private Vector3 dir;
         private GameObject face;
         private float tickrate = 0.1f;
-        private float tick = 0.1f;
+        private float tick = 0.2f;
         private float waitBeforeRotate = 1.5f;
         private float timer = 1.5f;
         private GameObject player;
@@ -43,6 +43,7 @@ namespace a
            // pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 10, 20);
 
            player = PlayerController.GetClosestPlayer(transform.position).transform.gameObject;
+            this.gameObject.GetComponent<DotHitBox>().dotTick = tick;
 
 
 
@@ -131,12 +132,13 @@ namespace a
         }
 
 
-        public void SetData(GameObject owner, Vector3 dir, GameObject player, float maxRange)
+        public void SetData(GameObject owner, Vector3 dir, GameObject player, float maxRange, float tick)
         {
             face = owner;
             this.dir = dir;
             this.player = player;
             this.maxRange = maxRange;
+            this.tick = tick;
         }
 
         protected override void OnHitResponse(HitData data)

@@ -88,6 +88,7 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
         
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Skill_SingleHand_Hold"),
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+        int attackVersion = Random.Range(0, 2);
 
         for(int i = 0; i < bladeAmount; i++)
         {
@@ -104,7 +105,7 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
             
             
             blade.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("danmaku", "danmakuDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
-            blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5 , initRotationTime , 30 , 160 , this.gameObject.transform , playerTrans, OnBulletRecycled);
+            blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5 , initRotationTime , 30 , 160 , this.gameObject.transform , playerTrans, OnBulletRecycled , attackVersion);
 
         }
     }
