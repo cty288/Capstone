@@ -1,11 +1,16 @@
-﻿using MikroFramework.Singletons;
+﻿using System.Collections.Generic;
+using MikroFramework.Singletons;
 using Polyglot;
 using UnityEngine;
 
 namespace Runtime.Utilities.ConfigSheet
 {
-	public class ConfigDatas : MikroSingleton<ConfigDatas>
-	{
+	public class ConfigDatas : MikroSingleton<ConfigDatas> {
+
+		private Dictionary<string, string> versionDict = new Dictionary<string, string>() {
+			{"develop", "11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE"},
+			{"current", "1BFUW1Z9EFAA1vVWAdZSzuuBaWRpiBvEevDJxHGBOeJQ"}
+		};
 		private ConfigDatas() { }
 
 		private ConfigTable bossEntityConfigTable;
@@ -38,43 +43,57 @@ namespace Runtime.Utilities.ConfigSheet
 		public ConfigTable SkillEntityConfigTable => skillEntityConfigTable;
 		
 		public ConfigTable CollectableResourceConfigTable => collectableResourceConfigTable;
+
+		private string GetDocID() {
+			if (Application.isEditor) {
+				return versionDict["develop"];
+			}
+			else {
+				return versionDict["current"];
+			}
+		}
         
-		public override void OnSingletonInit()
-		{
+		public override void OnSingletonInit() {
 			base.OnSingletonInit();
+			string docID = GetDocID();
+			
+			globalDataTable = new ConfigTable(docID,
+				"1266085510", "data_global", true);
+
+			bool isDownload = (globalDataTable.Get<string>("LOCK_CONFIG_TABLE", "Value1") != "1");
+			
 			//Debug.Log("ConfigDatas Singleton Init");
-			bossEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"1697603466", "data_enemies");
+			bossEntityConfigTable = new ConfigTable(docID,
+				"1697603466", "data_enemies", isDownload);
 
-			enemyEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"1757713118", "data_enemies_test");
+			enemyEntityConfigTable_test = new ConfigTable(docID,
+				"1757713118", "data_enemies_test", isDownload);
 
-			rawMaterialEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"1100243990", "data_raw_material");
+			rawMaterialEntityConfigTable = new ConfigTable(docID,
+				"1100243990", "data_raw_material", isDownload);
 
-			rawMaterialEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"1292551269", "data_raw_material_test");
+			rawMaterialEntityConfigTable_test = new ConfigTable(docID,
+				"1292551269", "data_raw_material_test", isDownload);
 			
-			weaponEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"2055187826", "data_weapons");
+			weaponEntityConfigTable = new ConfigTable(docID,
+				"2055187826", "data_weapons", isDownload);
 			
-			weaponEntityConfigTable_test = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"1228926880", "data_weapons_test");
+			weaponEntityConfigTable_test = new ConfigTable(docID,
+				"1228926880", "data_weapons_test", isDownload);
 			
-			playerEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"231118994", "data_player");
+			playerEntityConfigTable = new ConfigTable(docID,
+				"231118994", "data_player", isDownload);
 			
-			normalEnemyEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"642644287", "data_normal_enemies");
+			normalEnemyEntityConfigTable = new ConfigTable(docID,
+				"642644287", "data_normal_enemies", isDownload);
 			
-			globalDataTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"1266085510", "data_global");
 			
-			skillEntityConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"509422807", "data_skills");
 			
-			collectableResourceConfigTable = new ConfigTable("11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE",
-				"1707497374", "data_collectable_resources");
+			skillEntityConfigTable = new ConfigTable(docID,
+				"509422807", "data_skills", isDownload);
+			
+			collectableResourceConfigTable = new ConfigTable(docID,
+				"1707497374", "data_collectable_resources", isDownload);
 		}
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
