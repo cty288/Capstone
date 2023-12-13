@@ -7,6 +7,7 @@ using Runtime.Player;
 using Runtime.Player.ViewControllers;
 using Runtime.Utilities;
 using Runtime.Utilities.AnimatorSystem;
+using UnityEngine;
 
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 	public class MedicalNeedleInHandViewController  : AbstractInHandSkillViewController<MedicalNeedleSkill>  {
@@ -47,8 +48,10 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 			if (usedBefore) {
 				return;
 			}
+
+			Debug.Log("Medical Needle ItemStopUse");
 			usedBefore = true;
-			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger, 0));
+			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ItemUse", AnimationEventType.Trigger, 0));
 		}
 
 		public override void OnItemUse() {

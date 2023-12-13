@@ -52,6 +52,8 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 	private IResourceEntity waitingEntity;
 	private HotBarCategory waitingCategory;
 	private List<int> waitingActiveLayers;
+
+	//private bool justSwitchItem = false;
 	//private List<string> waitingPlayerAnimStatesBeforeNextItem = new List<string>();
 	//private 
 
@@ -114,6 +116,8 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		if (playerModel.IsPlayerDead()) {
 			return;
 		}
+
+	
 
 		if (currentHoldItemViewController != null) {
 			if (currentHoldDeployableItemViewController.Item1 != null &&
@@ -200,7 +204,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		
 		currentHoldItemViewController = null;
 		currentHoldDeployableItemViewController = (null, null);
-		
+		//justSwitchItem = true;
 
 		if (waitingPlayerAnimStatesBeforeNextItem == null || waitingPlayerAnimStatesBeforeNextItem.Count <= 0) {
 			currentHand = category;
