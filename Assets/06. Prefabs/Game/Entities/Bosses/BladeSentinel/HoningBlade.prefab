@@ -38848,7 +38848,7 @@ GameObject:
   - component: {fileID: 8098402363521700209}
   - component: {fileID: 3407992222366784481}
   - component: {fileID: 340286228519240055}
-  - component: {fileID: 8004586886217066252}
+  - component: {fileID: -6045537475418097424}
   m_Layer: 0
   m_Name: HoningBlade
   m_TagString: Untagged
@@ -38932,7 +38932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDamageNumber: 1
---- !u!114 &8004586886217066252
+--- !u!114 &-6045537475418097424
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38941,7 +38941,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5556029872014759846}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7421efb00f7dbdc4baa99fd23f584695, type: 3}
+  m_Script: {fileID: 11500000, guid: 542bd87062e4d5c44a168381af888e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onRecycledEvent:
@@ -38953,8 +38953,8 @@ MonoBehaviour:
   Pool: {fileID: 0}
   autoRecycleTime: 50
   penetrateSameFaction: 0
-  autoDestroyWhenOwnerDestroyed: 1
-  autoRecycleWhenHit: 0
+  autoDestroyWhenOwnerDestroyed: 0
+  autoRecycleWhenHit: 1
   particlePrefab: {fileID: 0}
 --- !u!1 &8355321887056663290
 GameObject:

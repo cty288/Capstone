@@ -44,7 +44,7 @@ CustomProperty Structure:
 If no levels, use negative numbers to represent",,
 ,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,
 BEGIN,,,,,,,,,,
-Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20,"{
+Boss1,"{""maxHealth"": 875, ""currentHealth"": 875}","[""Type1"", ""Type2""]",20,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -134,7 +134,6 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20
           ""y"": 1
         },
         ""dropWeight"": 2,
-        ""required"": true,
         ""setRarity"": true,
         ""rarityRange"": {
           ""x"": 1,
@@ -148,8 +147,8 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20
     ""info"": {
       ""type"": ""HealthInfo"",
       ""value"": {
-        ""maxHealth"": 100,
-        ""currentHealth"": 100
+        ""maxHealth"": 400,
+        ""currentHealth"": 400
       },
       ""useDefaultModifier"": true
     }
@@ -258,11 +257,11 @@ Boss1,"{""maxHealth"": 500, ""currentHealth"": 500}","[""Type1"", ""Type2""]",20
   }
 }",,,
 Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",1,,,123,,,,
-BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type2""]",10,"{
+BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Type2""]",10,"{
   ""1"": {
     ""TotalDropCountRange"": {
-      ""x"": 3,
-      ""y"": 5
+      ""x"": 4,
+      ""y"": 6
     },
     
     ""ItemDropInfos"": [
@@ -270,20 +269,7 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 2
-        },
-        ""dropWeight"": 5,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""HeatStoragor"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
+          ""y"": 1
         },
         ""dropWeight"": 6,
         ""setRarity"": false,
@@ -293,16 +279,16 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
         }
       },
       {
-        ""prefabName"": ""ReinforcedSteel"",
+        ""prefabName"": ""HeatStoragor"",
         ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 2
+          ""x"": 0,
+          ""y"": 1
         },
-        ""dropWeight"": 5,
+        ""dropWeight"": 3,
         ""setRarity"": false,
         ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
+          ""x"": 1,
+          ""y"": 1
         }
       },
       {
@@ -323,18 +309,18 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
   },
   ""2"": {
     ""TotalDropCountRange"": {
-      ""x"": 4,
-      ""y"": 6
+      ""x"": 5,
+      ""y"": 7
     },
     
     ""ItemDropInfos"": [
       {
         ""prefabName"": ""CarbonFiber"",
         ""batchCountRange"": {
-          ""x"": 2,
-          ""y"": 3
+          ""x"": 1,
+          ""y"": 1
         },
-        ""dropWeight"": 4,
+        ""dropWeight"": 5,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -345,22 +331,9 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
         ""prefabName"": ""HeatStoragor"",
         ""batchCountRange"": {
           ""x"": 1,
-          ""y"": 2
+          ""y"": 1
         },
-        ""dropWeight"": 5,
-        ""setRarity"": false,
-        ""rarityRange"": {
-          ""x"": 0,
-          ""y"": 0
-        }
-      },
-      {
-        ""prefabName"": ""ReinforcedSteel"",
-        ""batchCountRange"": {
-          ""x"": 1,
-          ""y"": 3
-        },
-        ""dropWeight"": 4,
+        ""dropWeight"": 3,
         ""setRarity"": false,
         ""rarityRange"": {
           ""x"": 0,
@@ -373,8 +346,7 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
           ""x"": 1,
           ""y"": 1
         },
-        ""dropWeight"": 1,
-        ""required"": true,
+        ""dropWeight"": 2,
         ""setRarity"": true,
         ""rarityRange"": {
           ""x"": 1,
@@ -391,25 +363,25 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
     },
     ""midRange"": {
       ""type"": ""float"",
-      ""value"": 50
+      ""value"": 40
     }
   },
   ""dash"": {
     ""minDistance"": {
       ""type"": ""float"",
-      ""value"": 15
+      ""value"": 10
     },
     ""maxDistance"": {
       ""type"": ""float"",
-      ""value"": 40
+      ""value"": 20
     },
     ""dashSpeed"": {
       ""type"": ""float"",
-      ""value"": 100
+      ""value"": 85
     },
     ""minDistanceFromLastMove"": {
       ""type"": ""float"",
-      ""value"": 20
+      ""value"": 5
     },
     ""dashFinishWaitTime"": {
       ""type"": ""float"",
@@ -427,28 +399,27 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
     },
     ""maxWalkDistance"": {
       ""type"": ""float"",
-      ""value"": 15
+      ""value"": 10
     },
     ""moveSpeed"": {
       ""type"": ""float"",
-      ""value"": 1.5
+      ""value"": 2
     }
   },
   ""uppercutBlades"": {
     ""bladeInterval"": {
       ""type"": ""float"",
-      ""value"": 0.4,
+      ""value"": 0.5,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
     ""bladeCount"": {
       ""type"": ""int"",
-      ""value"": 8,
-      ""useDefaultModifier"": true
+      ""value"": 8
     },
     ""bladeWaitTime"": {
       ""type"": ""float"",
-      ""value"": 1,
+      ""value"": 0.75,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
@@ -461,7 +432,7 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
   ""honingBlades"": {
     ""bladeInterval"": {
       ""type"": ""float"",
-      ""value"": 0.4,
+      ""value"": 0.2,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
@@ -470,27 +441,33 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
       ""value"": 8,
       ""useDefaultModifier"": true
     },
-    ""bladeWaitTime"": {
-      ""type"": ""float"",
-      ""value"": 1,
-      ""useDefaultModifier"": true,
-      ""inverse"": true
-    },
     ""bladeDamage"": {
       ""type"": ""int"",
-      ""value"": 15,
+      ""value"": 10,
       ""useDefaultModifier"": true
+    },
+    ""bladeSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    },
+    ""honingDuration"": {
+      ""type"": ""float"",
+      ""value"": 2
+    },
+    ""jumpHeight"": {
+      ""type"": ""float"",
+      ""value"": 20
     }
   },
   ""shockWave"": {
     ""explosionSize"": {
       ""type"": ""float"",
-      ""value"": 7,
+      ""value"": 5,
       ""useDefaultModifier"": true
     },
     ""explosionDamage"": {
       ""type"": ""int"",
-      ""value"": 20,
+      ""value"": 25,
       ""useDefaultModifier"": true
     },
     ""jumpHeight"": {
@@ -513,8 +490,25 @@ BladeSentinel,"{""maxHealth"": 600, ""currentHealth"": 600}","[""Type1"", ""Type
   ""danmaku"": {
     ""danmakuDamage"": {
       ""type"": ""int"",
-      ""value"": 25,
+      ""value"": 15,
       ""useDefaultModifier"": true
+    }
+  },
+  ""melee"": {
+    ""meleeDamage"": {
+      ""type"": ""int"",
+      ""value"": 40,
+      ""useDefaultModifier"": true
+    },
+    ""meleeWaitTime"": {
+      ""type"": ""float"",
+      ""value"": 0.2,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""dashSpeed"": {
+       ""type"": ""float"",
+      ""value"": 150
     }
   }
 }",,,
