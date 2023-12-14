@@ -44,7 +44,7 @@ CustomProperty Structure:
 If no levels, use negative numbers to represent",,
 ,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,
 BEGIN,,,,,,,,,,
-Boss1,"{""maxHealth"": 1250, ""currentHealth"": 1250}","[""Type1"", ""Type2""]",20,"{
+Boss1,"{""maxHealth"": 875, ""currentHealth"": 875}","[""Type1"", ""Type2""]",20,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -257,7 +257,7 @@ Boss1,"{""maxHealth"": 1250, ""currentHealth"": 1250}","[""Type1"", ""Type2""]",
   }
 }",,,
 Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",1,,,123,,,,
-BladeSentinel,"{""maxHealth"": 2000, ""currentHealth"": 2000}","[""Type1"", ""Type2""]",10,"{
+BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Type2""]",10,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 4,
@@ -359,11 +359,11 @@ BladeSentinel,"{""maxHealth"": 2000, ""currentHealth"": 2000}","[""Type1"", ""Ty
   ""ranges"":{
     ""closeRange"": {
       ""type"": ""float"",
-      ""value"": 10
+      ""value"": 20
     },
     ""midRange"": {
       ""type"": ""float"",
-      ""value"": 30
+      ""value"": 40
     }
   },
   ""dash"": {
@@ -377,7 +377,7 @@ BladeSentinel,"{""maxHealth"": 2000, ""currentHealth"": 2000}","[""Type1"", ""Ty
     },
     ""dashSpeed"": {
       ""type"": ""float"",
-      ""value"": 100
+      ""value"": 85
     },
     ""minDistanceFromLastMove"": {
       ""type"": ""float"",
@@ -403,7 +403,7 @@ BladeSentinel,"{""maxHealth"": 2000, ""currentHealth"": 2000}","[""Type1"", ""Ty
     },
     ""moveSpeed"": {
       ""type"": ""float"",
-      ""value"": 1.5
+      ""value"": 2
     }
   },
   ""uppercutBlades"": {
@@ -419,7 +419,7 @@ BladeSentinel,"{""maxHealth"": 2000, ""currentHealth"": 2000}","[""Type1"", ""Ty
     },
     ""bladeWaitTime"": {
       ""type"": ""float"",
-      ""value"": 0.5,
+      ""value"": 0.75,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
@@ -456,7 +456,7 @@ BladeSentinel,"{""maxHealth"": 2000, ""currentHealth"": 2000}","[""Type1"", ""Ty
   ""shockWave"": {
     ""explosionSize"": {
       ""type"": ""float"",
-      ""value"": 5.5,
+      ""value"": 5,
       ""useDefaultModifier"": true
     },
     ""explosionDamage"": {
@@ -484,8 +484,25 @@ BladeSentinel,"{""maxHealth"": 2000, ""currentHealth"": 2000}","[""Type1"", ""Ty
   ""danmaku"": {
     ""danmakuDamage"": {
       ""type"": ""int"",
-      ""value"": 5,
+      ""value"": 15,
       ""useDefaultModifier"": true
+    }
+  },
+  ""melee"": {
+    ""meleeDamage"": {
+      ""type"": ""int"",
+      ""value"": 40,
+      ""useDefaultModifier"": true
+    },
+    ""meleeWaitTime"": {
+      ""type"": ""float"",
+      ""value"": 0.2,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""dashSpeed"": {
+       ""type"": ""float"",
+      ""value"": 150
     }
   }
 }",,,
