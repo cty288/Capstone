@@ -63,6 +63,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         [SerializeField] protected int enemyCount = 0;
         private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
         
+        //test
+        public int totalEnemiesSpawned;
+        public bool isActive = true;
+        
         public List<GameObject> Enemies {
             get {
                 List<GameObject> enemyPrefabs = new List<GameObject>();
@@ -94,7 +98,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         {
             return (int) Mathf.Pow(2, subAreaLevelModifier.area);
         }
-        
+
+        protected override void OnEntityRecycled(IEntity ent)
+        {
+            base.OnEntityRecycled(ent);
+            OnExitLevel();
+            cooldownTimer = 0f;
+        }
+
         protected abstract ISubAreaLevelEntity OnInitSubLevelEntity(SubAreaLevelBuilder<T> builder);
 
         public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
@@ -131,6 +142,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             base.Update();
             
             if (!BoundEntity.IsActiveSpawner) {
+                isActive = false;
                 if (cooldownTimer <= areaSpawningCooldown)
                 {
                     cooldownTimer += Time.deltaTime;
@@ -140,6 +152,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
                     //off cooldown
                     BoundEntity.IsActiveSpawner = true;
                     BoundEntity.TotalEnemiesSpawnedSinceOffCooldown = 0;
+                    totalEnemiesSpawned = 0;
                 }
             }
         }
@@ -164,9 +177,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             }
         }
         
-    
-        
-        
         private void OnInitEnemy(IEnemyViewController enemyObject) {
         	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
         	enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
@@ -174,8 +184,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         	enemyCount++;
         	BoundEntity.CurrentEnemyCount++;
             BoundEntity.TotalEnemiesSpawnedSinceOffCooldown++;
+            totalEnemiesSpawned++;
         	currentEnemies.Add(enemyEntity);
             
+            // print($"subarea {BoundEntity.GetSubAreaNavMeshModifier()} has spawned {BoundEntity.TotalEnemiesSpawnedSinceOffCooldown} enemies");
             if(BoundEntity.TotalEnemiesSpawnedSinceOffCooldown >= BoundEntity.GetMaxEnemyCount()) {
                 StartSpawningCooldown();
             }
