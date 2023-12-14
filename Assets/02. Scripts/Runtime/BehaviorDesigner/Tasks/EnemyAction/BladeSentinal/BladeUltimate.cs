@@ -84,7 +84,8 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
         anim.CrossFadeInFixedTime("Ultimate_Jump_Start", 0.2f);
         await UniTask.WaitForSeconds(0.5f);
         anim.SetTrigger("Jump");
-        await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Ultimate_Jump"));
+        await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Ultimate_Jump"),
+            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         //Jump
         float duration = 1f;
@@ -107,10 +108,11 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
             await UniTask.Yield();
         }
         transform.position = targetPosition;
-        await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Ultimate_Idle"));
+        await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Ultimate_Idle"),
+            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         anim.CrossFadeInFixedTime("Ultimate_Windup", 0f);
 
-        await UniTask.WaitForSeconds(1f);
+        await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         recycledBulletCount = 0;
         for(int i = 0; i < bladeCount; i+=2)
         {
@@ -145,7 +147,7 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
             blade1.GetComponent<BladeSentinalHoningBlade>().SetData(bladeSpeed,honingDuration,GetPlayer().transform,transform,OnBulletRecycled);
             blade2.GetComponent<BladeSentinalHoningBlade>().SetData(bladeSpeed,honingDuration,GetPlayer().transform,transform,OnBulletRecycled);
             
-            await UniTask.WaitForSeconds(0.5f);
+            await UniTask.WaitForSeconds(0.5f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         }
         anim.CrossFadeInFixedTime("Ultimate_Shoot", 0f);
@@ -155,11 +157,12 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
             swordList[i].GetComponent<BladeSentinalHoningBlade>().Activate();
             swordList[i+1].GetComponent<BladeSentinalHoningBlade>().Activate();
 
-            await UniTask.WaitForSeconds(bladeInterval);
+            await UniTask.WaitForSeconds(bladeInterval, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         }
 
-        await UniTask.WaitUntil(() => recycledBulletCount == bladeCount);
+        await UniTask.WaitUntil(() => recycledBulletCount == bladeCount,
+            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         anim.SetTrigger("UltEnd");
         
         duration = 1f;
@@ -181,7 +184,7 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
         transform.position = targetPosition;
         anim.CrossFadeInFixedTime("Idle", 0f);
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),
-            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         taskStatus = TaskStatus.Success;
     }
     
@@ -192,7 +195,6 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
     public override void OnEnd() {
         base.OnEnd();
         StopAllCoroutines();
-        rb.isKinematic = false;
         agent.enabled = true;
     }
 }

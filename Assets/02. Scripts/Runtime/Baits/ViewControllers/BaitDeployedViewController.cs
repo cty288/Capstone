@@ -57,14 +57,14 @@ public class BaitDeployedViewController : AbstractDeployableResourceViewControll
 		//yield return new WaitForSeconds(Random.Range(baitWaitTimeRange.x, baitWaitTimeRange.y));
 
 		await UniTask.WaitForSeconds(Random.Range(baitWaitTimeRange.x, baitWaitTimeRange.y), false,
-			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle() );
+			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie() );
 		
 		foreach (var system in particleSystems) {
 			system.loop = false;
 		}
 		//yield return new WaitForSeconds(4f);
 		await UniTask.WaitForSeconds(4f,false,
-			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		
 		BoundEntity.BaitStatus = BaitStatus.Deactivated;
 		ILevelEntity levelEntity = levelModel.CurrentLevel.Value;

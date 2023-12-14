@@ -70,7 +70,7 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 	public async UniTask SkillExecute() {
 
 		await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Skill_SingleHand_Hold"),
-			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
 
 		List<UniTask> tasks = new List<UniTask>();
@@ -79,13 +79,13 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 			UniTask task = SpawnBlade();
 			tasks.Add(task);
 			await UniTask.WaitForSeconds(bladeInterval, false, PlayerLoopTiming.Update,
-				gameObject.GetCancellationTokenOnDestroyOrRecycle());
+				gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		}
 
 		await UniTask.WhenAll(tasks);
 		anim.SetTrigger("SkillEnd");
 		await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),
-			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		taskStatus = TaskStatus.Success;
 	}
 
@@ -95,7 +95,7 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 			GameObject indicator = GameObject.Instantiate(indicatorPrefab, groundPos, rotation);
 
 			await UniTask.WaitForSeconds(bladeWaitTime, false, PlayerLoopTiming.Update,
-				gameObject.GetCancellationTokenOnDestroyOrRecycle());
+				gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 			GameObject.Destroy(indicator);
 				
 			//spawn blade

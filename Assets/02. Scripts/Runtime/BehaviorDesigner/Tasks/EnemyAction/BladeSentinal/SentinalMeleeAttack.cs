@@ -77,7 +77,7 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
         animator.CrossFadeInFixedTime("Melee_Prepare", 0.1f);
         
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Melee_Hold"),
-            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         
         
         while (attempts > 0) {
@@ -134,20 +134,20 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
         });
 
         await UniTask.WaitUntil(() => dashFinish, PlayerLoopTiming.Update,
-            gameObject.GetCancellationTokenOnDestroyOrRecycle());
+            gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         mbm.enabled = false;
         model.SetActive(true);
         animator.CrossFadeInFixedTime("Melee_Hold", 0f);
 
         await UniTask.WaitForSeconds(meleeWaitTime, false, PlayerLoopTiming.Update,
-            gameObject.GetCancellationTokenOnDestroyOrRecycle());
+            gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         animator.CrossFadeInFixedTime("Melee_Release", 0.1f);
        
         
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),
-            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         
         status = TaskStatus.Success;

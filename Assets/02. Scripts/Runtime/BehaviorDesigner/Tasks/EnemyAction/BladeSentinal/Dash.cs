@@ -135,7 +135,7 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
         }else {
             animator.CrossFadeInFixedTime("Teleport", 0.1f);
             await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
-                gameObject.GetCancellationTokenOnDestroyOrRecycle());
+                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         }
 
         dashPosFound = true;
