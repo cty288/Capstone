@@ -9,29 +9,41 @@ using MikroFramework.Pool;
 using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.Spawning;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
     private Animator animator;
     private TaskStatus taskStatus;
+    private NavMeshAgent agent;
+    private Rigidbody rb;
+    
+    private float rad;
 
     private float bladeInterval;
     private float bladeCount;
     private float bladeWaitTime;
     private float bladeDamage;
+
+    private float chargeUpTime;
     
     public SharedGameObject swordPrefab;
-    private SafeGameObjectPool pool;
+    private SafeGameObjectPool bladePool;
     
     [SerializeField] private float jumpHeight;
     public override void OnAwake() {
         base.OnAwake();
         animator = gameObject.GetComponentInChildren<Animator>(true);
-        pool = GameObjectPoolManager.Singleton.CreatePool(swordPrefab.Value, 20, 50);
+        bladePool = GameObjectPoolManager.Singleton.CreatePool(swordPrefab.Value, 10, 20);
+		
+        animator = gameObject.GetComponentInChildren<Animator>(true);
+        agent = gameObject.GetComponent<NavMeshAgent>();
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     public override void OnStart() {
         base.OnStart();
-        animator.CrossFadeInFixedTime("Ultimate_Jump", 0.2f);
+        agent.enabled = false;
+        rb.isKinematic = true;
 		
         bladeInterval = enemyEntity.GetCustomDataValue<float>("honingBlades", "bladeInterval");
         bladeCount = enemyEntity.GetCustomDataValue<int>("honingBlades", "bladeCount");
@@ -39,36 +51,82 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
         bladeDamage = enemyEntity.GetCustomDataValue<int>("honingBlades", "bladeDamage");
 		
         taskStatus = TaskStatus.Running;
+        SkillExecute();
     }
 
     public override TaskStatus OnUpdate() {
+        Transform playerTr = GetPlayer().transform;
+        Vector3 direction = playerTr.position - gameObject.transform.position;
+        direction.y = 0;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        //look rotation.y - 48
+		
+        lookRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y - 48, 0);
+		
+        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 10f);
         return taskStatus;
     }
 
     public async UniTask SkillExecute() {
-        await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Ultimate_Air"),
-            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
-        
+
+        anim.CrossFadeInFixedTime("Jump_Start", 0.2f);
+        await UniTask.WaitForSeconds(chargeUpTime);
+        anim.SetTrigger("Jump");
+        await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"),
+        PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+
         //Jump
-        float duration = 1;
+        float duration = 0.5f;
         float timeElapsed = 0;
         Vector3 startPosition = transform.position;
+            
+        //raycast up 
+        RaycastHit hit;
+            
+        LayerMask mask = LayerMask.GetMask("Ground", "Wall");
+        if (Physics.Raycast(transform.position, Vector3.up, out hit, jumpHeight, mask, QueryTriggerInteraction.Ignore)) {
+            jumpHeight = hit.point.y - transform.position.y - enemyViewController.SpawnSizeCollider.bounds.size.y;
+        }
+
         Vector3 targetPosition = transform.position + new Vector3(0, jumpHeight, 0);
         while (timeElapsed < duration)
         {
             transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
             timeElapsed += Time.deltaTime;
-            await UniTask.Yield();
+            UniTask.Yield();
         }
         transform.position = targetPosition;
-        animator.CrossFadeInFixedTime("Ultimate_Attack", 0.2f);
-        await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Ultimate_End"), PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
-        //start spawning blades
-        for (int i = 0; i < bladeCount; i++) {
-            await UniTask.Delay((int) (bladeWaitTime * 1000), false, PlayerLoopTiming.Update,
-                gameObject.GetCancellationTokenOnDestroyOrRecycle());
-            //spawn blade
-            UnityEngine.GameObject s = pool.Allocate();
+
+
+        for(int i = 0; i < bladeCount; i++)
+        {
+            float angle = i * 360f / 8;
+            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * rad;
+            float z = Mathf.Cos(Mathf.Deg2Rad * angle) * rad;
+
+            Vector3 spawnPosition = new Vector3(x, 2, z) + this.gameObject.transform.position;
+            Quaternion spawnRotation = Quaternion.Euler(0f, angle, 0f);
+
+            GameObject blade = bladePool.Allocate();
+            blade.transform.position = spawnPosition;
+            blade.transform.rotation = spawnRotation;
+            
+            
+            //blade.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("danmaku", "danmakuDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
+            //blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5 , initRotationTime , 30 , 160 , this.gameObject.transform , playerTrans, OnBulletRecycled);
+
         }
+        
+        anim.SetTrigger("SkillEnd");
+        await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),
+            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+        taskStatus = TaskStatus.Success;
+    }
+    
+
+    public override void OnEnd() {
+        base.OnEnd();
+        StopAllCoroutines();
+        rb.isKinematic = false;
     }
 }
