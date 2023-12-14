@@ -167,14 +167,14 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			UpdateInteractHint();
 
 			await UniTask.WaitForSeconds(Random.Range(waitTimeRange.x, waitTimeRange.y),false,
-				PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+				PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 			
 			foreach (var system in particleSystems) {
 				system.loop = false;
 			}
 
 			await UniTask.WaitForSeconds(4f,false,
-				PlayerLoopTiming.Update,gameObject.GetCancellationTokenOnDestroyOrRecycle());
+				PlayerLoopTiming.Update,gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		
 			isActivating = false;
 			

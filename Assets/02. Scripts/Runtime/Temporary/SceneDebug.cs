@@ -16,6 +16,14 @@ namespace Runtime.Temporary
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.M)) {
+                ICurrencySystem currencySystem = this.GetSystem<ICurrencySystem>();
+                currencySystem.AddCurrency(CurrencyType.Combat, 10);
+                currencySystem.AddCurrency(CurrencyType.Mineral, 10);
+                currencySystem.AddCurrency(CurrencyType.Plant, 10);
+                currencySystem.AddCurrency(CurrencyType.Time, 10);
+            }
+            
             if (!Application.isEditor) {
                 return;
             }
@@ -29,13 +37,7 @@ namespace Runtime.Temporary
                 player.TakeDamage(10);
             }
 
-            if (Input.GetKeyDown(KeyCode.M)) {
-               ICurrencySystem currencySystem = this.GetSystem<ICurrencySystem>();
-               currencySystem.AddCurrency(CurrencyType.Combat, 10);
-               currencySystem.AddCurrency(CurrencyType.Mineral, 10);
-               currencySystem.AddCurrency(CurrencyType.Plant, 10);
-               currencySystem.AddCurrency(CurrencyType.Time, 10);
-            }
+            
         }
     }
 }
