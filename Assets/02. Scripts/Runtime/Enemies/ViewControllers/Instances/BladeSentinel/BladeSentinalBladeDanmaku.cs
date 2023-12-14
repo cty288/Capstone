@@ -101,7 +101,7 @@ public class BladeSentinalBladeDanmaku : AbstractBulletViewController
             childToRotate.transform.Rotate(0, 360 * Time.deltaTime, 0);
             this.gameObject.transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
         }
-        else if(!secondPhase && !thirdPhase && attackVersion == 1)
+        else if(!secondPhase && !thirdPhase && attackVersion == 0)
         {
             this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
             childToRotate.transform.Rotate(0, 360 * Time.deltaTime, 0);
