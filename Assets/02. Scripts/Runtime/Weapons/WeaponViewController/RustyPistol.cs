@@ -102,12 +102,7 @@ namespace Runtime.Weapons
         
         protected override void ShootEffects()
         {
-            CameraShakeData shakeData = new CameraShakeData(
-                Mathf.Lerp(0.2f, 0.5f, IsScopedIn ? 1: 0),
-                0.2f,
-                3
-            );
-            cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
+            base.ShootEffects();
         }
         
     }
