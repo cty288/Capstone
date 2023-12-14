@@ -22,6 +22,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private IEntity directStartLevel = null;
 
 		private GameObject currentLevelGo;
+		private ILevelViewController currentLevelViewController;
+
+		public ILevelViewController CurrentLevelViewController => currentLevelViewController;
 		private ILevelModel levelModel;
 		private void Awake() {
 			
@@ -72,7 +75,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			HUDManager.Singleton.ClearAll();
 			HUDManagerUI.Singleton.ClearAll();
-			
+			currentLevelViewController = null;
 			if (newLevel == null) {
 				return;
 			}
@@ -89,6 +92,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 			ILevelViewController levelViewController = spawnedLevel.GetComponent<ILevelViewController>();
+			currentLevelViewController = levelViewController;
 			levelViewController.SetLevelNumber(levelCount);
 			
 			levelViewController.InitWithID(newLevel.UUID);

@@ -47,6 +47,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		public int CurrentEnemyCount { get; set; }
 		public int TotalEnemiesSpawnedSinceOffCooldown { get; set; }
+		
+		public SubAreaDangerLevel GetSpawnStatus();
 	}
 	
 	public abstract class SubAreaLevelEntity<T> : AbstractBasicEntity, ISubAreaLevelEntity where T : SubAreaLevelEntity<T>, new() {
@@ -94,7 +96,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public SubAreaDangerLevel GetSpawnStatus()
 		{
 			if(IsActiveSpawner)
-				return SubAreaDangerLevel.High;
+				return SubAreaDangerLevel.Medium;
 			else
 				return SubAreaDangerLevel.Safe;
 		}
