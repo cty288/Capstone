@@ -135,6 +135,11 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			bossSpawnCosts = BoundEntity.GetProperty<ISpawnBossCost>().RealValue.Value;
 		}
 
+		public void SetLevelViewController(ILevelViewController levelViewController)
+		{
+			// LevelVC = levelViewController;
+		}
+
 		public IUnRegister RegisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy) {
 			this.onSpawnEnemy += onSpawnEnemy;
 			return new DirectorOnSpawnEnemyUnregister(this, onSpawnEnemy);
