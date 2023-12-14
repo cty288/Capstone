@@ -31,8 +31,8 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
     
     	
     private Animator animator;
-    private NavMeshAgent agent;
-    private Rigidbody rb;
+    //private NavMeshAgent agent;
+    //private Rigidbody rb;
     public override void OnAwake()
     {
         base.OnAwake();
@@ -40,16 +40,16 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
         playerTrans = GetPlayer().transform;
         
         animator = gameObject.GetComponentInChildren<Animator>(true);
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        rb = gameObject.GetComponent<Rigidbody>();
+        //agent = gameObject.GetComponent<NavMeshAgent>();
+       // rb = gameObject.GetComponent<Rigidbody>();
        
     }
 
     public override void OnStart()
     {
         base.OnStart();
-        agent.enabled = false;
-        rb.isKinematic = true;
+       // agent.enabled = false;
+        //rb.isKinematic = true;
         animator.CrossFadeInFixedTime("Skill_SingleHand_Start", 0.2f);
         
         status = TaskStatus.Running;

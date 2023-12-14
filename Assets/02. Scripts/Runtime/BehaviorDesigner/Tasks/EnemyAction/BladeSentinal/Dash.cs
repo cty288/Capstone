@@ -31,13 +31,13 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
     private float dashFinishWaitTime = 0.5f;
     private float dashFinishWaitTimer = 0f;
     private TaskStatus status;
-    private Rigidbody rigidbody;
+    //private Rigidbody rigidbody;
     public override void OnAwake() {
         base.OnAwake();
         model = gameObject.transform.Find("Pivot/Model").gameObject;
         mbm = gameObject.GetComponent<MoveBakeMesh>();
         agent = GetComponent<NavMeshAgent>();
-        rigidbody = GetComponent<Rigidbody>();
+        //rigidbody = GetComponent<Rigidbody>();
         animator = gameObject.GetComponentInChildren<Animator>(true);
     }
 
@@ -56,9 +56,9 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
         //model.SetActive(false);
         mbm.enabled = false;
         agent.enabled = false;
-        rigidbody.isKinematic = true;
+        //rigidbody.isKinematic = true;
         status = TaskStatus.Running;
-        FindDashPos();
+        TaskExecute();
     }
 
     public override void OnFixedUpdate() {
@@ -78,7 +78,7 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
             }
             else {
                 model.SetActive(true);
-                rigidbody.isKinematic = false;
+                //rigidbody.isKinematic = false;
                 agent.enabled = true;
                 status = TaskStatus.Success;
                 return;
@@ -95,7 +95,7 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
         return status;
     }
 
-    private async Task FindDashPos() {
+    protected virtual async Task TaskExecute() {
         int attempts = 5000;
 
 
@@ -157,6 +157,6 @@ public class Dash : EnemyAction<BladeSentinelEntity> {
 
     public override void OnEnd() {
         base.OnEnd();
-        rigidbody.isKinematic = false;
+        //rigidbody.isKinematic = false;
     }
 }

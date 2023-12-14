@@ -124,40 +124,7 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 
 
 
-	protected virtual void OnTriggerEnter(Collider other) {
-		if (!inited) {
-			return;
-		}
-		// if (gameObject.name == "GunBullet") {
-		// 	Debug.Log("HitResponse");
-		// }
-		if (!other.isTrigger) {
-			Rigidbody rootRigidbody = other.attachedRigidbody;
-			GameObject hitObj =
-				rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
-			
-			if (hitObj && bulletOwner && hitObj.transform == bulletOwner.transform) {
-				return;
-			}
-			if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
-				if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value) {
-					return;
-				}
-			}
-			
-			//OnHitObject(other);
-			//RecycleToCache();
-		}
-	}
-	
-	
 
-
-	protected virtual void Update() {
-		if (!inited) {
-			return;
-		}
-	}
 	
 
 	public override void OnRecycled() {

@@ -54,7 +54,8 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
             new AutoConfigCustomProperty("honingBlades"),
             new AutoConfigCustomProperty("shockWave"),
             new AutoConfigCustomProperty("danmaku"),
-            new AutoConfigCustomProperty("ranges")
+            new AutoConfigCustomProperty("ranges"),
+            new AutoConfigCustomProperty("melee")
         };
     }
 }
@@ -75,16 +76,21 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     private Rigidbody rb;
     private NavMeshAgent agent;
 
+    private MeleeBladeViewController meleeBlade;
+    
+    
     [SerializeField] private GameObject model;
     protected override void Awake() {
         base.Awake();
         animator = GetComponentInChildren<Animator>(true);
         rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
+        meleeBlade = GetComponentInChildren<MeleeBladeViewController>(true);
     }
 
     protected override void OnEntityStart() {
-
+        rb.isKinematic = true;
+        
     }
 
     protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
@@ -100,6 +106,16 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
         {
             case "CurrentAnimationEnd":
                // currentAnimationEnd = true;
+                break;
+            case "MeleeBladeStartCheck":
+                meleeBlade.Init(BoundEntity.CurrentFaction.Value,
+                    BoundEntity.GetCustomDataValue<int>("melee", "meleeDamage"),
+                    gameObject, BoundEntity);
+                
+                meleeBlade.StartCheckHit();
+                break;
+            case "MeleeBladeStopCheck":
+                meleeBlade.StopCheckHit();
                 break;
             default:
                 break;
@@ -133,7 +149,7 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
         base.OnRecycled();
         transform.localScale = Vector3.one;
         deathAnimationEnd = false;
-        rb.isKinematic = false;
+        rb.isKinematic = true;
         rb.useGravity = false;
         agent.enabled = true;
         behaviorTree.enabled = true;
