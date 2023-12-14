@@ -271,8 +271,16 @@ namespace Runtime.Weapons.ViewControllers.Base
         {
             BoundEntity.OnRecoil(IsScopedIn);
         }
-        
-        protected virtual void ShootEffects() {}
+
+        protected virtual void ShootEffects()
+        {
+            CameraShakeData shakeData = new CameraShakeData(
+                Mathf.Lerp(0.15f, 0.35f, IsScopedIn ? 1: 0),
+                0.2f,
+                3
+            );
+            cameraShaker.Shake(shakeData, CameraShakeBlendType.Maximum);
+        }
         #endregion
 
         #region Item Use

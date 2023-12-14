@@ -432,7 +432,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Ty
   ""honingBlades"": {
     ""bladeInterval"": {
       ""type"": ""float"",
-      ""value"": 0.4,
+      ""value"": 0.2,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
@@ -441,16 +441,22 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Ty
       ""value"": 8,
       ""useDefaultModifier"": true
     },
-    ""bladeWaitTime"": {
-      ""type"": ""float"",
-      ""value"": 1,
-      ""useDefaultModifier"": true,
-      ""inverse"": true
-    },
     ""bladeDamage"": {
       ""type"": ""int"",
       ""value"": 10,
       ""useDefaultModifier"": true
+    },
+    ""bladeSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    },
+    ""honingDuration"": {
+      ""type"": ""float"",
+      ""value"": 2
+    },
+    ""jumpHeight"": {
+      ""type"": ""float"",
+      ""value"": 20
     }
   },
   ""shockWave"": {
@@ -491,7 +497,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Ty
   ""melee"": {
     ""meleeDamage"": {
       ""type"": ""int"",
-      ""value"": 40,
+      ""value"": 30,
       ""useDefaultModifier"": true
     },
     ""meleeWaitTime"": {
@@ -502,7 +508,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Ty
     },
     ""dashSpeed"": {
        ""type"": ""float"",
-      ""value"": 150
+      ""value"": 175
     }
   }
 }",,,
