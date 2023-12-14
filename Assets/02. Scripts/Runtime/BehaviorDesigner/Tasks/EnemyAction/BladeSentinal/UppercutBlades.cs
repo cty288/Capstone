@@ -25,22 +25,22 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 	private SafeGameObjectPool bladePool;
 	
 	private Animator animator;
-	private NavMeshAgent agent;
-	private Rigidbody rb;
+	//private NavMeshAgent agent;
+	//private Rigidbody rb;
 	public override void OnAwake() {
 		base.OnAwake();
 		
 		bladePool = GameObjectPoolManager.Singleton.CreatePool(uppercutBladePrefab, 10, 20);
 		
 		animator = gameObject.GetComponentInChildren<Animator>(true);
-		agent = gameObject.GetComponent<NavMeshAgent>();
-		rb = gameObject.GetComponent<Rigidbody>();
+		//agent = gameObject.GetComponent<NavMeshAgent>();
+		//rb = gameObject.GetComponent<Rigidbody>();
 	}
 
 	public override void OnStart() {
 		base.OnStart();
-		agent.enabled = false;
-		rb.isKinematic = true;
+		//agent.enabled = false;
+		//rb.isKinematic = true;
 		animator.CrossFadeInFixedTime("Skill_SingleHand_Start", 0.2f);
 		
 		bladeInterval = enemyEntity.GetCustomDataValue<float>("uppercutBlades", "bladeInterval");
@@ -104,9 +104,10 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 			
 			//randomly rotate in y axis
 			Vector3 rot = rotation.eulerAngles;
-			rot.y = Random.Range(0, 360);
+			rot.y = Random.Range(-45, 45);
 
 
+			
 
 			blade.transform.rotation = Quaternion.Euler(rot);
 				
@@ -119,6 +120,6 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 	public override void OnEnd() {
 		base.OnEnd();
 		StopAllCoroutines();
-		rb.isKinematic = false;
+		//rb.isKinematic = false;
 	}
 }

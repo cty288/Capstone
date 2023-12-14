@@ -136,6 +136,7 @@ namespace Runtime.Spawning {
 				bool satisfied = false;
 				foreach (int pointIndex in resultIndices) {
 					//await UniTask.Yield();
+					
 					Vector3 point = refPointsKDTree.Points[pointIndex];
 					if (!NavMesh.SamplePosition(point, out navHit, 20.0f, areaMask)) {
 						continue;

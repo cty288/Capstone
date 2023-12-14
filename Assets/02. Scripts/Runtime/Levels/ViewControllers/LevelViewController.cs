@@ -41,6 +41,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public void Init();
 		
 		public void OnExitLevel();
+
+		public ISubAreaLevelEntity GetCurrentActiveSubArea();
 		
 		List<GameObject> Enemies { get; }
 	}
@@ -371,6 +373,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		protected void InitDirector(IDirectorViewController director) {
 			director.SetLevelEntity(BoundEntity);
+			director.SetLevelViewController(this);
 		}
 		
 		protected void RegisterOnSpawnEnemy(IDirectorViewController director) {
@@ -451,10 +454,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					}
 				}
 			}
-			
-			
 		}
 
+		public virtual ISubAreaLevelEntity GetCurrentActiveSubArea()
+		{
+			int areaMask = this.GetModel<IPlayerModel>().CurrentSubAreaMask.Value;
+			
+			// get subarea from level entity
+			return BoundEntity.GetAllSubAreaLevels().FirstOrDefault(x => 
+				x.GetSubAreaNavMeshModifier() == areaMask);
+		}
+		
 		public override void OnRecycled() {
 			base.OnRecycled();
 			currentEnemies.Clear();

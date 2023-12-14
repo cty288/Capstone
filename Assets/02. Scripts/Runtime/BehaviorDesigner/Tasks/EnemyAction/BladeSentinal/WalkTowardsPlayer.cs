@@ -22,12 +22,12 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 	private Vector3 lastPosition = Vector3.zero;
 	private float totalWalkedDistance = 0f;
 	private Animator animator;
-	private Rigidbody rb;
+	//private Rigidbody rb;
 	public override void OnAwake() {
 		base.OnAwake();
 		agent = GetComponent<NavMeshAgent>();
 		animator = gameObject.GetComponentInChildren<Animator>();
-		rb = gameObject.GetComponent<Rigidbody>();
+		//rb = gameObject.GetComponent<Rigidbody>();
 	}
 
 	public override void OnStart() {
@@ -79,7 +79,7 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 		}
 		else {
 			//face the path
-			rb.isKinematic = true;
+			//rb.isKinematic = true;
 			agent.SetDestination(player.Value.transform.position);
 			Vector3 direction = agent.steeringTarget - gameObject.transform.position;
 			direction.y = 0;
@@ -94,7 +94,8 @@ public class WalkTowardsPlayer : EnemyAction<BladeSentinelEntity> {
 
 	public override void OnEnd() {
 		base.OnEnd();
-		agent.enabled = false;
-		rb.isKinematic = false;
+		//agent.enabled = false;
+		//rb.isKinematic = false;
+		agent.ResetPath();
 	}
 }
