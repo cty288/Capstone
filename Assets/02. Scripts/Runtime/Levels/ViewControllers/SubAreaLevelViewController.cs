@@ -19,6 +19,13 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers
 {
+    public enum SubAreaDangerLevel {
+        Safe,
+        Low,
+        Medium,
+        High
+    }
+    
     public interface ISubAreaLevelViewController: IEntityViewController {
         // public ILevelEntity OnBuildNewLevel(int levelNumber);
         //
@@ -94,7 +101,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         {
             return (int) Mathf.Pow(2, subAreaLevelModifier.area);
         }
-        
+
+        protected override void OnEntityRecycled(IEntity ent)
+        {
+            base.OnEntityRecycled(ent);
+            OnExitLevel();
+            cooldownTimer = 0f;
+        }
+
         protected abstract ISubAreaLevelEntity OnInitSubLevelEntity(SubAreaLevelBuilder<T> builder);
 
         public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
@@ -154,6 +168,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             //director.RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);();
             //Tim update: get all directors in children and init
             
+        }
+
+        public SubAreaDangerLevel GetSpawnStatus()
+        {
+            if(BoundEntity.IsActiveSpawner)
+                return SubAreaDangerLevel.High;
+            else
+                return SubAreaDangerLevel.Safe;
         }
         
         private void OnSpawnEnemy(GameObject enemyObject, IDirectorViewController director) {
