@@ -11,6 +11,8 @@ Shader "hw/hw10/Glitch"
 		_Intensity("block glitching intensity", Range(0,1)) = 1
 
         _RGBGlichingIntensity("RGB Gliching Intensity", Range(0,1)) = 0.5
+		
+		_DistPow("Distance from center scaling", Range(0, 3)) = 0
 	}
 	SubShader
 	{
@@ -30,6 +32,7 @@ Shader "hw/hw10/Glitch"
             int _GlitchBlockSize;
             float _Intensity;
             float _RGBGlichingIntensity;
+            float _DistPow;
             struct MeshData
             {
                 float4 vertex : POSITION;
@@ -78,11 +81,16 @@ Shader "hw/hw10/Glitch"
                 float3 color = 0;
                 float2 uv = i.uv;
 
+            	float2 rescaledUV = 2 * (i.uv - 0.5f);
+            	float length = sqrt((rescaledUV.x * rescaledUV.x) + (rescaledUV.y * rescaledUV.y));
+            	float dist = pow(0.001f + length, _DistPow);
+
                 float glitchNoise = rand(floor(i.uv * _GlitchBlockSize) + _Time.y * 0.00001);
 
-                glitchNoise = pow(glitchNoise, 8) * _Intensity * rand(floor(i.uv * 10));
+                glitchNoise = pow(glitchNoise, 8) * dist * _Intensity * rand(floor(i.uv * 10));
+            	
 
-                float Offset =  _RGBGlichingIntensity * rand(float2(_Time.y,213));
+                float Offset =  dist * _RGBGlichingIntensity * rand(float2(_Time.y,213));
 
                 float r = tex2D(_MainTex, uv + glitchNoise + Offset).r;
                 float g = tex2D(_MainTex, uv).g;
