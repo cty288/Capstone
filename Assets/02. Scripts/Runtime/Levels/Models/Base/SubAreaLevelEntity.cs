@@ -17,6 +17,13 @@ using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.Models {
+	public enum SubAreaDangerLevel {
+		Safe,
+		Low,
+		Medium,
+		High
+	}
+	
 	public interface ISubAreaLevelEntity : IEntity, IHaveCustomProperties, IHaveTags {
         public List<LevelSpawnCard> GetAllCardsUnderCost(float cost);
 		
@@ -82,6 +89,14 @@ namespace _02._Scripts.Runtime.Levels.Models {
         
 		protected int GetMinRarity(LevelSpawnCard card) {
 			return card.MinRarity;
+		}
+		
+		public SubAreaDangerLevel GetSpawnStatus()
+		{
+			if(IsActiveSpawner)
+				return SubAreaDangerLevel.High;
+			else
+				return SubAreaDangerLevel.Safe;
 		}
 		
 		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost) {
@@ -154,6 +169,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		public override void OnRecycle() {
 			CurrentEnemyCount = 0;
+			TotalEnemiesSpawnedSinceOffCooldown = 0;
+			IsActiveSpawner = true;
 		}
 	}
 }

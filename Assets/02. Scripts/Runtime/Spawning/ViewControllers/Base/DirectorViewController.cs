@@ -47,6 +47,7 @@ namespace Runtime.Spawning
         IDirectorEntity DirectorEntity => Entity as IDirectorEntity;
 
         public void SetLevelEntity(ILevelEntity levelEntity);
+        public void SetLevelViewController(ILevelViewController levelViewController);
 
         public IUnRegister RegisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy);
         
@@ -59,10 +60,11 @@ namespace Runtime.Spawning
         protected Lottery m_lottery;
         
         protected ILevelEntity LevelEntity;
+        protected ILevelViewController LevelVC;
         protected int levelNumber;
         protected Action<GameObject, IDirectorViewController> onSpawnEnemy;
         
-        protected IPlayerModel playerModel;
+        // protected IPlayerModel playerModel;
 
         [Header("Director Info")]
         [SerializeField] public float baseMinSpawnTimer;
@@ -96,7 +98,7 @@ namespace Runtime.Spawning
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
-            playerModel = this.GetModel<IPlayerModel>();
+            // playerModel = this.GetModel<IPlayerModel>();
         }
 
         protected override void OnEntityStart() {
@@ -181,6 +183,10 @@ namespace Runtime.Spawning
             
             // RegisterOnSpawnEnemy(OnSpawnEnemy).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         }
+        
+        public void SetLevelViewController(ILevelViewController levelViewController) {
+            LevelVC = levelViewController;
+        }
 
         public IUnRegister RegisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy) {
             this.onSpawnEnemy += onSpawnEnemy;
@@ -202,11 +208,10 @@ namespace Runtime.Spawning
         {
             //pick card, store the card
             // get subarea index where player is standing
-            int areaMask = playerModel.CurrentSubAreaMask.Value;
+            // int areaMask = playerModel.CurrentSubAreaMask.Value;
             
-            // get subarea from level entity
-            ISubAreaLevelEntity subArea = LevelEntity.GetAllSubAreaLevels().FirstOrDefault(x => 
-                x.GetSubAreaNavMeshModifier() == areaMask);
+            // get subarea from level VC
+            ISubAreaLevelEntity subArea = LevelVC.GetCurrentActiveSubArea();
             
             //get cards under cost from subarea
             if (subArea == null)
@@ -227,7 +232,7 @@ namespace Runtime.Spawning
             //     return;
             
             List<LevelSpawnCard> cards = subArea.GetAllNormalEnemiesUnderCost(currentCredits);
-     
+            // print($"spawn cards in subarea {cards.Count}");
             if (cards.Count > 0)
             {
                 m_lottery.SetCards(cards);
@@ -241,7 +246,7 @@ namespace Runtime.Spawning
                 int maxPackSize = Random.Range(1, 5);
                 while (success && maxPackSize > 0)
                 {
-                    success = await SpawnEnemy(selectedCard, areaMask);
+                    success = await SpawnEnemy(selectedCard, subArea.GetSubAreaNavMeshModifier());
                     maxPackSize--;
                 }
             }
@@ -305,7 +310,7 @@ namespace Runtime.Spawning
                             IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
                             enemyEntity.SpawnedAreaIndex = areaMask;
                             onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                            Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity} and cost {cost}");
+                            // Debug.Log($"Spawn Success: {enemyEntity.EntityName} in area {areaMask} with rarity {rarity} and cost {cost}");
                             //currentEnemies.Add(enemyEntity);
                             // totalSpawnsSinceOffCooldown++;
                             currentCredits -= cost;
@@ -314,7 +319,7 @@ namespace Runtime.Spawning
                 //}
                 //spawnAttempts--;
             }
-            Debug.Log("spawn failed");
+            // Debug.Log($"spawn in subarea {areaMask} failed");
             return false;
         }
 
@@ -335,6 +340,10 @@ namespace Runtime.Spawning
         public override void OnRecycled() {
             base.OnRecycled();
             
+            creditTimer = addCreditsInterval;
+            currentCredits = baseStartingCredits;
+            directorSpawnTimer = 0f;
+            totalTimeElapsedInDirector = 0f;
             
             IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
             while (currentEnemies.Count > 0) {

@@ -87,7 +87,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		private HashSet<string> SubAreaUUIDs { get; set; } = new HashSet<string>();
 		
 		private HashSet<ISubAreaLevelEntity> subAreaLevelEntities = new HashSet<ISubAreaLevelEntity>();
-
+		
 		// [field: ES3Serializable]
 		// public int CurrentEnemyCount { get; set; }
 
