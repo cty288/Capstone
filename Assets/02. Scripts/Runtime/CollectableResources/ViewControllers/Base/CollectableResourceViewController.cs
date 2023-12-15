@@ -53,7 +53,9 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 		protected override void Awake() {
 			base.Awake();
 			commonEntityModel = this.GetModel<ICommonEntityModel>();
-			GetComponentInChildren<IHurtbox>(true).HurtResponder = this;
+			foreach (var componentsInChild in GetComponentsInChildren<IHurtbox>(true)) {
+				componentsInChild.HurtResponder = this;
+			}
 		}
 
 		protected override IEntity OnBuildNewEntity() {
@@ -221,7 +223,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Neutral);
 		public bool CheckHurt(HitData data) {
-			return data.Attacker.CurrentFaction.Value == Faction.Friendly;
+			return data.Attacker.CurrentFaction.Value != Faction.Hostile;
 		}
 
 		public void HurtResponse(HitData data) {

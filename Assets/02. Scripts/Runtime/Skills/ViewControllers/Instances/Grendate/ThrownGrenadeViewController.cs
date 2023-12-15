@@ -77,7 +77,7 @@ public class ThrownGrenadeViewController : MonoBehaviour
         
         GameObject explosion = pool.Allocate();
         explosion.transform.position = this.gameObject.transform.position;
-        explosion.GetComponent<IExplosionViewController>().Init(Faction.Neutral, damage, size,
+        explosion.GetComponent<IExplosionViewController>().Init(Faction.Explosion, damage, size,
             null,
             owner);
 

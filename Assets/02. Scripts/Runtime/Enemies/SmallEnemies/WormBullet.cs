@@ -161,7 +161,7 @@ namespace a
             {
                 Debug.Log("BulletOwner is null");
             }
-            exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, 10, 5, bulletOwner,
+            exp.GetComponent<IExplosionViewController>().Init(Faction.Explosion, 10, 5, bulletOwner,
                 bulletOwner.GetComponent<ICanDealDamage>());
         }
     }

@@ -6,6 +6,7 @@
 	public enum Faction {
 		Friendly,
 		Neutral,
-		Hostile
+		Hostile,
+		Explosion
 	}
 }
