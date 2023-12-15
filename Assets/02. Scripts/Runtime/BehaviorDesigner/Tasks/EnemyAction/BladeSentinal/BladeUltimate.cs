@@ -160,8 +160,7 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
             await UniTask.WaitForSeconds(bladeInterval, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         }
-
-        await UniTask.WaitForSeconds(3f);
+        await UniTask.WaitForSeconds(3f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         anim.SetTrigger("UltEnd");
         
         duration = 1f;
