@@ -161,8 +161,7 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
 
         }
 
-        await UniTask.WaitUntil(() => recycledBulletCount == bladeCount,
-            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+        await UniTask.WaitForSeconds(3f);
         anim.SetTrigger("UltEnd");
         
         duration = 1f;
