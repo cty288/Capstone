@@ -12,7 +12,7 @@ namespace _02._Scripts.Runtime.Levels {
 
 		public static float LAYER_CURVE_COFF = 0f;
 		public static float LEVEL_EXP_UPGRADE_COFF = 0f;
-		
+		public static float RARITY_CURVE_COFF = 2f;
 		static GlobalLevelFormulas() {
 			LAYER_CURVE_COFF =
 				float.Parse(ConfigDatas.Singleton.GlobalDataTable.Get<string>("LAYER_CURVE_COFF", "Value1"));
@@ -20,13 +20,14 @@ namespace _02._Scripts.Runtime.Levels {
 			LEVEL_EXP_UPGRADE_COFF =
 				float.Parse(ConfigDatas.Singleton.GlobalDataTable.Get<string>("LEVEL_EXP_UPGRADE_COFF", "Value1"));
 			
-			
+			RARITY_CURVE_COFF =
+				float.Parse(ConfigDatas.Singleton.GlobalDataTable.Get<string>("RARITY_CURVE_COFF", "Value1"));
 		}
 
-		private static float Gety2(int rarity, int level, bool inverse = false) {
-			return ((1 + (rarity - 1) / 10f) +
+		private static float Gety2(int rarity, int level) {
+			return ((1 + (rarity - 1) / RARITY_CURVE_COFF) +
 			        (LEVEL_EXP_UPGRADE_COFF * (level - 1)) *
-			        Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / 10f));
+			        Mathf.Pow(level, LAYER_CURVE_COFF) * (1 + (rarity - 1) / RARITY_CURVE_COFF));
 		}
 		
 		public static PropertyModifier<T> GetGeneralEnemyAbilityModifier<T>(Func<int> rarityGetter, Func<int> levelGetter, bool inverse = false) {
