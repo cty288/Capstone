@@ -1,7 +1,7 @@
 using MikroFramework.Architecture;
 
 namespace Framework {
-	public interface ISavableModel {
+	public interface ISavableModel : IModel {
 		void OnLoad(string suffix);
 		void OnSave(string suffix);
 		

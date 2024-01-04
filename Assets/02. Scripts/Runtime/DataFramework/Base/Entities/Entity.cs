@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.BuffSystem;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -75,16 +76,14 @@ namespace Runtime.DataFramework.Entities {
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
 		public T GetProperty<T>(PropertyNameInfo name) where T : class, IPropertyBase;
-	
-
-		/// <summary>
-		/// Return a property if you know its type, return null if not found
-		/// This will not retrieve those nested properties (in PropertyDict, PropertyList, etc.)
-		/// To retrieve nested properties, use the one that takes full name instead
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
-		public IPropertyBase GetProperty (Type type);
+		
+		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(BuffTag buffTag);
+		
+		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(params BuffTag[] buffTags);
+		
+		public bool OnValidateBuff(IBuff buff);
+		
+		public IPropertyBase[] GetProperties(Func<IPropertyBase, bool> predicate);
 	
 		public bool HasProperty(PropertyNameInfo nameInfo);
 	
@@ -193,6 +192,17 @@ namespace Runtime.DataFramework.Entities {
 		}
 	}
 
+	public struct BuffTagInfo {
+		public Type DataType;
+		public HashSet<IBuffedProperty> BuffedProperties;
+		
+		public BuffTagInfo(Type dataType) {
+			DataType = dataType;
+			BuffedProperties = new HashSet<IBuffedProperty>();
+		}
+	}
+
+	
 
 	public abstract class Entity :  IEntity  {
 		public abstract string EntityName { get; set; }
@@ -216,7 +226,18 @@ namespace Runtime.DataFramework.Entities {
 
 		private static Dictionary<Type, string> cachedPropertyNames = new Dictionary<Type, string>();
 
-	
+		[ES3NonSerializable]
+		private Dictionary<BuffTag, BuffTagInfo> buffTagToProperties =
+			new Dictionary<BuffTag, BuffTagInfo>();
+		
+		[ES3NonSerializable]
+		private Dictionary<IBuffedProperty, HashSet<BuffTag>> buffedPropertiesToTags =
+			new Dictionary<IBuffedProperty, HashSet<BuffTag>>();
+
+		[ES3NonSerializable]
+		private Dictionary<int, HashSet<IBuffedProperty>> cachedBuffedPropertiesQuery =
+			new Dictionary<int, HashSet<IBuffedProperty>>();
+
 		//protected abstract IPropertyBase[] OnGetOriginalProperties();
 		[field: SerializeField]
 		[field: ES3Serializable]
@@ -254,8 +275,8 @@ namespace Runtime.DataFramework.Entities {
 
 		public void OnLoadFromSave() {
 			_allProperties.Clear();
-		
-		
+			buffTagToProperties.Clear();
+
 			foreach (KeyValuePair<string,IPropertyBase> rootProperty in rootProperties) {
 				IPropertyBase property = rootProperty.Value;
 				_allProperties.Add(property.GetFullName(), property);
@@ -530,12 +551,76 @@ namespace Runtime.DataFramework.Entities {
 			return null;
 		}
 
+		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(BuffTag buffTag) {
+			HashSet<IBuffedProperty<TDataType>> res = new HashSet<IBuffedProperty<TDataType>>();
+			
+			if (buffTagToProperties.TryGetValue(buffTag, out BuffTagInfo buffTagInfo)) {
+				foreach (IBuffedProperty buffedProperty in buffTagInfo.BuffedProperties) {
+					res.Add((IBuffedProperty<TDataType>) buffedProperty);
+				}
+			}
+			return res;
+		}
+
+		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(params BuffTag[] buffTags) {
+			
+			HashSet<IBuffedProperty<TDataType>> res = new HashSet<IBuffedProperty<TDataType>>();
+
+			//transform buffTags to bit mask
+			int buffTagsBitMask = 0;
+			if (buffTags != null) {
+				foreach (BuffTag buffTag in buffTags) {
+					buffTagsBitMask |= 1 << (int) buffTag;
+				}
+			}
+			
+			if (cachedBuffedPropertiesQuery.TryGetValue(buffTagsBitMask, out HashSet<IBuffedProperty> cachedProperties)) {
+				foreach (IBuffedProperty property in cachedProperties) {
+					res.Add((IBuffedProperty<TDataType>) property);
+				}
+				return res;
+			}
+
+
+			HashSet<IBuffedProperty> buffedProperties = new HashSet<IBuffedProperty>();
+			foreach (IBuffedProperty propertyBase in buffedPropertiesToTags.Keys) {
+				HashSet<BuffTag> tags = buffedPropertiesToTags[propertyBase];
+				bool hasAllTags = true;
+
+				if (buffTags != null) {
+					foreach (BuffTag buffTag in buffTags) {
+						if (!tags.Contains(buffTag)) {
+							hasAllTags = false;
+							break;
+						}
+					}
+				}
+				
+
+				if (hasAllTags) {
+					buffedProperties.Add(propertyBase);
+					res.Add((IBuffedProperty<TDataType>) propertyBase);
+				}
+			}
+
+			cachedBuffedPropertiesQuery[buffTagsBitMask] = buffedProperties;
+			return res;
+		}
+
+		public virtual bool OnValidateBuff(IBuff buff) {
+			return true;
+		}
+
 
 		public IPropertyBase GetProperty(Type type) {
 			if (cachedPropertyNames.TryGetValue(type, out string propertyName)) {
 				return GetProperty(new PropertyNameInfo(propertyName));
 			}
 			return null;
+		}
+
+		public IPropertyBase[] GetProperties(Func<IPropertyBase, bool> predicate) {
+			return _allProperties.Values.Where(predicate).ToArray();
 		}
 
 		public bool HasProperty(PropertyNameInfo nameInfo) {
@@ -572,7 +657,44 @@ namespace Runtime.DataFramework.Entities {
 			initialized = true;
 		}
 
-		public abstract void OnAwake();
+		public virtual void OnAwake() {
+			buffTagToProperties.Clear();
+			buffedPropertiesToTags.Clear();
+			cachedBuffedPropertiesQuery.Clear();
+			foreach (IPropertyBase subProperty in _allProperties.Values) {
+				if (subProperty is IBuffedProperty buffedProperty) {
+					HashSet<BuffTag> tags = buffedProperty.BuffTags;
+					bool hasError = false;
+					if (tags != null) {
+						
+						foreach (BuffTag tag in tags) {
+							if (!buffTagToProperties.ContainsKey(tag)) {
+								buffTagToProperties[tag] = new BuffTagInfo(buffedProperty.GetBaseValue().GetType());
+							}
+							
+							Type buffedPropertyType = buffedProperty.GetBaseValue().GetType();
+							if (buffTagToProperties[tag].DataType != buffedPropertyType) {
+								Debug.LogError(
+									$"Buffed property {buffedProperty.PropertyName} has different data type from other properties with the same buff tag {tag}, which is supposed to be {buffTagToProperties[tag].DataType}");
+								hasError = true;
+							}
+							else {
+								buffTagToProperties[tag].BuffedProperties.Add(buffedProperty);
+							}
+						}
+					}
+					
+					if (hasError) {
+						continue;
+					}
+
+					if (tags == null) {
+						tags = new HashSet<BuffTag>();
+					}
+					buffedPropertiesToTags[buffedProperty] = tags;
+				}
+			}
+		}
 
 		protected void InitProperty(IPropertyBase property) {
 			
@@ -621,6 +743,9 @@ namespace Runtime.DataFramework.Entities {
 			EntityName = originalEntityName;
 			this.onReadyToRecycleEvent = null;
 			readyToRecycle = false;
+			buffTagToProperties.Clear();
+			cachedBuffedPropertiesQuery.Clear();
+			buffedPropertiesToTags.Clear();
 		}
 
 		[field: ES3Serializable]

@@ -1,4 +1,5 @@
 using _02._Scripts.Runtime.Baits.Model.Base;
+using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
@@ -29,6 +30,7 @@ namespace Framework {
 			this.RegisterSystem<ILevelSystem>(new LevelSystem());
 			this.RegisterSystem<ICurrencySystem>(new CurrencySystem());
 			this.RegisterSystem<ISkillSystem>(new SkillSystem());
+			this.RegisterSystem<IBuffSystem>(new BuffSystem());
 			
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());
@@ -43,6 +45,7 @@ namespace Framework {
 			this.RegisterModel<IBaitModel>(new BaitModel());
 			this.RegisterModel<ICurrencyModel>(new CurrencyModel());
 			this.RegisterModel<ISkillModel>(new SkillModel());
+			this.RegisterModel<IBuffModel>(new BuffModel());
 			
 			
 			//???

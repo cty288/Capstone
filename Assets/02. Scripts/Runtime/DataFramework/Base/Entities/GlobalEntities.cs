@@ -14,6 +14,10 @@ namespace Runtime.DataFramework.Entities {
 		}
 
 		public static (IEntity, IEntityModel) GetEntityAndModel(string uuid) {
+			if(string.IsNullOrEmpty(uuid)) {
+				return (null, null);
+			}
+			
 			if (globalEntities.TryGetValue(uuid, out var tuple)) {
 				return tuple;
 			}

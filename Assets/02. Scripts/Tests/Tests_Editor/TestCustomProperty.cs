@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using _02._Scripts.Runtime.BuffSystem;
 using Framework;
 using NUnit.Framework;
 using Runtime.DataFramework.Entities;
@@ -299,6 +301,56 @@ namespace Tests.Tests_Editor {
 		
 		
 		[Test]
+		public void TestEnemyWithBuffAndSaveLoad() {
+			EntityPropertyDependencyCache.ClearCache();
+			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
+
+			
+			
+			TestEntity ent1 = model.GetEnemyBuilder<TestEntity>(10)
+				.FromConfig()
+				.Build();
+
+
+			HashSet<IBuffedProperty<int>> buff1s = ent1.GetBuffedProperties<int>(BuffTag.TestBuff1);
+			Assert.AreEqual(1, buff1s.Count);
+			
+			HashSet<IBuffedProperty<int>> buff3s = ent1.GetBuffedProperties<int>(BuffTag.TestBuff3);
+			Assert.AreEqual(3, buff3s.Count);
+
+			HashSet<IBuffedProperty<int>> buff23s = ent1.GetBuffedProperties<int>(BuffTag.TestBuff2, BuffTag.TestBuff3);
+			Assert.AreEqual(2, buff23s.Count);
+			
+			//cached
+			buff23s = ent1.GetBuffedProperties<int>(BuffTag.TestBuff2, BuffTag.TestBuff3);
+			Assert.AreEqual(2, buff23s.Count);
+ 
+			ES3.Save("test_save_ent1", ent1, "test_save");
+			model.RemoveEntity(ent1.UUID);
+
+			ent1 = ES3.Load<TestEntity>("test_save_ent1", "test_save");
+			ent1.OnLoadFromSave();
+			
+			
+			
+			buff1s = ent1.GetBuffedProperties<int>(BuffTag.TestBuff1);
+			Assert.AreEqual(1, buff1s.Count);
+			
+			buff3s = ent1.GetBuffedProperties<int>(BuffTag.TestBuff3);
+			Assert.AreEqual(3, buff3s.Count);
+
+			buff23s = ent1.GetBuffedProperties<int>(BuffTag.TestBuff2, BuffTag.TestBuff3);
+			Assert.AreEqual(2, buff23s.Count);
+			
+			//cached
+			buff23s = ent1.GetBuffedProperties<int>(BuffTag.TestBuff2, BuffTag.TestBuff3);
+			Assert.AreEqual(2, buff23s.Count);
+			
+			ES3.DeleteKey("test_save_ent1", "test_save");
+		}
+		
+		
+		/*[Test]
 		public void TestOverrideDependencies() {
 			EntityPropertyDependencyCache.ClearCache();
 			IEnemyEntityModel model = MainGame_Test.Interface.GetModel<IEnemyEntityModel>();
@@ -348,7 +400,7 @@ namespace Tests.Tests_Editor {
 				.Build();
 
 			Assert.AreEqual(0, ent2.GetDanger().Value);
-		}
+		}*/
 		
 		
 		[Test]

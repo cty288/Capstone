@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Levels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -27,7 +28,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 		
 	}
 	
-	public class CustomDataProperty<T> : Property<T>, ICustomDataProperty, ICustomDataProperty<T> {
+	public class CustomDataProperty<T> : BuffedProperty<T>, ICustomDataProperty, ICustomDataProperty<T> {
 		[field: ES3Serializable]
 		public string CustomDataName { get; private set; }
 
@@ -83,6 +84,12 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 			string rawVal = value["value"].ToString();
 			
 			try {
+				if(value["buffTags"] is JArray buffTags) {
+					foreach (var buffTag in buffTags) {
+						BuffTags.Add((BuffTag) Enum.Parse(typeof(BuffTag), buffTag.ToString()));
+					}
+				}
+				
 				if (value["dependencies"] is JArray dependencies) {
 						
 					defaultDependencies = new PropertyNameInfo[dependencies.Count];
@@ -90,6 +97,8 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 						defaultDependencies[i] = new PropertyNameInfo(dependencies[i].ToString());
 					}
 				}
+				
+				
 				
 				if(value["useDefaultModifier"] is JValue {Value: bool and true}) {
 					bool inverse = value["inverse"] is JValue {Value: bool and true};
@@ -178,7 +187,8 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 			return defaultDependencies;
 		}
 
-		
+
+		[field: ES3Serializable] public override HashSet<BuffTag> BuffTags { get; } = new HashSet<BuffTag>();
 	}
 
 

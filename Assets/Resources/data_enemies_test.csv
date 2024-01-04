@@ -44,7 +44,8 @@ TTT2,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]"
   ""attack1"": {
     ""speed"": {
       ""type"": ""int"",
-      ""value"": 100
+      ""value"": 100,
+      ""buffTags"": [""TestBuff1""]
     },
     ""info"": {
       ""type"": ""dynamic"",
@@ -54,19 +55,23 @@ TTT2,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]"
     },
     ""damage"": {
       ""type"": ""int"",
-      ""value"": 900
+      ""value"": 900,
+      ""dependencies"": [""rarity"", ""custom_properties.attack1.speed""],
+      ""buffTags"": [""TestBuff2"", ""TestBuff3""]
     }
   },
   ""attack2"": {
     ""damage"": {
       ""type"": ""int"",
-      ""value"": 4
+      ""value"": 4,
+      ""buffTags"": [""TestBuff2"", ""TestBuff3""]
     }
   },
   ""attack3"": {
     ""damage"": {
       ""type"": ""int"",
-      ""value"": 50
+      ""value"": 50,
+      ""buffTags"": [""TestBuff3""]
     }
   }
 }","{
@@ -150,6 +155,44 @@ TTT3,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]"
       ""value"": 50,
       ""useDefaultModifier"": true,
       ""inverse"": true
+    }
+  }
+}","{
+  ""Test_Flame"": 3,
+  ""Test_Ice"": -1
+}","[""Name1"", ""Name2"", ""Name3""]"
+TTT4,"{""maxHealth"": 999, ""currentHealth"": 999}",123,"[""Type1"", ""Type2""]",456,789,"{
+  ""attack1"": {
+    ""speed"": {
+      ""type"": ""int"",
+      ""value"": 100,
+      ""buffTags"": [""TestBuff1""]
+    },
+    ""info"": {
+      ""type"": ""dynamic"",
+      ""value"": {
+        ""test"": 2.5
+      }
+    },
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 900,
+      ""dependencies"": [""rarity"", ""custom_properties.attack1.speed""],
+      ""buffTags"": [""TestBuff2"", ""TestBuff3""]
+    }
+  },
+  ""attack2"": {
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 4,
+      ""buffTags"": [""TestBuff2"", ""TestBuff3""]
+    }
+  },
+  ""attack3"": {
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 50,
+      ""buffTags"": [""TestBuff3""]
     }
   }
 }","{

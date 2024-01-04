@@ -29,9 +29,7 @@ namespace Tests.Tests_Editor {
 				
 			}
 
-			public override void OnAwake() {
-				
-			}
+			
 
 			protected override void OnInitModifiers() {
             

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.BuffSystem;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
 
@@ -352,5 +354,11 @@ namespace Runtime.DataFramework.Properties {
 
 	
 		//public abstract T OnSetBaseValueFromConfig(dynamic value);
+	}
+
+	public abstract class BuffedProperty<T> : Property<T>, IBuffedProperty<T> {
+		[field: ES3Serializable]
+		public bool IsBuffed { get; set; }
+		public abstract HashSet<BuffTag> BuffTags { get; }
 	}
 }
