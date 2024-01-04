@@ -11,7 +11,24 @@ half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoa
                                     half3 normalWS, half3 viewDirectionWS,
                                     half clearCoatMask, bool specularHighlightsOff)
 {
-	half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.0f);
+    // Adds a saturated edge to the shadow.
+    //half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalVertex, 0.1f, 0.4f);
+    half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
+    
+    half attenuation = RangeRemap(0.0f, 0.8f, radiance);
+    attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
+    half attenuation2 = RangeRemap(0.0f, 0.6f, radiance);
+    attenuation2 = 1 - (abs(attenuation2 - 0.5f) * 2);
+    attenuation = min(attenuation, attenuation2);
+    attenuation = pow(attenuation, 1.32f);
+    half3 hsv = RgbToHsv(lightColor);
+    //hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
+    hsv.z *= 1 + attenuation;
+    hsv.y += attenuation;
+    hsv.z += 0.15*attenuation;
+    radiance = RangeRemap(0.0f, 0.1f, radiance);
+    hsv.z *= radiance;
+    lightColor = HsvToRgb(hsv);
     radiance *= lightColor;
 
 	half3 brdf = brdfData.diffuse;
@@ -44,6 +61,12 @@ half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoa
 half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoat, Light light, half3 normalWS, half3 viewDirectionWS, half clearCoatMask, bool specularHighlightsOff)
 {
     return DesertLightingPhysicallyBased(brdfData, brdfDataClearCoat, light.color, light.direction, light.distanceAttenuation * light.shadowAttenuation, normalWS, viewDirectionWS, clearCoatMask, specularHighlightsOff);
+}
+
+half3 DesertLightingPhysicallyBased(BRDFData brdfData, Light light, half3 normalWS, half3 viewDirectionWS, bool specularHighlightsOff)
+{
+    const BRDFData noClearCoat = (BRDFData)0;
+    return DesertLightingPhysicallyBased(brdfData, noClearCoat, light, normalWS, viewDirectionWS, 0.0, specularHighlightsOff);
 }
 
 // Lighting Calculations
@@ -98,20 +121,21 @@ half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData, float3 nor
     }
 
     // Adds a saturated edge to the shadow.
-    half3 radiance = CalculateRadiance(mainLight.direction, (mainLight.distanceAttenuation) * mainLight.shadowAttenuation, normalVertex, _ShadowRadianceRange.x, _ShadowRadianceRange.y);
-    half3 radiance2 = CalculateRadiance(mainLight.direction, (mainLight.distanceAttenuation) * mainLight.shadowAttenuation, inputData.normalWS, _ShadowRadianceRange.x, _ShadowRadianceRange.y);
-    
+    half3 radiance = CalculateRadiance(mainLight.direction, (mainLight.distanceAttenuation) * mainLight.shadowAttenuation, normalVertex, 0.1f, 0.4f);
+    half3 radiance2 = CalculateRadiance(mainLight.direction, (mainLight.distanceAttenuation) * mainLight.shadowAttenuation, inputData.normalWS, 0.1f, 0.4f);
+
+    return half4(radiance, 1);
     half attenuation = RangeRemap(0.0f, 0.8f, radiance);
     attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
     half attenuation2 = RangeRemap(0.0f, 0.6f, radiance2);
     attenuation2 = 1 - (abs(attenuation2 - 0.5f) * 2);
     attenuation = min(attenuation, attenuation2);
-    attenuation = pow(attenuation, _ShadowEdgePower);
+    attenuation = pow(attenuation, 1.32f);
     half3 hsv = RgbToHsv(lightingData.mainLightColor);
     //hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
-    hsv.z *= 1 + attenuation*_ShadowEdgeSaturation;
-    hsv.y += attenuation*_ShadowEdgeSaturation;
-    hsv.z += 0.15*attenuation*_ShadowEdgeSaturation;
+    hsv.z *= 1 + attenuation;
+    hsv.y += attenuation;
+    hsv.z += 0.15*attenuation;
     radiance = RangeRemap(0.0f, 0.1f, radiance);
     hsv.z *= radiance;
     lightingData.mainLightColor = HsvToRgb(hsv);
