@@ -14,6 +14,8 @@ half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoa
     // Adds a saturated edge to the shadow.
     half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
     half3 radiance2 = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
+
+    return half4(radiance, 1);
     
     half attenuation = RangeRemap(0.0f, 0.8f, radiance);
     attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
