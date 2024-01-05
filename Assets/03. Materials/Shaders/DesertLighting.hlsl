@@ -12,15 +12,15 @@ half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoa
                                     half clearCoatMask, bool specularHighlightsOff)
 {
     // Adds a saturated edge to the shadow.
-    //half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalVertex, 0.1f, 0.4f);
     half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
+    half3 radiance2 = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
     
     half attenuation = RangeRemap(0.0f, 0.8f, radiance);
     attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
-    half attenuation2 = RangeRemap(0.0f, 0.6f, radiance);
+    half attenuation2 = RangeRemap(0.0f, 0.6f, radiance2);
     attenuation2 = 1 - (abs(attenuation2 - 0.5f) * 2);
     attenuation = min(attenuation, attenuation2);
-    attenuation = pow(attenuation, 1.32f);
+    //attenuation = pow(attenuation, 1.32f);
     half3 hsv = RgbToHsv(lightColor);
     //hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
     hsv.z *= 1 + attenuation;
