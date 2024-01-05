@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using _02._Scripts.Runtime.Currency.Model;
 using Framework;
@@ -80,7 +81,7 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
             Instantiate(rarityIndicator, rarityIndicatorTransform);
         }
 
-        if (propertyDescriptions is {Count: > 0}) {
+        if (propertyDescriptions is {Count: > 0} && propertyDescriptions.Any((propertyDescription => propertyDescription.display))) {
             itemPropertyDescriptionPanel.gameObject.SetActive(true);
             SetPropertyDescriptions(propertyDescriptions);
         }
@@ -136,6 +137,9 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         
         
         foreach (ResourcePropertyDescription propertyDescription in propertyDescriptions) {
+            if (!propertyDescription.display) {
+                continue;
+            }
             GameObject propertyDescriptionItem = propertyDescriptionItemPool.Allocate();
             propertyDescriptionItem.transform.SetParent(itemPropertyDescriptionPanel);
             propertyDescriptionItem.transform.localScale = Vector3.one;

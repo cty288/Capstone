@@ -27,10 +27,12 @@ namespace Runtime.GameResources.Model.Base {
 	public struct ResourcePropertyDescription {
 		public string iconName;
 		public string localizedDescription;
+		public bool display;
 		
-		public ResourcePropertyDescription(string iconName, string localizedDescription) {
+		public ResourcePropertyDescription(string iconName, string localizedDescription, bool display = true) {
 			this.iconName = iconName;
 			this.localizedDescription = localizedDescription;
+			this.display = display;
 		}
 		
 		

@@ -53,6 +53,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		
 		
 		public bool RemoveBuff<T>(string buffOwnerID, out IBuff removedBuff) where T : IBuff {
+			return RemoveBuff(typeof(T), buffOwnerID, out removedBuff);
+		}
+		
+		public bool RemoveBuff(Type buffType, string buffOwnerID, out IBuff removedBuff) {
 			removedBuff = null;
 			if (!_buffs.ContainsKey(buffOwnerID)) {
 				return false;
@@ -62,15 +66,25 @@ namespace _02._Scripts.Runtime.BuffSystem {
 				return false;
 			}
 
-			if (!_buffTypeMap[buffOwnerID].ContainsKey(typeof(T))) {
+			if (!_buffTypeMap[buffOwnerID].ContainsKey(buffType)) {
 				return false;
 			}
 
-			removedBuff = _buffTypeMap[buffOwnerID][typeof(T)];
+			removedBuff = _buffTypeMap[buffOwnerID][buffType];
 			_buffs[buffOwnerID].Remove(removedBuff);
 			_buffQueue[buffOwnerID].Remove(removedBuff);
-			_buffTypeMap[buffOwnerID].Remove(typeof(T));
+			_buffTypeMap[buffOwnerID].Remove(buffType);
+			
+			if (_buffs[buffOwnerID].Count == 0) {
+				_buffs.Remove(buffOwnerID);
+				_buffQueue.Remove(buffOwnerID);
+				_buffTypeMap.Remove(buffOwnerID);
+			}
 			return true;
+		}
+		
+		public bool RemoveBuff(IBuff buff) {
+			return RemoveBuff(buff.GetType(), buff.BuffOwnerID, out _);
 		}
 		
 		public bool HasBuff<T>(string buffOwnerID, out IBuff buff) where T : IBuff {
@@ -108,6 +122,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			_buffs[buffOwnerID].Clear();
 			_buffQueue[buffOwnerID].Clear();
 			_buffTypeMap[buffOwnerID].Clear();
+			_buffs.Remove(buffOwnerID);
+			_buffQueue.Remove(buffOwnerID);
+			_buffTypeMap.Remove(buffOwnerID);
+			
 			return true;
 		}
 		

@@ -14,6 +14,8 @@ public interface IBuff {
     public float MaxDuration { get; }
     public float RemainingDuration { get; set; }
     public float TickInterval { get; }
+    public float TickTimer { get; set; }
+    
     public int Priority { get; }
     public string BuffDealerID { get; }
     
@@ -34,13 +36,16 @@ public interface IBuff {
 
 public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
     
-    public abstract float MaxDuration { get; }
+    public abstract float MaxDuration { get; protected set;}
     
     [field: ES3Serializable]
     public float RemainingDuration { get; set; }
     
-    public abstract float TickInterval { get; }
+    public abstract float TickInterval { get; protected set; }
     
+    [field: ES3Serializable]
+    public float TickTimer { get; set; }
+
     public abstract int Priority { get; }
     
     [field: ES3Serializable]
@@ -83,6 +88,7 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
 
     public virtual void OnAwake() {
         RemainingDuration = MaxDuration;
+        TickTimer = TickInterval;
     }
 
     public abstract T OnStacked(T buff);
@@ -96,9 +102,13 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
     public abstract void OnEnd();
     
 
-    public void OnRecycled() {
+    public virtual void OnRecycled() {
         RemainingDuration = 0;
         BuffDealerID = null;
+        BuffOwnerID = null;
+        buffDealer = null;
+        buffOwner = null;
+        TickTimer = 0;
     }
 
     public bool IsRecycled { get; set; }

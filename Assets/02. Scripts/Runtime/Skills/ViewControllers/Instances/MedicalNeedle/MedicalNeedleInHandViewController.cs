@@ -1,4 +1,5 @@
-﻿using _02._Scripts.Runtime.Skills.Model.Builders;
+﻿using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.Skills.Model.Builders;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using _02._Scripts.Runtime.Skills.ViewControllers.Base;
 using MikroFramework.Architecture;
@@ -13,9 +14,11 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 	public class MedicalNeedleInHandViewController  : AbstractInHandSkillViewController<MedicalNeedleSkill>  {
 		private IGamePlayerModel playerModel;
 		private bool usedBefore = false;
+		private IBuffSystem buffSystem;
 		protected override void Awake() {
 			base.Awake();
 			playerModel = this.GetModel<IGamePlayerModel>();
+			buffSystem = this.GetSystem<IBuffSystem>();
 		}
 
 		protected override void OnBindEntityProperty() {
@@ -38,6 +41,13 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 			int amount = BoundEntity.GetCustomPropertyOfCurrentLevel<int>("healing_amount");
 			IPlayerEntity player = playerModel.GetPlayer();
 			player.Heal(amount, player);
+
+			if (BoundEntity.GetLevel() >= 3) {
+				float buffDuration = BoundEntity.GetCustomPropertyOfCurrentLevel<float>("buff_duration");
+				int buffAmount = BoundEntity.GetCustomPropertyOfCurrentLevel<int>("buff_effect");
+				RecoveryBuff buff = RecoveryBuff.Allocate(player, player, buffDuration, buffAmount);
+				buffSystem.AddBuff(player, buff);
+			}
 		}
 
 		public override void OnItemStartUse() {
