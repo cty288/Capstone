@@ -87,7 +87,7 @@ public class DanmakuBlade : EnemyAction<BladeSentinelEntity>
         }
         
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Skill_SingleHand_Hold"),
-            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+            PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         int attackVersion = Random.Range(0, 2);
 
         for(int i = 0; i < bladeAmount; i++)

@@ -66,7 +66,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             RaycastHit hit;
             
             LayerMask mask = LayerMask.GetMask("Ground", "Wall");
-            if (Physics.Raycast(transform.position, Vector3.up, out hit, jumpHeight, mask, QueryTriggerInteraction.Ignore)) {
+            if (Physics.Raycast(transform.position, Vector3.up, out hit, jumpHeight + enemyViewController.SpawnSizeCollider.bounds.size.y
+                    , mask, QueryTriggerInteraction.Ignore)) {
                 jumpHeight = hit.point.y - transform.position.y - enemyViewController.SpawnSizeCollider.bounds.size.y;
             }
 
@@ -103,7 +104,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             agent.enabled = true;
             GameObject shock = GameObject.Instantiate(shockWaveObj.Value);
             shock.transform.position = transform.position;
-            shock.GetComponent<Example_Explosion>().Init(Faction.Neutral, explosionDamage, explosionSize,gameObject,
+            shock.GetComponent<Example_Explosion>().Init(Faction.Explosion, explosionDamage, explosionSize,gameObject,
                 gameObject.GetComponent<ICanDealDamage>());
             anim.SetTrigger("SlamAttackEnd");
             yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"));

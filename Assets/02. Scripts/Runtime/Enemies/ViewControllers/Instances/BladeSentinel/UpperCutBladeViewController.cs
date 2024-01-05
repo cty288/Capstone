@@ -81,9 +81,9 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 	}
 
 	private async UniTask BladeStay(float time) {
-		await UniTask.WaitForSeconds(time, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+		await UniTask.WaitForSeconds(time, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		animator.SetTrigger("Finish");
-		await UniTask.WaitForSeconds(0.3f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycle());
+		await UniTask.WaitForSeconds(0.3f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		RecycleToCache();
 	}
 	

@@ -19,12 +19,12 @@ namespace Runtime.Weapons.ViewControllers {
 		}
 
 		protected override void OnHitResponse(HitData data) {
-			Explode();
-			RecycleToCache();
+			//Explode();
+			//RecycleToCache();
 		}
 
 		protected override void OnHitObject(Collider other) {
-			//Explode();
+			Explode();
 		}
 
 		protected override void OnBulletReachesMaxRange() {
@@ -43,7 +43,7 @@ namespace Runtime.Weapons.ViewControllers {
 			//Instantiate(explosion,transform.position,Quaternion.identity);
 			exp.transform.position = transform.position;
 			exp.transform.rotation = Quaternion.identity;
-			exp.GetComponent<IExplosionViewController>().Init(Faction.Neutral, explosionDamage, explosionSize,bulletOwner,
+			exp.GetComponent<IExplosionViewController>().Init(Faction.Explosion, explosionDamage, explosionSize,bulletOwner,
 				bulletOwner.GetComponent<ICanDealDamage>());
 		}
 	}

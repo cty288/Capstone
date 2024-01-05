@@ -23,7 +23,7 @@ namespace Runtime.Temporary.Weapon
         public int Damage => m_damage;
         
         [field: ES3Serializable]
-        public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Neutral);
+        public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Explosion);
 
         public void OnKillDamageable(IDamageable damageable) {
             

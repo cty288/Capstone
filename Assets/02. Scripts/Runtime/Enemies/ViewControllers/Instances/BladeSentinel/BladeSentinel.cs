@@ -139,6 +139,7 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 
         model.gameObject.SetActive(true);
         behaviorTree.enabled = false;
+        animator.SetBool("Die", true);
         animator.CrossFadeInFixedTime("Die", 0.1f);
         rb.isKinematic = false;
         rb.useGravity = true;
@@ -148,6 +149,7 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     public override void OnRecycled() {
         base.OnRecycled();
         transform.localScale = Vector3.one;
+        animator.SetBool("Die", false);
         deathAnimationEnd = false;
         rb.isKinematic = true;
         rb.useGravity = false;

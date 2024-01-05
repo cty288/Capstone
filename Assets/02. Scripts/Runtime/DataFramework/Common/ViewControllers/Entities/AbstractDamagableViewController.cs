@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -16,6 +17,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	
 	public interface IDamageableViewController : IEntityViewController {
 		public IDamageable DamageableEntity { get; }
+
+		public CancellationToken GetCancellationTokenOnDie();
 	}
 	
 	public interface ICanDealDamageViewController : IEntityViewController {
@@ -33,6 +36,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		[Header("Hurtresponder_Info")]
 		private List<HurtBox> hurtBoxes = new List<HurtBox>();
+
+		private CancellationTokenSource ctsWhenDie
+			= new CancellationTokenSource();
 		
 		[Header("Damage Number")]
 		[SerializeField] protected bool showDamageNumber = true;
@@ -60,7 +66,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			if (currenthealth <= 0) {
 				OnEntityDie(damagedealer);
-				
+				ctsWhenDie.Cancel();
 			}
 		}
 
@@ -100,5 +106,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		public IDamageable DamageableEntity => BoundEntity;
+		public CancellationToken GetCancellationTokenOnDie() {
+			return ctsWhenDie.Token;
+		}
 	}
 }
