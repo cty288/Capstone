@@ -16,6 +16,12 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.DataFramework.Entities {
+
+	public enum BuffUpdateEventType {
+		OnStart,
+		OnEnd,
+		OnUpdate
+	}
 	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent  {
 	
 		public string EntityName { get;}
@@ -80,6 +86,8 @@ namespace Runtime.DataFramework.Entities {
 		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(BuffTag buffTag);
 		
 		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(params BuffTag[] buffTags);
+
+		public void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType);
 		
 		public bool OnValidateBuff(IBuff buff);
 		
@@ -605,6 +613,10 @@ namespace Runtime.DataFramework.Entities {
 
 			cachedBuffedPropertiesQuery[buffTagsBitMask] = buffedProperties;
 			return res;
+		}
+
+		public virtual void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType) {
+			
 		}
 
 		public virtual bool OnValidateBuff(IBuff buff) {

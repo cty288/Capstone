@@ -59,6 +59,16 @@ public class TestBuffSystem
 	    public override float MaxDuration { get; protected set; } = 5;
 	    public override float TickInterval { get; protected set; } = 0.5f;
 	    public override int Priority { get; } = 10;
+
+
+	    public override string OnGetDescription(string defaultLocalizationKey) {
+		    return null;
+	    }
+
+	    public override bool IsDisplayed() {
+		    return true;
+	    }
+
 	    public override bool Validate() {
 		    return true;
 	    }
@@ -91,6 +101,14 @@ public class TestBuffSystem
 
 	    private RequiredBuffedProperties requiredSpeedProperty;
 	    private RequiredBuffedProperties requiredDamageBuff;
+	    public override string OnGetDescription(string defaultLocalizationKey) {
+		    return null;
+	    }
+
+	    public override bool IsDisplayed() {
+		    return true;
+	    }
+
 	    public override void OnInitialize() {
 		    requiredSpeedProperty = new RequiredBuffedProperties<int>(buffOwner, BuffTag.TestBuff1);
 		    requiredDamageBuff = new RequiredBuffedProperties<int>(buffOwner, BuffTag.TestBuff2, BuffTag.TestBuff3);
@@ -99,7 +117,7 @@ public class TestBuffSystem
 	    public override PropertyBuffBasic1 OnStacked(PropertyBuffBasic1 buff) {
 		    return this;
 	    }
-
+	   
 	    public override void OnStart() {
 		   
 	    }
@@ -126,7 +144,13 @@ public class TestBuffSystem
 	    public override int Priority { get; } = 5;
 
 	    private RequiredBuffedProperties requiredSpeedProperty;
-	  
+
+	    public override bool IsDisplayed() {
+		    return true;
+	    }
+	    public override string OnGetDescription(string defaultLocalizationKey) {
+		    return null;
+	    }
 	    public override void OnInitialize() {
 		    requiredSpeedProperty = new RequiredBuffedProperties<int>(buffOwner, BuffTag.TestBuff1, BuffTag.TestBuff2, BuffTag.TestBuff3);
 		  

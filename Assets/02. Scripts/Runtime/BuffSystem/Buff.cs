@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using MikroFramework.Pool;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using UnityEngine;
@@ -10,6 +11,30 @@ public enum BuffStatus {
     Running,
     End
 }
+
+public struct BuffDisplayInfo {
+    public bool Display;
+    public string IconPrefab;
+    public string BuffDisplayName;
+    public string BuffDescription;
+
+    public BuffDisplayInfo(bool display, string iconPrefabName, string buffDisplayName, string buffDescription) {
+        Display = display;
+        IconPrefab = iconPrefabName;
+        BuffDisplayName = buffDisplayName;
+        BuffDescription = buffDescription;
+    }
+
+    public BuffDisplayInfo(bool display = false) {
+        Display = false;
+        IconPrefab = null;
+        BuffDisplayName = null;
+        BuffDescription = null;
+    
+    }
+}
+
+
 public interface IBuff {
     public float MaxDuration { get; }
     public float RemainingDuration { get; set; }
@@ -20,6 +45,8 @@ public interface IBuff {
     public string BuffDealerID { get; }
     
     public string BuffOwnerID { get; }
+    
+    public BuffDisplayInfo OnGetBuffDisplayInfo();
     
     bool Validate();
     
@@ -53,6 +80,24 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
     
     [field: ES3Serializable]
     public string BuffOwnerID  { get; protected set; }
+
+    public BuffDisplayInfo OnGetBuffDisplayInfo() {
+        if (!IsDisplayed()) {
+            return new BuffDisplayInfo();
+        }
+        else {
+            string typeName = this.GetType().Name;
+            return new BuffDisplayInfo(true, $"{typeName}_Icon",
+                Localization.Get($"{typeName}_Name"),
+                OnGetDescription($"{typeName}_Desc"));
+        }
+    }
+    
+    public abstract string OnGetDescription(string defaultLocalizationKey);
+    
+    
+
+    public abstract bool IsDisplayed();
 
     public abstract bool Validate();
     

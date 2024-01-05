@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -16,9 +17,16 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 		private int healAmountPerTick;
 		
 		private IDamageable damagableEntity;
-		
-		
-		
+
+
+		public override string OnGetDescription(string defaultLocalizationKey) {
+			return Localization.GetFormat(defaultLocalizationKey, healAmountPerTick, TickInterval);
+		}
+
+		public override bool IsDisplayed() {
+			return true;
+		}
+
 		public override bool Validate() {
 			return buffOwner is IDamageable;
 		}
@@ -26,7 +34,10 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 		public override void OnInitialize() {
 			damagableEntity = buffOwner as IDamageable;
 		}
-
+		
+		
+		
+		
 		public override RecoveryBuff OnStacked(RecoveryBuff buff) {
 			this.MaxDuration = Mathf.Max(this.MaxDuration, buff.MaxDuration);
 			this.healAmountPerTick = Mathf.Max(this.healAmountPerTick, buff.healAmountPerTick);

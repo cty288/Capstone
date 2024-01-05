@@ -69,7 +69,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		}
 
 		public bool CanAddBuff(IEntity targetEntity, IBuff buff) {
-			return buff.Validate() && targetEntity.OnValidateBuff(buff);
+			return targetEntity !=null && buff.Validate() && targetEntity.OnValidateBuff(buff);
 		}
 
 		public bool AddBuff(IEntity targetEntity, IBuff buff) {
@@ -80,17 +80,24 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			buff.OnAwake();
 			if (ContainsBuff(targetEntity, buff.GetType(), out IBuff existingBuff)) {
 				existingBuff.OnStacked(buff);
+				SendBuffUpdateEvent(targetEntity, existingBuff, BuffUpdateEventType.OnUpdate);
 			}
 			else {
 				buffModel.BuffModelContainer.AddBuff(buff);
 				buff.OnStart();
+				SendBuffUpdateEvent(targetEntity, buff, BuffUpdateEventType.OnStart);
 			}
 			return true;
+		}
+		
+		protected void SendBuffUpdateEvent(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType) {
+			targetEntity.OnBuffUpdate(buff, eventType);
 		}
 
 		public bool RemoveBuff<T>(IEntity targetEntity) where T : IBuff {
 			if (buffModel.BuffModelContainer.RemoveBuff<T>(targetEntity.UUID, out IBuff removedBuff)) {
 				removedBuff.OnEnd();
+				SendBuffUpdateEvent(targetEntity, removedBuff, BuffUpdateEventType.OnEnd);
 				return true;
 			}
 
@@ -119,6 +126,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 							if (status == BuffStatus.End) {
 								buff.OnEnd();
 								buffsToRemove.Add(buff);
+								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
+							}
+							else {
+								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnUpdate);
 							}
 						}
 					}
@@ -128,6 +139,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 						if (buff.RemainingDuration == 0) {
 							buff.OnEnd();
 							buffsToRemove.Add(buff);
+							SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
 						}
 					}
 				}
