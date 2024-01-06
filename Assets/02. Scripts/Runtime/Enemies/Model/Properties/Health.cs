@@ -29,7 +29,7 @@ namespace Runtime.Enemies.Model.Properties {
 	/// Health property. Contains current and max health. <br/>
 	/// Depends on <see cref="Rarity"/> property. <br/>
 	/// </summary>
-	public interface IHealthProperty : IBuffedProperty<HealthInfo>, ILoadFromConfigProperty {
+	public interface IHealthProperty : IProperty<HealthInfo>, ILoadFromConfigProperty {
 		public int GetMaxHealth();
 		
 		public int GetCurrentHealth();
@@ -39,7 +39,7 @@ namespace Runtime.Enemies.Model.Properties {
 	/// Health property. Contains current and max health. <br/>
 	/// Depends on <see cref="Rarity"/> property. <br/>
 	/// </summary>
-	public class Health: AbstractLoadFromConfigBuffedProperty<HealthInfo>, IHealthProperty {
+	public class Health: AbstractLoadFromConfigProperty<HealthInfo>, IHealthProperty {
 		
 		public int GetMaxHealth() {
 			return RealValue.Value.MaxHealth;
@@ -58,7 +58,6 @@ namespace Runtime.Enemies.Model.Properties {
 			return new[] {new PropertyNameInfo(PropertyName.rarity), new PropertyNameInfo(PropertyName.level_number)};
 		}
 		
-		public override HashSet<BuffTag> BuffTags { get; } = new HashSet<BuffTag>() {BuffTag.Health};
 	}
 
 }

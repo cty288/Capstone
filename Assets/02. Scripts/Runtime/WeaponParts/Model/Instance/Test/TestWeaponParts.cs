@@ -35,13 +35,18 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 	public class TestWeaponPartBuff : WeaponPartsBuff<TestWeaponParts, TestWeaponPartBuff> {
 		[field: ES3Serializable]
 		public override float TickInterval { get; protected set; } = 0.5f;
+
+		private BuffedProperties<float> attackSpeedProperties;
+		
 		public override void OnInitialize() {
-			
+			attackSpeedProperties = new BuffedProperties<float>(weaponEntity, true, BuffTag.Weapon_AttackSpeed);
 		}
 
 		public override void OnStart() {
-			weaponEntity.GetAttackSpeed().RealValue.Value += weaponPartsEntity.GetCustomDataValue<float>(
-				"test", "attackSpeed");
+			foreach (IBuffedProperty<float> buffedProperty in attackSpeedProperties.Properties) {
+				buffedProperty.RealValue.Value += weaponPartsEntity.GetCustomDataValue<float>(
+					"test", "attackSpeed");
+			}
 		}
 
 		public override BuffStatus OnTick() {
@@ -49,12 +54,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 		}
 
 		public override void OnBuffEnd() {
-			weaponEntity.GetAttackSpeed().RealValue.Value -= weaponPartsEntity.GetCustomDataValue<int>(
-				"test", "attackSpeed");
+			foreach (IBuffedProperty<float> buffedProperty in attackSpeedProperties.Properties) {
+				buffedProperty.RealValue.Value -= weaponPartsEntity.GetCustomDataValue<float>(
+					"test", "attackSpeed");
+			}
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
-			return null;
+			return new[] {attackSpeedProperties};
 		}
 		
 		
