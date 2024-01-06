@@ -27,7 +27,7 @@ namespace Runtime.GameResources.ViewControllers {
 //[RequireComponent(typeof(TriggerCheck))]
 //[RequireComponent(typeof(PoolableGameObject))]
     public abstract class AbstractPickableResourceViewController<T> : AbstractResourceViewController<T>,
-        IPickableResourceViewController where T : class, IResourceEntity, new() {
+        IPickableResourceViewController where T : class, IResourceEntity{
     
        // protected ResLoader resLoader;
         //protected PoolableGameObject poolable;

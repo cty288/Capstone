@@ -20,7 +20,8 @@ namespace Runtime.GameResources.Model.Base {
 		Item,
 		Weapon,
 		Currency,
-		Skill
+		Skill,
+		WeaponParts
 	}
 
 	[Serializable]

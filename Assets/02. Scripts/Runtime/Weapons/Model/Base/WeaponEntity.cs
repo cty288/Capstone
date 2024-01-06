@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
@@ -48,6 +49,12 @@ namespace Runtime.Weapons.Model.Base
         public int GetRealDamageValue();
         
         public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer);
+        
+        public void AddToParts(string weaponPartID, WeaponPartType weaponPartType);
+
+        public bool CanAddToParts(IWeaponPartsEntity weaponPartsEntity);
+        
+        public void RemoveFromParts(WeaponPartType weaponPartType);
     }
     
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
@@ -68,8 +75,10 @@ namespace Runtime.Weapons.Model.Base
         
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
-        
-        
+
+        [field: ES3Serializable]
+        private Dictionary<WeaponPartType, string> weaponParts = new Dictionary<WeaponPartType, string>();
+
         public abstract int Width { get; }
 
         protected override ConfigTable GetConfigTable() {
@@ -123,6 +132,7 @@ namespace Runtime.Weapons.Model.Base
         public override void OnRecycle() {
             rootDamageDealer = null;
             CurrentAmmo.UnRegisterAll();
+            weaponParts.Clear();
         }
 
         protected override void OnEntityRegisterAdditionalProperties() {
@@ -214,6 +224,34 @@ namespace Runtime.Weapons.Model.Base
         public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer) {
             this.rootDamageDealer = rootDamageDealer;
             CurrentFaction.Value = rootDamageDealer.CurrentFaction.Value;
+        }
+
+        public void AddToParts(string weaponPartID, WeaponPartType weaponPartType) {
+            weaponParts.TryAdd(weaponPartType, weaponPartID);
+        }
+
+        public bool CanAddToParts(IWeaponPartsEntity weaponPartsEntity) {
+            if (weaponPartsEntity == null) {
+                return false;
+            }
+
+            return !weaponParts.ContainsKey(weaponPartsEntity.WeaponPartType);
+        }
+
+        public void RemoveFromParts(WeaponPartType weaponPartType) {
+            this.weaponParts.Remove(weaponPartType);
+        }
+
+        public override bool OnValidateBuff(IBuff buff) {
+            if (buff is IWeaponPartsBuff partsBuff) {
+                if (partsBuff.WeaponPartsEntity != null) {
+                    if (weaponParts.ContainsKey(partsBuff.WeaponPartsEntity.WeaponPartType)) {
+                        return false;
+                    }
+                }
+            }
+            
+            return base.OnValidateBuff(buff);
         }
 
         public void Reload() {

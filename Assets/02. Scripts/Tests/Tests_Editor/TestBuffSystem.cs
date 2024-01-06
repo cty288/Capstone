@@ -77,8 +77,8 @@ public class TestBuffSystem
 		    
 	    }
 
-	    public override BasicBuff OnStacked(BasicBuff buff) {
-		    return this;
+	    public override void OnStacked(BasicBuff buff) {
+		    
 	    }
 
 	    public override void OnStart() {
@@ -114,10 +114,12 @@ public class TestBuffSystem
 		    _damageBuff = new BuffedProperties<int>(buffOwner, true, BuffTag.TestBuff2, BuffTag.TestBuff3);
 	    }
 
-	    public override PropertyBuffBasic1 OnStacked(PropertyBuffBasic1 buff) {
-		    return this;
+	    
+
+	    public override void OnStacked(PropertyBuffBasic1 buff) {
+		    
 	    }
-	   
+
 	    public override void OnStart() {
 		   
 	    }
@@ -126,7 +128,10 @@ public class TestBuffSystem
 		    return BuffStatus.Running;
 	    }
 
-	    
+
+	    public override void OnBuffEnd() {
+		    
+	    }
 
 	    protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
 		    return new BuffedProperties[] {
@@ -154,8 +159,8 @@ public class TestBuffSystem
 		  
 	    }
 
-	    public override PropertyBuffBasic2 OnStacked(PropertyBuffBasic2 buff) {
-		    return this;
+	    public override void OnStacked(PropertyBuffBasic2 buff) {
+		    
 	    }
 
 	    public override void OnStart() {
@@ -166,7 +171,10 @@ public class TestBuffSystem
 		    return BuffStatus.Running;
 	    }
 
-	    
+
+	    public override void OnBuffEnd() {
+		    
+	    }
 
 	    protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
 		    return new BuffedProperties[] {

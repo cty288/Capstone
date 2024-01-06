@@ -56,6 +56,9 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		//TODO: set IsBuffed variable
 		public override bool Validate() {
 			IEnumerable<BuffedProperties> requiredBuffedPropertiesGroups = GetBuffedPropertyGroups();
+			if(requiredBuffedPropertiesGroups == null)
+				return true;
+			
 			foreach (var requiredBuffedProperties in requiredBuffedPropertiesGroups) {
 				if (requiredBuffedProperties.IsRequiredBuffedPropertiesValid && !requiredBuffedProperties.ContainBuffedProperties()) {
 					return false;
@@ -68,17 +71,25 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		public override void OnAwake() {
 			base.OnAwake();
 			IEnumerable<BuffedProperties> requiredBuffedPropertiesGroups = GetBuffedPropertyGroups();
-			foreach (var requiredBuffedProperties in requiredBuffedPropertiesGroups) {
-				requiredBuffedProperties.AddBuffCounters();
+			if (requiredBuffedPropertiesGroups != null) {
+				foreach (var requiredBuffedProperties in requiredBuffedPropertiesGroups) {
+					requiredBuffedProperties.AddBuffCounters();
+				}
 			}
+			
 		}
 
 		public override void OnEnd() {
 			IEnumerable<BuffedProperties> requiredBuffedPropertiesGroups = GetBuffedPropertyGroups();
-			foreach (var requiredBuffedProperties in requiredBuffedPropertiesGroups) {
-				requiredBuffedProperties.RemoveBuffCounters();
+			if (requiredBuffedPropertiesGroups != null) {
+				foreach (var requiredBuffedProperties in requiredBuffedPropertiesGroups) {
+					requiredBuffedProperties.RemoveBuffCounters();
+				}
 			}
+			OnBuffEnd();
 		}
+		
+		public abstract void OnBuffEnd();
 
 		protected abstract IEnumerable<BuffedProperties> GetBuffedPropertyGroups();
 

@@ -136,7 +136,7 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
         TickTimer = TickInterval;
     }
 
-    public abstract T OnStacked(T buff);
+    public abstract void OnStacked(T buff);
 
 
     public abstract void OnStart();

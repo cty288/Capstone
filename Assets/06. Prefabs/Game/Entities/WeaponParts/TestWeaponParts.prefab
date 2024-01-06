@@ -44,7 +44,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.7209874, g: 0.14509805, b: 0.98039216, a: 1}
+  m_Color: {r: 1, g: 0.13089007, b: 0.15668382, a: 1}
   m_Intensity: 1.79
   m_Range: 10
   m_SpotAngle: 30
@@ -174,10 +174,10 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 2.7935345, y: 1.198619, z: 9.539009, w: 1}
+      - m_Value: {x: 9.539009, y: 1.2485616, z: 1.4946083, w: 1}
         m_Name: TrailHeadColor
         m_Overridden: 1
-      - m_Value: {x: 43.120163, y: 14.649724, z: 121.6564, w: 1}
+      - m_Value: {x: 9.539009, y: 1.2485616, z: 1.4946083, w: 1}
         m_Name: ParticlesColor
         m_Overridden: 1
     m_Uint:
@@ -496,12 +496,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7603438385675746018}
   - component: {fileID: 7603438385675746019}
-  - component: {fileID: 7603438385675746020}
   - component: {fileID: 7603438385675746021}
   - component: {fileID: 4021195844121909738}
   - component: {fileID: 2866964269549704546}
+  - component: {fileID: 1488347989332238614}
   m_Layer: 10
-  m_Name: BionicGel
+  m_Name: TestWeaponParts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -636,43 +636,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &7603438385675746020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7603438385675746016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df199f3805ff4303bb45c6dba101d443, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onRecycledEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onAllocateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 5162e238-4c2c-43bc-80e7-bc6335aa06e4
-  autoCreateNewEntityWhenStart: 1
-  showNameTagWhenPointed: 1
-  nameTagFollowTransform: {fileID: 7323250059836298821}
-  nameTagPrefabName: NameTag_General
-  nameTagAutoAdjustHeight: 1
-  hasInteractiveHint: 0
-  interactiveHintPrefabName: InteractHint_General
-  interactiveHintLocalizedKey: interact
-  interactiveHintToleranceMaxTime: 0.3
-  interactiveHintFollowTransform: {fileID: 0}
-  interactiveHintHoldTime: -1
-  autoDestroyWhenEntityRemoved: 1
-  crossHairHUDToleranceMaxTime: 0.3
-  crossHairHUDToleranceScreenDistanceFactor: 0.5
-  autoRecycleTimeWhenNoAbsorb: 120
-  alsoRemoveEntityWhenNoAbsorb: 1
-  entityName: BionicGel
 --- !u!135 &7603438385675746021
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -715,6 +678,43 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.37
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1488347989332238614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7603438385675746016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f02ca56117394553ab7633d1ea520f38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
+  <PrefabID>k__BackingField: 753b5e24-5120-4639-8b37-f85fb59ff71e
+  autoCreateNewEntityWhenStart: 1
+  showNameTagWhenPointed: 1
+  nameTagFollowTransform: {fileID: 7323250059836298821}
+  nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
+  hasInteractiveHint: 0
+  interactiveHintPrefabName: InteractHint_General
+  interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
+  autoDestroyWhenEntityRemoved: 1
+  crossHairHUDToleranceMaxTime: 0.3
+  crossHairHUDToleranceScreenDistanceFactor: 0.5
+  autoRecycleTimeWhenNoAbsorb: 120
+  alsoRemoveEntityWhenNoAbsorb: 1
+  entityClassName: TestWeaponParts
 --- !u!1 &8841941348137013813
 GameObject:
   m_ObjectHideFlags: 0

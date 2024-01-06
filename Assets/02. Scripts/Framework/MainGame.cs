@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
+using _02._Scripts.Runtime.WeaponParts.Model;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
@@ -46,6 +47,7 @@ namespace Framework {
 			this.RegisterModel<ICurrencyModel>(new CurrencyModel());
 			this.RegisterModel<ISkillModel>(new SkillModel());
 			this.RegisterModel<IBuffModel>(new BuffModel());
+			this.RegisterModel<IWeaponPartsModel>(new WeaponPartsModel());
 			
 			
 			//???
