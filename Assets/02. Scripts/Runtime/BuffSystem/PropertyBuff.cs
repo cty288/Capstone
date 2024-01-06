@@ -5,25 +5,44 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 
 namespace _02._Scripts.Runtime.BuffSystem {
-	public abstract class RequiredBuffedProperties {
+	public abstract class BuffedProperties {
 		public HashSet<BuffTag> BuffTags { get; protected set; }
 		public abstract bool ContainBuffedProperties();
+		
+		public abstract bool IsRequiredBuffedPropertiesValid { get; protected set; }
+		
+		public abstract void AddBuffCounters();
+		public abstract void RemoveBuffCounters();
 	}
-	public class RequiredBuffedProperties<T> : RequiredBuffedProperties {
-		private HashSet<IBuffedProperty<T>> buffedProperties;
-		public HashSet<IBuffedProperty<T>> BuffedProperties => buffedProperties;
+	public class BuffedProperties<T> : BuffedProperties {
+		private HashSet<IBuffedProperty<T>> properties;
+		public HashSet<IBuffedProperty<T>> Properties => properties;
 
 		protected void SetBuffedProperties(HashSet<IBuffedProperty<T>> buffedProperties) {
-			this.buffedProperties = buffedProperties;
+			this.properties = buffedProperties;
 		}
 
 		public override bool ContainBuffedProperties() {
-			return buffedProperties.Count > 0;
+			return properties.Count > 0;
 		}
 
-		public RequiredBuffedProperties(IEntity entity, params BuffTag[] buffTags) {
+		public override bool IsRequiredBuffedPropertiesValid { get; protected set; }
+		public override void AddBuffCounters() {
+			foreach (var property in properties) {
+				property.IsBuffedRC.Retain();
+			}
+		}
+
+		public override void RemoveBuffCounters() {
+			foreach (var property in properties) {
+				property.IsBuffedRC.Release();
+			}
+		}
+
+		public BuffedProperties(IEntity entity, bool isRequired, params BuffTag[] buffTags) {
 			BuffTags = new HashSet<BuffTag>(buffTags);
-			buffedProperties = new HashSet<IBuffedProperty<T>>();
+			properties = new HashSet<IBuffedProperty<T>>();
+			this.IsRequiredBuffedPropertiesValid = isRequired;
 			SetBuffedProperties(entity.GetBuffedProperties<T>(buffTags));
 		}
 	}
@@ -34,10 +53,11 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		
 		
 		
+		//TODO: set IsBuffed variable
 		public override bool Validate() {
-			IEnumerable<RequiredBuffedProperties> requiredBuffedPropertiesGroups = GetRequiredBuffedPropertyGroups();
+			IEnumerable<BuffedProperties> requiredBuffedPropertiesGroups = GetBuffedPropertyGroups();
 			foreach (var requiredBuffedProperties in requiredBuffedPropertiesGroups) {
-				if (!requiredBuffedProperties.ContainBuffedProperties()) {
+				if (requiredBuffedProperties.IsRequiredBuffedPropertiesValid && !requiredBuffedProperties.ContainBuffedProperties()) {
 					return false;
 				}
 			}
@@ -45,7 +65,22 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			return true;
 		}
 
-		protected abstract IEnumerable<RequiredBuffedProperties> GetRequiredBuffedPropertyGroups();
+		public override void OnAwake() {
+			base.OnAwake();
+			IEnumerable<BuffedProperties> requiredBuffedPropertiesGroups = GetBuffedPropertyGroups();
+			foreach (var requiredBuffedProperties in requiredBuffedPropertiesGroups) {
+				requiredBuffedProperties.AddBuffCounters();
+			}
+		}
+
+		public override void OnEnd() {
+			IEnumerable<BuffedProperties> requiredBuffedPropertiesGroups = GetBuffedPropertyGroups();
+			foreach (var requiredBuffedProperties in requiredBuffedPropertiesGroups) {
+				requiredBuffedProperties.RemoveBuffCounters();
+			}
+		}
+
+		protected abstract IEnumerable<BuffedProperties> GetBuffedPropertyGroups();
 
 	}
 }

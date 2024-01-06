@@ -11,12 +11,12 @@ using Runtime.Utilities.ConfigSheet;
 using Object = System.Object;
 
 namespace Runtime.DataFramework.Properties.CustomProperties {
-	public interface ICustomDataProperty : IPropertyBase {
+	public interface ICustomDataProperty : IPropertyBase, IBuffedProperty {
 		public string CustomDataName { get; }
 		public dynamic OnGetBaseValueFromConfig(dynamic value, IEntity parentEntity);
 	}
 	
-	public interface ICustomDataProperty<T> : ICustomDataProperty, IProperty<T> {
+	public interface ICustomDataProperty<T> : ICustomDataProperty, IProperty<T>, IBuffedProperty<T> {
 		
 		dynamic ICustomDataProperty.OnGetBaseValueFromConfig(dynamic value, IEntity parentEntity) {
 			return OnGetBaseValueFromConfig(value, parentEntity);

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.Utilities;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
 
@@ -323,6 +324,18 @@ namespace Runtime.DataFramework.Properties {
 		
 		}
 	}
+	
+	public abstract class AbstractLoadFromConfigBuffedProperty<T> : AbstractLoadFromConfigProperty<T>, ILoadFromConfigProperty, IBuffedProperty<T> {
+	
+		
+		public AbstractLoadFromConfigBuffedProperty() : base() {
+		
+		}
+
+		[field: ES3Serializable]
+		public ReferenceCounter IsBuffedRC { get; set; } = new ReferenceCounter();
+		public abstract HashSet<BuffTag> BuffTags { get; }
+	}
 
 
 	/// <summary>
@@ -357,8 +370,9 @@ namespace Runtime.DataFramework.Properties {
 	}
 
 	public abstract class BuffedProperty<T> : Property<T>, IBuffedProperty<T> {
+		
 		[field: ES3Serializable]
-		public bool IsBuffed { get; set; }
+		public ReferenceCounter IsBuffedRC { get; set; } = new ReferenceCounter();
 		public abstract HashSet<BuffTag> BuffTags { get; }
 	}
 }

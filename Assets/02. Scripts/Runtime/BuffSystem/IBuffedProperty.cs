@@ -1,9 +1,15 @@
 ﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Utilities;
 using Runtime.DataFramework.Properties;
 
 namespace _02._Scripts.Runtime.BuffSystem {
 	public interface IBuffedProperty : IPropertyBase {
-		bool IsBuffed { get; set; }
+		ReferenceCounter IsBuffedRC { get; set; }
+
+		public bool GetIsBuffed() {
+			return IsBuffedRC.Count > 0;
+		}
+		
 		HashSet<BuffTag> BuffTags { get; }
 	}
 	public interface IBuffedProperty<T> : IProperty<T>, IBuffedProperty {

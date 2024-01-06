@@ -110,7 +110,7 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
     /// </summary>
     /// <param name="buffDealer"></param>
     /// <param name="entity"></param>
-    public void OnInitialize(IEntity buffDealer, IEntity entity) {
+    public virtual void OnInitialize(IEntity buffDealer, IEntity entity) {
         BuffDealerID = buffDealer?.UUID;
         BuffOwnerID = entity?.UUID;
         this.buffDealer = buffDealer;
