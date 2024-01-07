@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -10,10 +12,13 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
+using Runtime.Inventory.Model;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
+using Range = Runtime.Weapons.Model.Properties.Range;
 
 namespace Runtime.Weapons.Model.Base
 {
@@ -39,6 +44,8 @@ namespace Runtime.Weapons.Model.Base
         public IChargeSpeed GetChargeSpeed();
         public IWeight GetWeight();
         
+        public string DisplayedModelPrefabName { get; }
+        
         public BindableProperty<int> CurrentAmmo { get; set; }
         // public GunRecoil GunRecoilScript { get; set; }
         
@@ -49,12 +56,15 @@ namespace Runtime.Weapons.Model.Base
         public int GetRealDamageValue();
         
         public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer);
-        
-        public void AddToParts(string weaponPartID, WeaponPartType weaponPartType);
+        public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType);
 
-        public bool CanAddToParts(IWeaponPartsEntity weaponPartsEntity);
-        
-        public void RemoveFromParts(WeaponPartType weaponPartType);
+        // void RegisterOnWeaponPartsUpdate(Action<string, string> callback);
+    }
+
+    public struct OnWeaponPartsUpdate {
+        public IWeaponEntity WeaponEntity;
+        public string PreviousTopPartsUUID;
+        public string CurrentTopPartsUUID;
     }
     
     public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
@@ -77,7 +87,10 @@ namespace Runtime.Weapons.Model.Base
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
 
         [field: ES3Serializable]
-        private Dictionary<WeaponPartType, string> weaponParts = new Dictionary<WeaponPartType, string>();
+        private Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>> weaponParts = new Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>>();
+
+        //private Action<string, string> onWeaponPartsUpdate;
+        
 
         public abstract int Width { get; }
 
@@ -106,6 +119,34 @@ namespace Runtime.Weapons.Model.Base
         protected override void OnEntityStart(bool isLoadedFromSave) {
             if (!isLoadedFromSave) { //otherwise it is managed by es3
                 CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
+                InitWeaponPartsSlots();
+               
+                
+            }
+            foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
+                foreach (WeaponPartsSlot slot in part.Value) {
+                    slot.RegisterOnSlotUpdateCallback(OnWeaponPartSlotUpdate);
+                }
+            }
+        }
+
+        protected virtual void OnWeaponPartSlotUpdate(ResourceSlot slot, string previousTopPartsUUID, 
+            string currentTopPartsUUID, List<string> uuidList) {
+           this.SendEvent<OnWeaponPartsUpdate>(new OnWeaponPartsUpdate() {
+               WeaponEntity = this,
+                PreviousTopPartsUUID = previousTopPartsUUID,
+                CurrentTopPartsUUID = currentTopPartsUUID
+           });
+        }
+        
+       
+
+        protected virtual void InitWeaponPartsSlots() {
+            foreach (var t in Enum.GetValues(typeof(WeaponPartType))) {
+                WeaponPartType weaponPartType = (WeaponPartType) t;
+                weaponParts.Add(weaponPartType, new HashSet<WeaponPartsSlot>(1) {
+                    new WeaponPartsSlot(weaponPartType)
+                });
             }
         }
 
@@ -132,6 +173,12 @@ namespace Runtime.Weapons.Model.Base
         public override void OnRecycle() {
             rootDamageDealer = null;
             CurrentAmmo.UnRegisterAll();
+            foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
+                foreach (WeaponPartsSlot slot in part.Value) {
+                    slot.UnregisterOnSlotUpdateCallback(OnWeaponPartSlotUpdate);
+                }
+            }
+            
             weaponParts.Clear();
         }
 
@@ -216,7 +263,9 @@ namespace Runtime.Weapons.Model.Base
         {
             return weightProperty;
         }
-        
+
+        public virtual string DisplayedModelPrefabName => $"{EntityName}_Model";
+
         public int GetRealDamageValue() {
             return Random.Range(baseDamageProperty.RealValue.Value.x, baseDamageProperty.RealValue.Value.y + 1);
         }
@@ -226,8 +275,21 @@ namespace Runtime.Weapons.Model.Base
             CurrentFaction.Value = rootDamageDealer.CurrentFaction.Value;
         }
 
-        public void AddToParts(string weaponPartID, WeaponPartType weaponPartType) {
-            weaponParts.TryAdd(weaponPartType, weaponPartID);
+        public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType) {
+            if (!weaponParts.ContainsKey(weaponPartType)) {
+                return null;
+            }
+            return weaponParts[weaponPartType];
+        }
+
+
+
+        /*public void AddToParts(IWeaponPartsEntity weaponPartsEntity) {
+            WeaponPartType weaponPartType = weaponPartsEntity.WeaponPartType;
+            HashSet<WeaponPartsSlot> parts = weaponParts[weaponPartType];
+            if (parts.Count < weaponPartsSize[weaponPartType]) {
+                parts.Add(new WeaponPartsSlot(weaponPartsEntity));
+            }
         }
 
         public bool CanAddToParts(IWeaponPartsEntity weaponPartsEntity) {
@@ -235,23 +297,30 @@ namespace Runtime.Weapons.Model.Base
                 return false;
             }
 
-            return !weaponParts.ContainsKey(weaponPartsEntity.WeaponPartType);
+            //check if the number of parts in the list is less than the capacity
+            HashSet<string> parts = weaponParts[weaponPartsEntity.WeaponPartType];
+            return parts.Count < weaponPartsSize[weaponPartsEntity.WeaponPartType];
         }
 
-        public void RemoveFromParts(WeaponPartType weaponPartType) {
-            this.weaponParts.Remove(weaponPartType);
-        }
+        public void RemoveFromParts(string weaponPartID, WeaponPartType weaponPartType) {
+            HashSet<string> parts = weaponParts[weaponPartType];
+            if (parts.Contains(weaponPartID)) {
+                parts.Remove(weaponPartID);
+            }
+        }*/
 
         public override bool OnValidateBuff(IBuff buff) {
             if (buff is IWeaponPartsBuff partsBuff) {
                 if (partsBuff.WeaponPartsEntity != null) {
-                    if (weaponParts.ContainsKey(partsBuff.WeaponPartsEntity.WeaponPartType)) {
+                    /*if (weaponParts[partsBuff.WeaponPartsEntity.WeaponPartType].Any((slot =>
+                                slot.GetLastItemUUID() == partsBuff.WeaponPartsEntity.UUID))) {
                         return false;
-                    }
+                    }*/
+                    return true;
                 }
             }
-            
-            return base.OnValidateBuff(buff);
+
+            return false;
         }
 
         public void Reload() {

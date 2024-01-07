@@ -21,7 +21,8 @@ namespace Runtime.GameResources.Model.Base {
 		Weapon,
 		Currency,
 		Skill,
-		WeaponParts
+		WeaponParts,
+		All // do not use this
 	}
 
 	[Serializable]

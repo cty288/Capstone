@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.BindableProperty;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.ViewController;
@@ -35,8 +36,7 @@ namespace Runtime.Inventory.Model {
 		}
 		
 		private Action<ResourceSlot, string, List<string>> OnSlotUpdateCallback;
-
-
+		private Action<ResourceSlot, string, string, List<string>> OnSlotUpdateCallback2;
 
 		public ResourceSlot() {
 			ItemKey = null;
@@ -56,8 +56,9 @@ namespace Runtime.Inventory.Model {
 			return UUIDList.Count;
 		}
 		
-		public bool TryAddItem(IResourceEntity item) {
+		public virtual bool TryAddItem(IResourceEntity item) {
 			if (CanPlaceItem(item)) {
+				string previousTopItemUUID = GetLastItemUUID();
 				if (IsEmpty()) {
 					ItemKey = item.EntityName;
 				}
@@ -65,6 +66,7 @@ namespace Runtime.Inventory.Model {
 				UUIDSetMain.Add(item.UUID);
 				item.OnAddedToSlot();
 				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
+				this.OnSlotUpdateCallback2?.Invoke(this, previousTopItemUUID, GetLastItemUUID(), UUIDList);
 				return true;
 			}
 			return false;
@@ -72,10 +74,11 @@ namespace Runtime.Inventory.Model {
 		
 
 		
-		public bool RemoveLastItem() {
+		public virtual bool RemoveLastItem() {
 			if (IsEmpty()) {
 				return false;
 			}
+			
 			string uuid = UUIDList[^1];
 			UUIDList.RemoveAt(UUIDList.Count - 1);
 			UUIDSetMain.Remove(uuid);
@@ -83,6 +86,8 @@ namespace Runtime.Inventory.Model {
 				ItemKey = null;
 			}
 			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
+			this.OnSlotUpdateCallback2?.Invoke(this, uuid, GetLastItemUUID(), UUIDList);
+			
 			return true;
 		}
 		
@@ -93,24 +98,28 @@ namespace Runtime.Inventory.Model {
 			return UUIDList[^1];
 		}
 		
-		public bool RemoveItem(string uuid) {
+		public virtual bool RemoveItem(string uuid) {
 			if (IsEmpty() || !ContainsItem(uuid)) {
 				return false;
 			}
+			string previousTopItemUUID = GetLastItemUUID();
 			UUIDList.Remove(uuid);
 			UUIDSetMain.Remove(uuid);
 			if (IsEmpty()) {
 				ItemKey = null;
 			}
 			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
+			this.OnSlotUpdateCallback2?.Invoke(this, previousTopItemUUID, GetLastItemUUID(), UUIDList);
 			return true;
 		}
 		
-		public void Clear() {
+		public virtual void Clear() {
+			string previousTopItemUUID = GetLastItemUUID();
 			ItemKey = null;
 			UUIDList.Clear();
 			UUIDSetMain.Clear();
 			this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
+			this.OnSlotUpdateCallback2?.Invoke(this, previousTopItemUUID, GetLastItemUUID(), UUIDList);
 		}
 		
 		
@@ -118,6 +127,7 @@ namespace Runtime.Inventory.Model {
 			//translation
 			//other slot: slot1
 			//No . : slot 2
+			
 			if (!slot1.IsEmpty() && !slot2.CanPlaceItem(GlobalGameResourceEntities.GetAnyResource(slot1.GetLastItemUUID()), true)) {
 				return false;
 			}
@@ -125,6 +135,8 @@ namespace Runtime.Inventory.Model {
 			if(!slot2.IsEmpty() && !slot1.CanPlaceItem(GlobalGameResourceEntities.GetAnyResource(slot2.GetLastItemUUID()), true)) {
 				return false;
 			}
+			string slot1PreviousTopItemUUID = slot1.GetLastItemUUID();
+			string slot2PreviousTopItemUUID = slot2.GetLastItemUUID();
 			
 			
 			(slot1.ItemKey, slot2.ItemKey) = (slot2.ItemKey, slot1.ItemKey);
@@ -133,7 +145,13 @@ namespace Runtime.Inventory.Model {
 			(slot1.UUIDSet, slot2.UUIDSet) = (slot2.UUIDSet, slot1.UUIDSet);
 			
 			slot1.OnSlotUpdateCallback?.Invoke(slot1, slot1.GetLastItemUUID(), slot1.UUIDList);
+			slot1.OnSlotUpdateCallback2?.Invoke(slot1, slot1PreviousTopItemUUID, slot1.GetLastItemUUID(), slot1.UUIDList);
+			
+			
 			slot2.OnSlotUpdateCallback?.Invoke(slot2, slot2.GetLastItemUUID(), slot2.UUIDList);
+			slot2.OnSlotUpdateCallback2?.Invoke(slot2, slot2PreviousTopItemUUID, slot2.GetLastItemUUID(),
+				slot2.UUIDList);
+			
 			return true;
 		}
 		
@@ -154,6 +172,9 @@ namespace Runtime.Inventory.Model {
 			if (!IsEmpty() && ItemKey != otherSlot.ItemKey) {
 				return SwapSlotItems(this, otherSlot);
 			}else {
+				string previousTopItemUUID = GetLastItemUUID();
+				string otherSlotPreviousTopItemUUID = otherSlot.GetLastItemUUID();
+				
 				if (IsEmpty()) {
 					ItemKey = otherSlot.ItemKey;
 				}
@@ -176,8 +197,12 @@ namespace Runtime.Inventory.Model {
 				if (otherSlot.IsEmpty()) {
 					otherSlot.ItemKey = null;
 				}
+				
+				
 				this.OnSlotUpdateCallback?.Invoke(this, GetLastItemUUID(), UUIDList);
+				this.OnSlotUpdateCallback2?.Invoke(this, previousTopItemUUID, GetLastItemUUID(), UUIDList);
 				otherSlot.OnSlotUpdateCallback?.Invoke(otherSlot, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
+				otherSlot.OnSlotUpdateCallback2?.Invoke(otherSlot, otherSlotPreviousTopItemUUID, otherSlot.GetLastItemUUID(), otherSlot.UUIDList);
 			}
 			
 			return true;
@@ -215,10 +240,18 @@ namespace Runtime.Inventory.Model {
 		public void RegisterOnSlotUpdateCallback(Action<ResourceSlot, string, List<string>> callback) {
 			OnSlotUpdateCallback += callback;
 		}
+		public void RegisterOnSlotUpdateCallback(Action<ResourceSlot, string, string, List<string>> callback) {
+			OnSlotUpdateCallback2 += callback;
+		}
 		
 		public void UnregisterOnSlotUpdateCallback(Action<ResourceSlot, string, List<string>> callback) {
 			OnSlotUpdateCallback -= callback;
 		}
+		
+		public void UnregisterOnSlotUpdateCallback(Action<ResourceSlot, string, string, List<string>> callback) {
+			OnSlotUpdateCallback2 -= callback;
+		}
+		
 		public List<string> GetUUIDList() {
 			return UUIDList;
 		}
@@ -301,10 +334,16 @@ namespace Runtime.Inventory.Model {
 				return true;
 			}
 
-			//int maxCount = item.GetMaxStackProperty().RealValue.Value;
-			//if (slotMaxItemCount >= 0) {
-			//	maxCount = Math.Min(maxCount, slotMaxItemCount);
-			//}
+			ResourceCategory category = item.GetResourceCategory();
+			if (category == ResourceCategory.Skill || category == ResourceCategory.Weapon ||
+			    category == ResourceCategory.WeaponParts) {
+				int maxCount = item.GetMaxStackProperty().RealValue.Value;
+				if(GetQuantity() >= maxCount) {
+					return false;
+				}
+			}
+			
+			
 
 			if (!isSwapping) {
 				if (ItemKey == item.EntityName && !ContainsItem(item.UUID)) {
@@ -316,6 +355,44 @@ namespace Runtime.Inventory.Model {
 
 
 			return false;
+		}
+	}
+	
+	[Serializable]
+	public class WeaponPartsSlot : ResourceSlot {
+
+		[field: ES3Serializable]
+		private WeaponPartType weaponPartType;
+		
+		public WeaponPartsSlot(IWeaponPartsEntity entity) : base() {
+			SetSlotMaxItemCount(1);
+			this.weaponPartType = entity.WeaponPartType;
+			TryAddItem(entity);
+		}
+		
+		public WeaponPartsSlot() : base() {
+			SetSlotMaxItemCount(1);
+		}
+		
+		
+		public WeaponPartsSlot(WeaponPartType type) : base() {
+			SetSlotMaxItemCount(1);
+			this.weaponPartType = type;
+		}
+		
+		
+		public override bool CanPlaceItem(IResourceEntity item, bool isSwapping = false) {
+			if (item!=null && item.GetResourceCategory() != ResourceCategory.WeaponParts) {
+				return false;
+			}
+			
+			if (item is IWeaponPartsEntity weaponParts) {
+				if (weaponParts.WeaponPartType != weaponPartType) {
+					return false;
+				}
+			}
+			
+			return base.CanPlaceItem(item, isSwapping);
 		}
 	}
 }

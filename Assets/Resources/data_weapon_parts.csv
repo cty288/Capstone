@@ -1,13 +1,13 @@
-EntityName / Property Names,rarity,custom_properties,tags,,More Notes
-Types,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,int,"Dict<string, CustomProperty>
+EntityName / Property Names,rarity,max_stack,custom_properties,tags,,More Notes
+Types,int,int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,int,int,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
-,,,,,
-BEGIN,,,,,
-TestWeaponParts,1,"{
+,,,,,,
+BEGIN,,,,,,
+TestWeaponParts,2,1,"{
   ""test"": {
     ""attackSpeed"": {
       ""type"": ""float"",

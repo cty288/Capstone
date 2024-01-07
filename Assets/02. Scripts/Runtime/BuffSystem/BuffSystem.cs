@@ -17,6 +17,8 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		
 		bool RemoveBuff<T>(IEntity targetEntity) where T : IBuff;
 		
+		bool RemoveBuff(IEntity targetEntity, Type buffType);
+		
 		public bool ContainsBuff(IEntity targetEntity, Type buffType, out IBuff buff);
 
 		public bool ContainsBuff<T>(IEntity targetEntity, out IBuff buff) where T : IBuff;
@@ -95,7 +97,11 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		}
 
 		public bool RemoveBuff<T>(IEntity targetEntity) where T : IBuff {
-			if (buffModel.BuffModelContainer.RemoveBuff<T>(targetEntity.UUID, out IBuff removedBuff)) {
+			return RemoveBuff(targetEntity, typeof(T));
+		}
+
+		public bool RemoveBuff(IEntity targetEntity, Type buffType) {
+			if (buffModel.BuffModelContainer.RemoveBuff(buffType, targetEntity.UUID, out IBuff removedBuff)) {
 				removedBuff.OnEnd();
 				SendBuffUpdateEvent(targetEntity, removedBuff, BuffUpdateEventType.OnEnd);
 				return true;
@@ -103,7 +109,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 
 			return false;
 		}
-		
+
 		private void OnUpdate() {
 			entityIDsToRemove.Clear();
 			buffsToRemove.Clear();

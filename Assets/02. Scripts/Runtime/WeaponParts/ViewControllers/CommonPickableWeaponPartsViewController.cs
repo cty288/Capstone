@@ -40,17 +40,9 @@ namespace _02._Scripts.Runtime.WeaponParts.ViewControllers {
 			
 		}
 
+
 		protected override void OnStartAbsorb() {
-			//fake code
-			EquipToCurrentWeapon();
-		}
-
-		private void EquipToCurrentWeapon() {
-			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
-			IWeaponEntity weapon = inventorySystem.GetCurrentlySelectedEntity() as IWeaponEntity;
-
-			IWeaponPartsBuff buff = BoundEntity.OnGetBuff(weapon);
-			this.GetSystem<IBuffSystem>().AddBuff(weapon, buff);
+			
 		}
 
 		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
