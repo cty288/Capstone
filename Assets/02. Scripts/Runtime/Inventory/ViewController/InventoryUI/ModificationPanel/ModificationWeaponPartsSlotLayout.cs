@@ -63,7 +63,7 @@ public class ModificationWeaponPartsSlotLayout : AbstractMikroController<MainGam
 	}
 	
 	public void ClearSlots() {
-		foreach (Transform child in transform) {
+		foreach (ResourceSlotViewController child in slotViewControllers) {
 			Destroy(child.gameObject);
 		}
 		slotViewControllers.Clear();
