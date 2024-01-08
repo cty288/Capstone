@@ -71,6 +71,7 @@ namespace Runtime.Weapons
 
         public override void OnItemStartUse()
         {
+            // For manual guns
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {

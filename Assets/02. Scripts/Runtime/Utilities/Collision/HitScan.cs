@@ -93,28 +93,24 @@ namespace Runtime.Utilities.Collision
 
         //TODO: faction and IDamagable integration.
         private void ShootBullet() {
-            Vector2 crossHairScreenPos = Crosshair.Singleton.CrossHairScreenPosition;
-            Vector3 shootDir =  _camera.ViewportPointToRay(new Vector3(crossHairScreenPos.x, crossHairScreenPos.y, 0)).direction;
-            float spread = _weapon.GetSpread().RealValue.Value;
-            shootDir += new Vector3(
-                Random.Range(-spread, spread),
-                Random.Range(-spread, spread),
-                Random.Range(-spread, spread));
-            shootDir.Normalize();
+            // Vector2 crossHairScreenPos = Crosshair.Singleton.CrossHairScreenPosition;
+            float spreadValue = _weapon.GetSpread().RealValue.Value;
+            Vector3 spread = new Vector3(
+                Random.Range(-spreadValue, spreadValue),
+                Random.Range(-spreadValue, spreadValue),
+                0);
             
-            
-            HitData hitData = null;
-            //RaycastHit hit;
-            
+            Vector3 dir = new Vector3(0.5f, 0.5f, 0);
+            // dir.Normalize();
+            Ray shootDir =  _camera.ViewportPointToRay(dir + spread);
+            Debug.Log("dir: " + spread);
             
             for (int i = 0; i < _hits.Length; i++) {
                 _hits[i] = new RaycastHit();
             }
-            int nums = Physics.RaycastNonAlloc(_camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)), _hits,
-                _weapon.GetRange().RealValue.Value, _layer);
+            int nums = Physics.RaycastNonAlloc(shootDir, _hits, _weapon.GetRange().RealValue.Value, _layer);
             
             var sortedHits = _hits.OrderBy(hit => hit.transform ? hit.distance : float.MaxValue).ToArray();
-
 
             bool hitAnything = false;
             for (int i = 0; i < nums; i++) {
@@ -140,7 +136,7 @@ namespace Runtime.Utilities.Collision
                 }
                 
 
-                
+                HitData hitData = null;
                 hitAnything = true;
                 if (hurtbox != null)
                 {
@@ -184,10 +180,10 @@ namespace Runtime.Utilities.Collision
 
             if (!hitAnything) {
                 //hit nothing
-                if(!_useVFX)
-                    CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
-                else
-                    PlayBulletVFX(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue));
+                // if(!_useVFX)
+                //     CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
+                // else
+                //     PlayBulletVFX(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue));
             }
         }
 
