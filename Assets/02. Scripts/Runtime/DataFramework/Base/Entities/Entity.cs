@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using _02._Scripts.Runtime.BuffSystem;
 using Framework;
 using MikroFramework.Architecture;
@@ -243,8 +245,8 @@ namespace Runtime.DataFramework.Entities {
 			new Dictionary<IBuffedProperty, HashSet<BuffTag>>();
 
 		[ES3NonSerializable]
-		private Dictionary<int, HashSet<IBuffedProperty>> cachedBuffedPropertiesQuery =
-			new Dictionary<int, HashSet<IBuffedProperty>>();
+		private Dictionary<string, HashSet<IBuffedProperty>> cachedBuffedPropertiesQuery =
+			new Dictionary<string, HashSet<IBuffedProperty>>();
 
 		//protected abstract IPropertyBase[] OnGetOriginalProperties();
 		[field: SerializeField]
@@ -574,15 +576,17 @@ namespace Runtime.DataFramework.Entities {
 			
 			HashSet<IBuffedProperty<TDataType>> res = new HashSet<IBuffedProperty<TDataType>>();
 
+			
 			//transform buffTags to bit mask
-			int buffTagsBitMask = 0;
+			BigInteger buffTagsBitMask = 0;
+			
 			if (buffTags != null) {
 				foreach (BuffTag buffTag in buffTags) {
 					buffTagsBitMask |= 1 << (int) buffTag;
 				}
 			}
 			
-			if (cachedBuffedPropertiesQuery.TryGetValue(buffTagsBitMask, out HashSet<IBuffedProperty> cachedProperties)) {
+			if (cachedBuffedPropertiesQuery.TryGetValue(buffTagsBitMask.ToString(), out HashSet<IBuffedProperty> cachedProperties)) {
 				foreach (IBuffedProperty property in cachedProperties) {
 					res.Add((IBuffedProperty<TDataType>) property);
 				}
@@ -611,7 +615,7 @@ namespace Runtime.DataFramework.Entities {
 				}
 			}
 
-			cachedBuffedPropertiesQuery[buffTagsBitMask] = buffedProperties;
+			cachedBuffedPropertiesQuery[buffTagsBitMask.ToString()] = buffedProperties;
 			return res;
 		}
 
