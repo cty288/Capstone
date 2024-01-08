@@ -241,24 +241,46 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         UNITY_SETUP_INSTANCE_ID(input);
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
+        float scale = 0.001f;
+
         float2 screen_uv = (input.screenUV.xy / input.screenUV.z);
         #if _RENDER_PASS_ENABLED
+
+        float2 posTopRight = input.positionCS.xy - float2(-scale, scale);
+        float2 posTopLeft = input.positionCS.xy - float2(scale, scale);
+        float2 posBottomRight = input.positionCS.xy - float2(-scale, -scale);
+        float2 posBottomLeft = input.positionCS.xy - float2(scale, -scale);
+        
         half4 gbuffer3 = LOAD_FRAMEBUFFER_INPUT(GBUFFER3, input.positionCS.xy)
         float d        = gbuffer3.x;
         half4 gbuffer0 = LOAD_FRAMEBUFFER_INPUT(GBUFFER0, input.positionCS.xy);
         half4 gbuffer1 = LOAD_FRAMEBUFFER_INPUT(GBUFFER1, input.positionCS.xy);
         half4 gbuffer2 = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, input.positionCS.xy);
 
+        half4 normalTR = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, posTopRight);
+        half4 normalTL = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, posTopLeft);
+        half4 normalBR = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, posBottomRight);
+        half4 normalBL = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, posBottomLeft);
+
         //return half4(gbuffer3);
         #else
         // Using SAMPLE_TEXTURE2D is faster than using LOAD_TEXTURE2D on iOS platforms (5% faster shader).
         // Possible reason: HLSLcc upcasts Load() operation to float, which doesn't happen for Sample()?
-        // Sample Depth multiple times for outline? Or use depthnormaltexture as post-processing?
+        float2 posTopRight = screen_uv - float2(-scale, scale);
+        float2 posTopLeft = screen_uv - float2(scale, scale);
+        float2 posBottomRight = screen_uv - float2(-scale, -scale);
+        float2 posBottomLeft = screen_uv - float2(scale, -scale);
+        
         half4 gbuffer3 = SAMPLE_TEXTURE2D_X_LOD(_CameraDepthTexture, my_point_clamp_sampler, screen_uv, 0);
         float d        = gbuffer3.x; // raw depth value has UNITY_REVERSED_Z applied on most platforms.
         half4 gbuffer0 = SAMPLE_TEXTURE2D_X_LOD(_GBuffer0, my_point_clamp_sampler, screen_uv, 0);
         half4 gbuffer1 = SAMPLE_TEXTURE2D_X_LOD(_GBuffer1, my_point_clamp_sampler, screen_uv, 0);
         half4 gbuffer2 = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, screen_uv, 0);
+
+        half4 normalTR = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, posTopRight, 0);
+        half4 normalTL = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, posTopLeft, 0);
+        half4 normalBR = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, posBottomRight, 0);
+        half4 normalBL = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, posBottomLeft, 0);
 
         //return half4(gbuffer3);
         #endif
@@ -294,8 +316,7 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         #endif
         float4 posWS = mul(_ScreenToWorld[eyeIndex], float4(input.positionCS.xy, d, 1.0));
         posWS.xyz *= rcp(posWS.w);
-
-        //TODO: Sample Multiple Times
+        
         Light unityLight = GetStencilLight(posWS.xyz, screen_uv, shadowMask, materialFlags);
 
         [branch] if (!IsMatchingLightLayer(unityLight.layerMask, meshRenderingLayers))
@@ -313,6 +334,19 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
             #endif
         #endif
 
+        // Compare normals and light
+        half NdotLTR =  dot(normalTR.xyz, unityLight.direction);
+        half NdotLTL =  dot(normalTL.xyz, unityLight.direction);
+        half NdotLBR =  dot(normalBR.xyz, unityLight.direction);
+        half NdotLBL =  dot(normalBL.xyz, unityLight.direction);
+
+        half diff0 = abs(NdotLTL - NdotLBR);
+        half diff1 = abs(NdotLTR - NdotLBL);
+        half diff = diff0 > diff1 ? diff0 : diff1;
+
+        //return half4(diff.rrr, 1);
+        
+        
         InputData inputData = InputDataFromGbufferAndWorldPosition(gbuffer2, posWS.xyz);
 
         #if defined(_LIT)
@@ -335,6 +369,12 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
             color = diffuseColor * surfaceData.albedo + specularColor;
         #endif
 
+        half3 hsv = RgbToHsv(color);
+        hsv.z *= 1 + diff;
+        hsv.y += diff;
+        hsv.z += 0.15*diff;
+        color = HsvToRgb(hsv);
+        
         //return half4(1, 1, 1, 1);
         return half4(color, alpha);
     }
@@ -351,6 +391,7 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         float clip_z = UNITY_MATRIX_P[2][2] * -eye_z + UNITY_MATRIX_P[2][3];
         half fogFactor = ComputeFogFactor(clip_z);
         half fogIntensity = ComputeFogIntensity(fogFactor);
+        //return half4(0.0, 0.0, 0.0, fogIntensity);
         return half4(unity_FogColor.rgb, fogIntensity);
     }
 

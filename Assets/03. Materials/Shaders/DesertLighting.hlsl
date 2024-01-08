@@ -15,23 +15,23 @@ half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoa
     half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
     half3 radiance2 = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
 
-    return half4(radiance, 1);
+    //return half4(radiance, 1);
     
-    half attenuation = RangeRemap(0.0f, 0.8f, radiance);
-    attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
-    half attenuation2 = RangeRemap(0.0f, 0.6f, radiance2);
-    attenuation2 = 1 - (abs(attenuation2 - 0.5f) * 2);
-    attenuation = min(attenuation, attenuation2);
-    //attenuation = pow(attenuation, 1.32f);
-    half3 hsv = RgbToHsv(lightColor);
-    //hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
-    hsv.z *= 1 + attenuation;
-    hsv.y += attenuation;
-    hsv.z += 0.15*attenuation;
-    radiance = RangeRemap(0.0f, 0.1f, radiance);
-    hsv.z *= radiance;
-    lightColor = HsvToRgb(hsv);
-    radiance *= lightColor;
+    // half attenuation = RangeRemap(0.0f, 0.8f, radiance);
+    // attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
+    // half attenuation2 = RangeRemap(0.0f, 0.6f, radiance2);
+    // attenuation2 = 1 - (abs(attenuation2 - 0.5f) * 2);
+    // attenuation = min(attenuation, attenuation2);
+    // //attenuation = pow(attenuation, 1.32f);
+    // half3 hsv = RgbToHsv(lightColor);
+    // //hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
+    // hsv.z *= 1 + attenuation;
+    // hsv.y += attenuation;
+    // hsv.z += 0.15*attenuation;
+    // radiance = RangeRemap(0.0f, 0.1f, radiance);
+    // hsv.z *= radiance;
+    // lightColor = HsvToRgb(hsv);
+    // radiance *= lightColor;
 
 	half3 brdf = brdfData.diffuse;
 #ifndef _SPECULARHIGHLIGHTS_OFF
