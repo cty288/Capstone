@@ -32,7 +32,8 @@ public class SimpleBladeShoot : EnemyAction<BladeSentinelEntity>
     private int recycledBulletCount = 0;
     private TaskStatus status;
     private bool ended;
-
+    private float interval = 1f;
+    List<GameObject> blades = new List<GameObject>();
     private Animator animator;
     
     public override void OnAwake()
@@ -57,7 +58,7 @@ public class SimpleBladeShoot : EnemyAction<BladeSentinelEntity>
         recycledBulletCount = 0;
         timer = 0;
         //SkillExecute();
-        Fire();
+        StartCoroutine(Fire());
     }
 
     public override TaskStatus OnUpdate()
@@ -74,20 +75,35 @@ public class SimpleBladeShoot : EnemyAction<BladeSentinelEntity>
             return TaskStatus.Running;
         }
     }
-    private void Fire()
+    IEnumerator Fire()
     {
-        Debug.Log("asdf");
+       
+        int[] randomBladeOrder = new int[8];
+
+        // Fill the array with sequential values from 0 to 7
+        for (int i = 0; i < 8; i++)
+        {
+            randomBladeOrder[i] = i;
+        }
+
+        // Fisher-Yates shuffle to randomize the order
+        for (int i = randomBladeOrder.Length - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            int temp = randomBladeOrder[i];
+            randomBladeOrder[i] = randomBladeOrder[randomIndex];
+            randomBladeOrder[randomIndex] = temp;
+        }
         if (bladePrefab == null)
         {
             Debug.LogError("Knife prefab is not assigned!");
-            return;
+            yield return null ;
         }
-
-        for (int i = 0; i < bladeAmount; i++)
+        for(int i = 0; i < bladeAmount; i++)
         {
             float angle = -90 + i * (180f / (bladeAmount - 1));
             Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
-            Vector3 spawnPosition = transform.position + new Vector3(0,1.5f,0);
+            Vector3 spawnPosition = transform.position + new Vector3(0, 1.5f, 0);
 
 
 
@@ -95,6 +111,25 @@ public class SimpleBladeShoot : EnemyAction<BladeSentinelEntity>
             blade.transform.position = spawnPosition;
             blade.transform.Rotate(0f, 0f, angle);
             blade.transform.position += blade.transform.up * 4;
+            blades.Add(blade);
+        }
+        for (int i = 0; i < bladeAmount; i++)
+        {
+
+            SpawnBullet(blades[randomBladeOrder[i]]);
+            yield return new WaitForSeconds(interval);
+        }
+        ended = true;
+    }
+    void SpawnBullet( GameObject blade )
+    {
+
+    
+
+        
+            blade.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("danmaku", "danmakuDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
+            Vector3 directionToPlayer = (playerTrans.position - transform.position).normalized;
+            blade.GetComponent<BladeSentinalSimpleBullet>().SetData(8, directionToPlayer);
             /*
             float angle = i * 360f / 8;
             float x = Mathf.Sin(Mathf.Deg2Rad * angle) * rad;
@@ -111,9 +146,8 @@ public class SimpleBladeShoot : EnemyAction<BladeSentinelEntity>
             blade.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("danmaku", "danmakuDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
             blade.GetComponent<BladeSentinalBladeDanmaku>().SetData(5, initRotationTime, 30, 160, this.gameObject.transform, playerTrans, OnBulletRecycled, attackVersion);
             */
-        }
-        Debug.Log("taskfinished");
-        ended = true;
+        
+       
     }
 
     
