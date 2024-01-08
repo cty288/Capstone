@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.Utilities;
 using Runtime.DataFramework.Properties;
 
@@ -16,7 +17,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		
 	}
 	
-	
+
 	public enum BuffTag {
 		TestBuff1 = 1,
 		TestBuff2,
@@ -24,5 +25,6 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		Weapon_AttackSpeed,
 		Weapon_BaseDamage,
 		Weapon_AmmoSize,
+		
 	}
 }
