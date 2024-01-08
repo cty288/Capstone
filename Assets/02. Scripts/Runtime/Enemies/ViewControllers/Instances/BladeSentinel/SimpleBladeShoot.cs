@@ -129,7 +129,7 @@ public class SimpleBladeShoot : EnemyAction<BladeSentinelEntity>
         
             blade.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, enemyEntity.GetCustomDataValue<int>("danmaku", "danmakuDamage"), gameObject, gameObject.GetComponent<ICanDealDamage>(), -1f);
             Vector3 directionToPlayer = (playerTrans.position - transform.position).normalized;
-            blade.GetComponent<BladeSentinalSimpleBullet>().SetData(8, directionToPlayer);
+            blade.GetComponent<BladeSentinalSimpleBullet>().SetData(8, directionToPlayer , true);
             /*
             float angle = i * 360f / 8;
             float x = Mathf.Sin(Mathf.Deg2Rad * angle) * rad;

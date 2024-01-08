@@ -14,6 +14,7 @@ public class BladeSentinalSimpleBullet : AbstractBulletViewController
     float speed;
     Rigidbody rb;
     Vector3 dir;
+    bool start;
 
     protected override void OnBulletReachesMaxRange()
     {
@@ -34,10 +35,11 @@ public class BladeSentinalSimpleBullet : AbstractBulletViewController
     {
         throw new NotImplementedException();
     }
-    public void SetData(float speed, Vector3 dir)
+    public void SetData(float speed, Vector3 dir , bool start)
     {
         this.speed = speed;
         this.dir = dir;
+        this.start = start;
     }
 
     // Start is called before the first frame update
@@ -51,6 +53,10 @@ public class BladeSentinalSimpleBullet : AbstractBulletViewController
     // Update is called once per frame
     void Update()
     {
-        rb.AddForce(this.gameObject.transform.forward * 8f);
+        if (start)
+        {
+
+            rb.AddForce(this.gameObject.transform.forward * 8f);
+        }
     }
 }
