@@ -15,6 +15,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.Others;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
@@ -215,12 +216,12 @@ namespace Runtime.Inventory.ViewController {
         }
 
         private void CheckCanThrow() {
-            if (!ResourceSlot.currentHoveredSlot) {
+            if (!ResourceSlot.currentHoveredSlot.Value) {
                 ShowCantThrowMessage(false);
                 return;
             }
-            
-            ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot.Slot;
+
+            ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot.Value.Slot;
             if (currentHoveredSlot != null && currentHoveredSlot != slot) {
                 if (currentHoveredSlot is RubbishSlot) {
                     IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
@@ -447,7 +448,7 @@ namespace Runtime.Inventory.ViewController {
                     ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
                 topItem.GetResourcePropertyDescriptions(),useCost);
                 
-                if (ResourceSlot.currentHoveredSlot == this) {
+                if (ResourceSlot.currentHoveredSlot.Value == this) {
                     currentDescriptionPanel.Show();
                 }
             }
@@ -533,7 +534,7 @@ namespace Runtime.Inventory.ViewController {
                 slotHoverBG.DOFade(hoverBGAlpha, 0.2f).SetUpdate(true);
             }
             
-            ResourceSlot.currentHoveredSlot = this;
+            ResourceSlot.currentHoveredSlot.Value = this;
             if (slot.GetQuantity() > 0) {
                 IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
                 if(topItem == null) {
@@ -544,6 +545,7 @@ namespace Runtime.Inventory.ViewController {
                     SpawnDescriptionPanel(topItem);
                 }
               
+                
                 if (currentDescriptionPanel) {
                     
                     int rarityLevel = 0;
@@ -579,7 +581,7 @@ namespace Runtime.Inventory.ViewController {
                 
             }
             
-            ResourceSlot.currentHoveredSlot = null;
+            ResourceSlot.currentHoveredSlot.Value = null;
             if (currentDescriptionPanel) {
                 currentDescriptionPanel.Hide();
                 if (spawnDescriptionPanel) {
@@ -590,7 +592,7 @@ namespace Runtime.Inventory.ViewController {
         }
 
         private void Update() {
-            if (ResourceSlot.currentHoveredSlot == this) {
+            if (ResourceSlot.currentHoveredSlot.Value == this) {
                 descriptionPanelFollowTr.position = Input.mousePosition;
             }
             

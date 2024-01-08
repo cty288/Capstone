@@ -21,6 +21,8 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		TestBuff1 = 1,
 		TestBuff2,
 		TestBuff3,
-		Weapon_AttackSpeed
+		Weapon_AttackSpeed,
+		Weapon_BaseDamage,
+		Weapon_AmmoSize,
 	}
 }

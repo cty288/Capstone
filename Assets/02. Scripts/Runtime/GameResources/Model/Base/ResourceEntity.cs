@@ -10,6 +10,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Properties;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
+using Runtime.GameResources.Others;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 
@@ -25,20 +26,6 @@ namespace Runtime.GameResources.Model.Base {
 		All // do not use this
 	}
 
-	[Serializable]
-	public struct ResourcePropertyDescription {
-		public string iconName;
-		public string localizedDescription;
-		public bool display;
-		
-		public ResourcePropertyDescription(string iconName, string localizedDescription, bool display = true) {
-			this.iconName = iconName;
-			this.localizedDescription = localizedDescription;
-			this.display = display;
-		}
-		
-		
-	}
 	
 	
 	public delegate ResourcePropertyDescription GetResourcePropertyDescriptionGetter();
@@ -77,6 +64,10 @@ namespace Runtime.GameResources.Model.Base {
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition { get; }
 		
 		public IResourceEntity GetReturnToBaseEntity();
+		
+		public void AddAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
+		
+		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
 	}
 	
 	//3 forms
@@ -94,7 +85,9 @@ namespace Runtime.GameResources.Model.Base {
 		//private IStackSize stackSizeProperty;
 		protected List<GetResourcePropertyDescriptionGetter> resourcePropertyDescriptionGetters =
 			new List<GetResourcePropertyDescriptionGetter>();
-		
+		protected HashSet<List<GetResourcePropertyDescriptionGetter>> additionalResourcePropertyDescriptionGetters =
+			new HashSet<List<GetResourcePropertyDescriptionGetter>>();
+
 		private List<ResourcePropertyDescription> resourcePropertyDescriptions = new List<ResourcePropertyDescription>();
 
 		public override void OnAwake() {
@@ -198,12 +191,25 @@ namespace Runtime.GameResources.Model.Base {
 			foreach (var getter in resourcePropertyDescriptionGetters) {
 				resourcePropertyDescriptions.Add(getter());
 			}
+			
+			foreach (var additionalGetter in additionalResourcePropertyDescriptionGetters) {
+				foreach (var getter in additionalGetter) {
+					resourcePropertyDescriptions.Add(getter());
+				}
+			}
 
 			return resourcePropertyDescriptions;
 		}
 
 		public Func<Dictionary<CurrencyType, int>,bool> CanInventorySwitchToCondition { get; } = null;
 		public abstract IResourceEntity GetReturnToBaseEntity();
+		public void AddAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list) {
+			additionalResourcePropertyDescriptionGetters.Add(list);
+		}
+
+		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list) {
+			additionalResourcePropertyDescriptionGetters.Remove(list);
+		}
 	}
 
 }

@@ -27,7 +27,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			IWeaponPartsEntity newWeaponParts =
 				GlobalGameResourceEntities.GetAnyResource(e.CurrentTopPartsUUID) as IWeaponPartsEntity;
 			if(newWeaponParts != null) {
-				buffSystem.AddBuff(e.WeaponEntity, newWeaponParts.OnGetBuff(e.WeaponEntity));
+				IBuff buff = newWeaponParts.OnGetBuff(e.WeaponEntity);
+				if (!buffSystem.AddBuff(e.WeaponEntity, newWeaponParts, buff)) {
+					buff.RecycleToCache();
+				}
 			}
 		}
 	}

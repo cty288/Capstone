@@ -4,7 +4,7 @@ using Runtime.DataFramework.Properties;
 
 namespace Runtime.Weapons.Model.Properties
 {
-    public interface IAttackSpeed : IProperty<float>, ILoadFromConfigBuffedProperty { }
+    public interface IAttackSpeed : IBuffedProperty<float>, ILoadFromConfigBuffedProperty { }
     
     public class AttackSpeed : AbstractLoadFromConfigBuffedProperty<float>, IAttackSpeed
     {

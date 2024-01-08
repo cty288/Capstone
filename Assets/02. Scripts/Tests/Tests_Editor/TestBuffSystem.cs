@@ -89,7 +89,7 @@ public class TestBuffSystem
 		    return BuffStatus.Running;
 	    }
 
-	    public override void OnEnd() {
+	    public override void OnEnds() {
 		    
 	    }
     }
@@ -209,12 +209,12 @@ public class TestBuffSystem
             .Build();
 
 
-        buffSystem.AddBuff(ent1, BasicBuff.Allocate(null, ent1));
+        buffSystem.AddBuff(ent1, null, BasicBuff.Allocate(null, ent1));
         Assert.IsTrue(buffSystem.ContainsBuff<BasicBuff>(ent1, out _));
         
         PropertyBuffBasic1 buff2 = PropertyBuffBasic1.Allocate(null, ent1);
         Assert.IsTrue(buffSystem.CanAddBuff(ent1, buff2));
-        buffSystem.AddBuff(ent1, buff2);
+        buffSystem.AddBuff(ent1, null, buff2);
         Assert.IsTrue(buffSystem.ContainsBuff<PropertyBuffBasic1>(ent1, out _));
         Assert.IsTrue(ent1.GetCustomProperties()["attack2"].GetCustomDataProperty<int>("damage").GetIsBuffed());
         

@@ -12,6 +12,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.Others;
 using Runtime.Inventory.Model;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
@@ -101,16 +102,27 @@ namespace Runtime.Weapons.Model.Base
 
         public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
             base.OnRegisterResourcePropertyDescriptionGetters(ref list);
-            list.Add(() => new ResourcePropertyDescription("PropertyIconDamage", Localization.GetFormat(
-                "PROPERTY_ICON_DAMAGE",
-                baseDamageProperty.RealValue.Value.x + " - " + baseDamageProperty.RealValue.Value.y)));
+            
+            list.Add(() => new ResourceBuffedPropertyDescription<Vector2Int>(baseDamageProperty,
+                "PropertyIconDamage", Localization.Get(
+                    "PROPERTY_ICON_DAMAGE"),
+                (value) => value.x + " - " + value.y, (initial, real) => real.y - initial.y));
 
-            list.Add(() => new ResourcePropertyDescription("PropertyIconAttackSpeed", Localization.GetFormat(
-                "PROPERTY_ICON_ATTACk_SPEED", attackSpeedProperty.RealValue.Value)));
 
-            list.Add(() => new ResourcePropertyDescription("PropertyIconAmmo", Localization.GetFormat(
-                "PROPERTY_ICON_AMMO", ammoSizeProperty.RealValue.Value)));
+            list.Add(() => new ResourceBuffedPropertyDescription<float>(attackSpeedProperty,
+                "PropertyIconAttackSpeed",
+                Localization.Get("PROPERTY_ICON_ATTACk_SPEED"),
+                (value) => Localization.GetFormat("PROPERTY_ICON_ATTACk_SPEED_DESC", value),
+                (initial, real) => (Math.Abs(real - initial) < 0.01f) ? 0 : (real > initial) ? -1 : 1));
+
+            
+            list.Add(() => new ResourceBuffedPropertyDescription<int>(ammoSizeProperty,
+                "PropertyIconAmmo",
+                Localization.Get("PROPERTY_ICON_AMMO"),
+                (val) => val.ToString(),
+                (initial, real) => real - initial));
         }
+        
 
         public override ResourceCategory GetResourceCategory() {
             return ResourceCategory.Weapon;
@@ -126,13 +138,29 @@ namespace Runtime.Weapons.Model.Base
             foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
                 foreach (WeaponPartsSlot slot in part.Value) {
                     slot.RegisterOnSlotUpdateCallback(OnWeaponPartSlotUpdate);
+                    UpdateWeaponPartsOfType(slot);
                 }
             }
         }
 
+        private void UpdateWeaponPartsOfType(WeaponPartsSlot weaponPartsSlot) {
+            foreach (WeaponPartsSlot s in weaponParts[weaponPartsSlot.WeaponPartType]) {
+                s.UpdateAllWeaponPartsOfThisType(weaponPartsSlot);
+            }
+        }
+        
         protected virtual void OnWeaponPartSlotUpdate(ResourceSlot slot, string previousTopPartsUUID, 
             string currentTopPartsUUID, List<string> uuidList) {
-           this.SendEvent<OnWeaponPartsUpdate>(new OnWeaponPartsUpdate() {
+
+            WeaponPartsSlot weaponPartsSlot = slot as WeaponPartsSlot;
+            if (weaponPartsSlot == null) {
+                return;
+            }
+
+            
+            UpdateWeaponPartsOfType(weaponPartsSlot);
+            
+            this.SendEvent<OnWeaponPartsUpdate>(new OnWeaponPartsUpdate() {
                WeaponEntity = this,
                 PreviousTopPartsUUID = previousTopPartsUUID,
                 CurrentTopPartsUUID = currentTopPartsUUID
@@ -144,10 +172,19 @@ namespace Runtime.Weapons.Model.Base
         protected virtual void InitWeaponPartsSlots() {
             foreach (var t in Enum.GetValues(typeof(WeaponPartType))) {
                 WeaponPartType weaponPartType = (WeaponPartType) t;
-                weaponParts.Add(weaponPartType, new HashSet<WeaponPartsSlot>(1) {
-                    new WeaponPartsSlot(weaponPartType)
-                });
+                weaponParts.Add(weaponPartType, new HashSet<WeaponPartsSlot>());
+                AddWeaponPartsSlot(weaponPartType, false);
+                //AddWeaponPartsSlot(weaponPartType, false);
             }
+        }
+
+        protected void AddWeaponPartsSlot(WeaponPartType type, bool registerEvent = true) {
+            WeaponPartsSlot slot = new WeaponPartsSlot(type, weaponParts[type].Count);
+            weaponParts[type].Add(slot);
+            if (registerEvent) {
+                slot.RegisterOnSlotUpdateCallback(OnWeaponPartSlotUpdate);
+            }
+            
         }
 
         public override void OnResourceAwake() {

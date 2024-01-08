@@ -3,6 +3,8 @@ using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.GameResources.Model.Base;
+using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 	public class TestWeaponParts : WeaponPartsEntity<TestWeaponParts, TestWeaponPartBuff> {
@@ -37,15 +39,21 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 		public override float TickInterval { get; protected set; } = 0.5f;
 
 		private BuffedProperties<float> attackSpeedProperties;
-		
+		private BuffedProperties<Vector2Int> baseDamageProperties;
+
 		public override void OnInitialize() {
 			attackSpeedProperties = new BuffedProperties<float>(weaponEntity, true, BuffTag.Weapon_AttackSpeed);
+			baseDamageProperties = new BuffedProperties<Vector2Int>(weaponEntity, true, BuffTag.Weapon_BaseDamage);
 		}
 
 		public override void OnStart() {
 			foreach (IBuffedProperty<float> buffedProperty in attackSpeedProperties.Properties) {
 				buffedProperty.RealValue.Value += weaponPartsEntity.GetCustomDataValue<float>(
 					"test", "attackSpeed");
+			}
+			
+			foreach (IBuffedProperty<Vector2Int> buffedProperty in baseDamageProperties.Properties) {
+				buffedProperty.RealValue.Value += new Vector2Int(10, 50);
 			}
 		}
 
@@ -58,12 +66,22 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 				buffedProperty.RealValue.Value -= weaponPartsEntity.GetCustomDataValue<float>(
 					"test", "attackSpeed");
 			}
+
+			foreach (IBuffedProperty<Vector2Int> buffedProperty in baseDamageProperties.Properties) {
+				buffedProperty.RealValue.Value -= new Vector2Int(10, 50);
+			}
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
-			return new[] {attackSpeedProperties};
+			return new BuffedProperties[] {
+				attackSpeedProperties,
+				baseDamageProperties
+			};
 		}
-		
-		
+
+
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+			return null;
+		}
 	}
 }

@@ -1,9 +1,11 @@
+using System.Collections.Generic;
+using _02._Scripts.Runtime.BuffSystem;
 using Runtime.DataFramework.Properties;
 
 namespace Runtime.Weapons.Model.Properties
 {
-    public interface IAmmoSize : IProperty<int>, ILoadFromConfigProperty { }
-    public class AmmoSize : AbstractLoadFromConfigProperty<int>, IAmmoSize
+    public interface IAmmoSize : IBuffedProperty<int>, ILoadFromConfigBuffedProperty { }
+    public class AmmoSize : AbstractLoadFromConfigBuffedProperty<int>, IAmmoSize
     {
         protected override IPropertyDependencyModifier<int> GetDefautModifier() {
             return new AmmoSizeDefaultModifier();
@@ -17,6 +19,10 @@ namespace Runtime.Weapons.Model.Properties
         {
             return null;
         }
+
+        public override HashSet<BuffTag> BuffTags { get; } = new HashSet<BuffTag>() {
+            BuffTag.Weapon_AmmoSize,
+        };
     }
 
     public class AmmoSizeDefaultModifier : PropertyDependencyModifierWithRarity<int>

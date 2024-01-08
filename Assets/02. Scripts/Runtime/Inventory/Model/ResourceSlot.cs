@@ -4,6 +4,7 @@ using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.BindableProperty;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.ViewController;
 using Runtime.Weapons.Model.Base;
@@ -11,7 +12,8 @@ using Runtime.Weapons.Model.Base;
 namespace Runtime.Inventory.Model {
 	[Serializable]
 	public class ResourceSlot {
-		public static ResourceSlotViewController currentHoveredSlot = null;
+		public static BindableProperty<ResourceSlotViewController> currentHoveredSlot = 
+			new BindableProperty<ResourceSlotViewController>(null);
 
 		public static BindableProperty<ResourceSlot> currentDraggingSlot =
 			new BindableProperty<ResourceSlot>(null);
@@ -363,9 +365,18 @@ namespace Runtime.Inventory.Model {
 
 		[field: ES3Serializable]
 		private WeaponPartType weaponPartType;
-		
-		public WeaponPartsSlot(IWeaponPartsEntity entity) : base() {
+
+		[field: ES3Serializable ]
+		private int slotIndex = -1;
+		public WeaponPartType WeaponPartType => weaponPartType;
+
+		[field: ES3Serializable]
+		private Dictionary<int, string> allWeaponPartsOfThisType =
+			new Dictionary<int, string>();
+
+		public WeaponPartsSlot(IWeaponPartsEntity entity, int slotIndex) : base() {
 			SetSlotMaxItemCount(1);
+			this.slotIndex = slotIndex;
 			this.weaponPartType = entity.WeaponPartType;
 			TryAddItem(entity);
 		}
@@ -375,9 +386,10 @@ namespace Runtime.Inventory.Model {
 		}
 		
 		
-		public WeaponPartsSlot(WeaponPartType type) : base() {
+		public WeaponPartsSlot(WeaponPartType type, int slotIndex) : base() {
 			SetSlotMaxItemCount(1);
 			this.weaponPartType = type;
+			this.slotIndex = slotIndex;
 		}
 		
 		
@@ -390,9 +402,32 @@ namespace Runtime.Inventory.Model {
 				if (weaponParts.WeaponPartType != weaponPartType) {
 					return false;
 				}
+				else {
+					//find if there is any other slot that contains this weapon part
+					foreach (string key in allWeaponPartsOfThisType.Values) {
+						if (key == item.EntityName) {
+							return false;
+						}
+					}
+				}
 			}
 			
 			return base.CanPlaceItem(item, isSwapping);
 		}
+		
+		public void UpdateAllWeaponPartsOfThisType(WeaponPartsSlot slotToUpdate) {
+			if(slotToUpdate == this) {
+				return;
+			}
+			
+			if (allWeaponPartsOfThisType.ContainsKey(slotToUpdate.slotIndex)) {
+				allWeaponPartsOfThisType[slotToUpdate.slotIndex] = slotToUpdate.EntityKey;
+			}
+			else {
+				allWeaponPartsOfThisType.Add(slotToUpdate.slotIndex, slotToUpdate.EntityKey);
+			}
+		}
+		
+		
 	}
 }

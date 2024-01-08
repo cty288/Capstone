@@ -53,8 +53,9 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 			damagableEntity.Heal(healAmountPerTick, buffDealer as IBelongToFaction);
 			return BuffStatus.Running;
 		}
+		
 
-		public override void OnEnd() {
+		public override void OnEnds() {
 			
 		}
 

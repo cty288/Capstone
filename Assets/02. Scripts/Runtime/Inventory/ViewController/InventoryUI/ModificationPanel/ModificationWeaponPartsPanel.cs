@@ -33,6 +33,7 @@ public class ModificationWeaponPartsPanel : AbstractMikroController<MainGame>
 		       GameObject slotLayout = Instantiate(partsSlotLayoutPrefab, transform);
 		       slotLayout.GetComponent<ModificationWeaponPartsSlotLayout>().Init(slots, type);
 	       }
+	       
        }
        
     }

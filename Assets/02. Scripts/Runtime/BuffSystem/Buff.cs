@@ -35,7 +35,8 @@ public struct BuffDisplayInfo {
 }
 
 
-public interface IBuff {
+public interface IBuff: IPoolable {
+    public bool AutoRecycleWhenEnd { get; set; }
     public float MaxDuration { get; }
     public float RemainingDuration { get; set; }
     public float TickInterval { get; }
@@ -50,7 +51,7 @@ public interface IBuff {
     
     bool Validate();
     
-    void OnInitialize(IEntity buffDealer, IEntity entity);
+    void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false);
     void OnStacked(IBuff buff);
     
     void OnAwake();
@@ -61,8 +62,9 @@ public interface IBuff {
 }
 
 
-public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
-    
+public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
+    [field: ES3Serializable]
+    public bool AutoRecycleWhenEnd { get; set; } = true;
     public abstract float MaxDuration { get; protected set;}
     
     [field: ES3Serializable]
@@ -110,14 +112,24 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
     /// </summary>
     /// <param name="buffDealer"></param>
     /// <param name="entity"></param>
-    public virtual void OnInitialize(IEntity buffDealer, IEntity entity) {
-        BuffDealerID = buffDealer?.UUID;
-        BuffOwnerID = entity?.UUID;
-        this.buffDealer = buffDealer;
-        this.buffOwner = entity;
-        OnInitialize();
+    public virtual void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false) {
+        if(force || this.BuffOwnerID == null || this.BuffOwnerID != entity?.UUID || this.BuffDealerID != buffDealer?.UUID) {
+            BuffDealerID = buffDealer?.UUID;
+            BuffOwnerID = entity?.UUID;
+            this.buffDealer = buffDealer;
+            this.buffOwner = entity;
+            OnInitialize();
+        }
     }
-    
+
+    private void OnEntityRecycled(IEntity obj) {
+        OnEnd();
+        if (!IsRecycled) {
+            RecycleToCache();
+        }
+       
+    }
+
     public abstract void OnInitialize();
     
 
@@ -134,6 +146,7 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
     public virtual void OnAwake() {
         RemainingDuration = MaxDuration;
         TickTimer = TickInterval;
+        buffOwner?.RegisterOnEntityRecycled(OnEntityRecycled);
     }
 
     public abstract void OnStacked(T buff);
@@ -144,7 +157,16 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
 
     public abstract BuffStatus OnTick();
 
-    public abstract void OnEnd();
+    public void OnEnd() {
+        OnEnds();
+        buffOwner?.UnRegisterOnEntityRecycled(OnEntityRecycled);
+
+        if (AutoRecycleWhenEnd) {
+            RecycleToCache();
+        }
+    }
+    
+    public abstract void OnEnds();
     
 
     public virtual void OnRecycled() {
@@ -154,6 +176,7 @@ public abstract class Buff<T> : IBuff, IPoolable where T : Buff<T>, new() {
         buffDealer = null;
         buffOwner = null;
         TickTimer = 0;
+        AutoRecycleWhenEnd = true;
     }
 
     public bool IsRecycled { get; set; }

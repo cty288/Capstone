@@ -50,9 +50,12 @@ public class ModificationWeaponPartsSlotLayout : AbstractMikroController<MainGam
 			slotObject.transform.SetAsLastSibling();
 
 			ResourceSlotViewController slotViewController = slotObject.GetComponent<ResourceSlotViewController>();
+			
 			slotViewController.SetSlot(slot, false);
+			
 			slotViewController.AllowDrag = allowDrag;
 			slotViewController.SpawnDescription = showDescription;
+			
 			
 			slotViewControllers.Add(slotViewController);
 			slotViewController.Activate(true, isRightSide);
