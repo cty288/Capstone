@@ -100,10 +100,9 @@ namespace Runtime.Utilities.Collision
                 Random.Range(-spreadValue, spreadValue),
                 0);
             
-            Vector3 dir = new Vector3(0.5f, 0.5f, 0);
+            Vector3 dir = new Vector3(0.5f, 0.5f, 0) + spread;
             // dir.Normalize();
-            Ray shootDir =  _camera.ViewportPointToRay(dir + spread);
-            Debug.Log("dir: " + spread);
+            Ray shootDir =  _camera.ViewportPointToRay(dir);
             
             for (int i = 0; i < _hits.Length; i++) {
                 _hits[i] = new RaycastHit();
@@ -179,11 +178,11 @@ namespace Runtime.Utilities.Collision
             }
 
             if (!hitAnything) {
-                //hit nothing
-                // if(!_useVFX)
-                //     CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue), new RaycastHit()));
-                // else
-                //     PlayBulletVFX(_launchPoint.position, _launchPoint.position + (shootDir * _weapon.GetRange().RealValue));
+                // hit nothing
+                 if(!_useVFX)
+                     CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (dir * _weapon.GetRange().RealValue), new RaycastHit()));
+                 else
+                     PlayBulletVFX(_launchPoint.position, _launchPoint.position + (dir * _weapon.GetRange().RealValue));
             }
         }
 

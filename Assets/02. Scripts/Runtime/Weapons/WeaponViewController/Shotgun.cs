@@ -62,12 +62,7 @@ namespace Runtime.Weapons
             //multiple shots per click
             for (int i = 0; i < BoundEntity.GetBulletsPerShot().RealValue; i++)
             {
-                if (BoundEntity.CurrentAmmo > 0)
-                {
-                    print("shotgun shoot");
-                    hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetRealDamageValue());
-                    BoundEntity.CurrentAmmo.Value--;
-                }
+                hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetRealDamageValue());
             }
         }
     }
