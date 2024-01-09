@@ -401,19 +401,9 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         UNITY_SETUP_INSTANCE_ID(input);
         UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
-        float scale = 0.5f;
-
-        float2 posTopRight = input.positionCS.xy - float2(-scale, scale);
-        float2 posTopLeft = input.positionCS.xy - float2(scale, scale);
-        float2 posBottomRight = input.positionCS.xy - float2(-scale, -scale);
-        float2 posBottomLeft = input.positionCS.xy - float2(scale, -scale);
-
         float2 screen_uv = (input.screenUV.xy / input.screenUV.z);
-        
-        float2 posTopRightUV = screen_uv - float2(-scale, scale);
-        float2 posTopLeftUV = screen_uv - float2(scale, scale);
-        float2 posBottomRightUV = screen_uv - float2(-scale, -scale);
-        float2 posBottomLeftUV = screen_uv - float2(scale, -scale);
+
+        float scale = 0.002f;
         
         #if _RENDER_PASS_ENABLED
         half4 gbuffer3 = LOAD_FRAMEBUFFER_INPUT(GBUFFER3, input.positionCS.xy)
@@ -422,10 +412,15 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         half4 gbuffer1 = LOAD_FRAMEBUFFER_INPUT(GBUFFER1, input.positionCS.xy);
         half4 gbuffer2 = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, input.positionCS.xy);
 
-        half4 normalTR = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, posTopRight);
-        half4 normalTL = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, posTopLeft);
-        half4 normalBR = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, posBottomRight);
-        half4 normalBL = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, posBottomLeft);
+        float2 TopRight = input.itionCS.xy - float2(-scale, scale);
+        float2 TopLeft = input.itionCS.xy - float2(scale, scale);
+        float2 BottomRight = input.itionCS.xy - float2(-scale, -scale);
+        float2 BottomLeft = input.itionCS.xy - float2(scale, -scale);
+
+        half4 normalTR = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, TopRight);
+        half4 normalTL = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, TopLeft);
+        half4 normalBR = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, BottomRight);
+        half4 normalBL = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, BottomLeft);
 
         //return half4(gbuffer3);
         #else
@@ -438,10 +433,15 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         half4 gbuffer1 = SAMPLE_TEXTURE2D_X_LOD(_GBuffer1, my_point_clamp_sampler, screen_uv, 0);
         half4 gbuffer2 = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, screen_uv, 0);
 
-        half4 normalTR = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, posTopRightUV, 0);
-        half4 normalTL = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, posTopLeftUV, 0);
-        half4 normalBR = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, posBottomRightUV, 0);
-        half4 normalBL = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, posBottomLeftUV, 0);
+        float2 TopRightUV = screen_uv - float2(-scale, scale);
+        float2 TopLeftUV = screen_uv - float2(scale, scale);
+        float2 BottomRightUV = screen_uv - float2(-scale, -scale);
+        float2 BottomLeftUV = screen_uv - float2(scale, -scale);
+
+        half4 normalTR = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, TopRightUV, 0);
+        half4 normalTL = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, TopLeftUV, 0);
+        half4 normalBR = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, BottomRightUV, 0);
+        half4 normalBL = SAMPLE_TEXTURE2D_X_LOD(_GBuffer2, my_point_clamp_sampler, BottomLeftUV, 0);
 
         //return half4(gbuffer3);
         #endif
@@ -450,6 +450,18 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         #else
         half4 shadowMask = 1.0;
         #endif
+
+        scale = 0.5f;
+
+        float2 posTopRight = input.positionCS.xy - float2(-scale, scale);
+        float2 posTopLeft = input.positionCS.xy - float2(scale, scale);
+        float2 posBottomRight = input.positionCS.xy - float2(-scale, -scale);
+        float2 posBottomLeft = input.positionCS.xy - float2(scale, -scale);
+
+        float2 posTopRightUV = screen_uv - float2(-scale, scale);
+        float2 posTopLeftUV = screen_uv - float2(scale, scale);
+        float2 posBottomRightUV = screen_uv - float2(-scale, -scale);
+        float2 posBottomLeftUV = screen_uv - float2(scale, -scale);
 
         #ifdef _LIGHT_LAYERS
         float4 renderingLayers = SAMPLE_TEXTURE2D_X_LOD(MERGE_NAME(_, GBUFFER_LIGHT_LAYERS), my_point_clamp_sampler, screen_uv, 0);
@@ -502,6 +514,8 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         #endif
 
         // Compare normals and light
+        half nDotTarget = 0.15f;
+        half nDotDiffTarget = 0.1f;
         half NdotLTR =  dot(normalTR.xyz, lightShadows.unityLight.direction);
         half NdotLTL =  dot(normalTL.xyz, lightShadows.unityLight.direction);
         half NdotLBR =  dot(normalBR.xyz, lightShadows.unityLight.direction);
@@ -510,14 +524,18 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         half diff0 = abs(NdotLTL - NdotLBR);
         half diff1 = abs(NdotLTR - NdotLBL);
         half diff = diff0 > diff1 ? diff0 : diff1;
+        diff = saturate(1 - 10*abs(NdotLTR - nDotTarget));
+        diff = pow(diff, 2);
 
         half diff3 = abs(lightShadows.shadowAttenuationTR - lightShadows.shadowAttenuationBL);
         half diff2 = abs(lightShadows.shadowAttenuationTL - lightShadows.shadowAttenuationBR);
         half diff4 = diff2 > diff3 ? diff2 : diff3;
         //diff4 *= 100;
-        diff4 = saturate(diff4);
+        diff4 = 2.f * saturate(diff4 * 3.f);
 
-        //return half4(diff4.rrr, 1);
+        diff += diff4;
+
+        //return half4(diff.rrr, 1);
         
         
         InputData inputData = InputDataFromGbufferAndWorldPosition(gbuffer2, posWS.xyz);
@@ -542,12 +560,14 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
             color = diffuseColor * surfaceData.albedo + specularColor;
         #endif
 
-        //color += diff4;
-        half3 hsv = RgbToHsv(color);
+        float gray = 0.2989*color.r + 0.5870*color.g + 0.1140*color.b;
+        color =  -gray * diff + color * (1 + diff);
+        color = saturate(color);
+        //half3 hsv = RgbToHsv(color);
         //hsv.z *= 1 + diff4;
-        hsv.y += diff4 * 2;
+        //hsv.y += diff * 2;
         //hsv.z += diff4;
-        color = HsvToRgb(hsv);
+        //color = HsvToRgb(hsv);
         
         //return half4(1, 1, 1, 1);
         return half4(color, alpha);
