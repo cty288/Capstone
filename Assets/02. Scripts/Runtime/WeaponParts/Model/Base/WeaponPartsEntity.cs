@@ -1,4 +1,5 @@
 ﻿using System;
+using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -22,6 +23,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		
 		public IWeaponPartsBuff OnGetBuff(IWeaponEntity weaponEntity);
 		
+		public BindableProperty<T> GetCustomDataValueWithLevel<T>(string propertyName, int level);
+
+		public BindableProperty<T> GetCustomDataValueOfCurrentLevel<T>(string propertyName);
+		
 		public Type BuffType { get;}
 	}
 	
@@ -29,6 +34,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		where T : WeaponPartsEntity<T, TBuffType>, new()
 		where TBuffType : WeaponPartsBuff<T, TBuffType>, new() {
 		
+		protected virtual int levelRange { get; } = 3;
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.WeaponPartsConfigTable;
 		}
@@ -61,6 +67,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 			return WeaponPartsBuff<T, TBuffType>.CreateBuff(this, weaponEntity);
 		}
 
+		
+
 		public Type BuffType { get; } = typeof(TBuffType);
 
 
@@ -68,5 +76,50 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public override void OnRecycle() {
 			
 		}
+		
+		
+		
+		public BindableProperty<T1> GetCustomDataValueWithLevel<T1>(string propertyName, int level) {
+			int targetLevel = level + 1;
+			while (targetLevel > 0) {
+				targetLevel--;
+				string name = $"level{targetLevel}";
+				if (!HasCustomProperty(name)) {
+					continue;
+				}
+
+				if (GetCustomProperties()[name].TryGetCustomDataValue<T1>(propertyName, out BindableProperty<T1> val)) {
+					return val;
+				}
+			}
+			return null;
+		}
+
+		public BindableProperty<T1> GetCustomDataValueOfCurrentLevel<T1>(string propertyName) {
+			return GetCustomDataValueWithLevel<T1>(propertyName, GetRarity());
+		}
+		
+
+		protected override ICustomProperty[] OnRegisterCustomProperties() {
+			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[levelRange];
+			for (int i = 1; i <= levelRange; i++) {
+				properties[i - 1] = new AutoConfigCustomProperty($"level{i}");
+			}
+			
+			ICustomProperty[] additionalProperties = OnRegisterAdditionalCustomProperties();
+			
+			if (additionalProperties != null) {
+				ICustomProperty[] result = new ICustomProperty[properties.Length + additionalProperties.Length];
+				properties.CopyTo(result, 0);
+				additionalProperties.CopyTo(result, properties.Length);
+				return result;
+			}
+
+			ICustomProperty[] res= new ICustomProperty[properties.Length];
+			properties.CopyTo(res, 0);
+			return res;
+		}
+
+		protected abstract ICustomProperty[] OnRegisterAdditionalCustomProperties();
 	}
 }
