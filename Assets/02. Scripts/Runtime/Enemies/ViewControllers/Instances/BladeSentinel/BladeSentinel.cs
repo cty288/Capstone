@@ -117,6 +117,12 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
             case "MeleeBladeStopCheck":
                 meleeBlade.StopCheckHit();
                 break;
+            case "ActivateShield":
+                BoundEntity.IsInvincible.Value = true;
+                break;
+            case "DeactivateShield":
+                BoundEntity.IsInvincible.Value = false;
+                break;
             default:
                 break;
         }
