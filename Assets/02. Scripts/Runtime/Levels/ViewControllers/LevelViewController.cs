@@ -317,6 +317,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 
 		private async UniTask SpawnPillars() {
+			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			if (!hasPillars) {
 				return;
 			}
@@ -328,18 +329,22 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 			int pillarNumber = 0;
+			HashSet<string> ids = new HashSet<string>();
+			
 			foreach (GameObject pillar in pillars) {
 				IBossPillarViewController pillarViewController = pillar.GetComponent<IBossPillarViewController>();
 				//pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
 				//pillar.transform.SetParent(transform);
-				pillarViewController.InitPillar(BoundEntity, (CurrencyType) pillarNumber,
+				string id = pillarViewController.InitPillar(BoundEntity, (CurrencyType) pillarNumber,
 					bossSpawnCostInfo[(CurrencyType) pillarNumber]);
 				
+				ids.Add(id);
 				pillarNumber++;
 				//InitDirector(pillarViewController);
 				//RegisterOnSpawnEnemy(pillarViewController);
 			}
 			bossPillars = pillars.Select(p => p.GetComponent<IDirectorViewController>()).ToArray();
+			pillarModel.SetCurrentLevelPillars(ids);
 			
 		}
 		private void UpdateWallMaterials() {

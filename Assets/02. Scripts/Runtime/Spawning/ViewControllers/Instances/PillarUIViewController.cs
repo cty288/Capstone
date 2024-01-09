@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Pillars.Commands;
+using AYellowpaper.SerializedCollections;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -21,33 +23,55 @@ public interface IGameUIPanel {
 }
 public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 	private OnOpenPillarUI data;
-	private Button lastRarityButton;
-	private Button nextRarityButton;
-	private TMP_Text displayRarityText;
-	private Button summonButton;
-	private TMP_Text displayCostText;
-	private static int maxRarity = 4;
-	private int currentSelectedRarity = 1;
+
+	[SerializedDictionary("CurrencyType", "Icon")]
+	[SerializeField]
+	private SerializedDictionary<CurrencyType, Sprite> currencySprites;
+	
+	[SerializeField]
+	private Button confirmButton;
+
+	[SerializeField] private Slider currencySlider;
+	[SerializeField] private TMP_Text currencySliderText;
+	[SerializeField] private PressHoldButton addCurrencyButton;
+	[SerializeField] private PressHoldButton minusCurrencyButton;
+	[SerializeField] private Image currencyIcon;
+	[SerializeField] private TMP_Text requiredEnergyText;
+	[SerializeField] private TMP_Text levelText;
+
+	
 	private ICurrencyModel currencyModel;
+	private int currentSelectedCurrency = 0;
+	private int maxCurrencyPossible = 100;
 	public override void OnInit() {
-		currencyModel = this.GetModel<ICurrencyModel>();
-		lastRarityButton = transform.Find("SelectRarityPanel/ButtonLast").GetComponent<Button>();
-		nextRarityButton = transform.Find("SelectRarityPanel/ButtonNext").GetComponent<Button>();
-		displayRarityText = transform.Find("SelectRarityPanel/RarityNumber").GetComponent<TMP_Text>();
-		displayCostText = transform.Find("RequiredCurrencyPanel/Content").GetComponent<TMP_Text>();
-		summonButton = transform.Find("SummonButton").GetComponent<Button>();
-		lastRarityButton.onClick.AddListener(OnLastRarityButtonClicked);
-		nextRarityButton.onClick.AddListener(OnNextRarityButtonClicked);
-		summonButton.onClick.AddListener(OnSummonButtonClicked);
 		
+		currencyModel = this.GetModel<ICurrencyModel>();
+		
+		addCurrencyButton.RegisterCallback(OnAddCurrencyButtonClicked);
+		minusCurrencyButton.RegisterCallback(OnMinusCurrencyButtonClicked);
+
+		confirmButton.onClick.AddListener(OnConfirmButtonClicked);
 		this.RegisterEvent<OnCurrencyAmountChangedEvent>(OnCurrencyAmountChanged)
 			.UnRegisterWhenGameObjectDestroyed(gameObject);
 		
 	}
 
+	private void OnConfirmButtonClicked() {
+		this.SendCommand(ActivatePillarCommand.Allocate(data.pillarCurrencyType));
+	}
+
+	private void OnMinusCurrencyButtonClicked() {
+		SelectCurrency(currentSelectedCurrency - 1);
+	}
+
+	private void OnAddCurrencyButtonClicked() {
+		SelectCurrency(currentSelectedCurrency + 1);
+	}
+
 	private void OnCurrencyAmountChanged(OnCurrencyAmountChangedEvent e) {
 		if (IsOpening) {
-			SetRarity(currentSelectedRarity);
+			if (e.CurrencyType == data.pillarCurrencyType)
+				SelectCurrency(currentSelectedCurrency);
 		}
 	
 	}
@@ -58,19 +82,14 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		}
 	}
 
-	private void OnLastRarityButtonClicked() { 
-		int targetRarity = currentSelectedRarity <= 1 ? maxRarity : currentSelectedRarity - 1;
-		SetRarity(targetRarity);
-	}
-
-	private void OnNextRarityButtonClicked() {
-		int targetRarity = currentSelectedRarity >= maxRarity ? 1 : currentSelectedRarity + 1;
-		SetRarity(targetRarity);
-	}
+	
 
 	public override void OnOpen(UIMsg msg) {
 		data = (OnOpenPillarUI) msg;
-		SetRarity(1);
+		currencyIcon.sprite = currencySprites[data.pillarCurrencyType];
+		maxCurrencyPossible = data.rewardCosts.GetHighestCost();
+		SelectCurrency(0);
+		
 	}
 
 	public override void OnClosed() {
@@ -78,45 +97,60 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 	}
 	private void OnSummonButtonClicked() {
 		//this.SendCommand(PillarSpawnBossCommand.Allocate(data.pillar, GetRequiredCurrency(), currentSelectedRarity));
-		MainUI.Singleton.OpenOrGetClose<PillarUIViewController>(MainUI.Singleton, null);
+		//MainUI.Singleton.OpenOrGetClose<PillarUIViewController>(MainUI.Singleton, null);
 	}
-	public void SetRarity(int rarity) {
-		currentSelectedRarity = rarity;
-		displayRarityText.text = rarity.ToString();
-
-		StringBuilder sb = new StringBuilder();
-		bool canSummon = true;
-		
-		int requiredCurrency = GetRequiredCurrency();
-
-		int cost = data.rewardCosts.GetCostOfLevel(rarity);
-		CurrencyType currencyType = data.pillarCurrencyType;
-		
-		sb.Append($"<sprite index={(int) currencyType}>");
-		
-		bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= requiredCurrency;
-		if (!isEnough) {
-			canSummon = false;
+	public void SelectCurrency(int currency) {
+		if (currency < 0) {
+			currency = 0;
+		}else if (currency > maxCurrencyPossible) {
+			currency = maxCurrencyPossible;
 		}
-		sb.Append(isEnough
-			? $"<color=black>{requiredCurrency}</color>"
-			: $"<color=#FF0000>{requiredCurrency}</color>");
-		sb.Append("    ");
+		CurrencyType currencyType = data.pillarCurrencyType;
+		currentSelectedCurrency = currency;
+		currencySliderText.text = currency.ToString() + $"\n<sprite index={(int)currencyType}>";
 
-		displayCostText.text = sb.ToString();
+		float ratio = (float) currency / maxCurrencyPossible;
+		currencySlider.value = ratio;
 
-		summonButton.interactable = canSummon;
+		
+		bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= currency;
+		
+		int levelNumber = data.rewardCosts.GetLevel(currency);
+		levelText.text = Localization.GetFormat("PILLAR_LEVEL_TEXT", levelNumber);
+		levelText.color = Color.black;
+		
+		isEnough = isEnough && levelNumber > 0;
+		
+		bool canSummon = isEnough;
+		
+		requiredEnergyText.text = Localization.GetFormat("PILLAR_HINT_ERROR", (int) currencyType);
+		requiredEnergyText.gameObject.SetActive(false);
+		levelText.gameObject.SetActive(true);
+		
+		if (currency <= 0 || levelNumber <= 0) {
+			canSummon = false;
+			requiredEnergyText.gameObject.SetActive(true);
+			levelText.text = Localization.Get("PILLAR_LEVEL_TEXT_ERROR");
+			levelText.color = Color.red;
+			
+		}
+
+		if (currencyModel.GetCurrencyAmountProperty(currencyType) < currency) {
+			requiredEnergyText.gameObject.SetActive(true);
+			requiredEnergyText.text = Localization.GetFormat("PILLAR_HINT_ERROR_2", (int) currencyType);
+		}
+
+		currencySliderText.color = isEnough ? Color.black : Color.red;
+		confirmButton.interactable = canSummon;
 	}
 	
-	private int GetRequiredCurrency() {
-		return data.rewardCosts.GetCostOfLevel(currentSelectedRarity);
-	}
 
 	public IArchitecture GetArchitecture() {
 		return MainGame.Interface;
 	}
 
 	public IPanel GetClosePanel() {
+		//TODO: can't close when selecting rewards
 		return this;
 	}
 }

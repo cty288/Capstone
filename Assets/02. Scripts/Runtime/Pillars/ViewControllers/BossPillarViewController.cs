@@ -42,7 +42,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		//IEntity OnBuildNewEntity(int level, Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
 		//void SetBossSpawnCosts(Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
 
-		void InitPillar(ILevelEntity levelEntity, CurrencyType pillarCurrencyType, RewardCostInfo rewardCosts);
+		string InitPillar(ILevelEntity levelEntity, CurrencyType pillarCurrencyType, RewardCostInfo rewardCosts);
 		BoxCollider SpawnSizeCollider { get; }
 	}
 	
@@ -56,10 +56,11 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		
 		protected ILevelModel levelModel;
 		protected ParticleSystem[] particleSystems;
-		protected bool isActivating = false;
+		//protected bool isActivating = false;
 		protected ILevelSystem levelSystem;
 		[SerializeField] private Vector2 waitTimeRange = new Vector2(10, 20);
 		[SerializeField] private GameObject normalTrail;
+		[SerializeField] private GameObject activatedTrail;
 		
 		protected override void Awake() {
 			base.Awake();
@@ -86,6 +87,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			this.RegisterEvent<OnRequestPillarSpawnBoss>(OnRequestPillarSpawnBoss)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			BoundEntity.Status.RegisterWithInitValue(OnPillarStatusChanged)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
 			foreach (var system in particleSystems) {
 				system.Stop();
@@ -94,6 +97,18 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			normalTrail.gameObject.SetActive(true);
 		}
 
+		private void OnPillarStatusChanged(PillarStatus oldStatus, PillarStatus newStatus) {
+			UpdateInteractHint();
+			normalTrail.gameObject.SetActive(newStatus == PillarStatus.Idle);
+			activatedTrail.gameObject.SetActive(newStatus == PillarStatus.Activated);
+
+			if (newStatus == PillarStatus.Spawning) {
+				PlaySpawningParticles();
+			}
+			else {
+				StopSpawningParticles();
+			}
+		}
 
 
 		private void OnBossFightStatusChanged(bool arg1, bool status) {
@@ -107,10 +122,15 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				return (null, Localization.Get("PILLAR_ERROR_COMBAT"), b.Item3);
 			}
 
-			if (isActivating) {
-				return (null, Localization.Get("DEPLOY_ERROR_ACTIVATING"), b.Item3);
+			switch (BoundEntity.Status.Value) {
+				case PillarStatus.Idle:
+					return b;
+				case PillarStatus.Spawning:
+					return (null, Localization.Get("DEPLOY_ERROR_ACTIVATING"), b.Item3);
+				case PillarStatus.Activated:
+					return (null, Localization.Get("DEPLOY_ERROR_ACTIVATED"), b.Item3);
 			}
-			
+
 			return b;
 			
 		}
@@ -127,7 +147,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		}
 		
 		
-		public void InitPillar(ILevelEntity levelEntity, CurrencyType pillarCurrencyType, RewardCostInfo rewardCosts) {
+		public string InitPillar(ILevelEntity levelEntity, CurrencyType pillarCurrencyType, RewardCostInfo rewardCosts) {
 			LevelEntity = levelEntity;
 			levelNumber = levelEntity.GetCurrentLevelCount();
 			IEntity ent = OnBuildNewEntity(levelNumber, pillarCurrencyType, rewardCosts);
@@ -136,39 +156,43 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			//for some reason we need to do this again
 			LevelEntity = levelEntity;
 			levelNumber = levelEntity.GetCurrentLevelCount();
+			return ent.UUID;
 		}
 
-		public void SetLevelViewController(ILevelViewController levelViewController)
-		{
-			// LevelVC = levelViewController;
+
+
+		private void PlaySpawningParticles() {
+			foreach (var system in particleSystems) {
+				system.loop = true;
+				system.Play();
+			}
 		}
 		
-		
+		private void StopSpawningParticles() {
+			foreach (var system in particleSystems) {
+				system.loop = false;
+			}
+		}
 
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
 
 		protected async UniTask SpawnBoss(int rarity) {
 			Debug.Log("Spawn boss");
-			foreach (var system in particleSystems) {
-				system.loop = true;
-				system.Play();
-			}
+			PlaySpawningParticles();
 			normalTrail.gameObject.SetActive(false);
-			isActivating = true;
+			BoundEntity.Status.Value = PillarStatus.Spawning;
 			UpdateInteractHint();
 
 			await UniTask.WaitForSeconds(Random.Range(waitTimeRange.x, waitTimeRange.y),false,
 				PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 			
-			foreach (var system in particleSystems) {
-				system.loop = false;
-			}
+			StopSpawningParticles();
 
 			await UniTask.WaitForSeconds(4f,false,
 				PlayerLoopTiming.Update,gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		
-			isActivating = false;
+			BoundEntity.Status.Value = PillarStatus.Idle;
 			
 			ILevelEntity levelEntity = levelModel.CurrentLevel.Value;
 			if (levelEntity.IsInBossFight) {
@@ -228,7 +252,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			
 			if(levelModel.CurrentLevel.Value.IsInBossFight.Value 
 			   || UIManager.Singleton.GetPanel<PillarUIViewController>(true) != null
-			   || isActivating) {
+			   || BoundEntity.Status.Value != PillarStatus.Idle) {
 				return;
 			}
 
@@ -238,7 +262,6 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			isActivating = false;
 		}
 	}
 }
