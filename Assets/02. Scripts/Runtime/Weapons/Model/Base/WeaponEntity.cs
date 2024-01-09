@@ -400,6 +400,17 @@ namespace Runtime.Weapons.Model.Base
          ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
          public ICanDealDamageRootViewController RootViewController => null;
          public override IResourceEntity GetReturnToBaseEntity() {
+             //remove all weapon parts
+                foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
+                    foreach (WeaponPartsSlot slot in part.Value) {
+                        if (slot.GetQuantity() > 0) {
+                            GlobalEntities.GetEntityAndModel(slot.GetLastItemUUID()).Item2
+                                ?.RemoveEntity(slot.GetLastItemUUID(), true);
+                        }
+                        
+                        slot.Clear();
+                    }
+                }
              return this;
          }
     }

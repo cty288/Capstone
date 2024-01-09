@@ -101,7 +101,9 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			totalSpawnAmount = Random.Range(currencyInfo.amountRange.x, currencyInfo.amountRange.y + 1);
 			
 			realTotalShootTime = Mathf.Min(totalShootTime, totalSpawnAmount);
-			
+			if (realTotalShootTime == 0) {
+				realTotalShootTime = 1;
+			}
 			
 		}
 
