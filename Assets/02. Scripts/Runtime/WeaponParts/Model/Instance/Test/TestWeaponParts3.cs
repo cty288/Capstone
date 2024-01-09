@@ -22,10 +22,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 			
 		}
 
-		protected override ICustomProperty[] OnRegisterCustomProperties() {
-			return new ICustomProperty[] {
-				new AutoConfigCustomProperty("test")
-			};
+		
+
+		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
+			return null;
 		}
 
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {

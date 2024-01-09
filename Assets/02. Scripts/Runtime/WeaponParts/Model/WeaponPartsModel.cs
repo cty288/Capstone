@@ -4,7 +4,9 @@ using System.Reflection;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Builders;
 using Framework;
+using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.Builders;
+using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.RawMaterials.Model.Base;
 using Runtime.RawMaterials.Model.Builder;
@@ -59,5 +61,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model {
 
 			throw new Exception("Cannot find the builder for the weapon entity type: " + weaponEntityTypeName);
 		}
+		
+		
 	}
 }

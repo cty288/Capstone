@@ -20,6 +20,8 @@ namespace _02._Scripts.Runtime.WeaponParts.ViewControllers {
 		[Header("Build from Inventory")]
 		[SerializeField]
 		private string entityClassName;
+		[SerializeField]
+		private int rarity = 1;
 		
 		
 		protected IWeaponPartsModel weaponPartsModel;
@@ -59,7 +61,9 @@ namespace _02._Scripts.Runtime.WeaponParts.ViewControllers {
 
 			return builder?.FromConfig().Build() as IResourceEntity;
 		}
-		
-		
+
+		protected override IEntity OnBuildNewEntity() {
+			return OnBuildNewPickableResourceEntity(true, rarity);
+		}
 	}
 }

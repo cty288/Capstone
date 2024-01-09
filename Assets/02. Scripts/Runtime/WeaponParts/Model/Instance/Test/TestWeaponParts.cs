@@ -21,17 +21,15 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 			
 		}
 
-		protected override ICustomProperty[] OnRegisterCustomProperties() {
-			return new ICustomProperty[] {
-				new AutoConfigCustomProperty("test")
-			};
-		}
-
+		
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			return "Test Weapon Parts";
 		}
 
 		public override WeaponPartType WeaponPartType { get; } = WeaponPartType.Barrel;
+		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
+			return null;
+		}
 	}
 
 	public class TestWeaponPartBuff : WeaponPartsBuff<TestWeaponParts, TestWeaponPartBuff> {
@@ -48,8 +46,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 
 		public override void OnStart() {
 			foreach (IBuffedProperty<float> buffedProperty in attackSpeedProperties.Properties) {
-				buffedProperty.RealValue.Value += weaponPartsEntity.GetCustomDataValue<float>(
-					"test", "attackSpeed");
+				buffedProperty.RealValue.Value +=
+					weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("attackSpeed");
 			}
 			
 			foreach (IBuffedProperty<Vector2Int> buffedProperty in baseDamageProperties.Properties) {
@@ -63,8 +61,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 
 		public override void OnBuffEnd() {
 			foreach (IBuffedProperty<float> buffedProperty in attackSpeedProperties.Properties) {
-				buffedProperty.RealValue.Value -= weaponPartsEntity.GetCustomDataValue<float>(
-					"test", "attackSpeed");
+				buffedProperty.RealValue.Value -= 
+					weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("attackSpeed");
 			}
 
 			foreach (IBuffedProperty<Vector2Int> buffedProperty in baseDamageProperties.Properties) {
