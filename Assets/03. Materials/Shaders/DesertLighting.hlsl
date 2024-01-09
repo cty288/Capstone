@@ -1,6 +1,6 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
-half3 CalculateRadiance(half3 lightDirectionWS, half lightAttenuation, half3 normalWS, half remap = -0.1f, half remapMax = 1.0f)
+half CalculateRadiance(half3 lightDirectionWS, half lightAttenuation, half3 normalWS, half remap = -0.1f, half remapMax = 1.0f)
 {
     half NdotL = RangeRemap(remap, remapMax, (dot(normalWS, lightDirectionWS)));
     return(lightAttenuation * NdotL);
@@ -12,26 +12,7 @@ half3 DesertLightingPhysicallyBased(BRDFData brdfData, BRDFData brdfDataClearCoa
                                     half clearCoatMask, bool specularHighlightsOff)
 {
     // Adds a saturated edge to the shadow.
-    half3 radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
-    half3 radiance2 = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
-
-    //return half4(radiance, 1);
-    
-    // half attenuation = RangeRemap(0.0f, 0.8f, radiance);
-    // attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
-    // half attenuation2 = RangeRemap(0.0f, 0.6f, radiance2);
-    // attenuation2 = 1 - (abs(attenuation2 - 0.5f) * 2);
-    // attenuation = min(attenuation, attenuation2);
-    // //attenuation = pow(attenuation, 1.32f);
-    // half3 hsv = RgbToHsv(lightColor);
-    // //hsv.y *= 1 + attenuation*_ShadowEdgeSaturation;
-    // hsv.z *= 1 + attenuation;
-    // hsv.y += attenuation;
-    // hsv.z += 0.15*attenuation;
-    // radiance = RangeRemap(0.0f, 0.1f, radiance);
-    // hsv.z *= radiance;
-    // lightColor = HsvToRgb(hsv);
-    // radiance *= lightColor;
+    half radiance = CalculateRadiance(lightDirectionWS, lightAttenuation, normalWS, 0.1f, 0.4f);
 
 	half3 brdf = brdfData.diffuse;
 #ifndef _SPECULARHIGHLIGHTS_OFF
@@ -126,7 +107,7 @@ half4 DesertFragmentPBR(InputData inputData, SurfaceData surfaceData, float3 nor
     half3 radiance = CalculateRadiance(mainLight.direction, (mainLight.distanceAttenuation) * mainLight.shadowAttenuation, normalVertex, 0.1f, 0.4f);
     half3 radiance2 = CalculateRadiance(mainLight.direction, (mainLight.distanceAttenuation) * mainLight.shadowAttenuation, inputData.normalWS, 0.1f, 0.4f);
 
-    return half4(radiance, 1);
+    //return half4(radiance, 1);
     half attenuation = RangeRemap(0.0f, 0.8f, radiance);
     attenuation = 1 - (saturate(attenuation - 0.5f) * 2);
     half attenuation2 = RangeRemap(0.0f, 0.6f, radiance2);
