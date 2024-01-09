@@ -327,17 +327,57 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   bossSpawnCostInfo:
-  - CurrencyType: 0
-    Cost: 10
-  - CurrencyType: 1
-    Cost: 20
-  - CurrencyType: 2
-    Cost: 5
-  - CurrencyType: 3
-    Cost: 5
+    _serializedList:
+    - Key: 0
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 10
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 40
+          - Key: 4
+            Value: 80
+    - Key: 1
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 20
+          - Key: 2
+            Value: 40
+          - Key: 3
+            Value: 60
+          - Key: 4
+            Value: 80
+    - Key: 2
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 5
+          - Key: 2
+            Value: 15
+          - Key: 3
+            Value: 25
+          - Key: 4
+            Value: 35
+    - Key: 3
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 5
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 30
+          - Key: 4
+            Value: 45
   hasPillars: 1
   pillarPrefabName: BossPillar
-  pillarCount: 4
   maxExtent: {fileID: 4174941809537234053}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
@@ -4584,6 +4624,8 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   enemyCount: 0
+  totalEnemiesSpawned: 0
+  isActive: 1
 --- !u!1001 &6740914133432436796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10230,6 +10272,8 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   enemyCount: 0
+  totalEnemiesSpawned: 0
+  isActive: 1
 --- !u!114 &1045219877315657789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15100,6 +15144,8 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   enemyCount: 0
+  totalEnemiesSpawned: 0
+  isActive: 1
 --- !u!1001 &8872873331152879493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24318,3 +24364,5 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   enemyCount: 0
+  totalEnemiesSpawned: 0
+  isActive: 1

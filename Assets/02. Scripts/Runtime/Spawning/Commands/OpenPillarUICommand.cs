@@ -11,15 +11,18 @@ using UnityEngine;
 namespace Runtime.Spawning.Commands {
 	public struct OnOpenPillarUI : UIMsg{
 		public GameObject pillar;
-		public Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts;
+		public RewardCostInfo rewardCosts;
+		public CurrencyType pillarCurrencyType;
 	}
 	public class OpenPillarUICommand : AbstractCommand<OpenPillarUICommand> {
 		private GameObject pillar;
-		private Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts;
+		private RewardCostInfo rewardCosts;
+		private CurrencyType pillarCurrencyType;
 		protected override void OnExecute() {
 			this.SendEvent<OnOpenPillarUI>(new OnOpenPillarUI() {
 				pillar = pillar,
-				bossSpawnCosts = bossSpawnCosts
+				rewardCosts = rewardCosts,
+				pillarCurrencyType = pillarCurrencyType
 			});
 		}
 		
@@ -28,10 +31,11 @@ namespace Runtime.Spawning.Commands {
 			
 		}
 		
-		public static OpenPillarUICommand Allocate(GameObject pillar, Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts) {
+		public static OpenPillarUICommand Allocate(GameObject pillar, RewardCostInfo rewardCosts, CurrencyType pillarCurrencyType) {
 			OpenPillarUICommand command = SafeObjectPool<OpenPillarUICommand>.Singleton.Allocate();
 			command.pillar = pillar;
-			command.bossSpawnCosts = bossSpawnCosts;
+			command.rewardCosts = rewardCosts;
+			command.pillarCurrencyType = pillarCurrencyType;
 			return command;
 		}
 	}

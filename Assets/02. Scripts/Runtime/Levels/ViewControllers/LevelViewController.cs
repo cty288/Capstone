@@ -8,7 +8,9 @@ using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
+using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Utilities;
+using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using Framework;
 using MikroFramework;
@@ -126,7 +128,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		[Header("Enemies")]
 		[SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
-		[SerializeField] protected List<LevelBossSpawnCostInfo> bossSpawnCostInfo;
+		[SerializeField] 
+		[SerializedDictionary("Currency Type", "Costs")]
+		protected SerializedDictionary<CurrencyType, RewardCostInfo> bossSpawnCostInfo;
+		
 		[SerializeField] protected bool hasPillars = true;
 		[SerializeField] protected string pillarPrefabName = "BossPillar";
 		//[SerializeField] protected int pillarCount = 4;
@@ -321,12 +326,18 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (pillars == null) {
 				return;
 			}
+			
+			int pillarNumber = 0;
 			foreach (GameObject pillar in pillars) {
 				IBossPillarViewController pillarViewController = pillar.GetComponent<IBossPillarViewController>();
-				pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
+				//pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
 				//pillar.transform.SetParent(transform);
-				InitDirector(pillarViewController);
-				RegisterOnSpawnEnemy(pillarViewController);
+				pillarViewController.InitPillar(BoundEntity, (CurrencyType) pillarNumber,
+					bossSpawnCostInfo[(CurrencyType) pillarNumber]);
+				
+				pillarNumber++;
+				//InitDirector(pillarViewController);
+				//RegisterOnSpawnEnemy(pillarViewController);
 			}
 			bossPillars = pillars.Select(p => p.GetComponent<IDirectorViewController>()).ToArray();
 			
@@ -343,13 +354,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 		}
-		private Dictionary<CurrencyType, LevelBossSpawnCostInfo> GetBossSpawnCostInfoDict() {
-			Dictionary<CurrencyType, LevelBossSpawnCostInfo> dict = new Dictionary<CurrencyType, LevelBossSpawnCostInfo>();
+		private Dictionary<CurrencyType, RewardCostInfo> GetBossSpawnCostInfoDict() {
+			Dictionary<CurrencyType, RewardCostInfo> dict = new Dictionary<CurrencyType, RewardCostInfo>();
 			if (bossSpawnCostInfo == null) {
 				return dict;
 			}
 			foreach (var info in bossSpawnCostInfo) {
-				dict.Add(info.CurrencyType, info);
+				dict.Add(info.Key, info.Value);
 			}
 
 			return dict;
@@ -479,6 +490,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			// BoundEntity.CurrentEnemyCount = 0;
 			IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
 			IDirectorModel directorModel = this.GetModel<IDirectorModel>();
+			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			ISubAreaLevelModel subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
 			
 			ISpawnCardsProperty spawnCardsProperty = BoundEntity.GetProperty<ISpawnCardsProperty>();
@@ -501,7 +513,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {
-					directorModel.RemoveEntity(directorViewController.Entity.UUID, true);
+					pillarModel.RemoveEntity(directorViewController.Entity.UUID, true);
 				}
 			}
 			

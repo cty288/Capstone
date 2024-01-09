@@ -77,7 +77,7 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		
 	}
 	private void OnSummonButtonClicked() {
-		this.SendCommand(PillarSpawnBossCommand.Allocate(data.pillar, GetRequiredCurrency(), currentSelectedRarity));
+		//this.SendCommand(PillarSpawnBossCommand.Allocate(data.pillar, GetRequiredCurrency(), currentSelectedRarity));
 		MainUI.Singleton.OpenOrGetClose<PillarUIViewController>(MainUI.Singleton, null);
 	}
 	public void SetRarity(int rarity) {
@@ -86,33 +86,30 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 
 		StringBuilder sb = new StringBuilder();
 		bool canSummon = true;
-		Dictionary<CurrencyType, int> requiredCurrency = GetRequiredCurrency();
 		
-		foreach (CurrencyType currencyType in data.bossSpawnCosts.Keys) {
-			sb.Append($"<sprite index={(int) currencyType}>");
-			int currencyAmount = requiredCurrency[currencyType];
-			bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= currencyAmount;
-			if (!isEnough) {
-				canSummon = false;
-			}
-			sb.Append(isEnough
-				? $"<color=black>{currencyAmount}</color>"
-				: $"<color=#FF0000>{currencyAmount}</color>");
-			sb.Append("    ");
+		int requiredCurrency = GetRequiredCurrency();
+
+		int cost = data.rewardCosts.GetCostOfLevel(rarity);
+		CurrencyType currencyType = data.pillarCurrencyType;
+		
+		sb.Append($"<sprite index={(int) currencyType}>");
+		
+		bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= requiredCurrency;
+		if (!isEnough) {
+			canSummon = false;
 		}
+		sb.Append(isEnough
+			? $"<color=black>{requiredCurrency}</color>"
+			: $"<color=#FF0000>{requiredCurrency}</color>");
+		sb.Append("    ");
 
 		displayCostText.text = sb.ToString();
 
 		summonButton.interactable = canSummon;
 	}
 	
-	private Dictionary<CurrencyType, int> GetRequiredCurrency() {
-		Dictionary<CurrencyType, int> requiredCurrency = new Dictionary<CurrencyType, int>();
-		foreach (CurrencyType currencyType in data.bossSpawnCosts.Keys) {
-			requiredCurrency.Add(currencyType, data.bossSpawnCosts[currencyType].Cost * currentSelectedRarity);
-		}
-
-		return requiredCurrency;
+	private int GetRequiredCurrency() {
+		return data.rewardCosts.GetCostOfLevel(currentSelectedRarity);
 	}
 
 	public IArchitecture GetArchitecture() {

@@ -45843,7 +45843,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2867
+  m_VersionIndex: 2870
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -57077,7 +57077,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 19767
+  m_VersionIndex: 19770
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -69669,17 +69669,57 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 3
   bossSpawnCostInfo:
-  - CurrencyType: 0
-    Cost: 10
-  - CurrencyType: 1
-    Cost: 10
-  - CurrencyType: 2
-    Cost: 10
-  - CurrencyType: 3
-    Cost: 10
+    _serializedList:
+    - Key: 0
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 10
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 40
+          - Key: 4
+            Value: 80
+    - Key: 1
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 20
+          - Key: 2
+            Value: 40
+          - Key: 3
+            Value: 60
+          - Key: 4
+            Value: 80
+    - Key: 2
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 5
+          - Key: 2
+            Value: 15
+          - Key: 3
+            Value: 25
+          - Key: 4
+            Value: 35
+    - Key: 3
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 5
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 30
+          - Key: 4
+            Value: 45
   hasPillars: 1
   pillarPrefabName: BossPillar
-  pillarCount: 4
   maxExtent: {fileID: 1595554011}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}

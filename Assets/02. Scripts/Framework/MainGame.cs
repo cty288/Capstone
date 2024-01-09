@@ -4,6 +4,7 @@ using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model;
@@ -50,6 +51,7 @@ namespace Framework {
 			this.RegisterModel<ISkillModel>(new SkillModel());
 			this.RegisterModel<IBuffModel>(new BuffModel());
 			this.RegisterModel<IWeaponPartsModel>(new WeaponPartsModel());
+			this.RegisterModel<IPillarModel>(new PillarModel());
 			
 			
 			//???
