@@ -660,13 +660,18 @@ MonoBehaviour:
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 7323250059836298821}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  entityAutoRemovalTimeWhenNoAbsorb: 120
+  autoRecycleTimeWhenNoAbsorb: 120
+  alsoRemoveEntityWhenNoAbsorb: 1
   entityName: BionicGel
 --- !u!135 &7603438385675746021
 SphereCollider:

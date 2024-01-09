@@ -35,7 +35,7 @@ namespace Runtime.DataFramework.Entities {
 		
 
 		public override void OnAwake() {
-			
+			base.OnAwake();
 			rarityProperty = GetProperty<IRarityProperty>();
 			tagProperty = GetProperty<ITagProperty>();
 			customProperties = GetProperty<ICustomProperties>();

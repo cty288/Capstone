@@ -1,4 +1,7 @@
-﻿using Runtime.Enemies.Model.Properties;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.Utilities;
+using Runtime.Enemies.Model.Properties;
 
 namespace Runtime.DataFramework.Properties.TestOnly {
 	public class TestHealth: AbstractLoadFromConfigProperty<HealthInfo>, IHealthProperty {
@@ -24,8 +27,11 @@ namespace Runtime.DataFramework.Properties.TestOnly {
 		public override PropertyNameInfo[] GetDefaultDependentProperties() {
 			return new[] {new PropertyNameInfo(PropertyName.rarity)};
 		}
+
+
 		
-		
+		public ReferenceCounter IsBuffedRC { get; set; } = new ReferenceCounter();
+		public HashSet<BuffTag> BuffTags { get; }
 	}
 	
 	public class TestHealthDefaultModifier : PropertyDependencyModifier<HealthInfo> {

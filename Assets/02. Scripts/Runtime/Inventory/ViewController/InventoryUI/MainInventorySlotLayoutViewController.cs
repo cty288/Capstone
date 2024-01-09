@@ -62,6 +62,7 @@ namespace Runtime.Inventory.ViewController {
 				
                 
 				ResourceSlotViewController slotViewController = slot.GetComponent<ResourceSlotViewController>();
+				//slotViewController.Awake();
 				slotViewController.SetSlot(addedSlots[j++], IsHUDSlotLayout);
 				slotViewControllers.Add(slotViewController);
 				OnSlotViewControllerSpawned(slotViewController, i);

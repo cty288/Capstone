@@ -24,6 +24,7 @@ namespace Runtime.Utilities.ConfigSheet
 		private ConfigTable globalDataTable;
 		private ConfigTable skillEntityConfigTable;
 		private ConfigTable collectableResourceConfigTable;
+		private ConfigTable weaponPartsConfigTable;
 
 		public ConfigTable BossEntityConfigTable => bossEntityConfigTable;
 		public ConfigTable EnemyEntityConfigTable_Test => enemyEntityConfigTable_test;
@@ -43,6 +44,8 @@ namespace Runtime.Utilities.ConfigSheet
 		public ConfigTable SkillEntityConfigTable => skillEntityConfigTable;
 		
 		public ConfigTable CollectableResourceConfigTable => collectableResourceConfigTable;
+		
+		public ConfigTable WeaponPartsConfigTable => weaponPartsConfigTable;
 
 		private string GetDocID() {
 			if (Application.isEditor) {
@@ -94,6 +97,9 @@ namespace Runtime.Utilities.ConfigSheet
 			
 			collectableResourceConfigTable = new ConfigTable(docID,
 				"1707497374", "data_collectable_resources", isDownload);
+			
+			weaponPartsConfigTable = new ConfigTable(docID,
+				"1363196473", "data_weapon_parts", isDownload);
 		}
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

@@ -1,6 +1,7 @@
 ﻿using _02._Scripts.Runtime.Baits.Model.Builders;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Skills.Model.Builders;
+using _02._Scripts.Runtime.WeaponParts.Model.Builders;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.GameResources.Model.Builder;
@@ -50,8 +51,10 @@ namespace Runtime.DataFramework.Entities.Builders {
 				return SkillBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}else if (typeof(TBuilder) == typeof(SubAreaLevelBuilder<TEntity>)) {
 				return SubAreaLevelBuilder<TEntity>.Allocate(rarity) as TBuilder;
+			}else if (typeof(TBuilder) == typeof(WeaponPartsBuilder<TEntity>)) {
+				return WeaponPartsBuilder<TEntity>.Allocate(rarity) as TBuilder;
 			}
-			
+
 			return BasicEntityBuilder<TEntity>.Allocate(rarity) as TBuilder;
 		}
 	}

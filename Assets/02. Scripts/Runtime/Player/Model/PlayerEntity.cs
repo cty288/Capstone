@@ -57,6 +57,11 @@ namespace Runtime.Player {
 		[CanBeNull]
 		public HitData HitData;
 	}
+	
+	public struct OnPlayerBuffUpdate {
+		public IBuff Buff;
+		public BuffUpdateEventType EventType;
+	}
 
 	public struct OnPlayerDie {
 		public ICanDealDamage damageDealer;
@@ -299,7 +304,15 @@ namespace Runtime.Player {
 				HitData = hitData,
 				DamageToHealth = healthToTakeDamage
 			});
-				
+			
+		}
+
+		public override void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType) {
+			base.OnBuffUpdate(buff, eventType);
+			this.SendEvent<OnPlayerBuffUpdate>(new OnPlayerBuffUpdate() {
+				Buff = buff,
+				EventType = eventType
+			});
 		}
 	}
 }

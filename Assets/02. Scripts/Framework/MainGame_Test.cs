@@ -1,4 +1,5 @@
 using _02._Scripts.Runtime.Baits.Model.Base;
+using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
@@ -16,6 +17,7 @@ namespace Framework {
 	public class MainGame_Test : SavableArchitecture<MainGame_Test> {
 		protected override void Init() {
 			this.RegisterSystem<IInventorySystem>(new InventorySystem());
+			this.RegisterSystem<IBuffSystem>(new BuffSystem());
 			//this.RegisterSystem<ILevelSystem>(new LevelSystem());
 			
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
@@ -30,6 +32,7 @@ namespace Framework {
 			this.RegisterModel<IBaitModel>(new BaitModel());
 			this.RegisterModel<ICurrencyModel>(new CurrencyModel());
 			this.RegisterModel<ISkillModel>(new SkillModel());
+			this.RegisterModel<IBuffModel>(new BuffModel());
 		}
 
 		protected override string saveFileSuffix { get; } = "test";

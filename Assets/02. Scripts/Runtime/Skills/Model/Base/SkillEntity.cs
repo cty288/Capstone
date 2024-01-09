@@ -14,6 +14,7 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.Others;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Base;
@@ -206,11 +207,12 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 			int rarity = GetRarity();
 			float cooldown = skillCooldownProperty.GetByLevel(rarity);
-			
-			list.Add(() => new ResourcePropertyDescription("PropertyIconRarity", Localization.GetFormat(
-				"PROPERTY_ICON_LEVEL", rarity)));
-			list.Add(() => new ResourcePropertyDescription("PropertyIconCooldown", Localization.GetFormat(
-				"PROPERTY_ICON_COOLDOWN", Mathf.RoundToInt(cooldown))));
+			list.Add(() => new ResourcePropertyDescription("PropertyIconRarity", Localization.Get(
+				"PROPERTY_ICON_LEVEL"), rarity.ToString()));
+
+			list.Add(() => new ResourcePropertyDescription("PropertyIconCooldown", Localization.Get(
+					"PROPERTY_ICON_COOLDOWN"),
+				Localization.GetFormat("PROPERTY_ICON_COOLDOWN_DESC", Mathf.RoundToInt(cooldown))));
 		}
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
