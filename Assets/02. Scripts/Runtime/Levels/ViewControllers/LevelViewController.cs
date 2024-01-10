@@ -530,6 +530,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				}
 			}
 			
+			
 		
 
 			foreach (IDirectorViewController spawner in playerSpawners) {
