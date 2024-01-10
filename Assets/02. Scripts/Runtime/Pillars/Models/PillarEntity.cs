@@ -16,7 +16,6 @@ namespace Runtime.Spawning {
 		Idle,
 		Activated,
 		Spawning,
-		Deactivated
 	}
 	
 	[Serializable]

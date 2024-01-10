@@ -1,4 +1,7 @@
-﻿using _02._Scripts.Runtime.Baits.Model.Property;
+﻿using System.Collections.Generic;
+using System.Numerics;
+using _02._Scripts.Runtime.Baits.Model.Property;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
@@ -6,36 +9,42 @@ using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
+using Vector2 = UnityEngine.Vector2;
 
 namespace Runtime.Enemies.Model {
 	
 	public interface IBossEntity : IEnemyEntity {
-		public BindableList<TasteType> GetTaste();
-		
-		public BindableProperty<float> GetVigiliance();
+		public bool IsBossSpawnConditionSatisfied(Dictionary<CurrencyType, float> currencyPercentage);
 	}
 	public abstract class BossEntity<T> : EnemyEntity<T>, IBossEntity where T : BossEntity<T>, new()  {
-		protected ITasteProperty tasteProperty;
-		protected IVigilianceProperty vigilianceProperty;
+	
 
+		private IBossSpawnConditionProperty bossSpawnConditionProperty;
 		protected override void OnEntityRegisterAdditionalProperties() {
-			RegisterInitialProperty<ITasteProperty>(new Taste());
-			RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
+			//RegisterInitialProperty<ITasteProperty>(new Taste());
+			//RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
+			RegisterInitialProperty<IBossSpawnConditionProperty>(new BossSpawnCondition());
 			base.OnEntityRegisterAdditionalProperties();
 		}
 		
 		public override void OnAwake() {
 			base.OnAwake();
-			tasteProperty = GetProperty<ITasteProperty>();
-			vigilianceProperty = GetProperty<IVigilianceProperty>();
+			bossSpawnConditionProperty = GetProperty<IBossSpawnConditionProperty>();
 		}
 
-		public BindableList<TasteType> GetTaste() {
-			return this.tasteProperty.RealValues;
-		}
-
-		public BindableProperty<float> GetVigiliance() {
-			return this.vigilianceProperty.RealValue;
+		public bool IsBossSpawnConditionSatisfied(Dictionary<CurrencyType, float> currencyPercentage) {
+			foreach (var pair in bossSpawnConditionProperty.RealValue.Value) {
+				if (!currencyPercentage.ContainsKey(pair.Key)) {
+					continue;
+				}
+				Vector2 range = pair.Value;
+				float percentage = currencyPercentage[pair.Key];
+				if (percentage < range.x || percentage > range.y) {
+					return false;
+				}
+			}
+			
+			return true;
 		}
 
 

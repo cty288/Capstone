@@ -44,6 +44,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 
 		string InitPillar(ILevelEntity levelEntity, CurrencyType pillarCurrencyType, RewardCostInfo rewardCosts);
 		BoxCollider SpawnSizeCollider { get; }
+		
+		IPillarEntity Entity { get; }
 	}
 	
 	
@@ -176,6 +178,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
+
+		public IPillarEntity Entity => BoundEntity;
 
 		protected async UniTask SpawnBoss(int rarity) {
 			Debug.Log("Spawn boss");

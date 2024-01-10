@@ -1,8 +1,8 @@
-EntityName / Property Names,health,taste,spawn_cost,item_drop_collections,vigiliance,danger,custom_properties,tags,,Notes
-Types,HealthInfo,List<TasteType>,float,"Dictionary<int,ItemDropCollection>",float,int,dynamic,"Dictionary<TagName,int>",,
+EntityName / Property Names,health,spawn_cost,item_drop_collections,boss_spawn_condition,danger,custom_properties,tags,,Notes
+Types,HealthInfo,float,"Dictionary<int,ItemDropCollection>","Dictionary<CurrencyType,Vector2>",int,dynamic,"Dictionary<TagName,int>",,
 Notes ->,"json
 default: 
-{""maxHealth"": 100, ""currentHealth"": 100}","List, values separated by ,",,"{
+{""maxHealth"": 100, ""currentHealth"": 100}",,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -42,9 +42,9 @@ default:
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",,
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,
-BEGIN,,,,,,,,,,
-Boss1,"{""maxHealth"": 875, ""currentHealth"": 875}","[""Type1"", ""Type2""]",20,"{
+,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,
+BEGIN,,,,,,,,,
+Boss1,"{""maxHealth"": 875, ""currentHealth"": 875}",20,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 3,
@@ -142,7 +142,12 @@ Boss1,"{""maxHealth"": 875, ""currentHealth"": 875}","[""Type1"", ""Type2""]",20
       }
     ]
   }
-}",200,456,"{
+}","{
+  ""Combat"": {""x"": 0, ""y"": 1},
+  ""Time"": {""x"": 0, ""y"": 1},
+  ""Plant"": {""x"": 0, ""y"": 1},
+  ""Mineral"": {""x"": 0, ""y"": 1}
+}",456,"{
   ""shellHealthInfo"": {
     ""info"": {
       ""type"": ""HealthInfo"",
@@ -256,8 +261,8 @@ Boss1,"{""maxHealth"": 875, ""currentHealth"": 875}","[""Type1"", ""Type2""]",20
     }
   }
 }",,,
-Bee,"{""maxHealth"": 30, ""currentHealth"": 30}","[""Type1"", ""Type2""]",1,,,123,,,,
-BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Type2""]",10,"{
+Bee,"{""maxHealth"": 30, ""currentHealth"": 30}",1,,,123,,,,
+BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
   ""1"": {
     ""TotalDropCountRange"": {
       ""x"": 4,
@@ -355,7 +360,12 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Ty
       }
     ]
   }
-}",200,456,"{
+}","{
+  ""Combat"": {""x"": 0, ""y"": 0.2},
+  ""Time"": {""x"": 0, ""y"": 1},
+  ""Plant"": {""x"": 0, ""y"": 1},
+  ""Mineral"": {""x"": 0, ""y"": 1}
+}",456,"{
   ""ranges"":{
     ""closeRange"": {
       ""type"": ""float"",
@@ -509,6 +519,17 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}","[""Type1"", ""Ty
     ""dashSpeed"": {
        ""type"": ""float"",
       ""value"": 175
+    }
+  },
+  ""shield"": {
+    ""shieldDuration"": {
+      ""type"": ""float"",
+      ""value"": 4
+    },
+    ""bladeCount"": {
+      ""type"": ""int"",
+      ""value"": 8,
+      ""useDefaultModifier"": true
     }
   }
 }",,,

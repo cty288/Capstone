@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Baits.Model.Property;
 using _02._Scripts.Runtime.Levels;
 using Framework;
 using JetBrains.Annotations;
@@ -46,6 +47,8 @@ namespace Tests.Tests_Editor {
 
             protected override void OnEnemyRegisterAdditionalProperties() {
                // RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+               RegisterInitialProperty<ITasteProperty>(new Taste());
+               RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
                 RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
                 RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
             }

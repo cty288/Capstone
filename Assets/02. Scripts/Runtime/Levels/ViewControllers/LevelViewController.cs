@@ -9,6 +9,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Pillars.Models;
+using _02._Scripts.Runtime.Pillars.Systems;
 using _02._Scripts.Runtime.Utilities;
 using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
@@ -182,7 +183,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private NavMeshSurface navMeshSurface;
 
 		private HashSet<IDirectorViewController> playerSpawners = new HashSet<IDirectorViewController>();
-		private IDirectorViewController[] bossPillars;
+		private IBossPillarViewController[] bossPillars;
 
 		 private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
 		[SerializeField] protected bool autoUpdateNavMeshOnStart = true;
@@ -217,6 +218,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public void SetLevelNumber(int levelNumber) {
 			this.levelNumber = levelNumber;
 			
+		}
+
+		
+
+		private void OnBossSpawned(OnBossSpawned e) {
+			OnInitEnemy(e.Boss);
 		}
 
 		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
@@ -282,6 +289,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public async void Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
+			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			subAreaLevels = CreateSubAreaLevels();
 			if (autoCreateNewEntityWhenStart) {
 				UpdateNavMesh();
@@ -343,7 +351,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				//InitDirector(pillarViewController);
 				//RegisterOnSpawnEnemy(pillarViewController);
 			}
-			bossPillars = pillars.Select(p => p.GetComponent<IDirectorViewController>()).ToArray();
+			bossPillars = pillars.Select(p => p.GetComponent<IBossPillarViewController>()).ToArray();
 			pillarModel.SetCurrentLevelPillars(ids);
 			
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Baits.Model.Property;
 using _02._Scripts.Runtime.BuffSystem;
 using Framework;
 using NUnit.Framework;
@@ -38,7 +39,8 @@ namespace Tests.Tests_Editor {
 			
 			
 			protected override void OnEnemyRegisterAdditionalProperties() {
-				//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+				RegisterInitialProperty<ITasteProperty>(new Taste());
+				RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
 
@@ -96,6 +98,8 @@ namespace Tests.Tests_Editor {
 
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty(new TestCustomProperty2());
+				RegisterInitialProperty<ITasteProperty>(new Taste());
+				RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
 				//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
@@ -172,6 +176,8 @@ namespace Tests.Tests_Editor {
 
 			protected override void OnEnemyRegisterAdditionalProperties() {
 				RegisterInitialProperty(new TestCustomProperty2());
+				RegisterInitialProperty<ITasteProperty>(new Taste());
+				RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
 				//RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
 				RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
 			}
