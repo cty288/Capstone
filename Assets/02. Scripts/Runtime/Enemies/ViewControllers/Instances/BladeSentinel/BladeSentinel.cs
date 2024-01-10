@@ -55,7 +55,8 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
             new AutoConfigCustomProperty("shockWave"),
             new AutoConfigCustomProperty("danmaku"),
             new AutoConfigCustomProperty("ranges"),
-            new AutoConfigCustomProperty("melee")
+            new AutoConfigCustomProperty("melee"),
+            new AutoConfigCustomProperty("shield")
         };
     }
 }
