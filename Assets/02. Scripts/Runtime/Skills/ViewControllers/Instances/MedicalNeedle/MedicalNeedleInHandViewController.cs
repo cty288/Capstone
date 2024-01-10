@@ -46,7 +46,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 				float buffDuration = BoundEntity.GetCustomPropertyOfCurrentLevel<float>("buff_duration");
 				int buffAmount = BoundEntity.GetCustomPropertyOfCurrentLevel<int>("buff_effect");
 				RecoveryBuff buff = RecoveryBuff.Allocate(player, player, buffDuration, buffAmount);
-				buffSystem.AddBuff(player, buff);
+				buffSystem.AddBuff(player, player, buff);
 			}
 		}
 

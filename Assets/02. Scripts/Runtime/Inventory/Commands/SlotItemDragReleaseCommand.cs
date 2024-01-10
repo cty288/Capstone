@@ -21,10 +21,10 @@ namespace Runtime.Inventory.Commands {
 		
 		
 		protected override void OnExecute() {
-			if (!ResourceSlot.currentHoveredSlot) {
+			if (!ResourceSlot.currentHoveredSlot.Value) {
 				return;
 			}
-			ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot.Slot;
+			ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot.Value.Slot;
 			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
 			
 			if (currentHoveredSlot != null && currentHoveredSlot != fromSlot) {
@@ -37,14 +37,15 @@ namespace Runtime.Inventory.Commands {
 						}
 					}else if (currentHoveredSlot is UpgradeSlot) {
 						ISkillEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID()) as ISkillEntity;
-						if (currentHoveredSlot.CanPlaceItem(topItem)) {
+						if (ResourceSlot.currentHoveredSlot.Value.CanPlaceItem(topItem, false)) {
 							this.SendCommand<OpenSkillUpgradePanelCommand>(OpenSkillUpgradePanelCommand.Allocate(topItem));
 						}
 						
 					}
 					else {
 						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
-						if (currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem)) {
+						
+						if ( currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem)) {
 							if (topItem != null && currentHoveredSlot is LeftHotBarSlot slot && topItem is ISkillEntity skill) {
 								//skill cooldown reset
 								skill.StartSwapInventoryCooldown(swapInventoryCooldown);

@@ -129,7 +129,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] protected List<LevelBossSpawnCostInfo> bossSpawnCostInfo;
 		[SerializeField] protected bool hasPillars = true;
 		[SerializeField] protected string pillarPrefabName = "BossPillar";
-		[SerializeField] protected int pillarCount = 4;
+		//[SerializeField] protected int pillarCount = 4;
 		[SerializeField] protected Collider maxExtent;
 		
 		
@@ -316,8 +316,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				return;
 			}
 
-			
-			
+			int pillarCount = CurrencyType.GetValues(typeof(CurrencyType)).Length;
 			List<GameObject> pillars = await SpawningUtility.SpawnBossPillars(gameObject, pillarCount, pillarPrefabName, maxExtent.bounds);
 			if (pillars == null) {
 				return;

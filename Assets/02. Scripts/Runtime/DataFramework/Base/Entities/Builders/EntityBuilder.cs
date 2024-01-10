@@ -6,7 +6,14 @@ using Runtime.DataFramework.Properties.TagProperty;
 using Runtime.Utilities.ConfigSheet;
 
 namespace Runtime.DataFramework.Entities.Builders {
-    public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable 
+    public interface IEntityBuilder {
+        IEntityBuilder FromConfig(ConfigTable overrideTable = null);
+        IEntityBuilder OverrideName(string name);
+        
+        IEntityBuilder SetProperty<ValueType>(PropertyNameInfo propertyName, ValueType value);
+        IEntity Build();
+    }
+    public abstract class EntityBuilder<TBuilder, TEntity> : IPoolable, IEntityBuilder
         where TEntity : class, IEntity, new() 
         where TBuilder : EntityBuilder<TBuilder, TEntity>{
         protected virtual TEntity Entity { get; set; } = null;
@@ -26,7 +33,11 @@ namespace Runtime.DataFramework.Entities.Builders {
                 Entity = SafeObjectPool<TEntity>.Singleton.Allocate();
             }
         }
-        
+
+        IEntityBuilder IEntityBuilder.OverrideName(string name) {
+            return OverrideName(name);
+        }
+
         public TBuilder OverrideName(string name) {
             CheckEntity();
             Entity.OverrideEntityName(name);
@@ -37,6 +48,10 @@ namespace Runtime.DataFramework.Entities.Builders {
             CheckEntity();
             Entity.LoadPropertyBaseValueFromConfig(overrideTable);
             return (TBuilder) this;
+        }
+
+        IEntityBuilder IEntityBuilder.FromConfig(ConfigTable overrideTable) {
+            return FromConfig(overrideTable);
         }
 
         /// <summary>
@@ -58,7 +73,11 @@ namespace Runtime.DataFramework.Entities.Builders {
             Entity.SetPropertyBaseValue(propertyName, value);
             return (TBuilder) this;
         }
-    
+
+        IEntityBuilder IEntityBuilder.SetProperty<ValueType1>(PropertyNameInfo propertyName, ValueType1 value) {
+            return SetProperty(propertyName, value);
+        }
+
         /// <summary>
         /// Override the property's modifier
         /// If the entity has multiple properties with the same name, every property will be overriden
@@ -112,6 +131,10 @@ namespace Runtime.DataFramework.Entities.Builders {
             RecycleToCache();
             ent.OnStart(false);
             return ent;
+        }
+
+        IEntity IEntityBuilder.Build() {
+            return Build();
         }
 
         public void OnRecycled() {
