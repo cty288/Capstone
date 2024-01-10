@@ -4,6 +4,7 @@ using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
+using Framework;
 using Mikrocosmos;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
@@ -127,6 +128,10 @@ namespace Runtime.Temporary
 
             if (Input.GetKeyDown(KeyCode.C)) {
                 ImageEffectController.Singleton.DisableAllFeatures();
+            }
+
+            if (Input.GetKeyDown(KeyCode.F5)) {
+                ((SavableArchitecture<MainGame>) MainGame.Interface).SaveGame();
             }
         }
 

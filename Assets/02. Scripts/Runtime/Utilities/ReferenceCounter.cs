@@ -6,7 +6,10 @@ using MikroFramework.Utilities;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Utilities {
+	[Serializable]
 	public class ReferenceCounter : IRefCounter {
+		[field: ES3Serializable]
+		[field: SerializeField]
 		public BindableProperty<int> Count { get; private set; } = new BindableProperty<int>(0);
 
 		int IRefCounter.RefCount {

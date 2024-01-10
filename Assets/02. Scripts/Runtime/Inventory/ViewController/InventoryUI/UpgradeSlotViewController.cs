@@ -8,7 +8,7 @@ using Runtime.Utilities;
 using UnityEngine;
 
 public class UpgradeSlotViewController : ResourceSlotViewController {
-	protected override void Awake() {
+	public override void Awake() {
 		base.Awake();
 		
 	}
@@ -21,7 +21,7 @@ public class UpgradeSlotViewController : ResourceSlotViewController {
 		}
 		else {
 			IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(newSlot.GetLastItemUUID());
-			if (!Slot.CanPlaceItem(topItem, true)) {
+			if (!CanPlaceItem(topItem, true)) {
 				StopSlotBGColor();
 			}
 			else {

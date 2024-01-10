@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using _02._Scripts.Runtime.BuffSystem;
 using Framework;
 using MikroFramework.Architecture;
@@ -16,6 +18,12 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.DataFramework.Entities {
+
+	public enum BuffUpdateEventType {
+		OnStart,
+		OnEnd,
+		OnUpdate
+	}
 	public interface IEntity: IPoolable, IHaveDescription, IHaveDisplayName, ICanGetUtility, ICanSendEvent  {
 	
 		public string EntityName { get;}
@@ -80,6 +88,8 @@ namespace Runtime.DataFramework.Entities {
 		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(BuffTag buffTag);
 		
 		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(params BuffTag[] buffTags);
+
+		public void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType);
 		
 		public bool OnValidateBuff(IBuff buff);
 		
@@ -235,8 +245,8 @@ namespace Runtime.DataFramework.Entities {
 			new Dictionary<IBuffedProperty, HashSet<BuffTag>>();
 
 		[ES3NonSerializable]
-		private Dictionary<int, HashSet<IBuffedProperty>> cachedBuffedPropertiesQuery =
-			new Dictionary<int, HashSet<IBuffedProperty>>();
+		private Dictionary<string, HashSet<IBuffedProperty>> cachedBuffedPropertiesQuery =
+			new Dictionary<string, HashSet<IBuffedProperty>>();
 
 		//protected abstract IPropertyBase[] OnGetOriginalProperties();
 		[field: SerializeField]
@@ -566,15 +576,17 @@ namespace Runtime.DataFramework.Entities {
 			
 			HashSet<IBuffedProperty<TDataType>> res = new HashSet<IBuffedProperty<TDataType>>();
 
+			
 			//transform buffTags to bit mask
-			int buffTagsBitMask = 0;
+			BigInteger buffTagsBitMask = 0;
+			
 			if (buffTags != null) {
 				foreach (BuffTag buffTag in buffTags) {
 					buffTagsBitMask |= 1 << (int) buffTag;
 				}
 			}
 			
-			if (cachedBuffedPropertiesQuery.TryGetValue(buffTagsBitMask, out HashSet<IBuffedProperty> cachedProperties)) {
+			if (cachedBuffedPropertiesQuery.TryGetValue(buffTagsBitMask.ToString(), out HashSet<IBuffedProperty> cachedProperties)) {
 				foreach (IBuffedProperty property in cachedProperties) {
 					res.Add((IBuffedProperty<TDataType>) property);
 				}
@@ -603,8 +615,12 @@ namespace Runtime.DataFramework.Entities {
 				}
 			}
 
-			cachedBuffedPropertiesQuery[buffTagsBitMask] = buffedProperties;
+			cachedBuffedPropertiesQuery[buffTagsBitMask.ToString()] = buffedProperties;
 			return res;
+		}
+
+		public virtual void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType) {
+			
 		}
 
 		public virtual bool OnValidateBuff(IBuff buff) {

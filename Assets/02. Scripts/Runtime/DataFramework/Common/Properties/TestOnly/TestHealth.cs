@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.Utilities;
 using Runtime.Enemies.Model.Properties;
 
 namespace Runtime.DataFramework.Properties.TestOnly {
@@ -28,7 +29,8 @@ namespace Runtime.DataFramework.Properties.TestOnly {
 		}
 
 
-		public bool IsBuffed { get; set; }
+		
+		public ReferenceCounter IsBuffedRC { get; set; } = new ReferenceCounter();
 		public HashSet<BuffTag> BuffTags { get; }
 	}
 	

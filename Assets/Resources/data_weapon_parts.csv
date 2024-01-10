@@ -1,0 +1,69 @@
+EntityName / Property Names,max_stack,custom_properties,tags,,More Notes
+Types,int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,int,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+{""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
+If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
+,,,,,
+BEGIN,,,,,
+TestWeaponParts,1,"{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+TestWeaponParts2,1,"{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+TestWeaponParts3,1,"{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,

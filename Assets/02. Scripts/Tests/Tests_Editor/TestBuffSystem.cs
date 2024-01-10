@@ -59,6 +59,16 @@ public class TestBuffSystem
 	    public override float MaxDuration { get; protected set; } = 5;
 	    public override float TickInterval { get; protected set; } = 0.5f;
 	    public override int Priority { get; } = 10;
+
+
+	    public override string OnGetDescription(string defaultLocalizationKey) {
+		    return null;
+	    }
+
+	    public override bool IsDisplayed() {
+		    return true;
+	    }
+
 	    public override bool Validate() {
 		    return true;
 	    }
@@ -67,8 +77,8 @@ public class TestBuffSystem
 		    
 	    }
 
-	    public override BasicBuff OnStacked(BasicBuff buff) {
-		    return this;
+	    public override void OnStacked(BasicBuff buff) {
+		    
 	    }
 
 	    public override void OnStart() {
@@ -79,7 +89,7 @@ public class TestBuffSystem
 		    return BuffStatus.Running;
 	    }
 
-	    public override void OnEnd() {
+	    public override void OnEnds() {
 		    
 	    }
     }
@@ -89,15 +99,25 @@ public class TestBuffSystem
 	    public override float TickInterval { get; protected set; } = 0.5f;
 	    public override int Priority { get; } = 5;
 
-	    private RequiredBuffedProperties requiredSpeedProperty;
-	    private RequiredBuffedProperties requiredDamageBuff;
-	    public override void OnInitialize() {
-		    requiredSpeedProperty = new RequiredBuffedProperties<int>(buffOwner, BuffTag.TestBuff1);
-		    requiredDamageBuff = new RequiredBuffedProperties<int>(buffOwner, BuffTag.TestBuff2, BuffTag.TestBuff3);
+	    private BuffedProperties _speedProperty;
+	    private BuffedProperties _damageBuff;
+	    public override string OnGetDescription(string defaultLocalizationKey) {
+		    return null;
 	    }
 
-	    public override PropertyBuffBasic1 OnStacked(PropertyBuffBasic1 buff) {
-		    return this;
+	    public override bool IsDisplayed() {
+		    return true;
+	    }
+
+	    public override void OnInitialize() {
+		    _speedProperty = new BuffedProperties<int>(buffOwner, true, BuffTag.TestBuff1);
+		    _damageBuff = new BuffedProperties<int>(buffOwner, true, BuffTag.TestBuff2, BuffTag.TestBuff3);
+	    }
+
+	    
+
+	    public override void OnStacked(PropertyBuffBasic1 buff) {
+		    
 	    }
 
 	    public override void OnStart() {
@@ -108,14 +128,15 @@ public class TestBuffSystem
 		    return BuffStatus.Running;
 	    }
 
-	    public override void OnEnd() {
-		   
+
+	    public override void OnBuffEnd() {
+		    
 	    }
 
-	    protected override IEnumerable<RequiredBuffedProperties> GetRequiredBuffedPropertyGroups() {
-		    return new RequiredBuffedProperties[] {
-			    requiredSpeedProperty,
-			    requiredDamageBuff
+	    protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
+		    return new BuffedProperties[] {
+			    _speedProperty,
+			    _damageBuff
 		    };
 	    }
     }
@@ -125,15 +146,21 @@ public class TestBuffSystem
 	    public override float TickInterval { get; protected set; } = 0.5f;
 	    public override int Priority { get; } = 5;
 
-	    private RequiredBuffedProperties requiredSpeedProperty;
-	  
+	    private BuffedProperties _speedProperty;
+
+	    public override bool IsDisplayed() {
+		    return true;
+	    }
+	    public override string OnGetDescription(string defaultLocalizationKey) {
+		    return null;
+	    }
 	    public override void OnInitialize() {
-		    requiredSpeedProperty = new RequiredBuffedProperties<int>(buffOwner, BuffTag.TestBuff1, BuffTag.TestBuff2, BuffTag.TestBuff3);
+		    _speedProperty = new BuffedProperties<int>(buffOwner, true, BuffTag.TestBuff1, BuffTag.TestBuff2, BuffTag.TestBuff3);
 		  
 	    }
 
-	    public override PropertyBuffBasic2 OnStacked(PropertyBuffBasic2 buff) {
-		    return this;
+	    public override void OnStacked(PropertyBuffBasic2 buff) {
+		    
 	    }
 
 	    public override void OnStart() {
@@ -144,13 +171,14 @@ public class TestBuffSystem
 		    return BuffStatus.Running;
 	    }
 
-	    public override void OnEnd() {
-		   
+
+	    public override void OnBuffEnd() {
+		    
 	    }
 
-	    protected override IEnumerable<RequiredBuffedProperties> GetRequiredBuffedPropertyGroups() {
-		    return new RequiredBuffedProperties[] {
-			    requiredSpeedProperty
+	    protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
+		    return new BuffedProperties[] {
+			    _speedProperty
 		
 		    };
 	    }
@@ -181,13 +209,14 @@ public class TestBuffSystem
             .Build();
 
 
-        buffSystem.AddBuff(ent1, BasicBuff.Allocate(null, ent1));
+        buffSystem.AddBuff(ent1, null, BasicBuff.Allocate(null, ent1));
         Assert.IsTrue(buffSystem.ContainsBuff<BasicBuff>(ent1, out _));
         
         PropertyBuffBasic1 buff2 = PropertyBuffBasic1.Allocate(null, ent1);
         Assert.IsTrue(buffSystem.CanAddBuff(ent1, buff2));
-        buffSystem.AddBuff(ent1, buff2);
+        buffSystem.AddBuff(ent1, null, buff2);
         Assert.IsTrue(buffSystem.ContainsBuff<PropertyBuffBasic1>(ent1, out _));
+        Assert.IsTrue(ent1.GetCustomProperties()["attack2"].GetCustomDataProperty<int>("damage").GetIsBuffed());
         
         PropertyBuffBasic2 buff3 = PropertyBuffBasic2.Allocate(null, ent1);
         Assert.IsFalse(buffSystem.CanAddBuff(ent1, buff3));
@@ -207,9 +236,14 @@ public class TestBuffSystem
         
         Assert.IsTrue(buffSystem.ContainsBuff<BasicBuff>(ent1, out _));
         Assert.IsTrue(buffSystem.ContainsBuff<PropertyBuffBasic1>(ent1, out _));
+        Assert.IsTrue(ent1.GetCustomProperties()["attack2"].GetCustomDataProperty<int>("damage").GetIsBuffed());
+        
         
         buffSystem.RemoveBuff<BasicBuff>(ent1);
         Assert.IsFalse(buffSystem.ContainsBuff<BasicBuff>(ent1, out _));
+        
+        buffSystem.RemoveBuff<PropertyBuffBasic1>(ent1);
+        Assert.IsFalse(ent1.GetCustomProperties()["attack2"].GetCustomDataProperty<int>("damage").GetIsBuffed());
        // ES3.DeleteKey("test_save_ent1_buffed", "test_save");
     }
 }

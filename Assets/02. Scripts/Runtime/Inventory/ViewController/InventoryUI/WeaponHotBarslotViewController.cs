@@ -12,7 +12,7 @@ public class WeaponHotBarslotViewController : ResourceSlotViewController {
 	private TMP_Text weaponNameText;
 	private IWeaponEntity currentWeapon;
 
-	protected override void Awake() {
+	public override void Awake() {
 		base.Awake();
 		ammoText = transform.Find("AmmoText")?.GetComponent<TMP_Text>();
 		weaponNameText = transform.Find("WeaponNameText")?.GetComponent<TMP_Text>();
