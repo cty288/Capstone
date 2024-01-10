@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 4021195844121909738}
   - component: {fileID: 2866964269549704546}
   m_Layer: 0
-  m_Name: ReinforcedSteel
+  m_Name: Combat2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -655,19 +655,24 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 2cc05be7-85a2-4f63-bc12-639c013a043d
+  <PrefabID>k__BackingField: b6787245-8956-495d-b2c9-b14028f781f3
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 7323250059836298821}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  entityAutoRemovalTimeWhenNoAbsorb: 120
-  entityName: ReinforcedSteel
+  autoRecycleTimeWhenNoAbsorb: 120
+  alsoRemoveEntityWhenNoAbsorb: 1
+  entityName: Combat2
 --- !u!135 &7603438385675746021
 SphereCollider:
   m_ObjectHideFlags: 0

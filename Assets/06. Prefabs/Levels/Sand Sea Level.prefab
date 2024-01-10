@@ -337,7 +337,6 @@ MonoBehaviour:
     Cost: 5
   hasPillars: 1
   pillarPrefabName: BossPillar
-  pillarCount: 4
   maxExtent: {fileID: 4174941809537234053}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
@@ -4584,6 +4583,8 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   enemyCount: 0
+  totalEnemiesSpawned: 0
+  isActive: 1
 --- !u!1001 &6740914133432436796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10230,6 +10231,8 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   enemyCount: 0
+  totalEnemiesSpawned: 0
+  isActive: 1
 --- !u!114 &1045219877315657789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15100,6 +15103,8 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   enemyCount: 0
+  totalEnemiesSpawned: 0
+  isActive: 1
 --- !u!1001 &8872873331152879493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15235,7 +15240,7 @@ PrefabInstance:
     - target: {fileID: 8891719542349900527, guid: e1511b0cece165848855b3883aeed4a7,
         type: 3}
       propertyPath: overriddenItemDropCollections._serializedList.Array.data[0].Value.ItemDropInfos.Array.data[0].prefabName
-      value: BionicGel
+      value: Plant1
       objectReference: {fileID: 0}
     - target: {fileID: 8891719542349900527, guid: e1511b0cece165848855b3883aeed4a7,
         type: 3}
@@ -24318,3 +24323,5 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   enemyCount: 0
+  totalEnemiesSpawned: 0
+  isActive: 1
