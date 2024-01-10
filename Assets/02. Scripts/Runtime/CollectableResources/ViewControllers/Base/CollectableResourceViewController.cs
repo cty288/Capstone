@@ -237,7 +237,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			int spawnedTimeAfter = accumulatedDamage / damageRequiredPerShoot;
 			
 			//e.g. real total shoot time = 3, total spawn amount = 5 then get 1, 1, 3 resources each shoot
-			if (totalShootTime == 0) {
+			if (realTotalShootTime == 0) {
 				return;
 			}
 			int resourcePerSpawnTime = totalSpawnAmount / realTotalShootTime;

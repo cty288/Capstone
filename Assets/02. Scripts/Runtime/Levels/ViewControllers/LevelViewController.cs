@@ -10,6 +10,7 @@ using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
+using _02._Scripts.Runtime.Rewards;
 using _02._Scripts.Runtime.Utilities;
 using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
@@ -133,6 +134,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializedDictionary("Currency Type", "Costs")]
 		protected SerializedDictionary<CurrencyType, RewardCostInfo> bossSpawnCostInfo;
 		
+		[SerializeField]
+		protected PillarRewardsInfo pillarRewardsInfo;
+		
 		[SerializeField] protected bool hasPillars = true;
 		[SerializeField] protected string pillarPrefabName = "BossPillar";
 		//[SerializeField] protected int pillarCount = 4;
@@ -176,7 +180,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		// [SerializeField] protected int maxEnemiesBaseValue = 50;
 
-		//private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
+		private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
 		private ILevelModel levelModel;
         
 		private int levelNumber;
@@ -242,7 +246,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					prefabNames[i + 1] = enemy.variants[i].name;
 				}
 				
-				//templateEnemies.Add(enemyEntity);
+				 templateEnemies.Add(enemyEntity);
 				 spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefabNames,
 					enemy.minRarity, enemy.maxRarity));
 			}
@@ -523,6 +527,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			 	currentEnemies.Remove(enemy);
 			 	enemyModel.RemoveEntity(enemy.UUID, true);
 			 }
+
+			 foreach (IEnemyEntity enemyEntity in templateEnemies) {
+				 enemyModel.RemoveEntity(enemyEntity.UUID, true);
+			 }
+			 templateEnemies.Clear();
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {
