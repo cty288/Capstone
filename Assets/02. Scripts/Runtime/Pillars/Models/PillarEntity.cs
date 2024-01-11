@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using AYellowpaper.SerializedCollections;
@@ -68,9 +69,7 @@ namespace Runtime.Spawning {
 	}
 
 	public interface IPillarEntity : IEntity, IHaveCustomProperties, IHaveTags {
-		CurrencyType PillarCurrencyType { get; set; }
-		
-		RewardCostInfo RewardCost { get; set; }
+		public Dictionary<CurrencyType, RewardCostInfo>  RewardCost { get; set; }
 		
 		BindableProperty<PillarStatus> Status { get; }
 	}
@@ -79,9 +78,9 @@ namespace Runtime.Spawning {
 		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "Pillar";
 		
-		public CurrencyType PillarCurrencyType { get; set; }
 		
-		public RewardCostInfo RewardCost { get; set; }
+		
+		public Dictionary<CurrencyType, RewardCostInfo> RewardCost { get; set; }
 		
 		public BindableProperty<PillarStatus> Status { get; } = new BindableProperty<PillarStatus>(PillarStatus.Idle);
 
@@ -100,7 +99,6 @@ namespace Runtime.Spawning {
 		public override void OnRecycle() {
 			Status.Value = PillarStatus.Idle;
 			RewardCost = null;
-			PillarCurrencyType = CurrencyType.Combat;
 		}
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {

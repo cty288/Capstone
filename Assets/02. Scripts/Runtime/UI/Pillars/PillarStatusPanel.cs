@@ -10,13 +10,16 @@ using DG.Tweening;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
+using Runtime.Spawning;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PillarStatusPanel : AbstractMikroController<MainGame> {
 	private Transform layoutGroup;
-	private Dictionary<CurrencyType, PillarStatusElement> spawnedPillarStatusElements = new Dictionary<CurrencyType, PillarStatusElement>();
+	private Dictionary<IPillarEntity, PillarStatusElement> 
+		spawnedPillarStatusElements = new Dictionary<IPillarEntity, PillarStatusElement>();
+	
 	private ILevelModel levelModel;
 	
 	[SerializeField]
@@ -35,43 +38,83 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		this.RegisterEvent<OnPillarActivated>(OnPillarActivated)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-		this.RegisterEvent<OnBossSpawned>(OnBossSpawned)
+		this.RegisterEvent<OnPillarCurrencyReset>(OnPillarCurrencyReset)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		skullColor = skullImage.color;
 		ClearLayoutGroup();
 	}
 
-	private void OnBossSpawned(OnBossSpawned obj) {
+	private void OnPillarCurrencyReset(OnPillarCurrencyReset e) {
 		ClearLayoutGroup();
 	}
 
 	private void OnPillarActivated(OnPillarActivated e) {
 		if (spawnedPillarStatusElements.Count == 0) {
 			layoutGroup.gameObject.SetActive(true);
-			SpawnPillarStatusElements(e.Info);
 		}
+		SpawnPillarStatusElements(e.Info);
 		
 		foreach (var info in e.Info) {
 			spawnedPillarStatusElements[info.Key].SetProgress(info.Value.level, info.Value.pillarCurrencyType,
 				currencyColors[info.Value.pillarCurrencyType], info.Value.currencyPercentage);
 		}
 
+
+		skullImage.transform.parent.gameObject.SetActive(e.isAllPillarsActivated);
 		if (e.isAllPillarsActivated) {
 			skullImage.DOColor(Color.red, 0.5f).SetLoops(-1, LoopType.Yoyo);
 		}
+
+		StartCoroutine(RebuildLayout(0.35f));
 	}
 
-	private void SpawnPillarStatusElements(Dictionary<CurrencyType,PillarActivateInfo> currencyInfo) {
-		foreach (var info in currencyInfo) {
-			GameObject pillarStatusElement = Instantiate(pillarStatusElementPrefab, layoutGroup);
-
-			pillarStatusElement.GetComponent<PillarStatusElement>().SetProgress(info.Value.level, info.Value.pillarCurrencyType,
-				currencyColors[info.Value.pillarCurrencyType], info.Value.currencyPercentage);
-
-
-			spawnedPillarStatusElements.Add(info.Value.pillarCurrencyType,
-				pillarStatusElement.GetComponent<PillarStatusElement>());
+	private IEnumerator RebuildLayout(float lastTime) {
+		RectTransform rectTransform = layoutGroup.GetComponent<RectTransform>();
+		
+		float timer = 0;
+		while (timer < lastTime) {
+			timer += Time.deltaTime;
+			LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+			yield return null;
 		}
+		
+		LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+	}
+
+	private void SpawnPillarStatusElements(Dictionary<IPillarEntity,PillarActivateInfo> currencyInfo) {
+		//find all entries in currencyInfo that are not in spawnedPillarStatusElements
+		//spawn them
+		foreach (var info in currencyInfo) {
+			if (!spawnedPillarStatusElements.ContainsKey(info.Key)) {
+				//if there are more than 1 spawned status element that has the same currency type, 
+				//reposition the spawned status elements so that it is placed next to each other
+				int currentSublingIndex = 0;
+				int lastElementWithSameCurrencyTypeIndex = -1;
+				foreach (Transform child in layoutGroup.transform) {
+					if(child.TryGetComponent(out PillarStatusElement element)) {
+						if (element.CurrencyType == info.Value.pillarCurrencyType) {
+							lastElementWithSameCurrencyTypeIndex = currentSublingIndex;
+						}
+						currentSublingIndex++;
+					}
+				}
+
+				lastElementWithSameCurrencyTypeIndex++;
+				
+				GameObject pillarStatusElement = Instantiate(pillarStatusElementPrefab, layoutGroup);
+
+				pillarStatusElement.GetComponent<PillarStatusElement>().SetProgress(info.Value.level,
+					info.Value.pillarCurrencyType,
+					currencyColors[info.Value.pillarCurrencyType], info.Value.currencyPercentage);
+
+				spawnedPillarStatusElements.Add(info.Key,
+					pillarStatusElement.GetComponent<PillarStatusElement>());
+
+				pillarStatusElement.transform.SetSiblingIndex(lastElementWithSameCurrencyTypeIndex);
+
+			}
+		}
+		
 		skullImage.transform.parent.SetAsLastSibling();
 	}
 

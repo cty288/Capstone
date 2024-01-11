@@ -26,6 +26,10 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 	public struct OnBossSpawned {
 		public IEnemyViewController Boss;
 	}
+	
+	public struct OnPillarCurrencyReset {
+		
+	}
 	public class PillarActivateInfo {
 		public CurrencyType pillarCurrencyType;
 		public float currencyPercentage;
@@ -40,15 +44,16 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 		}
 	}
 	public struct OnPillarActivated {
-		[FormerlySerializedAs("currencyPercentage")] public Dictionary<CurrencyType, PillarActivateInfo> Info;
+		[FormerlySerializedAs("currencyPercentage")]
+		public Dictionary<IPillarEntity, PillarActivateInfo> Info;
 		public bool isAllPillarsActivated;
 	}
 	public class PillarSystem : AbstractSystem, IPillarSystem {
-		private Dictionary<CurrencyType, IPillarEntity> 
-			currentLevelPillars = new Dictionary<CurrencyType, IPillarEntity>();
 
-		private Dictionary<CurrencyType, PillarActivateInfo>
-			currentLevelPillarCurrencyAmount = new Dictionary<CurrencyType, PillarActivateInfo>();
+		private List<IPillarEntity> allPillars = new List<IPillarEntity>();
+
+		private Dictionary<IPillarEntity, PillarActivateInfo>
+			activatedPillarCurrencyAmount = new Dictionary<IPillarEntity, PillarActivateInfo>();
 		
 		private ILevelModel levelModel;
 		private ILevelSystem levelSystem;
@@ -61,19 +66,18 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 		}
 
 		private void OnRequestActivatePillar(OnRequestActivatePillar e) {
-			if (currentLevelPillars.ContainsKey(e.pillarCurrencyType)) {
-				IPillarEntity pillarEntity = currentLevelPillars[e.pillarCurrencyType];
-				if (pillarEntity.Status.Value == PillarStatus.Idle) {
-					ActivatePillar(pillarEntity, e.CurrencyAmount, e.level);
+			if (!activatedPillarCurrencyAmount.ContainsKey(e.pillarEntity)) {
+				if (e.pillarEntity.Status.Value == PillarStatus.Idle) {
+					ActivatePillar(e.pillarEntity, e.pillarCurrencyType, e.CurrencyAmount, e.level);
 				}
 			}
 		}
 		
-		private void ActivatePillar(IPillarEntity pillarEntity, float currencyAmount, int level) {
+		private void ActivatePillar(IPillarEntity pillarEntity, CurrencyType currencyType,  float currencyAmount, int level) {
 			pillarEntity.Status.Value = PillarStatus.Activated;
-			
-			currentLevelPillarCurrencyAmount[pillarEntity.PillarCurrencyType] =
-				new PillarActivateInfo(pillarEntity.PillarCurrencyType, currencyAmount, 0, level);
+
+			activatedPillarCurrencyAmount[pillarEntity] =
+				new PillarActivateInfo(currencyType, currencyAmount, 0, level);
 			
 			CalculateCurrencyPercentage();
 			
@@ -82,14 +86,14 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 
 			//check if all pillars are activated
 			bool allPillarsActivated = true;
-			foreach (var pillar in currentLevelPillars) {
-				if (pillar.Value.Status.Value != PillarStatus.Activated) {
+			foreach (var pillar in allPillars) {
+				if (pillar.Status.Value != PillarStatus.Activated) {
 					allPillarsActivated = false;
 					break;
 				}
 			}
 			this.SendEvent<OnPillarActivated>(new OnPillarActivated() {
-				Info = currentLevelPillarCurrencyAmount,
+				Info = activatedPillarCurrencyAmount,
 				isAllPillarsActivated = allPillarsActivated
 			});
 			if (allPillarsActivated) {
@@ -100,7 +104,7 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 		//TODO: temporarily close the exit door
 		private async UniTask SummonBoss() {
 			string levelID = levelModel.CurrentLevel.Value.UUID;
-			foreach (IPillarEntity pillarEntity in currentLevelPillars.Values) {
+			foreach (IPillarEntity pillarEntity in activatedPillarCurrencyAmount.Keys) {
 				pillarEntity.Status.Value = PillarStatus.Spawning;
 			}
 			
@@ -111,7 +115,7 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 				return;
 			}
 			
-			foreach (IPillarEntity pillarEntity in currentLevelPillars.Values) {
+			foreach (IPillarEntity pillarEntity in activatedPillarCurrencyAmount.Keys) {
 				pillarEntity.Status.Value = PillarStatus.Idle;
 			}
 			
@@ -121,8 +125,10 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 			}
 			
 			Dictionary<CurrencyType, float> currencyPercentage = new Dictionary<CurrencyType, float>();
-			foreach (var pillarCurrencyAmount in currentLevelPillarCurrencyAmount) {
-				currencyPercentage.Add(pillarCurrencyAmount.Key, pillarCurrencyAmount.Value.currencyPercentage);
+			foreach (var pillarCurrencyAmount in activatedPillarCurrencyAmount) {
+				currencyPercentage.TryAdd(pillarCurrencyAmount.Value.pillarCurrencyType, 0);
+				currencyPercentage[pillarCurrencyAmount.Value.pillarCurrencyType] +=
+					pillarCurrencyAmount.Value.currencyPercentage;
 			}
 
 			List<LevelSpawnCard> cards = levelModel.CurrentLevel.Value.GetAllBosses((bossEntity) => {
@@ -172,19 +178,18 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 	                Boss = spawnedEnemy.GetComponent<IEnemyViewController>()
 				});
                 
-                ClearPillarCurrency();
+               
 			}
-            
+			ClearPillarCurrency();
 		}
 		
 		private void CalculateCurrencyPercentage() {
 			float totalCurrencyAmount = 0;
-			foreach (var pillarCurrencyAmount in currentLevelPillarCurrencyAmount) {
+			foreach (var pillarCurrencyAmount in activatedPillarCurrencyAmount) {
 				totalCurrencyAmount += pillarCurrencyAmount.Value.currencyAmount;
 			}
 			
-			Dictionary<CurrencyType, PillarActivateInfo> currencyPercentage = new Dictionary<CurrencyType, PillarActivateInfo>();
-			foreach (var pillarCurrencyAmount in currentLevelPillarCurrencyAmount) {
+			foreach (var pillarCurrencyAmount in activatedPillarCurrencyAmount) {
 				pillarCurrencyAmount.Value.currencyPercentage =
 					pillarCurrencyAmount.Value.currencyAmount / totalCurrencyAmount;
 			}
@@ -193,32 +198,23 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 
 		private int GetRarity() {
 			int totalRarity = 0;
-			foreach (var pillarCurrencyAmount in currentLevelPillarCurrencyAmount) {
+			foreach (var pillarCurrencyAmount in activatedPillarCurrencyAmount) {
 				totalRarity += pillarCurrencyAmount.Value.level;
 			}
 
-			return Mathf.RoundToInt((float) totalRarity / currentLevelPillarCurrencyAmount.Count);
+			return Mathf.RoundToInt((float) totalRarity / activatedPillarCurrencyAmount.Count);
 		}
 
 		private void OnSetCurrentLevelPillars(OnSetCurrentLevelPillars e) {
 			//new level, reset
-			currentLevelPillars.Clear();
-			currentLevelPillarCurrencyAmount.Clear();
-			foreach (IPillarEntity pillarEntity in e.pillars) {
-				currentLevelPillars.Add(pillarEntity.PillarCurrencyType, pillarEntity);
-				
-				currentLevelPillarCurrencyAmount.Add(pillarEntity.PillarCurrencyType,
-					new PillarActivateInfo(pillarEntity.PillarCurrencyType, 0, 0, 0));
-			}
-			
+			this.allPillars.Clear();
+			allPillars = e.pillars;
+			ClearPillarCurrency();
 		}
 
 		private void ClearPillarCurrency() {
-			currentLevelPillarCurrencyAmount.Clear();
-			foreach (IPillarEntity pillarEntity in currentLevelPillars.Values) {
-				currentLevelPillarCurrencyAmount.Add(pillarEntity.PillarCurrencyType,
-					new PillarActivateInfo(pillarEntity.PillarCurrencyType, 0, 0, 0));
-			}
+			activatedPillarCurrencyAmount.Clear();
+			this.SendEvent<OnPillarCurrencyReset>(new OnPillarCurrencyReset());
 		}
 	}
 }

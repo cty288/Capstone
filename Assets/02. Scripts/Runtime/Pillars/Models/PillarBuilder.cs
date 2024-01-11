@@ -1,4 +1,5 @@
-﻿using _02._Scripts.Runtime.Currency.Model;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Builders;
@@ -23,15 +24,10 @@ namespace _02._Scripts.Runtime.Pillars.Models {
 			return target;
 		}
 		
-		public PillarBuilder<T> SetPillarCurrencyType(CurrencyType currencyType) {
+	
+		public PillarBuilder<T> SetRewardCost(Dictionary<CurrencyType, RewardCostInfo> rewardCosts) {
 			CheckEntity();
-			(Entity as IPillarEntity).PillarCurrencyType = currencyType;
-			return this;
-		}
-		
-		public PillarBuilder<T> SetRewardCost(RewardCostInfo costInfo) {
-			CheckEntity();
-			(Entity as IPillarEntity).RewardCost = costInfo;
+			(Entity as IPillarEntity).RewardCost = rewardCosts;
 			return this;
 		}
 	}

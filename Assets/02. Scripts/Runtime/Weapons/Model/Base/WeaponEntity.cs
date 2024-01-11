@@ -172,6 +172,7 @@ namespace Runtime.Weapons.Model.Base
         protected virtual void InitWeaponPartsSlots() {
             foreach (var t in Enum.GetValues(typeof(WeaponPartType))) {
                 WeaponPartType weaponPartType = (WeaponPartType) t;
+                if(weaponParts.ContainsKey(weaponPartType)) continue;
                 weaponParts.Add(weaponPartType, new HashSet<WeaponPartsSlot>());
                 AddWeaponPartsSlot(weaponPartType, false);
                 //AddWeaponPartsSlot(weaponPartType, false);

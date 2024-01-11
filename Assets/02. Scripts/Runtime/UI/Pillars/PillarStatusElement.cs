@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PillarStatusElement : AbstractMikroController<MainGame> {
-   [SerializeField] private Slider progressBar;
+   [SerializeField] private Vector2 widthRange = new Vector2(100, 800);
    [SerializeField] private TMP_Text progressText;
    [SerializeField] private Transform raritySpawnPoint;
    [SerializeField] private GameObject rarityIndicatorPrefab;
@@ -21,6 +21,13 @@ public class PillarStatusElement : AbstractMikroController<MainGame> {
    private float displayedProgress = 0;
    private float targetProgress = 0;
    private CurrencyType currencyType;
+
+   public CurrencyType CurrencyType => currencyType;
+   private RectTransform rectTransform;
+
+   private void Awake() {
+      rectTransform = GetComponent<RectTransform>();
+   }
 
    private void Update() {
       displayedProgress = Mathf.Lerp(displayedProgress, targetProgress, Time.deltaTime * 5);
@@ -33,7 +40,10 @@ public class PillarStatusElement : AbstractMikroController<MainGame> {
       }
       
       sliderFillImage.DOColor(color, 0.3f);
-      progressBar.DOValue(progress, 0.3f);
+      //progressBar.DOValue(progress, 0.3f);
+      float targetWidth = Mathf.Lerp(widthRange.x, widthRange.y, progress);
+      rectTransform.DOKill();
+      rectTransform.DOSizeDelta(new Vector2(targetWidth, rectTransform.sizeDelta.y), 0.3f);
       targetProgress = progress;
       this.currencyType = currencyType;
    }

@@ -39,10 +39,13 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 	[SerializeField] private Image currencyIcon;
 	[SerializeField] private TMP_Text requiredEnergyText;
 	[SerializeField] private TMP_Text levelText;
+	[SerializeField] private Button nextCurrencyButton;
+	[SerializeField] private Button previousCurrencyButton;
 
 	
 	private ICurrencyModel currencyModel;
 	private int currentSelectedCurrency = 0;
+	private CurrencyType currentSelectedCurrencyType;
 	private int maxCurrencyPossible = 100;
 	private ICurrencySystem currencySystem;
 	public override void OnInit() {
@@ -51,6 +54,8 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		currencySystem = this.GetSystem<ICurrencySystem>();
 		addCurrencyButton.RegisterCallback(OnAddCurrencyButtonClicked);
 		minusCurrencyButton.RegisterCallback(OnMinusCurrencyButtonClicked);
+		nextCurrencyButton.onClick.AddListener(OnNextCurrencyButtonClicked);
+		previousCurrencyButton.onClick.AddListener(OnPreviousCurrencyButtonClicked);
 
 		confirmButton.onClick.AddListener(OnConfirmButtonClicked);
 		this.RegisterEvent<OnCurrencyAmountChangedEvent>(OnCurrencyAmountChanged)
@@ -58,10 +63,37 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		
 	}
 
+	private void OnPreviousCurrencyButtonClicked() {
+		int index = (int) currentSelectedCurrencyType;
+		index--;
+		if (index < 0) {
+			index = Enum.GetValues(typeof(CurrencyType)).Length - 1;
+		}
+		SelectCurrency((CurrencyType) index);
+	}
+
+	private void OnNextCurrencyButtonClicked() {
+		int index = (int) currentSelectedCurrencyType;
+		index++;
+		if (index >= Enum.GetValues(typeof(CurrencyType)).Length) {
+			index = 0;
+		}
+		SelectCurrency((CurrencyType) index);
+	}
+	
+	private void SelectCurrency(CurrencyType currencyType) {
+		currentSelectedCurrencyType = currencyType;
+		currencyIcon.sprite = currencySprites[currencyType];
+		maxCurrencyPossible = data.rewardCosts[currentSelectedCurrencyType].GetHighestCost() * 2;
+		SelectCurrency(0);
+	}
+
 	private void OnConfirmButtonClicked() {
-		currencySystem.RemoveCurrency(data.pillarCurrencyType, currentSelectedCurrency);
-		this.SendCommand(ActivatePillarCommand.Allocate(data.pillarCurrencyType, currentSelectedCurrency,
-			data.rewardCosts.GetLevel(currentSelectedCurrency)));
+		currencySystem.RemoveCurrency(currentSelectedCurrencyType, currentSelectedCurrency);
+
+		this.SendCommand(ActivatePillarCommand.Allocate(data.pillar, currentSelectedCurrencyType,
+			currentSelectedCurrency,
+			data.rewardCosts[currentSelectedCurrencyType].GetLevel(currentSelectedCurrency)));
 	}
 
 	private void OnMinusCurrencyButtonClicked() {
@@ -74,7 +106,7 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 
 	private void OnCurrencyAmountChanged(OnCurrencyAmountChangedEvent e) {
 		if (IsOpening) {
-			if (e.CurrencyType == data.pillarCurrencyType)
+			if (e.CurrencyType == currentSelectedCurrencyType)
 				SelectCurrency(currentSelectedCurrency);
 		}
 	
@@ -90,10 +122,8 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 
 	public override void OnOpen(UIMsg msg) {
 		data = (OnOpenPillarUI) msg;
-		currencyIcon.sprite = currencySprites[data.pillarCurrencyType];
-		maxCurrencyPossible = data.rewardCosts.GetHighestCost() * 2;
+		SelectCurrency(CurrencyType.Combat);
 		SelectCurrency(0);
-		
 	}
 
 	public override void OnClosed() {
@@ -109,7 +139,8 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		}else if (currency > maxCurrencyPossible) {
 			currency = maxCurrencyPossible;
 		}
-		CurrencyType currencyType = data.pillarCurrencyType;
+
+		CurrencyType currencyType = currentSelectedCurrencyType;
 		currentSelectedCurrency = currency;
 		currencySliderText.text = currency.ToString() + $"\n<sprite index={(int)currencyType}>";
 
@@ -119,7 +150,7 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		
 		bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= currency;
 		
-		int levelNumber = data.rewardCosts.GetLevel(currency);
+		int levelNumber = data.rewardCosts[currencyType].GetLevel(currency);
 		levelText.text = Localization.GetFormat("PILLAR_LEVEL_TEXT", levelNumber);
 		levelText.color = Color.black;
 		

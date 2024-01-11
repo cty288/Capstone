@@ -347,8 +347,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				IBossPillarViewController pillarViewController = pillar.GetComponent<IBossPillarViewController>();
 				//pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
 				//pillar.transform.SetParent(transform);
-				string id = pillarViewController.InitPillar(BoundEntity, (CurrencyType) pillarNumber,
-					bossSpawnCostInfo[(CurrencyType) pillarNumber]);
+				string id = pillarViewController.InitPillar(BoundEntity, bossSpawnCostInfo);
 				
 				ids.Add(id);
 				pillarNumber++;

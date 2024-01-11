@@ -10,19 +10,17 @@ using UnityEngine;
 
 namespace Runtime.Spawning.Commands {
 	public struct OnOpenPillarUI : UIMsg{
-		public GameObject pillar;
-		public RewardCostInfo rewardCosts;
-		public CurrencyType pillarCurrencyType;
+		public IPillarEntity pillar;
+		public Dictionary<CurrencyType, RewardCostInfo> rewardCosts;
 	}
 	public class OpenPillarUICommand : AbstractCommand<OpenPillarUICommand> {
-		private GameObject pillar;
-		private RewardCostInfo rewardCosts;
+		private PillarEntity pillar;
+		private Dictionary<CurrencyType, RewardCostInfo> rewardCosts;
 		private CurrencyType pillarCurrencyType;
 		protected override void OnExecute() {
 			this.SendEvent<OnOpenPillarUI>(new OnOpenPillarUI() {
 				pillar = pillar,
 				rewardCosts = rewardCosts,
-				pillarCurrencyType = pillarCurrencyType
 			});
 		}
 		
@@ -31,11 +29,10 @@ namespace Runtime.Spawning.Commands {
 			
 		}
 		
-		public static OpenPillarUICommand Allocate(GameObject pillar, RewardCostInfo rewardCosts, CurrencyType pillarCurrencyType) {
+		public static OpenPillarUICommand Allocate(PillarEntity pillar, Dictionary<CurrencyType, RewardCostInfo> rewardCosts) {
 			OpenPillarUICommand command = SafeObjectPool<OpenPillarUICommand>.Singleton.Allocate();
 			command.pillar = pillar;
 			command.rewardCosts = rewardCosts;
-			command.pillarCurrencyType = pillarCurrencyType;
 			return command;
 		}
 	}

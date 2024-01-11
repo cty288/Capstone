@@ -34,8 +34,13 @@ namespace Runtime.Enemies.Model {
 
 		public bool IsBossSpawnConditionSatisfied(Dictionary<CurrencyType, float> currencyPercentage) {
 			foreach (var pair in bossSpawnConditionProperty.RealValue.Value) {
+				
+				
 				if (!currencyPercentage.ContainsKey(pair.Key)) {
-					continue;
+					if(pair.Value.x == 0 || pair.Value.y == 0) {
+						continue;
+					}
+					return false;
 				}
 				Vector2 range = pair.Value;
 				float percentage = currencyPercentage[pair.Key];

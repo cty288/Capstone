@@ -11,6 +11,7 @@ using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Utilities;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
+using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MikroFramework.Architecture;
@@ -42,7 +43,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		//IEntity OnBuildNewEntity(int level, Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
 		//void SetBossSpawnCosts(Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
 
-		string InitPillar(ILevelEntity levelEntity, CurrencyType pillarCurrencyType, RewardCostInfo rewardCosts);
+		string InitPillar(ILevelEntity levelEntity,
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts);
 		BoxCollider SpawnSizeCollider { get; }
 		
 		IPillarEntity Entity { get; }
@@ -73,13 +75,14 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		}
 
 		protected override IEntity OnBuildNewEntity() {
-			return OnBuildNewEntity(1, CurrencyType.Combat, new RewardCostInfo());
+			return OnBuildNewEntity(1, new Dictionary<CurrencyType, RewardCostInfo>());
 		}
 		
-		public IEntity OnBuildNewEntity(int level, CurrencyType pillarCurrencyType, RewardCostInfo rewardCosts) {
+		public IEntity OnBuildNewEntity(int level,
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts) {
+			
 			PillarBuilder<PillarEntity> builder = pillarModel.GetPillarBuilder<PillarEntity>();
-			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level)
-				.SetPillarCurrencyType(pillarCurrencyType).SetRewardCost(rewardCosts);
+			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level).SetRewardCost(rewardCosts);
 			return builder.Build();
 		}
 
@@ -149,10 +152,12 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		}
 		
 		
-		public string InitPillar(ILevelEntity levelEntity, CurrencyType pillarCurrencyType, RewardCostInfo rewardCosts) {
+		public string InitPillar(ILevelEntity levelEntity,
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts) {
+		
 			LevelEntity = levelEntity;
 			levelNumber = levelEntity.GetCurrentLevelCount();
-			IEntity ent = OnBuildNewEntity(levelNumber, pillarCurrencyType, rewardCosts);
+			IEntity ent = OnBuildNewEntity(levelNumber, rewardCosts);
 			InitWithID(ent.UUID);
             
 			//for some reason we need to do this again
@@ -260,8 +265,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				return;
 			}
 
-			this.SendCommand(OpenPillarUICommand.Allocate(gameObject,
-				BoundEntity.RewardCost, BoundEntity.PillarCurrencyType));
+			this.SendCommand(OpenPillarUICommand.Allocate(BoundEntity,
+				BoundEntity.RewardCost));
 		}
 
 		public override void OnRecycled() {
