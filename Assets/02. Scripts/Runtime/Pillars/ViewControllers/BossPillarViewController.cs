@@ -9,6 +9,7 @@ using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Pillars.Models;
+using _02._Scripts.Runtime.Rewards;
 using _02._Scripts.Runtime.Utilities;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using AYellowpaper.SerializedCollections;
@@ -44,7 +45,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		//void SetBossSpawnCosts(Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
 
 		string InitPillar(ILevelEntity levelEntity,
-			Dictionary<CurrencyType, RewardCostInfo> rewardCosts);
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts, PillarRewardsInfo rewardsInfo);
 		BoxCollider SpawnSizeCollider { get; }
 		
 		IPillarEntity Entity { get; }
@@ -75,14 +76,15 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		}
 
 		protected override IEntity OnBuildNewEntity() {
-			return OnBuildNewEntity(1, new Dictionary<CurrencyType, RewardCostInfo>());
+			return OnBuildNewEntity(1, new Dictionary<CurrencyType, RewardCostInfo>(), default);
 		}
 		
 		public IEntity OnBuildNewEntity(int level,
-			Dictionary<CurrencyType, RewardCostInfo> rewardCosts) {
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts, PillarRewardsInfo rewardsInfo) {
 			
 			PillarBuilder<PillarEntity> builder = pillarModel.GetPillarBuilder<PillarEntity>();
-			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level).SetRewardCost(rewardCosts);
+			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level).SetRewardCost(rewardCosts)
+				.SetRewardsInfo(rewardsInfo);
 			return builder.Build();
 		}
 
@@ -153,11 +155,11 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		
 		
 		public string InitPillar(ILevelEntity levelEntity,
-			Dictionary<CurrencyType, RewardCostInfo> rewardCosts) {
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts, PillarRewardsInfo rewardsInfo) {
 		
 			LevelEntity = levelEntity;
 			levelNumber = levelEntity.GetCurrentLevelCount();
-			IEntity ent = OnBuildNewEntity(levelNumber, rewardCosts);
+			IEntity ent = OnBuildNewEntity(levelNumber, rewardCosts, rewardsInfo);
 			InitWithID(ent.UUID);
             
 			//for some reason we need to do this again

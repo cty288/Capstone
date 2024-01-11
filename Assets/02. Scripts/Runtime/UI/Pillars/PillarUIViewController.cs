@@ -86,6 +86,7 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		currencyIcon.sprite = currencySprites[currencyType];
 		maxCurrencyPossible = data.rewardCosts[currentSelectedCurrencyType].GetHighestCost() * 2;
 		SelectCurrency(0);
+		
 	}
 
 	private void OnConfirmButtonClicked() {
@@ -124,6 +125,7 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		data = (OnOpenPillarUI) msg;
 		SelectCurrency(CurrencyType.Combat);
 		SelectCurrency(0);
+		
 	}
 
 	public override void OnClosed() {

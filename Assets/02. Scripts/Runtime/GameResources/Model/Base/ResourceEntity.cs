@@ -52,7 +52,10 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string DeployedVCPrefabName { get; }
 		
-
+		/// <summary>
+		/// Can this resourced be rewarded by the game through normal means?
+		/// </summary>
+		public bool Collectable { get; }
 		
 		/// <summary>
 		/// Width in inventory. Use only 1 or 2. Only effective for weapons.
@@ -175,6 +178,7 @@ namespace Runtime.GameResources.Model.Base {
 		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
 
 		public virtual string DeployedVCPrefabName { get; } = null;
+		public abstract bool Collectable { get; }
 
 
 		public override void OnStart(bool isLoadedFromSave) {

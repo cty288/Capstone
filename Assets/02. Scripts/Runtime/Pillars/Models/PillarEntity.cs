@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models.Properties;
+using _02._Scripts.Runtime.Rewards;
 using AYellowpaper.SerializedCollections;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
@@ -72,6 +73,8 @@ namespace Runtime.Spawning {
 		public Dictionary<CurrencyType, RewardCostInfo>  RewardCost { get; set; }
 		
 		BindableProperty<PillarStatus> Status { get; }
+		
+		public PillarRewardsInfo RewardsInfo { get; set; }
 	}
 	public class PillarEntity : AbstractBasicEntity, IPillarEntity{
 		
@@ -83,6 +86,7 @@ namespace Runtime.Spawning {
 		public Dictionary<CurrencyType, RewardCostInfo> RewardCost { get; set; }
 		
 		public BindableProperty<PillarStatus> Status { get; } = new BindableProperty<PillarStatus>(PillarStatus.Idle);
+		public PillarRewardsInfo RewardsInfo { get; set; }
 
 		protected override ConfigTable GetConfigTable() {
 			return null;
@@ -99,6 +103,7 @@ namespace Runtime.Spawning {
 		public override void OnRecycle() {
 			Status.Value = PillarStatus.Idle;
 			RewardCost = null;
+			RewardsInfo = default;
 		}
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {

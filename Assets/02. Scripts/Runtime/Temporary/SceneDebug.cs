@@ -1,10 +1,15 @@
+using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using Framework;
 using MikroFramework.Architecture;
+using Runtime.GameResources;
+using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
+using Runtime.Weapons.Model.Base;
 using UnityEngine;
 
 namespace Runtime.Temporary
@@ -37,6 +42,20 @@ namespace Runtime.Temporary
                 player.TakeDamage(10);
             }
 
+            if (Input.GetKeyDown(KeyCode.R)) {
+                IEnumerable<ResourceTemplateInfo> infos1 =
+                    ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts);
+
+                IEnumerable<ResourceTemplateInfo> infos2 =
+                    ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.Weapon,
+                        (entity => (entity as IWeaponEntity).GetAttackSpeed().RealValue.Value <= 0.3f));
+                
+                Debug.Log(infos1.Count());
+                Debug.Log(infos2.Count());
+
+                IResourceEntity entity = infos1.First().EntityCreater.Invoke(false, 1);
+                Debug.Log(entity.EntityName);
+            }
             
         }
     }

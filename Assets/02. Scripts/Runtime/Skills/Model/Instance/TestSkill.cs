@@ -5,6 +5,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 
 namespace _02._Scripts.Runtime.Skills.Model.Instance {
 	public class TestSkill : SkillEntity<TestSkill> {
+		public override bool Collectable { get; } = false;
 		[field: ES3Serializable] public override string EntityName { get; set; } = "TestSkill";
 		
 

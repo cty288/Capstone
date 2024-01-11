@@ -28,6 +28,7 @@ namespace Runtime.UI {
 
 		private void OnOpenPillarUI(OnOpenPillarUI e) {
 			OpenOrGetClose<PillarUIViewController>(this, e);
+			
 		}
 
 		private void Update() {
