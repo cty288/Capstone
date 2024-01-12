@@ -290,6 +290,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         public override void OnItemUse()
         {
+            // fully-automatic gun
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
@@ -311,6 +312,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public override void OnItemStopUse() {}
+        
+        public override void OnItemAltUse() { }
         
         public override void OnItemScopePressed() {
             if (isReloading || playerModel.IsPlayerSprinting()) {

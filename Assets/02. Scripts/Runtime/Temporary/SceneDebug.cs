@@ -27,10 +27,10 @@ namespace Runtime.Temporary
             if (!Application.isEditor) {
                 return;
             }
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                boss.TakeDamage(10);
-            }
+            // if (Input.GetKeyDown(KeyCode.B))
+            // {
+            //     boss.TakeDamage(10);
+            // }
 
             if (Input.GetKeyDown(KeyCode.P))
             {

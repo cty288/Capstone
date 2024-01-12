@@ -135,7 +135,11 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			if (playerActions.Shoot.IsPressed()) {
 				currentHoldItemViewController.OnItemUse();
 			}
-			
+
+			if (playerActions.ItemAlt.IsPressed())
+			{
+				currentHoldItemViewController.OnItemAltUse();
+			}
 
 			
 			if (playerActions.Shoot.WasReleasedThisFrame()) {

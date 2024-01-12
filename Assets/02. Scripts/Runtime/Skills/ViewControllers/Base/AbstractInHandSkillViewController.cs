@@ -47,7 +47,8 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 		public override void OnItemScopePressed() {
 			
 		}
-
+		
+		public override void OnItemAltUse() { }
 
 		public override void OnItemScopeReleased() {
 			
