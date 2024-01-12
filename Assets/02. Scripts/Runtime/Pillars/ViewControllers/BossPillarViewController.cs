@@ -66,7 +66,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		[SerializeField] private Vector2 waitTimeRange = new Vector2(10, 20);
 		[SerializeField] private GameObject normalTrail;
 		[SerializeField] private GameObject activatedTrail;
-		
+		[SerializeField] private Transform rewardSpawnPos;
 		protected override void Awake() {
 			base.Awake();
 			pillarModel = this.GetModel<IPillarModel>();
@@ -268,7 +268,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			}
 
 			this.SendCommand(OpenPillarUICommand.Allocate(BoundEntity,
-				BoundEntity.RewardCost));
+				BoundEntity.RewardCost, rewardSpawnPos));
 		}
 
 		public override void OnRecycled() {

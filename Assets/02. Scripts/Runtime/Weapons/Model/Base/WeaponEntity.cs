@@ -112,7 +112,7 @@ namespace Runtime.Weapons.Model.Base
             list.Add(() => new ResourceBuffedPropertyDescription<float>(attackSpeedProperty,
                 "PropertyIconAttackSpeed",
                 Localization.Get("PROPERTY_ICON_ATTACk_SPEED"),
-                (value) => Localization.GetFormat("PROPERTY_ICON_ATTACk_SPEED_DESC", value),
+                (value) => Localization.GetFormat("PROPERTY_ICON_ATTACk_SPEED_DESC", value.ToString("f2")),
                 (initial, real) => (Math.Abs(real - initial) < 0.01f) ? 0 : (real > initial) ? -1 : 1));
 
             
@@ -404,12 +404,15 @@ namespace Runtime.Weapons.Model.Base
              //remove all weapon parts
                 foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
                     foreach (WeaponPartsSlot slot in part.Value) {
-                        if (slot.GetQuantity() > 0) {
-                            GlobalEntities.GetEntityAndModel(slot.GetLastItemUUID()).Item2
-                                ?.RemoveEntity(slot.GetLastItemUUID(), true);
+                        string uuid = slot.GetLastItemUUID();
+                        slot.Clear();
+                        
+                        if (uuid != null) {
+                            GlobalEntities.GetEntityAndModel(uuid).Item2
+                                ?.RemoveEntity(uuid, true);
                         }
                         
-                        slot.Clear();
+                       
                     }
                 }
              return this;

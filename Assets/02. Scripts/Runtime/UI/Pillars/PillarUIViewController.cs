@@ -5,7 +5,10 @@ using System.Text;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Pillars.Commands;
+using _02._Scripts.Runtime.Rewards;
 using AYellowpaper.SerializedCollections;
+using BehaviorDesigner.Runtime.Tasks;
+using Cysharp.Threading.Tasks;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -13,16 +16,19 @@ using MikroFramework.UIKit;
 using Polyglot;
 using Runtime.Controls;
 using Runtime.Spawning.Commands;
+using Runtime.Temporary;
 using Runtime.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public interface IGameUIPanel {
 	public IPanel GetClosePanel();
 }
-public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
+public class PillarUIViewController : AbstractPanelContainer, IController, IGameUIPanel {
 	private OnOpenPillarUI data;
 
 	[SerializedDictionary("CurrencyType", "Icon")]
@@ -63,6 +69,10 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		
 	}
 
+	private void OnConfirmButtonClicked() {
+		OnConfirmButtonClickedAsync();
+	}
+
 	private void OnPreviousCurrencyButtonClicked() {
 		int index = (int) currentSelectedCurrencyType;
 		index--;
@@ -89,12 +99,38 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 		
 	}
 
-	private void OnConfirmButtonClicked() {
+	private async UniTask OnConfirmButtonClickedAsync() {
 		currencySystem.RemoveCurrency(currentSelectedCurrencyType, currentSelectedCurrency);
 
+		int level = data.rewardCosts[currentSelectedCurrencyType].GetLevel(currentSelectedCurrency);
+
+		List<GameObject> spawnedResources = await RewardDisperser.Singleton.DisperseRewards(
+			data.pillar.RewardsInfo.GetRewards(level),
+			this);
+
+		Transform spawnTr = PlayerController.GetClosestPlayer(data.rewardSpawnPos.position).transform;
+		Vector3 spawnPos = spawnTr.position;
+		if(Physics.Raycast(spawnTr.position, spawnTr.forward, out RaycastHit hit, 10,
+			   LayerMask.GetMask("Ground", "Default", "Wall"))) {
+
+			spawnPos = hit.point;
+		}
+
+		foreach (var resource in spawnedResources) {
+			resource.transform.position = spawnPos;
+			resource.transform.rotation = Quaternion.identity;
+			Rigidbody rb = resource.GetComponent<Rigidbody>();
+			if (rb) {
+				//45 degree upword, random direction
+				//rb.AddForce(Quaternion.Euler(45, Random.Range(0, 360), 0) * Vector3.up * 5, ForceMode.Impulse);
+			}
+		}
+		
 		this.SendCommand(ActivatePillarCommand.Allocate(data.pillar, currentSelectedCurrencyType,
 			currentSelectedCurrency,
-			data.rewardCosts[currentSelectedCurrencyType].GetLevel(currentSelectedCurrency)));
+			level));
+
+		MainUI.Singleton.GetAndClose(this);
 	}
 
 	private void OnMinusCurrencyButtonClicked() {
@@ -187,7 +223,12 @@ public class PillarUIViewController : AbstractPanel, IController, IGameUIPanel {
 	}
 
 	public IPanel GetClosePanel() {
-		//TODO: can't close when selecting rewards
-		return this;
+		IPanel openedChild = GetTopChild();
+		if (openedChild == null) {
+			return this;
+		}
+
+		return null;
+
 	}
 }

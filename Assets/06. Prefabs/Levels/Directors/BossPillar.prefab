@@ -10,9 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2375442132175476332}
   - component: {fileID: 5749350328267673770}
-  - component: {fileID: 2298616000915670325}
-  - component: {fileID: 40130165870259287}
-  - component: {fileID: 8370734444897977149}
   m_Layer: 0
   m_Name: Lazer
   m_TagString: Untagged
@@ -134,60 +131,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!65 &2298616000915670325
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 183161730811882128}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &40130165870259287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 183161730811882128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 597db6b630e603142aa446fbb8379132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetLayers:
-    serializedVersion: 2
-    m_Bits: 136
-  dotTick: 0.2
-  showDamageNumber: 1
---- !u!114 &8370734444897977149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 183161730811882128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d9073c8250194843962f4681684ffdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onRecycledEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onAllocateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  Pool: {fileID: 0}
-  autoRecycleTime: 3.4
-  penetrateSameFaction: 0
-  autoDestroyWhenOwnerDestroyed: 0
-  parent: {fileID: 0}
-  lineRenderer: {fileID: 0}
 --- !u!1 &2436788516394773401
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +172,7 @@ Transform:
   - {fileID: 4522881869669627130}
   - {fileID: 2375442132175476332}
   - {fileID: 8264911539272759740}
+  - {fileID: 5248000944857201088}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -296,6 +240,7 @@ MonoBehaviour:
   waitTimeRange: {x: 10, y: 20}
   normalTrail: {fileID: 183161730811882128}
   activatedTrail: {fileID: 3277829471405170576}
+  rewardSpawnPos: {fileID: 5248000944857201088}
   <SpawnSizeCollider>k__BackingField: {fileID: 9181898271395399007}
 --- !u!54 &3307318128920847460
 Rigidbody:
@@ -323,9 +268,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8264911539272759740}
   - component: {fileID: 3052514215204940421}
-  - component: {fileID: 1811125115999035123}
-  - component: {fileID: 3555130191381975679}
-  - component: {fileID: 3601571590280827917}
   m_Layer: 0
   m_Name: Lazer (1)
   m_TagString: Untagged
@@ -341,7 +283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3277829471405170576}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.56, y: 11.66, z: -1.99}
+  m_LocalPosition: {x: -0.56, y: 11.69, z: -1.99}
   m_LocalScale: {x: 0.3, y: 0.29999998, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -447,60 +389,37 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!65 &1811125115999035123
-BoxCollider:
+--- !u!1 &3278488698950089119
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3277829471405170576}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3555130191381975679
-MonoBehaviour:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5248000944857201088}
+  m_Layer: 0
+  m_Name: RewardSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5248000944857201088
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3277829471405170576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 597db6b630e603142aa446fbb8379132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetLayers:
-    serializedVersion: 2
-    m_Bits: 136
-  dotTick: 0.2
-  showDamageNumber: 1
---- !u!114 &3601571590280827917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3277829471405170576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d9073c8250194843962f4681684ffdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onRecycledEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onAllocateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  Pool: {fileID: 0}
-  autoRecycleTime: 3.4
-  penetrateSameFaction: 0
-  autoDestroyWhenOwnerDestroyed: 0
-  parent: {fileID: 0}
-  lineRenderer: {fileID: 0}
+  m_GameObject: {fileID: 3278488698950089119}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.56, y: 12.163, z: -1.99}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1696291244765927818}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3750204696606487485
 GameObject:
   m_ObjectHideFlags: 0
