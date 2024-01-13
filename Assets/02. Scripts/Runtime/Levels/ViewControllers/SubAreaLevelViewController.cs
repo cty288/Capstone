@@ -147,7 +147,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         protected override void Update()
         {
             base.Update();
-            
+            if(BoundEntity == null) return;
             if (!BoundEntity.IsActiveSpawner) {
                 isActive = false;
                 if (cooldownTimer <= areaSpawningCooldown)

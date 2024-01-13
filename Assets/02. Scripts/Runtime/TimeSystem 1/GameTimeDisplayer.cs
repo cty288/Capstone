@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Levels.Models;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using Polyglot;
 using Runtime.Utilities;
@@ -11,9 +12,14 @@ using UnityEngine;
 
 public class GameTimeDisplayer : AbstractMikroController<MainGame> {
    [SerializeField] private GameObject panel;
+   [SerializeField] private GameObject dayDisplayPanel;
+   
+   
    [SerializeField] private TMP_Text dayCountText;
    [SerializeField] private TMP_Text timeText;
    [SerializeField] private int updateIntervalInMinutes = 5;
+   
+   [SerializeField] private TMP_Text dayDisplayPanelDayCountText;
    private DateTime lastUpdateTime;
 
    private IGameTimeModel gameTimeModel;
@@ -29,6 +35,27 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
       
       gameTimeModel.GlobalTime.RegisterOnValueChanged(OnGlobalTimeChanged)
          .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+      
+      gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnDayCountChanged)
+         .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+   }
+
+   private void OnDayCountChanged(int arg1, int dayCount) {
+      if(levelModel.CurrentLevelCount.Value == 0) {
+         dayDisplayPanel.SetActive(false);
+         return;
+      }
+
+      ShowDayDisplayPanel(dayCount);
+   }
+   
+   
+   private void ShowDayDisplayPanel(int dayCount) {
+      dayDisplayPanel.SetActive(true);
+      dayDisplayPanelDayCountText.text = Localization.GetFormat("TIME_DISPLAY", dayCount);
+      this.Delay(4f, () => {
+         dayDisplayPanel.SetActive(false);
+      });
    }
 
    private void OnGlobalTimeChanged(DateTime arg1, DateTime updatedTime) {
@@ -40,6 +67,9 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
 
    private void OnLevelCountChanged(int level) {
       UpdateTime();
+      if (level == 1) {
+         ShowDayDisplayPanel(1);
+      }
    }
 
 
