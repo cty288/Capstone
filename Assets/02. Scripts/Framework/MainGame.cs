@@ -8,6 +8,7 @@ using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
 using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
+using _02._Scripts.Runtime.TimeSystem;
 using _02._Scripts.Runtime.WeaponParts.Model;
 using _02._Scripts.Runtime.WeaponParts.Systems;
 using MikroFramework.ResKit;
@@ -37,6 +38,7 @@ namespace Framework {
 			this.RegisterSystem<IBuffSystem>(new BuffSystem());
 			this.RegisterSystem<IWeaponPartsSystem>(new WeaponPartsSystem());
 			this.RegisterSystem<IPillarSystem>(new PillarSystem());
+			this.RegisterSystem<IGameTimeSystem>(new GameTimeSystem());
 			
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());
@@ -54,6 +56,7 @@ namespace Framework {
 			this.RegisterModel<IBuffModel>(new BuffModel());
 			this.RegisterModel<IWeaponPartsModel>(new WeaponPartsModel());
 			this.RegisterModel<IPillarModel>(new PillarModel());
+			this.RegisterModel<IGameTimeModel>(new GameTimeModel());
 			
 			
 			//???
