@@ -276,7 +276,7 @@ namespace Runtime.Player {
 				});
 			}
 
-			Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
+			//Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => this;

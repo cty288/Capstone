@@ -2,6 +2,7 @@
 using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework.Architecture;
 using MikroFramework.Singletons;
+using Runtime.Player;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.TimeSystem {
@@ -18,12 +19,13 @@ namespace _02._Scripts.Runtime.TimeSystem {
 	public class GameTimeSystem : AbstractSystem, IGameTimeSystem {
 		private IGameTimeModel gameTimeModel;
 		private ILevelModel levelModel;
+		private IGamePlayerModel playerModel;
 		private float realWorldSecondPerGameMinute = 1;
 		private float timer = 0;
 		protected override void OnInit() {
 			gameTimeModel = this.GetModel<IGameTimeModel>();
 			levelModel = this.GetModel<ILevelModel>();
-			
+			playerModel = this.GetModel<IGamePlayerModel>();
 			//1440 minutes in a day
 			realWorldSecondPerGameMinute = GameTimeModel.DayLength / 1440f;
 			GameTimeSystemUpdateExecutor.Singleton.OnUpdate += OnUpdate;
@@ -46,9 +48,10 @@ namespace _02._Scripts.Runtime.TimeSystem {
 
 		private void OnUpdate() {
 			//time does not change in base
-			if (levelModel.CurrentLevelCount == 0) {
+			if (levelModel.CurrentLevelCount == 0 || playerModel.IsPlayerDead()) {
 				return;
 			}
+			
 			timer += Time.deltaTime;
 			if (timer >= realWorldSecondPerGameMinute) {
 				timer = 0;

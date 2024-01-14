@@ -57,6 +57,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		public BindableProperty<bool> IsInBossFight { get; }
 		
+		public int DayStayed { get; set; }
+		
 		public void SetInBattle(bool isInBattle);
 		
 		// public int CurrentEnemyCount { get; set; }
@@ -196,7 +198,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		[field: SerializeField]
 		public BindableProperty<bool> IsInBossFight { get; } = new BindableProperty<bool>();
 
-		
+		[field: ES3Serializable] 
+		public int DayStayed { get; set; } = 0;
+
 
 		public void SetInBattle(bool isInBattle) {
 			this.isInBattle = isInBattle;
@@ -217,6 +221,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			IsInBossFight.Value = false;
 			SubAreaUUIDs.Clear();
 			subAreaLevelEntities.Clear();
+			DayStayed = 0;
 		}
 	}
 }

@@ -7,6 +7,7 @@ using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
+using _02._Scripts.Runtime.Levels.Sandstorm;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
@@ -146,7 +147,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		//[SerializeField] protected List<LevelEnemyPrefabConfig> bosses = new List<LevelEnemyPrefabConfig>();
 
 		[SerializeField] protected GameObject playerSpawner;
+		[SerializeField] private float[] sandstormProbability = new[] {0, 0.33f, 1f};
 
+		private IGameEventSystem gameEventSystem;
 
 		//mainPrefab + variants
 		public List<GameObject> Enemies {
@@ -200,12 +203,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private ILevelSystem levelSystem;
  
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+		protected IGameTimeModel gameTimeModel;
 
 		protected override void Awake() {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();
 			navMeshSurface = GetComponent<NavMeshSurface>();
 			levelSystem = this.GetSystem<ILevelSystem>();
+			gameTimeModel = this.GetModel<IGameTimeModel>();
+			gameEventSystem = this.GetSystem<IGameEventSystem>();
 		}
 
 		protected override IEntity OnBuildNewEntity() {
@@ -294,6 +300,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
 			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+
+			if (BoundEntity.GetCurrentLevelCount() <= 1) {
+				gameTimeModel.DayCountThisRound.RegisterWithInitValue(OnNewDay)
+					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			}
+			else {
+				gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnNewDay)
+					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			}
+			
+			
 			subAreaLevels = CreateSubAreaLevels();
 			if (autoCreateNewEntityWhenStart) {
 				UpdateNavMesh();
@@ -318,6 +335,33 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			
 			//Debug.Log("Bounds for level " + gameObject.name + " is " + maxExtent.bounds);
+		}
+
+		
+		private HashSet<int> triggeredNewDay = new HashSet<int>();
+		private void OnNewDay(int day) {
+			if (levelModel.CurrentLevel.Value != BoundEntity) {
+				return;
+			}
+			
+			if (triggeredNewDay.Contains(day)) {
+				return;
+			}
+			
+			triggeredNewDay.Add(day);
+			BoundEntity.DayStayed++; Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
+			if (BoundEntity.DayStayed -1 >= sandstormProbability.Length) {
+				return;
+			}
+			float sandstormProb = sandstormProbability[BoundEntity.DayStayed - 1];
+			if (Random.Range(0f, 1f) <= sandstormProb) {
+				//spawn sandstorm
+				int sandstormHappenTime = 23 * 60;
+				gameEventSystem.AddEvent(new SandstormEvent(), sandstormHappenTime);
+
+				int warningTime = sandstormHappenTime / 2;
+				gameEventSystem.AddEvent(new SandstormWarningEvent(), warningTime);
+			}
 		}
 
 		private void SpawnCollectableResources() {
@@ -500,6 +544,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			bossPillars = null;
 			subAreaLevels.Clear();
+			triggeredNewDay.Clear();
 		}
 		
 		public void OnExitLevel() {
