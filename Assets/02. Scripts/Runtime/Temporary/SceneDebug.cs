@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.GameEventSystem.Tests;
 using _02._Scripts.Runtime.Pillars.Commands;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
@@ -64,6 +65,14 @@ namespace Runtime.Temporary
                          pillarCurrencyType = CurrencyType.Combat
                     });
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad1)) {
+                 IGameEventSystem gameEventSystem = this.GetSystem<IGameEventSystem>();
+                 gameEventSystem.AddEvent(new TestEvent1(), 24 * 60);
+                 gameEventSystem.AddEvent(new TestEvent2(), 5 * 60);
+                 gameEventSystem.AddEvent(new TestEvent3(), 60);
+                 Debug.Log("EVENT ADDED");
             }
         }
     }
