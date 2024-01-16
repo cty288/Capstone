@@ -55,7 +55,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 			}
 			
 			levelModel.CurrentLevel.Value.IsInBossFight.Value = true;
-			bossEntity.RegisterOnEntityRecycled(OnBossRecycled);
+			bossEntity.RegisterReadyToRecycle(OnBossRecycled);
 		}
 
 		public void OnOneSecondPassed() {
@@ -66,6 +66,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 
 		private void OnBossRecycled(IEntity e) {
 			levelModel.CurrentLevel.Value.IsInBossFight.Value = false;
+			e.UnRegisterReadyToRecycle(OnBossRecycled);
 		}
 	}
 }

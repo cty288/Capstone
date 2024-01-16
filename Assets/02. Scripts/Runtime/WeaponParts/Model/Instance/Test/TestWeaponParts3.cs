@@ -33,6 +33,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 		}
 
 		public override WeaponPartType WeaponPartType { get; } = WeaponPartType.Magazine;
+		public override bool Collectable { get; } = true;
 	}
 
 	public class TestWeaponPartBuff3 : WeaponPartsBuff<TestWeaponParts3, TestWeaponPartBuff3> {

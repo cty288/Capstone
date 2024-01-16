@@ -23,7 +23,7 @@ namespace Runtime.Weapons
         {
             return null;
         }
-
+        public override bool Collectable { get; } = true;
         protected override void OnInitModifiers(int rarity) {
 
         }

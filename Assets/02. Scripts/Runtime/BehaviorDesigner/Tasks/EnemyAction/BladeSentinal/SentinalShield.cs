@@ -108,18 +108,15 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         {
             pivot.transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
             timeElapsed += Time.deltaTime;
-            await UniTask.Yield(PlayerLoopTiming.Update,
-                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            await UniTask.Yield();
         }
         pivot.transform.position = targetPosition;
         await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop"),
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         rotating = true;
-
-        await UniTask.WaitForSeconds(shieldDuration, false, PlayerLoopTiming.Update,
-            gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         
+        await UniTask.WaitForSeconds(shieldDuration);
         rotating = false;
         
         startPosition = pivot.transform.position;
@@ -128,8 +125,7 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         {
             pivot.transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
             timeElapsed += Time.deltaTime;
-            await UniTask.Yield(PlayerLoopTiming.Update,
-                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            await UniTask.Yield();
         }
 
         foreach (var blade in swordList)

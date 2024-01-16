@@ -57,7 +57,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 
 		public override string OnGroundVCPrefabName => EntityName;
 		public override IResourceEntity GetReturnToBaseEntity() {
-			return this;
+			return null;
 		}
 
 		public abstract WeaponPartType WeaponPartType { get; }

@@ -327,19 +327,105 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 2
   bossSpawnCostInfo:
-  - CurrencyType: 0
-    Cost: 10
-  - CurrencyType: 1
-    Cost: 20
-  - CurrencyType: 2
-    Cost: 5
-  - CurrencyType: 3
-    Cost: 5
+    _serializedList:
+    - Key: 0
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 10
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 35
+          - Key: 4
+            Value: 50
+    - Key: 1
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 15
+          - Key: 2
+            Value: 25
+          - Key: 3
+            Value: 35
+          - Key: 4
+            Value: 50
+    - Key: 2
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 5
+          - Key: 2
+            Value: 15
+          - Key: 3
+            Value: 30
+          - Key: 4
+            Value: 50
+    - Key: 3
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 5
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 35
+          - Key: 4
+            Value: 50
+  pillarRewardsInfo:
+    RewardsInfo:
+      _serializedList:
+      - Key: 1
+        Value:
+        - RewardType: 0
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+      - Key: 2
+        Value:
+        - RewardType: 1
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+      - Key: 3
+        Value:
+        - RewardType: 1
+          Level: 2
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 2
+          AmountRange: {x: 1, y: 1}
+      - Key: 4
+        Value:
+        - RewardType: 1
+          Level: 3
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 2
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 3
+          AmountRange: {x: 1, y: 1}
   hasPillars: 1
   pillarPrefabName: BossPillar
   maxExtent: {fileID: 4174941809537234053}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
+  sandstormProbability:
+  - 0
+  - 1
+  - 1
   subAreaLevelPrefabs:
   - {fileID: 5997115203119007213}
   - {fileID: 5997115203908220490}
