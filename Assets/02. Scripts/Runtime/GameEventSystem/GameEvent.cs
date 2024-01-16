@@ -10,6 +10,7 @@ public enum EventElapseType {
 	ExcludeTimeLeap
 }
 public interface IGameEvent : IPoolable {
+	public string EventID { get; set; }
 	public int RemainingMinutesToTrigger { get; set; }
 	
 	public int StartWithLevel { get; set; }
@@ -35,6 +36,9 @@ public interface IGameEvent : IPoolable {
 public abstract class GameEvent<T> : IGameEvent, ICanSendEvent, ICanGetUtility, ICanGetSystem, ICanRegisterEvent, IPoolable
 	where T : GameEvent<T>, new(){
 	
+	[field: ES3Serializable]
+	public string EventID { get; set; }
+
 	[field: ES3Serializable]
 	public int RemainingMinutesToTrigger { get; set; }
 	

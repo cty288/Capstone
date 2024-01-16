@@ -28,6 +28,7 @@ public class GameEventModel : AbstractSavableModel, IGameEventModel {
 	}
 
 	public void AddEvent(IGameEvent gameEvent, int remainingMinutesToTrigger) {
+		gameEvent.EventID = System.Guid.NewGuid().ToString();
 		gameEvent.RemainingMinutesToTrigger = remainingMinutesToTrigger;
 		gameEvent.OnInitialize();
 		gameEvents.Add(gameEvent);
