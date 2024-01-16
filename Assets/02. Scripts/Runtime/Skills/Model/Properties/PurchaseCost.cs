@@ -5,26 +5,26 @@ using Runtime.DataFramework.Properties;
 using Runtime.Utilities;
 
 namespace _02._Scripts.Runtime.Skills.Model.Properties {
-	public class SkillPurchaseCostInfo : ICloneable{
+	public class PurchaseCostInfo : ICloneable{
 		public Dictionary<string, int> ResourceCost;
 		public int MoneyCost;
 		
 		public object Clone() {
-			return new SkillPurchaseCostInfo() {
+			return new PurchaseCostInfo() {
 				ResourceCost = new Dictionary<string, int>(ResourceCost),
 				MoneyCost = MoneyCost
 			};
 		}
 	}
 	
-	public interface ISkillPurchaseCost : IProperty<SkillPurchaseCostInfo>, ILoadFromConfigProperty {
+	public interface IPurchaseCost : IProperty<PurchaseCostInfo>, ILoadFromConfigProperty {
 		
 	}
 	
 	
-	public class SkillPurchaseCost : AbstractLoadFromConfigProperty<SkillPurchaseCostInfo>, ISkillPurchaseCost {
+	public class PurchaseCost : AbstractLoadFromConfigProperty<PurchaseCostInfo>, IPurchaseCost {
 		protected override PropertyName GetPropertyName() {
-			return PropertyName.skill_purchase_cost;
+			return PropertyName.purchase_cost;
 		}
 		
 		
