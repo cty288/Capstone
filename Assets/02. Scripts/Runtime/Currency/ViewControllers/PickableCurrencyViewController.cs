@@ -8,8 +8,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.Currency.ViewControllers {
 	public interface IPickableCurrencyViewController : IResourceViewController {
-		public ICurrencyEntity OnBuildNewPickableCurrencyEntity(CurrencyType currencyType, int amount,
-			bool addToModelWhenBuilt = true);
+		public ICurrencyEntity OnBuildNewPickableCurrencyEntity(CurrencyType currencyType, int amount);
 		
 		
 	}
@@ -48,17 +47,11 @@ namespace _02._Scripts.Runtime.Currency.ViewControllers {
 			
 		}
 
-		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
-			bool addToModelWhenBuilt = true) {
-			return OnBuildNewPickableCurrencyEntity(currencyTypeBuildFromInspector, amountBuildFromInspector,
-				addToModelWhenBuilt);
+		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+			return OnBuildNewPickableCurrencyEntity(currencyTypeBuildFromInspector, amountBuildFromInspector);
 		}
 
-		public ICurrencyEntity OnBuildNewPickableCurrencyEntity(CurrencyType currencyType, int amount,
-			bool addToModelWhenBuilt = true) {
-			if (commonEntityModel == null) {
-				commonEntityModel = this.GetModel<ICommonEntityModel>();
-			}
+		public ICurrencyEntity OnBuildNewPickableCurrencyEntity(CurrencyType currencyType, int amount) {
 			CurrencyEntity entity = commonEntityModel.GetBuilder<CurrencyEntity>(1).Build();
 			entity.InitCurrency(currencyType, amount);
 			return entity;

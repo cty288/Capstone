@@ -32,8 +32,6 @@ namespace Runtime.RawMaterials.Model.Instances {
 		public override ResourceCategory GetResourceCategory() {
 			return ResourceCategory.RawMaterial;
 		}
- 
-		public override bool Collectable { get; } = true;
 
 		public override IResourceEntity GetReturnToBaseEntity() {
 			return this;

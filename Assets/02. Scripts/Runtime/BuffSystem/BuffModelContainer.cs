@@ -84,8 +84,8 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			return true;
 		}
 		
-		public bool RemoveBuff(string id, IBuff buff) {
-			return RemoveBuff(buff.GetType(), id, out _);
+		public bool RemoveBuff(IBuff buff) {
+			return RemoveBuff(buff.GetType(), buff.BuffOwnerID, out _);
 		}
 		
 		public bool HasBuff<T>(string buffOwnerID, out IBuff buff) where T : IBuff {

@@ -18,8 +18,7 @@ namespace Runtime.GameResources.ViewControllers {
     public interface IPickableResourceViewController : IResourceViewController {
         public bool HoldAbsorb { get; set; }
         
-        public IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
-            bool addToModelWhenBuilt = true);
+        public IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity);
     }
 
     /// <summary>
@@ -171,8 +170,7 @@ namespace Runtime.GameResources.ViewControllers {
         /// </summary>
         public bool HoldAbsorb { get; set; }
 
-        public abstract IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
-            bool addToModelWhenBuilt = true);
+        public abstract IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity);
 
         protected override IEntity OnBuildNewEntity() {
             return OnBuildNewPickableResourceEntity(false, 1);

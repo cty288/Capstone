@@ -359,15 +359,12 @@ namespace Runtime.Inventory.Model {
 					hasDefaultWeapon = true;
 				}
 				
-				if (returnToBaseEntity == null || returnToBaseEntity.UUID != entity.UUID) {
+				if (returnToBaseEntity.UUID != entity.UUID) {
 					(_, IEntityModel model) = GlobalEntities.GetEntityAndModel(entity.UUID);
 					model.RemoveEntity(entity.UUID, true);
 				}
 
-				if (returnToBaseEntity != null) {
-					model.AddToBaseStock(returnToBaseEntity);
-				}
-				
+				model.AddToBaseStock(returnToBaseEntity);
 			}
 
 			if (!hasDefaultWeapon) {

@@ -62,8 +62,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         [SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
         [SerializeField] protected int enemyCount = 0;
         private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
-
-        private List<IEntity> templateEnemies = new List<IEntity>();
+        
         //test
         public int totalEnemiesSpawned;
         public bool isActive = true;
@@ -105,12 +104,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             base.OnEntityRecycled(ent);
             OnExitLevel();
             cooldownTimer = 0f;
-            IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
-            foreach (IEntity enemyEntity in templateEnemies) {
-                enemyModel.RemoveEntity(enemyEntity.UUID, true);
-            }
-            templateEnemies.Clear();
-            OnRecycled();
         }
 
         protected abstract ISubAreaLevelEntity OnInitSubLevelEntity(SubAreaLevelBuilder<T> builder);
@@ -131,7 +124,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
                     prefabNames[i + 1] = enemy.variants[i].name;
                 }
 				
-                templateEnemies.Add(enemyEntity);
+                //templateEnemies.Add(enemyEntity);
                 spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefabNames,
                     enemy.minRarity, enemy.maxRarity));
             }
@@ -147,7 +140,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         protected override void Update()
         {
             base.Update();
-            if(BoundEntity == null) return;
+            
             if (!BoundEntity.IsActiveSpawner) {
                 isActive = false;
                 if (cooldownTimer <= areaSpawningCooldown)

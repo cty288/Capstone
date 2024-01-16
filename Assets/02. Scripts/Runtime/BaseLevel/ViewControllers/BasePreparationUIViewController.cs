@@ -61,7 +61,8 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 		canClose = false;
 		CalculateEmptySlotCount();
 
-		weaponSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Weapon));
+		weaponSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Weapon).Union(
+			inventoryModel.GetBaseStock(ResourceCategory.WeaponParts)).ToHashSet());
 		skillSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Skill));
 		
 		weaponSlotLayout.RegisterOnSlotClicked(OnSlotClicked);

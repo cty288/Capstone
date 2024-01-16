@@ -914,38 +914,29 @@ MonoBehaviour:
   playerSpawnPoints:
   - {fileID: 554314296457167679}
   enemies:
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+  - prefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
       type: 3}
-    variants: []
     minRarity: 1
     maxRarity: 2
-  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+  - prefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
       type: 3}
-    variants: []
     minRarity: 1
     maxRarity: 2
-  - mainPrefab: {fileID: 7182693560717081365, guid: f885754543c182943ad6e9cfabe2c0ed,
+  - prefab: {fileID: 7182693560717081365, guid: f885754543c182943ad6e9cfabe2c0ed,
       type: 3}
-    variants: []
     minRarity: 1
     maxRarity: 2
-  bossSpawnCostInfo:
-    _serializedList: []
-  pillarRewardsInfo:
-    RewardsInfo:
-      _serializedList: []
+  bossSpawnCostInfo: []
   hasPillars: 0
   pillarPrefabName: BossPillar
+  pillarCount: 4
   maxExtent: {fileID: 0}
   playerSpawner: {fileID: 0}
-  sandstormProbability:
-  - 0
-  - 0
-  - 0
-  subAreaLevelPrefabs: []
+  maxEnemiesBaseValue: 50
   autoUpdateNavMeshOnStart: 1
   ambientMusic: {fileID: 8300000, guid: 40c173f020bb645448cede9fae874c2d, type: 3}
   relativeVolume: 1
+  enemyCount: 0
 --- !u!1 &6048053586552478868
 GameObject:
   m_ObjectHideFlags: 0

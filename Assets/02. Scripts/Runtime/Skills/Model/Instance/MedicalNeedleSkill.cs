@@ -11,7 +11,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance {
 		protected override void OnInitModifiers(int rarity) {
 			
 		}
-		public override bool Collectable { get; } = true;
+
 		protected override string GetDescription(string defaultLocalizationKey) {
 			return Localization.Get(defaultLocalizationKey);
 		}

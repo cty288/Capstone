@@ -40,7 +40,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		
 		//cached
 		private List<string> entityIDsToRemove = new List<string>();
-		private Dictionary<IBuff, string> buffsToRemove = new Dictionary<IBuff, string>();
+		private HashSet<IBuff> buffsToRemove = new HashSet<IBuff>();
 
 		//life cycle: OnInitialize -> OnValidate -> (When Add) OnInitialize -> OnAwake -> OnStack -> OnStart -> OnTick -> OnEnd
 		protected override void OnInit() {
@@ -152,10 +152,9 @@ namespace _02._Scripts.Runtime.BuffSystem {
 							BuffStatus status = buff.OnTick();
 							
 							if (status == BuffStatus.End) {
-								
-								buffsToRemove.TryAdd(buff, buff.BuffOwnerID);
-								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
 								buff.OnEnd();
+								buffsToRemove.Add(buff);
+								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
 							}
 							else {
 								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnUpdate);
@@ -163,13 +162,12 @@ namespace _02._Scripts.Runtime.BuffSystem {
 						}
 					}
 					
-					if (buff.MaxDuration > 0 && !buffsToRemove.ContainsKey(buff)) {
+					if (buff.MaxDuration > 0 && !buffsToRemove.Contains(buff)) {
 						buff.RemainingDuration = Mathf.Max(0, buff.RemainingDuration - Time.deltaTime);
 						if (buff.RemainingDuration == 0) {
-							
-							buffsToRemove.TryAdd(buff, buff.BuffOwnerID);
-							SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
 							buff.OnEnd();
+							buffsToRemove.Add(buff);
+							SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
 						}
 					}
 				}
@@ -180,7 +178,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			}
 			
 			foreach (var buff in buffsToRemove) {
-				buffModel.BuffModelContainer.RemoveBuff(buff.Value, buff.Key);
+				buffModel.BuffModelContainer.RemoveBuff(buff);
 			}
 		}
 
