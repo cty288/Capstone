@@ -50,7 +50,8 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         base.OnStart();
         agent.enabled = false;
         rb.isKinematic = true;
-        
+        pivot.transform.position = Vector3.zero;
+        pivot.transform.rotation = Quaternion.identity;
         shieldDuration = enemyEntity.GetCustomDataValue<float>("shield", "shieldDuration");
         bladeCount = enemyEntity.GetCustomDataValue<int>("shield", "bladeCount");
         taskStatus = TaskStatus.Running;
