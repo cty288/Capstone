@@ -5,11 +5,11 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 	[Serializable]
 	public struct ResearchLevelInfo {
 		public int TotalExpRequired;
-		public string ResearchedEntityName;
+		public string[] ResearchedEntityNames;
 		
-		public ResearchLevelInfo(int totalExpRequired, string researchedEntityName) {
+		public ResearchLevelInfo(int totalExpRequired, string[] researchedEntityNames) {
 			TotalExpRequired = totalExpRequired;
-			ResearchedEntityName = researchedEntityName;
+			ResearchedEntityNames = researchedEntityNames;
 		}
 	}
 }

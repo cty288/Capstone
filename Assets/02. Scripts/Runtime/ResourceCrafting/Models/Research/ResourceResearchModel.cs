@@ -39,7 +39,7 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 			
 			while (table.HasEntity(index.ToString())) {
 				int totalExp = table.Get<int>(index.ToString(), "exp");
-				string entityName = table.Get<string>(index.ToString(), "EntityName");
+				string[] entityName = table.Get<string[]>(index.ToString(), "EntityName");
 				researchLevelInfos.Add(new ResearchLevelInfo(totalExp, entityName));
 				index++;
 			}
