@@ -143,6 +143,10 @@ namespace Runtime.Utilities.ConfigSheet {
 			return default(T);
 		}
 		
+		public bool HasEntity(string entityName) {
+			return data.ContainsKey(entityName);
+		}
+		
 		private static bool IsLineBreak(string currentString) {
 			return currentString.Length == 1 && (currentString[0] == '\r' || currentString[0] == '\n')
 			       || currentString.Length == 2 && currentString.Equals(Environment.NewLine);

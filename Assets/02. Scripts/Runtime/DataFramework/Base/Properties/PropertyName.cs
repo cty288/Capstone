@@ -73,6 +73,8 @@ namespace Runtime.DataFramework.Properties
 		skill_use_cost,
 		skill_upgrade_cost,
 		purchase_cost,
-		boss_spawn_condition
+		boss_spawn_condition,
+		research_point,
+		exp
 	}
 }
