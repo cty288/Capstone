@@ -118,11 +118,7 @@ Shader "Hidden/PostSandstorm"
 				lineColor = float4(1 - (1 - alphas.g) * (1 - lineColor.rgb), pow(max(lineColor.a*(_NoiseStrengths.w), alphas.g*_SandstormAlpha), 1.f)); // Screen
 				
 				//return float4(depth.rrr, 1);
-				color = alphaBlend(lineColor, color);
-				color *= 2*_Posterization;
-				color = ceil(color);
-				color /= 2*_Posterization;
-				return color;
+				return alphaBlend(lineColor, color);
 			}
 			
 			ENDHLSL

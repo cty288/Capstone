@@ -102,7 +102,7 @@ public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel
 			ResourceVCFactory.GetLocalizedResourceCategory(entity.GetResourceCategory()),
 			entity.GetResourcePropertyDescriptions(), entity.GetSkillUseCostOfCurrentLevel());
 
-		PurchaseCostInfo costInfo = entity.GetPurchaseCost();
+		SkillPurchaseCostInfo costInfo = entity.GetSkillPurchaseCost();
 		HashSet<PreparationSlot> ownedResources = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
 
 
@@ -116,7 +116,7 @@ public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel
 		}
 	}
 	
-	private bool CheckIsAllEnough(PurchaseCostInfo costInfo, HashSet<PreparationSlot> ownedResources) {
+	private bool CheckIsAllEnough(SkillPurchaseCostInfo costInfo, HashSet<PreparationSlot> ownedResources) {
 		bool isAllEnough = true;
 
 		if (costInfo != null) {
@@ -189,7 +189,7 @@ public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel
 			return;
 		}
 		
-		PurchaseCostInfo costInfo = entity.GetPurchaseCost();
+		SkillPurchaseCostInfo costInfo = entity.GetSkillPurchaseCost();
 		HashSet<PreparationSlot> ownedResources = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
 		bool isAllEnough = CheckIsAllEnough(costInfo, ownedResources);
 

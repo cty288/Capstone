@@ -36,12 +36,8 @@ namespace Runtime.RawMaterials.ViewControllers {
 		}
 
 		
-		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
-			bool addToModelWhenBuilt = true) {
-			if (rawMaterialModel == null) {
-                rawMaterialModel = this.GetModel<IRawMaterialModel>();
-            }
-			RawMaterialBuilder<T> builder = rawMaterialModel.GetRawMaterialBuilder<T>(addToModelWhenBuilt);
+		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+			RawMaterialBuilder<T> builder = rawMaterialModel.GetRawMaterialBuilder<T>();
 			if (setRarity) {
 				builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
 			}

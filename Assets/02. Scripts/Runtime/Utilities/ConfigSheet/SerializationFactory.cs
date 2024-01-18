@@ -47,7 +47,7 @@ namespace Runtime.Utilities.ConfigSheet {
 			RegisterType("RecoilInfo", typeof(RecoilInfo));
 			RegisterType("ItemDropCollection", typeof(ItemDropCollection));
 			RegisterType("CurrencyType", typeof(CurrencyType));
-			RegisterType("SkillPurchaseCostInfo", typeof(PurchaseCostInfo));
+			RegisterType("SkillPurchaseCostInfo", typeof(SkillPurchaseCostInfo));
 			RegisterType("CollectableResourceCurrencyInfo", typeof(CollectableResourceCurrencyInfo));
 
 		}

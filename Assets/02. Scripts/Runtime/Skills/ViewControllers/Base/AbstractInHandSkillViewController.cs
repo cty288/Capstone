@@ -28,13 +28,12 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 			skillModel = this.GetModel<ISkillModel>();
 		}
 
-		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
-			bool addToModelWhenBuilt = true) {
+		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
 			if(skillModel == null) {
 				skillModel = this.GetModel<ISkillModel>();
 			}
 
-			SkillBuilder<T> builder = skillModel.GetSkillBuilder<T>(1, addToModelWhenBuilt);
+			SkillBuilder<T> builder = skillModel.GetSkillBuilder<T>(1);
 			if (setRarity) {
 				builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
 			}

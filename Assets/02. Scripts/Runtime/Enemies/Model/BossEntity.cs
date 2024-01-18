@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-using _02._Scripts.Runtime.Baits.Model.Property;
-using _02._Scripts.Runtime.Currency.Model;
+﻿using _02._Scripts.Runtime.Baits.Model.Property;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
@@ -9,47 +6,36 @@ using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
-using Vector2 = UnityEngine.Vector2;
 
 namespace Runtime.Enemies.Model {
 	
 	public interface IBossEntity : IEnemyEntity {
-		public bool IsBossSpawnConditionSatisfied(Dictionary<CurrencyType, float> currencyPercentage);
+		public BindableList<TasteType> GetTaste();
+		
+		public BindableProperty<float> GetVigiliance();
 	}
 	public abstract class BossEntity<T> : EnemyEntity<T>, IBossEntity where T : BossEntity<T>, new()  {
-	
+		protected ITasteProperty tasteProperty;
+		protected IVigilianceProperty vigilianceProperty;
 
-		private IBossSpawnConditionProperty bossSpawnConditionProperty;
 		protected override void OnEntityRegisterAdditionalProperties() {
-			//RegisterInitialProperty<ITasteProperty>(new Taste());
-			//RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
-			RegisterInitialProperty<IBossSpawnConditionProperty>(new BossSpawnCondition());
+			RegisterInitialProperty<ITasteProperty>(new Taste());
+			RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
 			base.OnEntityRegisterAdditionalProperties();
 		}
 		
 		public override void OnAwake() {
 			base.OnAwake();
-			bossSpawnConditionProperty = GetProperty<IBossSpawnConditionProperty>();
+			tasteProperty = GetProperty<ITasteProperty>();
+			vigilianceProperty = GetProperty<IVigilianceProperty>();
 		}
 
-		public bool IsBossSpawnConditionSatisfied(Dictionary<CurrencyType, float> currencyPercentage) {
-			foreach (var pair in bossSpawnConditionProperty.RealValue.Value) {
-				
-				
-				if (!currencyPercentage.ContainsKey(pair.Key)) {
-					if(pair.Value.x == 0 || pair.Value.y == 0) {
-						continue;
-					}
-					return false;
-				}
-				Vector2 range = pair.Value;
-				float percentage = currencyPercentage[pair.Key];
-				if (percentage < range.x || percentage > range.y) {
-					return false;
-				}
-			}
-			
-			return true;
+		public BindableList<TasteType> GetTaste() {
+			return this.tasteProperty.RealValues;
+		}
+
+		public BindableProperty<float> GetVigiliance() {
+			return this.vigilianceProperty.RealValue;
 		}
 
 

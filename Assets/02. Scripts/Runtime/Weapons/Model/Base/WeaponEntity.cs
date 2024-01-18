@@ -112,7 +112,7 @@ namespace Runtime.Weapons.Model.Base
             list.Add(() => new ResourceBuffedPropertyDescription<float>(attackSpeedProperty,
                 "PropertyIconAttackSpeed",
                 Localization.Get("PROPERTY_ICON_ATTACk_SPEED"),
-                (value) => Localization.GetFormat("PROPERTY_ICON_ATTACk_SPEED_DESC", value.ToString("f2")),
+                (value) => Localization.GetFormat("PROPERTY_ICON_ATTACk_SPEED_DESC", value),
                 (initial, real) => (Math.Abs(real - initial) < 0.01f) ? 0 : (real > initial) ? -1 : 1));
 
             
@@ -172,7 +172,6 @@ namespace Runtime.Weapons.Model.Base
         protected virtual void InitWeaponPartsSlots() {
             foreach (var t in Enum.GetValues(typeof(WeaponPartType))) {
                 WeaponPartType weaponPartType = (WeaponPartType) t;
-                if(weaponParts.ContainsKey(weaponPartType)) continue;
                 weaponParts.Add(weaponPartType, new HashSet<WeaponPartsSlot>());
                 AddWeaponPartsSlot(weaponPartType, false);
                 //AddWeaponPartsSlot(weaponPartType, false);
@@ -401,20 +400,6 @@ namespace Runtime.Weapons.Model.Base
          ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
          public ICanDealDamageRootViewController RootViewController => null;
          public override IResourceEntity GetReturnToBaseEntity() {
-             //remove all weapon parts
-                foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
-                    foreach (WeaponPartsSlot slot in part.Value) {
-                        string uuid = slot.GetLastItemUUID();
-                        slot.Clear();
-                        
-                        if (uuid != null) {
-                            GlobalEntities.GetEntityAndModel(uuid).Item2
-                                ?.RemoveEntity(uuid, true);
-                        }
-                        
-                       
-                    }
-                }
              return this;
          }
     }

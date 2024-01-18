@@ -49,7 +49,7 @@ namespace Runtime.Weapons
         protected override void OnInitModifiers(int rarity)
         {
         }
-        public override bool Collectable { get; } = true;
+
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
             return null;

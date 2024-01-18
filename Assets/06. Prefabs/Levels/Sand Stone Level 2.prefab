@@ -45843,7 +45843,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2870
+  m_VersionIndex: 2867
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -57077,7 +57077,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 19770
+  m_VersionIndex: 19767
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -69669,98 +69669,17 @@ MonoBehaviour:
     minRarity: 1
     maxRarity: 3
   bossSpawnCostInfo:
-    _serializedList:
-    - Key: 0
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 10
-          - Key: 2
-            Value: 20
-          - Key: 3
-            Value: 35
-          - Key: 4
-            Value: 50
-    - Key: 1
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 15
-          - Key: 2
-            Value: 25
-          - Key: 3
-            Value: 35
-          - Key: 4
-            Value: 50
-    - Key: 2
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 5
-          - Key: 2
-            Value: 15
-          - Key: 3
-            Value: 30
-          - Key: 4
-            Value: 50
-    - Key: 3
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 5
-          - Key: 2
-            Value: 20
-          - Key: 3
-            Value: 35
-          - Key: 4
-            Value: 50
-  pillarRewardsInfo:
-    RewardsInfo:
-      _serializedList:
-      - Key: 1
-        Value:
-        - RewardType: 0
-          Level: 1
-          AmountRange: {x: 1, y: 1}
-      - Key: 2
-        Value:
-        - RewardType: 1
-          Level: 1
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          Level: 1
-          AmountRange: {x: 1, y: 1}
-      - Key: 3
-        Value:
-        - RewardType: 1
-          Level: 2
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          Level: 1
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          Level: 2
-          AmountRange: {x: 1, y: 1}
-      - Key: 4
-        Value:
-        - RewardType: 1
-          Level: 3
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          Level: 1
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          Level: 2
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          Level: 3
-          AmountRange: {x: 1, y: 1}
+  - CurrencyType: 0
+    Cost: 10
+  - CurrencyType: 1
+    Cost: 10
+  - CurrencyType: 2
+    Cost: 10
+  - CurrencyType: 3
+    Cost: 10
   hasPillars: 1
   pillarPrefabName: BossPillar
+  pillarCount: 4
   maxExtent: {fileID: 1595554011}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}

@@ -22,12 +22,12 @@ public class ExitDoorUI : AbstractPanelContainer, IController, IGameUIPanel {
 
 	private void OnNextLevelButtonClicked() {
 		this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
-		MainUI.Singleton.OpenOrGetClose<ExitDoorUI>(MainUI.Singleton, null, false);
+		MainUI.Singleton.OpenOrGetClose<ExitDoorUI>(MainUI.Singleton, null);
 	}
 
 	private void OnBaseButtonClicked() {
 		this.SendCommand<BackToBaseCommand>(BackToBaseCommand.Allocate());
-		MainUI.Singleton.OpenOrGetClose<ExitDoorUI>(MainUI.Singleton, null, false);
+		MainUI.Singleton.OpenOrGetClose<ExitDoorUI>(MainUI.Singleton, null);
 	}
 
 	public override void OnOpen(UIMsg msg) {

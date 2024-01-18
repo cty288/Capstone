@@ -116,13 +116,11 @@ namespace Runtime.Weapons.ViewControllers.Base
             animationSMBManager.Event.AddListener(OnAnimationEvent);
         }
         
-        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
-            bool addToModelWhenBuilt = true) {
+        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
             if(weaponModel == null) {
                 weaponModel = this.GetModel<IWeaponModel>();
             }
-
-            WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>(addToModelWhenBuilt);
+            WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>();
             if (setRarity) {
                 builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
             }

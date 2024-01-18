@@ -101,8 +101,6 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 		public override string OnGroundVCPrefabName { get; } = "Bait";
 
 		public override string DeployedVCPrefabName { get; } = "Bait_Deployed";
-		public override bool Collectable { get; } = false;
-
 		public BindableProperty<float> GetVigiliance() {
 			return this.vigilianceProperty.RealValue;
 		}

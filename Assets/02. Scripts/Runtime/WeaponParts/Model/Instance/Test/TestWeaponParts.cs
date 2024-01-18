@@ -15,7 +15,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 			
 		}
 
-		public override bool Collectable { get; } = true;
+		
 
 		protected override void OnInitModifiers(int rarity) {
 			

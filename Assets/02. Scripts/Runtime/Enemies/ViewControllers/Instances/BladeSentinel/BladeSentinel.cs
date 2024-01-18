@@ -55,7 +55,8 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
             new AutoConfigCustomProperty("shockWave"),
             new AutoConfigCustomProperty("danmaku"),
             new AutoConfigCustomProperty("ranges"),
-            new AutoConfigCustomProperty("melee")
+            new AutoConfigCustomProperty("melee"),
+            new AutoConfigCustomProperty("shield")
         };
     }
 }
@@ -116,6 +117,12 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
                 break;
             case "MeleeBladeStopCheck":
                 meleeBlade.StopCheckHit();
+                break;
+            case "ActivateShield":
+                BoundEntity.IsInvincible.Value = true;
+                break;
+            case "DeactivateShield":
+                BoundEntity.IsInvincible.Value = false;
                 break;
             default:
                 break;

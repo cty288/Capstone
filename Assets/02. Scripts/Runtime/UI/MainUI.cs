@@ -27,8 +27,7 @@ namespace Runtime.UI {
 		}
 
 		private void OnOpenPillarUI(OnOpenPillarUI e) {
-			OpenOrGetClose<PillarUIViewController>(this, e, false);
-			
+			OpenOrGetClose<PillarUIViewController>(this, e);
 		}
 
 		private void Update() {
@@ -72,19 +71,9 @@ namespace Runtime.UI {
 			return panel;
 		}
 
-		/// <summary>
-		/// Use this Open
-		/// </summary>
-		/// <param name="parent"></param>
-		/// <param name="message"></param>
-		/// <param name="switchUIPlayerMap"></param>
-		/// <param name="createNewIfNotExist"></param>
-		/// <param name="assetNameIfNotExist"></param>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		public T Open<T>(IPanelContainer parent, UIMsg message, bool isPopup, bool switchUIPlayerMap = true,
+		public T Open<T>(IPanelContainer parent, UIMsg message, bool switchUIPlayerMap = true,
 			bool createNewIfNotExist = true, string assetNameIfNotExist = "") where T : class, IPanel {
-			if (currentMainPanel != null && !isPopup) {
+			if (currentMainPanel != null) {
 				ClosePanel(currentMainPanel);
 			}
 		
@@ -109,7 +98,7 @@ namespace Runtime.UI {
 		}
 		
 		
-		public T OpenOrGetClose<T>(IPanelContainer parent, UIMsg message, bool isPopup, bool switchUIPlayerMap = true, 
+		public T OpenOrGetClose<T>(IPanelContainer parent, UIMsg message, bool switchUIPlayerMap = true, 
 			bool createNewIfNotExist = true, string assetNameIfNotExist = "")  where T : class, IPanel {
 			if (currentMainPanel!=null && currentMainPanel.GetType() == typeof(T)) {
 				GetAndClose(currentMainPanel, switchUIPlayerMap);
@@ -117,7 +106,7 @@ namespace Runtime.UI {
 			}
 
 
-			return Open<T>(parent, message,  isPopup, switchUIPlayerMap, createNewIfNotExist, assetNameIfNotExist);
+			return Open<T>(parent, message, switchUIPlayerMap, createNewIfNotExist, assetNameIfNotExist);
 		}
 
 		public override void ClosePanel(IPanel panel, bool alsoCloseChild = true) {
