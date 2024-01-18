@@ -14,6 +14,7 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 		public ResourceResearchGroup(ResearchLevelInfo[] researchLevelInfos) {
 			this.currentExp = 0;
 			this.currentLevel = 0;
+			this.researchLevelInfos = researchLevelInfos;
 		}
 
 		public ResourceResearchGroup() {
@@ -28,12 +29,21 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 			int totalExp = currentExp + exp;
 			int level = currentLevel;
 			int levelStart = currentLevel;
+			bool levelUp = false;
 			while (level < researchLevelInfos.Length && totalExp >= researchLevelInfos[level].TotalExpRequired) {
 				level++;
+				levelUp = true;
 			}
 
-			addedResearchLevelInfos = new ResearchLevelInfo[level - levelStart];
-			Array.Copy(this.researchLevelInfos, levelStart, researchLevelInfos, 0, level - levelStart);
+			if (levelUp) {
+				addedResearchLevelInfos = new ResearchLevelInfo[level - levelStart];
+				Array.Copy(this.researchLevelInfos, levelStart + 1, addedResearchLevelInfos, 0, level - levelStart);
+			} else {
+				addedResearchLevelInfos = Array.Empty<ResearchLevelInfo>();
+			}
+
+			
+			//Array.Copy(this.researchLevelInfos, levelStart, addedResearchLevelInfos, 0, level - levelStart);
 			return level;
 		}
 		
@@ -44,6 +54,8 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 			return level;
 		}
 		
-		
+		public bool IsMaxLevel() {
+			return currentLevel == researchLevelInfos.Length - 1;
+		}
 	}
 }

@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
+using _02._Scripts.Runtime.ResourceCrafting.Models;
 using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.TimeSystem;
@@ -15,6 +16,7 @@ using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.Model.Properties;
 using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.RawMaterials.Model.Base;
@@ -58,6 +60,7 @@ namespace Framework {
 			this.RegisterModel<IPillarModel>(new PillarModel());
 			this.RegisterModel<IGameTimeModel>(new GameTimeModel());
 			this.RegisterModel<IGameEventModel>(new GameEventModel());
+			this.RegisterModel<IResourceResearchModel>(new ResourceResearchModel());
 			
 			
 			//???

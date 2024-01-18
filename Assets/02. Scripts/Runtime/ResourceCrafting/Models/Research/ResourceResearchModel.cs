@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Framework;
 using Runtime.GameResources.Model.Base;
 using Runtime.RawMaterials.Model.Base;
@@ -15,20 +16,29 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 			int totalExp, out ResearchLevelInfo[] addedResearchLevelInfos, out int researchDays);
 
 		public int AddExp(ResourceCategory category, int exp, out ResearchLevelInfo[] addedResearchLevelInfos);
+		
+		public bool IsAllResearched(ResourceCategory category);
 
 	}
 	public class ResourceResearchModel : AbstractSavableModel, IResourceResearchModel {
-		public int expResearchPerDay = 7;
+		public static int ExpResearchPerDay = 7;
+		public static float CostPerExp = 10f;
+
 		[ES3Serializable] 
-		private Dictionary<ResourceCategory, ResourceResearchGroup> resourceResearchGroups;
+		private Dictionary<ResourceCategory, ResourceResearchGroup> resourceResearchGroups =
+			new Dictionary<ResourceCategory, ResourceResearchGroup>();
 
 		protected override void OnInit() {
 			base.OnInit();
 			if (IsFirstTimeCreated) {
-				expResearchPerDay =
+				ExpResearchPerDay =
 					int.Parse(ConfigDatas.Singleton.GlobalDataTable.Get<string>("EXP_RESEARCH_PER_DAY", "Value1"));
 
+				CostPerExp = float.Parse(ConfigDatas.Singleton.GlobalDataTable.Get<string>("COST_PER_EXP", "Value1"));
+				
 				LoadResourceGroupsFromConfig(ResourceCategory.Skill, ConfigDatas.Singleton.ResearchSkillsConfigTable);
+				LoadResourceGroupsFromConfig(ResourceCategory.WeaponParts,
+					ConfigDatas.Singleton.ResearchWeaponPartsConfigTable);
 			}
 		}
 
@@ -39,7 +49,7 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 			
 			while (table.HasEntity(index.ToString())) {
 				int totalExp = table.Get<int>(index.ToString(), "exp");
-				string[] entityName = table.Get<string[]>(index.ToString(), "EntityName");
+				string[] entityName = table.Get<String[]>(index.ToString(), "EntityNames");
 				researchLevelInfos.Add(new ResearchLevelInfo(totalExp, entityName));
 				index++;
 			}
@@ -62,12 +72,16 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 		public int GetLevelIfExpAdded(ResourceCategory category, int totalExp, out ResearchLevelInfo[] addedResearchLevelInfos,
 			out int researchDays) {
 			int level = resourceResearchGroups[category].GetLevelIfExpAdded(totalExp, out addedResearchLevelInfos);
-			researchDays = Mathf.CeilToInt(addedResearchLevelInfos.Length / (float) expResearchPerDay);
+			researchDays = Mathf.CeilToInt(totalExp / (float) ExpResearchPerDay);
 			return level;
 		}
 
 		public int AddExp(ResourceCategory category, int exp, out ResearchLevelInfo[] addedResearchLevelInfos) {
 			return resourceResearchGroups[category].AddExp(exp, out addedResearchLevelInfos);
+		}
+
+		public bool IsAllResearched(ResourceCategory category) {
+			return resourceResearchGroups[category].IsMaxLevel();
 		}
 	}
 }
