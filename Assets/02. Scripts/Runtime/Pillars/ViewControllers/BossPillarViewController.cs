@@ -8,8 +8,11 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers;
+using _02._Scripts.Runtime.Pillars.Models;
+using _02._Scripts.Runtime.Rewards;
 using _02._Scripts.Runtime.Utilities;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
+using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MikroFramework.Architecture;
@@ -37,51 +40,61 @@ using Random = UnityEngine.Random;
 //using PropertyName = UnityEngine.PropertyName;
 
 namespace Runtime.Spawning.ViewControllers.Instances {
-	public interface IBossPillarViewController : IDirectorViewController {
+	public interface IBossPillarViewController {
 		//IEntity OnBuildNewEntity(int level, Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
-		void SetBossSpawnCosts(Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
-		
+		//void SetBossSpawnCosts(Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts);
+
+		string InitPillar(ILevelEntity levelEntity,
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts, PillarRewardsInfo rewardsInfo);
 		BoxCollider SpawnSizeCollider { get; }
+		
+		IPillarEntity Entity { get; }
 	}
-	public class BossPillarViewController : AbstractBasicEntityViewController<BossPillarEntity>, IDirectorViewController, IBossPillarViewController {
+	
+	
+	public class BossPillarViewController : AbstractBasicEntityViewController<PillarEntity>, IBossPillarViewController {
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
-		protected IDirectorModel directorModel;
+		protected IPillarModel pillarModel;
 		protected ILevelEntity LevelEntity;
 		protected int levelNumber;
-		protected Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts;
-		protected Action<GameObject, IDirectorViewController> onSpawnEnemy;
+		
+		
 		protected ILevelModel levelModel;
 		protected ParticleSystem[] particleSystems;
-		protected bool isActivating = false;
+		//protected bool isActivating = false;
 		protected ILevelSystem levelSystem;
 		[SerializeField] private Vector2 waitTimeRange = new Vector2(10, 20);
 		[SerializeField] private GameObject normalTrail;
-		
+		[SerializeField] private GameObject activatedTrail;
+		[SerializeField] private Transform rewardSpawnPos;
 		protected override void Awake() {
 			base.Awake();
-			directorModel = this.GetModel<IDirectorModel>();
+			pillarModel = this.GetModel<IPillarModel>();
 			levelModel = this.GetModel<ILevelModel>();
 			levelSystem = this.GetSystem<ILevelSystem>();
 			particleSystems = GetComponentsInChildren<ParticleSystem>(true);
 		}
 
 		protected override IEntity OnBuildNewEntity() {
-			return OnBuildNewEntity(1, new Dictionary<CurrencyType, LevelBossSpawnCostInfo>());
+			return OnBuildNewEntity(1, new Dictionary<CurrencyType, RewardCostInfo>(), default);
 		}
 		
-		public IEntity OnBuildNewEntity(int level, Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts) {
-			DirectorBuilder<BossPillarEntity> builder = directorModel.GetDirectorBuilder<BossPillarEntity>();
-			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level)
-				//TODO: set other property base values here
-				.SetProperty(new PropertyNameInfo(PropertyName.spawn_boss_cost), bossSpawnCosts);
-
+		public IEntity OnBuildNewEntity(int level,
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts, PillarRewardsInfo rewardsInfo) {
+			
+			PillarBuilder<PillarEntity> builder = pillarModel.GetPillarBuilder<PillarEntity>();
+			builder.SetProperty(new PropertyNameInfo(PropertyName.level_number), level).SetRewardCost(rewardCosts)
+				.SetRewardsInfo(rewardsInfo);
 			return builder.Build();
 		}
 
 		protected override void OnEntityStart() {
+			
 			levelModel.CurrentLevel.Value.IsInBossFight.RegisterOnValueChanged(OnBossFightStatusChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			this.RegisterEvent<OnRequestPillarSpawnBoss>(OnRequestPillarSpawnBoss)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			BoundEntity.Status.RegisterWithInitValue(OnPillarStatusChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
 			foreach (var system in particleSystems) {
@@ -91,6 +104,18 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			normalTrail.gameObject.SetActive(true);
 		}
 
+		private void OnPillarStatusChanged(PillarStatus oldStatus, PillarStatus newStatus) {
+			UpdateInteractHint();
+			normalTrail.gameObject.SetActive(newStatus == PillarStatus.Idle);
+			activatedTrail.gameObject.SetActive(newStatus == PillarStatus.Activated);
+
+			if (newStatus == PillarStatus.Spawning) {
+				PlaySpawningParticles();
+			}
+			else {
+				StopSpawningParticles();
+			}
+		}
 
 
 		private void OnBossFightStatusChanged(bool arg1, bool status) {
@@ -104,10 +129,15 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				return (null, Localization.Get("PILLAR_ERROR_COMBAT"), b.Item3);
 			}
 
-			if (isActivating) {
-				return (null, Localization.Get("DEPLOY_ERROR_ACTIVATING"), b.Item3);
+			switch (BoundEntity.Status.Value) {
+				case PillarStatus.Idle:
+					return b;
+				case PillarStatus.Spawning:
+					return (null, Localization.Get("DEPLOY_ERROR_ACTIVATING"), b.Item3);
+				case PillarStatus.Activated:
+					return (null, Localization.Get("DEPLOY_ERROR_ACTIVATED"), b.Item3);
 			}
-			
+
 			return b;
 			
 		}
@@ -122,61 +152,58 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		protected override void OnBindEntityProperty() {
 			
 		}
-
-		public void SetLevelEntity(ILevelEntity levelEntity) {
+		
+		
+		public string InitPillar(ILevelEntity levelEntity,
+			Dictionary<CurrencyType, RewardCostInfo> rewardCosts, PillarRewardsInfo rewardsInfo) {
+		
 			LevelEntity = levelEntity;
 			levelNumber = levelEntity.GetCurrentLevelCount();
-			IEntity ent = OnBuildNewEntity(levelNumber, bossSpawnCosts);
+			IEntity ent = OnBuildNewEntity(levelNumber, rewardCosts, rewardsInfo);
 			InitWithID(ent.UUID);
             
 			//for some reason we need to do this again
 			LevelEntity = levelEntity;
 			levelNumber = levelEntity.GetCurrentLevelCount();
-			bossSpawnCosts = BoundEntity.GetProperty<ISpawnBossCost>().RealValue.Value;
+			return ent.UUID;
 		}
 
-		public void SetLevelViewController(ILevelViewController levelViewController)
-		{
-			// LevelVC = levelViewController;
-		}
 
-		public IUnRegister RegisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy) {
-			this.onSpawnEnemy += onSpawnEnemy;
-			return new DirectorOnSpawnEnemyUnregister(this, onSpawnEnemy);
-		}
 
-		public void UnregisterOnSpawnEnemy(Action<GameObject, IDirectorViewController> onSpawnEnemy) {
-			this.onSpawnEnemy -= onSpawnEnemy;
+		private void PlaySpawningParticles() {
+			foreach (var system in particleSystems) {
+				system.loop = true;
+				system.Play();
+			}
 		}
-
-		public void SetBossSpawnCosts(Dictionary<CurrencyType, LevelBossSpawnCostInfo> bossSpawnCosts) {
-			this.bossSpawnCosts = bossSpawnCosts;
+		
+		private void StopSpawningParticles() {
+			foreach (var system in particleSystems) {
+				system.loop = false;
+			}
 		}
 
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
 
+		public IPillarEntity Entity => BoundEntity;
+
 		protected async UniTask SpawnBoss(int rarity) {
 			Debug.Log("Spawn boss");
-			foreach (var system in particleSystems) {
-				system.loop = true;
-				system.Play();
-			}
+			PlaySpawningParticles();
 			normalTrail.gameObject.SetActive(false);
-			isActivating = true;
+			BoundEntity.Status.Value = PillarStatus.Spawning;
 			UpdateInteractHint();
 
 			await UniTask.WaitForSeconds(Random.Range(waitTimeRange.x, waitTimeRange.y),false,
 				PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 			
-			foreach (var system in particleSystems) {
-				system.loop = false;
-			}
+			StopSpawningParticles();
 
 			await UniTask.WaitForSeconds(4f,false,
 				PlayerLoopTiming.Update,gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		
-			isActivating = false;
+			BoundEntity.Status.Value = PillarStatus.Idle;
 			
 			ILevelEntity levelEntity = levelModel.CurrentLevel.Value;
 			if (levelEntity.IsInBossFight) {
@@ -214,7 +241,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				spawnedEnemy.gameObject.transform.localScale = Vector3.zero;
 				spawnedEnemy.transform.DOScale(spawnScale, 1f).SetEase(Ease.OutBack);
 
-				onSpawnEnemy?.Invoke(spawnedEnemy, this);
+				//onSpawnEnemy?.Invoke(spawnedEnemy, this);
 				Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity}");
 			}
 			else {
@@ -236,17 +263,16 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			
 			if(levelModel.CurrentLevel.Value.IsInBossFight.Value 
 			   || UIManager.Singleton.GetPanel<PillarUIViewController>(true) != null
-			   || isActivating) {
+			   || BoundEntity.Status.Value != PillarStatus.Idle) {
 				return;
 			}
 
-			this.SendCommand(OpenPillarUICommand.Allocate(gameObject,
-				BoundEntity.GetProperty<ISpawnBossCost>().RealValue.Value));
+			this.SendCommand(OpenPillarUICommand.Allocate(BoundEntity,
+				BoundEntity.RewardCost, rewardSpawnPos));
 		}
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			isActivating = false;
 		}
 	}
 }

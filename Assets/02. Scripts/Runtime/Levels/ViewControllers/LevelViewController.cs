@@ -7,8 +7,13 @@ using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
+using _02._Scripts.Runtime.Levels.Sandstorm;
 using _02._Scripts.Runtime.Levels.Systems;
+using _02._Scripts.Runtime.Pillars.Models;
+using _02._Scripts.Runtime.Pillars.Systems;
+using _02._Scripts.Runtime.Rewards;
 using _02._Scripts.Runtime.Utilities;
+using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using Framework;
 using MikroFramework;
@@ -126,7 +131,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		[Header("Enemies")]
 		[SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
-		[SerializeField] protected List<LevelBossSpawnCostInfo> bossSpawnCostInfo;
+		[SerializeField] 
+		[SerializedDictionary("Currency Type", "Costs")]
+		protected SerializedDictionary<CurrencyType, RewardCostInfo> bossSpawnCostInfo;
+		
+		[SerializeField]
+		protected PillarRewardsInfo pillarRewardsInfo;
+		
 		[SerializeField] protected bool hasPillars = true;
 		[SerializeField] protected string pillarPrefabName = "BossPillar";
 		//[SerializeField] protected int pillarCount = 4;
@@ -136,7 +147,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		//[SerializeField] protected List<LevelEnemyPrefabConfig> bosses = new List<LevelEnemyPrefabConfig>();
 
 		[SerializeField] protected GameObject playerSpawner;
+		[SerializeField] private float[] sandstormProbability = new[] {0, 0.33f, 1f};
 
+		private IGameEventSystem gameEventSystem;
 
 		//mainPrefab + variants
 		public List<GameObject> Enemies {
@@ -170,14 +183,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		// [SerializeField] protected int maxEnemiesBaseValue = 50;
 
-		//private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
+		private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
 		private ILevelModel levelModel;
         
 		private int levelNumber;
 		private NavMeshSurface navMeshSurface;
 
 		private HashSet<IDirectorViewController> playerSpawners = new HashSet<IDirectorViewController>();
-		private IDirectorViewController[] bossPillars;
+		private IBossPillarViewController[] bossPillars;
 
 		 private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
 		[SerializeField] protected bool autoUpdateNavMeshOnStart = true;
@@ -190,12 +203,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private ILevelSystem levelSystem;
  
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
+		protected IGameTimeModel gameTimeModel;
 
 		protected override void Awake() {
 			base.Awake();
 			levelModel = this.GetModel<ILevelModel>();
 			navMeshSurface = GetComponent<NavMeshSurface>();
 			levelSystem = this.GetSystem<ILevelSystem>();
+			gameTimeModel = this.GetModel<IGameTimeModel>();
+			gameEventSystem = this.GetSystem<IGameEventSystem>();
 		}
 
 		protected override IEntity OnBuildNewEntity() {
@@ -214,6 +230,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 		}
 
+		
+
+		private void OnBossSpawned(OnBossSpawned e) {
+			OnInitEnemy(e.Boss);
+		}
+
 		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
 			List<LevelSpawnCard> spawnCards = new List<LevelSpawnCard>();
 			
@@ -230,7 +252,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					prefabNames[i + 1] = enemy.variants[i].name;
 				}
 				
-				//templateEnemies.Add(enemyEntity);
+				 templateEnemies.Add(enemyEntity);
 				 spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefabNames,
 					enemy.minRarity, enemy.maxRarity));
 			}
@@ -277,6 +299,18 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public async void Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
+			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+
+			if (BoundEntity.GetCurrentLevelCount() <= 1) {
+				gameTimeModel.DayCountThisRound.RegisterWithInitValue(OnNewDay)
+					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			}
+			else {
+				gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnNewDay)
+					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			}
+			
+			
 			subAreaLevels = CreateSubAreaLevels();
 			if (autoCreateNewEntityWhenStart) {
 				UpdateNavMesh();
@@ -303,6 +337,33 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			//Debug.Log("Bounds for level " + gameObject.name + " is " + maxExtent.bounds);
 		}
 
+		
+		private HashSet<int> triggeredNewDay = new HashSet<int>();
+		private void OnNewDay(int day) {
+			if (levelModel.CurrentLevel.Value != BoundEntity) {
+				return;
+			}
+			
+			if (triggeredNewDay.Contains(day)) {
+				return;
+			}
+			
+			triggeredNewDay.Add(day);
+			BoundEntity.DayStayed++; Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
+			if (BoundEntity.DayStayed -1 >= sandstormProbability.Length) {
+				return;
+			}
+			float sandstormProb = sandstormProbability[BoundEntity.DayStayed - 1];
+			if (Random.Range(0f, 1f) <= sandstormProb) {
+				//spawn sandstorm
+				int sandstormHappenTime = 23 * 60;
+				gameEventSystem.AddEvent(new SandstormEvent(), sandstormHappenTime);
+
+				int warningTime = sandstormHappenTime / 2;
+				gameEventSystem.AddEvent(new SandstormWarningEvent(), warningTime);
+			}
+		}
+
 		private void SpawnCollectableResources() {
 			CollectableResourceSpawnArea[] collectableResourceViewControllers = GetComponentsInChildren<CollectableResourceSpawnArea>(true);
 			float seed = Random.Range(0, 1000000f);
@@ -312,6 +373,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 
 		private async UniTask SpawnPillars() {
+			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			if (!hasPillars) {
 				return;
 			}
@@ -321,14 +383,23 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (pillars == null) {
 				return;
 			}
+			
+			int pillarNumber = 0;
+			HashSet<string> ids = new HashSet<string>();
+			
 			foreach (GameObject pillar in pillars) {
 				IBossPillarViewController pillarViewController = pillar.GetComponent<IBossPillarViewController>();
-				pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
+				//pillarViewController.SetBossSpawnCosts(GetBossSpawnCostInfoDict());
 				//pillar.transform.SetParent(transform);
-				InitDirector(pillarViewController);
-				RegisterOnSpawnEnemy(pillarViewController);
+				string id = pillarViewController.InitPillar(BoundEntity, bossSpawnCostInfo, pillarRewardsInfo);
+				
+				ids.Add(id);
+				pillarNumber++;
+				//InitDirector(pillarViewController);
+				//RegisterOnSpawnEnemy(pillarViewController);
 			}
-			bossPillars = pillars.Select(p => p.GetComponent<IDirectorViewController>()).ToArray();
+			bossPillars = pillars.Select(p => p.GetComponent<IBossPillarViewController>()).ToArray();
+			pillarModel.SetCurrentLevelPillars(ids);
 			
 		}
 		private void UpdateWallMaterials() {
@@ -343,13 +414,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 		}
-		private Dictionary<CurrencyType, LevelBossSpawnCostInfo> GetBossSpawnCostInfoDict() {
-			Dictionary<CurrencyType, LevelBossSpawnCostInfo> dict = new Dictionary<CurrencyType, LevelBossSpawnCostInfo>();
+		private Dictionary<CurrencyType, RewardCostInfo> GetBossSpawnCostInfoDict() {
+			Dictionary<CurrencyType, RewardCostInfo> dict = new Dictionary<CurrencyType, RewardCostInfo>();
 			if (bossSpawnCostInfo == null) {
 				return dict;
 			}
 			foreach (var info in bossSpawnCostInfo) {
-				dict.Add(info.CurrencyType, info);
+				dict.Add(info.Key, info.Value);
 			}
 
 			return dict;
@@ -473,12 +544,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			bossPillars = null;
 			subAreaLevels.Clear();
+			triggeredNewDay.Clear();
 		}
 		
 		public void OnExitLevel() {
 			// BoundEntity.CurrentEnemyCount = 0;
 			IEnemyEntityModel enemyModel = this.GetModel<IEnemyEntityModel>();
 			IDirectorModel directorModel = this.GetModel<IDirectorModel>();
+			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			ISubAreaLevelModel subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
 			
 			ISpawnCardsProperty spawnCardsProperty = BoundEntity.GetProperty<ISpawnCardsProperty>();
@@ -499,11 +572,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			 	enemyModel.RemoveEntity(enemy.UUID, true);
 			 }
 
+			 foreach (IEnemyEntity enemyEntity in templateEnemies) {
+				 enemyModel.RemoveEntity(enemyEntity.UUID, true);
+			 }
+			 templateEnemies.Clear();
+
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {
-					directorModel.RemoveEntity(directorViewController.Entity.UUID, true);
+					pillarModel.RemoveEntity(directorViewController.Entity.UUID, true);
 				}
 			}
+			
 			
 		
 
