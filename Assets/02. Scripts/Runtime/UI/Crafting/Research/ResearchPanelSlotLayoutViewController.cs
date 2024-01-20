@@ -90,6 +90,14 @@ public class ResearchPanelSlotLayoutViewController : AbstractMikroController<Mai
 		}
 		
 	}
+	
+	public void RemoveItem(IResourceEntity entity) {
+		foreach (ResourceSlotViewController slotViewController in slotViewControllers) {
+			if (slotViewController.Slot.RemoveItem(entity.UUID)) {
+				return;
+			}
+		}
+	}
 
 	private void OnSlotClicked(ResourceSlotViewController vc) {
 		onSlotClicked?.Invoke(vc);
@@ -122,5 +130,17 @@ public class ResearchPanelSlotLayoutViewController : AbstractMikroController<Mai
 		}
 
 		return resources;
+	}
+	
+	
+	public HashSet<ResourceSlot> GetAllNonEmptySlots() {
+		HashSet<ResourceSlot> slots = new HashSet<ResourceSlot>();
+		foreach (ResourceSlotViewController slotViewController in slotViewControllers) {
+			if (!slotViewController.Slot.IsEmpty()) {
+				slots.Add(slotViewController.Slot);
+			}
+		}
+
+		return slots;
 	}
 }

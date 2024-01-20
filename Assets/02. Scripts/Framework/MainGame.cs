@@ -7,6 +7,7 @@ using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
 using _02._Scripts.Runtime.ResourceCrafting.Models;
+using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
 using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.TimeSystem;
@@ -21,6 +22,7 @@ using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.RawMaterials.Model.Base;
 using Runtime.Spawning;
+using Runtime.UI.Crafting.Research;
 using Runtime.Weapons.Model.Base;
 
 
@@ -42,6 +44,7 @@ namespace Framework {
 			this.RegisterSystem<IPillarSystem>(new PillarSystem());
 			this.RegisterSystem<IGameTimeSystem>(new GameTimeSystem());
 			this.RegisterSystem<IGameEventSystem>(new GameEventSystem());
+			this.RegisterSystem<IResearchSystem>(new ResearchSystem());
 			
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());
@@ -61,6 +64,7 @@ namespace Framework {
 			this.RegisterModel<IGameTimeModel>(new GameTimeModel());
 			this.RegisterModel<IGameEventModel>(new GameEventModel());
 			this.RegisterModel<IResourceResearchModel>(new ResourceResearchModel());
+			this.RegisterModel<IResourceBuildModel>(new ResourceBuildModel());
 			
 			
 			//???

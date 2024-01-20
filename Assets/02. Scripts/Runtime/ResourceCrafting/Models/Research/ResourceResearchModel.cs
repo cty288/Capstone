@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Framework;
 using Runtime.GameResources.Model.Base;
 using Runtime.RawMaterials.Model.Base;
+using Runtime.UI.Crafting.Research;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 
@@ -19,6 +20,12 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 		
 		public bool IsAllResearched(ResourceCategory category);
 
+		public void OnResearchEvent(ResearchEvent researchEvent);
+
+		public string GetCurrentResearchEventID(ResourceCategory category);
+		
+		public void RemoveResearchEvent(ResourceCategory category);
+
 	}
 	public class ResourceResearchModel : AbstractSavableModel, IResourceResearchModel {
 		public static int ExpResearchPerDay = 7;
@@ -27,6 +34,10 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 		[ES3Serializable] 
 		private Dictionary<ResourceCategory, ResourceResearchGroup> resourceResearchGroups =
 			new Dictionary<ResourceCategory, ResourceResearchGroup>();
+
+		[ES3Serializable]
+		private Dictionary<ResourceCategory, string> currentResearchEventIDs =
+			new Dictionary<ResourceCategory, string>();
 
 		protected override void OnInit() {
 			base.OnInit();
@@ -82,6 +93,21 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models {
 
 		public bool IsAllResearched(ResourceCategory category) {
 			return resourceResearchGroups[category].IsMaxLevel();
+		}
+
+		public void OnResearchEvent(ResearchEvent researchEvent) {
+			currentResearchEventIDs[researchEvent.Category] = researchEvent.EventID;
+		}
+
+		public string GetCurrentResearchEventID(ResourceCategory category) {
+			if (!currentResearchEventIDs.ContainsKey(category)) {
+				return null;
+			}
+			return currentResearchEventIDs[category];
+		}
+
+		public void RemoveResearchEvent(ResourceCategory category) {
+			currentResearchEventIDs.Remove(category);
 		}
 	}
 }

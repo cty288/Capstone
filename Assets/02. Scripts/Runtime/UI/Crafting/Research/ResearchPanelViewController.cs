@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.ResourceCrafting.Commands.Research;
 using _02._Scripts.Runtime.ResourceCrafting.Models;
 using MikroFramework.Architecture;
 using Polyglot;
@@ -10,6 +11,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
 using Runtime.RawMaterials.Model.Base;
+using Runtime.UI.Crafting.Research;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,18 +27,29 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 	[SerializeField] private GameObject[] rewardPreviewIcons;
 	[SerializeField] private GameObject rewardMoreIcon;
 	[SerializeField] private Button researchButton;
+	[SerializeField] private GameObject researchAvailablePanel;
+	[SerializeField] private GameObject researchUnavailablePanel;
+	[SerializeField] private TMP_Text remainingDaysText;
 	
+ 	private ResearchLevelInfo[] researchResults;
 	
 	private ResourceCategory category;
 	private IInventoryModel inventoryModel;
 	private IResourceResearchModel resourceResearchModel;
 	private ICurrencyModel currencyModel;
-	
+	int totalCost = 0;
+	int totalExp = 0;
+	int researchDays = 0;
+	private IResearchSystem researchSystem;
 	private void Awake() {
 		inventoryModel = this.GetModel<IInventoryModel>();
 		resourceResearchModel = this.GetModel<IResourceResearchModel>();
 		currencyModel = this.GetModel<ICurrencyModel>();
+		researchSystem = this.GetSystem<IResearchSystem>();
+		researchButton.onClick.AddListener(OnResearchButtonClicked);
 	}
+
+	
 
 
 	public override void OnSwitchToPanel() {
@@ -47,15 +60,29 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 
 	public override void OnSwitchToOtherPanel() {
 		base.OnSwitchToOtherPanel();
+
+		var resources = selectedSlotLayoutViewController.GetAllExpResources();
+		foreach (var resource in resources) {
+			selectedSlotLayoutViewController.RemoveItem(resource);
+			ownedSlotLayoutViewController.AddItem(resource);
+		}
+		
+		DestroySlots();
+		
+	}
+	
+	private void DestroySlots() {
+		researchAvailablePanel.SetActive(true);
 		ownedSlotLayoutViewController.OnUIClosed();
 		selectedSlotLayoutViewController.OnUIClosed();
 		ownedSlotLayoutViewController.UnRegisterOnSlotClicked(OnOwnedSlotClicked);
 		selectedSlotLayoutViewController.UnRegisterOnSlotClicked(OnSelectedSlotClicked);
-		//TODO: move selected back to owned
+		researchAvailablePanel.SetActive(false);
 	}
 
 
 	private void InitPanel() {
+		researchAvailablePanel.SetActive(true);
 		allresearchedHint.SetActive(false);
 		costPanel.SetActive(false);
 		noResourceSelectedHint.SetActive(false);
@@ -90,7 +117,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		selectedSlotLayoutViewController.OnShowItems(selectedSlots);
 		selectedSlotLayoutViewController.RegisterOnSlotClicked(OnSelectedSlotClicked);
 		
-		UpdateCost();
+		UpdatePanel();
 	}
 
 	private void OnSelectedSlotClicked(ResourceSlotViewController slotVC) {
@@ -107,7 +134,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		
 		slot.RemoveLastItem();
 		ownedSlotLayoutViewController.AddItem(entity);
-		UpdateCost();
+		UpdatePanel();
 	}
 
 	private void OnOwnedSlotClicked(ResourceSlotViewController slotVC) {
@@ -124,7 +151,34 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		
 		slot.RemoveLastItem();
 		selectedSlotLayoutViewController.AddItem(entity);
-		UpdateCost();
+		UpdatePanel();
+	}
+
+
+	private void UpdatePanel() {
+		
+		if (researchSystem.IsResearching(category)) {
+			researchAvailablePanel.SetActive(false);
+			researchUnavailablePanel.SetActive(true);
+			UpdateResearchingPanel();
+		}
+		else {
+			researchAvailablePanel.SetActive(true);
+			researchUnavailablePanel.SetActive(false);
+			UpdateCost();
+		}
+	
+	}
+
+	private void UpdateResearchingPanel() {
+		ResearchEvent researchEvent = researchSystem.GetResearchEvent(category);
+		if(researchEvent == null) {
+			return;
+		}
+		
+		float days = researchEvent.RemainingMinutesToTrigger / 60f / 24f;
+		remainingDaysText.text = Localization.GetFormat("RESEARCH_DOING_RESEARCH_REMAINING_DAY",
+			$"<color=#1D9F00>{Mathf.CeilToInt(days)}</color>", days > 1 ? "s" : "");
 	}
 
 	private void UpdateCost() {
@@ -138,15 +192,15 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		costPanel.SetActive(true);
 
 		HashSet<IHaveExpResourceEntity> selectedResources = selectedSlotLayoutViewController.GetAllExpResources();
-		int totalExp = 0;
+		totalExp = 0;
 		foreach (var resource in selectedResources) {
 			totalExp += resource.GetExpProperty().RealValue.Value;
 		}
 
-		int totalCost = Mathf.CeilToInt(ResourceResearchModel.CostPerExp * totalExp);
+		totalCost = Mathf.CeilToInt(ResourceResearchModel.CostPerExp * totalExp);
 		
 		int resultLevel = resourceResearchModel.GetLevelIfExpAdded(category, totalExp,
-			out ResearchLevelInfo[] addedResearchLevelInfos, out int researchDays);
+			out researchResults, out researchDays);
 
 		bool moneyEnough = currencyModel.Money >= totalCost;
 		string color = moneyEnough ? "#1D9F00" : "red";
@@ -154,7 +208,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		daysText.text = Localization.GetFormat("RESEARCH_DAYS", researchDays, researchDays > 1 ? "s" : "");
 
 		int potentialRewardCount = 0;
-		foreach (ResearchLevelInfo researchLevelInfo in addedResearchLevelInfos) {
+		foreach (ResearchLevelInfo researchLevelInfo in researchResults) {
 			potentialRewardCount += researchLevelInfo.ResearchedEntityNames?.Length ?? 0;
 		}
 		
@@ -179,6 +233,14 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 
 	}
 
+	private void OnResearchButtonClicked() {
+		//send commands
+		this.SendCommand<ResearchCommand>(ResearchCommand.Allocate(totalCost, totalExp, researchDays, category,
+			selectedSlotLayoutViewController.GetAllNonEmptySlots(), researchResults));
+		
+		UpdatePanel();
+	}
+	
 	
 	public void OnSetResourceCategory(ResourceCategory category) {
 		this.category = category;

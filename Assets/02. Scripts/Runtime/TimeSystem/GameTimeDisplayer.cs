@@ -46,7 +46,10 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
          return;
       }
 
-      ShowDayDisplayPanel(dayCount);
+      this.Delay(0.1f, () => {
+         ShowDayDisplayPanel(levelModel.CurrentLevel.Value.DayStayed);
+      });
+     
    }
    
    
@@ -79,7 +82,7 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
          return;
       }
       panel.SetActive(true);
-      dayCountText.text = Localization.GetFormat("TIME_DISPLAY", gameTimeModel.DayCountThisRound.Value);
+      dayCountText.text = Localization.GetFormat("TIME_DISPLAY", levelModel.CurrentLevel.Value.DayStayed);
       DateTime globalTime = gameTimeModel.GlobalTime.Value;
       timeText.text = $"{globalTime.ToString("HH:mm")}";
    }
