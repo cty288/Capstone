@@ -115,6 +115,10 @@ FragmentOutput LitGBufferPassFragment(Varyings IN) : SV_TARGET
     InputData inputData;
     InitializeInputData(IN, surfaceData.normalTS, inputData);
 
+	#ifdef _DBUFFER
+	ApplyDecalToSurfaceData(IN.positionCS, surfaceData, inputData);
+	#endif
+
 	BRDFData brdfData;
 	InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, brdfData);
 

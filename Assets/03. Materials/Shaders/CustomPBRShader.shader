@@ -64,57 +64,26 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 		_FresnelPower ("Fresnel", Range(0, 10)) = 5
         _FresnelCutOffIn ("Cut Off In", Range(0,1)) = 0.1
         _FresnelCutOffOut ("Cut Off Out", Range(0,1)) = 0.9
+    	
+    	// Blending state
+        _Surface("__surface", Float) = 0.0
+        _Blend("__blend", Float) = 0.0
+        _Cull("__cull", Float) = 2.0
+        [ToggleUI] _AlphaClip("__clip", Float) = 0.0
+        [HideInInspector] _SrcBlend("__src", Float) = 1.0
+        [HideInInspector] _DstBlend("__dst", Float) = 0.0
+        [HideInInspector] _ZWrite("__zw", Float) = 1.0
+
+        [ToggleUI] _ReceiveShadows("Receive Shadows", Float) = 1.0
+        // Editmode props
+        _QueueOffset("Queue offset", Float) = 0.0
     }
     SubShader
     {
         
-        Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "Queue" = "Geometry" "ShaderModel"="4.5"}
+        Tags{"RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "UniversalMaterialType" = "Lit"
+            "IgnoreProjector" = "True"}
         LOD 300
-        
-
-        HLSLINCLUDE
-        
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
-
-
-            CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST;
-		        float4 _BaseColor;
-
-                float _Cutoff;
-
-                float _Smoothness;
-                float _GlossMapScale;
-        
-                float _Metallic;
-        
-                float4 _SpecColor;
-
-				float _ShadowEdgePower;
-				float _ShadowEdgeSaturation;
-				float2 _ShadowRadianceRange;
-
-				float _BumpScale;
-				float4 _BumpMap_ST;
-        
-                float _OcclusionStrength;
-				float4 _OcclusionMap_ST;
-        
-                float4 _EmissionColor;
-				float4 _EmissionMap_ST;
-
-				float4 _HighlightColor;
-				float _FresnelPower;
-				float _FresnelCutOffOut;
-				float _FresnelCutOffIn;
-                
-    
-            CBUFFER_END
-        
-        ENDHLSL
         
         // DO NOT USE UsePass, only use Pass
         // DO NOT USE multi-pass
@@ -124,6 +93,10 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
         {
             Name "ForwardLit"
             Tags{"LightMode" = "UniversalForward"}
+            
+            Blend[_SrcBlend][_DstBlend]
+            ZWrite[_ZWrite]
+            Cull[_Cull]
             
             HLSLPROGRAM
 
@@ -149,38 +122,48 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             // -------------------------------------
             // Material Keywords
             #pragma shader_feature_local _NORMALMAP
+            #pragma shader_feature_local _PARALLAXMAP
+            #pragma shader_feature_local _RECEIVE_SHADOWS_OFF
+            #pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
+            #pragma shader_feature_local_fragment _SURFACE_TYPE_TRANSPARENT
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             #pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
             #pragma shader_feature_local_fragment _EMISSION
             #pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
             #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma shader_feature_local_fragment _OCCLUSIONMAP
-            #pragma shader_feature_local _PARALLAXMAP
-            #pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
             #pragma shader_feature_local_fragment _SPECULARHIGHLIGHTS_OFF
             #pragma shader_feature_local_fragment _ENVIRONMENTREFLECTIONS_OFF
             #pragma shader_feature_local_fragment _SPECULAR_SETUP
-            #pragma shader_feature_local _RECEIVE_SHADOWS_OFF
 
             // -------------------------------------
             // Universal Pipeline keywords
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+            #pragma multi_compile_fragment _ _REFLECTION_PROBE_BLENDING
+            #pragma multi_compile_fragment _ _REFLECTION_PROBE_BOX_PROJECTION
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
             #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
-            #pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
-            #pragma multi_compile _ SHADOWS_SHADOWMASK
+            #pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+            #pragma multi_compile_fragment _ _LIGHT_LAYERS
+            #pragma multi_compile_fragment _ _LIGHT_COOKIES
+            #pragma multi_compile _ _CLUSTERED_RENDERING
 
             // -------------------------------------
             // Unity defined keywords
+            #pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
+            #pragma multi_compile _ SHADOWS_SHADOWMASK
             #pragma multi_compile _ DIRLIGHTMAP_COMBINED
             #pragma multi_compile _ LIGHTMAP_ON
+            #pragma multi_compile _ DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
+            #pragma multi_compile_fragment _ DEBUG_DISPLAY
 
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
+            #pragma instancing_options renderinglayer
             #pragma multi_compile _ DOTS_INSTANCING_ON
 
             
@@ -244,6 +227,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             
             ZWrite On
             ZTest LEqual
+            ColorMask 0
+            Cull[_Cull]
             
             HLSLPROGRAM
 
@@ -281,8 +266,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             Name "GBuffer"
             Tags{"LightMode" = "UniversalGBuffer"}
             
-            ZWrite On
-            Cull Back
+            ZWrite[_ZWrite]
+            ZTest LEqual
+            Cull[_Cull]
             
             HLSLPROGRAM
 
@@ -290,6 +276,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             //#pragma exclude_renderers gles gles3 glcore
             //#pragma target 4.5
 
+            // -------------------------------------
             // -------------------------------------
             // Material Keywords
             #pragma shader_feature_local _NORMALMAP
@@ -309,22 +296,29 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 
             // -------------------------------------
             // Universal Pipeline keywords
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             //#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             //#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
-            #pragma multi_compile _ _SHADOWS_SOFT
-            #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+            #pragma multi_compile_fragment _ _REFLECTION_PROBE_BLENDING
+            #pragma multi_compile_fragment _ _REFLECTION_PROBE_BOX_PROJECTION
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
+            #pragma multi_compile_fragment _ _LIGHT_LAYERS
+            #pragma multi_compile_fragment _ _RENDER_PASS_ENABLED
 
             // -------------------------------------
             // Unity defined keywords
+            #pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
+            #pragma multi_compile _ SHADOWS_SHADOWMASK
             #pragma multi_compile _ DIRLIGHTMAP_COMBINED
             #pragma multi_compile _ LIGHTMAP_ON
+            #pragma multi_compile _ DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
 
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
+            #pragma instancing_options renderinglayer
             #pragma multi_compile _ DOTS_INSTANCING_ON
 
             #pragma vertex LitGBufferPassVertex
@@ -392,8 +386,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             Name "DepthOnly"
             Tags{"LightMode" = "DepthOnly"}
             
+            ZWrite On
             ColorMask 0
-			ZWrite On
+            Cull[_Cull]
             
             HLSLPROGRAM
 
@@ -426,7 +421,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             Tags{"LightMode" = "DepthNormals"}
             
             ZWrite On
-        	Cull Back
+            ColorMask 0
+            Cull[_Cull]
             
             HLSLPROGRAM
 
@@ -462,21 +458,21 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             Name "Meta"
             Tags{"LightMode" = "Meta"}
             
-            ZWrite On
-            Cull Back
+            Cull Off
             
             HLSLPROGRAM
 			#pragma vertex UniversalVertexMeta
 			#pragma fragment UniversalFragmentMeta
 
-			#pragma shader_feature_local_fragment _SPECULAR_SETUP
-			#pragma shader_feature_local_fragment _EMISSION
-			#pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
-			#pragma shader_feature_local_fragment _ALPHATEST_ON
-			#pragma shader_feature_local_fragment _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-			//#pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
+			#pragma shader_feature EDITOR_VISUALIZATION
+            #pragma shader_feature_local_fragment _SPECULAR_SETUP
+            #pragma shader_feature_local_fragment _EMISSION
+            #pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
+            #pragma shader_feature_local_fragment _ALPHATEST_ON
+            #pragma shader_feature_local_fragment _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+            #pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
 
-			#pragma shader_feature_local_fragment _SPECGLOSSMAP
+            #pragma shader_feature_local_fragment _SPECGLOSSMAP
 
 			struct Attributes {
 				float4 positionOS   : POSITION;
@@ -530,8 +526,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             Name "Universal2D"
             Tags{"LightMode" = "Universal2D"}
             
-            ZWrite On
-            Cull Back
+            Blend[_SrcBlend][_DstBlend]
+            ZWrite[_ZWrite]
+            Cull[_Cull]
             
             HLSLPROGRAM
 
@@ -550,5 +547,5 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             ENDHLSL
         }
     }
-    FallBack "Hidden/Universal Render Pipeline/FallbackError"
+    FallBack "Universal Render Pipeline/Lit"
 }
