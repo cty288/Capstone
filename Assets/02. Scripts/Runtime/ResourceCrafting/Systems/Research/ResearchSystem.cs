@@ -33,6 +33,9 @@ namespace Runtime.UI.Crafting.Research {
 
 				resourceResearchModel.AddExp(e.Category, e.Exp, out ResearchLevelInfo[] addedResearchLevelInfos);
 				foreach (ResearchLevelInfo researchLevelInfo in addedResearchLevelInfos) {
+					if (researchLevelInfo.ResearchedEntityNames == null) {
+						continue;
+					}
 					foreach (string entityName in researchLevelInfo.ResearchedEntityNames) {
 						resourceBuildModel.UnlockBuild(e.Category, entityName);
 					}

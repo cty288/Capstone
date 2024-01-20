@@ -1,13 +1,19 @@
-EntityName / Property Names,max_stack,custom_properties,tags,,More Notes
-Types,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,int,"Dict<string, CustomProperty>
+EntityName / Property Names,max_stack,purchase_cost,custom_properties,tags,,More Notes
+Types,int,SkillPurchaseCostInfo,dynamic,"Dictionary<TagName,int>",,
+Notes ->,int,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
-,,,,,
-BEGIN,,,,,
+,,,,,,
+BEGIN,,,,,,
 TestWeaponParts,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -28,6 +34,12 @@ TestWeaponParts,1,"{
   }
 }",,,
 TestWeaponParts2,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -48,6 +60,12 @@ TestWeaponParts2,1,"{
   }
 }",,,
 TestWeaponParts3,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -68,6 +86,12 @@ TestWeaponParts3,1,"{
   }
 }",,,
 TestWeaponParts4,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -88,6 +112,12 @@ TestWeaponParts4,1,"{
   }
 }",,,
 TestWeaponParts5,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -108,6 +138,12 @@ TestWeaponParts5,1,"{
   }
 }",,,
 TestWeaponParts6,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -128,6 +164,12 @@ TestWeaponParts6,1,"{
   }
 }",,,
 TestWeaponParts7,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",

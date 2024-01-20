@@ -36,19 +36,20 @@ public class NotificationPanel : MonoMikroSingleton<NotificationPanel>, IControl
     }
 
     private void OnResearchEventTriggered(OnResearchEventTriggered e) {
-        for (int i = 0; i < 2; i++) {
-            GameObject spawnedNotification = Instantiate(researchNotificationPrefab, parentRectTransform);
-            ResearchNotificationPanel researchNotificationPanel = spawnedNotification.GetComponent<ResearchNotificationPanel>();
+        GameObject spawnedNotification = Instantiate(researchNotificationPrefab, parentRectTransform);
+        ResearchNotificationPanel researchNotificationPanel = spawnedNotification.GetComponent<ResearchNotificationPanel>();
         
-            List<string> entityNames = new List<string>();
-            foreach (var result in e.ResearchResults) {
-                entityNames.AddRange(result.ResearchedEntityNames);
+        List<string> entityNames = new List<string>();
+        foreach (var result in e.ResearchResults) {
+            if (result.ResearchedEntityNames == null) {
+                continue;
             }
-
-            researchNotificationPanel.SetContent(entityNames.ToHashSet().ToArray());
-        
-            AddNotification(spawnedNotification, 5f);
+            entityNames.AddRange(result.ResearchedEntityNames);
         }
+
+        researchNotificationPanel.SetContent(entityNames.ToHashSet().ToArray());
+        
+        AddNotification(spawnedNotification, 5f);
     }
 
     private void Update() {

@@ -87,7 +87,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		protected override void OnRegisterProperties() {
 			base.OnRegisterProperties();
 			RegisterInitialProperty<ISkillCoolDown>(new SkillCooldown());
-			RegisterInitialProperty<IPurchaseCost>(new PurchaseCost());
+			
 			RegisterInitialProperty<ISkillUpgradeCost>(new SkillUpgradeCost());
 			RegisterInitialProperty<ISkillUseCost>(new SkillUseCost());
 		}
@@ -99,6 +99,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			skillUpgradeCostProperty = GetProperty<ISkillUpgradeCost>();
 			
 			
+		}
+
+		public override int GetMaxRarity() {
+			return skillUpgradeCostProperty.GetMaxLevel();
 		}
 
 		protected override void OnEntityStart(bool isLoadedFromSave) {

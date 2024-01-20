@@ -13,6 +13,7 @@ public class CraftingPanelViewController : SwitchableRootPanel {
 	private CraftingPanelMsg msg;
 
 	[SerializeField] private ResearchPanelViewController researchPanelViewController;
+	[SerializeField] private BuildPanelViewController buildPanelViewController;
 	
 	public override void OnOpen(UIMsg msg) {
 		this.msg = (CraftingPanelMsg) msg;
@@ -24,6 +25,8 @@ public class CraftingPanelViewController : SwitchableRootPanel {
 		base.OnSubpanelSelected(panel);
 		if (panel == researchPanelViewController) {
 			researchPanelViewController.OnSetResourceCategory(this.msg.category);
+		}else if (panel == buildPanelViewController) {
+			buildPanelViewController.OnSetResourceCategory(this.msg.category);
 		}
 	}
 }

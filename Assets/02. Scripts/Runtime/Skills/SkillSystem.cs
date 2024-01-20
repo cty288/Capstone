@@ -1,28 +1,30 @@
-﻿using _02._Scripts.Runtime.Skills.Model.Base;
+﻿using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using MikroFramework.Architecture;
 using Runtime.GameResources;
+using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 
 namespace _02._Scripts.Runtime.Skills {
 	public interface ISkillSystem : ISystem {
 		public void UnlockPurchaseableSkill(string skillName);
 		
-		public void RemoveSlot(PreparationSlot slot);
+		//public void RemoveSlot(PreparationSlot slot);
 	}
 	public class SkillSystem : AbstractSystem, ISkillSystem {
 
 		private static string[] initiallyPurchaseableSkillNames = new string[] {
-			"GrenadeSkill"
+			//"GrenadeSkill"
 		};
 		
-		protected ISkillModel skillModel;
+		protected IResourceBuildModel buildModel;
 		
 		protected override void OnInit() {
-			skillModel = this.GetModel<ISkillModel>();
-			if (skillModel.IsFirstTimeCreated) {
+			buildModel = this.GetModel<IResourceBuildModel>();
+			if (buildModel.IsFirstTimeCreated) {
 				foreach (string skillName in initiallyPurchaseableSkillNames) {
-					ISkillEntity skillEntity = GetNewSkillEntity(skillName);
-					skillModel.UnlockSkill(skillEntity);
+					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
+					buildModel.UnlockBuild(ResourceCategory.Skill, skillName);
 				}
 			}
 		}
@@ -32,12 +34,7 @@ namespace _02._Scripts.Runtime.Skills {
 		}
 
 		public void UnlockPurchaseableSkill(string skillName) {
-			ISkillEntity skillEntity = GetNewSkillEntity(skillName);
-			skillModel.UnlockSkill(skillEntity);
-		}
-
-		public void RemoveSlot(PreparationSlot slot) {
-			skillModel.RemoveSlot(slot);
+			buildModel.UnlockBuild(ResourceCategory.Skill, skillName);
 		}
 	}
 }

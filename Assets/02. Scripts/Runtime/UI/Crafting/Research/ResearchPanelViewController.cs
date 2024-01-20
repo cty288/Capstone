@@ -30,6 +30,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 	[SerializeField] private GameObject researchAvailablePanel;
 	[SerializeField] private GameObject researchUnavailablePanel;
 	[SerializeField] private TMP_Text remainingDaysText;
+	[SerializeField] private GameObject noResourceHint;
 	
  	private ResearchLevelInfo[] researchResults;
 	
@@ -86,7 +87,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		allresearchedHint.SetActive(false);
 		costPanel.SetActive(false);
 		noResourceSelectedHint.SetActive(false);
-		
+		noResourceHint.SetActive(false);
 		if (resourceResearchModel.IsAllResearched(category)) {
 			allresearchedHint.SetActive(true);
 			return;
@@ -94,7 +95,11 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 
 		
 		List<ResourceSlot> resourceSlots  = new List<ResourceSlot>();
+	
+		
 		var rawMaterials = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
+		noResourceHint.SetActive(rawMaterials == null || rawMaterials.Count == 0);
+		
 		if (rawMaterials != null) {
 			foreach (var rawMaterial in rawMaterials) {
 				resourceSlots.Add(rawMaterial);
@@ -184,6 +189,9 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 	private void UpdateCost() {
 		costPanel.SetActive(false);
 		noResourceSelectedHint.SetActive(false);
+		noResourceHint.SetActive(false);
+
+		noResourceHint.SetActive(ownedSlotLayoutViewController.IsAllEmpty());
 		
 		if (selectedSlotLayoutViewController.IsAllEmpty()) {
 			noResourceSelectedHint.SetActive(true);

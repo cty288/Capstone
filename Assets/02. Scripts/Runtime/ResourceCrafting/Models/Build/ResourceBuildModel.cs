@@ -8,6 +8,8 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models.Build {
 		void UnlockBuild(ResourceCategory category, string entityName);
 		
 		void RemoveFromBuild(ResourceCategory category, string entityName);
+		
+		HashSet<string> GetBuildableResources(ResourceCategory category);
 	}
 	public class ResourceBuildModel : AbstractSavableModel, IResourceBuildModel {
 		[field: ES3Serializable] 
@@ -27,6 +29,15 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models.Build {
 		public void RemoveFromBuild(ResourceCategory category, string entityName) {
 			if (buildableResources.TryGetValue(category, out var resources)) {
 				resources.Remove(entityName);
+			}
+		}
+
+		public HashSet<string> GetBuildableResources(ResourceCategory category) {
+			if (buildableResources.TryGetValue(category, out var resources)) {
+				return resources;
+			}
+			else {
+				return new HashSet<string>();
 			}
 		}
 	}

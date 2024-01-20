@@ -30,7 +30,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public Type BuffType { get;}
 	}
 	
-	public abstract class WeaponPartsEntity<T, TBuffType> : ResourceEntity<T>, IWeaponPartsEntity
+	public abstract class WeaponPartsEntity<T, TBuffType> : BuildableResourceEntity<T>, IWeaponPartsEntity
 		where T : WeaponPartsEntity<T, TBuffType>, new()
 		where TBuffType : WeaponPartsBuff<T, TBuffType>, new() {
 		
@@ -38,7 +38,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.WeaponPartsConfigTable;
 		}
-		
+
+		public override int GetMaxRarity() {
+			return 3;
+		}
+
 		protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
 			return originalDisplayName;
 		}

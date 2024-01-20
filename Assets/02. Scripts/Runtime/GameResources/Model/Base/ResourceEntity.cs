@@ -73,6 +73,8 @@ namespace Runtime.GameResources.Model.Base {
 		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
 	}
 	
+
+	
 	//3 forms
 	//on ground
 	//in inventory (sprite)
