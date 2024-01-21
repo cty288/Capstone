@@ -21,7 +21,7 @@ namespace Tests.Tests_Editor {
 		protected override void OnInitModifiers(int rarity) {
                 
 		}
-
+		public override bool Collectable { get; } = false;
 		public override int Width { get; } = 1;
 
 		protected override ConfigTable GetConfigTable() {

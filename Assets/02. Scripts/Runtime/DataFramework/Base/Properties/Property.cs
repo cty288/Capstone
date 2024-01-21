@@ -88,8 +88,10 @@ namespace Runtime.DataFramework.Properties {
 
 	public interface ILoadFromConfigProperty: IPropertyBase {
 		void LoadFromConfig(dynamic value, IEntity parentEntity);
-
-
+	}
+	
+	public interface ILoadFromConfigBuffedProperty: ILoadFromConfigProperty, IBuffedProperty {
+		
 	}
 
 	public interface IHaveSubProperties : IPropertyBase{
@@ -325,7 +327,7 @@ namespace Runtime.DataFramework.Properties {
 		}
 	}
 	
-	public abstract class AbstractLoadFromConfigBuffedProperty<T> : AbstractLoadFromConfigProperty<T>, ILoadFromConfigProperty, IBuffedProperty<T> {
+	public abstract class AbstractLoadFromConfigBuffedProperty<T> : AbstractLoadFromConfigProperty<T>, ILoadFromConfigBuffedProperty, IBuffedProperty<T> {
 	
 		
 		public AbstractLoadFromConfigBuffedProperty() : base() {

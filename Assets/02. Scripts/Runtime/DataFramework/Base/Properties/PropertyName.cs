@@ -72,6 +72,7 @@ namespace Runtime.DataFramework.Properties
 		skill_cooldown,
 		skill_use_cost,
 		skill_upgrade_cost,
-		skill_purchase_cost,
+		purchase_cost,
+		boss_spawn_condition
 	}
 }

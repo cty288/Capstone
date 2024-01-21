@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.Levels.Commands;
 using Framework;
 using MikroFramework.Architecture;
@@ -59,7 +60,7 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	public override void OnOpen(UIMsg msg) {
 		canClose = false;
 		CalculateEmptySlotCount();
-		
+
 		weaponSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Weapon));
 		skillSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Skill));
 		

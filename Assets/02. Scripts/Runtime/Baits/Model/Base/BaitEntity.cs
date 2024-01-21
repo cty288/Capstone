@@ -10,6 +10,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.Properties.TestOnly;
 using Runtime.Enemies.Model.Properties;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.Others;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Base;
@@ -58,7 +59,7 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 
 		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
 			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
-			list.Add(new GetResourcePropertyDescriptionGetter(() => new ResourcePropertyDescription("PropertyIconVigiliance", Localization.GetFormat(
+			/*list.Add(new GetResourcePropertyDescriptionGetter(() => new ResourcePropertyDescription("PropertyIconVigiliance", Localization.GetFormat(
 				"PROPERTY_VIGILIANCE",
 				vigilianceProperty.RealValue.Value.ToString("0.0")))));
 
@@ -72,7 +73,7 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 					}
 				}
 				return new ResourcePropertyDescription("PropertyIconTaste",taste);
-			}));
+			}));*/
 
 		}
 
@@ -100,6 +101,8 @@ namespace _02._Scripts.Runtime.Baits.Model.Base {
 		public override string OnGroundVCPrefabName { get; } = "Bait";
 
 		public override string DeployedVCPrefabName { get; } = "Bait_Deployed";
+		public override bool Collectable { get; } = false;
+
 		public BindableProperty<float> GetVigiliance() {
 			return this.vigilianceProperty.RealValue;
 		}

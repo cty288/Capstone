@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PriorityQueues;
+using Priority_Queue;
+
 using Runtime.DataFramework.Entities;
 
 namespace _02._Scripts.Runtime.BuffSystem {
@@ -11,10 +12,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		private Dictionary<string, HashSet<IBuff>> _buffs = new Dictionary<string, HashSet<IBuff>>();
 
 		[ES3NonSerializable]
-		private Dictionary<string, MappedBinaryPriorityQueue<IBuff>> _buffQueue =
-			new Dictionary<string, MappedBinaryPriorityQueue<IBuff>>();
+		private Dictionary<string, SimplePriorityQueue<IBuff, int>> _buffQueue =
+			new Dictionary<string, SimplePriorityQueue<IBuff, int>>();
 
-		public Dictionary<string, MappedBinaryPriorityQueue<IBuff>> BuffQueue => _buffQueue;
+		public Dictionary<string, SimplePriorityQueue<IBuff, int>> BuffQueue => _buffQueue;
 
 		[ES3NonSerializable]
 		//cache the type of buff for each entity
@@ -39,10 +40,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 
 			if (!_buffQueue.ContainsKey(buff.BuffOwnerID)) {
 				_buffQueue.Add(buff.BuffOwnerID,
-					new MappedBinaryPriorityQueue<IBuff>((a, b) => a.Priority.CompareTo(b.Priority)));
+					new SimplePriorityQueue<IBuff, int>(((a, b) => -a.CompareTo(b))));
 			}
 
-			_buffQueue[buff.BuffOwnerID].Enqueue(buff);
+			_buffQueue[buff.BuffOwnerID].Enqueue(buff, buff.Priority);
 			
 			if (!_buffTypeMap.ContainsKey(buff.BuffOwnerID)) {
 				_buffTypeMap.Add(buff.BuffOwnerID, new Dictionary<Type, IBuff>());
@@ -83,8 +84,8 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			return true;
 		}
 		
-		public bool RemoveBuff(IBuff buff) {
-			return RemoveBuff(buff.GetType(), buff.BuffOwnerID, out _);
+		public bool RemoveBuff(string id, IBuff buff) {
+			return RemoveBuff(buff.GetType(), id, out _);
 		}
 		
 		public bool HasBuff<T>(string buffOwnerID, out IBuff buff) where T : IBuff {

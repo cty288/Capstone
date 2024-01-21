@@ -38,12 +38,11 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 		
 		
 		
-		public override RecoveryBuff OnStacked(RecoveryBuff buff) {
+		public override void OnStacked(RecoveryBuff buff) {
 			this.MaxDuration = Mathf.Max(this.MaxDuration, buff.MaxDuration);
 			this.healAmountPerTick = Mathf.Max(this.healAmountPerTick, buff.healAmountPerTick);
 			this.RemainingDuration = this.MaxDuration;
 			this.TickInterval = Mathf.Min(this.TickInterval, buff.TickInterval);
-			return this;
 		}
 
 		public override void OnStart() {
@@ -54,8 +53,9 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 			damagableEntity.Heal(healAmountPerTick, buffDealer as IBelongToFaction);
 			return BuffStatus.Running;
 		}
+		
 
-		public override void OnEnd() {
+		public override void OnEnds() {
 			
 		}
 

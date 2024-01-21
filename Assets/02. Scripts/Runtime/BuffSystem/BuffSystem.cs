@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.Singletons;
-using PriorityQueues;
+using Priority_Queue;
 using Runtime.DataFramework.Entities;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -13,9 +13,13 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		// add, remove, contains
 		bool CanAddBuff(IEntity targetEntity, IBuff buff);
 		
-		bool AddBuff(IEntity targetEntity, IBuff buff);
+		bool AddBuff(IEntity targetEntity, IEntity buffDealer, IBuff buff);
 		
 		bool RemoveBuff<T>(IEntity targetEntity) where T : IBuff;
+		
+		bool RemoveBuff(IEntity targetEntity, Type buffType);
+		
+		bool RemoveBuff(IEntity targetEntity, Type buffType, bool recycle, out IBuff buff);
 		
 		public bool ContainsBuff(IEntity targetEntity, Type buffType, out IBuff buff);
 
@@ -32,13 +36,13 @@ namespace _02._Scripts.Runtime.BuffSystem {
 	public class BuffSystem : AbstractSystem, IBuffSystem {
 		private IBuffModel buffModel;
 		
-		private Dictionary<string, MappedBinaryPriorityQueue<IBuff>> buffQueue;
+		private Dictionary<string, SimplePriorityQueue<IBuff, int>> buffQueue;
 		
 		//cached
 		private List<string> entityIDsToRemove = new List<string>();
-		private HashSet<IBuff> buffsToRemove = new HashSet<IBuff>();
+		private Dictionary<IBuff, string> buffsToRemove = new Dictionary<IBuff, string>();
 
-		//life cycle: OnInitialize -> OnValidate -> OnAwake -> OnStack -> OnStart -> OnTick -> OnEnd
+		//life cycle: OnInitialize -> OnValidate -> (When Add) OnInitialize -> OnAwake -> OnStack -> OnStart -> OnTick -> OnEnd
 		protected override void OnInit() {
 			buffModel = this.GetModel<IBuffModel>();
 			buffQueue = buffModel.BuffModelContainer.BuffQueue;
@@ -58,8 +62,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 				}
 				else {
 					foreach (var buff in buffQueue.Value) {
-						buff.OnInitialize(GlobalEntities.GetEntityAndModel(buff.BuffDealerID).Item1, entity);
+						buff.OnInitialize(GlobalEntities.GetEntityAndModel(buff.BuffDealerID).Item1, entity, true);
 					}
+
+					entity.RegisterOnEntityRecycled(OnEntityRecycled);
 				}
 			}
 			
@@ -68,21 +74,31 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			}
 		}
 
+		private void OnEntityRecycled(IEntity e) {
+			e.UnRegisterOnEntityRecycled(OnEntityRecycled);
+			buffModel.BuffModelContainer.RemoveAllBuffs(e.UUID);
+		}
+
 		public bool CanAddBuff(IEntity targetEntity, IBuff buff) {
 			return targetEntity !=null && buff.Validate() && targetEntity.OnValidateBuff(buff);
 		}
 
-		public bool AddBuff(IEntity targetEntity, IBuff buff) {
+		public bool AddBuff(IEntity targetEntity, IEntity buffDealer, IBuff buff) {
 			if (!CanAddBuff(targetEntity, buff)) {
 				return false;
 			}
 
+			buff.OnInitialize(buffDealer, targetEntity);
 			buff.OnAwake();
 			if (ContainsBuff(targetEntity, buff.GetType(), out IBuff existingBuff)) {
 				existingBuff.OnStacked(buff);
 				SendBuffUpdateEvent(targetEntity, existingBuff, BuffUpdateEventType.OnUpdate);
 			}
 			else {
+				if (!buffQueue.ContainsKey(targetEntity.UUID)) {
+					targetEntity.RegisterOnEntityRecycled(OnEntityRecycled);
+				}
+				
 				buffModel.BuffModelContainer.AddBuff(buff);
 				buff.OnStart();
 				SendBuffUpdateEvent(targetEntity, buff, BuffUpdateEventType.OnStart);
@@ -95,15 +111,27 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		}
 
 		public bool RemoveBuff<T>(IEntity targetEntity) where T : IBuff {
-			if (buffModel.BuffModelContainer.RemoveBuff<T>(targetEntity.UUID, out IBuff removedBuff)) {
-				removedBuff.OnEnd();
-				SendBuffUpdateEvent(targetEntity, removedBuff, BuffUpdateEventType.OnEnd);
+			return RemoveBuff(targetEntity, typeof(T));
+		}
+
+		public bool RemoveBuff(IEntity targetEntity, Type buffType) {
+			return RemoveBuff(targetEntity, buffType, true, out _);
+		}
+		
+		
+
+		public bool RemoveBuff(IEntity targetEntity, Type buffType, bool recycle, out IBuff buff) {
+			if (buffModel.BuffModelContainer.RemoveBuff(buffType, targetEntity.UUID, out buff)) {
+				buff.AutoRecycleWhenEnd = recycle;
+				buff.OnEnd();
+				SendBuffUpdateEvent(targetEntity, buff, BuffUpdateEventType.OnEnd);
+				
 				return true;
 			}
 
 			return false;
 		}
-		
+
 		private void OnUpdate() {
 			entityIDsToRemove.Clear();
 			buffsToRemove.Clear();
@@ -124,9 +152,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 							BuffStatus status = buff.OnTick();
 							
 							if (status == BuffStatus.End) {
-								buff.OnEnd();
-								buffsToRemove.Add(buff);
+								
+								buffsToRemove.TryAdd(buff, buff.BuffOwnerID);
 								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
+								buff.OnEnd();
 							}
 							else {
 								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnUpdate);
@@ -134,12 +163,13 @@ namespace _02._Scripts.Runtime.BuffSystem {
 						}
 					}
 					
-					if (buff.MaxDuration > 0 && !buffsToRemove.Contains(buff)) {
+					if (buff.MaxDuration > 0 && !buffsToRemove.ContainsKey(buff)) {
 						buff.RemainingDuration = Mathf.Max(0, buff.RemainingDuration - Time.deltaTime);
 						if (buff.RemainingDuration == 0) {
-							buff.OnEnd();
-							buffsToRemove.Add(buff);
+							
+							buffsToRemove.TryAdd(buff, buff.BuffOwnerID);
 							SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
+							buff.OnEnd();
 						}
 					}
 				}
@@ -150,7 +180,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			}
 			
 			foreach (var buff in buffsToRemove) {
-				buffModel.BuffModelContainer.RemoveBuff(buff);
+				buffModel.BuffModelContainer.RemoveBuff(buff.Value, buff.Key);
 			}
 		}
 

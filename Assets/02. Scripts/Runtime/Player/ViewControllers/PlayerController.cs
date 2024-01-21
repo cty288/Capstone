@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Levels.Sandstorm;
+using Framework;
 using Mikrocosmos;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
@@ -47,6 +50,12 @@ namespace Runtime.Temporary
             currencySystem = this.GetSystem<ICurrencySystem>();
             levelModel.CurrentLevelCount.RegisterWithInitValue(OnCurrentLevelNumChanged)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnSandStormKillPlayer>(OnSandStormKillPlayer)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnSandStormKillPlayer(OnSandStormKillPlayer e) {
+            BoundEntity.TakeDamage(Int32.MaxValue, null, null);
         }
 
         private void OnCurrentLevelNumChanged(int arg1, int levelNum) {
@@ -127,6 +136,10 @@ namespace Runtime.Temporary
 
             if (Input.GetKeyDown(KeyCode.C)) {
                 ImageEffectController.Singleton.DisableAllFeatures();
+            }
+
+            if (Input.GetKeyDown(KeyCode.F5)) {
+                ((SavableArchitecture<MainGame>) MainGame.Interface).SaveGame();
             }
         }
 

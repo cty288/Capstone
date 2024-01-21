@@ -64,12 +64,12 @@ public class PrefabPostProcessor : AssetPostprocessor
 		}
 	}
 	
-	private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
+	/*private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
 		string[] movedFromAssetPaths) {
 		foreach (string str in importedAssets) {
 			UpdatePrefabIDAtPath(str);
 		}
-	}
+	}*/
 
 	/*private void OnPostprocessPrefab(GameObject g)
 	{

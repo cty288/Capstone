@@ -46,14 +46,14 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 				float buffDuration = BoundEntity.GetCustomPropertyOfCurrentLevel<float>("buff_duration");
 				int buffAmount = BoundEntity.GetCustomPropertyOfCurrentLevel<int>("buff_effect");
 				RecoveryBuff buff = RecoveryBuff.Allocate(player, player, buffDuration, buffAmount);
-				buffSystem.AddBuff(player, buff);
+				buffSystem.AddBuff(player, player, buff);
 			}
 		}
 
 		// public override void OnItemAltUse() { }
 		
 		public override void OnItemStartUse() {
-			//this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger, 0));
+			
 		}
 
 		public override void OnItemStopUse() {

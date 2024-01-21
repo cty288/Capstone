@@ -33,6 +33,7 @@ namespace Framework {
 			this.RegisterModel<ICurrencyModel>(new CurrencyModel());
 			this.RegisterModel<ISkillModel>(new SkillModel());
 			this.RegisterModel<IBuffModel>(new BuffModel());
+			this.RegisterModel<IGameTimeModel>(new GameTimeModel());
 		}
 
 		protected override string saveFileSuffix { get; } = "test";
