@@ -7,9 +7,9 @@ using Runtime.GameResources.Model.Base;
 
 namespace Runtime.UI.Crafting.Research {
 	public interface IResearchSystem : ISystem {
-		bool IsResearching(ResourceCategory category);
+		bool IsResearching(ResearchCategory category);
 		
-		ResearchEvent GetResearchEvent(ResourceCategory category);
+		ResearchEvent GetResearchEvent(ResearchCategory category);
 		
 	}
 
@@ -37,7 +37,7 @@ namespace Runtime.UI.Crafting.Research {
 						continue;
 					}
 					foreach (string entityName in researchLevelInfo.ResearchedEntityNames) {
-						resourceBuildModel.UnlockBuild(e.Category, entityName);
+						resourceBuildModel.UnlockBuild(e.Category, entityName, true);
 					}
 				}
 			}
@@ -50,11 +50,11 @@ namespace Runtime.UI.Crafting.Research {
 		}
 
 
-		public bool IsResearching(ResourceCategory category) {
+		public bool IsResearching(ResearchCategory category) {
 			return GetResearchEvent(category) != null;
 		}
 
-		public ResearchEvent GetResearchEvent(ResourceCategory category) {
+		public ResearchEvent GetResearchEvent(ResearchCategory category) {
 			string currentResearchEventID = resourceResearchModel.GetCurrentResearchEventID(category);
 			
 			if (string.IsNullOrEmpty(currentResearchEventID)) {

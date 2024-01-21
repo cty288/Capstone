@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.ResourceCrafting.Models;
 using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
 using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
@@ -37,7 +38,7 @@ public class BuildPanelViewController : SwitchableSubPanel {
 	private ICurrencySystem currencySystem;
 	//private ISkillSystem skillSystem;
 	private IInventorySystem inventorySystem;
-	private ResourceCategory category;
+	private ResearchCategory category;
 	private IResourceBuildModel resourceBuildModel;
 	private int selectedRarity = 1;
 	private HashSet<IResourceEntity> entitiesToRemoveWhenClear = new HashSet<IResourceEntity>();
@@ -50,7 +51,7 @@ public class BuildPanelViewController : SwitchableSubPanel {
 	[SerializeField] private Button nextRarityButton;
 	[SerializeField] private GameObject noBuildableResourceHint;
 	[SerializeField] private GameObject noResourceHint;
-	
+	[SerializeField] private GameObject previewSelectionObject;
 	private void Awake() {
 		buildableResourcePanel = transform.Find("BuildableResourcePanel").GetComponent<PreparationSlotLayoutViewController>();
 		materialPanel = transform.Find("OwnedMaterialPanel").GetComponent<PreparationSlotLayoutViewController>();
@@ -139,19 +140,40 @@ public class BuildPanelViewController : SwitchableSubPanel {
 		}
 
 		buildableResourcePanel.OnShowItems(buildableSlots);
+
+		foreach (var slots in buildableResourcePanel.GetAllSlots()) {
+			slots.GetComponent<PreparationSlotViewController>().SetNewItemHint(GetIsSlotNew(slots.Slot));
+		}
 		
 		buildableResourcePanel.RegisterOnSlotClicked(OnSlotClicked);
+	}
+	
+	private bool GetIsSlotNew(ResourceSlot slot) {
+		string itemUUID = slot.GetLastItemUUID();
+		if (itemUUID == null || slot.IsEmpty()) {
+			return false;
+		}
+
+		string resourceName = slot.EntityKey;
+		bool isNew = resourceBuildModel.IsNew(resourceName);
+		return isNew;
 	}
 
 	private void OnSlotClicked(ResourceSlotViewController slotVC, PreparationSlotLayoutViewController layout, bool isSelectedAlready) {
 		currentPreviewSlot = slotVC.Slot;
+
+		if (currentPreviewSlot != null && !currentPreviewSlot.IsEmpty()) {
+			resourceBuildModel.SetIsNew(slotVC.Slot.EntityKey, false);
+			slotVC.GetComponent<PreparationSlotViewController>().SetNewItemHint(false);
+		}
+
 		SetPreviewedRarity(1);
 	}
 
 	private void SetPreviewedRarity(int rarity) {
 		var slot = currentPreviewSlot;
 		ClearPreview();
-		if(slot == null) return;
+		if(slot == null || slot.IsEmpty()) return;
 		
 	
 		
@@ -172,6 +194,7 @@ public class BuildPanelViewController : SwitchableSubPanel {
 			rarity = maxRarity;
 		}
 
+		previewSelectionObject.SetActive(maxRarity > 1);
 		selectedRarity = rarity;
 
 		currentPreviewEntity = ResourceTemplates.Singleton.GetResourceTemplates(templateEntity.EntityName)
@@ -296,15 +319,21 @@ public class BuildPanelViewController : SwitchableSubPanel {
 					true);
 			}
 
-			resourceBuildModel.RemoveFromBuild(category, entity.EntityName);
+			
 
-			if (entity.GetResourceCategory() is ResourceCategory.Skill or ResourceCategory.Weapon) {
+			if (entity.GetResourceCategory() is ResourceCategory.Skill) {
 				inventoryModel.AddToBaseStock(entity);
 				entitiesToRemoveWhenClear.Remove(entity);
+				resourceBuildModel.RemoveFromBuild(category, entity.EntityName);
 				
 			}else if (entity.GetResourceCategory() is ResourceCategory.WeaponParts) {
 				IWeaponPartsModel weaponPartsModel = this.GetModel<IWeaponPartsModel>();
 				weaponPartsModel.AddToUnlockedParts(entity.EntityName);
+				resourceBuildModel.RemoveFromBuild(category, entity.EntityName);
+				
+			}else if (entity.GetResourceCategory() is ResourceCategory.Weapon) {
+				inventoryModel.AddToBaseStock(entity);
+				entitiesToRemoveWhenClear.Remove(entity);
 			}
 			
 			
@@ -320,7 +349,7 @@ public class BuildPanelViewController : SwitchableSubPanel {
 		Clear();
 	}
 
-	public void OnSetResourceCategory(ResourceCategory msgCategory) {
+	public void OnSetResourceCategory(ResearchCategory msgCategory) {
 		category = msgCategory;
 	}
 }

@@ -34,7 +34,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 	
  	private ResearchLevelInfo[] researchResults;
 	
-	private ResourceCategory category;
+	private ResearchCategory category;
 	private IInventoryModel inventoryModel;
 	private IResourceResearchModel resourceResearchModel;
 	private ICurrencyModel currencyModel;
@@ -250,7 +250,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 	}
 	
 	
-	public void OnSetResourceCategory(ResourceCategory category) {
+	public void OnSetResourceCategory(ResearchCategory category) {
 		this.category = category;
 		
 	}

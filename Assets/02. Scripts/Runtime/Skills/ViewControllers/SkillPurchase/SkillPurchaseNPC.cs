@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.ResourceCrafting.Models;
 using Framework;
 using MikroFramework.Architecture;
 using Polyglot;
@@ -18,7 +19,7 @@ public class SkillPurchaseNPC : BaseNPC {
 		//MainUI.Singleton.OpenOrGetClose<SkillPurchaseUI>(MainUI.Singleton, null, false);
 		MainUI.Singleton.OpenOrGetClose
 			<CraftingPanelViewController>(MainUI.Singleton, new CraftingPanelMsg() {
-				category = ResourceCategory.Skill
+				category = ResearchCategory.Skill
 			}, false);
 	}
 }

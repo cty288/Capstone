@@ -1,4 +1,5 @@
-﻿using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
+﻿using _02._Scripts.Runtime.ResourceCrafting.Models;
+using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using MikroFramework.Architecture;
 using Runtime.GameResources;
@@ -24,7 +25,7 @@ namespace _02._Scripts.Runtime.Skills {
 			if (buildModel.IsFirstTimeCreated) {
 				foreach (string skillName in initiallyPurchaseableSkillNames) {
 					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
-					buildModel.UnlockBuild(ResourceCategory.Skill, skillName);
+					buildModel.UnlockBuild(ResearchCategory.Skill, skillName, false);
 				}
 			}
 		}
@@ -34,7 +35,7 @@ namespace _02._Scripts.Runtime.Skills {
 		}
 
 		public void UnlockPurchaseableSkill(string skillName) {
-			buildModel.UnlockBuild(ResourceCategory.Skill, skillName);
+			buildModel.UnlockBuild(ResearchCategory.Skill, skillName, true);
 		}
 	}
 }

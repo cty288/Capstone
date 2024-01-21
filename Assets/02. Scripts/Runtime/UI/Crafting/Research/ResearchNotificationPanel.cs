@@ -15,7 +15,7 @@ public class ResearchNotificationPanel : AbstractMikroController<MainGame> {
     
 
 
-    public void SetContent(string[] entityNames) {
+    public void SetContent(string[] entityNames, string npcName) {
         string[] localizedEntityNames = new string[entityNames.Length];
         
         for (int i = 0; i < entityNames.Length; i++) {
@@ -25,6 +25,6 @@ public class ResearchNotificationPanel : AbstractMikroController<MainGame> {
         }
 
         string joinedNames = string.Join("\n", localizedEntityNames);
-        notificationText.text = Localization.GetFormat("RESEARCH_NOT_BODY", joinedNames);
+        notificationText.text = Localization.GetFormat("RESEARCH_NOT_BODY", joinedNames, npcName);
     }
 }

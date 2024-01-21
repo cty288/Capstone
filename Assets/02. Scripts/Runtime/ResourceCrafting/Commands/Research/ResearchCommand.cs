@@ -19,7 +19,7 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Commands.Research {
 		private int money;
 		private int exp;
 		private int days;
-		private ResourceCategory category;
+		private ResearchCategory category;
 		private HashSet<ResourceSlot> selectedResources;
 		
 		private ICurrencySystem currencySystem;
@@ -33,7 +33,7 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Commands.Research {
 		}
 
 		public static ResearchCommand Allocate(int money, int exp, int days,
-			ResourceCategory category, HashSet<ResourceSlot> selectedResources,
+			ResearchCategory category, HashSet<ResourceSlot> selectedResources,
 			ResearchLevelInfo[] researchResults) {
 			
 			ResearchCommand command = SafeObjectPool<ResearchCommand>.Singleton.Allocate();

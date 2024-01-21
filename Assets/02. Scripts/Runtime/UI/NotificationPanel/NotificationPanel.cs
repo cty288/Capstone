@@ -47,7 +47,7 @@ public class NotificationPanel : MonoMikroSingleton<NotificationPanel>, IControl
             entityNames.AddRange(result.ResearchedEntityNames);
         }
 
-        researchNotificationPanel.SetContent(entityNames.ToHashSet().ToArray());
+        researchNotificationPanel.SetContent(entityNames.ToHashSet().ToArray(), e.NPCName);
         
         AddNotification(spawnedNotification, 5f);
     }

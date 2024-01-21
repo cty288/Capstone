@@ -68,7 +68,7 @@ namespace Runtime.Weapons.Model.Base
         public string CurrentTopPartsUUID;
     }
     
-    public abstract class WeaponEntity<T> :  ResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
+    public abstract class WeaponEntity<T> :  BuildableResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
         private IBaseDamage baseDamageProperty;
         private IAttackSpeed attackSpeedProperty;
         private IAdsFOV adsFOVProperty;
@@ -98,6 +98,10 @@ namespace Runtime.Weapons.Model.Base
         protected override ConfigTable GetConfigTable() {
             
             return ConfigDatas.Singleton.WeaponEntityConfigTable;
+        }
+
+        public override int GetMaxRarity() {
+            return 1;
         }
 
         public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
@@ -386,7 +390,7 @@ namespace Runtime.Weapons.Model.Base
         }
 
         protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
-            return "???";
+            return originalDisplayName;
         }
 
         [field: ES3Serializable] public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);

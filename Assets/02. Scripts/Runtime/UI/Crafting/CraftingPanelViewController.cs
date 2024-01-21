@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.ResourceCrafting.Models;
 using MikroFramework.UIKit;
 using Runtime.GameResources.Model.Base;
 using Runtime.UI;
 using UnityEngine;
 
 public struct CraftingPanelMsg : UIMsg {
-	public ResourceCategory category;
+	public ResearchCategory category;
 }
 
 public class CraftingPanelViewController : SwitchableRootPanel {

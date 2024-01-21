@@ -5,39 +5,69 @@ using Runtime.Inventory.Model;
 
 namespace _02._Scripts.Runtime.ResourceCrafting.Models.Build {
 	public interface IResourceBuildModel : ISavableModel {
-		void UnlockBuild(ResourceCategory category, string entityName);
+		void UnlockBuild(ResearchCategory category, string entityName, bool isNew);
 		
-		void RemoveFromBuild(ResourceCategory category, string entityName);
+		void RemoveFromBuild(ResearchCategory category, string entityName);
 		
-		HashSet<string> GetBuildableResources(ResourceCategory category);
+		HashSet<string> GetBuildableResources(ResearchCategory category);
+		
+		void SetIsNew(string entityName, bool isNew);
+		
+		bool IsNew(string entityName);
 	}
 	public class ResourceBuildModel : AbstractSavableModel, IResourceBuildModel {
 		[field: ES3Serializable] 
-		private Dictionary<ResourceCategory, HashSet<string>> buildableResources =
-			new Dictionary<ResourceCategory, HashSet<string>>();
+		private Dictionary<ResearchCategory, HashSet<string>> buildableResources =
+			new Dictionary<ResearchCategory, HashSet<string>>();
 
+		[field: ES3Serializable]
+		private Dictionary<string, bool> isNewBuildableResources = new Dictionary<string, bool>();
 		
-		public void UnlockBuild(ResourceCategory category, string entityName) {
+		public void UnlockBuild(ResearchCategory category, string entityName, bool isNew) {
 			if (buildableResources.TryGetValue(category, out var resources)) {
 				resources.Add(entityName);
+			}else {
+				buildableResources.Add(category, new HashSet<string>() {entityName});
+			}
+			
+			if (isNewBuildableResources.TryGetValue(entityName, out var isnew)) {
+				isNewBuildableResources[entityName] = isNew;
 			}
 			else {
-				buildableResources.Add(category, new HashSet<string>() {entityName});
+				isNewBuildableResources.Add(entityName, isNew);
 			}
 		}
 
-		public void RemoveFromBuild(ResourceCategory category, string entityName) {
+		public void RemoveFromBuild(ResearchCategory category, string entityName) {
 			if (buildableResources.TryGetValue(category, out var resources)) {
 				resources.Remove(entityName);
 			}
 		}
 
-		public HashSet<string> GetBuildableResources(ResourceCategory category) {
+		public HashSet<string> GetBuildableResources(ResearchCategory category) {
 			if (buildableResources.TryGetValue(category, out var resources)) {
 				return resources;
 			}
 			else {
 				return new HashSet<string>();
+			}
+		}
+
+		public void SetIsNew(string entityName, bool isNew) {
+			if (isNewBuildableResources.TryGetValue(entityName, out _)) {
+				isNewBuildableResources[entityName] = isNew;
+			}
+			else {
+				isNewBuildableResources.Add(entityName, isNew);
+			}
+		}
+
+		public bool IsNew(string entityName) {
+			if (isNewBuildableResources.TryGetValue(entityName, out var isNew)) {
+				return isNew;
+			}
+			else {
+				return false;
 			}
 		}
 	}

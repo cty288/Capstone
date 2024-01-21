@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.ResourceCrafting.Models;
 using Runtime.GameResources.Model.Base;
 using Runtime.UI;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class GunsmithNPC : BaseNPC
 		base.OnInteract();
 		MainUI.Singleton.OpenOrGetClose
 			<CraftingPanelViewController>(MainUI.Singleton, new CraftingPanelMsg() {
-				category = ResourceCategory.WeaponParts
+				category = ResearchCategory.WeaponAndParts
 			}, false);
 	}
 }

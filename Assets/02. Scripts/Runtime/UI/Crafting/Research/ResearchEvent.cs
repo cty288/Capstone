@@ -1,6 +1,7 @@
 ﻿using _02._Scripts.Runtime.ResourceCrafting.Models;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Polyglot;
 using Runtime.GameResources.Model.Base;
 
 namespace Runtime.UI.Crafting.Research {
@@ -8,8 +9,9 @@ namespace Runtime.UI.Crafting.Research {
 	public struct OnResearchEventTriggered {
 		public string EventID;
 		public int Exp;
-		public ResourceCategory Category;
+		public ResearchCategory Category;
 		public ResearchLevelInfo[] ResearchResults;
+		public string NPCName;
 	}
 	
 	
@@ -18,9 +20,9 @@ namespace Runtime.UI.Crafting.Research {
 		[ES3Serializable]
 		private int exp;
 		[ES3Serializable]
-		private ResourceCategory category;
+		private ResearchCategory category;
 
-		public ResourceCategory Category => category;
+		public ResearchCategory Category => category;
 		
 		[ES3Serializable]
 		private ResearchLevelInfo[] researchResults;
@@ -33,7 +35,8 @@ namespace Runtime.UI.Crafting.Research {
 				EventID = this.EventID,
 				Exp = exp,
 				Category = category,
-				ResearchResults = researchResults
+				ResearchResults = researchResults,
+				NPCName = category == ResearchCategory.Skill ? Localization.Get("NPC_SKILL") : Localization.Get("NPC_GUNSMITH")
 			});
 			
 			
@@ -48,7 +51,7 @@ namespace Runtime.UI.Crafting.Research {
 			
 		}
 		
-		public static ResearchEvent Allocate(int exp, ResourceCategory category, ResearchLevelInfo[] researchResults) {
+		public static ResearchEvent Allocate(int exp, ResearchCategory category, ResearchLevelInfo[] researchResults) {
 			ResearchEvent researchEvent = ResearchEvent.Allocate();
 			researchEvent.exp = exp;
 			researchEvent.category = category;
