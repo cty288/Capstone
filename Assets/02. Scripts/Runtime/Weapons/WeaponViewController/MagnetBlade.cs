@@ -79,7 +79,7 @@ namespace Runtime.Weapons
             Transform parent = ownerGameObject.transform.GetChild(5);
             blade.transform.SetParent(parent);
             blade.transform.localPosition = GetCurrentBladeLocalPos();
-            blade.transform.localRotation = Quaternion.Euler(100f, 0f, 0f);
+            blade.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
             // blade.gameObject.SetActive(true);
             blades.Push(blade);
         }
@@ -91,7 +91,7 @@ namespace Runtime.Weapons
             {
                 return new Vector3(0, 0.4f, 0);
             }
-            return index % 2 == 0 ? new Vector3((index-1) * 0.4f, 0.4f, -0.6f) : new Vector3(index * -0.4f, 0.4f, -0.6f);
+            return index % 2 == 0 ? new Vector3((index-1) * 0.4f, 0.4f, -0.4f) : new Vector3(index * -0.4f, 0.4f, -0.4f);
         }
         
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<MagnetBladeEntity> builder) {
@@ -109,6 +109,12 @@ namespace Runtime.Weapons
         public override void OnItemScopePressed()
         {
             // TODO: use melee attack
+            // check melee cooldown / avaliability
+            // start melee animation
+            // set melee cooldown
+                // turn on collider using animation events
+                // turn off collider using animation events
+                // toggle melee attack finished
         }
         
         public override void OnItemUse() {}
@@ -120,7 +126,6 @@ namespace Runtime.Weapons
                 if (blades.Count > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
-                    print(blades.Count);
                     SetShoot(true);
                     ShootEffects();
                 }
@@ -131,7 +136,6 @@ namespace Runtime.Weapons
 
         protected override void Shoot()
         {
-            print("SHOOT BLADE");
             Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
             MagnetBladeBullet blade = blades.Pop();
             
@@ -140,7 +144,7 @@ namespace Runtime.Weapons
                 gameObject, this, BoundEntity.GetRange().BaseValue);
             
             blade.Launch(shootDir, BoundEntity.GetBulletSpeed().RealValue);
-            // CheckReloadBlade();
+            CheckReloadBlade();
         }
 
         private void CheckReloadBlade()
@@ -156,7 +160,7 @@ namespace Runtime.Weapons
         {
             isReloadingBlade = true;
             
-            yield return BoundEntity.GetReloadSpeed();
+            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().RealValue);
             InitializeBlade();
             
             isReloadingBlade = false;

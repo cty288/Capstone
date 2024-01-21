@@ -11,13 +11,14 @@ namespace Runtime.Weapons
     public class MagnetBladeBullet : AbstractBulletViewController
     {
         private bool isShooting = false;
-        
+        public Rigidbody rigidbody;
         protected override void Update() {
             if (!inited) {
                 return;
             }
 			         
-            if (isShooting && maxRange > 0 && Vector3.Distance(transform.position, origin) > maxRange) {
+            if (isShooting && maxRange > 0 && Vector3.Distance(transform.position, origin) > maxRange)
+            {
                 OnBulletReachesMaxRange();
                 RecycleToCache();
             }
@@ -25,10 +26,10 @@ namespace Runtime.Weapons
         
         public void Launch(Vector3 direction, float speed)
         {
-            print("LAUNCH BLADE");
             transform.SetParent(null);
-            transform.rotation = Quaternion.identity;
-            GetComponent<Rigidbody>().velocity = direction * speed;
+            transform.rotation = Quaternion.LookRotation(direction);
+            rigidbody.isKinematic = false;
+            rigidbody.velocity = direction * speed;
             isShooting = true;
             origin = transform.position;
         }
@@ -48,6 +49,8 @@ namespace Runtime.Weapons
         protected override void OnBulletRecycled()
         {
             isShooting = false;
+            rigidbody.isKinematic = true;
+            rigidbody.velocity = Vector3.zero;
         }
     }
 }
