@@ -14,6 +14,7 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.Others;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Base;
@@ -23,7 +24,7 @@ using UnityEngine.PlayerLoop;
 using AutoConfigCustomProperty = Runtime.DataFramework.Properties.CustomProperties.AutoConfigCustomProperty;
 
 namespace _02._Scripts.Runtime.Skills.Model.Base {
-	public interface ISkillEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
+	public interface ISkillEntity : IBuildableResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
 		public float GetRemainingCooldown();
 		
 		public float GetMaxCooldown();
@@ -51,17 +52,17 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public int GetMaxLevel();
 		
-		public SkillPurchaseCostInfo GetSkillPurchaseCost();
+		
 	}
 
 	public struct OnSkillUsed {
 		public ISkillEntity skillEntity;
 	}
-	public abstract class SkillEntity<T>:  ResourceEntity<T>, ISkillEntity  where T : SkillEntity<T>, new() {
+	public abstract class SkillEntity<T>:  BuildableResourceEntity<T>, ISkillEntity  where T : SkillEntity<T>, new() {
 		protected ISkillCoolDown skillCooldownProperty;
 		protected ISkillUseCost skillUseCostProperty;
 		protected ISkillUpgradeCost skillUpgradeCostProperty;
-		protected ISkillPurchaseCost skillPurchaseCostProperty;
+		
 		protected ICanDealDamage owner;
 
 		public override string InHandVCPrefabName => EntityName;
@@ -86,7 +87,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		protected override void OnRegisterProperties() {
 			base.OnRegisterProperties();
 			RegisterInitialProperty<ISkillCoolDown>(new SkillCooldown());
-			RegisterInitialProperty<ISkillPurchaseCost>(new SkillPurchaseCost());
+			RegisterInitialProperty<IPurchaseCost>(new PurchaseCost());
 			RegisterInitialProperty<ISkillUpgradeCost>(new SkillUpgradeCost());
 			RegisterInitialProperty<ISkillUseCost>(new SkillUseCost());
 		}
@@ -96,7 +97,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			skillCooldownProperty = GetProperty<ISkillCoolDown>();
 			skillUseCostProperty = GetProperty<ISkillUseCost>();
 			skillUpgradeCostProperty = GetProperty<ISkillUpgradeCost>();
-			skillPurchaseCostProperty = GetProperty<ISkillPurchaseCost>();
+			
 			
 		}
 
@@ -206,11 +207,12 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 			int rarity = GetRarity();
 			float cooldown = skillCooldownProperty.GetByLevel(rarity);
-			
-			list.Add(() => new ResourcePropertyDescription("PropertyIconRarity", Localization.GetFormat(
-				"PROPERTY_ICON_LEVEL", rarity)));
-			list.Add(() => new ResourcePropertyDescription("PropertyIconCooldown", Localization.GetFormat(
-				"PROPERTY_ICON_COOLDOWN", Mathf.RoundToInt(cooldown))));
+			list.Add(() => new ResourcePropertyDescription("PropertyIconRarity", Localization.Get(
+				"PROPERTY_ICON_LEVEL"), rarity.ToString()));
+
+			list.Add(() => new ResourcePropertyDescription("PropertyIconCooldown", Localization.Get(
+					"PROPERTY_ICON_COOLDOWN"),
+				Localization.GetFormat("PROPERTY_ICON_COOLDOWN_DESC", Mathf.RoundToInt(cooldown))));
 		}
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -249,9 +251,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return levelRange;
 		}
 
-		public SkillPurchaseCostInfo GetSkillPurchaseCost() {
-			return skillPurchaseCostProperty.RealValue.Value;
-		}
+		
 
 
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => GetInventorySwitchCondition;

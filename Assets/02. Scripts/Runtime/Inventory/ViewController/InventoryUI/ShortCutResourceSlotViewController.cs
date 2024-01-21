@@ -12,7 +12,7 @@ public class ShortCutResourceSlotViewController : ResourceSlotViewController {
    private Transform shortCutTransform;
    private TMP_Text[] currencyTexts;
 
-   protected override void Awake() {
+   public override void Awake() {
       base.Awake();
       shortCutTransform = transform.Find("ShortCutTag");
       shortCutText = shortCutTransform.Find("ShortCutText").GetComponent<TMP_Text>();

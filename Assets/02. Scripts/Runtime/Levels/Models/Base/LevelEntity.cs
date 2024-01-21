@@ -57,6 +57,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		public BindableProperty<bool> IsInBossFight { get; }
 		
+		public int DayStayed { get; set; }
+		
 		public void SetInBattle(bool isInBattle);
 		
 		// public int CurrentEnemyCount { get; set; }
@@ -141,40 +143,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return card.MinRarity;
 		}
 		
-		// public List<LevelSpawnCard> GetAllCardsUnderCost(float cost) {
-		// 	List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
-		// 	int level = GetCurrentLevelCount();
-		// 	foreach (var card in spawnCardsProperty.RealValues) {
-		// 		
-		// 		if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost) {
-		// 			cards.Add(card);
-		// 		}
-		// 	}
-		// 	return cards;
-		// }
-
-		// public List<LevelSpawnCard> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate) {
-		// 	List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
-		// 	int level = GetCurrentLevelCount();
-		// 	foreach (var card in spawnCardsProperty.RealValues) {
-		// 		if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost && furtherPredicate(card)) {
-		// 			cards.Add(card);
-		// 		}
-		// 	}
-		// 	return cards;
-		// }
-
-		// public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost) {
-		// 	return GetCards((card =>
-		// 		card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy));
-		// }
-		//
-		// public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate) {
-		// 	return GetCards((card =>
-		// 		card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy &&
-		// 		furtherPredicate(card)));
-		// }
-
+		
 		public List<LevelSpawnCard> GetAllBosses(Predicate<IEnemyEntity> templateEntityFurtherPredicate) {
 			if (templateEntityFurtherPredicate == null) {
 				return GetCards((card => !card.IsNormalEnemy));
@@ -229,7 +198,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		[field: SerializeField]
 		public BindableProperty<bool> IsInBossFight { get; } = new BindableProperty<bool>();
 
-		
+		[field: ES3Serializable] 
+		public int DayStayed { get; set; } = 0;
+
 
 		public void SetInBattle(bool isInBattle) {
 			this.isInBattle = isInBattle;
@@ -250,6 +221,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			IsInBossFight.Value = false;
 			SubAreaUUIDs.Clear();
 			subAreaLevelEntities.Clear();
+			DayStayed = 0;
 		}
 	}
 }

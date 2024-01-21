@@ -5,6 +5,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using MikroFramework.ResKit;
+using Polyglot;
 using TMPro;
 using UnityEngine;
 
@@ -19,8 +20,15 @@ public class PropertyDescriptionItemViewController : PoolableGameObject, IContro
     }
 
 
-    public void SetContent(string descriptionText, string iconPrefabName) {
-        this.descriptionText.text = descriptionText;
+    public void SetContent(string iconNameText, string descriptionText, string iconPrefabName) {
+        string colon = Localization.Get("COLON");
+        if (string.IsNullOrEmpty(iconNameText)) {
+            this.descriptionText.text = descriptionText;
+        }
+        else {
+            this.descriptionText.text = $"<b>{iconNameText}{colon}</b>{descriptionText}";
+        }
+        
 
         if (!string.IsNullOrEmpty(iconPrefabName)) {
             GameObject prefab = resLoader.LoadSync<GameObject>(iconPrefabName);

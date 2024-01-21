@@ -1,63 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PriorityQueues
+namespace Priority_Queue
 {
-	/// <summary>
-	/// Represents a generic priority queue
-	/// </summary>
-	public interface IPriorityQueue<T> : IEnumerable<T>
-	{
-		/// <summary>
-		/// Gets the number of elements contained in the queue
-		/// </summary>
-		int Count { get; }
+    /// <summary>
+    /// The IPriorityQueue interface.  This is mainly here for purists, and in case I decide to add more implementations later.
+    /// For speed purposes, it is actually recommended that you *don't* access the priority queue through this interface, since the JIT can
+    /// (theoretically?) optimize method calls from concrete-types slightly better.
+    /// </summary>
+    public interface IPriorityQueue<TItem, in TPriority> : IEnumerable<TItem>
+    {
+        /// <summary>
+        /// Enqueue a node to the priority queue.  Lower values are placed in front. Ties are broken by first-in-first-out.
+        /// See implementation for how duplicates are handled.
+        /// </summary>
+        void Enqueue(TItem node, TPriority priority);
 
-		/// <summary>
-		/// Clear all elements from the queue
-		/// </summary>
-		void Clear();
+        /// <summary>
+        /// Removes the head of the queue (node with minimum priority; ties are broken by order of insertion), and returns it.
+        /// </summary>
+        TItem Dequeue();
 
-		/// <summary>
-		/// Determines whether the queue contains the specified element
-		/// </summary>
-		/// <param name="element"></param>
-		/// <exception cref="ArgumentNullException"></exception>
-		/// <returns><see langword="true"/> if the queue contains the specified element, <see langword="false"/> otherwise</returns>
-		bool Contains(T element);
+        /// <summary>
+        /// Removes every node from the queue.
+        /// </summary>
+        void Clear();
 
-		/// <summary>
-		/// Returns the element with the highest priority value and removes it from the queue
-		/// </summary>
-		/// <exception cref="InvalidOperationException"></exception>
-		/// <returns>The element with the highest priority</returns>
-		T Dequeue();
+        /// <summary>
+        /// Returns whether the given node is in the queue.
+        /// </summary>
+        bool Contains(TItem node);
 
-		/// <summary>
-		/// Inserts an element to the queue
-		/// </summary>
-		/// <exception cref="ArgumentNullException"></exception>
-		/// <param name="element">The element to be added to the queue</param>
-		void Enqueue(T element);
+        /// <summary>
+        /// Removes a node from the queue.  The node does not need to be the head of the queue.  
+        /// </summary>
+        void Remove(TItem node);
 
-		/// <summary>
-		/// Determines if the queue contains no elements
-		/// </summary>
-		/// <returns><see langword="true"/> if the queue contains no elements, <see langword="false"/> otherwise</returns>
-		bool IsEmpty();
+        /// <summary>
+        /// Call this method to change the priority of a node.  
+        /// </summary>
+        void UpdatePriority(TItem node, TPriority priority);
 
-		/// <summary>
-		/// Returns the element with the highest priority value without removing it from the queue
-		/// </summary>
-		/// <exception cref="InvalidOperationException"></exception>
-		/// <returns>The element with the highest priority</returns>
-		T Peek();
+        /// <summary>
+        /// Returns the head of the queue, without removing it (use Dequeue() for that).
+        /// </summary>
+        TItem First { get; }
 
-		/// <summary>
-		/// Removes an element from the queue
-		/// </summary>
-		/// <param name="element">Element to remove from queue; can be null</param>
-		/// <returns><see langword="true"/> if the element is successfuly removed; otherwise, <see langword="false"/>. This method also returns false if the element is not found in the queue</returns>
-		bool Remove(T element);
-	}
+        /// <summary>
+        /// Returns the number of nodes in the queue.
+        /// </summary>
+        int Count { get; }
+    }
 }

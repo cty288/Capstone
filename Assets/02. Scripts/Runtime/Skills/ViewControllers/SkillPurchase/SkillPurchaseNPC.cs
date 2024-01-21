@@ -33,7 +33,7 @@ public class SkillPurchaseNPC : AbstractMikroController<MainGame> {
 
 	private void Update() {
 		if (inZone && ClientInput.Singleton.GetSharedActions().Interact.WasPressedThisFrame()) {
-			MainUI.Singleton.OpenOrGetClose<SkillPurchaseUI>(MainUI.Singleton, null);
+			MainUI.Singleton.OpenOrGetClose<SkillPurchaseUI>(MainUI.Singleton, null, false);
 		}
 	}
 

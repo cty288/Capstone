@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
@@ -98,6 +100,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 
         public int Damage => BoundEntity.GetRealDamageValue();
+        
+        private IBuffSystem buffSystem;
 
         #region Initialization
         protected override void Awake() {
@@ -105,7 +109,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             weaponModel = this.GetModel<IWeaponModel>();
             playerModel = this.GetModel<IGamePlayerModel>();
             fpsCamera = mainCamera.GetUniversalAdditionalCameraData().cameraStack[0];
-            
+            buffSystem = this.GetSystem<IBuffSystem>();
             cam = Camera.main;
             playerActions = ClientInput.Singleton.GetPlayerActions();
             animationSMBManager = GetComponent<AnimationSMBManager>();
@@ -115,11 +119,13 @@ namespace Runtime.Weapons.ViewControllers.Base
             fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
         }
         
-        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
+            bool addToModelWhenBuilt = true) {
             if(weaponModel == null) {
                 weaponModel = this.GetModel<IWeaponModel>();
             }
-            WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>();
+
+            WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>(addToModelWhenBuilt);
             if (setRarity) {
                 builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
             }
@@ -133,8 +139,10 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.OnEntityStart();
             _isScopedIn = false;
             cameraShaker = FindObjectOfType<CameraShaker>();
+           
         }
-        
+
+       
         protected override void OnBindEntityProperty() {}
         
 
