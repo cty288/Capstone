@@ -12,7 +12,8 @@ namespace Runtime.Weapons
     public class ShotgunEntity : WeaponEntity<ShotgunEntity>
     {
         [field: ES3Serializable] public override string EntityName { get; set; } = "Shotgun";
-        
+
+        public override bool Collectable { get; }
         [field: ES3Serializable] public override int Width { get; } = 1;
         
         protected override string OnGetDescription(string defaultLocalizationKey) {
