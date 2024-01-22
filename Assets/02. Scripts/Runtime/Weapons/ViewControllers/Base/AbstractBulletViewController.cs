@@ -151,22 +151,22 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			if (!inited) {
 				return;
 			}
-			// if (gameObject.name == "GunBullet") {
-			// 	Debug.Log("HitResponse");
-			// }
+
 			if (!other.isTrigger) {
 				Rigidbody rootRigidbody = other.attachedRigidbody;
-				GameObject hitObj =
-					rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
+				GameObject hitObj = rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
 				if (hitObj && bulletOwner && hitObj.transform == bulletOwner.transform) {
 					return;
 				}
+				
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
-					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
+					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && !penetrateSameFaction) {
 						return;
 					}
 				}
+				
+				// print($"BLADE HIT {hitObj.name}, my faction: {CurrentFaction.Value}, hit faction: {belongToFaction.CurrentFaction.Value}, hit same faction: {penetrateSameFaction}");
 				
 				OnHitObject(other);
 				if (autoRecycleWhenHit) {

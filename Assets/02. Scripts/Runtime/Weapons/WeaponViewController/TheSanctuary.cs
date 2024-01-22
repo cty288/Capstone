@@ -96,7 +96,7 @@ namespace Runtime.Weapons
 
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
                 BoundEntity.GetRealDamageValue(),
-                gameObject, gameObject.GetComponent<ICanDealDamage>(), BoundEntity.GetRange().BaseValue);
+                gameObject, this, BoundEntity.GetRange().BaseValue);
         }
         
         public override bool CheckHit(HitData data)
@@ -105,8 +105,7 @@ namespace Runtime.Weapons
         }
         
         public override void HitResponse(HitData data) {
-            // TODO: Optimize projectile when we make one, or it might be using the old system for this.
-            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            // Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
         }
     }
 }

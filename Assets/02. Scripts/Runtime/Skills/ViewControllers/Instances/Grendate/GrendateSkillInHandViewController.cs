@@ -234,6 +234,8 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 			ShowTrajectory();
 		}
 
+		// public override void OnItemAltUse() { }
+
 		protected override IResourceEntity OnInitSkillEntity(SkillBuilder<GrenadeSkill> builder) {
 			return builder.FromConfig().Build();
 		}
