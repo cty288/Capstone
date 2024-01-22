@@ -189,3 +189,48 @@ TestWeaponParts7,1,"{
     }
   }
 }",,,
+SpecialBarrel,1,,"{
+  ""level1"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.1}
+  },
+  ""level2"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level3"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.3}
+  },
+  ""level4"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.5}
+  }
+}",,,
+HeavyBarrel,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.1},
+    ""buff_level"": {""type"": ""int"", ""value"": 1},
+    ""buff_damage"": {""type"": ""float"", ""value"": 1},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_level"": {""type"": ""int"", ""value"": 1},
+    ""buff_damage"": {""type"": ""float"", ""value"": 1},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_level"": {""type"": ""int"", ""value"": 2},
+    ""buff_damage"": {""type"": ""float"", ""value"": 5},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level4"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_level"": {""type"": ""int"", ""value"": 3},
+    ""buff_damage"": {""type"": ""float"", ""value"": 0.005},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  }
+}",,,

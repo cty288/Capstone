@@ -34,13 +34,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		where T : WeaponPartsEntity<T, TBuffType>, new()
 		where TBuffType : WeaponPartsBuff<T, TBuffType>, new() {
 		
-		protected virtual int levelRange { get; } = 3;
+		protected virtual int levelRange => 4;
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.WeaponPartsConfigTable;
 		}
 
 		public override int GetMaxRarity() {
-			return 3;
+			return 4;
 		}
 
 		protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {

@@ -24,7 +24,8 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    [SerializeField] private float throwForce = 10f;
    
    [SerializeField] private List<GameObject> initialItems;
-
+   [SerializeField] private List<GameObject> initialItems_debug;
+   
    private DPunkInputs.SharedActions sharedActions;
    private IInventoryModel inventoryModel;
    private IInventorySystem inventorySystem;
@@ -53,6 +54,16 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
 
          //inventorySystem.AddItem(resourceEntity);
          inventoryModel.AddToBaseStock(resourceEntity);
+      }
+      
+      if(Application.isEditor) {
+         foreach (GameObject item in initialItems_debug) {
+            IPickableResourceViewController resourceViewController = item.GetComponent<IPickableResourceViewController>();
+            IResourceEntity resourceEntity = resourceViewController.OnBuildNewPickableResourceEntity(false, 1);
+
+            inventorySystem.AddItem(resourceEntity);
+            //inventoryModel.AddToBaseStock(resourceEntity);
+         }
       }
    }
 
