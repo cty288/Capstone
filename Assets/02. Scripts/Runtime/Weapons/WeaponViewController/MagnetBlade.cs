@@ -24,7 +24,7 @@ namespace Runtime.Weapons
     {
         [field: ES3Serializable] public override string EntityName { get; set; } = "MagnetBlade";
 
-        public override bool Collectable { get; }
+        public override bool Collectable => true;
         [field: ES3Serializable] public override int Width { get; } = 2;
         
         public override void OnRecycle()
