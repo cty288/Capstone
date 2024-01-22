@@ -80,48 +80,6 @@ Shader "Universal Render Pipeline/Custom/Sand"
 			#define _NORMALMAP
         
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
-
-
-            CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST;
-		        float4 _BaseColor;
-
-                float _Cutoff;
-
-                float _Smoothness;
-                float _GlossMapScale;
-        
-                float _Metallic;
-        
-                float4 _SpecColor;
-
-				float _ShadowEdgePower;
-				float _ShadowEdgeSaturation;
-				float2 _ShadowRadianceRange;
-
-				float _BumpScale;
-				float4 _BumpMap_ST;
-				float4 _RippleMap0_ST;
-				float4 _RippleMap1_ST;
-				float _RippleStrength;
-				float _SteepnessPower;
-        
-                float _OcclusionStrength;
-				float4 _OcclusionMap_ST;
-        
-                float4 _EmissionColor;
-				float4 _EmissionMap_ST;
-
-				float4 _HighlightColor;
-				float _FresnelPower;
-				float _FresnelCutOffOut;
-				float _FresnelCutOffIn;
-                
-    
-            CBUFFER_END
         
         ENDHLSL
         
@@ -443,7 +401,8 @@ Shader "Universal Render Pipeline/Custom/Sand"
 
             #pragma vertex LitGBufferPassVertex
             #pragma fragment LitGBufferPassFragment
-            
+
+            #include "Inputs.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             // ------------------
@@ -508,8 +467,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
             	
 	            return combined;
             }
-
-            #include "Inputs.hlsl"
+            
             #define UNIVERSAL_LIT_GBUFFER_PASS_INCLUDED
 
 			#include "DesertLighting.hlsl"
