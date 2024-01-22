@@ -556,8 +556,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			ISubAreaLevelModel subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
 			
 			ISpawnCardsProperty spawnCardsProperty = BoundEntity.GetProperty<ISpawnCardsProperty>();
-			foreach (LevelSpawnCard spawnCard in spawnCardsProperty.RealValue.Value) {
-				enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
+			foreach (LevelSpawnCard[] spawnCards in spawnCardsProperty.RealValue.Value) {
+				foreach (LevelSpawnCard spawnCard in spawnCards) {
+					enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
+				}
 			}
 
 
@@ -567,16 +569,16 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					true);
 			}
 			
-			 while (currentEnemies.Count > 0) {
-			 	IEntity enemy = currentEnemies.First();
-			 	currentEnemies.Remove(enemy);
-			 	enemyModel.RemoveEntity(enemy.UUID, true);
-			 }
+			while (currentEnemies.Count > 0) {
+				IEntity enemy = currentEnemies.First();
+				currentEnemies.Remove(enemy);
+				enemyModel.RemoveEntity(enemy.UUID, true);
+			}
 
-			 foreach (IEnemyEntity enemyEntity in templateEnemies) {
-				 enemyModel.RemoveEntity(enemyEntity.UUID, true);
-			 }
-			 templateEnemies.Clear();
+			foreach (IEnemyEntity enemyEntity in templateEnemies) {
+				enemyModel.RemoveEntity(enemyEntity.UUID, true);
+			}
+			templateEnemies.Clear();
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {

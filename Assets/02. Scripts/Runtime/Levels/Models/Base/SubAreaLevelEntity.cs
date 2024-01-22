@@ -25,17 +25,17 @@ namespace _02._Scripts.Runtime.Levels.Models {
 	}
 	
 	public interface ISubAreaLevelEntity : IEntity, IHaveCustomProperties, IHaveTags {
-        public List<LevelSpawnCard> GetAllCardsUnderCost(float cost);
+        public List<LevelSpawnCard[]> GetAllCardsUnderCost(float cost);
 		
-		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate);
+		public List<LevelSpawnCard[]> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard[]> furtherPredicate);
 		
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost);
+		public List<LevelSpawnCard[]> GetAllNormalEnemiesUnderCost(float cost);
 		
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate);
+		public List<LevelSpawnCard[]> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard[]> furtherPredicate);
 		
-		public List<LevelSpawnCard> GetAllCards();
+		public List<LevelSpawnCard[]> GetAllCards();
 
-		public List<LevelSpawnCard> GetCards(Predicate<LevelSpawnCard> predicate);
+		public List<LevelSpawnCard[]> GetCards(Predicate<LevelSpawnCard[]> predicate);
 		
 		public int GetCurrentLevelCount();
 		
@@ -141,57 +141,70 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			else
 				return SubAreaDangerLevel.Safe;
 		}
+
+		private float GetMinCost(LevelSpawnCard[] cards)
+		{
+			return cards.Sum(card => card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)));
+		}
+
+		private bool IsNormalEnemies(LevelSpawnCard[] cards)
+		{
+			return cards.Any(card => card.IsNormalEnemy == false);
+		}
+
+		private bool IsAllEnemiesUnderCount(LevelSpawnCard[] cards)
+		{
+			return cards.All(card => enemyCount[card.PrefabNames[0]] <= GetMaxSpawnPerEnemy()[card.PrefabNames[0]]);
+		}
 		
-		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost) {
-			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
-			int level = GetCurrentLevelCount();
-			foreach (var card in spawnCardsProperty.RealValues) {
-				
-				if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost) {
-					cards.Add(card);
+		public List<LevelSpawnCard[]> GetAllCardsUnderCost(float cost) {
+			List<LevelSpawnCard[]> cardsList = new List<LevelSpawnCard[]>();
+			foreach (var cards in spawnCardsProperty.RealValues) {
+				if (GetMinCost(cards) <= cost) {
+					cardsList.Add(cards);
 				}
 			}
-			return cards;
+			return cardsList;
 		}
 
-		public List<LevelSpawnCard> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate) {
-			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
-			int level = GetCurrentLevelCount();
-			foreach (var card in spawnCardsProperty.RealValues) {
-				if (card.GetRealSpawnCost(level, GetMinRarity(card)) <= cost && furtherPredicate(card)) {
-					cards.Add(card);
+		public List<LevelSpawnCard[]> GetAllCardsUnderCost(float cost, Predicate<LevelSpawnCard[]> furtherPredicate) {
+			List<LevelSpawnCard[]> cardsList = new List<LevelSpawnCard[]>();
+			foreach (var cards in spawnCardsProperty.RealValues) {
+				if (GetMinCost(cards) <= cost && furtherPredicate(cards)) {
+					cardsList.Add(cards);
 				}
 			}
-			return cards;
+			return cardsList;
 		}
 
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost) {
-			return GetCards((card =>
-				card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost 
-				&& card.IsNormalEnemy
-				&& enemyCount[card.PrefabNames[0]] <= GetMaxSpawnPerEnemy()[card.PrefabNames[0]]));
-		
-
+		public List<LevelSpawnCard[]> GetAllNormalEnemiesUnderCost(float cost) {
+			return GetCards((cards =>
+				GetMinCost(cards) <= cost 
+				&& IsNormalEnemies(cards)
+				&& IsAllEnemiesUnderCount(cards)
+				));
 		}
 
-		public List<LevelSpawnCard> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard> furtherPredicate) {
-			return GetCards((card =>
-				card.GetRealSpawnCost(GetCurrentLevelCount(), GetMinRarity(card)) <= cost && card.IsNormalEnemy &&
-				furtherPredicate(card)));
+		public List<LevelSpawnCard[]> GetAllNormalEnemiesUnderCost(float cost, Predicate<LevelSpawnCard[]> furtherPredicate) {
+			return GetCards((cards =>
+				GetMinCost(cards) <= cost
+				&& IsNormalEnemies(cards)
+				&& IsAllEnemiesUnderCount(cards)
+				&& furtherPredicate(cards)));
 		}
 
-		public List<LevelSpawnCard> GetAllCards() {
+		public List<LevelSpawnCard[]> GetAllCards() {
 			return spawnCardsProperty.RealValues.ToList();
 		}
-		
-		public List<LevelSpawnCard> GetCards(Predicate<LevelSpawnCard> predicate) {
-			List<LevelSpawnCard> cards = new List<LevelSpawnCard>();
-			foreach (var card in spawnCardsProperty.RealValues) {
-				if (predicate(card)) {
-					cards.Add(card);
+
+		public List<LevelSpawnCard[]> GetCards(Predicate<LevelSpawnCard[]> predicate) {
+			List<LevelSpawnCard[]> cardsList = new List<LevelSpawnCard[]>();
+			foreach (var cards in spawnCardsProperty.RealValues) {
+				if (predicate(cards)) {
+					cardsList.Add(cards);
 				}
 			}
-			return cards;
+			return cardsList;
 		}
 
 		public int GetCurrentLevelCount() {
