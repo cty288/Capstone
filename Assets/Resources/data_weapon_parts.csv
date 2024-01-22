@@ -1,13 +1,19 @@
-EntityName / Property Names,max_stack,custom_properties,tags,,More Notes
-Types,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,int,"Dict<string, CustomProperty>
+EntityName / Property Names,max_stack,purchase_cost,custom_properties,tags,,More Notes
+Types,int,SkillPurchaseCostInfo,dynamic,"Dictionary<TagName,int>",,
+Notes ->,int,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
-,,,,,
-BEGIN,,,,,
+,,,,,,
+BEGIN,,,,,,
 TestWeaponParts,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -28,6 +34,12 @@ TestWeaponParts,1,"{
   }
 }",,,
 TestWeaponParts2,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -48,6 +60,12 @@ TestWeaponParts2,1,"{
   }
 }",,,
 TestWeaponParts3,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -65,5 +83,154 @@ TestWeaponParts3,1,"{
       ""type"": ""float"",
       ""value"": 10
     }
+  }
+}",,,
+TestWeaponParts4,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+TestWeaponParts5,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+TestWeaponParts6,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+TestWeaponParts7,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+SpecialBarrel,1,,"{
+  ""level1"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.1}
+  },
+  ""level2"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level3"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.3}
+  },
+  ""level4"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.5}
+  }
+}",,,
+HeavyBarrel,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.1},
+    ""buff_level"": {""type"": ""int"", ""value"": 1},
+    ""buff_damage"": {""type"": ""float"", ""value"": 1},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_level"": {""type"": ""int"", ""value"": 1},
+    ""buff_damage"": {""type"": ""float"", ""value"": 1},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_level"": {""type"": ""int"", ""value"": 2},
+    ""buff_damage"": {""type"": ""float"", ""value"": 5},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level4"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_level"": {""type"": ""int"", ""value"": 3},
+    ""buff_damage"": {""type"": ""float"", ""value"": 0.005},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
   }
 }",,,
