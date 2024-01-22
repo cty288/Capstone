@@ -4,6 +4,7 @@ using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using BehaviorDesigner.Runtime.Tasks;
 using MikroFramework.Architecture;
+using Runtime.DataFramework.Description;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
@@ -60,7 +61,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         
         [Header("Enemies")]
         [SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
-        [SerializeField] protected int enemyCount = 0;
+        [SerializeField] protected int totalEnemyCount = 0;
         private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
 
         private List<IEntity> templateEnemies = new List<IEntity>();
@@ -82,19 +83,33 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         }
 
         public ISubAreaLevelEntity OnInitEntity(){
-            if (subAreaLevelModel == null) {
+            if (subAreaLevelModel == null)
+            {
                 subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
             }
 
+            // initialize sub area count of enemies
+            BoundEntity.InitializeEnemyCountDictionary(enemies);
+            
             SubAreaLevelBuilder<T> builder = subAreaLevelModel.GetSubAreaLevelBuilder<T>();
             builder
                 .SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber))
                 .SetProperty(new PropertyNameInfo(PropertyName.max_enemies), maxEnemiesPerArea)
+                .SetProperty(new PropertyNameInfo(PropertyName.max_spawn_per_enemy), CreateMaxSpawnPerEnemyDictionary())
                 .SetProperty(new PropertyNameInfo(PropertyName.sub_area_nav_mesh_modifier), CalculateSubAreaMaskIndex());
 
             return OnInitSubLevelEntity(builder);
         }
 
+        private Dictionary<string, int> CreateMaxSpawnPerEnemyDictionary() {
+            Dictionary<string, int> maxSpawnPerEnemy = new Dictionary<string, int>();
+            foreach (var enemy in enemies) {
+                maxSpawnPerEnemy.Add(enemy.mainPrefab.GetComponent<IHaveDisplayName>().GetDisplayName(), enemy.maxSpawnCountPerArea);
+            }
+
+            return maxSpawnPerEnemy;
+        }
+        
         protected int CalculateSubAreaMaskIndex()
         {
             return (int) Mathf.Pow(2, subAreaLevelModifier.area);
@@ -188,9 +203,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
         	enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
         		.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-        	enemyCount++;
+        	totalEnemyCount++;
+            BoundEntity.IncrementEnemyCountDictionary(enemyObject.EnemyEntity.GetDisplayName());
         	BoundEntity.CurrentEnemyCount++;
             BoundEntity.TotalEnemiesSpawnedSinceOffCooldown++;
+            
             totalEnemiesSpawned++;
         	currentEnemies.Add(enemyEntity);
             
@@ -202,7 +219,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         
         private void OnEnemyEntityRecycled(IEntity enemy) {
         	enemy.UnRegisterOnEntityRecycled(OnEnemyEntityRecycled);
-        	enemyCount--;
+        	totalEnemyCount--;
+            BoundEntity.DecrementEnemyCountDictionary(enemy.GetDisplayName());
         	BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
         	currentEnemies.Remove(enemy);
         }
@@ -221,7 +239,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         public override void OnRecycled()
         {
             base.OnRecycled();
-            enemyCount = 0;
+            totalEnemyCount = 0;
+            BoundEntity.ClearEnemyCountDictionary();
             currentEnemies.Clear();
         }
 

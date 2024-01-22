@@ -47,7 +47,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		public void OnExitLevel();
 
-		public ISubAreaLevelEntity GetCurrentActiveSubArea();
+		public ISubAreaLevelEntity GetCurrentActiveSubAreaEntity();
 		
 		List<GameObject> Enemies { get; }
 	}
@@ -119,6 +119,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public List<GameObject> variants;
 		public int minRarity;
 		public int maxRarity;
+		public int maxSpawnCountPerArea;
 	}
 	
 	
@@ -526,7 +527,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		public virtual ISubAreaLevelEntity GetCurrentActiveSubArea()
+		public virtual ISubAreaLevelEntity GetCurrentActiveSubAreaEntity()
 		{
 			int areaMask = this.GetModel<IPlayerModel>().CurrentSubAreaMask.Value;
 			

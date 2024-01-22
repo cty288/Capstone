@@ -4,7 +4,7 @@ namespace _02._Scripts.Runtime.Levels.Models.Properties {
 	public interface IMaxEnemiesProperty : IProperty<int> {
 		
 	}
-	public class MaxEnemies : Property<int>, IMaxEnemiesProperty {
+	public class MaxEnemiesProperty : Property<int>, IMaxEnemiesProperty {
 		protected override IPropertyDependencyModifier<int> GetDefautModifier() {
 			return null;
 		}
