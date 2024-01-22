@@ -55,7 +55,7 @@ Canvas:
   m_RenderMode: 1
   m_Camera: {fileID: 2891772104782532208}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -137,10 +137,10 @@ RectTransform:
   m_Father: {fileID: 2891772102979644719}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -174.25, y: 225}
-  m_SizeDelta: {x: 243.85, y: 161.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -174.2505, y: 225.00002}
+  m_SizeDelta: {x: -556.15, y: -638.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2891772103503763004
 CanvasRenderer:
@@ -272,10 +272,10 @@ RectTransform:
   m_Father: {fileID: 2891772102979644719}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -225.33, y: -138}
-  m_SizeDelta: {x: 450.66, y: 353.51}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -225.3296, y: -138.0005}
+  m_SizeDelta: {x: -349.34, y: -446.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2891772103633003200
 CanvasRenderer:
@@ -485,10 +485,10 @@ RectTransform:
   m_Father: {fileID: 2891772102979644719}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -288.03, y: 227.96}
-  m_SizeDelta: {x: 229.86, y: 80.67}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -288.02982, y: 227.96025}
+  m_SizeDelta: {x: -570.14, y: -719.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2891772104296810367
 CanvasRenderer:
@@ -586,7 +586,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
@@ -650,9 +650,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderers:
   - {fileID: 0}
-  images: []
-  unlitIndicator: {fileID: 0}
-  spriteIndicator: {fileID: 0}
+  images:
+  - {fileID: 2891772104296810366}
+  unlitIndicator: {fileID: 2100000, guid: 3f156aadd9fe9b848a447b1dcc065f17, type: 2}
+  spriteIndicator: {fileID: 2100000, guid: da1a6d299cbac894e81812e5a4831576, type: 2}
   updateIndicators: 1
-  currentAmmo: {fileID: 0}
-  maxAmmo: {fileID: 0}
+  currentAmmo: {fileID: 2891772103633003203}
+  maxAmmo: {fileID: 2891772103503763007}
