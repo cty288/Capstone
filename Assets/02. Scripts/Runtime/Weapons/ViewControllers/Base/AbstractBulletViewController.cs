@@ -17,7 +17,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	public interface IBulletViewController : IController, IHitResponder {
 		int Damage { get; }
 
-		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange);
+		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
+			bool ownerTriggerHitResponse = false);
 	}
 	
 	
@@ -55,6 +56,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected bool tickType = false;
 		protected TrailRenderer[] trailRenderers = null;
 		protected HitData hitData;
+		protected bool ownerTriggerHitResponse = true;
 		[SerializeField] private bool autoRecycleWhenHit = true;
 		protected virtual void Awake() {
 			hitBox = GetComponent<HitBox>();
@@ -76,7 +78,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			}
 		}
 
-		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange) {
+		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
+			 bool ownerTriggerHitResponse = false) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
@@ -99,6 +102,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			owner?.RootDamageDealer?.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
 			entity?.RetainRecycleRC();
 			inited = true;
+			this.ownerTriggerHitResponse = ownerTriggerHitResponse;
 			EnableAllTrailRenderers();
 		}
 
@@ -142,7 +146,19 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			  }
 			  hitObjects.Add(data.Hurtbox.Owner);
 			}
+			if(ownerTriggerHitResponse && owner is IHitResponder hitResponder){
+				hitResponder.HitResponse(data);
+			}
 			OnHitResponse(data);
+		}
+
+		public HitData OnModifyHitData(HitData data) {
+			if (owner is IHitResponder hitResponder) {
+				return hitResponder.OnModifyHitData(data);
+			}
+			else {
+				return data;
+			}
 		}
 
 		protected abstract void OnHitResponse(HitData data);

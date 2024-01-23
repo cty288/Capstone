@@ -43,7 +43,11 @@ namespace Runtime.Temporary.Weapon
             Instantiate(explosionPrefab, data.HitPoint, Quaternion.identity);
             Destroy(gameObject);
         }
-        
+
+        public HitData OnModifyHitData(HitData data) {
+            return data;
+        }
+
         public void Init(Faction faction, int damage) {
             CurrentFaction.Value = faction;
             Damage = damage;

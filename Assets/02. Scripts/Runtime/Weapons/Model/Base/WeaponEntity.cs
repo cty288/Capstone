@@ -14,6 +14,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 using Runtime.Inventory.Model;
+using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
 using UnityEngine;
@@ -59,6 +60,15 @@ namespace Runtime.Weapons.Model.Base
         public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer);
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType);
 
+        public void RegisterOnDealDamage(Action<IDamageable, int> callback);
+
+        public void UnRegisterOnDealDamage(Action<IDamageable, int> callback);
+
+        public HitData OnModifyHitData(HitData data);
+
+        public void RegisterOnModifyHitData(Func<HitData, HitData> callback);
+        
+        public void UnRegisterOnModifyHitData(Func<HitData, HitData> callback);
         // void RegisterOnWeaponPartsUpdate(Action<string, string> callback);
     }
 
@@ -91,8 +101,9 @@ namespace Runtime.Weapons.Model.Base
         private Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>> weaponParts = new Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>>();
 
         //private Action<string, string> onWeaponPartsUpdate;
-        
+        private Action<IDamageable, int> onDealDamage;
 
+        private List<Func<HitData, HitData>> onModifyHitData = new List<Func<HitData, HitData>>();
         public abstract int Width { get; }
 
         protected override ConfigTable GetConfigTable() {
@@ -220,8 +231,11 @@ namespace Runtime.Weapons.Model.Base
                     slot.UnregisterOnSlotUpdateCallback(OnWeaponPartSlotUpdate);
                 }
             }
+            onDealDamage = null;
+            onModifyHitData.Clear();
             
             weaponParts.Clear();
+            
         }
 
         protected override void OnEntityRegisterAdditionalProperties() {
@@ -324,6 +338,29 @@ namespace Runtime.Weapons.Model.Base
             return weaponParts[weaponPartType];
         }
 
+        public void RegisterOnDealDamage(Action<IDamageable, int> callback) {
+            onDealDamage += callback;
+        }
+
+        public void UnRegisterOnDealDamage(Action<IDamageable, int> callback) {
+            onDealDamage -= callback;
+        }
+
+        public HitData OnModifyHitData(HitData data) {
+            HitData result = data;
+            foreach (Func<HitData, HitData> func in onModifyHitData) {
+                result = func(result);
+            }
+            return result;
+        }
+
+        public void RegisterOnModifyHitData(Func<HitData, HitData> callback) {
+            onModifyHitData.Add(callback);
+        }
+
+        public void UnRegisterOnModifyHitData(Func<HitData, HitData> callback) {
+            onModifyHitData.Remove(callback);
+        }
 
 
         /*public void AddToParts(IWeaponPartsEntity weaponPartsEntity) {
@@ -400,6 +437,7 @@ namespace Runtime.Weapons.Model.Base
 
         public void OnDealDamage(IDamageable damageable, int damage) {
             Debug.Log($"Dealt {damage} damage to {damageable}");
+            onDealDamage?.Invoke(damageable, damage);
         }
 
          ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;

@@ -95,6 +95,8 @@ namespace Runtime.Utilities.Collision
         //int Damage { get; }
         public bool CheckHit(HitData data);
         public void HitResponse(HitData data);
+        
+        public HitData OnModifyHitData(HitData data);
     }
 
     /// <summary>

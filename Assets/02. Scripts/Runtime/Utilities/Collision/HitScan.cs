@@ -149,6 +149,10 @@ namespace Runtime.Utilities.Collision
                     
                     Debug.Log("hurtbox respond: " + hurtbox);
                     // hit something with hurtbox
+                    if (hitData.HitDetector.HitResponder != null) {
+                        hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
+                    }
+                   
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                     PlayBulletVFX(_launchPoint.position, hit.point);

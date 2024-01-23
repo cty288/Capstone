@@ -64,6 +64,9 @@ namespace Runtime.Utilities.Collision
                 if (hitData.Validate())
                 {
                     // Debug.Log("validate: ");
+                    if (hitData.HitDetector.HitResponder != null) {
+                        hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
+                    }
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                 }
