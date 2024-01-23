@@ -87,16 +87,11 @@ namespace Runtime.Utilities.Collision
             if (hurtbox != null)
             {
                 // Debug.Log("make hitdata");
-                hitData = new HitData()
-                    {
-                        Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier),
-                        HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
-                        HitNormal = hitNormal,
-                        Hurtbox = hurtbox,
-                        HitDetector = this,
-                        Attacker = m_hitResponder,
-                        ShowDamageNumber = showDamageNumber
-                    };
+                hitData = new HitData().SetHitBoxData(m_hitResponder, hurtbox,
+                    hitPoint == Vector3.zero ? center : hitPoint, hitNormal,
+                    this, showDamageNumber);
+                
+                
                 if (hitData.Validate())
                 {
                     // Debug.Log("validate: ");

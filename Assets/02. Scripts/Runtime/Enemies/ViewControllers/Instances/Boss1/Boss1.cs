@@ -307,7 +307,7 @@ namespace Runtime.Enemies
                     
                     if (data.ShowDamageNumber) {
                         DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage,
-                            data?.Hurtbox?.DamageMultiplier > 1);
+                            data != null && data.IsCritical);
                     }
                 }
                 else {

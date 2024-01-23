@@ -50,7 +50,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.AdaptedCompensator {
 				return data;
 			}
 
-			if (data.Hurtbox.DamageMultiplier > 1) {
+			if (data.IsCritical) {
 				data.Damage = Mathf.RoundToInt(data.Damage * (1 + multiplier));
 			}
 
