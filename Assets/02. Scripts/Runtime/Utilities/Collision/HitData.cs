@@ -43,10 +43,10 @@ namespace Runtime.Utilities.Collision
             return this;
         }
 
-        public HitData SetHitBoxData(IHitResponder hitResponder, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
+        public HitData SetHitBoxData(IHitResponder hitResponder,int damage, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
             IHitDetector hitDetector, bool showDamageNumber) {
 
-            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier);
+            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(damage * hurtbox.DamageMultiplier);
             IsCritical = hurtbox?.DamageMultiplier > 1;
             HitPoint = hitpoint;
             HitNormal = hitNormal;
@@ -57,9 +57,9 @@ namespace Runtime.Utilities.Collision
             return this;
         }
         
-        public HitData SetHitBoxData(IHitResponder hitResponder, int damage, bool isCritical, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
+        public HitData SetHitBoxData(IHitResponder hitResponder, int overriddenDamage, bool isCritical, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
             IHitDetector hitDetector, bool showDamageNumber) {
-            Damage = damage;
+            Damage = overriddenDamage;
             IsCritical = isCritical;
             HitPoint = hitpoint;
             HitNormal = hitNormal;

@@ -42,6 +42,8 @@ namespace Runtime.Player {
 		void SetScopedIn(bool state);
 		
 		void AddArmor(float amount);
+		
+		public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
 	}
 
 	public struct OnPlayerKillEnemy {
@@ -236,6 +238,10 @@ namespace Runtime.Player {
 			}
 		}
 
+		public void SetRootViewController(ICanDealDamageRootViewController rootViewController) {
+			RootViewController = rootViewController;
+		}
+
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
 		}
@@ -281,7 +287,8 @@ namespace Runtime.Player {
 		}
 
 		public ICanDealDamageRootEntity RootDamageDealer => this;
-		public ICanDealDamageRootViewController RootViewController => null;
+
+		public ICanDealDamageRootViewController RootViewController { get; protected set; } = null;
 
 		protected override int DoTakeDamage(int actualDamage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData, 
 			bool nonlethal = false)  {

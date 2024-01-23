@@ -87,11 +87,19 @@ namespace Runtime.Utilities.Collision
             if (hurtbox != null)
             {
                 // Debug.Log("make hitdata");
-                hitData = new HitData().SetHitBoxData(m_hitResponder, hurtbox,
+                hitData = new HitData().SetHitBoxData(m_hitResponder, Damage, hurtbox,
                     hitPoint == Vector3.zero ? center : hitPoint, hitNormal,
                     this, showDamageNumber);
                 
-                
+                    /*{
+                        Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier),
+                        HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
+                        HitNormal = hitNormal,
+                        Hurtbox = hurtbox,
+                        HitDetector = this,
+                        Attacker = m_hitResponder,
+                        ShowDamageNumber = showDamageNumber
+                    };*/
                 if (hitData.Validate())
                 {
                     // Debug.Log("validate: ");
@@ -103,7 +111,11 @@ namespace Runtime.Utilities.Collision
                 }
             }
             else {
-                hitData = new HitData()
+                hitData = new HitData().SetHitBoxData(m_hitResponder, Damage, false,null,
+                    hitPoint == Vector3.zero ? center : hitPoint, hitNormal,
+                    this, showDamageNumber);
+                
+                /*= new HitData()
                 {
                     Damage = Damage,
                     HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
@@ -112,7 +124,7 @@ namespace Runtime.Utilities.Collision
                     HitDetector = this,
                     Attacker = m_hitResponder,
                     ShowDamageNumber = showDamageNumber
-                };
+                };*/
                 if (hitData.HitDetector.HitResponder != null) {
                     hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
                 }
