@@ -122,10 +122,10 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 		}
 	}
 
+	public HitData OnModifyHitData(HitData data) {
+		return data;
+	}
 
-
-
-	
 
 	public override void OnRecycled() {
 		base.OnRecycled();

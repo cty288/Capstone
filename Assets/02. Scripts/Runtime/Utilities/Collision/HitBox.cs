@@ -100,6 +100,9 @@ namespace Runtime.Utilities.Collision
                 if (hitData.Validate())
                 {
                     // Debug.Log("validate: ");
+                    if (hitData.HitDetector.HitResponder != null) {
+                        hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
+                    }
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                 }
@@ -115,7 +118,9 @@ namespace Runtime.Utilities.Collision
                     Attacker = m_hitResponder,
                     ShowDamageNumber = showDamageNumber
                 };
-                
+                if (hitData.HitDetector.HitResponder != null) {
+                    hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
+                }
                 HitResponder?.HitResponse(hitData);
             }
             // Debug.Log("validate: " + (hitData.Validate()));

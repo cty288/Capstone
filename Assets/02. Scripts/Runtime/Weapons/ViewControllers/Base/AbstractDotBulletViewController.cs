@@ -80,8 +80,16 @@ namespace Runtime.Weapons.ViewControllers.Base
 				trailRenderer.enabled = true;
 			}
 		}
-
-		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange)
+		public HitData OnModifyHitData(HitData data) {
+			if (owner is IHitResponder hitResponder) {
+				return hitResponder.OnModifyHitData(data);
+			}
+			else {
+				return data;
+			}
+		}
+		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
+			bool ownerTriggerHitResponse = false)
 		{
 			CurrentFaction.Value = faction;
 			Damage = damage;

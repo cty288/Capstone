@@ -16,7 +16,7 @@ using Runtime.Weapons.Model.Base;
 using TMPro;
 using UnityEngine;
 
-public class ModificationSubPanel : InventorySubPanel {
+public class ModificationSubPanel : SwitchableSubPanel {
     [SerializeField] private ModificationPanelSlotLayout weaponSlotLayout;
     [SerializeField] private ModificationPanelSlotLayout weaponPartsSlotLayout;
     [SerializeField] private ModificationWeaponPartsPanel weaponPartsPanel;

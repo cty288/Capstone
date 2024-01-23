@@ -47,6 +47,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         public override void HitResponse(HitData data) {
+            Debug.Log("AbstractHitScanWeaponViewController HitResponse");
             // TODO: Phase out old Particle System
             hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
             hitVFXSystem.SetVector3("HitNormal", data.HitNormal);

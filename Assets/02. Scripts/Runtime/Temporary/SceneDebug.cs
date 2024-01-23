@@ -30,6 +30,7 @@ namespace Runtime.Temporary
                 currencySystem.AddCurrency(CurrencyType.Mineral, 10);
                 currencySystem.AddCurrency(CurrencyType.Plant, 10);
                 currencySystem.AddCurrency(CurrencyType.Time, 10);
+                this.GetModel<ICurrencyModel>().AddMoney(100);
             }
             
             if (!Application.isEditor) {

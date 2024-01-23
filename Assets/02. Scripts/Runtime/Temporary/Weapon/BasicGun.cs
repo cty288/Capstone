@@ -152,6 +152,10 @@ namespace Runtime.Temporary.Weapon
             DrawLine(launchPoint.position, data.HitPoint);
         }
 
+        public HitData OnModifyHitData(HitData data) {
+            return data;
+        }
+
         public void DrawLine(Vector3 start, Vector3 end)
         {
             lr.SetPosition(0, start);
