@@ -231,54 +231,56 @@ namespace Runtime.Spawning
 
         protected virtual async UniTask<bool> SpawnEnemy(LevelSpawnCard[] cards, int areaMask)
         {
+            int rarity = 0;
+            float[] costs = new float[cards.Length];
+            
             // Check if can spawn elite
             if (cards.Length == 0)
             {
-                int rarity = 5;
-                float cost = cards[0].GetRealSpawnCost(levelNumber, rarity);
-                if (currentCredits > cost 
+                // int[] rarity = {5};
+                // float[] cost = {cards[0].GetRealSpawnCost(levelNumber, rarity[0])};
+                rarity = 5;
+                costs[0] = cards[0].GetRealSpawnCost(levelNumber, 5);
+                bool isElite = true;
+                
+                if (currentCredits > costs[0]
                     && totalEliteEnemies <= BoundEntity.GetMaxEliteEnemies().RealValue 
                     && Random.Range(0, 100) < 30)
                 {
-                    cost = eliteCost;
-                    rarity = eliteRarity;
-                    isElite = true;
+                    return await SpawnHelper(cards[0], areaMask, rarity, costs[0], isElite);
                 }
             }
             
             //determine level and cost
-            int rarity = cards.MinRarity;
-            float cost = cards.GetRealSpawnCost(levelNumber, cards.MinRarity);
-            bool isElite = false;
-            
-            // TODO: Spawn elite
-            int eliteRarity = 5;
-            float eliteCost = cards.GetRealSpawnCost(levelNumber, eliteRarity);
-            if (currentCredits > eliteCost 
-                && totalEliteEnemies <= BoundEntity.GetMaxEliteEnemies().RealValue 
-                && Random.Range(0, 100) < 30)
+            // int[] rarities = cards.Select(c => c.MinRarity).ToArray();
+
+            // NORMAL SPAWN
+            int maxRarity = cards.Select(c => c.MaxRarity).Max();
+            int minRarity = cards.Select(c => c.MinRarity).Min();
+            for(int r = maxRarity; r >= minRarity; r--)
             {
-                cost = eliteCost;
-                rarity = eliteRarity;
-                isElite = true;
-            }
-            else
-            {
-                // NORMAL SPAWN
-                for (int i = cards.MaxRarity; i >= cards.MinRarity; i--)
+                float checkCost = cards.Sum(c => c.GetRealSpawnCost(levelNumber, r));
+                if (currentCredits > checkCost)
                 {
-                    float checkCost = cards.GetRealSpawnCost(levelNumber, i);
-                    if (currentCredits > checkCost)
+                    rarity = r;
+                    for (int c = 0; c < cards.Length; c++)
                     {
-                        cost = checkCost;
-                        rarity = i;
-                        break;
+                        costs[c] = cards[c].GetRealSpawnCost(levelNumber, r);
                     }
+                    break;
                 }
             }
+            
+            // return spawnEnemy()
+            for (int i = 0; i < cards.Length; i++)
+            {
+                return await SpawnHelper(cards[i], areaMask, rarity, costs[i], false);
+            }
+            
+            return false;
         }
 
-        private bool SpawnHelper(LevelSpawnCard[] cards, int areaMask, int rarity, float cost, bool isElite)
+        private async UniTask<bool> SpawnHelper(LevelSpawnCard card, int areaMask, int rarity, float cost, bool isElite)
         {
             //raycast down from random point within min/max range
             int spawnAttempts = 10;
@@ -299,7 +301,7 @@ namespace Runtime.Spawning
                 NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
                 spawnPos = hitNavMesh.position;
 
-                GameObject prefabToSpawn = cards.Prefabs[Random.Range(0, cards.Prefabs.Count)];
+                GameObject prefabToSpawn = card.Prefabs[Random.Range(0, card.Prefabs.Count)];
                 NavMeshFindResult findResult =
                     await SpawningUtility.FindNavMeshSuitablePosition(
                         gameObject, () => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider,

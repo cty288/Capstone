@@ -751,6 +751,12 @@ NAME_Weapon,,Weapon,,,,,,,,,,,,,,,,,武器,武器,,,,,,,,,
 NAME_Skill,,Skill,,,,,,,,,,,,,,,,,技能,技能,,,,,,,,,
 NAME_WeaponParts,,Weapon Part,,,,,,,,,,,,,,,,,武器部件,武器部件,,,,,,,,,
 NAME_WeaponParts2,,Weapon Parts,,,,,,,,,,,,,,,,,武器部件,武器部件,,,,,,,,,
+TestWeaponParts2_name,,Weapon Parts 2,,,,,,,,,,,,,,,,,,,,,,,,,,,
+TestWeaponParts3_name,,Weapon Parts 3,,,,,,,,,,,,,,,,,武器部件,武器部件,,,,,,,,,
+TestWeaponParts4_name,,Weapon Parts 4,,,,,,,,,,,,,,,,,武器部件,武器部件,,,,,,,,,
+TestWeaponParts5_name,,Weapon Parts 5,,,,,,,,,,,,,,,,,武器部件,武器部件,,,,,,,,,
+TestWeaponParts6_name,,Weapon Parts 6,,,,,,,,,,,,,,,,,武器部件,武器部件,,,,,,,,,
+TestWeaponParts7_name,,Weapon Parts 7,,,,,,,,,,,,,,,,,武器部件,武器部件,,,,,,,,,
 NAME_Barrel,,Barrel,,,,,,,,,,,,,,,,,枪管,槍管,,,,,,,,,
 NAME_Magazine,,Magazine,,,,,,,,,,,,,,,,,弹匣,彈匣,,,,,,,,,
 NAME_Attachment,,Attachment,,,,,,,,,,,,,,,,,附件,附件,,,,,,,,,
@@ -792,7 +798,7 @@ BASE_PREPARE_ERROR,,You need to have at least 1 weapon to enter the desert!,,,,,
 BASE_PREPARE_ENTER,,Enter the Desert!,,,,,,,,,,,,,,,,,进入沙漠！,進入沙漠！,,,,,,,,,
 HINT_CURRENCY_TRANSFER,,{0} are converted to {1},,,,,,,,,,,,,,,,,{0}已转换为{1},{0}已轉換為{1},,,,,,,,,
 SKILL_PURCHASE_TITLE,,Unlock Skills,,,,,,,,,,,,,,,,,技能解锁,技能解鎖,,,,,,,,,
-SKILL_PURCHASE_HINT1,,Choose a skill to unlock,,,,,,,,,,,,,,,,,选择一个要解锁的技能,選擇一個要解鎖的技能,,,,,,,,,
+SKILL_PURCHASE_HINT1,,Choose an item to unlock,,,,,,,,,,,,,,,,,选择一个要解锁的项目,選擇一個要解鎖的項目,,,,,,,,,
 SKILL_PURCHASE_HINT2,,My Materials,,,,,,,,,,,,,,,,,我的材料,我的材料,,,,,,,,,
 SKILL_PURCHASE_HINT3,,Preview,,,,,,,,,,,,,,,,,预览,預覽,,,,,,,,,
 SKILL_PURCHASE_HINT4,,Required Resources,,,,,,,,,,,,,,,,,所需资源,所需資源,,,,,,,,,
@@ -823,3 +829,43 @@ RESEARCH_ALL_FINISHED,,You have completed all researches!,,,,,,,,,,,,,,,,,你已
 RESEARCH_NO_SELECTED,,Please select resources to be researched!,,,,,,,,,,,,,,,,,请选择要被研究的资源！,請選擇要被研究的資源！,,,,,,,,,
 RESEARCH_COST,,Cost: {0},,,,,,,,,,,,,,,,,费用：{0},費用：{0},,,,,,,,,
 RESEARCH_DAYS,,{0} Day{1},,,,,,,,,,,,,,,,,{0}天,{0}天,,,,,,,,,
+RESEARCH_DOING_RESEARCH,,Currently Researching,,,,,,,,,,,,,,,,,正在研究中,正在研究中,,,,,,,,,
+RESEARCH_DOING_RESEARCH_REMAINING_DAY,,{0} Day{1} Remaining,,,,,,,,,,,,,,,,,剩余{0}天,剩餘{0}天,,,,,,,,,
+RESEARCH_NOT_TITLE,,Research Finished!,,,,,,,,,,,,,,,,,研究完成！,研究完成！,,,,,,,,,
+RESEARCH_NOT_BODY,,"The {1} just finished a research in:
+<color=yellow>{0}</color>
+Go back to the Gunsmith to check them out!",,,,,,,,,,,,,,,,,"枪匠刚刚完成了一项研究：
+<color=yellow>{0}</color>
+回到枪匠处以查看研究！","槍匠剛剛完成了一項研究：
+<color=yellow>{0}</color>
+回到槍匠處以查看研究！",,,,,,,,,
+BUILD_PREVIEW_LEVEL_TEXT,,Preview Level: {0},,,,,,,,,,,,,,,,,预览等级：{0},預覽等級：{0},,,,,,,,,
+RESEARCH_NO_RESOURCE_HINT,,You don't have any resources! Gather some resources from the desert to research!,,,,,,,,,,,,,,,,,你没有任何材料！在沙漠中收集材料来进行研究！,你沒有任何材料！在沙漠中收集材料來進行研究！,,,,,,,,,
+BUILD_NO_BUILD_HINT,,No items can be built! Start a research to unlock more!,,,,,,,,,,,,,,,,,没有可以制造的项目！进行研究以解锁更多！,沒有可以製造的項目！進行研究以解鎖更多！,,,,,,,,,
+NPC_SKILL,,Skill Master,,,,,,,,,,,,,,,,,技能大师,技能大師,,,,,,,,,
+NPC_GUNSMITH,,Gunsmith,,,,,,,,,,,,,,,,,枪匠,槍匠,,,,,,,,,
+HINT_NEW,,NEW!,,,,,,,,,,,,,,,,,新！,新！,,,,,,,,,
+SpecialBarrel_desc,,Increase your weapon's damage by {0}.,,,,,,,,,,,,,,,,,增加武器伤害 {0}。,增加武器傷害 {0}。,,,,,,,,,
+SpecialBarrel_name,,Special Barrel,,,,,,,,,,,,,,,,,特制枪管,特殊槍管,,,,,,,,,
+HeavyBarrel_name,,Heavy Barrel,,,,,,,,,,,,,,,,,重型枪管,重型槍管,,,,,,,,,
+HeavyBarrel_desc,,"When added to a weapon, there is {0} chance to add a level{1} <b><color=red>Bleeding</color></b> effect when hitting the enemy.
+
+ <b><color=red>Bleeding</color></b>: {2}",,,,,,,,,,,,,,,,,"当加装到武器上时，有 {0} 的几率在击中敌人时附加一个等级为 {1} 的<b><color=red>流血</color></b>效果。
+
+<b><color=red>流血</color></b>：{2}","當加裝到武器上時，有 {0} 的機率在擊中敵人時附加一個等級為 {1} 的<b><color=red>流血</color></b>效果。
+
+<b><color=red>流血</color></b>：{2}",,,,,,,,,
+HeavyBarrel_BUFF_PROPERTY,,"When hitting an enemy, there is {0} chance to add a level{1} <b><color=red>Bleeding</color></b> effect",,,,,,,,,,,,,,,,,在击中敌人时，有 {0} 的几率附加一个等级为 {1} 的<b><color=red>流血</color></b>效果。,在擊中敵人時，有 {0} 的機率附加一個等級為 {1} 的<b><color=red>流血</color></b>效果。,,,,,,,,,
+BUFF_BLEEDING_1,,"Lose {0} health per second, lasting {1} seconds.",,,,,,,,,,,,,,,,,每秒失去 {0} 点生命值，持续 {1} 秒。,每秒失去 {0} 點生命值，持續 {1} 秒。,,,,,,,,,
+BUFF_BLEEDING_2,,"Lose {0} health per second, lasting {1} seconds.",,,,,,,,,,,,,,,,,每秒失去 {0} 点生命值，持续 {1} 秒。,每秒失去 {0} 點生命值，持續 {1} 秒。,,,,,,,,,
+BUFF_BLEEDING_3,,"Lose {0}% max health per second, lasting {1} seconds.",,,,,,,,,,,,,,,,,每秒失去最大生命值的 {0}%，持续 {1} 秒。,每秒失去最大生命值的 {0}%，持續 {1} 秒。,,,,,,,,,
+BUFF_BLEEDING_4,,"Lose {0}% max health per second, lasting {1} seconds.",,,,,,,,,,,,,,,,,每秒失去最大生命值的 {0}%，持续 {1} 秒。,每秒失去最大生命值的 {0}%，持續 {1} 秒。,,,,,,,,,
+AdaptedCompensator_name,,Adapted Compensator,,,,,,,,,,,,,,,,,适配补偿器,適配補償器,,,,,,,,,
+AdaptedCompensator_desc,,Increase your weapon's critical damage by {0}%,,,,,,,,,,,,,,,,,你的武器的暴击伤害增加{0}%,你的武器的暴擊傷害增加{0}%,,,,,,,,,
+AdaptedCompensator_BUFF_PROPERTY,,Critical damage increased by {0}%,,,,,,,,,,,,,,,,,暴击伤害增加{0}%,暴擊傷害增加{0}%,,,,,,,,,
+SpecialCompensator_name,,Special Compensator,,,,,,,,,,,,,,,,,特殊补偿器,特殊補償器,,,,,,,,,
+SpecialCompensator_desc,,"If your bullets don't hit weak points, they have {0}% chance of dealing {1}x damage.",,,,,,,,,,,,,,,,,如果你的子弹没有击中弱点，它们有 {0}% 的几率造成 {1} 倍伤害。,如果你的子彈沒有擊中弱點，它們有 {0}% 的機率造成 {1} 倍傷害。,,,,,,,,,
+ShortBarrel_name,,Short Barrel,,,,,,,,,,,,,,,,,短管,短管,,,,,,,,,
+ShortBarrel_desc,,+{0}% damage when your bullets hit an enemy within {1} meters.,,,,,,,,,,,,,,,,,当你的子弹击中{1}米内的敌人时，伤害增加 {0}%。,當你的子彈擊中{1}米內的敵人時，傷害增加 {0}%。,,,,,,,,,
+LongBarrel_name,,Long Barrel,,,,,,,,,,,,,,,,,长管,長管,,,,,,,,,
+LongBarrel_desc,,+{0}% damage when your bullets hit an enemy farther than {1} meters.,,,,,,,,,,,,,,,,,当你的子弹击中{1}米外的敌人时，伤害增加 {0}%。,當你的子彈擊中{1}米外的敵人時，傷害增加 {0}%。,,,,,,,,,
