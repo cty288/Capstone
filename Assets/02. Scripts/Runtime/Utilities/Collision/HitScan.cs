@@ -156,6 +156,7 @@ namespace Runtime.Utilities.Collision
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                     PlayBulletVFX(_launchPoint.position, hit.point);
+                    break;
                 }
                 else
                 {
