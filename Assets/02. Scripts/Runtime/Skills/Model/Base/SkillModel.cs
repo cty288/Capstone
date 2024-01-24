@@ -8,11 +8,11 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		SkillBuilder<T> GetSkillBuilder<T>(int rarity, bool addToModelOnceBuilt = true)
 			where T : class, ISkillEntity, new();
 		
-		List<PreparationSlot> GetPurchasableSkillSlots();
+		/*List<PreparationSlot> GetPurchasableSkillSlots();
 		
 		void UnlockSkill(ISkillEntity skillEntity);
 		
-		void RemoveSlot(PreparationSlot slot);
+		void RemoveSlot(PreparationSlot slot);*/
 	}
 	public class SkillModel : GameResourceModel<ISkillEntity>, ISkillModel {
 		[field: ES3Serializable]

@@ -87,8 +87,11 @@ namespace Runtime.Utilities.Collision
             if (hurtbox != null)
             {
                 // Debug.Log("make hitdata");
-                hitData = new HitData()
-                    {
+                hitData = new HitData().SetHitBoxData(m_hitResponder, Damage, hurtbox,
+                    hitPoint == Vector3.zero ? center : hitPoint, hitNormal,
+                    this, showDamageNumber);
+                
+                    /*{
                         Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier),
                         HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
                         HitNormal = hitNormal,
@@ -96,16 +99,23 @@ namespace Runtime.Utilities.Collision
                         HitDetector = this,
                         Attacker = m_hitResponder,
                         ShowDamageNumber = showDamageNumber
-                    };
+                    };*/
                 if (hitData.Validate())
                 {
                     // Debug.Log("validate: ");
+                    if (hitData.HitDetector.HitResponder != null) {
+                        hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
+                    }
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                 }
             }
             else {
-                hitData = new HitData()
+                hitData = new HitData().SetHitBoxData(m_hitResponder, Damage, false,null,
+                    hitPoint == Vector3.zero ? center : hitPoint, hitNormal,
+                    this, showDamageNumber);
+                
+                /*= new HitData()
                 {
                     Damage = Damage,
                     HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
@@ -114,8 +124,10 @@ namespace Runtime.Utilities.Collision
                     HitDetector = this,
                     Attacker = m_hitResponder,
                     ShowDamageNumber = showDamageNumber
-                };
-                
+                };*/
+                if (hitData.HitDetector.HitResponder != null) {
+                    hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
+                }
                 HitResponder?.HitResponse(hitData);
             }
             // Debug.Log("validate: " + (hitData.Validate()));

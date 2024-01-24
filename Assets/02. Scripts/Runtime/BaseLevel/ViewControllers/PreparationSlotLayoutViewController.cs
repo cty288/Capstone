@@ -111,5 +111,9 @@ public class PreparationSlotLayoutViewController : AbstractMikroController<MainG
 			slotViewController.GetComponent<PreparationSlotViewController>().SetTicked(selected);
 		}
 		
-		
+		public HashSet<ResourceSlotViewController> GetAllSlots() {
+			return new HashSet<ResourceSlotViewController>(slotViewControllers);
+		}
+
+
 }

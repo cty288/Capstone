@@ -76,13 +76,13 @@ namespace Runtime.Weapons
             return builder.FromConfig().Build();
         }
         
-        public override void SetShoot(bool shouldShoot)
+        /*public override void SetShoot(bool shouldShoot)
         {
             base.SetShoot(shouldShoot);
             if (shouldShoot) {
                 Shoot();
             }
-        }
+        }*/
 
         protected override void Shoot()
         {
@@ -96,7 +96,7 @@ namespace Runtime.Weapons
 
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
                 BoundEntity.GetRealDamageValue(),
-                gameObject, this, BoundEntity.GetRange().BaseValue);
+                gameObject, this, BoundEntity.GetRange().BaseValue, true);
         }
         
         public override bool CheckHit(HitData data)
@@ -106,6 +106,7 @@ namespace Runtime.Weapons
         
         public override void HitResponse(HitData data) {
             // Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            Debug.Log("The Sanctuary HitResponse");
         }
     }
 }

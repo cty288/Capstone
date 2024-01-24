@@ -3,6 +3,8 @@
 namespace Runtime.GameResources.Model.Base {
 	public interface IBuildableResourceEntity : IResourceEntity {
 		public PurchaseCostInfo GetPurchaseCost();
+		
+		public int GetMaxRarity();
 	}
 
 	public abstract class BuildableResourceEntity<T> : ResourceEntity<T>, IBuildableResourceEntity
@@ -17,5 +19,12 @@ namespace Runtime.GameResources.Model.Base {
 		public PurchaseCostInfo GetPurchaseCost() {
 			return PurchaseCostProperty.RealValue.Value;
 		}
+
+		protected override void OnRegisterProperties() {
+			base.OnRegisterProperties();
+			RegisterInitialProperty<IPurchaseCost>(new PurchaseCost());
+		}
+
+		public abstract int GetMaxRarity();
 	}
 }
