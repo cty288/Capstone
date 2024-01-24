@@ -537,6 +537,8 @@ GameObject:
   - component: {fileID: 2891772104782532208}
   - component: {fileID: 2891772104782532210}
   - component: {fileID: 40812234696708434}
+  - component: {fileID: 5166583672293798090}
+  - component: {fileID: 8610748783097418887}
   m_Layer: 0
   m_Name: AmmoDisplayCamera
   m_TagString: Untagged
@@ -657,3 +659,28 @@ MonoBehaviour:
   updateIndicators: 1
   currentAmmo: {fileID: 2891772103633003203}
   maxAmmo: {fileID: 2891772103503763007}
+--- !u!114 &5166583672293798090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891772104782532221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501c608631c5c4440a77fa357d3f66b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
+--- !u!114 &8610748783097418887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2891772104782532221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3561051c98fb99045939ccfe242e4279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,13 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ReverseLossyScale : MonoBehaviour
 {
-    // Update is called once per frame
-    void Update()
+    private Vector3 _lossyScale;
+    void FixedUpdate()
     {
-        var lossyScale = transform.lossyScale;
-        transform.localScale = new Vector3(1/lossyScale.x, 1/lossyScale.y, 1/lossyScale.z);
+        if(_lossyScale.magnitude != transform.localScale.magnitude){
+            _lossyScale = transform.lossyScale;
+            Debug.Log(_lossyScale.magnitude);
+            if (Math.Abs(_lossyScale.x - 1.0f) > 0.01f)
+            {
+                transform.localScale = new Vector3(1/_lossyScale.x, 1/_lossyScale.y, 1/_lossyScale.z);
+            }
+        }
     }
 }
