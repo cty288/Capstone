@@ -19,7 +19,7 @@ using UnityEngine.UI;
 
 public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel 
 {
-	private PreparationSlotLayoutViewController skillPanel;
+	/*private PreparationSlotLayoutViewController skillPanel;
 	private PreparationSlotLayoutViewController materialPanel;
 	private GameObject previewPanel;
 	private ISkillModel skillModel;
@@ -223,5 +223,24 @@ public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel
 
 	public IPanel GetClosePanel() {
 		return this;
+	}*/
+	public override void OnInit() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void OnOpen(UIMsg msg) {
+		throw new System.NotImplementedException();
+	}
+
+	public override void OnClosed() {
+		throw new System.NotImplementedException();
+	}
+
+	public IArchitecture GetArchitecture() {
+		throw new System.NotImplementedException();
+	}
+
+	public IPanel GetClosePanel() {
+		throw new System.NotImplementedException();
 	}
 }

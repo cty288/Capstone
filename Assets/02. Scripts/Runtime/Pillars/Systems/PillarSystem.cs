@@ -208,7 +208,7 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 		private void OnSetCurrentLevelPillars(OnSetCurrentLevelPillars e) {
 			//new level, reset
 			this.allPillars.Clear();
-			allPillars = e.pillars;
+			allPillars = new List<IPillarEntity>(e.pillars);
 			ClearPillarCurrency();
 		}
 

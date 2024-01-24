@@ -62,7 +62,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			OnEntityTakeDamage(damage, currenthealth, damagedealer);
 			if (showDamageNumber && (hitData == null || hitData.ShowDamageNumber)) {
 				DamageNumberHUD.Singleton.SpawnHUD(hitData?.HitPoint ?? transform.position, damage,
-					hitData?.Hurtbox?.DamageMultiplier > 1f);
+					hitData != null && hitData.IsCritical);
 			}
 			if (currenthealth <= 0) {
 				OnEntityDie(damagedealer);

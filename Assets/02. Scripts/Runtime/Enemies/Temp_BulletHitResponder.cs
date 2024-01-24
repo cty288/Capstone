@@ -47,6 +47,10 @@ namespace Runtime.Enemies
             hitObjects.Add(data.Hurtbox.Owner);
             Destroy(gameObject);
         }
+
+        public HitData OnModifyHitData(HitData data) {
+            return data;
+        }
     }
 }
 

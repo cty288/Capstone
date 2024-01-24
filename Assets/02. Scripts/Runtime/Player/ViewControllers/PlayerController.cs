@@ -166,6 +166,7 @@ namespace Runtime.Temporary
         protected override void OnEntityStart() {
             Debug.Log("PlayerController.OnEntityStart");
             players.Add(this);
+            BoundEntity.SetRootViewController(this);
         }
 
         protected override void OnBindEntityProperty() {

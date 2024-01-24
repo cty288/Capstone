@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.WeaponParts.Model;
 using Cysharp.Threading.Tasks;
+using Framework;
+using MikroFramework.Architecture;
 using MikroFramework.Singletons;
 using MikroFramework.UIKit;
 using Runtime.DataFramework.Properties;
@@ -13,7 +16,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.Rewards {
-	public class RewardDisperser : MikroSingleton<RewardDisperser> {
+	public class RewardDisperser : MikroSingleton<RewardDisperser>, IController {
 		private RewardDisperser() {
 			
 		}
@@ -70,9 +73,11 @@ namespace _02._Scripts.Runtime.Rewards {
 				
 				case RewardType.WeaponParts_ChooseOne:
 					RewardSelectionPanel panel = null;
+					IWeaponPartsModel weaponPartsModel = this.GetModel<IWeaponPartsModel>();
 					for (int m = 0; m < count; m++) {
 						var weaponParts =
-							ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts);
+							ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts,
+								(parts) => weaponPartsModel.IsUnlocked(parts.EntityName));
 
 						var weaponPartTemplateInfos = weaponParts.ToList();
 						if (weaponParts == null || !weaponPartTemplateInfos.Any()) {
@@ -112,6 +117,10 @@ namespace _02._Scripts.Runtime.Rewards {
 			}
 			
 			return spawnedGameObjects;
+		}
+
+		public IArchitecture GetArchitecture() {
+			return MainGame.Interface;
 		}
 	}
 }
