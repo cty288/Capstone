@@ -50,6 +50,8 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 			}
 		}
 
+		// public override void OnItemAltUse() { }
+		
 		public override void OnItemStartUse() {
 			
 		}

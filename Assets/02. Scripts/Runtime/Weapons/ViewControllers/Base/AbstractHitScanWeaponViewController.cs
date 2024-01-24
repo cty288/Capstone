@@ -14,7 +14,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         [Header("Aesthetic")]
         public VisualEffect[] bulletVFX;
-        private HitDetectorInfo hitDetectorInfo;
+        protected HitDetectorInfo hitDetectorInfo;
         
         protected override void OnEntityStart()
         {

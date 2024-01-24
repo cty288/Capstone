@@ -35,7 +35,7 @@ namespace Runtime.Weapons
         {
             return null;
         }
-        public override bool Collectable { get; } = true;
+        public override bool Collectable  => true;
         protected override void OnInitModifiers(int rarity) {
 
         }
@@ -73,6 +73,7 @@ namespace Runtime.Weapons
 
         public override void OnItemStartUse()
         {
+            // For semi-auto gun
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {

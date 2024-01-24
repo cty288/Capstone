@@ -65,7 +65,11 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 		protected override void OnBindEntityProperty() {
 			
 		}
-		
+
+
+		public override void OnItemAltUse()
+		{
+		}
 
 		public override void OnItemScopePressed() {
 			
