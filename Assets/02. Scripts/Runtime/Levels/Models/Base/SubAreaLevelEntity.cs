@@ -50,7 +50,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public int CurrentEnemyCount { get; set; }
 		public int TotalEnemiesSpawnedSinceOffCooldown { get; set; }
 		public Dictionary<string, int> GetEnemyCountDictionary();
-		public void InitializeEnemyCountDictionary(List<LevelEnemyPrefabConfig> enemyPrefabConfigs);
+		public void InitializeEnemyCountDictionary(List<SpawnCardListConfig> enemyListConfigs);
 		public void IncrementEnemyCountDictionary(string name);
 		public void DecrementEnemyCountDictionary(string name);
 		public void ClearEnemyCountDictionary();
@@ -111,11 +111,14 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return enemyCount;
 		}
 
-		public void InitializeEnemyCountDictionary(List<LevelEnemyPrefabConfig> enemyPrefabConfigs)
+		public void InitializeEnemyCountDictionary(List<SpawnCardListConfig> enemyListConfigs)
 		{
-			foreach (var config in enemyPrefabConfigs)
+			foreach (var spawnCardList in enemyListConfigs)
 			{
-				enemyCount.Add(config.mainPrefab.name, 0);
+				foreach (EnemySpawnInfo enemyInfo in spawnCardList.enemySpawnInfos)
+				{
+					enemyCount.Add(enemyInfo.mainPrefab.name, 0);
+				}
 			}
 		}
 
