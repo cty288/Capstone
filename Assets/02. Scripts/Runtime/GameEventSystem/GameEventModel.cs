@@ -10,12 +10,14 @@ public interface IGameEventModel : ISavableModel {
 	
 	void RemoveEvent(IGameEvent gameEvent);
 	
-	HashSet<IGameEvent> GameEvents { get; }
+	Dictionary<string, IGameEvent> GameEvents { get; }
+	
+	IGameEvent GetEvent(string eventID);
 }
 public class GameEventModel : AbstractSavableModel, IGameEventModel {
 
 	[field: ES3Serializable]
-	private HashSet<IGameEvent> gameEvents = new HashSet<IGameEvent>();
+	private Dictionary<string, IGameEvent> gameEvents = new Dictionary<string, IGameEvent>();
 	
 	protected override void OnInit() {
 		base.OnInit();
@@ -23,7 +25,7 @@ public class GameEventModel : AbstractSavableModel, IGameEventModel {
 
 	public void InitExistingEvents() {
 		foreach (var gameEvent in gameEvents) {
-			gameEvent.OnInitialize();
+			gameEvent.Value.OnInitialize();
 		}
 	}
 
@@ -31,13 +33,21 @@ public class GameEventModel : AbstractSavableModel, IGameEventModel {
 		gameEvent.EventID = System.Guid.NewGuid().ToString();
 		gameEvent.RemainingMinutesToTrigger = remainingMinutesToTrigger;
 		gameEvent.OnInitialize();
-		gameEvents.Add(gameEvent);
+		
+		gameEvents.Add(gameEvent.EventID, gameEvent);
 	}
 
 	public void RemoveEvent(IGameEvent gameEvent) {
-		gameEvents.Remove(gameEvent);
+		gameEvents.Remove(gameEvent.EventID);
 		gameEvent.RecycleToCache();
 	}
 
-	public HashSet<IGameEvent> GameEvents => gameEvents;
+	public Dictionary<string, IGameEvent>  GameEvents => gameEvents;
+	public IGameEvent GetEvent(string eventID) {
+		if (gameEvents.TryGetValue(eventID, out var @event)) {
+			return @event;
+		}
+
+		return null;
+	}
 }

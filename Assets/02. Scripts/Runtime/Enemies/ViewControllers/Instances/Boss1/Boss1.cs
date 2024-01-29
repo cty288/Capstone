@@ -307,7 +307,7 @@ namespace Runtime.Enemies
                     
                     if (data.ShowDamageNumber) {
                         DamageNumberHUD.Singleton.SpawnHUD(data?.HitPoint ?? transform.position, originalDamage,
-                            data?.Hurtbox?.DamageMultiplier > 1);
+                            data != null && data.IsCritical);
                     }
                 }
                 else {
@@ -339,7 +339,7 @@ namespace Runtime.Enemies
         public override void HitResponse(HitData data)
         {
             base.HitResponse(data);
-            if (slamHitBox.isActiveAndEnabled&& data.Hurtbox.Owner.CompareTag("Player"))
+            if (slamHitBox.isActiveAndEnabled && data.Hurtbox != null && data.Hurtbox.Owner.CompareTag("Player"))
             {
                 Vector3 dir = data.Hurtbox.Owner.transform.position - transform.position;
                 dir.y = 0;

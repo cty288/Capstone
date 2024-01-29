@@ -142,7 +142,7 @@ namespace Runtime.Weapons
             
             blade.Init(CurrentFaction.Value,
                 BoundEntity.GetRealDamageValue(),
-                gameObject, this, BoundEntity.GetRange().BaseValue);
+                gameObject, this, BoundEntity.GetRange().BaseValue, true);
             
             blade.Launch(shootDir, BoundEntity.GetBulletSpeed().RealValue);
             CheckReloadBlade();

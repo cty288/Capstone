@@ -6,7 +6,7 @@ using MikroFramework.Architecture;
 using UnityEngine;
 
 public interface IGameEventSystem : ISystem {
-	void AddEvent(IGameEvent gameEvent, int remainingMinutesToTrigger);
+	string AddEvent(IGameEvent gameEvent, int remainingMinutesToTrigger);
 	void RemoveEvent(IGameEvent gameEvent);
 }
 public class GameEventSystem : AbstractSystem, IGameEventSystem {
@@ -26,7 +26,7 @@ public class GameEventSystem : AbstractSystem, IGameEventSystem {
 	private void OnLevelCountChanged(int oldLevel, int newLevel) {
 		eventsToRemoved.Clear();
 		
-		foreach (IGameEvent gameEvent in gameEventModel.GameEvents) {
+		foreach (IGameEvent gameEvent in gameEventModel.GameEvents.Values) {
 			if (gameEvent.StartWithLevel == oldLevel && !gameEvent.CanPersistToOtherLevels) {
 				eventsToRemoved.Add(gameEvent);
 				gameEvent.OnEventLeaped();
@@ -41,7 +41,7 @@ public class GameEventSystem : AbstractSystem, IGameEventSystem {
 	private void OnGlobalTimeChanged(DateTime oldTime, DateTime newTime) {
 		eventsToRemoved.Clear();
 		int minuteElapsed = (int) (newTime - oldTime).TotalMinutes;
-		foreach (IGameEvent gameEvent in gameEventModel.GameEvents) {
+		foreach (IGameEvent gameEvent in gameEventModel.GameEvents.Values) {
 			int realMinuteElapsed = gameEvent.ElapseType == EventElapseType.Predetermined
 				? minuteElapsed
 				: Mathf.Clamp(minuteElapsed, 0, 1);
@@ -62,9 +62,10 @@ public class GameEventSystem : AbstractSystem, IGameEventSystem {
 		
 	}
 
-	public void AddEvent(IGameEvent gameEvent, int remainingMinutesToTrigger) {
+	public string AddEvent(IGameEvent gameEvent, int remainingMinutesToTrigger) {
 		gameEvent.StartWithLevel = levelModel.CurrentLevelCount.Value;
 		gameEventModel.AddEvent(gameEvent, remainingMinutesToTrigger);
+		return gameEvent.EventID;
 	}
 
 	public void RemoveEvent(IGameEvent gameEvent) {

@@ -12,9 +12,10 @@ namespace Runtime.Weapons.ViewControllers {
 		private int explosionDamage;
 		public float explosionSize;
 
-		public override void Init(Faction faction, int damage ,GameObject bulletOwner, ICanDealDamage owner, float maxRange)
+		public override void Init(Faction faction, int damage ,GameObject bulletOwner, ICanDealDamage owner, float maxRange,
+			bool ownerTriggerHitResponse = false)
 		{
-			base.Init(faction, 0, bulletOwner, owner, maxRange);
+			base.Init(faction, 0, bulletOwner, owner, maxRange, ownerTriggerHitResponse);
 			explosionDamage = damage;
 		}
 
@@ -43,8 +44,8 @@ namespace Runtime.Weapons.ViewControllers {
 			//Instantiate(explosion,transform.position,Quaternion.identity);
 			exp.transform.position = transform.position;
 			exp.transform.rotation = Quaternion.identity;
-			exp.GetComponent<IExplosionViewController>().Init(Faction.Explosion, explosionDamage, explosionSize,bulletOwner,
-				bulletOwner.GetComponent<ICanDealDamage>());
+			exp.GetComponent<IExplosionViewController>().Init(Faction.Explosion, explosionDamage, explosionSize,this.gameObject,
+				this);
 		}
 	}
 }

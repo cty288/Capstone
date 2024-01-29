@@ -373,6 +373,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
             #pragma shader_feature_local_fragment _OCCLUSIONMAP
             #pragma shader_feature_local _PARALLAXMAP
             #pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
+            #pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
 
             #pragma shader_feature_local_fragment _SPECULARHIGHLIGHTS_OFF
             #pragma shader_feature_local_fragment _ENVIRONMENTREFLECTIONS_OFF
@@ -552,6 +553,10 @@ Shader "Universal Render Pipeline/Custom/Sand"
 
 			    InputData inputData;
 			    InitializeInputData(IN, surfaceData.normalTS, inputData);
+
+				#ifdef _DBUFFER
+					ApplyDecalToSurfaceData(IN.positionCS, surfaceData, inputData);
+				#endif
 
 				BRDFData brdfData;
 				InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, brdfData);

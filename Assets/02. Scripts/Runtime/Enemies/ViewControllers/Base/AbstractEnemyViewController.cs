@@ -132,7 +132,11 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		}
 
 		public virtual void HitResponse(HitData data) {
-			hitObjects.Add(data.Hurtbox.Owner);
+			hitObjects.Add(data.Hurtbox?.Owner);
+		}
+
+		public HitData OnModifyHitData(HitData data) {
+			return data;
 		}
 
 

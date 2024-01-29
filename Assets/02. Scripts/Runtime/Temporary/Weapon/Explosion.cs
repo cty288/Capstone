@@ -62,5 +62,9 @@ namespace Runtime.Temporary.Weapon
             hitObjects.Add(data.Hurtbox.Owner);
             Debug.Log("Explosion Hit Response");
         }
+
+        public HitData OnModifyHitData(HitData data) {
+            return data;
+        }
     }
 }

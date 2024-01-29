@@ -99,6 +99,8 @@ public class MeleeBladeViewController : AbstractMikroController<MainGame>, IHitR
 			}
 		}
 	}
-	
-	
+
+	public HitData OnModifyHitData(HitData data) {
+		return data;
+	}
 }
