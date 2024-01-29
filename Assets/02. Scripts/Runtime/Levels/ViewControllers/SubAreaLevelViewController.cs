@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
+using AYellowpaper.SerializedCollections;
 using BehaviorDesigner.Runtime.Tasks;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Description;
@@ -27,7 +28,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
 		      //
         // public void OnExitLevel();
 		      //
-        List<GameObject> Enemies { get; }
+        HashSet<GameObject> Enemies { get; }
         public void SetLevelNumber(int levelNumber);
         
         public NavMeshModifier GetSubAreaLevelModifierMask();
@@ -55,32 +56,87 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         [SerializeField] protected float areaSpawningCooldown = 360f;
         protected float cooldownTimer = 0f;
         
-        [FormerlySerializedAs("subAreaLevelModifierMask")]
         [Header("SubArea Modifier")]
         [SerializeField] private NavMeshModifier subAreaLevelModifier;
         
         [Header("Enemies")]
-        [SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
+        [SerializeField] protected List<SpawnCardListConfig> enemySpawnCardConfigs;
+        [SerializeField] protected SerializedDictionary<string, int> maxSpawnPerEnemy = new SerializedDictionary<string, int>();
+
         [SerializeField] protected int totalEnemyCount = 0;
         private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
-
         private List<IEntity> templateEnemies = new List<IEntity>();
         //test
         public int totalEnemiesSpawned;
         public bool isActive = true;
+
         
-        public List<GameObject> Enemies {
+        public HashSet<GameObject> Enemies {
             get {
-                List<GameObject> enemyPrefabs = new List<GameObject>();
-                foreach (var enemy in enemies) {
-                    enemyPrefabs.Add(enemy.mainPrefab);
-                    if (enemy.variants != null) {
-                        enemyPrefabs.AddRange(enemy.variants);
+                HashSet<GameObject> enemyPrefabs = new HashSet<GameObject>();
+				
+				
+                ISubAreaLevelViewController[] subAreas = GetComponentsInChildren<ISubAreaLevelViewController>(true);
+                if (subAreas != null) {
+                    foreach (var subArea in subAreas) {
+                        enemyPrefabs.UnionWith(subArea.Enemies);
+                    }
+                }
+				
+                foreach (SpawnCardListConfig spawnCardList in enemySpawnCardConfigs)
+                {
+                    foreach (EnemySpawnInfo info in spawnCardList.enemySpawnInfos)
+                    {
+                        enemyPrefabs.Add(info.mainPrefab);
+                        if (info.variants != null)
+                        {
+                            enemyPrefabs.UnionWith(info.variants);
+                        }
                     }
                 }
                 return enemyPrefabs;
             }
         }
+        
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            HashSet<string> enemyNameHashSet = new HashSet<string>();
+            foreach (SpawnCardListConfig spawnCardList in enemySpawnCardConfigs)
+            {
+                foreach (EnemySpawnInfo info in spawnCardList.enemySpawnInfos)
+                {
+                    enemyNameHashSet.Add(info.mainPrefab.name);
+                }
+            }
+
+            List<string> keysToRemove = new List<string>();
+
+            foreach (var entry in maxSpawnPerEnemy)
+            {
+                // If the entry is not in the hashset, add it to the list of keys to remove
+                if (!enemyNameHashSet.Contains(entry.Key))
+                {
+                    keysToRemove.Add(entry.Key);
+                }
+            }
+
+            // Remove the keys from the dictionary
+            foreach (var key in keysToRemove)
+            {
+                maxSpawnPerEnemy.Remove(key);
+            }
+
+            foreach (var entry in enemyNameHashSet)
+            {
+                // If the entry is not in the dictionary, add it with a value of 1
+                if (!maxSpawnPerEnemy.ContainsKey(entry))
+                {
+                    maxSpawnPerEnemy.Add(entry, 1);
+                }
+            }
+        }
+#endif
 
         public ISubAreaLevelEntity OnInitEntity(){
             if (subAreaLevelModel == null)
@@ -89,25 +145,16 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             }
 
             // initialize sub area count of enemies
-            BoundEntity.InitializeEnemyCountDictionary(enemies);
+            BoundEntity.InitializeEnemyCountDictionary(enemySpawnCardConfigs);
             
             SubAreaLevelBuilder<T> builder = subAreaLevelModel.GetSubAreaLevelBuilder<T>();
             builder
                 .SetProperty(new PropertyNameInfo(PropertyName.spawn_cards), CreateTemplateEnemies(levelNumber))
                 .SetProperty(new PropertyNameInfo(PropertyName.max_enemies), maxEnemiesPerArea)
-                .SetProperty(new PropertyNameInfo(PropertyName.max_spawn_per_enemy), CreateMaxSpawnPerEnemyDictionary())
+                .SetProperty(new PropertyNameInfo(PropertyName.max_spawn_per_enemy), maxSpawnPerEnemy)
                 .SetProperty(new PropertyNameInfo(PropertyName.sub_area_nav_mesh_modifier), CalculateSubAreaMaskIndex());
 
             return OnInitSubLevelEntity(builder);
-        }
-
-        private Dictionary<string, int> CreateMaxSpawnPerEnemyDictionary() {
-            Dictionary<string, int> maxSpawnPerEnemy = new Dictionary<string, int>();
-            foreach (var enemy in enemies) {
-                maxSpawnPerEnemy.Add(enemy.mainPrefab.GetComponent<IHaveDisplayName>().GetDisplayName(), enemy.maxSpawnCountPerArea);
-            }
-
-            return maxSpawnPerEnemy;
         }
         
         protected int CalculateSubAreaMaskIndex()
@@ -130,27 +177,34 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
 
         protected abstract ISubAreaLevelEntity OnInitSubLevelEntity(SubAreaLevelBuilder<T> builder);
 
-        public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
-            List<LevelSpawnCard> spawnCards = new List<LevelSpawnCard>();
-			
-            foreach (var enemy in enemies) {
-                GameObject prefab = enemy.mainPrefab;
-                ICreatureViewController enemyViewController = prefab.GetComponent<ICreatureViewController>();
-                IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
-				
-				
-                string[] prefabNames = new string[
-                    (enemy.variants?.Count ?? 0) + 1];
-                prefabNames[0] = prefab.name;
-                for (int i = 0; i < enemy.variants.Count; i++) {
-                    prefabNames[i + 1] = enemy.variants[i].name;
+        public List<LevelSpawnCard[]> CreateTemplateEnemies(int levelNumber) {
+            List<LevelSpawnCard[]> spawnCards = new List<LevelSpawnCard[]>();
+
+            foreach (var spawnCardList in enemySpawnCardConfigs)
+            {
+                LevelSpawnCard[] cards = new LevelSpawnCard[spawnCardList.enemySpawnInfos.Length];
+                for (int card_index = 0; card_index < cards.Length; card_index++)
+                {
+                    EnemySpawnInfo enemyInfo = spawnCardList.enemySpawnInfos[card_index];
+                    GameObject prefab = enemyInfo.mainPrefab;
+                    ICreatureViewController enemyViewController = prefab.GetComponent<ICreatureViewController>();
+                    IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
+
+                    string[] prefabNames = new string[(enemyInfo.variants?.Count ?? 0) + 1];
+                    prefabNames[0] = prefab.name;
+                    for (int i = 0; i < enemyInfo.variants.Count; i++)
+                    {
+                        prefabNames[i + 1] = enemyInfo.variants[i].name;
+                    }
+
+                    templateEnemies.Add(enemyEntity);
+                    cards[card_index] = new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber),
+                        prefabNames,
+                        enemyInfo.minRarity, enemyInfo.maxRarity);
                 }
-				
-                templateEnemies.Add(enemyEntity);
-                spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefabNames,
-                    enemy.minRarity, enemy.maxRarity));
+                spawnCards.Add(cards);
             }
-			
+
             return spawnCards;
         }
         

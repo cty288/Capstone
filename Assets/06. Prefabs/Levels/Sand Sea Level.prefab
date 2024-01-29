@@ -315,17 +315,21 @@ MonoBehaviour:
   - {fileID: 8077268434524721375}
   - {fileID: 5510856074636867583}
   - {fileID: 6309164413135760662}
-  enemies:
-  - mainPrefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 53076124648127137, guid: c4c4d07d25d51ff45bd1e540ac4a68c4,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
+  enemySpawnCardConfigs:
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
+        type: 3}
+      variants: []
+      minRarity: 1
+      maxRarity: 2
+      maxSpawnCountPerArea: 0
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 53076124648127137, guid: c4c4d07d25d51ff45bd1e540ac4a68c4,
+        type: 3}
+      variants: []
+      minRarity: 1
+      maxRarity: 2
+      maxSpawnCountPerArea: 0
   bossSpawnCostInfo:
     _serializedList:
     - Key: 0
@@ -4651,24 +4655,11 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 4308668825488644635}
-  enemies:
-  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0,
-      type: 3}
-    variants:
-    - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
-    minRarity: 1
-    maxRarity: 2
-  enemyCount: 0
+  enemySpawnCardConfigs:
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
 --- !u!1001 &6740914133432436796
@@ -10293,30 +10284,12 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 1045219877315657789}
-  enemies:
-  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
-      type: 3}
-    variants:
-    - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
-    - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
-    minRarity: 1
-    maxRarity: 2
-  enemyCount: 0
+  enemySpawnCardConfigs:
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
 --- !u!114 &1045219877315657789
@@ -15177,18 +15150,10 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 2559758980679965766}
-  enemies:
-  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  enemyCount: 0
+  enemySpawnCardConfigs:
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
 --- !u!1001 &8872873331152879493
@@ -24397,17 +24362,9 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 646451224746513326}
-  enemies:
-  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  enemyCount: 0
+  enemySpawnCardConfigs:
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
