@@ -75,14 +75,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             get {
                 HashSet<GameObject> enemyPrefabs = new HashSet<GameObject>();
 				
-				
-                ISubAreaLevelViewController[] subAreas = GetComponentsInChildren<ISubAreaLevelViewController>(true);
-                if (subAreas != null) {
-                    foreach (var subArea in subAreas) {
-                        enemyPrefabs.UnionWith(subArea.Enemies);
-                    }
-                }
-				
                 foreach (SpawnCardListConfig spawnCardList in enemySpawnCardConfigs)
                 {
                     foreach (EnemySpawnInfo info in spawnCardList.enemySpawnInfos)
@@ -100,6 +92,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         
 #if UNITY_EDITOR
         private void OnValidate()
+        {
+            SetUpEnemyCountDictionary();
+        }
+#endif
+
+        private void SetUpEnemyCountDictionary()
         {
             HashSet<string> enemyNameHashSet = new HashSet<string>();
             foreach (SpawnCardListConfig spawnCardList in enemySpawnCardConfigs)
@@ -136,16 +134,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
                 }
             }
         }
-#endif
-
+        
         public ISubAreaLevelEntity OnInitEntity(){
             if (subAreaLevelModel == null)
             {
                 subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
             }
-
-            // initialize sub area count of enemies
-            BoundEntity.InitializeEnemyCountDictionary(enemySpawnCardConfigs);
             
             SubAreaLevelBuilder<T> builder = subAreaLevelModel.GetSubAreaLevelBuilder<T>();
             builder
@@ -160,6 +154,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         protected int CalculateSubAreaMaskIndex()
         {
             return (int) Mathf.Pow(2, subAreaLevelModifier.area);
+        }
+
+        protected override void OnEntityStart()
+        {
+            // initialize sub area count of enemies
+            BoundEntity.InitializeEnemyCountDictionary();
         }
 
         protected override void OnEntityRecycled(IEntity ent)
@@ -253,12 +253,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             }
         }
         
-        private void OnInitEnemy(IEnemyViewController enemyObject) {
-        	IEnemyEntity enemyEntity = enemyObject.EnemyEntity;
+        private void OnInitEnemy(IEnemyViewController enemyVC) {
+        	IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
         	enemyEntity.RegisterOnEntityRecycled(OnEnemyEntityRecycled)
         		.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         	totalEnemyCount++;
-            BoundEntity.IncrementEnemyCountDictionary(enemyObject.EnemyEntity.GetDisplayName());
+            BoundEntity.IncrementEnemyCountDictionary(enemyVC.EnemyEntity.GetDisplayName());
         	BoundEntity.CurrentEnemyCount++;
             BoundEntity.TotalEnemiesSpawnedSinceOffCooldown++;
             

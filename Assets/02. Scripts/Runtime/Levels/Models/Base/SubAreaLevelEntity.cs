@@ -50,7 +50,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public int CurrentEnemyCount { get; set; }
 		public int TotalEnemiesSpawnedSinceOffCooldown { get; set; }
 		public Dictionary<string, int> GetEnemyCountDictionary();
-		public void InitializeEnemyCountDictionary(List<SpawnCardListConfig> enemyListConfigs);
+		public void InitializeEnemyCountDictionary();
 		public void IncrementEnemyCountDictionary(string name);
 		public void DecrementEnemyCountDictionary(string name);
 		public void ClearEnemyCountDictionary();
@@ -111,15 +111,20 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return enemyCount;
 		}
 
-		public void InitializeEnemyCountDictionary(List<SpawnCardListConfig> enemyListConfigs)
+		public void InitializeEnemyCountDictionary()
 		{
-			foreach (var spawnCardList in enemyListConfigs)
+			Debug.Log("SPAWN_TEST: initializing enemy count dictionary");
+			foreach (var enemy in GetMaxSpawnPerEnemy())
 			{
-				foreach (EnemySpawnInfo enemyInfo in spawnCardList.enemySpawnInfos)
-				{
-					enemyCount.Add(enemyInfo.mainPrefab.name, 0);
-				}
+				enemyCount.Add(enemy.Key, 0);
 			}
+			
+			string print = "";
+			foreach (var kv in enemyCount)
+			{
+				print += string.Format("Key = {0}, Value = {1} ", kv.Key, kv.Value);
+			}
+			Debug.Log($"SPAWN_TEST: {print}");
 		}
 
 		public void IncrementEnemyCountDictionary(string name)
@@ -152,11 +157,18 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		private bool IsNormalEnemies(LevelSpawnCard[] cards)
 		{
-			return cards.Any(card => card.IsNormalEnemy == false);
+			return cards.All(card => card.IsNormalEnemy);
 		}
 
 		private bool IsAllEnemiesUnderCount(LevelSpawnCard[] cards)
 		{
+			string print = "";
+			foreach (KeyValuePair<string, int> kvp in enemyCount)
+			{
+				print += string.Format("Key = {0}, Value = {1} ", kvp.Key, kvp.Value);
+			}
+			
+			Debug.Log($"SPAWN_TEST: dictionary = {print}");
 			return cards.All(card => enemyCount[card.PrefabNames[0]] <= GetMaxSpawnPerEnemy()[card.PrefabNames[0]]);
 		}
 		

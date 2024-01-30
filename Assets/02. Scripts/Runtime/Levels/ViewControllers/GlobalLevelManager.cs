@@ -64,6 +64,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					globalPrefabList.TryAdd(enemy.name, enemy);
 				}
 			}
+
+			return;
 		}
 
 		private void OnCurrentLevelChanged(ILevelEntity oldLevel, ILevelEntity newLevel) {
