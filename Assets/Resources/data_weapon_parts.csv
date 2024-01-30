@@ -271,7 +271,12 @@ SpecialCompensator,1,"{
     ""chance"" : {""type"": ""float"", ""value"": 0.33}
   }
 }",,,
-ShortBarrel,1,,"{
+ShortBarrel,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.1},
     ""distance"" : {""type"": ""float"", ""value"": 10}
@@ -289,7 +294,12 @@ ShortBarrel,1,,"{
     ""distance"" : {""type"": ""float"", ""value"": 10}
   }
 }",,,
-LongBarrel,1,,"{
+LongBarrel,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.1},
     ""distance"" : {""type"": ""float"", ""value"": 10}
@@ -305,5 +315,29 @@ LongBarrel,1,,"{
   ""level4"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.75},
     ""distance"" : {""type"": ""float"", ""value"": 10}
+  }
+}",,,
+CustomizedMagazine,1,,"{ ""level1"": { ""multiplier"": {""type"": ""float"", ""value"": 2} }, ""level2"": { ""multiplier"": {""type"": ""float"", ""value"": 3} }, ""level3"": { ""multiplier"": {""type"": ""float"", ""value"": 5} }, ""level4"": { ""multiplier"": {""type"": ""float"", ""value"": 10} } }",,,
+GunpowerEnchancement,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 20}
+  },
+  ""level2"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 30}
+  },
+  ""level3"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 50}
+  },
+  ""level4"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 100}
   }
 }",,,

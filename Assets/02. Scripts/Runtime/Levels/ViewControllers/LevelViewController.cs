@@ -25,10 +25,12 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
+using Runtime.GameResources;
 using Runtime.Spawning;
 using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
 using Runtime.Utilities;
+using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 using UnityEngine.AI;
@@ -149,6 +151,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] protected GameObject playerSpawner;
 		[SerializeField] private float[] sandstormProbability = new[] {0, 0.33f, 1f};
 
+		[SerializeField] private int timeCurrencyLevel = 1;
+		
 		private IGameEventSystem gameEventSystem;
 
 		//mainPrefab + variants
@@ -361,6 +365,25 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 				int warningTime = sandstormHappenTime / 2;
 				gameEventSystem.AddEvent(new SandstormWarningEvent(), warningTime);
+			}
+
+			int prevDay = day - 1;
+			if (prevDay > 0) {
+				int timePointsPerDay =
+					int.Parse(ConfigDatas.Singleton.GlobalDataTable.Get<string>("TIME_POINTS_PER_DAY", "Value1"));
+				
+				int timePointsCost = timePointsPerDay * prevDay;
+
+				string entityName = $"Time{timeCurrencyLevel}";
+
+				foreach (PlayerController controller in PlayerController.GetAllPlayers()) {
+					for (int i = 0; i < timePointsCost; i++) {
+						ResourceVCFactory.Singleton.AddToInventoryOrSpawnNewVc(entityName, true,
+							controller.transform.position,
+							true, timeCurrencyLevel);
+					}
+				}
+				
 			}
 		}
 

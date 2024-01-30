@@ -777,7 +777,6 @@ namespace Runtime.DataFramework.Entities {
 		
 		
 		public string GetDescription() {
-			
 			return OnGetDescription($"{EntityName}_desc");
 		}
 
