@@ -271,7 +271,12 @@ SpecialCompensator,1,"{
     ""chance"" : {""type"": ""float"", ""value"": 0.33}
   }
 }",,,
-ShortBarrel,1,,"{
+ShortBarrel,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.1},
     ""distance"" : {""type"": ""float"", ""value"": 10}
@@ -289,7 +294,12 @@ ShortBarrel,1,,"{
     ""distance"" : {""type"": ""float"", ""value"": 10}
   }
 }",,,
-LongBarrel,1,,"{
+LongBarrel,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.1},
     ""distance"" : {""type"": ""float"", ""value"": 10}
@@ -305,5 +315,23 @@ LongBarrel,1,,"{
   ""level4"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.75},
     ""distance"" : {""type"": ""float"", ""value"": 10}
+  }
+}",,,
+CustomizedMagazine,1,,"{
+  ""level1"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 20},
+    ""max_layers"": {""type"": ""float"", ""value"": 10}
+  },
+  ""level2"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 30},
+    ""max_layers"": {""type"": ""float"", ""value"": 10}
+  },
+  ""level3"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 50},
+    ""max_layers"": {""type"": ""float"", ""value"": 10}
+  },
+  ""level4"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 100},
+     ""max_layers"": {""type"": ""float"", ""value"": 10}
   }
 }",,,
