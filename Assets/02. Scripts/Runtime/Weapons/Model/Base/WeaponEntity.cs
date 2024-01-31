@@ -66,10 +66,11 @@ namespace Runtime.Weapons.Model.Base
 
         public HitData OnModifyHitData(HitData data);
 
-        public void RegisterOnModifyHitData(Func<HitData, HitData> callback);
+        public void RegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
         
-        public void UnRegisterOnModifyHitData(Func<HitData, HitData> callback);
+        public void UnRegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
         // void RegisterOnWeaponPartsUpdate(Action<string, string> callback);
+       // void OnModifyHitData(Func<HitData, IWeaponEntity, HitData> onModifyHitData);
     }
 
     public struct OnWeaponPartsUpdate {
@@ -103,7 +104,7 @@ namespace Runtime.Weapons.Model.Base
         //private Action<string, string> onWeaponPartsUpdate;
         private Action<IDamageable, int> onDealDamage;
 
-        private List<Func<HitData, HitData>> onModifyHitData = new List<Func<HitData, HitData>>();
+        private List<Func<HitData, IWeaponEntity, HitData>> onModifyHitData = new List<Func<HitData, IWeaponEntity, HitData>>();
         public abstract int Width { get; }
 
         protected override ConfigTable GetConfigTable() {
@@ -140,8 +141,10 @@ namespace Runtime.Weapons.Model.Base
         
 
         public override ResourceCategory GetResourceCategory() {
-            return ResourceCategory.Weapon;
+            return ResourceCategory.Weapon; 
         }
+        
+        
 
         protected override void OnEntityStart(bool isLoadedFromSave) {
             if (!isLoadedFromSave) { //otherwise it is managed by es3
@@ -190,7 +193,8 @@ namespace Runtime.Weapons.Model.Base
                 if(weaponParts.ContainsKey(weaponPartType)) continue;
                 weaponParts.Add(weaponPartType, new HashSet<WeaponPartsSlot>());
                 AddWeaponPartsSlot(weaponPartType, false);
-                //AddWeaponPartsSlot(weaponPartType, false);
+                /*AddWeaponPartsSlot(weaponPartType, false);
+                AddWeaponPartsSlot(weaponPartType, false);*/
             }
         }
 
@@ -348,17 +352,17 @@ namespace Runtime.Weapons.Model.Base
 
         public HitData OnModifyHitData(HitData data) {
             HitData result = data;
-            foreach (Func<HitData, HitData> func in onModifyHitData) {
-                result = func(result);
+            foreach (Func<HitData, IWeaponEntity, HitData> func in onModifyHitData) {
+                result = func(result, this);
             }
             return result;
         }
 
-        public void RegisterOnModifyHitData(Func<HitData, HitData> callback) {
+        public void RegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback) {
             onModifyHitData.Add(callback);
         }
 
-        public void UnRegisterOnModifyHitData(Func<HitData, HitData> callback) {
+        public void UnRegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback) {
             onModifyHitData.Remove(callback);
         }
 

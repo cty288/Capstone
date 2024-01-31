@@ -73,9 +73,11 @@ namespace Runtime.Player {
 		public override string EntityName { get; set; } = "Player";
 		
 		private IAccelerationForce accelerationForce;
+		
 		private IWalkSpeed walkSpeed;
 		private ISprintSpeed sprintSpeed;
 		private ISlideSpeed slideSpeed;
+		
 		private IGroundDrag groundDrag;
 		private IJumpForce jumpForce;
 		private IAdditionalGravity additionalGravity;
