@@ -7,7 +7,7 @@ CustomProperty Structure:
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
 ,,,,,,,
 BEGIN,,,,,,,
-TestWeaponParts,1,Time,"{
+TestWeaponParts,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 3,
             ""Plant1"": 1
@@ -33,7 +33,7 @@ TestWeaponParts,1,Time,"{
     }
   }
 }",,,
-TestWeaponParts2,1,Time,"{
+TestWeaponParts2,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Plant1"": 5
@@ -59,7 +59,7 @@ TestWeaponParts2,1,Time,"{
     }
   }
 }",,,
-TestWeaponParts3,1,Time,"{
+TestWeaponParts3,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Plant1"": 5
@@ -85,7 +85,7 @@ TestWeaponParts3,1,Time,"{
     }
   }
 }",,,
-TestWeaponParts4,1,Time,"{
+TestWeaponParts4,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 3,
             ""Plant1"": 1
@@ -111,7 +111,7 @@ TestWeaponParts4,1,Time,"{
     }
   }
 }",,,
-TestWeaponParts5,1,Time,"{
+TestWeaponParts5,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 3,
             ""Plant1"": 1
@@ -137,7 +137,7 @@ TestWeaponParts5,1,Time,"{
     }
   }
 }",,,
-TestWeaponParts6,1,Time,"{
+TestWeaponParts6,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 3,
             ""Plant1"": 1
@@ -163,7 +163,7 @@ TestWeaponParts6,1,Time,"{
     }
   }
 }",,,
-TestWeaponParts7,1,Time,"{
+TestWeaponParts7,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 3,
             ""Plant1"": 1
@@ -189,7 +189,7 @@ TestWeaponParts7,1,Time,"{
     }
   }
 }",,,
-SpecialBarrel,1,Time,,"{
+SpecialBarrel,1,"""Time""",,"{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -203,7 +203,7 @@ SpecialBarrel,1,Time,,"{
     ""damage"": {""type"": ""float"", ""value"": 0.5}
   }
 }",,,
-HeavyBarrel,1,Time,"{
+HeavyBarrel,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Plant1"": 5
@@ -234,7 +234,7 @@ HeavyBarrel,1,Time,"{
     ""buff_length"": {""type"": ""float"", ""value"": 5}
   }
 }",,,
-AdaptedCompensator,1,Time,,"{
+AdaptedCompensator,1,"""Time""",,"{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.15}
   },
@@ -248,7 +248,7 @@ AdaptedCompensator,1,Time,,"{
     ""multiplier"": {""type"": ""float"", ""value"": 0.75}
   }
 }",,,
-SpecialCompensator,1,Time,"{
+SpecialCompensator,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Plant1"": 5
@@ -271,7 +271,7 @@ SpecialCompensator,1,Time,"{
     ""chance"" : {""type"": ""float"", ""value"": 0.33}
   }
 }",,,
-ShortBarrel,1,Time,"{
+ShortBarrel,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Plant1"": 5
@@ -294,7 +294,7 @@ ShortBarrel,1,Time,"{
     ""distance"" : {""type"": ""float"", ""value"": 10}
   }
 }",,,
-LongBarrel,1,Time,"{
+LongBarrel,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Plant1"": 5
@@ -317,8 +317,8 @@ LongBarrel,1,Time,"{
     ""distance"" : {""type"": ""float"", ""value"": 10}
   }
 }",,,
-CustomizedMagazine,1,Time,,"{ ""level1"": { ""multiplier"": {""type"": ""float"", ""value"": 2} }, ""level2"": { ""multiplier"": {""type"": ""float"", ""value"": 3} }, ""level3"": { ""multiplier"": {""type"": ""float"", ""value"": 5} }, ""level4"": { ""multiplier"": {""type"": ""float"", ""value"": 10} } }",,,
-GunpowerEnchancement,1,Time,"{
+CustomizedMagazine,1,"""Time""",,"{ ""level1"": { ""multiplier"": {""type"": ""float"", ""value"": 2} }, ""level2"": { ""multiplier"": {""type"": ""float"", ""value"": 3} }, ""level3"": { ""multiplier"": {""type"": ""float"", ""value"": 5} }, ""level4"": { ""multiplier"": {""type"": ""float"", ""value"": 10} } }",,,
+GunpowerEnchancement,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Time1"": 5
@@ -341,7 +341,7 @@ GunpowerEnchancement,1,Time,"{
     ""damage"": {""type"": ""int"", ""value"": 100}
   }
 }",,,
-VampireMagazine,1,Time,"{
+VampireMagazine,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Time1"": 5
@@ -364,7 +364,7 @@ VampireMagazine,1,Time,"{
     ""health"": {""type"": ""int"", ""value"": 5}
   }
 }",,,
-RageDetector,1,Time,"{
+RageDetector,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Time1"": 5
@@ -387,7 +387,7 @@ RageDetector,1,Time,"{
     ""health_bound"": {""type"": ""float"", ""value"": 0.5}
   }
 }",,,
-KineticDevice,1,Time,"{
+KineticDevice,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Time1"": 5
@@ -406,7 +406,7 @@ KineticDevice,1,Time,"{
     ""multiplayer"": {""type"": ""float"", ""value"": 0.2}
   }
 }",,,
-FactoryNewAttachment,1,Time,"{
+FactoryNewAttachment,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Time1"": 5
@@ -429,4 +429,4 @@ FactoryNewAttachment,1,Time,"{
     ""time"": {""type"": ""float"", ""value"": 3}
   }
 }",,,
-SelfLoadingAttachment,1,Time,,,,,
+SelfLoadingAttachment,1,"""Time""",,,,,
