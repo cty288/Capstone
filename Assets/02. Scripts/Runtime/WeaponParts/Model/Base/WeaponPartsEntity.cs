@@ -34,7 +34,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		where T : WeaponPartsEntity<T, TBuffType>, new()
 		where TBuffType : WeaponPartsBuff<T, TBuffType>, new() {
 		
-		protected virtual int levelRange => 4;
+		//protected virtual int levelRange => 4;
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.WeaponPartsConfigTable;
 		}
@@ -105,8 +105,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
-			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[levelRange];
-			for (int i = 1; i <= levelRange; i++) {
+			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[GetMaxRarity()];
+			for (int i = 1; i <= GetMaxRarity(); i++) {
 				properties[i - 1] = new AutoConfigCustomProperty($"level{i}");
 			}
 			

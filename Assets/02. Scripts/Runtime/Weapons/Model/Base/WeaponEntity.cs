@@ -70,6 +70,7 @@ namespace Runtime.Weapons.Model.Base
         
         public void UnRegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
         // void RegisterOnWeaponPartsUpdate(Action<string, string> callback);
+       // void OnModifyHitData(Func<HitData, IWeaponEntity, HitData> onModifyHitData);
     }
 
     public struct OnWeaponPartsUpdate {
@@ -140,8 +141,10 @@ namespace Runtime.Weapons.Model.Base
         
 
         public override ResourceCategory GetResourceCategory() {
-            return ResourceCategory.Weapon;
+            return ResourceCategory.Weapon; 
         }
+        
+        
 
         protected override void OnEntityStart(bool isLoadedFromSave) {
             if (!isLoadedFromSave) { //otherwise it is managed by es3

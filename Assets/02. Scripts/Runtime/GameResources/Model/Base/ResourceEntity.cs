@@ -71,6 +71,12 @@ namespace Runtime.GameResources.Model.Base {
 		public void AddAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
 		
 		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
+		
+		/*public void OnStartHold();
+		
+		public void OnStopHold();*/
+		
+		public BindableProperty<bool> IsHolding { get; }
 	}
 	
 
@@ -94,7 +100,9 @@ namespace Runtime.GameResources.Model.Base {
 			new HashSet<List<GetResourcePropertyDescriptionGetter>>();
 
 		private List<ResourcePropertyDescription> resourcePropertyDescriptions = new List<ResourcePropertyDescription>();
-
+		
+		[field: ES3NonSerializable]
+		public BindableProperty<bool> IsHolding { get; private set; } = new BindableProperty<bool>(false);
 		public override void OnAwake() {
 			base.OnAwake();
 			OnResourceAwake();
@@ -116,7 +124,9 @@ namespace Runtime.GameResources.Model.Base {
 
 
 		public override void OnDoRecycle() {
+			encounteredBefore = false;
 			resourcePropertyDescriptionGetters?.Clear();
+			IsHolding.Value = false;
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
 		}
 		
@@ -216,6 +226,17 @@ namespace Runtime.GameResources.Model.Base {
 		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list) {
 			additionalResourcePropertyDescriptionGetters.Remove(list);
 		}
+
+		/*public void OnStartHold() {
+			IsHolding.Value = true;
+		}
+
+		public void OnStopHold() {
+			IsHolding.Value = false;
+		}*/
+
+		
+	
 	}
 
 }

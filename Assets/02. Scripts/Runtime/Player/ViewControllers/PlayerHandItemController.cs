@@ -197,6 +197,8 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 
 		
 		if (previousViewController as Object != null) {
+			
+			previousViewController.ResourceEntity.IsHolding.Value = false;
 			previousViewController.OnStopHold();
 			waitingPlayerAnimStatesBeforeNextItem = previousViewController.PlayerAnimStateToWaitWhenStopHold;
 			waitingActiveLayers = previousViewController.AnimLayerInfos.ConvertAll(layerInfo => animator.GetLayerIndex(layerInfo.LayerName));
@@ -238,6 +240,8 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 						(deployedPrefab.GetComponent<IDeployableResourceViewController>(), deployedPrefab);
 				}
 			
+				
+				currentHoldItemViewController.ResourceEntity.IsHolding.Value = true;
 				currentHoldItemViewController.OnStartHold(gameObject);
 				this.SendCommand(PlayerSwitchAnimCommand.Allocate(currentHoldItemViewController.AnimLayerInfos));
 			

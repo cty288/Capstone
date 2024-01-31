@@ -74,10 +74,15 @@ namespace _02._Scripts.Runtime.Rewards {
 				case RewardType.WeaponParts_ChooseOne:
 					RewardSelectionPanel panel = null;
 					IWeaponPartsModel weaponPartsModel = this.GetModel<IWeaponPartsModel>();
+					
 					for (int m = 0; m < count; m++) {
 						var weaponParts =
 							ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts,
-								(parts) => weaponPartsModel.IsUnlocked(parts.EntityName));
+								(parts) => {
+									IBuildableResourceEntity template = (IBuildableResourceEntity) parts;
+									return weaponPartsModel.IsUnlocked(parts.EntityName) &&
+									       template.GetMaxRarity() >= rewardBatch.Level;
+								});
 
 						var weaponPartTemplateInfos = weaponParts.ToList();
 						if (weaponParts == null || !weaponPartTemplateInfos.Any()) {
@@ -100,7 +105,10 @@ namespace _02._Scripts.Runtime.Rewards {
 					
 						List<IResourceEntity> spawnedWeaponParts = new List<IResourceEntity>();
 						foreach (var weaponPart in selectedWeaponParts) {
-							IResourceEntity resource = weaponPart.EntityCreater.Invoke(true, rewardBatch.Level);
+							
+							IResourceEntity resource =
+								weaponPart.EntityCreater.Invoke(true, rewardBatch.Level);
+							
 							spawnedWeaponParts.Add(resource);
 						}
 

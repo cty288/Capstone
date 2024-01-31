@@ -14,7 +14,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 	public class WeaponPartsSystem : AbstractSystem, IWeaponPartsSystem{
 		private IBuffSystem buffSystem;	
 		private IWeaponPartsModel weaponPartsModel;
-		
+
 		private static string[] initiallyUnlockedPartsNames = new string[] {
 			/*"SpecialBarrel",
 			"HeavyBarrel",
@@ -22,6 +22,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			"SpecialCompensator",
 			"ShortBarrel",
 			"LongBarrel",*/
+			"SpecialBarrel",
+			"CustomizedMagazine",
+			"SelfLoadingAttachment"
 		};
 		
 		protected IResourceBuildModel buildModel;

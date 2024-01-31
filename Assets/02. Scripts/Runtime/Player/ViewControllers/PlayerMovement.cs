@@ -330,7 +330,7 @@ namespace Runtime.Player.ViewControllers
             }
                 
             // Mode - Sliding
-            else if (sliding)
+             if (sliding)
             {
                 state = MovementState.sliding;
                 playerEntity.SetMovementState(state);
