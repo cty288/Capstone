@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.WeaponParts.Model;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using Cysharp.Threading.Tasks;
 using Framework;
 using MikroFramework.Architecture;
@@ -28,12 +30,13 @@ namespace _02._Scripts.Runtime.Rewards {
 		/// </summary>
 		/// <param name="rewardBatches"></param>
 		/// <param name="onRewardsDispersed"></param>
-		public async UniTask<List<GameObject>> DisperseRewards(List<RewardBatch> rewardBatches, IPanelContainer parentPanel) {
+		public async UniTask<List<GameObject>> DisperseRewards(List<RewardBatch> rewardBatches, IPanelContainer parentPanel,
+			CurrencyType buildType) {
 			
 			List<GameObject> spawnedGameObjects = new List<GameObject>();
 			
 			foreach (var rewardBatch in rewardBatches) {
-				List<GameObject> spawnedGameObjectsInBatch = await DisperseRewards(rewardBatch, parentPanel);
+				List<GameObject> spawnedGameObjectsInBatch = await DisperseRewards(rewardBatch, parentPanel, buildType);
 				if (spawnedGameObjectsInBatch != null) {
 					spawnedGameObjects.AddRange(spawnedGameObjectsInBatch);
 				}
@@ -44,7 +47,8 @@ namespace _02._Scripts.Runtime.Rewards {
 
 
 		
-		private async UniTask<List<GameObject>> DisperseRewards(RewardBatch rewardBatch, IPanelContainer parentPanel) {
+		private async UniTask<List<GameObject>> DisperseRewards(RewardBatch rewardBatch, IPanelContainer parentPanel,
+			CurrencyType buildType) {
 			
 			int count = Random.Range(rewardBatch.AmountRange.x, rewardBatch.AmountRange.y + 1);
 			List<GameObject> spawnedGameObjects = new List<GameObject>();
@@ -79,9 +83,10 @@ namespace _02._Scripts.Runtime.Rewards {
 						var weaponParts =
 							ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts,
 								(parts) => {
-									IBuildableResourceEntity template = (IBuildableResourceEntity) parts;
+									IWeaponPartsEntity template = (IWeaponPartsEntity) parts;
 									return weaponPartsModel.IsUnlocked(parts.EntityName) &&
-									       template.GetMaxRarity() >= rewardBatch.Level;
+									       template.GetMaxRarity() >= rewardBatch.Level &&
+									       template.GetBuildType() == buildType;
 								});
 
 						var weaponPartTemplateInfos = weaponParts.ToList();

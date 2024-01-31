@@ -75,6 +75,7 @@ namespace Runtime.DataFramework.Properties
 		purchase_cost,
 		boss_spawn_condition,
 		research_point,
-		exp
+		exp,
+		build_type,
 	}
 }
