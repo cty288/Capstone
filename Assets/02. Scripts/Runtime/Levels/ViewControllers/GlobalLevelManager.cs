@@ -7,6 +7,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Singletons;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.UI.NameTags;
 using UnityEngine;
 
@@ -61,7 +62,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			foreach (GameObject level in levels) {
 				ILevelViewController levelViewController = level.GetComponent<ILevelViewController>();
 				foreach (GameObject enemy in levelViewController.Enemies) {
-					globalPrefabList.TryAdd(enemy.name, enemy);
+					globalPrefabList.TryAdd(enemy.GetComponent<ICreatureViewController>().EntityOverrideName, enemy);
 				}
 			}
 

@@ -64,7 +64,7 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class QuadrupedCarrier : AbstractNormalEnemyViewController<QuadrupedCarrierEntity>
     {
-
+        public override string EntityOverrideName => "QuadrupedCarrier";
         [SerializeField] private GameObject deathEffect;
         [SerializeField] private SafeGameObjectPool pool;
         [SerializeField] private GameObject hurtBox;
@@ -108,7 +108,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<QuadrupedCarrierEntity> builder)
         {
-            return builder.
+            return builder.OverrideName(EntityOverrideName).
                 FromConfig()
                 //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();

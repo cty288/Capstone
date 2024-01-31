@@ -66,6 +66,7 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class HunterWorm : AbstractNormalEnemyViewController<HunterWormEntity>
     {
+        public override string EntityOverrideName => "HunterWorm";
         [SerializeField] private GameObject deathEffect;
         [SerializeField] private SafeGameObjectPool pool;
         [SerializeField] private GameObject hurtBox;
@@ -118,7 +119,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<HunterWormEntity> builder)
         {
-            return builder.
+            return builder.OverrideName(EntityOverrideName).
                 FromConfig()
                 //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();

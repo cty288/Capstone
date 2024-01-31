@@ -63,6 +63,7 @@ namespace Runtime.Enemies.SmallEnemies
 
 
     public class Bee : AbstractNormalEnemyViewController<BeeEntity> {
+        public override string EntityOverrideName => "SurveillanceDrone";
         [SerializeField] private List<GameObject> waypoints;
         [SerializeField] private GameObject deathEffect;
         [SerializeField] private SafeGameObjectPool pool;
@@ -146,7 +147,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<BeeEntity> builder)
         {
-            return builder.
+            return builder.OverrideName(EntityOverrideName).
                 FromConfig()
                 //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();

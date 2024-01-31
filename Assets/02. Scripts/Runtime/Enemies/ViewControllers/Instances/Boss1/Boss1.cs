@@ -75,7 +75,7 @@ namespace Runtime.Enemies
     }
     public class Boss1 : AbstractBossViewController<Boss1Entity>
     {
-        
+        public override string EntityOverrideName => "Boss1";
         public int MaxShellHealth { get; }
         
         public int CurrentShellHealth { get; }
@@ -198,7 +198,7 @@ namespace Runtime.Enemies
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<Boss1Entity> builder)
         {
-            return builder.
+            return builder.OverrideName(EntityOverrideName).
                 FromConfig()
                 //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();
