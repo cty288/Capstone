@@ -30,7 +30,7 @@ namespace Runtime.Enemies
     public class Boss1Entity : BossEntity<Boss1Entity>
     {
         [field: ES3Serializable]
-        public override string EntityName { get; set; } = "Buddha";
+        public override string EntityName { get; set; } = "Boss1";
         
 
         [field: ES3Serializable] public BindableProperty<bool> ShellClosed { get; } = new BindableProperty<bool>(true);
