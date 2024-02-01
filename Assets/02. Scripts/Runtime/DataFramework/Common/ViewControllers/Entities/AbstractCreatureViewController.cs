@@ -20,8 +20,6 @@ using Random = UnityEngine.Random;
 namespace Runtime.DataFramework.ViewControllers.Entities {
 
 	public interface ICreatureViewController : IDamageableViewController {
-		public string EntityOverrideName { get; set; }
-		
 		public BoxCollider SpawnSizeCollider { get; }
 		
 		public ICreature OnInitEntity(int level, int rarity);
@@ -53,7 +51,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature {
 		//[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
-		public virtual string EntityOverrideName { get; set; }
 
 		private static int combatCurrencyAmountPerItem = 5;
 		[Header("Rarity Base Value")]

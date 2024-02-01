@@ -199,16 +199,16 @@ namespace Runtime.Spawning
             //check if area is still active
             if (!subArea.IsActiveSpawner)
             {
-                print($"SPAWN_TEST: subarea is not actively spawning");
+                // print($"SPAWN_TEST: subarea is not actively spawning");
                 return;
             }
             
             //if over max, return to stop spawning in area
             // if(enemyCount >= subArea.GetMaxEnemyCount())
             //     return;
-            print($"SPAWN_TEST: spawning in {subArea.EntityName} with {currentCredits} credits");
+            // print($"SPAWN_TEST: spawning in {subArea.EntityName} with {currentCredits} credits");
             List<LevelSpawnCard[]> cards = subArea.GetAllNormalEnemiesUnderCost(currentCredits);
-            print($"SPAWN_TEST: cards count {cards.Count}");
+            // print($"SPAWN_TEST: cards count {cards.Count}");
             // print($"spawn cards in subarea {cards.Count}");
             if (cards.Count > 0)
             {
@@ -233,27 +233,28 @@ namespace Runtime.Spawning
 
         protected virtual async UniTask<bool> SpawnEnemy(LevelSpawnCard[] cards, int areaMask)
         {
-            print($"SPAWN_TEST: spawning enemy {cards.Length}");
+            // print($"SPAWN_TEST: spawning enemy {cards.Length}");
             int rarity = 0;
             float[] costs = new float[cards.Length];
             
             // Check if can spawn elite
-            // if (cards.Length == 0)
-            // {
-            //     // int[] rarity = {5};
-            //     // float[] cost = {cards[0].GetRealSpawnCost(levelNumber, rarity[0])};
-            //     rarity = 5;
-            //     costs[0] = cards[0].GetRealSpawnCost(levelNumber, 5);
-            //     bool isElite = true;
-            //     
-            //     if (currentCredits > costs[0]
-            //         && totalEliteEnemies <= BoundEntity.GetMaxEliteEnemies().RealValue 
-            //         && Random.Range(0, 100) < 30)
-            //     {
-            //         print($"SPAWN_TEST: spawn elite {cards[0].EntityName}");
-            //         return await SpawnHelper(cards[0], areaMask, rarity, costs[0], isElite);
-            //     }
-            // }
+            if (cards.Length == 1)
+            {
+                // int[] rarity = {5};
+                // float[] cost = {cards[0].GetRealSpawnCost(levelNumber, rarity[0])};
+                rarity = 5;
+                costs[0] = cards[0].GetRealSpawnCost(levelNumber, 5);
+                bool isElite = true;
+                // print($"SPAWN_TEST: check spawn elite {cards[0].EntityName}");
+
+                if (currentCredits > costs[0]
+                    && totalEliteEnemies <= BoundEntity.GetMaxEliteEnemies().RealValue 
+                    && Random.Range(0, 100) < 50)
+                {
+                    // print($"SPAWN_TEST: spawn elite {cards[0].EntityName}");
+                    return await SpawnHelper(cards[0], areaMask, rarity, costs[0], isElite);
+                }
+            }
             
             // NORMAL SPAWN
             int maxRarity = cards.Select(c => c.MaxRarity).Max();
@@ -275,7 +276,7 @@ namespace Runtime.Spawning
             List<UniTask> tasks = new List<UniTask>();
             for (int i = 0; i < cards.Length; i++)
             {
-                print($"SPAWN_TEST: spawn normal {cards[i].EntityName}");
+                // print($"SPAWN_TEST: spawn normal {cards[i].EntityName}");
                 tasks.Add(SpawnHelper(cards[i], areaMask, rarity, costs[i], false));
             }
             
@@ -286,7 +287,7 @@ namespace Runtime.Spawning
         private async UniTask<bool> SpawnHelper(LevelSpawnCard card, int areaMask, int rarity, float cost, bool isElite)
         {
             //raycast down from random point within min/max range
-            int spawnAttempts = 10;
+            int spawnAttempts = 5;
             while (currentCredits > cost && spawnAttempts > 0)
             {
                 float angle = Random.Range(0, 360); 
@@ -327,11 +328,11 @@ namespace Runtime.Spawning
                     }
                     onSpawnEnemy?.Invoke(spawnedEnemy, this);
                     currentCredits -= cost;
-                    print($"SPAWN_TEST: spawn success {spawnedEnemy.name}");
+                    // print($"SPAWN_TEST: spawn success {spawnedEnemy.name}");
                     return true;
                 }
             }
-            print($"SPAWN_TEST: spawn failed");
+            // print($"SPAWN_TEST: spawn failed {card.EntityName}");
             return false;
         }
         

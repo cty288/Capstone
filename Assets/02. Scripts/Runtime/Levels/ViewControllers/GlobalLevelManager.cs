@@ -62,7 +62,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			foreach (GameObject level in levels) {
 				ILevelViewController levelViewController = level.GetComponent<ILevelViewController>();
 				foreach (GameObject enemy in levelViewController.Enemies) {
-					globalPrefabList.TryAdd(enemy.GetComponent<ICreatureViewController>().EntityOverrideName, enemy);
+					globalPrefabList.TryAdd(enemy.name, enemy);
 				}
 			}
 		}

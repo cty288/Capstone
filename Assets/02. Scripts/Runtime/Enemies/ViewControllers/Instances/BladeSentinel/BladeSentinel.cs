@@ -63,7 +63,6 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
 
 public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 {
-    public override string EntityOverrideName => "BladeSentinel";
     private bool deathAnimationEnd = false;
 
    // public bool currentAnimationEnd;
@@ -130,7 +129,7 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
         }
     }
     protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<BladeSentinelEntity> builder) {
-        return builder.OverrideName(EntityOverrideName).
+        return builder.
             FromConfig()
             .Build();
     }

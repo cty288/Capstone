@@ -9,7 +9,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction {
 		public override void OnStart() {
 			base.OnStart();
 			playerToSet.Value = GetPlayer();
-			Debug.Log(playerToSet.Value);
+			// Debug.Log(playerToSet.Value);
 		}
 		
 		public override TaskStatus OnUpdate() {

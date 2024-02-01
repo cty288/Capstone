@@ -67,8 +67,6 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class SpineWheel : AbstractNormalEnemyViewController<SpineWheelEntity>
     {
-        public override string EntityOverrideName => "SpineWheel";
-        
         [SerializeField] private List<GameObject> waypoints;
         [SerializeField] private GameObject hurtBox;
       
@@ -128,7 +126,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<SpineWheelEntity> builder)
         {
-            return builder.OverrideName(EntityOverrideName).
+            return builder.
                 FromConfig()
                 //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();

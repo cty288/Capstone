@@ -264,10 +264,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
 
 					string[] prefabNames = new string[(enemyInfo.variants?.Count ?? 0) + 1];
-					prefabNames[0] = enemyViewController.EntityOverrideName;
+					prefabNames[0] = prefab.name;
 					for (int i = 0; i < enemyInfo.variants.Count; i++)
 					{
-						prefabNames[i + 1] = enemyInfo.variants[i].GetComponent<ICreatureViewController>().EntityOverrideName;
+						prefabNames[i + 1] = enemyInfo.variants[i].name;
 					}
 
 					templateEnemies.Add(enemyEntity);
