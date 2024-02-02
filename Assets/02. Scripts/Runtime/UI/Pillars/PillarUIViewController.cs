@@ -106,7 +106,7 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 
 		List<GameObject> spawnedResources = await RewardDisperser.Singleton.DisperseRewards(
 			data.pillar.RewardsInfo.GetRewards(level),
-			this);
+			this, currentSelectedCurrencyType);
 
 		Transform spawnTr = PlayerController.GetClosestPlayer(data.rewardSpawnPos.position).transform;
 		Vector3 spawnPos = spawnTr.position;
