@@ -1,10 +1,11 @@
-﻿using Runtime.DataFramework.Entities;
+﻿using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement {
 
-	public class DustBuff : Buff<DustBuff> {
+	public class DustBuff : ConfigurableBuff<DustBuff> {
 		
 		[field: ES3Serializable]
 		public override float MaxDuration { get; protected set; } = -1;
@@ -16,8 +17,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		
 		
 
-		[field: ES3Serializable] private int maxLayer;
-		[field: ES3Serializable] private int damage;
+		/*[field: ES3Serializable] private int maxLayer;
+		[field: ES3Serializable] private int damage;*/
 		[field: ES3Serializable] private int currentLayer;
 
 		private IDamageable damagableEntity;
@@ -37,11 +38,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		public override void OnInitialize() {
 			damagableEntity = buffOwner as IDamageable;
 		}
+		
 
-		public override void OnStacked(DustBuff buff) {
-			this.maxLayer = Mathf.Max(buff.maxLayer, maxLayer);
-			this.damage = Mathf.Max(buff.damage, damage);
-			this.currentLayer = Mathf.Min(this.currentLayer + 1, maxLayer);
+		protected override void OnBuffStacked(DustBuff buff) {
+			this.currentLayer++;
 		}
 
 		public override void OnStart() {
@@ -49,10 +49,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		}
 
 		public override BuffStatus OnTick() {
+			int maxLayer = GetBuffPropertyAtCurrentLevel<int>("layer_num");
 			if (currentLayer < maxLayer) {
 				return BuffStatus.Running;
 			}
 
+			int damage = GetBuffPropertyAtCurrentLevel<int>("damage");
 			damagableEntity.TakeDamage(damage, buffDealer as ICanDealDamage);
 			return BuffStatus.End;
 		}
@@ -60,17 +62,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		public override void OnEnds() {
 			
 		}
-		public static DustBuff Allocate(int maxLayer, int damage, IEntity buffDealer, IEntity buffOwner) {
-			DustBuff buff = Allocate(buffDealer, buffOwner);
-			buff.maxLayer = maxLayer;
-			buff.damage = damage;
-			return buff;
-		}
+	
 
 		public override void OnRecycled() {
 			base.OnRecycled();
-			maxLayer = 0;
-			damage = 0;
 			currentLayer = 0;
 		}
 

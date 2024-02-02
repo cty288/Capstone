@@ -14,10 +14,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 	public class GunpowerEnchancement : WeaponPartsEntity<GunpowerEnchancement, GunpowerEnchancementBuff> {
 		public override string EntityName { get; set; } = "GunpowerEnchancement";
 		
-		public int LayerNumber => GetCustomDataValueOfCurrentLevel<int>("layer_num");
-		public int Damage => GetCustomDataValueOfCurrentLevel<int>("damage");
 
 		public string GetBuffDescription() {
+			int LayerNumber = DustBuff.GetBuffPropertyAtLevel<int>("DustBuff", "layer_num", GetRarity());
+			int Damage = DustBuff.GetBuffPropertyAtLevel<int>("DustBuff", "damage", GetRarity());
+			
 			return Localization.GetFormat($"BUFF_DUST_desc", LayerNumber, Damage);
 		}
 		
@@ -54,9 +55,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		}
 
 		private void OnWeaponDealDamage(IDamageable target, int damage) {
-			buffSystem.AddBuff(target, weaponEntity.RootDamageDealer, DustBuff.Allocate(weaponPartsEntity.LayerNumber,
-				weaponPartsEntity.Damage,
-				weaponEntity.RootDamageDealer, target));
+			buffSystem.AddBuff(target, weaponEntity.RootDamageDealer, DustBuff.Allocate(
+				weaponEntity.RootDamageDealer, target, weaponPartsEntity.GetRarity()));
 		}
 
 		public override void OnStart() {
