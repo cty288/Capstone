@@ -16,18 +16,21 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		public override string EntityName { get; set; } = "HeavyBarrel";
 		public float BuffChance => GetCustomDataValueOfCurrentLevel<float>("chance");
 		public int BuffLevel => GetCustomDataValueOfCurrentLevel<int>("buff_level");
-		public float BuffDamage => GetCustomDataValueOfCurrentLevel<float>("buff_damage");
-		public float BuffDuration => GetCustomDataValueOfCurrentLevel<float>("buff_length");
+		
 
 		public string GetBleedingBuffDescription() {
 			int buffLevel = BuffLevel;
+			float damage  = BleedingBuff.GetBuffPropertyAtLevel<float>("BleedingBuff", "buff_damage", buffLevel);
+			float duration = BleedingBuff.GetBuffPropertyAtLevel<float>("BleedingBuff", "buff_length", buffLevel);
+			
+			
 			if (buffLevel <= 2) {
-				return Localization.GetFormat($"BUFF_BLEEDING_{buffLevel}", BuffDamage, BuffDuration);
+				return Localization.GetFormat($"BUFF_BLEEDING_{buffLevel}", damage, duration);
 			}
 			else {
-				float buffDamage = BuffDamage * 100;
+				float buffDamage = damage * 100;
 				return Localization.GetFormat($"BUFF_BLEEDING_{buffLevel}", buffDamage.ToString("f2"),
-					BuffDuration);
+					duration);
 			}
 		}
 		
@@ -72,8 +75,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			}
 
 			buffSystem.AddBuff(target, weaponEntity.RootDamageDealer, BleedingBuff.Allocate(
-				weaponPartsEntity.BuffDuration, 1, weaponPartsEntity.BuffDamage,
-				weaponPartsEntity.BuffLevel, weaponEntity.RootDamageDealer, target));
+				1, weaponPartsEntity.BuffLevel, weaponEntity.RootDamageDealer, target));
 		}
 
 		public override void OnStart() {

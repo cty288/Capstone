@@ -104,6 +104,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public override int GetMaxRarity() {
 			return skillUpgradeCostProperty.GetMaxLevel();
 		}
+		
+		public override int GetMinRarity() {
+			return 1;
+		}
 
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			maxCooldown = skillCooldownProperty.GetByLevel(GetRarity());

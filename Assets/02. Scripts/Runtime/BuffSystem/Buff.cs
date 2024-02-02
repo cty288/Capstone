@@ -61,6 +61,11 @@ public interface IBuff: IPoolable {
     void OnEnd();
 }
 
+public interface ILeveledBuff: IBuff {
+    public int Level { get; }
+    
+    public int MaxLevel { get; }
+}
 
 public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
     [field: ES3Serializable]

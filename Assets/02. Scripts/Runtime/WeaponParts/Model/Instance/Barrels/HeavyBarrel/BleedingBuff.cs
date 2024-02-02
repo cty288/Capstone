@@ -1,19 +1,19 @@
-﻿using Runtime.DataFramework.Entities;
+﻿using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Enemies.Model.Properties;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
-	public class BleedingBuff : Buff<BleedingBuff> {
+	public class BleedingBuff : ConfigurableBuff<BleedingBuff> {
+		
 		[field: ES3Serializable]
 		public override float MaxDuration { get; protected set; }
 		[field: ES3Serializable]
 		public override float TickInterval { get; protected set; }
-
 		[field: ES3Serializable] public override int Priority { get; } = 1;
-
-		[field: ES3Serializable] private float damage;
-		[field: ES3Serializable] private int level;
+		//[field: ES3Serializable] private float damage;
+		
 		
 		private IDamageable damagableEntity;
 		public override string OnGetDescription(string defaultLocalizationKey) {
@@ -31,15 +31,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		public override void OnInitialize() {
 			damagableEntity = buffOwner as IDamageable;
 		}
+		
 
-		public override void OnStacked(BleedingBuff buff) {
+		protected override void OnBuffStacked(BleedingBuff buff) {
 			this.MaxDuration = Mathf.Max(this.MaxDuration, buff.MaxDuration);
 			this.RemainingDuration = this.MaxDuration;
 			this.TickInterval = Mathf.Min(this.TickInterval, buff.TickInterval);
-			if (buff.level > this.level) {
-				this.level = buff.level;
-				this.damage = buff.damage;
-			}
 		}
 
 		public override void OnStart() {
@@ -47,18 +44,19 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		}
 
 		public override BuffStatus OnTick() {
+
+			float damage = GetBuffPropertyAtCurrentLevel<float>("buff_damage");
 			
-			if (level <= 2) {
+			if (Level <= 2) {
 				damagableEntity.TakeDamage(Mathf.RoundToInt(damage), buffDealer as ICanDealDamage);
-			}
-			else {
+			}else {
 				int maxHealth = damagableEntity.HealthProperty.InitialValue.MaxHealth;
-				int damage = Mathf.RoundToInt(Mathf.Max(1, this.damage * maxHealth));
+				int damageRounded = Mathf.RoundToInt(Mathf.Max(1, damage * maxHealth));
 
 				HealthInfo healthInfo = damagableEntity.HealthProperty.RealValue.Value;
 				damagableEntity.HealthProperty.RealValue.Value =
-					new HealthInfo(healthInfo.MaxHealth - damage, healthInfo.CurrentHealth);
-				damagableEntity.TakeDamage(damage, buffDealer as ICanDealDamage);
+					new HealthInfo(healthInfo.MaxHealth - damageRounded, healthInfo.CurrentHealth);
+				damagableEntity.TakeDamage(damageRounded, buffDealer as ICanDealDamage);
 			}
 
 			return BuffStatus.Running;
@@ -68,12 +66,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			
 		}
 		
-		public static BleedingBuff Allocate(float maxDuration, float tickInterval, float damage, int level, IEntity buffDealer, IEntity buffOwner) {
-			BleedingBuff buff = Allocate(buffDealer, buffOwner);
-			buff.MaxDuration = maxDuration;
+		public static BleedingBuff Allocate(float tickInterval, int level, IEntity buffDealer, IEntity buffOwner) {
+			BleedingBuff buff = Allocate(buffDealer, buffOwner, level);
+			buff.MaxDuration = buff.GetBuffPropertyAtCurrentLevel<float>("buff_length");
 			buff.TickInterval = tickInterval;
-			buff.damage = damage;
-			buff.level = level;
 			return buff;
 		}
 	}

@@ -27,6 +27,7 @@ namespace Runtime.Utilities.ConfigSheet
 		private ConfigTable weaponPartsConfigTable;
 		private ConfigTable researchSkillsConfigTable;
 		private ConfigTable researchWeaponPartsConfigTable;
+		private ConfigTable buffConfigTable;
 
 		public ConfigTable BossEntityConfigTable => bossEntityConfigTable;
 		public ConfigTable EnemyEntityConfigTable_Test => enemyEntityConfigTable_test;
@@ -52,6 +53,8 @@ namespace Runtime.Utilities.ConfigSheet
 		public ConfigTable ResearchSkillsConfigTable => researchSkillsConfigTable;
 		
 		public ConfigTable ResearchWeaponPartsConfigTable => researchWeaponPartsConfigTable;
+		
+		public ConfigTable BuffConfigTable => buffConfigTable;
 
 		private string GetDocID() {
 			if (Application.isEditor) {
@@ -112,6 +115,9 @@ namespace Runtime.Utilities.ConfigSheet
 
 			researchWeaponPartsConfigTable = new ConfigTable(docID,
 				"1143344623", "data_research_weapon_parts", isDownload);
+			
+			buffConfigTable = new ConfigTable(docID,
+				"1585691106", "data_buffs", isDownload);
 		}
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

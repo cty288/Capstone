@@ -32,6 +32,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public Type BuffType { get;}
 
 		public CurrencyType GetBuildType();
+		
+		public int GetRarity();
 	}
 	
 	public abstract class WeaponPartsEntity<T, TBuffType> : BuildableResourceEntity<T>, IWeaponPartsEntity
@@ -48,6 +50,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public override int GetMaxRarity() {
 			return 4;
 		}
+
+		public override int GetMinRarity() {
+			return 1;
+		}
+		
+		
 
 		public override void OnAwake() {
 			base.OnAwake();

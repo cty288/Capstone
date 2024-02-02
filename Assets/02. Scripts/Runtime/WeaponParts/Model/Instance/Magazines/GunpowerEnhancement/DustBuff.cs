@@ -3,6 +3,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement {
+
 	public class DustBuff : Buff<DustBuff> {
 		
 		[field: ES3Serializable]
@@ -12,6 +13,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		public override float TickInterval { get; protected set; } = 0.1f;
 
 		public override int Priority { get; } = 1;
+		
+		
 
 		[field: ES3Serializable] private int maxLayer;
 		[field: ES3Serializable] private int damage;
@@ -70,5 +73,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 			damage = 0;
 			currentLayer = 0;
 		}
+
+		
 	}
 }

@@ -191,5 +191,11 @@ namespace Runtime.Utilities.ConfigSheet {
 			}
 			
 		}
+		
+		public string[] GetKeys() {
+			string[] keys = new string[data.Keys.Count];
+			data.Keys.CopyTo(keys, 0);
+			return keys;
+		}
 	}
 }

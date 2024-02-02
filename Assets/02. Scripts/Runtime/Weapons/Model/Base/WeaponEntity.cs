@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
+using JetBrains.Annotations;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
@@ -69,8 +71,13 @@ namespace Runtime.Weapons.Model.Base
         public void RegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
         
         public void UnRegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
+
+        public CurrencyType GetMainBuildType();
+        
+        public int GetTotalBuildRarity(CurrencyType currencyType);
+
         // void RegisterOnWeaponPartsUpdate(Action<string, string> callback);
-       // void OnModifyHitData(Func<HitData, IWeaponEntity, HitData> onModifyHitData);
+        // void OnModifyHitData(Func<HitData, IWeaponEntity, HitData> onModifyHitData);
     }
 
     public struct OnWeaponPartsUpdate {
@@ -113,6 +120,10 @@ namespace Runtime.Weapons.Model.Base
         }
 
         public override int GetMaxRarity() {
+            return 1;
+        }
+
+        public override int GetMinRarity() {
             return 1;
         }
 
@@ -366,31 +377,75 @@ namespace Runtime.Weapons.Model.Base
             onModifyHitData.Remove(callback);
         }
 
-
-        /*public void AddToParts(IWeaponPartsEntity weaponPartsEntity) {
-            WeaponPartType weaponPartType = weaponPartsEntity.WeaponPartType;
-            HashSet<WeaponPartsSlot> parts = weaponParts[weaponPartType];
-            if (parts.Count < weaponPartsSize[weaponPartType]) {
-                parts.Add(new WeaponPartsSlot(weaponPartsEntity));
+        public CurrencyType GetMainBuildType() {
+            if (!weaponParts.ContainsKey(WeaponPartType.Magazine)) {
+                return CurrencyType.Time;
             }
+
+
+            Dictionary<CurrencyType, int> currencyTypes = new Dictionary<CurrencyType, int>();
+            foreach (WeaponPartsSlot slot in weaponParts[WeaponPartType.Magazine]) {
+                if (slot.GetLastItemUUID() == null) {
+                    continue;
+                }
+
+                IWeaponPartsEntity weaponPartsEntity = GlobalEntities.GetEntityAndModel(slot.GetLastItemUUID()).Item2 as IWeaponPartsEntity;
+                if (weaponPartsEntity == null) {
+                    continue;
+                }
+                
+
+                CurrencyType buildType = weaponPartsEntity.GetBuildType();
+                
+                if (!currencyTypes.ContainsKey(buildType)) {
+                    currencyTypes.Add(buildType, 0);
+                }
+                currencyTypes[buildType]++;
+            }
+            
+            if (currencyTypes.Count == 0) {
+                return CurrencyType.Time;
+            }
+            
+            //get the currency type with the highest count
+            int maxCount = 0;
+            CurrencyType maxCurrencyType = CurrencyType.Time;
+            foreach (KeyValuePair<CurrencyType, int> currencyType in currencyTypes) {
+                if (currencyType.Value > maxCount) {
+                    maxCount = currencyType.Value;
+                    maxCurrencyType = currencyType.Key;
+                }
+            }
+
+            return maxCurrencyType;
         }
 
-        public bool CanAddToParts(IWeaponPartsEntity weaponPartsEntity) {
-            if (weaponPartsEntity == null) {
-                return false;
+        public int GetTotalBuildRarity(CurrencyType currencyType) {
+            int totalRarity = 0;
+            foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
+                foreach (WeaponPartsSlot slot in part.Value) {
+                    if (slot.GetLastItemUUID() == null) {
+                        continue;
+                    }
+
+                    IWeaponPartsEntity weaponPartsEntity =
+                        GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID()) as IWeaponPartsEntity;
+                    
+                    if (weaponPartsEntity == null) {
+                        continue;
+                    }
+
+                    if (weaponPartsEntity.GetBuildType() != currencyType) {
+                        continue;
+                    }
+
+                    totalRarity += weaponPartsEntity.GetRarity();
+                }
             }
 
-            //check if the number of parts in the list is less than the capacity
-            HashSet<string> parts = weaponParts[weaponPartsEntity.WeaponPartType];
-            return parts.Count < weaponPartsSize[weaponPartsEntity.WeaponPartType];
+            return totalRarity;
         }
 
-        public void RemoveFromParts(string weaponPartID, WeaponPartType weaponPartType) {
-            HashSet<string> parts = weaponParts[weaponPartType];
-            if (parts.Contains(weaponPartID)) {
-                parts.Remove(weaponPartID);
-            }
-        }*/
 
         public override bool OnValidateBuff(IBuff buff) {
             if (buff is IWeaponPartsBuff partsBuff) {

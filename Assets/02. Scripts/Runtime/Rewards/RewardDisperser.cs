@@ -86,6 +86,7 @@ namespace _02._Scripts.Runtime.Rewards {
 									IWeaponPartsEntity template = (IWeaponPartsEntity) parts;
 									return weaponPartsModel.IsUnlocked(parts.EntityName) &&
 									       template.GetMaxRarity() >= rewardBatch.Level &&
+									       template.GetMinRarity() <= rewardBatch.Level &&
 									       template.GetBuildType() == buildType;
 								});
 
