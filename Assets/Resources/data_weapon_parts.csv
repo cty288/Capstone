@@ -1,13 +1,19 @@
-EntityName / Property Names,max_stack,custom_properties,tags,,More Notes
-Types,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,int,"Dict<string, CustomProperty>
+EntityName / Property Names,max_stack,build_type,purchase_cost,custom_properties,tags,,More Notes
+Types,int,CurrencyType,SkillPurchaseCostInfo,dynamic,"Dictionary<TagName,int>",,
+Notes ->,int,,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
-,,,,,
-BEGIN,,,,,
-TestWeaponParts,1,"{
+,,,,,,,
+BEGIN,,,,,,,
+TestWeaponParts,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -27,7 +33,13 @@ TestWeaponParts,1,"{
     }
   }
 }",,,
-TestWeaponParts2,1,"{
+TestWeaponParts2,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -47,7 +59,13 @@ TestWeaponParts2,1,"{
     }
   }
 }",,,
-TestWeaponParts3,1,"{
+TestWeaponParts3,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -67,3 +85,340 @@ TestWeaponParts3,1,"{
     }
   }
 }",,,
+TestWeaponParts4,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+TestWeaponParts5,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+TestWeaponParts6,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+TestWeaponParts7,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{
+  ""level1"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""level2"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 4
+    }
+  },
+  ""level3"": {
+    ""attackSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  }
+}",,,
+SpecialBarrel,1,"""Time""",,"{
+  ""level1"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.1}
+  },
+  ""level2"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level3"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.3}
+  },
+  ""level4"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.5}
+  }
+}",,,
+HeavyBarrel,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.1},
+    ""buff_level"": {""type"": ""int"", ""value"": 1}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_level"": {""type"": ""int"", ""value"": 1}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_level"": {""type"": ""int"", ""value"": 2}
+  },
+  ""level4"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.33},
+    ""buff_level"": {""type"": ""int"", ""value"": 3}
+  }
+}",,,
+AdaptedCompensator,1,"""Time""",,"{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.15}
+  },
+  ""level2"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.25}
+  },
+  ""level3"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level4"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.75}
+  }
+}",,,
+SpecialCompensator,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 2},
+    ""chance"" : {""type"": ""float"", ""value"": 0.1}
+  },
+  ""level2"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 2},
+    ""chance"" : {""type"": ""float"", ""value"": 0.15}
+  },
+  ""level3"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 2},
+    ""chance"" : {""type"": ""float"", ""value"": 0.25}
+  },
+  ""level4"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 2},
+    ""chance"" : {""type"": ""float"", ""value"": 0.33}
+  }
+}",,,
+ShortBarrel,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.1},
+    ""distance"" : {""type"": ""float"", ""value"": 10}
+  },
+  ""level2"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.2},
+    ""distance"" : {""type"": ""float"", ""value"": 10}
+  },
+  ""level3"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.5},
+    ""distance"" : {""type"": ""float"", ""value"": 10}
+  },
+  ""level4"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.75},
+    ""distance"" : {""type"": ""float"", ""value"": 10}
+  }
+}",,,
+LongBarrel,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        }
+}","{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.1},
+    ""distance"" : {""type"": ""float"", ""value"": 10}
+  },
+  ""level2"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.2},
+    ""distance"" : {""type"": ""float"", ""value"": 10}
+  },
+  ""level3"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.5},
+    ""distance"" : {""type"": ""float"", ""value"": 10}
+  },
+  ""level4"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.75},
+    ""distance"" : {""type"": ""float"", ""value"": 10}
+  }
+}",,,
+CustomizedMagazine,1,"""Time""",,"{ ""level1"": { ""multiplier"": {""type"": ""float"", ""value"": 2} }, ""level2"": { ""multiplier"": {""type"": ""float"", ""value"": 3} }, ""level3"": { ""multiplier"": {""type"": ""float"", ""value"": 5} }, ""level4"": { ""multiplier"": {""type"": ""float"", ""value"": 10} } }",,,
+GunpowerEnchancement,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 20}
+  },
+  ""level2"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 30}
+  },
+  ""level3"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 50}
+  },
+  ""level4"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 100}
+  }
+}",,,
+VampireMagazine,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.1},
+    ""health"": {""type"": ""int"", ""value"": 1}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.15},
+    ""health"": {""type"": ""int"", ""value"": 2}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""health"": {""type"": ""int"", ""value"": 3}
+  },
+  ""level4"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.25},
+    ""health"": {""type"": ""int"", ""value"": 5}
+  }
+}",,,
+RageDetector,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.2},
+    ""health_bound"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level2"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.3},
+    ""health_bound"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level3"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.5},
+    ""health_bound"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level4"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.75},
+    ""health_bound"": {""type"": ""float"", ""value"": 0.5}
+  }
+}",,,
+KineticDevice,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.05}
+  },
+  ""level2"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.1}
+  },
+  ""level3"": {
+   ""multiplayer"": {""type"": ""float"", ""value"": 0.15}
+  },
+  ""level4"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.2}
+  }
+}",,,
+FactoryNewAttachment,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.25},
+    ""time"": {""type"": ""float"", ""value"": 3}
+  },
+  ""level2"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.5},
+    ""time"": {""type"": ""float"", ""value"": 3}
+  },
+  ""level3"": {
+   ""multiplayer"": {""type"": ""float"", ""value"": 0.75},
+    ""time"": {""type"": ""float"", ""value"": 3}
+  },
+  ""level4"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 1},
+    ""time"": {""type"": ""float"", ""value"": 3}
+  }
+}",,,
+SelfLoadingAttachment,1,"""Time""",,,,,

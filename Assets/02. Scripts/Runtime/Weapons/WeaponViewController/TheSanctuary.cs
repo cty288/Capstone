@@ -49,7 +49,7 @@ namespace Runtime.Weapons
         protected override void OnInitModifiers(int rarity)
         {
         }
-
+        public override bool Collectable  => true;
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
             return null;
@@ -76,13 +76,13 @@ namespace Runtime.Weapons
             return builder.FromConfig().Build();
         }
         
-        public override void SetShoot(bool shouldShoot)
+        /*public override void SetShoot(bool shouldShoot)
         {
             base.SetShoot(shouldShoot);
             if (shouldShoot) {
                 Shoot();
             }
-        }
+        }*/
 
         protected override void Shoot()
         {
@@ -96,7 +96,7 @@ namespace Runtime.Weapons
 
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
                 BoundEntity.GetRealDamageValue(),
-                gameObject, gameObject.GetComponent<ICanDealDamage>(), BoundEntity.GetRange().BaseValue);
+                gameObject, this, BoundEntity.GetRange().BaseValue, true);
         }
         
         public override bool CheckHit(HitData data)
@@ -105,8 +105,8 @@ namespace Runtime.Weapons
         }
         
         public override void HitResponse(HitData data) {
-            // TODO: Optimize projectile when we make one, or it might be using the old system for this.
-            Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            // Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+            Debug.Log("The Sanctuary HitResponse");
         }
     }
 }

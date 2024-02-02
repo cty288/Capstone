@@ -5,7 +5,9 @@ using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Model;
 using Runtime.Utilities;
 using Runtime.Weapons.Model.Base;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Runtime.Weapons
@@ -15,8 +17,12 @@ namespace Runtime.Weapons
         //[SerializeField] private GameObject weapon;
         private IWeaponEntity _associatedWeapon;
         [SerializeField] private Renderer[] renderers;
-        [SerializeField] private Material gunBarrelIndicator;
+        [SerializeField] private RawImage[] images;
+        [SerializeField] private Material unlitIndicator;
+        [SerializeField] private Material spriteIndicator;
         [SerializeField] private bool updateIndicators = true;
+        [SerializeField] private TMP_Text currentAmmo;
+        [SerializeField] private TMP_Text maxAmmo;
         private Material[] _instanceGunBarrelIndicators;
         private static readonly int MaxAmmo = Shader.PropertyToID("_MaxAmmo");
         private static readonly int CurrentAmmo = Shader.PropertyToID("_CurrentAmmo");
@@ -25,19 +31,19 @@ namespace Runtime.Weapons
         void Awake()
         {
             if(!updateIndicators) return;
-            _instanceGunBarrelIndicators = new Material[renderers.Length];
+            _instanceGunBarrelIndicators = new Material[renderers.Length + images.Length];
             for (int i = 0; i < renderers.Length; i++)
             {
                 if (renderers[i].material == null)
                 {
-                    renderers[i].material = new Material(gunBarrelIndicator);
+                    renderers[i].material = new Material(unlitIndicator);
                     _instanceGunBarrelIndicators[i] = renderers[i].material;
                 }
                 else
                 {
                     foreach (var material in renderers[i].materials)
                     {
-                        if (material.shader.name.Equals(gunBarrelIndicator.shader.name))
+                        if (material.shader.name.Equals(unlitIndicator.shader.name))
                         {
                             _instanceGunBarrelIndicators[i] = material;
                         }
@@ -45,8 +51,19 @@ namespace Runtime.Weapons
                 }
                 if (_instanceGunBarrelIndicators[i] == null)
                 {
-                    renderers[i].material = new Material(gunBarrelIndicator);
+                    renderers[i].material = new Material(unlitIndicator);
                     _instanceGunBarrelIndicators[i] = renderers[i].material;
+                }
+            }
+            
+            for (int i = 0; i < images.Length; i++)
+            {
+                images[i].material = new Material(spriteIndicator);
+                _instanceGunBarrelIndicators[renderers.Length + i] = images[i].material;
+                if (_instanceGunBarrelIndicators[renderers.Length + i] == null)
+                {
+                    images[i].material = new Material(spriteIndicator);
+                    _instanceGunBarrelIndicators[renderers.Length + i] = images[i].material;
                 }
             }
         }
@@ -58,6 +75,8 @@ namespace Runtime.Weapons
             {
                 gunBarrelIndicator.SetInteger(MaxAmmo, _associatedWeapon.GetAmmoSize().RealValue);
             }
+
+            if(maxAmmo) maxAmmo.text = _associatedWeapon.GetAmmoSize().RealValue.ToString();
             _associatedWeapon.CurrentAmmo.RegisterWithInitValue(OnAmmoChanged)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(transform.parent.gameObject);
         }
@@ -69,6 +88,8 @@ namespace Runtime.Weapons
             {
                 gunBarrelIndicator.SetFloat(CurrentAmmo, num);
             }
+
+            if(currentAmmo) currentAmmo.text = num.ToString();
         }
         
     }

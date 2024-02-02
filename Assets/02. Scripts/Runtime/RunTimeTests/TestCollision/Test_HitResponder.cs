@@ -82,6 +82,10 @@ namespace Runtime.RunTimeTests.TestCollision
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
         }
 
+        public HitData OnModifyHitData(HitData data) {
+            return data;
+        }
+
         public void OnAnimationEvent(string eventName)
         {
             // Debug.Log("Animation Event: " + eventName);

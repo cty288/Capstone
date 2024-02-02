@@ -64,7 +64,6 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class QuadrupedCarrier : AbstractNormalEnemyViewController<QuadrupedCarrierEntity>
     {
-
         [SerializeField] private GameObject deathEffect;
         [SerializeField] private SafeGameObjectPool pool;
         [SerializeField] private GameObject hurtBox;

@@ -59,7 +59,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[field: ES3Serializable]
 		public string ID { get; set; }
 
-		[field: SerializeField]
+		//[field: SerializeField]
 		public string PrefabID { get; set; }
 
 		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]

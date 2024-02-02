@@ -28,10 +28,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances {
 				.Build();
 		}
 
-		protected override void OnEntityStart()
-		{
-		}
-
 		protected override void OnBindEntityProperty()
 		{
 		}

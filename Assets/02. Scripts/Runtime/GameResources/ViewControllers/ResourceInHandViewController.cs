@@ -30,7 +30,8 @@ namespace Runtime.GameResources.ViewControllers {
 		void OnItemUse();
 
 		void OnItemScopePressed();
-		
+
+		void OnItemAltUse();
 		void OnItemScopeReleased();
 		
 		Vector3 InHandLocalPosition { get; }
@@ -260,6 +261,9 @@ namespace Runtime.GameResources.ViewControllers {
 		public abstract void OnItemStopUse();
 
 		public abstract void OnItemUse();
+		
+		public abstract void OnItemAltUse();
+		
 		public abstract void OnItemScopePressed();
 
 		public abstract void OnItemScopeReleased();

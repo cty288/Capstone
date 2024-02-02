@@ -24,14 +24,14 @@ public class NextLevelDoor : AbstractMikroController<MainGame> {
 				return;
 			}
 			if (isBaseDoor) {
-				MainUI.Singleton.Open<BasePreparationUIViewController>(MainUI.Singleton, null);
+				MainUI.Singleton.Open<BasePreparationUIViewController>(MainUI.Singleton, null, false);
 				return;
 			}
 			if (goToNextLevelByDefault) {
 				this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
 			}
 			else {
-				MainUI.Singleton.OpenOrGetClose<ExitDoorUI>(MainUI.Singleton, null);
+				MainUI.Singleton.OpenOrGetClose<ExitDoorUI>(MainUI.Singleton, null, false);
 			}
 		}
 	}

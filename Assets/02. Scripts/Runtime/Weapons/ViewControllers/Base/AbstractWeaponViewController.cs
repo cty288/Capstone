@@ -114,13 +114,18 @@ namespace Runtime.Weapons.ViewControllers.Base
             playerActions = ClientInput.Singleton.GetPlayerActions();
             animationSMBManager = GetComponent<AnimationSMBManager>();
             animationSMBManager.Event.AddListener(OnAnimationEvent);
+            
+            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
+            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
         }
         
-        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+        public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
+            bool addToModelWhenBuilt = true) {
             if(weaponModel == null) {
                 weaponModel = this.GetModel<IWeaponModel>();
             }
-            WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>();
+
+            WeaponBuilder<T> builder = weaponModel.GetWeaponBuilder<T>(addToModelWhenBuilt);
             if (setRarity) {
                 builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
             }
@@ -146,6 +151,11 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected override void Update()
         {
             base.Update();
+            WeaponUpdate();
+        }
+
+        protected virtual void WeaponUpdate()
+        {
             if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Reload
@@ -168,7 +178,7 @@ namespace Runtime.Weapons.ViewControllers.Base
                 }
             }
         }
-
+        
         #region Animation
         protected virtual void OnAnimationEvent(string eventName)
         {
@@ -296,6 +306,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         public override void OnItemUse()
         {
+            // fully-automatic gun
             if (!isReloading) {
                 if (BoundEntity.CurrentAmmo > 0 &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
@@ -317,6 +328,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public override void OnItemStopUse() {}
+        
+        public override void OnItemAltUse() { }
         
         public override void OnItemScopePressed() {
             if (isReloading || playerModel.IsPlayerSprinting()) {
@@ -360,6 +373,11 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public abstract void HitResponse(HitData data);
+        public HitData OnModifyHitData(HitData data) {
+            
+            return BoundEntity.OnModifyHitData(data);
+        }
+
         #endregion
 
         #region Recycling

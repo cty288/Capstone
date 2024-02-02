@@ -12181,13 +12181,8 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 1533547333141084678}
-  enemies:
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  enemyCount: 0
+  enemySpawnCardConfigs: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
 --- !u!114 &1533547333141084678
@@ -26601,19 +26596,8 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 7518815705803485129}
-  enemies:
-  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0,
-      type: 3}
-    variants:
-    - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
-    minRarity: 1
-    maxRarity: 2
-  enemyCount: 0
+  enemySpawnCardConfigs: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
 --- !u!114 &7518815705803485129
@@ -31396,18 +31380,8 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 1150315226522254986}
-  enemies:
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
-      type: 3}
-    variants: []
-    minRarity: 0
-    maxRarity: 0
-  enemyCount: 0
+  enemySpawnCardConfigs: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
 --- !u!114 &1150315226522254986
@@ -34139,15 +34113,8 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 3040550545555058686}
-  enemies:
-  - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
-      type: 3}
-    variants:
-    - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
-    - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
-    minRarity: 1
-    maxRarity: 2
-  enemyCount: 0
+  enemySpawnCardConfigs: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
 --- !u!114 &3040550545555058686
@@ -56981,18 +56948,8 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 5729297349475455337}
-  enemies:
-  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  enemyCount: 0
+  enemySpawnCardConfigs: []
+  totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
 --- !u!114 &5729297349475455337
@@ -69657,31 +69614,121 @@ MonoBehaviour:
   - {fileID: 5663218840538364143}
   - {fileID: 8283682368419291087}
   - {fileID: 7566422051405874470}
-  enemies:
-  - mainPrefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 3
-  - mainPrefab: {fileID: 53076124648127137, guid: c4c4d07d25d51ff45bd1e540ac4a68c4,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 3
+  enemySpawnCardConfigs:
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
+        type: 3}
+      variants: []
+      minRarity: 1
+      maxRarity: 2
+      maxSpawnCountPerArea: 0
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 53076124648127137, guid: c4c4d07d25d51ff45bd1e540ac4a68c4,
+        type: 3}
+      variants: []
+      minRarity: 1
+      maxRarity: 2
+      maxSpawnCountPerArea: 0
   bossSpawnCostInfo:
-  - CurrencyType: 0
-    Cost: 10
-  - CurrencyType: 1
-    Cost: 10
-  - CurrencyType: 2
-    Cost: 10
-  - CurrencyType: 3
-    Cost: 10
+    _serializedList:
+    - Key: 0
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 10
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 35
+          - Key: 4
+            Value: 50
+    - Key: 1
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 15
+          - Key: 2
+            Value: 25
+          - Key: 3
+            Value: 35
+          - Key: 4
+            Value: 50
+    - Key: 2
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 5
+          - Key: 2
+            Value: 15
+          - Key: 3
+            Value: 30
+          - Key: 4
+            Value: 50
+    - Key: 3
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 5
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 35
+          - Key: 4
+            Value: 50
+  pillarRewardsInfo:
+    RewardsInfo:
+      _serializedList:
+      - Key: 1
+        Value:
+        - RewardType: 0
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+      - Key: 2
+        Value:
+        - RewardType: 1
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+      - Key: 3
+        Value:
+        - RewardType: 1
+          Level: 2
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 2
+          AmountRange: {x: 1, y: 1}
+      - Key: 4
+        Value:
+        - RewardType: 1
+          Level: 3
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 1
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 2
+          AmountRange: {x: 1, y: 1}
+        - RewardType: 0
+          Level: 3
+          AmountRange: {x: 1, y: 1}
   hasPillars: 1
   pillarPrefabName: BossPillar
   maxExtent: {fileID: 1595554011}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
+  sandstormProbability:
+  - 0
+  - 0.33
+  - 1
   subAreaLevelPrefabs:
   - {fileID: 2935341558826336954}
   - {fileID: 1399609052374784794}

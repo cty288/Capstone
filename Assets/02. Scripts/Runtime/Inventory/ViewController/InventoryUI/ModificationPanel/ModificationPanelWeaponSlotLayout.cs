@@ -29,7 +29,8 @@ public class ModificationPanelWeaponSlotLayout  : ModificationPanelSlotLayout{
 
 		}
 
-		if (!selectedInitialWeapon) {
+		
+		if (!selectedInitialWeapon && slotViewControllers.Count > 0) {
 			OnSlotClicked(slotViewControllers[0]);
 		}
 

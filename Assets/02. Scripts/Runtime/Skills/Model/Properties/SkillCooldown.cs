@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Properties;
 using Runtime.Utilities;
@@ -6,6 +7,7 @@ using Runtime.Utilities;
 namespace _02._Scripts.Runtime.Skills.Model.Properties {
 	public interface ISkillLevelProperty<T> : IDictionaryProperty<int, T>, ILoadFromConfigProperty {
 		public T GetByLevel(int level);
+		public int GetMaxLevel();
 	}
 
 	public interface ISkillCoolDown : ISkillLevelProperty<float>, ILoadFromConfigProperty {
@@ -38,6 +40,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Properties {
 		
 		public T GetByLevel(int level) {
 			return GetByLevel(level, RealValue.Value);
+		}
+		
+		public int GetMaxLevel() {
+			return RealValue.Value.Keys.Max();
 		}
 	}
 	
