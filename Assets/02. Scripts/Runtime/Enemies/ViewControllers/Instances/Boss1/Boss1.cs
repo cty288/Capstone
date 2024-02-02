@@ -75,7 +75,6 @@ namespace Runtime.Enemies
     }
     public class Boss1 : AbstractBossViewController<Boss1Entity>
     {
-        
         public int MaxShellHealth { get; }
         
         public int CurrentShellHealth { get; }

@@ -51,7 +51,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature {
 		//[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
+
 		private static int combatCurrencyAmountPerItem = 5;
+		[Header("Rarity Base Value")]
 		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
 		protected NavMeshAgent navMeshAgent;
 		protected BehaviorTree behaviorTree;
@@ -62,6 +64,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Creature Recycle Settings")]
 		[SerializeField]
 		private bool autoRemoveEntityWhenDie = true;
+
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
@@ -77,7 +80,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				behaviorTree.enabled = false;
 			}
 		}
-
+		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
 
 		protected override void OnStart() {

@@ -49,9 +49,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		public void OnExitLevel();
 
-		public ISubAreaLevelEntity GetCurrentActiveSubArea();
+		public ISubAreaLevelEntity GetCurrentActiveSubAreaEntity();
 		
-		List<GameObject> Enemies { get; }
+		HashSet<GameObject> Enemies { get; }
 	}
 
 	public struct LevelSpawnCard : ICanGetModel {
@@ -114,15 +114,19 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			return MainGame.Interface;
 		}
 	}
+	
+	[Serializable]
+	public struct SpawnCardListConfig {
+		[FormerlySerializedAs("spawnCardList")] public EnemySpawnInfo[] enemySpawnInfos;
+	}
 
 	[Serializable]
-	public struct LevelEnemyPrefabConfig {
-		[FormerlySerializedAs("prefab")] public GameObject mainPrefab;
+	public struct EnemySpawnInfo {
+		public GameObject mainPrefab;
 		public List<GameObject> variants;
 		public int minRarity;
 		public int maxRarity;
 	}
-	
 	
 	[RequireComponent(typeof(NavMeshSurface))]
 	public abstract class LevelViewController<T> : AbstractBasicEntityViewController<T>, ILevelViewController
@@ -131,8 +135,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[Header("Player")] 
 		[SerializeField] protected List<Transform> playerSpawnPoints = new List<Transform>();
 		
+		[FormerlySerializedAs("enemySpawnCardConfig")]
+		[FormerlySerializedAs("enemies")]
 		[Header("Enemies")]
-		[SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
+		[SerializeField] protected List<SpawnCardListConfig> enemySpawnCardConfigs;
 		[SerializeField] 
 		[SerializedDictionary("Currency Type", "Costs")]
 		protected SerializedDictionary<CurrencyType, RewardCostInfo> bossSpawnCostInfo;
@@ -156,25 +162,29 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		private IGameEventSystem gameEventSystem;
 
 		//mainPrefab + variants
-		public List<GameObject> Enemies {
+		public HashSet<GameObject> Enemies {
 			get {
-				List<GameObject> enemyPrefabs = new List<GameObject>();
+				HashSet<GameObject> enemyPrefabs = new HashSet<GameObject>();
 				
 				
 				ISubAreaLevelViewController[] subAreas = GetComponentsInChildren<ISubAreaLevelViewController>(true);
 				if (subAreas != null) {
 					foreach (var subArea in subAreas) {
-						enemyPrefabs.AddRange(subArea.Enemies);
+						enemyPrefabs.UnionWith(subArea.Enemies);
 					}
 				}
 				
-				foreach (var enemy in enemies) {
-					enemyPrefabs.Add(enemy.mainPrefab);
-					if (enemy.variants != null) {
-						enemyPrefabs.AddRange(enemy.variants);
+				foreach (SpawnCardListConfig spawnCardList in enemySpawnCardConfigs)
+				{
+					foreach (EnemySpawnInfo info in spawnCardList.enemySpawnInfos)
+					{
+						enemyPrefabs.Add(info.mainPrefab);
+						if (info.variants != null)
+						{
+							enemyPrefabs.UnionWith(info.variants);
+						}
 					}
 				}
-		
 				return enemyPrefabs;
 			}
 		}
@@ -240,27 +250,34 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			OnInitEnemy(e.Boss);
 		}
 
-		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
-			List<LevelSpawnCard> spawnCards = new List<LevelSpawnCard>();
-			
-			foreach (var enemy in enemies) {
-				GameObject prefab = enemy.mainPrefab;
-				ICreatureViewController enemyViewController = prefab.GetComponent<ICreatureViewController>();
-				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
-				
-				
-				string[] prefabNames = new string[
-					(enemy.variants?.Count ?? 0) + 1];
-				prefabNames[0] = prefab.name;
-				for (int i = 0; i < enemy.variants.Count; i++) {
-					prefabNames[i + 1] = enemy.variants[i].name;
+		public List<LevelSpawnCard[]> CreateTemplateEnemies(int levelNumber) {
+			List<LevelSpawnCard[]> spawnCards = new List<LevelSpawnCard[]>();
+
+			foreach (var spawnCardList in enemySpawnCardConfigs)
+			{
+				LevelSpawnCard[] cards = new LevelSpawnCard[spawnCardList.enemySpawnInfos.Length];
+				for (int card_index = 0; card_index < cards.Length; card_index++)
+				{
+					EnemySpawnInfo enemyInfo = spawnCardList.enemySpawnInfos[card_index];
+					GameObject prefab = enemyInfo.mainPrefab;
+					ICreatureViewController enemyViewController = prefab.GetComponent<ICreatureViewController>();
+					IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
+
+					string[] prefabNames = new string[(enemyInfo.variants?.Count ?? 0) + 1];
+					prefabNames[0] = prefab.name;
+					for (int i = 0; i < enemyInfo.variants.Count; i++)
+					{
+						prefabNames[i + 1] = enemyInfo.variants[i].name;
+					}
+
+					templateEnemies.Add(enemyEntity);
+					cards[card_index] = new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber),
+						prefabNames,
+						enemyInfo.minRarity, enemyInfo.maxRarity);
 				}
-				
-				 templateEnemies.Add(enemyEntity);
-				 spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefabNames,
-					enemy.minRarity, enemy.maxRarity));
+				spawnCards.Add(cards);
 			}
-			
+
 			return spawnCards;
 		}
 		
@@ -549,7 +566,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		public virtual ISubAreaLevelEntity GetCurrentActiveSubArea()
+		public virtual ISubAreaLevelEntity GetCurrentActiveSubAreaEntity()
 		{
 			int areaMask = this.GetModel<IPlayerModel>().CurrentSubAreaMask.Value;
 			
@@ -578,8 +595,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			ISubAreaLevelModel subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
 			
 			ISpawnCardsProperty spawnCardsProperty = BoundEntity.GetProperty<ISpawnCardsProperty>();
-			foreach (LevelSpawnCard spawnCard in spawnCardsProperty.RealValue.Value) {
-				enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
+			foreach (LevelSpawnCard[] spawnCards in spawnCardsProperty.RealValue.Value) {
+				foreach (LevelSpawnCard spawnCard in spawnCards) {
+					enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
+				}
 			}
 
 
@@ -589,16 +608,16 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					true);
 			}
 			
-			 while (currentEnemies.Count > 0) {
-			 	IEntity enemy = currentEnemies.First();
-			 	currentEnemies.Remove(enemy);
-			 	enemyModel.RemoveEntity(enemy.UUID, true);
-			 }
+			while (currentEnemies.Count > 0) {
+				IEntity enemy = currentEnemies.First();
+				currentEnemies.Remove(enemy);
+				enemyModel.RemoveEntity(enemy.UUID, true);
+			}
 
-			 foreach (IEnemyEntity enemyEntity in templateEnemies) {
-				 enemyModel.RemoveEntity(enemyEntity.UUID, true);
-			 }
-			 templateEnemies.Clear();
+			foreach (IEnemyEntity enemyEntity in templateEnemies) {
+				enemyModel.RemoveEntity(enemyEntity.UUID, true);
+			}
+			templateEnemies.Clear();
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {
