@@ -12,7 +12,7 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
     { 
     	[Header(Main Texture)]
         [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
-        [MainColor] _BaseColor("Color", Color) = (1,1,1,1)
+        [HDR] [MainColor] _BaseColor("Color", Color) = (1,1,1,1)
 
     	[Space(20)]
         _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
@@ -24,6 +24,8 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
     	_CenterPivot("Center Pivot Point", Vector) = (0, 0, 0, 0)
     	_Health("Health", Range(0, 1)) = 1
     	_Manifest("Manifest", Range(-0.001,2)) = 1
+    	_Seed("Seed", Float) = 0
+    	[HDR] _DamageColor("Damaged Color", Color) = (1, 1, 1, 1)
 
     	[Space(20)]
     	[Header(Emission)]
@@ -59,6 +61,7 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 
 			Blend SrcAlpha OneMinusSrcAlpha
 			Cull Off
+			//ZWrite Off
 
 			HLSLPROGRAM
 
@@ -82,6 +85,9 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
     		float _Direction;
     		float _HeightArc;
 			float _Manifest;
+			float _Health;
+			float _Seed;
+			float4 _DamageColor;
 
 			// Structs
 			struct Attributes {
@@ -94,12 +100,16 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 			struct Varyings {
 				float4 positionCS 	: SV_POSITION;
 				float2 uv		    : TEXCOORD0;
-				float3 arc           : TEXCOORD1;
-				float4 color		: COLOR;
+				float4 arc           : TEXCOORD1;
+				float4 positionSS : TEXCOORD2;
+				float4 color		: COLOR;	
 				float3 normalWS     : TEXCOORD3;
 			};
 
 			#include "Inputs.hlsl"
+
+			TEXTURE2D(_CameraDepthTexture);
+			SAMPLER(sampler_CameraDepthTexture);
 
 			float2 PolarToCartesian(float r, float radian)
 			{
@@ -107,7 +117,12 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 				float y = r * sin(radian);
 				return float2(x, y);
 			}
-			
+
+			float Random(float seed, float3 normal)
+			{
+				float val = sin(seed * 1000 + normal.x * 23423 + normal.y * 21 + normal.z * 2349011);
+				return 0.5 * val + 0.5f;
+			}
 
 			// Vertex Shader
 			Varyings UnlitPassVertex(Attributes IN) {
@@ -116,15 +131,19 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 				VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
 				OUT.positionCS = positionInputs.positionCS;
 
+				OUT.positionSS = ComputeScreenPos(OUT.positionCS);
+
 				VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz);
 				half3 viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
 				OUT.normalWS = NormalizeNormalPerVertex(normalInputs.normalWS);
 
 				float2 arcCenter = PolarToCartesian(1.f, _Direction * TAU);
 				float rad = acos(dot(arcCenter, normalize(IN.normalOS.xz)));
-				float arc = (_Arc * PI) - rad;
+				float x = _Arc * PI;
+				
+				float arc = x - rad;
 
-				float manifested = arc - _Arc*PI*(1 - _Manifest);
+				float manifested = arc - x*(1 - _Manifest);
 				/*float manifesting = _Manifest;
 				manifesting = arc - _Arc*PI*(1 - manifesting);*/
 				float manifesting = manifested + PI;
@@ -132,11 +151,14 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 				float height = _HeightArc - abs(IN.normalOS.y);
 				
 				arc = min(height, arc);
+
+				float rand = Random(_Seed, IN.normalOS);
+				float health = saturate(-(rand - 2*(1 - _Health)));
 				
-				OUT.arc = float3(arc, manifested, manifesting);
+				OUT.arc = float4(arc, manifested, manifesting, health);
 				
 				OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
-				OUT.color = half4(IN.color.rgb * IN.normalOS.xyz, IN.color.a);
+				OUT.color = half4(IN.color.rgb - (rand*0.5f), IN.color.a);
 				return OUT;
 			}
 
@@ -144,13 +166,20 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 			half4 UnlitPassFragment(Varyings IN) : SV_Target {
 				half4 baseMap = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
 
-				float intersect = 1-saturate(IN.arc.y	 * IN.arc.z);
+				float intersect = 1-saturate(IN.arc.y * IN.arc.z);
 
+				float depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, IN.positionSS.xy/IN.positionSS.w).r, _ZBufferParams);
+				depth = 1 - smoothstep(0, 0.25f, abs(IN.positionSS.w - depth));
+				//depth *= 0.05f;	
+				//depth = 0.2f*saturate(depth);
+				
 				clip(IN.arc.y);
 				clip(IN.arc.x);
 
-				//return intersect.rrrr;
-				return (baseMap * _BaseColor * IN.color) + intersect;
+				//return float4(IN.positionSS.www, 0.5f);
+				//return float4(depth.rrr, 0.5f);
+				float4 col = lerp((baseMap * _BaseColor * IN.color), _DamageColor, IN.arc.w) + intersect;
+				return float4(col.rgb, col.a) + depth;
 			}
 			ENDHLSL
 		}
@@ -166,7 +195,7 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
             Name "DepthOnly"
             Tags{"LightMode" = "DepthOnly"}
             
-            ZWrite On
+            //ZWrite Off
             ColorMask 0
             Cull Off
             
@@ -200,7 +229,7 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
             Name "DepthNormals"
             Tags{"LightMode" = "DepthNormals"}
             
-            ZWrite On
+            //ZWrite Off
             ColorMask 0
             Cull Off
             
