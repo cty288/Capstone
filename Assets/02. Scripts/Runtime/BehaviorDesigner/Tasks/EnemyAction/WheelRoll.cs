@@ -25,7 +25,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public float timer = 3f;
         public SharedGameObject player; // Reference to the player GameObject
         private NavMeshAgent agent;
-        private float extensionDistance = 5f;
+        private float extensionDistance = 10f;
         private bool moving;
         private Color startEmissionColor;
         public SharedGameObject e;
@@ -62,7 +62,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             if (player.Value != null && moving == false) // Check if the player reference is valid
             {
-                Debug.Log("rolling");
+                
                 // Calculate a vector from the enemy to the player
                 Vector3 toPlayer = player.Value.transform.position - transform.position;
 
@@ -85,10 +85,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
                 moving = true;
             }
-            if(agent.remainingDistance < 0.1f)
-            {
-                return TaskStatus.Success;
-            }
+            
             if(rollTime < 0)
             {
                 
