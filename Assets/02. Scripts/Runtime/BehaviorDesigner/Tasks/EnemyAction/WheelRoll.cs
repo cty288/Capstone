@@ -32,6 +32,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private SafeGameObjectPool pool;
         // Start is called before the first frame update
         private float explosionTimer = 0.4f;
+        private float rollTime = 3f;
         public override void OnStart()
         {
             base.OnStart();
@@ -45,6 +46,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override TaskStatus OnUpdate()
         {
             explosionTimer -= Time.deltaTime;
+            rollTime -= Time.deltaTime;
             if(explosionTimer < 0)
             {
                 explosionTimer = 0.4f;
@@ -68,7 +70,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 Vector3 targetPosition = player.Value.transform.position + toPlayer.normalized * extensionDistance;
 
                 // Move the enemy to the target position using NavMesh
-                agent.SetDestination(targetPosition);
+                Vector3 rollDestination = SetDestinationClosestToTarget(targetPosition);
+                if (rollDestination != targetPosition)
+                {
+                    Debug.Log("found place to roll");
+                    agent.SetDestination(targetPosition);
+                    
+                }
+                else
+                {
+                    Debug.Log("nah can't go shit");
+                    return TaskStatus.Success;
+                }
 
                 moving = true;
             }
@@ -76,9 +89,26 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 return TaskStatus.Success;
             }
+            if(rollTime < 0)
+            {
+                
+                return TaskStatus.Success;
+            }
             else
             {
                 return TaskStatus.Running;
+            }
+        }
+        Vector3 SetDestinationClosestToTarget(Vector3 target)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(target, out hit, 60f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+            else
+            {
+                return target;
             }
         }
         public override void OnEnd()
@@ -86,7 +116,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             moving = false;
             agent.speed = 2f;
             explosionTimer = 0.4f;
-            
+            rollTime = 3f;
+
         }
     }
 
