@@ -14,11 +14,18 @@ using Runtime.RawMaterials.Model.Builder;
 namespace _02._Scripts.Runtime.WeaponParts.Model {
 	public interface IWeaponPartsModel : IGameResourceModel<IWeaponPartsEntity>, ISavableModel {
 		IEntityBuilder GetWeaponPartsBuilder(string weaponEntityTypeName, bool addToModelOnceBuilt = true);
+		
+		void AddToUnlockedParts(string weaponEntityTypeName);
+		
+		bool IsUnlocked(string weaponEntityTypeName);
 	}
 	
 	public class WeaponPartsModel  : GameResourceModel<IWeaponPartsEntity>, IWeaponPartsModel {
 		[ES3NonSerializable]
 		private Dictionary<string, MethodInfo> builderMethods = new Dictionary<string, MethodInfo>();
+
+		[ES3Serializable] private HashSet<string> unlockedParts = new HashSet<string>();
+		
 		protected override void OnInit() {
 			base.OnInit();
 			RegisterBuilders();
@@ -61,7 +68,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model {
 
 			throw new Exception("Cannot find the builder for the weapon entity type: " + weaponEntityTypeName);
 		}
-		
-		
+
+		public void AddToUnlockedParts(string weaponEntityTypeName) {
+			unlockedParts.Add(weaponEntityTypeName);
+		}
+
+		public bool IsUnlocked(string weaponEntityTypeName) {
+			return unlockedParts.Contains(weaponEntityTypeName);
+		}
 	}
 }

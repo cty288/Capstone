@@ -52,7 +52,10 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public string DeployedVCPrefabName { get; }
 		
-
+		/// <summary>
+		/// Can this resourced be rewarded by the game through normal means?
+		/// </summary>
+		public bool Collectable { get; }
 		
 		/// <summary>
 		/// Width in inventory. Use only 1 or 2. Only effective for weapons.
@@ -68,7 +71,15 @@ namespace Runtime.GameResources.Model.Base {
 		public void AddAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
 		
 		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
+		
+		/*public void OnStartHold();
+		
+		public void OnStopHold();*/
+		
+		public BindableProperty<bool> IsHolding { get; }
 	}
+	
+
 	
 	//3 forms
 	//on ground
@@ -89,7 +100,9 @@ namespace Runtime.GameResources.Model.Base {
 			new HashSet<List<GetResourcePropertyDescriptionGetter>>();
 
 		private List<ResourcePropertyDescription> resourcePropertyDescriptions = new List<ResourcePropertyDescription>();
-
+		
+		[field: ES3NonSerializable]
+		public BindableProperty<bool> IsHolding { get; private set; } = new BindableProperty<bool>(false);
 		public override void OnAwake() {
 			base.OnAwake();
 			OnResourceAwake();
@@ -111,7 +124,9 @@ namespace Runtime.GameResources.Model.Base {
 
 
 		public override void OnDoRecycle() {
+			encounteredBefore = false;
 			resourcePropertyDescriptionGetters?.Clear();
+			IsHolding.Value = false;
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
 		}
 		
@@ -175,6 +190,7 @@ namespace Runtime.GameResources.Model.Base {
 		public virtual string InHandVCPrefabName => OnGroundVCPrefabName;
 
 		public virtual string DeployedVCPrefabName { get; } = null;
+		public abstract bool Collectable { get; }
 
 
 		public override void OnStart(bool isLoadedFromSave) {
@@ -210,6 +226,17 @@ namespace Runtime.GameResources.Model.Base {
 		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list) {
 			additionalResourcePropertyDescriptionGetters.Remove(list);
 		}
+
+		/*public void OnStartHold() {
+			IsHolding.Value = true;
+		}
+
+		public void OnStopHold() {
+			IsHolding.Value = false;
+		}*/
+
+		
+	
 	}
 
 }

@@ -21,6 +21,7 @@ namespace Runtime.Utilities.Collision
         public IHitDetector HitDetector;
         public ICanDealDamage Attacker;
         public bool ShowDamageNumber = true;
+        public bool IsCritical = false;
 
         /// <summary>
         /// Sets the data of the hit. Used for HitScan.
@@ -35,6 +36,33 @@ namespace Runtime.Utilities.Collision
             Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitDetector.Damage * hurtbox.DamageMultiplier);
             HitPoint = hit.point;
             HitNormal = hit.normal;
+            Hurtbox = hurtbox;
+            HitDetector = hitDetector;
+            Attacker = hitResponder;
+            ShowDamageNumber = showDamageNumber;
+            return this;
+        }
+
+        public HitData SetHitBoxData(IHitResponder hitResponder,int damage, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
+            IHitDetector hitDetector, bool showDamageNumber) {
+
+            Damage = hitResponder == null ? 0 : Mathf.FloorToInt(damage * hurtbox.DamageMultiplier);
+            IsCritical = hurtbox?.DamageMultiplier > 1;
+            HitPoint = hitpoint;
+            HitNormal = hitNormal;
+            Hurtbox = hurtbox;
+            HitDetector = hitDetector;
+            Attacker = hitResponder;
+            ShowDamageNumber = showDamageNumber;
+            return this;
+        }
+        
+        public HitData SetHitBoxData(IHitResponder hitResponder, int overriddenDamage, bool isCritical, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
+            IHitDetector hitDetector, bool showDamageNumber) {
+            Damage = overriddenDamage;
+            IsCritical = isCritical;
+            HitPoint = hitpoint;
+            HitNormal = hitNormal;
             Hurtbox = hurtbox;
             HitDetector = hitDetector;
             Attacker = hitResponder;
@@ -95,6 +123,8 @@ namespace Runtime.Utilities.Collision
         //int Damage { get; }
         public bool CheckHit(HitData data);
         public void HitResponse(HitData data);
+        
+        public HitData OnModifyHitData(HitData data);
     }
 
     /// <summary>

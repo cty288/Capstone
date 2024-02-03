@@ -31,7 +31,6 @@ namespace Runtime.Player.ViewControllers
         sprinting,
         sliding,
         air,
-        wallrunning
     }
     
     [RequireComponent(typeof(Rigidbody))]
@@ -165,38 +164,11 @@ namespace Runtime.Player.ViewControllers
         
         private bool sliding; 
         
-        [Header("Wallrunning")]
-        [SerializeField]
-        private LayerMask whatIsWall;
-        [SerializeField]
-        private float wallJumpUpForce;
-        [SerializeField]
-        private float wallJumpSideForce;
-        //public float wallClimbSpeed;
-        [SerializeField]
-        private float maxWallRunTime;
-        private float wallRunTimer;
-
-
-        private bool wasWallRunning;
-        //wallrun checks
-        [SerializeField]
-        private  float wallCheckDistance;
-        //public float minJumpHeight;
-        private RaycastHit leftWallhit;
-        private RaycastHit rightWallhit;
-        private bool wallLeft;
-        private bool wallRight;
-        
-        private bool exitingWall;
-        private float exitWallTime = 0.8f;
-        private float exitWallTimer;
         
         private bool useGravity = false;
         [SerializeField]
         private float gravityCounterForce;
-
-        private bool wallrunning;
+        
         //temporary
         float horizontalInput;
         float verticalInput;
@@ -225,8 +197,6 @@ namespace Runtime.Player.ViewControllers
         private float runningAudioTime = 0.35f;
         private float runningAudioTimer = 0f;
         
-        private float wallRunAudioTime = 0.2f;
-        private float wallRunAudioTimer = 0f;
         
         private AudioSource slidingAudioSource = null;
 
@@ -282,7 +252,6 @@ namespace Runtime.Player.ViewControllers
                 HandleAudio();
                 MyInput();
                 StateHandler();
-                CheckForWall();
                 
                 HandleAnimation();
 
@@ -300,7 +269,6 @@ namespace Runtime.Player.ViewControllers
             if (grounded)
             {
                 rb.drag = playerEntity.GetGroundDrag().RealValue;
-                wasWallRunning = false;
                 playerCollider.material = groundMaterial;
                 
             }
@@ -333,16 +301,6 @@ namespace Runtime.Player.ViewControllers
                     runningAudioTimer = 0f;
                 }
             }
-
-            if (state == MovementState.wallrunning)
-            {
-                wallRunAudioTimer += Time.deltaTime;
-                if (wallRunAudioTimer >= wallRunAudioTime)
-                {
-                    AudioSystem.Singleton.Play2DSound("FootSteps");
-                    wallRunAudioTimer = 0f;
-                }
-            }
             
             if (state == MovementState.sliding)
             {
@@ -370,17 +328,9 @@ namespace Runtime.Player.ViewControllers
             {
                 weaponWeight = heldEntity.GetProperty<IWeight>().RealValue;
             }
-            
-            // Mode - Wallrunning
-            if (wallrunning)
-            {
-                state = MovementState.wallrunning;
-                playerEntity.SetMovementState(state);
-
-                 desiredMoveSpeed = playerEntity.GetSprintSpeed().RealValue * weaponWeight;
-            }
+                
             // Mode - Sliding
-            else if (sliding)
+             if (sliding)
             {
                 state = MovementState.sliding;
                 playerEntity.SetMovementState(state);
@@ -600,16 +550,14 @@ namespace Runtime.Player.ViewControllers
             {
                 readyToJump = false;
                 readyToDoubleJump = true;
-                wasWallRunning = false;
 
                 Jump();
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded && !wallrunning)
+            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded)
             {
                 readyToDoubleJump = false;
-                wasWallRunning = false;
 
                 Jump();
                 
@@ -661,56 +609,6 @@ namespace Runtime.Player.ViewControllers
                 DoCamTilt(0f);
             }
             
-            if((wallLeft || wallRight) && verticalInput > 0 && !grounded && !exitingWall)
-            {
-                if (playerActions.SprintHold.IsPressed())
-                {
-                    if (!wasWallRunning&&!wallrunning)
-                    {
-                        StartWallRun();
-                    }
-                    if (playerActions.SprintHold.WasPressedThisFrame())
-                    {
-                        if (!wallrunning)
-                            StartWallRun();
-                    }
-                    
-                    // wallrun timer
-                    if (wallRunTimer > 0)
-                        wallRunTimer -= Time.deltaTime;
-                    if(wallRunTimer <= 0 && wallrunning)
-                    {
-                        exitingWall = true;
-                        exitWallTimer = exitWallTime;
-                    }
-                    
-                    // wall jump
-                    if (playerActions.Jump.WasPressedThisFrame() ) WallJump();
-                }
-                else
-                {
-                    if (wallrunning)
-                        StopWallRun();
-                }
-
-            }
-            else if (exitingWall)
-            {
-                if (wallrunning)
-                    StopWallRun();
-
-                if (exitWallTimer > 0)
-                    exitWallTimer -= Time.deltaTime;
-
-                if (exitWallTimer <= 0)
-                    exitingWall = false;
-            }
-            else
-            {
-                if (wallrunning)
-                    StopWallRun();
-            }
-
         }
 
         private void MovePlayer()
@@ -722,8 +620,6 @@ namespace Runtime.Player.ViewControllers
             if (flatVel.magnitude < moveSpeed) {
                 if (sliding)
                     SlidingMovement();
-                else if (wallrunning)
-                    WallRunningMovement();
                 else if (onSlope && !exitingSlope) {
                     rb.AddForce(GetSlopeMoveDirection(moveDirection) * playerEntity.GetAccelerationForce().RealValue, ForceMode.Force);
 
@@ -750,7 +646,7 @@ namespace Runtime.Player.ViewControllers
                 }
             }
            // Debug.Log("Grounded ");
-            if (!grounded && !onSlope && !wallrunning){
+            if (!grounded && !onSlope){
               
                 rb.AddForce((-transform.up)* playerEntity.GetAdditionalGravity().RealValue,ForceMode.Force);
             }
@@ -870,85 +766,6 @@ namespace Runtime.Player.ViewControllers
                 DoCamTilt(0f);
             }
         }
-        
-        private void CheckForWall()
-        {
-            wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallhit, wallCheckDistance, whatIsWall);
-            wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallhit, wallCheckDistance, whatIsWall);
-        }
-        
-        private void StartWallRun()
-        {
-            wallrunning = true;
-
-            wallRunTimer = maxWallRunTime;
-
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-            // apply camera effects
-
-            if (wallLeft) DoCamTilt(-25f);
-            if (wallRight) DoCamTilt(25f);
-        }
-        
-        private void StopWallRun()
-        {
-            wallrunning = false;
-            wasWallRunning = true;
-
-            // reset camera effects
-
-            DoCamTilt(0f);
-        }
-        
-        private void WallJump()
-        {
-            // enter exiting wall state
-            exitingWall = true;
-            exitWallTimer = exitWallTime;
-            readyToDoubleJump = true;
-
-            Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
-
-            Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
-
-            // reset y velocity and add force
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            rb.AddForce(forceToApply, ForceMode.Impulse);
-        }
-        
-        private void WallRunningMovement()
-        {
-            rb.useGravity = useGravity;
-
-            Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
-
-            Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
-
-            if ((orientation.forward - wallForward).magnitude > (orientation.forward - -wallForward).magnitude)
-                wallForward = -wallForward;
-
-            // forward force
-            rb.AddForce(wallForward * playerEntity.GetWallRunForce().RealValue, ForceMode.Force);
-            
-            if(wallRunTimer<=0.5f)
-                rb.velocity = new Vector3(rb.velocity.x, -5f, rb.velocity.z);
-
-            // upwards/downwards force
-            /*if (upwardsRunning)
-                rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
-            if (downwardsRunning)
-                */
-
-            // push to wall force
-            if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))
-                rb.AddForce(-wallNormal * 100, ForceMode.Force);
-
-            // weaken gravity
-            if (useGravity)
-                rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
-        }
-
         private void CheckLocation()
         {
             NavMeshHit hit;

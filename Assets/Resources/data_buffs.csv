@@ -1,0 +1,42 @@
+EntityName / Property Names,max_level,level_properties,tags,,More Notes
+Types,int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+{""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
+If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
+,,,,,
+BEGIN,,,,,
+BleedingBuff,3,"{
+  ""level1"": { 
+    ""buff_damage"": {""type"": ""float"", ""value"": 1},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level2"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 5},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level3"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 0.005},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+    
+  }
+}",,,
+DustBuff,4,"{
+  ""level1"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 20}
+  },
+  ""level2"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 30}
+  },
+  ""level3"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 50}
+  },
+  ""level4"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 100}
+  }
+}",,,

@@ -1,4 +1,47 @@
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
+
+
+CBUFFER_START(UnityPerMaterial)
+	float4 _BaseMap_ST;
+float4 _BaseColor;
+
+float _Cutoff;
+
+float _Smoothness;
+float _GlossMapScale;
+        
+float _Metallic;
+        
+float4 _SpecColor;
+
+float _ShadowEdgePower;
+float _ShadowEdgeSaturation;
+float2 _ShadowRadianceRange;
+
+float _BumpScale;
+float4 _BumpMap_ST;
+        
+float _OcclusionStrength;
+float4 _OcclusionMap_ST;
+        
+float4 _EmissionColor;
+float4 _EmissionMap_ST;
+
+float4 _HighlightColor;
+float _FresnelPower;
+float _FresnelCutOffOut;
+float _FresnelCutOffIn;
+
+float4 _RippleMap0_ST;
+float4 _RippleMap1_ST;
+float _RippleStrength;
+float _SteepnessPower;
+    
+CBUFFER_END
 
 #ifdef UNITY_DOTS_INSTANCING_ENABLED
 UNITY_DOTS_INSTANCING_START(MaterialPropertyMetadata)

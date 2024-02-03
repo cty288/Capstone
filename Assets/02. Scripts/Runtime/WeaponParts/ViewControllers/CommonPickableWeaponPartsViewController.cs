@@ -47,19 +47,22 @@ namespace _02._Scripts.Runtime.WeaponParts.ViewControllers {
 			
 		}
 
-		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity, bool addToModelWhenBuilt = true) {
 			if (weaponPartsModel == null) {
 				weaponPartsModel = this.GetModel<IWeaponPartsModel>();
 			}
 			
 			IEntityBuilder builder =
-				weaponPartsModel.GetWeaponPartsBuilder(entityClassName);
+				weaponPartsModel.GetWeaponPartsBuilder(entityClassName, addToModelWhenBuilt);
 			
 			if (setRarity) {
 				builder?.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity);
 			}
+			
+			
 
-			return builder?.FromConfig().Build() as IResourceEntity;
+			return builder?.SetProperty(new PropertyNameInfo(PropertyName.max_stack), 1).
+				FromConfig().Build() as IResourceEntity;
 		}
 
 		protected override IEntity OnBuildNewEntity() {

@@ -99,6 +99,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 		public void HitResponse(HitData data) {
 			hitObjects.Add(data.Hurtbox.Owner);
+			if(owner is IHitResponder hitResponder) {
+				hitResponder.HitResponse(data);
+			}
 			OnHitResponse(data);
 		}
 
@@ -119,7 +122,14 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			
 			particleSystems.ForEach(p => p.Stop());
 		}
-
+		public HitData OnModifyHitData(HitData data) {
+			if (owner is IHitResponder hitResponder) {
+				return hitResponder.OnModifyHitData(data);
+			}
+			else {
+				return data;
+			}
+		}
 		protected abstract void OnBulletRecycled();
 
 		public IArchitecture GetArchitecture() {

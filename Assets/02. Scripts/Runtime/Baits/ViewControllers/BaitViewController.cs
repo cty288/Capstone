@@ -19,7 +19,7 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 	public interface IBaitViewController : IResourceViewController {
 		IBaitEntity BaitEntity { get; }
 
-		IBaitEntity BuildBait(int rarity, float vigilianceBase, List<TasteType> tastesBase);
+		//IBaitEntity BuildBait(int rarity, float vigilianceBase, List<TasteType> tastesBase);
 	}
 	
 	
@@ -38,9 +38,10 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 			playerModel = this.GetModel<IGamePlayerModel>();
 		}
 
-		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity) {
+		public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
+			bool addToModelWhenBuilt = true) {
 			if (setRarity) {
-				return BuildBait(rarity, vigilianceBase, tastesBase);
+				return BuildBait(rarity, vigilianceBase, tastesBase, addToModelWhenBuilt);
 			}
 
 			return OnBuildNewEntity() as IResourceEntity;
@@ -50,10 +51,10 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 		}
 		
 		
-		public IBaitEntity BuildBait(int rarity, float vigilianceBase, List<TasteType> tastesBase) {
+		public IBaitEntity BuildBait(int rarity, float vigilianceBase, List<TasteType> tastesBase, bool addToModelWhenBuilt = true) {
 			if(baitModel == null)
 				baitModel = this.GetModel<IBaitModel>();
-			BaitBuilder<BaitEntity> builder = baitModel.GetBaitBuilder<BaitEntity>();
+			BaitBuilder<BaitEntity> builder = baitModel.GetBaitBuilder<BaitEntity>(addToModelWhenBuilt);
 			return builder.SetProperty(new PropertyNameInfo(PropertyName.rarity), rarity)
 				.SetBaseTastes(tastesBase)
 				.SetBaseVigiliance(vigilianceBase)
@@ -64,7 +65,11 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 		protected override void OnBindEntityProperty() {
 			
 		}
-		
+
+
+		public override void OnItemAltUse()
+		{
+		}
 
 		public override void OnItemScopePressed() {
 			

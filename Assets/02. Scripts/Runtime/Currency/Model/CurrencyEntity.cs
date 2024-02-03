@@ -71,6 +71,8 @@ namespace _02._Scripts.Runtime.Currency.Model {
 		}
 
 		public override string OnGroundVCPrefabName { get; } = null;
+		public override bool Collectable { get; } = false;
+
 		public override IResourceEntity GetReturnToBaseEntity() {
 			return this;
 		}

@@ -51,6 +51,8 @@ namespace Runtime.DataFramework.Properties
 		spawn_cost,
 		spawn_weight,
 		max_enemies,
+		max_spawn_per_enemy,
+		current_spawn_per_enemy,
 		spawn_cards,
 		//sub_area_levels,
 		sub_area_nav_mesh_modifier,
@@ -62,6 +64,7 @@ namespace Runtime.DataFramework.Properties
 		max_spawn_timer,
 		max_active_time,
 		max_director_enemies,
+		max_elite_enemies,
 		item_drop_collections,
 		air_speed,
 		air_drag,
@@ -72,6 +75,10 @@ namespace Runtime.DataFramework.Properties
 		skill_cooldown,
 		skill_use_cost,
 		skill_upgrade_cost,
-		skill_purchase_cost,
+		purchase_cost,
+		boss_spawn_condition,
+		research_point,
+		exp,
+		build_type,
 	}
 }

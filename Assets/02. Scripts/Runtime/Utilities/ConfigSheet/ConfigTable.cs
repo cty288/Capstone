@@ -143,6 +143,10 @@ namespace Runtime.Utilities.ConfigSheet {
 			return default(T);
 		}
 		
+		public bool HasEntity(string entityName) {
+			return data.ContainsKey(entityName);
+		}
+		
 		private static bool IsLineBreak(string currentString) {
 			return currentString.Length == 1 && (currentString[0] == '\r' || currentString[0] == '\n')
 			       || currentString.Length == 2 && currentString.Equals(Environment.NewLine);
@@ -186,6 +190,12 @@ namespace Runtime.Utilities.ConfigSheet {
 				Debug.Log("Saved to Resources");
 			}
 			
+		}
+		
+		public string[] GetKeys() {
+			string[] keys = new string[data.Keys.Count];
+			data.Keys.CopyTo(keys, 0);
+			return keys;
 		}
 	}
 }
