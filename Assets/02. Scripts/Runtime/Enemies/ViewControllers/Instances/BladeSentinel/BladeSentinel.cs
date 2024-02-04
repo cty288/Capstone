@@ -38,7 +38,45 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
             
     }
 
-    public void SetShieldBlades(List<GameObject> positionList, List<GameObject> shieldList, List<GameObject> bladeList) {
+    public int GetCurrentBladeCount()
+    {
+        return activeBladeStack.Count;
+    }
+    
+    public void RemoveBlades(int count)
+    {
+        if(activeBladeStack.Count == 0) return;
+        
+        for (int i = 0; i < count; i++)
+        {
+            activeBladeStack.Pop().SetActive(false);
+            if (activeShieldStack.Count != 0)
+            {
+                activeShieldStack.Pop().SetActive(false);
+            }
+            
+            if (GetCurrentBladeCount() == originalBladeList.Count) // has full blades
+            {
+                activeShieldStack.Pop().SetActive(false);
+            }
+        }
+    }
+    
+    public void RefreshBladeShieldStack() {
+        activeBladeStack.Clear();
+        foreach (var blade in originalBladeList)
+        {
+            activeBladeStack.Push(blade);
+        }
+        
+        activeShieldStack.Clear();
+        foreach (var shield in originalShieldList)
+        {
+            activeBladeStack.Push(shield);
+        }
+    }
+
+    public void InitializeShieldBlades(List<GameObject> positionList, List<GameObject> shieldList, List<GameObject> bladeList) {
         bladeSpawnPositions = positionList;
         this.originalShieldList = shieldList;
         this.originalBladeList = bladeList;
@@ -99,6 +137,9 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     public List<GameObject> bladeSpawnPositions;
     public List<GameObject> bladeList;
     public List<GameObject> shieldList;
+    
+    public Transform pivot;
+    
     protected override void Awake() {
         base.Awake();
         animator = GetComponentInChildren<Animator>(true);
@@ -109,7 +150,7 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 
     protected override void OnEntityStart() {
         rb.isKinematic = true;
-        BoundEntity.SetShieldBlades(bladeSpawnPositions, shieldList, bladeList);
+        BoundEntity.InitializeShieldBlades(bladeSpawnPositions, shieldList, bladeList);
     }
 
     protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
@@ -120,6 +161,12 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
         
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        pivot.transform.Rotate(new Vector3(0,20,0) * Time.deltaTime);
+    }
+    
     protected override void OnAnimationEvent(string eventName) {
         switch (eventName)
         {

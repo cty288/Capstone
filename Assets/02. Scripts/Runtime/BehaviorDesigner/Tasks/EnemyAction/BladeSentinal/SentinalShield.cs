@@ -50,10 +50,6 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         base.OnStart();
         agent.enabled = false;
         rb.isKinematic = true;
-        // pivot.transform.localPosition = Vector3.zero;
-        // pivot.transform.rotation = Quaternion.identity;
-        // shieldDuration = enemyEntity.GetCustomDataValue<float>("shield", "shieldDuration");
-        // bladeCount = enemyEntity.GetCustomDataValue<int>("shield", "bladeCount");
         swordList = enemyEntity.GetSwordList();
         sheildList = enemyEntity.GetShieldList();
         swordSpawnPositions = enemyEntity.GetPositionList();
@@ -69,15 +65,7 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         Quaternion lookRotation = Quaternion.LookRotation(direction);
 		
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 10f);
-
-        if (rotating)
-        {
-            pivot.transform.Rotate(new Vector3(0,60,0) * Time.deltaTime);
-        }
-        // else
-        // {
-        //     pivot.transform.rotation = Quaternion.identity;
-        // }
+        
         return taskStatus;
     }
 
@@ -87,7 +75,6 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop"),
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         
-        rotating = true;
         for(int i = 0; i < swordList.Count; i++)
         {
             GameObject shield;
@@ -110,7 +97,8 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
             
             await UniTask.WaitForSeconds(0.1f);
         }
-        rotating = false;
+        
+        enemyEntity.RefreshBladeShieldStack();
         
         anim.CrossFadeInFixedTime("Shield_End", 0f);
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),

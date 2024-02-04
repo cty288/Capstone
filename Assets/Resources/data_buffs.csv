@@ -45,7 +45,7 @@ TimeBuff,3,"{
    
   },
   ""level2"": {
-    ""reload"": {""type"": ""float"", ""value"": 11}
+    ""reload"": {""type"": ""float"", ""value"": 0.25}
   },
   ""level3"": {
     ""level_up_time"": {""type"": ""float"", ""value"": 5}
@@ -54,11 +54,11 @@ TimeBuff,3,"{
 MotivatedBuff,4,"{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.05},
-    ""time"": {""type"": ""float"", ""value"": 1}
+    ""time"": {""type"": ""float"", ""value"": 2}
   },
   ""level2"": {
     ""damage"": {""type"": ""float"", ""value"": 0.15},
-    ""time"": {""type"": ""float"", ""value"": 1},
+    ""time"": {""type"": ""float"", ""value"": 2},
     ""shield"": {""type"": ""int"", ""value"": 10}
   },
   ""level3"": {
@@ -70,5 +70,25 @@ MotivatedBuff,4,"{
     ""damage"": {""type"": ""float"", ""value"": 0.4},
     ""time"": {""type"": ""float"", ""value"": 5},
     ""shield"": {""type"": ""int"", ""value"": 30}
+  }
+}",,,
+MineralBuff,3,"{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""int"", ""value"": 1},
+    ""time"": {""type"": ""float"", ""value"": 10}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""int"", ""value"": 1},
+    ""range"": {""type"": ""float"", ""value"": 10},
+    ""time"": {""type"": ""float"", ""value"": 10}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""int"", ""value"": 2},
+    ""range"": {""type"": ""float"", ""value"": 10},
+    ""time"": {""type"": ""float"", ""value"": -1}
+
   }
 }",,,

@@ -35,13 +35,13 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
         agent = GetComponent<NavMeshAgent>();
         animator = gameObject.GetComponentInChildren<Animator>(true);
     }
-
-
+    
     public override void OnStart() {
         base.OnStart();
         player = GetPlayer();
         dashSpeed = enemyEntity.GetCustomDataValue<float>("melee", "dashSpeed");
         meleeWaitTime = enemyEntity.GetCustomDataValue<float>("melee", "meleeWaitTime");
+        enemyEntity.RemoveBlades(1);
         
         dashFinishWaitTimer = 0f;
         mbm.enabled = false;
