@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.Singletons;
 using Priority_Queue;
 using Runtime.DataFramework.Entities;
+using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -24,6 +26,8 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		public bool ContainsBuff(IEntity targetEntity, Type buffType, out IBuff buff);
 
 		public bool ContainsBuff<T>(IEntity targetEntity, out IBuff buff) where T : IBuff;
+		
+		public void SendBuffUpdateEvent(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType);
 	}
 	public class BuffSystemUpdateExecutor : MonoMikroSingleton<BuffSystemUpdateExecutor> {
 		public Action OnUpdate = () => { };
@@ -46,8 +50,15 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		protected override void OnInit() {
 			buffModel = this.GetModel<IBuffModel>();
 			buffQueue = buffModel.BuffModelContainer.BuffQueue;
-			InitBuffModel();
+			
+			InitModelOnStart();
 			BuffSystemUpdateExecutor.Singleton.OnUpdate += OnUpdate;
+		}
+		
+		protected async UniTask InitModelOnStart() {
+			InitBuffModel();
+			await UniTask.WaitForSeconds(0.1f);
+			ForceSendAllBuffUpdateEvents();
 		}
 
 		
@@ -93,6 +104,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			if (ContainsBuff(targetEntity, buff.GetType(), out IBuff existingBuff)) {
 				existingBuff.OnStacked(buff);
 				SendBuffUpdateEvent(targetEntity, existingBuff, BuffUpdateEventType.OnUpdate);
+				buff.OnEnd();
 			}
 			else {
 				if (!buffQueue.ContainsKey(targetEntity.UUID)) {
@@ -106,7 +118,20 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			return true;
 		}
 		
-		protected void SendBuffUpdateEvent(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType) {
+		protected void ForceSendAllBuffUpdateEvents() {
+			foreach (var buffQueue in buffQueue) {
+				IEntity entity = GlobalEntities.GetEntityAndModel(buffQueue.Key).Item1;
+				if (entity == null) {
+					continue;
+				}
+				
+				foreach (var buff in buffQueue.Value) {
+					SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnStart);
+				}
+			}
+		}
+		
+		public void SendBuffUpdateEvent(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType) {
 			targetEntity.OnBuffUpdate(buff, eventType);
 		}
 

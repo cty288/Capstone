@@ -41,6 +41,9 @@ namespace Runtime.Temporary
        
         private ILevelModel levelModel;
         private ICurrencySystem currencySystem;
+        private Action<IDamageable, int> _onDealDamageCallback;
+        private Action<IDamageable> _onKillDamageableCallback;
+
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
@@ -229,6 +232,17 @@ namespace Runtime.Temporary
         }
 
         public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
         public ICanDealDamage ParentDamageDealer => BoundEntity;
     }
 }

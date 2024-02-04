@@ -64,6 +64,9 @@ namespace Tests.Tests_Editor {
         }
         
         internal class TestFriendlyEntity : AbstractCreature, ICanDealDamage {
+            private Action<IDamageable, int> _onDealDamageCallback;
+            private Action<IDamageable> _onKillDamageableCallback;
+
             [field: ES3Serializable]
             public override string EntityName { get; set; } = "TestEnemy2";
 
@@ -116,6 +119,17 @@ namespace Tests.Tests_Editor {
             }
 
             public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+
+            Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+                get => _onDealDamageCallback;
+                set => _onDealDamageCallback = value;
+            }
+
+            Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+                get => _onKillDamageableCallback;
+                set => _onKillDamageableCallback = value;
+            }
+
             public ICanDealDamage ParentDamageDealer { get; }
 
             /*public ICanDealDamageRootEntity RootDamageDealer { get; }

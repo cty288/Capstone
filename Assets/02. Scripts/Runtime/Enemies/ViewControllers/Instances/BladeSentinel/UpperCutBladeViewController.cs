@@ -33,6 +33,17 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 	}
 
 	public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+	Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+		get => _onDealDamageCallback;
+		set => _onDealDamageCallback = value;
+	}
+
+	Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+		get => _onKillDamageableCallback;
+		set => _onKillDamageableCallback = value;
+	}
+
 	public ICanDealDamage ParentDamageDealer => owner;
 
 	/*public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
@@ -51,8 +62,10 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 
 	protected bool inited = false;
 	protected HitData hitData;
-	
-	
+	private Action<IDamageable, int> _onDealDamageCallback;
+	private Action<IDamageable> _onKillDamageableCallback;
+
+
 	protected virtual void Awake() {
 		hitBox = GetComponentInChildren<HitBox>();
 		animator = GetComponentInChildren<Animator>();
@@ -154,7 +167,8 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 		hitBox.StopCheckingHits();
 		entity?.ReleaseRecycleRC();
 		OnModifyDamageCountCallbackList.Clear();
-
+		_onDealDamageCallback = null;
+		_onKillDamageableCallback = null;
 	}
 
 

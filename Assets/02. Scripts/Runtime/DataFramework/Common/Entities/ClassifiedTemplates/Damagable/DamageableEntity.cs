@@ -73,7 +73,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 			int modifiedDamage = damageDealer?.DoModifyDamageCount(damage) ?? damage;
 			
-			int actualDamage = OnTakeDamageAdditionalCheck(damage, damageDealer);
+			int actualDamage = OnTakeDamageAdditionalCheck(modifiedDamage, damageDealer);
 			
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage

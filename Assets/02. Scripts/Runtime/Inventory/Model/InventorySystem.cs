@@ -11,6 +11,7 @@ using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
+using Runtime.Player;
 using Runtime.Utilities;
 
 namespace Runtime.Inventory.Model {
@@ -36,6 +37,7 @@ namespace Runtime.Inventory.Model {
 		private int currentSelectedIndex = 0;
 		private ReferenceCounter lockSwitchCounter = new ReferenceCounter();
 		private ICurrencyModel currencyModel;
+		private IGamePlayerModel playerModel;
 		
 		
 		private Dictionary<ResourceSlot, HotBarCategory> slotToCategories = new Dictionary<ResourceSlot, HotBarCategory>();
@@ -43,6 +45,7 @@ namespace Runtime.Inventory.Model {
 		protected override void OnInit() {
 			base.OnInit();
 
+			playerModel = this.GetModel<IGamePlayerModel>();
 			currencyModel = this.GetModel<ICurrencyModel>();
 			//this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
 			if (model.IsFirstTimeCreated) {
@@ -245,8 +248,10 @@ namespace Runtime.Inventory.Model {
 							Item = item
 						});
 					}
-					item.OnAddedToInventory();
+
+					
 				}
+				item.OnAddedToInventory(playerModel.GetPlayer().UUID);
 				return true;
 			}
 

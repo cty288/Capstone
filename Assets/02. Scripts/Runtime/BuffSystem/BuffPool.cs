@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel;
 using Runtime.DataFramework.Entities;
@@ -16,6 +17,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		static BuffPool() {
 			RegisterGeneralBuff((DustBuff.Allocate));
 			RegisterGeneralBuff(((dealer, owner, level) => BleedingBuff.Allocate(1, level, dealer, owner)));
+			RegisterGeneralBuff((MotivatedBuff.Allocate));
+
+
+			RegisterWeaponBuildBuff(CurrencyType.Time, TimeBuff.Allocate);
 		}
 		
 		public static List<BuffBuilder> FindBuffs(Predicate<IBuff> predicate) {

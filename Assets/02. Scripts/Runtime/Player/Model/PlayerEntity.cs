@@ -45,6 +45,10 @@ namespace Runtime.Player {
 		
 		void AddArmor(float amount);
 		
+		void RegisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback);
+		
+		void UnregisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback);
+		
 		//public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
 	}
 
@@ -91,9 +95,19 @@ namespace Runtime.Player {
 		private IArmorProperty armor;
 		private IArmorRecoverSpeedProperty armorRecoverSpeed;
 		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		private Action<IBuff, BuffUpdateEventType> onBuffUpdateCallback = null;
+
+		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
 		private MovementState movementState;
 		private bool scopedIn;
-		
+		private Action<IDamageable, int> _onDealDamageCallback;
+		private Action<IDamageable> _onKillDamageableCallback;
+
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.PlayerEntityConfigTable;
 		}
@@ -104,6 +118,8 @@ namespace Runtime.Player {
 
 		public override void OnRecycle() {
 			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 		protected override void OnInitModifiers(int rarity) {
             
@@ -242,7 +258,14 @@ namespace Runtime.Player {
 			}
 		}
 
-	
+		public void RegisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback) {
+			onBuffUpdateCallback += callback;
+		}
+
+		public void UnregisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback) {
+			onBuffUpdateCallback -= callback;
+		}
+
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
@@ -274,6 +297,11 @@ namespace Runtime.Player {
 			}
 
 			Debug.Log("Player Deal Damage to " + damageable.EntityName + " with damage " + damage);
+		}
+
+		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
 		}
 
 		public ICanDealDamage ParentDamageDealer => null;
@@ -335,6 +363,7 @@ namespace Runtime.Player {
 				Buff = buff,
 				EventType = eventType
 			});
+			onBuffUpdateCallback?.Invoke(buff, eventType);
 		}
 	}
 }
