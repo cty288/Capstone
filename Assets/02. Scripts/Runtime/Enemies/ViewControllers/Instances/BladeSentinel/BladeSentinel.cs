@@ -1,28 +1,27 @@
-using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
-using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.ViewControllers;
-using Runtime.Enemies;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.ViewControllers.Base;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
 {
     [field: ES3Serializable]
     public override string EntityName { get; set; } = "BladeSentinel";
-        
+    private List<GameObject> bladeSpawnPositions;
+    private List<GameObject> originalShieldList; // tracks original objects
+    private List<GameObject> originalBladeList;
     
+    private Stack<GameObject> activeBladeStack; // tracks active usable objects for attacks
+    private Stack<GameObject> activeShieldStack;
 
     protected override void OnEntityStart(bool isLoadedFromSave) {
             
@@ -35,12 +34,30 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
             
     }
         
-
-        
     protected override void OnEnemyRegisterAdditionalProperties() {
             
     }
 
+    public void SetShieldBlades(List<GameObject> positionList, List<GameObject> shieldList, List<GameObject> bladeList) {
+        bladeSpawnPositions = positionList;
+        this.originalShieldList = shieldList;
+        this.originalBladeList = bladeList;
+        this.activeShieldStack = new Stack<GameObject>(shieldList);
+        this.activeBladeStack = new Stack<GameObject>(bladeList);
+    }
+
+    public List<GameObject> GetPositionList() {
+        return bladeSpawnPositions;
+    }
+    
+    public List<GameObject> GetSwordList() {
+        return originalBladeList;
+    }
+    
+    public List<GameObject> GetShieldList() {
+        return originalShieldList;
+    }
+    
     protected override string OnGetDescription(string defaultLocalizationKey) {
         return Localization.Get(defaultLocalizationKey);
     }
@@ -65,8 +82,6 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 {
     private bool deathAnimationEnd = false;
 
-   // public bool currentAnimationEnd;
-    
     [BindCustomData("ranges", "closeRange")]
     public float CloseRange { get;}
         
@@ -79,8 +94,11 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 
     private MeleeBladeViewController meleeBlade;
     
-    
     [SerializeField] private GameObject model;
+
+    public List<GameObject> bladeSpawnPositions;
+    public List<GameObject> bladeList;
+    public List<GameObject> shieldList;
     protected override void Awake() {
         base.Awake();
         animator = GetComponentInChildren<Animator>(true);
@@ -91,7 +109,7 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 
     protected override void OnEntityStart() {
         rb.isKinematic = true;
-        
+        BoundEntity.SetShieldBlades(bladeSpawnPositions, shieldList, bladeList);
     }
 
     protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {

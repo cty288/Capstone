@@ -48,7 +48,6 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
         agent.enabled = false;
         status = TaskStatus.Running;
         
-        
         TaskExecute();
     }
 
@@ -93,13 +92,9 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
                 continue;
             }
 
-
             NavMeshFindResult result = await (SpawningUtility.FindNavMeshSuitablePosition(gameObject,
                 () => enemyViewController.SpawnSizeCollider,
                 hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), default, 10, 3, attempts));
-
-
-
 
             attempts -= result.UsedAttempts;
 
