@@ -59,6 +59,8 @@ public interface IBuff: IPoolable {
     void OnStart();
     BuffStatus OnTick();
     void OnEnd();
+    
+    bool IsGoodBuff { get; }
 }
 
 public interface ILeveledBuff: IBuff {
@@ -170,7 +172,9 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
             RecycleToCache();
         }
     }
-    
+
+    public abstract bool IsGoodBuff { get; }
+
     public abstract void OnEnds();
     
 

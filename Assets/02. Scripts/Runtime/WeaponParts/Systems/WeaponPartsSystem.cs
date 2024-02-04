@@ -1,4 +1,5 @@
 ﻿using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.ResourceCrafting.Models;
 using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
 using _02._Scripts.Runtime.WeaponParts.Model;
@@ -6,6 +7,7 @@ using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.Architecture;
 using Runtime.GameResources.Model.Base;
 using Runtime.Weapons.Model.Base;
+using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Systems {
 	public interface IWeaponPartsSystem : ISystem {
@@ -62,7 +64,36 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 					buff.RecycleToCache();
 				}
 			}
+
+			if (e.WeaponEntity.CurrentBuildBuffType != null) {
+				buffSystem.RemoveBuff(e.WeaponEntity, e.WeaponEntity.CurrentBuildBuffType);
+			}
+
+			e.WeaponEntity.CurrentBuildBuffType = null;
+
+			CurrencyType newBuildType = e.WeaponEntity.GetMainBuildType();
+			int totalBuildRarity = e.WeaponEntity.GetTotalBuildRarity(newBuildType);
+			int buildBuffRarity = e.WeaponEntity.GetBuildBuffRarityFromBuildTotalRarity(totalBuildRarity);
+			Debug.Log("Weapon Build Update. Build Type: " + newBuildType + " Rarity: " + buildBuffRarity +
+			          " Total Rarity: " + totalBuildRarity + " Weapon: " + e.WeaponEntity.GetDisplayName());
 			
+			
+			if (buildBuffRarity < 0) {
+				return;
+			}
+
+			
+			
+			BuffBuilder buffBuilder = BuffPool.GetWeaponBuildBuff(newBuildType);
+			if (buffBuilder == null) {
+				return;
+			}
+			IBuff buildBuff = buffBuilder(e.WeaponEntity, e.WeaponEntity, buildBuffRarity);
+			if (!buffSystem.AddBuff(e.WeaponEntity, e.WeaponEntity, buildBuff)) {
+				buildBuff.RecycleToCache();
+			}else {
+				e.WeaponEntity.CurrentBuildBuffType = buildBuff.GetType();
+			}
 		}
 	}
 }

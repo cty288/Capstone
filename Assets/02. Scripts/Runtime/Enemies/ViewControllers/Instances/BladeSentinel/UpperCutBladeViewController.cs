@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -23,16 +24,19 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 	[SerializeField] private bool autoDestroyWhenOwnerDestroyed = true;
 	public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Hostile);
 	public void OnKillDamageable(IDamageable damageable) {
-		owner?.OnKillDamageable(damageable);
+		//owner?.OnKillDamageable(damageable);
 	}
 
 	public void OnDealDamage(IDamageable damageable, int damage) {
-		owner?.OnDealDamage(damageable, damage);
+		//owner?.OnDealDamage(damageable, damage);
 		
 	}
 
-	public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
-	public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
+	public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+	public ICanDealDamage ParentDamageDealer => owner;
+
+	/*public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+	public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;*/
 	
 	public int Damage { get; protected set; }
 
@@ -73,7 +77,12 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 		}
 		this.owner = owner;
 		entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
-		owner?.RootDamageDealer?.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
+
+		ICanDealDamage root = (this as ICanDealDamage).GetRootDamageDealer();
+		if (root != null && root is IEntity rootEntity) {
+			rootEntity.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
+		}
+		
 		entity?.RetainRecycleRC();
 		inited = true;
 
@@ -144,6 +153,7 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 		inited = false;
 		hitBox.StopCheckingHits();
 		entity?.ReleaseRecycleRC();
+		OnModifyDamageCountCallbackList.Clear();
 
 	}
 

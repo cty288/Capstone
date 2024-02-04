@@ -26,16 +26,18 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	public abstract class AbstractBulletViewController : PoolableGameObject, IHitResponder, IController, IBulletViewController, ICanDealDamage {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 		public void OnKillDamageable(IDamageable damageable) {
-			owner?.OnKillDamageable(damageable);
+			//owner?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			owner?.OnDealDamage(damageable, damage);
-			
+			//owner?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+		public ICanDealDamage ParentDamageDealer => owner;
+
+		//public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+	//	public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
 
 		protected HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
@@ -49,6 +51,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected HitBox hitBox = null;
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
+		
 		protected IEntity entity = null;
 		protected float maxRange;
 		protected Vector3 origin;
@@ -99,7 +102,12 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			this.maxRange = maxRange;
 			origin = transform.position;
 			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
-			owner?.RootDamageDealer?.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
+			ICanDealDamage rootDamageDealer = (this as ICanDealDamage).GetRootDamageDealer();
+			if (rootDamageDealer != null && rootDamageDealer is IEntity rootEntity) {
+				rootEntity.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
+			}
+			
+			
 			entity?.RetainRecycleRC();
 			inited = true;
 			this.ownerTriggerHitResponse = ownerTriggerHitResponse;
@@ -237,6 +245,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			//this.owner = null;
 			entity?.ReleaseRecycleRC();
 			DisableAllTrailRenderers();
+			OnModifyDamageCountCallbackList.Clear();
 			
 		}
 		

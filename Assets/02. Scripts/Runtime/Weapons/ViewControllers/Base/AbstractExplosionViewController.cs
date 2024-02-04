@@ -31,15 +31,18 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		
 		
 		public void OnKillDamageable(IDamageable damageable) {
-			owner?.OnKillDamageable(damageable);
+			//owner?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			owner?.OnDealDamage(damageable, damage);
+			//owner?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+		public ICanDealDamage ParentDamageDealer => owner;
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;*/
 
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
@@ -121,6 +124,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			entity?.ReleaseRecycleRC();
 			
 			particleSystems.ForEach(p => p.Stop());
+			OnModifyDamageCountCallbackList.Clear();
 		}
 		public HitData OnModifyHitData(HitData data) {
 			if (owner is IHitResponder hitResponder) {

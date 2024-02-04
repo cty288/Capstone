@@ -19,7 +19,7 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		private static Dictionary<string, Dictionary<int, Dictionary<string, dynamic>>> _globalBuffLevelProperties =
 			new Dictionary<string, Dictionary<int, Dictionary<string, dynamic>>>();
 
-		private Dictionary<int, Dictionary<string, dynamic>> _buffLevelProperties;
+		//private Dictionary<int, Dictionary<string, dynamic>> _buffLevelProperties;
 
 
 		static ConfigurableBuff() {
@@ -27,7 +27,7 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		}
 		
 		public ConfigurableBuff() {
-			_buffLevelProperties = _globalBuffLevelProperties[GetType().Name];
+			//_buffLevelProperties = _globalBuffLevelProperties[GetType().Name];
 		}
 		
 		protected T GetBuffPropertyAtLevel<T>(string propertyName, int level) {
@@ -40,9 +40,28 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 
 		public static T GetBuffPropertyAtLevel<T>(string buffName, string propertyName, int level) {
 			if (_globalBuffLevelProperties.ContainsKey(buffName)) {
-				if (_globalBuffLevelProperties[buffName].ContainsKey(level)) {
-					if (_globalBuffLevelProperties[buffName][level].ContainsKey(propertyName)) {
-						return (T) _globalBuffLevelProperties[buffName][level][propertyName];
+				Dictionary<int, Dictionary<string, dynamic>> buffLevelProperties = _globalBuffLevelProperties[buffName];
+				
+				if (buffLevelProperties.ContainsKey(level)) {
+					if (buffLevelProperties[level].ContainsKey(propertyName)) {
+						return (T) buffLevelProperties[level][propertyName];
+					}
+				}
+				
+				
+				//find the cloest level that is <= level that has the property
+				int closestLevel = 0;
+				foreach (int l in buffLevelProperties.Keys) {
+					if (l <= level && l > closestLevel) {
+						if (buffLevelProperties[l].ContainsKey(propertyName)) {
+							closestLevel = l;
+						}
+					}
+				}
+				
+				if (buffLevelProperties.ContainsKey(closestLevel)) {
+					if (buffLevelProperties[closestLevel].ContainsKey(propertyName)) {
+						return (T) buffLevelProperties[closestLevel][propertyName];
 					}
 				}
 			}
@@ -109,7 +128,7 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		
 		protected abstract void OnBuffStacked(TBuff buff);
 
-		public static TBuff Allocate(IEntity buffDealer, IEntity entity, int level) {
+		public static  TBuff Allocate(IEntity buffDealer, IEntity entity, int level) {
 			TBuff buff = SafeObjectPool<TBuff>.Singleton.Allocate();
 			buff.OnInitialize(buffDealer, entity);
 			buff.Level = level;

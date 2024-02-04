@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
@@ -32,8 +33,11 @@ namespace Runtime.Enemies
             
         }
 
-        public ICanDealDamageRootEntity RootDamageDealer { get; }
-        public ICanDealDamageRootViewController RootViewController { get; }
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+        public ICanDealDamage ParentDamageDealer => null;
+
+        /*ublic ICanDealDamageRootEntity RootDamageDealer { get; }
+                public ICanDealDamageRootViewController RootViewController { get; }p*/
 
         public int Damage => m_damage;
         public List<GameObject> hitObjects= new List<GameObject>();

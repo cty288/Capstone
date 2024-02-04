@@ -21,7 +21,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.ViewControllers.Base {
 	[RequireComponent(typeof(AnimationSMBManager))]
-	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder, ICanDealDamageViewController, ICanDealDamageRootViewController
+	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
 		
@@ -112,6 +112,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 				OnDestroyHealthBar(currentHealthBar);
 			}
 			currentHealthBar = null;
+			OnModifyDamageCountCallbackList.Clear();
 		}
 
 		protected override int GetSpawnedCombatCurrencyAmount() {
@@ -141,19 +142,24 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 
 		public void OnKillDamageable(IDamageable damageable) {
-			BoundEntity?.OnKillDamageable(damageable);
+			//BoundEntity?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			BoundEntity?.OnDealDamage(damageable, damage);
+			//BoundEntity?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => BoundEntity?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => this;
-
-		public ICanDealDamage CanDealDamageEntity => BoundEntity;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+		public ICanDealDamage ParentDamageDealer => BoundEntity;
 		public Transform GetTransform() {
 			return transform;
 		}
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => BoundEntity?.RootDamageDealer;
+		
+		
+		
+		public ICanDealDamageRootViewController RootViewController => this;*/
+		
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Framework;
@@ -14,8 +15,8 @@ public class MeleeBladeViewController : AbstractMikroController<MainGame>, IHitR
 	[SerializeField] private float meleeForce = 40f;
 	public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Hostile);
 	
-	public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
-	public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
+	/*public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+	public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;*/
 	
 	public int Damage { get; protected set; }
 	
@@ -65,14 +66,17 @@ public class MeleeBladeViewController : AbstractMikroController<MainGame>, IHitR
 	}
 	
 	public void OnKillDamageable(IDamageable damageable) {
-		owner?.OnKillDamageable(damageable);
+		//owner?.OnKillDamageable(damageable);
 	}
 
 	public void OnDealDamage(IDamageable damageable, int damage) {
-		owner?.OnDealDamage(damageable, damage);
+		//owner?.OnDealDamage(damageable, damage);
 		
 	}
-	
+
+	public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+	public ICanDealDamage ParentDamageDealer => owner;
+
 	public bool CheckHit(HitData data) {
 		if (!inited) {
 			return false;

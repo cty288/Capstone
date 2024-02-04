@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
@@ -16,7 +18,7 @@ using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Player {
-	public interface IPlayerEntity : ICreature, IEntity, ICanDealDamageRootEntity {
+	public interface IPlayerEntity : ICreature, IEntity {
 		IAccelerationForce GetAccelerationForce();
 		IWalkSpeed GetWalkSpeed();
 		ISprintSpeed GetSprintSpeed();
@@ -43,7 +45,7 @@ namespace Runtime.Player {
 		
 		void AddArmor(float amount);
 		
-		public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
+		//public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
 	}
 
 	public struct OnPlayerKillEnemy {
@@ -88,7 +90,7 @@ namespace Runtime.Player {
 		private IAirSpeedProperty airSpeed;
 		private IArmorProperty armor;
 		private IArmorRecoverSpeedProperty armorRecoverSpeed;
-
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 		private MovementState movementState;
 		private bool scopedIn;
 		
@@ -101,7 +103,7 @@ namespace Runtime.Player {
 		}
 
 		public override void OnRecycle() {
-			
+			OnModifyDamageCountCallbackList.Clear();
 		}
 		protected override void OnInitModifiers(int rarity) {
             
@@ -240,9 +242,7 @@ namespace Runtime.Player {
 			}
 		}
 
-		public void SetRootViewController(ICanDealDamageRootViewController rootViewController) {
-			RootViewController = rootViewController;
-		}
+	
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
@@ -276,6 +276,8 @@ namespace Runtime.Player {
 			Debug.Log("Player Deal Damage to " + damageable.EntityName + " with damage " + damage);
 		}
 
+		public ICanDealDamage ParentDamageDealer => null;
+
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {
 			base.OnTakeDamage(damage, damageDealer, hitData);
 			if (GetCurrentHealth() <= 0) {
@@ -288,9 +290,9 @@ namespace Runtime.Player {
 			//Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => this;
+		/*public ICanDealDamageRootEntity RootDamageDealer => this;
 
-		public ICanDealDamageRootViewController RootViewController { get; protected set; } = null;
+		public ICanDealDamageRootViewController RootViewController { get; protected set; } = null;*/
 
 		protected override int DoTakeDamage(int actualDamage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData, 
 			bool nonlethal = false)  {

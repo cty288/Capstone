@@ -6,7 +6,9 @@ using _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancem
 using Framework;
 using MikroFramework.Architecture;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
@@ -54,14 +56,14 @@ public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazin
 
 		private void OnWeaponDealDamage(IDamageable target, int damage) {
 			if (target is IEnemyEntity) {
-				ICanDealDamageRootEntity rootEntity = weaponEntity.RootDamageDealer;
+				IEntity rootEntity = weaponEntity.GetRootDamageDealer() as IEntity;
 				if (rootEntity == null) {
 					return;
 				}
 
 				if (rootEntity is IDamageable damageable) {
 					if (Random.value < weaponPartsEntity.Chance) {
-						damageable.Heal(weaponPartsEntity.Health, rootEntity);
+						damageable.Heal(weaponPartsEntity.Health, rootEntity as IBelongToFaction);
 					}
 				}
 			}

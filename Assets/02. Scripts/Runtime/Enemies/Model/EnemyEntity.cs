@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.Levels;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
@@ -17,7 +19,7 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.Model {
-	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage, ICanDealDamageRootEntity {
+	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
 		
@@ -128,6 +130,7 @@ namespace Runtime.Enemies.Model {
 
 		public override void OnDoRecycle() {
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
+			OnModifyDamageCountCallbackList.Clear();
 		}
 
 
@@ -138,10 +141,12 @@ namespace Runtime.Enemies.Model {
 		public void OnDealDamage(IDamageable damageable, int damage) {
 			
 		}
-		
-		
 
-		public ICanDealDamageRootEntity RootDamageDealer => this;
-		public ICanDealDamageRootViewController RootViewController => null;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+		public ICanDealDamage ParentDamageDealer { get; } = null;
+
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => this;
+		public ICanDealDamageRootViewController RootViewController => null;*/
 	}
 }

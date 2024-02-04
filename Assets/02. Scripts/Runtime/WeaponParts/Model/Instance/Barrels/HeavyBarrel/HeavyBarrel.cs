@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using Framework;
 using MikroFramework.Architecture;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
@@ -74,8 +75,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 				return;
 			}
 
-			buffSystem.AddBuff(target, weaponEntity.RootDamageDealer, BleedingBuff.Allocate(
-				1, weaponPartsEntity.BuffLevel, weaponEntity.RootDamageDealer, target));
+			IEntity rootEntity = weaponEntity.GetRootDamageDealer() as IEntity;
+			buffSystem.AddBuff(target,rootEntity, BleedingBuff.Allocate(
+				1, weaponPartsEntity.BuffLevel, rootEntity, target));
 		}
 
 		public override void OnStart() {

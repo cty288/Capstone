@@ -54,7 +54,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.ShortBarrel {
 				return data;
 			}
 
-			Transform attacker = data.Attacker?.RootViewController?.GetTransform();
+
+			Transform attacker = data.Attacker?.GetRootTransform();
 			Transform target = data.Hurtbox?.Transform;
 			if (attacker == null || target == null) {
 				return data;

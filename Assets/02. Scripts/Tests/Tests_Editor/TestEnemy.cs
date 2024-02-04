@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Baits.Model.Property;
 using _02._Scripts.Runtime.Levels;
@@ -114,8 +115,11 @@ namespace Tests.Tests_Editor {
                 
             }
 
-            public ICanDealDamageRootEntity RootDamageDealer { get; }
-            public ICanDealDamageRootViewController RootViewController { get; }
+            public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+            public ICanDealDamage ParentDamageDealer { get; }
+
+            /*public ICanDealDamageRootEntity RootDamageDealer { get; }
+            public ICanDealDamageRootViewController RootViewController { get; }*/
         }
     
         //===============================Start writing your tests here===============================

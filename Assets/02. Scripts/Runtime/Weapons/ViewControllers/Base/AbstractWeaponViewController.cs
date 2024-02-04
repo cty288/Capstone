@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
@@ -46,7 +47,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         public Vector3 adsCameraRotation;
     }
     
-    public interface IWeaponViewController : IResourceViewController, ICanDealDamageViewController, IPickableResourceViewController, IInHandResourceViewController {
+    public interface IWeaponViewController : IResourceViewController,  IPickableResourceViewController, IInHandResourceViewController {
         IWeaponEntity WeaponEntity { get; }
     }
     
@@ -90,11 +91,11 @@ namespace Runtime.Weapons.ViewControllers.Base
         //scoping
         [SerializeField] protected CameraPlacementData cameraPlacementData;
 
-        protected ICanDealDamageViewController ownerVc;
+        //protected ICanDealDamageViewController ownerVc;
         public IWeaponEntity WeaponEntity => BoundEntity;
         public ICanDealDamage CanDealDamageEntity => BoundEntity;
-        public ICanDealDamageRootEntity RootDamageDealer => ownerVc?.CanDealDamageEntity?.RootDamageDealer;
-        public ICanDealDamageRootViewController RootViewController => ownerVc?.CanDealDamageEntity?.RootViewController;
+        /*public ICanDealDamageRootEntity RootDamageDealer => ownerVc?.CanDealDamageEntity?.RootDamageDealer;
+        public ICanDealDamageRootViewController RootViewController => ownerVc?.CanDealDamageEntity?.RootViewController;*/
 
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
@@ -139,7 +140,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.OnEntityStart();
             _isScopedIn = false;
             cameraShaker = FindObjectOfType<CameraShaker>();
-           
         }
 
        
@@ -222,14 +222,14 @@ namespace Runtime.Weapons.ViewControllers.Base
         #region Holding
         public override void OnStartHold(GameObject ownerGameObject) {
             base.OnStartHold(ownerGameObject);
-            if(ownerGameObject.TryGetComponent<ICanDealDamageViewController>(out var damageDealer)) {
-                BoundEntity.SetRootDamageDealer(damageDealer.CanDealDamageEntity?.RootDamageDealer);
-                ownerVc = damageDealer;
+            if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
+                BoundEntity.SetOwner(damageDealer);
             }
         }
 
         public override void OnStopHold() {
             BoundEntity.CurrentFaction.Value = Faction.Neutral;
+            BoundEntity.SetOwner(null);
             base.OnStopHold();
             ChangeScopeStatus(false);
         }
@@ -355,19 +355,22 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         #region Damage and Hit Response
         public void OnKillDamageable(IDamageable damageable) {
-            BoundEntity.OnKillDamageable(damageable);
-            ownerVc?.CanDealDamageEntity?.OnKillDamageable(damageable);
+            //BoundEntity.OnKillDamageable(damageable);
+            //ownerVc?.CanDealDamageEntity?.OnKillDamageable(damageable);
             crossHairViewController?.OnKill(damageable);
         }
 
         public void OnDealDamage(IDamageable damageable, int damage) {
-            BoundEntity.OnDealDamage(damageable, damage);
-            ownerVc?.CanDealDamageEntity?.OnDealDamage(damageable, damage);
+            //BoundEntity.OnDealDamage(damageable, damage);
+            //ownerVc?.CanDealDamageEntity?.OnDealDamage(damageable, damage);
             crossHairViewController?.OnHit(damageable, damage);
-            Debug.Log(
-                $"Weapon root owner {RootDamageDealer.RootDamageDealer.EntityName} deal damage to {damageable.EntityName} with damage {damage}");
+            /*Debug.Log(
+                $"Weapon root owner {ownerVc?.CanDealDamageEntity} deal damage to {damageable.EntityName} with damage {damage}");*/
         }
-        
+
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+        public ICanDealDamage ParentDamageDealer => BoundEntity;
+
         public virtual bool CheckHit(HitData data) {
             return data.Hurtbox.Owner != gameObject;
         }
@@ -392,6 +395,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);
+            OnModifyDamageCountCallbackList.Clear();
         }
         #endregion
     }

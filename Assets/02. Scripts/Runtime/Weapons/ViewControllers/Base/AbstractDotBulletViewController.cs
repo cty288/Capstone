@@ -24,17 +24,20 @@ namespace Runtime.Weapons.ViewControllers.Base
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 		public void OnKillDamageable(IDamageable damageable)
 		{
-			owner?.OnKillDamageable(damageable);
+			//owner?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage)
 		{
-			owner?.OnDealDamage(damageable, damage);
+			//owner?.OnDealDamage(damageable, damage);
 
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+		public ICanDealDamage ParentDamageDealer => owner;
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;*/
 
 		protected HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
@@ -108,7 +111,12 @@ namespace Runtime.Weapons.ViewControllers.Base
 			this.maxRange = maxRange;
 			origin = transform.position;
 			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
-			owner?.RootDamageDealer?.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
+
+			ICanDealDamage ownerDamageDealer = owner?.ParentDamageDealer;
+			if(ownerDamageDealer != null && ownerDamageDealer is IEntity rootEntity) {
+				rootEntity.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
+			}
+			
 			entity?.RetainRecycleRC();
 			inited = true;
 			EnableAllTrailRenderers();
@@ -242,6 +250,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 			//this.owner = null;
 			entity?.ReleaseRecycleRC();
 			DisableAllTrailRenderers();
+			OnModifyDamageCountCallbackList.Clear();
 
 		}
 

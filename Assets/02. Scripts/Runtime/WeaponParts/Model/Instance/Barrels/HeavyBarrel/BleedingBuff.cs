@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 	public class BleedingBuff : ConfigurableBuff<BleedingBuff> {
+		public override bool IsGoodBuff => false;
 		
 		[field: ES3Serializable]
 		public override float MaxDuration { get; protected set; }

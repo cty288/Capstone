@@ -13,6 +13,8 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 		public override float TickInterval { get; protected set; } = 1;
 		public override int Priority { get; } = 1;
 		
+		public override bool IsGoodBuff => true;
+		
 		[ES3Serializable]
 		private int healAmountPerTick;
 		

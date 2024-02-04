@@ -2,7 +2,9 @@
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Builders;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
@@ -12,7 +14,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 	
-	public interface ISkillViewController : IResourceViewController, ICanDealDamageViewController {
+	public interface ISkillViewController : IResourceViewController {
 		ISkillEntity SkillEntity { get; }
 	}
 	
@@ -68,12 +70,18 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 
 		public override void OnStartHold(GameObject ownerGameObject) {
 			base.OnStartHold(ownerGameObject);
-			if(ownerGameObject.TryGetComponent<ICanDealDamageViewController>(out var damageDealer)) {
-				BoundEntity.SetOwner(damageDealer.CanDealDamageEntity);
+			if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
+				BoundEntity.SetOwner(damageDealer);
 			}
 		}
 
+		public override void OnStopHold() {
+			base.OnStopHold();
+			//BoundEntity.SetOwner(null);
+		}
+
 		public ISkillEntity SkillEntity => BoundEntity;
-		public ICanDealDamage CanDealDamageEntity => BoundEntity;
+
+		
 	}
 }

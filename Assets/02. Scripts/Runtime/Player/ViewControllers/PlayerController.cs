@@ -25,7 +25,7 @@ using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController, ICanDealDamageRootViewController {
+    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamage, ICanDealDamageViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
         private TriggerCheck triggerCheck;
@@ -166,7 +166,6 @@ namespace Runtime.Temporary
         protected override void OnEntityStart() {
             Debug.Log("PlayerController.OnEntityStart");
             players.Add(this);
-            BoundEntity.SetRootViewController(this);
         }
 
         protected override void OnBindEntityProperty() {
@@ -216,9 +215,20 @@ namespace Runtime.Temporary
         }
 
         public ICanDealDamage CanDealDamageEntity => BoundEntity;
-        public ICanDealDamageRootViewController RootViewController => this;
+      
         public Transform GetTransform() {
             return transform;
         }
+
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
+
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+        public ICanDealDamage ParentDamageDealer => BoundEntity;
     }
 }

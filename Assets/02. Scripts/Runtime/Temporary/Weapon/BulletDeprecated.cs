@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -62,7 +64,12 @@ namespace Runtime.Temporary.Weapon
             
         }
 
-        public ICanDealDamageRootEntity RootDamageDealer { get; }
-        public ICanDealDamageRootViewController RootViewController { get; }
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+        public ICanDealDamage ParentDamageDealer { get; }
+
+      
+
+        /*public ICanDealDamageRootEntity RootDamageDealer { get; }
+        public ICanDealDamageRootViewController RootViewController { get; }*/
     }
 }

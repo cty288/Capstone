@@ -136,6 +136,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public override void OnRecycle() {
 			CoroutineRunner.Singleton.UnregisterUpdate(OnUpdate);
 			owner = null;
+			OnModifyDamageCountCallbackList.Clear();
 		}
 
 		public override string OnGroundVCPrefabName { get; } = null;
@@ -311,15 +312,18 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		[field: ES3Serializable]
 		public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
 		public void OnKillDamageable(IDamageable damageable) {
-			owner?.OnKillDamageable(damageable);
+			//owner?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			owner?.OnDealDamage(damageable, damage);
+			//owner?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer=> owner?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => null;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+		public ICanDealDamage ParentDamageDealer => owner;
+
+		/*public ICanDealDamageRootEntity RootDamageDealer=> owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => null;*/
 		
 		public override IResourceEntity GetReturnToBaseEntity() {
 			return ResourceVCFactory.Singleton.SpawnNewResourceEntity(EntityName, true, 1);
