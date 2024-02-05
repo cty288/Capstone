@@ -34,11 +34,6 @@ public class MeleeBladeViewController : AbstractMikroController<MainGame>, IHitR
 		collider = GetComponent<Collider>();
 	}
 
-	private void Update()
-	{
-		
-	}
-
 	public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner) {
 		CurrentFaction.Value = faction;
 		Damage = damage;

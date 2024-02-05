@@ -29,7 +29,7 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
     // private int bladeCount;
     private List<GameObject> swordList;
     private List<GameObject> swordSpawnPositions;
-    private List<GameObject> sheildList;
+    private List<SentinelShieldViewController> sheildList;
     
     
     public SharedGameObject swordPrefab;
@@ -55,7 +55,7 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         swordSpawnPositions = enemyEntity.GetPositionList();
         
         taskStatus = TaskStatus.Running;
-        CreateShield();
+        SkillExecute();
     }
 
     public override TaskStatus OnUpdate() {
@@ -69,7 +69,7 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         return taskStatus;
     }
 
-    public async UniTask CreateShield() {
+    public async UniTask SkillExecute() {
 
         anim.CrossFadeInFixedTime("Shield_Start", 0.2f);
         await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop"),
@@ -77,11 +77,12 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         
         for(int i = 0; i < swordList.Count; i++)
         {
-            GameObject shield;
+            SentinelShieldViewController shield;
             if (i > 0) // initialize shields
             {
                 shield = sheildList[i - 1];
-                shield.SetActive(true);
+                shield.gameObject.SetActive(true);
+                shield.Init(enemyEntity);
             }
             
             GameObject blade = swordList[i]; // initialize blades
@@ -92,7 +93,8 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
             if(i == swordList.Count - 1) // initialize last shield
             {
                 shield = sheildList[i];
-                shield.SetActive(true);
+                shield.gameObject.SetActive(true);
+                shield.Init(enemyEntity);
             }
             
             await UniTask.WaitForSeconds(0.1f);

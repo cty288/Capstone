@@ -11,9 +11,9 @@ using Runtime.Spawning;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
-    [SerializeField] private GameObject meleeBlade;
-    
+public class SentinalDualMeleeAttack : EnemyAction<BladeSentinelEntity> {
+    [SerializeField] private GameObject meleeBlade1;
+    [SerializeField] private GameObject meleeBlade2;
     
     private GameObject model;
     private MoveBakeMesh mbm;
@@ -70,7 +70,8 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
 
         //distance : 2;
         model.SetActive(true);
-        meleeBlade.SetActive(true);
+        meleeBlade1.SetActive(true);
+        meleeBlade2.SetActive(true);
         
         Vector3 teleportLocation = Vector3.zero;
         animator.CrossFadeInFixedTime("Melee_Prepare", 0.1f);
@@ -148,7 +149,8 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
 
     public override void OnEnd() {
         base.OnEnd();
-        meleeBlade.SetActive(false);
+        meleeBlade1.SetActive(false);
+        meleeBlade2.SetActive(false);
         agent.enabled = true;
     }
 }
