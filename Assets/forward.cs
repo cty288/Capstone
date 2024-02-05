@@ -14,5 +14,6 @@ public class forward : MonoBehaviour
     void Update()
     {
         this.gameObject.transform.Translate(this.transform.forward * 5 * Time.deltaTime);
+        this.gameObject.transform.Translate(this.transform.up * 5 * Time.deltaTime);
     }
 }

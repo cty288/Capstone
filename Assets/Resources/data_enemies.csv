@@ -448,8 +448,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     },
     ""bladeCount"": {
       ""type"": ""int"",
-      ""value"": 5,
-      ""useDefaultModifier"": true
+      ""value"": 5
     },
     ""bladeDamage"": {
       ""type"": ""int"",
@@ -534,11 +533,113 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     },
     ""bladeCount"": {
       ""type"": ""int"",
-      ""value"": 8,
-      ""useDefaultModifier"": true
+      ""value"": 8
     }
   }
 }",,,
 WormBoss,"{""maxHealth"":2000,
-""currentHealth"":2000}",30,,,,,,,
+""currentHealth"":2000}",30,"{
+  ""1"": {
+    ""TotalDropCountRange"": {
+      ""x"": 4,
+      ""y"": 6
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""Combat1"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 6,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""Combat2"",
+        ""batchCountRange"": {
+          ""x"": 0,
+          ""y"": 1
+        },
+        ""dropWeight"": 3,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
+      },
+      {
+        ""prefabName"": ""TheSanctuary"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 1,
+        ""required"": true,
+        ""setRarity"": true,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
+      }
+    ]
+  },
+  ""2"": {
+    ""TotalDropCountRange"": {
+      ""x"": 5,
+      ""y"": 7
+    },
+    
+    ""ItemDropInfos"": [
+      {
+        ""prefabName"": ""Combat1"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 5,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""Combat2"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 3,
+        ""setRarity"": false,
+        ""rarityRange"": {
+          ""x"": 0,
+          ""y"": 0
+        }
+      },
+      {
+        ""prefabName"": ""TheSanctuary"",
+        ""batchCountRange"": {
+          ""x"": 1,
+          ""y"": 1
+        },
+        ""dropWeight"": 2,
+        ""setRarity"": true,
+        ""rarityRange"": {
+          ""x"": 1,
+          ""y"": 1
+        }
+      }
+    ]
+  }
+}","{
+  ""Combat"": {""x"": 0.5, ""y"": 1},
+  ""Time"": {""x"": 0, ""y"": 0.2},
+  ""Plant"": {""x"": 0, ""y"": 1},
+  ""Mineral"": {""x"": 0, ""y"": 1}
+}",456,,,,
 WormBossSegment,,,,,,,,,
