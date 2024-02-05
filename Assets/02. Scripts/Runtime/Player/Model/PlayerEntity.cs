@@ -45,9 +45,7 @@ namespace Runtime.Player {
 		
 		void AddArmor(float amount);
 		
-		void RegisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback);
-		
-		void UnregisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback);
+	
 		
 		//public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
 	}
@@ -96,7 +94,7 @@ namespace Runtime.Player {
 		private IArmorRecoverSpeedProperty armorRecoverSpeed;
 		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-		private Action<IBuff, BuffUpdateEventType> onBuffUpdateCallback = null;
+		
 
 		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
 			get => _onDealDamageCallback;
@@ -258,13 +256,7 @@ namespace Runtime.Player {
 			}
 		}
 
-		public void RegisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback) {
-			onBuffUpdateCallback += callback;
-		}
-
-		public void UnregisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback) {
-			onBuffUpdateCallback -= callback;
-		}
+		
 
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
@@ -363,7 +355,7 @@ namespace Runtime.Player {
 				Buff = buff,
 				EventType = eventType
 			});
-			onBuffUpdateCallback?.Invoke(buff, eventType);
+			
 		}
 	}
 }

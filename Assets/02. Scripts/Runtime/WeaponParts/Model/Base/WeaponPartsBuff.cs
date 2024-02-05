@@ -34,8 +34,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		}
 
 
-		public override void OnStacked(TBuffType buff) {
-			
+		public override bool OnStacked(TBuffType buff) {
+			return true;
 		}
 
 		public override void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false) {

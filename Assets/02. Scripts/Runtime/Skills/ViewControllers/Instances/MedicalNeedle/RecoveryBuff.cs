@@ -40,11 +40,12 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 		
 		
 		
-		public override void OnStacked(RecoveryBuff buff) {
+		public override bool OnStacked(RecoveryBuff buff) {
 			this.MaxDuration = Mathf.Max(this.MaxDuration, buff.MaxDuration);
 			this.healAmountPerTick = Mathf.Max(this.healAmountPerTick, buff.healAmountPerTick);
 			this.RemainingDuration = this.MaxDuration;
 			this.TickInterval = Mathf.Min(this.TickInterval, buff.TickInterval);
+			return true;
 		}
 
 		public override void OnStart() {

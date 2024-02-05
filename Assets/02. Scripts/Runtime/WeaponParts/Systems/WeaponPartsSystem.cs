@@ -46,36 +46,19 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 				}
 			}
 		}
-		
 
-		private void OnWeaponPartsUpdate(OnWeaponPartsUpdate e) {
-			IWeaponPartsEntity previousWeaponParts =
-				GlobalGameResourceEntities.GetAnyResource(e.PreviousTopPartsUUID) as IWeaponPartsEntity;
-            
-			if(previousWeaponParts != null) {
-				buffSystem.RemoveBuff(e.WeaponEntity, previousWeaponParts.BuffType);
-			}
-            
-			IWeaponPartsEntity newWeaponParts =
-				GlobalGameResourceEntities.GetAnyResource(e.CurrentTopPartsUUID) as IWeaponPartsEntity;
-			if(newWeaponParts != null) {
-				IBuff buff = newWeaponParts.OnGetBuff(e.WeaponEntity);
-				if (!buffSystem.AddBuff(e.WeaponEntity, newWeaponParts, buff)) {
-					buff.RecycleToCache();
-				}
+		private void UpdateBuildBuff(IWeaponEntity weaponEntity) {
+			if (weaponEntity.CurrentBuildBuffType != null) {
+				buffSystem.RemoveBuff(weaponEntity, weaponEntity.CurrentBuildBuffType);
 			}
 
-			if (e.WeaponEntity.CurrentBuildBuffType != null) {
-				buffSystem.RemoveBuff(e.WeaponEntity, e.WeaponEntity.CurrentBuildBuffType);
-			}
+			weaponEntity.CurrentBuildBuffType = null;
 
-			e.WeaponEntity.CurrentBuildBuffType = null;
-
-			CurrencyType newBuildType = e.WeaponEntity.GetMainBuildType();
-			int totalBuildRarity = e.WeaponEntity.GetTotalBuildRarity(newBuildType);
-			int buildBuffRarity = e.WeaponEntity.GetBuildBuffRarityFromBuildTotalRarity(totalBuildRarity);
+			CurrencyType newBuildType = weaponEntity.GetMainBuildType();
+			int totalBuildRarity =weaponEntity.GetTotalBuildRarity(newBuildType);
+			int buildBuffRarity = weaponEntity.GetBuildBuffRarityFromBuildTotalRarity(totalBuildRarity);
 			Debug.Log("Weapon Build Update. Build Type: " + newBuildType + " Rarity: " + buildBuffRarity +
-			          " Total Rarity: " + totalBuildRarity + " Weapon: " + e.WeaponEntity.GetDisplayName());
+			          " Total Rarity: " + totalBuildRarity + " Weapon: " + weaponEntity.GetDisplayName());
 			
 			
 			if (buildBuffRarity < 0) {
@@ -88,12 +71,36 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			if (buffBuilder == null) {
 				return;
 			}
-			IBuff buildBuff = buffBuilder(e.WeaponEntity, e.WeaponEntity, buildBuffRarity);
-			if (!buffSystem.AddBuff(e.WeaponEntity, e.WeaponEntity, buildBuff)) {
+			IBuff buildBuff = buffBuilder(weaponEntity, weaponEntity, buildBuffRarity);
+			if (!buffSystem.AddBuff(weaponEntity, weaponEntity, buildBuff)) {
 				buildBuff.RecycleToCache();
 			}else {
-				e.WeaponEntity.CurrentBuildBuffType = buildBuff.GetType();
+				weaponEntity.CurrentBuildBuffType = buildBuff.GetType();
 			}
+		}
+
+		private void OnWeaponPartsUpdate(OnWeaponPartsUpdate e) {
+			IWeaponPartsEntity previousWeaponParts =
+				GlobalGameResourceEntities.GetAnyResource(e.PreviousTopPartsUUID) as IWeaponPartsEntity;
+            
+			if(previousWeaponParts != null) {
+				buffSystem.RemoveBuff(e.WeaponEntity, previousWeaponParts.BuffType);
+			}
+			
+			UpdateBuildBuff(e.WeaponEntity);
+			
+			
+			IWeaponPartsEntity newWeaponParts =
+				GlobalGameResourceEntities.GetAnyResource(e.CurrentTopPartsUUID) as IWeaponPartsEntity;
+			if(newWeaponParts != null) {
+				IBuff buff = newWeaponParts.OnGetBuff(e.WeaponEntity);
+				if (!buffSystem.AddBuff(e.WeaponEntity, newWeaponParts, buff)) {
+					buff.RecycleToCache();
+				}
+			}
+
+			
+
 		}
 	}
 }

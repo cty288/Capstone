@@ -78,8 +78,8 @@ public class TestBuffSystem
 		    
 	    }
 
-	    public override void OnStacked(BasicBuff buff) {
-		    
+	    public override bool OnStacked(BasicBuff buff) {
+		    return true;
 	    }
 
 	    public override void OnStart() {
@@ -118,8 +118,8 @@ public class TestBuffSystem
 
 	    
 
-	    public override void OnStacked(PropertyBuffBasic1 buff) {
-		    
+	    public override bool OnStacked(PropertyBuffBasic1 buff) {
+		    return true;
 	    }
 
 	    public override void OnStart() {
@@ -162,8 +162,8 @@ public class TestBuffSystem
 		  
 	    }
 
-	    public override void OnStacked(PropertyBuffBasic2 buff) {
-		    
+	    public override bool OnStacked(PropertyBuffBasic2 buff) {
+		    return true;
 	    }
 
 	    public override void OnStart() {

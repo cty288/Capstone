@@ -90,6 +90,9 @@ namespace Runtime.DataFramework.Entities {
 		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(params BuffTag[] buffTags);
 
 		public void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType);
+		void RegisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback);
+		
+		void UnregisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback);
 		
 		public bool OnValidateBuff(IBuff buff);
 		
@@ -267,6 +270,8 @@ namespace Runtime.DataFramework.Entities {
 		protected Action<IEntity> onRecycleRCZeroRef = null;
 		
 		private bool readyToRecycle = false;
+		
+		private Action<IBuff, BuffUpdateEventType> onBuffUpdateCallback = null;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 			originalEntityName = EntityName;
@@ -620,7 +625,7 @@ namespace Runtime.DataFramework.Entities {
 		}
 
 		public virtual void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType) {
-			
+			onBuffUpdateCallback?.Invoke(buff, eventType);
 		}
 
 		public virtual bool OnValidateBuff(IBuff buff) {
@@ -733,7 +738,13 @@ namespace Runtime.DataFramework.Entities {
 		}
 
 		protected abstract void OnInitModifiers();
+		public void RegisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback) {
+			onBuffUpdateCallback += callback;
+		}
 
+		public void UnregisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback) {
+			onBuffUpdateCallback -= callback;
+		}
 
 		public void OnRecycled() {
 			OnRecycle();
@@ -762,6 +773,7 @@ namespace Runtime.DataFramework.Entities {
 			buffTagToProperties.Clear();
 			cachedBuffedPropertiesQuery.Clear();
 			buffedPropertiesToTags.Clear();
+			onBuffUpdateCallback = null;
 		}
 
 		[field: ES3Serializable]

@@ -52,7 +52,7 @@ public interface IBuff: IPoolable {
     bool Validate();
     
     void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false);
-    void OnStacked(IBuff buff);
+    bool OnStacked(IBuff buff);
     
     void OnAwake();
     
@@ -140,12 +140,13 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
     public abstract void OnInitialize();
     
 
-    public void OnStacked(IBuff buff) {
+    public bool OnStacked(IBuff buff) {
         if (buff is T tBuff) {
-            OnStacked(tBuff);
+            return OnStacked(tBuff);
         }
         else {
             Debug.LogError("Buff type mismatch for " + buff.GetType() + " and " + GetType() + " when stacking!");
+            return false;
         }
     }
 
@@ -156,7 +157,7 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
         buffOwner?.RegisterOnEntityRecycled(OnEntityRecycled);
     }
 
-    public abstract void OnStacked(T buff);
+    public abstract bool OnStacked(T buff);
 
 
     public abstract void OnStart();

@@ -48,7 +48,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
 
 		void RegisterOnDealDamage(Action<IDamageable, int> onDealDamage) {
-			OnDealDamageCallback += OnDealDamageCallback;
+			OnDealDamageCallback += onDealDamage;
 		}
 		
 		void UnregisterOnDealDamage(Action<IDamageable, int> onDealDamage) {
@@ -71,7 +71,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		ICanDealDamage ParentDamageDealer { get; }
 
 
-		Transform GetRootTransform() {
+		Transform GetRootDamageDealerTransform() {
 			ICanDealDamageViewController deepestVC = null;
 			ICanDealDamage current = this;
 			while (current != null) {

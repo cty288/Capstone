@@ -78,7 +78,7 @@ public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazin
 		}
 
 		public override void OnBuffEnd() {
-			weaponEntity.UnRegisterOnDealDamage(OnWeaponDealDamage);
+			weaponEntity.UnregisterOnDealDamage(OnWeaponDealDamage);
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

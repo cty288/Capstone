@@ -127,7 +127,7 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		}
 
 
-		public override void OnStacked(TBuff buff) {
+		public override bool OnStacked(TBuff buff) {
 			int oldLevel = this.Level;
 			if (buff.Level > this.Level) {
 				this.Level = buff.Level;
@@ -137,6 +137,8 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 			if (oldLevel < this.Level) {
 				OnLevelUp();
 			}
+
+			return true;
 		}
 		
 		

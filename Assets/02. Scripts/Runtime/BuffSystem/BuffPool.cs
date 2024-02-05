@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel;
@@ -18,9 +19,12 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			RegisterGeneralBuff((DustBuff.Allocate));
 			RegisterGeneralBuff(((dealer, owner, level) => BleedingBuff.Allocate(1, level, dealer, owner)));
 			RegisterGeneralBuff((MotivatedBuff.Allocate));
+			RegisterGeneralBuff((dealer, owner, level) => HackedBuff.Allocate(dealer, owner, 10, 2, 1));
+			
 
 
 			RegisterWeaponBuildBuff(CurrencyType.Time, TimeBuff.Allocate);
+			RegisterWeaponBuildBuff(CurrencyType.Mineral, MineralBuff.Allocate);
 		}
 		
 		public static List<BuffBuilder> FindBuffs(Predicate<IBuff> predicate) {

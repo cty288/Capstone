@@ -49,6 +49,8 @@ namespace Runtime.Weapons.Model.Base
         public IBulletSpeed GetBulletSpeed();
         public IChargeSpeed GetChargeSpeed();
         public IWeight GetWeight();
+
+        public int GetRarity();
         
         public string DisplayedModelPrefabName { get; }
         
@@ -66,9 +68,7 @@ namespace Runtime.Weapons.Model.Base
        // public void SetDamageDealer(ICanDealDamage damageDealer);
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType);
 
-        public void RegisterOnDealDamage(Action<IDamageable, int> callback);
-
-        public void UnRegisterOnDealDamage(Action<IDamageable, int> callback);
+       
 
         public HitData OnModifyHitData(HitData data);
 
@@ -378,18 +378,14 @@ namespace Runtime.Weapons.Model.Base
             return weaponParts[weaponPartType];
         }
 
-        public void RegisterOnDealDamage(Action<IDamageable, int> callback) {
-            onDealDamage += callback;
-        }
+      
 
         Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
             get => _onDealDamageCallback;
             set => _onDealDamageCallback = value;
         }
 
-        public void UnRegisterOnDealDamage(Action<IDamageable, int> callback) {
-            onDealDamage -= callback;
-        }
+      
 
         public HitData OnModifyHitData(HitData data) {
             HitData result = data;
@@ -419,7 +415,7 @@ namespace Runtime.Weapons.Model.Base
                     continue;
                 }
 
-                IWeaponPartsEntity weaponPartsEntity = GlobalEntities.GetEntityAndModel(slot.GetLastItemUUID()).Item2 as IWeaponPartsEntity;
+                IWeaponPartsEntity weaponPartsEntity = GlobalEntities.GetEntityAndModel(slot.GetLastItemUUID()).Item1 as IWeaponPartsEntity;
                 if (weaponPartsEntity == null) {
                     continue;
                 }
@@ -548,8 +544,17 @@ namespace Runtime.Weapons.Model.Base
             set => _onKillDamageableCallback = value;
         }
 
-        public ICanDealDamage ParentDamageDealer =>
-            GlobalEntities.GetEntityAndModel(damageDealerUUID).Item1 as ICanDealDamage;
+        public ICanDealDamage ParentDamageDealer{
+            get {
+                PlayerController player = PlayerController.GetPlayerByUUID(damageDealerUUID);
+                if (player) {
+                    return player;
+                }
+                
+                return GlobalEntities.GetEntityAndModel(damageDealerUUID).Item1 as ICanDealDamage;
+            }
+        }
+            
         
         
         [field: ES3Serializable] private string damageDealerUUID { get; set; } = null;

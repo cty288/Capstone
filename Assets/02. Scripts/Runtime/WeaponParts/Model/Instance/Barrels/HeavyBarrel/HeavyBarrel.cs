@@ -90,7 +90,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		}
 
 		public override void OnBuffEnd() {
-			weaponEntity.UnRegisterOnDealDamage(OnWeaponDealDamage);
+			weaponEntity.UnregisterOnDealDamage(OnWeaponDealDamage);
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
