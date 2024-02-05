@@ -112,8 +112,10 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
                 shield.gameObject.SetActive(true);
                 shield.Init(enemyEntity);
             }
+
+            await UniTask.WaitForSeconds(0.1f, false, PlayerLoopTiming.Update,
+                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
-            await UniTask.WaitForSeconds(0.1f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         }
         
         enemyEntity.RefreshBladeShieldStack();
