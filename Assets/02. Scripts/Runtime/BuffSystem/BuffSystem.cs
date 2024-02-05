@@ -91,7 +91,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		}
 
 		public bool CanAddBuff(IEntity targetEntity, IBuff buff) {
-			return targetEntity !=null && buff.Validate() && targetEntity.OnValidateBuff(buff);
+			return targetEntity !=null && targetEntity.UUID!=null && buff.Validate() && targetEntity.OnValidateBuff(buff);
 		}
 
 		public bool AddBuff(IEntity targetEntity, IEntity buffDealer, IBuff buff) {
@@ -102,9 +102,12 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			buff.OnInitialize(buffDealer, targetEntity);
 			buff.OnAwake();
 			if (ContainsBuff(targetEntity, buff.GetType(), out IBuff existingBuff)) {
-				existingBuff.OnStacked(buff);
-				SendBuffUpdateEvent(targetEntity, existingBuff, BuffUpdateEventType.OnUpdate);
-				buff.OnEnd();
+				if (existingBuff.OnStacked(buff)) {
+					SendBuffUpdateEvent(targetEntity, existingBuff, BuffUpdateEventType.OnUpdate);
+					buff.OnEnd();
+				}else {
+					return false;
+				}
 			}
 			else {
 				if (!buffQueue.ContainsKey(targetEntity.UUID)) {

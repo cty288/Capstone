@@ -96,6 +96,15 @@ namespace Runtime.Temporary
             triggerCheck.Clear();
         }
 
+        public static PlayerController GetPlayerByUUID(string uuid) {
+            foreach (var player in players) {
+                if (player.BoundEntity.UUID == uuid) {
+                    return player;
+                }
+            }
+
+            return null;
+        }
         public static PlayerController GetClosestPlayer(Vector3 position) {
             if (players.Count == 0) {
                 //try find gameobject of type playercontroller

@@ -77,7 +77,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			MotivatedBuff motivatedBuff = MotivatedBuff.Allocate(weaponRootOwner,
 				weaponRootOwner, 1);
 			
-			
+			IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
+			Debug.Log("TimeBuff.OnDealDamage");
 			buffSystem.AddBuff
 			(weaponRootOwner, weaponRootOwner, motivatedBuff);
 		}

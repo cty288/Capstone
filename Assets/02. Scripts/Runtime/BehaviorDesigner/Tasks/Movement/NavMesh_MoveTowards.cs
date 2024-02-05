@@ -61,6 +61,8 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
         public override void OnEnd()
         {
             m_NavMeshAgent.ResetPath();
+            Debug.Log("ended");
         }
+        
     }
 }
