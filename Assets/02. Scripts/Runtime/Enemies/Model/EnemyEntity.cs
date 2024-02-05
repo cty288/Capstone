@@ -45,6 +45,8 @@ namespace Runtime.Enemies.Model {
 		protected ISpawnCostProperty spawnCostProperty;
 		protected ISpawnWeightProperty spawnWeightProperty;
 		protected ILevelNumberProperty levelNumberProperty;
+		private Action<IDamageable, int> _onDealDamageCallback;
+		private Action<IDamageable> _onKillDamageableCallback;
 
 		// protected IDirectorEntity directorOwner;
 		public int SpawnedAreaIndex { get; set; }
@@ -131,6 +133,8 @@ namespace Runtime.Enemies.Model {
 		public override void OnDoRecycle() {
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
 			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 
 
@@ -143,6 +147,17 @@ namespace Runtime.Enemies.Model {
 		}
 
 		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
 		public ICanDealDamage ParentDamageDealer { get; } = null;
 
 

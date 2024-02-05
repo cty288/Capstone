@@ -18,22 +18,22 @@ public class BladeSentinalSimpleBullet : AbstractBulletViewController
 
     protected override void OnBulletReachesMaxRange()
     {
-        throw new NotImplementedException();
+     
     }
 
     protected override void OnBulletRecycled()
     {
-        throw new NotImplementedException();
+       
     }
 
     protected override void OnHitObject(Collider other)
     {
-        throw new NotImplementedException();
+       
     }
 
     protected override void OnHitResponse(HitData data)
     {
-        throw new NotImplementedException();
+      
     }
     public void SetData(float speed, Vector3 dir , bool start)
     {

@@ -16,6 +16,8 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 using Runtime.Inventory.Model;
+using Runtime.Player;
+using Runtime.Temporary;
 using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
@@ -59,7 +61,7 @@ namespace Runtime.Weapons.Model.Base
 
         public int GetRealDamageValue();
         
-        public void SetOwner(ICanDealDamage owner);
+        //public void SetOwner(ICanDealDamage owner);
         
        // public void SetDamageDealer(ICanDealDamage damageDealer);
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType);
@@ -118,6 +120,8 @@ namespace Runtime.Weapons.Model.Base
         private Action<IDamageable, int> onDealDamage;
 
         private List<Func<HitData, IWeaponEntity, HitData>> onModifyHitData = new List<Func<HitData, IWeaponEntity, HitData>>();
+        private Action<IDamageable, int> _onDealDamageCallback;
+        private Action<IDamageable> _onKillDamageableCallback;
         public abstract int Width { get; }
 
         protected override ConfigTable GetConfigTable() {
@@ -258,8 +262,17 @@ namespace Runtime.Weapons.Model.Base
             
             weaponParts.Clear();
             OnModifyDamageCountCallbackList.Clear();
-            
+            _onDealDamageCallback = null;
+            _onKillDamageableCallback = null;
+            damageDealerUUID = null;
         }
+
+        public override void OnAddedToInventory(string playerUUID) {
+            base.OnAddedToInventory(playerUUID);
+            damageDealerUUID = playerUUID;
+        }
+        
+       
 
         protected override void OnEntityRegisterAdditionalProperties() {
             base.OnEntityRegisterAdditionalProperties();
@@ -349,18 +362,14 @@ namespace Runtime.Weapons.Model.Base
             return Random.Range(baseDamageProperty.RealValue.Value.x, baseDamageProperty.RealValue.Value.y + 1);
         }
 
-        public void SetOwner(ICanDealDamage owner) {
+        /*public void SetOwner(ICanDealDamage owner) {
             if (owner != null) {
                 ParentDamageDealer = owner;
                 CurrentFaction.Value = (this as ICanDealDamage).GetRootDamageDealer().CurrentFaction.Value;
             }
            
-        }
-
-        public void SetDamageDealer(ICanDealDamage damageDealer) {
-            
-            //CurrentFaction.Value = (this as ICanDealDamage).GetRootDamageDealer().CurrentFaction.Value;
-        }
+        }*/
+        
 
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType) {
             if (!weaponParts.ContainsKey(weaponPartType)) {
@@ -371,6 +380,11 @@ namespace Runtime.Weapons.Model.Base
 
         public void RegisterOnDealDamage(Action<IDamageable, int> callback) {
             onDealDamage += callback;
+        }
+
+        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
         }
 
         public void UnRegisterOnDealDamage(Action<IDamageable, int> callback) {
@@ -486,8 +500,7 @@ namespace Runtime.Weapons.Model.Base
                     return true;
                 }
             }
-
-            return false;
+            return true;
         }
 
         public void Reload() {
@@ -529,7 +542,18 @@ namespace Runtime.Weapons.Model.Base
         }
 
         public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
-        public ICanDealDamage ParentDamageDealer { get; protected set; }
+
+        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer =>
+            GlobalEntities.GetEntityAndModel(damageDealerUUID).Item1 as ICanDealDamage;
+        
+        
+        [field: ES3Serializable] private string damageDealerUUID { get; set; } = null;
+        
 
         /*ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
          public ICanDealDamageRootViewController RootViewController => null;*/

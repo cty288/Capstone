@@ -36,7 +36,7 @@ namespace Runtime.GameResources.Model.Base {
 
 		public void OnAddedToSlot();
 
-		public void OnAddedToInventory();
+		public void OnAddedToInventory(string playerUUID);
 		
 		public void OnRemovedFromInventory();
 		
@@ -171,7 +171,7 @@ namespace Runtime.GameResources.Model.Base {
 			encounteredBefore = true;
 		}
 
-		public virtual void OnAddedToInventory() {
+		public virtual void OnAddedToInventory(string playerUUID) {
 			
 		}
 

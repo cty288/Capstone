@@ -1,8 +1,12 @@
-﻿using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.Player;
+using Runtime.Temporary;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 
@@ -12,16 +16,24 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		[field: ES3Serializable] public override float TickInterval { get; protected set; } = -1;
 		public override int Priority => 1;
 		 
+		private ICanDealDamage owner;
 		public override string OnGetDescription(string defaultLocalizationKey) {
+			return GetDescription(Level, defaultLocalizationKey);
+		}
+		
+		public static string GetDescription(int level, string localizationKey) {
 			string additionalDescription = "";
-			if (Level >= 2) {
-				additionalDescription = Localization.GetFormat("MotivatedBuff_Desc_2", 
-					GetBuffPropertyAtLevel<int>("shield", Level));
+			if (level >= 2) {
+				additionalDescription = Localization.GetFormat("MotivatedBuff_Desc_2",
+					ConfigurableBuff<MotivatedBuff>.GetBuffPropertyAtLevel<int>("MotivatedBuff", "shield", level));
 			}
+
+			float damage =
+				ConfigurableBuff<MotivatedBuff>.GetBuffPropertyAtLevel<float>("MotivatedBuff", "damage", level);
 			
-			float damage = GetBuffPropertyAtLevel<float>("damage", Level);
 			int displayedDamage = (int) damage * 100;
-			return Localization.GetFormat(defaultLocalizationKey, displayedDamage, additionalDescription);
+			
+			return Localization.GetFormat(localizationKey, displayedDamage, additionalDescription);
 		}
 
 		public override bool IsDisplayed() {
@@ -29,7 +41,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		}
 
 		public override bool Validate() {
-			return buffOwner is ICanDealDamage;
+			return base.Validate() && buffOwner is ICanDealDamage;
 		}
 
 		public override void OnStart() {
@@ -41,16 +53,56 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		}
 
 		public override bool IsGoodBuff => true;
-		public override void OnEnds() {
-			
+		
+		public override void OnBuffEnd() {
+		
+		}
+
+		public override void OnRecycled() {
+			if (owner == null) {
+				return;
+			}
+			owner.UnregisterOnModifyDamageCount(OnModifyDamageCount);
+			owner.UnregisterOnKillDamageable(OnKillDamageable);
+			owner = null;
+			base.OnRecycled();
+		}
+
+		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
+			return null;
+		}
+
+		private int OnModifyDamageCount(int count) {
+			float percentage = GetBuffPropertyAtLevel<float>("damage", Level);
+			return Mathf.CeilToInt(count * (1 + percentage));
 		}
 
 		public override void OnInitialize() {
-			
+			owner = (ICanDealDamage) buffOwner;
+			if (owner == null) {
+				return;
+			}
+			owner.RegisterOnModifyDamageCount(OnModifyDamageCount);
+			owner.RegisterOnKillDamageable(OnKillDamageable);
+		}
+
+		private void OnKillDamageable(IDamageable target) {
+			if (Level >= 2) {
+				int shield = GetBuffPropertyAtLevel<int>("shield", Level);
+				if (owner.CurrentFaction.Value != target.CurrentFaction.Value) {
+					if(owner is IPlayerEntity player) {
+						player.AddArmor(shield);
+					}
+				}
+			}
+		}
+
+		protected override void OnLevelUp() {
+			this.MaxDuration = GetBuffPropertyAtCurrentLevel<float>("time");
+			this.RemainingDuration = MaxDuration;
 		}
 
 		protected override void OnBuffStacked(MotivatedBuff buff) {
-			this.Level = Mathf.Max(buff.Level, this.Level);
 			this.MaxDuration = Mathf.Max(buff.MaxDuration, this.MaxDuration);
 			this.RemainingDuration = MaxDuration;
 		}
@@ -60,5 +112,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			buff.MaxDuration = buff.GetBuffPropertyAtLevel<float>("time", level);
 			return buff;
 		}
+
+		
 	}
 }

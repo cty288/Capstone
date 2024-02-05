@@ -21,7 +21,10 @@ namespace Runtime.Temporary.Weapon
         [Header("Hit Effects")]
         [SerializeField] private GameObject explosionPrefab;
 
-        
+        private Action<IDamageable, int> _onDealDamageCallback;
+        private Action<IDamageable> _onKillDamageableCallback;
+
+
         public int Damage { get; protected set; }
 
         private void Start()
@@ -65,6 +68,17 @@ namespace Runtime.Temporary.Weapon
         }
 
         public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+
+        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
         public ICanDealDamage ParentDamageDealer { get; }
 
       

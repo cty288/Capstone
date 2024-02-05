@@ -103,6 +103,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         public int Damage => BoundEntity.GetRealDamageValue();
         
         private IBuffSystem buffSystem;
+        private Action<IDamageable, int> _onDealDamageCallback;
+        private Action<IDamageable> _onKillDamageableCallback;
 
         #region Initialization
         protected override void Awake() {
@@ -204,11 +206,11 @@ namespace Runtime.Weapons.ViewControllers.Base
             ChangeReloadStatus(true);
             //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
             this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
-                AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue));
-            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().BaseValue);
+                AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().RealValue));
+            animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().RealValue);
             animator.SetTrigger("Reload");
             
-            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().BaseValue);
+            yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().RealValue);
         }
 
         protected virtual void OnReloadAnimationEnd()
@@ -222,14 +224,15 @@ namespace Runtime.Weapons.ViewControllers.Base
         #region Holding
         public override void OnStartHold(GameObject ownerGameObject) {
             base.OnStartHold(ownerGameObject);
-            if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
+            /*if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
                 BoundEntity.SetOwner(damageDealer);
-            }
+            }*/
         }
 
+        
         public override void OnStopHold() {
             BoundEntity.CurrentFaction.Value = Faction.Neutral;
-            BoundEntity.SetOwner(null);
+           // BoundEntity.SetOwner(null);
             base.OnStopHold();
             ChangeScopeStatus(false);
         }
@@ -369,6 +372,17 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
         public ICanDealDamage ParentDamageDealer => BoundEntity;
 
         public virtual bool CheckHit(HitData data) {
@@ -396,6 +410,8 @@ namespace Runtime.Weapons.ViewControllers.Base
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);
             OnModifyDamageCountCallbackList.Clear();
+            _onDealDamageCallback = null;
+            _onKillDamageableCallback = null;
         }
         #endregion
     }

@@ -32,6 +32,7 @@ public class PlayerBuffPanelViewController : AbstractMikroController<MainGame> {
             buffIcon.transform.localScale = Vector3.one;
             buffIcon.SetBuff(e.Buff);
             buffToGameObject.Add(e.Buff, buffIcon);
+            buffIcon.OnRefresh();
             break;
          case BuffUpdateEventType.OnUpdate:
             if (buffToGameObject.TryGetValue(e.Buff, out var value)) {

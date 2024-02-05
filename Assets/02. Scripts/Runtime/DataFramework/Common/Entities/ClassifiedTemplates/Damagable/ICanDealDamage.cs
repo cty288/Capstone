@@ -10,6 +10,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		
 		void DoOnKillDamageable(IDamageable damageable) {
 			OnKillDamageable(damageable);
+			OnKillDamageableCallback?.Invoke(damageable);
 			Debug.Log(this.GetType().Name + "kill " + damageable.GetType().Name);
 			ParentDamageDealer?.DoOnKillDamageable(damageable);
 		}
@@ -18,6 +19,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 		void DoOnDealDamage(IDamageable damageable, int damage) {
 			OnDealDamage(damageable, damage);
+			OnDealDamageCallback?.Invoke(damageable, damage);
 			Debug.Log("[ICanDealDamageDebug]" +this.GetType().Name + "deal damage to " + damageable.GetType().Name + " with " + damage +
 			          " damage.");
 			ParentDamageDealer?.DoOnDealDamage(damageable, damage);
@@ -44,10 +46,28 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		}
 
 		HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+
+		void RegisterOnDealDamage(Action<IDamageable, int> onDealDamage) {
+			OnDealDamageCallback += OnDealDamageCallback;
+		}
 		
+		void UnregisterOnDealDamage(Action<IDamageable, int> onDealDamage) {
+			OnDealDamageCallback -= onDealDamage;
+		}
 		
+		Action<IDamageable, int> OnDealDamageCallback { get; protected set; }
+
+
+		void RegisterOnKillDamageable(Action<IDamageable> onKillDamageable) {
+			OnKillDamageableCallback += onKillDamageable;
+		}
 		
-	
+		void UnregisterOnKillDamageable(Action<IDamageable> onKillDamageable) {
+			OnKillDamageableCallback -= onKillDamageable;
+		}
+		
+		Action<IDamageable> OnKillDamageableCallback { get; protected set; }
+
 		ICanDealDamage ParentDamageDealer { get; }
 
 

@@ -9,7 +9,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Utilities.ConfigSheet;
 
 namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
-	public abstract class ConfigurableBuff<TBuff> : Buff<TBuff>, IBuff, ILeveledBuff where TBuff : ConfigurableBuff<TBuff>, new() {
+	public abstract class ConfigurableBuff<TBuff> : PropertyBuff<TBuff>, IBuff, ILeveledBuff where TBuff : ConfigurableBuff<TBuff>, new() {
 		[field: ES3Serializable] 
 		public int Level { get; protected set; }
 
@@ -26,6 +26,16 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 			ReadBuffLevelProperties();
 		}
 		
+		public void LevelUp() {
+			if (Level < MaxLevel) {
+				Level++;
+				buffOwner?.OnBuffUpdate(this, BuffUpdateEventType.OnUpdate);
+				OnLevelUp();
+			}
+		}
+
+		protected abstract void OnLevelUp();
+
 		public ConfigurableBuff() {
 			//_buffLevelProperties = _globalBuffLevelProperties[GetType().Name];
 		}
@@ -118,11 +128,15 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 
 
 		public override void OnStacked(TBuff buff) {
+			int oldLevel = this.Level;
 			if (buff.Level > this.Level) {
 				this.Level = buff.Level;
 			}
 
 			OnBuffStacked(buff);
+			if (oldLevel < this.Level) {
+				OnLevelUp();
+			}
 		}
 		
 		

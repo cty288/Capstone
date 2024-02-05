@@ -71,6 +71,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		private float remainingCooldown = 0;
 		private float maxCooldown = 0;
 		protected bool isWaitingForSwapInventoryCooldown = false;
+		private Action<IDamageable, int> _onDealDamageCallback;
+		private Action<IDamageable> _onKillDamageableCallback;
 		protected virtual int levelRange { get; } = 4;
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.SkillEntityConfigTable;
@@ -137,6 +139,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			CoroutineRunner.Singleton.UnregisterUpdate(OnUpdate);
 			owner = null;
 			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 
 		public override string OnGroundVCPrefabName { get; } = null;
@@ -320,6 +324,17 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		}
 
 		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
 		public ICanDealDamage ParentDamageDealer => owner;
 
 		/*public ICanDealDamageRootEntity RootDamageDealer=> owner?.RootDamageDealer;
