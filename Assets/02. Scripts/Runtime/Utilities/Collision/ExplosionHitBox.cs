@@ -49,21 +49,22 @@ namespace Runtime.Utilities.Collision
             {
 
                 float explosionMultiplier = 0.7f* (1-Vector3.Distance(hitPoint,center)/_sphereCollider.radius)+0.3f;
-                // Debug.Log("make hitdata");
-                hitData = new HitData()
-                    {
-                        Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier*explosionMultiplier),
-                        HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
-                        HitNormal = hitNormal,
-                        Hurtbox = hurtbox,
-                        HitDetector = this,
-                        Attacker = m_hitResponder,
-                        ShowDamageNumber = showDamageNumber
-                    };
+                
+                hitData = new HitData().SetHitBoxData(m_hitResponder, 
+                    m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier*explosionMultiplier),
+                    hurtbox.DamageMultiplier > 1,
+                    hurtbox,
+                    hitPoint == Vector3.zero ? center : hitPoint, hitNormal,
+                    this, showDamageNumber);
+                
+                
                 // Debug.Log("validate: " + (hitData.Validate()));
                 if (hitData.Validate())
                 {
                     // Debug.Log("validate: ");
+                    if (hitData.HitDetector.HitResponder != null) {
+                        hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
+                    }
                     hitData.HitDetector.HitResponder?.HitResponse(hitData);
                     hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                 }

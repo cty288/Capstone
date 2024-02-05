@@ -51,7 +51,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature {
 		//[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
+
 		private static int combatCurrencyAmountPerItem = 5;
+		[Header("Rarity Base Value")]
 		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
 		protected NavMeshAgent navMeshAgent;
 		protected BehaviorTree behaviorTree;
@@ -62,6 +64,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Creature Recycle Settings")]
 		[SerializeField]
 		private bool autoRemoveEntityWhenDie = true;
+
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
@@ -77,7 +80,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				behaviorTree.enabled = false;
 			}
 		}
-
+		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
 
 		protected override void OnStart() {
@@ -102,8 +105,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		private void SpawnDeathDroppedItemsAndCurrency(ICanDealDamage damagedealer) {
-			if (damagedealer == null || damagedealer.RootDamageDealer == null ||
-			    damagedealer.RootDamageDealer.IsSameFaction(this)) {
+			if (damagedealer == null || damagedealer.GetRootDamageDealer() == null ||
+			    damagedealer.GetRootDamageDealer().IsSameFaction(this)) {
 				return;
 			}
 
@@ -141,7 +144,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 			}
 
-			if (damagedealer.RootDamageDealer.CurrentFaction.Value == Faction.Friendly) { //killed by the player or friendly
+			if (damagedealer.GetRootDamageDealer().CurrentFaction.Value == Faction.Friendly) { //killed by the player or friendly
 				int combatCurrencyDropCount = GetSpawnedCombatCurrencyAmount();
 				if (combatCurrencyDropCount > 0) {
 					GeneratePickableCombatCurrency(combatCurrencyDropCount);

@@ -7,6 +7,7 @@ using DG.Tweening;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.GameResources.Model.Base;
 using Runtime.Player.ViewControllers;
 using Runtime.Utilities;
@@ -223,6 +224,8 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 			Vector3 throwDirection = GetThrowDirection();
 			grenade.AddForce(throwDirection * throwForce, ForceMode.VelocityChange);
 			
+			
+			
 
 		}
 		
@@ -233,6 +236,8 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 			}
 			ShowTrajectory();
 		}
+
+		// public override void OnItemAltUse() { }
 
 		protected override IResourceEntity OnInitSkillEntity(SkillBuilder<GrenadeSkill> builder) {
 			return builder.FromConfig().Build();

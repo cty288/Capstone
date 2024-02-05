@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
@@ -16,7 +18,7 @@ using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Player {
-	public interface IPlayerEntity : ICreature, IEntity, ICanDealDamageRootEntity {
+	public interface IPlayerEntity : ICreature, IEntity {
 		IAccelerationForce GetAccelerationForce();
 		IWalkSpeed GetWalkSpeed();
 		ISprintSpeed GetSprintSpeed();
@@ -42,6 +44,10 @@ namespace Runtime.Player {
 		void SetScopedIn(bool state);
 		
 		void AddArmor(float amount);
+		
+	
+		
+		//public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
 	}
 
 	public struct OnPlayerKillEnemy {
@@ -71,9 +77,11 @@ namespace Runtime.Player {
 		public override string EntityName { get; set; } = "Player";
 		
 		private IAccelerationForce accelerationForce;
+		
 		private IWalkSpeed walkSpeed;
 		private ISprintSpeed sprintSpeed;
 		private ISlideSpeed slideSpeed;
+		
 		private IGroundDrag groundDrag;
 		private IJumpForce jumpForce;
 		private IAdditionalGravity additionalGravity;
@@ -84,10 +92,20 @@ namespace Runtime.Player {
 		private IAirSpeedProperty airSpeed;
 		private IArmorProperty armor;
 		private IArmorRecoverSpeedProperty armorRecoverSpeed;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		
+
+		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
 
 		private MovementState movementState;
 		private bool scopedIn;
-		
+		private Action<IDamageable, int> _onDealDamageCallback;
+		private Action<IDamageable> _onKillDamageableCallback;
+
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.PlayerEntityConfigTable;
 		}
@@ -97,7 +115,9 @@ namespace Runtime.Player {
 		}
 
 		public override void OnRecycle() {
-			
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 		protected override void OnInitModifiers(int rarity) {
             
@@ -105,6 +125,7 @@ namespace Runtime.Player {
 		protected override string OnGetDescription(string defaultLocalizationKey) {
 			return "";
 		}
+		
 
 		protected override void OnEntityRegisterAdditionalProperties() {
 			base.OnEntityRegisterAdditionalProperties();
@@ -235,6 +256,9 @@ namespace Runtime.Player {
 			}
 		}
 
+		
+
+
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
 		}
@@ -267,6 +291,13 @@ namespace Runtime.Player {
 			Debug.Log("Player Deal Damage to " + damageable.EntityName + " with damage " + damage);
 		}
 
+		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
+		public ICanDealDamage ParentDamageDealer => null;
+
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {
 			base.OnTakeDamage(damage, damageDealer, hitData);
 			if (GetCurrentHealth() <= 0) {
@@ -276,16 +307,25 @@ namespace Runtime.Player {
 				});
 			}
 
-			Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
+			//Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => this;
-		public ICanDealDamageRootViewController RootViewController => null;
+		/*public ICanDealDamageRootEntity RootDamageDealer => this;
 
-		protected override void DoTakeDamage(int damageAmount, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData) {
+		public ICanDealDamageRootViewController RootViewController { get; protected set; } = null;*/
+
+		protected override int DoTakeDamage(int actualDamage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData, 
+			bool nonlethal = false)  {
+			
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
-			float armorToTakeDamage = Mathf.Min(armor.RealValue.Value, damageAmount);
-			float healthToTakeDamage = damageAmount - armorToTakeDamage;
+			float armorToTakeDamage = Mathf.Min(armor.RealValue.Value, actualDamage);
+			int healthToTakeDamage = actualDamage - (int) armorToTakeDamage;
+			healthToTakeDamage = Mathf.Min(healthToTakeDamage, healthInfo.CurrentHealth);
+			if(nonlethal && healthToTakeDamage >= healthInfo.CurrentHealth) {
+				healthToTakeDamage = healthInfo.CurrentHealth - 1;
+			}
+
+			int totalDamage = (int) armorToTakeDamage + healthToTakeDamage;
 			
 			if (armorToTakeDamage > 0) {
 				armor.RealValue.Value -= armorToTakeDamage;
@@ -294,16 +334,18 @@ namespace Runtime.Player {
 
 			if (healthToTakeDamage > 0) {
 				HealthProperty.RealValue.Value =
-					new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
+					new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - healthToTakeDamage);
 				
 			}
 			
 			this.SendEvent<OnPlayerTakeDamage>(new OnPlayerTakeDamage() {
-				DamageTaken = damageAmount,
+				DamageTaken = totalDamage,
 				HealthInfo = HealthProperty.RealValue.Value,
 				HitData = hitData,
 				DamageToHealth = healthToTakeDamage
 			});
+			
+			return totalDamage;
 			
 		}
 
@@ -313,6 +355,7 @@ namespace Runtime.Player {
 				Buff = buff,
 				EventType = eventType
 			});
+			
 		}
 	}
 }

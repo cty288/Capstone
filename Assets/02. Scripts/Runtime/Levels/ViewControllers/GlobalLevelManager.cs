@@ -7,6 +7,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Singletons;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.UI.NameTags;
 using UnityEngine;
 

@@ -59,7 +59,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		
 		public bool RemoveBuff(Type buffType, string buffOwnerID, out IBuff removedBuff) {
 			removedBuff = null;
-			if (!_buffs.ContainsKey(buffOwnerID)) {
+			if (buffOwnerID == null || !_buffs.ContainsKey(buffOwnerID)) {
 				return false;
 			}
 
@@ -84,8 +84,8 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			return true;
 		}
 		
-		public bool RemoveBuff(IBuff buff) {
-			return RemoveBuff(buff.GetType(), buff.BuffOwnerID, out _);
+		public bool RemoveBuff(string id, IBuff buff) {
+			return RemoveBuff(buff.GetType(), id, out _);
 		}
 		
 		public bool HasBuff<T>(string buffOwnerID, out IBuff buff) where T : IBuff {

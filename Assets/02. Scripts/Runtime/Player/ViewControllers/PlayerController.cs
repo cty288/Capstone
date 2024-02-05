@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Levels.Sandstorm;
 using Framework;
 using Mikrocosmos;
 using MikroFramework.ActionKit;
@@ -23,7 +25,7 @@ using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController, ICanDealDamageRootViewController {
+    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamage, ICanDealDamageViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
         private TriggerCheck triggerCheck;
@@ -39,6 +41,9 @@ namespace Runtime.Temporary
        
         private ILevelModel levelModel;
         private ICurrencySystem currencySystem;
+        private Action<IDamageable, int> _onDealDamageCallback;
+        private Action<IDamageable> _onKillDamageableCallback;
+
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
@@ -48,6 +53,12 @@ namespace Runtime.Temporary
             currencySystem = this.GetSystem<ICurrencySystem>();
             levelModel.CurrentLevelCount.RegisterWithInitValue(OnCurrentLevelNumChanged)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnSandStormKillPlayer>(OnSandStormKillPlayer)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnSandStormKillPlayer(OnSandStormKillPlayer e) {
+            BoundEntity.TakeDamage(Int32.MaxValue, null, null);
         }
 
         private void OnCurrentLevelNumChanged(int arg1, int levelNum) {
@@ -85,6 +96,15 @@ namespace Runtime.Temporary
             triggerCheck.Clear();
         }
 
+        public static PlayerController GetPlayerByUUID(string uuid) {
+            foreach (var player in players) {
+                if (player.BoundEntity.UUID == uuid) {
+                    return player;
+                }
+            }
+
+            return null;
+        }
         public static PlayerController GetClosestPlayer(Vector3 position) {
             if (players.Count == 0) {
                 //try find gameobject of type playercontroller
@@ -207,9 +227,31 @@ namespace Runtime.Temporary
         }
 
         public ICanDealDamage CanDealDamageEntity => BoundEntity;
-        public ICanDealDamageRootViewController RootViewController => this;
+      
         public Transform GetTransform() {
             return transform;
         }
+
+        public void OnKillDamageable(IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(IDamageable damageable, int damage) {
+            
+        }
+
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer => BoundEntity;
     }
 }

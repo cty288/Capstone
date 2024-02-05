@@ -50,8 +50,10 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 			}
 		}
 
+		// public override void OnItemAltUse() { }
+		
 		public override void OnItemStartUse() {
-			//this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger, 0));
+			
 		}
 
 		public override void OnItemStopUse() {

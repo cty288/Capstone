@@ -72,7 +72,7 @@ public class HazardLevelIndicator : AbstractMikroController<MainGame> {
 			return;
 		}
 
-		ISubAreaLevelEntity subArea = currentLevelViewController.GetCurrentActiveSubArea();
+		ISubAreaLevelEntity subArea = currentLevelViewController.GetCurrentActiveSubAreaEntity();
 		if (subArea == null) {
 			return;
 		}

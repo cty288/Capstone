@@ -27,7 +27,8 @@ public class DamageIndicatorUI : AbstractMikroController<MainGame> {
     }
 
     private void OnPlayerTakeDamage(OnPlayerTakeDamage e) {
-        Transform targetTransform = e.HitData?.Attacker?.RootViewController?.GetTransform();
+
+        Transform targetTransform = e.HitData?.Attacker?.GetRootDamageDealerTransform();
         if (!targetTransform || !targetTransform.gameObject.activeInHierarchy) {
             return;
         }

@@ -4,18 +4,25 @@ using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Pillars.Models;
+using _02._Scripts.Runtime.Pillars.Systems;
+using _02._Scripts.Runtime.ResourceCrafting.Models;
+using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
 using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
+using _02._Scripts.Runtime.TimeSystem;
 using _02._Scripts.Runtime.WeaponParts.Model;
 using _02._Scripts.Runtime.WeaponParts.Systems;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources.Model.Base;
+using Runtime.GameResources.Model.Properties;
 using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.RawMaterials.Model.Base;
 using Runtime.Spawning;
+using Runtime.UI.Crafting.Research;
 using Runtime.Weapons.Model.Base;
 
 
@@ -34,10 +41,13 @@ namespace Framework {
 			this.RegisterSystem<ISkillSystem>(new SkillSystem());
 			this.RegisterSystem<IBuffSystem>(new BuffSystem());
 			this.RegisterSystem<IWeaponPartsSystem>(new WeaponPartsSystem());
+			this.RegisterSystem<IPillarSystem>(new PillarSystem());
+			this.RegisterSystem<IGameTimeSystem>(new GameTimeSystem());
+			this.RegisterSystem<IGameEventSystem>(new GameEventSystem());
+			this.RegisterSystem<IResearchSystem>(new ResearchSystem());
 			
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());
-			//this.RegisterModel<IGameResourceModel>(new GameResourceModel());
 			this.RegisterModel<IRawMaterialModel>(new RawMaterialModel());
 			this.RegisterModel<IInventoryModel>(new InventoryModel());
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
@@ -50,6 +60,11 @@ namespace Framework {
 			this.RegisterModel<ISkillModel>(new SkillModel());
 			this.RegisterModel<IBuffModel>(new BuffModel());
 			this.RegisterModel<IWeaponPartsModel>(new WeaponPartsModel());
+			this.RegisterModel<IPillarModel>(new PillarModel());
+			this.RegisterModel<IGameTimeModel>(new GameTimeModel());
+			this.RegisterModel<IGameEventModel>(new GameEventModel());
+			this.RegisterModel<IResourceResearchModel>(new ResourceResearchModel());
+			this.RegisterModel<IResourceBuildModel>(new ResourceBuildModel());
 			
 			
 			//???

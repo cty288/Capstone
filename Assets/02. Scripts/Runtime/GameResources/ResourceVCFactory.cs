@@ -12,10 +12,11 @@ using Polyglot;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
+using Runtime.Inventory.Model;
 using UnityEngine;
 
 namespace Runtime.GameResources {
-	public class ResourceVCFactory : MikroSingleton<ResourceVCFactory>, ISingleton, ICanGetUtility{
+	public class ResourceVCFactory : MikroSingleton<ResourceVCFactory>, ISingleton, ICanGetUtility, ICanGetSystem{
 
 		private ResLoader resLoader;
 		public override void OnSingletonInit() {
@@ -75,6 +76,19 @@ namespace Runtime.GameResources {
 			GameObject prefab = resLoader.LoadSync<GameObject>(pickableResourcePrefabName);
 			IPickableResourceViewController vcComponent = prefab.GetComponent<IPickableResourceViewController>();
 			return vcComponent.OnBuildNewPickableResourceEntity(setRarity, rarity);
+		}
+		
+		public void AddToInventoryOrSpawnNewVc(string pickableResourcePrefabName, bool usePool, Vector3 position,
+			bool setRarity = false, int rarity = 1, int poolInitCount = 5, int poolMaxCount = 20) {
+			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+
+			IResourceEntity resourceEntity = SpawnNewResourceEntity(pickableResourcePrefabName, setRarity, rarity);
+			if (inventorySystem.AddItem(resourceEntity)) {
+				return;
+			}
+
+			GameObject vc = SpawnPickableResourceVC(resourceEntity, usePool, poolInitCount, poolMaxCount);
+			vc.transform.position = position;
 		}
 		
 		private GameObject SpawnResourceGameObject(string prefabName, bool usePool, int poolInitCount = 5,

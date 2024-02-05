@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Baits.Model.Property;
 using _02._Scripts.Runtime.Levels;
 using Framework;
 using JetBrains.Annotations;
@@ -46,6 +48,8 @@ namespace Tests.Tests_Editor {
 
             protected override void OnEnemyRegisterAdditionalProperties() {
                // RegisterInitialProperty<IVigilianceProperty>(new TestVigiliance());
+               RegisterInitialProperty<ITasteProperty>(new Taste());
+               RegisterInitialProperty<IVigilianceProperty>(new Vigiliance());
                 RegisterInitialProperty<IAttackRangeProperty>(new TestAttackRange());
                 RegisterInitialProperty<TestHashSetProperty>(new TestHashSetProperty());
             }
@@ -60,6 +64,9 @@ namespace Tests.Tests_Editor {
         }
         
         internal class TestFriendlyEntity : AbstractCreature, ICanDealDamage {
+            private Action<IDamageable, int> _onDealDamageCallback;
+            private Action<IDamageable> _onKillDamageableCallback;
+
             [field: ES3Serializable]
             public override string EntityName { get; set; } = "TestEnemy2";
 
@@ -111,8 +118,22 @@ namespace Tests.Tests_Editor {
                 
             }
 
-            public ICanDealDamageRootEntity RootDamageDealer { get; }
-            public ICanDealDamageRootViewController RootViewController { get; }
+            public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+
+            Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+                get => _onDealDamageCallback;
+                set => _onDealDamageCallback = value;
+            }
+
+            Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+                get => _onKillDamageableCallback;
+                set => _onKillDamageableCallback = value;
+            }
+
+            public ICanDealDamage ParentDamageDealer { get; }
+
+            /*public ICanDealDamageRootEntity RootDamageDealer { get; }
+            public ICanDealDamageRootViewController RootViewController { get; }*/
         }
     
         //===============================Start writing your tests here===============================

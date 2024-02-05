@@ -34,6 +34,9 @@ namespace Runtime.RunTimeTests.TestMaterial {
 		protected override void OnInitModifiers(int rarity) {
             
 		}
+
+		public override bool Collectable { get; } = false;
+
 		public override IResourceEntity GetReturnToBaseEntity() {
 			return this;
 		}

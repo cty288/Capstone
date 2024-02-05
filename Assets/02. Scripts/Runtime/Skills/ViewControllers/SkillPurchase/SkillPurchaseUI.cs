@@ -19,7 +19,7 @@ using UnityEngine.UI;
 
 public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel 
 {
-	private PreparationSlotLayoutViewController skillPanel;
+	/*private PreparationSlotLayoutViewController skillPanel;
 	private PreparationSlotLayoutViewController materialPanel;
 	private GameObject previewPanel;
 	private ISkillModel skillModel;
@@ -102,7 +102,7 @@ public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel
 			ResourceVCFactory.GetLocalizedResourceCategory(entity.GetResourceCategory()),
 			entity.GetResourcePropertyDescriptions(), entity.GetSkillUseCostOfCurrentLevel());
 
-		SkillPurchaseCostInfo costInfo = entity.GetSkillPurchaseCost();
+		PurchaseCostInfo costInfo = entity.GetPurchaseCost();
 		HashSet<PreparationSlot> ownedResources = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
 
 
@@ -116,7 +116,7 @@ public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel
 		}
 	}
 	
-	private bool CheckIsAllEnough(SkillPurchaseCostInfo costInfo, HashSet<PreparationSlot> ownedResources) {
+	private bool CheckIsAllEnough(PurchaseCostInfo costInfo, HashSet<PreparationSlot> ownedResources) {
 		bool isAllEnough = true;
 
 		if (costInfo != null) {
@@ -189,7 +189,7 @@ public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel
 			return;
 		}
 		
-		SkillPurchaseCostInfo costInfo = entity.GetSkillPurchaseCost();
+		PurchaseCostInfo costInfo = entity.GetPurchaseCost();
 		HashSet<PreparationSlot> ownedResources = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
 		bool isAllEnough = CheckIsAllEnough(costInfo, ownedResources);
 
@@ -223,5 +223,24 @@ public class SkillPurchaseUI  :  AbstractPanel, IController, IGameUIPanel
 
 	public IPanel GetClosePanel() {
 		return this;
+	}*/
+	public override void OnInit() {
+		throw new System.NotImplementedException();
+	}
+
+	public override void OnOpen(UIMsg msg) {
+		throw new System.NotImplementedException();
+	}
+
+	public override void OnClosed() {
+		throw new System.NotImplementedException();
+	}
+
+	public IArchitecture GetArchitecture() {
+		throw new System.NotImplementedException();
+	}
+
+	public IPanel GetClosePanel() {
+		throw new System.NotImplementedException();
 	}
 }

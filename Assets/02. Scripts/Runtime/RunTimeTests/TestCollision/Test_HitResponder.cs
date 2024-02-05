@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -34,6 +35,8 @@ namespace Runtime.RunTimeTests.TestCollision
         [SerializeField] private GameObject hitParticlePrefab;
 
         private List<GameObject> hitObjects = new List<GameObject>();
+        private Action<IDamageable, int> _onDealDamageCallback;
+        private Action<IDamageable> _onKillDamageableCallback;
 
         public int Damage => m_damage;
         
@@ -48,8 +51,22 @@ namespace Runtime.RunTimeTests.TestCollision
             
         }
 
-        public ICanDealDamageRootEntity RootDamageDealer { get; }
-        public ICanDealDamageRootViewController RootViewController { get; }
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+
+        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer => null;
+
+        /*public ICanDealDamageRootEntity RootDamageDealer { get; }
+        public ICanDealDamageRootViewController RootViewController { get; }*/
 
 
         public void Start()
@@ -80,6 +97,10 @@ namespace Runtime.RunTimeTests.TestCollision
         public void HitResponse(HitData data) {
             hitObjects.Add(data.Hurtbox.Owner);
             Instantiate(hitParticlePrefab, data.HitPoint, Quaternion.identity);
+        }
+
+        public HitData OnModifyHitData(HitData data) {
+            return data;
         }
 
         public void OnAnimationEvent(string eventName)

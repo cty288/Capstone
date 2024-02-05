@@ -80,48 +80,6 @@ Shader "Universal Render Pipeline/Custom/Sand"
 			#define _NORMALMAP
         
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
-
-
-            CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST;
-		        float4 _BaseColor;
-
-                float _Cutoff;
-
-                float _Smoothness;
-                float _GlossMapScale;
-        
-                float _Metallic;
-        
-                float4 _SpecColor;
-
-				float _ShadowEdgePower;
-				float _ShadowEdgeSaturation;
-				float2 _ShadowRadianceRange;
-
-				float _BumpScale;
-				float4 _BumpMap_ST;
-				float4 _RippleMap0_ST;
-				float4 _RippleMap1_ST;
-				float _RippleStrength;
-				float _SteepnessPower;
-        
-                float _OcclusionStrength;
-				float4 _OcclusionMap_ST;
-        
-                float4 _EmissionColor;
-				float4 _EmissionMap_ST;
-
-				float4 _HighlightColor;
-				float _FresnelPower;
-				float _FresnelCutOffOut;
-				float _FresnelCutOffIn;
-                
-    
-            CBUFFER_END
         
         ENDHLSL
         
@@ -415,6 +373,7 @@ Shader "Universal Render Pipeline/Custom/Sand"
             #pragma shader_feature_local_fragment _OCCLUSIONMAP
             #pragma shader_feature_local _PARALLAXMAP
             #pragma shader_feature_local _ _DETAIL_MULX2 _DETAIL_SCALED
+            #pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
 
             #pragma shader_feature_local_fragment _SPECULARHIGHLIGHTS_OFF
             #pragma shader_feature_local_fragment _ENVIRONMENTREFLECTIONS_OFF
@@ -443,7 +402,8 @@ Shader "Universal Render Pipeline/Custom/Sand"
 
             #pragma vertex LitGBufferPassVertex
             #pragma fragment LitGBufferPassFragment
-            
+
+            #include "Inputs.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             // ------------------
@@ -489,8 +449,122 @@ Shader "Universal Render Pipeline/Custom/Sand"
                     UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            #include "Inputs.hlsl"
-            #include "DesertLitDeferredPass.hlsl"
+            // ------------------
+			// Sand Functions
+			// ------------------
+
+            TEXTURE2D(_RippleMap0);         SAMPLER(sampler_RippleMap0);
+			TEXTURE2D(_RippleMap1);         SAMPLER(sampler_RippleMap1);
+
+            float3 RipplesNormal(float2 uv, float3 normal)
+            {
+            	float3 ripple0 = SampleNormal(uv * _RippleMap0_ST.xy + _RippleMap0_ST.zw, TEXTURE2D_ARGS(_RippleMap0, sampler_RippleMap0));
+            	float3 ripple1 = SampleNormal(uv * _RippleMap1_ST.xy + _RippleMap1_ST.zw, TEXTURE2D_ARGS(_RippleMap1, sampler_RippleMap1));
+
+            	float steepness = saturate(dot(normal, float3(0, 1, 0)));
+            	steepness = pow(steepness, _SteepnessPower);
+            	//float3 combined = normalize(lerp(ripple1, ripple0, steepness));
+            	float3 combined = lerp(ripple1, ripple0, steepness);
+            	
+	            return combined;
+            }
+            
+            #define UNIVERSAL_LIT_GBUFFER_PASS_INCLUDED
+
+			#include "DesertLighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+						#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+						#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceInput.hlsl"
+						#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/ParallaxMapping.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
+            #include "DeferredInitializeInputs.hlsl"
+
+			// ------------------
+			// Vertex
+			// ------------------
+
+			Varyings LitGBufferPassVertex(Attributes IN)
+			{
+			    Varyings OUT;
+
+			    UNITY_SETUP_INSTANCE_ID(IN);
+			    UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
+			    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+
+			    VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
+				#ifdef _NORMALMAP
+					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS, IN.tangentOS);
+				#else
+					VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz);
+				#endif
+
+				OUT.positionCS = positionInputs.positionCS;
+				OUT.positionWS = positionInputs.positionWS;
+
+				half3 viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
+				half3 vertexLight = VertexLighting(positionInputs.positionWS, normalInputs.normalWS);
+				
+				#ifdef _NORMALMAP
+					OUT.normalWS = normalInputs.normalWS;
+			        real sign = IN.tangentOS.w * GetOddNegativeScale();
+					OUT.tangentWS = half4(normalInputs.tangentWS, sign);
+				#else
+					OUT.normalWS = NormalizeNormalPerVertex(normalInputs.normalWS);
+				#endif
+
+			    OUT.viewDirWS = viewDirWS;
+
+				#ifdef _NORMALMAP
+				    half3 viewDirTS = GetViewDirectionTangentSpace(OUT.tangentWS, OUT.normalWS, viewDirWS);
+					OUT.viewDirTS = viewDirTS;
+				#endif
+
+				OUTPUT_LIGHTMAP_UV(IN.lightmapUV, unity_LightmapST, OUT.lightmapUV);
+				OUTPUT_SH(OUT.normalWS.xyz, OUT.vertexSH);
+			    
+			    OUT.vertexLighting = vertexLight;
+
+				#if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
+					OUT.shadowCoord = GetShadowCoord(positionInputs);
+				#endif
+
+				OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
+				return OUT;
+			}
+
+			// ------------------
+			// Fragment
+			// ------------------
+
+			FragmentOutput LitGBufferPassFragment(Varyings IN) : SV_TARGET
+			{
+
+				UNITY_SETUP_INSTANCE_ID(IN);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
+				
+			    SurfaceData surfaceData;
+			    InitializeSurfaceData(IN.uv, surfaceData);
+
+				float3 normal = IN.normalWS; //Sand is initialized in this first normal check.
+				normal = RipplesNormal(IN.positionWS.xz, normal); // We modify the normal in this function.
+
+				surfaceData.normalTS = lerp(surfaceData.normalTS, normal, _RippleStrength);
+
+			    InputData inputData;
+			    InitializeInputData(IN, surfaceData.normalTS, inputData);
+
+				#ifdef _DBUFFER
+					ApplyDecalToSurfaceData(IN.positionCS, surfaceData, inputData);
+				#endif
+
+				BRDFData brdfData;
+				InitializeBRDFData(surfaceData.albedo, surfaceData.metallic, surfaceData.specular, surfaceData.smoothness, surfaceData.alpha, brdfData);
+
+				half3 color = GlobalIllumination(brdfData, inputData.bakedGI, surfaceData.occlusion, inputData.normalWS, inputData.viewDirectionWS);
+
+				return BRDFDataToGbuffer(brdfData, inputData, surfaceData.smoothness, surfaceData.emission + color);
+			}
             
             ENDHLSL
         }

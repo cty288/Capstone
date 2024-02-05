@@ -361,19 +361,19 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     ]
   }
 }","{
-  ""Combat"": {""x"": 0, ""y"": 0.2},
-  ""Time"": {""x"": 0, ""y"": 1},
+  ""Combat"": {""x"": 0.5, ""y"": 1},
+  ""Time"": {""x"": 0, ""y"": 0.2},
   ""Plant"": {""x"": 0, ""y"": 1},
   ""Mineral"": {""x"": 0, ""y"": 1}
 }",456,"{
   ""ranges"":{
     ""closeRange"": {
       ""type"": ""float"",
-      ""value"": 20
+      ""value"": 10
     },
     ""midRange"": {
       ""type"": ""float"",
-      ""value"": 40
+      ""value"": 30
     }
   },
   ""dash"": {
@@ -425,7 +425,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     },
     ""bladeCount"": {
       ""type"": ""int"",
-      ""value"": 8
+      ""value"": 5
     },
     ""bladeWaitTime"": {
       ""type"": ""float"",
@@ -448,7 +448,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     },
     ""bladeCount"": {
       ""type"": ""int"",
-      ""value"": 8,
+      ""value"": 5,
       ""useDefaultModifier"": true
     },
     ""bladeDamage"": {
@@ -458,7 +458,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     },
     ""bladeSpeed"": {
       ""type"": ""float"",
-      ""value"": 10
+      ""value"": 30
     },
     ""honingDuration"": {
       ""type"": ""float"",
@@ -522,9 +522,15 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     }
   },
   ""shield"": {
+    ""shieldHealth"": {
+      ""type"": ""int"",
+      ""value"": 50,
+      ""useDefaultModifier"": true
+    },
     ""shieldDuration"": {
       ""type"": ""float"",
-      ""value"": 4
+      ""value"": 4,
+      ""useDefaultModifier"": true
     },
     ""bladeCount"": {
       ""type"": ""int"",
@@ -533,3 +539,6 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     }
   }
 }",,,
+WormBoss,"{""maxHealth"":2000,
+""currentHealth"":2000}",30,,,,,,,
+WormBossSegment,,,,,,,,,

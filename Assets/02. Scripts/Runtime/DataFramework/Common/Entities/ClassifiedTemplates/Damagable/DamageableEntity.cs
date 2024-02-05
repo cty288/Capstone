@@ -56,7 +56,6 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public int GetCurrentHealth() {
 			return HealthProperty.GetCurrentHealth();
 		}
-
 		
 
 		/// <summary>
@@ -70,23 +69,25 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			if(!CheckCanTakeDamage(damageDealer) || healthInfo.CurrentHealth <= 0) {
 				return;
 			}
-			
 
-			int actualDamage = OnTakeDamageAdditionalCheck(damage, damageDealer);
+
+			int modifiedDamage = damageDealer?.DoModifyDamageCount(damage) ?? damage;
+			
+			int actualDamage = OnTakeDamageAdditionalCheck(modifiedDamage, damageDealer);
 			
 			//if curr health is less than damage, damage amount = curr health
 			//else damage amount = damage
-			int damageAmount = healthInfo.CurrentHealth < damage ? healthInfo.CurrentHealth : actualDamage;
-			damageAmount = nonlethal && healthInfo.CurrentHealth <= damage ? healthInfo.CurrentHealth - 1 : damageAmount;
-			DoTakeDamage(damageAmount, damageDealer, hitData);
+			
+			
+			int damageAmount = DoTakeDamage(actualDamage, damageDealer, hitData);
 
 			if (hitData != null) {
 				hitData.Damage = damageAmount;
 			}
 			OnTakeDamage(damageAmount, damageDealer, hitData);
-			damageDealer?.OnDealDamage(this, damageAmount);
+			damageDealer?.DoOnDealDamage(this, damageAmount);
 			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
-				damageDealer?.OnKillDamageable(this);
+				damageDealer?.DoOnKillDamageable(this);
 			}
 			
 			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer, hitData);
@@ -97,9 +98,14 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// Please use TakeDamage instead of this method
 		/// </summary>
 		/// <param name="damageAmount"></param>
-		protected virtual void DoTakeDamage(int damageAmount, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData) {
+		protected virtual int DoTakeDamage(int actualDamage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData, bool nonlethal = false) {
+			int damageAmount = healthProperty.GetCurrentHealth() < actualDamage ? healthProperty.GetCurrentHealth() : actualDamage;
+			damageAmount = nonlethal && healthProperty.GetCurrentHealth() <= actualDamage ? healthProperty.GetCurrentHealth() - 1 : damageAmount;
+			
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
 			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - damageAmount);
+			
+			return damageAmount;
 		}
 		
 		

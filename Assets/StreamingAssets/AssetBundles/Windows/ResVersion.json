@@ -3,8 +3,8 @@
   "ABMD5List": [
     {
       "AssetName": "audios",
-      "MD5": "53810bd35d80455f81d2a2577b1e6167",
-      "FileSize": 3553.9834,
+      "MD5": "d3537dd4a7931b3d8ef47aa591055202",
+      "FileSize": 3582.2373,
       "assetDatas": [
         {
           "Name": "Player_Land",
@@ -102,6 +102,11 @@
           "AssetType": "UnityEngine.AudioClip"
         },
         {
+          "Name": "gun_click",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
           "Name": "enemy_Spider_AlertSound",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
@@ -174,6 +179,38 @@
       ]
     },
     {
+      "AssetName": "buff_icons",
+      "MD5": "0acac7c3f49e82dfd6411cf9418a1f37",
+      "FileSize": 4912.69336,
+      "assetDatas": [
+        {
+          "Name": "buff frame",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "buff_die",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "buff_heal",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "BuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "RecoveryBuff_Icon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
       "AssetName": "data",
       "MD5": "236cc476047cf4bac7727a5b25a350ef",
       "FileSize": 15.8134766,
@@ -226,8 +263,8 @@
     },
     {
       "AssetName": "info",
-      "MD5": "45aad0374fcd23683a875796a17418ff",
-      "FileSize": 6778.59668,
+      "MD5": "dc4c8173dfb12aec57a79cfd62c39a86",
+      "FileSize": 6823.131,
       "assetDatas": [
         {
           "Name": "Crosshair Instruction + Reference",
@@ -1067,8 +1104,8 @@
     },
     {
       "AssetName": "others",
-      "MD5": "653134b976bd87de5d90c041e3dad8b0",
-      "FileSize": 352.06543,
+      "MD5": "6d0333ec1ca2a5f7c80c0d673ca2a29a",
+      "FileSize": 439.380859,
       "assetDatas": [
         {
           "Name": "PooledCube",
@@ -1096,6 +1133,11 @@
           "AssetType": "UnityEngine.Shader"
         },
         {
+          "Name": "ItemDisplayer",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "Nofric",
           "OwnerBundleName": "others",
           "AssetType": "UnityEngine.PhysicMaterial"
@@ -1114,8 +1156,8 @@
     },
     {
       "AssetName": "scene",
-      "MD5": "acd29ff81df95a1a097108ca8088a6c7",
-      "FileSize": 57.19336,
+      "MD5": "073cdd5215ccceb87656fa423e839734",
+      "FileSize": 238.209961,
       "assetDatas": [
         {
           "Name": "SceneTestES3",
@@ -1333,8 +1375,8 @@
     },
     {
       "AssetName": "test_sphere",
-      "MD5": "f2405f44fbbf88b94bc3b94d2f738c04",
-      "FileSize": 42.55664,
+      "MD5": "7fe462af40db2fec0da30ea3cbfe30bb",
+      "FileSize": 50.22754,
       "assetDatas": [
         {
           "Name": "Sphere",
@@ -1345,14 +1387,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "2d38fba1303882649bd16d27498bbed8",
-      "FileSize": 2.09765625,
+      "MD5": "192ac7079159c2565d02fa2e512cc2ad",
+      "FileSize": 2.131836,
       "assetDatas": []
     },
     {
       "AssetName": "assets/fonts",
-      "MD5": "a5be5d3542cabdb23e2d67cd6eddc054",
-      "FileSize": 896.1367,
+      "MD5": "db536610fbbfe64b0c884401f4df9655",
+      "FileSize": 904.943359,
       "assetDatas": [
         {
           "Name": "Orbitron-Black SDF",
@@ -1418,9 +1460,49 @@
     },
     {
       "AssetName": "assets/goods_inventory",
-      "MD5": "098af143c8914f7c19325fb9e6b1ceab",
-      "FileSize": 12.0039063,
+      "MD5": "c00447c4fd75fced2b5640b7606a3b74",
+      "FileSize": 25.3398438,
       "assetDatas": [
+        {
+          "Name": "Combat1_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Combat2_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "FireOreSprite",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Mineral1_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Plant1_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TestRaw2_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TestRaw_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Rifle_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
         {
           "Name": "RustyPistol2_Icon",
           "OwnerBundleName": "assets/goods_inventory",
@@ -1433,6 +1515,11 @@
         },
         {
           "Name": "RustyPistol_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Shotgun_Icon",
           "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
@@ -1455,8 +1542,8 @@
     },
     {
       "AssetName": "entities/pillars",
-      "MD5": "ecf5410f39a5f3467965732625202c09",
-      "FileSize": 6239.14355,
+      "MD5": "7ad06fc16a82cb9f2258d971428cba32",
+      "FileSize": 6329.338,
       "assetDatas": [
         {
           "Name": "BossPillar",
@@ -1467,8 +1554,8 @@
     },
     {
       "AssetName": "entities/resources",
-      "MD5": "ce1b7907f5735c6a4300282657abdb70",
-      "FileSize": 41613.8477,
+      "MD5": "eec9978677e47bb61140e1078e188bc6",
+      "FileSize": 49489.3164,
       "assetDatas": [
         {
           "Name": "Bait",
@@ -1501,17 +1588,62 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
-          "Name": "BionicGel",
+          "Name": "Combat1",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
         {
-          "Name": "CarbonFiber",
+          "Name": "Combat2",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
         {
-          "Name": "HeatStoragor",
+          "Name": "Combat3",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Combat4",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Mineral1",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Mineral2",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Mineral3",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Mineral4",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Plant1",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Plant2",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Plant3",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Plant4",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1521,7 +1653,22 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
-          "Name": "ReinforcedSteel",
+          "Name": "Time1",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Time2",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Time3",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Time4",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1541,6 +1688,91 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "AdaptedCompensator",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "HeavyBarrel",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "LongBarrel",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ShortBarrel",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "SpecialBarrel",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "SpecialCompensator",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestWeaponParts",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestWeaponParts2",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestWeaponParts3",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestWeaponParts4",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestWeaponParts5",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestWeaponParts6",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestWeaponParts7",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "CustomizedMagazine",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "GunpowerEnhancement",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "MagnetBlade",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Rifle",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "RustyPistol",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
@@ -1556,7 +1788,27 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "RustyPistol3_Model",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "RustyPistol_Model",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Shotgun",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "SubMachineGun",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "SubMachineGun_Model",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1566,7 +1818,17 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "TheSanctuary_Model",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "UniversalPistol",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "UniversalPistol_Model",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1579,8 +1841,8 @@
     },
     {
       "AssetName": "entities/resources_inventory",
-      "MD5": "b7b33bb03f3bb715639364f28c863e49",
-      "FileSize": 1092.77148,
+      "MD5": "f50365df50953c8220b7b8c297c48694",
+      "FileSize": 1314.79883,
       "assetDatas": [
         {
           "Name": "ResourceInvAtlas",
@@ -1589,21 +1851,6 @@
         },
         {
           "Name": "Bait_Icon",
-          "OwnerBundleName": "entities/resources_inventory",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "FireOreSprite",
-          "OwnerBundleName": "entities/resources_inventory",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "TestRaw2_Icon",
-          "OwnerBundleName": "entities/resources_inventory",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "TestRaw_Icon",
           "OwnerBundleName": "entities/resources_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
@@ -1621,13 +1868,28 @@
           "Name": "TestSkill_Icon",
           "OwnerBundleName": "entities/resources_inventory",
           "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TestWeaponParts2_Icon",
+          "OwnerBundleName": "entities/resources_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TestWeaponParts3_Icon",
+          "OwnerBundleName": "entities/resources_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TestWeaponParts_Icon",
+          "OwnerBundleName": "entities/resources_inventory",
+          "AssetType": "UnityEngine.Texture2D"
         }
       ]
     },
     {
       "AssetName": "test/scene_test.ab",
-      "MD5": "d9b54dff8654969f96be0da5d1cb55a6",
-      "FileSize": 184.097656,
+      "MD5": "c65de4c7266caa0f867905eb1ac12e74",
+      "FileSize": 199.930664,
       "assetDatas": [
         {
           "Name": "TestABScene",

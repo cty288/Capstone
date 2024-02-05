@@ -1,13 +1,19 @@
-EntityName / Property Names,base_damage,weight,attack_speed,ads_fov,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,scope_recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
-Types,Vector2Int,float,float,float,float,int,float,int,float,RecoilInfo,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,Vector2Int,modifier on movement speed,float (cooldown),fov to set in camera,float,int,float (seconds),int (TODO: CHANGE TO RANGE),"float  (max = 0.1, has issue with screen sizing rn but not big deal, change to range for x and y)",,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
+EntityName / Property Names,rarity,purchase_cost,base_damage,weight,attack_speed,ads_fov,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,scope_recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
+Types,int,SkillPurchaseCostInfo,Vector2Int,float,float,float,float,int,float,int,float,RecoilInfo,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,,,Vector2Int,modifier on movement speed,float (cooldown),fov to set in camera,float,int,float (seconds),int (TODO: CHANGE TO RANGE),"float  (max = 0.1, has issue with screen sizing rn but not big deal, change to range for x and y)",,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
-,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,,,,,
-BEGIN,,,,,,,,,,,,,,,,,,
-RustyPistol,"{""x"":8,""y"":11}",1,0.3,80,50,6,2,1,0,"{
+,,,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,,,,,
+BEGIN,,,,,,,,,,,,,,,,,,,,
+RustyPistol,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 3,
+            ""Plant1"": 1
+        },
+        ""MoneyCost"": 4
+}","{""x"":8,""y"":11}",1,0.3,80,50,6,2,1,0,"{
   ""recoilX"": -7.5,
   ""recoilY"": 5,
   ""recoilZ"": 0.5,
@@ -20,7 +26,13 @@ RustyPistol,"{""x"":8,""y"":11}",1,0.3,80,50,6,2,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 6
 }",0,300,1,,,,
-TheSanctuary,"{""x"":45,""y"":65}",0.3,1,80,30,1,4,1,0.06,"{
+TheSanctuary,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{""x"":45,""y"":65}",0.3,1,80,30,1,4,1,0.06,"{
   ""recoilX"": -50,
   ""recoilY"": 10,
   ""recoilZ"": 1,
@@ -40,7 +52,13 @@ TheSanctuary,"{""x"":45,""y"":65}",0.3,1,80,30,1,4,1,0.06,"{
     }
   }
 }",,,
-RustyPistol2,"{""x"":2,""y"":4}",1,0.1,80,50,30,2.5,1,0,"{
+RustyPistol2,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{""x"":2,""y"":4}",1,0.1,80,50,30,2.5,1,0,"{
   ""recoilX"": -8,
   ""recoilY"": 2,
   ""recoilZ"": 0.35,
@@ -53,7 +71,13 @@ RustyPistol2,"{""x"":2,""y"":4}",1,0.1,80,50,30,2.5,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 4.5
 }",0,300,1,,,,
-RustyPistol3,"{""x"":200,""y"":400}",1,0.1,80,50,30,2.5,1,0,"{
+RustyPistol3,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{""x"":200,""y"":400}",1,0.1,80,50,30,2.5,1,0,"{
   ""recoilX"": -8,
   ""recoilY"": 2,
   ""recoilZ"": 0.35,
@@ -66,7 +90,13 @@ RustyPistol3,"{""x"":200,""y"":400}",1,0.1,80,50,30,2.5,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 4.5
 }",0,300,1,,,,
-SubMachineGun,"{""x"":4,""y"":6}",1,0.1,80,40,30,2.5,1,0,"{
+SubMachineGun,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{""x"":4,""y"":6}",1,0.1,80,40,20,2.5,1,0,"{
   ""recoilX"": -5,
   ""recoilY"": 3,
   ""recoilZ"": 0.25,
@@ -79,7 +109,13 @@ SubMachineGun,"{""x"":4,""y"":6}",1,0.1,80,40,30,2.5,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 7
 }",0,325,1,,,,
-UniversalPistol,"{""x"":5,""y"":7}",1,0.175,80,45,12,1.75,1,0,"{
+UniversalPistol,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{""x"":5,""y"":7}",1,0.175,80,45,12,1.75,1,0,"{
   ""recoilX"": -4,
   ""recoilY"": 2,
   ""recoilZ"": 0.2,
@@ -92,7 +128,13 @@ UniversalPistol,"{""x"":5,""y"":7}",1,0.175,80,45,12,1.75,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 5
 }",0,300,1,,,,
-Shotgun,"{""x"":5,""y"":7}",1,1,80,5,4,3,5,0.1,"{
+Shotgun,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{""x"":8,""y"":10}",1,0.75,80,20,4,3,5,0.1,"{
   ""recoilX"": -7.5,
   ""recoilY"": 5,
   ""recoilZ"": 0.5,
@@ -105,7 +147,13 @@ Shotgun,"{""x"":5,""y"":7}",1,1,80,5,4,3,5,0.1,"{
   ""snappiness"": 7,
   ""returnSpeed"": 6
 }",0,300,1,,,,
-Rifle,"{""x"":5,""y"":7}",1,0.175,80,45,12,1.75,1,0,"{
+Rifle,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{""x"":5,""y"":6}",1,0.125,80,50,30,2.75,1,0,"{
   ""recoilX"": -4,
   ""recoilY"": 2,
   ""recoilZ"": 0.2,
@@ -118,3 +166,22 @@ Rifle,"{""x"":5,""y"":7}",1,0.175,80,45,12,1.75,1,0,"{
   ""snappiness"": 7,
   ""returnSpeed"": 5
 }",0,300,1,,,,
+MagnetBlade,1,"{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Plant1"": 5
+        },
+        ""MoneyCost"": 100
+}","{""x"":20,""y"":25}",1,0.1,80,50,3,1.25,1,0,"{
+  ""recoilX"": 0,
+  ""recoilY"": 0,
+  ""recoilZ"": 0,
+  ""snappiness"": 0,
+  ""returnSpeed"": 0
+}","{
+  ""recoilX"": 0,
+  ""recoilY"": 0,
+  ""recoilZ"": 0,
+  ""snappiness"": 0,
+  ""returnSpeed"": 0
+}",0,75,1,,,,
