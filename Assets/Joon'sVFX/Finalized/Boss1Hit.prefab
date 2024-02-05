@@ -4902,6 +4902,10 @@ GameObject:
   - component: {fileID: 1004229041087787911}
   - component: {fileID: 1004229041087787910}
   - component: {fileID: 1004229041087787909}
+  - component: {fileID: 2942299187157443312}
+  - component: {fileID: 7860809578559358572}
+  - component: {fileID: 5545089290721572528}
+  - component: {fileID: 8732178190345073443}
   m_Layer: 0
   m_Name: Boss1Hit
   m_TagString: Untagged
@@ -9775,6 +9779,73 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!65 &2942299187157443312
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004229041087787908}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.0050001144, z: 0}
+--- !u!114 &7860809578559358572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004229041087787908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32dc96957271f284483981eb18b94c4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  maxDistance: 100
+  detectTime: 1
+--- !u!114 &5545089290721572528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004229041087787908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDamageNumber: 1
+--- !u!114 &8732178190345073443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004229041087787908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bd81983846cf3746b681a66d79c75f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
+  autoRecycleTime: 3
+  penetrateSameFaction: 0
+  autoDestroyWhenOwnerDestroyed: 0
+  autoRecycleWhenHit: 1
+  effect: {fileID: 0}
 --- !u!1 &1004229042580489309
 GameObject:
   m_ObjectHideFlags: 0
