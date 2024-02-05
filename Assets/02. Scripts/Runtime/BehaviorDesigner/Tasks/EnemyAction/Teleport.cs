@@ -16,7 +16,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
     public class Teleport : EnemyAction
     {
         private Vector3 teleportLocation;
-
+        public GameObject vfx;
         public SharedGameObject player;
         public bool finished= false;
 
@@ -26,7 +26,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
         public override void OnStart()
         {
             base.OnStart();
-            
+            if(vfx == null)
+            {
+                Transform teleport = this.transform.Find("Teleport");
+                vfx = teleport.gameObject;
+            }
+            vfx.SetActive(true);
+            vfx.GetComponent<ParticleSystem>().Play();
             finished = false;
             navAgent = gameObject.GetComponent<NavMeshAgent>();
             navAgent.enabled = false;
@@ -110,6 +116,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction{
 
          public override void OnEnd() {
              base.OnEnd();
+             vfx.SetActive(false);
              navAgent.enabled = true;
          }
     }
