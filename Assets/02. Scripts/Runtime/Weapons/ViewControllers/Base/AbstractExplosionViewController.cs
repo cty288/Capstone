@@ -31,15 +31,29 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		
 		
 		public void OnKillDamageable(IDamageable damageable) {
-			owner?.OnKillDamageable(damageable);
+			//owner?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			owner?.OnDealDamage(damageable, damage);
+			//owner?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
+		public ICanDealDamage ParentDamageDealer => owner;
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;*/
 
 		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
@@ -51,6 +65,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected ExplosionHitBox hitBox = null;
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
+		private Action<IDamageable, int> _onDealDamageCallback;
+		private Action<IDamageable> _onKillDamageableCallback;
+
 		protected virtual void Awake() {
 			hitBox = GetComponent<ExplosionHitBox>();
 			particleSystems.AddRange(GetComponentsInChildren<ParticleSystem>(true));
@@ -121,6 +138,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			entity?.ReleaseRecycleRC();
 			
 			particleSystems.ForEach(p => p.Stop());
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 		public HitData OnModifyHitData(HitData data) {
 			if (owner is IHitResponder hitResponder) {

@@ -55,7 +55,7 @@ public class RageDetector : WeaponPartsEntity<RageDetector, RageDetectorBuff> {
 		}
 
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
-			ICanDealDamageRootEntity rootEntity = weaponEntity.RootDamageDealer;
+			ICanDealDamage rootEntity = weaponEntity.GetRootDamageDealer();
 			if (rootEntity == null) {
 				return hit;
 			}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
@@ -32,11 +33,28 @@ namespace Runtime.Enemies
             
         }
 
-        public ICanDealDamageRootEntity RootDamageDealer { get; }
-        public ICanDealDamageRootViewController RootViewController { get; }
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer => null;
+
+        /*ublic ICanDealDamageRootEntity RootDamageDealer { get; }
+                public ICanDealDamageRootViewController RootViewController { get; }p*/
 
         public int Damage => m_damage;
         public List<GameObject> hitObjects= new List<GameObject>();
+        private Action<IDamageable, int> _onDealDamageCallback;
+        private Action<IDamageable> _onKillDamageableCallback;
+
         public bool CheckHit(HitData data) {
             if (data.Hurtbox.Owner == boss1) { return false; }
             else { return true; }

@@ -105,8 +105,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		private void SpawnDeathDroppedItemsAndCurrency(ICanDealDamage damagedealer) {
-			if (damagedealer == null || damagedealer.RootDamageDealer == null ||
-			    damagedealer.RootDamageDealer.IsSameFaction(this)) {
+			if (damagedealer == null || damagedealer.GetRootDamageDealer() == null ||
+			    damagedealer.GetRootDamageDealer().IsSameFaction(this)) {
 				return;
 			}
 
@@ -144,7 +144,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 			}
 
-			if (damagedealer.RootDamageDealer.CurrentFaction.Value == Faction.Friendly) { //killed by the player or friendly
+			if (damagedealer.GetRootDamageDealer().CurrentFaction.Value == Faction.Friendly) { //killed by the player or friendly
 				int combatCurrencyDropCount = GetSpawnedCombatCurrencyAmount();
 				if (combatCurrencyDropCount > 0) {
 					GeneratePickableCombatCurrency(combatCurrencyDropCount);

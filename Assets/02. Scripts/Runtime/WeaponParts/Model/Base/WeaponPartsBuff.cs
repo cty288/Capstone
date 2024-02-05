@@ -15,8 +15,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 	
 	public abstract class WeaponPartsBuff<TWeaponParts, TBuffType> : PropertyBuff<TBuffType>, IWeaponPartsBuff<TWeaponParts> 
 		where TWeaponParts : class, IWeaponPartsEntity
-	 where TBuffType : WeaponPartsBuff<TWeaponParts, TBuffType>, new(){
+	 where TBuffType : WeaponPartsBuff<TWeaponParts, TBuffType>, new() {
 		
+		public override bool IsGoodBuff => true;
+
 		[field: ES3Serializable]
 		public override float MaxDuration { get; protected set; } = -1;
 		public override int Priority { get; } = 1;
@@ -32,8 +34,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		}
 
 
-		public override void OnStacked(TBuffType buff) {
-			
+		public override bool OnStacked(TBuffType buff) {
+			return true;
 		}
 
 		public override void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false) {

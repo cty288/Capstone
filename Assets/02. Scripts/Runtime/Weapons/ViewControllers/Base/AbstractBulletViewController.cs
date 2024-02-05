@@ -26,16 +26,29 @@ namespace Runtime.Weapons.ViewControllers.Base {
 	public abstract class AbstractBulletViewController : PoolableGameObject, IHitResponder, IController, IBulletViewController, ICanDealDamage {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 		public void OnKillDamageable(IDamageable damageable) {
-			owner?.OnKillDamageable(damageable);
+			//owner?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			owner?.OnDealDamage(damageable, damage);
-			
+			//owner?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
+		public ICanDealDamage ParentDamageDealer => owner;
+
+		//public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+	//	public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
 
 		protected HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
@@ -49,6 +62,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected HitBox hitBox = null;
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
+		
 		protected IEntity entity = null;
 		protected float maxRange;
 		protected Vector3 origin;
@@ -58,6 +72,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected HitData hitData;
 		protected bool ownerTriggerHitResponse = true;
 		[SerializeField] private bool autoRecycleWhenHit = true;
+		private Action<IDamageable, int> _onDealDamageCallback;
+		private Action<IDamageable> _onKillDamageableCallback;
+
 		protected virtual void Awake() {
 			hitBox = GetComponent<HitBox>();
 			trailRenderers = GetComponentsInChildren<TrailRenderer>(true);
@@ -99,7 +116,12 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			this.maxRange = maxRange;
 			origin = transform.position;
 			entity = bulletOwner.GetComponent<IEntityViewController>()?.Entity;
-			owner?.RootDamageDealer?.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
+			ICanDealDamage rootDamageDealer = (this as ICanDealDamage).GetRootDamageDealer();
+			if (rootDamageDealer != null && rootDamageDealer is IEntity rootEntity) {
+				rootEntity.RegisterReadyToRecycle(OnOwnerReadyToRecycle);
+			}
+			
+			
 			entity?.RetainRecycleRC();
 			inited = true;
 			this.ownerTriggerHitResponse = ownerTriggerHitResponse;
@@ -237,7 +259,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			//this.owner = null;
 			entity?.ReleaseRecycleRC();
 			DisableAllTrailRenderers();
-			
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 		
 		

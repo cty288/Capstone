@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.Levels;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
@@ -17,7 +19,7 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.Model {
-	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage, ICanDealDamageRootEntity {
+	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
 		
@@ -43,6 +45,8 @@ namespace Runtime.Enemies.Model {
 		protected ISpawnCostProperty spawnCostProperty;
 		protected ISpawnWeightProperty spawnWeightProperty;
 		protected ILevelNumberProperty levelNumberProperty;
+		private Action<IDamageable, int> _onDealDamageCallback;
+		private Action<IDamageable> _onKillDamageableCallback;
 
 		// protected IDirectorEntity directorOwner;
 		public int SpawnedAreaIndex { get; set; }
@@ -128,6 +132,9 @@ namespace Runtime.Enemies.Model {
 
 		public override void OnDoRecycle() {
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 
 
@@ -138,10 +145,23 @@ namespace Runtime.Enemies.Model {
 		public void OnDealDamage(IDamageable damageable, int damage) {
 			
 		}
-		
-		
 
-		public ICanDealDamageRootEntity RootDamageDealer => this;
-		public ICanDealDamageRootViewController RootViewController => null;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
+		public ICanDealDamage ParentDamageDealer { get; } = null;
+
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => this;
+		public ICanDealDamageRootViewController RootViewController => null;*/
 	}
 }

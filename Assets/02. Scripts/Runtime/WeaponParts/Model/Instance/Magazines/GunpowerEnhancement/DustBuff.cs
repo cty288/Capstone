@@ -1,4 +1,6 @@
-﻿using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using UnityEngine;
@@ -6,6 +8,8 @@ using UnityEngine;
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement {
 
 	public class DustBuff : ConfigurableBuff<DustBuff> {
+		
+		public override bool IsGoodBuff => false;
 		
 		[field: ES3Serializable]
 		public override float MaxDuration { get; protected set; } = -1;
@@ -32,13 +36,17 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		}
 
 		public override bool Validate() {
-			return buffOwner is IDamageable;
+			return base.Validate() && buffOwner is IDamageable;
 		}
 
 		public override void OnInitialize() {
 			damagableEntity = buffOwner as IDamageable;
 		}
-		
+
+
+		protected override void OnLevelUp() {
+			
+		}
 
 		protected override void OnBuffStacked(DustBuff buff) {
 			this.currentLayer++;
@@ -59,10 +67,16 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 			return BuffStatus.End;
 		}
 
-		public override void OnEnds() {
+		
+
+		public override void OnBuffEnd() {
 			
 		}
-	
+
+		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
+			return null;
+		}
+
 
 		public override void OnRecycled() {
 			base.OnRecycled();

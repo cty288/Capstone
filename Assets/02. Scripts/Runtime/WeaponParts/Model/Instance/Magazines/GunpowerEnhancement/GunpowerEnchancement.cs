@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel;
 using Framework;
 using MikroFramework.Architecture;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
@@ -51,12 +52,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		private IBuffSystem buffSystem;
 		public override void OnInitialize() {
 			weaponEntity.RegisterOnDealDamage(OnWeaponDealDamage);
-			buffSystem = this.GetSystem<IBuffSystem>();
+		
 		}
 
 		private void OnWeaponDealDamage(IDamageable target, int damage) {
-			buffSystem.AddBuff(target, weaponEntity.RootDamageDealer, DustBuff.Allocate(
-				weaponEntity.RootDamageDealer, target, weaponPartsEntity.GetRarity()));
+			buffSystem = this.GetSystem<IBuffSystem>();
+			IEntity damageDealer = weaponEntity.GetRootDamageDealer() as IEntity;
+			buffSystem.AddBuff(target, damageDealer, DustBuff.Allocate(
+				damageDealer, target, weaponPartsEntity.GetRarity()));
 		}
 
 		public override void OnStart() {
@@ -68,7 +71,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		}
 
 		public override void OnBuffEnd() {
-			weaponEntity.UnRegisterOnDealDamage(OnWeaponDealDamage);
+			weaponEntity.UnregisterOnDealDamage(OnWeaponDealDamage);
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
