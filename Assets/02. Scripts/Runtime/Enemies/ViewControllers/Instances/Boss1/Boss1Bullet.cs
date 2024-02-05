@@ -10,21 +10,21 @@ namespace a {
         public float bulletSpeed;
         private Transform playerTrans;
         private float timer;
-        private GameObject vfx;
+        public GameObject vfx;
         private SafeGameObjectPool pool;
         private GameObject particleInstance;
 
         private void Start()
         {
-            if(vfx == null)
-            {
-                Transform vfx = this.transform.Find("Boss1Hit");
-                this.vfx = vfx.gameObject;
-            }
+            
             pool = GameObjectPoolManager.Singleton.CreatePool(vfx, 50, 100);
             timer = Random.Range(0.5f, 2f);
             var child = this.gameObject.transform.GetChild(0).GetComponent<TrailRenderer>();
             child.enabled = true;
+        }
+        private void OnEnable()
+        {
+            
         }
         private void Update()
         {
@@ -93,6 +93,7 @@ namespace a {
         }
 
         protected override void OnBulletRecycled() {
+            //vfx.SetActive(false);
             timer = Random.Range(0.5f, 2f);
             var child = this.gameObject.transform.GetChild(0).GetComponent<TrailRenderer>();
             child.enabled = false;
