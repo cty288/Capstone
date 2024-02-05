@@ -24,10 +24,12 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
 
     public Transform pivot;
     
-    private float shieldDuration;
-    
-    private int bladeCount;
+    // private float shieldDuration;
+    //
+    // private int bladeCount;
     private List<GameObject> swordList;
+    private List<GameObject> swordSpawnPositions;
+    private List<SentinelShieldViewController> sheildList;
     
     
     public SharedGameObject swordPrefab;
@@ -42,18 +44,16 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         animator = gameObject.GetComponentInChildren<Animator>(true);
         agent = gameObject.GetComponent<NavMeshAgent>();
         rb = gameObject.GetComponent<Rigidbody>();
-        bladePool = GameObjectPoolManager.Singleton.CreatePool(swordPrefab.Value, 10, 20);
-        swordList = new List<GameObject>();
     }
 
     public override void OnStart() {
         base.OnStart();
         agent.enabled = false;
         rb.isKinematic = true;
-        pivot.transform.localPosition = Vector3.zero;
-        pivot.transform.rotation = Quaternion.identity;
-        shieldDuration = enemyEntity.GetCustomDataValue<float>("shield", "shieldDuration");
-        bladeCount = enemyEntity.GetCustomDataValue<int>("shield", "bladeCount");
+        swordList = enemyEntity.GetSwordList();
+        sheildList = enemyEntity.GetShieldList();
+        swordSpawnPositions = enemyEntity.GetPositionList();
+        
         taskStatus = TaskStatus.Running;
         SkillExecute();
     }
@@ -65,75 +65,43 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
         Quaternion lookRotation = Quaternion.LookRotation(direction);
 		
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 10f);
-
-        if (rotating)
-        {
-            pivot.transform.Rotate(new Vector3(0,60,0)*Time.deltaTime);
-        }
-        else
-        {
-            pivot.transform.rotation = Quaternion.identity;
-        }
+        
         return taskStatus;
     }
 
     public async UniTask SkillExecute() {
 
         anim.CrossFadeInFixedTime("Shield_Start", 0.2f);
-        
-        for(int i = 0; i < bladeCount; i++)
-        {
-            float angle = i* 360f / bladeCount;
-            
-            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * arcRadius;
-            
-            float z = Mathf.Cos(Mathf.Deg2Rad * -angle) * arcRadius;
-
-            Vector3 spawnPosition = new Vector3(x, 0, z);
-            
-
-            GameObject blade = bladePool.Allocate();
-            
-            blade.transform.parent = pivot;
-            blade.transform.localPosition = spawnPosition;
-            blade.transform.forward = transform.forward;
-            
-            swordList.Add(blade);
-
-        }
-        float duration = 1f;
-        float timeElapsed = 0;
-        Vector3 startPosition = pivot.transform.position;
-        Vector3 targetPosition = pivot.transform.position + new Vector3(0, 1, 0);
-        while (timeElapsed < duration)
-        {
-            pivot.transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-            timeElapsed += Time.deltaTime;
-            await UniTask.Yield();
-        }
-        pivot.transform.position = targetPosition;
         await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop"),
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-
-        rotating = true;
         
-        await UniTask.WaitForSeconds(shieldDuration);
-        rotating = false;
+        for(int i = 0; i < swordList.Count; i++)
+        {
+            SentinelShieldViewController shield;
+            if (i > 0) // initialize shields
+            {
+                shield = sheildList[i - 1];
+                shield.gameObject.SetActive(true);
+                shield.Init(enemyEntity);
+            }
+            
+            GameObject blade = swordList[i]; // initialize blades
+            blade.SetActive(true);
+            blade.transform.parent = swordSpawnPositions[i].transform;
+            blade.transform.localPosition = Vector3.zero;
+            
+            if(i == swordList.Count - 1) // initialize last shield
+            {
+                shield = sheildList[i];
+                shield.gameObject.SetActive(true);
+                shield.Init(enemyEntity);
+            }
+            
+            await UniTask.WaitForSeconds(0.1f);
+        }
         
-        startPosition = pivot.transform.position;
-        targetPosition = pivot.transform.position - new Vector3(0, 1, 0);
-        while (timeElapsed < duration)
-        {
-            pivot.transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-            timeElapsed += Time.deltaTime;
-            await UniTask.Yield();
-        }
-
-        foreach (var blade in swordList)
-        {
-            blade.GetComponent<DefaultPoolableGameObject>().RecycleToCache();
-        }
-        swordList.Clear();
+        enemyEntity.RefreshBladeShieldStack();
+        
         anim.CrossFadeInFixedTime("Shield_End", 0f);
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
