@@ -39,6 +39,8 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
 
     private bool rotating = false;
     public override void OnAwake() {
+        Debug.Log($"BS - Shield on awake");
+
         base.OnAwake();
 		
         animator = gameObject.GetComponentInChildren<Animator>(true);
@@ -47,18 +49,21 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
     }
 
     public override void OnStart() {
+        Debug.Log($"BS - skill onstart");
+
         base.OnStart();
         agent.enabled = false;
         rb.isKinematic = true;
-        swordList = enemyEntity.GetSwordList();
-        sheildList = enemyEntity.GetShieldList();
-        swordSpawnPositions = enemyEntity.GetPositionList();
         
         taskStatus = TaskStatus.Running;
+        Debug.Log($"BS - before skill execute");
+
         SkillExecute();
     }
 
     public override TaskStatus OnUpdate() {
+        Debug.Log($"BS - Shield update");
+
         Transform playerTr = GetPlayer().transform;
         Vector3 direction = playerTr.position - transform.position;
         direction.y = 0;
@@ -71,9 +76,20 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
 
     public async UniTask SkillExecute() {
 
+        Debug.Log($"BS - Shield Skill start");
         anim.CrossFadeInFixedTime("Shield_Start", 0.2f);
-        await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop"),
+        await UniTask.WaitUntil(() =>
+            {
+                Debug.Log($"BS - {anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop")}");
+                return anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop");
+            },
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+        
+        swordList = enemyEntity.GetSwordList();
+        sheildList = enemyEntity.GetShieldList();
+        swordSpawnPositions = enemyEntity.GetPositionList();
+        Debug.Log($"BS - Shield Count: {swordList.Count}");
+
         
         for(int i = 0; i < swordList.Count; i++)
         {
@@ -97,7 +113,7 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
                 shield.Init(enemyEntity);
             }
             
-            await UniTask.WaitForSeconds(0.1f);
+            await UniTask.WaitForSeconds(0.1f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         }
         
         enemyEntity.RefreshBladeShieldStack();

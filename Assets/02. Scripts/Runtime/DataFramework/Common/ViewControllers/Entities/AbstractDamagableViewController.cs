@@ -67,6 +67,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (currenthealth <= 0) {
 				OnEntityDie(damagedealer);
 				ctsWhenDie.Cancel();
+				ctsWhenDie = new CancellationTokenSource();
 			}
 		}
 
