@@ -1,7 +1,8 @@
 ﻿using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
+using MikroFramework.Pool;
+using MikroFramework;
 using UnityEngine;
-
 
 namespace a {
 	public class Boss1Bullet : AbstractBulletViewController {
@@ -9,10 +10,18 @@ namespace a {
         public float bulletSpeed;
         private Transform playerTrans;
         private float timer;
+        private GameObject vfx;
+        private SafeGameObjectPool pool;
+        private GameObject particleInstance;
 
         private void Start()
         {
-
+            if(vfx == null)
+            {
+                Transform vfx = this.transform.Find("Boss1Hit");
+                this.vfx = vfx.gameObject;
+            }
+            pool = GameObjectPoolManager.Singleton.CreatePool(vfx, 50, 100);
             timer = Random.Range(0.5f, 2f);
             var child = this.gameObject.transform.GetChild(0).GetComponent<TrailRenderer>();
             child.enabled = true;
@@ -72,7 +81,11 @@ namespace a {
 		}
 
         protected override void OnHitObject(Collider other) {
-	        
+            Vector3 hitPoint = other.ClosestPointOnBounds(transform.position);
+            Vector3 hitNormal = other.ClosestPointOnBounds(transform.position + transform.forward) - transform.position;
+            particleInstance = pool.Allocate();
+            particleInstance.transform.position = (hitPoint);
+            particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
         }
 
         protected override void OnBulletReachesMaxRange() {
@@ -83,6 +96,7 @@ namespace a {
             timer = Random.Range(0.5f, 2f);
             var child = this.gameObject.transform.GetChild(0).GetComponent<TrailRenderer>();
             child.enabled = false;
+            
         }
         public void SetData(float bulletSpeed, Transform playerTrans)
         {
