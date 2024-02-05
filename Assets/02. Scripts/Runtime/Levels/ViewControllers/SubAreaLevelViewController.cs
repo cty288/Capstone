@@ -294,7 +294,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         {
             base.OnRecycled();
             totalEnemyCount = 0;
-            BoundEntity.ClearEnemyCountDictionary();
+            BoundEntity?.ClearEnemyCountDictionary();
             currentEnemies.Clear();
         }
 

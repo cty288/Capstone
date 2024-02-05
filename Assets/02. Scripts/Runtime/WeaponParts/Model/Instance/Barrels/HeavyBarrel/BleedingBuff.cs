@@ -1,4 +1,6 @@
-﻿using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Enemies.Model.Properties;
@@ -6,6 +8,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 	public class BleedingBuff : ConfigurableBuff<BleedingBuff> {
+		public override bool IsGoodBuff => false;
 		
 		[field: ES3Serializable]
 		public override float MaxDuration { get; protected set; }
@@ -25,19 +28,26 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		}
 
 		public override bool Validate() {
-			return buffOwner is IDamageable;
+			return base.Validate() && buffOwner is IDamageable;
 		}
 
 		public override void OnInitialize() {
 			damagableEntity = buffOwner as IDamageable;
 		}
-		
+
+
+		protected override void OnLevelUp() {
+			this.MaxDuration = GetBuffPropertyAtCurrentLevel<float>("buff_length");
+			this.TickInterval = GetBuffPropertyAtCurrentLevel<float>("tick_interval");
+			this.RemainingDuration = this.MaxDuration;
+		}
 
 		protected override void OnBuffStacked(BleedingBuff buff) {
 			this.MaxDuration = Mathf.Max(this.MaxDuration, buff.MaxDuration);
 			this.RemainingDuration = this.MaxDuration;
 			this.TickInterval = Mathf.Min(this.TickInterval, buff.TickInterval);
 		}
+
 
 		public override void OnStart() {
 			
@@ -62,10 +72,16 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			return BuffStatus.Running;
 		}
 
-		public override void OnEnds() {
+		
+
+		public override void OnBuffEnd() {
 			
 		}
-		
+
+		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
+			return null;
+		}
+
 		public static BleedingBuff Allocate(float tickInterval, int level, IEntity buffDealer, IEntity buffOwner) {
 			BleedingBuff buff = Allocate(buffDealer, buffOwner, level);
 			buff.MaxDuration = buff.GetBuffPropertyAtCurrentLevel<float>("buff_length");

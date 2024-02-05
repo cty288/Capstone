@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using Framework;
 using MikroFramework.Architecture;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
@@ -65,17 +66,19 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		private IBuffSystem buffSystem;
 		public override void OnInitialize() {
 			weaponEntity.RegisterOnDealDamage(OnWeaponDealDamage);
-			buffSystem = this.GetSystem<IBuffSystem>();
+			
 		}
 
 		private void OnWeaponDealDamage(IDamageable target, int damage) {
+			buffSystem = this.GetSystem<IBuffSystem>();
 			float chance = weaponPartsEntity.BuffChance;
 			if (Random.Range(0f, 1f) > chance) {
 				return;
 			}
 
-			buffSystem.AddBuff(target, weaponEntity.RootDamageDealer, BleedingBuff.Allocate(
-				1, weaponPartsEntity.BuffLevel, weaponEntity.RootDamageDealer, target));
+			IEntity rootEntity = weaponEntity.GetRootDamageDealer() as IEntity;
+			buffSystem.AddBuff(target,rootEntity, BleedingBuff.Allocate(
+				1, weaponPartsEntity.BuffLevel, rootEntity, target));
 		}
 
 		public override void OnStart() {
@@ -87,7 +90,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		}
 
 		public override void OnBuffEnd() {
-			weaponEntity.UnRegisterOnDealDamage(OnWeaponDealDamage);
+			weaponEntity.UnregisterOnDealDamage(OnWeaponDealDamage);
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

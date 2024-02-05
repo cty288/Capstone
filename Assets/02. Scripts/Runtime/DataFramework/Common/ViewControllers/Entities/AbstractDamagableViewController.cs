@@ -21,10 +21,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public CancellationToken GetCancellationTokenOnDie();
 	}
 	
-	public interface ICanDealDamageViewController : IEntityViewController {
+	/*public interface ICanDealDamageViewController : IEntityViewController, ICanDealDamage {
 		public ICanDealDamage CanDealDamageEntity { get; }
 		
-	}
+	}*/
 	
 	/// <summary>
 	/// An abstract view controller for entities that can take damage (have health)

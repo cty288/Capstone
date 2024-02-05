@@ -8,6 +8,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Polyglot;
 using Runtime.Controls;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Player;
 using Runtime.UI;
@@ -50,8 +51,8 @@ public class PlayerDieCanvas : AbstractMikroController<MainGame> {
 		if (damageDealer == null) {
 			return;
 		}
-		
-		ICanDealDamageRootEntity rootEntity = damageDealer.RootDamageDealer;
+
+		ICanDealDamage rootEntity = damageDealer.GetRootDamageDealer();
 		if (rootEntity == null) {
 			return;
 		}
@@ -59,8 +60,8 @@ public class PlayerDieCanvas : AbstractMikroController<MainGame> {
 		if (rootEntity is IPlayerEntity) {
 			deathReasonText.text = Localization.Get("DIE_PAGE_REASON_2");
 		}
-		else {
-			deathReasonText.text = Localization.GetFormat("DIE_PAGE_REASON_1", rootEntity.GetDisplayName());
+		else if(rootEntity is IEntity entity) {
+			deathReasonText.text = Localization.GetFormat("DIE_PAGE_REASON_1", entity.GetDisplayName());
 		}
 	}
 }

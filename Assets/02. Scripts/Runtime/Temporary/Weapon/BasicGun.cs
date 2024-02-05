@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.BindableProperty;
@@ -57,6 +58,8 @@ namespace Runtime.Temporary.Weapon
 
         public int Damage => m_damage;
         private DPunkInputs.PlayerActions playerActions;
+        private Action<IDamageable, int> _onDealDamageCallback;
+        private Action<IDamageable> _onKillDamageableCallback;
 
         private void Awake() {
             playerActions = ClientInput.Singleton.GetPlayerActions();
@@ -73,8 +76,22 @@ namespace Runtime.Temporary.Weapon
             
         }
 
-        public ICanDealDamageRootEntity RootDamageDealer { get; }
-        public ICanDealDamageRootViewController RootViewController { get; }
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer => null;
+
+        /*public ICanDealDamageRootEntity RootDamageDealer { get; }
+        public ICanDealDamageRootViewController RootViewController { get; }*/
 
         public void Start()
         {

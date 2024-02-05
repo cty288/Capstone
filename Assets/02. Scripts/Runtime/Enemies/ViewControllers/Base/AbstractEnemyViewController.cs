@@ -21,7 +21,7 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.ViewControllers.Base {
 	[RequireComponent(typeof(AnimationSMBManager))]
-	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder, ICanDealDamageViewController, ICanDealDamageRootViewController
+	public abstract class AbstractEnemyViewController<T> : AbstractCreatureViewController<T>, IEnemyViewController, IHitResponder
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
 		
@@ -44,6 +44,9 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 		protected ILevelModel levelModel;
 		protected AnimationSMBManager animationSMBManager;
+		private Action<IDamageable, int> _onDealDamageCallback;
+		private Action<IDamageable> _onKillDamageableCallback;
+
 		protected override void Awake() {
 			base.Awake();
 			
@@ -112,6 +115,9 @@ namespace Runtime.Enemies.ViewControllers.Base {
 				OnDestroyHealthBar(currentHealthBar);
 			}
 			currentHealthBar = null;
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 
 		protected override int GetSpawnedCombatCurrencyAmount() {
@@ -141,19 +147,35 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 
 		public void OnKillDamageable(IDamageable damageable) {
-			BoundEntity?.OnKillDamageable(damageable);
+			//BoundEntity?.OnKillDamageable(damageable);
 		}
 
 		public void OnDealDamage(IDamageable damageable, int damage) {
-			BoundEntity?.OnDealDamage(damageable, damage);
+			//BoundEntity?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => BoundEntity?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => this;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-		public ICanDealDamage CanDealDamageEntity => BoundEntity;
+		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
+		public ICanDealDamage ParentDamageDealer => BoundEntity;
 		public Transform GetTransform() {
 			return transform;
 		}
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => BoundEntity?.RootDamageDealer;
+		
+		
+		
+		public ICanDealDamageRootViewController RootViewController => this;*/
+		
 	}
 }

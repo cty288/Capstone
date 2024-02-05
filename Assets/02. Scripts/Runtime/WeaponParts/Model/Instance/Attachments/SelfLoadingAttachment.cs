@@ -61,6 +61,7 @@ public class SelfLoadingAttachment : WeaponPartsEntity<SelfLoadingAttachment, Se
 			if (weaponEntity != this.weaponEntity) return;
 			if(weaponEntity.IsHolding.Value) return;
 			
+			
 			base.weaponEntity.Reload();
 		}
 

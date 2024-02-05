@@ -68,7 +68,7 @@ public class KineticDevice : WeaponPartsEntity<KineticDevice, KineticDeviceBuff>
 		}
 
 		private void OnIsHoldingChanged(bool arg1, bool isHolding) {
-			IPlayerEntity playerEntity = weaponEntity.RootDamageDealer as IPlayerEntity;
+			IPlayerEntity playerEntity = weaponEntity.GetRootDamageDealer() as IPlayerEntity;
 			if (playerEntity == null) {
 				return;
 			}
@@ -96,7 +96,7 @@ public class KineticDevice : WeaponPartsEntity<KineticDevice, KineticDeviceBuff>
 		}
 		
 		private void RecoverSpeed() {
-			IPlayerEntity playerEntity = weaponEntity.RootDamageDealer as IPlayerEntity;
+			IPlayerEntity playerEntity = weaponEntity.GetRootDamageDealer() as IPlayerEntity;
 			if (playerEntity == null) {
 				return;
 			}

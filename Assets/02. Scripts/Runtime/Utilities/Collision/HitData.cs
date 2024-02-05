@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -31,8 +32,8 @@ namespace Runtime.Utilities.Collision
         /// <param name="hit"></param>
         /// <param name="hitDetector"></param>
         /// <returns>Returns HitData object.</returns>
-        public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector, bool showDamageNumber)
-        {
+        public HitData SetHitScanData(IHitResponder hitResponder,  IHurtbox hurtbox, 
+            RaycastHit hit, IHitDetector hitDetector, bool showDamageNumber) {
             Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitDetector.Damage * hurtbox.DamageMultiplier);
             HitPoint = hit.point;
             HitNormal = hit.normal;
@@ -40,10 +41,13 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
+           
+            
+            
             return this;
         }
 
-        public HitData SetHitBoxData(IHitResponder hitResponder,int damage, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
+        public HitData SetHitBoxData(IHitResponder hitResponder, int damage, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
             IHitDetector hitDetector, bool showDamageNumber) {
 
             Damage = hitResponder == null ? 0 : Mathf.FloorToInt(damage * hurtbox.DamageMultiplier);
@@ -54,6 +58,7 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
+           
             return this;
         }
         
@@ -67,6 +72,7 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
+          
             return this;
         }
 
@@ -125,6 +131,8 @@ namespace Runtime.Utilities.Collision
         public void HitResponse(HitData data);
         
         public HitData OnModifyHitData(HitData data);
+        
+      
     }
 
     /// <summary>
