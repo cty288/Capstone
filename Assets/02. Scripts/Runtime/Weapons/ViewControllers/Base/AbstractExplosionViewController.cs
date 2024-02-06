@@ -108,7 +108,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 		public bool CheckHit(HitData data) {
 
-			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner)) {
+			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || 
+			    data.Hurtbox.Owner == owner.GetRootDamageDealerTransform()?.gameObject || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;
 			}
 			else { return true; }

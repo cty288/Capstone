@@ -71,6 +71,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 		protected HitData hitData;
 		private Action<IDamageable, int> _onDealDamageCallback;
 		private Action<IDamageable> _onKillDamageableCallback;
+		private bool overrideExplosionFaction = false;
 
 		private void Awake()
 		{
@@ -105,7 +106,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 			}
 		}
 		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
-			bool ownerTriggerHitResponse = false)
+			bool ownerTriggerHitResponse = false, bool overrideExplosionFaction = false)
 		{
 			CurrentFaction.Value = faction;
 			Damage = damage;
@@ -113,6 +114,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
+			this.overrideExplosionFaction = overrideExplosionFaction;
 
 			//ignore collision with bullet owner
 			Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();

@@ -132,3 +132,24 @@ Powerless,4,"{
      ""damage_multiplier"": {""type"": ""float"", ""value"": 0.4}
   }
 }",,,
+MineralBuff,3,"{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 30},
+    ""range"": {""type"": ""float"", ""value"": 15}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 30},
+    ""range"": {""type"": ""float"", ""value"": 15},
+    ""health_kill"": {""type"": ""float"", ""value"": 0.1}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 30},
+    ""range"": {""type"": ""float"", ""value"": 15},
+    ""health_kill"": {""type"": ""float"", ""value"": 0.1},
+    ""ammo_recovery_base"": {""type"": ""int"", ""value"": 1},
+    ""ammo_recovery_kill"": {""type"": ""int"", ""value"": 3}
+  }
+}",,,

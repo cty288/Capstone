@@ -18,7 +18,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		int Damage { get; }
 
 		public void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
-			bool ownerTriggerHitResponse = false);
+			bool ownerTriggerHitResponse = false, bool overrideExplosionFaction = false);
 	}
 	
 	
@@ -74,6 +74,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		[SerializeField] private bool autoRecycleWhenHit = true;
 		private Action<IDamageable, int> _onDealDamageCallback;
 		private Action<IDamageable> _onKillDamageableCallback;
+		protected bool overrideExplosionFaction = false;
 
 		protected virtual void Awake() {
 			hitBox = GetComponent<HitBox>();
@@ -96,13 +97,14 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
-			 bool ownerTriggerHitResponse = false) {
+			 bool ownerTriggerHitResponse = false, bool overrideExplosionFaction = false) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
+			this.overrideExplosionFaction = overrideExplosionFaction;
 			
 			//ignore collision with bullet owner
 			Collider[] bulletOwnerColliders = bulletOwner.GetComponentsInChildren<Collider>(true);
@@ -194,12 +196,13 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				Rigidbody rootRigidbody = other.attachedRigidbody;
 				GameObject hitObj = rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
-				if (hitObj && bulletOwner && hitObj.transform == bulletOwner.transform) {
+				if (hitObj && (bulletOwner && hitObj.transform == bulletOwner.transform) || 
+				    (hitObj.transform == owner.GetRootDamageDealerTransform())) {
 					return;
 				}
 				
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
-					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && !penetrateSameFaction) {
+					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
 						return;
 					}
 				}
