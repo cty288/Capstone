@@ -74,6 +74,15 @@ public class SentinelShieldViewController : AbstractMikroController<MainGame>, I
 			gameObject.SetActive(false);
 		});
 	}
+
+	public void ResetShield()
+	{
+		currentHealth = maxHealth;
+		shieldMaterial.SetFloat("_Health", 1);
+		shieldMaterial.SetFloat("_Manifest", 0);
+		shieldMaterial.SetColor("_DamageColor", originalColor);
+		gameObject.SetActive(false);
+	}
 	
 	private async UniTask FlashAndBreak()
 	{
