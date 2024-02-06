@@ -55,6 +55,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             bulletCount = enemyEntity.GetCustomDataValue<int>("attack", "bulletCount");
             bulletAccuracy = enemyEntity.GetCustomDataValue<float>("attack", "bulletAccuracy");
             StartCoroutine(RF());
+            //StopAllCoroutines();
         }
         public override TaskStatus OnUpdate()
         {

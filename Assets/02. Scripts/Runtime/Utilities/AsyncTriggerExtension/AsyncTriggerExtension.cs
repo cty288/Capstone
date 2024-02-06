@@ -7,7 +7,17 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.Utilities.AsyncTriggerExtension {
 	public static class AsyncTriggerExtension {
-		public static CancellationToken GetCancellationTokenOnDestroyOrRecycleOrDie(this GameObject gameObject) {
+		public static CancellationToken GetCancellationTokenOnDestroyOrRecycleOrDie(this GameObject gameObject, bool cancelledOnStunned = true) {
+			if(gameObject.TryGetComponent<ICreatureViewController>(out ICreatureViewController c)) {
+				if (cancelledOnStunned) {
+					return c.GetCancellationTokenOnStunnedOrDie();
+				}
+				else {
+					return c.GetCancellationTokenOnDie();
+				}
+			
+			}
+			
 			if (gameObject.TryGetComponent<IDamageableViewController>(out IDamageableViewController o)) {
 				return o.GetCancellationTokenOnDie();
 			}

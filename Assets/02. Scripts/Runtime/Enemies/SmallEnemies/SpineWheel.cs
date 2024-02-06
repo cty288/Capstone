@@ -35,7 +35,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         public override void OnRecycle()
         {
-
+               base.OnRecycle();
         }
 
 

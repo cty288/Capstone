@@ -57,7 +57,6 @@ namespace Runtime.Enemies.Model {
 			return ConfigDatas.Singleton.BossEntityConfigTable;
 		}
 		
-		
 
 	}
 }

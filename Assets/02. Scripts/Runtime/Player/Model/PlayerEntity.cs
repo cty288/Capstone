@@ -115,6 +115,7 @@ namespace Runtime.Player {
 		}
 
 		public override void OnRecycle() {
+			base.OnRecycle();
 			OnModifyDamageCountCallbackList.Clear();
 			_onDealDamageCallback = null;
 			_onKillDamageableCallback = null;

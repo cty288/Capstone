@@ -90,7 +90,9 @@ namespace Runtime.UI.HealthBar {
 					buffIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(height, height);
 					
 					buffIcon.SetBuff(buff);
-					buffToGameObject.Add(buff, buffIcon);
+					if (!buffToGameObject.TryAdd(buff, buffIcon)) {
+						Destroy(buffIcon.gameObject);
+					}
 					buffIcon.OnRefresh();
 					break;
 				case BuffUpdateEventType.OnUpdate:
