@@ -24,7 +24,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		}
 
 		public override bool IsDisplayed() {
-			return false;
+			return true;
 		}
 
 		public override bool Validate() {

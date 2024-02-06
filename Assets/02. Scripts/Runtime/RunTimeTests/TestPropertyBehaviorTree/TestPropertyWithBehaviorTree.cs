@@ -23,7 +23,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         public int MyPersistentButNotInherentData { get; set; } = 100;
     
         public override void OnRecycle() {
-        
+            base.OnRecycle();
         }
         protected override void OnInitModifiers(int rarity, int level) {
             

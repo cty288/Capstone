@@ -28,7 +28,7 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
     }
 
     public override void OnRecycle() {
-
+          base.OnRecycle();
     }
     protected override void OnInitModifiers(int rarity, int level) {
             

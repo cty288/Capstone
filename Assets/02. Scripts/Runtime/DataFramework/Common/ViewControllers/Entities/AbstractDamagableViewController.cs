@@ -52,6 +52,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			foreach (HurtBox hurtBox in hurtBoxes) {
 				hurtBox.HurtResponder = this;
 			}
+			ctsWhenDie = new CancellationTokenSource();
 		}
 
 		private void OnHeal(int healamount, int currenthealth, IBelongToFaction healer) {
@@ -107,6 +108,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public IDamageable DamageableEntity => BoundEntity;
 		public CancellationToken GetCancellationTokenOnDie() {
+			
 			return ctsWhenDie.Token;
 		}
 	}

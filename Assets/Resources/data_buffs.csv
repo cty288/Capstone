@@ -72,7 +72,7 @@ MotivatedBuff,4,"{
     ""shield"": {""type"": ""int"", ""value"": 30}
   }
 }",,,
-MineralBuff,3,"{
+CombatBuff,3,"{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2},
     ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
@@ -90,5 +90,45 @@ MineralBuff,3,"{
     ""range"": {""type"": ""float"", ""value"": 10},
     ""time"": {""type"": ""float"", ""value"": 20}
 
+  }
+}",,,
+PlantBuff,3,"{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 15},
+    ""range"": {""type"": ""float"", ""value"": 20},
+    ""buff_time"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 15},
+    ""range"": {""type"": ""float"", ""value"": 20},
+    ""buff_time"": {""type"": ""float"", ""value"": 5},
+    ""hit_buff_multiplier"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 15},
+    ""range"": {""type"": ""float"", ""value"": 20},
+    ""buff_time"": {""type"": ""float"", ""value"": 5},
+    ""hit_buff_multiplier"": {""type"": ""float"", ""value"": 0.2},
+    ""enemy_damage_decrease_multiplier"": {""type"": ""float"", ""value"": 0.2}
+  }
+}",,,
+Powerless,4,"{
+  ""level1"": { 
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 0.15}
+  },
+  ""level2"": {
+     ""damage_multiplier"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level3"": {
+     ""damage_multiplier"": {""type"": ""float"", ""value"": 0.25}
+  },
+  ""level4"": {
+     ""damage_multiplier"": {""type"": ""float"", ""value"": 0.4}
   }
 }",,,
