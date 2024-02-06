@@ -391,7 +391,9 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public abstract void HitResponse(HitData data);
         public HitData OnModifyHitData(HitData data) {
-            
+            if(BoundEntity == null) {
+                return data;
+            }
             return BoundEntity.OnModifyHitData(data);
         }
 

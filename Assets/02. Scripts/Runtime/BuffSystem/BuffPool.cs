@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement;
@@ -28,6 +29,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			RegisterWeaponBuildBuff(CurrencyType.Time, TimeBuff.Allocate);
 			RegisterWeaponBuildBuff(CurrencyType.Combat, CombatBuff.Allocate);
 			RegisterWeaponBuildBuff(CurrencyType.Plant, PlantBuff.Allocate);
+			RegisterWeaponBuildBuff(CurrencyType.Mineral, MineralBuff.Allocate);
 		}
 		
 		public static List<BuffBuilder> FindBuffs(Predicate<IBuff> predicate) {

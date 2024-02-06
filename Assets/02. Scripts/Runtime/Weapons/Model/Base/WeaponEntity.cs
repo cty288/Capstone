@@ -35,7 +35,7 @@ namespace Runtime.Weapons.Model.Base
         public float returnSpeed;
     }
     
-    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
+    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage, IHitResponder {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
         public IAdsFOV GetAdsFOV();
@@ -70,7 +70,7 @@ namespace Runtime.Weapons.Model.Base
 
        
 
-        public HitData OnModifyHitData(HitData data);
+        //public HitData OnModifyHitData(HitData data);
 
         public void RegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
         
@@ -385,7 +385,14 @@ namespace Runtime.Weapons.Model.Base
             set => _onDealDamageCallback = value;
         }
 
-      
+
+        public bool CheckHit(HitData data) {
+            return true;
+        }
+
+        public void HitResponse(HitData data) {
+         
+        }
 
         public HitData OnModifyHitData(HitData data) {
             HitData result = data;

@@ -28,11 +28,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			if (Random.Range(0f, 1f) <= chance) {
-				if (hit.Attacker is IExplosionViewController) {
-					
-				}
-				else {
-					
+				if (hit.Attacker is not IExplosionViewController) {
 					float range = GetBuffPropertyAtCurrentLevel<float>("range");
 					float explosionDamagePerRarity = GetBuffPropertyAtCurrentLevel<float>("damage_per_rarity");
 					int damage = Mathf.RoundToInt(explosionDamagePerRarity * weaponEntity.GetRarity());
@@ -44,7 +40,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 
 					explosion.Init(weaponEntity.CurrentFaction.Value, damage, range, null, weaponEntity);
 				}
-	
+
 			}
 
 			return hit;
