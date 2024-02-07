@@ -66,6 +66,7 @@ public class GameTimeModel : AbstractSavableModel, IGameTimeModel {
     
     public const float DayLength = 420f; // day length in seconds
     public const int NewDayStartHour = 5;
+    public const int NightStartHour = 20;
     
     [field: ES3Serializable]
     public BindableProperty<int> DayCountThisRound { get; } = new BindableProperty<int>(1);

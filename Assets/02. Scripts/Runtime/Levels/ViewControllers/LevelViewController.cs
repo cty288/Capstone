@@ -383,6 +383,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				int warningTime = sandstormHappenTime / 2;
 				gameEventSystem.AddEvent(new SandstormWarningEvent(), warningTime);
 			}
+			
+			// Add Night Events
+			// gameEventSystem.AddEvent()
 
 			int prevDay = day - 1;
 			if (prevDay > 0) {
