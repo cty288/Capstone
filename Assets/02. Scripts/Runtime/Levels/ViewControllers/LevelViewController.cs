@@ -5,6 +5,7 @@ using System.Linq;
 using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Levels.DayNight;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Sandstorm;
@@ -385,7 +386,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 			// Add Night Events
-			// gameEventSystem.AddEvent()
+			// Night occurs at 8pm (20h)
+			int nightHappeningTime = (GameTimeModel.NightStartHour - GameTimeModel.NewDayStartHour) * 60;
+			gameEventSystem.AddEvent(new NightEvent(), nightHappeningTime);
+			
+			// Trigger warning 1 in-game hour before night time.
+			gameEventSystem.AddEvent(NightWarningEvent.Allocate(60), nightHappeningTime - 1);
+			
+			// New Day Event
+			gameEventSystem.AddEvent(new NewDayEvent(), 0);
 
 			int prevDay = day - 1;
 			if (prevDay > 0) {

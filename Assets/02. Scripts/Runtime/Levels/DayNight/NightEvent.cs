@@ -9,6 +9,7 @@ namespace _02._Scripts.Runtime.Levels.DayNight
     }
     public class NightEvent: GameEvent<NightEvent> {
         public override EventElapseType ElapseType { get; } = EventElapseType.Predetermined;
+        
         public override void OnInitialized() {
             Debug.Log($"Night approaches in {RemainingMinutesToTrigger} minutes!");
         }

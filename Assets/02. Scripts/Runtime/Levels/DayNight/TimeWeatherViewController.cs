@@ -13,7 +13,12 @@ namespace _02._Scripts.Runtime.TimeSystem
     {
         [SerializeField] private Material sandstormGradientMat;
         [SerializeField] private Light skyLight;
-        
+
+        [SerializeField] private bool isDay = true;
+        [SerializeField] private Vector2 daySunRotationEuler = new Vector2(0, 180);
+        [SerializeField] private Vector2 nightSunRotationEuler = new Vector2(180, 360);
+
+        private float _endOfDayMinutes = (GameTimeModel.NightStartHour - GameTimeModel.NewDayStartHour) * 60; // From start of day (5am) to end of day (8pm)
         
         private IGameTimeModel gameTimeModel;
         private ILevelModel levelModel;
@@ -47,9 +52,8 @@ namespace _02._Scripts.Runtime.TimeSystem
         }
 
         private void OnGlobalTimeChanged(DateTime obj)
-        {
-            obj.
-            throw new NotImplementedException();
+        { 
+            float dayTimeMinutes = (obj.Hour - GameTimeModel.NewDayStartHour) * 60 + obj.Minute;
         }
 
         private void OnSandStormWarning(OnSandStormWarning e)
