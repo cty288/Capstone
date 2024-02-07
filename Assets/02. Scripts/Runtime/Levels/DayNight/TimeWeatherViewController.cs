@@ -1,4 +1,5 @@
 ﻿using System;
+using _02._Scripts.Runtime.Levels.DayNight;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Sandstorm;
 using Framework;
@@ -14,7 +15,6 @@ namespace _02._Scripts.Runtime.TimeSystem
         [SerializeField] private Light skyLight;
         
         
-        
         private IGameTimeModel gameTimeModel;
         private ILevelModel levelModel;
         private void Awake() {
@@ -23,6 +23,8 @@ namespace _02._Scripts.Runtime.TimeSystem
             
             this.RegisterEvent<OnSandStormWarning>(OnSandStormWarning);
             this.RegisterEvent<OnSandStormKillPlayer>(OnSandStormKillPlayer);
+            this.RegisterEvent<OnNightStart>(OnNightStart);
+            this.RegisterEvent<OnNightApproaching>(OnNightApproaching);
 
             levelModel.CurrentLevelCount.RegisterWithInitValue(OnLevelCountChanged)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
@@ -46,6 +48,7 @@ namespace _02._Scripts.Runtime.TimeSystem
 
         private void OnGlobalTimeChanged(DateTime obj)
         {
+            obj.
             throw new NotImplementedException();
         }
 
@@ -56,7 +59,15 @@ namespace _02._Scripts.Runtime.TimeSystem
         private void OnSandStormKillPlayer(OnSandStormKillPlayer e)
         {
         }
+
+        private void OnNightStart(OnNightStart e)
+        {
+            
+        }
         
-        
+        private void OnNightApproaching(OnNightApproaching e)
+        {
+            
+        }
     }
 }
