@@ -51,7 +51,7 @@ public class SentinelShieldViewController : AbstractMikroController<MainGame>, I
 
 	public bool CheckHurt(HitData data)
 	{
-		return data.Attacker.CurrentFaction.Value != Faction.Hostile;
+		return data.Attacker.CurrentFaction.Value != CurrentFaction.Value;
 	}
 
 	public void HurtResponse(HitData data)

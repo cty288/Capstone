@@ -49,6 +49,7 @@ namespace Runtime.Weapons.ViewControllers.Base
     
     public interface IWeaponViewController : IResourceViewController,  IPickableResourceViewController, IInHandResourceViewController {
         IWeaponEntity WeaponEntity { get; }
+        IEntity IEntityViewController.Entity => WeaponEntity;
     }
     
     /// <summary>
@@ -227,6 +228,9 @@ namespace Runtime.Weapons.ViewControllers.Base
             /*if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
                 BoundEntity.SetOwner(damageDealer);
             }*/
+            if(BoundEntity.CurrentAmmo == 0 && autoReload) {
+                StartCoroutine(ReloadAnimation());
+            }
         }
 
         
