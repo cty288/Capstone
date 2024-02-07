@@ -67,7 +67,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			}
 		}
 
-		private void OnDealDamage(IDamageable target, int damage) {
+		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
 			IEntity weaponRootOwner = weaponEntity.GetRootDamageDealer() as IEntity;
 			if (weaponRootOwner == null) {
 				return;

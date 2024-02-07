@@ -21,7 +21,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			weaponEntity.RegisterOnDealDamage(OnDealDamage);
 		}
 
-		private void OnDealDamage(IDamageable target, int damage) {
+		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			if(Random.Range(0f, 1f) <= chance) {
 				float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage_multiplier");

@@ -25,22 +25,22 @@ namespace Runtime.Enemies
        
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Hostile);
-        public void OnKillDamageable(IDamageable damageable) {
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
             
         }
 
-        public void OnDealDamage(IDamageable damageable, int damage) {
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
             
         }
 
         public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
             get => _onDealDamageCallback;
             set => _onDealDamageCallback = value;
         }
 
-        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
             get => _onKillDamageableCallback;
             set => _onKillDamageableCallback = value;
         }
@@ -52,8 +52,8 @@ namespace Runtime.Enemies
 
         public int Damage => m_damage;
         public List<GameObject> hitObjects= new List<GameObject>();
-        private Action<IDamageable, int> _onDealDamageCallback;
-        private Action<IDamageable> _onKillDamageableCallback;
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
         public bool CheckHit(HitData data) {
             if (data.Hurtbox.Owner == boss1) { return false; }

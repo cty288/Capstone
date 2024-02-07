@@ -5,6 +5,8 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
+using Runtime.DataFramework.ViewControllers.Entities;
+using Runtime.Enemies.Model;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers.Base;
@@ -21,27 +23,65 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 				return;
 			}
 			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
+			weaponEntity.RegisterOnKillDamageable(OnKillDamageable);
+			//weaponEntity.RegisterOnDealDamage();
 			
 			resLoader = this.GetUtility<ResLoader>();
 		}
 
+		private void OnKillDamageable(ICanDealDamage source, IDamageable target) {
+			if (Level < 3) {
+				return;
+			}
+			
+			if (source is IExplosionViewController) {
+				int ammoRecovered = GetBuffPropertyAtCurrentLevel<int>("ammo_recovery_kill");
+				weaponEntity.AddAmmo(ammoRecovered);
+			}
+		}
+
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
-			if (Random.Range(0f, 1f) <= chance) {
-				if (hit.Attacker is not IExplosionViewController) {
-					float range = GetBuffPropertyAtCurrentLevel<float>("range");
-					float explosionDamagePerRarity = GetBuffPropertyAtCurrentLevel<float>("damage_per_rarity");
-					int damage = Mathf.RoundToInt(explosionDamagePerRarity * weaponEntity.GetRarity());
+			if (hit.Attacker is IExplosionViewController) {
+				if (Level < 2) return hit;
 				
-					GameObject explosionGo = resLoader.LoadSync<GameObject>("Explosion_MineralBuff");
-					MineralBuffExplosion explosion =
-						GameObject.Instantiate(explosionGo, hit.HitPoint, Quaternion.identity)
-							.GetComponent<MineralBuffExplosion>();
+				if (hit.Hurtbox.Owner && hit.Hurtbox.Owner.TryGetComponent<INormalEnemyViewController>(out INormalEnemyViewController vc)) {
+					IEnemyEntity enemyEntity = vc.EnemyEntity;
+					if(enemyEntity == null) return hit;
 
-					explosion.Init(weaponEntity.CurrentFaction.Value, damage, range, null, weaponEntity);
+					int maxHealth = enemyEntity.GetMaxHealth();
+					int currentHealth = enemyEntity.GetCurrentHealth();
+					float healthPercentage = (float)currentHealth / maxHealth;
+					float killThreshold = GetBuffPropertyAtCurrentLevel<float>("health_kill");
+
+					if (healthPercentage <= killThreshold) {
+						enemyEntity.Kill(hit.Attacker, hit);
+					}
 				}
-
 			}
+			else {
+				if (Random.Range(0f, 1f) <= chance) {
+					if (hit.Attacker is not IExplosionViewController) {
+						float range = GetBuffPropertyAtCurrentLevel<float>("range");
+						float explosionDamagePerRarity = GetBuffPropertyAtCurrentLevel<float>("damage_per_rarity");
+						int damage = Mathf.RoundToInt(explosionDamagePerRarity * weaponEntity.GetRarity());
+				
+						GameObject explosionGo = resLoader.LoadSync<GameObject>("Explosion_MineralBuff");
+						MineralBuffExplosion explosion =
+							GameObject.Instantiate(explosionGo, hit.HitPoint, Quaternion.identity)
+								.GetComponent<MineralBuffExplosion>();
+
+						explosion.Init(weaponEntity.CurrentFaction.Value, damage, range, null, weaponEntity);
+
+						if (Level > 2) {
+							int ammoRecovered = GetBuffPropertyAtCurrentLevel<int>("ammo_recovery_base");
+							weaponEntity.AddAmmo(ammoRecovered);
+						}
+					}
+				
+				}
+			}
+			
 
 			return hit;
 		}
@@ -63,6 +103,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 		public override void OnRecycled() {
 			if (weaponEntity != null) {
 				weaponEntity.UnRegisterOnModifyHitData(OnWeaponModifyHitData);
+				weaponEntity.UnregisterOnKillDamageable(OnKillDamageable);
 			}
 			base.OnRecycled();
 		}

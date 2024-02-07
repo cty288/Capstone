@@ -47,7 +47,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			return data;
 		}
 
-		private void OnDealDamage(IDamageable target, int damage) {
+		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			if (Random.Range(0f, 1f) <= chance) {
 				Transform transform = weaponEntity.GetRootDamageDealerTransform();
