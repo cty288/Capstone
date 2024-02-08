@@ -12163,7 +12163,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 
   autoCreateNewEntityWhenStart: 0
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -12182,6 +12181,8 @@ MonoBehaviour:
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 1533547333141084678}
   enemySpawnCardConfigs: []
+  maxSpawnPerEnemy:
+    _serializedList: []
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -26578,7 +26579,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 
   autoCreateNewEntityWhenStart: 0
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -26597,6 +26597,8 @@ MonoBehaviour:
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 7518815705803485129}
   enemySpawnCardConfigs: []
+  maxSpawnPerEnemy:
+    _serializedList: []
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -31362,7 +31364,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 
   autoCreateNewEntityWhenStart: 0
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -31381,6 +31382,8 @@ MonoBehaviour:
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 1150315226522254986}
   enemySpawnCardConfigs: []
+  maxSpawnPerEnemy:
+    _serializedList: []
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -34095,7 +34098,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 
   autoCreateNewEntityWhenStart: 0
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -34114,6 +34116,8 @@ MonoBehaviour:
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 3040550545555058686}
   enemySpawnCardConfigs: []
+  maxSpawnPerEnemy:
+    _serializedList: []
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -45810,7 +45814,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2876
+  m_VersionIndex: 2879
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -56930,7 +56934,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 
   autoCreateNewEntityWhenStart: 0
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -56949,6 +56952,8 @@ MonoBehaviour:
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 5729297349475455337}
   enemySpawnCardConfigs: []
+  maxSpawnPerEnemy:
+    _serializedList: []
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -57034,7 +57039,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 19776
+  m_VersionIndex: 19779
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -69594,7 +69599,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 19ab2d1f-aab2-43a9-b695-57625965317d
   autoCreateNewEntityWhenStart: 0
   showNameTagWhenPointed: 0
   nameTagFollowTransform: {fileID: 0}
@@ -69621,14 +69625,12 @@ MonoBehaviour:
       variants: []
       minRarity: 1
       maxRarity: 2
-      maxSpawnCountPerArea: 0
   - enemySpawnInfos:
     - mainPrefab: {fileID: 53076124648127137, guid: c4c4d07d25d51ff45bd1e540ac4a68c4,
         type: 3}
       variants: []
       minRarity: 1
       maxRarity: 2
-      maxSpawnCountPerArea: 0
   bossSpawnCostInfo:
     _serializedList:
     - Key: 0
@@ -69729,6 +69731,7 @@ MonoBehaviour:
   - 0
   - 0.33
   - 1
+  timeCurrencyLevel: 1
   subAreaLevelPrefabs:
   - {fileID: 2935341558826336954}
   - {fileID: 1399609052374784794}
