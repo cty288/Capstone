@@ -97,11 +97,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			return null;
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					int chance = (int) (weaponPartsEntity.BuffChance * 100);
-					return new WeaponBuffedAdditionalPropertyDescription(null, null,
+					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("HeavyBarrel_BUFF_PROPERTY", chance + "%",
 							weaponPartsEntity.BuffLevel));
 				})

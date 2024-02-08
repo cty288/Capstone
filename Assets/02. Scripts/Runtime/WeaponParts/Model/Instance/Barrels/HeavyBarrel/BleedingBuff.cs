@@ -19,14 +19,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		
 		
 		private IDamageable damagableEntity;
-		public override string OnGetDescription(string defaultLocalizationKey) {
-			return null;
-		}
-
+		
 		public override bool IsDisplayed() {
 			return true;
 		}
-
+		public override string GetLevelDescription(int level) {
+			return null;
+		}
 		public override bool Validate() {
 			return base.Validate() && buffOwner is IDamageable;
 		}

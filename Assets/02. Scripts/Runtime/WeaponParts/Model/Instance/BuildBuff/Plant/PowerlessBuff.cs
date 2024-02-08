@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using UnityEngine;
@@ -13,14 +14,19 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 
 		//[ES3Serializable] private float damageMultiplier;
 		private ICanDealDamage owner;
-		public override string OnGetDescription(string defaultLocalizationKey) {
-			return null;
-		}
+		
 
 		public override bool IsDisplayed() {
 			return true;
 		}
-
+		
+		
+		public override string GetLevelDescription(int level) {
+			int displayedPercentage = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("damage_multiplier", level) * 100);
+			return Localization.GetFormat("PowerlessBuff_Desc", level, displayedPercentage);
+		}
+		
+		
 		public override void OnInitialize() {
 			owner = (ICanDealDamage) buffOwner;
 			if (owner == null) {

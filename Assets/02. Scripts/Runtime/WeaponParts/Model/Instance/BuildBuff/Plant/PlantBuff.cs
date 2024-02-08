@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using Framework;
 using MikroFramework.Architecture;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.ViewControllers.Entities;
@@ -22,7 +24,29 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			weaponEntity.RegisterOnDealDamage(OnDealDamage);
 			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
 		}
+		public override string[] GetAllLevelDescriptions() {
+			int displayedChance = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("chance", 1) * 100);
+			int time = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("buff_time", 1));
+			int additionalDamage = weaponEntity.GetRarity() * GetBuffPropertyAtLevel<int>("damage_per_rarity", 1);
+			string malfunctionBuffDesc = Localization.Get("MulfunctionBuff_Desc");
 
+			int displayedPercentage = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("hit_buff_multiplier", 2) * 100);
+			
+			PowerlessBuff powerlessBuff =
+				BuffPool.GetTemplateBuffs((buff => buff is PowerlessBuff)).FirstOrDefault() as PowerlessBuff;
+			string powerlessBuffDesc = powerlessBuff?.GetLevelDescription(2);
+			
+			
+			return new string[] {
+                Localization.GetFormat("BUILD_BUFF_PLANT_1", displayedChance, time, additionalDamage, malfunctionBuffDesc),
+                Localization.GetFormat("BUILD_BUFF_PLANT_2", displayedPercentage),
+                Localization.GetFormat("BUILD_BUFF_PLANT_3", powerlessBuffDesc)
+			};
+
+		}
+		
+		
+		
 		private HitData OnModifyHitData(HitData data, IWeaponEntity weapon) {
 			if (data.Hurtbox == null) {
 				return data;

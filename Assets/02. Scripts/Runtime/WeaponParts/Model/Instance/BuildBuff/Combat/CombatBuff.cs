@@ -3,6 +3,7 @@ using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using Framework;
 using MikroFramework.Architecture;
+using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
@@ -104,6 +105,18 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 
 		protected override bool OnValidate() {
 			return true;
+		}
+
+		public override string[] GetAllLevelDescriptions() {
+			int displayedChance = Mathf.RoundToInt(GetBuffPropertyAtCurrentLevel<float>("chance") * 100);
+			int time = Mathf.RoundToInt(GetBuffPropertyAtCurrentLevel<float>("time"));
+			int calculatedDamage = 2 * weaponEntity.GetRarity();
+			
+			return new string[] {
+				Localization.GetFormat("BUILD_BUFF_Combat_1", displayedChance, time, calculatedDamage),
+				Localization.Get("BUILD_BUFF_Combat_2"),
+				Localization.Get("BUILD_BUFF_Combat_3")
+			};
 		}
 
 		public IArchitecture GetArchitecture() {

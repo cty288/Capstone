@@ -40,7 +40,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.AdaptedCompensator {
 	public class AdaptedCompensatorBuff : WeaponPartsBuff<AdaptedCompensator, AdaptedCompensatorBuff> {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
-
+		[ES3Serializable]
 		private float multiplier;
 		public override void OnInitialize() {
 			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
@@ -74,11 +74,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.AdaptedCompensator {
 			return null;
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					int percentage = (int) (multiplier * 100);
-					return new WeaponBuffedAdditionalPropertyDescription(null, null,
+					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("AdaptedCompensator_BUFF_PROPERTY", percentage));
 				})
 			};

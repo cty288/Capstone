@@ -42,8 +42,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialCompensator {
 	public class SpecialCompensatorBuff : WeaponPartsBuff<SpecialCompensator, SpecialCompensatorBuff> {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
-
+		[ES3Serializable]
 		private float multiplier;
+		[ES3Serializable]
 		private float chance;
 		public override void OnInitialize() {
 			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
@@ -81,11 +82,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialCompensator {
 			return null;
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					int displayChance = (int) (chance * 100);
-					return new WeaponBuffedAdditionalPropertyDescription(null, null,
+					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("SpecialCompensator_desc", displayChance, (int) multiplier));
 				})
 			};

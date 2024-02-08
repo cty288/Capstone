@@ -27,9 +27,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 
 		private IDamageable damagableEntity;
 		
-		public override string OnGetDescription(string defaultLocalizationKey) {
-			return null;
-		}
+		
 
 		public override bool IsDisplayed() {
 			return true;
@@ -43,6 +41,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 			damagableEntity = buffOwner as IDamageable;
 		}
 
+
+		public override string GetLevelDescription(int level) {
+			return null;
+		}
 
 		protected override void OnLevelUp() {
 			

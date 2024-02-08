@@ -39,6 +39,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines {
 	public class CustomizedMagazineBuff : WeaponPartsBuff<CustomizedMagazine, CustomizedMagazineBuff> {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
+		[ES3Serializable]
 		private float multiplier;
 		
 		[ES3Serializable]
@@ -76,11 +77,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines {
 			return null;
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 
-					return new WeaponBuffedAdditionalPropertyDescription(null, null,
+					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("CustomizedMagazine_desc", (int) multiplier));
 				})
 			};
