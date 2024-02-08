@@ -67,10 +67,37 @@ namespace Runtime.Weapons
         public override void OnStartHold(GameObject ownerGameObject)
         {
             base.OnStartHold(ownerGameObject);
-            for(int i = 0; i < BoundEntity.CurrentAmmo - blades.Count; i++) {
+            isReloadingBlade = false;
+            blades.Clear();
+            
+            int bladeCount = blades.Count;
+            for(int i = 0; i < BoundEntity.CurrentAmmo - bladeCount; i++) {
+                print($"BLADES: start hold {BoundEntity.CurrentAmmo} - {blades.Count}");
                 InitializeBlade();
             }
+            
+            print("BLADES: check reload");
+            CheckReloadBlade();
         }
+
+        public override void OnStopHold()
+        {
+            base.OnStopHold();
+            foreach (var blade in blades)
+            {
+                bladePool.Recycle(blade.gameObject);
+            }
+            
+            blades.Clear();
+        }
+
+        // protected override void Update()
+        // {
+        //     base.Update();
+        //     if(Input.GetKeyDown(KeyCode.Semicolon)) {
+        //         print(blades.Count);
+        //     }
+        // }
 
         private void InitializeBlade()
         {
@@ -107,9 +134,15 @@ namespace Runtime.Weapons
             }
         }
 
+        protected override void ChangeScopeStatus(bool isScoped)
+        {
+            
+        }
+
         public override void OnItemScopePressed()
         {
-            // TODO: use melee attack
+            print("BLADES: scope pressed");
+            // TODO: use melee attack (need animation)
             // check melee cooldown / avaliability
             // start melee animation
             // set melee cooldown
@@ -145,14 +178,17 @@ namespace Runtime.Weapons
                 gameObject, this, BoundEntity.GetRange().BaseValue, true);
             
             blade.Launch(shootDir, BoundEntity.GetBulletSpeed().RealValue);
+            BoundEntity.CurrentAmmo.Value--;
             CheckReloadBlade();
         }
 
         private void CheckReloadBlade()
         {
+            print($"{blades.Count} and isreloadingblade {isReloadingBlade}");
             if (blades.Count < BoundEntity.GetAmmoSize().RealValue
                 && !isReloadingBlade)
             {
+                print("BLADES: start couroutine");
                 StartCoroutine(ReloadBlade());
             }
         }
@@ -163,6 +199,7 @@ namespace Runtime.Weapons
             
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().RealValue);
             InitializeBlade();
+            BoundEntity.CurrentAmmo.Value++;
             
             isReloadingBlade = false;
             CheckReloadBlade();

@@ -252,7 +252,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         #endregion
 
         #region Scope/Reload Status
-        protected void ChangeScopeStatus(bool shouldScope) {
+        protected virtual void ChangeScopeStatus(bool shouldScope) {
             bool previsScope = _isScopedIn;
             _isScopedIn = shouldScope;
             
@@ -353,7 +353,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public override void OnItemStopUse() {}
         
-        public override void OnItemAltUse() { }
+        public override void OnItemAltUse() { } 
         
         public override void OnItemScopePressed() {
             if (isReloading || playerModel.IsPlayerSprinting()) {
