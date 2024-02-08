@@ -2,12 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Framework;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using UnityEngine;
 
 
+public struct OnNewDayStart {
+	public int DayCount;
+}
+
 public interface IGameTimeModel : ISavableModel {
-     public BindableProperty<int> DayCountThisRound { get; } //the number of days since the player start out from the base
+     //public BindableProperty<int> DayCountThisRound { get; } //the number of days since the player start out from the base
      public BindableProperty<DateTime> GlobalTime { get; } //the global time in the game, this will always increase for the save file
      
      void NextMinute(); //increase the global time by one minute
@@ -82,6 +87,9 @@ public class GameTimeModel : AbstractSavableModel, IGameTimeModel {
 	    GlobalTime.Value = GlobalTime.Value.AddMinutes(1);
 	    if (GlobalTime.Value.Hour == NewDayStartHour && GlobalTime.Value.Minute == 0) {
 		    DayCountThisRound.Value++;
+		    this.SendEvent<OnNewDayStart>(new OnNewDayStart() {
+			    DayCount =  DayCountThisRound.Value
+		    });
 	    }
     }
 
@@ -108,6 +116,9 @@ public class GameTimeModel : AbstractSavableModel, IGameTimeModel {
 	    var minutesLeaped = (int) (nextDay - GlobalTime.Value).TotalMinutes;
 	    GlobalTime.Value = nextDay;
 	    DayCountThisRound.Value++;
+	    this.SendEvent<OnNewDayStart>(new OnNewDayStart() {
+		    DayCount = DayCountThisRound.Value
+	    });
 	    return minutesLeaped;
     }
 
@@ -117,6 +128,9 @@ public class GameTimeModel : AbstractSavableModel, IGameTimeModel {
 	    GlobalTime.Value = nextDay;
 	    DayCountThisRound.Value = 1;
 	    RoundStartTime = nextDay;
+	    this.SendEvent<OnNewDayStart>(new OnNewDayStart() {
+		    DayCount = DayCountThisRound.Value
+	    });
 	    return minutesLeaped;
     }
 

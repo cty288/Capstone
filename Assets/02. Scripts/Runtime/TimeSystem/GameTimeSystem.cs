@@ -35,6 +35,9 @@ namespace _02._Scripts.Runtime.TimeSystem {
 
 		private void OnLevelCountChanged(int previousLevelNum, int currentLevelNum) {
 			if (previousLevelNum == 0) {
+				this.SendEvent<OnNewDayStart>(new OnNewDayStart() {
+					DayCount = 1
+				});
 				return; //do nothing when the change level from base
 			}
 
@@ -44,6 +47,8 @@ namespace _02._Scripts.Runtime.TimeSystem {
 			else {
 				gameTimeModel.NextDay();
 			}
+			
+			Debug.Log("GameTimeSystem.OnLevelCountChanged");
 		}
 
 		private void OnUpdate() {

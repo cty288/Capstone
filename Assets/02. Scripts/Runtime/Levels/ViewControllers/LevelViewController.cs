@@ -323,14 +323,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			//navMeshSurface.navMeshData 
 			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 
-			if (BoundEntity.GetCurrentLevelCount() <= 1) {
+			this.RegisterEvent<OnNewDayStart>(OnNewDay).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
+			
+			/*if (BoundEntity.GetCurrentLevelCount() <= 1) {
 				gameTimeModel.DayCountThisRound.RegisterWithInitValue(OnNewDay)
 					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			}
 			else {
 				gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnNewDay)
 					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-			}
+			}*/
 			
 			
 			subAreaLevels = CreateSubAreaLevels();
@@ -361,7 +364,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		
 		private HashSet<int> triggeredNewDay = new HashSet<int>();
-		private void OnNewDay(int day) {
+		private void OnNewDay(OnNewDayStart e) {
+			int day = e.DayCount;
+			
 			if (levelModel.CurrentLevel.Value != BoundEntity) {
 				return;
 			}

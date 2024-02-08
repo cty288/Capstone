@@ -36,6 +36,8 @@ public class GameEventSystem : AbstractSystem, IGameEventSystem {
 		foreach (IGameEvent gameEvent in eventsToRemoved) {
 			gameEventModel.RemoveEvent(gameEvent);
 		}
+		
+		Debug.Log("GameEventSystem.OnLevelCountChanged");
 	}
 
 	private void OnGlobalTimeChanged(DateTime oldTime, DateTime newTime) {

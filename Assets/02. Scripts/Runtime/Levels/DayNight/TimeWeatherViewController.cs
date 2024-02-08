@@ -42,11 +42,12 @@ namespace _02._Scripts.Runtime.TimeSystem
             gameTimeModel.GlobalTime.RegisterOnValueChanged(OnGlobalTimeChanged)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
       
-            gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnDayCountChanged)
-                .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            //gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnDayCountChanged)
+              //  .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+              this.RegisterEvent<OnNewDayStart>(OnNewDay).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         }
 
-        private void OnDayCountChanged(int obj)
+        private void OnNewDay(OnNewDayStart e)
         {
             isDay = true;
             // transition material to day.
