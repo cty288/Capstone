@@ -18,13 +18,16 @@ namespace _02._Scripts.Runtime.TimeSystem
         [SerializeField] private bool isDawnDusk = false;
         [SerializeField] private Vector2 daySunRotationEuler = new Vector2(0, 180);
         [SerializeField] private Vector2 nightSunRotationEuler = new Vector2(180, 360);
+        [SerializeField] private float sandstormFogFactor = 0.05f;
 
         private float _endOfDayMinutes = (GameTimeModel.NightStartHour - GameTimeModel.NewDayStartHour) * 60; // From start of day (5am) to end of day (8pm)
         private float _inGameHour = GameTimeModel.DayLength / 24f;
-        [SerializeField] private float _dawnDuskTimer = 0f;
+        private float _dawnDuskTimer = 0f;
+        private float _extraFactor = 0;
         private float _duskTime;
         private Volume _volume;
         private SandstormEffect _sandstorm;
+        private float sandstormCountDown = 0;
         
         private IGameTimeModel gameTimeModel;
         private ILevelModel levelModel;
@@ -86,51 +89,54 @@ namespace _02._Scripts.Runtime.TimeSystem
         private void OnLevelCountChanged(int obj)
         {
             isDay = true;
+            _extraFactor = 0;
+            sandstormCountDown = 0;
         }
 
         private void OnGlobalTimeChanged(DateTime obj)
         {
             if (isDay)
             {
-                float dayTimeMinutes = (obj.Hour - GameTimeModel.NewDayStartHour) * 60 + obj.Minute;
-                float sunAngle = Mathf.Lerp(daySunRotationEuler.x, daySunRotationEuler.y, dayTimeMinutes / _endOfDayMinutes);
-                skyLight.transform.rotation = Quaternion.Euler(sunAngle, 50, 0);
                 if (isDawnDusk)
                 {
                     if (obj.Hour == GameTimeModel.NewDayStartHour)
                     {
                         float t = obj.Minute / 60f;
-                        _sandstorm.nightDaySlide.value = Mathf.Lerp(0, 1, t);
-                        RenderSettings.fogDensity = (1 - t) * 0.05f;
+                        _sandstorm.nightDaySlide.value = Mathf.Lerp(0 - (2 * _extraFactor), 1 + (2 * _extraFactor), t);
+                        RenderSettings.fogDensity = (1 - t) * 0.05f + _extraFactor;
                         _dawnDuskTimer = t;
                         if (t >= 1) isDawnDusk = false;
                     }
                     else if (obj.Hour == GameTimeModel.NightStartHour - 1)
                     {
                         float t = obj.Minute / _duskTime;
-                        _sandstorm.nightDaySlide.value = Mathf.Lerp(1, 0, t);
-                        RenderSettings.fogDensity = t * 0.05f;
+                        _sandstorm.nightDaySlide.value = Mathf.Lerp(1 + (2 * _extraFactor), 0 - (2 * _extraFactor), t);
+                        RenderSettings.fogDensity = t * 0.05f + _extraFactor;
                         _dawnDuskTimer = t;
                         if (t >= 1) isDawnDusk = false;
                     }
                     else if(obj.Hour == GameTimeModel.NewDayStartHour + 1)
                     {
-                        _sandstorm.nightDaySlide.value = 1;
-                        RenderSettings.fogDensity = 0f;
+                        _sandstorm.nightDaySlide.value = 1 + (2 * _extraFactor);
+                        RenderSettings.fogDensity = 0f + _extraFactor;
                         isDawnDusk = false;
                     }
+                }
+                else
+                {
+                    _sandstorm.nightDaySlide.value = 1 + (2 * _extraFactor);
+                    RenderSettings.fogDensity = 0f + _extraFactor;
                 }
             }
             else
             {
-                float nightTimeMinutes = ((obj.Hour - GameTimeModel.NewDayStartHour) * 60 + obj.Minute) - _endOfDayMinutes;
-                float sunAngle = Mathf.Lerp(nightSunRotationEuler.x, nightSunRotationEuler.y, nightTimeMinutes / (24*60 - _endOfDayMinutes));
-                skyLight.transform.rotation = Quaternion.Euler(sunAngle, 50, 0);
+                _sandstorm.nightDaySlide.value = 0 - (2 * _extraFactor);
+                RenderSettings.fogDensity = 0.05f + _extraFactor;
             }
-            
         }
 
-        private float _timeMinutes = GameTimeModel.DayLength / 1440f;
+        private float _firstSandstormTick;
+        private float _timeMinutes = 1440f / GameTimeModel.DayLength;
         private float _dayTime;
         void Update()
         {
@@ -149,22 +155,33 @@ namespace _02._Scripts.Runtime.TimeSystem
                 float sunAngle = Mathf.Lerp(nightSunRotationEuler.x, nightSunRotationEuler.y, nightTimeMinutes / (24*60 - _endOfDayMinutes));
                 skyLight.transform.rotation = Quaternion.Euler(sunAngle, 50, 0);
             }
+            
+            if (sandstormCountDown > 0)
+            {
+                float t = (_dayTime - _firstSandstormTick) / sandstormCountDown;
+                _extraFactor = Mathf.Lerp(0, sandstormFogFactor, t);
+                if (t >= 1) sandstormCountDown = 0;
+            } 
         }
 
         private void OnSandStormWarning(OnSandStormWarning e)
         {
+            //_extraFactor = sandstormFogFactor;
+            sandstormCountDown = e.RemainingMinutes;
+            _firstSandstormTick = _dayTime;
         }
         
         private void OnSandStormKillPlayer(OnSandStormKillPlayer e)
         {
+            
         }
 
         private void OnNightStart(OnNightStart e)
         {
             isDay = false;
-            _sandstorm.nightDaySlide.value = 0;
-            RenderSettings.fogDensity = 0.05f;
-            _dayTime = _endOfDayMinutes;
+            _sandstorm.nightDaySlide.value = 0 - (2 * _extraFactor);
+            RenderSettings.fogDensity = 0.05f + _extraFactor;
+            //_dayTime = _endOfDayMinutes;
         }
         
         private void OnNightApproaching(OnNightApproaching e)

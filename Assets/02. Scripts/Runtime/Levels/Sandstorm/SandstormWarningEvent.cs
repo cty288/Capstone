@@ -17,7 +17,7 @@ namespace _02._Scripts.Runtime.Levels.Sandstorm {
 
 		public override void OnTriggered() {
 			this.SendEvent<OnSandStormWarning>(new OnSandStormWarning() {
-				RemainingMinutes = timeToTrigger
+				RemainingMinutes = timeToTrigger,
 			});
 		}
 
