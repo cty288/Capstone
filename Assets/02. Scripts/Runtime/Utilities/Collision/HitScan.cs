@@ -187,7 +187,7 @@ namespace Runtime.Utilities.Collision
                  if(!_useVFX)
                      CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (dir * _weapon.GetRange().RealValue), new RaycastHit()));
                  else
-                     PlayBulletVFX(_launchPoint.position, _launchPoint.position + (dir * _weapon.GetRange().RealValue));
+                     PlayBulletVFX(_launchPoint.position, shootDir.GetPoint(_weapon.GetRange().RealValue));
             }
         }
 

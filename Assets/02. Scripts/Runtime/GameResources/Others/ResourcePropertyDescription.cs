@@ -11,6 +11,7 @@ namespace Runtime.GameResources.Others {
 		public bool display;
 		public string LocalizedPropertyName { get; set; }
 		
+		
 		public ResourcePropertyDescription(string iconName, string localizedPropertyName,
 			string localizedDescription, bool display = true) {
 			this.iconName = iconName;
@@ -28,7 +29,7 @@ namespace Runtime.GameResources.Others {
 
 	public class WeaponBuffedAdditionalPropertyDescription : ResourcePropertyDescription {
 		public override string GetLocalizedDescription(bool compareBuffedProperties = false) {
-			return $"<color=#00C531>{base.GetLocalizedDescription(compareBuffedProperties)}</color>";
+			return $"{base.GetLocalizedDescription(compareBuffedProperties)}";
 		}
 		
 		public WeaponBuffedAdditionalPropertyDescription(string iconName, string localizedPropertyName,

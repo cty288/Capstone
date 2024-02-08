@@ -81,10 +81,11 @@ public class SelfLoadingAttachment : WeaponPartsEntity<SelfLoadingAttachment, Se
 			return null;
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					return new WeaponBuffedAdditionalPropertyDescription(null, null,
+					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.Get("SelfLoadingAttachment_desc"));
 				})
 			};

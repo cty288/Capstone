@@ -53,6 +53,10 @@ namespace Runtime.UI.Crafting.Research {
 		
 		public static ResearchEvent Allocate(int exp, ResearchCategory category, ResearchLevelInfo[] researchResults) {
 			ResearchEvent researchEvent = ResearchEvent.Allocate();
+			
+			
+			
+			
 			researchEvent.exp = exp;
 			researchEvent.category = category;
 			researchEvent.researchResults = researchResults;

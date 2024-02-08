@@ -89,13 +89,14 @@ public class RageDetector : WeaponPartsEntity<RageDetector, RageDetectorBuff> {
 			return null;
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					int displayMultiplayer = (int) (weaponPartsEntity.multiplayer * 100);
 					int displayHealthBound = (int) (weaponPartsEntity.healthBound * 100);
 
-					return new WeaponBuffedAdditionalPropertyDescription(null, null,
+					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("RageDetector_PEOPERTY_desc", displayHealthBound,  displayMultiplayer));
 				})
 			};

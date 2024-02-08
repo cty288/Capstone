@@ -38,6 +38,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		public override float TickInterval { get; protected set; } = -1;
 		
 		private BuffedProperties<Vector2Int> baseDamageProperties;
+		[ES3Serializable]
 		private Vector2Int addedDamage;
 		public override void OnInitialize() {
 			baseDamageProperties = new BuffedProperties<Vector2Int>(weaponEntity, true, BuffTag.Weapon_BaseDamage);
@@ -69,7 +70,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			return new[] {baseDamageProperties};
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return null;
 		}
 	}

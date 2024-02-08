@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using DG.Tweening;
 using Framework;
 using MikroFramework;
@@ -316,7 +317,8 @@ namespace Runtime.Inventory.ViewController {
             }
 
             if (currentDescriptionPanel) {
-                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null, null);
+                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null, null,
+                    null);
             }
 
             if (showRarityIndicator) {
@@ -405,8 +407,14 @@ namespace Runtime.Inventory.ViewController {
                     rarityLevel = rarityProperty.RealValue.Value;
                     for (int i = 0; i < rarityLevel; i++) {
                         GameObject star = Instantiate(rarityIndicatorPrefab, rarityBar);
+
+                        if (topItem is IWeaponPartsEntity weaponPart) {
+                            RarityIndicator rarityIndicator = star.GetComponent<RarityIndicator>();
+                            rarityIndicator.SetCurrency(weaponPart.GetBuildType());
+                        }
+                        
                         RectTransform starRect = star.GetComponent<RectTransform>();
-                        //set height = rarityBar's height
+                        
                         float height = rarityBar.rect.height;
                         starRect.sizeDelta = new Vector2(height, height);
                     }
@@ -443,10 +451,18 @@ namespace Runtime.Inventory.ViewController {
                 Dictionary<CurrencyType, int> useCost = topItem is ISkillEntity skillEntity
                     ? skillEntity.GetSkillUseCostOfCurrentLevel()
                     : null;
+                
+                
+                IWeaponPartsEntity weaponPartsEntity = topItem as IWeaponPartsEntity;
+                CurrencyType? currencyType = null;
+                if (weaponPartsEntity != null) {
+                    currencyType = weaponPartsEntity.GetBuildType();
+                }
+                
                 currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
                     InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
                     ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
-                topItem.GetResourcePropertyDescriptions(),useCost);
+                topItem.GetResourcePropertyDescriptions(),useCost,currencyType);
                 
                 if (ResourceSlot.currentHoveredSlot.Value == this) {
                     currentDescriptionPanel.Show();
@@ -557,10 +573,18 @@ namespace Runtime.Inventory.ViewController {
                     Dictionary<CurrencyType, int> useCost = topItem is ISkillEntity skillEntity
                         ? skillEntity.GetSkillUseCostOfCurrentLevel()
                         : null;
+                    
+                    IWeaponPartsEntity weaponPartsEntity = topItem as IWeaponPartsEntity;
+                    CurrencyType? currencyType = null;
+                    if (weaponPartsEntity != null) {
+                        currencyType = weaponPartsEntity.GetBuildType();
+                    }
+                    
+                    
                     currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
                         InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
                         ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
-                        topItem.GetResourcePropertyDescriptions(), useCost);
+                        topItem.GetResourcePropertyDescriptions(), useCost, currencyType);
                     currentDescriptionPanel.Show();
                 }
             }
@@ -595,7 +619,14 @@ namespace Runtime.Inventory.ViewController {
             if (ResourceSlot.currentHoveredSlot.Value == this) {
                 descriptionPanelFollowTr.position = Input.mousePosition;
             }
-            
+
+            if (rarityBar) {
+                float height = rarityBar.rect.height;
+                for (int i = 0; i < rarityBar.childCount; i++) {
+                    RectTransform starRect = rarityBar.GetChild(i).GetComponent<RectTransform>();
+                    starRect.sizeDelta = new Vector2(height, height);
+                }
+            }
             
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.Currency.Model;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
@@ -41,18 +42,42 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public override void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false) {
 			weaponPartsEntity = buffDealer as TWeaponParts;
 			weaponEntity = entity as IWeaponEntity;
+			
+			
+			if (force || this.BuffOwnerID == null || this.BuffOwnerID != entity?.UUID ||
+			    this.BuffDealerID != buffDealer?.UUID) {
+				
+				
+				CurrencyType currencyType = weaponPartsEntity.GetBuildType();
+				WeaponPartType partType = weaponPartsEntity.WeaponPartType;
+
+
+				additionalResourcePropertyDescriptionGetters = OnRegisterResourcePropertyDescriptionGetters(
+					$"PropertyIcon{currencyType.ToString()}",
+					null);
+				if (additionalResourcePropertyDescriptionGetters != null) {
+					weaponEntity?.AddAdditionalResourcePropertyDescriptionGetters(additionalResourcePropertyDescriptionGetters);
+				}
+			}
+
+			
+			
+			
+			
 			base.OnInitialize(buffDealer, entity, force);
 		}
 
+		
 		public override void OnAwake() {
 			base.OnAwake();
-			additionalResourcePropertyDescriptionGetters = OnRegisterResourcePropertyDescriptionGetters();
-			if (additionalResourcePropertyDescriptionGetters != null) {
-				weaponEntity?.AddAdditionalResourcePropertyDescriptionGetters(additionalResourcePropertyDescriptionGetters);
-			}
+			
+			
+			
+			
 		}
 
-		public abstract List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters();
+		public abstract List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title);
 
 		
 		public override bool Validate() {

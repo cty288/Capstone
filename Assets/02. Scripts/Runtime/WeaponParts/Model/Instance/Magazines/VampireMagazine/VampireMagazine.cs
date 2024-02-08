@@ -85,11 +85,12 @@ public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazin
 			return null;
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					int chance = (int) (weaponPartsEntity.Chance * 100);
-					return new WeaponBuffedAdditionalPropertyDescription(null, null,
+					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("VampireMagazine_desc", chance, weaponPartsEntity.Health));
 				})
 			};

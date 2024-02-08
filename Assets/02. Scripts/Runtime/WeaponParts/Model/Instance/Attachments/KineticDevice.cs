@@ -132,12 +132,13 @@ public class KineticDevice : WeaponPartsEntity<KineticDevice, KineticDeviceBuff>
 			return null;
 		}
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					int displayMultiplayer = (int) (weaponPartsEntity.multiplayer * 100);
 
-					return new WeaponBuffedAdditionalPropertyDescription(null, null,
+					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("KineticDevice_PROPERTY_desc",  displayMultiplayer));
 				})
 			};
