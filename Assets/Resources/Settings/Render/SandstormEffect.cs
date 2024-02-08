@@ -14,6 +14,7 @@ public class SandstormEffect : VolumeComponent, IPostProcessComponent
     public FloatParameter sandstormDepthDistance = new FloatParameter(100.0f);
     public Vector4Parameter noiseStrengths = new Vector4Parameter(new Vector4(0.1f, 0.1f, 0.01f, 0.8f));
     [Range(0, 1)]public FloatParameter sandstormAlpha = new FloatParameter(1);
+    [Range(0, 1)]public FloatParameter nightDaySlide = new FloatParameter(1);
 
     public bool IsActive()
     {

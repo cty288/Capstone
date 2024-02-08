@@ -24,7 +24,6 @@ namespace _02._Scripts.Runtime.Levels.DayNight
 
         public override bool CanPersistToOtherLevels { get; } = false;
         public override void OnEventRecycled() {
-            Debug.LogError("Dark!");
         }
     }
 }

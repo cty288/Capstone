@@ -396,10 +396,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			gameEventSystem.AddEvent(new NightEvent(), nightHappeningTime);
 			
 			// Trigger warning 1 in-game hour before night time.
-			gameEventSystem.AddEvent(NightWarningEvent.Allocate(60), nightHappeningTime - 1);
+			gameEventSystem.AddEvent(NightWarningEvent.Allocate(60), nightHappeningTime - 60);
 			
 			// New Day Event
-			gameEventSystem.AddEvent(new NewDayEvent(), 1);
+			gameEventSystem.AddEvent(new NewDayEvent(), 0);
 
 			int prevDay = day - 1;
 			if (prevDay > 0) {

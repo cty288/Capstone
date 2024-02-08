@@ -14,7 +14,6 @@ namespace _02._Scripts.Runtime.Levels.DayNight
 
         public override void OnTriggered() {
             this.SendEvent<OnNewDay>();
-            Debug.LogError("Dawn!");
         }
 
         public override void OnLeaped() {
@@ -22,7 +21,6 @@ namespace _02._Scripts.Runtime.Levels.DayNight
 
         public override bool CanPersistToOtherLevels { get; } = false;
         public override void OnEventRecycled() {
-            Debug.LogError("Darn!");
         }
     }
 }

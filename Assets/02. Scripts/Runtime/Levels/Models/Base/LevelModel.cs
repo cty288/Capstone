@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
