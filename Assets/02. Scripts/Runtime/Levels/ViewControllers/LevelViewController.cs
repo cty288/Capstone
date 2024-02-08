@@ -394,7 +394,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			gameEventSystem.AddEvent(NightWarningEvent.Allocate(60), nightHappeningTime - 1);
 			
 			// New Day Event
-			gameEventSystem.AddEvent(new NewDayEvent(), 0);
+			gameEventSystem.AddEvent(new NewDayEvent(), 1);
 
 			int prevDay = day - 1;
 			if (prevDay > 0) {

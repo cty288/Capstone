@@ -74,10 +74,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 				levelNumber = 0;
 			}
 			
-			
 			CurrentLevel.Value = levelEntities[levelNumber];
 			CurrentLevelCount.Value = levelNumber;
-			
 			
 			if (levelNumber == 0) {
 				HashSet<int> toRemove = new HashSet<int>();

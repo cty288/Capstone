@@ -15,13 +15,18 @@ namespace _02._Scripts.Runtime.TimeSystem
         [SerializeField] private Light skyLight;
 
         [SerializeField] private bool isDay = true;
+        [SerializeField] private bool isDawnDusk = false;
         [SerializeField] private Vector2 daySunRotationEuler = new Vector2(0, 180);
         [SerializeField] private Vector2 nightSunRotationEuler = new Vector2(180, 360);
 
         private float _endOfDayMinutes = (GameTimeModel.NightStartHour - GameTimeModel.NewDayStartHour) * 60; // From start of day (5am) to end of day (8pm)
+        private float _inGameHour = GameTimeModel.DayLength / 24f;
+        private float _dawnDuskTimer = 0f;
         
         private IGameTimeModel gameTimeModel;
         private ILevelModel levelModel;
+        private static readonly int NightDaySlide = Shader.PropertyToID("_NightDaySlide");
+
         private void Awake() {
             gameTimeModel = this.GetModel<IGameTimeModel>();
             levelModel = this.GetModel<ILevelModel>();
@@ -43,17 +48,48 @@ namespace _02._Scripts.Runtime.TimeSystem
 
         private void OnDayCountChanged(int obj)
         {
-            throw new NotImplementedException();
+            isDay = true;
+            // transition material to day.
+            isDawnDusk = true;
+            _dawnDuskTimer = 0;
         }
 
         private void OnLevelCountChanged(int obj)
         {
-            throw new NotImplementedException();
+            isDay = true;
         }
 
         private void OnGlobalTimeChanged(DateTime obj)
-        { 
-            float dayTimeMinutes = (obj.Hour - GameTimeModel.NewDayStartHour) * 60 + obj.Minute;
+        {
+            if (isDay)
+            {
+                float dayTimeMinutes = (obj.Hour - GameTimeModel.NewDayStartHour) * 60 + obj.Minute;
+                float sunAngle = Mathf.Lerp(daySunRotationEuler.x, daySunRotationEuler.y, dayTimeMinutes / _endOfDayMinutes);
+                skyLight.transform.rotation = Quaternion.Euler(sunAngle, 50, 0);
+                if (isDawnDusk)
+                {
+                    _dawnDuskTimer += Time.deltaTime;
+                    float t = _dawnDuskTimer / _inGameHour;
+                    sandstormGradientMat.SetFloat(NightDaySlide, Mathf.Lerp(0, 1, t));
+                    RenderSettings.fogDensity = t * 0.05f;
+                    if (t >= 1) isDawnDusk = false;
+                }
+            }
+            else
+            {
+                float nightTimeMinutes = ((obj.Hour - GameTimeModel.NewDayStartHour) * 60 + obj.Minute) - _endOfDayMinutes;
+                float sunAngle = Mathf.Lerp(nightSunRotationEuler.x, nightSunRotationEuler.y, nightTimeMinutes / (24*60 - _endOfDayMinutes));
+                skyLight.transform.rotation = Quaternion.Euler(sunAngle, 50, 0);
+                if (isDawnDusk)
+                {
+                    _dawnDuskTimer += Time.deltaTime;
+                    float t = _dawnDuskTimer / _inGameHour;
+                    sandstormGradientMat.SetFloat(NightDaySlide, Mathf.Lerp(1, 0, t));
+                    RenderSettings.fogDensity = t * 0.05f;
+                    if (t >= 1) isDawnDusk = false;
+                }
+            }
+            
         }
 
         private void OnSandStormWarning(OnSandStormWarning e)
@@ -66,12 +102,14 @@ namespace _02._Scripts.Runtime.TimeSystem
 
         private void OnNightStart(OnNightStart e)
         {
-            
+            isDay = false;
         }
         
         private void OnNightApproaching(OnNightApproaching e)
         {
-            
+            //start transitioning material to night
+            isDawnDusk = true;
+            _dawnDuskTimer = 0;
         }
     }
 }
