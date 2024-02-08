@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -23,6 +24,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 
 		private OnTakeDamage onTakeDamage;
+		private Action<ICanDealDamage, HitData> onDie;
 		
 		private OnHeal onHeal;
 
@@ -85,13 +87,19 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 				hitData.Damage = damageAmount;
 			}
 			OnTakeDamage(damageAmount, damageDealer, hitData);
-			damageDealer?.DoOnDealDamage(this, damageAmount);
-			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
-				damageDealer?.DoOnKillDamageable(this);
-			}
+			damageDealer?.DoOnDealDamage( damageDealer,this, damageAmount);
+			
 			
 			onTakeDamage?.Invoke(damageAmount, HealthProperty.RealValue.Value.CurrentHealth, damageDealer, hitData);
 			
+			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
+				Kill(damageDealer, hitData);
+			}
+		}
+
+		public void Kill(ICanDealDamage damageDealer, HitData hitData = null) {
+			damageDealer?.DoOnKillDamageable(damageDealer, this);
+			onDie?.Invoke(damageDealer, hitData);
 		}
 
 		/// <summary>
@@ -139,6 +147,14 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 		public void UnRegisterOnTakeDamage(OnTakeDamage onTakeDamage) {
 			this.onTakeDamage -= onTakeDamage;
+		}
+
+		public void RegisterOnDie(Action<ICanDealDamage, HitData> onDie) {
+			this.onDie += onDie;
+		}
+
+		public void UnRegisterOnDie(Action<ICanDealDamage, HitData> onDie) {
+			this.onDie -= onDie;
 		}
 
 

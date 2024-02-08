@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Runtime.Enemies
 {
-    public class Example_Explosion : AbstractExplosionViewController
+    public class BasicExplosion : AbstractExplosionViewController
     {
         
         //ParticleSystem[] particleSystems;
@@ -36,10 +36,11 @@ namespace Runtime.Enemies
             
         }
 
-        protected override void OnBulletRecycled()
-        {
+        protected override void OnBulletRecycled() {
             StopAllCoroutines();
         }
+        
+        
     }
 
 }

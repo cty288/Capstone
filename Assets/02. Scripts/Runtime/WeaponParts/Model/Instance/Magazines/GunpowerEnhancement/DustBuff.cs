@@ -32,7 +32,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		}
 
 		public override bool IsDisplayed() {
-			return false;
+			return true;
 		}
 
 		public override bool Validate() {

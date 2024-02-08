@@ -41,8 +41,8 @@ namespace Runtime.Temporary
        
         private ILevelModel levelModel;
         private ICurrencySystem currencySystem;
-        private Action<IDamageable, int> _onDealDamageCallback;
-        private Action<IDamageable> _onKillDamageableCallback;
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
         protected override void Awake() {
             base.Awake();
@@ -232,22 +232,22 @@ namespace Runtime.Temporary
             return transform;
         }
 
-        public void OnKillDamageable(IDamageable damageable) {
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
             
         }
 
-        public void OnDealDamage(IDamageable damageable, int damage) {
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
             
         }
 
         public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
             get => _onDealDamageCallback;
             set => _onDealDamageCallback = value;
         }
 
-        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
             get => _onKillDamageableCallback;
             set => _onKillDamageableCallback = value;
         }

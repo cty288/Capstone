@@ -45,8 +45,8 @@ namespace Runtime.Enemies.Model {
 		protected ISpawnCostProperty spawnCostProperty;
 		protected ISpawnWeightProperty spawnWeightProperty;
 		protected ILevelNumberProperty levelNumberProperty;
-		private Action<IDamageable, int> _onDealDamageCallback;
-		private Action<IDamageable> _onKillDamageableCallback;
+		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
 		// protected IDirectorEntity directorOwner;
 		public int SpawnedAreaIndex { get; set; }
@@ -138,22 +138,22 @@ namespace Runtime.Enemies.Model {
 		}
 
 
-		public void OnKillDamageable(IDamageable damageable) {
+		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
 			Debug.Log($"Kill Damageable: {damageable.EntityName}");
 		}
 
-		public void OnDealDamage(IDamageable damageable, int damage) {
+		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
 			
 		}
 
 		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+		Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
 			get => _onDealDamageCallback;
 			set => _onDealDamageCallback = value;
 		}
 
-		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+		Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
 			get => _onKillDamageableCallback;
 			set => _onKillDamageableCallback = value;
 		}

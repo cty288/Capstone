@@ -54,7 +54,7 @@ public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazin
 			weaponEntity.RegisterOnDealDamage(OnWeaponDealDamage);
 		}
 
-		private void OnWeaponDealDamage(IDamageable target, int damage) {
+		private void OnWeaponDealDamage(ICanDealDamage source, IDamageable target, int damage) {
 			if (target is IEnemyEntity) {
 				IEntity rootEntity = weaponEntity.GetRootDamageDealer() as IEntity;
 				if (rootEntity == null) {

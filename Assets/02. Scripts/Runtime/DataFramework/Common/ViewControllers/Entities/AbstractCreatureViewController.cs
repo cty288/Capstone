@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using BehaviorDesigner.Runtime;
@@ -12,6 +13,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.GameResources;
+using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -23,6 +25,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public BoxCollider SpawnSizeCollider { get; }
 		
 		public ICreature OnInitEntity(int level, int rarity);
+		CancellationToken GetCancellationTokenOnStunnedOrDie();
 	}
 
 	[Serializable]
@@ -65,6 +68,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField]
 		private bool autoRemoveEntityWhenDie = true;
 
+		private CancellationTokenSource ctsWhenDieOrStunned
+			= new CancellationTokenSource();
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
@@ -94,7 +99,36 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				behaviorTree.Start();
 			}
 
+			BoundEntity.StunnedCounter.Count.RegisterWithInitValue(OnStunnedCounterChanged)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+
+			//ctsWhenDieOrStunned = new CancellationTokenSource();
 		}
+
+		private void OnStunnedCounterChanged(int oldCount, int newCount) {
+			if (newCount <= 0) {
+				ctsWhenDieOrStunned.Cancel();
+				ctsWhenDieOrStunned = new CancellationTokenSource();
+			}
+			OnStunned(newCount > 0);
+		}
+
+		protected virtual void OnStunned(bool isStunned) {
+			if (behaviorTree) {
+				behaviorTree.enabled = !isStunned;
+			}
+			
+			
+			if (navMeshAgent) {
+				navMeshAgent.enabled = !isStunned;
+			}
+
+			Animator animator = GetComponentInChildren<Animator>();
+			if (animator) {
+				animator.enabled = !isStunned;
+			}
+		}
+
 		protected abstract MikroAction WaitingForDeathCondition();
 		protected virtual void OnDieWaitEnd(ICanDealDamage damagedealer) {
 			SpawnDeathDroppedItemsAndCurrency(damagedealer);
@@ -102,6 +136,17 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				GlobalEntities.GetEntityAndModel(BoundEntity.UUID).Item2.RemoveEntity(BoundEntity.UUID);
 			}
 		
+		}
+
+		protected override void Update() {
+			base.Update();
+			if (Input.GetKeyDown(KeyCode.O)) {
+				BoundEntity.StunnedCounter.Retain();
+			}
+			
+			if (Input.GetKeyDown(KeyCode.I)) {
+				BoundEntity.StunnedCounter.Release();
+			}
 		}
 
 		private void SpawnDeathDroppedItemsAndCurrency(ICanDealDamage damagedealer) {
@@ -164,7 +209,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			else {
 				OnDieWaitEnd(damagedealer);
 			}
-			
+			ctsWhenDieOrStunned.Cancel();
+			ctsWhenDieOrStunned = new CancellationTokenSource();
 		}
 		
 		protected abstract int GetSpawnedCombatCurrencyAmount();
@@ -264,5 +310,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public BoxCollider SpawnSizeCollider { get; protected set; }
 
 		public abstract ICreature OnInitEntity(int level, int rarity);
+		public CancellationToken GetCancellationTokenOnStunnedOrDie() {
+			return ctsWhenDieOrStunned.Token;
+		}
 	}
 }

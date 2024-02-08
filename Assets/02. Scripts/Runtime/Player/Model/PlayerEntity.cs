@@ -96,16 +96,20 @@ namespace Runtime.Player {
 
 		
 
-		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+		Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
 			get => _onDealDamageCallback;
 			set => _onDealDamageCallback = value;
 		}
 
+		Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
 		private MovementState movementState;
 		private bool scopedIn;
-		private Action<IDamageable, int> _onDealDamageCallback;
-		private Action<IDamageable> _onKillDamageableCallback;
-
+		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.PlayerEntityConfigTable;
 		}
@@ -115,6 +119,7 @@ namespace Runtime.Player {
 		}
 
 		public override void OnRecycle() {
+			base.OnRecycle();
 			OnModifyDamageCountCallbackList.Clear();
 			_onDealDamageCallback = null;
 			_onKillDamageableCallback = null;
@@ -267,11 +272,11 @@ namespace Runtime.Player {
 			return Faction.Friendly;
 		}
 
-		public void OnKillDamageable(IDamageable damageable) {
+		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
 			
 		}
 
-		public void OnDealDamage(IDamageable damageable, int damage) {
+		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
 			if (damageable.GetCurrentHealth() <= 0) {
 				if (damageable is IBossEntity boss) {
 					this.SendEvent<OnPlayerKillEnemy>(new OnPlayerKillEnemy() {
@@ -291,11 +296,7 @@ namespace Runtime.Player {
 			Debug.Log("Player Deal Damage to " + damageable.EntityName + " with damage " + damage);
 		}
 
-		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
-			get => _onKillDamageableCallback;
-			set => _onKillDamageableCallback = value;
-		}
-
+	
 		public ICanDealDamage ParentDamageDealer => null;
 
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {

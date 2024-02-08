@@ -35,19 +35,18 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
         agent = GetComponent<NavMeshAgent>();
         animator = gameObject.GetComponentInChildren<Animator>(true);
     }
-
-
+    
     public override void OnStart() {
         base.OnStart();
         player = GetPlayer();
         dashSpeed = enemyEntity.GetCustomDataValue<float>("melee", "dashSpeed");
         meleeWaitTime = enemyEntity.GetCustomDataValue<float>("melee", "meleeWaitTime");
+        enemyEntity.RemoveBlades(1);
         
         dashFinishWaitTimer = 0f;
         mbm.enabled = false;
         agent.enabled = false;
         status = TaskStatus.Running;
-        
         
         TaskExecute();
     }
@@ -93,13 +92,9 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
                 continue;
             }
 
-
             NavMeshFindResult result = await (SpawningUtility.FindNavMeshSuitablePosition(gameObject,
                 () => enemyViewController.SpawnSizeCollider,
                 hit.position, 60, NavMeshHelper.GetSpawnableAreaMask(), default, 10, 3, attempts));
-
-
-
 
             attempts -= result.UsedAttempts;
 
@@ -113,12 +108,10 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
         }
 
         if (teleportLocation == Vector3.zero) {
-            status = TaskStatus.Failure;
+            // status = TaskStatus.Failure;
+            status = TaskStatus.Success;
             return;
         }
-
-        
-
         mbm.enabled = true;
         model.SetActive(false);
 

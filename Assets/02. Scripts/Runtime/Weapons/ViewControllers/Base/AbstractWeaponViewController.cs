@@ -103,8 +103,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         public int Damage => BoundEntity.GetRealDamageValue();
         
         private IBuffSystem buffSystem;
-        private Action<IDamageable, int> _onDealDamageCallback;
-        private Action<IDamageable> _onKillDamageableCallback;
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
         #region Initialization
         protected override void Awake() {
@@ -357,13 +357,13 @@ namespace Runtime.Weapons.ViewControllers.Base
         #endregion
 
         #region Damage and Hit Response
-        public void OnKillDamageable(IDamageable damageable) {
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
             //BoundEntity.OnKillDamageable(damageable);
             //ownerVc?.CanDealDamageEntity?.OnKillDamageable(damageable);
             crossHairViewController?.OnKill(damageable);
         }
 
-        public void OnDealDamage(IDamageable damageable, int damage) {
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
             //BoundEntity.OnDealDamage(damageable, damage);
             //ownerVc?.CanDealDamageEntity?.OnDealDamage(damageable, damage);
             crossHairViewController?.OnHit(damageable, damage);
@@ -373,12 +373,12 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
             get => _onDealDamageCallback;
             set => _onDealDamageCallback = value;
         }
 
-        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
             get => _onKillDamageableCallback;
             set => _onKillDamageableCallback = value;
         }
@@ -391,7 +391,9 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public abstract void HitResponse(HitData data);
         public HitData OnModifyHitData(HitData data) {
-            
+            if(BoundEntity == null) {
+                return data;
+            }
             return BoundEntity.OnModifyHitData(data);
         }
 

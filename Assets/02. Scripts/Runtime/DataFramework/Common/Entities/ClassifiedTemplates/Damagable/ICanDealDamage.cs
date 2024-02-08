@@ -8,24 +8,24 @@ using UnityEngine;
 namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	public interface ICanDealDamage : IBelongToFaction {
 		
-		void DoOnKillDamageable(IDamageable damageable) {
-			OnKillDamageable(damageable);
-			OnKillDamageableCallback?.Invoke(damageable);
+		void DoOnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
+			OnKillDamageable(sourceDealer, damageable);
+			OnKillDamageableCallback?.Invoke(sourceDealer, damageable);
 			Debug.Log(this.GetType().Name + "kill " + damageable.GetType().Name);
-			ParentDamageDealer?.DoOnKillDamageable(damageable);
+			ParentDamageDealer?.DoOnKillDamageable(sourceDealer, damageable);
 		}
 		
-		void OnKillDamageable(IDamageable damageable);
+		void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable);
 
-		void DoOnDealDamage(IDamageable damageable, int damage) {
-			OnDealDamage(damageable, damage);
-			OnDealDamageCallback?.Invoke(damageable, damage);
+		void DoOnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
+			OnDealDamage(sourceDealer, damageable, damage);
+			OnDealDamageCallback?.Invoke(sourceDealer, damageable, damage);
 			Debug.Log("[ICanDealDamageDebug]" +this.GetType().Name + "deal damage to " + damageable.GetType().Name + " with " + damage +
 			          " damage.");
-			ParentDamageDealer?.DoOnDealDamage(damageable, damage);
+			ParentDamageDealer?.DoOnDealDamage(sourceDealer, damageable, damage);
 		}
 		
-		void OnDealDamage(IDamageable damageable, int damage);
+		void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage);
 
 		int DoModifyDamageCount(int damage) {
 			int modifiedDamage = damage;
@@ -47,26 +47,26 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 		HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
 
-		void RegisterOnDealDamage(Action<IDamageable, int> onDealDamage) {
+		void RegisterOnDealDamage(Action<ICanDealDamage, IDamageable, int> onDealDamage) {
 			OnDealDamageCallback += onDealDamage;
 		}
 		
-		void UnregisterOnDealDamage(Action<IDamageable, int> onDealDamage) {
+		void UnregisterOnDealDamage(Action<ICanDealDamage, IDamageable, int> onDealDamage) {
 			OnDealDamageCallback -= onDealDamage;
 		}
 		
-		Action<IDamageable, int> OnDealDamageCallback { get; protected set; }
+		Action<ICanDealDamage, IDamageable, int> OnDealDamageCallback { get; protected set; }
 
 
-		void RegisterOnKillDamageable(Action<IDamageable> onKillDamageable) {
+		void RegisterOnKillDamageable(Action<ICanDealDamage, IDamageable> onKillDamageable) {
 			OnKillDamageableCallback += onKillDamageable;
 		}
 		
-		void UnregisterOnKillDamageable(Action<IDamageable> onKillDamageable) {
+		void UnregisterOnKillDamageable(Action<ICanDealDamage, IDamageable> onKillDamageable) {
 			OnKillDamageableCallback -= onKillDamageable;
 		}
 		
-		Action<IDamageable> OnKillDamageableCallback { get; protected set; }
+		Action<ICanDealDamage, IDamageable> OnKillDamageableCallback { get; protected set; }
 
 		ICanDealDamage ParentDamageDealer { get; }
 

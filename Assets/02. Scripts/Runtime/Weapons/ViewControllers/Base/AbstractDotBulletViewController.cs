@@ -22,12 +22,12 @@ namespace Runtime.Weapons.ViewControllers.Base
 	public abstract class AbstractDotBulletViewController : PoolableGameObject, IHitResponder, IController, IBulletViewController, ICanDealDamage
 	{
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
-		public void OnKillDamageable(IDamageable damageable)
+		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable)
 		{
 			//owner?.OnKillDamageable(damageable);
 		}
 
-		public void OnDealDamage(IDamageable damageable, int damage)
+		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage)
 		{
 			//owner?.OnDealDamage(damageable, damage);
 
@@ -35,12 +35,12 @@ namespace Runtime.Weapons.ViewControllers.Base
 
 		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+		Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
 			get => _onDealDamageCallback;
 			set => _onDealDamageCallback = value;
 		}
 
-		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+		Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
 			get => _onKillDamageableCallback;
 			set => _onKillDamageableCallback = value;
 		}
@@ -69,8 +69,9 @@ namespace Runtime.Weapons.ViewControllers.Base
 		protected bool tickType = false;
 		protected TrailRenderer[] trailRenderers = null;
 		protected HitData hitData;
-		private Action<IDamageable, int> _onDealDamageCallback;
-		private Action<IDamageable> _onKillDamageableCallback;
+		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+		private bool overrideExplosionFaction = false;
 
 		private void Awake()
 		{
@@ -105,7 +106,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 			}
 		}
 		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
-			bool ownerTriggerHitResponse = false)
+			bool ownerTriggerHitResponse = false, bool overrideExplosionFaction = false)
 		{
 			CurrentFaction.Value = faction;
 			Damage = damage;
@@ -113,6 +114,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
 			this.bulletOwner = bulletOwner;
+			this.overrideExplosionFaction = overrideExplosionFaction;
 
 			//ignore collision with bullet owner
 			Collider bulletOwnerCollider = bulletOwner.GetComponent<Collider>();
