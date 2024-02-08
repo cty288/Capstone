@@ -84,7 +84,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         [SerializeField] protected float reloadAnimationLength;
         protected AnimationSMBManager animationSMBManager;
         
-        //timers
+        //timers & status
+        protected bool isLocked = false;
         protected bool isReloading = false;
         protected float lastShootTime = 0f;
         protected float reloadTimer = 0f;
@@ -162,7 +163,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Reload
-                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
+                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && !isLocked &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
                     if (IsScopedIn)
@@ -181,6 +182,14 @@ namespace Runtime.Weapons.ViewControllers.Base
                 }
             }
         }
+
+        #region  Weapon Lock
+
+        public void LockWeapon(bool shouldLock) {
+            isLocked = shouldLock;
+        }
+
+        #endregion
         
         #region Animation
         protected virtual void OnAnimationEvent(string eventName)
@@ -228,7 +237,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             /*if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
                 BoundEntity.SetOwner(damageDealer);
             }*/
-            if(BoundEntity.CurrentAmmo == 0 && autoReload) {
+            if(BoundEntity.CurrentAmmo == 0 && autoReload && !isLocked) {
                 StartCoroutine(ReloadAnimation());
             }
         }
@@ -242,6 +251,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         #endregion
 
+        #region Scope/Reload Status
         protected void ChangeScopeStatus(bool shouldScope) {
             bool previsScope = _isScopedIn;
             _isScopedIn = shouldScope;
@@ -269,7 +279,8 @@ namespace Runtime.Weapons.ViewControllers.Base
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", AnimationEventType.Trigger, 0));
             }
         }
-
+        #endregion
+        
         #region Shooting
         
         protected void SetShootStatus(bool isShooting) {
@@ -314,8 +325,14 @@ namespace Runtime.Weapons.ViewControllers.Base
         public override void OnItemUse()
         {
             // fully-automatic gun
+            CheckShoot();
+        }
+
+        //abstracted for modularity
+        protected void CheckShoot()
+        {
             if (!isReloading) {
-                if (BoundEntity.CurrentAmmo > 0 &&
+                if (BoundEntity.CurrentAmmo > 0 && !isLocked &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
                     
@@ -325,7 +342,7 @@ namespace Runtime.Weapons.ViewControllers.Base
                     BoundEntity.CurrentAmmo.Value--;
                 }
                 
-                if (autoReload && BoundEntity.CurrentAmmo <= 0)
+                if (autoReload && BoundEntity.CurrentAmmo <= 0 && !isLocked)
                 {
                     SetShoot(false);
                     ChangeReloadStatus(true);
