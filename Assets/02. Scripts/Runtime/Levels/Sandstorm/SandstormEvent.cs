@@ -6,6 +6,7 @@ namespace _02._Scripts.Runtime.Levels.Sandstorm {
 	public struct OnSandStormKillPlayer {
 		
 	}
+	
 	public class SandstormEvent : GameEvent<SandstormEvent> {
 		public override EventElapseType ElapseType { get; } = EventElapseType.Predetermined;
 		public override void OnInitialized() {
