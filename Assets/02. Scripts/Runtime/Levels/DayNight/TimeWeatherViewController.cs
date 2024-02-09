@@ -7,12 +7,15 @@ using MikroFramework.Architecture;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
+using UnityEngine.VFX;
 
 namespace _02._Scripts.Runtime.TimeSystem
 {
     public class TimeWeatherViewController : AbstractMikroController<MainGame>
     {
         [SerializeField] private Light skyLight;
+        [FormerlySerializedAs("sandstorm")] [SerializeField] private VisualEffect sandstormVFX;
 
         [SerializeField] private bool isDay = true;
         [SerializeField] private bool isDawnDusk = false;
@@ -32,7 +35,16 @@ namespace _02._Scripts.Runtime.TimeSystem
         private IGameTimeModel gameTimeModel;
         private ILevelModel levelModel;
 
+        private static readonly int AlphaID = Shader.PropertyToID("Alpha");
+        private static readonly int NSRID = Shader.PropertyToID("NearSimRate");
+        private static readonly int FSRID = Shader.PropertyToID("FarSimRate");
+
         private void Awake() {
+            UnityEngine.Rendering.VolumeProfile volumeProfile = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
+            if(!volumeProfile) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
+ 
+            if(!volumeProfile.TryGet(out _sandstorm)) throw new System.NullReferenceException(nameof(_sandstorm));
+            
             gameTimeModel = this.GetModel<IGameTimeModel>();
             levelModel = this.GetModel<ILevelModel>();
             
@@ -70,12 +82,9 @@ namespace _02._Scripts.Runtime.TimeSystem
             _dayTime = 0;
         }
 
-        private void Start()
+        void Start()
         {
-            UnityEngine.Rendering.VolumeProfile volumeProfile = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
-            if(!volumeProfile) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
- 
-            if(!volumeProfile.TryGet(out _sandstorm)) throw new System.NullReferenceException(nameof(_sandstorm));
+            
         }
 
         private void OnDayCountChanged()
@@ -91,6 +100,10 @@ namespace _02._Scripts.Runtime.TimeSystem
             isDay = true;
             _extraFactor = 0;
             sandstormCountDown = 0;
+            sandstormVFX.SetFloat(AlphaID, 0);
+            sandstormVFX.SetInt(NSRID, 0);
+            sandstormVFX.SetInt(FSRID, 0);
+            _sandstorm.sandstormAlpha.value = 0;
         }
 
         private void OnGlobalTimeChanged(DateTime obj)
@@ -160,6 +173,10 @@ namespace _02._Scripts.Runtime.TimeSystem
             {
                 float t = (_dayTime - _firstSandstormTick) / sandstormCountDown;
                 _extraFactor = Mathf.Lerp(0, sandstormFogFactor, t);
+                sandstormVFX.SetFloat(AlphaID, Mathf.Lerp(0, 0.7f, t));
+                sandstormVFX.SetInt(NSRID, (int)Mathf.Lerp(0, 32, t));
+                sandstormVFX.SetInt(FSRID, (int)Mathf.Lerp(0, 32, t));
+                _sandstorm.sandstormAlpha.value = Mathf.Lerp(0, 1.12f, t);
                 if (t >= 1) sandstormCountDown = 0;
             } 
         }
