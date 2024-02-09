@@ -77,8 +77,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278247167
+  m_fontColor: {r: 1, g: 0.87058824, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 1224053578}
   - component: {fileID: 1224053577}
   m_Layer: 0
-  m_Name: base Canvas
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2335,7 +2335,7 @@ GameObject:
   - component: {fileID: 8428599711926726815}
   - component: {fileID: 3137381580956461557}
   m_Layer: 0
-  m_Name: base Canvas (11)
+  m_Name: 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2449,7 +2449,7 @@ GameObject:
   - component: {fileID: 1213235200367869890}
   - component: {fileID: 7058894861417203815}
   m_Layer: 0
-  m_Name: base Canvas (3)
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2618,8 +2618,7 @@ MonoBehaviour:
   m_text: Depending on the type and the amount of shard you channel, you gain different
     resources and weapon parts. Weapon parts are powerful, but can only be used when
     you are out exploring. Weapon parts have different categories, and the magazine
-    part will determine the weapon's category. Assembling more parts of the same
-    classification to give the weapon special classification effects.
+    part will determine the weapon's category.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 33724c5005899fd4cadb5702227d71ef, type: 2}
   m_sharedMaterial: {fileID: -228762131019309666, guid: 33724c5005899fd4cadb5702227d71ef,
@@ -2738,6 +2737,7 @@ Transform:
   - {fileID: 7968718490144974169}
   - {fileID: 8755437416578609487}
   - {fileID: 5616349668191647372}
+  - {fileID: 8641590087470841720}
   m_Father: {fileID: 7905501659469829108}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2755,7 +2755,7 @@ GameObject:
   - component: {fileID: 794518753396469623}
   - component: {fileID: 7066019522056623304}
   m_Layer: 0
-  m_Name: base Canvas (16)
+  m_Name: 16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3005,7 +3005,7 @@ GameObject:
   - component: {fileID: 5946687946505231241}
   - component: {fileID: 2935324349691592989}
   m_Layer: 0
-  m_Name: base Canvas (7)
+  m_Name: 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3976,6 +3976,120 @@ Transform:
   m_Father: {fileID: 7905501659469829108}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1901943276617160726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8641590087470841720}
+  - component: {fileID: 8111492883565464609}
+  - component: {fileID: 879970009366933838}
+  - component: {fileID: 6035224336997962899}
+  - component: {fileID: 4919635024983137914}
+  m_Layer: 0
+  m_Name: 22
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8641590087470841720
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901943276617160726}
+  m_LocalRotation: {x: -0, y: 0.99475753, z: -0, w: 0.102262214}
+  m_LocalPosition: {x: 0, y: 0, z: 10.1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5490470333139719455}
+  m_Father: {fileID: 7226525726132095114}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 528.261, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -84.7, y: -13}
+  m_SizeDelta: {x: 5, y: 5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &8111492883565464609
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901943276617160726}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &879970009366933838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901943276617160726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!114 &6035224336997962899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901943276617160726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &4919635024983137914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901943276617160726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4980c34192022a941b13ac0c9a8b483f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1955114162431525705
 GameObject:
   m_ObjectHideFlags: 0
@@ -4594,7 +4708,7 @@ GameObject:
   - component: {fileID: 5675993966360015206}
   - component: {fileID: 3415963628521091451}
   m_Layer: 0
-  m_Name: base Canvas (20)
+  m_Name: 20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4608,7 +4722,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2192080928900204729}
   m_LocalRotation: {x: -0, y: 0.99475753, z: -0, w: 0.102262214}
-  m_LocalPosition: {x: 0, y: 0, z: 50.6}
+  m_LocalPosition: {x: 0, y: 0, z: 53.000065}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4618,7 +4732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 528.261, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -103.2, y: -7.01}
+  m_AnchoredPosition: {x: -101.30001, y: -7.01}
   m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8860489298380985205
@@ -4761,7 +4875,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Did you hear that? It's a sandstorm warning. You've got to get out of here
-    fast. Go back to base through the door outside the cave.
+    fast. Go back to base through the door to the right of the cave entrance.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 33724c5005899fd4cadb5702227d71ef, type: 2}
   m_sharedMaterial: {fileID: -228762131019309666, guid: 33724c5005899fd4cadb5702227d71ef,
@@ -4789,7 +4903,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.4
+  m_fontSize: 0.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5411,7 +5525,7 @@ GameObject:
   - component: {fileID: 3032633305322790163}
   - component: {fileID: 2047227569159269}
   m_Layer: 0
-  m_Name: base Canvas (19)
+  m_Name: 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5425,7 +5539,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2524101586935686692}
   m_LocalRotation: {x: -0, y: 0.99475753, z: -0, w: 0.102262214}
-  m_LocalPosition: {x: 0, y: 0, z: 50.599934}
+  m_LocalPosition: {x: 0, y: 0, z: 53}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5435,7 +5549,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 528.261, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -103.2, y: -13}
+  m_AnchoredPosition: {x: -101.3, y: -13}
   m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3748114748994258467
@@ -6451,6 +6565,143 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &3516514155403139768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5490470333139719455}
+  - component: {fileID: 8781527964532797105}
+  - component: {fileID: 7152049917211241243}
+  m_Layer: 0
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5490470333139719455
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3516514155403139768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8641590087470841720}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 5, y: 5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8781527964532797105
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3516514155403139768}
+  m_CullTransparentMesh: 1
+--- !u!114 &7152049917211241243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3516514155403139768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "You're ready, recruit. Go deeper into the desert and find us \u201Cthe
+    Great Oasis\u201C."
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 33724c5005899fd4cadb5702227d71ef, type: 2}
+  m_sharedMaterial: {fileID: -228762131019309666, guid: 33724c5005899fd4cadb5702227d71ef,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278247167
+  m_fontColor: {r: 1, g: 0.87058824, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 0.45
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 0
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 1.907455, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3559165379877419939
 GameObject:
   m_ObjectHideFlags: 0
@@ -6465,7 +6716,7 @@ GameObject:
   - component: {fileID: 7890604131157248361}
   - component: {fileID: 6743459390334121074}
   m_Layer: 0
-  m_Name: base Canvas (15)
+  m_Name: 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6907,8 +7158,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Did you hear that? It's a sandstorm warning. You've got to get out of here
-    fast. Go back to base through the door outside the cave.
+  m_text: 'Another group of stronger enemies, just in time for you to test out the
+    weapon with new parts! Repel them!
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 33724c5005899fd4cadb5702227d71ef, type: 2}
   m_sharedMaterial: {fileID: -228762131019309666, guid: 33724c5005899fd4cadb5702227d71ef,
@@ -6992,7 +7245,7 @@ GameObject:
   - component: {fileID: 3067391585784984182}
   - component: {fileID: 4319343442679433529}
   m_Layer: 0
-  m_Name: base Canvas (5)
+  m_Name: 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7786,7 +8039,7 @@ GameObject:
   - component: {fileID: 5310488214042759075}
   - component: {fileID: 2116058673540925778}
   m_Layer: 0
-  m_Name: base Canvas (6)
+  m_Name: 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8041,7 +8294,7 @@ GameObject:
   - component: {fileID: 1220276026158390309}
   - component: {fileID: 2179283473162381384}
   m_Layer: 0
-  m_Name: base Canvas (9)
+  m_Name: 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8155,7 +8408,7 @@ GameObject:
   - component: {fileID: 2213885179774195047}
   - component: {fileID: 2264894576942585088}
   m_Layer: 0
-  m_Name: base Canvas (1)
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8596,9 +8849,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Time passes while exploring the desert, and every 2-3 days a sandstorm
-    will move in and the area you are currently exploring will be completely engulfed.
-    Find the door to the next level or return to the base before the sandstorm arrives.
+  m_text: Enemies have rarities to reflect their strength, with higher rarity meaning
+    stronger enemies. In order to explore the desert longer, pair your weapons with
+    suitable parts and gather multiple parts of the same category to give your weapons
+    powerful, special classification attributes, enhancing your strength.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 33724c5005899fd4cadb5702227d71ef, type: 2}
   m_sharedMaterial: {fileID: -228762131019309666, guid: 33724c5005899fd4cadb5702227d71ef,
@@ -8626,7 +8880,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.25
+  m_fontSize: 0.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8872,8 +9126,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\rMinerals and Tanks, these are two kinds of resources you look for in
     the Desert. To collect them, you simply shoot them until they break. Open your
-    inventory with Tab and drag the \u201CTS-R01 Silicon Platinum\u201D into the
-    weapon slot on the right."
+    inventory with Tab and drag the \u201CUF23 MPD\u201D into the weapon slot on
+    the right."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 33724c5005899fd4cadb5702227d71ef, type: 2}
   m_sharedMaterial: {fileID: -228762131019309666, guid: 33724c5005899fd4cadb5702227d71ef,
@@ -8901,7 +9155,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.25
+  m_fontSize: 0.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9039,7 +9293,7 @@ GameObject:
   - component: {fileID: 3014092381917323369}
   - component: {fileID: 3232122567352419436}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9294,7 +9548,7 @@ GameObject:
   - component: {fileID: 4136623488066148387}
   - component: {fileID: 4047810928869799618}
   m_Layer: 0
-  m_Name: base Canvas (10)
+  m_Name: 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9684,7 +9938,7 @@ GameObject:
   - component: {fileID: 8812500236652708056}
   - component: {fileID: 8640040514340457091}
   m_Layer: 0
-  m_Name: base Canvas (12)
+  m_Name: 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9798,7 +10052,7 @@ GameObject:
   - component: {fileID: 3547291685031252853}
   - component: {fileID: 8898551934035615365}
   m_Layer: 0
-  m_Name: base Canvas (13)
+  m_Name: 14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10424,7 +10678,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Space twice for double jump.
+  m_text: Press Space twice to double jump.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 33724c5005899fd4cadb5702227d71ef, type: 2}
   m_sharedMaterial: {fileID: -228762131019309666, guid: 33724c5005899fd4cadb5702227d71ef,
@@ -10922,7 +11176,7 @@ GameObject:
   - component: {fileID: 2696487500250877637}
   - component: {fileID: 5494984762827387167}
   m_Layer: 0
-  m_Name: base Canvas (2)
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11036,7 +11290,7 @@ GameObject:
   - component: {fileID: 5995839027844962441}
   - component: {fileID: 4740003838730885792}
   m_Layer: 0
-  m_Name: base Canvas (8)
+  m_Name: 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12811,7 +13065,7 @@ GameObject:
   - component: {fileID: 8808907664792010424}
   - component: {fileID: 3811268075721918527}
   m_Layer: 0
-  m_Name: base Canvas (17)
+  m_Name: 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14351,7 +14605,7 @@ GameObject:
   - component: {fileID: 6349843971603958257}
   - component: {fileID: 6337131128194541741}
   m_Layer: 0
-  m_Name: base Canvas (4)
+  m_Name: 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14465,7 +14719,7 @@ GameObject:
   - component: {fileID: 6189453853310032170}
   - component: {fileID: 2597281922946191793}
   m_Layer: 0
-  m_Name: base Canvas (18)
+  m_Name: 18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

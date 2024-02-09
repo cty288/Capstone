@@ -895,7 +895,42 @@ FactoryNewAttachment_name,,Factory-new,,,,,,,,,,,,,,,,,全新出厂附件,全新
 FactoryNewAttachment_desc,,"When you switch to the attached weapon, the weapon deals {0}% extra damage for {1} seconds",,,,,,,,,,,,,,,,,当你切换到附加的武器时，该武器在 {1} 秒内造成额外 {0}% 的伤害。,當您切換到附加的武器時，該武器在 {1} 秒內造成額外 {0}% 的傷害。,,,,,,,,,
 FactoryNewAttachment_PROPERTY_desc,,"When you switch to this weapon, it deals {0}% extra damage for {1} seconds",,,,,,,,,,,,,,,,,当你切换到该武器时，该武器在 {1} 秒内造成额外 {0}% 的伤害。,當您切換到該武器時，該武器在 {1} 秒內造成額外 {0}% 的傷害。,,,,,,,,,
 MotivatedBuff_Name,,Motivated,,,,,,,,,,,,,,,,,战意,戰意,,,,,,,,,
-MotivatedBuff_Desc,,Deal {0}% extra damage. {1},,,,,,,,,,,,,,,,,造成额外 {0}% 的伤害。{1},造成額外 {0}% 的傷害。{1},,,,,,,,,
-MotivatedBuff_Desc_2,,"When you kill an enemy, gain {0} shields.",,,,,,,,,,,,,,,,,当你击杀一个敌人时，获得 {0} 护盾。,當您擊殺一個敵人時，獲得 {0} 護盾。,,,,,,,,,
 INVENTORY_TITLE_INV,,<sprite index=0 tint=1> Inventory,,,,,,,,,,,,,,,,,<sprite index=0 tint=1> 背包,<sprite index=0 tint=1> 背包,,,,,,,,,
 INVENTORY_TITLE_MOD,,<sprite index=1 tint=1> Modification,,,,,,,,,,,,,,,,,<sprite index=1 tint=1> 武器改造,<sprite index=1 tint=1> 武器改造,,,,,,,,,
+BUILD_PANEL_TITLE,,Magazine Type: {0},,,,,,,,,,,,,,,,,弹匣类型：{0},彈匣類型：{0},,,,,,,,,
+BUILD_PANEL_TITLE_Mineral,,<color=#E2AF3F>Shredding</color>,,,,,,,,,,,,,,,,,<color=#E2AF3F>爆破弹</color>,<color=#E2AF3F>爆破彈</color>,,,,,,,,,
+BUILD_PANEL_TITLE_Combat,,<color=#E54160>Viral</color>,,,,,,,,,,,,,,,,,<color=#E54160>病毒</color>,<color=#E54160>病毒</color>,,,,,,,,,
+BUILD_PANEL_TITLE_Plant,,<color=#3B896D>EMP</color>,,,,,,,,,,,,,,,,,<color=#3B896D>电磁脉冲</color>,<color=#3B896D>電磁脈衝</color>,,,,,,,,,
+BUILD_PANEL_TITLE_Time,,<color=#4259A5>Artifical</color>,,,,,,,,,,,,,,,,,<color=#4259A5>人工制品</color>,<color=#4259A5>人工製品</color>,,,,,,,,,
+BUILD_BUFF_MINERAL_1,,Your bullets have a {0}% chance of creating an explosion that deals an additional 30 x Gun Level ({1}) damage to the target.,,,,,,,,,,,,,,,,,你的子弹有{0}%概率产生爆炸，该爆炸会对目标造成30×枪支等级（{1}）的额外伤害。,你的子彈有{0}%概率産生爆炸，該爆炸會對目標造成30×槍支等級（{1}）的額外傷害。,,,,,,,,,
+BUILD_BUFF_MINERAL_2,,The explosion created by the bullet will directly kill normal monsters with less than {0}% health.,,,,,,,,,,,,,,,,,子弹产生的爆炸将直接击杀血量{0}%以下的普通怪物。,子彈産生的爆炸將直接擊殺血量{0}%以下的普通怪物。,,,,,,,,,
+BUILD_BUFF_MINERAL_3,,"When a bullet explodes, it returns {0} rounds of ammo; if the explosion kills an enemy, it returns an additional {1} round of ammo.",,,,,,,,,,,,,,,,,子弹爆炸后，回复{0}发弹药；如果爆炸将敌人杀死，额外回复{1}发弹药,子彈爆炸後，回複{0}髮彈藥；如果爆炸將敵人殺死，額外回複{1}髮彈藥,,,,,,,,,
+MulfunctionBuff_Desc,,"<b>Mulfunction</b>: If the target is a normal monster, disable it (unable to move and attack).",,,,,,,,,,,,,,,,,<b>故障</b>：如果目标是普通怪物，使其无法行动(无法移动及攻击）。,<b>故障</b>：如果目標是普通怪物，使其無法行動(無法移動及攻擊）。,,,,,,,,,
+BUILD_BUFF_PLANT_1,,"When the weapon deals damage to an enemy, there is a {0}% chance that it will apply a <b>Malfunction</b> effect to the target for {1} seconds, as well as deal 15 x Gun Level ({2}) damage to all other monsters within a moderate distance of the target monster.
+
+{3}",,,,,,,,,,,,,,,,,"当武器对一个敌人造成伤害后，有{0}%的概率为目标施加一个{1}秒的<b>故障</b>效果，同时对目标怪物周围中等距离内的所有其他怪物造成15×枪支等级（{2}）的伤害。
+
+{3}","當武器對一個敵人造成傷害後，有{0}%的概率爲目標施加一個{1}秒的<b>故障</b>效果，同時對目標怪物週圍中等距離內的所有其他怪物造成15×槍支等級（{2}）的傷害。
+
+{3}",,,,,,,,,
+BUILD_BUFF_PLANT_2,,Bullets deal {0}% extra damage when hitting enemies in <b>Malfunction</b> effect.,,,,,,,,,,,,,,,,,子弹击中处于<b>故障</b>效果的敌人时造成{0}%额外伤害。,子彈擊中處於<b>故障</b>效果的敵人時造成{0}%額外傷害。,,,,,,,,,
+BUILD_BUFF_PLANT_3,,"When a weapon causes a <b>Malfunction</b> effect on an enemy, the enemy will also receive a Level 2 <b>Powerless</b> effect.
+
+{0}",,,,,,,,,,,,,,,,,"当武器对一个敌人造成<b>故障</b>效果后，该敌人还会同时获得等级2的<b>无力</b>效果。
+
+{1}",當武器對一個敵人造成<b>故障</b>效果後，該敵人還會同時獲得等級2的<b>無力</b>效果。,,,,,,,,,
+PowerlessBuff_Desc,,<b>Powerless {0}</b>: All damage dealt is reduced by {1}%.,,,,,,,,,,,,,,,,,<b>无力{0}</b>：造成的所有伤害减少{1}%。,<b>無力{0}</b>：造成的所有傷害減少{1}%。,,,,,,,,,
+BUILD_BUFF_Combat_1,,"When the weapon inflicts damage, there is a {0}% chance to apply a <b>Hacked</b> effect on the target for {1} seconds, which causes damage to the target every second equal to 2 × Gun Level ({2}).",,,,,,,,,,,,,,,,,当武器造成伤害时，有{0}%概率为目标施加持续{1}秒的<b>病毒</b>效果，该效果每秒会对目标造成2×枪支等级（{2}）的伤害,當武器造成傷害時，有{0}%機率為目標施加持續{1}秒的<b>病毒</b>效果，該效果每秒會對目標造成2×槍支等級（{2}）的傷害。,,,,,,,,,
+BUILD_BUFF_Combat_2,,"When the weapon successfully applies a <b>Hacked</b> effect to a target, all other monsters within a small range around the monster also receive the effect.",,,,,,,,,,,,,,,,,当武器成功为一个目标施加<b>病毒</b>效果后，使怪物周围小范围内的所有其他怪物也获得该效果。,當武器成功為一個目標施加<b>病毒</b>效果後，使怪物周圍小範圍內的所有其他怪物也獲得該效果。,,,,,,,,,
+BUILD_BUFF_Combat_3,,"The damage caused by the <b>Hacked</b> effect inflicted by the weapon is doubled, and the duration of the effect is also doubled.",,,,,,,,,,,,,,,,,武器造成的<b>病毒</b>效果造成的伤害翻倍，且持续时间翻倍。,武器造成的<b>病毒</b>效果造成的傷害翻倍，且持續時間翻倍。,,,,,,,,,
+MotivatedBuff_Desc,,"<b>Motivated {0}</b>: Deals an additional {1}% damage, lasting {2} seconds. {3}",,,,,,,,,,,,,,,,,<b>战意{0}</b>：造成额外{1}%伤害，持续{2}秒。{3},<b>戰意{0}</b>：造成額外{1}%傷害，持續{2}秒。{3},,,,,,,,,
+MotivatedBuff_Desc2,,Gain {0} shield points upon killing an enemy.,,,,,,,,,,,,,,,,,击杀敌人时，获得{0}点护盾。,擊殺敵人時，獲得{0}點護盾。,,,,,,,,,
+BUILD_BUFF_Time_1,,"When the weapon inflicts damage, you gain a Level {0} <b>Motivated</b> effect.
+
+{1}",,,,,,,,,,,,,,,,,"当武器造成伤害时，你获得等级{0}的<b>战意</b>效果。
+
+{1}","當武器造成傷害時，你獲得等級{0}的<b>戰意</b>效果。
+
+{1}",,,,,,,,,
+BUILD_BUFF_Time_2,,"When you are under the <b>Motivated</b> effect, your reload speed is reduced by {0} seconds.",,,,,,,,,,,,,,,,,当你处于<b>战意</b>效果时，你的换弹速度减少{0}秒。,當你處於<b>戰意</b>效果時，你的換彈速度減少{0}秒。,,,,,,,,,
+BUILD_BUFF_Time_3,,"Every {0} seconds you are under the <b>Motivated</b> effect, the <b>Motivated</b> level will increase by one. Upon leveling up <b>Motivated</b>, the damage bonus and duration of the effect will increase, and it will provide you with additional shields.",,,,,,,,,,,,,,,,,你处于<b>战意</b>效果中的每{0}秒会将<b>战意</b>等级上升一级。升级<b>战意</b>后，该效果的伤害加成、持续时间会有所增长，并会为你提供额外的护盾。,你處於<b>戰意</b>效果中的每{0}秒會將<b>戰意</b>等級上升一級。升級<b>戰意</b>後，該效果的傷害加成、持續時間會有所增長，並會為你提供額外的護盾。,,,,,,,,,
