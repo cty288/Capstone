@@ -50,8 +50,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			IBuffedProperty<Vector2Int> baseAttackSpeedProperty = baseDamageProperties.Properties.First();
 
 			addedDamage = new Vector2Int(
-				Mathf.RoundToInt((baseAttackSpeedProperty.RealValue.Value.x * multiplayer)),
-				Mathf.RoundToInt((baseAttackSpeedProperty.RealValue.Value.y * multiplayer)));
+				Mathf.RoundToInt((baseAttackSpeedProperty.BaseValue.x * multiplayer)),
+				Mathf.RoundToInt((baseAttackSpeedProperty.BaseValue.y * multiplayer)));
 
 
 			baseAttackSpeedProperty.RealValue.Value += addedDamage;

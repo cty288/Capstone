@@ -22,6 +22,7 @@ public class RageDetector : WeaponPartsEntity<RageDetector, RageDetectorBuff> {
 
 		
 	
+	
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
 		}

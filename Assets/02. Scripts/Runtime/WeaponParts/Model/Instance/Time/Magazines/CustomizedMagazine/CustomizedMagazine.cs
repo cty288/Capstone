@@ -70,7 +70,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines {
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.CurrentAmmo.UnRegisterOnValueChanged(OnAmmoChange);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

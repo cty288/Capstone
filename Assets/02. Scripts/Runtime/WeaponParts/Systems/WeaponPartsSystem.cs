@@ -26,7 +26,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			"LongBarrel",*/
 			"SpecialBarrel",
 			"CustomizedMagazine",
-			"SelfLoadingAttachment"
+			"SelfLoadingAttachment",
+			"FatesEdgeBarrel",
+			"DoubleExplosionMagazine",
+			"VerticalForegrip"
 		};
 		
 		protected IResourceBuildModel buildModel;
@@ -61,7 +64,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			          " Total Rarity: " + totalBuildRarity + " Weapon: " + weaponEntity.GetDisplayName());
 			
 			
-			if (buildBuffRarity < 0) {
+			if (buildBuffRarity <= 0) {
 				return;
 			}
 
