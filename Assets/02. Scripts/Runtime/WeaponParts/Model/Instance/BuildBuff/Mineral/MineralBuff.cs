@@ -18,6 +18,17 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
+
+	public class OnMineralBuffGenerateExplostion : WeaponBuildBuffEvent {
+		public int Damage { get; set; }
+		public GameObject HurtboxOwner { get; set; }
+		public Vector3 HitPoint { get; set; }
+		public ICanDealDamage Attacker { get; set; }
+		
+		public MineralBuff Buff { get; set; }
+	}
+	
+	
 	public class MineralBuffInternalExplosion : ICanDealDamage {
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
@@ -97,53 +108,62 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 			}
 		}
 
+		public void GenerateExplosion(int damage, GameObject hurtboxOwner, Vector3 hitPoint, ICanDealDamage attacker) {
+			float range = GetBuffPropertyAtCurrentLevel<float>("range");
+			
+			GameObject explosionGo = resLoader.LoadSync<GameObject>("Explosion_MineralBuff");
+			MineralBuffExplosion explosion =
+				GameObject.Instantiate(explosionGo, hitPoint, Quaternion.identity)
+					.GetComponent<MineralBuffExplosion>();
+			
+			explosion.Init(weaponEntity.CurrentFaction.Value, 0, range, null, weaponEntity);
+			
+			if (hurtboxOwner && hurtboxOwner.TryGetComponent<IDamageableViewController>(out IDamageableViewController damageableViewController)) {
+				bool killTriggered = false;
+				if (Level >= 2) {
+					if (damageableViewController.DamageableEntity is INormalEnemyEntity enemyEntity) {
+						int maxHealth = enemyEntity.GetMaxHealth();
+						int currentHealth = enemyEntity.GetCurrentHealth();
+						float healthPercentage = (float)currentHealth / maxHealth;
+						float killThreshold = GetBuffPropertyAtCurrentLevel<float>("health_kill");
+
+						if (healthPercentage <= killThreshold) {
+							enemyEntity.Kill(new MineralBuffInternalExplosion(attacker));
+							killTriggered = true;
+						}
+					}
+				}
+
+				if (!killTriggered) {
+					damageableViewController.DamageableEntity.TakeDamage(damage, new MineralBuffInternalExplosion(attacker));
+				}
+			}
+
+			if (Level >= 3) {
+				int ammoRecovered = GetBuffPropertyAtCurrentLevel<int>("ammo_recovery_base");
+				weaponEntity.AddAmmo(ammoRecovered);
+			}
+			
+		}
+
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			if (Random.Range(0f, 1f) <= chance) {
-				if (hit.Attacker is not IExplosionViewController) {
-					float range = GetBuffPropertyAtCurrentLevel<float>("range");
-					int explosionDamagePerRarity = GetBuffPropertyAtCurrentLevel<int>("damage_per_rarity");
-					int damage = Mathf.RoundToInt(explosionDamagePerRarity * weaponEntity.GetRarity());
-
-					GameObject explosionGo = resLoader.LoadSync<GameObject>("Explosion_MineralBuff");
-					MineralBuffExplosion explosion =
-						GameObject.Instantiate(explosionGo, hit.HitPoint, Quaternion.identity)
-							.GetComponent<MineralBuffExplosion>();
-
-					explosion.Init(weaponEntity.CurrentFaction.Value, 0, range, null, weaponEntity);
-					//hit.Damage += damage;
+				int explosionDamagePerRarity = GetBuffPropertyAtCurrentLevel<int>("damage_per_rarity");
+				int damage = Mathf.RoundToInt(explosionDamagePerRarity * weaponEntity.GetRarity());
+				GameObject owner = hit.Hurtbox?.Owner;
 
 
-					GameObject owner = hit.Hurtbox?.Owner;
-					if (owner && owner.TryGetComponent<IDamageableViewController>(
-						    out IDamageableViewController damageableViewController)) {
-						
-						
-						bool killTriggered = false;
-						if (Level >= 2) {
-							if (damageableViewController.DamageableEntity is INormalEnemyEntity enemyEntity) {
-								int maxHealth = enemyEntity.GetMaxHealth();
-								int currentHealth = enemyEntity.GetCurrentHealth();
-								float healthPercentage = (float)currentHealth / maxHealth;
-								float killThreshold = GetBuffPropertyAtCurrentLevel<float>("health_kill");
+				GenerateExplosion(damage, owner, hit.HitPoint, hit.Attacker);
 
-								if (healthPercentage <= killThreshold) {
-									enemyEntity.Kill(new MineralBuffInternalExplosion(hit.Attacker));
-									killTriggered = true;
-								}
-							}
-						}
-
-						if (!killTriggered) {
-							damageableViewController.DamageableEntity.TakeDamage(damage, new MineralBuffInternalExplosion(hit.Attacker));
-						}
-					}
-
-					if (Level >= 3) {
-						int ammoRecovered = GetBuffPropertyAtCurrentLevel<int>("ammo_recovery_base");
-						weaponEntity.AddAmmo(ammoRecovered);
-					}
-				}
+				SendWeaponBuildBuffEvent<OnMineralBuffGenerateExplostion>
+				(new OnMineralBuffGenerateExplostion() {
+					Attacker = hit.Attacker,
+					Damage = damage,
+					HitPoint = hit.HitPoint,
+					HurtboxOwner = owner,
+					Buff = this
+				});
 
 			}
 

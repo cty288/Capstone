@@ -147,7 +147,7 @@ namespace Runtime.Temporary
             }
 
             if (Input.GetKeyDown(KeyCode.C)) {
-                ImageEffectController.Singleton.DisableAllFeatures();
+                //ImageEffectController.Singleton.DisableAllFeatures();
             }
 
             if (Input.GetKeyDown(KeyCode.F5)) {
