@@ -12,7 +12,7 @@ using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class WormBossArcMovement : EnemyAction
+    public partial class WormBossArcMovement : EnemyAction
     {
         private Vector3 start;
         private Vector3 end;
