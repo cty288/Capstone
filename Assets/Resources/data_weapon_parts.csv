@@ -316,7 +316,7 @@ GunpowerEnchancement,1,"""Time""","{
             ""Time1"": 5
         }
 }",,,,
-VampireMagazine,1,"""Mineral""","{
+VampireMagazine,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Time1"": 5
@@ -362,7 +362,7 @@ RageDetector,1,"""Time""","{
     ""health_bound"": {""type"": ""float"", ""value"": 0.5}
   }
 }",,,
-KineticDevice,1,"""Mineral""","{
+KineticDevice,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Time1"": 5
@@ -405,3 +405,151 @@ FactoryNewAttachment,1,"""Time""","{
   }
 }",,,
 SelfLoadingAttachment,1,"""Time""",,,,,
+FatesEdgeBarrel,1,"""Mineral""",,"{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.15},
+    ""health"": {""type"": ""float"", ""value"": 0.75}
+  },
+  ""level2"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.25},
+    ""health"": {""type"": ""float"", ""value"": 0.75}
+  },
+  ""level3"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.25},
+    ""health"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level4"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.5},
+    ""health"": {""type"": ""float"", ""value"": 0.5}
+  }
+}",,,
+DoubleExplosionMagazine,1,"""Mineral""",,"{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level2"": {
+   ""multiplier"": {""type"": ""float"", ""value"": 0.75}
+  },
+  ""level3"": {
+   ""multiplier"": {""type"": ""float"", ""value"": 1}
+  },
+  ""level4"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 1.25}
+  }
+}",,,
+VerticalForegrip,1,"""Mineral""",,"{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.25}
+  }
+}",,,
+ThundercrackBarrel,1,"""Plant""",,"{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level2"": {
+   ""multiplier"": {""type"": ""float"", ""value"": 0.3}
+  },
+  ""level3"": {
+   ""multiplier"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level4"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 0.75}
+  }
+}",,,
+EMPChain,1,"""Plant""",,"{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level2"": {
+   ""chance"": {""type"": ""float"", ""value"": 0.35}
+  },
+  ""level3"": {
+   ""chance"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level4"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.75}
+  }
+}",,,
+IntenseEMP,1,"""Plant""",,"{
+  ""level1"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 1.5},
+    ""range"": {""type"": ""float"", ""value"": 20}
+  },
+  ""level2"": {
+   ""multiplier"": {""type"": ""float"", ""value"": 1.75},
+    ""range"": {""type"": ""float"", ""value"": 20}
+  },
+  ""level3"": {
+   ""multiplier"": {""type"": ""float"", ""value"": 1.75},
+    ""range"": {""type"": ""float"", ""value"": 30}
+  },
+  ""level4"": {
+    ""multiplier"": {""type"": ""float"", ""value"": 2},
+    ""range"": {""type"": ""float"", ""value"": 30}
+  }
+}",,,
+WorseViral,1,"""Combat""",,"{
+  ""level1"": {
+    ""damage"": {""type"": ""int"", ""value"": 1}
+  },
+  ""level2"": {
+   ""damage"": {""type"": ""int"", ""value"": 2}
+  },
+  ""level3"": {
+   ""damage"": {""type"": ""int"", ""value"": 3}
+  },
+  ""level4"": {
+    ""damage"": {""type"": ""int"", ""value"": 4}
+  }
+}",,,
+EvolvingVirus,1,"""Combat""",,"{
+  ""level1"": {
+    ""time"": {""type"": ""int"", ""value"": 5}
+  },
+  ""level2"": {
+   ""time"": {""type"": ""int"", ""value"": 7}
+  },
+  ""level3"": {
+   ""time"": {""type"": ""int"", ""value"": 10}
+  },
+  ""level4"": {
+    ""time"": {""type"": ""int"", ""value"": 15}
+  }
+}",,,
+Multivirus,1,"""Combat""",,"{
+  ""level1"": {
+    ""number"": {""type"": ""int"", ""value"": 1}
+  },
+  ""level2"": {
+   ""number"": {""type"": ""int"", ""value"": 2}
+  },
+  ""level3"": {
+   ""number"": {""type"": ""int"", ""value"": 3}
+  }
+}",,,
+ChargedMagazine,1,"""Time""","{
+        ""ResourceCost"": {
+            ""Time1"": 10
+        }
+}","{
+  ""level1"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.25},
+    ""condition"": {""type"": ""int"", ""value"": 10},
+    ""effect"": {""type"": ""int"", ""value"": 10}
+  },
+  ""level2"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 0.35},
+    ""condition"": {""type"": ""int"", ""value"": 10},
+     ""effect"": {""type"": ""int"", ""value"": 10}
+  },
+  ""level3"": {
+   ""multiplayer"": {""type"": ""float"", ""value"": 0.75},
+   ""condition"": {""type"": ""int"", ""value"": 10},
+   ""effect"": {""type"": ""int"", ""value"": 10}
+  },
+  ""level4"": {
+    ""multiplayer"": {""type"": ""float"", ""value"": 1},
+    ""condition"": {""type"": ""int"", ""value"": 10},
+    ""effect"": {""type"": ""int"", ""value"": 10}
+  }
+}",,,
