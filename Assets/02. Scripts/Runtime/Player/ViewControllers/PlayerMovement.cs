@@ -589,6 +589,10 @@ namespace Runtime.Player.ViewControllers
                 sprinting = false;
             }
 
+            if (!playerActions.SprintHold.IsPressed()) {
+                sprinting = false;
+            }
+
             if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
             {
                 sliding = true;
