@@ -162,7 +162,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             }
             
             if(Input.GetKeyDown(KeyCode.G)) {
-                BoundEntity.TakeDamage(10, null);
+                BoundEntity.TakeDamage(10, null, out _);
             }
             
             if(Input.GetKeyDown(KeyCode.H)) {

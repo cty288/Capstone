@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_active: 1
-  m_owner: {fileID: 5900674649198547759}
+  m_owner: {fileID: 8049880895992306662}
   m_damageMultiplier: 1
 --- !u!114 &997281954627919530
 MonoBehaviour:
@@ -364,7 +364,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: b2ef6ad2-267f-444b-9522-8bda652aa753
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -382,6 +381,7 @@ MonoBehaviour:
   showDamageNumber: 1
   rarityBaseValueBuiltFromInspector: 1
   randomizeNavMeshPriority: 1
+  autoRemoveEntityWhenDie: 1
   <SpawnSizeCollider>k__BackingField: {fileID: 3424044716484302364}
   healthBarPrefabName: EnemyHealthBar
   healthBarSpawnPoint: {fileID: 8049880894790430500}
@@ -390,6 +390,8 @@ MonoBehaviour:
   autoRecycleDistanceFromPlayer: 150
   autoRecycleCheckTimeInterval: 5
   waypoints: []
+  deathEffect: {fileID: 0}
+  pool: {fileID: 0}
 --- !u!195 &8049880895992306660
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -48,7 +48,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			return BuffStatus.Running;
 		}
 
-		public override bool IsGoodBuff => true;
+		public override bool IsGoodBuff => false;
 		public override void OnBuffEnd() {
 			
 		}

@@ -29,7 +29,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			"SelfLoadingAttachment",
 			"FatesEdgeBarrel",
 			"DoubleExplosionMagazine",
-			"VerticalForegrip"
+			"VerticalForegrip",
+			"ThundercrackBarrel",
+			"EMPChain",
+			"IntenseEMP",
+			"EvolvingVirus",
+			"WorseViral",
+			"Multivirus"
 		};
 		
 		protected IResourceBuildModel buildModel;

@@ -105,7 +105,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Doub
 					string multiplierString = multiplier.ToString("f2");
 
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("CustomizedMagazine_desc", multiplierString));
+						Localization.GetFormat("DoubleExplosionMagazine_desc", multiplierString));
 				})
 			};
 		}

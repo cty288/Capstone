@@ -310,14 +310,14 @@ namespace Runtime.Enemies
                     }
                 }
                 else {
-                    BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
+                    BoundEntity.TakeDamage(data.Damage, data.Attacker,out _, data);
                 }
                 
                 
                
             }
             else {
-                BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
+                BoundEntity.TakeDamage(data.Damage, data.Attacker,out _, data);
             }
 
            

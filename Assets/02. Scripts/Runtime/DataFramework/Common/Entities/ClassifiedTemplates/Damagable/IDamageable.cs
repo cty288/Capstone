@@ -73,14 +73,15 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		
 		public int GetCurrentHealth();
-		
+
 		/// <summary>
 		/// Deal damage to the entity
 		/// </summary>
 		/// <param name="damage">the amount of damage</param>
 		/// <param name="damageDealer">the damage dealer entity</param>
-		
-		public void TakeDamage(int damage, ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null, bool nonlethal = false);
+
+		public void TakeDamage(int damage, ICanDealDamage damageDealer, out bool isDie,
+			[CanBeNull] HitData hitData = null, bool nonlethal = false);
 
 
 		public void Kill(ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null);

@@ -57,7 +57,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			float damage = GetBuffPropertyAtCurrentLevel<float>("buff_damage");
 			
 			if (Level <= 2) {
-				damagableEntity.TakeDamage(Mathf.RoundToInt(damage), buffDealer as ICanDealDamage);
+				damagableEntity.TakeDamage(Mathf.RoundToInt(damage), buffDealer as ICanDealDamage, out _);
 			}else {
 				int maxHealth = damagableEntity.HealthProperty.InitialValue.MaxHealth;
 				int damageRounded = Mathf.RoundToInt(Mathf.Max(1, damage * maxHealth));
@@ -65,7 +65,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 				HealthInfo healthInfo = damagableEntity.HealthProperty.RealValue.Value;
 				damagableEntity.HealthProperty.RealValue.Value =
 					new HealthInfo(healthInfo.MaxHealth - damageRounded, healthInfo.CurrentHealth);
-				damagableEntity.TakeDamage(damageRounded, buffDealer as ICanDealDamage);
+				damagableEntity.TakeDamage(damageRounded, buffDealer as ICanDealDamage, out _);
 			}
 
 			return BuffStatus.Running;

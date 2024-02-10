@@ -65,7 +65,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 			}
 
 			int damage = GetBuffPropertyAtCurrentLevel<int>("damage");
-			damagableEntity.TakeDamage(damage, buffDealer as ICanDealDamage);
+			damagableEntity.TakeDamage(damage, buffDealer as ICanDealDamage, out _);
 			return BuffStatus.End;
 		}
 

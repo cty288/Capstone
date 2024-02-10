@@ -43,7 +43,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		}
 
 		public override BuffStatus OnTick() {
-			damagableEntity.TakeDamage(Mathf.RoundToInt(damage * damageMultiplier), buffDealer as ICanDealDamage);
+			damagableEntity.TakeDamage(Mathf.RoundToInt(damage * damageMultiplier), buffDealer as ICanDealDamage, out _);
 			return BuffStatus.Running;
 		}
 

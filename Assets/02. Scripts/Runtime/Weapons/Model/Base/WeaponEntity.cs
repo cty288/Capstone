@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using JetBrains.Annotations;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.Event;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -33,6 +34,15 @@ namespace Runtime.Weapons.Model.Base
         public Vector3 recoilVector;
         public float snappiness;
         public float returnSpeed;
+    }
+    
+    public abstract class ModifyValueEvent{}
+    public abstract class ModifyValueEvent<T> : ModifyValueEvent {
+        public T Value;
+		
+        public ModifyValueEvent(T value) {
+            Value = value;
+        }
     }
     
     public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage, IHitResponder {
@@ -87,12 +97,43 @@ namespace Runtime.Weapons.Model.Base
         public void AddAmmo(int amount);
         // void RegisterOnWeaponPartsUpdate(Action<string, string> callback);
         // void OnModifyHitData(Func<HitData, IWeaponEntity, HitData> onModifyHitData);
+
+        public TEventType SendModifyValueEvent<TEventType>(TEventType modifyValueEvent)
+            where TEventType : ModifyValueEvent;
+
+        public void RegisterOnModifyValueEvent<TEventType>(Func<TEventType, TEventType> callback)
+            where TEventType : ModifyValueEvent;
+        
+        public void UnRegisterOnModifyValueEvent<TEventType>(Func<TEventType, TEventType> callback)
+            where TEventType : ModifyValueEvent;
+
+        public void ShootUseAmmo(int count);
+        
+        public void RegisterOnUseAmmo(Action<int> callback);
+        
+        public void UnRegisterOnUseAmmo(Action<int> callback);
     }
 
     public struct OnWeaponPartsUpdate {
         public IWeaponEntity WeaponEntity;
         public string PreviousTopPartsUUID;
         public string CurrentTopPartsUUID;
+    }
+
+
+    public interface IFuncRegisterations {
+    }
+
+    public class FuncRegisterations<T> : IFuncRegisterations {
+        public HashSet<Func<T, T>> OnEvent = new HashSet<Func<T, T>>();
+        
+        public void Add(Func<T, T> callback) {
+            OnEvent.Add(callback);
+        }
+        
+        public void Remove(Func<T, T> callback) {
+            OnEvent.Remove(callback);
+        }
     }
     
     public abstract class WeaponEntity<T> :  BuildableResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
@@ -109,6 +150,11 @@ namespace Runtime.Weapons.Model.Base
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
         private IWeight weightProperty;
+
+        private Dictionary<Type, IFuncRegisterations> onModifyValueEventCallbacks =
+            new Dictionary<Type, IFuncRegisterations>();
+        
+        
         //protected ICanDealDamageRootEntity rootDamageDealer;
        // protected ICanDealDamage damageDealer;
         
@@ -124,6 +170,7 @@ namespace Runtime.Weapons.Model.Base
         private List<Func<HitData, IWeaponEntity, HitData>> onModifyHitData = new List<Func<HitData, IWeaponEntity, HitData>>();
         private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
         private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+        private Action<int> _onUseAmmoCallback;
         public abstract int Width { get; }
 
         protected override ConfigTable GetConfigTable() {
@@ -267,6 +314,7 @@ namespace Runtime.Weapons.Model.Base
             _onDealDamageCallback = null;
             _onKillDamageableCallback = null;
             damageDealerUUID = null;
+            _onUseAmmoCallback = null;
         }
 
         public override void OnAddedToInventory(string playerUUID) {
@@ -480,6 +528,65 @@ namespace Runtime.Weapons.Model.Base
                 CurrentAmmo.Value += amount;
             }
         }
+
+        public TEventType SendModifyValueEvent<TEventType>(TEventType modifyValueEvent) where TEventType: ModifyValueEvent {
+            Type type = modifyValueEvent.GetType();
+            if (!onModifyValueEventCallbacks.ContainsKey(type)) {
+                return modifyValueEvent;
+            }
+
+            FuncRegisterations<TEventType> registerations =
+                onModifyValueEventCallbacks[type] as FuncRegisterations<TEventType>;
+            
+            
+            TEventType result = modifyValueEvent;
+            foreach (Func<TEventType, TEventType> func in registerations.OnEvent) {
+                result = func(result);
+            }
+
+            return result;
+        }
+        
+
+        public void RegisterOnModifyValueEvent<TEventType>(Func<TEventType, TEventType> callback) where TEventType : ModifyValueEvent {
+            Type type = typeof(TEventType);
+            if (!onModifyValueEventCallbacks.ContainsKey(type)) {
+                onModifyValueEventCallbacks.Add(type, new FuncRegisterations<TEventType>());
+            }
+
+
+            FuncRegisterations<TEventType> registerations =
+                onModifyValueEventCallbacks[type] as FuncRegisterations<TEventType>;
+            
+            registerations.Add(callback);
+        }
+
+        public void UnRegisterOnModifyValueEvent<TEventType>(Func<TEventType, TEventType> callback) where TEventType : ModifyValueEvent {
+            Type type = typeof(TEventType);
+            if (!onModifyValueEventCallbacks.ContainsKey(type)) {
+                return;
+            }
+
+            FuncRegisterations<TEventType> registerations =
+                onModifyValueEventCallbacks[type] as FuncRegisterations<TEventType>;
+
+            registerations.Remove(callback);
+        }
+
+        public void ShootUseAmmo(int count) {
+            int realCount = Mathf.Min(count, CurrentAmmo.Value);
+            CurrentAmmo.Value -= realCount;
+            _onUseAmmoCallback?.Invoke(realCount);
+        }
+
+        public void RegisterOnUseAmmo(Action<int> callback) {
+            _onUseAmmoCallback += callback;
+        }
+
+        public void UnRegisterOnUseAmmo(Action<int> callback) {
+            _onUseAmmoCallback -= callback;
+        }
+
 
         public int GetTotalBuildRarity(CurrencyType currencyType) {
             int totalRarity = 0;

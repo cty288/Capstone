@@ -7,9 +7,23 @@ using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
+using Runtime.Weapons.Model.Base;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
+	public class OnCombatBuffChangeDOTEvent : ModifyValueEvent<int> {
+		public OnCombatBuffChangeDOTEvent(int value) : base(value) {
+		}
+	}
+	
+	public class OnCombatBuffChangeDurationEvent : ModifyValueEvent<float> {
+		public OnCombatBuffChangeDurationEvent(float value) : base(value) {
+		}
+	}
+
+	public class OnHackedBuffAdded : WeaponBuildBuffEvent {
+		public IDamageable Target { get; set; }
+	}
 	public class CombatBuff : WeaponBuildBuff<CombatBuff>, ICanGetSystem {
 		[field: ES3Serializable]
 		public override float TickInterval { get; protected set; } = -1;
@@ -22,18 +36,41 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			weaponEntity.RegisterOnDealDamage(OnDealDamage);
 		}
 
+
+		public bool AddHackedBuff(IDamageable target) {
+			float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage_multiplier");
+			float duration = GetBuffPropertyAtCurrentLevel<float>("time");
+			duration = weaponEntity
+				.SendModifyValueEvent<OnCombatBuffChangeDurationEvent>(
+					new OnCombatBuffChangeDurationEvent(duration))
+				.Value;
+				
+				
+			IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
+			int dot = 2 * weaponEntity.GetRarity();
+			dot = weaponEntity.SendModifyValueEvent<OnCombatBuffChangeDOTEvent>(new OnCombatBuffChangeDOTEvent(dot))
+				.Value;
+				
+
+			HackedBuff buff = HackedBuff.Allocate(weaponEntity, target, duration, dot,
+				damageMultiplier);
+
+			if (buffSystem.AddBuff(target, weaponEntity, buff)) {
+				SendWeaponBuildBuffEvent<OnHackedBuffAdded>(new OnHackedBuffAdded() {Target = target});
+				return true;
+			}
+			else {
+				buff.RecycleToCache();
+				return false;
+			}
+		}
+		
+		
+		
 		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			if(Random.Range(0f, 1f) <= chance) {
-				float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage_multiplier");
-				float duration = GetBuffPropertyAtCurrentLevel<float>("time");
-				
-				
-				IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
-				HackedBuff buff = HackedBuff.Allocate(weaponEntity, target, duration, 2 * weaponEntity.GetRarity(),
-					damageMultiplier);
-
-				if (buffSystem.AddBuff(target, weaponEntity, buff)) {
+				if (AddHackedBuff(target)) {
 					if (Level >= 2) {
 						
 						Transform transform = weaponEntity.GetRootDamageDealerTransform();
@@ -44,14 +81,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 						//get all enemies in range
 						HashSet<IEnemyEntity> enemies = new HashSet<IEnemyEntity>();
 						LayerMask mask = LayerMask.GetMask("Default");
-						/*var size = Physics.OverlapSphereNonAlloc(transform.position, range, results, mask);
-						for (int i = 0; i < size; i++) {
-							IEnemyViewController enemy = results[i].GetComponent<IEnemyViewController>();
-							if (enemy != null && enemy.EnemyEntity != null) {
-								enemies.Add(enemy.EnemyEntity);
-							}
-						}*/
-						
+
 						Collider[] colliders = Physics.OverlapSphere(transform.position, range, mask);
 						foreach (var collider in colliders) {
 							if(!collider.attachedRigidbody) continue;
@@ -64,18 +94,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 						//apply buff to all enemies
 						foreach (var enemy in enemies) {
 							if (enemy != target) {
-								HackedBuff aoeBuff = HackedBuff.Allocate(weaponEntity, enemy,
-									duration, 2 * weaponEntity.GetRarity(),
-									damageMultiplier);
-
-								if (!buffSystem.AddBuff(enemy, weaponEntity, aoeBuff)) {
-									aoeBuff.RecycleToCache();
-								}
+								AddHackedBuff(enemy);
 							}
 						}
 					}
-				}else {
-					buff.RecycleToCache();
 				}
 			}
 		}

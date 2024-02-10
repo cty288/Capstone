@@ -46,7 +46,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			return BuffStatus.Running;
 		}
 
-		public override bool IsGoodBuff { get; }
+		public override bool IsGoodBuff { get; } = false;
 		public override void OnEnds() {
 			if (creature is IBossEntity) {
 				return;

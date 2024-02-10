@@ -135,7 +135,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 				}
 
 				if (!killTriggered) {
-					damageableViewController.DamageableEntity.TakeDamage(damage, new MineralBuffInternalExplosion(attacker));
+					damageableViewController.DamageableEntity.TakeDamage(damage, new MineralBuffInternalExplosion(attacker), out _);
 				}
 			}
 

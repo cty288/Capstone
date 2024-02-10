@@ -79,7 +79,7 @@ namespace Runtime.Weapons
                         SetShoot(true);
                         ShootEffects();
 
-                        BoundEntity.CurrentAmmo.Value--;
+                        BoundEntity.ShootUseAmmo(1);
                     }
                 
                     if (autoReload && BoundEntity.CurrentAmmo <= 0)
