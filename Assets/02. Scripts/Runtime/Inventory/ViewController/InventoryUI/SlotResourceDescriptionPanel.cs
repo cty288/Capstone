@@ -53,7 +53,8 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
     }
     
     public void SetContent(string name, string description, Sprite sprite, bool isLeftPivot, int rarity,
-    string resourceDisplayedType, List<ResourcePropertyDescription> propertyDescriptions, Dictionary<CurrencyType, int> skillUseCosts) {
+    string resourceDisplayedType, List<ResourcePropertyDescription> propertyDescriptions, Dictionary<CurrencyType, int> skillUseCosts,
+    CurrencyType? currencyType) {
         
         nameText.text = name;
         descriptionText.text = description;
@@ -79,7 +80,10 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
             Destroy(child.gameObject);
         }
         for (int i = 0; i < rarity; i++) {
-            Instantiate(rarityIndicator, rarityIndicatorTransform);
+            GameObject indicator = Instantiate(rarityIndicator, rarityIndicatorTransform);
+            if (currencyType != null) {
+                indicator.GetComponent<RarityIndicator>().SetCurrency(currencyType.Value);
+            }
         }
 
         if (propertyDescriptions is {Count: > 0} && propertyDescriptions.Any((propertyDescription => propertyDescription.display))) {
@@ -183,7 +187,7 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
     }
 
     public void Clear() {
-        SetContent("", "", null, true, 0, "",null, null);
+        SetContent("", "", null, true, 0, "",null, null, null);
     }
     public override void OnRecycled() {
         base.OnRecycled();

@@ -165,12 +165,23 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 		currentHoldDeployableItemViewController.Item1.OnDeploy();
 		//currentHoldItemViewController = null;
 		currentHoldDeployableItemViewController = (null, null);
-		HotBarSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
-		currentHotBarSlot.RemoveLastItem();
-		this.Delay(0.5f, () => {
-			inventoryModel.ReplenishHotBarSlot(currentHand, currentHotBarSlot);
-		});
-		
+		if (currentHoldItemViewController is IInHandDeployableResourceViewController vc) {
+			vc.OnDeploy();
+
+			if (vc.RemoveAfterDeploy) {
+				HotBarSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
+				currentHotBarSlot.RemoveLastItem();
+				this.Delay(0.5f, () => {
+					inventoryModel.ReplenishHotBarSlot(currentHand, currentHotBarSlot);
+				});
+			}
+			else {
+				if (currentHoldItemViewController is IInHandDeployableResourceViewController) {
+					SpawnCurrentHoldDeployableItem();
+				}
+				
+			}
+		}
 		//replenish the hotbar slot
 
 
@@ -232,12 +243,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 				spawnedItem.transform.localScale = currentHoldItemViewController.InHandLocalScale;
 
 				if (currentHoldItemViewController is IInHandDeployableResourceViewController) {
-					GameObject deployedPrefab =
-						ResourceVCFactory.Singleton.SpawnDeployableResourceVC(
-							currentHoldItemViewController.ResourceEntity, true, true);
-
-					currentHoldDeployableItemViewController =
-						(deployedPrefab.GetComponent<IDeployableResourceViewController>(), deployedPrefab);
+					SpawnCurrentHoldDeployableItem();
 				}
 			
 				
@@ -258,6 +264,15 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			waitingEntity = resourceEntity;
 			waitingCategory = category;
 		}
+	}
+	
+	private void SpawnCurrentHoldDeployableItem() {
+		GameObject deployedPrefab =
+			ResourceVCFactory.Singleton.SpawnDeployableResourceVC(
+				currentHoldItemViewController.ResourceEntity, true, true);
+
+		currentHoldDeployableItemViewController =
+			(deployedPrefab.GetComponent<IDeployableResourceViewController>(), deployedPrefab);
 	}
 
 	private void Update() {

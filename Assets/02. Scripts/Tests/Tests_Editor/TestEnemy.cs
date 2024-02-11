@@ -254,7 +254,7 @@ namespace Tests.Tests_Editor {
 
 
             ent1.RegisterOnTakeDamage(OnEnt1TakeDamage);
-            ent1.TakeDamage(200, ent2);
+            ent1.TakeDamage(200, ent2, out _);
             
             void OnEnt1TakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer, [CanBeNull] HitData hitData) {
                 Assert.AreEqual(200, damage);
@@ -267,11 +267,11 @@ namespace Tests.Tests_Editor {
             
             //when invincible, damage taken will be 0
             ent1.IsInvincible.Value = true;
-            ent1.TakeDamage(200, ent2);
+            ent1.TakeDamage(200, ent2, out _);
             Assert.AreEqual(1298, ent1.GetCurrentHealth());
             
             //when the damage dealer has the same faction, damage will not be taken
-            ent1.TakeDamage(100, ent1);
+            ent1.TakeDamage(100, ent1, out _);
             Assert.AreEqual(1298, ent1.GetCurrentHealth());
             
             

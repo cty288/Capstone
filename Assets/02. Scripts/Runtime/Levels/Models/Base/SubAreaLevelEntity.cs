@@ -115,7 +115,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		{
 			foreach (var enemy in GetMaxSpawnPerEnemy())
 			{
-				enemyCount.Add(enemy.Key, 0);
+				enemyCount.TryAdd(enemy.Key, 0);
 			}
 		}
 

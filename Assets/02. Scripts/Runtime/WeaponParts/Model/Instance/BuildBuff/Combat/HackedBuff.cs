@@ -1,4 +1,5 @@
 ﻿using _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		[ES3Serializable] private float damageMultiplier = 1;
 		
 		public override string OnGetDescription(string defaultLocalizationKey) {
-			return null;
+			return Localization.GetFormat(defaultLocalizationKey, damage * damageMultiplier);
 		}
 
 		public override bool IsDisplayed() {
@@ -42,7 +43,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		}
 
 		public override BuffStatus OnTick() {
-			damagableEntity.TakeDamage(Mathf.RoundToInt(damage * damageMultiplier), buffDealer as ICanDealDamage);
+			damagableEntity.TakeDamage(Mathf.RoundToInt(damage * damageMultiplier), buffDealer as ICanDealDamage, out _);
 			return BuffStatus.Running;
 		}
 

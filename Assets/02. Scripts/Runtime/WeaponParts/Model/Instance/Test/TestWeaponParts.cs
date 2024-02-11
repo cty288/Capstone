@@ -78,7 +78,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 		}
 
 
-		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters() {
+		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(
+			string iconName, string title) {
 			return null;
 		}
 	}

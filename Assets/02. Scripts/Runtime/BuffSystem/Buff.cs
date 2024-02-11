@@ -67,6 +67,10 @@ public interface ILeveledBuff: IBuff {
     public int Level { get; }
     
     public int MaxLevel { get; }
+    
+  
+
+    string GetLevelDescription(int level);
 }
 
 public abstract class Buff<T> : IBuff where T : Buff<T>, new() {

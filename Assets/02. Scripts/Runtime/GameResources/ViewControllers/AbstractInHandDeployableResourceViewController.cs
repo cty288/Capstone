@@ -8,9 +8,9 @@ using UnityEngine;
 
 namespace Runtime.GameResources.ViewControllers {
 	public interface IInHandDeployableResourceViewController : IInHandResourceViewController {
-		public void OnDeployed();
-
 		public void OnDeployFailureReasonChanged(DeployFailureReason lastReason, DeployFailureReason currentReason);
+		void OnDeploy();
+		bool RemoveAfterDeploy { get; set; }
 	}
 
 	public abstract class AbstractInHandDeployableResourceViewController<T> :
@@ -29,9 +29,7 @@ namespace Runtime.GameResources.ViewControllers {
 			
 		}
 
-		public void OnDeployed() {
-			RecycleToCache();
-		}
+	
 
 		public override void OnStopHold() {
 			this.SendCommand(SetDeployStatusHintCommand.Allocate(null));
@@ -47,5 +45,8 @@ namespace Runtime.GameResources.ViewControllers {
 				this.SendCommand(SetDeployStatusHintCommand.Allocate("DEPLOY_ERROR_LOCATION"));
 			}
 		}
+
+		public abstract void OnDeploy();
+		public abstract bool RemoveAfterDeploy { get; set; }
 	}
 }

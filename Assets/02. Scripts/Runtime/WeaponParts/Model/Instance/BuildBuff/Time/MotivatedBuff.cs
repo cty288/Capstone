@@ -17,6 +17,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		public override int Priority => 1;
 		 
 		private ICanDealDamage owner;
+		public override string GetLevelDescription(int level) {
+			return GetDescription(level, "MotivatedBuff_Desc");
+		}
+
 		public override string OnGetDescription(string defaultLocalizationKey) {
 			return GetDescription(Level, defaultLocalizationKey);
 		}
@@ -30,10 +34,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 
 			float damage =
 				ConfigurableBuff<MotivatedBuff>.GetBuffPropertyAtLevel<float>("MotivatedBuff", "damage", level);
-			
-			int displayedDamage = (int) damage * 100;
-			
-			return Localization.GetFormat(localizationKey, displayedDamage, additionalDescription);
+
+			int time = Mathf.RoundToInt(
+				ConfigurableBuff<MotivatedBuff>.GetBuffPropertyAtLevel<float>("MotivatedBuff", "time", level));
+
+			int displayedDamage = (int) (damage * 100);
+
+			return Localization.GetFormat(localizationKey, level, displayedDamage, time, additionalDescription);
 		}
 
 		public override bool IsDisplayed() {

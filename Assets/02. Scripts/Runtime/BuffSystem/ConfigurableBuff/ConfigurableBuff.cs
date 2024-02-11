@@ -16,6 +16,12 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		[field: ES3Serializable]
 		public int MaxLevel { get; protected set; }
 
+		public abstract string GetLevelDescription(int level);
+
+		public override string OnGetDescription(string defaultLocalizationKey) {
+			return GetLevelDescription(Level);
+		}
+
 		private static Dictionary<string, Dictionary<int, Dictionary<string, dynamic>>> _globalBuffLevelProperties =
 			new Dictionary<string, Dictionary<int, Dictionary<string, dynamic>>>();
 
@@ -33,7 +39,7 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 				OnLevelUp();
 			}
 		}
-
+		
 		protected abstract void OnLevelUp();
 
 		public ConfigurableBuff() {

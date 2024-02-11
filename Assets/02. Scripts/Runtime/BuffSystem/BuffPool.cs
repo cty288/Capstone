@@ -42,6 +42,17 @@ namespace _02._Scripts.Runtime.BuffSystem {
 
 			return result;
 		}
+		
+		public static List<IBuff> GetTemplateBuffs(Predicate<IBuff> predicate) {
+			List<IBuff> result = new List<IBuff>();
+			foreach (var pair in buffPool) {
+				if (predicate(pair.Key)) {
+					result.Add(pair.Key);
+				}
+			}
+
+			return result;
+		}
 
 		public static BuffBuilder GetWeaponBuildBuff(CurrencyType currencyType) {
 			if (!weaponBuildBuffPool.ContainsKey(currencyType)) {

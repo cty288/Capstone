@@ -4,6 +4,7 @@ using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using Framework;
 using MikroFramework.Architecture;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Player;
@@ -40,7 +41,17 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			playerEntity.RegisterOnBuffUpdate(OnBuffUpdate);
 			levelUpTime = GetBuffPropertyAtLevel<float>("level_up_time", 3);
 		}
+		public override string[] GetAllLevelDescriptions() {
+			string motivatedBuffDesc = MotivatedBuff.GetDescription(1, "MotivatedBuff_Desc");
+			string reloadSpeedSubtraction = GetBuffPropertyAtLevel<float>("reload", 2).ToString("f2");
+			int time = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("level_up_time", 3));
 
+			return new[] {
+				Localization.GetFormat("BUILD_BUFF_Time_1", 1, motivatedBuffDesc),
+				Localization.GetFormat("BUILD_BUFF_Time_2", reloadSpeedSubtraction),
+				Localization.GetFormat("BUILD_BUFF_Time_3", time)
+			};
+		}
 		private void OnBuffUpdate(IBuff buff, BuffUpdateEventType updateType) {
 			if(buff is not MotivatedBuff motivatedBuff) {
 				return;

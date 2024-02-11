@@ -25,6 +25,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Gradient:
+        m_Texture: {fileID: 2800000, guid: a27901127b0c7ca43b6044924c830887, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GradientNight:
         m_Texture: {fileID: 2800000, guid: ab009bd2b450a054ca7a263b14d73776, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -40,7 +44,8 @@ Material:
     - _Posterization: 40
     m_Floats:
     - _MaxGradientDistance: 300
-    - _SandstormAlpha: 0.7
+    - _NightDaySlide: 1
+    - _SandstormAlpha: 0
     - _SandstormDepthDistance: 100
     m_Colors:
     - _NoiseStrengths: {r: 0.1, g: 0.08, b: 0.02, a: 0.5}

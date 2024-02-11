@@ -9,6 +9,7 @@ using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Properties;
 using _02._Scripts.Runtime.WeaponParts.Model;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
 using MikroFramework.UIKit;
@@ -210,10 +211,16 @@ public class BuildPanelViewController : SwitchableSubPanel {
 			skillUseCost = skillEntity.GetSkillUseCostOfCurrentLevel();
 		}
 
+		IWeaponPartsEntity weaponPartsEntity = currentPreviewEntity as IWeaponPartsEntity;
+		CurrencyType? currencyType = null;
+		if (weaponPartsEntity != null) {
+			currencyType = weaponPartsEntity.GetBuildType();
+		}
+
 		previewDescriptionPanel.SetContent(currentPreviewEntity.GetDisplayName(), currentPreviewEntity.GetDescription(),
 			InventorySpriteFactory.Singleton.GetSprite(currentPreviewEntity.EntityName), true, rarity,
 			ResourceVCFactory.GetLocalizedResourceCategory(currentPreviewEntity.GetResourceCategory()),
-			currentPreviewEntity.GetResourcePropertyDescriptions(), skillUseCost);
+			currentPreviewEntity.GetResourcePropertyDescriptions(), skillUseCost, currencyType);
 
 		PurchaseCostInfo costInfo = templateEntity.GetPurchaseCost();
 		HashSet<PreparationSlot> ownedResources = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);

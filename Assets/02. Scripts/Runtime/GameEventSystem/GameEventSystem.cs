@@ -36,12 +36,15 @@ public class GameEventSystem : AbstractSystem, IGameEventSystem {
 		foreach (IGameEvent gameEvent in eventsToRemoved) {
 			gameEventModel.RemoveEvent(gameEvent);
 		}
+		
+		Debug.Log("GameEventSystem.OnLevelCountChanged");
 	}
 
 	private void OnGlobalTimeChanged(DateTime oldTime, DateTime newTime) {
 		eventsToRemoved.Clear();
 		int minuteElapsed = (int) (newTime - oldTime).TotalMinutes;
 		foreach (IGameEvent gameEvent in gameEventModel.GameEvents.Values) {
+			Debug.LogWarning(gameEvent);
 			int realMinuteElapsed = gameEvent.ElapseType == EventElapseType.Predetermined
 				? minuteElapsed
 				: Mathf.Clamp(minuteElapsed, 0, 1);

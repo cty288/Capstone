@@ -1,9 +1,25 @@
 ﻿using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+using Framework;
+using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.Weapons.Model.Base;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
-	public abstract class WeaponBuildBuff<T> : ConfigurableBuff<T> where T : WeaponBuildBuff<T>, new(){
+	public interface IWeaponBuildBuff : ILeveledBuff {
+		string[] GetAllLevelDescriptions();
+	}
+
+	public class WeaponBuildBuffEvent {
+		public IWeaponEntity WeaponEntity { get; set; }
+	}
+	
+
+	
+	
+	
+	
+	
+	public abstract class WeaponBuildBuff<T> : ConfigurableBuff<T>, IWeaponBuildBuff, ICanSendEvent where T : WeaponBuildBuff<T>, new(){
 		[field: ES3Serializable]
 		public override float MaxDuration { get; protected set; } = -1;
 		public override int Priority { get; } = 1;
@@ -25,6 +41,20 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		protected abstract bool OnValidate();
 
 		public override bool IsGoodBuff => true;
+		
+		public abstract string[] GetAllLevelDescriptions();
+
+		public override string GetLevelDescription(int level) {
+			int index = level - 1;
+			string[] allLevelDescriptions = GetAllLevelDescriptions();
+			if (index < 0 || index >= allLevelDescriptions.Length) {
+				return string.Empty;
+			}
+
+			return allLevelDescriptions[index];
+		}
+		
+		
 
 		protected override void OnLevelUp() {
 			
@@ -37,6 +67,15 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 
 		protected override void OnBuffStacked(T buff) {
 			
+		}
+		
+		public void SendWeaponBuildBuffEvent<T>(T weaponBuildBuffEvent) where T : WeaponBuildBuffEvent  {
+			weaponBuildBuffEvent.WeaponEntity = weaponEntity;
+			this.SendEvent<T>(weaponBuildBuffEvent);
+		}
+
+		public IArchitecture GetArchitecture() {
+			return MainGame.Interface;
 		}
 	}
 }
