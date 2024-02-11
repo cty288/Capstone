@@ -21,10 +21,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance {
 		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
 			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
 
-			list.Add(() => new ResourcePropertyDescription("PropertyIconDamage", Localization.Get(
+			list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
 				"PROPERTY_ICON_DAMAGE"), GetCustomPropertyOfCurrentLevel<int>("explosion_damage").ToString()));
 
-			list.Add(() => new ResourcePropertyDescription("PropertyIconRange", Localization.Get(
+			list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
 					"PROPERTY_ICON_RANGE"),
 				Localization.GetFormat("PROPERTY_ICON_RANGE_DESC",
 					Mathf.RoundToInt(GetCustomPropertyOfCurrentLevel<float>("explosion_radius")))));

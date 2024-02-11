@@ -33,6 +33,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		Obstructed,
 		InAir,
 		BaitInBattle,
+		TurretReachMaxCount,
 		NA
 	}
 	
@@ -46,7 +47,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 
 		[Header("Deply Status Settings")]
-		[SerializeField] private MeshRenderer[] deployStatusRenderers;
+		[SerializeField] private Renderer[] deployStatusRenderers;
 		[SerializeField] private Color canDeployColor = new Color(0f, 1f, 0f, 0.38f);
 		[SerializeField] private Color cannotDeployColor = new Color(1f, 0f, 0f, 0.38f);
 		
@@ -68,7 +69,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				selfColliders.Add(collider, collider.isTrigger);
 			}
 
-			foreach (MeshRenderer meshRenderer in deployStatusRenderers) {
+			foreach (Renderer meshRenderer in deployStatusRenderers) {
 				Material material = Instantiate(meshRenderer.material);
 				meshRenderer.material = material;
 			}
@@ -94,7 +95,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					col.isTrigger = true;
 				}
 				
-				foreach (MeshRenderer meshRenderer in deployStatusRenderers) {
+				foreach (Renderer meshRenderer in deployStatusRenderers) {
 					meshRenderer.material.color = canDeployColor;
 				}
 				
@@ -104,7 +105,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					col.isTrigger = selfColliders[col];
 				}
 				
-				foreach (MeshRenderer meshRenderer in deployStatusRenderers) {
+				foreach (Renderer meshRenderer in deployStatusRenderers) {
 					meshRenderer.material.color = Color.white;
 				}
 				
@@ -171,12 +172,12 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public virtual void OnCanDeployFailureStateChanged(DeployFailureReason lastReason,
 			DeployFailureReason currentReason) {
 			if (currentReason != DeployFailureReason.NoFailure && (lastReason == DeployFailureReason.NoFailure || lastReason == DeployFailureReason.NA)) {
-				foreach (MeshRenderer meshRenderer in deployStatusRenderers) {
+				foreach (Renderer meshRenderer in deployStatusRenderers) {
 					meshRenderer.material.DOColor(cannotDeployColor, "_BaseColor", 0.2f);
 				}
 			}
 			else if (currentReason == DeployFailureReason.NoFailure) { 
-				foreach (MeshRenderer meshRenderer in deployStatusRenderers) {
+				foreach (Renderer meshRenderer in deployStatusRenderers) {
 					meshRenderer.material.DOColor(canDeployColor, "_BaseColor", 0.2f);
 				}
 			}
@@ -191,7 +192,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				selfCollider.Key.isTrigger = selfCollider.Value;
 			}
 			
-			foreach (MeshRenderer meshRenderer in deployStatusRenderers) {
+			foreach (Renderer meshRenderer in deployStatusRenderers) {
 				meshRenderer.material.color = Color.white;
 			}
 		}

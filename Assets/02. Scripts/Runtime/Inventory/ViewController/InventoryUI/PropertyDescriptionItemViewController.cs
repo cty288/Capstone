@@ -31,12 +31,16 @@ public class PropertyDescriptionItemViewController : PoolableGameObject, IContro
         
 
         if (!string.IsNullOrEmpty(iconPrefabName)) {
+            iconSpawnPoint.gameObject.SetActive(true);
             GameObject prefab = resLoader.LoadSync<GameObject>(iconPrefabName);
             GameObject icon = GameObject.Instantiate(prefab, iconSpawnPoint);
             
             //set left right top bottom to 0
             icon.GetComponent<RectTransform>().offsetMin = Vector2.zero;
             icon.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+        }
+        else {
+            iconSpawnPoint.gameObject.SetActive(false);
         }
 
     }

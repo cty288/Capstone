@@ -190,20 +190,20 @@ namespace Runtime.Weapons.Model.Base
             base.OnRegisterResourcePropertyDescriptionGetters(ref list);
             
             list.Add(() => new ResourceBuffedPropertyDescription<Vector2Int>(baseDamageProperty,
-                "PropertyIconDamage", Localization.Get(
+                null, Localization.Get(
                     "PROPERTY_ICON_DAMAGE"),
                 (value) => value.x + " - " + value.y, (initial, real) => real.y - initial.y));
 
 
             list.Add(() => new ResourceBuffedPropertyDescription<float>(attackSpeedProperty,
-                "PropertyIconAttackSpeed",
+                null,
                 Localization.Get("PROPERTY_ICON_ATTACk_SPEED"),
                 (value) => Localization.GetFormat("PROPERTY_ICON_ATTACk_SPEED_DESC", value.ToString("f2")),
                 (initial, real) => (Math.Abs(real - initial) < 0.01f) ? 0 : (real > initial) ? -1 : 1));
 
             
             list.Add(() => new ResourceBuffedPropertyDescription<int>(ammoSizeProperty,
-                "PropertyIconAmmo",
+                null,
                 Localization.Get("PROPERTY_ICON_AMMO"),
                 (val) => val.ToString(),
                 (initial, real) => real - initial));
