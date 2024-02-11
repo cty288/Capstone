@@ -62,15 +62,13 @@ namespace Runtime.Enemies
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
-            /*
+            
             return new[] {
-                new AutoConfigCustomProperty("shellHealthInfo"),
-                new AutoConfigCustomProperty("damages"),
-                new AutoConfigCustomProperty("ranges"),
-                new AutoConfigCustomProperty("waitTimes")
+                new AutoConfigCustomProperty("laserbeam")
+                
             };
-            */
-            return null;
+            
+            
         }
 
 
@@ -182,12 +180,12 @@ namespace Runtime.Enemies
             {
                 case "ShellOpen":
                     //BoundEntity.IsInvincible.Value = false;
-                    UnSpawnShellHealthBar();
+                   
                     // shellHurbox.SetActive(false);
                     break;
                 case "ShellClose":
                     //BoundEntity.IsInvincible.Value = true;
-                    SpawnShellHealthBar();
+                   
                     //shellHurbox.SetActive(true);
                     break;
                 case "ClearHits":
@@ -219,18 +217,9 @@ namespace Runtime.Enemies
             }
         }
 
-        private void SpawnShellHealthBar()
-        {
-            HealthBar healthBar = SpawnCrosshairResponseHUDElement(shellHealthBarSpawnTransform, "Boss1ShellHealthBar",
-                HUDCategory.HealthBar, false).Item1.GetComponent<HealthBar>();
+       
 
-            healthBar.OnSetEntity(BoundEntity.GetCustomDataValue<HealthInfo>("shellHealthInfo", "info"), BoundEntity);
-        }
-
-        private void UnSpawnShellHealthBar()
-        {
-            DespawnHUDElement(shellHealthBarSpawnTransform, HUDCategory.HealthBar);
-        }
+       
 
 
         public void ClearHitObjects()

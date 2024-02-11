@@ -1,6 +1,6 @@
 EntityName / Property Names,rarity,purchase_cost,base_damage,weight,attack_speed,ads_fov,range,ammo_size,reload_speed,bullets_per_shot,spread,recoil,scope_recoil,charge_speed,bullet_speed,max_stack,custom_properties,tags,,More Notes
 Types,int,SkillPurchaseCostInfo,Vector2Int,float,float,float,float,int,float,int,float,RecoilInfo,RecoilInfo,float,float,int,dynamic,"Dictionary<TagName,int>",,
-Notes ->,,,Vector2Int,modifier on movement speed,float (cooldown),fov to set in camera,float,int,float (seconds),int (TODO: CHANGE TO RANGE),"float  (max = 0.1, has issue with screen sizing rn but not big deal, change to range for x and y)",,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
+Notes ->,,,Vector2Int,modifier on movement speed,float (cooldown),fov to set in camera,float,int,float (seconds),int (TODO: CHANGE TO RANGE),radius of spread cricle,,,float (seconds),speed of trail renderer,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
@@ -32,7 +32,7 @@ TheSanctuary,1,"{
             ""Plant1"": 5
         },
         ""MoneyCost"": 100
-}","{""x"":45,""y"":65}",0.3,1,80,30,1,4,1,0.06,"{
+}","{""x"":45,""y"":65}",0.3,1,80,30,1,4,1,0,"{
   ""recoilX"": -50,
   ""recoilY"": 10,
   ""recoilZ"": 1,
@@ -140,7 +140,7 @@ Shotgun,1,"{
             ""Plant1"": 5
         },
         ""MoneyCost"": 100
-}","{""x"":8,""y"":10}",1,0.75,80,20,4,3,5,0.1,"{
+}","{""x"":8,""y"":10}",1,0.75,80,20,4,3,5,0.9,"{
   ""recoilX"": -7.5,
   ""recoilY"": 5,
   ""recoilZ"": 0.5,
