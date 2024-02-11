@@ -27,8 +27,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 		
 		public MineralBuff Buff { get; set; }
 	}
-	
-	
+
+	public class MineralBuffOnModifyBaseAmmoRecoverEvent : ModifyValueEvent<int> {
+		public MineralBuffOnModifyBaseAmmoRecoverEvent(int value) : base(value) {
+		}
+	}
+
 	public class MineralBuffInternalExplosion : ICanDealDamage {
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
@@ -139,11 +143,17 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 				}
 			}
 
+
+			int ammoRecovered = 0;
 			if (Level >= 3) {
-				int ammoRecovered = GetBuffPropertyAtCurrentLevel<int>("ammo_recovery_base");
+				ammoRecovered += GetBuffPropertyAtCurrentLevel<int>("ammo_recovery_base");
+			}
+			ammoRecovered = weaponEntity
+					.SendModifyValueEvent(new MineralBuffOnModifyBaseAmmoRecoverEvent(ammoRecovered)).Value;
+
+			if (ammoRecovered > 0) {
 				weaponEntity.AddAmmo(ammoRecovered);
 			}
-			
 		}
 
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
