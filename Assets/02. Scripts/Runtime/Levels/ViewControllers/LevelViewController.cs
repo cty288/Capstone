@@ -303,13 +303,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 				subLevelVC.InitWithID(levelEntity.UUID);
 				subLevelVC.InitDirectors();
-				// print($"number of directors in playerSpawners: {playerSpawners.Count}");
-				// foreach (var director in playerSpawners)
-				// {
-				// 	print($"add director to {levelEntity.EntityName}: {director.Entity.EntityName}");
-				// 	subLevelVC.InitDirector(director);
-				// }
-				//templateEnemies.Add(enemyEntity);
 				subAreaLevels.Add(subLevelVC);
 				BoundEntity.AddSubArea(levelEntity.UUID);
 			}
@@ -353,9 +346,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			SpawnCollectableResources();
 			
 			StartCoroutine(UpdateLevelSystemTime());
-			
-			
-			//Debug.Log("Bounds for level " + gameObject.name + " is " + maxExtent.bounds);
 		}
 
 		
@@ -370,7 +360,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 			triggeredNewDay.Add(day);
-			BoundEntity.DayStayed++; Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
+			BoundEntity.DayStayed++; 
+			Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
 			if (BoundEntity.DayStayed -1 >= sandstormProbability.Length) {
 				return;
 			}

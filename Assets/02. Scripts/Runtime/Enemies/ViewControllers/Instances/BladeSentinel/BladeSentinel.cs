@@ -29,8 +29,6 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
         originalBladeList = new List<GameObject>();
         activeBladeStack = new Stack<GameObject>();
         activeShieldStack = new Stack<SentinelShieldViewController>();
-        Debug.Log("BS - Entity OnEntityStart");
-
     }
 
     public override void OnRecycle() {
@@ -72,8 +70,6 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
     }
     
     public void RefreshBladeShieldStack() {
-        Debug.Log("BS - Entity Refresh Shield Blade Stack");
-
         activeBladeStack.Clear();
         foreach (var blade in originalBladeList)
         {
@@ -105,8 +101,6 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
     }
 
     public void InitializeShieldBlades(List<GameObject> positionList, List<SentinelShieldViewController> shieldList, List<GameObject> bladeList) {
-        Debug.Log("BS - Entity InitializeShieldBlades");
-
         bladeSpawnPositions = positionList;
         originalShieldList = shieldList;
         originalBladeList = bladeList;
@@ -179,7 +173,6 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
     }
 
     protected override void OnEntityStart() {
-        print("BS - VC OnEntityStart");
         rb.isKinematic = true;
         BoundEntity.InitializeShieldBlades(bladeSpawnPositions, shieldList, bladeList);
     }

@@ -54,7 +54,6 @@ public class SanctuaryShieldViewController : AbstractMikroController<MainGame>, 
 
 	public bool CheckHurt(HitData data)
 	{
-		print("check shield hits");
 		return data.Attacker.CurrentFaction.Value != CurrentFaction.Value;
 	}	
 
@@ -70,24 +69,6 @@ public class SanctuaryShieldViewController : AbstractMikroController<MainGame>, 
 		}
 	}
 
-	// public void HideShield()
-	// {
-	// 	shieldMaterial.DOFloat(0, "_Manifest", 0.75f).OnComplete(() =>
-	// 	{
-	// 		shieldMaterial.SetColor("_DamageColor", originalColor);
-	// 		gameObject.SetActive(false);
-	// 	});
-	// }
-	//
-	// public void ResetShield()
-	// {
-	// 	currentHealth = maxHealth;
-	// 	shieldMaterial.SetFloat("_Health", 1);
-	// 	shieldMaterial.SetFloat("_Manifest", 0);
-	// 	shieldMaterial.SetColor("_DamageColor", originalColor);
-	// 	gameObject.SetActive(false);
-	// }
-	//
 	private async UniTask FlashAndBreak()
 	{
 		//flash

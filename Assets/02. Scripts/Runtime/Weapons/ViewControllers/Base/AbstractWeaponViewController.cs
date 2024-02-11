@@ -59,8 +59,9 @@ namespace Runtime.Weapons.ViewControllers.Base
     public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IWeaponViewController, IBelongToFaction, IHitResponder
         where T : class, IWeaponEntity, new() {
         public GameObject model;
-        [Header("Auto Reload")]
+        [Header("Gun Options")]
         public bool autoReload = true;
+        public bool canScope = true;
         
         [Header("Layer Hit Mask")]
         public LayerMask layer;
@@ -119,9 +120,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             playerActions = ClientInput.Singleton.GetPlayerActions();
             animationSMBManager = GetComponent<AnimationSMBManager>();
             animationSMBManager.Event.AddListener(OnAnimationEvent);
-            
-            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
         }
         
         public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
@@ -237,6 +235,10 @@ namespace Runtime.Weapons.ViewControllers.Base
             /*if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
                 BoundEntity.SetOwner(damageDealer);
             }*/
+            
+            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
+            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
+            
             if(BoundEntity.CurrentAmmo == 0 && autoReload && !isLocked) {
                 StartCoroutine(ReloadAnimation());
             }
@@ -269,6 +271,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         protected void ChangeReloadStatus(bool shouldReload) {
+            if (!canScope)
+                return;
+            
             bool prevIsReloading = isReloading;
             isReloading = shouldReload;
             if (prevIsReloading != isReloading) {

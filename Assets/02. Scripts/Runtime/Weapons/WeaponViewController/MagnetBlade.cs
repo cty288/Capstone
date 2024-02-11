@@ -72,11 +72,9 @@ namespace Runtime.Weapons
             
             int bladeCount = blades.Count;
             for(int i = 0; i < BoundEntity.CurrentAmmo - bladeCount; i++) {
-                print($"BLADES: start hold {BoundEntity.CurrentAmmo} - {blades.Count}");
                 InitializeBlade();
             }
             
-            print("BLADES: check reload");
             CheckReloadBlade();
         }
 
@@ -90,14 +88,6 @@ namespace Runtime.Weapons
             
             blades.Clear();
         }
-
-        // protected override void Update()
-        // {
-        //     base.Update();
-        //     if(Input.GetKeyDown(KeyCode.Semicolon)) {
-        //         print(blades.Count);
-        //     }
-        // }
 
         private void InitializeBlade()
         {
@@ -134,14 +124,8 @@ namespace Runtime.Weapons
             }
         }
 
-        protected override void ChangeScopeStatus(bool isScoped)
-        {
-            
-        }
-
         public override void OnItemScopePressed()
         {
-            print("BLADES: scope pressed");
             // TODO: use melee attack (need animation)
             // check melee cooldown / avaliability
             // start melee animation
@@ -184,11 +168,9 @@ namespace Runtime.Weapons
 
         private void CheckReloadBlade()
         {
-            print($"{blades.Count} and isreloadingblade {isReloadingBlade}");
             if (blades.Count < BoundEntity.GetAmmoSize().RealValue
                 && !isReloadingBlade)
             {
-                print("BLADES: start couroutine");
                 StartCoroutine(ReloadBlade());
             }
         }

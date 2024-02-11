@@ -156,10 +156,9 @@ namespace a
             //Instantiate(explosion,transform.position,Quaternion.identity);
             exp.transform.position = transform.position;
             exp.transform.rotation = Quaternion.identity;
-            Debug.Log("IExplosionViewController: " + exp.GetComponent<IExplosionViewController>());
             if (!bulletOwner)
             {
-                Debug.Log("BulletOwner is null");
+                Debug.Log("Worm BulletOwner is null");
             }
             exp.GetComponent<IExplosionViewController>().Init(Faction.Explosion, 10, 5, bulletOwner,
                 bulletOwner.GetComponent<ICanDealDamage>());
