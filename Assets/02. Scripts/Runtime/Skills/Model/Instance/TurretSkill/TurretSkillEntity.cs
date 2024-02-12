@@ -2,6 +2,7 @@
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
@@ -12,8 +13,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TurretSkill {
 		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "TurretSkill";
 		public override string DeployedVCPrefabName { get; } = "Turret_Deployed";
-
-		[field: ES3Serializable] private int deployedCount = 0;
+		
+		private int deployedCount = 0;
 		
 		protected override void OnInitModifiers(int rarity) {
 			
@@ -53,9 +54,23 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TurretSkill {
 			deployedCount = 0;
 		}
 
-		protected override bool GetInventorySwitchCondition(Dictionary<CurrencyType, int> currency) {
+		
+
+		protected override bool UseCurrencySatisfiedCondition(Dictionary<CurrencyType, int> currency) {
 			int maxCount = GetCustomPropertyOfCurrentLevel<int>("max_count");
-			return base.GetInventorySwitchCondition(currency) && deployedCount < maxCount;
+			return base.UseCurrencySatisfiedCondition(currency) && deployedCount < maxCount;
+		}
+
+		public void OnSpawnTurret(TurretEntity entity) {
+			if(entity == null) return;
+			
+			deployedCount++;
+			entity.RegisterOnEntityRecycled(OnTurretRecycled);
+		}
+
+		private void OnTurretRecycled(IEntity e) {
+			e.UnRegisterOnEntityRecycled(OnTurretRecycled);
+			deployedCount--;
 		}
 	}
 }

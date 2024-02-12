@@ -144,6 +144,8 @@ namespace Runtime.Utilities.Collision
         public LayerMask layer;
         public Transform launchPoint;
         public IWeaponEntity weapon;
+        public Vector3 startPoint; // if do this, no camera :)
+        public Vector3 direction; // see above
     }
     
     /// <summary>

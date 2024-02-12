@@ -43,6 +43,9 @@ namespace Runtime.Utilities.Collision
         private LayerMask _layer;
         private IWeaponEntity _weapon;
         private bool showDamageNumber = true;
+        
+        
+        
 
         private bool _useVFX = true;
 
@@ -86,6 +89,7 @@ namespace Runtime.Utilities.Collision
             _weapon = hitDetectorInfo.weapon;
             this.Damage = damage;
 
+            
             ShootBullet();
         }
 
@@ -104,6 +108,11 @@ namespace Runtime.Utilities.Collision
             // dir.Normalize();
             Ray shootDir =  _camera.ViewportPointToRay(dir);
             
+            ShootBullet(shootDir);
+            
+        }
+
+        private void ShootBullet(Ray shootDir) {
             for (int i = 0; i < _hits.Length; i++) {
                 _hits[i] = new RaycastHit();
             }

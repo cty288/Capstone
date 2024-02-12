@@ -2,6 +2,7 @@
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
+using Runtime.DataFramework.ViewControllers;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Utilities.Collision;
 using UnityEngine;
@@ -11,6 +12,27 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.TurretSkill {
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = true;
 		
 		protected ICommonEntityModel commonEntityModel;
+		
+		[BindCustomData("data", "install_time")]
+		public float InstallTime { get; }
+		
+		[BindCustomData("data", "vision")]
+		public float Vision { get; }
+		
+		[BindCustomData("data", "last_time")]
+		public float LastTime { get; }
+		
+		[BindCustomData("data", "ammo_size")]
+		public int AmmoSize { get; }
+		
+		[BindCustomData("data", "time_per_shot")]
+		public float TimePerShot { get; }
+		
+		[BindCustomData("data", "damage")]
+		public int Damage { get; }
+		
+		
+		
 		
 		protected override void Awake() {
 			base.Awake();

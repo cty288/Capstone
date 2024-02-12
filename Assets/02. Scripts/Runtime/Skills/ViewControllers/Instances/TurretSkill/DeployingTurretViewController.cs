@@ -32,6 +32,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.TurretSkill {
 				BoundEntity.GetCustomPropertyOfCurrentLevel<int>("damage"));
 
 			turret.GetComponent<TurretViewController>().InitWithID(entity.UUID);
+			BoundEntity.OnSpawnTurret(entity);
 		}
 
 		protected override IResourceEntity OnBuildNewEntity(bool isPreview) {
