@@ -1,9 +1,10 @@
 using UnityEngine;
-
+using FIMSpace;
 public class WormMovement : MonoBehaviour
 {
     public float moveSpeed = 5.0f; // Adjust the movement speed as needed.
     private Rigidbody rb;
+    
 
     void Start()
     {

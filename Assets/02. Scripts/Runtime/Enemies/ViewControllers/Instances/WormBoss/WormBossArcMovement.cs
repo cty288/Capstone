@@ -23,27 +23,42 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override void OnStart()
         {
+            Collider collider = this.gameObject.GetComponent<Collider>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
+
+            // Disable colliders in children recursively
+            foreach (Transform child in this.gameObject.transform)
+            {
+                collider.enabled = false;
+            }
+
             progress = 0;
             float minDistance = 50f; // Minimum distance between sample and sample2
 
             // Generate the first random sample
-            Vector3 sample = Random.insideUnitSphere * 50;
-
+            Vector3 sample = this.transform.position + Random.insideUnitSphere * 70;
+            Debug.Log(sample);
             // Generate the second random sample, ensuring it is at least minDistance away from the first sample
             Vector3 sample2;
             do
             {
-                sample2 = Random.insideUnitSphere * 50;
+                sample2 = this.transform.position + Random.insideUnitSphere * 70;
+                Debug.Log(sample2);
             } while (Vector3.Distance(sample, sample2) < minDistance);
 
             NavMeshHit hit;
             if (NavMesh.SamplePosition(sample, out hit, 15, 1))
             {
                 start = hit.position;
+                Debug.Log(start);
             }
             if (NavMesh.SamplePosition(sample2, out hit, 15, 1))
             {
                 end = hit.position;
+                Debug.Log(end);
             }
 
             // Calculate the speed based on the duration
@@ -55,12 +70,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // Interpolate between the start and end positions using a Bezier curve with a jump in the y-axis
             Vector3 newPosition = BezierCurve(start, end, progress, jumpHeight);
 
-            // Set the object's position
-            this.gameObject.transform.position = newPosition;
+            // Calculate the forward vector based on the difference between the new position and the current position
+            Vector3 direction = newPosition - transform.position;
 
-            // Calculate the forward vector based on the direction of movement
-            Vector3 direction = BezierCurveDerivative(start, end, progress);
-            this.gameObject.transform.forward = direction.normalized;
+            // If there's a significant change in position
+            if (direction.magnitude > 0.01f)
+            {
+                // Set the object's rotation to look in the direction of movement
+                transform.rotation = Quaternion.LookRotation(direction);
+            }
+
+            // Set the object's position
+            transform.position = newPosition;
 
             // Increment the progress based on time and speed
             progress += Time.deltaTime * speed;
@@ -74,6 +95,22 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             return TaskStatus.Running;
         }
 
+
+        public override void OnEnd()
+        {
+            base.OnEnd();
+            Collider collider = this.gameObject.GetComponent<Collider>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
+
+            // Disable colliders in children recursively
+            foreach (Transform child in this.gameObject.transform)
+            {
+                collider.enabled = false;
+            }
+        }
         // Bezier curve calculation with a jump in the y-axis
         private Vector3 BezierCurve(Vector3 p0, Vector3 p1, float t, float jumpHeight)
         {
