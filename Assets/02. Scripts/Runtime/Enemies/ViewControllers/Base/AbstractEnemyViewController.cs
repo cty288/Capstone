@@ -102,8 +102,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		
 
 		protected void OnCurrentHealthChanged(int oldValue, int newValue) {
-			Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
-			
+			// Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
 		}
 
 	

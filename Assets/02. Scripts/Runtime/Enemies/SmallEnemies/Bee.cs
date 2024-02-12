@@ -145,7 +145,6 @@ namespace Runtime.Enemies.SmallEnemies
                 a.transform.position = this.transform.GetChild(0).position;
                 AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position, 0.3f);
             }
-            Debug.Log($"bee 1 Take damage: {damage}. bee 1 current health: {currenthealth}");
         }
 
         protected override void OnAnimationEvent(string eventName) {

@@ -30,6 +30,7 @@ using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Pool;
 using UnityEngine.Serialization;
 
+
 namespace Runtime.Weapons
 {
     public class TheSanctuaryEntity : WeaponEntity<TheSanctuaryEntity>
@@ -52,11 +53,15 @@ namespace Runtime.Weapons
         public override bool Collectable  => true;
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
-            return null;
+            return new[]
+            {
+                new AutoConfigCustomProperty("shield")
+            };
         }
 
 
         public override string OnGroundVCPrefabName { get; } = "TheSanctuary";
+        
 
     }
 
@@ -64,6 +69,8 @@ namespace Runtime.Weapons
     {
         public Transform bulletSpawnPos;
         public GameObject bulletPrefab;
+        [SerializeField] private GameObject shieldPrefab;
+        public GameObject spawnedShieldObject;
         
         private SafeGameObjectPool pool;
         
@@ -75,15 +82,42 @@ namespace Runtime.Weapons
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<TheSanctuaryEntity> builder) {
             return builder.FromConfig().Build();
         }
-        
-        /*public override void SetShoot(bool shouldShoot)
-        {
-            base.SetShoot(shouldShoot);
-            if (shouldShoot) {
-                Shoot();
-            }
-        }*/
 
+        public override void OnStartHold(GameObject ownerGameObject)
+        {
+            base.OnStartHold(ownerGameObject);
+            if(spawnedShieldObject != null)
+            {
+                spawnedShieldObject.SetActive(true);
+            }
+        }
+
+        public override void OnStopHold()
+        {
+            base.OnStopHold();
+            if(spawnedShieldObject != null)
+            {
+                spawnedShieldObject.SetActive(false);
+            }
+        }
+
+        private async void SpawnShield() {
+            if(spawnedShieldObject != null)
+            {
+                return;
+            }
+            
+            spawnedShieldObject = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
+            spawnedShieldObject.GetComponent<SanctuaryShieldViewController>().Init(this, ownerGameObject);
+            spawnedShieldObject.transform.SetParent(ownerGameObject.transform);
+        }
+
+        protected override void OnReloadAnimationEnd()
+        {
+            base.OnReloadAnimationEnd();
+            Destroy(spawnedShieldObject);
+        }
+        
         protected override void Shoot()
         {
             Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
@@ -97,6 +131,8 @@ namespace Runtime.Weapons
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
                 BoundEntity.GetRealDamageValue(),
                 gameObject, this, BoundEntity.GetRange().BaseValue, true, true);
+
+            SpawnShield();
         }
         
         public override bool CheckHit(HitData data)

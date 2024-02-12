@@ -106,7 +106,6 @@ namespace Runtime.Enemies.SmallEnemies
                 a.transform.position = this.transform.GetChild(2).position;
                
             }
-            Debug.Log($"Worm 1 Take damage: {damage}. Worm 1 current health: {currenthealth}");
         }
 
         protected override void OnAnimationEvent(string eventName)

@@ -79,10 +79,8 @@ namespace Runtime.Player.ViewControllers
 
         private void OnPlayerAnimationEvent(PlayerAnimationEvent e)
         {
-            // Debug.Log(e.parameterName + e.flag);
             if (e.type == AnimationEventType.Trigger)
             {
-                // Debug.Log("shootanim");
                 playerAnim.SetTrigger(e.parameterName);
             }
             else if (e.type == AnimationEventType.Bool)
