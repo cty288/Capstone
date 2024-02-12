@@ -124,8 +124,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderers: []
-  gunBarrelIndicator: {fileID: 2100000, guid: 3f156aadd9fe9b848a447b1dcc065f17, type: 2}
+  images: []
+  unlitIndicator: {fileID: 0}
+  spriteIndicator: {fileID: 0}
   updateIndicators: 0
+  currentAmmo: {fileID: 0}
+  maxAmmo: {fileID: 0}
 --- !u!1 &2279471719275896931 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 951011102456138778, guid: eb2e3c7d414bb3042b9542a93ae08cc1,
@@ -1366,8 +1370,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 833b01ad-24cc-4748-a08c-11bde029cc1c
-  autoCreateNewEntityWhenStart: 0
+  autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 8957742908061847295}
   nameTagPrefabName: NameTag_General

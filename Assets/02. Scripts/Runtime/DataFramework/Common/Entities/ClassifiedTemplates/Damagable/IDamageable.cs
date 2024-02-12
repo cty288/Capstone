@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -82,6 +83,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public void TakeDamage(int damage, ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null, bool nonlethal = false);
 
 
+		public void Kill(ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null);
+		
 		/// <summary>
 		/// Register the event when the entity takes damage
 		/// </summary>
@@ -95,6 +98,10 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		/// <param name="unRegister"></param>
 		public void UnRegisterOnTakeDamage(OnTakeDamage onTakeDamage);
+		
+		public void RegisterOnDie(Action<ICanDealDamage, HitData> onDie);
+		
+		public void UnRegisterOnDie(Action<ICanDealDamage, HitData> onDie);
 		
 		/// <summary>
 		/// Heal the entity

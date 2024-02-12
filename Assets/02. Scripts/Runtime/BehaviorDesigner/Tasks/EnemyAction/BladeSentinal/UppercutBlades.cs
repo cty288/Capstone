@@ -39,8 +39,6 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 
 	public override void OnStart() {
 		base.OnStart();
-		//agent.enabled = false;
-		//rb.isKinematic = true;
 		animator.CrossFadeInFixedTime("Skill_SingleHand_Start", 0.2f);
 		
 		bladeInterval = enemyEntity.GetCustomDataValue<float>("uppercutBlades", "bladeInterval");
@@ -102,12 +100,11 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 			GameObject blade = bladePool.Allocate();
 			blade.transform.position = groundPos;
 			
+			enemyEntity.RemoveBlades(1);
+			
 			//randomly rotate in y axis
 			Vector3 rot = rotation.eulerAngles;
 			rot.y = Random.Range(-45, 45);
-
-
-			
 
 			blade.transform.rotation = Quaternion.Euler(rot);
 				

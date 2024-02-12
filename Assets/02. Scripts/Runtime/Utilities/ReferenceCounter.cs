@@ -65,5 +65,11 @@ namespace _02._Scripts.Runtime.Utilities {
 		protected virtual void OnZeroRef() {
 			onZeroRef?.Invoke();
 		}
+		
+		public void Clear() {
+			Count.Value = 0;
+			refOwners.Clear();
+			onZeroRef?.Invoke();
+		}
 	}
 }

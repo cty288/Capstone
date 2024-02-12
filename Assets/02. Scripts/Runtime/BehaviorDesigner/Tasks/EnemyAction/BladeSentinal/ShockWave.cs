@@ -104,7 +104,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             agent.enabled = true;
             GameObject shock = GameObject.Instantiate(shockWaveObj.Value);
             shock.transform.position = transform.position;
-            shock.GetComponent<Example_Explosion>().Init(Faction.Explosion, explosionDamage, explosionSize,gameObject,
+            shock.GetComponent<BasicExplosion>().Init(Faction.Explosion, explosionDamage, explosionSize,gameObject,
                 gameObject.GetComponent<ICanDealDamage>());
             anim.SetTrigger("SlamAttackEnd");
             yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"));

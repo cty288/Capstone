@@ -6,6 +6,7 @@ using DG.Tweening;
 using Mikrocosmos;
 using MikroFramework;
 using MikroFramework.Pool;
+using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Player;
 using Runtime.Temporary;
@@ -14,7 +15,7 @@ using Runtime.Utilities.Collision;
 using UnityEngine;
 
 namespace Runtime.Enemies.ViewControllers.Base {
-	public abstract class AbstractNormalEnemyViewController<T> : AbstractEnemyViewController<T> 
+	public abstract class AbstractNormalEnemyViewController<T> : AbstractEnemyViewController<T>, INormalEnemyViewController 
 		where T : class, IEnemyEntity, new()  {
 		[SerializeField] private string healthBarPrefabName = "EnemyHealthBar";
 		[SerializeField] private Transform healthBarSpawnPoint = null;

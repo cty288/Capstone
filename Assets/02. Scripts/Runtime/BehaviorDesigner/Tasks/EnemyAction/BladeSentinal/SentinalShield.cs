@@ -24,10 +24,12 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
 
     public Transform pivot;
     
-    private float shieldDuration;
-    
-    private int bladeCount;
+    // private float shieldDuration;
+    //
+    // private int bladeCount;
     private List<GameObject> swordList;
+    private List<GameObject> swordSpawnPositions;
+    private List<SentinelShieldViewController> sheildList;
     
     
     public SharedGameObject swordPrefab;
@@ -37,103 +39,87 @@ public class SentinalShield : EnemyAction<BladeSentinelEntity>
 
     private bool rotating = false;
     public override void OnAwake() {
+        Debug.Log($"BS - Shield on awake");
+
         base.OnAwake();
 		
         animator = gameObject.GetComponentInChildren<Animator>(true);
         agent = gameObject.GetComponent<NavMeshAgent>();
         rb = gameObject.GetComponent<Rigidbody>();
-        bladePool = GameObjectPoolManager.Singleton.CreatePool(swordPrefab.Value, 10, 20);
-        swordList = new List<GameObject>();
     }
 
     public override void OnStart() {
+        Debug.Log($"BS - skill onstart");
+
         base.OnStart();
         agent.enabled = false;
         rb.isKinematic = true;
-        pivot.transform.localPosition = Vector3.zero;
-        pivot.transform.rotation = Quaternion.identity;
-        shieldDuration = enemyEntity.GetCustomDataValue<float>("shield", "shieldDuration");
-        bladeCount = enemyEntity.GetCustomDataValue<int>("shield", "bladeCount");
+        
         taskStatus = TaskStatus.Running;
+        Debug.Log($"BS - before skill execute");
+
         SkillExecute();
     }
 
     public override TaskStatus OnUpdate() {
+        Debug.Log($"BS - Shield update");
+
         Transform playerTr = GetPlayer().transform;
         Vector3 direction = playerTr.position - transform.position;
         direction.y = 0;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
 		
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, lookRotation, Time.deltaTime * 10f);
-
-        if (rotating)
-        {
-            pivot.transform.Rotate(new Vector3(0,60,0)*Time.deltaTime);
-        }
-        else
-        {
-            pivot.transform.rotation = Quaternion.identity;
-        }
+        
         return taskStatus;
     }
 
     public async UniTask SkillExecute() {
 
+        Debug.Log($"BS - Shield Skill start");
         anim.CrossFadeInFixedTime("Shield_Start", 0.2f);
-        
-        for(int i = 0; i < bladeCount; i++)
-        {
-            float angle = i* 360f / bladeCount;
-            
-            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * arcRadius;
-            
-            float z = Mathf.Cos(Mathf.Deg2Rad * -angle) * arcRadius;
-
-            Vector3 spawnPosition = new Vector3(x, 0, z);
-            
-
-            GameObject blade = bladePool.Allocate();
-            
-            blade.transform.parent = pivot;
-            blade.transform.localPosition = spawnPosition;
-            blade.transform.forward = transform.forward;
-            
-            swordList.Add(blade);
-
-        }
-        float duration = 1f;
-        float timeElapsed = 0;
-        Vector3 startPosition = pivot.transform.position;
-        Vector3 targetPosition = pivot.transform.position + new Vector3(0, 1, 0);
-        while (timeElapsed < duration)
-        {
-            pivot.transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-            timeElapsed += Time.deltaTime;
-            await UniTask.Yield();
-        }
-        pivot.transform.position = targetPosition;
-        await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop"),
+        await UniTask.WaitUntil(() =>
+            {
+                Debug.Log($"BS - {anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop")}");
+                return anim.GetCurrentAnimatorStateInfo(0).IsName("Shield_Loop");
+            },
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-
-        rotating = true;
         
-        await UniTask.WaitForSeconds(shieldDuration);
-        rotating = false;
-        
-        startPosition = pivot.transform.position;
-        targetPosition = pivot.transform.position - new Vector3(0, 1, 0);
-        while (timeElapsed < duration)
-        {
-            pivot.transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / duration);
-            timeElapsed += Time.deltaTime;
-            await UniTask.Yield();
-        }
+        swordList = enemyEntity.GetSwordList();
+        sheildList = enemyEntity.GetShieldList();
+        swordSpawnPositions = enemyEntity.GetPositionList();
+        Debug.Log($"BS - Shield Count: {swordList.Count}");
 
-        foreach (var blade in swordList)
+        
+        for(int i = 0; i < swordList.Count; i++)
         {
-            blade.GetComponent<DefaultPoolableGameObject>().RecycleToCache();
+            SentinelShieldViewController shield;
+            if (i > 0) // initialize shields
+            {
+                shield = sheildList[i - 1];
+                shield.gameObject.SetActive(true);
+                shield.Init(enemyEntity);
+            }
+            
+            GameObject blade = swordList[i]; // initialize blades
+            blade.SetActive(true);
+            blade.transform.parent = swordSpawnPositions[i].transform;
+            blade.transform.localPosition = Vector3.zero;
+            
+            if(i == swordList.Count - 1) // initialize last shield
+            {
+                shield = sheildList[i];
+                shield.gameObject.SetActive(true);
+                shield.Init(enemyEntity);
+            }
+
+            await UniTask.WaitForSeconds(0.1f, false, PlayerLoopTiming.Update,
+                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
         }
-        swordList.Clear();
+        
+        enemyEntity.RefreshBladeShieldStack();
+        
         anim.CrossFadeInFixedTime("Shield_End", 0f);
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());

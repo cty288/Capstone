@@ -10,6 +10,8 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
+using Runtime.Utilities.Collision;
+using Runtime.Weapons.Model.Base;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement {
 	public class GunpowerEnchancement : WeaponPartsEntity<GunpowerEnchancement, GunpowerEnchancementBuff> {
@@ -52,10 +54,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		private IBuffSystem buffSystem;
 		public override void OnInitialize() {
 			weaponEntity.RegisterOnDealDamage(OnWeaponDealDamage);
-		
 		}
 
-		private void OnWeaponDealDamage(IDamageable target, int damage) {
+		
+
+		private void OnWeaponDealDamage(ICanDealDamage source, IDamageable target, int damage) {
 			buffSystem = this.GetSystem<IBuffSystem>();
 			IEntity damageDealer = weaponEntity.GetRootDamageDealer() as IEntity;
 			buffSystem.AddBuff(target, damageDealer, DustBuff.Allocate(

@@ -86,7 +86,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			owner.RegisterOnKillDamageable(OnKillDamageable);
 		}
 
-		private void OnKillDamageable(IDamageable target) {
+		private void OnKillDamageable(ICanDealDamage source, IDamageable target) {
 			if (Level >= 2) {
 				int shield = GetBuffPropertyAtLevel<int>("shield", Level);
 				if (owner.CurrentFaction.Value != target.CurrentFaction.Value) {

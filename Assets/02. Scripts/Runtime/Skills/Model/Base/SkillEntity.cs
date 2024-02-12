@@ -71,8 +71,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		private float remainingCooldown = 0;
 		private float maxCooldown = 0;
 		protected bool isWaitingForSwapInventoryCooldown = false;
-		private Action<IDamageable, int> _onDealDamageCallback;
-		private Action<IDamageable> _onKillDamageableCallback;
+		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 		protected virtual int levelRange { get; } = 4;
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.SkillEntityConfigTable;
@@ -315,22 +315,22 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		
 		[field: ES3Serializable]
 		public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
-		public void OnKillDamageable(IDamageable damageable) {
+		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
 			//owner?.OnKillDamageable(damageable);
 		}
 
-		public void OnDealDamage(IDamageable damageable, int damage) {
+		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
 			//owner?.OnDealDamage(damageable, damage);
 		}
 
 		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-		Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+		Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
 			get => _onDealDamageCallback;
 			set => _onDealDamageCallback = value;
 		}
 
-		Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
+		Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
 			get => _onKillDamageableCallback;
 			set => _onKillDamageableCallback = value;
 		}

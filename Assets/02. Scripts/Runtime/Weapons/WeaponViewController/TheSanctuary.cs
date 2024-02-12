@@ -96,7 +96,7 @@ namespace Runtime.Weapons
 
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
                 BoundEntity.GetRealDamageValue(),
-                gameObject, this, BoundEntity.GetRange().BaseValue, true);
+                gameObject, this, BoundEntity.GetRange().BaseValue, true, true);
         }
         
         public override bool CheckHit(HitData data)

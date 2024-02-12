@@ -40,7 +40,7 @@ namespace Runtime.Enemies
         }
 
         public override void OnRecycle() {
-
+            base.OnRecycle();
         }
         protected override void OnInitModifiers(int rarity, int level) {
             

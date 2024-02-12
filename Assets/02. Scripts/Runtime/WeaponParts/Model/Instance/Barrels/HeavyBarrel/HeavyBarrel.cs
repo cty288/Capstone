@@ -69,7 +69,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			
 		}
 
-		private void OnWeaponDealDamage(IDamageable target, int damage) {
+		private void OnWeaponDealDamage(ICanDealDamage source, IDamageable target, int damage) {
 			buffSystem = this.GetSystem<IBuffSystem>();
 			float chance = weaponPartsEntity.BuffChance;
 			if (Random.Range(0f, 1f) > chance) {

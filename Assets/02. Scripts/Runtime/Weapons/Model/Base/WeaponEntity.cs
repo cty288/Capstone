@@ -35,7 +35,7 @@ namespace Runtime.Weapons.Model.Base
         public float returnSpeed;
     }
     
-    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
+    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage, IHitResponder {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
         public IAdsFOV GetAdsFOV();
@@ -70,7 +70,7 @@ namespace Runtime.Weapons.Model.Base
 
        
 
-        public HitData OnModifyHitData(HitData data);
+        //public HitData OnModifyHitData(HitData data);
 
         public void RegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
         
@@ -83,6 +83,8 @@ namespace Runtime.Weapons.Model.Base
         public Type CurrentBuildBuffType { get; set; }
 
         public int GetBuildBuffRarityFromBuildTotalRarity(int totalRarity);
+        
+        public void AddAmmo(int amount);
         // void RegisterOnWeaponPartsUpdate(Action<string, string> callback);
         // void OnModifyHitData(Func<HitData, IWeaponEntity, HitData> onModifyHitData);
     }
@@ -120,8 +122,8 @@ namespace Runtime.Weapons.Model.Base
         private Action<IDamageable, int> onDealDamage;
 
         private List<Func<HitData, IWeaponEntity, HitData>> onModifyHitData = new List<Func<HitData, IWeaponEntity, HitData>>();
-        private Action<IDamageable, int> _onDealDamageCallback;
-        private Action<IDamageable> _onKillDamageableCallback;
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
         public abstract int Width { get; }
 
         protected override ConfigTable GetConfigTable() {
@@ -380,12 +382,24 @@ namespace Runtime.Weapons.Model.Base
 
       
 
-        Action<IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
             get => _onDealDamageCallback;
             set => _onDealDamageCallback = value;
         }
 
-      
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+
+        public bool CheckHit(HitData data) {
+            return true;
+        }
+
+        public void HitResponse(HitData data) {
+         
+        }
 
         public HitData OnModifyHitData(HitData data) {
             HitData result = data;
@@ -455,6 +469,16 @@ namespace Runtime.Weapons.Model.Base
                 return 2;
             }
             return 3;
+        }
+
+        public void AddAmmo(int amount) {
+            int maxAmmo = ammoSizeProperty.RealValue.Value;
+            if (CurrentAmmo.Value + amount > maxAmmo) {
+                CurrentAmmo.Value = maxAmmo;
+            }
+            else {
+                CurrentAmmo.Value += amount;
+            }
         }
 
         public int GetTotalBuildRarity(CurrencyType currencyType) {
@@ -528,22 +552,18 @@ namespace Runtime.Weapons.Model.Base
         }
 
         [field: ES3Serializable] public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
-        public void OnKillDamageable(IDamageable damageable) {
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
             
         }
 
-        public void OnDealDamage(IDamageable damageable, int damage) {
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
             Debug.Log($"Dealt {damage} damage to {damageable}");
             onDealDamage?.Invoke(damageable, damage);
         }
 
         public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-        Action<IDamageable> ICanDealDamage.OnKillDamageableCallback {
-            get => _onKillDamageableCallback;
-            set => _onKillDamageableCallback = value;
-        }
-
+       
         public ICanDealDamage ParentDamageDealer{
             get {
                 PlayerController player = PlayerController.GetPlayerByUUID(damageDealerUUID);

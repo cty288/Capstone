@@ -47,11 +47,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected override void OnStart() {
 			base.OnStart();
 			BoundEntity.RegisterOnTakeDamage(OnTakeDamage).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			BoundEntity.RegisterOnDie(OnDie);
 			BoundEntity.RegisterOnHeal(OnHeal).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			hurtBoxes = new List<HurtBox>(GetComponentsInChildren<HurtBox>(true));
 			foreach (HurtBox hurtBox in hurtBoxes) {
 				hurtBox.HurtResponder = this;
 			}
+			ctsWhenDie = new CancellationTokenSource();
+		}
+
+		private void OnDie(ICanDealDamage damagedealer, HitData hitData) {
+			OnEntityDie(damagedealer);
+			ctsWhenDie.Cancel();
+			ctsWhenDie = new CancellationTokenSource();
 		}
 
 		private void OnHeal(int healamount, int currenthealth, IBelongToFaction healer) {
@@ -63,10 +71,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (showDamageNumber && (hitData == null || hitData.ShowDamageNumber)) {
 				DamageNumberHUD.Singleton.SpawnHUD(hitData?.HitPoint ?? transform.position, damage,
 					hitData != null && hitData.IsCritical);
-			}
-			if (currenthealth <= 0) {
-				OnEntityDie(damagedealer);
-				ctsWhenDie.Cancel();
 			}
 		}
 
@@ -107,7 +111,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public IDamageable DamageableEntity => BoundEntity;
 		public CancellationToken GetCancellationTokenOnDie() {
+			
 			return ctsWhenDie.Token;
+		}
+
+		public override void OnRecycled() {
+			BoundEntity.UnRegisterOnDie(OnDie);
+			base.OnRecycled();
 		}
 	}
 }
