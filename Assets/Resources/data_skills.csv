@@ -264,10 +264,14 @@ TurretSkill,"{
       ""last_time"": {""type"": ""float"", ""value"": 60},
       ""ammo_size"": {""type"": ""int"", ""value"": 50},
       ""time_per_shot"":  {""type"": ""float"", ""value"": 0.2},
-      ""damage"":  {""type"": ""int"", ""value"": 2}
+      ""damage"":  {""type"": ""int"", ""value"": 2},
+      ""explode_damage"":  {""type"": ""int"", ""value"": 0},
+      ""explode_radius"":  {""type"": ""float"", ""value"": 2}
     },
     ""level2"": {
-      ""damage"":  {""type"": ""int"", ""value"": 3}
+      ""damage"":  {""type"": ""int"", ""value"": 3},
+      ""explode_damage"":  {""type"": ""int"", ""value"": 50},
+      ""explode_radius"":  {""type"": ""float"", ""value"": 30}
     },
     ""level3"": {
       ""max_count"": {""type"": ""int"", ""value"": 2},

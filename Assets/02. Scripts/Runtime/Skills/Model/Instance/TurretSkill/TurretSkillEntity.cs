@@ -47,6 +47,12 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TurretSkill {
 			list.Add(() => new ResourcePropertyDescription(null, null,
 				Localization.GetFormat("TurretSkill_MAX_COUNT", maxCount, maxCount > 1 ? "s" : "")));
 
+			if (GetLevel() >= 2) {
+				int explodeDamage = GetCustomPropertyOfCurrentLevel<int>("explode_damage");
+				list.Add(() => new ResourcePropertyDescription(null, null, Localization.GetFormat(
+					"TurretSkill_EXPLODE", explodeDamage.ToString())));
+			}
+
 		}
 
 		public override void OnRecycle() {

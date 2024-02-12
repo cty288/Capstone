@@ -884,7 +884,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					if (nameTag) {
 						INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
 						if (nameTagComponent != null) {
-							nameTagComponent.SetName(BoundEntity.GetDisplayName());
+							nameTagComponent.SetEntity(BoundEntity);
 						}
 						nameTag.gameObject.SetActive(false);
 						StartCoroutine(ShowNameTagDelayed(nameTag,nameTagInfo.Item2));

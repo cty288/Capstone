@@ -36,8 +36,8 @@ public class RetrieveEnemyHurtboxes : Action
 
         
         //sort hurtboxes by distance (closest to furthest)
-        hurtboxes.Sort((x, y) => Vector3.Distance(transform.position, x.transform.position)
-            .CompareTo(Vector3.Distance(transform.position, y.transform.position)));
+        hurtboxes.Sort((x, y) => Vector3.Distance(transform.position, x.transform.position).
+            CompareTo(Vector3.Distance(transform.position, y.transform.position)));
 
 
         returnedHurtboxes.Value = hurtboxes;

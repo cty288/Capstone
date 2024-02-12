@@ -44,6 +44,9 @@ namespace Runtime.Utilities.Collision
         private IWeaponEntity _weapon;
         private bool showDamageNumber = true;
         
+        private Vector3 overridenDirection = Vector3.zero;
+        private Vector3 overridenOrigin = Vector3.zero;
+        
         
         
 
@@ -80,48 +83,61 @@ namespace Runtime.Utilities.Collision
         /// Called every frame to check for Raycast collision.
         /// </summary>
         /// <returns>Returns true if hit detected.</returns>
-        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage, Collider[] ignoreColliders = null)
         {
             // Debug.Log("checkhit");
             _launchPoint = hitDetectorInfo.launchPoint;
             _camera = hitDetectorInfo.camera;
             _layer = hitDetectorInfo.layer;
             _weapon = hitDetectorInfo.weapon;
+            overridenDirection = hitDetectorInfo.direction;
+            overridenOrigin = hitDetectorInfo.startPoint;
             this.Damage = damage;
-
             
-            ShootBullet();
+            ShootBullet(ignoreColliders);
         }
 
         public int Damage { get; protected set; }
 
         //TODO: faction and IDamagable integration.
-        private void ShootBullet() {
+        private void ShootBullet(Collider[] ignoreColliders = null) {
             // Vector2 crossHairScreenPos = Crosshair.Singleton.CrossHairScreenPosition;
-            float spreadValue = _weapon.GetSpread().RealValue.Value;
+            float spreadValue = 0;
+            if (_weapon != null) {
+                spreadValue = _weapon.GetSpread().RealValue.Value;
+            }
+            
 
             Vector3 dir = new Vector3(0.5f, 0.5f, 0);
-            Ray shootRay =  _camera.ViewportPointToRay(dir);
+            Ray shootRay;
+            if (overridenDirection == default) {
+                shootRay =  _camera.ViewportPointToRay(dir);
 
-            // Adding spread
-            Vector3 spreadPoint = _camera.ViewportToWorldPoint(new Vector3(
-                0.5f + Random.Range(-spreadValue, spreadValue), 
-                0.5f + Random.Range(-spreadValue, spreadValue), 
-                _camera.nearClipPlane));
+                // Adding spread
+                Vector3 spreadPoint = _camera.ViewportToWorldPoint(new Vector3(
+                    0.5f + Random.Range(-spreadValue, spreadValue), 
+                    0.5f + Random.Range(-spreadValue, spreadValue), 
+                    _camera.nearClipPlane));
             
-            shootRay.origin = spreadPoint;
-            
-            // Debug.DrawRay(shootRay.origin, shootRay.direction, Color.green, 100f);
-            
-            ShootBullet(shootDir);
-            
+                shootRay.origin = spreadPoint;
+            }
+            else {
+                shootRay = new Ray(overridenOrigin, overridenDirection.normalized);
+                 
+            }
+            ShootBullet(shootRay, ignoreColliders);
         }
 
-        private void ShootBullet(Ray shootDir) {
+        private void ShootBullet(Ray shootRay, Collider[] ignoreColliders = null) {
             for (int i = 0; i < _hits.Length; i++) {
                 _hits[i] = new RaycastHit();
             }
-            int nums = Physics.RaycastNonAlloc(shootRay, _hits, _weapon.GetRange().RealValue.Value, _layer);
+
+            float maxDistance = float.MaxValue;
+            if (_weapon != null) {
+                maxDistance = _weapon.GetRange().RealValue.Value;
+            }
+            int nums = Physics.RaycastNonAlloc(shootRay, _hits, maxDistance, _layer);
             
             var sortedHits = _hits.OrderBy(hit => hit.transform ? hit.distance : float.MaxValue).ToArray();
 
@@ -129,6 +145,9 @@ namespace Runtime.Utilities.Collision
             for (int i = 0; i < nums; i++) {
                 RaycastHit hit = sortedHits[i];
                 
+                if (ignoreColliders != null && ignoreColliders.Contains(hit.collider)) {
+                    continue;
+                }
                 // Debug.Log("hit w/ gun: " + hit.collider.name);
                 IHurtbox hurtbox = hit.collider.GetComponent<IHurtbox>();
 
@@ -155,7 +174,13 @@ namespace Runtime.Utilities.Collision
                 {
                     Debug.Log("hurtbox make hitdata: " + hurtbox);
                     hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this, showDamageNumber);
-                    hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
+                    if (overridenDirection != default) {
+                        hitData.HitDirectionNormalized = Vector3.Normalize(overridenDirection + offset);
+                    }
+                    else {
+                        hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
+                    }
+                    
                 }
 
                 if (hurtbox != null && hitData.Validate())
@@ -199,9 +224,9 @@ namespace Runtime.Utilities.Collision
             if (!hitAnything) {
                 // hit nothing
                  if(!_useVFX)
-                     CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (dir * _weapon.GetRange().RealValue), new RaycastHit()));
+                     CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (shootRay.direction * maxDistance), new RaycastHit()));
                  else
-                     PlayBulletVFX(_launchPoint.position, shootRay.GetPoint(_weapon.GetRange().RealValue));
+                     PlayBulletVFX(_launchPoint.position, shootRay.GetPoint(maxDistance));
             }
         }
 
@@ -230,15 +255,22 @@ namespace Runtime.Utilities.Collision
 
         protected void PlayBulletVFX(Vector3 startPoint, Vector3 endPoint)
         {
-            // Camera calculations
-            var conversion = _camera.ScreenToWorldPoint(_fpsCamera.WorldToScreenPoint(startPoint));
-            //var newStartPos = _vfx[0].transform.InverseTransformPoint(conversion);
-            startPoint = conversion;
+            if (overridenDirection == default) {
+                // Camera calculations
+                var conversion = _camera.ScreenToWorldPoint(_fpsCamera.WorldToScreenPoint(startPoint));
+                //var newStartPos = _vfx[0].transform.InverseTransformPoint(conversion);
+                startPoint = conversion;
+            }
+           
             
             Vector3 dir = endPoint - startPoint;
-            float bulletSpeed = _weapon.GetBulletSpeed().GetRealValue().Value * 0.5f;
+            float lifeTime = 0.3f;
+            float bulletSpeed = 400;
             float maxDistance = Vector3.Distance(startPoint, endPoint);
-            float lifeTime = maxDistance / bulletSpeed;
+            if (_weapon != null) {
+                bulletSpeed = _weapon.GetBulletSpeed().GetRealValue().Value * 0.5f;
+            }
+            lifeTime = maxDistance / bulletSpeed;
 
             foreach (var vfx in _vfx)
             {
@@ -272,7 +304,9 @@ namespace Runtime.Utilities.Collision
                     endPoint,
                     Mathf.Clamp01(1 - (remainingDistance / distance))
                 );
-                remainingDistance -= _weapon.GetBulletSpeed().GetRealValue().Value * Time.deltaTime;
+
+                float bulletSpeed = _weapon == null ? 400 : _weapon.GetBulletSpeed().GetRealValue().Value;
+                remainingDistance -= bulletSpeed * Time.deltaTime;
 
                 yield return null;
             }

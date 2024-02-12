@@ -136,7 +136,7 @@ namespace Runtime.Utilities.Collision
         /// Creates a HitData object that is sent to the HitResponder and HurtResponder, invoking their responses.
         /// </summary>
         /// <returns>Returns true if a hit is detected.</returns>
-        public void CheckHit(HitDetectorInfo hitDetectorInfo = new HitDetectorInfo(), int damage = 0)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo = new HitDetectorInfo(), int damage = 0, Collider[] ignoredColliders = null)
         {
             Debug.Log("checkhit() is replaced for testing");
             
