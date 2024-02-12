@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -77,7 +77,6 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			
 			CurrentLevel.Value = levelEntities[levelNumber];
 			CurrentLevelCount.Value = levelNumber;
-			
 			
 			if (levelNumber == 0) {
 				HashSet<int> toRemove = new HashSet<int>();

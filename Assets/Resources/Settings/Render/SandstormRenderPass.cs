@@ -24,6 +24,7 @@ class SandstormRenderPass : ScriptableRenderPass
     readonly int _sandstormDepthDistanceID = Shader.PropertyToID("_SandstormDepthDistance");
     readonly int _noiseStrengthsID = Shader.PropertyToID("_NoiseStrengths");
     readonly int _sandstormAlphaID = Shader.PropertyToID("_SandstormAlpha");
+    readonly int _nightDaySliderID = Shader.PropertyToID("_NightDaySlide");
 
     private Material material;
 
@@ -102,6 +103,7 @@ class SandstormRenderPass : ScriptableRenderPass
             material.SetFloat(_sandstormDepthDistanceID, customEffect.sandstormDepthDistance.value);
             material.SetVector(_noiseStrengthsID, customEffect.noiseStrengths.value);
             material.SetFloat(_sandstormAlphaID, customEffect.sandstormAlpha.value);
+            material.SetFloat(_nightDaySliderID, customEffect.nightDaySlide.value);
             
             BlitTo(material);
         }

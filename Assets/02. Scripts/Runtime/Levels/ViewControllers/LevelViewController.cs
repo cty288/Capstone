@@ -5,6 +5,7 @@ using System.Linq;
 using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Levels.DayNight;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Sandstorm;
@@ -303,13 +304,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 				subLevelVC.InitWithID(levelEntity.UUID);
 				subLevelVC.InitDirectors();
-				// print($"number of directors in playerSpawners: {playerSpawners.Count}");
-				// foreach (var director in playerSpawners)
-				// {
-				// 	print($"add director to {levelEntity.EntityName}: {director.Entity.EntityName}");
-				// 	subLevelVC.InitDirector(director);
-				// }
-				//templateEnemies.Add(enemyEntity);
 				subAreaLevels.Add(subLevelVC);
 				BoundEntity.AddSubArea(levelEntity.UUID);
 			}
@@ -322,14 +316,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			//navMeshSurface.navMeshData 
 			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 
-			if (BoundEntity.GetCurrentLevelCount() <= 1) {
+			this.RegisterEvent<OnNewDayStart>(OnNewDay).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
+			
+			/*if (BoundEntity.GetCurrentLevelCount() <= 1) {
 				gameTimeModel.DayCountThisRound.RegisterWithInitValue(OnNewDay)
 					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			}
 			else {
 				gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnNewDay)
 					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-			}
+			}*/
 			
 			
 			subAreaLevels = CreateSubAreaLevels();
@@ -353,14 +350,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			SpawnCollectableResources();
 			
 			StartCoroutine(UpdateLevelSystemTime());
-			
-			
-			//Debug.Log("Bounds for level " + gameObject.name + " is " + maxExtent.bounds);
 		}
 
 		
 		private HashSet<int> triggeredNewDay = new HashSet<int>();
-		private void OnNewDay(int day) {
+		private void OnNewDay(OnNewDayStart e) {
+			int day = e.DayCount;
+			
 			if (levelModel.CurrentLevel.Value != BoundEntity) {
 				return;
 			}
@@ -370,7 +366,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 			triggeredNewDay.Add(day);
-			BoundEntity.DayStayed++; Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
+			BoundEntity.DayStayed++; 
+			Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
 			if (BoundEntity.DayStayed -1 >= sandstormProbability.Length) {
 				return;
 			}
@@ -383,6 +380,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				int warningTime = sandstormHappenTime / 2;
 				gameEventSystem.AddEvent(new SandstormWarningEvent(), warningTime);
 			}
+			
+			// Add Night Events
+			// Night occurs at 8pm (20h)
+			int nightHappeningTime = (GameTimeModel.NightStartHour - GameTimeModel.NewDayStartHour) * 60;
+			gameEventSystem.AddEvent(new NightEvent(), nightHappeningTime);
+			
+			// Trigger warning 1 in-game hour before night time.
+			gameEventSystem.AddEvent(NightWarningEvent.Allocate(60), nightHappeningTime - 60);
+			
+			// New Day Event
+			gameEventSystem.AddEvent(new NewDayEvent(), 0);
 
 			int prevDay = day - 1;
 			if (prevDay > 0) {

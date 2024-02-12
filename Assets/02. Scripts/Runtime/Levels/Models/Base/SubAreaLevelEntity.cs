@@ -113,18 +113,10 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		public void InitializeEnemyCountDictionary()
 		{
-			// Debug.Log("SPAWN_TEST: initializing enemy count dictionary");
 			foreach (var enemy in GetMaxSpawnPerEnemy())
 			{
-				enemyCount.Add(enemy.Key, 0);
+				enemyCount.TryAdd(enemy.Key, 0);
 			}
-			
-			// string print = "";
-			// foreach (var kv in enemyCount)
-			// {
-			// 	print += string.Format("Key = {0}, Value = {1} ", kv.Key, kv.Value);
-			// }
-			// Debug.Log($"SPAWN_TEST: {print}");
 		}
 
 		public void IncrementEnemyCountDictionary(string name)
@@ -163,13 +155,6 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		private bool IsAllEnemiesUnderCount(LevelSpawnCard[] cards)
 		{
-			// string print = "";
-			// foreach (KeyValuePair<string, int> kvp in enemyCount)
-			// {
-			// 	print += string.Format("Key = {0}, Value = {1} ", kvp.Key, kvp.Value);
-			// }
-			//
-			// Debug.Log($"SPAWN_TEST: dictionary = {print}");
 			return cards.All(card => enemyCount[card.PrefabNames[0].Split('_')[0]] <= GetMaxSpawnPerEnemy()[card.PrefabNames[0].Split('_')[0]]);
 		}
 		

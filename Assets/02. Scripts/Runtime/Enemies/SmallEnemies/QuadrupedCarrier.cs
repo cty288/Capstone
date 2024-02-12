@@ -97,7 +97,6 @@ namespace Runtime.Enemies.SmallEnemies
                 a.transform.position = this.transform.position + new Vector3(0, 2, 0);
 
             }
-            Debug.Log($"carrier 1 Take damage: {damage}. carrier 1 current health: {currenthealth}");
         }
 
         protected override void OnAnimationEvent(string eventName)

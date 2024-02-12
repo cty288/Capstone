@@ -220,10 +220,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 			int rarity = GetRarity();
 			float cooldown = skillCooldownProperty.GetByLevel(rarity);
-			list.Add(() => new ResourcePropertyDescription("PropertyIconRarity", Localization.Get(
+			list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
 				"PROPERTY_ICON_LEVEL"), rarity.ToString()));
 
-			list.Add(() => new ResourcePropertyDescription("PropertyIconCooldown", Localization.Get(
+			list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
 					"PROPERTY_ICON_COOLDOWN"),
 				Localization.GetFormat("PROPERTY_ICON_COOLDOWN_DESC", Mathf.RoundToInt(cooldown))));
 		}

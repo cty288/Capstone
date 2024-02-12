@@ -139,7 +139,7 @@ namespace Runtime.Enemies.Model {
 
 
 		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
-			Debug.Log($"Kill Damageable: {damageable.EntityName}");
+			// Debug.Log($"Kill Damageable: {damageable.EntityName}");
 		}
 
 		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {

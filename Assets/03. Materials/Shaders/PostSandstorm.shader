@@ -4,6 +4,7 @@ Shader "Hidden/PostSandstorm"
     {
         _MainTex ("Texture", 2D) = "white" {}
     	_Gradient ("Gradient Texture", 2D) = "white" {}
+    	_GradientNight ("Night Time Gradient Texture", 2D) = "white" {}
     	_AlphaMap("Alphas", 2D) = "white" {}
     	_NoiseMap ("Noise Texture", 2D) = "white" {}
     	
@@ -12,6 +13,7 @@ Shader "Hidden/PostSandstorm"
     	_SandstormDepthDistance ("Sandstorm Depth Distance", Float) = 100.
     	_NoiseStrengths ("Noise Strengths", Vector) = (0.1, 0.1, 0.01, 0.8)
     	_SandstormAlpha ("Sandstorm Alpha", Float) = 1
+    	_NightDaySlide ("Night (0) and Day (1) Slider", Range(0, 1)) = 1
     }
     SubShader 
 	{
@@ -34,6 +36,9 @@ Shader "Hidden/PostSandstorm"
             TEXTURE2D(_Gradient);
             SAMPLER(sampler_Gradient);
 
+            TEXTURE2D(_GradientNight);
+            SAMPLER(sampler_GradientNight);
+
             TEXTURE2D(_AlphaMap);
             SAMPLER(sampler_AlphaMap);
 
@@ -49,6 +54,7 @@ Shader "Hidden/PostSandstorm"
             float _SandstormDepthDistance;
             float4 _NoiseStrengths;
             float _SandstormAlpha;
+            float _NightDaySlide;
             
             struct Attributes
             {
@@ -111,6 +117,8 @@ Shader "Hidden/PostSandstorm"
 				fogDepth = clamp(fogDepth, 0, 0.99f);
 
 				float4 lineColor = SAMPLE_TEXTURE2D(_Gradient, sampler_Gradient, float2(fogDepth0, 0.5f));
+				float4 lineColor2 = SAMPLE_TEXTURE2D(_GradientNight, sampler_GradientNight, float2(fogDepth0, 0.5f));
+				lineColor = lerp(lineColor2, lineColor, _NightDaySlide);
 				float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
 				float4 lineColor0 = float4(lineColor.rgb <= 0.5 ? color.rgb * (lineColor.rgb + 0.5) : 1 - (1 - color) * (1 - (lineColor.rgb - 0.5)), fogDepth0); // Soft Light
 				lineColor = float4(lineColor.rgb, lineColor.a * fogDepth);

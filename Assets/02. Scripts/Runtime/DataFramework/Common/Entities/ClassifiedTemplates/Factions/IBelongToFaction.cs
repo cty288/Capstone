@@ -20,7 +20,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Factions {
 		public bool IsSameFaction(IBelongToFaction other) {
 			if (other == null)
 			{
-				Debug.Log("is null");
+				Debug.Log("Cannot check faction: Other is null");
 			}
 			return CurrentFaction.Value == other.CurrentFaction.Value;
 		}

@@ -389,11 +389,7 @@ namespace Runtime.Player.ViewControllers
         }
         private void HandleCamera()
         {
-            //Camera;
-            
-            //Vector2 mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
             Vector2 mouseDelta = playerActions.Look.ReadValue<Vector2>();
-            //Debug.Log(mouseDelta);
             float sensitivity = ClientInput.Singleton.PlayerInput.currentControlScheme == "Gamepad" ? controllerSensitivity : mouseSensitivity;
             cameraPitch -= mouseDelta.y * sensitivity;
             cameraPitch = Mathf.Clamp(cameraPitch, fpsBotClamp, fpsTopClamp);
@@ -589,6 +585,10 @@ namespace Runtime.Player.ViewControllers
                 sprinting = false;
             }
 
+            if (!playerActions.SprintHold.IsPressed()) {
+                sprinting = false;
+            }
+
             if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
             {
                 sliding = true;
@@ -772,7 +772,6 @@ namespace Runtime.Player.ViewControllers
             NavMesh.SamplePosition(transform.position, out hit, 100f, NavMesh.AllAreas);
             if (hit.hit)
             {
-                // print($"player current area: {hit.mask}");
                 playerModel.CurrentSubAreaMask.Value = hit.mask;
             }
         }

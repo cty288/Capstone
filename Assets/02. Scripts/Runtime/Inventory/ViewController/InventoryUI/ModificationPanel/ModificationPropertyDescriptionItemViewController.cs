@@ -10,14 +10,16 @@ using UnityEngine;
 
 public class ModificationPropertyDescriptionItemViewController : AbstractMikroController<MainGame> {
     private ResLoader resLoader;
+    [SerializeField]
     private TMP_Text propertyNameText;
+    [SerializeField]
     private TMP_Text propertyValueText;
     private Transform iconSpawnPoint;
 
     private void Awake() {
         resLoader = this.GetUtility<ResLoader>();
-        propertyNameText = transform.Find("TextGroup/PropertyName").GetComponent<TMP_Text>();
-        propertyValueText = transform.Find("TextGroup/PropertyValue").GetComponent<TMP_Text>();
+        //propertyNameText = transform.Find("TextGroup/PropertyName").GetComponent<TMP_Text>();
+        //propertyValueText = transform.Find("TextGroup/PropertyValue").GetComponent<TMP_Text>();
         iconSpawnPoint = transform.Find("Icon");
     }
     

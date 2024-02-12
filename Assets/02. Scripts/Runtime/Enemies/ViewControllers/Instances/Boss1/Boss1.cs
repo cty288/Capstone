@@ -156,7 +156,7 @@ namespace Runtime.Enemies
 
         protected override void OnEntityStart()
         {
-            Debug.Log("start");
+            // Debug.Log("start");
             //binding
             BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
             BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
@@ -204,9 +204,6 @@ namespace Runtime.Enemies
         }
         
         protected void OnShellClosedChanged(bool oldValue,bool newValue) {
-            //GetComponent<>()
-            
-            Debug.Log("changed to" + newValue);
             shellCollider.enabled = newValue;
             hardCollider.enabled = newValue;
             if (CurrentShellHealth <= 0 && !newValue) {
@@ -214,29 +211,16 @@ namespace Runtime.Enemies
             }
             animator.SetBool("ShellClosed",newValue);
             _innerShellHurtboxModifier.IgnoreHurtboxCheck = !newValue;
-            /*foreach (var pedalHurbox in pedalHurboxes) {
-                pedalHurbox.DamageMultiplier = 1;
-            }*/
-           // shellHurbox.SetActive(newValue);
         }
-        
-        // private void Update()
-        // {
-        //
-        // }
 
         protected override void OnAnimationEvent(string eventName) {
             switch (eventName)
             {
                 case "ShellOpen":
-                    //BoundEntity.IsInvincible.Value = false;
                     UnSpawnShellHealthBar();
-                   // shellHurbox.SetActive(false);
                     break;
                 case "ShellClose":
-                    //BoundEntity.IsInvincible.Value = true;
                     SpawnShellHealthBar();
-                    //shellHurbox.SetActive(true);
                     break;
                 case "ClearHits":
                     hitObjects.Clear();
@@ -245,12 +229,6 @@ namespace Runtime.Enemies
                     ClearHitObjects();
                     slamHitBox.gameObject.SetActive(true);
                     slamHitBox.StartCheckingHits(BoundEntity.GetCustomDataValue<int>("damages","meleeDamage").Value);
-                   // shellHurbox.SetActive(false);
-                    /*foreach (var pedalHurbox in pedalHurboxes) {
-                        pedalHurbox.DamageMultiplier = 0;
-                    }*/
-
-                    //BoundEntity.ChangeShellStatus(false);
                     _innerShellHurtboxModifier.IgnoreHurtboxCheck = true;
                     break;
                 case "MeleeFinish":
@@ -310,14 +288,14 @@ namespace Runtime.Enemies
                     }
                 }
                 else {
-                    BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
+                    BoundEntity.TakeDamage(data.Damage, data.Attacker,out _, data);
                 }
                 
                 
                
             }
             else {
-                BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
+                BoundEntity.TakeDamage(data.Damage, data.Attacker,out _, data);
             }
 
            

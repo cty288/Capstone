@@ -36,7 +36,6 @@ namespace Runtime.Utilities.Collision
         
         public override void TriggerCheckHit(Collider c)
         {
-            // Debug.Log("trigger hit detected: " + c.name);
             HitData hitData = null;
             IHurtbox hurtbox;
             Vector3 center = _collider.transform.position;
@@ -44,7 +43,6 @@ namespace Runtime.Utilities.Collision
             Vector3 hitNormal = transform.position - hitPoint;
             
             hurtbox = c.GetComponent<IHurtbox>();
-            // Debug.Log("hurtbox: " + hurtbox);
             if (hurtbox != null)
             {
 
@@ -58,10 +56,8 @@ namespace Runtime.Utilities.Collision
                     this, showDamageNumber);
                 
                 
-                // Debug.Log("validate: " + (hitData.Validate()));
                 if (hitData.Validate())
                 {
-                    // Debug.Log("validate: ");
                     if (hitData.HitDetector.HitResponder != null) {
                         hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
                     }

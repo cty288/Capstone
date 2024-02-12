@@ -95,19 +95,24 @@ namespace Runtime.Utilities.Collision
         private void ShootBullet() {
             // Vector2 crossHairScreenPos = Crosshair.Singleton.CrossHairScreenPosition;
             float spreadValue = _weapon.GetSpread().RealValue.Value;
-            Vector3 spread = new Vector3(
-                Random.Range(-spreadValue, spreadValue),
-                Random.Range(-spreadValue, spreadValue),
-                0);
+
+            Vector3 dir = new Vector3(0.5f, 0.5f, 0);
+            Ray shootRay =  _camera.ViewportPointToRay(dir);
+
+            // Adding spread
+            Vector3 spreadPoint = _camera.ViewportToWorldPoint(new Vector3(
+                0.5f + Random.Range(-spreadValue, spreadValue), 
+                0.5f + Random.Range(-spreadValue, spreadValue), 
+                _camera.nearClipPlane));
             
-            Vector3 dir = new Vector3(0.5f, 0.5f, 0) + spread;
-            // dir.Normalize();
-            Ray shootDir =  _camera.ViewportPointToRay(dir);
+            shootRay.origin = spreadPoint;
+            
+            // Debug.DrawRay(shootRay.origin, shootRay.direction, Color.green, 100f);
             
             for (int i = 0; i < _hits.Length; i++) {
                 _hits[i] = new RaycastHit();
             }
-            int nums = Physics.RaycastNonAlloc(shootDir, _hits, _weapon.GetRange().RealValue.Value, _layer);
+            int nums = Physics.RaycastNonAlloc(shootRay, _hits, _weapon.GetRange().RealValue.Value, _layer);
             
             var sortedHits = _hits.OrderBy(hit => hit.transform ? hit.distance : float.MaxValue).ToArray();
 
@@ -187,7 +192,7 @@ namespace Runtime.Utilities.Collision
                  if(!_useVFX)
                      CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, _launchPoint.position + (dir * _weapon.GetRange().RealValue), new RaycastHit()));
                  else
-                     PlayBulletVFX(_launchPoint.position, _launchPoint.position + (dir * _weapon.GetRange().RealValue));
+                     PlayBulletVFX(_launchPoint.position, shootRay.GetPoint(_weapon.GetRange().RealValue));
             }
         }
 

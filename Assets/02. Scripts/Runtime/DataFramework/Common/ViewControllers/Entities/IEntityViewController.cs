@@ -60,10 +60,5 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         
     }
 
-    public interface IWeaponViewController : IEntityViewController
-    {
-        public IWeaponEntity WeaponEntity { get; }
-
-        IEntity IEntityViewController.Entity => WeaponEntity;
-    }
+   
 }

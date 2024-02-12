@@ -1,4 +1,5 @@
 ﻿using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.Enemies.Model;
@@ -15,7 +16,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		
 		private ICreature creature;
 		public override string OnGetDescription(string defaultLocalizationKey) {
-			return null;
+			return Localization.Get(defaultLocalizationKey);
 		}
 
 		public override bool IsDisplayed() {
@@ -45,7 +46,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			return BuffStatus.Running;
 		}
 
-		public override bool IsGoodBuff { get; }
+		public override bool IsGoodBuff { get; } = false;
 		public override void OnEnds() {
 			if (creature is IBossEntity) {
 				return;
