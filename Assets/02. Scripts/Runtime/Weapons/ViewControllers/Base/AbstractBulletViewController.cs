@@ -207,8 +207,6 @@ namespace Runtime.Weapons.ViewControllers.Base {
 					}
 				}
 				
-				// print($"BLADE HIT {hitObj.name}, my faction: {CurrentFaction.Value}, hit faction: {belongToFaction.CurrentFaction.Value}, hit same faction: {penetrateSameFaction}");
-				
 				OnHitObject(other);
 				if (autoRecycleWhenHit) {
 					RecycleToCache();

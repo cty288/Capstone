@@ -49,6 +49,7 @@ namespace Runtime.Weapons.ViewControllers.Base
     
     public interface IWeaponViewController : IResourceViewController,  IPickableResourceViewController, IInHandResourceViewController {
         IWeaponEntity WeaponEntity { get; }
+        IEntity IEntityViewController.Entity => WeaponEntity;
     }
     
     /// <summary>
@@ -58,8 +59,9 @@ namespace Runtime.Weapons.ViewControllers.Base
     public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IWeaponViewController, IBelongToFaction, IHitResponder
         where T : class, IWeaponEntity, new() {
         public GameObject model;
-        [Header("Auto Reload")]
+        [Header("Gun Options")]
         public bool autoReload = true;
+        public bool canScope = true;
         
         [Header("Layer Hit Mask")]
         public LayerMask layer;
@@ -83,7 +85,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         [SerializeField] protected float reloadAnimationLength;
         protected AnimationSMBManager animationSMBManager;
         
-        //timers
+        //timers & status
+        protected bool isLocked = false;
         protected bool isReloading = false;
         protected float lastShootTime = 0f;
         protected float reloadTimer = 0f;
@@ -117,9 +120,6 @@ namespace Runtime.Weapons.ViewControllers.Base
             playerActions = ClientInput.Singleton.GetPlayerActions();
             animationSMBManager = GetComponent<AnimationSMBManager>();
             animationSMBManager.Event.AddListener(OnAnimationEvent);
-            
-            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
         }
         
         public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
@@ -161,7 +161,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Reload
-                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading &&
+                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && !isLocked &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
                     if (IsScopedIn)
@@ -180,6 +180,14 @@ namespace Runtime.Weapons.ViewControllers.Base
                 }
             }
         }
+
+        #region  Weapon Lock
+
+        public void LockWeapon(bool shouldLock) {
+            isLocked = shouldLock;
+        }
+
+        #endregion
         
         #region Animation
         protected virtual void OnAnimationEvent(string eventName)
@@ -227,6 +235,13 @@ namespace Runtime.Weapons.ViewControllers.Base
             /*if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
                 BoundEntity.SetOwner(damageDealer);
             }*/
+            
+            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
+            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
+            
+            if(BoundEntity.CurrentAmmo == 0 && autoReload && !isLocked) {
+                StartCoroutine(ReloadAnimation());
+            }
         }
 
         
@@ -238,7 +253,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         #endregion
 
-        protected void ChangeScopeStatus(bool shouldScope) {
+        #region Scope/Reload Status
+        protected virtual void ChangeScopeStatus(bool shouldScope) {
             bool previsScope = _isScopedIn;
             _isScopedIn = shouldScope;
             
@@ -255,6 +271,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
 
         protected void ChangeReloadStatus(bool shouldReload) {
+            if (!canScope)
+                return;
+            
             bool prevIsReloading = isReloading;
             isReloading = shouldReload;
             if (prevIsReloading != isReloading) {
@@ -265,7 +284,8 @@ namespace Runtime.Weapons.ViewControllers.Base
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Reload", AnimationEventType.Trigger, 0));
             }
         }
-
+        #endregion
+        
         #region Shooting
         
         protected void SetShootStatus(bool isShooting) {
@@ -310,8 +330,14 @@ namespace Runtime.Weapons.ViewControllers.Base
         public override void OnItemUse()
         {
             // fully-automatic gun
+            CheckShoot();
+        }
+
+        //abstracted for modularity
+        protected void CheckShoot()
+        {
             if (!isReloading) {
-                if (BoundEntity.CurrentAmmo > 0 &&
+                if (BoundEntity.CurrentAmmo > 0 && !isLocked &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
                     
@@ -321,7 +347,7 @@ namespace Runtime.Weapons.ViewControllers.Base
                     BoundEntity.ShootUseAmmo(1);
                 }
                 
-                if (autoReload && BoundEntity.CurrentAmmo <= 0)
+                if (autoReload && BoundEntity.CurrentAmmo <= 0 && !isLocked)
                 {
                     SetShoot(false);
                     ChangeReloadStatus(true);
@@ -332,7 +358,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         public override void OnItemStopUse() {}
         
-        public override void OnItemAltUse() { }
+        public override void OnItemAltUse() { } 
         
         public override void OnItemScopePressed() {
             if (isReloading || playerModel.IsPlayerSprinting()) {

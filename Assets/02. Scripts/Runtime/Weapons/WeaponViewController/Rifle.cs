@@ -62,7 +62,7 @@ namespace Runtime.Weapons
         {
             if (isFullyAutomatic)
             {
-                base.OnItemUse();
+                CheckShoot();
             }
         }
         
@@ -70,25 +70,7 @@ namespace Runtime.Weapons
         {
             if (!isFullyAutomatic)
             {
-                // For semi-auto gun
-                if (!isReloading) {
-                    if (BoundEntity.CurrentAmmo > 0 &&
-                        Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
-                        lastShootTime = Time.time;
-                    
-                        SetShoot(true);
-                        ShootEffects();
-
-                        BoundEntity.ShootUseAmmo(1);
-                    }
-                
-                    if (autoReload && BoundEntity.CurrentAmmo <= 0)
-                    {
-                        SetShoot(false);
-                        ChangeReloadStatus(true);
-                        StartCoroutine(ReloadAnimation());
-                    }
-                }
+                CheckShoot();
             }
         }
         

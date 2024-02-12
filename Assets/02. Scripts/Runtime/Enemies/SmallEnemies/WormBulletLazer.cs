@@ -143,7 +143,6 @@ namespace a
 
         protected override void OnHitResponse(HitData data)
         {
-            Debug.Log("hi");
         }
 
         protected override void OnHitObject(Collider other)

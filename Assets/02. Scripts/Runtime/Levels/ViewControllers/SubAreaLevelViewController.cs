@@ -265,7 +265,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             totalEnemiesSpawned++;
         	currentEnemies.Add(enemyEntity);
             
-            // print($"subarea {BoundEntity.GetSubAreaNavMeshModifier()} has spawned {BoundEntity.TotalEnemiesSpawnedSinceOffCooldown} enemies");
             if(BoundEntity.TotalEnemiesSpawnedSinceOffCooldown >= BoundEntity.GetMaxEnemyCount()) {
                 StartSpawningCooldown();
             }

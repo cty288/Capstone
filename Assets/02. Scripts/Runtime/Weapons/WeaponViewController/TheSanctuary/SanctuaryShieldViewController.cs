@@ -12,13 +12,14 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Utilities.Collision;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 
-public class SentinelShieldViewController : AbstractMikroController<MainGame>, IHurtResponder, IController {
-	public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Hostile);
+public class SanctuaryShieldViewController : AbstractMikroController<MainGame>, IHurtResponder, IController {
+	public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 	
 	protected HurtBox hurtbox = null;
-	protected IEnemyEntity entityOwner = null;
+	protected IWeaponViewController weaponOwner = null;
 
 	protected bool inited = false;
 	protected HitData hitData;
@@ -28,6 +29,7 @@ public class SentinelShieldViewController : AbstractMikroController<MainGame>, I
 	protected int currentHealth;
 	public Material shieldMaterial;
 	private Color originalColor;
+	
 	protected virtual void Awake() {
 		hurtbox = GetComponentInChildren<HurtBox>();
 		collider = GetComponentInChildren<Collider>();
@@ -35,12 +37,13 @@ public class SentinelShieldViewController : AbstractMikroController<MainGame>, I
 			shieldMaterial = gameObject.GetComponent<Renderer>().material;
 	}
 
-	public void Init(IEnemyEntity owner)
+	public void Init(IWeaponViewController weaponOwner, GameObject characterOwner)
 	{
-		entityOwner = owner;
+		this.weaponOwner = weaponOwner;
+		hurtbox.SetOwner(characterOwner);
 		hurtbox.HurtResponder = this;
 		
-		maxHealth = entityOwner.GetCustomDataValue<int>("shield", "shieldHealth").Value;
+		maxHealth = this.weaponOwner.WeaponEntity.GetCustomDataValue<int>("shield", "health").Value;
 		currentHealth = maxHealth;
 		originalColor = shieldMaterial.GetColor("_DamageColor");
 		
@@ -52,7 +55,7 @@ public class SentinelShieldViewController : AbstractMikroController<MainGame>, I
 	public bool CheckHurt(HitData data)
 	{
 		return data.Attacker.CurrentFaction.Value != CurrentFaction.Value;
-	}
+	}	
 
 	public void HurtResponse(HitData data)
 	{
@@ -66,24 +69,6 @@ public class SentinelShieldViewController : AbstractMikroController<MainGame>, I
 		}
 	}
 
-	public void HideShield()
-	{
-		shieldMaterial.DOFloat(0, "_Manifest", 0.75f).OnComplete(() =>
-		{
-			shieldMaterial.SetColor("_DamageColor", originalColor);
-			gameObject.SetActive(false);
-		});
-	}
-
-	public void ResetShield()
-	{
-		currentHealth = maxHealth;
-		shieldMaterial.SetFloat("_Health", 1);
-		shieldMaterial.SetFloat("_Manifest", 0);
-		shieldMaterial.SetColor("_DamageColor", originalColor);
-		gameObject.SetActive(false);
-	}
-	
 	private async UniTask FlashAndBreak()
 	{
 		//flash
