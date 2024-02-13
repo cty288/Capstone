@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1543156114490598300
 Transform:
   m_ObjectHideFlags: 0
@@ -82,8 +82,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.03
+        time: 0.003692627
+        value: 0.1082623
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -92,7 +92,7 @@ TrailRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 0.06085968
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 6487893219933925104}
   - component: {fileID: 7490496053937370637}
   m_Layer: 0
-  m_Name: WormBullet
+  m_Name: WormBossRapidFireBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,6 +260,7 @@ MonoBehaviour:
   autoRecycleTime: 5
   penetrateSameFaction: 0
   autoDestroyWhenOwnerDestroyed: 0
+  autoRecycleWhenHit: 1
   maxRotationAngle: 45
   curveHeight: 5
   explosion: {fileID: 2049937806834680411, guid: 847ee5411a8f91d4f97ff392f0b6e09f,
@@ -330,6 +331,10 @@ PrefabInstance:
     - target: {fileID: 4903523721451584, guid: 1315b83b9f76e004d81e6f5c8cf8e15f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4903523721451584, guid: 1315b83b9f76e004d81e6f5c8cf8e15f, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114896872521589134, guid: 1315b83b9f76e004d81e6f5c8cf8e15f, type: 3}

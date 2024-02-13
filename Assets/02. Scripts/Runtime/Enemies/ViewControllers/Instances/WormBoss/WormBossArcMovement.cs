@@ -17,23 +17,16 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 start;
         private Vector3 end;
         private float progress = 0f;
-        public float duration = 10f; // Duration in seconds
+        public float duration = 8f; // Duration in seconds
         private float speed; // Calculated speed based on the duration
         public float jumpHeight = 50f; // Amplitude of the jump
+        private bool endDive = false;
 
+        private Vector3 direction;
+        
         public override void OnStart()
         {
-            Collider collider = this.gameObject.GetComponent<Collider>();
-            if (collider != null)
-            {
-                collider.enabled = false;
-            }
-
-            // Disable colliders in children recursively
-            foreach (Transform child in this.gameObject.transform)
-            {
-                collider.enabled = false;
-            }
+            EnableColliders(true);
 
             progress = 0;
             float minDistance = 50f; // Minimum distance between sample and sample2
@@ -45,7 +38,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Vector3 sample2;
             do
             {
-                sample2 = this.transform.position + Random.insideUnitSphere * 70;
+                // sample2 = this.transform.position + Random.insideUnitSphere * 70;
+                sample2 = RandomPointInAnnulus(sample, 40, 70);
                 Debug.Log(sample2);
             } while (Vector3.Distance(sample, sample2) < minDistance);
 
@@ -65,13 +59,47 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             speed = 1f / duration;
         }
 
+        private void EnableColliders(bool enable)
+        {
+            Collider[] colliders = gameObject.GetComponents<Collider>();
+            foreach (var c in colliders)
+            {
+                if (c == null) continue;
+                if (!c.isTrigger)
+                    c.enabled = enable;
+            }
+        }
+
+        public Vector3 RandomPointInAnnulus(Vector2 origin, float minRadius, float maxRadius){
+     
+            var randomDirection = (Random.insideUnitCircle * origin).normalized;
+     
+            var randomDistance = Random.Range(minRadius, maxRadius);
+     
+            var point = origin + randomDirection * randomDistance;
+     
+            return new Vector3(point.x, 0, point.y);
+        }
+
+        
         public override TaskStatus OnUpdate()
         {
+            if(endDive) {
+                return TaskStatus.Success;
+            }
+            
+            // Check if the movement has reached the end
+            if (progress >= 1f)
+            {
+                StartCoroutine(MoveUnderGround());
+                return TaskStatus.Running;
+            }
+            
             // Interpolate between the start and end positions using a Bezier curve with a jump in the y-axis
             Vector3 newPosition = BezierCurve(start, end, progress, jumpHeight);
 
             // Calculate the forward vector based on the difference between the new position and the current position
-            Vector3 direction = newPosition - transform.position;
+            direction = newPosition - transform.position;
 
             // If there's a significant change in position
             if (direction.magnitude > 0.01f)
@@ -86,12 +114,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // Increment the progress based on time and speed
             progress += Time.deltaTime * speed;
 
-            // Check if the movement has reached the end
-            if (progress >= 1f)
-            {
-                return TaskStatus.Success;
-            }
-
             return TaskStatus.Running;
         }
 
@@ -99,18 +121,26 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override void OnEnd()
         {
             base.OnEnd();
-            Collider collider = this.gameObject.GetComponent<Collider>();
-            if (collider != null)
+            
+            EnableColliders(false);
+        }
+
+        private IEnumerator MoveUnderGround()
+        {
+            float time = 0;
+            float duration = 8f;
+            while (time < duration)
             {
-                collider.enabled = false;
+                time += Time.deltaTime;
+                Vector3 dir = direction.normalized;
+                transform.position += dir * Time.deltaTime * speed;    
+                yield return null;
             }
 
-            // Disable colliders in children recursively
-            foreach (Transform child in this.gameObject.transform)
-            {
-                collider.enabled = false;
-            }
+            endDive = true;
         }
+        
+        
         // Bezier curve calculation with a jump in the y-axis
         private Vector3 BezierCurve(Vector3 p0, Vector3 p1, float t, float jumpHeight)
         {
