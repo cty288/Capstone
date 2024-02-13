@@ -14731,7 +14731,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -39320,7 +39320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1677334751974549045
 Transform:
   m_ObjectHideFlags: 0
@@ -54135,6 +54135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Red
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: e4a169c32ea7ddb49a6ebdc202c7e487,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4a169c32ea7ddb49a6ebdc202c7e487, type: 3}
 --- !u!4 &5926072863458567177 stripped
@@ -54381,6 +54386,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: White
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: e4a169c32ea7ddb49a6ebdc202c7e487,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4a169c32ea7ddb49a6ebdc202c7e487, type: 3}
