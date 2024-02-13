@@ -281,3 +281,40 @@ TurretSkill,"{
       ""damage"":  {""type"": ""int"", ""value"": 4}
     }
   }",,,
+StunGrenadeSkill,"{
+        ""ResourceCost"": {
+            ""Combat2"": 5,
+            ""Time2"": 5
+        },
+        ""MoneyCost"": 150
+}","{
+    ""2"": {""Combat"": 20, ""Time"": 10, ""Plant"": 0, ""Mineral"": 0},
+    ""3"": {""Combat"": 25, ""Time"": 20, ""Plant"": 0, ""Mineral"": 0},
+    ""4"": {""Combat"": 40, ""Time"": 35, ""Plant"": 0, ""Mineral"": 0}
+  }","{
+    ""1"": {""Combat"": 10, ""Time"": 10, ""Plant"": 0, ""Mineral"": 0},
+    ""2"": {""Combat"": 5, ""Time"": 10, ""Plant"": 0, ""Mineral"": 0},
+    ""3"": {""Combat"": 5, ""Time"": 10, ""Plant"": 0, ""Mineral"": 0},
+    ""4"": {""Combat"": 5, ""Time"": 5, ""Plant"": 0, ""Mineral"": 0}
+  }","{
+        ""1"": 30,
+        ""2"": 30,
+        ""3"": 20,
+        ""4"": 20
+    }",1,"{
+    ""level1"": {
+      ""malfunction_time"": {""type"": ""float"", ""value"": 7},
+      ""range"": {""type"": ""float"", ""value"": 10},
+      ""powerless_time"": {""type"": ""float"", ""value"": 0},
+      ""powerless_level"": {""type"": ""int"", ""value"": 1}
+    },
+    ""level2"": {
+       ""range"": {""type"": ""float"", ""value"": 20}
+    },
+    ""level3"": {
+      ""powerless_time"": {""type"": ""float"", ""value"": 5}
+    },
+    ""level4"": {
+       ""range"": {""type"": ""float"", ""value"": 40}
+    }
+  }",,,
