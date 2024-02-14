@@ -103,7 +103,7 @@ TestSkill,"{
 ",,,
 GrenadeSkill,"{
         ""ResourceCost"": {
-            ""Combat1"": 15,
+            ""Combat1"": 5,
             ""Plant1"": 10
         },
         ""MoneyCost"": 100
@@ -352,5 +352,31 @@ AdrenalineSkill,"{
     },
     ""level4"": {
       ""buff_level"": {""type"": ""int"", ""value"": 4}
+    }
+  }",,,
+BackpackSkill,"{
+        ""ResourceCost"": {
+            ""Combat1"": 0,
+            ""Time1"": 0,
+            ""Plant1"": 0,
+            ""Mineral2"": 5
+        },
+        ""MoneyCost"": 150
+}","{
+    ""2"": {""Combat"": 0, ""Time"": 0, ""Plant"": 20, ""Mineral"": 20},
+    ""3"": {""Combat"": 0, ""Time"": 0, ""Plant"": 25, ""Mineral"": 20},
+    ""4"": {""Combat"": 0, ""Time"": 0, ""Plant"": 25, ""Mineral"": 25}
+}",,,1,"{
+    ""level1"": {
+      ""count"": {""type"": ""int"", ""value"": 5}
+    },
+    ""level2"": {
+       ""count"": {""type"": ""int"", ""value"": 5}
+    },
+    ""level3"": {
+      ""count"": {""type"": ""int"", ""value"": 5}
+    },
+    ""level4"": {
+      ""count"": {""type"": ""int"", ""value"": 9999}
     }
   }",,,
