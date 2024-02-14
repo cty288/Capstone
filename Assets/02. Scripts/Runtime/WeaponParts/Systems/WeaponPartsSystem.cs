@@ -50,7 +50,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			if (buildModel.IsFirstTimeCreated) {
 				foreach (string skillName in initiallyUnlockedPartsNames) {
 					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
-					buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, skillName, false);
+					//buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, skillName, false);
 					weaponPartsModel.AddToUnlockedParts(skillName);
 				}
 			}
