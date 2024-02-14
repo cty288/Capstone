@@ -49,9 +49,13 @@ public class PillarStatusElement : AbstractMikroController<MainGame> {
    }
 
    private void SpawnRarityIndicators(int rarity) {
+      float height = raritySpawnPoint.GetComponent<RectTransform>().rect.height;
       for (int i = 0; i < rarity; i++) {
          GameObject rarityIndicator = Instantiate(rarityIndicatorPrefab, raritySpawnPoint);
          spawnedRarityIndicators.Add(rarityIndicator);
+         RectTransform rarityIndicatorRect = rarityIndicator.GetComponent<RectTransform>();
+         rarityIndicatorRect.sizeDelta = new Vector2(height, height);
+         
       }
    }
 }

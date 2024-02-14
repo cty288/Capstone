@@ -14,14 +14,14 @@ namespace _02._Scripts.Runtime.Skills.Commands {
 		private int level;
 		private Action<ISkillEntity> onSkillUpgradeSuccessCallback;
 		protected override void OnExecute() {
-			ISkillEntity upgradedSkill =
-				ResourceVCFactory.Singleton.SpawnNewResourceEntity(originalSkill.EntityName, true, level) as ISkillEntity;
+			//ISkillEntity upgradedSkill =
+				//ResourceVCFactory.Singleton.SpawnNewResourceEntity(originalSkill.EntityName, true, level) as ISkillEntity;
 			ICurrencyModel currencyModel = this.GetModel<ICurrencyModel>();
 			ICurrencySystem currencySystem = this.GetSystem<ICurrencySystem>();
 			ISkillModel skillModel = this.GetModel<ISkillModel>();
 			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
 
-			var cost = upgradedSkill.GetSkillUpgradeCostOfCurrentLevel();
+			var cost = originalSkill.GetSkillUpgradeCostOfLevel(level);
 			
 			bool hasEnoughCurrency = true;
 			foreach (CurrencyType costKey in cost.Keys) {
@@ -35,13 +35,15 @@ namespace _02._Scripts.Runtime.Skills.Commands {
 				foreach (CurrencyType costKey in cost.Keys) {
 					currencySystem.RemoveCurrency(costKey, cost[costKey]);
 				}
-				inventorySystem.RemoveItem(originalSkill);
-				skillModel.RemoveEntity(originalSkill.UUID);
-				inventorySystem.AddItem(upgradedSkill);
-				onSkillUpgradeSuccessCallback?.Invoke(upgradedSkill);
+				//inventorySystem.RemoveItem(originalSkill);
+				//skillModel.RemoveEntity(originalSkill.UUID);
+				//inventorySystem.AddItem(upgradedSkill);
+
+				originalSkill.Upgrade(level);
+				onSkillUpgradeSuccessCallback?.Invoke(originalSkill);
 			}
 			else {
-				skillModel.RemoveEntity(upgradedSkill.UUID);
+				//skillModel.RemoveEntity(upgradedSkill.UUID);
 			}
 		}
 		

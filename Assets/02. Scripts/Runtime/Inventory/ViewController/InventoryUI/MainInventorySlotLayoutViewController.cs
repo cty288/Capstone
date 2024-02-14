@@ -23,7 +23,7 @@ namespace Runtime.Inventory.ViewController {
 			
 			inventoryModel = this.GetModel<IInventoryModel>();
 			if (lockedSlotPrefab && !awaked) {
-				int lockedSlotCount = InventoryModel.MaxSlotCount;
+				int lockedSlotCount = inventoryModel.MaxSlotCount;
 				for (int i = 0; i < lockedSlotCount; i++) {
 					GameObject lockedSlot = Instantiate(lockedSlotPrefab, slotLayout);
 					lockedSlot.transform.SetParent(slotLayout);
@@ -39,13 +39,26 @@ namespace Runtime.Inventory.ViewController {
 			slotViewControllers.ForEach(slot => slot.OnInventoryUIClosed());
 		}
 
+		
+
 		public override void OnInventorySlotAdded(List<ResourceSlot> addedSlots, int addedCount) {
 			Awake();
 			if (lockedSlotPrefab) {
-				//first remove addCount locked slots, from the end of the list
-				for (int i = 0; i < addedCount; i++) {
-					DestroyImmediate(slotLayout.GetChild(slotLayout.childCount - 1).gameObject);
+				//if added count > lockedSlotCount, then remove the locked slots
+				if (addedCount > 32) {
+					/*//remove all locked slots
+					for (int i = 0; i < inventoryModel.MaxSlotCount - unlockedSlotCount; i++) {
+						DestroyImmediate(slotLayout.GetChild(slotLayout.childCount - 1).gameObject);
+					}*/
 				}
+				else {
+					//first remove addCount locked slots, from the end of the list
+					for (int i = 0; i < addedCount; i++) {
+						DestroyImmediate(slotLayout.GetChild(slotLayout.childCount - 1).gameObject);
+					}
+				}
+
+				
 			}
 			
 			
@@ -67,6 +80,26 @@ namespace Runtime.Inventory.ViewController {
 				slotViewControllers.Add(slotViewController);
 				OnSlotViewControllerSpawned(slotViewController, i);
 			}
+		}
+		public override void OnInventorySlotRemoved(List<ResourceSlot> eRemovedSlots, int eRemovedCount) {
+			Awake();
+			//remove the slot at index = unlockedSlotCount - 1
+			for (int i = 0; i < eRemovedCount; i++) {
+				DestroyImmediate(slotLayout.GetChild(unlockedSlotCount - 1).gameObject);
+				unlockedSlotCount--;
+			}
+			
+			slotViewControllers.RemoveRange(unlockedSlotCount, eRemovedCount);
+			
+			//spawn locked slots
+			if (lockedSlotPrefab) {
+				for (int i = 0; i < eRemovedCount; i++) {
+					GameObject lockedSlot = Instantiate(lockedSlotPrefab, slotLayout);
+					lockedSlot.transform.SetParent(slotLayout);
+					lockedSlot.transform.SetAsLastSibling();
+				}
+			}
+			
 		}
 		
 		public virtual void OnSlotViewControllerSpawned(ResourceSlotViewController slotViewController, int index) {

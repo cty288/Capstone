@@ -19,7 +19,11 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance {
 		
 		}
 
-		
+
+		protected override void OnUpgrade(int previousLevel, int level) {
+			
+		}
+
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}

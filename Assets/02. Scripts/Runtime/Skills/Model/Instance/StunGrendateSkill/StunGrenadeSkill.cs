@@ -20,20 +20,36 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.StunGrendateSkill {
 
 		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
 			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
-			float range = GetCustomPropertyOfCurrentLevel<float>("range");
-			list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
-				"StunGrenadeSkill_RANGE"), Localization.GetFormat("StunGrenadeSkill_RANGE_VALUE", range)));
 			
-			float buff1Time = GetCustomPropertyOfCurrentLevel<float>("malfunction_time");
-			list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
-				"StunGrenadeSkill_BUFF1_TIME"), Localization.GetFormat("StunGrenadeSkill_BUFF_TIME_VALUE", buff1Time)));
+			list.Add(() => {
+				float range = GetCustomPropertyOfCurrentLevel<float>("range");
+				return new ResourcePropertyDescription(null, Localization.Get(
+					"StunGrenadeSkill_RANGE"), Localization.GetFormat("StunGrenadeSkill_RANGE_VALUE", range));
+			});
+			
+			
+			list.Add(() => {
+				float buff1Time = GetCustomPropertyOfCurrentLevel<float>("malfunction_time");
+				return new ResourcePropertyDescription(null, Localization.Get(
+						"StunGrenadeSkill_BUFF1_TIME"),
+					Localization.GetFormat("StunGrenadeSkill_BUFF_TIME_VALUE", buff1Time));
+			});
 
-			if (GetLevel() >= 3) {
-				float buff2Time = GetCustomPropertyOfCurrentLevel<float>("powerless_time");
-				list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
-						"StunGrenadeSkill_BUFF2_TIME"),
-					Localization.GetFormat("StunGrenadeSkill_BUFF_TIME_VALUE", buff2Time)));
-			}
+			
+				
+			list.Add(() => {
+				if (GetLevel() >= 3) {
+					float buff2Time = GetCustomPropertyOfCurrentLevel<float>("powerless_time");
+					return new ResourcePropertyDescription(null, Localization.Get(
+							"StunGrenadeSkill_BUFF2_TIME"),
+						Localization.GetFormat("StunGrenadeSkill_BUFF_TIME_VALUE", buff2Time));
+				}
+				else {
+					return new ResourcePropertyDescription(null, null, null, false);
+				}
+				
+			});
+		
 			
 		}
 
@@ -58,6 +74,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.StunGrendateSkill {
 
 			return Localization.GetFormat(key,
 				malfunctionBuff.OnGetDescription("MulfunctionBuff_Desc"), powerLessBuffDesc, displayedPowerlessLevel);
+		}
+
+		protected override void OnUpgrade(int previousLevel, int level) {
+			
 		}
 
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {

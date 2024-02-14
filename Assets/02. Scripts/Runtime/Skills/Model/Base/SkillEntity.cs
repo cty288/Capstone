@@ -47,12 +47,19 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public Dictionary<CurrencyType, int> GetSkillUseCostOfCurrentLevel();
 		
 		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfCurrentLevel();
+		
+		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfLevel(int level);
 
 		public int GetLevel();
 
 		public int GetMaxLevel();
+
+
+		void Upgrade(int level);
 		
+		public void RegisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback);
 		
+		public void UnregisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback);
 	}
 
 	public struct OnSkillUsed {
@@ -62,7 +69,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		protected ISkillCoolDown skillCooldownProperty;
 		protected ISkillUseCost skillUseCostProperty;
 		protected ISkillUpgradeCost skillUpgradeCostProperty;
-		
+		protected Action<ISkillEntity, int, int> onSkillUpgradeCallback;
 		protected ICanDealDamage owner;
 
 		public override string InHandVCPrefabName => EntityName;
@@ -218,11 +225,15 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
 			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
 
-			int rarity = GetRarity();
-			float cooldown = skillCooldownProperty.GetByLevel(rarity);
-			list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
-					"PROPERTY_ICON_COOLDOWN"),
-				Localization.GetFormat("PROPERTY_ICON_COOLDOWN_DESC", Mathf.RoundToInt(cooldown))));
+			
+			list.Add(() => {
+				int rarity = GetRarity();
+				float cooldown = skillCooldownProperty.GetByLevel(rarity);
+				return new ResourcePropertyDescription(null, Localization.Get(
+						"PROPERTY_ICON_COOLDOWN"),
+					Localization.GetFormat("PROPERTY_ICON_COOLDOWN_DESC", Mathf.RoundToInt(cooldown)),
+					HasCooldown());
+			});
 		}
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -253,6 +264,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return skillUpgradeCostProperty.GetByLevel(GetRarity());
 		}
 
+		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfLevel(int level) {
+			return skillUpgradeCostProperty.GetByLevel(level);
+		}
+
 		public int GetLevel() {
 			return GetRarity();
 		}
@@ -261,7 +276,22 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return levelRange;
 		}
 
-		
+		public void Upgrade(int level) {
+			int previousLevel = GetRarity();
+			GetProperty<IRarityProperty>().RealValue.Value = level;
+			OnUpgrade(previousLevel, level);
+			onSkillUpgradeCallback?.Invoke(this, previousLevel, level);
+		}
+
+		public void RegisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback) {
+			onSkillUpgradeCallback += callback;
+		}
+
+		public void UnregisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback) {
+			onSkillUpgradeCallback -= callback;
+		}
+
+		protected abstract void OnUpgrade(int previousLevel, int level);
 
 
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => GetInventorySwitchCondition;
