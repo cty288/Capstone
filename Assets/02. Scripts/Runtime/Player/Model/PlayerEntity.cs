@@ -45,7 +45,11 @@ namespace Runtime.Player {
 		
 		void AddArmor(float amount);
 		
-	
+		/// <summary>
+		/// This is not dealing damage or healing, it's just changing the health value
+		/// </summary>
+		/// <param name="amount"></param>
+		void ChangeHealth(int amount);
 		
 		//public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
 	}
@@ -261,7 +265,14 @@ namespace Runtime.Player {
 			}
 		}
 
-		
+		public void ChangeHealth(int amount) {
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth,
+				Mathf.Clamp(healthInfo.CurrentHealth + amount, 0, healthInfo.MaxHealth));
+			if (amount < 0) {
+				Kill(null);
+			}
+		}
 
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {

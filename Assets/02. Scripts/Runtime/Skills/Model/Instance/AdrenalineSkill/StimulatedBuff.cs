@@ -3,9 +3,12 @@ using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel;
 using Polyglot;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties;
+using Runtime.Enemies.Model.Properties;
 using Runtime.Player;
 using Runtime.Player.Properties;
+using Runtime.Utilities.Collision;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill {
@@ -25,7 +28,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill {
 		[field: ES3Serializable]
 		private float addedSlideSpeed;
 		
-		
+		private int addedTempHealth;
 		public override bool IsDisplayed() {
 			return true;
 		}
@@ -44,18 +47,32 @@ namespace _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill {
 			playerEntity = buffOwner as IPlayerEntity;
 			if (playerEntity != null) {
 				playerEntity.RegisterOnModifyDamageCount(OnPlayerModifyDamageCount);
+				playerEntity.HealthProperty.RealValue.RegisterOnValueChanged(OnPlayerHealthChanged);
 			}
 			
 		}
 
+		private void OnPlayerHealthChanged(HealthInfo oldHealth, HealthInfo newHealth) {
+			int change = newHealth.CurrentHealth - oldHealth.CurrentHealth;
+			if (change < 0) {
+				addedTempHealth -= Mathf.Abs(change);
+			}
+		}
+		
+
 		private int OnPlayerModifyDamageCount(int count) {
 			float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage");
-			return Mathf.RoundToInt(count * (1 + damageMultiplier));
+			return Mathf.CeilToInt(count * (1 + damageMultiplier));
 		}
 
 		public override void OnStart() {
-			
 			AddSpeed();
+			int tempHealth = GetBuffPropertyAtCurrentLevel<int>("temp_health");
+			int currentHealth = playerEntity.GetCurrentHealth();
+			int maxHealth = playerEntity.GetMaxHealth();
+
+			addedTempHealth = Mathf.Min(maxHealth - currentHealth, tempHealth);
+			playerEntity.Heal(addedTempHealth, playerEntity);
 		}
 
 		
@@ -67,6 +84,9 @@ namespace _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill {
 		public override bool IsGoodBuff => true;
 		public override void OnBuffEnd() {
 			RecoverSpeed();
+			if (addedTempHealth > 0) {
+				playerEntity.ChangeHealth(-addedTempHealth);
+			}
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
@@ -130,8 +150,9 @@ namespace _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill {
 			base.OnRecycled();
 			if (playerEntity != null) {
 				playerEntity.UnregisterOnModifyDamageCount(OnPlayerModifyDamageCount);
+				playerEntity.HealthProperty.RealValue.UnRegisterOnValueChanged(OnPlayerHealthChanged);
 			}
-			
+			addedTempHealth = 0;
 		}
 	}
 }
