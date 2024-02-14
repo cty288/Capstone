@@ -642,7 +642,7 @@ WormBoss,"{""maxHealth"":2000,
   ""Plant"": {""x"": 0, ""y"": 1},
   ""Mineral"": {""x"": 0, ""y"": 1}
 }",456,"{
-  ""laserbeam"": {
+  ""laserBeam"": {
     ""laserDamage"": {
       ""type"": ""int"",
       ""value"": 25,
@@ -657,6 +657,12 @@ WormBoss,"{""maxHealth"":2000,
     ""simpleMissileMaxTurnAngle"": {
       ""type"": ""float"",
       ""value"": 30,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""interval"": {
+      ""type"": ""float"",
+      ""value"": 0.2,
       ""useDefaultModifier"": true,
       ""inverse"": true
     }
