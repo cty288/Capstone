@@ -99,6 +99,7 @@ namespace Runtime.Utilities.Collision
 
         public int Damage { get; protected set; }
 
+
         //TODO: faction and IDamagable integration.
         private void ShootBullet(Collider[] ignoreColliders = null) {
             // Vector2 crossHairScreenPos = Crosshair.Singleton.CrossHairScreenPosition;
@@ -111,15 +112,17 @@ namespace Runtime.Utilities.Collision
             Vector3 dir = new Vector3(0.5f, 0.5f, 0);
             Ray shootRay;
             if (overridenDirection == default) {
-                shootRay =  _camera.ViewportPointToRay(dir);
-
-                // Adding spread
-                Vector3 spreadPoint = _camera.ViewportToWorldPoint(new Vector3(
+                Vector3 startPoint = _camera.ViewportToWorldPoint(
+                new Vector3(0.5f, 0.5f, _camera.nearClipPlane));
+                Vector3 endPoint = _camera.ViewportToWorldPoint(new Vector3(
                     0.5f + Random.Range(-spreadValue, spreadValue), 
-                    0.5f + Random.Range(-spreadValue, spreadValue), 
-                    _camera.nearClipPlane));
+                    0.5f + Random.Range(-spreadValue, spreadValue),  
+                    _camera.farClipPlane));
+                
+                shootRay = new Ray(startPoint, (endPoint - startPoint).normalized);
             
-                shootRay.origin = spreadPoint;
+            // Debug.DrawRay(shootRay.origin, shootRay.direction * 100, Color.green, 100f);
+            
             }
             else {
                 shootRay = new Ray(overridenOrigin, overridenDirection.normalized);
