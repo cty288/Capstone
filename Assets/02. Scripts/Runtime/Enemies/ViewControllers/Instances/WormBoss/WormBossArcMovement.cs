@@ -8,12 +8,14 @@ using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning;
 using System.Threading.Tasks;
+using DG.Tweening;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public partial class WormBossArcMovement : EnemyAction
+    public class WormBossArcMovement : EnemyAction
     {
+        public SharedVector3 divePosition;
         private Vector3 start;
         private Vector3 end;
         private float progress = 0f;
@@ -21,27 +23,27 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float speed; // Calculated speed based on the duration
         public float jumpHeight = 50f; // Amplitude of the jump
         private bool endDive = false;
+        private bool startEnd = false;
 
         private Vector3 direction;
         
         public override void OnStart()
         {
-            EnableColliders(true);
+            endDive = false;
+            startEnd = false;
+            progress = 0;
+            
+            EnableColliders(false);
 
             progress = 0;
-            float minDistance = 50f; // Minimum distance between sample and sample2
+            float minDistance = 40f; // Minimum distance between sample and sample2
 
             // Generate the first random sample
-            Vector3 sample = this.transform.position + Random.insideUnitSphere * 70;
+            Vector3 sample = transform.position;
             Debug.Log(sample);
             // Generate the second random sample, ensuring it is at least minDistance away from the first sample
-            Vector3 sample2;
-            do
-            {
-                // sample2 = this.transform.position + Random.insideUnitSphere * 70;
-                sample2 = RandomPointInAnnulus(sample, 40, 70);
-                Debug.Log(sample2);
-            } while (Vector3.Distance(sample, sample2) < minDistance);
+            Vector3 sample2 = RandomPointInAnnulus(sample, minDistance, 70);
+            Debug.Log(sample2);
 
             NavMeshHit hit;
             if (NavMesh.SamplePosition(sample, out hit, 15, 1))
@@ -70,12 +72,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
         }
 
-        public Vector3 RandomPointInAnnulus(Vector2 origin, float minRadius, float maxRadius){
-     
+        private Vector3 RandomPointInAnnulus(Vector2 origin, float minRadius, float maxRadius){
             var randomDirection = (Random.insideUnitCircle * origin).normalized;
-     
             var randomDistance = Random.Range(minRadius, maxRadius);
-     
             var point = origin + randomDirection * randomDistance;
      
             return new Vector3(point.x, 0, point.y);
@@ -89,30 +88,34 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             
             // Check if the movement has reached the end
-            if (progress >= 1f)
+            if (progress >= 1f && !startEnd)
             {
-                StartCoroutine(MoveUnderGround());
-                return TaskStatus.Running;
-            }
-            
-            // Interpolate between the start and end positions using a Bezier curve with a jump in the y-axis
-            Vector3 newPosition = BezierCurve(start, end, progress, jumpHeight);
-
-            // Calculate the forward vector based on the difference between the new position and the current position
-            direction = newPosition - transform.position;
-
-            // If there's a significant change in position
-            if (direction.magnitude > 0.01f)
-            {
-                // Set the object's rotation to look in the direction of movement
-                transform.rotation = Quaternion.LookRotation(direction);
+                startEnd = true;
+                divePosition.SetValue(end);
+                MoveUnderGround();
             }
 
-            // Set the object's position
-            transform.position = newPosition;
+            if (!startEnd)
+            {
+                // Interpolate between the start and end positions using a Bezier curve with a jump in the y-axis
+                Vector3 newPosition = BezierCurve(start, end, progress, jumpHeight);
 
-            // Increment the progress based on time and speed
-            progress += Time.deltaTime * speed;
+                // Calculate the forward vector based on the difference between the new position and the current position
+                direction = newPosition - transform.position;
+
+                // If there's a significant change in position
+                if (direction.magnitude > 0.01f)
+                {
+                    // Set the object's rotation to look in the direction of movement
+                    transform.rotation = Quaternion.LookRotation(direction);
+                }
+
+                // Set the object's position
+                transform.position = newPosition;
+
+                // Increment the progress based on time and speed
+                progress += Time.deltaTime * speed;
+            }
 
             return TaskStatus.Running;
         }
@@ -122,24 +125,39 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             base.OnEnd();
             
-            EnableColliders(false);
-        }
-
-        private IEnumerator MoveUnderGround()
-        {
-            float time = 0;
-            float duration = 8f;
-            while (time < duration)
-            {
-                time += Time.deltaTime;
-                Vector3 dir = direction.normalized;
-                transform.position += dir * Time.deltaTime * speed;    
-                yield return null;
-            }
-
-            endDive = true;
+            // EnableColliders(false);
         }
         
+        // private IEnumerator MoveUnderGround()
+        // {
+        //     float time = 0;
+        //     float diveDuration = 5f;
+        //     while (time <= diveDuration)
+        //     {
+        //         time += Time.deltaTime;
+        //         Vector3 dir = direction.normalized;
+        //         transform.position += direction * Time.deltaTime * speed * 50f;    
+        //         yield return null;
+        //     }
+        //
+        //     GameObject debug_obj = new GameObject("worm1 end position");
+        //     debug_obj.transform.position = end;
+        //     
+        //     endDive = true;
+        // }
+
+
+        private void MoveUnderGround()
+        {
+            Vector3 endPos = end + direction.normalized * 100f;
+            transform.DOMove(endPos, 4f).OnComplete(() =>
+            {
+                GameObject debug_obj = new GameObject("worm1 end position");
+                debug_obj.transform.position = end;
+
+                endDive = true;
+            });
+        }
         
         // Bezier curve calculation with a jump in the y-axis
         private Vector3 BezierCurve(Vector3 p0, Vector3 p1, float t, float jumpHeight)

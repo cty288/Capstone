@@ -62,7 +62,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             GameObject b = pool.Allocate();
             b.transform.position = firePoint.Value.transform.position;
             b.transform.rotation = firePoint.Value.transform.rotation;
-            b.transform.LookAt(playerTrans);
+            // b.transform.LookAt(playerTrans);
             
             // b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
             //     enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
