@@ -77,6 +77,29 @@ namespace Runtime.Temporary
                     .Invoke(playerEntity, playerEntity, 4) as MotivatedBuff;
                 this.GetSystem<IBuffSystem>().AddBuff(playerEntity, playerEntity, buff);
             }
+            
+            if (Input.GetKeyDown(KeyCode.Keypad2)) {
+                IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+                inventoryModel.RemoveSlots(2);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad3)) {
+                IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+                inventoryModel.MaxSlotCount = 100;
+                inventoryModel.AddSlots(100, out int addedCount);
+                
+                IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+                var resources = ResourceTemplates.Singleton.GetResourceTemplates((entity) => entity.GetResourceCategory() == ResourceCategory.WeaponParts
+                || entity.GetResourceCategory() == ResourceCategory.Skill);
+                foreach (var resource in resources) {
+                    int minRarity = resource.TemplateEntity is IBuildableResourceEntity resourceEntity      
+                        ? resourceEntity.GetMinRarity()
+                        : 1;
+                    
+                    IResourceEntity entity = resource.EntityCreater.Invoke(true, minRarity);
+                    inventorySystem.AddItem(entity);
+                }
+            }
         }
     }
 }

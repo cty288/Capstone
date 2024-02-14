@@ -24,6 +24,11 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.AdrenalineSkill {
 			return Localization.GetFormat(defaultLocalizationKey, buffLevel, buffDescription);
 		}
 
+
+		protected override void OnUpgrade(int previousLevel, int level) {
+			
+		}
+
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}

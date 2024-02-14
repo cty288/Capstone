@@ -60,10 +60,6 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 			
 			if (IsHUDSlot && BoundEntity!=null && BoundEntity.HasCooldown() && BoundEntity.GetMaxCooldown() > 0) {
 				cooldownImg.fillAmount = BoundEntity.GetRemainingCooldown() / BoundEntity.GetMaxCooldown();
-
-			
-				
-				
 				if (useCurrencySatisfiedCondition.Invoke(currencyAmountDict)) {
 					//cooldownImg.gameObject.SetActive(true);
 					//lerp transparency to 1

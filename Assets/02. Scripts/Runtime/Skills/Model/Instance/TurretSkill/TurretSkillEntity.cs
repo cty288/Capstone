@@ -34,24 +34,40 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TurretSkill {
 		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
 			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
 
-			int damage = GetCustomPropertyOfCurrentLevel<int>("damage");
-			list.Add(() => new ResourcePropertyDescription(null, Localization.Get(
-				"TurretSkill_DAMAGE_NAME"), damage.ToString()));
 			
-			int ammoSize = GetCustomPropertyOfCurrentLevel<int>("ammo_size");
-			list.Add(() => new ResourcePropertyDescription(null,
-				Localization.GetFormat("TurretSkill_AMMO_SIZE", ammoSize.ToString()),
-				ammoSize.ToString()));
+			list.Add(() => {
+				int damage = GetCustomPropertyOfCurrentLevel<int>("damage");
+				return new ResourcePropertyDescription(null, Localization.Get(
+					"TurretSkill_DAMAGE_NAME"), damage.ToString());
+			});
 			
-			int maxCount = GetCustomPropertyOfCurrentLevel<int>("max_count");
-			list.Add(() => new ResourcePropertyDescription(null, null,
-				Localization.GetFormat("TurretSkill_MAX_COUNT", maxCount, maxCount > 1 ? "s" : "")));
+			
+			list.Add(() => {
+				int ammoSize = GetCustomPropertyOfCurrentLevel<int>("ammo_size");
+				return new ResourcePropertyDescription(null,
+					Localization.GetFormat("TurretSkill_AMMO_SIZE", ammoSize.ToString()),
+					ammoSize.ToString());
+			});
+			
+			
+			list.Add(() => {
+				int maxCount = GetCustomPropertyOfCurrentLevel<int>("max_count");
+				return new ResourcePropertyDescription(null, null,
+					Localization.GetFormat("TurretSkill_MAX_COUNT", maxCount, maxCount > 1 ? "s" : ""));
+			});
 
-			if (GetLevel() >= 2) {
-				int explodeDamage = GetCustomPropertyOfCurrentLevel<int>("explode_damage");
-				list.Add(() => new ResourcePropertyDescription(null, null, Localization.GetFormat(
-					"TurretSkill_EXPLODE", explodeDamage.ToString())));
-			}
+			
+			list.Add(() => {
+				if (GetLevel() >= 2) {
+					int explodeDamage = GetCustomPropertyOfCurrentLevel<int>("explode_damage");
+					return new ResourcePropertyDescription(null, null, Localization.GetFormat(
+						"TurretSkill_EXPLODE", explodeDamage.ToString()));
+				}
+				else {
+					return new ResourcePropertyDescription(null, null, null, false);
+				}
+			});
+			
 
 		}
 
@@ -60,7 +76,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TurretSkill {
 			deployedCount = 0;
 		}
 
-		
+
+		protected override void OnUpgrade(int previousLevel, int level) {
+			
+		}
 
 		protected override bool UseCurrencySatisfiedCondition(Dictionary<CurrencyType, int> currency) {
 			int maxCount = GetCustomPropertyOfCurrentLevel<int>("max_count");

@@ -101,119 +101,16 @@ TestSkill,"{
     }
 }
 ",,,
-GrenadeSkill,"{
-        ""ResourceCost"": {
-            ""Combat1"": 15,
-            ""Plant1"": 10
-        },
-        ""MoneyCost"": 100
-}","{
-        ""2"": {
-            ""Combat"": 25,
-            ""Mineral"": 10,
-            ""Plant"": 0,
-            ""Time"": 25
-        },
-        ""3"": {
-            ""Combat"": 30,
-            ""Mineral"": 15,
-            ""Plant"": 0,
-            ""Time"": 35
-        },
-        ""4"": {
-            ""Combat"": 50,
-            ""Mineral"": 25,
-            ""Plant"": 0,
-            ""Time"": 45
-        }
-    }","{
-        ""1"": {
-            ""Combat"": 10,
-            ""Mineral"": 5,
-            ""Plant"": 0,
-            ""Time"": 0
-        },
-        ""2"": {
-            ""Combat"": 10,
-            ""Mineral"": 5,
-            ""Plant"": 0,
-            ""Time"": 0
-        },
-        ""3"": {
-            ""Combat"": 10,
-            ""Mineral"": 10,
-            ""Plant"": 0,
-            ""Time"": 0
-        },
-        ""4"": {
-            ""Combat"": 15,
-            ""Mineral"": 10,
-            ""Plant"": 0,
-            ""Time"": 0
-        }
-    }","{
-        ""1"": 10,
-        ""2"": 8.0,
-        ""3"": 6.0,
-        ""4"": 4.0
-    }",1,"{
-        ""level1"": {
-            ""explosion_radius"": {
-                ""type"": ""float"",
-                ""value"": 6
-            },
-            ""explosion_damage"": {
-                ""type"": ""int"",
-                ""value"": 50
-            }
-        },
-        ""level2"": {
-            ""explosion_radius"": {
-                ""type"": ""float"",
-                ""value"": 6
-            },
-            ""explosion_damage"": {
-                ""type"": ""int"",
-                ""value"": 75
-            }
-        },
-        ""level3"": {
-            ""explosion_radius"": {
-                ""type"": ""float"",
-                ""value"": 9
-            },
-            ""explosion_damage"": {
-                ""type"": ""int"",
-                ""value"": 100
-            }
-        },
-        ""level4"": {
-            ""explosion_radius"": {
-                ""type"": ""float"",
-                ""value"": 12
-            },
-            ""explosion_damage"": {
-                ""type"": ""int"",
-                ""value"": 150
-            }
-        }
-}",,,
-MedicalNeedleSkill,"{
-        ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
-        },
-        ""MoneyCost"": 100
-}","{
-    ""2"": {""Combat"": 0, ""Time"": 30, ""Plant"": 20, ""Mineral"": 0},
-    ""3"": {""Combat"": 0, ""Time"": 40, ""Plant"": 30, ""Mineral"": 0},
-    ""4"": {""Combat"": 0, ""Time"": 50, ""Plant"": 50, ""Mineral"": 0}
+MedicalNeedleSkill,,"{
+    ""2"": {""Time"": 30, ""Plant"": 20},
+    ""3"": {""Time"": 40, ""Plant"": 30, ""Mineral"": 20},
+    ""4"": {""Time"": 50, ""Plant"": 50, ""Mineral"": 30}
   }","{
-    ""1"": {""Combat"": 0, ""Time"": 0, ""Plant"": 5, ""Mineral"": 0},
-    ""2"": {""Combat"": 0, ""Time"": 0, ""Plant"": 5, ""Mineral"": 0},
-    ""3"": {""Combat"": 0, ""Time"": 0, ""Plant"": 5, ""Mineral"": 5},
-    ""4"": {""Combat"": 0, ""Time"": 0, ""Plant"": 10, ""Mineral"": 5}
-  }","{
+    ""1"": {""Plant"": 5},
+    ""2"": {""Plant"": 5},
+    ""3"": {""Plant"": 5, ""Mineral"": 5},
+    ""4"": {""Plant"": 10, ""Mineral"": 5}
+ }","{
     ""1"": 30,
     ""2"": 30,
     ""3"": 25,
@@ -236,21 +133,85 @@ MedicalNeedleSkill,"{
       ""buff_effect"": {""type"": ""int"", ""value"": 2}
     }
   }",,,
-TurretSkill,"{
+GrenadeSkill,"{
         ""ResourceCost"": {
             ""Combat1"": 5,
-            ""Mineral1"": 15 
+            ""Mineral1"": 5
         },
-        ""MoneyCost"": 120
+        ""MoneyCost"": 100
+}","{
+  ""2"": {""Combat"": 25, ""Mineral"": 10, ""Time"": 25},
+  ""3"": {""Combat"": 30,""Mineral"": 15, ""Time"": 35},
+  ""4"": {""Combat"": 50,""Mineral"": 25,""Time"": 45}
+}","{
+    ""1"": {""Combat"": 10, ""Mineral"": 5},
+    ""2"": {""Combat"": 10, ""Mineral"": 5},
+    ""3"": {""Combat"": 10, ""Plant"": 5, ""Mineral"": 10},
+    ""4"": {""Combat"": 15, ""Plant"": 5, ""Mineral"": 10}
+ }","{
+        ""1"": 12,
+        ""2"": 10,
+        ""3"": 8,
+        ""4"": 5
+    }",1,"{
+        ""level1"": {
+            ""explosion_radius"": {
+                ""type"": ""float"",
+                ""value"": 8
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 50
+            }
+        },
+        ""level2"": {
+            ""explosion_radius"": {
+                ""type"": ""float"",
+                ""value"": 10
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 75
+            }
+        },
+        ""level3"": {
+            ""explosion_radius"": {
+                ""type"": ""float"",
+                ""value"": 12
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 100
+            }
+        },
+        ""level4"": {
+            ""explosion_radius"": {
+                ""type"": ""float"",
+                ""value"": 15
+            },
+            ""explosion_damage"": {
+                ""type"": ""int"",
+                ""value"": 150
+            }
+        }
+}",,,
+TurretSkill,"{
+  ""ResourceCost"": {
+    ""Combat1"": 15,
+    ""Mineral1"": 20,
+    ""Mineral2"": 5,
+    ""Time1"": 30
+  },
+  ""MoneyCost"": 500
 }","{
     ""2"": {""Combat"": 5, ""Time"": 0, ""Plant"": 0, ""Mineral"": 15},
     ""3"": {""Combat"": 5, ""Time"": 0, ""Plant"": 0, ""Mineral"": 25},
     ""4"": {""Combat"": 5, ""Time"": 0, ""Plant"": 0, ""Mineral"": 40}
   }","{
-    ""1"": {""Combat"": 0, ""Time"": 0, ""Plant"": 0, ""Mineral"": 10},
-    ""2"": {""Combat"": 0, ""Time"": 0, ""Plant"": 0, ""Mineral"": 10},
-    ""3"": {""Combat"": 0, ""Time"": 0, ""Plant"": 0, ""Mineral"": 5},
-    ""4"": {""Combat"": 0, ""Time"": 0, ""Plant"": 0, ""Mineral"": 5}
+    ""1"": {""Combat"": 15, ""Mineral"": 20},
+    ""2"": {""Combat"": 15, ""Plant"": 5, ""Mineral"": 20},
+    ""3"": {""Combat"": 15,""Plant"": 5, ""Mineral"": 25},
+    ""4"": {""Combat"": 20, ""Plant"": 5, ""Mineral"": 25}
   }","{
     ""1"": 5,
     ""2"": 5,
@@ -352,5 +313,31 @@ AdrenalineSkill,"{
     },
     ""level4"": {
       ""buff_level"": {""type"": ""int"", ""value"": 4}
+    }
+  }",,,
+BackpackSkill,"{
+        ""ResourceCost"": {
+            ""Combat1"": 0,
+            ""Time1"": 0,
+            ""Plant1"": 0,
+            ""Mineral2"": 5
+        },
+        ""MoneyCost"": 150
+}","{
+    ""2"": {""Combat"": 0, ""Time"": 0, ""Plant"": 20, ""Mineral"": 20},
+    ""3"": {""Combat"": 0, ""Time"": 0, ""Plant"": 25, ""Mineral"": 20},
+    ""4"": {""Combat"": 0, ""Time"": 0, ""Plant"": 25, ""Mineral"": 25}
+}",,,1,"{
+    ""level1"": {
+      ""count"": {""type"": ""int"", ""value"": 5}
+    },
+    ""level2"": {
+       ""count"": {""type"": ""int"", ""value"": 5}
+    },
+    ""level3"": {
+      ""count"": {""type"": ""int"", ""value"": 5}
+    },
+    ""level4"": {
+      ""count"": {""type"": ""int"", ""value"": 9999}
     }
   }",,,
