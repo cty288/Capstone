@@ -18,7 +18,7 @@ using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Player {
-	public interface IPlayerEntity : ICreature, IEntity {
+	public interface IPlayerEntity : ICreature, IEntity, ICanDealDamage {
 		IAccelerationForce GetAccelerationForce();
 		IWalkSpeed GetWalkSpeed();
 		ISprintSpeed GetSprintSpeed();
