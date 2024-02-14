@@ -97,6 +97,18 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			return root;
 		}
 		
+		ICanDealDamage GetParentDamageDealer(Predicate<ICanDealDamage> predicate) {
+			ICanDealDamage current = this;
+			while (current != null) {
+				if (predicate(current)) {
+					return current;
+				}
+				current = current.ParentDamageDealer;
+			}
+
+			return null;
+		}
+		
 		//public ICanDealDamageRootViewController RootViewController { get; }
 	}
 	
