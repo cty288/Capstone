@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using FIMSpace.FSpine;
 using MikroFramework;
+using MoreMountains.Feedbacks;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
@@ -38,6 +39,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private FSpineAnimator _spine;
         private Transform _lookAt;
         private Vector3 _originPos;
+        private Vector3 _liftedPos;
         private float _progress = 0f;
         private bool _headLifted;
 
@@ -69,6 +71,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             _t = 0;
             _progress = 0;
             _originPos = transform.position;
+            _liftedPos = transform.position + Vector3.up * liftHeight;
             _spine.GravityPower = gravity;
             supportPlatform.position = _bodyJoint.FinalPosition + Vector3.up * 1f;
             supportSphere.position = _neckJoint.FinalPosition + Vector3.down * 8f;
@@ -80,15 +83,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             supportSphere.position = _neckJoint.FinalPosition + Vector3.down * 8f;
             supportPlatform.position = new Vector3(_bodyJoint.FinalPosition.x, supportPlatform.position.y, _bodyJoint.FinalPosition.z);
+            
+            
+            // Aim at player
+            Aim();
+            
             if (!_headLifted)
             {
                 // See LiftHead.
                 LiftHead();
                 return TaskStatus.Running;
             }
-            
-            // Aim at player
-            Aim();
             
             if (_progress >= 1f)
             {
@@ -114,11 +119,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool _lowering;
         private void LiftHead()
         {
+            var position = transform.position;
+            var headPos = position;
+            var originPos = new Vector3(position.x, _originPos.y, position.z);
             _t += Time.deltaTime/liftTime;
-            transform.position = Vector3.Lerp(_originPos, _originPos + Vector3.up * liftHeight,_t/liftTime);
+            transform.position = Vector3.Lerp(originPos, headPos, _t);
             if (_t >= 1)
             {
-                _originPos = transform.position;
                 _headLifted = true;
                 _t = 0;
             }
@@ -131,7 +138,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             var position = transform.position;
             var headPos = new Vector3(position.x, _headY, position.z);
             var originPos = new Vector3(position.x, _originPos.y, position.z);
-            position = Vector3.Lerp(headPos,  originPos + Vector3.down * liftHeight,_t/liftTime);
+            position = Vector3.Lerp(headPos,  originPos, _t);
             transform.position = position;
             if (_t >= 1)
             {
@@ -143,15 +150,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private void Aim()
         {
-            _progress += Time.deltaTime / duration;
-            //var targetRotation = Quaternion.LookRotation(_lookAt.position - transform.position, Vector3.up);
-            transform.LookAt(_lookAt.position);
+            _progress += Time.deltaTime / (duration + liftTime);
             var lookVector = _lookAt.position - transform.position;
+            var targetRotation = Quaternion.LookRotation(lookVector, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 2f * Time.deltaTime);
+            //transform.LookAt(_lookAt.position);
+            
             if (lookVector.magnitude > 1)
             {
                 lookVector = lookVector.normalized;
             }
-            transform.position = Vector3.Lerp(transform.position, _originPos + lookVector * moveRange, 0.3f);
+            transform.position = Vector3.Lerp(transform.position, _liftedPos + lookVector * moveRange, 2f * Time.deltaTime);
         }
     }
 }
