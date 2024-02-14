@@ -704,6 +704,12 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!4 &499633168 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1288078251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &572461796 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7213418426385118063, guid: c9cde926f2244d647970fe68cb077a24,
@@ -790,15 +796,15 @@ MonoBehaviour:
         Selector","Instant":true,"Int32seed":0,"BooleanuseSeed":false,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(180,140)"},"ID":3,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-94.8566,175.667114)","Comment":"This
         subtree is used for\nthe 3 varying attacks\nwhen the worm raises\nit''s head."},"ID":4,"Name":"Parallel
         Complete","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-74.48779,114.474632)"},"ID":5,"Name":"Worm
-        Boss Aim","Instant":true,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":0},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.RandomSelector","NodeData":{"Offset":"(67.6754456,108.430893)"},"ID":6,"Name":"Random
+        Boss Aim","Instant":true,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":0},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":1},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2}},{"Type":"BehaviorDesigner.Runtime.Tasks.RandomSelector","NodeData":{"Offset":"(67.6754456,108.430893)"},"ID":6,"Name":"Random
         Selector","Instant":true,"Int32seed":0,"BooleanuseSeed":false,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadLaser","NodeData":{"Offset":"(-4.99938965,139.774414)"},"ID":7,"Name":"Worm
         Boss Head Laser","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
-        Fire Point","IsShared":true,"GameObjectmValue":2},"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":3}}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(226.666687,130)"},"ID":8,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]}]},"DetachedTasks":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormAttackLazer","NodeData":{"Offset":"(652.1666,670.3333)"},"ID":9,"Name":"Worm
+        Fire Point","IsShared":true,"GameObjectmValue":3},"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":4}}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(226.666687,130)"},"ID":8,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]}]},"DetachedTasks":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormAttackLazer","NodeData":{"Offset":"(652.1666,670.3333)"},"ID":9,"Name":"Worm
         Attack Lazer","Instant":true,"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null}},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1070,680)"},"ID":10,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-120,140)"},"ID":11,"Name":"Worm
         Boss Arc Movement","Instant":true,"Singleduration":10,"SinglejumpHeight":50},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(71.166626,137.333374)"},"ID":12,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadAcid","NodeData":{"Offset":"(1550,1120)"},"ID":13,"Name":"Worm
-        Boss Head Acid","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":4},"SharedGameObjectacidBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":5},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadRapidFire","NodeData":{"Offset":"(1210,1120)"},"ID":14,"Name":"Worm
-        Boss Head Rapid Fire","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":6},"SharedGameObjectrapidFireBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":7},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
-        Fire Point","IsShared":true,"GameObjectmValue":8}]}'
+        Boss Head Acid","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":5},"SharedGameObjectacidBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":6},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadRapidFire","NodeData":{"Offset":"(1210,1120)"},"ID":14,"Name":"Worm
+        Boss Head Rapid Fire","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":7},"SharedGameObjectrapidFireBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":8},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
+        Fire Point","IsShared":true,"GameObjectmValue":9}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
@@ -807,6 +813,7 @@ MonoBehaviour:
         unityObjects:
         - {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
         - {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
+        - {fileID: 1773686976}
         - {fileID: 1773686976}
         - {fileID: 2534608482763259814, guid: fd509476f9c923b4b82087df16444118, type: 3}
         - {fileID: 1773686976}
@@ -2985,7 +2992,7 @@ PrefabInstance:
     - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
         type: 3}
@@ -3236,6 +3243,90 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.383
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c02d9ef745b89564b82fa23b1939b5fb, type: 3}
+--- !u!1001 &1288078251
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1773686977}
+    m_Modifications:
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 593
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945604, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677334750579945605, guid: c02d9ef745b89564b82fa23b1939b5fb,
+        type: 3}
+      propertyPath: m_Name
+      value: Gojo Red Hollow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c02d9ef745b89564b82fa23b1939b5fb, type: 3}
@@ -3608,6 +3699,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 499633168}
   - {fileID: 101230881}
   m_Father: {fileID: 1079986047}
   m_RootOrder: 3

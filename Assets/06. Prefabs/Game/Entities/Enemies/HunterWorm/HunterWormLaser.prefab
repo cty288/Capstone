@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bbe071bf7007d68488f13bb5a928c704, type: 2}
+  - {fileID: 2100000, guid: b5c0e0d2452d3894b8080a8049013065, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,9 +95,9 @@ GameObject:
   - component: {fileID: 6769394123635497601}
   - component: {fileID: 4145417216644842339}
   - component: {fileID: -6789137201556308449}
-  - component: {fileID: 58989901078299050}
+  - component: {fileID: 838971105159984375}
   m_Layer: 0
-  m_Name: WormBossLaser
+  m_Name: HunterWormLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 2534608482763259814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.17, z: -1}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 0.3}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3049570914251383332}
@@ -130,7 +130,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.47927094
-  m_Height: 2
+  m_Height: 2.0716782
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 1}
 --- !u!54 &4145417216644842339
@@ -166,7 +166,7 @@ MonoBehaviour:
     m_Bits: 136
   dotTick: 0.2
   showDamageNumber: 1
---- !u!114 &58989901078299050
+--- !u!114 &838971105159984375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,6 +175,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2534608482763259814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e16ff3fe193500439ba3a5ee994d7f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d9073c8250194843962f4681684ffdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onRecycledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllocateEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  Pool: {fileID: 0}
+  autoRecycleTime: 3.4
+  penetrateSameFaction: 0
+  autoDestroyWhenOwnerDestroyed: 1
+  parent: {fileID: 0}
+  lineRenderer: {fileID: 0}

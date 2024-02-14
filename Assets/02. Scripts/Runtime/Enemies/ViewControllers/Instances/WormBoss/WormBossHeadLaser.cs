@@ -20,7 +20,7 @@ using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class WormBossHeadLaser : EnemyAction
+    public class WormBossHeadLaser : EnemyAction<WormBossEntity>
     {
         public SharedGameObject firePoint;
         
@@ -28,11 +28,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private SafeGameObjectPool pool;
 
         private GameObject laserInstance;
+        private int laserDamage = 5;
+        private float interval = 0.2f;
+        
         
         public override void OnStart()
         {
             pool = GameObjectPoolManager.Singleton.CreatePool(lazerPrefab.Value, 1, 3);
-
+            //laserDamage = enemyEntity.GetCustomDataValue<int>("laserBeam", "laserDamage");
+            //interval = enemyEntity.GetCustomDataValue<float>("laserBeam", "interval");
             StartCoroutine(Shoot());
         }
         
@@ -43,7 +47,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         public IEnumerator Shoot()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(2f);
 
             for (int i = 0; i < 1; i++)
             {
@@ -61,17 +65,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             
             laserInstance = pool.Allocate();
-            
-            // laser.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-            //     enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
-            //     gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
-
+            /*
+            laserInstance.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
+                enemyEntity.GetCustomDataValue<int>("laserBeam", "laserDamage"),
+                gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
+            */
             Vector3 dir = transform.forward.normalized;
             Quaternion rotation = Quaternion.LookRotation(dir);
             laserInstance.transform.parent = firePoint.Value.transform;
             laserInstance.transform.position = firePoint.Value.transform.position;
             laserInstance.transform.rotation = rotation;
-            // laser.GetComponent<WormBulletLazer>().SetData(this.gameObject , dir , player , maxRange , damageInterval);
+            //laserInstance.GetComponent<WormBossLaser>().SetData(interval, laserDamage);
         }
         
         public override void OnEnd()

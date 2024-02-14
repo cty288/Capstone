@@ -42,7 +42,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 _liftedPos;
         private float _progress = 0f;
         private bool _headLifted;
-
+        public SharedGameObject firePoint;
         
         public override void OnAwake()
         {
@@ -151,7 +151,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private void Aim()
         {
             _progress += Time.deltaTime / (duration + liftTime);
-            var lookVector = _lookAt.position - transform.position;
+            var lookVector = _lookAt.position - firePoint.Value.transform.position;
             var targetRotation = Quaternion.LookRotation(lookVector, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 2f * Time.deltaTime);
             //transform.LookAt(_lookAt.position);

@@ -36,7 +36,7 @@ namespace Runtime.Enemies
 
         protected override void OnEntityStart(bool isLoadedFromSave)
         {
-
+            Debug.Log("worm start");
         }
 
         public override void OnRecycle()
@@ -64,7 +64,7 @@ namespace Runtime.Enemies
         {
             
             return new[] {
-                new AutoConfigCustomProperty("laserbeam")
+                new AutoConfigCustomProperty("laserBeam")
                 
             };
             
