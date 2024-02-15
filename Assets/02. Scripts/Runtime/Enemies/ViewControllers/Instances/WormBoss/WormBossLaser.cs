@@ -65,7 +65,7 @@ public class WormBossLaser : AbstractDotBulletViewController
     protected override void Update()
     {
         base.Update();
-        transform.localScale += new Vector3(0, 0, 3.5f);
+        transform.localScale += new Vector3(0, 0, 5.5f);
         /*
         if (this.gameObject.transform.localScale.z >= 30)
         {

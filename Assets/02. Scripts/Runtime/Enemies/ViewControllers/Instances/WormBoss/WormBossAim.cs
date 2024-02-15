@@ -21,7 +21,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float liftHeight = 20f;
         private float moveRange = 18f;
         private float liftTime = 1f;
-        private float duration = 5f;
+        //making this public for tuning
+        public float duration = 5f;
         private float maxTurnRate = 30f;
         private float maxShiftRate = 10f;// Units per second
         private Vector3 gravity = new Vector3(0, -8, 0);

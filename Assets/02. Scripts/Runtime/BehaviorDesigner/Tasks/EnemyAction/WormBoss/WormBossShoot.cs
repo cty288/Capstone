@@ -64,15 +64,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         }
         IEnumerator SpawnMissile()
         {
-            for (int i = 0; i < 7; i++)
+            for(int i = 0; i < 3; i++)
             {
-                GameObject b = pool.Allocate();
-                b.transform.position = bulletSpawnPos[i].transform.position;
-                b.transform.rotation = Quaternion.Euler(-90, 0, 0);
-                b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, 5, gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
-                b.GetComponent<WormBossMissile>().Setup(10f, playerTrans , 30, 20);
-                yield return new WaitForSeconds(1);
 
+                for (int j = 0; j < 7; j++)
+                {
+                    GameObject b = pool.Allocate();
+                    b.transform.position = bulletSpawnPos[i].transform.position;
+                    b.transform.rotation = Quaternion.Euler(-90, 0, 0);
+                    b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, 5, gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
+                    b.GetComponent<WormBossMissile>().Setup(10f, playerTrans , 30, 20);
+                    yield return new WaitForSeconds(0.3f);
+
+                }
             }
             ended = true;
             yield return null;

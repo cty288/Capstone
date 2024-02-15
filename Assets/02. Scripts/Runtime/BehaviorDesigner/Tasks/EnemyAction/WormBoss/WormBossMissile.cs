@@ -47,6 +47,7 @@ public class WormBossMissile : AbstractBulletViewController
     // Update is called once per frame
     private void FixedUpdate()
     {
+        //transform.Rotate(0, 10, 0);
         rb.velocity = transform.forward * bulletSpeed;
         var leadTimePercentage = Mathf.InverseLerp(10, 100, Vector3.Distance(transform.position, player.transform.position));
         PredictMovement(leadTimePercentage);
@@ -106,6 +107,6 @@ public class WormBossMissile : AbstractBulletViewController
 
         exp.transform.position = transform.position;
         exp.transform.rotation = Quaternion.identity;
-        exp.GetComponent<IExplosionViewController>().Init(Faction.Explosion, explosionDamage, explosionSize, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>());
+        exp.GetComponent<IExplosionViewController>().Init(Faction.Explosion, explosionDamage, 2, bulletOwner, bulletOwner.GetComponent<ICanDealDamage>());
     }
 }
