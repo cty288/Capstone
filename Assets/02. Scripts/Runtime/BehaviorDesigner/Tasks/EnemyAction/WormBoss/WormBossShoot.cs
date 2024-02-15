@@ -70,7 +70,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 for (int j = 0; j < 7; j++)
                 {
                     GameObject b = pool.Allocate();
-                    b.transform.position = bulletSpawnPos[i].transform.position;
+                    b.transform.position = bulletSpawnPos[j].transform.position;
+                   // b.transform.position = b.transform.parent.GetComponent<SphereCollider>().center;
                     b.transform.rotation = Quaternion.Euler(-90, 0, 0);
                     b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, 5, gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
                     b.GetComponent<WormBossMissile>().Setup(10f, playerTrans , 30, 20);
