@@ -13,6 +13,8 @@ using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 using UnityEngine.AI;
 using Runtime.Enemies;
+using FIMSpace.FSpine;
+
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -26,6 +28,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private int bulletCount;
         private float bulletSpeed;
         private float spawnInterval;
+        private bool flag = false;
 
         public List<GameObject> bulletSpawnPos;
 
@@ -34,13 +37,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(missilePrefab, 20, 50);
             playerTrans = GetPlayer().transform;
+            
 
         }
         public override void OnStart()
         {
             base.OnStart();
             ended = false;
-            StartCoroutine(RapidFire());
+            //StartCoroutine(RapidFire());
         }
 
         // Update is called once per frame
@@ -48,7 +52,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             if (ended)
             {
-                return TaskStatus.Success;
+                return TaskStatus.Running;
 
             }
             else
@@ -57,20 +61,37 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             
         }
+        public override void OnLateUpdate()
+        {
+            base.OnLateUpdate();
+            if (flag == false)
+            {
+                flag = true;
+                StartCoroutine(RapidFire());
+            }
+            
+        }
         IEnumerator RapidFire()
         {
             StartCoroutine(SpawnMissile());
             yield return null;
         }
+        
         IEnumerator SpawnMissile()
         {
-            for(int i = 0; i < 3; i++)
+            
+           
+            for (int i = 0; i < 3; i++)
             {
 
                 for (int j = 0; j < 7; j++)
                 {
                     GameObject b = pool.Allocate();
+                    
+                    
                     b.transform.position = bulletSpawnPos[j].transform.position;
+                    
+                    //b.transform.position = bulletSpawnPos[j].transform.parent.GetComponent<SphereCollider>().center;
                    // b.transform.position = b.transform.parent.GetComponent<SphereCollider>().center;
                     b.transform.rotation = Quaternion.Euler(-90, 0, 0);
                     b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, 5, gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
@@ -80,6 +101,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 }
             }
             ended = true;
+            
             yield return null;
         }
         
