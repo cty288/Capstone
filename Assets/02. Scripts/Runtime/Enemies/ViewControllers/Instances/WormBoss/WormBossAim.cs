@@ -43,7 +43,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 _liftedPos;
         private float _progress = 0f;
         private bool _headLifted;
-        private bool _running;
+        private bool _running = true;
         public SharedGameObject firePoint;
         
         public override void OnAwake()

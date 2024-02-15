@@ -61,6 +61,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             
         }
+        public override void OnEnd()
+        {
+            flag = false;
+        }
         public override void OnLateUpdate()
         {
             base.OnLateUpdate();
