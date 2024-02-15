@@ -43,6 +43,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 _liftedPos;
         private float _progress = 0f;
         private bool _headLifted;
+        private bool _running;
         public SharedGameObject firePoint;
         
         public override void OnAwake()
@@ -82,6 +83,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         // Update is called once per frame
         public override TaskStatus OnUpdate()
         {
+            if (!_running) return TaskStatus.Running;
+            
             supportSphere.position = _neckJoint.FinalPosition + Vector3.down * 8f;
             supportPlatform.position = new Vector3(_bodyJoint.FinalPosition.x, supportPlatform.position.y, _bodyJoint.FinalPosition.z);
             
@@ -162,6 +165,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 lookVector = lookVector.normalized;
             }
             transform.position = Vector3.Lerp(transform.position, _liftedPos + lookVector * moveRange, 2f * Time.deltaTime);
+        }
+
+        public void ToggleAim(bool running = true)
+        {
+            _running = running;
         }
     }
 }
