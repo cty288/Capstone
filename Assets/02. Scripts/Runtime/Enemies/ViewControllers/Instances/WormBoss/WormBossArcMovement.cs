@@ -19,7 +19,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 start;
         private Vector3 end;
         private float progress = 0f;
-        public float duration = 8f; // Duration in seconds
+        private float duration = 5f; // Duration in seconds
         private float speed; // Calculated speed based on the duration
         public float jumpHeight = 50f; // Amplitude of the jump
         private bool endDive = false;
@@ -46,19 +46,22 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Debug.Log(sample2);
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(sample, out hit, 15, 1))
+            if (NavMesh.SamplePosition(sample, out hit, 20, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 start = hit.position;
-                Debug.Log(start);
+                Debug.Log($"WORM BOSS start: {start}");
             }
-            if (NavMesh.SamplePosition(sample2, out hit, 15, 1))
+            if (NavMesh.SamplePosition(sample2, out hit, 20, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 end = hit.position;
-                Debug.Log(end);
+                Debug.Log($"WORM BOSS end: {end}");
             }
 
             // Calculate the speed based on the duration
             speed = 1f / duration;
+            
+            // GameObject debug_obj = new GameObject("worm1 arc start position");
+            // debug_obj.transform.position = start;
         }
 
         private void EnableColliders(bool enable)
@@ -149,12 +152,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private void MoveUnderGround()
         {
-            Vector3 endPos = end + direction.normalized * 100f;
-            transform.DOMove(endPos, 4f).OnComplete(() =>
+            Vector3 endPos = end + direction.normalized * 150f;
+            transform.DOMove(endPos, duration * 2).OnComplete(() =>
             {
-                GameObject debug_obj = new GameObject("worm1 end position");
+                GameObject debug_obj = new GameObject("worm1 arc end position");
                 debug_obj.transform.position = end;
-
                 endDive = true;
             });
         }

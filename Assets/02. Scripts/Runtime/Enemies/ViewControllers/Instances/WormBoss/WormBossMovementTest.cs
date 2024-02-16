@@ -25,9 +25,12 @@ public class WormBossMovementTest : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.green, 5f);
+            
             // If the ray hits something
             if (Physics.Raycast(ray, out hit))
             {
+                agent.enabled = true;
                 // Check if the object hit has a NavMesh surface
                 NavMeshHit navMeshHit;
                 if (NavMesh.SamplePosition(hit.point, out navMeshHit, 1.0f, NavMesh.AllAreas))
