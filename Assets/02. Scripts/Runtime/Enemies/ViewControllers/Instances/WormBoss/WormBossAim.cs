@@ -21,7 +21,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float liftHeight = 20f;
         private float moveRange = 18f;
         private float liftTime = 1f;
-        private float duration = 5f;
+        //making this public for tuning
+        public float duration = 5f;
         private float maxTurnRate = 30f;
         private float maxShiftRate = 10f;// Units per second
         private Vector3 gravity = new Vector3(0, -8, 0);
@@ -42,6 +43,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 _liftedPos;
         private float _progress = 0f;
         private bool _headLifted;
+        private bool _running = true;
         public SharedGameObject firePoint;
         
         public override void OnAwake()
@@ -81,6 +83,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         // Update is called once per frame
         public override TaskStatus OnUpdate()
         {
+            if (!_running) return TaskStatus.Running;
+            
             supportSphere.position = _neckJoint.FinalPosition + Vector3.down * 8f;
             supportPlatform.position = new Vector3(_bodyJoint.FinalPosition.x, supportPlatform.position.y, _bodyJoint.FinalPosition.z);
             
@@ -161,6 +165,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 lookVector = lookVector.normalized;
             }
             transform.position = Vector3.Lerp(transform.position, _liftedPos + lookVector * moveRange, 2f * Time.deltaTime);
+        }
+
+        public void ToggleAim(bool running = true)
+        {
+            _running = running;
         }
     }
 }

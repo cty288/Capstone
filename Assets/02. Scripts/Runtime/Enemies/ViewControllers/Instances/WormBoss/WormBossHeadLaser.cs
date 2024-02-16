@@ -30,7 +30,16 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private GameObject laserInstance;
         private int laserDamage = 5;
         private float interval = 0.2f;
-        
+
+        public GameObject charging;
+        public GameObject charged;
+        public GameObject beam;
+
+        private ParticleSystem chargingVFX;
+        private ParticleSystem chargedVFX;
+        private ParticleSystem beamVFX;
+
+        private float timer = 3f;
         
         public override void OnStart()
         {
@@ -38,6 +47,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             //laserDamage = enemyEntity.GetCustomDataValue<int>("laserBeam", "laserDamage");
             //interval = enemyEntity.GetCustomDataValue<float>("laserBeam", "interval");
             StartCoroutine(Shoot());
+            /*
+            chargingVFX = charging.GetComponent<ParticleSystem>();
+            chargedVFX = charged.GetComponent<ParticleSystem>();
+            beamVFX = beam.GetComponent<ParticleSystem>();
+            */
+            timer = 3f;
         }
         
         public override TaskStatus OnUpdate()
@@ -63,7 +78,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 pool.Recycle(laserInstance);
                 laserInstance = null;
             }
-            
+            charging.SetActive(true);
+            charged.SetActive(true);
+            float timer = 4f;
+            while(timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            beam.SetActive(true);
             laserInstance = pool.Allocate();
             /*
             laserInstance.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
