@@ -4,6 +4,7 @@ using _02._Scripts.Runtime.Utilities;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using MikroFramework.Architecture;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;

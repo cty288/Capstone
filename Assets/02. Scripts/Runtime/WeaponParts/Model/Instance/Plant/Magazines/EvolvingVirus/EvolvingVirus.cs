@@ -2,14 +2,16 @@
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.WorseViral {
-	public class WorseViral : WeaponPartsEntity<WorseViral, WorseViralBuff> {
-		public override string EntityName { get; set; } = "WorseViral";
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.EvolvingVirus {
+	public class EvolvingVirus : WeaponPartsEntity<EvolvingVirus, EvolvingVirusBuff> {
+		public override string EntityName { get; set; } = "EvolvingVirus";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
 		}
@@ -20,29 +22,29 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.WorseVi
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			int damage = GetCustomDataValueOfCurrentLevel<int>("damage");
-			return Localization.GetFormat(defaultLocalizationKey, damage);
+			int time = GetCustomDataValueOfCurrentLevel<int>("time");
+			return Localization.GetFormat(defaultLocalizationKey, time);
 		}
 		
 
-		public override WeaponPartType WeaponPartType => WeaponPartType.Barrel;
+		public override WeaponPartType WeaponPartType => WeaponPartType.Magazine;
 		
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}
 	}
 	
-	public class WorseViralBuff : WeaponPartsBuff<WorseViral, WorseViralBuff> {
+	public class EvolvingVirusBuff : WeaponPartsBuff<EvolvingVirus, EvolvingVirusBuff> {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
 		
 		public override void OnInitialize() {
-			weaponEntity.RegisterOnModifyValueEvent<OnCombatBuffChangeDOTEvent>(OnCombatBuffChangeDOTEvent);
+			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeDurationEvent>(OnModifyDurationEvent);
 		}
 
-		private OnCombatBuffChangeDOTEvent OnCombatBuffChangeDOTEvent(OnCombatBuffChangeDOTEvent e) {
-			int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
-			e.Value += damage;
+		private OnPlantBuffChangeDurationEvent OnModifyDurationEvent(OnPlantBuffChangeDurationEvent e) {
+			int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
+			e.Value += time;
 			return e;
 		}
 
@@ -60,7 +62,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.WorseVi
 		}
 
 		public override void OnRecycled() {
-			weaponEntity.UnRegisterOnModifyValueEvent<OnCombatBuffChangeDOTEvent>(OnCombatBuffChangeDOTEvent);
+			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeDurationEvent>(OnModifyDurationEvent);
 			base.OnRecycled();
 		}
 
@@ -73,10 +75,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.WorseVi
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					
-					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
+					int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
 
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("WorseViral_desc", damage));
+						Localization.GetFormat("EvolvingVirus_desc", time));
 				})
 			};
 		}

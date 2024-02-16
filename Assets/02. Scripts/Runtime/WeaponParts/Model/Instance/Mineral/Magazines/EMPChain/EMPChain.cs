@@ -41,13 +41,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.EMPCha
 		public override float TickInterval { get; protected set; } = -1;
 		
 		public override void OnInitialize() {
-			RegisterWeaponBuildBuffEvent<PlantAOEEvent>(OnPlantAOEEvent);
+			RegisterWeaponBuildBuffEvent<MineralAOEEvent>(OnPlantAOEEvent);
 		}
 
-		private void OnPlantAOEEvent(PlantAOEEvent e) {
+		private void OnPlantAOEEvent(MineralAOEEvent e) {
 			float chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
 			if(Random.Range(0f, 1f) < chance) {
-				e.Buff.AddMulfunctionBuff(e.Duration, e.Target);
+				e.Buff2.AddMulfunctionBuff(e.Duration, e.Target);
 			}
 		}
 		
@@ -65,7 +65,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.EMPCha
 		}
 
 		public override void OnRecycled() {
-			UnRegisterWeaponBuildBuffEvent<PlantAOEEvent>(OnPlantAOEEvent);
+			UnRegisterWeaponBuildBuffEvent<MineralAOEEvent>(OnPlantAOEEvent);
 			base.OnRecycled();
 		}
 

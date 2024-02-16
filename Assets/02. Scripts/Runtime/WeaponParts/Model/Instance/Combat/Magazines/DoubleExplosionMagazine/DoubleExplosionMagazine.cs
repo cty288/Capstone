@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
 using Cysharp.Threading.Tasks;
 using Polyglot;
@@ -42,15 +43,15 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Doub
 	
 		public override void OnInitialize() {
 			
-			RegisterWeaponBuildBuffEvent<OnMineralBuffGenerateExplostion>(OnMineralBuffGenerateExplostion);
+			RegisterWeaponBuildBuffEvent<OnCombatBuffGenerateExplostion>(OnCombatBuffGenerateExplostion);
 
 		}
 
-		private void OnMineralBuffGenerateExplostion(OnMineralBuffGenerateExplostion e) {
+		private void OnCombatBuffGenerateExplostion(OnCombatBuffGenerateExplostion e) {
 			OnDoubleExplosion(e);
 		}
 		
-		private async UniTask OnDoubleExplosion(OnMineralBuffGenerateExplostion e) {
+		private async UniTask OnDoubleExplosion(OnCombatBuffGenerateExplostion e) {
 			string uuid = weaponEntity.UUID + weaponPartsEntity.UUID;
 			IEntityViewController target = e.HurtboxOwner.GetComponent<IEntityViewController>();
 			
@@ -89,7 +90,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Doub
 		}
 
 		public override void OnRecycled() {
-			UnRegisterWeaponBuildBuffEvent<OnMineralBuffGenerateExplostion>(OnMineralBuffGenerateExplostion);
+			UnRegisterWeaponBuildBuffEvent<OnCombatBuffGenerateExplostion>(OnCombatBuffGenerateExplostion);
 			base.OnRecycled();
 		}
 

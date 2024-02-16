@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.Skills.ViewControllers.Instances.AdrenalineSkill;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel;

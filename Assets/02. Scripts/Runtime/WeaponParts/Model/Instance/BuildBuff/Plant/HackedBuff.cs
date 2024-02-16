@@ -4,7 +4,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using UnityEngine;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 	public class HackedBuff : Buff<HackedBuff> {
 		[field: ES3Serializable]
 		public override float MaxDuration { get; protected set; }

@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
+using Cysharp.Threading.Tasks;
 using Polyglot;
-using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
-using Runtime.Utilities.Collision;
-using Runtime.Weapons.Model.Base;
 using UnityEngine;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels {
-	public class ThundercrackBarrel : WeaponPartsEntity<ThundercrackBarrel, ThundercrackBarrelBuff> {
-		public override string EntityName { get; set; } = "ThundercrackBarrel";
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.InfiniteChainMagazine {
+	public class InfiniteChainMagazine : WeaponPartsEntity<InfiniteChainMagazine, InfiniteChainMagazineBuff> {
+		public override string EntityName { get; set; } = "InfiniteChainMagazine";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
 		}
@@ -25,36 +24,40 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels {
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			float multiplayer = GetCustomDataValueOfCurrentLevel<float>("multiplier");
-			int displayMultiplayer = (int) (multiplayer * 100);
-			
-			
-			return Localization.GetFormat(defaultLocalizationKey, displayMultiplayer);
+			int number = GetCustomDataValueOfCurrentLevel<int>("number");
+			return Localization.GetFormat(defaultLocalizationKey, number);
 		}
-		
 
-		public override WeaponPartType WeaponPartType => WeaponPartType.Barrel;
+		public override int GetMaxRarity() {
+			return 3;
+		}
+
+		public override int GetMinRarity() {
+			return 2;
+		}
+
+
+		public override WeaponPartType WeaponPartType => WeaponPartType.Magazine;
 		
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}
 	}
 	
-	public class ThundercrackBarrelBuff : WeaponPartsBuff<ThundercrackBarrel, ThundercrackBarrelBuff> {
+	public class InfiniteChainMagazineBuff : WeaponPartsBuff<InfiniteChainMagazine, InfiniteChainMagazineBuff> {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
-		
+	
 		public override void OnInitialize() {
-			weaponEntity.RegisterOnModifyValueEvent<PlantBuffMultiplierEvent>(OnModifyValueEvent);
+			weaponEntity.RegisterOnModifyValueEvent<CombatBuffOnModifyBaseAmmoRecoverEvent>(OnModifyBaseAmmoRecover);
 		}
 
-		private PlantBuffMultiplierEvent OnModifyValueEvent(PlantBuffMultiplierEvent e) {
-			float multiplier = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("multiplier");
-			e.Value *= (1 + multiplier);
+		private CombatBuffOnModifyBaseAmmoRecoverEvent OnModifyBaseAmmoRecover(CombatBuffOnModifyBaseAmmoRecoverEvent e) {
+			int number = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("number");
+			e.Value += number;
 			return e;
 		}
 
-		
 
 		public override void OnStart() {
 			
@@ -69,7 +72,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels {
 		}
 
 		public override void OnRecycled() {
-			weaponEntity.UnRegisterOnModifyValueEvent<PlantBuffMultiplierEvent>(OnModifyValueEvent);
+			weaponEntity.UnRegisterOnModifyValueEvent<CombatBuffOnModifyBaseAmmoRecoverEvent>(OnModifyBaseAmmoRecover);
 			base.OnRecycled();
 		}
 
@@ -81,12 +84,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels {
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					
-					float multiplier = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("multiplier");
-					int displayedMultiplier = (int) (multiplier * 100);
+					int number = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("number");
 
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("ThundercrackBarrel_desc", displayedMultiplier));
+						Localization.GetFormat("InfiniteChainMagazine_desc", number));
 				})
 			};
 		}
