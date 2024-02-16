@@ -37,6 +37,8 @@ namespace Runtime.Enemies.Model {
 		// public IDirectorEntity GetDirectorOwner();
 		
 		public int SpawnedAreaIndex { get; set; }
+		
+		public BindableProperty<bool> IsElite { get; }
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
@@ -51,6 +53,9 @@ namespace Runtime.Enemies.Model {
 		// protected IDirectorEntity directorOwner;
 		public int SpawnedAreaIndex { get; set; }
 		
+		[field: ES3Serializable]
+		public BindableProperty<bool> IsElite { get; } = new BindableProperty<bool>(false);
+
 		protected override void OnEntityRegisterAdditionalProperties() {
 			base.OnEntityRegisterAdditionalProperties();
 			RegisterInitialProperty<IDangerProperty>(new Danger());
@@ -135,6 +140,7 @@ namespace Runtime.Enemies.Model {
 			OnModifyDamageCountCallbackList.Clear();
 			_onDealDamageCallback = null;
 			_onKillDamageableCallback = null;
+			IsElite.Value = false;
 		}
 
 

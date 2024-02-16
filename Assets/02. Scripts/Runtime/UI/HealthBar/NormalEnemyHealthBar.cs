@@ -8,6 +8,7 @@ using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties;
+using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using TMPro;
@@ -24,6 +25,7 @@ namespace Runtime.UI.HealthBar {
 		[SerializeField] private Color healthyColor = Color.red;
 		[SerializeField] private Color hurtColor = Color.red;
 		[SerializeField] private GameObject rarityIndicatorPrefab;
+		[SerializeField] private GameObject eliteIndicatorPrefab;
 		private Transform rarityBar;
 		
 		protected Material healthBGMaterial;
@@ -54,6 +56,12 @@ namespace Runtime.UI.HealthBar {
 
 		protected override void OnSetEntity(BindableProperty<HealthInfo> healthProperty, IDamageable entity) {
 			ClearRarityIndicator();
+
+			if (entity is INormalEnemyEntity normalEnemy) {
+				normalEnemy.IsElite.RegisterOnValueChanged(OnEliteChanged)
+					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			}
+			
 			
 			this.boundHealthProperty = healthProperty;
 			boundHealthProperty.RegisterWithInitValue(OnHealthChanged)
@@ -68,14 +76,38 @@ namespace Runtime.UI.HealthBar {
 			
 			if (rarityIndicatorPrefab && entity.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarityProperty)) {
 				if (rarityProperty is IRarityProperty rarity) {
+					float parentHeight = rarityBar.GetComponent<RectTransform>().rect.height;
 					for (int i = 0; i < rarity.RealValue.Value; i++) {
-						Instantiate(rarityIndicatorPrefab, rarityBar);
+						RectTransform transfrorm = Instantiate(rarityIndicatorPrefab, rarityBar).GetComponent<RectTransform>();
+						transfrorm.sizeDelta = new Vector2(parentHeight, parentHeight);
 					}
 				}
 			}
 		}
 
-		
+		private void OnEliteChanged(bool arg1, bool isElite) {
+			ClearRarityIndicator();
+			GameObject prefab = isElite ? eliteIndicatorPrefab : rarityIndicatorPrefab;
+			float parentHeight = rarityBar.GetComponent<RectTransform>().rect.height;
+
+			if (isElite) {
+				RectTransform transfrorm = Instantiate(prefab, rarityBar).GetComponent<RectTransform>();
+				//transfrorm.sizeDelta = new Vector2(parentHeight, parentHeight);
+			}
+			else {
+				if (entity.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarityProperty)) {
+					if (rarityProperty is IRarityProperty rarity) {
+						for (int i = 0; i < rarity.RealValue.Value; i++) {
+							RectTransform transfrorm = Instantiate(rarityIndicatorPrefab, rarityBar)
+								.GetComponent<RectTransform>();
+							transfrorm.sizeDelta = new Vector2(parentHeight, parentHeight);
+						}
+					}
+				}
+			}
+		}
+
+
 		protected override void OnHealthBarDestroyed() {
 			boundHealthProperty.UnRegisterOnValueChanged(OnHealthChanged);
 			entity.UnregisterOnBuffUpdate(OnBuffUpdate);
