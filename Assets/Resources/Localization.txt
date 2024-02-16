@@ -783,7 +783,7 @@ PROPERTY_ICON_COOLDOWN,,Cooldown,,,,,,,,,,,,,,,,,冷却时间,冷卻時間,,,,,,
 PROPERTY_ICON_COOLDOWN_DESC,,{0} seconds,,,,,,,,,,,,,,,,,{0}秒,{0}秒,,,,,,,,,
 PROPERTY_ICON_RANGE,,Range,,,,,,,,,,,,,,,,,范围,範圍,,,,,,,,,
 PROPERTY_ICON_RANGE_DESC,,{0} meters,,,,,,,,,,,,,,,,,{0}米,{0}米,,,,,,,,,
-PROPERTY_ICON_LEVEL,,Level,,,,,,,,,,,,,,,,,等级,等級,,,,,,,,,
+PROPERTY_ICON_LEVEL,,Level {0},,,,,,,,,,,,,,,,,等级{0},等級{0},,,,,,,,,
 MedicalNeedleSkill_name,,Medical Needle,,,,,,,,,,,,,,,,,医疗针,醫療針,,,,,,,,,
 MedicalNeedleSkill_desc,,"A medical item with healing properties, can be used with herbs to heal wounds.",,,,,,,,,,,,,,,,,具有恢复作用的医疗用品，可以配合药材以治愈伤口。,具有恢復作用的醫療用品，可以配合藥材以治癒傷口。,,,,,,,,,
 PROPERTY_NEEDLE_HEAL,,Instantly restores {0} health upon use.,,,,,,,,,,,,,,,,,使用后立即恢复{0}血量。,使用後立即恢復{0}血量。,,,,,,,,,
@@ -966,5 +966,40 @@ TurretSkill_desc,,"After using the skill, a turret will begin to be installed at
 TurretSkill_DAMAGE_NAME,,Bullet Damage,,,,,,,,,,,,,,,,,子弹伤害,子彈傷害,,,,,,,,,
 TurretSkill_AMMO_SIZE,,Ammo Size,,,,,,,,,,,,,,,,,弹匣容量,彈匣容量,,,,,,,,,
 TurretSkill_MAX_COUNT,,You can only have {0} turret{1} at the same time.,,,,,,,,,,,,,,,,,你只能同时拥有{0}个机枪,你隻能同時擁有{0}個機槍,,,,,,,,,
+TurretSkill_EXPLODE,,"After the turret self-destructs, it will create an explosion with damage of {0}.",,,,,,,,,,,,,,,,,机枪自毁后，会产生伤害为{0}的爆炸,機槍自毀後，會產生傷害為{0}的爆炸。,,,,,,,,,
 DEPLOY_ERROR_TURRET_MAX_COUNT,,You can't deploy more turrets at this time!,,,,,,,,,,,,,,,,,你现在无法部署更多机枪了！,你現在無法部署更多機槍了！,,,,,,,,,
 TurretEntity_name,,Turret,,,,,,,,,,,,,,,,,机枪,機槍,,,,,,,,,
+StunGrenadeSkill_name,,Tactical Stun Grenade,,,,,,,,,,,,,,,,,战术震撼弹,戰術震撼彈,,,,,,,,,
+StunGrenadeSkill_desc,,"After use, a stun grenade will be thrown, and its explosion will cause all surrounding enemies to receive a <b>Malfunction</b> effect.{2}
+
+{0}{1}",,,,,,,,,,,,,,,,,"使用后将会向前方投掷一颗震撼弹，其爆炸后会使所有周围的敌人获得<b>故障</b>效果。
+
+{0}{1}","使用後將會向前方投擲一顆震撼彈，其爆炸後會使所有週圍的敵人獲得<b>故障</b>效果。
+
+{0}{1}",,,,,,,,,
+StunGrenadeSkill_desc2,,"After use, a stun grenade will be thrown, and its explosion will cause all surrounding enemies to receive a <b>Malfunction</b>effect. After the effect ends, the enemies will receive a <b>Powerless{2}</b> effect.  
+
+{0}{1}",,,,,,,,,,,,,,,,,"使用后将会向前方投掷一颗震撼弹，其爆炸后会使所有周围的敌人获得<b>故障</b>效果。在效果结束后，敌人将获得<b>无力{2}</b>效果。
+
+{0}{1}","使用後將會向前方投擲一顆震撼彈，其爆炸後會使所有週圍的敵人獲得<b>故障</b>效果。在效果結束後，敵人將獲得<b>無力{2}</b>效果。
+
+{0}{1}",,,,,,,,,
+StunGrenadeSkill_BUFF1_TIME,,<b>Malfunction</b> Effect Time,,,,,,,,,,,,,,,,,<b>故障</b>效果持续时间,<b>故障</b>效果持續時間,,,,,,,,,
+StunGrenadeSkill_BUFF_TIME_VALUE,,{0} seconds,,,,,,,,,,,,,,,,,{0}秒,{0}秒,,,,,,,,,
+StunGrenadeSkill_RANGE,,Range,,,,,,,,,,,,,,,,,范围,範圍,,,,,,,,,
+StunGrenadeSkill_RANGE_VALUE,,{0} meters,,,,,,,,,,,,,,,,,{0}米,{0}米,,,,,,,,,
+StunGrenadeSkill_BUFF2_TIME,,<b>Powerless</b> Effect Time,,,,,,,,,,,,,,,,,<b>无力</b>效果持续时间,<b>無力</b>效果持續時間,,,,,,,,,
+AdrenalineSkill_name,,Adrenaline,,,,,,,,,,,,,,,,,肾上腺素,腎上腺素,,,,,,,,,
+AdrenalineSkill_desc,,"Gain level {0} <b>Stimulated</b> effect.
+
+{1}",,,,,,,,,,,,,,,,,"获得等级 {0} 的<b>亢奋</b>效果。
+
+{1}","獲得等級 {0} 的<b>亢奮</b>效果。
+
+{1}",,,,,,,,,
+StimulatedBuff_Desc,,"<b>Stimulated {0}</b>: All the damage you deal is increased by {1}%, your movement speed is increased by {2}%, and get {3} temporary health. This effect lasts for {4} seconds.",,,,,,,,,,,,,,,,,<b>亢奋{0}</b>:你造成的所有伤害增加{1}%，你的移动速度增加{2}%，获得{3}点临时血量。持续{4}秒。,<b>亢奮{0}</b>:你造成的所有傷害增加{1}%，你的移動速度增加{2}%，獲得{3}點臨時血量。持續{4}秒。,,,,,,,,,
+BackpackSkill_name,,Expansion Backpack,,,,,,,,,,,,,,,,,扩容背包,擴容背包,,,,,,,,,
+BackpackSkill_desc,,Unlock {0} additional backpack slots.,,,,,,,,,,,,,,,,,解锁额外{0}个背包栏位。,解鎖額外{0}個背包欄位。,,,,,,,,,
+BackpackSkill_desc2,,Unlock all backpack slots.,,,,,,,,,,,,,,,,,解锁所有背包栏位。,解鎖所有背包欄位。,,,,,,,,,
+INFO_ELITE,,Elite,,,,,,,,,,,,,,,,,精英,精英,,,,,,,,,
+PILLAR_INFO_CURRENCY,,Select an energy to transfer to the pillar,,,,,,,,,,,,,,,,,请向召唤柱输送一种能量,請向召喚柱輸送一種能量,,,,,,,,,

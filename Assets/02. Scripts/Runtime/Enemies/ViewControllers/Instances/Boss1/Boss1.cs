@@ -249,7 +249,7 @@ namespace Runtime.Enemies
             HealthBar healthBar = SpawnCrosshairResponseHUDElement(shellHealthBarSpawnTransform, "Boss1ShellHealthBar",
                 HUDCategory.HealthBar, false).Item1.GetComponent<HealthBar>();
 
-            healthBar.OnSetEntity(BoundEntity.GetCustomDataValue<HealthInfo>("shellHealthInfo", "info"), BoundEntity);
+            healthBar.SetEntity(BoundEntity.GetCustomDataValue<HealthInfo>("shellHealthInfo", "info"), BoundEntity);
         }
         
         private void UnSpawnShellHealthBar() {

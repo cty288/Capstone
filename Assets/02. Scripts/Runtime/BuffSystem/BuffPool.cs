@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill;
+using _02._Scripts.Runtime.Skills.ViewControllers.Instances.AdrenalineSkill;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
@@ -24,6 +26,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			RegisterGeneralBuff((dealer, owner, level) => HackedBuff.Allocate(dealer, owner, 10, 2, 1));
 			RegisterGeneralBuff(((dealer, owner, level) => MalfunctionBuff.Allocate(dealer, owner, 5)));
 			RegisterGeneralBuff(((dealer, owner, level) => PowerlessBuff.Allocate(dealer, owner, level, 10)));
+			RegisterGeneralBuff((StimulatedBuff.Allocate));
 
 
 			RegisterWeaponBuildBuff(CurrencyType.Time, TimeBuff.Allocate);

@@ -238,8 +238,8 @@ namespace Runtime.Spawning
             {
                 // int[] rarity = {5};
                 // float[] cost = {cards[0].GetRealSpawnCost(levelNumber, rarity[0])};
-                rarity = 5;
-                costs[0] = cards[0].GetRealSpawnCost(levelNumber, 5);
+                rarity = Random.Range(5, 9);
+                costs[0] = cards[0].GetRealSpawnCost(levelNumber, rarity);
                 bool isElite = true;
 
                 if (currentCredits > costs[0]
@@ -315,9 +315,9 @@ namespace Runtime.Spawning
                     IEnemyViewController enemyVC = spawnedEnemy.GetComponent<IEnemyViewController>();
                     IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
                     enemyEntity.SpawnedAreaIndex = areaMask;
-                    if (isElite)
-                    {
+                    if (isElite) {
                         totalEliteEnemies++;
+                        enemyEntity.IsElite.Value = true;
                     }
                     onSpawnEnemy?.Invoke(spawnedEnemy, this);
                     currentCredits -= cost;

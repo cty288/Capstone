@@ -164,8 +164,8 @@ namespace Tests.Tests_Editor {
 		[Test]
 		public void AddSlots_Successfully() {
 			int initialSlotCount = inventoryModel.GetSlotCount();
-			
-			bool result = inventoryModel.AddSlots(5);
+
+			bool result = inventoryModel.AddSlots(5, out _);
     
 			Assert.IsTrue(result);
 			Assert.AreEqual(initialSlotCount + 5, inventoryModel.GetSlotCount());
@@ -173,7 +173,7 @@ namespace Tests.Tests_Editor {
 		
 		[Test]
 		public void ResetInventory_Successfully() {
-			inventoryModel.AddSlots(5);
+			inventoryModel.AddSlots(5, out _);
 			IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
 			inventorySystem.AddItem(item);
     

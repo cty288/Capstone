@@ -5,6 +5,7 @@ using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
+using UnityEngine;
 
 namespace Runtime.Inventory.Model {
 	public interface IInventoryModel : IModel, IResourceSlotsModel, ISavableModel {
@@ -17,7 +18,7 @@ namespace Runtime.Inventory.Model {
 		/// </summary>
 		/// <param name="slotCount"></param>
 		/// <returns></returns>
-		bool AddSlots(int slotCount);
+		bool AddSlots(int slotCount, out int actualAddedCount);
 		
 		/// <summary>
 		/// Add the specified number of slots to the hotbar. <br/>
@@ -56,6 +57,9 @@ namespace Runtime.Inventory.Model {
 		bool HasEntityInBaseStockByName(ResourceCategory category, string entityName);
 		
 		List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate);
+		void RemoveSlots(int slots);
+		
+		int MaxSlotCount { get; set; }
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -93,7 +97,12 @@ namespace Runtime.Inventory.Model {
 	public struct OnInventoryItemAddedEvent {
 		public IResourceEntity Item;
 	}
-	
+
+	public struct OnInventorySlotRemovedEvent {
+		public int RemovedCount;
+		public List<ResourceSlot> RemovedSlots;
+	}
+
 	public class InventoryModel: ResourceSlotsModel, IInventoryModel {
 
 		[ES3Serializable]
@@ -107,7 +116,8 @@ namespace Runtime.Inventory.Model {
 		//[ES3Serializable]
 		
 		
-		public static int MaxSlotCount = 32;
+		[field: ES3Serializable]
+		public int MaxSlotCount { get; set; } = 32;
 		
 		public static Dictionary<HotBarCategory, int> MaxHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
 			{HotBarCategory.Right, 3},
@@ -279,6 +289,8 @@ namespace Runtime.Inventory.Model {
 			return result;
 		}
 
+		
+
 
 		protected override bool AddItemAt(IResourceEntity item, ResourceSlot slot) {
 			return base.AddItemAt(item, slot);
@@ -289,15 +301,28 @@ namespace Runtime.Inventory.Model {
 			//check each hot bar first
 			foreach (var hotBarSlot in hotBarSlots) {
 				foreach (var slot in hotBarSlot.Value.Slots) {
-					if (slot.RemoveItem(uuid)) {
-						IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
-						entity.OnRemovedFromInventory();
-						entity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+					if (RemoveItemFromSlot(uuid, slot)) {
 						return true;
 					}
 				}
 			}
-			return base.RemoveItem(uuid);
+			for (int i = 0; i < GetSlotCount(); i++) {
+				if (slots[i].ContainsItem(uuid)) {
+					RemoveItemFromSlot(uuid, slots[i]);
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		protected bool RemoveItemFromSlot(string uuid, ResourceSlot slot) {
+			if (slot.RemoveItem(uuid)) {
+				IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
+				entity.OnRemovedFromInventory();
+				entity.UnRegisterOnEntityRecycled(OnEntityRecycled);
+				return true;
+			}
+			return false;
 		}
 
 		public override bool CanPlaceItem(IResourceEntity item) {
@@ -312,8 +337,8 @@ namespace Runtime.Inventory.Model {
 			return base.CanPlaceItem(item);
 		}
 
-		public bool AddSlots(int slotCount) {
-			int actualAddedCount = slotCount;
+		public bool AddSlots(int slotCount, out int actualAddedCount) {
+			actualAddedCount = slotCount;
 			if (slotCount + GetSlotCount() > MaxSlotCount) {
 				actualAddedCount = MaxSlotCount - GetSlotCount();
 			}
@@ -332,10 +357,30 @@ namespace Runtime.Inventory.Model {
 			});
 			return actualAddedCount == slotCount;
 		}
+		
+		
+		public void RemoveSlots(int slots) {
+			int actualCount = Mathf.Min(slots, GetSlotCount());
+			List<ResourceSlot> removedSlots = new List<ResourceSlot>();
+			for (int i = 0; i < actualCount; i++) {
+				ResourceSlot slot = this.slots[^1];
+				List<string> uuids = new List<string>(slot.GetUUIDList());
+				
+				this.slots.RemoveAt(this.slots.Count - 1);
+				removedSlots.Add(slot);
+				foreach (string uuid in uuids) {
+					RemoveItemFromSlot(uuid, slot);
+				}
 
-		/*public void InitWithInitialSlots() {
+				
+			}
 			
-		}*/
+			this.SendEvent<OnInventorySlotRemovedEvent>(new OnInventorySlotRemovedEvent() {
+				RemovedCount = actualCount,
+				RemovedSlots = removedSlots
+			});
+		}
+		
 
 		protected override void OnInit() {
 			base.OnInit();

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
@@ -159,6 +160,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] private float[] sandstormProbability = new[] {0, 0.33f, 1f};
 
 		[SerializeField] private int timeCurrencyLevel = 1;
+		[SerializeField] private bool spawnExitDoor = true;
 		
 		private IGameEventSystem gameEventSystem;
 
@@ -345,6 +347,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			UpdateWallMaterials();
 			await UniTask.Yield();
 			SpawningUtility.UpdateRefPointsKDTree();
+			if (spawnExitDoor) {
+				await SpawnLevelExitDoor();
+			}
+			
 			await SpawnPillars();
 			UpdatePreExistingDirectors();
 			SpawnCollectableResources();
@@ -352,7 +358,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			StartCoroutine(UpdateLevelSystemTime());
 		}
 
-		
+		private async UniTask SpawnLevelExitDoor() {
+			GameObject door = await SpawningUtility.SpawnExitDoor(gameObject, "LevelExitDoor", maxExtent.bounds);
+			door.transform.SetParent(transform);
+		}
+
+
 		private HashSet<int> triggeredNewDay = new HashSet<int>();
 		private void OnNewDay(OnNewDayStart e) {
 			int day = e.DayCount;

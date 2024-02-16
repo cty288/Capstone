@@ -19,6 +19,8 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     private INameTag spawnedNameTag;
     private GameObject spawnedNameTagGameObject;
 
+    public BoxCollider SpawnSizeCollider => transform.Find("SpawnSizeCollider").GetComponent<BoxCollider>();
+    
     private void Awake() {
         exitDoorGameObject = transform.Find("ExitDoor").gameObject;
         hudSpawnPoint = transform.Find("HUDSpawnPoint");
@@ -33,29 +35,14 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
         
         levelSystem.IsLevelExitSatisfied.RegisterWithInitValue(OnLevelExitSatisfied)
             .UnRegisterWhenGameObjectDestroyed(gameObject);
-        levelModel.CurrentLevel.Value.IsInBossFight.RegisterOnValueChanged(OnBossFightChanged)
-            .UnRegisterWhenGameObjectDestroyed(gameObject);
+      
 
 
        spawnedNameTagGameObject.SetActive(false);
 
     }
 
-    private void OnBossFightChanged(bool oldVal, bool newVal) {
-        bool levelExitSatisfied = levelSystem.IsLevelExitSatisfied.Value;
-        if(!newVal && levelExitSatisfied) {
-            exitDoorGameObject.SetActive(true);
-            SetExitDoorName(true, "EXIT_DOOR_STATE_1");
-        }
-        else {
-            string localizationName = "EXIT_DOOR_STATE_2";
-            if (!levelExitSatisfied) {
-                localizationName = "EXIT_DOOR_STATE_3";
-            }
-            exitDoorGameObject.SetActive(false);
-            SetExitDoorName(false, localizationName);
-        }
-    }
+    
 
     private void SetExitDoorName(bool isOpen, string localizationName) {
         spawnedNameTag.SetName(Localization.Get(localizationName));
@@ -70,18 +57,13 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     }
 
     private void OnLevelExitSatisfied(bool oldVal, bool newVal) {
-        bool isInBossFight = levelModel.CurrentLevel.Value.IsInBossFight.Value;
-        if(!isInBossFight && newVal) {
+     
+        if(newVal) { 
             exitDoorGameObject.SetActive(true);
             SetExitDoorName(true, "EXIT_DOOR_STATE_1");
         }
         else {
-            string localizationName = "EXIT_DOOR_STATE_2";
-
-            if (!newVal) {
-                localizationName = "EXIT_DOOR_STATE_3";
-            }
-            
+            string localizationName = "EXIT_DOOR_STATE_3";
             exitDoorGameObject.SetActive(false);
             SetExitDoorName(false, localizationName);
         }

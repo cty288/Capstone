@@ -147,7 +147,7 @@ namespace Runtime.Utilities.Collision
             StopCheckingHits();
         }
 
-        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage, Collider[] ignoredColliders = null)
         {
             throw new NotImplementedException();
         }

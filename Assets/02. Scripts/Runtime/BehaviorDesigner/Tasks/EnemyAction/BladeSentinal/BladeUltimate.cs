@@ -163,7 +163,8 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
             swordList[i].GetComponent<BladeSentinalHoningBlade>().Activate();
             swordList[i+1].GetComponent<BladeSentinalHoningBlade>().Activate();
 
-            await UniTask.WaitForSeconds(bladeInterval, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            await UniTask.WaitForSeconds(bladeInterval, false, PlayerLoopTiming.Update, 
+                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         }
         await UniTask.WaitForSeconds(3f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());

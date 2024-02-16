@@ -25,6 +25,7 @@ using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+
 public interface IGameUIPanel {
 	public IPanel GetClosePanel();
 }
@@ -38,6 +39,8 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 	[SerializeField]
 	private Button confirmButton;
 
+	[SerializeField] private Toggle[] currencyToggles;
+	
 	[SerializeField] private Slider currencySlider;
 	[SerializeField] private TMP_Text currencySliderText;
 	[SerializeField] private PressHoldButton addCurrencyButton;
@@ -45,14 +48,11 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 	[SerializeField] private Image currencyIcon;
 	[SerializeField] private TMP_Text requiredEnergyText;
 	[SerializeField] private TMP_Text levelText;
-	[SerializeField] private Button nextCurrencyButton;
-	[SerializeField] private Button previousCurrencyButton;
-
 	
 	private ICurrencyModel currencyModel;
 	private int currentSelectedCurrency = 0;
 	private CurrencyType currentSelectedCurrencyType;
-	private int maxCurrencyPossible = 100;
+	private int maxCurrencyPossible = 200;
 	private ICurrencySystem currencySystem;
 	public override void OnInit() {
 		
@@ -60,8 +60,20 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 		currencySystem = this.GetSystem<ICurrencySystem>();
 		addCurrencyButton.RegisterCallback(OnAddCurrencyButtonClicked);
 		minusCurrencyButton.RegisterCallback(OnMinusCurrencyButtonClicked);
-		nextCurrencyButton.onClick.AddListener(OnNextCurrencyButtonClicked);
-		previousCurrencyButton.onClick.AddListener(OnPreviousCurrencyButtonClicked);
+		//nextCurrencyButton.onClick.AddListener(OnNextCurrencyButtonClicked);
+		//previousCurrencyButton.onClick.AddListener(OnPreviousCurrencyButtonClicked);
+
+		foreach (Toggle currencyToggle in currencyToggles) {
+			currencyToggle.onValueChanged.AddListener((isOn) => {
+				CurrencySelectElement element = currencyToggle.GetComponent<CurrencySelectElement>();
+				CurrencyType currencyType = element.CurrencyType;
+				if (isOn) {
+					SelectCurrency(currencyType);
+				}
+			});
+		}
+		
+		
 
 		confirmButton.onClick.AddListener(OnConfirmButtonClicked);
 		this.RegisterEvent<OnCurrencyAmountChangedEvent>(OnCurrencyAmountChanged)
@@ -96,7 +108,6 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 		currencyIcon.sprite = currencySprites[currencyType];
 		maxCurrencyPossible = data.rewardCosts[currentSelectedCurrencyType].GetHighestCost() * 2;
 		SelectCurrency(0);
-		
 	}
 
 	private async UniTask OnConfirmButtonClickedAsync() {
@@ -159,7 +170,8 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 
 	public override void OnOpen(UIMsg msg) {
 		data = (OnOpenPillarUI) msg;
-		SelectCurrency(CurrencyType.Combat);
+		//SelectCurrency(CurrencyType.Combat);
+		currencyToggles[0].isOn = true;
 		SelectCurrency(0);
 		
 	}
@@ -180,7 +192,7 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 
 		CurrencyType currencyType = currentSelectedCurrencyType;
 		currentSelectedCurrency = currency;
-		currencySliderText.text = currency.ToString() + $"\n<sprite index={(int)currencyType}>";
+		currencySliderText.text = currency.ToString();
 
 		float ratio = (float) currency / maxCurrencyPossible;
 		currencySlider.value = ratio;
@@ -190,7 +202,7 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 		
 		int levelNumber = data.rewardCosts[currencyType].GetLevel(currency);
 		levelText.text = Localization.GetFormat("PILLAR_LEVEL_TEXT", levelNumber);
-		levelText.color = Color.black;
+		levelText.color = Color.white;
 		
 		isEnough = isEnough && levelNumber > 0;
 		
