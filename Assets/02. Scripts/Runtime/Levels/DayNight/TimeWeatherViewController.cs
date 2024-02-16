@@ -21,12 +21,13 @@ namespace _02._Scripts.Runtime.TimeSystem
         [SerializeField] private bool isDawnDusk = false;
         [SerializeField] private Vector2 daySunRotationEuler = new Vector2(0, 180);
         [SerializeField] private Vector2 nightSunRotationEuler = new Vector2(180, 360);
-        [SerializeField] private float sandstormFogFactor = 0.05f;
+        private float _sandstormFogFactor = 0.02f;
 
         private float _endOfDayMinutes = (GameTimeModel.NightStartHour - GameTimeModel.NewDayStartHour) * 60; // From start of day (5am) to end of day (8pm)
         private float _inGameHour = GameTimeModel.DayLength / 24f;
         private float _dawnDuskTimer = 0f;
         private float _extraFactor = 0;
+        private float _nightFog = 0.02f;
         private float _duskTime;
         private Volume _volume;
         private SandstormEffect _sandstorm;
@@ -80,6 +81,7 @@ namespace _02._Scripts.Runtime.TimeSystem
             isDawnDusk = true;
             _dawnDuskTimer = 0;
             _dayTime = 0;
+            _dayTimeNext = _dayTime + 1;
         }
 
         void Start()
@@ -100,14 +102,18 @@ namespace _02._Scripts.Runtime.TimeSystem
             isDay = true;
             _extraFactor = 0;
             sandstormCountDown = 0;
+            RenderSettings.fogDensity = 0;
             sandstormVFX.SetFloat(AlphaID, 0);
             sandstormVFX.SetInt(NSRID, 0);
             sandstormVFX.SetInt(FSRID, 0);
+            //sandstormVFX.Reinit();
             _sandstorm.sandstormAlpha.value = 0;
         }
 
         private void OnGlobalTimeChanged(DateTime obj)
         {
+            _dayTime = obj.Hour * 60 + obj.Minute;
+            _dayTimeNext = _dayTime + 1;
             if (isDay)
             {
                 if (isDawnDusk)
@@ -116,7 +122,7 @@ namespace _02._Scripts.Runtime.TimeSystem
                     {
                         float t = obj.Minute / 60f;
                         _sandstorm.nightDaySlide.value = Mathf.Lerp(0 - (2 * _extraFactor), 1 + (2 * _extraFactor), t);
-                        RenderSettings.fogDensity = (1 - t) * 0.05f + _extraFactor;
+                        RenderSettings.fogDensity = (1 - t) * _nightFog + _extraFactor;
                         _dawnDuskTimer = t;
                         if (t >= 1) isDawnDusk = false;
                     }
@@ -124,7 +130,7 @@ namespace _02._Scripts.Runtime.TimeSystem
                     {
                         float t = obj.Minute / _duskTime;
                         _sandstorm.nightDaySlide.value = Mathf.Lerp(1 + (2 * _extraFactor), 0 - (2 * _extraFactor), t);
-                        RenderSettings.fogDensity = t * 0.05f + _extraFactor;
+                        RenderSettings.fogDensity = t * _nightFog + _extraFactor;
                         _dawnDuskTimer = t;
                         if (t >= 1) isDawnDusk = false;
                     }
@@ -144,13 +150,14 @@ namespace _02._Scripts.Runtime.TimeSystem
             else
             {
                 _sandstorm.nightDaySlide.value = 0 - (2 * _extraFactor);
-                RenderSettings.fogDensity = 0.05f + _extraFactor;
+                RenderSettings.fogDensity = _nightFog + _extraFactor;
             }
         }
 
         private float _firstSandstormTick;
         private float _timeMinutes = 1440f / GameTimeModel.DayLength;
         private float _dayTime;
+        private float _dayTimeNext;
         void Update()
         {
             if (isDay)
@@ -172,13 +179,15 @@ namespace _02._Scripts.Runtime.TimeSystem
             if (sandstormCountDown > 0)
             {
                 float t = (_dayTime - _firstSandstormTick) / sandstormCountDown;
-                _extraFactor = Mathf.Lerp(0, sandstormFogFactor, t);
+                _extraFactor = Mathf.Lerp(0, _sandstormFogFactor, t);
                 sandstormVFX.SetFloat(AlphaID, Mathf.Lerp(0, 0.7f, t));
                 sandstormVFX.SetInt(NSRID, (int)Mathf.Lerp(0, 32, t));
                 sandstormVFX.SetInt(FSRID, (int)Mathf.Lerp(0, 32, t));
                 _sandstorm.sandstormAlpha.value = Mathf.Lerp(0, 1.12f, t);
                 if (t >= 1) sandstormCountDown = 0;
             } 
+            
+            _dayTime = _dayTime > _dayTimeNext ? _dayTimeNext : _dayTime; // correct time to continue matching global time.
         }
 
         private void OnSandStormWarning(OnSandStormWarning e)
@@ -197,7 +206,7 @@ namespace _02._Scripts.Runtime.TimeSystem
         {
             isDay = false;
             _sandstorm.nightDaySlide.value = 0 - (2 * _extraFactor);
-            RenderSettings.fogDensity = 0.05f + _extraFactor;
+            RenderSettings.fogDensity = _nightFog + _extraFactor;
             //_dayTime = _endOfDayMinutes;
         }
         
