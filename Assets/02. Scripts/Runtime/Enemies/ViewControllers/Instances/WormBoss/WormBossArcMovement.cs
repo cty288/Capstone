@@ -155,8 +155,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Vector3 endPos = end + direction.normalized * 150f;
             transform.DOMove(endPos, duration * 2).OnComplete(() =>
             {
-                GameObject debug_obj = new GameObject("worm1 arc end position");
-                debug_obj.transform.position = end;
+                // GameObject debug_obj = new GameObject("worm1 arc end position");
+                // debug_obj.transform.position = end;
                 endDive = true;
             });
         }

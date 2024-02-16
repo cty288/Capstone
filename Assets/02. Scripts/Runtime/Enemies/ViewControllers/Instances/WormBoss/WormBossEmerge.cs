@@ -14,7 +14,7 @@ using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class WormBossPrepareEmerge : EnemyAction
+    public class WormBossEmerge : EnemyAction
     {
         public SharedVector3 previousDivePosition;
         private Vector3 emergePosition;
@@ -22,6 +22,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public float maxRadiusAroundPlayer = 70f;
         
         private GameObject player;
+        
+        private TaskStatus taskStatus;
 
         public override void OnStart()
         {
@@ -46,14 +48,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Vector3 targetPosition = emergePosition - new Vector3(0, height, 0);
             transform.position = targetPosition;
             
-            
+            taskStatus = TaskStatus.Running;
             SlitherUp();
+        }
+
+        public override TaskStatus OnUpdate()
+        {
+            return taskStatus;
         }
 
         private async UniTask SlitherUp()
         {
             float duration = 2f;
-            await transform.DOMove(emergePosition, duration).SetEase(Ease.InOutSine).Play().ToUniTask(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            await transform.DOMove(emergePosition, duration).ToUniTask(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            taskStatus = TaskStatus.Success;
         }
 
         private Vector3 RandomPointInAnnulus(Vector2 origin, float minRadius, float maxRadius){
