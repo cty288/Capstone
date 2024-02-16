@@ -52,7 +52,7 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 	private ICurrencyModel currencyModel;
 	private int currentSelectedCurrency = 0;
 	private CurrencyType currentSelectedCurrencyType;
-	private int maxCurrencyPossible = 100;
+	private int maxCurrencyPossible = 200;
 	private ICurrencySystem currencySystem;
 	public override void OnInit() {
 		
@@ -202,7 +202,7 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 		
 		int levelNumber = data.rewardCosts[currencyType].GetLevel(currency);
 		levelText.text = Localization.GetFormat("PILLAR_LEVEL_TEXT", levelNumber);
-		levelText.color = Color.black;
+		levelText.color = Color.white;
 		
 		isEnough = isEnough && levelNumber > 0;
 		

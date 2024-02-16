@@ -45814,7 +45814,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2888
+  m_VersionIndex: 2900
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -57039,7 +57039,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 19788
+  m_VersionIndex: 19800
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -69685,40 +69685,90 @@ MonoBehaviour:
       - Key: 1
         Value:
         - RewardType: 0
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 8
+            - Key: 2
+              Value: 2
           AmountRange: {x: 1, y: 1}
       - Key: 2
         Value:
         - RewardType: 1
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 8
+            - Key: 2
+              Value: 2
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 8
+            - Key: 2
+              Value: 2
           AmountRange: {x: 1, y: 1}
       - Key: 3
         Value:
         - RewardType: 1
-          Level: 2
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 2
+              Value: 8
+            - Key: 3
+              Value: 2
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 2
+              Value: 8
+            - Key: 3
+              Value: 2
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 2
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 8
+            - Key: 2
+              Value: 2
           AmountRange: {x: 1, y: 1}
       - Key: 4
         Value:
         - RewardType: 1
-          Level: 3
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 3
+              Value: 8
+            - Key: 4
+              Value: 2
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 3
+              Value: 8
+            - Key: 4
+              Value: 2
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 2
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 2
+              Value: 8
+            - Key: 3
+              Value: 2
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 3
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 8
+            - Key: 2
+              Value: 2
           AmountRange: {x: 1, y: 1}
   hasPillars: 1
   pillarPrefabName: BossPillar

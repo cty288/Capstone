@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.CollectableResources.Model;
 using _02._Scripts.Runtime.CollectableResources.Model.Properties;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Levels.Models;
 using AYellowpaper.SerializedCollections;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -34,6 +35,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 		//[SerializeField] private int levelBuildFromInspector = 1;
 		[SerializeField] private string overriddenName;
 		[SerializeField] private int currencyAmountPerItem = 2;
+		private ILevelModel levelModel;
 
 		[SerializeField] private int totalShootTime = 3;
 		[SerializeField] private int damageRequiredPerShoot = 10;
@@ -56,10 +58,15 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			foreach (var componentsInChild in GetComponentsInChildren<IHurtbox>(true)) {
 				componentsInChild.HurtResponder = this;
 			}
+			levelModel = this.GetModel<ILevelModel>();
 		}
 
 		protected override IEntity OnBuildNewEntity() {
-			return OnBuildNewEntity(1);
+			int level = levelModel.CurrentLevelCount.Value;
+			if (level == 0) {
+				level = 1;
+			}
+			return OnBuildNewEntity(level);
 		}
 
 
@@ -139,7 +146,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			ItemDropInfo[] requiredDrops = BoundEntity.GetRequiredDropItems();
 			if (requiredDrops != null) {
 				foreach (ItemDropInfo requiredDrop in requiredDrops) {
-					GenerateDropItem(requiredDrop, Int32.MaxValue);
+					GenerateDropItem(requiredDrop, Int32.MaxValue, 0);
 				}
 			}
 			
@@ -154,17 +161,18 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 					throw new Exception("ItemDropInfo prefabName is null or empty in " + BoundEntity.GetType().Name +
 					                    " entity.");
 				}
-				dropCount += GenerateDropItem(info, totalDropCount);
+				dropCount += GenerateDropItem(info, totalDropCount, dropCount);
 
 			}
 		}
 		
-		protected int GenerateDropItem(ItemDropInfo info, int totalDropCount) {
+		protected int GenerateDropItem(ItemDropInfo info, int totalDropCount, int alreadyDropped) {
 			int dropCount = Random.Range(info.batchCountRange.x, info.batchCountRange.y + 1);
 			Vector3 spawnBasePosition = transform.position;
 			spawnBasePosition.y = SpawnSizeCollider.bounds.max.y;
 
-			dropCount = Mathf.Min(dropCount, totalDropCount);
+			dropCount = Mathf.Min(dropCount, totalDropCount - alreadyDropped);
+			dropCount = Mathf.Max(0, dropCount);
 			for (int i = 0; i < dropCount; i++) {
 				
 				int rarity = Random.Range(info.rarityRange.x, info.rarityRange.y + 1);
