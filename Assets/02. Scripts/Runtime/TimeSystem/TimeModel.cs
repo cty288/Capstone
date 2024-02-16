@@ -69,7 +69,7 @@ public interface IGameTimeModel : ISavableModel {
 
 public class GameTimeModel : AbstractSavableModel, IGameTimeModel {
     
-    public const float DayLength = 10f; // day length in seconds
+    public const float DayLength = 420f; // day length in seconds
     public const int NewDayStartHour = 5;
     public const int NightStartHour = 20;
     
