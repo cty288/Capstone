@@ -555,7 +555,7 @@ Shader "GAPH Custom Shader/Shader_IntegradedEffect"
 									half4 linepasstex = tex2D(_LinePassTex, i.linepasscoord.xy);
 									return res *= linepasstex;
 								#endif
-								UNITY_APPLY_FOG_COLOR(i.fogCoord, res, half4(0, 0, 0, 0));
+								//UNITY_APPLY_FOG_COLOR(i.fogCoord, res, half4(0, 0, 0, 0));
 								return res;
 							}
 							ENDCG
