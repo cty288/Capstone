@@ -81,7 +81,6 @@ namespace _02._Scripts.Runtime.TimeSystem
             isDawnDusk = true;
             _dawnDuskTimer = 0;
             _dayTime = 0;
-            _dayTimeNext = _dayTime + 1;
         }
 
         void Start()
@@ -106,14 +105,12 @@ namespace _02._Scripts.Runtime.TimeSystem
             sandstormVFX.SetFloat(AlphaID, 0);
             sandstormVFX.SetInt(NSRID, 0);
             sandstormVFX.SetInt(FSRID, 0);
-            //sandstormVFX.Reinit();
+            sandstormVFX.Reinit();
             _sandstorm.sandstormAlpha.value = 0;
         }
 
         private void OnGlobalTimeChanged(DateTime obj)
         {
-            _dayTime = obj.Hour * 60 + obj.Minute;
-            _dayTimeNext = _dayTime + 1;
             if (isDay)
             {
                 if (isDawnDusk)
@@ -157,9 +154,10 @@ namespace _02._Scripts.Runtime.TimeSystem
         private float _firstSandstormTick;
         private float _timeMinutes = 1440f / GameTimeModel.DayLength;
         private float _dayTime;
-        private float _dayTimeNext;
         void Update()
         {
+            if (levelModel.CurrentLevelCount == 0) return;
+            
             if (isDay)
             {
                 _dayTime += Time.deltaTime * _timeMinutes;
@@ -185,9 +183,7 @@ namespace _02._Scripts.Runtime.TimeSystem
                 sandstormVFX.SetInt(FSRID, (int)Mathf.Lerp(0, 32, t));
                 _sandstorm.sandstormAlpha.value = Mathf.Lerp(0, 1.12f, t);
                 if (t >= 1) sandstormCountDown = 0;
-            } 
-            
-            _dayTime = _dayTime > _dayTimeNext ? _dayTimeNext : _dayTime; // correct time to continue matching global time.
+            }
         }
 
         private void OnSandStormWarning(OnSandStormWarning e)
@@ -207,7 +203,7 @@ namespace _02._Scripts.Runtime.TimeSystem
             isDay = false;
             _sandstorm.nightDaySlide.value = 0 - (2 * _extraFactor);
             RenderSettings.fogDensity = _nightFog + _extraFactor;
-            //_dayTime = _endOfDayMinutes;
+            _dayTime = _endOfDayMinutes;
         }
         
         private void OnNightApproaching(OnNightApproaching e)
