@@ -45,10 +45,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments {
 		public override float TickInterval { get; protected set; } = -1;
 		
 		public override void OnInitialize() {
-			RegisterWeaponBuildBuffEvent<PlantAOEKillEvent>(OnPlantAOEKillEvent);
+			RegisterWeaponBuildBuffEvent<MineralAOEKillEvent>(OnPlantAOEKillEvent);
 		}
 
-		private void OnPlantAOEKillEvent(PlantAOEKillEvent e) {
+		private void OnPlantAOEKillEvent(MineralAOEKillEvent e) {
 			float range = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("range");
 			float multiplier = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("multiplier");
 			var weaponDamage = weaponEntity.GetBaseDamage().RealValue.Value;
@@ -56,13 +56,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments {
 			
 			int realDamage = Mathf.RoundToInt(damage * multiplier);
 
-			e.Buff.RangeAOE(range, realDamage, 1, e.Transform, e.Target, weaponEntity, false);
+			e.Buff2.RangeAOE(range, realDamage, 1, e.Transform, e.Target, weaponEntity, false);
 		}
 
-		private void OnPlantAOEEvent(PlantAOEEvent e) {
+		private void OnPlantAOEEvent(MineralAOEEvent e) {
 			float chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
 			if(Random.Range(0f, 1f) < chance) {
-				e.Buff.AddMulfunctionBuff(e.Duration, e.Target);
+				e.Buff2.AddMulfunctionBuff(e.Duration, e.Target);
 			}
 		}
 		
@@ -80,7 +80,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments {
 		}
 
 		public override void OnRecycled() {
-			UnRegisterWeaponBuildBuffEvent<PlantAOEKillEvent>(OnPlantAOEKillEvent);
+			UnRegisterWeaponBuildBuffEvent<MineralAOEKillEvent>(OnPlantAOEKillEvent);
 			base.OnRecycled();
 		}
 

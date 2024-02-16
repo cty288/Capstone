@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
-using Cysharp.Threading.Tasks;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
-using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
-using UnityEngine;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.InfiniteChainMagazine {
-	public class InfiniteChainMagazine : WeaponPartsEntity<InfiniteChainMagazine, InfiniteChainMagazineBuff> {
-		public override string EntityName { get; set; } = "InfiniteChainMagazine";
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.WorseViral {
+	public class WorseViral : WeaponPartsEntity<WorseViral, WorseViralBuff> {
+		public override string EntityName { get; set; } = "WorseViral";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
 		}
@@ -23,37 +21,29 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Infi
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			int number = GetCustomDataValueOfCurrentLevel<int>("number");
-			return Localization.GetFormat(defaultLocalizationKey, number);
+			int damage = GetCustomDataValueOfCurrentLevel<int>("damage");
+			return Localization.GetFormat(defaultLocalizationKey, damage);
 		}
+		
 
-		public override int GetMaxRarity() {
-			return 3;
-		}
-
-		public override int GetMinRarity() {
-			return 2;
-		}
-
-
-		public override WeaponPartType WeaponPartType => WeaponPartType.Magazine;
+		public override WeaponPartType WeaponPartType => WeaponPartType.Barrel;
 		
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}
 	}
 	
-	public class InfiniteChainMagazineBuff : WeaponPartsBuff<InfiniteChainMagazine, InfiniteChainMagazineBuff> {
+	public class WorseViralBuff : WeaponPartsBuff<WorseViral, WorseViralBuff> {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
-	
+		
 		public override void OnInitialize() {
-			weaponEntity.RegisterOnModifyValueEvent<MineralBuffOnModifyBaseAmmoRecoverEvent>(OnModifyBaseAmmoRecover);
+			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeDOTEvent>(OnCombatBuffChangeDOTEvent);
 		}
 
-		private MineralBuffOnModifyBaseAmmoRecoverEvent OnModifyBaseAmmoRecover(MineralBuffOnModifyBaseAmmoRecoverEvent e) {
-			int number = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("number");
-			e.Value += number;
+		private OnPlantBuffChangeDOTEvent OnCombatBuffChangeDOTEvent(OnPlantBuffChangeDOTEvent e) {
+			int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
+			e.Value += damage;
 			return e;
 		}
 
@@ -71,7 +61,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Infi
 		}
 
 		public override void OnRecycled() {
-			weaponEntity.UnRegisterOnModifyValueEvent<MineralBuffOnModifyBaseAmmoRecoverEvent>(OnModifyBaseAmmoRecover);
+			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeDOTEvent>(OnCombatBuffChangeDOTEvent);
 			base.OnRecycled();
 		}
 
@@ -83,10 +73,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Infi
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					int number = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("number");
+					
+					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
 
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("InfiniteChainMagazine_desc", number));
+						Localization.GetFormat("WorseViral_desc", damage));
 				})
 			};
 		}
