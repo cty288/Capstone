@@ -71,7 +71,7 @@ public class FactoryNewAttachment : WeaponPartsEntity<FactoryNewAttachment, Fact
 		
 
 		public override void OnStart() {
-			
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {

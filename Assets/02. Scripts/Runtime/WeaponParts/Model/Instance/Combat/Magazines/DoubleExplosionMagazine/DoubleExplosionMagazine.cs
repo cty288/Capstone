@@ -78,7 +78,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Doub
 
 
 		public override void OnStart() {
-			
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {

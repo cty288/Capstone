@@ -44,38 +44,43 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 			return true;
 		}
 
+		private bool descriptionAdded = false;
+
 		public override void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false) {
 			weaponPartsEntity = buffDealer as TWeaponParts;
 			weaponEntity = entity as IWeaponEntity;
-			
-			
+
+
 			if (force || this.BuffOwnerID == null || this.BuffOwnerID != entity?.UUID ||
 			    this.BuffDealerID != buffDealer?.UUID) {
-				
-				
-				CurrencyType currencyType = weaponPartsEntity.GetBuildType();
-				WeaponPartType partType = weaponPartsEntity.WeaponPartType;
-
-
-				additionalResourcePropertyDescriptionGetters = OnRegisterResourcePropertyDescriptionGetters(
-					$"PropertyIcon{currencyType.ToString()}",
-					null);
-				if (additionalResourcePropertyDescriptionGetters != null) {
-					weaponEntity?.AddAdditionalResourcePropertyDescriptionGetters(additionalResourcePropertyDescriptionGetters);
-				}
+				AddDescription();
 			}
-
-			
-			
-			
-			
 			base.OnInitialize(buffDealer, entity, force);
+		}
+
+		protected void AddDescription() {
+			if (descriptionAdded) {
+				return;
+			}
+			descriptionAdded = true;
+			CurrencyType currencyType = weaponPartsEntity.GetBuildType();
+			WeaponPartType partType = weaponPartsEntity.WeaponPartType;
+			additionalResourcePropertyDescriptionGetters = OnRegisterResourcePropertyDescriptionGetters(
+				$"PropertyIcon{currencyType.ToString()}",
+				null);
+			if (additionalResourcePropertyDescriptionGetters != null) {
+				weaponEntity?.AddAdditionalResourcePropertyDescriptionGetters(
+					additionalResourcePropertyDescriptionGetters);
+			}
 		}
 
 		
 		public override void OnAwake() {
 			base.OnAwake();
-			
+		}
+
+		public override void OnStart() {
+			AddDescription();
 		}
 
 		protected Dictionary<Type, TypeEventSystem.IRegisterations> eventRegisterations =
@@ -140,7 +145,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 			if (additionalResourcePropertyDescriptionGetters != null) {
 				weaponEntity.RemoveAdditionalResourcePropertyDescriptionGetters(additionalResourcePropertyDescriptionGetters);
 			}
-			
+			descriptionAdded = false;
 		}
 
 		public IWeaponPartsEntity WeaponPartsEntity => weaponPartsEntity;

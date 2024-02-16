@@ -59,6 +59,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.AdaptedCompensator {
 		}
 
 		public override void OnStart() {
+			base.OnStart();
 			multiplier = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("multiplier");
 		}
 

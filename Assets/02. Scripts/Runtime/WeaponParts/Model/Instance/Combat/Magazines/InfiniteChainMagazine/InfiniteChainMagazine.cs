@@ -60,7 +60,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Infi
 
 
 		public override void OnStart() {
-			
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {

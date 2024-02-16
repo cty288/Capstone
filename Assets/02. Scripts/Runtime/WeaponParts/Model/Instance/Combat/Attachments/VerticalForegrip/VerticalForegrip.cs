@@ -55,6 +55,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments {
 		}
 
 		public override void OnStart() {
+			base.OnStart();
 			float multiplayer = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("multiplier");
 			IBuffedProperty<RecoilInfo> recoilProperty = baseRecollProperties.Properties.First();
 

@@ -67,6 +67,7 @@ public class SelfLoadingAttachment : WeaponPartsEntity<SelfLoadingAttachment, Se
 
 		
 		public override void OnStart() {
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {

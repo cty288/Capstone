@@ -71,7 +71,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Attachments.Mul
 		
 
 		public override void OnStart() {
-			
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {

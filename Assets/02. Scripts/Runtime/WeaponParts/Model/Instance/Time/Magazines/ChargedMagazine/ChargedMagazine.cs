@@ -94,6 +94,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Time.Magazines.Charged
 
 
 		public override void OnStart() {
+			base.OnStart();
 			remainingAmmoToTrigger = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("condition");
 			remainingAmmoToEndEffect = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("effect");
 		}

@@ -68,7 +68,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments {
 		
 
 		public override void OnStart() {
-			
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {
