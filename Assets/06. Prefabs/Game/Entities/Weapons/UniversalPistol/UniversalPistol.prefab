@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: eb2e3c7d414bb3042b9542a93ae08cc1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eb2e3c7d414bb3042b9542a93ae08cc1,
         type: 3}
@@ -1444,7 +1444,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: ab41f728-70db-4643-9785-26ca89deac99
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 8957742908061847295}
@@ -1475,17 +1474,17 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
   - includeChildren: 1
-    ownerGameObject: {fileID: 5813153945547683118}
+    ownerGameObject: {fileID: 0}
     originalLayer:
       serializedVersion: 2
       m_Bits: 0
   - includeChildren: 1
-    ownerGameObject: {fileID: 7628581825884564576}
+    ownerGameObject: {fileID: 0}
     originalLayer:
       serializedVersion: 2
       m_Bits: 0
   - includeChildren: 1
-    ownerGameObject: {fileID: 2794142419374327900}
+    ownerGameObject: {fileID: 0}
     originalLayer:
       serializedVersion: 2
       m_Bits: 0
@@ -1512,6 +1511,7 @@ MonoBehaviour:
   crossHairPrefabName: DefaultCrossHair
   model: {fileID: 8398458644937393783}
   autoReload: 1
+  canScope: 1
   layer:
     serializedVersion: 2
     m_Bits: 2433
@@ -1521,10 +1521,10 @@ MonoBehaviour:
   animator: {fileID: 4898352156591280616}
   reloadAnimationLength: 3
   cameraPlacementData:
-    hipFireCameraPosition: {x: 0.03, y: -0.095, z: -0.08}
+    hipFireCameraPosition: {x: 0.06, y: -0.07, z: -0.25}
     hipFireCameraRotation: {x: 1.1099944, y: 353.98, z: 2.900004}
-    adsCameraPosition: {x: 0.004899999, y: -0.1, z: 0.27500004}
-    adsCameraRotation: {x: 358.99002, y: 357.04, z: 0.08000492}
+    adsCameraPosition: {x: 0.00485, y: -0.1, z: 0.27500004}
+    adsCameraRotation: {x: 360, y: 357.04, z: 0.08000492}
   bulletVFX:
   - {fileID: 1287861412996858552}
   - {fileID: 864970247027404768}
@@ -1535,27 +1535,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5651504985171777211}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2794142419374327900 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7541528740236041959, guid: c6400bebfea407e45af2aa63a341365f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5651504985171777211}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5813153945547683118 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2216427843909641109, guid: c6400bebfea407e45af2aa63a341365f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5651504985171777211}
-  m_PrefabAsset: {fileID: 0}
 --- !u!2083052967 &7570269908101100327 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5651504985171777211}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7628581825884564576 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2859793562509966043, guid: c6400bebfea407e45af2aa63a341365f,
     type: 3}
   m_PrefabInstance: {fileID: 5651504985171777211}
   m_PrefabAsset: {fileID: 0}
