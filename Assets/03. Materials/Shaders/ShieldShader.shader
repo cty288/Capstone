@@ -196,8 +196,8 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 
 				//return float4(IN.positionSS.www, 0.5f);
 				//return float4(depth.rrr, 0.5f);
-				float4 col = lerp((baseMap * _BaseColor * IN.color), _DamageColor, IN.arc.w) + intersect;
-				return float4(col.rgb, col.a * fresnel) + max(depth0, fresnel * 0.5f);
+				float4 col = lerp((baseMap * _BaseColor * IN.color) * fresnel, _DamageColor, IN.arc.w * fresnel) + intersect;
+				return float4(col.rgb, col.a) + max(depth0, fresnel * 0.5f);
 			}
 			ENDHLSL
 		}
