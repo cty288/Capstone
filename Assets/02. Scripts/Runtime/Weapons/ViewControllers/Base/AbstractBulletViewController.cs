@@ -188,30 +188,22 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected abstract void OnHitResponse(HitData data);
 
 		protected virtual void OnTriggerEnter(Collider other) {
-			print($"WORM BOSS HIT {other.name} A");
 
 			if (!inited) {
-				print($"WORM BOSS HIT {other.name} B");
 				return;
 			}
 
 			if (!other.isTrigger) {
-				print($"WORM BOSS HIT {other.name} C");
-
 				Rigidbody rootRigidbody = other.attachedRigidbody;
 				GameObject hitObj = rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
 				if (hitObj && (bulletOwner && hitObj.transform == bulletOwner.transform) || 
 				    (hitObj.transform == owner.GetRootDamageDealerTransform())) {
-					print($"WORM BOSS HIT {other.name} D");
-
 					return;
 				}
 				
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
 					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
-						print($"WORM BOSS HIT {other.name} E");
-
 						return;
 					}
 				}

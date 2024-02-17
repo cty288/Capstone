@@ -68,18 +68,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // shoot 1,2,3
             for(int i = 0; i < firePoints.Length; i++)
             {
-                Debug.Log($"WORM BOSS START BULLETS {i}");
                 chargeEffects[i].SetActive(false);
                 bulletEffects.Add(SpawnBulletEffect(firePoints[i].Value.transform));
-                await UniTask.WaitForSeconds(1f);
-                Debug.Log("WORM BOSS BULLET WAIT");
-                // await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
-                //     gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+                await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
+                    gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
 
-            await UniTask.WaitForSeconds(1f);
-            // await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
-            //     gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
+                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
             taskStatus = TaskStatus.Success;
         }
@@ -96,8 +92,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         private GameObject SpawnBulletEffect(Transform spawnTransform)
         {
-            Debug.Log($"WORM BOSS BEFORE INIT ASDLKJADKLFGH");
-
             GameObject b = acidBulletPool.Allocate();
             b.transform.position = spawnTransform.position;
             
@@ -110,9 +104,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Vector3 dir = destination - spawnTransform.position;
             b.transform.rotation = Quaternion.LookRotation(dir);
             
-            Debug.Log($"WORM BOSS BEFORE INIT AAAAAAAAA");
-
-            // Debug.Log($"WORM BOSS BEFORE INIT {enemyEntity.EntityName}");
             b.GetComponent<IBulletViewController>().Init(Faction.Hostile,
                 10,
                 gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
@@ -120,10 +111,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
             //     enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
             //     gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
-            Debug.Log($"WORM BOSS BULLET SPEED {bulletSpeed}");
 
             b.GetComponent<WormBossBulletToxic>().SetData(bulletSpeed);
-            
             return b;
         }
         

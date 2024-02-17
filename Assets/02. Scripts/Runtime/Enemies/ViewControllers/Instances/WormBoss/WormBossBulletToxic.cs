@@ -2,6 +2,8 @@ using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
 using MikroFramework.Pool;
 using MikroFramework;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.Enemies;
 using UnityEngine;
 
 namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
@@ -11,29 +13,31 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
         public GameObject particlePrefab;
         private SafeGameObjectPool pool;
         private GameObject particleInstance;
-        private Rigidbody rb;
+        
+        [SerializeField] private Rigidbody rb;
         
         private void Start()
         {
-            pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 50, 100);
-            rb = gameObject.GetComponent<Rigidbody>();
+            pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 3, 9);
         }
 
-        protected override void OnBulletReachesMaxRange() {}
+        protected override void OnBulletReachesMaxRange()
+        {
+            particleInstance = pool.Allocate();
+            particleInstance.transform.position = transform.position;
+        }
 
 
         public void SetData(float bulletSpeed)
         {
             this.bulletSpeed = bulletSpeed;
             rb.velocity = gameObject.transform.forward * bulletSpeed;
-            print($"WORM BOSS BULLET SPEED {bulletSpeed}");
         }
 
         protected override void OnHitResponse(HitData data) {}
 
         protected override void OnHitObject(Collider other)
         {
-            print($"WORM BOSS HIT {other.name}");
             if (particlePrefab != null)
             {
                 // Get the hit point and normal
@@ -42,14 +46,16 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
 
                 // Instantiate the particle system at the hit point with the correct rotation
                 particleInstance = pool.Allocate();
-                particleInstance.transform.position = (hitPoint);
+                particleInstance.transform.position = hitPoint;
                 particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
+                
+                particleInstance.GetComponent<WormBossAcidExplosionViewController>().Init(Faction.Hostile, 10, 1, gameObject, owner);
             }
         }
 
         protected override void OnBulletRecycled()
         {
-            pool.Recycle(particleInstance);   
+            // pool.Recycle(particleInstance);   
         }
     }
 }

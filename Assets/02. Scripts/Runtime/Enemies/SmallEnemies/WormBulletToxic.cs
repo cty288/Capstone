@@ -2,6 +2,7 @@ using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
 using MikroFramework.Pool;
 using MikroFramework;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using UnityEngine;
 
 namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
@@ -20,6 +21,7 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
         {
             base.Update();
             gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * bulletSpeed;
+            overrideExplosionFaction = true;
         }
 
         protected override void OnBulletReachesMaxRange() {}
@@ -44,12 +46,17 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
                 particleInstance = pool.Allocate();
                 particleInstance.transform.position = (hitPoint);
                 particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
+                
+                particleInstance.GetComponent<IExplosionViewController>().Init(overrideExplosionFaction
+                        ? CurrentFaction.Value
+                        : Faction.Explosion, 20, 1, gameObject,
+                    this);
             }
         }
 
         protected override void OnBulletRecycled()
         {
-            pool.Recycle(particleInstance);   
+            // pool.Recycle(particleInstance);   
         }
     }
 }

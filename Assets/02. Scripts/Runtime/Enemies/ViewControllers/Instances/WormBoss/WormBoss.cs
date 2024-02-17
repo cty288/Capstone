@@ -31,7 +31,6 @@ namespace Runtime.Enemies
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "WormBoss";
         
-
         protected override void OnEntityStart(bool isLoadedFromSave)
         {
             Debug.Log("worm start");
@@ -39,218 +38,84 @@ namespace Runtime.Enemies
 
         public override void OnRecycle()
         {
-
+            base.OnRecycle();
         }
-        protected override void OnInitModifiers(int rarity, int level)
-        {
+        
+        protected override void OnInitModifiers(int rarity, int level) {}
+        
+        protected override void OnEnemyRegisterAdditionalProperties() {}
 
-        }
-
-
-
-        protected override void OnEnemyRegisterAdditionalProperties()
-        {
-
-        }
-
-        protected override string OnGetDescription(string defaultLocalizationKey)
-        {
+        protected override string OnGetDescription(string defaultLocalizationKey) {
             return Localization.Get(defaultLocalizationKey);
         }
 
-        protected override ICustomProperty[] OnRegisterCustomProperties()
-        {
-            
+        protected override ICustomProperty[] OnRegisterCustomProperties() {
             return new[] {
-                new AutoConfigCustomProperty("laserBeam")
-                
+                new AutoConfigCustomProperty("laserBeam"),
+                new AutoConfigCustomProperty("acidAttack")
             };
-            
-            
         }
-
-
     }
+    
     public class WormBoss : AbstractBossViewController<WormBossEntity>
     {
-        public int MaxShellHealth { get; }
+        private Animator animator;
+        private NavMeshAgent agent;
+        private Rigidbody rb;
 
-        public int CurrentShellHealth { get; }
-        [Header("HitResponder_Info")]
-        public Animator animator;
-        public NavMeshAgent agent;
-
-
-
-        [SerializeField] private HitBox hitbox_roll;
-
-        [BindCustomData("ranges", "closeRange")]
-        public float CloseRange { get; }
-
-        [BindCustomData("ranges", "midRange")]
-        public float MidRange { get; }
-
-        [BindCustomData("ranges", "longRange")]
-        public float LongRange { get; }
-
-        [BindCustomData("ranges", "meleeRange")]
-        public float MeleeRange { get; }
-
-        [BindCustomData("waitTimes", "meleeWait")]
-        public float MeleeWait { get; }
-        [BindCustomData("waitTimes", "rapidFireWait")]
-        public float RapidFireWait { get; }
-        [BindCustomData("waitTimes", "rangedAOEWait")]
-        public float RangedAOEWait { get; }
-
-
-        [BindCustomData("waitTimes", "rollWait")]
-        public float RollWait { get; }
-
-
-
-        private HitDetectorInfo hitDetectorInfo;
-        private bool deathAnimationEnd = false;
-
-
-        [SerializeField]
-        private Collider hardCollider;
-
-        [Header("Shell")]
-        [SerializeField]
-        private Collider shellCollider;
-
-        [SerializeField] private Transform shellHealthBarSpawnTransform;
-
-        [SerializeField] public HitBox slamHitBox;
-
-        [SerializeField] private float meleeKnockbackForce;
-        //[SerializeField] private GameObject shellHurbox;
-        [SerializeField] private HurtBox[] pedalHurboxes;
-        private HashSet<IHurtbox> hashedPedalHurboxes = new HashSet<IHurtbox>();
-
-        private HurtboxModifier _innerShellHurtboxModifier;
-        protected override MikroAction WaitingForDeathCondition()
-        {
-            transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => {
-                deathAnimationEnd = true;
-            });
-
-            return UntilAction.Allocate(() => deathAnimationEnd);
-        }
-
+        [SerializeField] private GameObject model;
 
         protected override void Awake()
         {
             base.Awake();
-           
+            animator = GetComponentInChildren<Animator>(true);
+            rb = GetComponent<Rigidbody>();
+            agent = GetComponent<NavMeshAgent>();
+        }
+        
+        protected override void OnEntityStart()
+        {
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
-        {
-
-        }
-
-        protected override void OnEntityStart()
         {
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
-            
         }
-
-
 
         protected override IEnemyEntity OnInitEnemyEntity(EnemyBuilder<WormBossEntity> builder)
         {
             return builder.
                 FromConfig()
-                //.SetAllBasics(0, new HealthInfo(100, 100), TasteType.Type1, TasteType.Type2)
                 .Build();
         }
-
-       
-
+        
         protected override void OnAnimationEvent(string eventName)
         {
             switch (eventName)
             {
-                case "ShellOpen":
-                    //BoundEntity.IsInvincible.Value = false;
-                   
-                    // shellHurbox.SetActive(false);
-                    break;
-                case "ShellClose":
-                    //BoundEntity.IsInvincible.Value = true;
-                   
-                    //shellHurbox.SetActive(true);
-                    break;
-                case "ClearHits":
-                    hitObjects.Clear();
-                    break;
-                case "MeleeStart":
-                    ClearHitObjects();
-                    slamHitBox.gameObject.SetActive(true);
-                    slamHitBox.StartCheckingHits(BoundEntity.GetCustomDataValue<int>("damages", "meleeDamage").Value);
-                    // shellHurbox.SetActive(false);
-                    /*foreach (var pedalHurbox in pedalHurboxes) {
-                        pedalHurbox.DamageMultiplier = 0;
-                    }*/
-
-                    //BoundEntity.ChangeShellStatus(false);
-                    _innerShellHurtboxModifier.IgnoreHurtboxCheck = true;
-                    break;
-                case "MeleeFinish":
-                    slamHitBox.StopCheckingHits();
-                    slamHitBox.gameObject.SetActive(false);
-                    break;
-                case "MeleeShellClose":
-                    //shellHurbox.SetActive(true);
-                    //BoundEntity.ChangeShellStatus(true);
-                    _innerShellHurtboxModifier.IgnoreHurtboxCheck = false;
-                    break;
                 default:
                     break;
             }
         }
+        
+        protected override MikroAction WaitingForDeathCondition() {
 
-       
-
-       
-
-
-        public void ClearHitObjects()
-        {
-            hitObjects.Clear();
-        }
-
-        public override void HurtResponse(HitData data)
-        {
-            
-
-
-        }
-
-        public void ChangeShellStatus(bool newStatus)
-        {
-            
-        }
-
-
-        public void MeleeAttack()
-        {
-
-        }
-
-        public override void HitResponse(HitData data)
-        {
-            
+            return UntilAction.Allocate(() => !model.gameObject.activeInHierarchy ||
+                                              (animator.GetCurrentAnimatorStateInfo(0).IsName("Die") &&
+                                               animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f));
         }
 
         public override void OnRecycled()
         {
+            base.OnRecycled();
             
+            transform.localScale = Vector3.one;
+            agent.enabled = true;
+            behaviorTree.enabled = true;
+            model.gameObject.SetActive(true);
         }
     }
 }
