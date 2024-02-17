@@ -74,6 +74,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         // Start is called before the first frame update
         public override void OnStart()
         {
+            base.OnStart();
+            
             agent.enabled = false;
             
             supportSphere.parent = null;

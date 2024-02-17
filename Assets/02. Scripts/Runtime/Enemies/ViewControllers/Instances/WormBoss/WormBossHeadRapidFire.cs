@@ -21,7 +21,7 @@ using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class WormBossHeadRapidFire : EnemyAction
+    public class WormBossHeadRapidFire : EnemyAction<WormBossEntity>
     {
         private TaskStatus taskStatus;
         public SharedGameObject firePoint;
@@ -30,20 +30,31 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private SafeGameObjectPool pool;
 
         private GameObject player;
-
-        public float bulletInterval = 1f;
-        public float bulletSpeed = 10f;
-        public int bulletCount = 5;
+        
+        private float bulletSpeed;
+        private int bulletCountPerWave;
         private float bulletAccuracy;
-
-        public float duration = 5f;
+        private int bulletDamage;
+        private int bulletWaves;
+        private float bulletWaveInterval;
+        private float bulletRange;
 
         public override void OnStart()
         {
+            base.OnStart(); 
+            
             taskStatus = TaskStatus.Running;
             pool = GameObjectPoolManager.Singleton.CreatePool(rapidFireBulletPrefab.Value, 1, 3);
             
             player = GetPlayer();
+            
+            bulletSpeed = enemyEntity.GetCustomDataValue<int>("rapidFire", "bulletSpeed");
+            bulletCountPerWave = enemyEntity.GetCustomDataValue<int>("rapidFire", "bulletCountPerWave");
+            bulletAccuracy = enemyEntity.GetCustomDataValue<float>("rapidFire", "bulletAccuracy");
+            bulletDamage = enemyEntity.GetCustomDataValue<int>("rapidFire", "bulletDamage");
+            bulletWaves = enemyEntity.GetCustomDataValue<int>("rapidFire", "bulletWaves");
+            bulletWaveInterval = enemyEntity.GetCustomDataValue<float>("rapidFire", "bulletWaveInterval");
+            bulletRange = enemyEntity.GetCustomDataValue<float>("rapidFire", "bulletRange");
 
             SkillExecute();
         }
@@ -55,28 +66,33 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         private async UniTask SkillExecute()
         {
-            await UniTask.WaitForSeconds(2f,
-                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-
-            float timer = duration;
-            float lastShootTime = 0f;
-            while (timer > 0)
-            {
-                timer -= Time.deltaTime;
-                
-                if(lastShootTime + bulletInterval < Time.time)
-                {
-                    lastShootTime = Time.time;
-                    for (int i = 0; i < bulletCount; i++)
-                    {
-                        SpawnBullet();
-                    }
-                }
-                await UniTask.Yield(PlayerLoopTiming.Update,
-                    cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-            }
             await UniTask.WaitForSeconds(1f,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+
+            for (int i = 0; i < bulletWaves; i++)
+            {
+                await RapidFire();
+            }
+            
+            // float timer = duration;
+            // float lastShootTime = 0f;
+            // while (timer > 0)
+            // {
+            //     timer -= Time.deltaTime;
+            //     
+            //     if(lastShootTime + bulletWaveInterval < Time.time)
+            //     {
+            //         lastShootTime = Time.time;
+            //         for (int i = 0; i < bulletCountPerWave; i++)
+            //         {
+            //             SpawnBullet();
+            //         }
+            //     }
+            //     await UniTask.Yield(PlayerLoopTiming.Update,
+            //         cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            // }
+            // await UniTask.WaitForSeconds(1f,
+            //     cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             taskStatus = TaskStatus.Success;
         }
         
@@ -91,15 +107,21 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             b.transform.position = firePoint.Value.transform.position;
             b.transform.rotation = firePoint.Value.transform.rotation * randomRotation;
             
-            // b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-            //     enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
-            //     gameObject, gameObject.GetComponent<ICanDealDamage>() , 50f);
+            b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
+                bulletDamage,
+                gameObject, gameObject.GetComponent<ICanDealDamage>() , bulletRange);
 
             b.GetComponent<WormBullet>().SetData(bulletSpeed, player, bulletAccuracy);
         }
         
-        public override void OnEnd()
+        private async UniTask RapidFire()
         {
+            for (int i = 0; i < bulletCountPerWave; i++)
+            {
+                SpawnBullet();
+            }
+            await UniTask.WaitForSeconds(bulletWaveInterval,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         }
     }
 }

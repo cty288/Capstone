@@ -9,10 +9,12 @@ using UnityEngine;
 namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
     public class WormBossBulletToxic : AbstractBulletViewController
     {
-        private float bulletSpeed;
         public GameObject particlePrefab;
         private SafeGameObjectPool pool;
         private GameObject particleInstance;
+
+        private int acidTickDamage;
+        private float acidExplosionRadius;
         
         [SerializeField] private Rigidbody rb;
         
@@ -28,9 +30,10 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
         }
 
 
-        public void SetData(float bulletSpeed)
+        public void SetData(float bulletSpeed, int acidTickDamage, float acidExplosionRadius)
         {
-            this.bulletSpeed = bulletSpeed;
+            this.acidTickDamage = acidTickDamage;
+            this.acidExplosionRadius = acidExplosionRadius;
             rb.velocity = gameObject.transform.forward * bulletSpeed;
         }
 
@@ -49,7 +52,7 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
                 particleInstance.transform.position = hitPoint;
                 particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
                 
-                particleInstance.GetComponent<WormBossAcidExplosionViewController>().Init(Faction.Hostile, 10, 1, gameObject, owner);
+                particleInstance.GetComponent<WormBossAcidExplosionViewController>().Init(Faction.Hostile, acidTickDamage, acidExplosionRadius, gameObject, owner);
             }
         }
 

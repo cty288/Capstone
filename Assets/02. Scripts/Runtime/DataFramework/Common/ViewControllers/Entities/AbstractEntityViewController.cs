@@ -732,6 +732,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			foreach (var prop in properties) {
 				if (prop.GetCustomAttributes(typeof(BindAttribute), false).FirstOrDefault() is BindAttribute attribute) {
 					
+					print("TESTING: " + attribute.PropertyName.GetFullName());
 					IBindableProperty bindedProperty = BoundEntity.GetProperty(attribute.PropertyName).GetRealValue();
 					
 					//get type of the property

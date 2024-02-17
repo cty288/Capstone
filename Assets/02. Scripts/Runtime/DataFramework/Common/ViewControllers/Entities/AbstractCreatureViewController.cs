@@ -99,6 +99,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			
 			if (behaviorTree) {
+				print($"{BoundEntity.EntityName} behavior tree enabled");
 				behaviorTree.enabled = true;
 				behaviorTree.Start();
 			}

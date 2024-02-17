@@ -31,16 +31,32 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         List<GameObject> bulletEffects = new List<GameObject>();
         
         private Transform playerTrans;
-        
-        public float bulletSpeed = 20f;
 
+        private float bulletSpeed;
+        private float chargeUpTime;
+        private int bulletExplosionDamage;
+        private float timeBetweenShots;
+        private float acidExplosionRadius;
+        private float bulletRange;
+        private int acidTickDamage;
+        
         public override void OnStart()
         {
+            base.OnStart();
+            
             taskStatus = TaskStatus.Running;
             playerTrans = GetPlayer().transform;
             
             acidChargePool = GameObjectPoolManager.Singleton.CreatePool(acidChargePrefab.Value, 3, 9);
             acidBulletPool = GameObjectPoolManager.Singleton.CreatePool(acidBulletPrefab.Value, 3, 9);
+            
+            bulletSpeed = enemyEntity.GetCustomDataValue<int>("acidAttack", "bulletSpeed");
+            chargeUpTime = enemyEntity.GetCustomDataValue<float>("acidAttack", "chargeUpTime");
+            bulletExplosionDamage = enemyEntity.GetCustomDataValue<int>("acidAttack", "bulletExplosionDamage");
+            timeBetweenShots = enemyEntity.GetCustomDataValue<float>("acidAttack", "timeBetweenShots");
+            acidExplosionRadius = enemyEntity.GetCustomDataValue<float>("acidAttack", "acidExplosionRadius");
+            bulletRange = enemyEntity.GetCustomDataValue<float>("acidAttack", "bulletRange");
+            acidTickDamage = enemyEntity.GetCustomDataValue<int>("acidAttack", "acidTickDamage");
             
             SkillExecute();
         }
@@ -58,7 +74,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             foreach (var point in firePoints)
             {
                 chargeEffects.Add(SpawnChargeEffect(point.Value.transform));
-                await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
+                await UniTask.WaitForSeconds(chargeUpTime, false, PlayerLoopTiming.Update,
                     gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
             
@@ -70,7 +86,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 chargeEffects[i].SetActive(false);
                 bulletEffects.Add(SpawnBulletEffect(firePoints[i].Value.transform));
-                await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
+                await UniTask.WaitForSeconds(timeBetweenShots, false, PlayerLoopTiming.Update,
                     gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
 
@@ -105,14 +121,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             b.transform.rotation = Quaternion.LookRotation(dir);
             
             b.GetComponent<IBulletViewController>().Init(Faction.Hostile,
-                10,
-                gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
-            
-            // b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-            //     enemyEntity.GetCustomDataValue<int>("attack", "bulletDamage"),
-            //     gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
+                bulletExplosionDamage,
+                gameObject, gameObject.GetComponent<ICanDealDamage>(), bulletRange);
 
-            b.GetComponent<WormBossBulletToxic>().SetData(bulletSpeed);
+            b.GetComponent<WormBossBulletToxic>().SetData(bulletSpeed, acidTickDamage, acidExplosionRadius);
             return b;
         }
         

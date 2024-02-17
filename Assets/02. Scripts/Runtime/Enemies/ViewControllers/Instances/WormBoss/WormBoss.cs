@@ -59,6 +59,11 @@ namespace Runtime.Enemies
     
     public class WormBoss : AbstractBossViewController<WormBossEntity>
     {
+        [BindCustomData("entity", "speed")]
+        public float Speed { get;}
+        [BindCustomData("entity", "closeRange")]
+        public float CloseRange { get;}
+        
         private Animator animator;
         private NavMeshAgent agent;
         private Rigidbody rb;

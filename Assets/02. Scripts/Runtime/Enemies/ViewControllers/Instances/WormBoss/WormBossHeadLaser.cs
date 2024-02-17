@@ -25,14 +25,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         private TaskStatus taskStatus;
         public SharedGameObject firePoint;
-        public float laserDuration = 5f;
         
         public SharedGameObject lazerPrefab;
         private SafeGameObjectPool pool;
 
         private GameObject laserInstance;
-        private int laserDamage = 5;
-        private float interval = 0.2f;
+        private int laserDamage;
+        private float chargeUpTime;
+        private float simpleMissileMaxTurnAngle;
+        private float maxRange;
+        private float interval;
+        private float laserDuration;
 
         public GameObject charging;
         public GameObject charged;
@@ -41,14 +44,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private ParticleSystem chargingVFX;
         private ParticleSystem chargedVFX;
         private ParticleSystem beamVFX;
-
         
         public override void OnStart()
         {
+            base.OnStart();
+            
             taskStatus = TaskStatus.Running;
             pool = GameObjectPoolManager.Singleton.CreatePool(lazerPrefab.Value, 1, 3);
-            //laserDamage = enemyEntity.GetCustomDataValue<int>("laserBeam", "laserDamage");
-            //interval = enemyEntity.GetCustomDataValue<float>("laserBeam", "interval");
+
+            laserDamage = enemyEntity.GetCustomDataValue<int>("laserBeam", "laserDamage");
+            chargeUpTime = enemyEntity.GetCustomDataValue<float>("laserBeam", "chargeUpTime");
+            simpleMissileMaxTurnAngle = enemyEntity.GetCustomDataValue<float>("laserBeam", "simpleMissileMaxTurnAngle");
+            maxRange = enemyEntity.GetCustomDataValue<float>("laserBeam", "maxRange");
+            interval = enemyEntity.GetCustomDataValue<float>("laserBeam", "interval");
+            laserDuration = enemyEntity.GetCustomDataValue<float>("laserBeam", "laserDuration");
 
             SkillExecute();
         }
@@ -60,7 +69,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private async UniTask SkillExecute()
         {
-            await UniTask.WaitForSeconds(2f,
+            await UniTask.WaitForSeconds(chargeUpTime,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
             await SpawnLazer();
@@ -92,17 +101,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             beam.SetActive(true);
             laserInstance = pool.Allocate();
-            /*
+            
             laserInstance.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-                enemyEntity.GetCustomDataValue<int>("laserBeam", "laserDamage"),
-                gameObject, gameObject.GetComponent<ICanDealDamage>(), 50f);
-            */
+                laserDamage, gameObject, gameObject.GetComponent<ICanDealDamage>(), maxRange);
+            
             Vector3 dir = transform.forward.normalized;
             Quaternion rotation = Quaternion.LookRotation(dir);
             laserInstance.transform.parent = firePoint.Value.transform;
             laserInstance.transform.position = firePoint.Value.transform.position;
             laserInstance.transform.rotation = rotation;
-            //laserInstance.GetComponent<WormBossLaser>().SetData(interval, laserDamage);
+            
+            laserInstance.GetComponent<WormBossLaser>().SetData(interval, laserDamage);
         }
         
         public override void OnEnd()
