@@ -15,7 +15,7 @@ Shader "Universal Render Pipeline/Custom/Sandstorm"
         Tags {
 			"RenderPipeline"="UniversalPipeline"
 			"RenderType"="Transparent"
-			"Queue"="Transparent"
+			"Queue"="Transparent-1"
 			"UniversalMaterialType" = "Lit" "IgnoreProjector" = "True"
 		}
         LOD 100
