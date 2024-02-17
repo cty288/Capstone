@@ -28,15 +28,19 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [UnityEngine.Serialization.FormerlySerializedAs("targetRotation")]
         public SharedVector3 m_TargetRotation;
 
+        public Transform source;
         public override TaskStatus OnUpdate()
         {
+            if (!source) {
+                source =  transform;
+            }
             var rotation = Target();
             // Return a task status of success once we are done rotating
-            if (Quaternion.Angle(transform.rotation, rotation) < m_RotationEpsilon.Value) {
+            if (Quaternion.Angle(source.rotation, rotation) < m_RotationEpsilon.Value) {
                 return TaskStatus.Success;
             }
             // We haven't reached the target yet so keep rotating towards it
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, m_MaxLookAtRotationDelta.Value);
+            source.rotation = Quaternion.RotateTowards(source.rotation, rotation, m_MaxLookAtRotationDelta.Value);
             Debug.Log("rotating");
             return TaskStatus.Running;
         }
@@ -47,7 +51,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             if (m_Target == null || m_Target.Value == null) {
                 return Quaternion.Euler(m_TargetRotation.Value);
             }
-            var position = m_Target.Value.transform.position - transform.position;
+            var position = m_Target.Value.transform.position - source.position;
             if (m_OnlyY.Value) {
                 position.y = 0;
             }

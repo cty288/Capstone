@@ -55,7 +55,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		/*public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
 		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;*/
 
-		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
+		protected HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
 		
 		public float Size { get; protected set; }
@@ -108,6 +108,10 @@ namespace Runtime.Weapons.ViewControllers.Base {
 
 		public virtual bool CheckHit(HitData data) {
 
+			if (Damage == 0) {
+				return false;
+			}
+			
 			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || 
 			    data.Hurtbox.Owner == owner.GetRootDamageDealerTransform()?.gameObject || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;

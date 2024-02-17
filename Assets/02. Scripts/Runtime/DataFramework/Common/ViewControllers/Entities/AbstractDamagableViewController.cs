@@ -106,7 +106,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		public virtual void HurtResponse(HitData data) {
 			// Debug.Log("I AM HURTING");
-			BoundEntity.TakeDamage(data.Damage, data.Attacker, out _, data);
+			BoundEntity?.TakeDamage(data.Damage, data.Attacker, out _, data);
 		}
 
 		public IDamageable DamageableEntity => BoundEntity;

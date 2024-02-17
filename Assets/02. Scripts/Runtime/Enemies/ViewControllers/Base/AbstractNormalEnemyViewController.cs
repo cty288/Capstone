@@ -11,6 +11,7 @@ using Runtime.Enemies.Model;
 using Runtime.Player;
 using Runtime.Temporary;
 using Runtime.UI.NameTags;
+using Runtime.Utilities;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		private float invincibleTime = 2f;
 		protected Dictionary<HurtBox, bool> initialHurtBoxActiveState = new Dictionary<HurtBox, bool>();
 
+		[SerializeField] private float eliteScaleMultiplier = 1.5f;
 		protected override void Awake() {
 			base.Awake();
 			HurtBox[] hurtBoxes = GetComponentsInChildren<HurtBox>(true);
@@ -49,6 +51,18 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			
 			foreach (var hurtBox in initialHurtBoxActiveState.Keys) {
 				hurtBox.gameObject.SetActive(false);
+			}
+
+			BoundEntity.IsElite.RegisterWithInitValue(OnEliteChanged)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		}
+
+		private void OnEliteChanged(bool arg1, bool isElite) {
+			if (isElite) {
+				transform.localScale *= eliteScaleMultiplier;
+			}
+			else {
+				transform.localScale = Vector3.one;
 			}
 		}
 

@@ -70,6 +70,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		private CancellationTokenSource ctsWhenDieOrStunned
 			= new CancellationTokenSource();
+		
+		private Rigidbody rb;
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
@@ -84,6 +86,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (behaviorTree) {
 				behaviorTree.enabled = false;
 			}
+			
+			rb = GetComponent<Rigidbody>();
 		}
 		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
@@ -120,7 +124,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 			
 			if (navMeshAgent) {
+				if (isStunned) {
+					navMeshAgent.velocity = Vector3.zero;
+				}
 				navMeshAgent.enabled = !isStunned;
+			}
+			
+			if(rb && isStunned) {
+				rb.velocity = Vector3.zero;
 			}
 
 			Animator animator = GetComponentInChildren<Animator>();

@@ -14,8 +14,29 @@ namespace _02._Scripts.Runtime.Rewards {
 	[Serializable]
 	public struct RewardBatch {
 		public RewardType RewardType;
-		public int Level;
+		public SerializedDictionary<int, int> PossibleLevelWithWeights;
 		public Vector2Int AmountRange;
+		
+		public int PickLevel() {
+			if (PossibleLevelWithWeights.Count == 0) {
+				return 1;
+			}
+			int totalWeight = 0;
+			foreach (var pair in PossibleLevelWithWeights) {
+				totalWeight += pair.Value;
+			}
+
+			int randomWeight = UnityEngine.Random.Range(0, totalWeight + 1);
+			int currentWeight = 0;
+			foreach (var pair in PossibleLevelWithWeights) {
+				currentWeight += pair.Value;
+				if (currentWeight >= randomWeight) {
+					return pair.Key;
+				}
+			}
+
+			return 1;
+		}
 	}
 
 	[Serializable]

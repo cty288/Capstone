@@ -59,6 +59,7 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
         bool canSummon = true;
         Dictionary<CurrencyType, int> requiredCurrency = GetRequiredCurrency(spawnedUpgradedSkill);
 		
+        int i = 0;
         foreach (CurrencyType currencyType in requiredCurrency.Keys) {
             sb.Append($"<sprite index={(int) currencyType}>");
             int currencyAmount = requiredCurrency[currencyType];
@@ -70,6 +71,10 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
                 ? $"<color=white>{currencyAmount}</color>"
                 : $"<color=#FF0000>{currencyAmount}</color>");
             sb.Append("    ");
+            i++;
+            if (i % 2 == 0 && i != requiredCurrency.Count) {
+                sb.Append("\n");
+            }
         }
 
         requiredCurrencyText.text = sb.ToString();

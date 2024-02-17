@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 997311448}
   m_Layer: 0
   m_Name: BladeSentinel_0
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 3640700455242532562}
   m_Layer: 7
   m_Name: Hurtbox_Head
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 8592749010837563861}
   m_Layer: 0
   m_Name: Pivot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 5474699264780513656}
   m_Layer: 9
   m_Name: CrossHairDetect
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -739,7 +739,7 @@ GameObject:
   - component: {fileID: 7111285484481289238}
   m_Layer: 0
   m_Name: Holographic Shield
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 6993224157754262480}
   m_Layer: 0
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 8076686000186218928}
   m_Layer: 2
   m_Name: SpawnSizeCollider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -882,7 +882,7 @@ GameObject:
   - component: {fileID: 7528317972267331258}
   m_Layer: 7
   m_Name: Hurtbox_Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1004,7 +1004,7 @@ GameObject:
   - component: {fileID: 1538566426029916698}
   m_Layer: 0
   m_Name: ShieldPivot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4505,6 +4505,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 8.106655
       objectReference: {fileID: 0}
+    - target: {fileID: -8887615309342865120, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
         type: 3}
       propertyPath: m_RootOrder
@@ -4939,6 +4944,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 74.53784
+      objectReference: {fileID: 0}
+    - target: {fileID: -7479921388421512603, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: -7460015196448038735, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
         type: 3}
@@ -6705,11 +6715,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss2_Rig
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1426963059667097542, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3a2f8eff7e81bf549896ad7ea0bdcd3d, type: 2}
+    - target: {fileID: 1513523464446302688, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1632438808440733357, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -6754,6 +6774,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105186373724743840, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 3330672487054445881, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
         type: 3}
@@ -6900,6 +6925,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -16.956375
       objectReference: {fileID: 0}
+    - target: {fileID: 4137865114491750185, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4202017841438466844, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6949,6 +6979,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 79.450294
+      objectReference: {fileID: 0}
+    - target: {fileID: 4238235221158708091, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4688159634446341346, guid: 3b4124d93d7fe4e4ca1ce3b93417d2e2,
         type: 3}

@@ -314,7 +314,7 @@ namespace Runtime.Inventory.Model {
 
 
 		private void AddInitialSlots() {
-			model.AddSlots(InitialSlotCount);
+			model.AddSlots(InitialSlotCount, out _);
 
 			model.AddHotBarSlots(HotBarCategory.Left, InitialHotBarSlotCount[HotBarCategory.Left],
 				()=>new LeftHotBarSlot());

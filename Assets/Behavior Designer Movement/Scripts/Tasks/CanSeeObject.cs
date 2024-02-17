@@ -61,13 +61,27 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("The object that is within sight.")]
         [UnityEngine.Serialization.FormerlySerializedAs("returnedObject")]
         public SharedGameObject m_ReturnedObject;
-
+        [Tooltip("Eye")]
+        [UnityEngine.Serialization.FormerlySerializedAs("eye")]
+        public SharedTransform eyeTransform;
+        
+        
+        
         private GameObject[] m_AgentColliderGameObjects;
         private int[] m_OriginalColliderLayer;
         private Collider[] m_OverlapColliders;
         private Collider2D[] m_Overlap2DColliders;
 
         private int m_IgnoreRaycastLayer = LayerMask.NameToLayer("Ignore Raycast");
+        
+        
+
+        public override void OnStart() {
+            base.OnStart();
+            if (eyeTransform.Value == null) {
+                eyeTransform.Value = transform;
+            }
+        }
 
         // Returns success if an object was found otherwise failure
         public override TaskStatus OnUpdate()
@@ -102,9 +116,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
 
             if ((m_DetectionMode.Value & DetectionMode.Object) != 0 && m_TargetObject.Value != null) {
                 if (m_UsePhysics2D) {
-                    m_ReturnedObject.Value = MovementUtility.WithinSight2D(transform, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_TargetObject.Value, m_TargetOffset.Value, m_AngleOffset2D.Value, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value);
+                    m_ReturnedObject.Value = MovementUtility.WithinSight2D(eyeTransform.Value, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_TargetObject.Value, m_TargetOffset.Value, m_AngleOffset2D.Value, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value);
                 } else {
-                    m_ReturnedObject.Value = MovementUtility.WithinSight(transform, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_TargetObject.Value, m_TargetOffset.Value, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value);
+                    m_ReturnedObject.Value = MovementUtility.WithinSight(eyeTransform.Value, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_TargetObject.Value, m_TargetOffset.Value, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value);
                 }
             }
 
@@ -112,7 +126,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                 var minAngle = Mathf.Infinity;
                 for (int i = 0; i < m_TargetObjects.Value.Count; ++i) {
                     GameObject obj;
-                    if ((obj = MovementUtility.WithinSight(transform, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_TargetObjects.Value[i], m_TargetOffset.Value, m_UsePhysics2D, m_AngleOffset2D.Value, out var angle, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value)) != null) {
+                    if ((obj = MovementUtility.WithinSight(eyeTransform.Value, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_TargetObjects.Value[i], m_TargetOffset.Value, m_UsePhysics2D, m_AngleOffset2D.Value, out var angle, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value)) != null) {
                         // This object is within sight. Set it to the objectFound GameObject if the angle is less than any of the other objects
                         if (angle < minAngle) {
                             minAngle = angle;
@@ -128,7 +142,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                     var minAngle = Mathf.Infinity;
                     for (int i = 0; i < targets.Length; ++i) {
                         GameObject obj;
-                        if ((obj = MovementUtility.WithinSight(transform, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, targets[i], m_TargetOffset.Value, m_UsePhysics2D, m_AngleOffset2D.Value, out var angle, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value)) != null) {
+                        if ((obj = MovementUtility.WithinSight(eyeTransform.Value, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, targets[i], m_TargetOffset.Value, m_UsePhysics2D, m_AngleOffset2D.Value, out var angle, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value)) != null) {
                             // This object is within sight. Set it to the objectFound GameObject if the angle is less than any of the other objects
                             if (angle < minAngle) {
                                 minAngle = angle;
@@ -145,13 +159,13 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
                         m_Overlap2DColliders = new Collider2D[m_MaxCollisionCount];
                     }
 
-                    m_ReturnedObject.Value = MovementUtility.WithinSight2D(transform, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_Overlap2DColliders, m_TargetLayerMask.Value, m_TargetOffset.Value, m_AngleOffset2D.Value, m_IgnoreLayerMask, m_DrawDebugRay.Value);
+                    m_ReturnedObject.Value = MovementUtility.WithinSight2D(eyeTransform.Value, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_Overlap2DColliders, m_TargetLayerMask.Value, m_TargetOffset.Value, m_AngleOffset2D.Value, m_IgnoreLayerMask, m_DrawDebugRay.Value);
                 } else {
                     if (m_OverlapColliders == null) {
                         m_OverlapColliders = new Collider[m_MaxCollisionCount];
                     }
 
-                    m_ReturnedObject.Value = MovementUtility.WithinSight(transform, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_OverlapColliders, m_TargetLayerMask.Value, m_TargetOffset.Value, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value);
+                    m_ReturnedObject.Value = MovementUtility.WithinSight(eyeTransform.Value, m_Offset.Value, m_FieldOfViewAngle.Value, m_ViewDistance.Value, m_OverlapColliders, m_TargetLayerMask.Value, m_TargetOffset.Value, m_IgnoreLayerMask, m_UseTargetBone.Value, m_TargetBone.Value, m_DrawDebugRay.Value);
                 }
             }
 

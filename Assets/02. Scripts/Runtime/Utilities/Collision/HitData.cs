@@ -144,6 +144,8 @@ namespace Runtime.Utilities.Collision
         public LayerMask layer;
         public Transform launchPoint;
         public IWeaponEntity weapon;
+        public Vector3 startPoint; // if do this, no camera :)
+        public Vector3 direction; // see above
     }
     
     /// <summary>
@@ -152,7 +154,7 @@ namespace Runtime.Utilities.Collision
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage); //CheckHit only required for HitScan right now.
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage, Collider[] ignoreColliders= null); //CheckHit only required for HitScan right now.
         
         public int Damage { get; }
     }

@@ -116,7 +116,7 @@ public class KineticDevice : WeaponPartsEntity<KineticDevice, KineticDeviceBuff>
 
 
 		public override void OnStart() {
-			
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {

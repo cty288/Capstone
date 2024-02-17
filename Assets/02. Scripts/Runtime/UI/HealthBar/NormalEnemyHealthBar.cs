@@ -8,6 +8,7 @@ using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties;
+using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities;
 using TMPro;
@@ -24,25 +25,27 @@ namespace Runtime.UI.HealthBar {
 		[SerializeField] private Color healthyColor = Color.red;
 		[SerializeField] private Color hurtColor = Color.red;
 		[SerializeField] private GameObject rarityIndicatorPrefab;
+		[SerializeField] private GameObject eliteIndicatorPrefab;
 		private Transform rarityBar;
 		
 		protected Material healthBGMaterial;
 		
-		protected IDamageable entity;
+		
 		protected BindableProperty<HealthInfo> boundHealthProperty;
-		private ResLoader resLoader;
-		private Transform buffSpawnParent;
+		
+		
    
-		private Dictionary<IBuff, BuffIconViewController> buffToGameObject = new Dictionary<IBuff, BuffIconViewController>();
-		private void Awake() {
+		
+		protected override void Awake() {
+			base.Awake();
 			bar = transform.Find("Mask/Fill Area/Fill").GetComponent<Image>();
 			healthBGMaterial = Instantiate(bar.material);
 			bar.material = healthBGMaterial;
 			nameText = transform.Find("NameText").GetComponent<TMP_Text>();
 			rarityBar = transform.Find("RarityBar");
 			
-			resLoader = this.GetUtility<ResLoader>();
-			buffSpawnParent = transform.Find("BuffPanel");
+			
+		
 		}
 		
 		private void ClearRarityIndicator() {
@@ -51,14 +54,20 @@ namespace Runtime.UI.HealthBar {
 			}
 		}
 
-		public override void OnSetEntity(BindableProperty<HealthInfo> healthProperty, IDamageable entity) {
+		protected override void OnSetEntity(BindableProperty<HealthInfo> healthProperty, IDamageable entity) {
 			ClearRarityIndicator();
-			this.entity = entity;
+
+			if (entity is INormalEnemyEntity normalEnemy) {
+				normalEnemy.IsElite.RegisterOnValueChanged(OnEliteChanged)
+					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			}
+			
+			
 			this.boundHealthProperty = healthProperty;
 			boundHealthProperty.RegisterWithInitValue(OnHealthChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
-			this.entity.RegisterOnBuffUpdate(OnBuffUpdate);
+			
 			
 			nameText.text = "";
 			if (!String.IsNullOrEmpty(entity.GetDisplayName())) {
@@ -67,59 +76,41 @@ namespace Runtime.UI.HealthBar {
 			
 			if (rarityIndicatorPrefab && entity.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarityProperty)) {
 				if (rarityProperty is IRarityProperty rarity) {
+					float parentHeight = rarityBar.GetComponent<RectTransform>().rect.height;
 					for (int i = 0; i < rarity.RealValue.Value; i++) {
-						Instantiate(rarityIndicatorPrefab, rarityBar);
+						RectTransform transfrorm = Instantiate(rarityIndicatorPrefab, rarityBar).GetComponent<RectTransform>();
+						transfrorm.sizeDelta = new Vector2(parentHeight, parentHeight);
 					}
 				}
 			}
 		}
 
-		private void OnBuffUpdate(IBuff buff, BuffUpdateEventType updateType) {
-			BuffDisplayInfo buffDisplayInfo = buff.OnGetBuffDisplayInfo();
-			switch (updateType) {
-				case BuffUpdateEventType.OnStart:
-					BuffIconViewController buffIcon = Instantiate(resLoader.LoadSync<GameObject>(buffDisplayInfo.IconPrefab))
-						.GetComponent<BuffIconViewController>();
-            
-					buffIcon.transform.SetParent(buffSpawnParent);
-					buffIcon.transform.localScale = Vector3.one;
-					
-					//get height of the spawn parent
-					float height = buffSpawnParent.GetComponent<RectTransform>().rect.height;
-					//set width/height of the buff icon
-					buffIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(height, height);
-					
-					buffIcon.SetBuff(buff);
-					if (!buffToGameObject.TryAdd(buff, buffIcon)) {
-						Destroy(buffIcon.gameObject);
+		private void OnEliteChanged(bool arg1, bool isElite) {
+			ClearRarityIndicator();
+			GameObject prefab = isElite ? eliteIndicatorPrefab : rarityIndicatorPrefab;
+			float parentHeight = rarityBar.GetComponent<RectTransform>().rect.height;
+
+			if (isElite) {
+				RectTransform transfrorm = Instantiate(prefab, rarityBar).GetComponent<RectTransform>();
+				//transfrorm.sizeDelta = new Vector2(parentHeight, parentHeight);
+			}
+			else {
+				if (entity.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarityProperty)) {
+					if (rarityProperty is IRarityProperty rarity) {
+						for (int i = 0; i < rarity.RealValue.Value; i++) {
+							RectTransform transfrorm = Instantiate(rarityIndicatorPrefab, rarityBar)
+								.GetComponent<RectTransform>();
+							transfrorm.sizeDelta = new Vector2(parentHeight, parentHeight);
+						}
 					}
-					buffIcon.OnRefresh();
-					break;
-				case BuffUpdateEventType.OnUpdate:
-					if (buffToGameObject.TryGetValue(buff, out var value)) {
-						value.OnRefresh();
-					}
-            
-					break;
-				case BuffUpdateEventType.OnEnd:
-					if (buffToGameObject.TryGetValue(buff, out var buffIconViewController)) {
-						buffToGameObject.Remove(buff);
-						Destroy(buffIconViewController.gameObject);
-					}
-					break;
+				}
 			}
 		}
 
-		public override void OnHealthBarDestroyed() {
+
+		protected override void OnHealthBarDestroyed() {
 			boundHealthProperty.UnRegisterOnValueChanged(OnHealthChanged);
 			entity.UnregisterOnBuffUpdate(OnBuffUpdate);
-			
-			
-			foreach (var buffIcon in buffToGameObject.Values) {
-				Destroy(buffIcon.gameObject);
-			}
-			
-			buffToGameObject.Clear();
 			ClearRarityIndicator();
 		}
 

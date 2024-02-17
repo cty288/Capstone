@@ -1,39 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
-using MikroFramework.ResKit;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
-using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 
-	public class OnMineralBuffGenerateExplostion : WeaponBuildBuffEvent {
-		public int Damage { get; set; }
-		public GameObject HurtboxOwner { get; set; }
-		public Vector3 HitPoint { get; set; }
-		public ICanDealDamage Attacker { get; set; }
-		
-		public MineralBuff Buff { get; set; }
-	}
 
-	public class MineralBuffOnModifyBaseAmmoRecoverEvent : ModifyValueEvent<int> {
-		public MineralBuffOnModifyBaseAmmoRecoverEvent(int value) : base(value) {
+	public class MineralBuffMultiplierEvent : ModifyValueEvent<float> {
+		public MineralBuffMultiplierEvent(float value) : base(value) {
 		}
 	}
 
-	public class MineralBuffInternalExplosion : ICanDealDamage {
+	public class MineralAOEEvent : WeaponBuildBuffEvent {
+		public MineralBuff Buff2 { get; set; }
+		public float Duration { get; set; }
+		public IDamageable Target { get; set; }
+	}
+	
+	public class MineralAOEKillEvent : WeaponBuildBuffEvent {
+		public MineralBuff Buff2 { get; set; }
+		public IDamageable Target { get; set; }
+		public Transform Transform { get; set; }
+	}
+	
+	public class MineralBuffAOE : ICanDealDamage {
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>();
@@ -59,127 +64,165 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 
 		public ICanDealDamage ParentDamageDealer { get; }
 		
-		public MineralBuffInternalExplosion(ICanDealDamage parentDamageDealer) {
+		public MineralBuffAOE(ICanDealDamage parentDamageDealer) {
 			ParentDamageDealer = parentDamageDealer;
 			CurrentFaction.Value = parentDamageDealer.CurrentFaction.Value;
 		}
 	}
 	
-	
-	public class MineralBuff : WeaponBuildBuff<MineralBuff>, ICanGetUtility {
-		[field: ES3Serializable]
-		public override float TickInterval { get; protected set; } = -1;
-
-		private ResLoader resLoader;
+	public class MineralBuff : WeaponBuildBuff<MineralBuff>, ICanGetSystem {
+		[field: ES3Serializable] public override float TickInterval { get; protected set; } = -1;
 		public override void OnInitialize() {
 			if (weaponEntity == null) {
 				return;
 			}
-			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
-			weaponEntity.RegisterOnKillDamageable(OnKillDamageable);
-			weaponEntity.RegisterOnDealDamage(OnDealDamage);
-			//weaponEntity.RegisterOnDealDamage();
 			
-			resLoader = this.GetUtility<ResLoader>();
+			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
+			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
 		}
 
-		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
-			
-		}
+		
+
 		public override string[] GetAllLevelDescriptions() {
 			int displayedChance = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("chance", 1) * 100);
-			int totalDamage =
-				GetBuffPropertyAtLevel<int>("damage_per_rarity", 1) * weaponEntity.GetRarity();
+			int time = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("buff_time", 1));
+			int additionalDamage = weaponEntity.GetRarity() * GetBuffPropertyAtLevel<int>("damage_per_rarity", 1);
+			string malfunctionBuffDesc = Localization.Get("MulfunctionBuff_Desc");
 
-			int displayedHealthThreshold = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("health_kill", 2) * 100);
-
-			return new[] {
-				Localization.GetFormat("BUILD_BUFF_MINERAL_1", displayedChance, totalDamage),
-				Localization.GetFormat("BUILD_BUFF_MINERAL_2", displayedHealthThreshold),
-				Localization.GetFormat("BUILD_BUFF_MINERAL_3", GetBuffPropertyAtLevel<int>("ammo_recovery_base", 3),
-					GetBuffPropertyAtLevel<int>("ammo_recovery_kill", 3))
+			int displayedPercentage = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("hit_buff_multiplier", 2) * 100);
+			
+			PowerlessBuff powerlessBuff =
+				BuffPool.GetTemplateBuffs((buff => buff is PowerlessBuff)).FirstOrDefault() as PowerlessBuff;
+			string powerlessBuffDesc = powerlessBuff?.GetLevelDescription(2);
+			
+			
+			return new string[] {
+                Localization.GetFormat("BUILD_BUFF_MINERAL_1", displayedChance, time, additionalDamage, malfunctionBuffDesc),
+                Localization.GetFormat("BUILD_BUFF_MINERAL_2", displayedPercentage),
+                Localization.GetFormat("BUILD_BUFF_MINERAL_3", powerlessBuffDesc)
 			};
-		}
 
-		private void OnKillDamageable(ICanDealDamage source, IDamageable target) {
-			if (Level < 3) {
-				return;
+		}
+		
+		
+		
+		private HitData OnModifyHitData(HitData data, IWeaponEntity weapon) {
+			if (data.Hurtbox == null) {
+				return data;
 			}
 			
-			if (source is MineralBuffInternalExplosion) {
-				int ammoRecovered = GetBuffPropertyAtCurrentLevel<int>("ammo_recovery_kill");
-				weaponEntity.AddAmmo(ammoRecovered);
+			if (Level < 2) {
+				return data;
 			}
+			
+			if (data.Hurtbox.Owner &&
+			    data.Hurtbox.Owner.TryGetComponent<IEntityViewController>(out IEntityViewController vc)) {
+
+				IEntity entity = vc.Entity;
+				IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
+
+				if (buffSystem.ContainsBuff<MalfunctionBuff>(entity, out IBuff buff)) {
+					float hit_buff_multiplier = GetBuffPropertyAtCurrentLevel<float>("hit_buff_multiplier");
+					data.Damage = Mathf.RoundToInt(data.Damage * (1 + hit_buff_multiplier));
+				}
+			}
+
+			return data;
 		}
 
-		public void GenerateExplosion(int damage, GameObject hurtboxOwner, Vector3 hitPoint, ICanDealDamage attacker) {
-			float range = GetBuffPropertyAtCurrentLevel<float>("range");
+		
+		/// <summary>
+		/// Will also add powerless buff if level is greater than 2
+		/// </summary>
+		/// <param name="duration"></param>
+		/// <param name="target"></param>
+		public void AddMulfunctionBuff(float duration, IDamageable target) {
+			IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
+			MalfunctionBuff buff = MalfunctionBuff.Allocate(weaponEntity, target, duration);
+			if (!buffSystem.AddBuff(target, weaponEntity, buff)) {
+				buff.RecycleToCache();
+			}
 			
-			GameObject explosionGo = resLoader.LoadSync<GameObject>("Explosion_MineralBuff");
-			MineralBuffExplosion explosion =
-				GameObject.Instantiate(explosionGo, hitPoint, Quaternion.identity)
-					.GetComponent<MineralBuffExplosion>();
-			
-			explosion.Init(weaponEntity.CurrentFaction.Value, 0, range, null, weaponEntity);
-			
-			if (hurtboxOwner && hurtboxOwner.TryGetComponent<IDamageableViewController>(out IDamageableViewController damageableViewController)) {
-				bool killTriggered = false;
-				if (Level >= 2) {
-					if (damageableViewController.DamageableEntity is INormalEnemyEntity enemyEntity) {
-						int maxHealth = enemyEntity.GetMaxHealth();
-						int currentHealth = enemyEntity.GetCurrentHealth();
-						float healthPercentage = (float)currentHealth / maxHealth;
-						float killThreshold = GetBuffPropertyAtCurrentLevel<float>("health_kill");
+			if (Level > 2) {
+				PowerlessBuff powerlessBuff = PowerlessBuff.Allocate(weaponEntity, target, 2, duration);
+				if (!buffSystem.AddBuff(target, weaponEntity, powerlessBuff)) {
+					powerlessBuff.RecycleToCache();
+				}
+			} 
+		}
 
-						if (healthPercentage <= killThreshold) {
-							enemyEntity.Kill(new MineralBuffInternalExplosion(attacker));
-							killTriggered = true;
-						}
+		public void RangeAOE(float range, int damage, float duration, Transform transform, IDamageable target, 
+			ICanDealDamage damageDealer, bool sendBuildBuffEvent) {
+			HashSet<IEnemyEntity> enemies = new HashSet<IEnemyEntity>();
+			LayerMask mask = LayerMask.GetMask("Default");
+			Collider[] colliders = Physics.OverlapSphere(transform.position, range, mask);
+			
+			foreach (var collider in colliders) {
+				if(!collider.attachedRigidbody) continue;
+				IEnemyViewController enemy = collider.attachedRigidbody.GetComponent<IEnemyViewController>();
+				if (enemy != null && enemy.EnemyEntity != null) {
+					enemies.Add(enemy.EnemyEntity);
+				}
+			}
+						
+			//apply buff to all enemies
+			foreach (var enemy in enemies) {
+				if (enemy != target) {
+					if (sendBuildBuffEvent) {
+						SendWeaponBuildBuffEvent(new MineralAOEEvent() {
+							Buff2 = this,
+							Duration = duration,
+							Target = enemy
+						});
+					}
+
+					enemy.TakeDamage(Mathf.RoundToInt(damage), damageDealer, out bool isDie);
+					if (isDie && sendBuildBuffEvent) {
+						SendWeaponBuildBuffEvent(new MineralAOEKillEvent() {
+							Buff2 = this,
+							Target = enemy,
+							Transform = transform
+						});
 					}
 				}
-
-				if (!killTriggered) {
-					damageableViewController.DamageableEntity.TakeDamage(damage, new MineralBuffInternalExplosion(attacker), out _);
-				}
-			}
-
-
-			int ammoRecovered = 0;
-			if (Level >= 3) {
-				ammoRecovered += GetBuffPropertyAtCurrentLevel<int>("ammo_recovery_base");
-			}
-			ammoRecovered = weaponEntity
-					.SendModifyValueEvent(new MineralBuffOnModifyBaseAmmoRecoverEvent(ammoRecovered)).Value;
-
-			if (ammoRecovered > 0) {
-				weaponEntity.AddAmmo(ammoRecovered);
 			}
 		}
 
-		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
+		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weaponEntity) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			if (Random.Range(0f, 1f) <= chance) {
-				int explosionDamagePerRarity = GetBuffPropertyAtCurrentLevel<int>("damage_per_rarity");
-				int damage = Mathf.RoundToInt(explosionDamagePerRarity * weaponEntity.GetRarity());
-				GameObject owner = hit.Hurtbox?.Owner;
+				Transform transform = weaponEntity.GetRootDamageDealerTransform();
+				if (!transform) {
+					return hit;
+				}
+
+				if (hit.Hurtbox == null || !hit.Hurtbox.Owner) {
+					return hit;
+				}
+				
+				IDamageable target = hit.Hurtbox.Owner.GetComponent<IDamageableViewController>()?.DamageableEntity;
+				if (target == null) {
+					return hit;
+				}
+
+				float duration = GetBuffPropertyAtCurrentLevel<float>("buff_time");
+				AddMulfunctionBuff(duration, target);
+
+				
+				float range = GetBuffPropertyAtCurrentLevel<float>("range");
+				int damagePerRarity = GetBuffPropertyAtCurrentLevel<int>("damage_per_rarity");
+				float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage_multiplier");
+				damageMultiplier = weaponEntity.SendModifyValueEvent(new MineralBuffMultiplierEvent(damageMultiplier))
+					.Value;
+				int realDamage = Mathf.RoundToInt(damagePerRarity * weaponEntity.GetRarity() * damageMultiplier);
 
 
-				GenerateExplosion(damage, owner, hit.HitPoint, hit.Attacker);
-
-				SendWeaponBuildBuffEvent<OnMineralBuffGenerateExplostion>
-				(new OnMineralBuffGenerateExplostion() {
-					Attacker = hit.Attacker,
-					Damage = damage,
-					HitPoint = hit.HitPoint,
-					HurtboxOwner = owner,
-					Buff = this
-				});
-
+				RangeAOE(range, realDamage, duration, hit.Hurtbox.Owner.transform, target, new MineralBuffAOE(weaponEntity), true);
 			}
-
+			
 			return hit;
 		}
-
+		
 		
 
 		public override void OnStart() {
@@ -194,21 +237,21 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral {
 			
 		}
 
-		public override void OnRecycled() {
-			if (weaponEntity != null) {
-				weaponEntity.UnRegisterOnModifyHitData(OnWeaponModifyHitData);
-				weaponEntity.UnregisterOnKillDamageable(OnKillDamageable);
-				weaponEntity.UnregisterOnDealDamage(OnDealDamage);
-			}
-			base.OnRecycled();
-		}
-
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
 			return null;
 		}
 
 		protected override bool OnValidate() {
 			return true;
+		}
+
+		public override void OnRecycled() {
+			base.OnRecycled();
+			if (weaponEntity != null) {
+				weaponEntity.UnRegisterOnModifyHitData(OnWeaponModifyHitData);
+				weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			}
+			base.OnRecycled();
 		}
 
 		public IArchitecture GetArchitecture() {

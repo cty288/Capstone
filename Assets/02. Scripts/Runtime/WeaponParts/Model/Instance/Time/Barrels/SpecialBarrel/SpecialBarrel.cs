@@ -45,6 +45,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		}
 
 		public override void OnStart() {
+			base.OnStart();
 			float multiplayer = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("damage");
 
 			IBuffedProperty<Vector2Int> baseAttackSpeedProperty = baseDamageProperties.Properties.First();
