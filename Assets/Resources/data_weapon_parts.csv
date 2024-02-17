@@ -626,7 +626,7 @@ ShrapnelBullets,1,"""Combat""","{
     ""buff_level"": {""type"": ""int"", ""value"": 4}
   }
 }",,,
-KillCounter,,"""Combat""","{
+KillCounter,1,"""Combat""","{
         ""ResourceCost"": {
             ""Combat1"": 5,
             ""Time1"": 5
@@ -643,5 +643,28 @@ KillCounter,,"""Combat""","{
   ""level3"": {
     ""counter"": {""type"": ""int"", ""value"": 5},
     ""damage"": {""type"": ""int"", ""value"": 3}
+  }
+}",,,
+ConcentratedCurrent,1,"""Mineral""","{
+        ""ResourceCost"": {
+            ""Mineral1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""range"": {""type"": ""float"", ""value"": 0.5},
+    ""damage"": {""type"": ""float"", ""value"": 0.25}
+  },
+  ""level2"": {
+    ""range"": {""type"": ""float"", ""value"": 0.5},
+    ""damage"": {""type"": ""float"", ""value"": 0.35}
+  },
+  ""level3"": {
+    ""range"": {""type"": ""float"", ""value"": 0.5},
+    ""damage"": {""type"": ""float"", ""value"": 0.5}
+  },
+  ""level4"": {
+    ""range"": {""type"": ""float"", ""value"": 0.5},
+    ""damage"": {""type"": ""float"", ""value"": 0.75}
   }
 }",,,

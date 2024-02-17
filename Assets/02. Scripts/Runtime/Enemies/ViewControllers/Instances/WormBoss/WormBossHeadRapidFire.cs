@@ -8,6 +8,7 @@ using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning;
 using System.Threading.Tasks;
+using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using a;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using FIMSpace.FSpine;
@@ -22,6 +23,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class WormBossHeadRapidFire : EnemyAction
     {
+        private TaskStatus taskStatus;
         public SharedGameObject firePoint;
         
         public SharedGameObject rapidFireBulletPrefab;
@@ -34,32 +36,48 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public int bulletCount = 5;
         private float bulletAccuracy;
 
+        public float duration = 5f;
+
         public override void OnStart()
         {
+            taskStatus = TaskStatus.Running;
             pool = GameObjectPoolManager.Singleton.CreatePool(rapidFireBulletPrefab.Value, 1, 3);
             
             player = GetPlayer();
 
-            StartCoroutine(Shoot());
+            SkillExecute();
         }
         
         public override TaskStatus OnUpdate()
         {
-            return TaskStatus.Running;
+            return taskStatus;
         }
         
-        public IEnumerator Shoot()
+        private async UniTask SkillExecute()
         {
-            yield return new WaitForSeconds(0.5f);
+            await UniTask.WaitForSeconds(2f,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
-            while (true)
+            float timer = duration;
+            float lastShootTime = 0f;
+            while (timer > 0)
             {
-                for (int i = 0; i < bulletCount; i++)
+                timer -= Time.deltaTime;
+                
+                if(lastShootTime + bulletInterval < Time.time)
                 {
-                    SpawnBullet();
+                    lastShootTime = Time.time;
+                    for (int i = 0; i < bulletCount; i++)
+                    {
+                        SpawnBullet();
+                    }
                 }
-                yield return new WaitForSeconds(bulletInterval);
+                await UniTask.Yield(PlayerLoopTiming.Update,
+                    cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
+            await UniTask.WaitForSeconds(1f,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            taskStatus = TaskStatus.Success;
         }
         
         void SpawnBullet()
@@ -82,7 +100,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         public override void OnEnd()
         {
-            StopAllCoroutines();
         }
     }
 }

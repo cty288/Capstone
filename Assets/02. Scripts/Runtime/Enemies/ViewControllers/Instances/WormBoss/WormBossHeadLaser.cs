@@ -8,6 +8,7 @@ using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning;
 using System.Threading.Tasks;
+using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using a;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using FIMSpace.FSpine;
@@ -22,7 +23,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class WormBossHeadLaser : EnemyAction<WormBossEntity>
     {
+        private TaskStatus taskStatus;
         public SharedGameObject firePoint;
+        public float laserDuration = 5f;
         
         public SharedGameObject lazerPrefab;
         private SafeGameObjectPool pool;
@@ -39,52 +42,54 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private ParticleSystem chargedVFX;
         private ParticleSystem beamVFX;
 
-        private float timer = 3f;
         
         public override void OnStart()
         {
+            taskStatus = TaskStatus.Running;
             pool = GameObjectPoolManager.Singleton.CreatePool(lazerPrefab.Value, 1, 3);
             //laserDamage = enemyEntity.GetCustomDataValue<int>("laserBeam", "laserDamage");
             //interval = enemyEntity.GetCustomDataValue<float>("laserBeam", "interval");
-            StartCoroutine(Shoot());
-            /*
-            chargingVFX = charging.GetComponent<ParticleSystem>();
-            chargedVFX = charged.GetComponent<ParticleSystem>();
-            beamVFX = beam.GetComponent<ParticleSystem>();
-            */
-            timer = 3f;
+
+            SkillExecute();
         }
         
         public override TaskStatus OnUpdate()
         {
-            return TaskStatus.Running;
+            return taskStatus;
         }
-        
-        public IEnumerator Shoot()
-        {
-            yield return new WaitForSeconds(2f);
 
-            for (int i = 0; i < 1; i++)
-            {
-                SpawnLazer();
-                yield return null;
-            }
+        private async UniTask SkillExecute()
+        {
+            await UniTask.WaitForSeconds(2f,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+
+            await SpawnLazer();
+            
+            await UniTask.WaitForSeconds(laserDuration,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
+            beam.SetActive(false);
+            
+            await UniTask.WaitForSeconds(1f,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
+            taskStatus = TaskStatus.Success;
         }
         
-        void SpawnLazer()
+        private async UniTask SpawnLazer()
         {
             if (laserInstance != null)
             {
                 pool.Recycle(laserInstance);
                 laserInstance = null;
             }
+            
             charging.SetActive(true);
             charged.SetActive(true);
-            float timer = 4f;
-            while(timer > 0)
-            {
-                timer -= Time.deltaTime;
-            }
+            
+            await UniTask.WaitForSeconds(4f,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
             beam.SetActive(true);
             laserInstance = pool.Allocate();
             /*
@@ -107,8 +112,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 pool.Recycle(laserInstance);
                 laserInstance = null;
             }
-            
-            StopAllCoroutines();
         }
     }
 }
