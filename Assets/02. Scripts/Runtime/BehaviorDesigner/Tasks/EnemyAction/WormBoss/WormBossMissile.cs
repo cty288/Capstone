@@ -82,7 +82,7 @@ public class WormBossMissile : AbstractBulletViewController
 
     protected override void OnHitResponse(HitData data)
     {
-        throw new System.NotImplementedException();
+        // throw new System.NotImplementedException();
     }
 
     protected override void OnHitObject(Collider other)
@@ -93,7 +93,7 @@ public class WormBossMissile : AbstractBulletViewController
 
     protected override void OnBulletReachesMaxRange()
     {
-        throw new System.NotImplementedException();
+        // throw new System.NotImplementedException();
     }
 
     protected override void OnBulletRecycled()

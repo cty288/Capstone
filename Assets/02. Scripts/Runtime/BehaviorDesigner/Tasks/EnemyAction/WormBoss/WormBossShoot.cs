@@ -52,7 +52,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             if (ended)
             {
-                return TaskStatus.Running;
+                return TaskStatus.Success;
 
             }
             else

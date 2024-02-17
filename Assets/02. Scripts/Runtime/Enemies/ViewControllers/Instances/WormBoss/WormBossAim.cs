@@ -20,7 +20,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         private float liftHeight = 20f;
         private float moveRange = 18f;
-        private float liftTime = 1f;
+        public SharedFloat liftTime;
         //making this public for tuning
         public float duration = 5f;
         private float maxTurnRate = 30f;
@@ -31,35 +31,42 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public SharedGameObject neckSupportSphere;
         public SharedGameObject bodySupportPlatform;
-        
+
         private Transform supportSphere;
         private Transform supportPlatform;
-
+        
         private FSpineAnimator.SpineBone _neckJoint;
         private FSpineAnimator.SpineBone _bodyJoint;
         private FSpineAnimator _spine;
         private Transform _lookAt;
-        private Vector3 _originPos;
+        public SharedVector3 originPos;
         private Vector3 _liftedPos;
         private float _progress = 0f;
         private bool _headLifted;
         private bool _running = true;
         public SharedGameObject firePoint;
         
+        private NavMeshAgent agent;
+        // private Rigidbody rb;
+        
         public override void OnAwake()
         {
+            agent = gameObject.GetComponent<NavMeshAgent>();
             _spine = GetComponent<FSpineAnimator>();
             _spine.GravityPower = Vector3.zero;
             
             _bodyJoint = _spine.SpineBones[bodyJointIndex];
             _neckJoint = _spine.SpineBones[neckJointIndex];
-            var spherePool = GameObjectPoolManager.Singleton.CreatePool(neckSupportSphere.Value, 1, 3);
-            var platPool = GameObjectPoolManager.Singleton.CreatePool(bodySupportPlatform.Value, 1, 3);
-            supportSphere = spherePool.Allocate().transform;
-            supportPlatform = platPool.Allocate().transform;
+            Debug.Log($"WORM BOSS: awake {_bodyJoint} at {bodyJointIndex}");
+            
+            supportSphere = neckSupportSphere.Value.transform;
+            supportPlatform = bodySupportPlatform.Value.transform;
+            supportSphere.parent = null;
+            supportPlatform.parent = null;
             supportSphere.position = Vector3.down * 10000;
             supportPlatform.position = Vector3.down * 10000;
             
+            _spine.IncludedColliders.Clear();
             _spine.IncludedColliders.Add(supportSphere.GetComponent<Collider>());
             _spine.IncludedColliders.Add(supportPlatform.GetComponent<Collider>());
         }
@@ -67,14 +74,21 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         // Start is called before the first frame update
         public override void OnStart()
         {
+            agent.enabled = false;
+            
+            supportSphere.parent = null;
+            supportPlatform.parent = null;
+            supportSphere.gameObject.SetActive(true);
+            supportPlatform.gameObject.SetActive(true);
+            
             _lookAt = GetPlayer().transform;
             _headLifted = false;
-            _lowering = false;
             _t = 0;
             _progress = 0;
-            _originPos = transform.position;
+            originPos.SetValue(transform.position);
             _liftedPos = transform.position + Vector3.up * liftHeight;
             _spine.GravityPower = gravity;
+
             supportPlatform.position = _bodyJoint.FinalPosition + Vector3.up * 1f;
             supportSphere.position = _neckJoint.FinalPosition + Vector3.down * 8f;
             //StartCoroutine(LiftHead());
@@ -101,32 +115,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             if (_progress >= 1f)
             {
-                if (!_lowering)
-                {
-                    _headY = transform.position.y;
-                    _lowering = true;
-                }
-                if (LowerHead())
-                {
-                    _spine.GravityPower = Vector3.zero;
-                    _lowering = false;
-                    supportSphere.position = Vector3.down * 10000;
-                    supportPlatform.position = Vector3.down * 10000;
-                    return TaskStatus.Success;
-                }
+                return TaskStatus.Success;
             }
             return TaskStatus.Running;
         }
 
 
         private float _t;
-        private bool _lowering;
+        // private bool _lowering;
         private void LiftHead()
         {
             var position = transform.position;
             var headPos = position;
-            var originPos = new Vector3(position.x, _originPos.y, position.z);
-            _t += Time.deltaTime/liftTime;
+            var originPos = new Vector3(position.x, this.originPos.Value.y, position.z);
+            _t += Time.deltaTime/liftTime.Value;
             transform.position = Vector3.Lerp(originPos, headPos, _t);
             if (_t >= 1)
             {
@@ -135,26 +137,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
         }
 
-        private float _headY;
-        private bool LowerHead()
-        {
-            _t += Time.deltaTime/liftTime * 0.5f;
-            var position = transform.position;
-            var headPos = new Vector3(position.x, _headY, position.z);
-            var originPos = new Vector3(position.x, _originPos.y, position.z);
-            position = Vector3.Lerp(headPos,  originPos, _t);
-            transform.position = position;
-            if (_t >= 1)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         private void Aim()
         {
-            _progress += Time.deltaTime / (duration + liftTime);
+            _progress += Time.deltaTime / (duration + liftTime.Value);
             var lookVector = _lookAt.position - firePoint.Value.transform.position;
             var targetRotation = Quaternion.LookRotation(lookVector, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 2f * Time.deltaTime);

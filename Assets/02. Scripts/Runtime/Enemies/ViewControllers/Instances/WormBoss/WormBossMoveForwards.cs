@@ -23,7 +23,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private GameObject player;
         private Vector3 destination;
         private float startTme;
-        private float duration = 5f; // Duration in seconds
+        public float duration = 5f; // Duration in seconds
         
         public override void OnAwake()
         {
