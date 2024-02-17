@@ -124,6 +124,13 @@ FragmentOutput LitGBufferPassFragment(Varyings IN) : SV_TARGET
 
 	half3 color = GlobalIllumination(brdfData, inputData.bakedGI, surfaceData.occlusion, inputData.normalWS, inputData.viewDirectionWS);
 
+	#ifdef _FRESNELGLOW
+		float fresnel = CalculateFresnel(inputData, _FresnelPower, _FresnelCutOffOut, _FresnelCutOffIn);
+
+		float3 highlightColor = color <= 0.5 ? 2 * color * _HighlightColor : 1 - 2 * (1 - color) * (1 - _HighlightColor);
+		color = lerp(color, highlightColor, fresnel * _HighlightColor.a);
+	#endif
+
 	return BRDFDataToGbuffer(brdfData, inputData, surfaceData.smoothness, surfaceData.emission + color);
 }
 
