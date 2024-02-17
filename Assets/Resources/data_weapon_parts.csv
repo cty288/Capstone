@@ -588,3 +588,60 @@ InfiniteChainMagazine,1,"""Combat""","{
    ""number"": {""type"": ""int"", ""value"": 2}
   }
 }",,,
+DawnbreakerBlast,1,"""Combat""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""damage"": {""type"": ""int"", ""value"": 35}
+  },
+  ""level2"": {
+     ""damage"": {""type"": ""int"", ""value"": 40}
+  },
+  ""level3"": {
+     ""damage"": {""type"": ""int"", ""value"": 50}
+  },
+  ""level4"": {
+    ""damage"": {""type"": ""int"", ""value"": 60}
+  }
+}",,,
+ShrapnelBullets,1,"""Combat""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""buff_level"": {""type"": ""int"", ""value"": 1}
+  },
+  ""level2"": {
+     ""buff_level"": {""type"": ""int"", ""value"": 2}
+  },
+  ""level3"": {
+     ""buff_level"": {""type"": ""int"", ""value"": 3}
+  },
+  ""level4"": {
+    ""buff_level"": {""type"": ""int"", ""value"": 4}
+  }
+}",,,
+KillCounter,,"""Combat""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""counter"": {""type"": ""int"", ""value"": 5},
+    ""damage"": {""type"": ""int"", ""value"": 1}
+  },
+  ""level2"": {
+    ""counter"": {""type"": ""int"", ""value"": 5},
+    ""damage"": {""type"": ""int"", ""value"": 2}
+  },
+  ""level3"": {
+    ""counter"": {""type"": ""int"", ""value"": 5},
+    ""damage"": {""type"": ""int"", ""value"": 3}
+  }
+}",,,

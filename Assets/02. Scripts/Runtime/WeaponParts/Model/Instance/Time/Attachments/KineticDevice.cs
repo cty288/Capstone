@@ -19,6 +19,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Attachments {
 public class KineticDevice : WeaponPartsEntity<KineticDevice, KineticDeviceBuff> {
+	[field: ES3Serializable]
 		public override string EntityName { get; set; } = "KineticDevice";
 		
 		public float multiplayer => GetCustomDataValueOfCurrentLevel<float>("multiplayer");
@@ -124,8 +125,14 @@ public class KineticDevice : WeaponPartsEntity<KineticDevice, KineticDeviceBuff>
 		}
 
 		public override void OnBuffEnd() {
+			
+			
+		}
+
+		public override void OnRecycled() {
 			RecoverSpeed();
 			weaponEntity.IsHolding.UnRegisterOnValueChanged(OnIsHoldingChanged);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

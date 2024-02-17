@@ -15,6 +15,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Attachments {
 public class RageDetector : WeaponPartsEntity<RageDetector, RageDetectorBuff> {
+	[field: ES3Serializable]
 		public override string EntityName { get; set; } = "RageDetector";
 		
 		public float multiplayer => GetCustomDataValueOfCurrentLevel<float>("multiplayer");
@@ -83,7 +84,12 @@ public class RageDetector : WeaponPartsEntity<RageDetector, RageDetectorBuff> {
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.UnRegisterOnModifyHitData(OnWeaponModifyHitData);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

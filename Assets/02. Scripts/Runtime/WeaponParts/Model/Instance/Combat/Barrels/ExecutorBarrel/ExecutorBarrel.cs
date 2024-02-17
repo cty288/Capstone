@@ -13,6 +13,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Barrels.ExecutorBarrel {
 	public class ExecutorBarrel : WeaponPartsEntity<ExecutorBarrel, ExecutorBarrelBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "ExecutorBarrel";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -82,7 +83,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Barrels.Execut
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

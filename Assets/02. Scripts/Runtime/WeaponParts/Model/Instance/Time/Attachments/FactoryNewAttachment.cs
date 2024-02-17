@@ -19,6 +19,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Attachments {
 public class FactoryNewAttachment : WeaponPartsEntity<FactoryNewAttachment, FactoryNewAttachmentBuff> {
+	[field: ES3Serializable]
 		public override string EntityName { get; set; } = "FactoryNewAttachment";
 		
 		public float multiplayer => GetCustomDataValueOfCurrentLevel<float>("multiplayer");
@@ -80,10 +81,16 @@ public class FactoryNewAttachment : WeaponPartsEntity<FactoryNewAttachment, Fact
 		}
 
 		public override void OnBuffEnd() {
-			weaponEntity.IsHolding.UnRegisterOnValueChanged(OnIsHoldingChanged);
-			weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			
 			timer = 0;
 		}
+
+		public override void OnRecycled() {
+			weaponEntity.IsHolding.UnRegisterOnValueChanged(OnIsHoldingChanged);
+			weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			base.OnRecycled();
+		}
+
 
 		private HitData OnModifyHitData(HitData hitData, IWeaponEntity weapon) {
 			if (timer <= 0) {

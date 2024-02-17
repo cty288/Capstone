@@ -746,7 +746,7 @@ namespace Runtime.DataFramework.Entities {
 			onBuffUpdateCallback -= callback;
 		}
 
-		public void OnRecycled() {
+		public virtual void OnRecycled() {
 			OnRecycle();
 			
 			onRecycleRCZeroRef = null;

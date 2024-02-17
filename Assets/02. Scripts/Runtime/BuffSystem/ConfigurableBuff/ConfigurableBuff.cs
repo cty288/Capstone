@@ -150,7 +150,7 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		
 		protected abstract void OnBuffStacked(TBuff buff);
 
-		public static  TBuff Allocate(IEntity buffDealer, IEntity entity, int level) {
+		public static TBuff Allocate(IEntity buffDealer, IEntity entity, int level) {
 			TBuff buff = SafeObjectPool<TBuff>.Singleton.Allocate();
 			buff.OnInitialize(buffDealer, entity);
 			buff.Level = level;

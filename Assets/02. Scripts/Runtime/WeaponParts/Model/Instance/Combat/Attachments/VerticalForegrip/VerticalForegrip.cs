@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments {
 	public class VerticalForegrip : WeaponPartsEntity<VerticalForegrip,VerticalForegripBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "VerticalForegrip";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			

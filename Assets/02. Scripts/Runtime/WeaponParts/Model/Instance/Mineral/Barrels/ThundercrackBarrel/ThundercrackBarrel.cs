@@ -14,6 +14,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels {
 	public class ThundercrackBarrel : WeaponPartsEntity<ThundercrackBarrel, ThundercrackBarrelBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "ThundercrackBarrel";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			

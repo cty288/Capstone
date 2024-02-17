@@ -11,6 +11,7 @@ using Runtime.GameResources.Others;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.EvolvingVirus {
 	public class EvolvingVirus : WeaponPartsEntity<EvolvingVirus, EvolvingVirusBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "EvolvingVirus";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			

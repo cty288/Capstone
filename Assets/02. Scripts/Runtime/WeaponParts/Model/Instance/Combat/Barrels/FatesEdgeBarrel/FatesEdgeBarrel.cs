@@ -13,6 +13,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Barrels.FatesEdgeBarrel {
 	public class FatesEdgeBarrel : WeaponPartsEntity<FatesEdgeBarrel, FatesEdgeBarrelBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "FatesEdgeBarrel";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -82,11 +83,16 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Barrels.FatesE
 		}
 
 		public override void OnBuffEnd() {
-			weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
 			return null;
+		}
+
+		public override void OnRecycled() {
+			weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			base.OnRecycled();
 		}
 
 		public override List<GetResourcePropertyDescriptionGetter> OnRegisterResourcePropertyDescriptionGetters(

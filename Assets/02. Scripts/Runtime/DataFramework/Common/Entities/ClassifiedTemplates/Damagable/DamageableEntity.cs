@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
@@ -31,7 +32,10 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		private IHealthProperty healthProperty;
 		public IHealthProperty HealthProperty => healthProperty;
 
-		
+
+		private HashSet<Func<int, ICanDealDamage, int>> onModifyDamageCountCallbackList =
+			new HashSet<Func<int, ICanDealDamage, int>>();
+
 
 		public override void OnAwake() {
 			base.OnAwake();
@@ -75,6 +79,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 
 			int modifiedDamage = damageDealer?.DoModifyDamageCount(damage) ?? damage;
+			foreach (var onModifyDamage in onModifyDamageCountCallbackList) {
+				modifiedDamage = onModifyDamage(modifiedDamage, damageDealer);
+			}
 			
 			int actualDamage = OnTakeDamageAdditionalCheck(modifiedDamage, damageDealer);
 			
@@ -142,6 +149,14 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			return true;
 		}
 
+		public void RegisterOnModifyDamage(Func<int, ICanDealDamage, int> onModifyDamage) {
+			onModifyDamageCountCallbackList.Add(onModifyDamage);
+		}
+
+		public void UnRegisterOnModifyDamage(Func<int, ICanDealDamage, int> onModifyDamage) {
+			onModifyDamageCountCallbackList.Remove(onModifyDamage);
+		}
+
 		public IUnRegister RegisterOnTakeDamage(OnTakeDamage onTakeDamage) {
 			this.onTakeDamage += onTakeDamage;
 			return new OnTakeDamageUnRegister(this, onTakeDamage);
@@ -188,5 +203,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			this.onHeal -= onHeal;
 		}
 
+		public override void OnRecycled() {
+			base.OnRecycled();
+			onTakeDamage = null;
+		}
 	}
 }

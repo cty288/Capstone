@@ -16,6 +16,7 @@ using Runtime.GameResources.Others;
 using UnityEngine;
 
 public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazineBuff> {
+	[field: ES3Serializable]
 		public override string EntityName { get; set; } = "VampireMagazine";
 		
 		public float Chance => GetCustomDataValueOfCurrentLevel<float>("chance");
@@ -78,7 +79,12 @@ public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazin
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.UnregisterOnDealDamage(OnWeaponDealDamage);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

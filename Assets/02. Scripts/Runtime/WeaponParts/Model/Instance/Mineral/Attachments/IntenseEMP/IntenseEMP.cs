@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments {
 	public class IntenseEMP : WeaponPartsEntity<IntenseEMP, IntenseEMPBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "IntenseEMP";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			

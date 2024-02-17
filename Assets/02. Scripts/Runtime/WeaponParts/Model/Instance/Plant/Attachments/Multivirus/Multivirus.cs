@@ -14,6 +14,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Attachments.Multivirus {
 	public class Multivirus : WeaponPartsEntity<Multivirus, MultivirusBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "Multivirus";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			

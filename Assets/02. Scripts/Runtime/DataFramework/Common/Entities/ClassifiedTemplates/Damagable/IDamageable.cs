@@ -133,5 +133,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public BindableProperty<bool> IsInvincible { get; }
 		
 		public bool CheckCanTakeDamage([CanBeNull] ICanDealDamage damageDealer);
+
+		public void RegisterOnModifyDamage(Func<int, ICanDealDamage, int> onModifyDamage);
+
+		public void UnRegisterOnModifyDamage(Func<int, ICanDealDamage, int> onModifyDamage);
 	}
 }
