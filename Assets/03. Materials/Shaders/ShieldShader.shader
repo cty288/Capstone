@@ -26,6 +26,10 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
     	_Manifest("Manifest", Range(-0.001,2)) = 1
     	_Seed("Seed", Float) = 0
     	[HDR] _DamageColor("Damaged Color", Color) = (1, 1, 1, 1)
+    	
+    	[Space(20)]
+    	_FresnelWeight("True Fresnel vs Screen Space Fresnel", Range(0, 1)) = 0.5
+    	_FresnelStrength("Fresnel Power", Range(0, 4)) = 0.75
 
     	[Space(20)]
     	[Header(Emission)]
@@ -89,6 +93,9 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 			float _Seed;
 			float4 _DamageColor;
 
+			float _FresnelWeight;
+			float _FresnelStrength;
+			
 			// Structs
 			struct Attributes {
 				float4 positionOS	: POSITION;
@@ -104,6 +111,7 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 				float4 positionSS : TEXCOORD2;
 				float4 color		: COLOR;	
 				float3 normalWS     : TEXCOORD3;
+				float3 viewDir : TEXCOORD4;
 			};
 
 			#include "Inputs.hlsl"
@@ -135,6 +143,7 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 
 				VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS.xyz);
 				half3 viewDirWS = GetWorldSpaceViewDir(positionInputs.positionWS);
+				OUT.viewDir = viewDirWS;
 				OUT.normalWS = NormalizeNormalPerVertex(normalInputs.normalWS);
 
 				float2 arcCenter = PolarToCartesian(1.f, _Direction * TAU);
@@ -169,9 +178,18 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 				float intersect = 1-saturate(IN.arc.y * IN.arc.z);
 
 				float depth = LinearEyeDepth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, IN.positionSS.xy/IN.positionSS.w).r, _ZBufferParams);
-				depth = 1 - smoothstep(0, 0.25f, abs(IN.positionSS.w - depth));
+				float depth0 = 1 - smoothstep(0, 0.25f, abs(IN.positionSS.w - depth));
 				//depth *= 0.05f;	
 				//depth = 0.2f*saturate(depth);
+				
+				float fresnel = dot(IN.normalWS, IN.viewDir);
+				fresnel = saturate(1 - abs(fresnel));
+				float fresnel2 = distance(IN.positionSS.xy/IN.positionSS.w, float2(0.5f, 0.5f));
+				fresnel2 = pow(fresnel2, 3.f);
+				
+				fresnel = (fresnel * (1-_FresnelWeight)) + (fresnel2 * _FresnelWeight);
+				
+				fresnel = pow(fresnel, _FresnelStrength);
 				
 				clip(IN.arc.y);
 				clip(IN.arc.x);
@@ -179,7 +197,7 @@ Shader "Universal Render Pipeline/Custom/VFX/Shield"
 				//return float4(IN.positionSS.www, 0.5f);
 				//return float4(depth.rrr, 0.5f);
 				float4 col = lerp((baseMap * _BaseColor * IN.color), _DamageColor, IN.arc.w) + intersect;
-				return float4(col.rgb, col.a) + depth;
+				return float4(col.rgb, col.a * fresnel) + max(depth0, fresnel * 0.5f);
 			}
 			ENDHLSL
 		}
