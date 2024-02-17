@@ -5,21 +5,18 @@ using MikroFramework;
 using UnityEngine;
 
 namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
-    public class WormBulletToxic : AbstractBulletViewController
+    public class WormBossBulletToxic : AbstractBulletViewController
     {
         private float bulletSpeed;
         public GameObject particlePrefab;
         private SafeGameObjectPool pool;
         private GameObject particleInstance;
+        private Rigidbody rb;
+        
         private void Start()
         {
             pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 50, 100);
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * bulletSpeed;
+            rb = gameObject.GetComponent<Rigidbody>();
         }
 
         protected override void OnBulletReachesMaxRange() {}
@@ -28,12 +25,15 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
         public void SetData(float bulletSpeed)
         {
             this.bulletSpeed = bulletSpeed;
+            rb.velocity = gameObject.transform.forward * bulletSpeed;
+            print($"WORM BOSS BULLET SPEED {bulletSpeed}");
         }
 
         protected override void OnHitResponse(HitData data) {}
 
         protected override void OnHitObject(Collider other)
         {
+            print($"WORM BOSS HIT {other.name}");
             if (particlePrefab != null)
             {
                 // Get the hit point and normal

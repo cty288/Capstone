@@ -176,10 +176,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5991458527910054936}
-  - {fileID: 7729133486732817204}
-  - {fileID: 8810564007733899595}
-  - {fileID: 5263084121023038749}
+  - {fileID: 8554743211993430205}
   m_Father: {fileID: 7770089469946453510}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -331,6 +328,41 @@ Transform:
   m_Father: {fileID: 5620848317704976050}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1475257038298797301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8554743211993430205}
+  m_Layer: 0
+  m_Name: Laser
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8554743211993430205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475257038298797301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5991458527910054936}
+  - {fileID: 7729133486732817204}
+  - {fileID: 8810564007733899595}
+  - {fileID: 5263084121023038749}
+  m_Father: {fileID: 5773739406374862004}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1543082006654604436
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +449,37 @@ SkinnedMeshRenderer:
     m_Center: {x: -166.38812, y: -0.000030517578, z: 0}
     m_Extent: {x: 15.214066, y: 104.36026, z: 104.33593}
   m_DirtyAABB: 0
+--- !u!1 &1928203359801962746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6634433819764659712}
+  m_Layer: 0
+  m_Name: side gun fire points
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6634433819764659712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928203359801962746}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -641.7821, y: 231.81169, z: 397.00012}
+  m_LocalScale: {x: 69.999985, y: 70, z: 69.999985}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1872607072230770910}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2329949986402082914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1306,37 @@ Transform:
   m_Father: {fileID: 7770089469946453510}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5292181211495265240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1106664193886919986}
+  m_Layer: 0
+  m_Name: side gun fire points
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1106664193886919986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5292181211495265240}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -641.782, y: -461.1883, z: -0.00012207031}
+  m_LocalScale: {x: 69.999985, y: 70, z: 69.999985}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1872607072230770910}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5321188592830718439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,7 +1686,6 @@ GameObject:
   - component: {fileID: 7808782474623570061}
   - component: {fileID: 313980576834515698}
   - component: {fileID: 313980576834515708}
-  - component: {fileID: 313980576834515711}
   - component: {fileID: 7808782475727053591}
   - component: {fileID: 7808782475727053590}
   - component: {fileID: 7808782475727053599}
@@ -1659,7 +1752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpineAnimatorAmount: 1
-  _Editor_Category: 0
+  _Editor_Category: 3
   _Editor_PivotoffsetXYZ: 0
   ModelForwardAxis: {x: 0, y: 0, z: 1}
   ModelForwardAxisScaled: {x: 0, y: 0, z: 1}
@@ -1676,7 +1769,7 @@ MonoBehaviour:
   _gizmospeep: {fileID: 7258910099222332856}
   SpineBones:
   - transform: {fileID: 872292841210961075}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -19.776323}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -19.776323}
     ProceduralRotation: {x: 0, y: 0, z: 0, w: 1}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1699,7 +1792,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 5620848318906853206}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -17.72525}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -17.72525}
     ProceduralRotation: {x: 0, y: 0, z: 0, w: 1}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1722,7 +1815,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 55248709985554146}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -20.138674}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -20.138674}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1745,7 +1838,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 4961779915535352913}
-    ProceduralPosition: {x: -13.373494, y: 4.801883, z: -22.552006}
+    ProceduralPosition: {x: -13.373494, y: 5.521883, z: -22.552006}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.00000019758457}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1768,7 +1861,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 5620848317704976050}
-    ProceduralPosition: {x: -13.373496, y: 4.801883, z: -24.966232}
+    ProceduralPosition: {x: -13.373496, y: 5.521883, z: -24.966232}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000003950227}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1791,7 +1884,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 55248711195795206}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -27.379656}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -27.379656}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.00000019757707}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1814,7 +1907,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 4961779914589361589}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -29.792988}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -29.792988}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1837,7 +1930,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 5620848319010786200}
-    ProceduralPosition: {x: -13.373498, y: 4.801883, z: -32.207222}
+    ProceduralPosition: {x: -13.373498, y: 5.521883, z: -32.207222}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000005925322}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1860,7 +1953,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 55248709948727852}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -34.620647}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -34.620647}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.00000059273077}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1883,7 +1976,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 4961779915433257119}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -37.033985}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -37.033985}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1906,7 +1999,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 5620848317844923352}
-    ProceduralPosition: {x: -13.373498, y: 4.801883, z: -39.44823}
+    ProceduralPosition: {x: -13.373498, y: 5.521883, z: -39.44823}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000005925294}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1929,7 +2022,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 55248711064226412}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -41.861656}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -41.861656}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.00000059273077}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1952,7 +2045,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 4961779914451960031}
-    ProceduralPosition: {x: -13.373498, y: 4.801883, z: -44.274986}
+    ProceduralPosition: {x: -13.373498, y: 5.521883, z: -44.274986}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000005927542}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1975,7 +2068,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 5620848317793428203}
-    ProceduralPosition: {x: -13.373503, y: 4.801883, z: -46.68925}
+    ProceduralPosition: {x: -13.373503, y: 5.521883, z: -46.68925}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000009875412}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -1998,7 +2091,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 55248711149308767}
-    ProceduralPosition: {x: -13.373498, y: 4.801883, z: -49.10268}
+    ProceduralPosition: {x: -13.373498, y: 5.521883, z: -49.10268}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.000000987883}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2021,7 +2114,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 4961779914501095916}
-    ProceduralPosition: {x: -13.3735, y: 4.801883, z: -51.516018}
+    ProceduralPosition: {x: -13.3735, y: 5.521883, z: -51.516018}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000003951682}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2044,7 +2137,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 5620848318368247642}
-    ProceduralPosition: {x: -13.373505, y: 4.801883, z: -53.930355}
+    ProceduralPosition: {x: -13.373505, y: 5.521883, z: -53.930355}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000009875115}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2067,7 +2160,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 55248709440980718}
-    ProceduralPosition: {x: -13.3735, y: 4.801883, z: -56.343773}
+    ProceduralPosition: {x: -13.3735, y: 5.521883, z: -56.343773}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.0000009878877}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2090,7 +2183,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 4961779915001990237}
-    ProceduralPosition: {x: -13.373505, y: 4.801883, z: -58.75711}
+    ProceduralPosition: {x: -13.373505, y: 5.521883, z: -58.75711}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000009879205}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2113,7 +2206,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 5620848317357976962}
-    ProceduralPosition: {x: -13.373509, y: 4.801883, z: -61.17141}
+    ProceduralPosition: {x: -13.373509, y: 5.521883, z: -61.17141}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000009875272}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2136,7 +2229,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 55248710443910198}
-    ProceduralPosition: {x: -13.3735, y: 4.801883, z: -63.58483}
+    ProceduralPosition: {x: -13.3735, y: 5.521883, z: -63.58483}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.0000019757722}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2159,7 +2252,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 4961779913864842885}
-    ProceduralPosition: {x: -13.373505, y: 4.801883, z: -65.99817}
+    ProceduralPosition: {x: -13.373505, y: 5.521883, z: -65.99817}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: -0.0000009879205}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2182,7 +2275,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 5620848317138339315}
-    ProceduralPosition: {x: -13.3735, y: 4.801883, z: -68.412476}
+    ProceduralPosition: {x: -13.3735, y: 5.521883, z: -68.412476}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.000000987524}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2205,7 +2298,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 55248710226259015}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -70.8259}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -70.8259}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0.0000009878861}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2228,7 +2321,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 4961779914082510580}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -73.23924}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -73.23924}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2251,7 +2344,7 @@ MonoBehaviour:
     CollisionRadius: 1
     ColliderOffset: {x: 0, y: 0, z: 0}
   - transform: {fileID: 7258910099222332856}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -75.65225}
+    ProceduralPosition: {x: -13.373495, y: 5.521883, z: -75.65225}
     ProceduralRotation: {x: 0, y: 1, z: 0, w: 0}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
@@ -2300,7 +2393,7 @@ MonoBehaviour:
   MaxStretching: 1
   Slithery: 1
   AngleLimit: 35
-  LimitSmoother: 0.35
+  LimitSmoother: 0.233
   StraightenSpeed: 7.5
   TurboStraighten: 0
   GoBackSpeed: 0
@@ -2409,47 +2502,6 @@ MonoBehaviour:
   m_event:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &313980576834515711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6962344675241428156}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startWhenEnabled: 1
-  asynchronousLoad: 0
-  pauseWhenDisabled: 0
-  restartWhenComplete: 0
-  logTaskChanges: 0
-  group: 0
-  resetValuesOnRestart: 0
-  externalBehavior: {fileID: 0}
-  mBehaviorSource:
-    behaviorName: WormBoss
-    behaviorDescription: 
-    mTaskData:
-      types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(1229,243.666656)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(-1,123.666656)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(1,132.666687)"},"ID":2,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-123,131.666687)"},"ID":3,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-176.5,223.333374)"},"ID":4,"Name":"Worm
-        Boss Arc Movement","Instant":true,"Singlespeed":5},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(105.5,233.333374)"},"ID":5,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":30},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]}]}}'
-      fieldSerializationData:
-        typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
-        unityObjects: []
-        byteData: 
-        byteDataArray: 
-      Version: 1.7.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
 --- !u!54 &7808782475727053591
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2461,10 +2513,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &7808782475727053590
 CapsuleCollider:
@@ -2558,19 +2610,17 @@ MonoBehaviour:
       startIndex: 
       variableStartIndex: 
       JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(1229,223.666656)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(2.166626,202.333313)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.RandomSelector","NodeData":{"Offset":"(0.166625977,125.333313)"},"ID":2,"Name":"Random
-        Selector","Instant":true,"Int32seed":0,"BooleanuseSeed":false,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(180,140)"},"ID":3,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-94.8566,175.667114)","Comment":"This
-        subtree is used for\nthe 3 varying attacks\nwhen the worm raises\nit''s head."},"ID":4,"Name":"Parallel
-        Complete","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-154.4878,274.47464)"},"ID":5,"Name":"Worm
-        Boss Aim","Instant":true,"Singleduration":4,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":0},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":1},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2}},{"Type":"BehaviorDesigner.Runtime.Tasks.RandomSelector","NodeData":{"Offset":"(67.6754456,108.430893)"},"ID":6,"Name":"Random
-        Selector","Instant":true,"Int32seed":0,"BooleanuseSeed":false,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossShoot","NodeData":{"Offset":"(80,160)"},"ID":7,"Name":"Worm
-        Boss Shoot","Instant":true,"GameObjectmissilePrefab":3,"List`1bulletSpawnPos":[4,5,6,7,8,9,10]}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(226.666687,130)"},"ID":8,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]}]},"DetachedTasks":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormAttackLazer","NodeData":{"Offset":"(652.1666,670.3333)"},"ID":9,"Name":"Worm
-        Attack Lazer","Instant":true,"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null}},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1070,680)"},"ID":10,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-120,140)"},"ID":11,"Name":"Worm
-        Boss Arc Movement","Instant":true,"Singleduration":10,"SinglejumpHeight":50},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(71.166626,137.333374)"},"ID":12,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadAcid","NodeData":{"Offset":"(1680,1140)"},"ID":13,"Name":"Worm
-        Boss Head Acid","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":11},"SharedGameObjectacidBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":12},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadLaser","NodeData":{"Offset":"(1210,1360)"},"ID":14,"Name":"Worm
+        Selector","Instant":true,"Int32seed":0,"BooleanuseSeed":false,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(180,140)"},"ID":3,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-94.8566,175.667114)"},"ID":4,"Name":"Acid
+        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-78.73024,105.14592)"},"ID":5,"Name":"Worm
+        Boss Aim","Instant":true,"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":0},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":1},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadAcid","NodeData":{"Offset":"(73.33362,113.073822)"},"ID":6,"Name":"Worm
+        Boss Head Acid","Instant":true,"SharedGameObject[]firePoints":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":3},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":4},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":5}],"SharedGameObjectacidChargePrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":6},"SharedGameObjectacidBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":7},"SinglebulletSpeed":10}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(226.666687,130)"},"ID":7,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]}]},"DetachedTasks":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormAttackLazer","NodeData":{"Offset":"(652.1666,670.3333)"},"ID":8,"Name":"Worm
+        Attack Lazer","Instant":true,"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null}},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1070,680)"},"ID":9,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-120,140)"},"ID":10,"Name":"Worm
+        Boss Arc Movement","Instant":true,"SharedVector3divePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SinglejumpHeight":50},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(71.166626,137.333374)"},"ID":11,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadRapidFire","NodeData":{"Offset":"(1380.16882,1230.03955)"},"ID":12,"Name":"Worm
+        Boss Head Rapid Fire","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":8},"SharedGameObjectrapidFireBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":9},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossShoot","NodeData":{"Offset":"(1129.888,1280.01978)"},"ID":13,"Name":"Worm
+        Boss Shoot","Instant":true,"GameObjectmissilePrefab":10,"List`1bulletSpawnPos":[11,12,13,14,15,16,17]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadLaser","NodeData":{"Offset":"(1390,1170)"},"ID":14,"Name":"Worm
         Boss Head Laser","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
-        Fire Point","IsShared":true,"GameObjectmValue":13},"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":14},"GameObjectcharging":15,"GameObjectcharged":16,"GameObjectbeam":17},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadRapidFire","NodeData":{"Offset":"(870,1110)"},"ID":15,"Name":"Worm
-        Boss Head Rapid Fire","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":18},"SharedGameObjectrapidFireBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":19},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
-        Fire Point","IsShared":true,"GameObjectmValue":20}]}'
+        Fire Point","IsShared":true,"GameObjectmValue":18},"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":19},"GameObjectcharging":20,"GameObjectcharged":21,"GameObjectbeam":22}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
+        Fire Point","IsShared":true,"GameObjectmValue":23}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
@@ -2580,6 +2630,13 @@ MonoBehaviour:
         - {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
         - {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
         - {fileID: 7808782474424061144}
+        - {fileID: 1928203359801962746}
+        - {fileID: 7155761172163080558}
+        - {fileID: 5292181211495265240}
+        - {fileID: 7043234790096801525, guid: d468f634683df4e418d449aa0f5fcf9c, type: 3}
+        - {fileID: 7947353322020710246, guid: 32acaad28bff56a42be4a19bef32d0f1, type: 3}
+        - {fileID: 7808782474424061144}
+        - {fileID: 1700704895486175575, guid: 6f0a4a23cc4f0f94aa8c60b675625e99, type: 3}
         - {fileID: 510573299129508542, guid: d9011468b58dfaa4385a8bccd3aab96b, type: 3}
         - {fileID: 2685916519299610002}
         - {fileID: 718317587841484483}
@@ -2589,14 +2646,10 @@ MonoBehaviour:
         - {fileID: 718317587841484483}
         - {fileID: 932212800939880154}
         - {fileID: 7808782474424061144}
-        - {fileID: 1700704895486175575, guid: 1a1fa88e24dd0184caf948532241886b, type: 3}
-        - {fileID: 7808782474424061144}
         - {fileID: 2534608482763259814, guid: fd509476f9c923b4b82087df16444118, type: 3}
         - {fileID: 5991458527910054917}
         - {fileID: 7729133486732817200}
         - {fileID: 8810564007733899594}
-        - {fileID: 7808782474424061144}
-        - {fileID: 1700704895486175575, guid: 6f0a4a23cc4f0f94aa8c60b675625e99, type: 3}
         - {fileID: 7808782474424061144}
         byteData: 
         byteDataArray: 
@@ -2670,6 +2723,37 @@ Transform:
   - {fileID: 5687656246865934200}
   m_Father: {fileID: 872292841210961075}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7155761172163080558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 488763866557886418}
+  m_Layer: 0
+  m_Name: side gun fire points
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &488763866557886418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155761172163080558}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -641.78186, y: 231.81169, z: -397.0003}
+  m_LocalScale: {x: 69.999985, y: 70, z: 69.999985}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1872607072230770910}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7808782474424061144
 GameObject:
@@ -3020,7 +3104,10 @@ Transform:
   m_LocalPosition: {x: -2.842171e-14, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6634433819764659712}
+  - {fileID: 488763866557886418}
+  - {fileID: 1106664193886919986}
   m_Father: {fileID: 6118021295109065182}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3232,7 +3319,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5773739406374862004}
+    m_TransformParent: {fileID: 8554743211993430205}
     m_Modifications:
     - target: {fileID: 1747801527443595624, guid: ff7e6c1aa7cde1644a0d605d085cec92,
         type: 3}
@@ -3277,7 +3364,7 @@ PrefabInstance:
     - target: {fileID: 1747801527443595637, guid: ff7e6c1aa7cde1644a0d605d085cec92,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 151.2
+      value: 151.2001
       objectReference: {fileID: 0}
     - target: {fileID: 1747801527443595637, guid: ff7e6c1aa7cde1644a0d605d085cec92,
         type: 3}
@@ -3338,7 +3425,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5773739406374862004}
+    m_TransformParent: {fileID: 8554743211993430205}
     m_Modifications:
     - target: {fileID: 1592927370926174601, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
@@ -3420,7 +3507,7 @@ PrefabInstance:
     - target: {fileID: 1592927372223329402, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1592927372223329403, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
@@ -3455,7 +3542,7 @@ PrefabInstance:
     - target: {fileID: 1592927372223329403, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 176.1
+      value: 176.10016
       objectReference: {fileID: 0}
     - target: {fileID: 1592927372223329403, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
@@ -3465,17 +3552,17 @@ PrefabInstance:
     - target: {fileID: 1592927372223329403, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1592927372223329403, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1592927372223329403, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1592927372223329403, guid: 01ed30a36ee552d4a8a4abfb611f0db3,
         type: 3}
@@ -4335,7 +4422,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5773739406374862004}
+    m_TransformParent: {fileID: 8554743211993430205}
     m_Modifications:
     - target: {fileID: 1320623822082351358, guid: 0a396b2d94f079a48b371561eade8286,
         type: 3}
@@ -4908,7 +4995,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5773739406374862004}
+    m_TransformParent: {fileID: 8554743211993430205}
     m_Modifications:
     - target: {fileID: 1423210576230068410, guid: 8f444726dc31a6e4e9c55e46bfe4d89c,
         type: 3}
@@ -4953,7 +5040,7 @@ PrefabInstance:
     - target: {fileID: 1423210576230068414, guid: 8f444726dc31a6e4e9c55e46bfe4d89c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 153
+      value: 152.99988
       objectReference: {fileID: 0}
     - target: {fileID: 1423210576230068414, guid: 8f444726dc31a6e4e9c55e46bfe4d89c,
         type: 3}

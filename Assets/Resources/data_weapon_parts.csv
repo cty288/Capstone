@@ -405,7 +405,7 @@ FactoryNewAttachment,1,"""Time""","{
   }
 }",,,
 SelfLoadingAttachment,1,"""Time""",,,,,
-FatesEdgeBarrel,1,"""Mineral""",,"{
+FatesEdgeBarrel,1,"""Combat""",,"{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.15},
     ""health"": {""type"": ""float"", ""value"": 0.75}
@@ -423,7 +423,7 @@ FatesEdgeBarrel,1,"""Mineral""",,"{
     ""health"": {""type"": ""float"", ""value"": 0.5}
   }
 }",,,
-DoubleExplosionMagazine,1,"""Mineral""",,"{
+DoubleExplosionMagazine,1,"""Combat""",,"{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.5}
   },
@@ -437,12 +437,12 @@ DoubleExplosionMagazine,1,"""Mineral""",,"{
     ""multiplier"": {""type"": ""float"", ""value"": 1.25}
   }
 }",,,
-VerticalForegrip,1,"""Mineral""",,"{
+VerticalForegrip,1,"""Combat""",,"{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.25}
   }
 }",,,
-ThundercrackBarrel,1,"""Plant""",,"{
+ThundercrackBarrel,1,"""Mineral""",,"{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.2}
   },
@@ -456,7 +456,7 @@ ThundercrackBarrel,1,"""Plant""",,"{
     ""multiplier"": {""type"": ""float"", ""value"": 0.75}
   }
 }",,,
-EMPChain,1,"""Plant""",,"{
+EMPChain,1,"""Mineral""",,"{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2}
   },
@@ -470,7 +470,7 @@ EMPChain,1,"""Plant""",,"{
     ""chance"": {""type"": ""float"", ""value"": 0.75}
   }
 }",,,
-IntenseEMP,1,"""Plant""",,"{
+IntenseEMP,1,"""Mineral""",,"{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 1.5},
     ""range"": {""type"": ""float"", ""value"": 20}
@@ -488,7 +488,7 @@ IntenseEMP,1,"""Plant""",,"{
     ""range"": {""type"": ""float"", ""value"": 30}
   }
 }",,,
-WorseViral,1,"""Combat""",,"{
+WorseViral,1,"""Plant""",,"{
   ""level1"": {
     ""damage"": {""type"": ""int"", ""value"": 1}
   },
@@ -502,7 +502,7 @@ WorseViral,1,"""Combat""",,"{
     ""damage"": {""type"": ""int"", ""value"": 4}
   }
 }",,,
-EvolvingVirus,1,"""Combat""",,"{
+EvolvingVirus,1,"""Plant""",,"{
   ""level1"": {
     ""time"": {""type"": ""int"", ""value"": 5}
   },
@@ -516,7 +516,7 @@ EvolvingVirus,1,"""Combat""",,"{
     ""time"": {""type"": ""int"", ""value"": 15}
   }
 }",,,
-Multivirus,1,"""Combat""",,"{
+Multivirus,1,"""Plant""",,"{
   ""level1"": {
     ""number"": {""type"": ""int"", ""value"": 1}
   },
@@ -553,7 +553,7 @@ ChargedMagazine,1,"""Time""","{
     ""effect"": {""type"": ""int"", ""value"": 10}
   }
 }",,,
-ExecutorBarrel,1,"""Mineral""","{
+ExecutorBarrel,1,"""Combat""","{
         ""ResourceCost"": {
             ""Mineral1"": 5,
             ""Time1"": 5
@@ -576,7 +576,7 @@ ExecutorBarrel,1,"""Mineral""","{
     ""health"": {""type"": ""float"", ""value"": 0.5}
   }
 }",,,
-InfiniteChainMagazine,1,"""Mineral""","{
+InfiniteChainMagazine,1,"""Combat""","{
         ""ResourceCost"": {
             ""Combat1"": 5
         }
@@ -586,5 +586,24 @@ InfiniteChainMagazine,1,"""Mineral""","{
   },
   ""level3"": {
    ""number"": {""type"": ""int"", ""value"": 2}
+  }
+}",,,
+DawnbreakerBlast,1,"""Combat""","{
+        ""ResourceCost"": {
+            ""Combat1"": 5,
+            ""Time1"": 5
+        }
+}","{
+  ""level1"": {
+    ""damage"": {""type"": ""int"", ""value"": 35}
+  },
+  ""level2"": {
+     ""damage"": {""type"": ""int"", ""value"": 40}
+  },
+  ""level3"": {
+     ""damage"": {""type"": ""int"", ""value"": 50}
+  },
+  ""level4"": {
+    ""damage"": {""type"": ""int"", ""value"": 60}
   }
 }",,,

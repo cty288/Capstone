@@ -58,32 +58,29 @@ public class WormBossLaser : AbstractDotBulletViewController
 
     private void OnEnable()
     {
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 0.3f);
+        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 100f);
     }
 
     // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-        transform.localScale += new Vector3(0, 0, 5.5f);
-        /*
-        if (this.gameObject.transform.localScale.z >= 30)
-        {
-            this.gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, 30f);
-
-        }
-        */
-        
-
-            
-
-        
-    }
+//     protected override void Update()
+//     {
+//         base.Update();
+//         transform.localScale += new Vector3(0, 0, 5.5f);
+//         /*
+//         if (this.gameObject.transform.localScale.z >= 30)
+//         {
+//             this.gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, 30f);
+//
+//         }
+//         */
+//     }
+    
     public void SetData(float tick, float damage)
     {
         this.tick = tick;
         this.damage = damage;
     }
+    
     /*
     protected override void OnTriggerEnter(Collider other)
     {

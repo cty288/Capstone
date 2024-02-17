@@ -30,9 +30,7 @@ namespace Runtime.Enemies
     {
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "WormBoss";
-
-
-       
+        
 
         protected override void OnEntityStart(bool isLoadedFromSave)
         {

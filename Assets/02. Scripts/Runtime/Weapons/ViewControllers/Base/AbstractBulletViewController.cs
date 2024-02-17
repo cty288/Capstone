@@ -97,7 +97,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
-			 bool ownerTriggerHitResponse = false, bool overrideExplosionFaction = false) {
+			bool ownerTriggerHitResponse = false, bool overrideExplosionFaction = false) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
@@ -188,21 +188,30 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected abstract void OnHitResponse(HitData data);
 
 		protected virtual void OnTriggerEnter(Collider other) {
+			print($"WORM BOSS HIT {other.name} A");
+
 			if (!inited) {
+				print($"WORM BOSS HIT {other.name} B");
 				return;
 			}
 
 			if (!other.isTrigger) {
+				print($"WORM BOSS HIT {other.name} C");
+
 				Rigidbody rootRigidbody = other.attachedRigidbody;
 				GameObject hitObj = rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
 				if (hitObj && (bulletOwner && hitObj.transform == bulletOwner.transform) || 
 				    (hitObj.transform == owner.GetRootDamageDealerTransform())) {
+					print($"WORM BOSS HIT {other.name} D");
+
 					return;
 				}
 				
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
 					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
+						print($"WORM BOSS HIT {other.name} E");
+
 						return;
 					}
 				}
