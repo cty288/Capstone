@@ -96,7 +96,7 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
 
     public BuffDisplayInfo OnGetBuffDisplayInfo() {
         if (!IsDisplayed()) {
-            return new BuffDisplayInfo();
+            return new BuffDisplayInfo(){Display = false};
         }
         else {
             string typeName = this.GetType().Name;

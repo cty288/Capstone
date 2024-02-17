@@ -29,9 +29,16 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.TurretSkill {
 				BoundEntity.GetCustomPropertyOfCurrentLevel<float>("last_time"),
 				BoundEntity.GetCustomPropertyOfCurrentLevel<int>("ammo_size"),
 				BoundEntity.GetCustomPropertyOfCurrentLevel<float>("time_per_shot"),
-				BoundEntity.GetCustomPropertyOfCurrentLevel<int>("damage"));
+				BoundEntity.GetCustomPropertyOfCurrentLevel<int>("damage"),
+				BoundEntity.GetCustomPropertyOfCurrentLevel<int>("explode_damage"),
+				BoundEntity.GetCustomPropertyOfCurrentLevel<float>("explode_radius"),
+				BoundEntity.GetLevel());
 
 			turret.GetComponent<TurretViewController>().InitWithID(entity.UUID);
+			turret.GetComponent<TurretViewController>().SetParentDamageDealer(BoundEntity);
+			BoundEntity.OnSpawnTurret(entity);
+			
+			
 		}
 
 		protected override IResourceEntity OnBuildNewEntity(bool isPreview) {

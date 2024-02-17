@@ -11,6 +11,7 @@ public class ShortCutResourceSlotViewController : ResourceSlotViewController {
    private TMP_Text shortCutText;
    private Transform shortCutTransform;
    private TMP_Text[] currencyTexts;
+   private ISkillEntity prevSkill;
 
    public override void Awake() {
       base.Awake();
@@ -32,7 +33,20 @@ public class ShortCutResourceSlotViewController : ResourceSlotViewController {
       }
 
       if (topItem is ISkillEntity skill) {
+         if (prevSkill != null) {
+            prevSkill.UnregisterOnSkillUpgrade(OnSkillUpgrade);
+         }
+         skill.RegisterOnSkillUpgrade(OnSkillUpgrade);
+         prevSkill = skill;
+         OnSkillUpgrade(skill, 0, skill.GetLevel());
+      }
+   }
+
+   private void OnSkillUpgrade(ISkillEntity skill, int prevLevel, int newLevel) {
+      foreach (TMP_Text text in currencyTexts) {
+         text.gameObject.SetActive(false);
          Dictionary<CurrencyType, int> currencies = skill.GetSkillUseCostOfCurrentLevel();
+         if (currencies == null) continue;
          int i = 0;
          foreach (KeyValuePair<CurrencyType, int> pair in currencies) {
             if (pair.Value <= 0) {
@@ -51,6 +65,10 @@ public class ShortCutResourceSlotViewController : ResourceSlotViewController {
          foreach (TMP_Text text in currencyTexts) {
             text.gameObject.SetActive(false);
          }
+      }
+      if (prevSkill != null) {
+         prevSkill.UnregisterOnSkillUpgrade(OnSkillUpgrade);
+         prevSkill = null;
       }
       
    }

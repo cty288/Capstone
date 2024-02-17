@@ -66,6 +66,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialCompensator {
 		}
 
 		public override void OnStart() {
+			base.OnStart();
 			multiplier = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("multiplier");
 			chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
 		}

@@ -75,7 +75,7 @@ public class RageDetector : WeaponPartsEntity<RageDetector, RageDetectorBuff> {
 		
 
 		public override void OnStart() {
-			
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {

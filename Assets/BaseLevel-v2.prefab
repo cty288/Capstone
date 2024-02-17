@@ -24648,7 +24648,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 328a06e3-1cab-4a0c-9759-f856a990b59b
   autoCreateNewEntityWhenStart: 0
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -24665,22 +24664,10 @@ MonoBehaviour:
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   playerSpawnPoints:
   - {fileID: 554314296457167679}
-  enemies:
-  - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
-  - mainPrefab: {fileID: 7182693560717081365, guid: f885754543c182943ad6e9cfabe2c0ed,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 2
+  enemySpawnCardConfigs:
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
   bossSpawnCostInfo:
     _serializedList: []
   pillarRewardsInfo:
@@ -24694,6 +24681,8 @@ MonoBehaviour:
   - 0
   - 0.33
   - 1
+  timeCurrencyLevel: 1
+  spawnExitDoor: 0
   subAreaLevelPrefabs: []
   autoUpdateNavMeshOnStart: 1
   ambientMusic: {fileID: 8300000, guid: 40c173f020bb645448cede9fae874c2d, type: 3}
@@ -43180,8 +43169,12 @@ MonoBehaviour:
   renderers:
   - {fileID: 2846277831368508961}
   - {fileID: 4315245863774165186}
-  gunBarrelIndicator: {fileID: 2100000, guid: 3f156aadd9fe9b848a447b1dcc065f17, type: 2}
+  images: []
+  unlitIndicator: {fileID: 0}
+  spriteIndicator: {fileID: 0}
   updateIndicators: 1
+  currentAmmo: {fileID: 0}
+  maxAmmo: {fileID: 0}
 --- !u!4 &1088863670642499367 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 45ad3489be993c341ad9d44c34494cdc,
@@ -43715,8 +43708,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renderers: []
-  gunBarrelIndicator: {fileID: 2100000, guid: 3f156aadd9fe9b848a447b1dcc065f17, type: 2}
+  images: []
+  unlitIndicator: {fileID: 0}
+  spriteIndicator: {fileID: 0}
   updateIndicators: 0
+  currentAmmo: {fileID: 0}
+  maxAmmo: {fileID: 0}
 --- !u!4 &9146280749564262040 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eb2e3c7d414bb3042b9542a93ae08cc1,

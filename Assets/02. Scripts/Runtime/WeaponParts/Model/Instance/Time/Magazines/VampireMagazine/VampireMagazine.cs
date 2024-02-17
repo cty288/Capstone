@@ -70,7 +70,7 @@ public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazin
 		}
 
 		public override void OnStart() {
-			
+			base.OnStart();
 		}
 
 		public override BuffStatus OnTick() {

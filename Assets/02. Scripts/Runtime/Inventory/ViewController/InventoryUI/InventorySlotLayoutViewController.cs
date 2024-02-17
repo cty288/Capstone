@@ -21,5 +21,7 @@ namespace Runtime.Inventory.ViewController {
 		public abstract void OnSelected(int slotIndex);
 		
 		public abstract void OnInventoryUIClosed();
+
+		public abstract void OnInventorySlotRemoved(List<ResourceSlot> eRemovedSlots, int eRemovedCount);
 	}
 }

@@ -52,13 +52,16 @@ namespace _02._Scripts.Runtime.Rewards {
 			
 			int count = Random.Range(rewardBatch.AmountRange.x, rewardBatch.AmountRange.y + 1);
 			List<GameObject> spawnedGameObjects = new List<GameObject>();
+
+			
+			
 			switch (rewardBatch.RewardType) {
 				case RewardType.Resource:
-					
+					int targetLevel = rewardBatch.PickLevel();
 					var resources = 
 						ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.RawMaterial, entity =>
 						((IRawMaterialEntity) entity).GetProperty<IRarityProperty>().RealValue.Value ==
-						rewardBatch.Level);
+						targetLevel);
 
 					var resourceTemplateInfos = resources as ResourceTemplateInfo[] ?? resources.ToArray();
 					if (resources == null || !resourceTemplateInfos.Any()) {
@@ -68,7 +71,7 @@ namespace _02._Scripts.Runtime.Rewards {
 					var targetResource = resourceTemplateInfos[Random.Range(0, resourceTemplateInfos.Length)];
 					
 					for (int i = 0; i < count; i++) {
-						IResourceEntity resource = targetResource.EntityCreater.Invoke(false, rewardBatch.Level);
+						IResourceEntity resource = targetResource.EntityCreater.Invoke(false, targetLevel);
 						GameObject spawnedVC = ResourceVCFactory.Singleton.SpawnPickableResourceVC(resource, true);
 						spawnedGameObjects.Add(spawnedVC);
 					}
@@ -80,40 +83,50 @@ namespace _02._Scripts.Runtime.Rewards {
 					IWeaponPartsModel weaponPartsModel = this.GetModel<IWeaponPartsModel>();
 					
 					for (int m = 0; m < count; m++) {
-						var weaponParts =
-							ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts,
-								(parts) => {
-									IWeaponPartsEntity template = (IWeaponPartsEntity) parts;
-									return weaponPartsModel.IsUnlocked(parts.EntityName) &&
-									       template.GetMaxRarity() >= rewardBatch.Level &&
-									       template.GetMinRarity() <= rewardBatch.Level &&
-									       template.GetBuildType() == buildType;
-								});
-
-						var weaponPartTemplateInfos = weaponParts.ToList();
-						if (weaponParts == null || !weaponPartTemplateInfos.Any()) {
-							return null;
-						}
-					
+						
 					
 						//select 3 different weapon parts
-						List<ResourceTemplateInfo> selectedWeaponParts = new List<ResourceTemplateInfo>();
+						List<(ResourceTemplateInfo, int)> selectedWeaponParts = new List<(ResourceTemplateInfo, int)>();
+						HashSet<string> alreadySelectedWeaponParts = new HashSet<string>();
 						for (int i = 0; i < 3; i++) {
+							int level = rewardBatch.PickLevel();
+							var weaponParts =
+								ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts,
+									(parts) => {
+										IWeaponPartsEntity template = (IWeaponPartsEntity) parts;
+										return weaponPartsModel.IsUnlocked(parts.EntityName) &&
+										       template.GetMaxRarity() >= level &&
+										       template.GetMinRarity() <= level &&
+										       template.GetBuildType() == buildType &&
+										       !alreadySelectedWeaponParts.Contains(parts.EntityName);
+									});
+
+							var weaponPartTemplateInfos = weaponParts.ToList();
+							if (weaponParts == null || !weaponPartTemplateInfos.Any()) {
+								break;
+							}
+
+							
 							if (weaponPartTemplateInfos.Count == 0) {
 								break;
 							}
 						
 							int randomIndex = Random.Range(0, weaponPartTemplateInfos.Count);
 							ResourceTemplateInfo selectedWeaponPart = weaponPartTemplateInfos[randomIndex];
-							selectedWeaponParts.Add(selectedWeaponPart);
-							weaponPartTemplateInfos.RemoveAt(randomIndex);
+							selectedWeaponParts.Add((selectedWeaponPart, level));
+							alreadySelectedWeaponParts.Add(selectedWeaponPart.TemplateEntity.EntityName);
+
+							//weaponPartTemplateInfos.RemoveAt(randomIndex);
 						}
 					
 						List<IResourceEntity> spawnedWeaponParts = new List<IResourceEntity>();
-						foreach (var weaponPart in selectedWeaponParts) {
+						foreach (var weaponPartTuple in selectedWeaponParts) {
 							
+							ResourceTemplateInfo weaponPart = weaponPartTuple.Item1;
+							int level = weaponPartTuple.Item2;
+
 							IResourceEntity resource =
-								weaponPart.EntityCreater.Invoke(true, rewardBatch.Level);
+								weaponPart.EntityCreater.Invoke(true, level);
 							
 							spawnedWeaponParts.Add(resource);
 						}

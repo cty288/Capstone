@@ -45,6 +45,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 		}
 
 		public override void OnStart() {
+			base.OnStart();
 			foreach (IBuffedProperty<float> buffedProperty in attackSpeedProperties.Properties) {
 				buffedProperty.RealValue.Value +=
 					weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("attackSpeed");

@@ -104,7 +104,15 @@ public class ModificationSubPanel : SwitchableSubPanel {
     /// <param name="prev"></param>
     /// <param name="currentSlot"></param>
     private void OnCurrentHoveredSlotChanged(ResourceSlotViewController prev, ResourceSlotViewController currentSlot) {
+       // ClearSpawnedDescriptions();
         if(selectedWeapon == null) {
+            return;
+        }
+        if ((currentSlot != null && currentSlot.Slot is WeaponPartsSlot) || (prev != null && prev.Slot is WeaponPartsSlot)) {
+            return;
+        }
+        
+        if((currentSlot != null && currentSlot.Slot.GetQuantity() == 0) || (prev != null && prev.Slot.GetQuantity() == 0)) {
             return;
         }
         

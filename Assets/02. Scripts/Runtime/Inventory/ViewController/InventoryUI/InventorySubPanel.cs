@@ -52,16 +52,19 @@ public class InventorySubPanel : SwitchableSubPanel
             
         this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected)
             .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        
+        this.RegisterEvent<OnInventorySlotRemovedEvent>(OnInventorySlotRemoved)
+            .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 
         
         SetInitialSlots();
         
     }
+
     
 
 
-
-        private void OnInventoryHotBarSlotAdded(OnInventoryHotBarSlotAddedEvent e) {
+    private void OnInventoryHotBarSlotAdded(OnInventoryHotBarSlotAddedEvent e) {
             if (hotBarSlotLayoutViewControllers.TryGetValue(e.Category, out var controller)) {
                 controller.ForEach(slotLayoutViewController => {
                     slotLayoutViewController.OnInventorySlotAdded(
@@ -109,7 +112,9 @@ public class InventorySubPanel : SwitchableSubPanel
         private void OnInventorySlotAdded(OnInventorySlotAddedEvent e) {
             mainSlotLayoutViewController.OnInventorySlotAdded(e.AddedSlots, e.AddedCount);
         }
-
+        private void OnInventorySlotRemoved(OnInventorySlotRemovedEvent e) {
+            mainSlotLayoutViewController.OnInventorySlotRemoved(e.RemovedSlots, e.RemovedCount);
+        }
         public void OnOpen(UIMsg msg) {
             mainSlotLayoutViewController.OnShowSlotItem();
             

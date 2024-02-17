@@ -62,6 +62,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines {
 
 		
 		public override void OnStart() {
+			base.OnStart();
 			multiplier = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("multiplier");
 		}
 

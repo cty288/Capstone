@@ -48,7 +48,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Test {
 		}
 
 		public override void OnStart() {
-
+			base.OnStart();
 			foreach (IBuffedProperty<Vector2Int> buffedProperty in baseDamageProperties.Properties) {
 				buffedProperty.RealValue.Value += new Vector2Int(30, 80);
 			}
