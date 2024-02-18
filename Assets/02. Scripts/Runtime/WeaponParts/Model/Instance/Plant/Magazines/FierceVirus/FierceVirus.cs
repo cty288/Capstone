@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.EvolvingVirus {
-	public class EvolvingVirus : WeaponPartsEntity<EvolvingVirus, EvolvingVirusBuff> {
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.FierceVirus {
+	public class FierceVirus : WeaponPartsEntity<FierceVirus, FierceVirusBuff> {
 		[field: ES3Serializable]
-		public override string EntityName { get; set; } = "EvolvingVirus";
+		public override string EntityName { get; set; } = "FierceVirus";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
 		}
@@ -21,10 +19,15 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 			
 		}
 
+		public override int GetMaxRarity() {
+			return 3;
+		}
+
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			int time = GetCustomDataValueOfCurrentLevel<int>("time");
-			return Localization.GetFormat(defaultLocalizationKey, time);
+			float time = GetCustomDataValueOfCurrentLevel<float>("time");
+			int displayedTime = (int) (time * 100);
+			return Localization.GetFormat(defaultLocalizationKey, displayedTime);
 		}
 		
 
@@ -35,17 +38,17 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 		}
 	}
 	
-	public class EvolvingVirusBuff : WeaponPartsBuff<EvolvingVirus, EvolvingVirusBuff> {
+	public class FierceVirusBuff : WeaponPartsBuff<FierceVirus, FierceVirusBuff> {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
 		
 		public override void OnInitialize() {
-			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
+			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeTotalDurationEvent>(OnPlantBuffChangeTotalDurationEvent);
 		}
 
-		private OnPlantBuffChangeBaseDurationEvent OnModifyDurationEvent(OnPlantBuffChangeBaseDurationEvent e) {
-			int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
-			e.Value += time;
+		private OnPlantBuffChangeTotalDurationEvent OnPlantBuffChangeTotalDurationEvent(OnPlantBuffChangeTotalDurationEvent e) {
+			float time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("time");
+			e.Value *= (1 - time);
 			return e;
 		}
 
@@ -63,7 +66,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 		}
 
 		public override void OnRecycled() {
-			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
+			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeTotalDurationEvent>(OnPlantBuffChangeTotalDurationEvent);
 			base.OnRecycled();
 		}
 
@@ -76,10 +79,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					
-					int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
+					float time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("time");
+					int displayedTime = (int) (time * 100);
 
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("EvolvingVirus_desc", time));
+						Localization.GetFormat("FierceVirus_desc", displayedTime));
 				})
 			};
 		}

@@ -17,8 +17,23 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 		}
 	}
 	
-	public class OnPlantBuffChangeDurationEvent : ModifyValueEvent<float> {
-		public OnPlantBuffChangeDurationEvent(float value) : base(value) {
+	public class OnPlantBuffChangeBaseDurationEvent : ModifyValueEvent<float> {
+		public OnPlantBuffChangeBaseDurationEvent(float value) : base(value) {
+		}
+	}
+	
+	public class OnPlantBuffChangeTotalDurationEvent : ModifyValueEvent<float> {
+		public OnPlantBuffChangeTotalDurationEvent(float value) : base(value) {
+		}
+	}
+	
+	public class OnPlantBuffChangeTotalDamageEvent : ModifyValueEvent<float> {
+		public OnPlantBuffChangeTotalDamageEvent(float value) : base(value) {
+		}
+	}
+	
+	public class OnPlantBuffChangeIsSuddenDeathEvent : ModifyValueEvent<bool> {
+		public OnPlantBuffChangeIsSuddenDeathEvent(bool value) : base(value) {
 		}
 	}
 
@@ -40,21 +55,36 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 
 		public bool AddHackedBuff(IDamageable target) {
 			float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage_multiplier");
-			float duration = GetBuffPropertyAtCurrentLevel<float>("time");
-			duration = weaponEntity
-				.SendModifyValueEvent<OnPlantBuffChangeDurationEvent>(
-					new OnPlantBuffChangeDurationEvent(duration))
+			float baseDuration = GetBuffPropertyAtCurrentLevel<float>("time");
+			baseDuration = weaponEntity
+				.SendModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(
+					new OnPlantBuffChangeBaseDurationEvent(baseDuration))
 				.Value;
-				
+
+			float actualDuration = weaponEntity
+				.SendModifyValueEvent<OnPlantBuffChangeTotalDurationEvent>(
+					new OnPlantBuffChangeTotalDurationEvent(baseDuration))
+				.Value;
+			
 				
 			IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
-			int dot = 2 * weaponEntity.GetRarity();
-			dot = weaponEntity.SendModifyValueEvent<OnPlantBuffChangeDOTEvent>(new OnPlantBuffChangeDOTEvent(dot))
+			int damagePerSec = 2 * weaponEntity.GetRarity();
+			damagePerSec = weaponEntity.SendModifyValueEvent<OnPlantBuffChangeDOTEvent>(new OnPlantBuffChangeDOTEvent(damagePerSec))
 				.Value;
-				
 
-			HackedBuff buff = HackedBuff.Allocate(weaponEntity, target, duration, dot,
-				damageMultiplier);
+
+			float totalDamage = Mathf.RoundToInt(damagePerSec * baseDuration);
+			totalDamage = weaponEntity.SendModifyValueEvent<OnPlantBuffChangeTotalDamageEvent>(
+				new OnPlantBuffChangeTotalDamageEvent(totalDamage)).Value;
+			int actualDamagePerSec = Mathf.CeilToInt((totalDamage / actualDuration) - 0.01f);
+
+			bool isSuddenDeath = false;
+			isSuddenDeath = weaponEntity.SendModifyValueEvent<OnPlantBuffChangeIsSuddenDeathEvent>(
+				new OnPlantBuffChangeIsSuddenDeathEvent(isSuddenDeath)).Value;
+
+			HackedBuff buff = HackedBuff.Allocate(weaponEntity, target, actualDuration, actualDamagePerSec,
+				damageMultiplier, isSuddenDeath, (int) totalDamage);
+			
 
 			if (buffSystem.AddBuff(target, weaponEntity, buff)) {
 				SendWeaponBuildBuffEvent<OnHackedBuffAdded>(new OnHackedBuffAdded() {Target = target});

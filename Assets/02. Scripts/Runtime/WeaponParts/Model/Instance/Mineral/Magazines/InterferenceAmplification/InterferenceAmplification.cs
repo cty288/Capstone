@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Barrels.ConcentratedCurrent;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.EvolvingVirus {
-	public class EvolvingVirus : WeaponPartsEntity<EvolvingVirus, EvolvingVirusBuff> {
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.InterferenceAmplification {
+	public class InterferenceAmplification : WeaponPartsEntity<InterferenceAmplification, InterferenceAmplificationBuff> {
 		[field: ES3Serializable]
-		public override string EntityName { get; set; } = "EvolvingVirus";
+		public override string EntityName { get; set; } = "InterferenceAmplification";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
 		}
@@ -23,8 +22,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			int time = GetCustomDataValueOfCurrentLevel<int>("time");
-			return Localization.GetFormat(defaultLocalizationKey, time);
+			int range = GetCustomDataValueOfCurrentLevel<int>("range");
+			
+			
+			return Localization.GetFormat(defaultLocalizationKey, range);
 		}
 		
 
@@ -34,20 +35,21 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 			return null;
 		}
 	}
-	
-	public class EvolvingVirusBuff : WeaponPartsBuff<EvolvingVirus, EvolvingVirusBuff> {
-		[field: ES3Serializable]	
-		public override float TickInterval { get; protected set; } = -1;
-		
+
+	public class InterferenceAmplificationBuff : WeaponPartsBuff<InterferenceAmplification, InterferenceAmplificationBuff> {
+		[field: ES3Serializable] public override float TickInterval { get; protected set; } = -1;
+
 		public override void OnInitialize() {
-			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
+			
+			weaponEntity.RegisterOnModifyValueEvent<MineralBuffRangeEvent>(OnModifyRangeEvent);
 		}
 
-		private OnPlantBuffChangeBaseDurationEvent OnModifyDurationEvent(OnPlantBuffChangeBaseDurationEvent e) {
-			int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
-			e.Value += time;
+		private MineralBuffRangeEvent OnModifyRangeEvent(MineralBuffRangeEvent e) {
+			int range = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("range");
+			e.Value += range;
 			return e;
 		}
+		
 
 
 		public override void OnStart() {
@@ -59,11 +61,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 		}
 
 		public override void OnBuffEnd() {
-			
+
 		}
 
 		public override void OnRecycled() {
-			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
+			weaponEntity.UnRegisterOnModifyValueEvent<MineralBuffRangeEvent>(OnModifyRangeEvent);
 			base.OnRecycled();
 		}
 
@@ -75,11 +77,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					
-					int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
+
+					int range = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("range");
 
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("EvolvingVirus_desc", time));
+						Localization.GetFormat("InterferenceAmplification_desc", range));
 				})
 			};
 		}

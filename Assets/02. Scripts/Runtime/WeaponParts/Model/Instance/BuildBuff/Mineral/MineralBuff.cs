@@ -25,6 +25,16 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		public MineralBuffMultiplierEvent(float value) : base(value) {
 		}
 	}
+	
+	public class MineralBuffRangeMultiplierEvent : ModifyValueEvent<float> {
+		public MineralBuffRangeMultiplierEvent(float value) : base(value) {
+		}
+	}
+	
+	public class MineralBuffRangeEvent : ModifyValueEvent<float> {
+		public MineralBuffRangeEvent(float value) : base(value) {
+		}
+	}
 
 	public class MineralAOEEvent : WeaponBuildBuffEvent {
 		public MineralBuff Buff2 { get; set; }
@@ -36,6 +46,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		public MineralBuff Buff2 { get; set; }
 		public IDamageable Target { get; set; }
 		public Transform Transform { get; set; }
+	}
+	
+	public class OnMineralAOEAddMalfunctionBuff : WeaponBuildBuffEvent {
+		public MineralBuff Buff { get; set; }
+		public IDamageable Target { get; set; }
 	}
 	
 	public class MineralBuffAOE : ICanDealDamage {
@@ -139,8 +154,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		public void AddMulfunctionBuff(float duration, IDamageable target) {
 			IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
 			MalfunctionBuff buff = MalfunctionBuff.Allocate(weaponEntity, target, duration);
+			bool addMalfunctionSuccess = false;
 			if (!buffSystem.AddBuff(target, weaponEntity, buff)) {
 				buff.RecycleToCache();
+			}
+			else {
+				addMalfunctionSuccess = true;
 			}
 			
 			if (Level > 2) {
@@ -148,7 +167,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 				if (!buffSystem.AddBuff(target, weaponEntity, powerlessBuff)) {
 					powerlessBuff.RecycleToCache();
 				}
-			} 
+			}
+
+			if (addMalfunctionSuccess) {
+				SendWeaponBuildBuffEvent(new OnMineralAOEAddMalfunctionBuff() {
+					Buff = this,
+					Target = target
+				});
+			}
 		}
 
 		public void RangeAOE(float range, int damage, float duration, Transform transform, IDamageable target, 
@@ -210,6 +236,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 
 				
 				float range = GetBuffPropertyAtCurrentLevel<float>("range");
+				range = weaponEntity.SendModifyValueEvent(new MineralBuffRangeEvent(range)).Value;
+				
+				float rangeMultiplier = 1;
+				rangeMultiplier = weaponEntity.SendModifyValueEvent(new MineralBuffRangeMultiplierEvent(rangeMultiplier)).Value;
+				
 				int damagePerRarity = GetBuffPropertyAtCurrentLevel<int>("damage_per_rarity");
 				float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage_multiplier");
 				damageMultiplier = weaponEntity.SendModifyValueEvent(new MineralBuffMultiplierEvent(damageMultiplier))
@@ -217,7 +248,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 				int realDamage = Mathf.RoundToInt(damagePerRarity * weaponEntity.GetRarity() * damageMultiplier);
 
 
-				RangeAOE(range, realDamage, duration, hit.Hurtbox.Owner.transform, target, new MineralBuffAOE(weaponEntity), true);
+				RangeAOE(range * rangeMultiplier, realDamage, duration, hit.Hurtbox.Owner.transform, target, new MineralBuffAOE(weaponEntity), true);
 			}
 			
 			return hit;

@@ -642,15 +642,30 @@ WormBoss,"{""maxHealth"":2000,
   ""Plant"": {""x"": 0, ""y"": 1},
   ""Mineral"": {""x"": 0, ""y"": 1}
 }",456,"{
+  ""entity"":{
+    ""speed"": {
+      ""type"": ""float"",
+      ""value"": 12,
+      ""useDefaultModifier"": true
+    },
+    ""closeRange"": {
+      ""type"": ""float"",
+      ""value"": 50
+    }
+  },
   ""laserBeam"": {
     ""laserDamage"": {
       ""type"": ""int"",
       ""value"": 25,
       ""useDefaultModifier"": true
     },
+    ""maxRange"": {
+      ""type"": ""float"",
+      ""value"": 500
+    },
     ""chargeUpTime"": {
       ""type"": ""float"",
-      ""value"": 1,
+      ""value"": 2,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
@@ -665,12 +680,84 @@ WormBoss,"{""maxHealth"":2000,
       ""value"": 0.2,
       ""useDefaultModifier"": true,
       ""inverse"": true
+    },
+    ""laserDuration"": {
+      ""type"": ""float"",
+      ""value"": 5
     }
   },
   ""acidAttack"": {
     ""bulletExplosionDamage"": {
       ""type"": ""int"",
       ""value"": 25,
+      ""useDefaultModifier"": true
+    },
+    ""chargeUpTime"": {
+      ""type"": ""float"",
+      ""value"": 1,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""timeBetweenShots"": {
+      ""type"": ""float"",
+      ""value"": 1,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    },
+    ""bulletSpeed"": {
+      ""type"": ""float"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""bulletRange"": {
+      ""type"": ""float"",
+      ""value"": 200,
+      ""useDefaultModifier"": true
+    },
+    ""acidExplosionRadius"": {
+      ""type"": ""float"",
+      ""value"": 1,
+      ""useDefaultModifier"": true
+    },
+    ""acidTickDamage"": {
+      ""type"": ""int"",
+      ""value"": 1,
+      ""useDefaultModifier"": true
+    }
+  },
+  ""rapidFire"": {
+    ""bulletDamage"": {
+      ""type"": ""int"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""bulletWaveInterval"": {
+      ""type"": ""float"",
+      ""value"": 3
+    },
+    ""bulletSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""bulletCountPerWave"": {
+      ""type"": ""int"",
+      ""value"": 5,
+      ""useDefaultModifier"": true
+    },
+    ""bulletWaves"": {
+      ""type"": ""int"",
+      ""value"": 3,
+      ""useDefaultModifier"": true
+    },
+    ""bulletAccuracy"": {
+      ""type"": ""float"",
+      ""value"": 0.3,
+      ""useDefaultModifier"": true
+    },
+    ""bulletRange"": {
+      ""type"": ""float"",
+      ""value"": 100,
       ""useDefaultModifier"": true
     }
   }

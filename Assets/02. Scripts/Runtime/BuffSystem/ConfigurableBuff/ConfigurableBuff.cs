@@ -17,6 +17,7 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		public int MaxLevel { get; protected set; }
 
 		public abstract string GetLevelDescription(int level);
+		
 
 		public override string OnGetDescription(string defaultLocalizationKey) {
 			return GetLevelDescription(Level);
@@ -33,11 +34,14 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		}
 		
 		public void LevelUp() {
-			if (Level < MaxLevel) {
-				Level++;
-				buffOwner?.OnBuffUpdate(this, BuffUpdateEventType.OnUpdate);
-				OnLevelUp();
-			}
+			LevelUp(1);
+		}
+		
+		public void LevelUp(int level) {
+			int actualLevelUpCount = Math.Min(level, MaxLevel - Level);
+			Level += actualLevelUpCount;
+			buffOwner?.OnBuffUpdate(this, BuffUpdateEventType.OnUpdate);
+			OnLevelUp();
 		}
 		
 		protected abstract void OnLevelUp();

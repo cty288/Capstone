@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
@@ -27,7 +28,9 @@ namespace _02._Scripts.Runtime.BuffSystem {
 
 		public bool ContainsBuff<T>(IEntity targetEntity, out IBuff buff) where T : IBuff;
 		
-		public void SendBuffUpdateEvent(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType);
+		public void SendBuffUpdateEvent(IEntity targetEntity, IEntity buffDealer, IBuff buff, BuffUpdateEventType eventType);
+		
+		public List<IBuff> GetBuffs(IEntity targetEntity);
 	}
 	public class BuffSystemUpdateExecutor : MonoMikroSingleton<BuffSystemUpdateExecutor> {
 		public Action OnUpdate = () => { };
@@ -103,7 +106,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			buff.OnAwake();
 			if (ContainsBuff(targetEntity, buff.GetType(), out IBuff existingBuff)) {
 				if (existingBuff.OnStacked(buff)) {
-					SendBuffUpdateEvent(targetEntity, existingBuff, BuffUpdateEventType.OnUpdate);
+					SendBuffUpdateEvent(targetEntity,  buffDealer, existingBuff, BuffUpdateEventType.OnUpdate);
 					buff.OnEnd();
 				}else {
 					return false;
@@ -116,7 +119,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 				
 				buffModel.BuffModelContainer.AddBuff(buff);
 				buff.OnStart();
-				SendBuffUpdateEvent(targetEntity, buff, BuffUpdateEventType.OnStart);
+				SendBuffUpdateEvent(targetEntity, buffDealer, buff, BuffUpdateEventType.OnStart);
 			}
 			return true;
 		}
@@ -124,18 +127,35 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		protected void ForceSendAllBuffUpdateEvents() {
 			foreach (var buffQueue in buffQueue) {
 				IEntity entity = GlobalEntities.GetEntityAndModel(buffQueue.Key).Item1;
+				
 				if (entity == null) {
 					continue;
 				}
 				
 				foreach (var buff in buffQueue.Value) {
-					SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnStart);
+					string dealerID = buff.BuffDealerID;
+					IEntity dealer = GlobalEntities.GetEntityAndModel(dealerID).Item1;
+					SendBuffUpdateEvent(entity, dealer, buff, BuffUpdateEventType.OnStart);
 				}
 			}
 		}
 		
-		public void SendBuffUpdateEvent(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType) {
+		public void SendBuffUpdateEvent(IEntity targetEntity, IEntity buffDealer, IBuff buff, BuffUpdateEventType eventType) {
 			targetEntity.OnBuffUpdate(buff, eventType);
+			if (buffDealer != null) {
+				buffDealer.OnDealtBuffUpdate(targetEntity, buff, eventType);
+			}
+		}
+
+		public List<IBuff> GetBuffs(IEntity targetEntity) {
+			List<IBuff> buffs = new List<IBuff>();
+			if (buffQueue.TryGetValue(targetEntity.UUID, out SimplePriorityQueue<IBuff, int> queue)) {
+				foreach (var buff in queue) {
+					buffs.Add(buff);
+				}
+			}
+			
+			return buffs;
 		}
 
 		public bool RemoveBuff<T>(IEntity targetEntity) where T : IBuff {
@@ -150,9 +170,10 @@ namespace _02._Scripts.Runtime.BuffSystem {
 
 		public bool RemoveBuff(IEntity targetEntity, Type buffType, bool recycle, out IBuff buff) {
 			if (buffModel.BuffModelContainer.RemoveBuff(buffType, targetEntity.UUID, out buff)) {
+				IEntity dealer = GlobalEntities.GetEntityAndModel(buff.BuffDealerID).Item1;
 				buff.AutoRecycleWhenEnd = recycle;
 				buff.OnEnd();
-				SendBuffUpdateEvent(targetEntity, buff, BuffUpdateEventType.OnEnd);
+				SendBuffUpdateEvent(targetEntity, dealer, buff, BuffUpdateEventType.OnEnd);
 				
 				return true;
 			}
@@ -164,14 +185,21 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			entityIDsToRemove.Clear();
 			buffsToRemove.Clear();
 			
-			foreach (var buffQueue in buffQueue) {
-				IEntity entity = GlobalEntities.GetEntityAndModel(buffQueue.Key).Item1;
+			
+			string[] entityKeys = buffQueue.Keys.ToArray();
+			foreach (string key in entityKeys) {
+				var queue = buffQueue[key];
+				
+				IEntity entity = GlobalEntities.GetEntityAndModel(key).Item1;
 				if (entity == null) {
-					entityIDsToRemove.Add(buffQueue.Key);
+					entityIDsToRemove.Add(key);
 					continue;
 				}
 				
-				foreach (var buff in buffQueue.Value) {
+				IBuff[] buffs = queue.ToArray();
+				
+				foreach (var buff in buffs) {
+					IEntity dealer = GlobalEntities.GetEntityAndModel(buff.BuffDealerID).Item1;
 					if (buff.TickInterval > 0) {
 						buff.TickTimer -= Time.deltaTime;
 						
@@ -182,11 +210,11 @@ namespace _02._Scripts.Runtime.BuffSystem {
 							if (status == BuffStatus.End) {
 								
 								buffsToRemove.TryAdd(buff, buff.BuffOwnerID);
-								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
+								SendBuffUpdateEvent(entity, dealer, buff, BuffUpdateEventType.OnEnd);
 								buff.OnEnd();
 							}
 							else {
-								SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnUpdate);
+								SendBuffUpdateEvent(entity, dealer, buff, BuffUpdateEventType.OnUpdate);
 							}
 						}
 					}
@@ -196,12 +224,14 @@ namespace _02._Scripts.Runtime.BuffSystem {
 						if (buff.RemainingDuration == 0) {
 							
 							buffsToRemove.TryAdd(buff, buff.BuffOwnerID);
-							SendBuffUpdateEvent(entity, buff, BuffUpdateEventType.OnEnd);
+							SendBuffUpdateEvent(entity, dealer, buff, BuffUpdateEventType.OnEnd);
 							buff.OnEnd();
 						}
 					}
 				}
 			}
+			
+			
 			
 			foreach (var id in entityIDsToRemove) {
 				buffModel.BuffModelContainer.RemoveAllBuffs(id);

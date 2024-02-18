@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
+using MikroFramework.Architecture;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
+using UnityEngine;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.EvolvingVirus {
-	public class EvolvingVirus : WeaponPartsEntity<EvolvingVirus, EvolvingVirusBuff> {
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.ChainReaction {
+	public class ChainReaction : WeaponPartsEntity<ChainReaction, ChainReactionBuff> {
 		[field: ES3Serializable]
-		public override string EntityName { get; set; } = "EvolvingVirus";
+		public override string EntityName { get; set; } = "ChainReaction";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
 		}
@@ -21,32 +22,46 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 			
 		}
 
+		public override int GetMaxRarity() {
+			return 1;
+		}
+
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			int time = GetCustomDataValueOfCurrentLevel<int>("time");
-			return Localization.GetFormat(defaultLocalizationKey, time);
+			return Localization.Get(defaultLocalizationKey);
 		}
 		
 
-		public override WeaponPartType WeaponPartType => WeaponPartType.Magazine;
+		public override WeaponPartType WeaponPartType => WeaponPartType.Attachment;
 		
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}
 	}
 	
-	public class EvolvingVirusBuff : WeaponPartsBuff<EvolvingVirus, EvolvingVirusBuff> {
+	public class ChainReactionBuff : WeaponPartsBuff<ChainReaction, ChainReactionBuff>, ICanGetSystem {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
 		
 		public override void OnInitialize() {
-			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
+			RegisterWeaponBuildBuffEvent<OnMineralAOEAddMalfunctionBuff>(OnMineralAOEAddMalfunctionBuff);
 		}
 
-		private OnPlantBuffChangeBaseDurationEvent OnModifyDurationEvent(OnPlantBuffChangeBaseDurationEvent e) {
-			int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
-			e.Value += time;
-			return e;
+		private void OnMineralAOEAddMalfunctionBuff(OnMineralAOEAddMalfunctionBuff e) {
+			IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
+			List<IBuff> buffs = buffSystem.GetBuffs(e.Target);
+			
+			foreach (var buff in buffs) {
+				if(buff is MalfunctionBuff) {
+					continue;
+				}
+
+				buff.RemainingDuration = buff.MaxDuration;
+				if(buff is ILeveledBuff leveledBuff) {
+					leveledBuff.LevelUp(1);
+					buffSystem.SendBuffUpdateEvent(e.Target, weaponEntity, buff, BuffUpdateEventType.OnUpdate);
+				}
+			}
 		}
 
 
@@ -63,7 +78,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 		}
 
 		public override void OnRecycled() {
-			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
+			UnRegisterWeaponBuildBuffEvent<OnMineralAOEAddMalfunctionBuff>(OnMineralAOEAddMalfunctionBuff);
 			base.OnRecycled();
 		}
 
@@ -75,11 +90,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					
-					int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
-
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("EvolvingVirus_desc", time));
+						Localization.Get("ChainReaction_desc"));
 				})
 			};
 		}

@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
-using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using Polyglot;
+using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 
-namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.EvolvingVirus {
-	public class EvolvingVirus : WeaponPartsEntity<EvolvingVirus, EvolvingVirusBuff> {
+namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels.HardCasesBarrel {
+	public class HardCasesBarrel : WeaponPartsEntity<HardCasesBarrel, HardCasesBarrelBuff> {
 		[field: ES3Serializable]
-		public override string EntityName { get; set; } = "EvolvingVirus";
+		public override string EntityName { get; set; } = "HardCasesBarrel";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
 		}
@@ -23,31 +24,38 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			int time = GetCustomDataValueOfCurrentLevel<int>("time");
-			return Localization.GetFormat(defaultLocalizationKey, time);
+			int damage = GetCustomDataValueOfCurrentLevel<int>("damage");
+			return Localization.GetFormat(defaultLocalizationKey, damage);
 		}
 		
 
-		public override WeaponPartType WeaponPartType => WeaponPartType.Magazine;
+		public override WeaponPartType WeaponPartType => WeaponPartType.Barrel;
 		
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}
 	}
 	
-	public class EvolvingVirusBuff : WeaponPartsBuff<EvolvingVirus, EvolvingVirusBuff> {
+	public class HardCasesBarrelBuff : WeaponPartsBuff<HardCasesBarrel, HardCasesBarrelBuff> {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
 		
 		public override void OnInitialize() {
-			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
+			weaponEntity.RegisterOnDealtBuffUpdate(OnWeaponBuffUpdate);
 		}
 
-		private OnPlantBuffChangeBaseDurationEvent OnModifyDurationEvent(OnPlantBuffChangeBaseDurationEvent e) {
-			int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
-			e.Value += time;
-			return e;
+		private void OnWeaponBuffUpdate(IEntity target, IBuff buff, BuffUpdateEventType eventType) {
+			if(buff is not HackedBuff) return;
+			if(eventType != BuffUpdateEventType.OnEnd) return;
+			if(!weaponEntity.IsHolding) return;
+			
+			int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
+			int calculatedDamage = damage * weaponEntity.GetRarity();
+			if (target is IDamageable damageable) {
+				damageable.TakeDamage(calculatedDamage, weaponEntity, out _);
+			}
 		}
+		
 
 
 		public override void OnStart() {
@@ -59,11 +67,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 		}
 
 		public override void OnBuffEnd() {
-			
+			 
 		}
 
 		public override void OnRecycled() {
-			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
+			weaponEntity.UnRegisterOnDealtBuffUpdate(OnWeaponBuffUpdate);
 			base.OnRecycled();
 		}
 
@@ -76,10 +84,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					
-					int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
+					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
+					int calculatedDamage = damage * weaponEntity.GetRarity();
 
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("EvolvingVirus_desc", time));
+						Localization.GetFormat("HardCasesBarrel_desc2", damage, calculatedDamage));
 				})
 			};
 		}

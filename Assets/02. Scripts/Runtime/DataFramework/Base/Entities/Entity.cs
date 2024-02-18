@@ -160,6 +160,11 @@ namespace Runtime.DataFramework.Entities {
 		public void RetainRecycleRC();
 		
 		public void ReleaseRecycleRC();
+		void OnDealtBuffUpdate(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType);
+		
+		public void RegisterOnDealtBuffUpdate(Action<IEntity, IBuff, BuffUpdateEventType> callback);
+		
+		public void UnRegisterOnDealtBuffUpdate(Action<IEntity, IBuff, BuffUpdateEventType> callback);
 	}
 	
 	
@@ -272,6 +277,8 @@ namespace Runtime.DataFramework.Entities {
 		private bool readyToRecycle = false;
 		
 		private Action<IBuff, BuffUpdateEventType> onBuffUpdateCallback = null;
+		
+		private Action<IEntity, IBuff, BuffUpdateEventType> onDealtBuffUpdateCallback = null;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 			originalEntityName = EntityName;
@@ -529,6 +536,18 @@ namespace Runtime.DataFramework.Entities {
 		
 		public void ReleaseRecycleRC() {
 			recycleRC.Release();
+		}
+
+		public void OnDealtBuffUpdate(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType) {
+			onDealtBuffUpdateCallback?.Invoke(targetEntity, buff, eventType);
+		}
+
+		public void RegisterOnDealtBuffUpdate(Action<IEntity, IBuff, BuffUpdateEventType> callback) {
+			onDealtBuffUpdateCallback += callback;
+		}
+
+		public void UnRegisterOnDealtBuffUpdate(Action<IEntity, IBuff, BuffUpdateEventType> callback) {
+			onDealtBuffUpdateCallback -= callback;
 		}
 
 		/// <summary>
