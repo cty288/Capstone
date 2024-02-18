@@ -115,6 +115,17 @@ namespace Runtime.Enemies
                                               (animator.GetCurrentAnimatorStateInfo(0).IsName("Die") &&
                                                animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f));
         }
+        
+        protected override void OnEntityDie(ICanDealDamage damagedealer) {
+            base.OnEntityDie(damagedealer);
+            model.gameObject.SetActive(true);
+            behaviorTree.enabled = false;
+            // animator.SetBool("Die", true);
+            // animator.CrossFadeInFixedTime("Die", 0.1f);
+            // rb.isKinematic = false;
+            // rb.useGravity = true;
+            agent.enabled = false;
+        }
 
         public override void OnRecycled()
         {

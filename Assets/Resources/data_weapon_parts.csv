@@ -727,3 +727,30 @@ ConcentratedCurrent,1,"""Mineral""","{
     ""damage"": {""type"": ""float"", ""value"": 0.75}
   }
 }",,,
+InterferenceAmplification,1,"""Mineral""","{
+        ""ResourceCost"": {
+            ""Mineral1"": 5,
+            ""Time1"": 5
+        },
+        ""MoneyCost"": 100
+}","{
+  ""level1"": {
+    ""range"": {""type"": ""int"", ""value"": 2}
+  },
+  ""level2"": {
+     ""range"": {""type"": ""int"", ""value"": 4}
+  },
+  ""level3"": {
+     ""range"": {""type"": ""int"", ""value"": 6}
+  },
+  ""level4"": {
+    ""range"": {""type"": ""int"", ""value"": 8}
+  }
+}",,,
+ChainReaction,1,"""Mineral""","{
+        ""ResourceCost"": {
+            ""Mineral1"": 5,
+            ""Time1"": 5
+        },
+        ""MoneyCost"": 100
+}",,,,

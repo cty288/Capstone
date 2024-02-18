@@ -2521,10 +2521,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 700
+  m_Radius: 520
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 149.2, z: 0}
 --- !u!195 &7808782475727053599
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3895,6 +3895,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594758769678698372, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248710226259015 stripped
@@ -3903,6 +3913,56 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7808782473925969585}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &376154563798630709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7594758769678698372, guid: 0001343133cde804fb66e7b384f1f63f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7808782473925969585}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2764153123402247223
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376154563798630709}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4972823489706443691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376154563798630709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
+--- !u!54 &4134990407395779107
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376154563798630709}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2767132281703706430 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -3936,24 +3996,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 500
+  m_Radius: 505
   m_Center: {x: 0, y: 0, z: 0}
---- !u!208 &7808782475283398435
-NavMeshObstacle:
+--- !u!114 &6128426294362810163
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132281703706430}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 300, y: 300, z: 300}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
 --- !u!4 &4961779914082510580 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4061,6 +4120,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248710443910198 stripped
@@ -4102,24 +4166,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 500
+  m_Radius: 505
   m_Center: {x: 0, y: 0, z: 0}
---- !u!208 &7808782474281355737
-NavMeshObstacle:
+--- !u!114 &5347024253907969148
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132281451333455}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 300, y: 300, z: 300}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
 --- !u!4 &4961779913864842885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4221,6 +4284,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248711195795206 stripped
@@ -4262,8 +4330,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 500
+  m_Radius: 505
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8699775775129483523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2767132280861039743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
 --- !u!4 &4961779914589361589 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4365,6 +4448,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248711149308767 stripped
@@ -4406,24 +4494,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 500
+  m_Radius: 505
   m_Center: {x: 0, y: 0, z: 0}
---- !u!208 &7808782475305073531
-NavMeshObstacle:
+--- !u!114 &3395814438844823439
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132280747509798}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 300, y: 300, z: 300}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
 --- !u!4 &4961779914501095916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4525,6 +4612,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248711064226412 stripped
@@ -4566,24 +4658,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 500
+  m_Radius: 505
   m_Center: {x: 0, y: 0, z: 0}
---- !u!208 &7808782475509325741
-NavMeshObstacle:
+--- !u!114 &573025149853369994
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132280998234389}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 300, y: 300, z: 300}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
 --- !u!4 &4961779914451960031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4810,6 +4901,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248709440980718 stripped
@@ -4851,24 +4947,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 500
+  m_Radius: 505
   m_Center: {x: 0, y: 0, z: 0}
---- !u!208 &7808782475383382158
-NavMeshObstacle:
+--- !u!114 &2255236257407841368
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132282595952023}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 300, y: 300, z: 300}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
 --- !u!4 &4961779915001990237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4970,6 +5065,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248709985554146 stripped
@@ -5011,8 +5111,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 500
+  m_Radius: 505
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1751345886607418678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2767132282062785947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
 --- !u!4 &4961779915535352913 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -5098,6 +5213,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248709948727852 stripped
@@ -5139,24 +5259,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 500
+  m_Radius: 505
   m_Center: {x: 0, y: 0, z: 0}
---- !u!208 &7808782475823542881
-NavMeshObstacle:
+--- !u!114 &3908057394643541146
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132281962783061}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 300, y: 300, z: 300}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_active: 1
+  m_owner: {fileID: 6962344675241428156}
+  m_damageMultiplier: 1
 --- !u!4 &4961779915433257119 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
