@@ -35,7 +35,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Vector3 sample = RandomPointInAnnulus(player.transform.position, minRadiusAroundPlayer, maxRadiusAroundPlayer);
             
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(sample, out hit, 30, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(sample, out hit, 30, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 emergePosition = hit.position;
             }

@@ -35,11 +35,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             // rb.isKinematic = false;
             player = GetPlayer();
+            agent.enabled = true;
             
             Vector3 sample = RandomPointInAnnulus(player.transform.position, 20, 40);
             
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(sample, out hit, 10, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(sample, out hit, 40, NavMesh.AllAreas))
             {
                 destination = hit.position;
             }

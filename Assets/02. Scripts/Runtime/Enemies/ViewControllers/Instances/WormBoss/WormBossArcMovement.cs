@@ -51,7 +51,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 start = hit.position;
                 Debug.Log($"WORM BOSS start: {start}");
             }
-            if (NavMesh.SamplePosition(sample2, out hit, 20, NavMeshHelper.GetSpawnableAreaMask()))
+            if (NavMesh.SamplePosition(sample2, out hit, 40, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 end = hit.position;
                 Debug.Log($"WORM BOSS end: {end}");

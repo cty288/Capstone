@@ -48,7 +48,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             player = GetPlayer();
             
-            bulletSpeed = enemyEntity.GetCustomDataValue<int>("rapidFire", "bulletSpeed");
+            bulletSpeed = enemyEntity.GetCustomDataValue<float>("rapidFire", "bulletSpeed");
             bulletCountPerWave = enemyEntity.GetCustomDataValue<int>("rapidFire", "bulletCountPerWave");
             bulletAccuracy = enemyEntity.GetCustomDataValue<float>("rapidFire", "bulletAccuracy");
             bulletDamage = enemyEntity.GetCustomDataValue<int>("rapidFire", "bulletDamage");

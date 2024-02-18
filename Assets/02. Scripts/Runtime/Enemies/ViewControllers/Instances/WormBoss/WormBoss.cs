@@ -52,7 +52,9 @@ namespace Runtime.Enemies
         protected override ICustomProperty[] OnRegisterCustomProperties() {
             return new[] {
                 new AutoConfigCustomProperty("laserBeam"),
-                new AutoConfigCustomProperty("acidAttack")
+                new AutoConfigCustomProperty("acidAttack"),
+                new AutoConfigCustomProperty("rapidFire"),
+                new AutoConfigCustomProperty("entity")
             };
         }
     }
@@ -80,6 +82,7 @@ namespace Runtime.Enemies
         
         protected override void OnEntityStart()
         {
+            agent.speed = Speed;
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
