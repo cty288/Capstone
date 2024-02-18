@@ -82,6 +82,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             supportPlatform.parent = null;
             supportSphere.gameObject.SetActive(true);
             supportPlatform.gameObject.SetActive(true);
+            supportSphere.rotation = Quaternion.identity;
+            supportPlatform.rotation = Quaternion.identity;
             
             _lookAt = GetPlayer().transform;
             _headLifted = false;
@@ -91,7 +93,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             _liftedPos = transform.position + Vector3.up * liftHeight;
             _spine.GravityPower = gravity;
 
-            supportPlatform.position = _bodyJoint.FinalPosition + Vector3.up * 1f;
+            supportPlatform.position = _bodyJoint.FinalPosition + Vector3.up * -2f;
             supportSphere.position = _neckJoint.FinalPosition + Vector3.down * 8f;
             //StartCoroutine(LiftHead());
         }
