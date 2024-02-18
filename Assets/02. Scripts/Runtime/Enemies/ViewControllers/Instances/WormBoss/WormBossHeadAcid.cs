@@ -50,7 +50,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             acidChargePool = GameObjectPoolManager.Singleton.CreatePool(acidChargePrefab.Value, 3, 9);
             acidBulletPool = GameObjectPoolManager.Singleton.CreatePool(acidBulletPrefab.Value, 3, 9);
             
-            bulletSpeed = enemyEntity.GetCustomDataValue<int>("acidAttack", "bulletSpeed");
+            bulletSpeed = enemyEntity.GetCustomDataValue<float>("acidAttack", "bulletSpeed");
             chargeUpTime = enemyEntity.GetCustomDataValue<float>("acidAttack", "chargeUpTime");
             bulletExplosionDamage = enemyEntity.GetCustomDataValue<int>("acidAttack", "bulletExplosionDamage");
             timeBetweenShots = enemyEntity.GetCustomDataValue<float>("acidAttack", "timeBetweenShots");
