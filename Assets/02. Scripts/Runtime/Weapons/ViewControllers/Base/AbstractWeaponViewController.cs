@@ -109,6 +109,10 @@ namespace Runtime.Weapons.ViewControllers.Base
         private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
         private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
+        protected string shootSoundName;
+        protected string reloadStartSoundName;
+        protected string reloadFinishSoundName;
+        
         #region Initialization
         protected override void Awake() {
             base.Awake();
@@ -120,6 +124,16 @@ namespace Runtime.Weapons.ViewControllers.Base
             playerActions = ClientInput.Singleton.GetPlayerActions();
             animationSMBManager = GetComponent<AnimationSMBManager>();
             animationSMBManager.Event.AddListener(OnAnimationEvent);
+            
+            SetSoundNames();
+        }
+
+        protected virtual void SetSoundNames()
+        {
+            //basic sounds
+            shootSoundName = "Pistol_Single_Shot";
+            reloadStartSoundName = "Pistol_Reload_Begin";
+            reloadFinishSoundName = "Pistol_Reload_Finish";
         }
         
         public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
@@ -207,12 +221,11 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         protected virtual void OnReloadAnimationStart()
         {
-            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+            AudioSystem.Singleton.Play2DSound(reloadStartSoundName);
         }
         
         protected virtual IEnumerator ReloadAnimation() {
             ChangeReloadStatus(true);
-            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
             this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
                 AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().RealValue));
             animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().RealValue);
@@ -224,7 +237,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected virtual void OnReloadAnimationEnd()
         {
             ChangeReloadStatus(false);
-            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
+            AudioSystem.Singleton.Play2DSound(reloadFinishSoundName);
             BoundEntity.Reload();
         }
         #endregion
@@ -290,7 +303,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected void SetShootStatus(bool isShooting) {
             if (isShooting) {
-                AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 1f);
+                AudioSystem.Singleton.Play2DSound(shootSoundName, 1f);
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
                 animator.SetTrigger("Shoot");
             }
