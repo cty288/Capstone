@@ -7,6 +7,7 @@ using _02._Scripts.Runtime.GameEventSystem.Tests;
 using _02._Scripts.Runtime.Pillars.Commands;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
+using _02._Scripts.Runtime.TimeSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using Framework;
 using MikroFramework.Architecture;
@@ -99,6 +100,16 @@ namespace Runtime.Temporary
                     IResourceEntity entity = resource.EntityCreater.Invoke(true, minRarity);
                     inventorySystem.AddItem(entity);
                 }
+            }
+            
+            if(Input.GetKeyDown(KeyCode.KeypadPlus)) {
+                IGameTimeSystem gameTimeSystem = this.GetSystem<IGameTimeSystem>();
+                gameTimeSystem.speed_debug++;
+            }
+            
+            if(Input.GetKeyDown(KeyCode.KeypadMinus)){
+                IGameTimeSystem gameTimeSystem = this.GetSystem<IGameTimeSystem>();
+                gameTimeSystem.speed_debug--;
             }
         }
     }
