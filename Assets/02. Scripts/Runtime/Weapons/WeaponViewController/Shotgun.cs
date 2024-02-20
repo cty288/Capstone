@@ -1,4 +1,5 @@
-﻿using Polyglot;
+﻿using MikroFramework.AudioKit;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Utilities.Collision;
@@ -46,6 +47,15 @@ namespace Runtime.Weapons
             gunAmmoVisual = GetComponentInChildren<GunAmmoVisual>(true);
             gunAmmoVisual.Init(BoundEntity);
         }
+        
+        protected override void SetSoundNames()
+        {
+            //basic sounds
+            shootSoundName = "Shotgun_Single_Shot";
+            reloadStartSoundName = "Shotgun_Reload_Begin";
+            reloadFinishSoundName = "Shotgun_Reload_Finish";
+        }
+        
         protected override IHitDetector OnCreateHitDetector()
         {
             return new HitScan(this, CurrentFaction.Value, bulletVFX, fpsCamera);
@@ -65,6 +75,12 @@ namespace Runtime.Weapons
             {
                 hitDetector.CheckHit(hitDetectorInfo, BoundEntity.GetRealDamageValue());
             }
+        }
+
+        public override void OnStartHold(GameObject ownerGameObject)
+        {
+            base.OnStartHold(ownerGameObject);
+            AudioSystem.Singleton.Play2DSound("Shotgun_Equip");
         }
     }
 }

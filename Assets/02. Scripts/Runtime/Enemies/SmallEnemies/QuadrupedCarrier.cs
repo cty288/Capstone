@@ -17,6 +17,7 @@ using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
+using MikroFramework.AudioKit;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 
 namespace Runtime.Enemies.SmallEnemies
@@ -79,6 +80,7 @@ namespace Runtime.Enemies.SmallEnemies
         protected override void OnEntityStart()
         {
             pool = GameObjectPoolManager.Singleton.CreatePool(deathEffect, 10, 15);
+            AudioSystem.Singleton.Play3DSound("enemy-spawn", gameObject.transform.position, 0.5f);
         }
 
 

@@ -87,8 +87,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityStart()
         {
-            
-
+            AudioSystem.Singleton.Play3DSound("enemy-spawn", gameObject.transform.position, 0.5f);
         }
 
         private IEnumerator DelayedStart()

@@ -727,13 +727,7 @@ ConcentratedCurrent,29,1,"""Mineral""","{
     ""damage"": {""type"": ""float"", ""value"": 0.75}
   }
 }",,
-InterferenceAmplification,30,1,"""Mineral""","{
-        ""ResourceCost"": {
-            ""Mineral1"": 5,
-            ""Time1"": 5
-        },
-        ""MoneyCost"": 100
-}","{
+InterferenceAmplification,30,1,"""Mineral""",,"{
   ""level1"": {
     ""range"": {""type"": ""int"", ""value"": 2}
   },
@@ -748,19 +742,14 @@ InterferenceAmplification,30,1,"""Mineral""","{
   }
 }",,
 ChainReaction,31,1,"""Mineral""","{
-        ""ResourceCost"": {
-            ""Mineral1"": 5,
-            ""Time1"": 5
-        },
-        ""MoneyCost"": 100
+    ""ResourceCost"": {
+        ""Mineral4"": 5,
+        ""Mineral3"": 15,
+        ""Time4"": 5
+    },
+    ""MoneyCost"": 225
 }",,,
-HardCasesBarrel,32,1,"""Plant""","{
-        ""ResourceCost"": {
-            ""Plant1"": 5,
-            ""Time1"": 5
-        },
-        ""MoneyCost"": 100
-}","{
+HardCasesBarrel,32,1,"""Plant""",,"{
   ""level1"": {
     ""damage"": {""type"": ""int"", ""value"": 5}
   },
@@ -775,11 +764,12 @@ HardCasesBarrel,32,1,"""Plant""","{
   }
 }",,
 FierceVirus,33,1,"""Plant""","{
-        ""ResourceCost"": {
-            ""Plant1"": 5,
-            ""Time1"": 5
-        },
-        ""MoneyCost"": 100
+    ""ResourceCost"": {
+        ""Plant4"": 5,
+        ""Plant3"": 15,
+        ""Time4"": 5
+    },
+    ""MoneyCost"": 225
 }","{
   ""level1"": {
     ""time"": {""type"": ""float"", ""value"": 0.25}
@@ -792,11 +782,12 @@ FierceVirus,33,1,"""Plant""","{
   }
 }",,
 SuddenDeath,34,1,"""Plant""","{
-        ""ResourceCost"": {
-            ""Plant1"": 5,
-            ""Time1"": 5
-        },
-        ""MoneyCost"": 100
+    ""ResourceCost"": {
+        ""Mineral3"": 5,
+        ""Mineral2"": 15,
+        ""Time3"": 5
+    },
+    ""MoneyCost"": 150
 }","{
   ""level2"": {
     ""time"": {""type"": ""float"", ""value"": 10},
@@ -826,10 +817,11 @@ ArtificialAdaptedMagazine,35,1,"""Time""",,"{
   }
 }",,
 SunriseSurge,36,1,"""Time""","{
-        ""ResourceCost"": {
-            ""Time1"": 10
-        },
-        ""MoneyCost"": 100
+    ""ResourceCost"": {
+        ""Time3"": 10,
+        ""Time2"": 15
+    },
+    ""MoneyCost"": 150
 }","{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.25}
