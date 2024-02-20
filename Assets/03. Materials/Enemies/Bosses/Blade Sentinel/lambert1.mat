@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: lambert1
   m_Shader: {fileID: 4800000, guid: eece14cf363229c41817c5e9958f3794, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _FRESNELGLOW
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -90,9 +91,11 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FresnelCutOffIn: 0.03
-    - _FresnelCutOffOut: 0.91
-    - _FresnelPower: 0.06
+    - _FresnelCutOffIn: 0.254
+    - _FresnelCutOffOut: 0.915
+    - _FresnelGlow: 0
+    - _FresnelOn: 1
+    - _FresnelPower: 0.1
     - _GlossMapScale: 1
     - _GlossToggle: 0
     - _Glossiness: 0
@@ -119,7 +122,7 @@ Material:
     - _BaseColor: {r: 0.7353569, g: 0.7353569, b: 0.7353569, a: 1}
     - _Color: {r: 0.7353569, g: 0.7353569, b: 0.7353569, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HighlightColor: {r: 1, g: 0.16978739, b: 0.06935841, a: 1}
+    - _HighlightColor: {r: 242.7134, g: 27.956518, b: 16.51976, a: 1}
     - _ShadowRadianceRange: {r: 0.1, g: 0.5, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

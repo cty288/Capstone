@@ -23,6 +23,7 @@ namespace Runtime.Utilities.Collision
         public ICanDealDamage Attacker;
         public bool ShowDamageNumber = true;
         public bool IsCritical = false;
+        public string HitDataUUID;
 
         /// <summary>
         /// Sets the data of the hit. Used for HitScan.
@@ -41,9 +42,9 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
-           
-            
-            
+            HitDataUUID = Guid.NewGuid().ToString();
+
+
             return this;
         }
 
@@ -58,7 +59,7 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
-           
+            HitDataUUID = Guid.NewGuid().ToString();
             return this;
         }
         
@@ -72,7 +73,7 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
-          
+            HitDataUUID = Guid.NewGuid().ToString();
             return this;
         }
 
@@ -112,6 +113,7 @@ namespace Runtime.Utilities.Collision
             Hurtbox = null;
             HitDetector = null;
             Attacker = null;
+            HitDataUUID = null;
         }
 
         public bool IsRecycled { get; set; }

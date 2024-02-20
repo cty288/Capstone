@@ -14,6 +14,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 	public class HeavyBarrel : WeaponPartsEntity<HeavyBarrel, HeavyBarrelPartsBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "HeavyBarrel";
 		public float BuffChance => GetCustomDataValueOfCurrentLevel<float>("chance");
 		public int BuffLevel => GetCustomDataValueOfCurrentLevel<int>("buff_level");
@@ -90,7 +91,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+
+		public override void OnRecycled() {
 			weaponEntity.UnregisterOnDealDamage(OnWeaponDealDamage);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

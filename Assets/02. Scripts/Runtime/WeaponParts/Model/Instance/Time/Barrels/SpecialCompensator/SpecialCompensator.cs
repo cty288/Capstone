@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialCompensator {
 	public class SpecialCompensator  : WeaponPartsEntity<SpecialCompensator, SpecialCompensatorBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "SpecialCompensator";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -76,7 +77,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialCompensator {
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

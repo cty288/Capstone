@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Utilities;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using JetBrains.Annotations;
 using MikroFramework.Architecture;
@@ -78,9 +79,9 @@ namespace Runtime.Weapons.Model.Base
        // public void SetDamageDealer(ICanDealDamage damageDealer);
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType);
 
-       
+        public ReferenceCounter LockWeaponCounter { get; }
 
-        //public HitData OnModifyHitData(HitData data);
+        public bool IsLocked { get; }
 
         public void RegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
         
@@ -315,6 +316,7 @@ namespace Runtime.Weapons.Model.Base
             _onKillDamageableCallback = null;
             damageDealerUUID = null;
             _onUseAmmoCallback = null;
+            LockWeaponCounter.Clear();
         }
 
         public override void OnAddedToInventory(string playerUUID) {
@@ -428,7 +430,11 @@ namespace Runtime.Weapons.Model.Base
             return weaponParts[weaponPartType];
         }
 
-      
+        [field: ES3Serializable]
+        public ReferenceCounter LockWeaponCounter { get; } = new ReferenceCounter();
+
+        public bool IsLocked => LockWeaponCounter.Count > 0;
+
 
         Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
             get => _onDealDamageCallback;

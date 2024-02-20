@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2523448162
+CRC: 3823669887
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c852eaa3abb30f647c37b1145380d994
+    Hash: fe153e9f421feec7f688fd123e1305b4
   TypeTreeHash:
     serializedVersion: 2
-    Hash: c3bf99692d8946eea4462df2ce13ec29
+    Hash: 45e5f596f08a84b63911d8d68ad19d86
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -26,17 +26,19 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2a4db7a114972834c8e4117be1d82ba3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2580a31b8d584dc4689b886251805906, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d7e10776f3cbda546b2397fdc0a6c3d3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: b4351b1bd7f6f3b469cae84fa7aa0de4, type: 3}
 - Class: 114
@@ -55,6 +57,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: d9ad56eea96413045932a8c67119fa99, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 4ea25bf3956944709f2f2bcd5a17420f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1556a0e581b457f4d88db51e6fd72708, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 84a92b25f83d49b9bc132d206b370281, type: 3}
 - Class: 114
@@ -78,6 +82,10 @@ ClassTypes:
 - Class: 687078895
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
+- AssemblyName: AYellowpaper.SerializedCollections
+  ClassName: AYellowpaper.SerializedCollections.SerializedDictionary`2[_02._Scripts.Runtime.Currency.Model.CurrencyType,UnityEngine.Color]
+- AssemblyName: AYellowpaper.SerializedCollections
+  ClassName: AYellowpaper.SerializedCollections.SerializedKeyValuePair`2[_02._Scripts.Runtime.Currency.Model.CurrencyType,UnityEngine.Color]
 - AssemblyName: Unity.TextMeshPro
   ClassName: TMPro.TMP_SpriteCharacter
 - AssemblyName: Unity.TextMeshPro
@@ -117,6 +125,7 @@ Assets:
 - Assets/05. Sprites/UI/Crosshairs/Crosshair7_FullBody.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Exit button selected_1.png
 - Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconAmmo.prefab
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconCombat.prefab
 - Assets/06. Prefabs/Game/Inventory/RarityIndicator2.prefab
 - Assets/06. Prefabs/Game/CrossHairs/DefaultCrossHair/DefaultCrossHair.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Trash box selected_1.png
@@ -196,8 +205,8 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box selected (Blue version).png
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout description box_1.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconPlant.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Main inventory clicked_1.png
-- Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star black.png
 - Assets/05. Sprites/UI/LevelProgress/progress bar - dark.png
 - Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click7-01.png
 - Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconTaste.prefab
@@ -208,6 +217,7 @@ Assets:
 - Assets/06. Prefabs/Game/UI/InteractiveHint/InteractHint_General.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star black_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair6_Body.png
+- Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star black.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Popout base_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Bottom right decoration.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box empty.png
@@ -226,6 +236,7 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star white_1.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Top red bar_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair3_Body.png
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconTime.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped box full_1.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair5_FullBody.png
 - Assets/05. Sprites/UI/Crosshairs/Crosshair7_Body.png
@@ -236,6 +247,7 @@ Assets:
 - Assets/05. Sprites/UI/Inventory/Inventory - Bottom red bar.png
 - Assets/05. Sprites/UI/Inventory/Main Screen - Inventory Box.png
 - Assets/06. Prefabs/Game/UI/HealthBars/EnemyHealthBar.prefab
+- Assets/06. Prefabs/Game/Inventory/PropertyIcons/PropertyIconMineral.prefab
 - Assets/05. Sprites/UI/Inventory/Inventory - Top bar_1.png
 - Assets/05. Sprites/UI/HealthBars/Boss/Boss Health bar left decoration.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Rarity Star white.png
@@ -258,6 +270,7 @@ Assets:
 - Assets/05. Sprites/UI/Crosshairs/Crosshair11_Aim2.png
 - Assets/05. Sprites/UI/Inventory/Inventory - Equipped Item.png
 - Assets/05. Sprites/UI/LevelProgress/progress bar - filling.png
+- Assets/06. Prefabs/Game/Entities/Skills/TurretSkill/TurretHealthBar.prefab
 - Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click5-01.png
 - Assets/05. Sprites/UI/KeyIcons/Icons_Keyboard&Mouse/MouseClickAnimations/click2-01.png
 - Assets/06. Prefabs/Game/UI/HealthBars/UIHealthBar.prefab
@@ -270,3 +283,4 @@ Assets:
 Dependencies:
 - D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/assets/fonts
 - D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/assets/goods_inventory
+- D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/buff_icons

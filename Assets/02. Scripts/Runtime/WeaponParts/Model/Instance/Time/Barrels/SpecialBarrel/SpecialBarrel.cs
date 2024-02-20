@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 	public class SpecialBarrel : WeaponPartsEntity<SpecialBarrel, SpecialBarrelPartsBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "SpecialBarrel";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -43,6 +44,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		public override void OnInitialize() {
 			baseDamageProperties = new BuffedProperties<Vector2Int>(weaponEntity, true, BuffTag.Weapon_BaseDamage);
 		}
+		
+		
 
 		public override void OnStart() {
 			base.OnStart();
@@ -65,6 +68,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		public override void OnBuffEnd() {
 			IBuffedProperty<Vector2Int> baseAttackSpeedProperty = baseDamageProperties.Properties.First();
 			baseAttackSpeedProperty.RealValue.Value -= addedDamage;
+		}
+
+
+		public override void OnRecycled() {
+			base.OnRecycled();
+			
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

@@ -25,6 +25,43 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		public MineralBuffMultiplierEvent(float value) : base(value) {
 		}
 	}
+	
+	public class MineralBuffRangeMultiplierEvent : ModifyValueEvent<float> {
+		public MineralBuffRangeMultiplierEvent(float value) : base(value) {
+		}
+	}
+	
+	public class MineralBuffRangeEvent : ModifyValueEvent<float> {
+		public MineralBuffRangeEvent(float value) : base(value) {
+		}
+	}
+	
+	public class MineralBuffModifyChanceEvent : ModifyValueEvent<float> {
+		public MineralBuffModifyChanceEvent(float value) : base(value) {
+		}
+	}
+	
+	public class MineralBuffModifyTriggerAOEEvent : ModifyValueEvent<bool> {
+		public MineralBuff MineralBuff { get; }
+		public float Duration { get; }
+		public IDamageable OriginalTarget { get; }
+		
+		public string HitID { get; }
+		
+		public float Range { get;}
+		
+		public int Damage { get; set; }
+		
+		public MineralBuffModifyTriggerAOEEvent(bool value, MineralBuff mineralBuff, float duration, IDamageable originalTarget,
+			string HitID, float range, int damage) : base(value) {
+			MineralBuff = mineralBuff;
+			Duration = duration;
+			OriginalTarget = originalTarget;
+			this.HitID = HitID;
+			Range = range;
+			Damage = damage;
+		}
+	}
 
 	public class MineralAOEEvent : WeaponBuildBuffEvent {
 		public MineralBuff Buff2 { get; set; }
@@ -36,6 +73,28 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		public MineralBuff Buff2 { get; set; }
 		public IDamageable Target { get; set; }
 		public Transform Transform { get; set; }
+	}
+	
+	
+	
+	public class OnMineralAOEAddMalfunctionBuff : WeaponBuildBuffEvent {
+		public MineralBuff Buff { get; set; }
+		public IDamageable Target { get; set; }
+	}
+	
+	public class OnMineralAOEGenerateOriginalMulfunctionBuff : WeaponBuildBuffEvent {
+		public MineralBuff Buff { get; set; }
+		public IDamageable Target { get; set; }
+	}
+	
+	public class OnModifyMineralAOEIndividualDamage : ModifyValueEvent<int> {
+		public float Distance { get; protected set; }
+		public float AOERange { get; protected set; }
+
+		public OnModifyMineralAOEIndividualDamage(int value, float distance, float aoeRange) : base(value) {
+			Distance = distance;
+			AOERange = aoeRange;
+		}
 	}
 	
 	public class MineralBuffAOE : ICanDealDamage {
@@ -139,8 +198,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		public void AddMulfunctionBuff(float duration, IDamageable target) {
 			IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
 			MalfunctionBuff buff = MalfunctionBuff.Allocate(weaponEntity, target, duration);
+			bool addMalfunctionSuccess = false;
 			if (!buffSystem.AddBuff(target, weaponEntity, buff)) {
 				buff.RecycleToCache();
+			}
+			else {
+				addMalfunctionSuccess = true;
 			}
 			
 			if (Level > 2) {
@@ -148,12 +211,20 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 				if (!buffSystem.AddBuff(target, weaponEntity, powerlessBuff)) {
 					powerlessBuff.RecycleToCache();
 				}
-			} 
+			}
+
+			if (addMalfunctionSuccess) {
+				SendWeaponBuildBuffEvent(new OnMineralAOEAddMalfunctionBuff() {
+					Buff = this,
+					Target = target
+				});
+			}
 		}
 
 		public void RangeAOE(float range, int damage, float duration, Transform transform, IDamageable target, 
 			ICanDealDamage damageDealer, bool sendBuildBuffEvent) {
-			HashSet<IEnemyEntity> enemies = new HashSet<IEnemyEntity>();
+			Dictionary<IEnemyEntity, float> enemies = new Dictionary<IEnemyEntity, float>();
+			
 			LayerMask mask = LayerMask.GetMask("Default");
 			Collider[] colliders = Physics.OverlapSphere(transform.position, range, mask);
 			
@@ -161,12 +232,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 				if(!collider.attachedRigidbody) continue;
 				IEnemyViewController enemy = collider.attachedRigidbody.GetComponent<IEnemyViewController>();
 				if (enemy != null && enemy.EnemyEntity != null) {
-					enemies.Add(enemy.EnemyEntity);
+					float distance = Vector3.Distance(transform.position, collider.transform.position);
+					enemies.TryAdd(enemy.EnemyEntity, distance);
 				}
 			}
 						
 			//apply buff to all enemies
-			foreach (var enemy in enemies) {
+			foreach (var enemyData in enemies) {
+				IEnemyEntity enemy = enemyData.Key;
 				if (enemy != target) {
 					if (sendBuildBuffEvent) {
 						SendWeaponBuildBuffEvent(new MineralAOEEvent() {
@@ -176,7 +249,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 						});
 					}
 
-					enemy.TakeDamage(Mathf.RoundToInt(damage), damageDealer, out bool isDie);
+					int individualDamage = weaponEntity
+						.SendModifyValueEvent(new OnModifyMineralAOEIndividualDamage(damage, enemyData.Value, range)).Value;
+					
+					
+					enemy.TakeDamage(Mathf.RoundToInt(individualDamage), damageDealer, out bool isDie);
 					if (isDie && sendBuildBuffEvent) {
 						SendWeaponBuildBuffEvent(new MineralAOEKillEvent() {
 							Buff2 = this,
@@ -189,7 +266,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		}
 
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weaponEntity) {
+			
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
+			chance = weaponEntity.SendModifyValueEvent(new MineralBuffModifyChanceEvent(chance)).Value;
+			
 			if (Random.Range(0f, 1f) <= chance) {
 				Transform transform = weaponEntity.GetRootDamageDealerTransform();
 				if (!transform) {
@@ -210,14 +290,28 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 
 				
 				float range = GetBuffPropertyAtCurrentLevel<float>("range");
+				range = weaponEntity.SendModifyValueEvent(new MineralBuffRangeEvent(range)).Value;
+				
+				float rangeMultiplier = 1;
+				rangeMultiplier = weaponEntity.SendModifyValueEvent(new MineralBuffRangeMultiplierEvent(rangeMultiplier)).Value;
+				
 				int damagePerRarity = GetBuffPropertyAtCurrentLevel<int>("damage_per_rarity");
 				float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage_multiplier");
 				damageMultiplier = weaponEntity.SendModifyValueEvent(new MineralBuffMultiplierEvent(damageMultiplier))
 					.Value;
 				int realDamage = Mathf.RoundToInt(damagePerRarity * weaponEntity.GetRarity() * damageMultiplier);
 
+				bool triggerAOE = weaponEntity.SendModifyValueEvent(new MineralBuffModifyTriggerAOEEvent(true,
+					this, duration, target, hit.HitDataUUID, range * rangeMultiplier, realDamage)).Value;
+				
+				if (triggerAOE) {
+					RangeAOE(range * rangeMultiplier, realDamage, duration, hit.Hurtbox.Owner.transform, target, new MineralBuffAOE(weaponEntity), true);
+				}
 
-				RangeAOE(range, realDamage, duration, hit.Hurtbox.Owner.transform, target, new MineralBuffAOE(weaponEntity), true);
+				SendWeaponBuildBuffEvent(new OnMineralAOEGenerateOriginalMulfunctionBuff() {
+					Buff = this,
+					Target = target
+				});
 			}
 			
 			return hit;

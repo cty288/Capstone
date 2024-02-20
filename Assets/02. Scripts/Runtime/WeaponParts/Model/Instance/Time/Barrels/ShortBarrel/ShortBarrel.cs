@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.ShortBarrel {
 	public class ShortBarrel  : WeaponPartsEntity<ShortBarrel, ShortBarrelBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "ShortBarrel";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -83,7 +84,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.ShortBarrel {
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

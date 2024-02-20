@@ -15,6 +15,7 @@ using Runtime.Weapons.Model.Base;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnhancement {
 	public class GunpowerEnchancement : WeaponPartsEntity<GunpowerEnchancement, GunpowerEnchancementBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "GunpowerEnchancement";
 		
 
@@ -74,7 +75,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.UnregisterOnDealDamage(OnWeaponDealDamage);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

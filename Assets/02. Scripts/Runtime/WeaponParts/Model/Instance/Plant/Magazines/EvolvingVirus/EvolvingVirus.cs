@@ -11,6 +11,7 @@ using Runtime.GameResources.Others;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.EvolvingVirus {
 	public class EvolvingVirus : WeaponPartsEntity<EvolvingVirus, EvolvingVirusBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "EvolvingVirus";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -39,10 +40,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 		public override float TickInterval { get; protected set; } = -1;
 		
 		public override void OnInitialize() {
-			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeDurationEvent>(OnModifyDurationEvent);
+			weaponEntity.RegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
 		}
 
-		private OnPlantBuffChangeDurationEvent OnModifyDurationEvent(OnPlantBuffChangeDurationEvent e) {
+		private OnPlantBuffChangeBaseDurationEvent OnModifyDurationEvent(OnPlantBuffChangeBaseDurationEvent e) {
 			int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
 			e.Value += time;
 			return e;
@@ -62,7 +63,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 		}
 
 		public override void OnRecycled() {
-			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeDurationEvent>(OnModifyDurationEvent);
+			weaponEntity.UnRegisterOnModifyValueEvent<OnPlantBuffChangeBaseDurationEvent>(OnModifyDurationEvent);
 			base.OnRecycled();
 		}
 

@@ -4,6 +4,7 @@ using System.Threading;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using BehaviorDesigner.Runtime;
+using Cysharp.Threading.Tasks;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
@@ -219,10 +220,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				action.Execute();
 			}
 			else {
-				OnDieWaitEnd(damagedealer);
+				OnEntityDieWithoutCallback(damagedealer);
 			}
 			ctsWhenDieOrStunned.Cancel();
 			ctsWhenDieOrStunned = new CancellationTokenSource();
+		}
+
+		private async UniTask OnEntityDieWithoutCallback(ICanDealDamage damagedealer) {
+			await UniTask.Yield();
+			OnDieWaitEnd(damagedealer);
 		}
 		
 		protected abstract int GetSpawnedCombatCurrencyAmount();

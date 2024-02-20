@@ -12,6 +12,7 @@ using Runtime.Weapons.Model.Base;
 using UnityEngine;
 
 public class SelfLoadingAttachment : WeaponPartsEntity<SelfLoadingAttachment, SelfLoadingAttachmentBuff> {
+	[field: ES3Serializable]
 		public override string EntityName { get; set; } = "SelfLoadingAttachment";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -27,9 +28,7 @@ public class SelfLoadingAttachment : WeaponPartsEntity<SelfLoadingAttachment, Se
 		}
 
 
-		public override int GetMaxRarity() {
-			return 1;
-		}
+
 
 		public override WeaponPartType WeaponPartType => WeaponPartType.Attachment;
 		
@@ -75,7 +74,12 @@ public class SelfLoadingAttachment : WeaponPartsEntity<SelfLoadingAttachment, Se
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.IsHolding.UnRegisterOnValueChanged(OnIsHoldingChanged);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

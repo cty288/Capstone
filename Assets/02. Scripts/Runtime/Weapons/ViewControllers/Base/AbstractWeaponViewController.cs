@@ -86,7 +86,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected AnimationSMBManager animationSMBManager;
         
         //timers & status
-        protected bool isLocked = false;
+        //protected bool isLocked = false;
         protected bool isReloading = false;
         protected float lastShootTime = 0f;
         protected float reloadTimer = 0f;
@@ -109,6 +109,10 @@ namespace Runtime.Weapons.ViewControllers.Base
         private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
         private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
+        protected string shootSoundName;
+        protected string reloadStartSoundName;
+        protected string reloadFinishSoundName;
+        
         #region Initialization
         protected override void Awake() {
             base.Awake();
@@ -120,6 +124,16 @@ namespace Runtime.Weapons.ViewControllers.Base
             playerActions = ClientInput.Singleton.GetPlayerActions();
             animationSMBManager = GetComponent<AnimationSMBManager>();
             animationSMBManager.Event.AddListener(OnAnimationEvent);
+            
+            SetSoundNames();
+        }
+
+        protected virtual void SetSoundNames()
+        {
+            //basic sounds
+            shootSoundName = "Pistol_Single_Shot";
+            reloadStartSoundName = "Pistol_Reload_Begin";
+            reloadFinishSoundName = "Pistol_Reload_Finish";
         }
         
         public override IResourceEntity OnBuildNewPickableResourceEntity(bool setRarity, int rarity,
@@ -161,7 +175,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Reload
-                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && !isLocked &&
+                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && !WeaponEntity.IsLocked &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
                     if (IsScopedIn)
@@ -181,13 +195,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
 
-        #region  Weapon Lock
 
-        public void LockWeapon(bool shouldLock) {
-            isLocked = shouldLock;
-        }
-
-        #endregion
         
         #region Animation
         protected virtual void OnAnimationEvent(string eventName)
@@ -207,12 +215,11 @@ namespace Runtime.Weapons.ViewControllers.Base
 
         protected virtual void OnReloadAnimationStart()
         {
-            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
+            AudioSystem.Singleton.Play2DSound(reloadStartSoundName);
         }
         
         protected virtual IEnumerator ReloadAnimation() {
             ChangeReloadStatus(true);
-            //AudioSystem.Singleton.Play2DSound("Pistol_Reload_Begin");
             this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ReloadSpeed", 
                 AnimationEventType.Float,reloadAnimationLength/BoundEntity.GetReloadSpeed().RealValue));
             animator.SetFloat("ReloadSpeed",reloadAnimationLength/BoundEntity.GetReloadSpeed().RealValue);
@@ -224,7 +231,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected virtual void OnReloadAnimationEnd()
         {
             ChangeReloadStatus(false);
-            AudioSystem.Singleton.Play2DSound("Pistol_Reload_Finish");
+            AudioSystem.Singleton.Play2DSound(reloadFinishSoundName);
             BoundEntity.Reload();
         }
         #endregion
@@ -239,7 +246,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
             fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
             
-            if(BoundEntity.CurrentAmmo == 0 && autoReload && !isLocked) {
+            if(BoundEntity.CurrentAmmo == 0 && autoReload && !WeaponEntity.IsLocked) {
                 StartCoroutine(ReloadAnimation());
             }
         }
@@ -290,7 +297,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected void SetShootStatus(bool isShooting) {
             if (isShooting) {
-                AudioSystem.Singleton.Play2DSound("Pistol_Single_Shot", 1f);
+                AudioSystem.Singleton.Play2DSound(shootSoundName, 1f);
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
                 animator.SetTrigger("Shoot");
             }
@@ -337,7 +344,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected void CheckShoot()
         {
             if (!isReloading) {
-                if (BoundEntity.CurrentAmmo > 0 && !isLocked &&
+                if (BoundEntity.CurrentAmmo > 0 && !WeaponEntity.IsLocked &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
                     
@@ -347,7 +354,7 @@ namespace Runtime.Weapons.ViewControllers.Base
                     BoundEntity.ShootUseAmmo(1);
                 }
                 
-                if (autoReload && BoundEntity.CurrentAmmo <= 0 && !isLocked)
+                if (autoReload && BoundEntity.CurrentAmmo <= 0 && !WeaponEntity.IsLocked)
                 {
                     SetShoot(false);
                     ChangeReloadStatus(true);

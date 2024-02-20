@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
+using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -182,6 +183,8 @@ namespace Runtime.Enemies
             
            // BoundEntity.IsInvincible.Value = true;
             SpawnShellHealthBar();
+
+            AudioSystem.Singleton.Play3DSound("boss1-spawn", gameObject.transform.position, 0.5f);
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
@@ -207,6 +210,7 @@ namespace Runtime.Enemies
             shellCollider.enabled = newValue;
             hardCollider.enabled = newValue;
             if (CurrentShellHealth <= 0 && !newValue) {
+                AudioSystem.Singleton.Play3DSound("break-shield", gameObject.transform.position, 0.5f);
                 animator.CrossFade("OpenImmediately", 0.05f);
             }
             animator.SetBool("ShellClosed",newValue);

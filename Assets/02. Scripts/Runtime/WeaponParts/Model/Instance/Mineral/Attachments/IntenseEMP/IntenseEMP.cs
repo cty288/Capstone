@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments {
 	public class IntenseEMP : WeaponPartsEntity<IntenseEMP, IntenseEMPBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "IntenseEMP";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -59,14 +60,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments {
 			e.Buff2.RangeAOE(range, realDamage, 1, e.Transform, e.Target, weaponEntity, false);
 		}
 
-		private void OnPlantAOEEvent(MineralAOEEvent e) {
-			float chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
-			if(Random.Range(0f, 1f) < chance) {
-				e.Buff2.AddMulfunctionBuff(e.Duration, e.Target);
-			}
-		}
 		
-
 		public override void OnStart() {
 			base.OnStart();
 		}

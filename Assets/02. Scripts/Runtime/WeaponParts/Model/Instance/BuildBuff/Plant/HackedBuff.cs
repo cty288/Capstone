@@ -14,10 +14,25 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		private IDamageable damagableEntity;
 		
 		[ES3Serializable]
-		private float damage;
+		private int damage;
+		
+
+		public int DamagePerTick {
+			get => damage;
+			set => damage = value;
+		}
 
 		[ES3Serializable] private float damageMultiplier = 1;
-		
+		public float DamageMultiplier => damageMultiplier;
+
+		[ES3Serializable] private bool isSuddenDeathBuff;
+
+		public bool IsSuddenDeathBuff => isSuddenDeathBuff;
+		[ES3Serializable] private int suddenDeathBuffDamage;
+
+		public int SuddenDeathBuffDamage => suddenDeathBuffDamage;
+
+
 		public override string OnGetDescription(string defaultLocalizationKey) {
 			return Localization.GetFormat(defaultLocalizationKey, damage * damageMultiplier);
 		}
@@ -39,24 +54,32 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		}
 
 		public override void OnStart() {
-			
+			OnTick();
 		}
 
 		public override BuffStatus OnTick() {
-			damagableEntity.TakeDamage(Mathf.RoundToInt(damage * damageMultiplier), buffDealer as ICanDealDamage, out _);
+			if (!isSuddenDeathBuff) {
+				damagableEntity.TakeDamage(Mathf.RoundToInt(damage * damageMultiplier), buffDealer as ICanDealDamage, out _);
+			}
+			
 			return BuffStatus.Running;
 		}
 
 		public override bool IsGoodBuff => false;
 		public override void OnEnds() {
-			
+			if (isSuddenDeathBuff) {
+				damagableEntity.TakeDamage(suddenDeathBuffDamage, buffDealer as ICanDealDamage, out _);
+			}
 		}
 		
-		public static HackedBuff Allocate(IEntity buffDealer, IEntity buffOwner, float totalDuration, int damage, float damageMultiplier) {
+		public static HackedBuff Allocate(IEntity buffDealer, IEntity buffOwner, float totalDuration, int damage, float damageMultiplier,
+			bool isSuddenDeathBuff, int suddenDeathBuffDamage) {
 			HackedBuff buff = Allocate(buffDealer, buffOwner);
 			buff.MaxDuration = totalDuration;
 			buff.damage = damage;
 			buff.damageMultiplier = damageMultiplier;
+			buff.isSuddenDeathBuff = isSuddenDeathBuff;
+			buff.suddenDeathBuffDamage = suddenDeathBuffDamage;
 			return buff;
 		}
 	}

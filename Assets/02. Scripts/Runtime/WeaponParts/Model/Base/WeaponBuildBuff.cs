@@ -73,6 +73,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 			weaponBuildBuffEvent.WeaponEntity = weaponEntity;
 			this.SendEvent<T>(weaponBuildBuffEvent);
 		}
+		
+		public static void SendWeaponBuildBuffEvent<T>(IWeaponEntity weaponEntity, T weaponBuildBuffEvent) where T : WeaponBuildBuffEvent {
+			weaponBuildBuffEvent.WeaponEntity = weaponEntity;
+			MainGame.Interface.SendEvent<T>(weaponBuildBuffEvent);
+		}
 
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;

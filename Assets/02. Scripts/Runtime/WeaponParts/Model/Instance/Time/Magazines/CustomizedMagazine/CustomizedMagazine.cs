@@ -12,6 +12,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines {
 	public class CustomizedMagazine : WeaponPartsEntity<CustomizedMagazine, CustomizedMagazineBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "CustomizedMagazine";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			

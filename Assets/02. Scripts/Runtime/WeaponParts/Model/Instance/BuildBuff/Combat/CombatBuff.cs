@@ -28,11 +28,30 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		
 		public CombatBuff Buff { get; set; }
 	}
+	
+	public class OnCombatBuffExplosionDealDamge : WeaponBuildBuffEvent {
+		public int Damage { get; set; }
+		public IDamageable Target { get; set; }
+		public CombatBuff Buff { get; set; }
+		public bool IsDie { get; set; }
+	}
 
 	public class CombatBuffOnModifyBaseAmmoRecoverEvent : ModifyValueEvent<int> {
 		public CombatBuffOnModifyBaseAmmoRecoverEvent(int value) : base(value) {
 		}
 	}
+
+	public class OnCombatBuffModifyExplosionDOR : ModifyValueEvent<int> {
+		public OnCombatBuffModifyExplosionDOR(int value) : base(value) {
+		}
+	}
+	
+	public class OnCombatBuffModifyExplosionChance : ModifyValueEvent<float> {
+		public OnCombatBuffModifyExplosionChance(float value) : base(value) {
+		}
+	}
+	
+	
 
 	public class CombatBuffInternalExplosion : ICanDealDamage {
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
@@ -139,9 +158,18 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 					}
 				}
 
+				bool isDie = false;
 				if (!killTriggered) {
-					damageableViewController.DamageableEntity.TakeDamage(damage, new CombatBuffInternalExplosion(attacker), out _);
+					damageableViewController.DamageableEntity.TakeDamage(damage,
+						new CombatBuffInternalExplosion(attacker), out isDie);
 				}
+				
+				SendWeaponBuildBuffEvent<OnCombatBuffExplosionDealDamge>(new OnCombatBuffExplosionDealDamge() {
+					Buff = this,
+					Damage = damage,
+					IsDie = killTriggered || isDie,
+					Target = damageableViewController.DamageableEntity
+				});
 			}
 
 
@@ -159,8 +187,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
+			chance = weaponEntity.SendModifyValueEvent(new OnCombatBuffModifyExplosionChance(chance)).Value;
+			
 			if (Random.Range(0f, 1f) <= chance) {
 				int explosionDamagePerRarity = GetBuffPropertyAtCurrentLevel<int>("damage_per_rarity");
+				explosionDamagePerRarity = weaponEntity
+					.SendModifyValueEvent(new OnCombatBuffModifyExplosionDOR(explosionDamagePerRarity)).Value;
+				
+				
 				int damage = Mathf.RoundToInt(explosionDamagePerRarity * weaponEntity.GetRarity());
 				GameObject owner = hit.Hurtbox?.Owner;
 

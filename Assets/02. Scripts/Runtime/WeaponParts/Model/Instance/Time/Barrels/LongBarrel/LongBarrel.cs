@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.LongBarrel {
 		public class LongBarrel  : WeaponPartsEntity<LongBarrel, LongBarrelBuff> {
+			[field: ES3Serializable]
 		public override string EntityName { get; set; } = "LongBarrel";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -82,7 +83,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.LongBarrel {
 		}
 
 		public override void OnBuffEnd() {
+			
+		}
+
+		public override void OnRecycled() {
 			weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
+			base.OnRecycled();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

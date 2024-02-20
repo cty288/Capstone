@@ -13,6 +13,8 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.InfiniteChainMagazine {
 	public class InfiniteChainMagazine : WeaponPartsEntity<InfiniteChainMagazine, InfiniteChainMagazineBuff> {
+		
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "InfiniteChainMagazine";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			

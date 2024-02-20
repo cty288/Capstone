@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3356837920
+CRC: 2102663473
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 999b7c107a3872a58e6719a4109660f0
+    Hash: 6dc16c67aaa83ddda6b489059b9c9e66
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 35ba6005db8c9e7a0955630a58e49258
+    Hash: 81d610f6ae33185c04f40c5dc7f20e1c
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -50,11 +50,17 @@ ClassTypes:
 - Class: 108
   Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 08b1e037f1374a219e8a87101dcf4752, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7faa9b73b45149c284d58e01208216f4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 14b0d5800a8c4c5188cb32f46af97ec6, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: e5825cde73a147bab19ad65c7aa05215, type: 3}
 - Class: 114
@@ -64,6 +70,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 24863ad3696e40a9b9df1063b647f906, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: d6c3f68df1a540d8b4cbaccadb063981, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: d06566a98c04a6d45b06f384f2974f1d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: df199f3805ff4303bb45c6dba101d443, type: 3}
@@ -72,9 +80,15 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 1de5f3cd43c4437aa5db68c65a3959d8, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: ff446329682d4d5ab0fc16cd50c78010, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: e57b8bc811999ab40a753b421661045a, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 3b9e1f8a4bc0441b948d4f992b7b4a29, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: a22d6f44285a21a4b85cce83f623ebc3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 - Class: 114
@@ -106,6 +120,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: f5f870245e7796642b3a38ae058342c6, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: db6fd81b3fc292a4c971293dad9b68b0, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
@@ -120,9 +136,17 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 69cb82b1661d4e62b87a0071d11a0802, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 96a8fddf04204197a71ef55105dd0768, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: e19a9b7a5e85493885003d56b8dde295, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 99c8819ce602469c8968c88d989f2a1b, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 800c67950b0343488382774e8420e753, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4ac83cb6671745518014b5fa4e3f22e4, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 206f5d07aa864e0392045f714ccb2adf, type: 3}
 - Class: 115
@@ -143,6 +167,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 199
   Script: {instanceID: 0}
+- Class: 208
+  Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 - Class: 222
@@ -158,6 +184,12 @@ ClassTypes:
 - Class: 2083052967
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
+- AssemblyName: BehaviorDesigner.Runtime
+  ClassName: BehaviorDesigner.Runtime.BehaviorSource
+- AssemblyName: BehaviorDesigner.Runtime
+  ClassName: BehaviorDesigner.Runtime.FieldSerializationData
+- AssemblyName: BehaviorDesigner.Runtime
+  ClassName: BehaviorDesigner.Runtime.TaskSerializationData
 - AssemblyName: MainGame
   ClassName: Runtime.GameResources.ViewControllers.AnimLayerInfo
 - AssemblyName: MainGame
@@ -203,61 +235,94 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
+- Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol_Model.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Attachment/SelfLoadingAttachment.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Combat/Barrels/ExecutorBarrel.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Magazine/ArtificialAdaptedMagazine.prefab
+- Assets/06. Prefabs/Game/Entities/Currency/PlantCurrency.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Mineral/Barrels/ConcentratedCurrent.prefab
+- Assets/06. Prefabs/Game/Entities/Weapons/UniversalPistol/UniversalPistol_Model.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Attachment/KineticDevice.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Barrels/SpecialBarrel.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts6.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Attachment/RageDetector.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/MedicalNeedle/MedicalNeedleSkill.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Combat/Magazines/DoubleExplosionMagazine.prefab
+- Assets/06. Prefabs/Game/Entities/Baits/Bait_Deployed.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Barrels/ShortBarrel.prefab
+- Assets/06. Prefabs/Game/Entities/RawMaterials/Mineral1.prefab
+- Assets/06. Prefabs/Game/Entities/Weapons/Blade/MagnetBlade.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/BackpackSkill/BackpackSkill.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Mineral/Attachments/ChainReaction.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts7.prefab
+- Assets/06. Prefabs/Game/Entities/Currency/CombatCurrency.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Barrels/SpecialCompensator.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts4.prefab
+- Assets/06. Prefabs/Game/Entities/RawMaterials/Combat1.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Plant/Attachments/SuddenDeath.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Magazine/ChargedMagazine.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Plant/Magazines/FierceVirus.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Mineral/Attachments/IntenseEMP.prefab
+- Assets/06. Prefabs/Game/Entities/Weapons/Shotgun/Shotgun.prefab
+- Assets/06. Prefabs/Game/Entities/RawMaterials/Combat3.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/TurretSkill/TurretSkill.prefab
+- Assets/06. Prefabs/Game/Entities/Currency/TimeCurrency.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Mineral/Magazines/InterferenceAmplification.prefab
+- Assets/06. Prefabs/Game/Entities/RawMaterials/Time1.prefab
+- Assets/06. Prefabs/Game/Entities/RawMaterials/Time2.prefab
+- Assets/06. Prefabs/Game/Entities/RawMaterials/Plant2.prefab
+- Assets/06. Prefabs/Game/Entities/Weapons/SubMachineGun/SubMachineGun_Model.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Barrels/LongBarrel.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Plant/Barrels/WorseViral.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/AdrenalineSkill/AdrenalineSkill.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol2.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol3_Model.prefab
 - Assets/06. Prefabs/Game/Entities/Currency/MineralCurrency.prefab
-- Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol_Model.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Plant1.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Mineral/Magazines/EMPChain.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Attachment/FactoryNewAttachment.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/Rifle/Rifle.prefab
 - Assets/06. Prefabs/Game/Entities/Skills/GrenadeSkill/GrenadeSkill.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Barrels/AdaptedCompensator.prefab
-- Assets/06. Prefabs/Game/Entities/Currency/PlantCurrency.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Barrels/AdaptedCompensator.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Plant/Magazines/EvolvingVirus.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Combat4.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Barrels/HeavyBarrel.prefab
-- Assets/06. Prefabs/Game/Entities/Weapons/UniversalPistol/UniversalPistol_Model.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Barrels/HeavyBarrel.prefab
 - Assets/06. Prefabs/Game/Inventory/EntityInventoryVC_Common.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Barrels/SpecialBarrel.prefab
-- Assets/06. Prefabs/Game/Entities/RawMaterials/Combat2.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts6.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/UniversalPistol/UniversalPistol.prefab
+- Assets/06. Prefabs/Game/Entities/RawMaterials/Combat2.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Mineral3.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Magazine/CustomizedMagazine.prefab
-- Assets/06. Prefabs/Game/Entities/Skills/MedicalNeedle/MedicalNeedleSkill.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Combat/Magazines/InfiniteChainMagazine.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Magazine/CustomizedMagazine.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Combat/Barrels/DawnbreakerBlast.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Mineral4.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Plant3.prefab
-- Assets/06. Prefabs/Game/Entities/Baits/Bait_Deployed.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Barrels/ShortBarrel.prefab
-- Assets/06. Prefabs/Game/Entities/RawMaterials/Mineral1.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/RawMaterial_OnGround.prefab
-- Assets/06. Prefabs/Game/Entities/Weapons/Blade/MagnetBlade.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/TurretSkill/Turret_Deployed.prefab
 - Assets/06. Prefabs/Game/Entities/Baits/Bait.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Magazine/VampireMagazine.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Time4.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Magazine/GunpowerEnhancement.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts7.prefab
-- Assets/06. Prefabs/Game/Entities/Currency/CombatCurrency.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Barrels/SpecialCompensator.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts4.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Plant/Barrels/HardCasesBarrel.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Time/Magazine/GunpowerEnchancement.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Plant/Attachments/Multivirus.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Mineral/Barrels/ThundercrackBarrel.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/RustyPistol/RustyPistol3.prefab
-- Assets/06. Prefabs/Game/Entities/RawMaterials/Combat1.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Combat/Attachments/KillCounter.prefab
 - Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts2.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Combat/Attachments/VerticalForegrip.prefab
 - Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts.prefab
-- Assets/06. Prefabs/Game/Entities/Weapons/Shotgun/Shotgun.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/StunGrenadeSkill/StunGrenadeSkill.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/TheSancturary/TheSanctuary_Model.prefab
-- Assets/06. Prefabs/Game/Entities/RawMaterials/Combat3.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/SubMachineGun/SubMachineGun.prefab
-- Assets/06. Prefabs/Game/Entities/Currency/TimeCurrency.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Time3.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Combat/Magazines/ShrapnelBullets.prefab
 - Assets/06. Prefabs/Game/Entities/Skills/SkillInventoryVC.prefab
-- Assets/06. Prefabs/Game/Entities/RawMaterials/Time1.prefab
-- Assets/06. Prefabs/Game/Entities/RawMaterials/Time2.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Mineral2.prefab
+- Assets/06. Prefabs/Game/Entities/Skills/TurretSkill/TurretEntity.prefab
 - Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts5.prefab
 - Assets/06. Prefabs/Game/Entities/RawMaterials/Plant4.prefab
-- Assets/06. Prefabs/Game/Entities/RawMaterials/Plant2.prefab
+- Assets/06. Prefabs/Game/Entities/WeaponParts/Combat/Barrels/FatesEdgeBarrel.prefab
 - Assets/06. Prefabs/Game/Entities/WeaponParts/Examples/TestWeaponParts3.prefab
-- Assets/06. Prefabs/Game/Entities/Weapons/SubMachineGun/SubMachineGun_Model.prefab
-- Assets/06. Prefabs/Game/Entities/WeaponParts/Barrels/LongBarrel.prefab
 - Assets/06. Prefabs/Game/Entities/Weapons/TheSancturary/TheSanctuary.prefab
 Dependencies:
 - D:/Unity Projects/Capstone/Assets/StreamingAssets/AssetBundles/Windows/mftest

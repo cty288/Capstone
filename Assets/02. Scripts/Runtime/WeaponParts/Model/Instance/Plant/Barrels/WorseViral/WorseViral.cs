@@ -10,6 +10,7 @@ using Runtime.GameResources.Others;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.WorseViral {
 	public class WorseViral : WeaponPartsEntity<WorseViral, WorseViralBuff> {
+		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "WorseViral";
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			

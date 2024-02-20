@@ -52,6 +52,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
 
     	[Space(20)]
     	[Header(Emission)]
+    	[Toggle(_EMISSION)] _FresnelGlow("Use Emission", Float) = 0
         [HDR] _EmissionColor("Color", Color) = (0,0,0)
         _EmissionMap("Emission", 2D) = "white" {}
         
@@ -60,8 +61,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
     	
     	[Space(20)]
     	[Header(Fresnel Highlight)]
-    	_HighlightColor ("Highlight Color", Color) = (1,0,0,1)
-		_FresnelPower ("Fresnel", Range(0, 10)) = 5
+    	[Toggle(_FRESNELGLOW)] _FresnelOn("Use Fresnel", Float) = 0
+    	[HDR]_HighlightColor ("Highlight Color", Color) = (1,0,0,1)
+		_FresnelPower ("Fresnel", Range(0, 4)) = 1
         _FresnelCutOffIn ("Cut Off In", Range(0,1)) = 0.1
         _FresnelCutOffOut ("Cut Off Out", Range(0,1)) = 0.9
     	
@@ -129,6 +131,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             #pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
             #pragma shader_feature_local_fragment _EMISSION
+            #pragma shader_feature_local_fragment _FRESNELGLOW
             #pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
             #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -283,6 +286,7 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             //#pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
             #pragma shader_feature_local_fragment _EMISSION
+            #pragma shader_feature_local_fragment _FRESNELGLOW
             #pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
             #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma shader_feature_local_fragment _OCCLUSIONMAP

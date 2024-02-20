@@ -130,7 +130,7 @@ namespace Runtime.Weapons
 
             b.GetComponent<IBulletViewController>().Init(CurrentFaction.Value,
                 BoundEntity.GetRealDamageValue(),
-                gameObject, this, BoundEntity.GetRange().BaseValue, true, true);
+                gameObject, this, BoundEntity.GetRange().RealValue, true, true);
 
             SpawnShield();
         }

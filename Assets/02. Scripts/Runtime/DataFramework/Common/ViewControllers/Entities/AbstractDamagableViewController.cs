@@ -56,7 +56,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			ctsWhenDie = new CancellationTokenSource();
 		}
 
-		private void OnDie(ICanDealDamage damagedealer, HitData hitData) {
+		private void OnDie(ICanDealDamage damagedealer,IDamageable damageable,  HitData hitData) {
 			OnEntityDie(damagedealer);
 			ctsWhenDie.Cancel();
 			ctsWhenDie = new CancellationTokenSource();
