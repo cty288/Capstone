@@ -22,9 +22,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Ch
 			
 		}
 
-		public override int GetMaxRarity() {
-			return 1;
-		}
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {

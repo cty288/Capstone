@@ -86,7 +86,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected AnimationSMBManager animationSMBManager;
         
         //timers & status
-        protected bool isLocked = false;
+        //protected bool isLocked = false;
         protected bool isReloading = false;
         protected float lastShootTime = 0f;
         protected float reloadTimer = 0f;
@@ -175,7 +175,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (isHolding && !playerModel.IsPlayerDead())
             {
                 //Reload
-                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && !isLocked &&
+                if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && !WeaponEntity.IsLocked &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)
                 {
                     if (IsScopedIn)
@@ -195,13 +195,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
 
-        #region  Weapon Lock
 
-        public void LockWeapon(bool shouldLock) {
-            isLocked = shouldLock;
-        }
-
-        #endregion
         
         #region Animation
         protected virtual void OnAnimationEvent(string eventName)
@@ -252,7 +246,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
             fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
             
-            if(BoundEntity.CurrentAmmo == 0 && autoReload && !isLocked) {
+            if(BoundEntity.CurrentAmmo == 0 && autoReload && !WeaponEntity.IsLocked) {
                 StartCoroutine(ReloadAnimation());
             }
         }
@@ -350,7 +344,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected void CheckShoot()
         {
             if (!isReloading) {
-                if (BoundEntity.CurrentAmmo > 0 && !isLocked &&
+                if (BoundEntity.CurrentAmmo > 0 && !WeaponEntity.IsLocked &&
                     Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
                     lastShootTime = Time.time;
                     
@@ -360,7 +354,7 @@ namespace Runtime.Weapons.ViewControllers.Base
                     BoundEntity.ShootUseAmmo(1);
                 }
                 
-                if (autoReload && BoundEntity.CurrentAmmo <= 0 && !isLocked)
+                if (autoReload && BoundEntity.CurrentAmmo <= 0 && !WeaponEntity.IsLocked)
                 {
                     SetShoot(false);
                     ChangeReloadStatus(true);

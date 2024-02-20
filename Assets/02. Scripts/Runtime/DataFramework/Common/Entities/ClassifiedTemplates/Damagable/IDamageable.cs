@@ -100,9 +100,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// <param name="unRegister"></param>
 		public void UnRegisterOnTakeDamage(OnTakeDamage onTakeDamage);
 		
-		public void RegisterOnDie(Action<ICanDealDamage, HitData> onDie);
+		public void RegisterOnDie(Action<ICanDealDamage, IDamageable, HitData> onDie);
 		
-		public void UnRegisterOnDie(Action<ICanDealDamage, HitData> onDie);
+		public void UnRegisterOnDie(Action<ICanDealDamage, IDamageable, HitData> onDie);
 		
 		/// <summary>
 		/// Heal the entity

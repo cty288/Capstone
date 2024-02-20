@@ -8,6 +8,7 @@ using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
+using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
 
@@ -16,6 +17,23 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 		public OnPlantBuffChangeDOTEvent(int value) : base(value) {
 		}
 	}
+	
+	public class OnPlantBuffStackBuffEvent : WeaponBuildBuffEvent {
+		public IDamageable Target { get; set; }
+		public HackedBuff Buff { get; set; }
+	}
+	
+	
+	public class OnPlantBuffGenerateInitialBuffEvent : WeaponBuildBuffEvent {
+		public IDamageable Target { get; set; }
+	}
+	
+	public class OnPlantBuffModifyChanceEvent : ModifyValueEvent<float> {
+		public OnPlantBuffModifyChanceEvent(float value) : base(value) {
+		}
+	}
+	
+	
 	
 	public class OnPlantBuffChangeBaseDurationEvent : ModifyValueEvent<float> {
 		public OnPlantBuffChangeBaseDurationEvent(float value) : base(value) {
@@ -39,6 +57,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 
 	public class OnHackedBuffAdded : WeaponBuildBuffEvent {
 		public IDamageable Target { get; set; }
+		public Transform TargetTransform { get; set; }
+		
+		
 	}
 	public class PlantBuff : WeaponBuildBuff<PlantBuff>, ICanGetSystem {
 		[field: ES3Serializable]
@@ -49,11 +70,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 			if (weaponEntity == null) {
 				return;
 			}
-			weaponEntity.RegisterOnDealDamage(OnDealDamage);
+			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
 		}
 
+		
 
-		public bool AddHackedBuff(IDamageable target) {
+
+		public bool AddHackedBuff(Transform targetTransform, IDamageable target) {
 			float damageMultiplier = GetBuffPropertyAtCurrentLevel<float>("damage_multiplier");
 			float baseDuration = GetBuffPropertyAtCurrentLevel<float>("time");
 			baseDuration = weaponEntity
@@ -66,8 +89,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 					new OnPlantBuffChangeTotalDurationEvent(baseDuration))
 				.Value;
 			
-				
-			IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
 			int damagePerSec = 2 * weaponEntity.GetRarity();
 			damagePerSec = weaponEntity.SendModifyValueEvent<OnPlantBuffChangeDOTEvent>(new OnPlantBuffChangeDOTEvent(damagePerSec))
 				.Value;
@@ -82,55 +103,101 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 			isSuddenDeath = weaponEntity.SendModifyValueEvent<OnPlantBuffChangeIsSuddenDeathEvent>(
 				new OnPlantBuffChangeIsSuddenDeathEvent(isSuddenDeath)).Value;
 
+			return AddHackedBuff(weaponEntity, targetTransform, target, actualDuration, actualDamagePerSec, damageMultiplier,
+				isSuddenDeath,
+				(int) totalDamage);
+
+		}
+
+		public static bool AddHackedBuff(IWeaponEntity weaponEntity, Transform targetTransform, IDamageable target, float actualDuration, int actualDamagePerSec,
+			float damageMultiplier, bool isSuddenDeath, int totalDamage) {
+			IBuffSystem buffSystem = MainGame.Interface.GetSystem<IBuffSystem>();
+			
 			HackedBuff buff = HackedBuff.Allocate(weaponEntity, target, actualDuration, actualDamagePerSec,
 				damageMultiplier, isSuddenDeath, (int) totalDamage);
-			
-
 			if (buffSystem.AddBuff(target, weaponEntity, buff)) {
-				SendWeaponBuildBuffEvent<OnHackedBuffAdded>(new OnHackedBuffAdded() {Target = target});
+				SendWeaponBuildBuffEvent<OnHackedBuffAdded>(weaponEntity, new OnHackedBuffAdded()
+					{Target = target, TargetTransform = targetTransform});
 				return true;
 			}
 			else {
+				//stack failed
+				if(buffSystem.ContainsBuff<HackedBuff>(target, out var hackedBuff)) {
+					SendWeaponBuildBuffEvent<OnPlantBuffStackBuffEvent>(weaponEntity, new OnPlantBuffStackBuffEvent() {
+						Target = target,
+						Buff = hackedBuff as HackedBuff
+					});
+				}
 				buff.RecycleToCache();
 				return false;
 			}
 		}
 		
 		
-		
-		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
+		private HitData OnModifyHitData(HitData hit, IWeaponEntity weaponEntity) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
+			chance = weaponEntity
+				.SendModifyValueEvent<OnPlantBuffModifyChanceEvent>(new OnPlantBuffModifyChanceEvent(chance)).Value;
+			
+			
 			if(Random.Range(0f, 1f) <= chance) {
-				if (AddHackedBuff(target)) {
+				
+				
+				
+
+				if (hit.Hurtbox == null || !hit.Hurtbox.Owner) {
+					return hit;
+				}
+
+				Transform transform = hit.Hurtbox.Owner.transform;
+				if (!transform) {
+					return hit;
+				}
+				
+				
+				IDamageable target = hit.Hurtbox.Owner.GetComponent<IDamageableViewController>()?.DamageableEntity;
+				if (target == null) {
+					return hit;
+				}
+				
+				
+				
+				if (AddHackedBuff(transform, target)) {
+					SendWeaponBuildBuffEvent<OnPlantBuffGenerateInitialBuffEvent>(
+						new OnPlantBuffGenerateInitialBuffEvent() {
+							Target = target
+						});
+					
 					if (Level >= 2) {
 						
-						Transform transform = weaponEntity.GetRootDamageDealerTransform();
-						if (!transform) {
-							return;
-						}
+						
 						float range = GetBuffPropertyAtCurrentLevel<float>("range");
 						//get all enemies in range
-						HashSet<IEnemyEntity> enemies = new HashSet<IEnemyEntity>();
+						Dictionary<IEnemyEntity, Transform> enemies = new Dictionary<IEnemyEntity, Transform>();
 						LayerMask mask = LayerMask.GetMask("Default");
-
 						Collider[] colliders = Physics.OverlapSphere(transform.position, range, mask);
 						foreach (var collider in colliders) {
 							if(!collider.attachedRigidbody) continue;
 							IEnemyViewController enemy = collider.attachedRigidbody.GetComponent<IEnemyViewController>();
 							if (enemy != null && enemy.EnemyEntity != null) {
-								enemies.Add(enemy.EnemyEntity);
+								enemies.TryAdd(enemy.EnemyEntity, collider.transform);
 							}
 						}
 						
 						//apply buff to all enemies
-						foreach (var enemy in enemies) {
-							if (enemy != target) {
-								AddHackedBuff(enemy);
+						foreach (var enemyKVP in enemies) {
+							if (enemyKVP.Key != target) {
+								AddHackedBuff(enemyKVP.Value, enemyKVP.Key);
 							}
 						}
 					}
 				}
 			}
+			
+			return hit;
+		}
+		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
+			
 		}
 
 		public override void OnStart() {
@@ -147,7 +214,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 
 		public override void OnRecycled() {
 			if (weaponEntity != null) {
-				weaponEntity.UnregisterOnDealDamage(OnDealDamage);
+				weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
 			}
 			base.OnRecycled();
 		}

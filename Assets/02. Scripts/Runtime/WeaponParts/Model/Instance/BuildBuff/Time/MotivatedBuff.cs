@@ -28,7 +28,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		public static string GetDescription(int level, string localizationKey) {
 			string additionalDescription = "";
 			if (level >= 2) {
-				additionalDescription = Localization.GetFormat("MotivatedBuff_Desc_2",
+				additionalDescription = Localization.GetFormat("MotivatedBuff_Desc2",
 					ConfigurableBuff<MotivatedBuff>.GetBuffPropertyAtLevel<int>("MotivatedBuff", "shield", level));
 			}
 

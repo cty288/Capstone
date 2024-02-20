@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
 using _02._Scripts.Runtime.WeaponParts.Model;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.Architecture;
+using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Weapons.Model.Base;
 using UnityEngine;
@@ -18,24 +19,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 		private IWeaponPartsModel weaponPartsModel;
 
 		private static string[] initiallyUnlockedPartsNames = new string[] {
-			/*"SpecialBarrel",
-			"HeavyBarrel",
-			"AdaptedCompensator",
-			"SpecialCompensator",
-			"ShortBarrel",
-			"LongBarrel",*/
-			"SpecialBarrel",
-			"CustomizedMagazine",
-			"SelfLoadingAttachment",
-			"FatesEdgeBarrel",
-			"DoubleExplosionMagazine",
-			"VerticalForegrip",
-			"ThundercrackBarrel",
-			"EMPChain",
-			"IntenseEMP",
-			"EvolvingVirus",
-			"WorseViral",
-			"Multivirus"
+			"ShreddingAdaptedBarrel", "ShreddingAdaptedMagazine", "ShreddingAdaptedAttachment", "ExecutorBarrel",
+			"ShrapnelBullets", "EMPAdaptedBarrel", "EMPAdaptedMagazine", "EMPAdaptedAttachment", "SpecialCompensator",
+			"InterferenceAmplification", "ViralAdaptedBarrel", "ViralAdaptedMagazine", "ViralAdaptedAttachment",
+			"HardCasesBarrel", "EvolvingVirus", "SpecialBarrel", "HeavyBarrel", "GunpowerEnchancement",
+			"ArtificialAdaptedMagazine", "ArtificialAdaptedAttachment"
 		};
 		
 		protected IResourceBuildModel buildModel;
@@ -52,6 +40,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
 					//buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, skillName, false);
 					weaponPartsModel.AddToUnlockedParts(skillName);
+					var template = ResourceTemplates.Singleton.GetResourceTemplates(skillName);
+					if (template == null) {
+						Debug.LogError("Template not found for " + skillName);
+						continue;
+					}
 				}
 			}
 		}

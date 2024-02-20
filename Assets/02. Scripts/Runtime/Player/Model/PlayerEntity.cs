@@ -357,6 +357,7 @@ namespace Runtime.Player {
 				DamageToHealth = healthToTakeDamage
 			});
 			
+			
 			return totalDamage;
 			
 		}

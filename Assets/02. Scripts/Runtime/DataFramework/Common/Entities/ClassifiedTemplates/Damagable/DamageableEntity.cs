@@ -25,7 +25,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 
 		private OnTakeDamage onTakeDamage;
-		private Action<ICanDealDamage, HitData> onDie;
+		private Action<ICanDealDamage, IDamageable, HitData> onDie;
 		
 		private OnHeal onHeal;
 
@@ -108,7 +108,7 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 
 		public void Kill(ICanDealDamage damageDealer, HitData hitData = null) {
 			damageDealer?.DoOnKillDamageable(damageDealer, this);
-			onDie?.Invoke(damageDealer, hitData);
+			onDie?.Invoke(damageDealer, this, hitData);
 		}
 
 		/// <summary>
@@ -166,11 +166,11 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			this.onTakeDamage -= onTakeDamage;
 		}
 
-		public void RegisterOnDie(Action<ICanDealDamage, HitData> onDie) {
+		public void RegisterOnDie(Action<ICanDealDamage, IDamageable, HitData> onDie) {
 			this.onDie += onDie;
 		}
 
-		public void UnRegisterOnDie(Action<ICanDealDamage, HitData> onDie) {
+		public void UnRegisterOnDie(Action<ICanDealDamage, IDamageable, HitData> onDie) {
 			this.onDie -= onDie;
 		}
 
@@ -206,6 +206,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public override void OnRecycled() {
 			base.OnRecycled();
 			onTakeDamage = null;
+			onDie = null;
+			onHeal = null;
 		}
 	}
 }

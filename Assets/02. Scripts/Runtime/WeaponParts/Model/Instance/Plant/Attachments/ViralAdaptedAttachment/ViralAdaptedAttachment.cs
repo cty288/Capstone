@@ -9,7 +9,7 @@ using Runtime.GameResources.Others;
 using Runtime.Weapons.Model.Properties;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.ViralAdaptedAttachment {
-public class ViralAdaptedAttachment : WeaponPartsEntity<ViralAdaptedAttachment,ViralAdaptedAttachmentBuff> {
+	public class ViralAdaptedAttachment : WeaponPartsEntity<ViralAdaptedAttachment,ViralAdaptedAttachmentBuff> {
 		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "ViralAdaptedAttachment";
 		protected override void OnEntityStart(bool isLoadedFromSave) {

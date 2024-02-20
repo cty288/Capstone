@@ -14,14 +14,25 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		private IDamageable damagableEntity;
 		
 		[ES3Serializable]
-		private float damage;
+		private int damage;
+		
+
+		public int DamagePerTick {
+			get => damage;
+			set => damage = value;
+		}
 
 		[ES3Serializable] private float damageMultiplier = 1;
-		
+		public float DamageMultiplier => damageMultiplier;
+
 		[ES3Serializable] private bool isSuddenDeathBuff;
+
+		public bool IsSuddenDeathBuff => isSuddenDeathBuff;
 		[ES3Serializable] private int suddenDeathBuffDamage;
-		
-		
+
+		public int SuddenDeathBuffDamage => suddenDeathBuffDamage;
+
+
 		public override string OnGetDescription(string defaultLocalizationKey) {
 			return Localization.GetFormat(defaultLocalizationKey, damage * damageMultiplier);
 		}

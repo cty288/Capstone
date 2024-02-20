@@ -45,6 +45,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		public OnCombatBuffModifyExplosionDOR(int value) : base(value) {
 		}
 	}
+	
+	public class OnCombatBuffModifyExplosionChance : ModifyValueEvent<float> {
+		public OnCombatBuffModifyExplosionChance(float value) : base(value) {
+		}
+	}
+	
+	
 
 	public class CombatBuffInternalExplosion : ICanDealDamage {
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
@@ -180,6 +187,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
+			chance = weaponEntity.SendModifyValueEvent(new OnCombatBuffModifyExplosionChance(chance)).Value;
+			
 			if (Random.Range(0f, 1f) <= chance) {
 				int explosionDamagePerRarity = GetBuffPropertyAtCurrentLevel<int>("damage_per_rarity");
 				explosionDamagePerRarity = weaponEntity

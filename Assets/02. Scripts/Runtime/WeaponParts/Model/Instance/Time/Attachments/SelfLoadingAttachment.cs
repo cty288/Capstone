@@ -28,9 +28,7 @@ public class SelfLoadingAttachment : WeaponPartsEntity<SelfLoadingAttachment, Se
 		}
 
 
-		public override int GetMaxRarity() {
-			return 1;
-		}
+
 
 		public override WeaponPartType WeaponPartType => WeaponPartType.Attachment;
 		
