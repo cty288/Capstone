@@ -74,10 +74,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             await SpawnLazer();
             
+            Debug.Log($"Spawned Lazer {Time.time}");
             await UniTask.WaitForSeconds(laserDuration,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
+            Debug.Log($"Hide Lazer {Time.time}");
+            charged.SetActive(false);
             beam.SetActive(false);
+            laserInstance.SetActive(false);
             
             await UniTask.WaitForSeconds(1f,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
@@ -96,21 +100,26 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             charging.SetActive(true);
             charged.SetActive(true);
             
-            await UniTask.WaitForSeconds(4f,
+            Debug.Log($"Charge Start Lazer {Time.time}");
+
+            await UniTask.WaitForSeconds(3f,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
+            Debug.Log($"Fire Lazer {Time.time}");
+            charging.SetActive(false);
             beam.SetActive(true);
             laserInstance = pool.Allocate();
-            
-            laserInstance.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-                laserDamage, gameObject, gameObject.GetComponent<ICanDealDamage>(), maxRange);
+            laserInstance.SetActive(true);
             
             Vector3 dir = transform.forward.normalized;
             Quaternion rotation = Quaternion.LookRotation(dir);
             laserInstance.transform.parent = firePoint.Value.transform;
             laserInstance.transform.position = firePoint.Value.transform.position;
             laserInstance.transform.rotation = rotation;
-            
+                        
+            laserInstance.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
+                laserDamage, gameObject, gameObject.GetComponent<ICanDealDamage>(), maxRange);
+
             laserInstance.GetComponent<WormBossLaser>().SetData(interval, laserDamage);
         }
         

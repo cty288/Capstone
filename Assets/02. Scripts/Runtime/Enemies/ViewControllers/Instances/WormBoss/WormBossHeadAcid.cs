@@ -110,11 +110,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             GameObject b = acidBulletPool.Allocate();
             b.transform.position = spawnTransform.position;
-            
+
+            float spread = 4f;
             Vector3 destination = new Vector3(
-                playerTrans.position.x + Random.Range(-8, 8),
-                0, 
-                playerTrans.position.z + Random.Range(-8, 8)
+                playerTrans.position.x + Random.Range(-spread, spread),
+                playerTrans.position.y, 
+                playerTrans.position.z + Random.Range(-spread, spread)
             );
             
             Vector3 dir = destination - spawnTransform.position;

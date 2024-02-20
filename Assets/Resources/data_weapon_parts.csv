@@ -942,10 +942,11 @@ ViralAdaptedAttachment,46,1,"""Plant""",,"{
 }",,
 DangerousModification,47,1,"""Combat""","{
     ""ResourceCost"": {
-        ""Combat1"": 5,
-        ""Time1"": 5
+        ""Combat3"": 5,
+        ""Combat2"": 15,
+        ""Time3"": 5
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 150
 }","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2},
@@ -954,10 +955,10 @@ DangerousModification,47,1,"""Combat""","{
 }",,
 CompressedCurrent,48,1,"""Mineral""","{
     ""ResourceCost"": {
-        ""Combat1"": 5,
+        ""Mineral1"": 5,
         ""Time1"": 5
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 25
 }","{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.2}
@@ -974,17 +975,19 @@ CompressedCurrent,48,1,"""Mineral""","{
 }",,
 ControlledEMP,49,1,"""Mineral""","{
     ""ResourceCost"": {
-        ""Combat1"": 5,
-        ""Time1"": 5
+        ""Mineral3"": 5,
+        ""Mineral2"": 15,
+        ""Time3"": 5
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 150
 }",,,
 DangerousModification_EMP,50,1,"""Mineral""","{
     ""ResourceCost"": {
-        ""Combat1"": 5,
-        ""Time1"": 5
+        ""Mineral3"": 5,
+        ""Mineral2"": 15,
+        ""Time3"": 5
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 150
 }","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2},
@@ -993,10 +996,11 @@ DangerousModification_EMP,50,1,"""Mineral""","{
 }",,
 HackedAgain,51,1,"""Plant""","{
     ""ResourceCost"": {
-        ""Plant1"": 5,
-        ""Time1"": 5
+        ""Plant2"": 5,
+        ""Plant1"": 15,
+        ""Time2"": 5
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 75
 }","{
   ""level1"": {
     ""damage"": {""type"": ""int"", ""value"": 1}
@@ -1004,10 +1008,11 @@ HackedAgain,51,1,"""Plant""","{
 }",,
 FunctionalLimit,52,1,"""Plant""","{
     ""ResourceCost"": {
-        ""Plant1"": 5,
-        ""Time1"": 5
+        ""Plant3"": 5,
+        ""Plant2"": 15,
+        ""Time3"": 5
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 150
 }","{
   ""level1"": {
     ""buff_level"": {""type"": ""int"", ""value"": 1}
@@ -1024,10 +1029,11 @@ FunctionalLimit,52,1,"""Plant""","{
 }",,
 DangerousModification_Viral,53,1,"""Plant""","{
     ""ResourceCost"": {
-        ""Plant1"": 5,
-        ""Time1"": 5
+        ""Plant3"": 5,
+        ""Plant2"": 15,
+        ""Time3"": 5
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 150
 }","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2},
@@ -1039,7 +1045,7 @@ TransmissionAttachment,54,1,"""Plant""","{
         ""Plant1"": 5,
         ""Time1"": 5
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 25
 }","{
   ""level1"": {
     ""range"": {""type"": ""float"", ""value"": 10}
@@ -1047,10 +1053,10 @@ TransmissionAttachment,54,1,"""Plant""","{
 }",,
 BerserkerAttachment,55,1,"""Time""","{
     ""ResourceCost"": {
-        ""Plant1"": 5,
-        ""Time1"": 5
+        ""Time4"": 10,
+        ""Time3"": 15
     },
-    ""MoneyCost"": 100
+    ""MoneyCost"": 225
 }","{
   ""level1"": {
     ""buff_level"": {""type"": ""int"", ""value"": 1}

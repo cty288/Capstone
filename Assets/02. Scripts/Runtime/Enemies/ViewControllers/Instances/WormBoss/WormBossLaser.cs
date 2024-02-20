@@ -56,37 +56,33 @@ public class WormBossLaser : AbstractDotBulletViewController
         this.gameObject.GetComponent<DotHitBox>().dotTick = tick;
     }
 
-    private void OnEnable()
-    {
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 100f);
-    }
-
     // Update is called once per frame
-//     protected override void Update()
-//     {
-//         base.Update();
-//         transform.localScale += new Vector3(0, 0, 5.5f);
-//         /*
-//         if (this.gameObject.transform.localScale.z >= 30)
-//         {
-//             this.gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, 30f);
+//      protected override void Update()
+//      {
+//          base.Update();
+//          transform.localScale += new Vector3(0, 0, 5.5f);
+//          /*
+//          if (this.gameObject.transform.localScale.z >= 30)
+//          {
+//              this.gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, 30f);
 //
-//         }
-//         */
-//     }
+//          }
+//          */
+//      }
     
     public void SetData(float tick, float damage)
     {
         this.tick = tick;
         this.damage = damage;
+        
+        transform.localScale = new Vector3(
+            transform.localScale.x, 
+            transform.localScale.y, 
+            transform.localScale.z * maxRange);
     }
     
-    /*
     protected override void OnTriggerEnter(Collider other)
     {
-        // if (gameObject.name == "GunBullet") {
-        // 	Debug.Log("HitResponse");
-        // }
         if (!other.isTrigger)
         {
             Rigidbody rootRigidbody = other.attachedRigidbody;
@@ -99,7 +95,7 @@ public class WormBossLaser : AbstractDotBulletViewController
             }
             if (hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction))
             {
-                if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && false)
+                if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction)
                 {
                     return;
                 }
@@ -109,6 +105,8 @@ public class WormBossLaser : AbstractDotBulletViewController
             //RecycleToCache();
         }
     }
+    
+    /*
     private void OnTriggerStay(Collider collision)
     {
 

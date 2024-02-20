@@ -194,20 +194,28 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			}
 
 			if (!other.isTrigger) {
+				// print($"{gameObject.name} OnTriggerEnter: {other.name}");
 				Rigidbody rootRigidbody = other.attachedRigidbody;
 				GameObject hitObj = rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
 				if (hitObj && (bulletOwner && hitObj.transform == bulletOwner.transform) || 
 				    (hitObj.transform == owner.GetRootDamageDealerTransform())) {
+					// print($"{gameObject.name} OnTriggerEnter: {other.name}, owner issues");
+					return;
+				}
+				
+				if(hitObj.layer == LayerMask.NameToLayer("CorrectiveCollider")){
+					// print($"{gameObject.name} OnTriggerEnter: {other.name}, layer issues");
 					return;
 				}
 				
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
 					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
+						// print($"{gameObject.name} OnTriggerEnter: {other.name}, faction issues");
 						return;
 					}
 				}
-				
+				// print($"{gameObject.name} OnTriggerEnter: {other.name}, hit object success");
 				OnHitObject(other);
 				if (autoRecycleWhenHit) {
 					RecycleToCache();
