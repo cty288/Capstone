@@ -67,11 +67,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             await UniTask.WaitForSeconds(laserDuration,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            await disableVFX();
+            await UniTask.WaitForSeconds(3f, cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+
             
-            beam.SetActive(false);
-            
-            await UniTask.WaitForSeconds(1f,
-                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
             taskStatus = TaskStatus.Success;
         }
@@ -86,7 +85,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             charging.SetActive(true);
             charged.SetActive(true);
-            
+            beam.SetActive(true);
             await UniTask.WaitForSeconds(4f,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
@@ -104,6 +103,21 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             laserInstance.transform.rotation = rotation;
             //laserInstance.GetComponent<WormBossLaser>().SetData(interval, laserDamage);
         }
+        private async UniTask disableVFX()
+        {
+            var c = charged.gameObject.GetComponent<VFXTransform>();
+            c.initialSize = new Vector3(300, 300, 300);
+            c.timer = 0f;
+            c.targetSize = Vector3.zero;
+            
+            var b = beam.gameObject.GetComponent<VFXTransform>();
+            b.initialSize = new Vector3(300, 300, 300);
+            b.timer = 0f;
+            b.targetSize = Vector3.zero;
+           
+            
+            
+        }
         
         public override void OnEnd()
         {
@@ -112,6 +126,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 pool.Recycle(laserInstance);
                 laserInstance = null;
             }
+            charging.SetActive(false);
+            var c = charged.gameObject.GetComponent<VFXTransform>();
+            c.initialSize = new Vector3(0, 0, 0);
+            c.timer = 0f;
+            c.targetSize = new Vector3(300, 300, 300);
+            charged.SetActive(false);
+            var b = beam.gameObject.GetComponent<VFXTransform>();
+            b.initialSize = new Vector3(0, 0, 0);
+            b.timer = 0f;
+            b.targetSize = new Vector3(300, 300, 300);
+            beam.SetActive(false);
         }
     }
 }

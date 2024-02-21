@@ -7,13 +7,7 @@ CustomProperty Structure:
 If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
 ,,,online JSON Editor: https://jsoneditoronline.org/#left=local.duyoxi,,,,,,,,,,,,,,,,,
 BEGIN,,,,,,,,,,,,,,,,,,,,
-RustyPistol,1,"{
-        ""ResourceCost"": {
-            ""Combat1"": 3,
-            ""Plant1"": 1
-        },
-        ""MoneyCost"": 4
-}","{""x"":8,""y"":11}",1,0.3,80,50,6,2,1,0,"{
+RustyPistol,1,,"{""x"":8,""y"":11}",1,0.3,80,50,6,2,1,0,"{
   ""recoilX"": -7.5,
   ""recoilY"": 5,
   ""recoilZ"": 0.5,
@@ -26,13 +20,7 @@ RustyPistol,1,"{
   ""snappiness"": 7,
   ""returnSpeed"": 6
 }",0,300,1,,,,
-TheSanctuary,1,"{
-        ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
-        },
-        ""MoneyCost"": 100
-}","{""x"":45,""y"":65}",0.3,1,80,30,1,4,1,0,"{
+TheSanctuary,1,,"{""x"":45,""y"":65}",0.3,1,80,30,1,4,1,0,"{
   ""recoilX"": -50,
   ""recoilY"": 10,
   ""recoilZ"": 1,
@@ -58,13 +46,7 @@ TheSanctuary,1,"{
     }
   }
 }",,,
-RustyPistol2,1,"{
-        ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
-        },
-        ""MoneyCost"": 100
-}","{""x"":2,""y"":4}",1,0.1,80,50,30,2.5,1,0,"{
+RustyPistol2,1,,"{""x"":2,""y"":4}",1,0.1,80,50,30,2.5,1,0,"{
   ""recoilX"": -8,
   ""recoilY"": 2,
   ""recoilZ"": 0.35,
@@ -77,13 +59,7 @@ RustyPistol2,1,"{
   ""snappiness"": 7,
   ""returnSpeed"": 4.5
 }",0,300,1,,,,
-RustyPistol3,1,"{
-        ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
-        },
-        ""MoneyCost"": 100
-}","{""x"":200,""y"":400}",1,0.1,80,50,30,2.5,1,0,"{
+RustyPistol3,1,,"{""x"":200,""y"":400}",1,0.1,80,50,30,2.5,1,0,"{
   ""recoilX"": -8,
   ""recoilY"": 2,
   ""recoilZ"": 0.35,
@@ -98,10 +74,16 @@ RustyPistol3,1,"{
 }",0,300,1,,,,
 SubMachineGun,1,"{
         ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
+            ""Combat3"": 10,
+            ""Combat2"": 30,
+            ""Mineral3"": 10,
+            ""Mineral2"": 30,
+            ""Plant3"": 10,
+            ""Plant2"": 30,
+            ""Time3"": 10,
+            ""Time2"": 30
         },
-        ""MoneyCost"": 100
+        ""MoneyCost"": 600
 }","{""x"":4,""y"":6}",1,0.1,80,40,20,2.5,1,0,"{
   ""recoilX"": -5,
   ""recoilY"": 3,
@@ -117,8 +99,10 @@ SubMachineGun,1,"{
 }",0,325,1,,,,
 UniversalPistol,1,"{
         ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
+            ""Combat1"": 10,
+            ""Mineral1"": 10,
+            ""Plant1"": 10,
+            ""Time1"": 10
         },
         ""MoneyCost"": 100
 }","{""x"":5,""y"":7}",1,0.175,80,45,12,1.75,1,0,"{
@@ -136,10 +120,16 @@ UniversalPistol,1,"{
 }",0,300,1,,,,
 Shotgun,1,"{
         ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
+            ""Combat2"": 10,
+            ""Combat1"": 30,
+            ""Mineral2"": 10,
+            ""Mineral1"": 30,
+            ""Plant2"": 10,
+            ""Plant1"": 30,
+            ""Time2"": 10,
+            ""Time1"": 30
         },
-        ""MoneyCost"": 100
+        ""MoneyCost"": 300
 }","{""x"":8,""y"":10}",1,0.75,80,20,4,3,5,0.05,"{
   ""recoilX"": -7.5,
   ""recoilY"": 5,
@@ -155,10 +145,16 @@ Shotgun,1,"{
 }",0,300,1,,,,
 Rifle,1,"{
         ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
+            ""Combat4"": 10,
+            ""Combat3"": 30,
+            ""Mineral4"": 10,
+            ""Mineral3"": 30,
+            ""Plant4"": 10,
+            ""Plant3"": 30,
+            ""Time4"": 10,
+            ""Time3"": 30
         },
-        ""MoneyCost"": 100
+        ""MoneyCost"": 900
 }","{""x"":5,""y"":6}",1,0.125,80,50,30,2.75,1,0,"{
   ""recoilX"": -4,
   ""recoilY"": 2,
@@ -172,13 +168,7 @@ Rifle,1,"{
   ""snappiness"": 7,
   ""returnSpeed"": 5
 }",0,300,1,,,,
-MagnetBlade,1,"{
-        ""ResourceCost"": {
-            ""Combat1"": 5,
-            ""Plant1"": 5
-        },
-        ""MoneyCost"": 100
-}","{""x"":20,""y"":25}",1,0.1,80,50,3,1.25,1,0,"{
+MagnetBlade,1,,"{""x"":20,""y"":25}",1,0.1,80,50,3,1.25,1,0,"{
   ""recoilX"": 0,
   ""recoilY"": 0,
   ""recoilZ"": 0,
