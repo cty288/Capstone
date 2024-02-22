@@ -10,6 +10,7 @@ using Runtime.Spawning;
 using System.Threading.Tasks;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using DG.Tweening;
+using FIMSpace.FSpine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
@@ -30,8 +31,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public TimelineAsset emergeAnimationTimeline;
         private PlayableDirector director;
 
+        private FSpineAnimator spineAnimator;
+
         public override void OnAwake()
         {
+            spineAnimator = GetComponent<FSpineAnimator>();
             director = gameObject.GetComponent<PlayableDirector>();
         }
 
@@ -67,6 +71,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 emergePosition = previousDivePosition.Value;
             }
 
+            spineAnimator.GoBackSpeed = 1;
+
             float height = 30f;
             Vector3 targetPosition = emergePosition - new Vector3(0, height, 0);
             transform.position = targetPosition;
@@ -80,13 +86,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     private async UniTask SlitherUp()
         {
             //rotate y to face player
-            // Vector3 direction = player.transform.position - transform.position;
-            // transform.rotation = Quaternion.LookRotation(direction, transform.forward);
+            Vector3 direction = player.transform.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(direction, transform.forward);
+            var rotation = transform.rotation;
+            rotation.eulerAngles = new Vector3(-90, lookRotation.eulerAngles.y, 0);
+            transform.rotation = rotation;
+            
+            await UniTask.WaitForSeconds(1f, 
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
             director.Play(emergeAnimationTimeline);
             await UniTask.WaitForSeconds((float)emergeAnimationTimeline.duration, 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             director.Stop();
+            spineAnimator.GoBackSpeed = 0;
             await UniTask.WaitForSeconds(1f, 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             // float duration = 2f;
