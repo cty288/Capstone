@@ -206,6 +206,25 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			}
 		}
 
+		public void ChangeMaxHealth(int amount) {
+			var health = HealthProperty.RealValue.Value;
+			if (amount > 0) {
+				HealthProperty.RealValue.Value = new HealthInfo(HealthProperty.RealValue.Value.MaxHealth + amount, 
+					HealthProperty.RealValue.Value.CurrentHealth + amount);
+			}
+			else {
+				int targetMaxHealth = Mathf.Max(0, health.MaxHealth + amount);
+				HealthProperty.RealValue.Value = new HealthInfo(targetMaxHealth, 
+					Mathf.Min(health.CurrentHealth, targetMaxHealth));
+			}
+			
+			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
+				Kill(null, null);
+			}
+		}
+		
+	
+
 		public void RegisterOnModifyReceivedHealAmount(Func<int, IBelongToFaction, IDamageable, int> onModifyHealAmount) {
 			onModifyHealAmountCallbackList.Add(onModifyHealAmount);
 		}

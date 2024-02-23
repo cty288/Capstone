@@ -9,7 +9,7 @@ using Runtime.Player;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Skills.Model.Instance.BiologicalArmorSkill {
-	public class BiologicalArmorSkill  : PassiveSkillEntity<BiologicalArmorSkill>, ICanGetModel  {
+	public class BiologicalArmorSkill : PassiveSkillEntity<BiologicalArmorSkill>, ICanGetModel  {
 		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "BiologicalArmorSkill";
 		

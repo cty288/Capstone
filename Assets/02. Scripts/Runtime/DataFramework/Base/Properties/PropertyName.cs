@@ -80,5 +80,6 @@ namespace Runtime.DataFramework.Properties
 		research_point,
 		exp,
 		build_type,
+		health_recover_speed
 	}
 }

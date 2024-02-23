@@ -122,6 +122,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		/// <param name="health"></param>
 		public void SetHealth(int health);
+
+		public void ChangeMaxHealth(int amount);
 		
 		/// <summary>
 		/// Register the event when the entity is healed
