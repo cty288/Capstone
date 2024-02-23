@@ -36,6 +36,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			
 			buildModel = this.GetModel<IResourceBuildModel>();
 			if (buildModel.IsFirstTimeCreated) {
+				//buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "Shotgun", false);
 				foreach (string skillName in initiallyUnlockedPartsNames) {
 					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
 					//buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, skillName, false);

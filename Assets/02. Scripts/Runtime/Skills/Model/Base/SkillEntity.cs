@@ -368,7 +368,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public ICanDealDamageRootViewController RootViewController => null;*/
 		
 		public override IResourceEntity GetReturnToBaseEntity() {
-			return ResourceVCFactory.Singleton.SpawnNewResourceEntity(EntityName, true, 1);
+			return ResourceVCFactory.Singleton.SpawnNewResourceEntity(EntityName, true, GetMinRarity());
 		}
 	}
 }
