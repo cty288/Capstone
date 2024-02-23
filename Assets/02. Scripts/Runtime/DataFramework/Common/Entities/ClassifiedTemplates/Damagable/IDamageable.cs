@@ -110,7 +110,18 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// <param name="healAmount">The amount of heal</param>
 		/// <param name="healer">Healer</param>
 		public void Heal(int healAmount, IBelongToFaction healer);
+
+		public void RegisterOnModifyReceivedHealAmount(Func<int, IBelongToFaction, IDamageable, int> onModifyHealAmount);
 		
+		public void UnRegisterOnModifyReceivedHealAmount(Func<int, IBelongToFaction, IDamageable, int> onModifyHealAmount);
+		
+		/// <summary>
+		/// Unlike to heal, set the health of the entity to a specific value, this will not trigger the heal event,
+		/// but if the health is below 0, it will trigger the die event.
+		/// Health will not exceed the max health
+		/// </summary>
+		/// <param name="health"></param>
+		public void SetHealth(int health);
 		
 		/// <summary>
 		/// Register the event when the entity is healed
@@ -134,8 +145,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		
 		public bool CheckCanTakeDamage([CanBeNull] ICanDealDamage damageDealer);
 
-		public void RegisterOnModifyDamage(Func<int, ICanDealDamage, int> onModifyDamage);
+		public void RegisterOnModifyReceivedDamage(Func<int, ICanDealDamage, int> onModifyDamage);
 
-		public void UnRegisterOnModifyDamage(Func<int, ICanDealDamage, int> onModifyDamage);
+		public void UnRegisterOnModifyReceivedDamage(Func<int, ICanDealDamage, int> onModifyDamage);
 	}
 }

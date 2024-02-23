@@ -4,8 +4,10 @@ using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.DataFramework.Entities.Creatures;
 using Runtime.Enemies.Model.Properties;
 using Runtime.Utilities.Collision;
+using UnityEngine;
 
 namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 	
@@ -36,6 +38,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		private HashSet<Func<int, ICanDealDamage, int>> onModifyDamageCountCallbackList =
 			new HashSet<Func<int, ICanDealDamage, int>>();
 
+		private HashSet<Func<int, IBelongToFaction, IDamageable, int>> onModifyHealAmountCallbackList =
+			new HashSet<Func<int, IBelongToFaction, IDamageable, int>>();
 
 		public override void OnAwake() {
 			base.OnAwake();
@@ -149,11 +153,11 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			return true;
 		}
 
-		public void RegisterOnModifyDamage(Func<int, ICanDealDamage, int> onModifyDamage) {
+		public void RegisterOnModifyReceivedDamage(Func<int, ICanDealDamage, int> onModifyDamage) {
 			onModifyDamageCountCallbackList.Add(onModifyDamage);
 		}
 
-		public void UnRegisterOnModifyDamage(Func<int, ICanDealDamage, int> onModifyDamage) {
+		public void UnRegisterOnModifyReceivedDamage(Func<int, ICanDealDamage, int> onModifyDamage) {
 			onModifyDamageCountCallbackList.Remove(onModifyDamage);
 		}
 
@@ -178,6 +182,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public void Heal(int healAmount, [CanBeNull] IBelongToFaction healer) {
 			//if curr health + heal amount is greater than max health, heal amount = max health - curr health
 			//else heal amount = heal amount
+			foreach (var onModifyHealAmount in onModifyHealAmountCallbackList) {
+				healAmount = onModifyHealAmount(healAmount, healer, this);
+			}
 			
 			int maxHealth = HealthProperty.GetMaxHealth();
 			int currentHealth = HealthProperty.GetCurrentHealth();
@@ -190,6 +197,26 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			OnHeal(healAmountClamped, healer);
 		}
 		
+		public void SetHealth(int health) {
+			int actualHealth = Mathf.Clamp(health, 0, HealthProperty.GetMaxHealth());
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth, actualHealth);
+			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {
+				Kill(null, null);
+			}
+		}
+
+		public void RegisterOnModifyReceivedHealAmount(Func<int, IBelongToFaction, IDamageable, int> onModifyHealAmount) {
+			onModifyHealAmountCallbackList.Add(onModifyHealAmount);
+		}
+
+		public void UnRegisterOnModifyReceivedHealAmount(Func<int, IBelongToFaction, IDamageable, int> onModifyHealAmount) {
+			onModifyHealAmountCallbackList.Remove(onModifyHealAmount);
+		}
+
+		
+
+
 		public virtual void OnHeal(int healAmount, [CanBeNull] IBelongToFaction healer) {
 			
 		}
@@ -208,6 +235,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			onTakeDamage = null;
 			onDie = null;
 			onHeal = null;
+			onModifyDamageCountCallbackList.Clear();
+			onModifyHealAmountCallbackList.Clear();
 		}
 	}
 }

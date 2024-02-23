@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -32,8 +33,10 @@ namespace Runtime.Player {
 
 		IAirSpeedProperty GetAirSpeed();
 		
-		IArmorProperty GetArmor();
+		IArmorProperty GetMaxArmor();
 		
+		BindableProperty<float> Armor { get; }
+
 		IArmorRecoverSpeedProperty GetArmorRecoverSpeed();
 		
 		IAirDrag GetAirDrag();
@@ -44,6 +47,14 @@ namespace Runtime.Player {
 		void SetScopedIn(bool state);
 		
 		void AddArmor(float amount);
+		
+		/// <summary>
+		/// Unlike AddArmor, this will not trigger related events like RegisterOnModifyReceivedAddArmor
+		/// </summary>
+		/// <param name="amount"></param>
+		void SetArmor(float amount);
+		
+		void ChangeMaxArmor(float amount);
 		
 		/// <summary>
 		/// This is not dealing damage or healing, it's just changing the health value
@@ -94,7 +105,7 @@ namespace Runtime.Player {
 		private IWallRunForce wallRunForce;
 		private IAirDrag airDrag;
 		private IAirSpeedProperty airSpeed;
-		private IArmorProperty armor;
+		private IArmorProperty maxArmor;
 		private IArmorRecoverSpeedProperty armorRecoverSpeed;
 		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
@@ -159,7 +170,7 @@ namespace Runtime.Player {
 
 
 		protected override void OnEntityStart(bool isLoadedFromSave) {
-			
+			Armor.Value =  maxArmor.RealValue.Value;
 		}
 
 		public override void OnAwake() {
@@ -176,7 +187,7 @@ namespace Runtime.Player {
 			wallRunForce = GetProperty<IWallRunForce>();
 			airSpeed = GetProperty<IAirSpeedProperty>();
 			airDrag = GetProperty<IAirDrag>();
-			armor = GetProperty<IArmorProperty>();
+			maxArmor = GetProperty<IArmorProperty>();
 			armorRecoverSpeed = GetProperty<IArmorRecoverSpeedProperty>();
 		}
 
@@ -225,10 +236,12 @@ namespace Runtime.Player {
 			return airSpeed;
 		}
 
-		public IArmorProperty GetArmor() {
-			return armor;
+		public IArmorProperty GetMaxArmor() {
+			return maxArmor;
 		}
-		
+
+		public BindableProperty<float> Armor { get; } = new BindableProperty<float>(0);
+
 		public IArmorRecoverSpeedProperty GetArmorRecoverSpeed() {
 			return armorRecoverSpeed;
 		}
@@ -258,10 +271,26 @@ namespace Runtime.Player {
 		}
 
 		public void AddArmor(float amount) {
-			float maxArmor = armor.InitialValue;
-			if (armor.RealValue.Value < maxArmor) {
-				float validAmount = Mathf.Min(maxArmor - armor.RealValue.Value, amount);
-				armor.RealValue.Value += validAmount;
+			float maxArmor = this.maxArmor.RealValue;
+			
+			if (Armor.Value < maxArmor) {
+				float validAmount = Mathf.Min(maxArmor - Armor.Value, amount);
+				this.Armor.Value +=  validAmount;
+			}
+		}
+
+		public void SetArmor(float amount) {
+			Armor.Value = Mathf.Clamp(amount, 0, maxArmor.RealValue.Value);
+		}
+
+		public void ChangeMaxArmor(float amount) {
+			if (amount > 0) {
+				maxArmor.RealValue.Value += amount;
+				Armor.Value +=  amount;
+			}
+			else {
+				maxArmor.RealValue.Value = Mathf.Max(0, maxArmor.RealValue.Value + amount);
+				Armor.Value = Mathf.Min(Armor.Value, maxArmor.RealValue.Value);
 			}
 		}
 
@@ -330,7 +359,7 @@ namespace Runtime.Player {
 			bool nonlethal = false)  {
 			
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
-			float armorToTakeDamage = Mathf.Min(armor.RealValue.Value, actualDamage);
+			float armorToTakeDamage = Mathf.Min(Armor.Value, actualDamage);
 			int healthToTakeDamage = actualDamage - (int) armorToTakeDamage;
 			healthToTakeDamage = Mathf.Min(healthToTakeDamage, healthInfo.CurrentHealth);
 			if(nonlethal && healthToTakeDamage >= healthInfo.CurrentHealth) {
@@ -340,7 +369,7 @@ namespace Runtime.Player {
 			int totalDamage = (int) armorToTakeDamage + healthToTakeDamage;
 			
 			if (armorToTakeDamage > 0) {
-				armor.RealValue.Value -= armorToTakeDamage;
+				Armor.Value -= armorToTakeDamage;
 			}
 				
 
