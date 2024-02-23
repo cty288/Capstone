@@ -19,10 +19,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class WormBossEmerge : EnemyAction
     {
-        public SharedVector3 previousDivePosition;
+        // public SharedVector3 previousDivePosition;
         private Vector3 emergePosition;
-        public float minRadiusAroundPlayer = 40f;
-        public float maxRadiusAroundPlayer = 70f;
+        public float minRadiusAroundPlayer;
+        public float maxRadiusAroundPlayer;
 
         private GameObject player;
 
@@ -44,7 +44,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             player = GetPlayer();
 
             //face upwards
-            Debug.Log("WORM BOSS ROTATE");
             transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
             taskStatus = TaskStatus.Running;
 
@@ -59,21 +58,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private async UniTask SkillExecute()
         {
             Vector3 sample =
-                RandomPointInAnnulus(player.transform.position, minRadiusAroundPlayer, maxRadiusAroundPlayer);
+                MathFunctions.RandomPointInAnnulus(player.transform.position, minRadiusAroundPlayer, maxRadiusAroundPlayer);
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(sample, out hit, 30, NavMeshHelper.GetSpawnableAreaMask()))
+            if (NavMesh.SamplePosition(sample, out hit, 10, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 emergePosition = hit.position;
             }
             else
             {
-                emergePosition = previousDivePosition.Value;
+                Debug.Log("WORM BOSS: EMERGE NO POSITION FOUND");
+                // emergePosition = previousDivePosition.Value;
             }
 
-            spineAnimator.GoBackSpeed = 1;
-
-            float height = 30f;
+            float height = 15f;
             Vector3 targetPosition = emergePosition - new Vector3(0, height, 0);
             transform.position = targetPosition;
             
@@ -99,20 +97,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             await UniTask.WaitForSeconds((float)emergeAnimationTimeline.duration, 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             director.Stop();
-            spineAnimator.GoBackSpeed = 0;
             await UniTask.WaitForSeconds(1f, 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-            // float duration = 2f;
-            // await transform.DOMove(emergePosition, duration).ToUniTask(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-            taskStatus = TaskStatus.Success;
-        }
 
-        private Vector3 RandomPointInAnnulus(Vector2 origin, float minRadius, float maxRadius){
-            var randomDirection = (Random.insideUnitCircle * origin).normalized;
-            var randomDistance = Random.Range(minRadius, maxRadius);
-            var point = origin + randomDirection * randomDistance;
-     
-            return new Vector3(point.x, 0, point.y);
+            taskStatus = TaskStatus.Success;
         }
     }
 }

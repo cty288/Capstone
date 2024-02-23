@@ -42,7 +42,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             Vector3 sample = transform.position;
             Debug.Log(sample);
             // Generate the second random sample, ensuring it is at least minDistance away from the first sample
-            Vector3 sample2 = RandomPointInAnnulus(sample, minDistance, 70);
+            Vector3 sample2 = MathFunctions.RandomPointInAnnulus(sample, minDistance, 70);
             Debug.Log(sample2);
 
             NavMeshHit hit;
@@ -74,15 +74,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                     c.enabled = enable;
             }
         }
-
-        private Vector3 RandomPointInAnnulus(Vector2 origin, float minRadius, float maxRadius){
-            var randomDirection = (Random.insideUnitCircle * origin).normalized;
-            var randomDistance = Random.Range(minRadius, maxRadius);
-            var point = origin + randomDirection * randomDistance;
-     
-            return new Vector3(point.x, 0, point.y);
-        }
-
         
         public override TaskStatus OnUpdate()
         {
@@ -130,25 +121,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             // EnableColliders(false);
         }
-        
-        // private IEnumerator MoveUnderGround()
-        // {
-        //     float time = 0;
-        //     float diveDuration = 5f;
-        //     while (time <= diveDuration)
-        //     {
-        //         time += Time.deltaTime;
-        //         Vector3 dir = direction.normalized;
-        //         transform.position += direction * Time.deltaTime * speed * 50f;    
-        //         yield return null;
-        //     }
-        //
-        //     GameObject debug_obj = new GameObject("worm1 end position");
-        //     debug_obj.transform.position = end;
-        //     
-        //     endDive = true;
-        // }
-
 
         private void MoveUnderGround()
         {

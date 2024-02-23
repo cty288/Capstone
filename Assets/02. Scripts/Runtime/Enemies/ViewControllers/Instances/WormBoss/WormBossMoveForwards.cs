@@ -16,6 +16,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class WormBossMoveForwards : EnemyAction
     {
+        public SharedFloat speed;
         private TaskStatus taskStatus;
         private NavMeshAgent agent;
         private Rigidbody rb;
@@ -36,11 +37,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // rb.isKinematic = false;
             player = GetPlayer();
             agent.enabled = true;
+            agent.speed = speed.Value;
             
-            Vector3 sample = RandomPointInAnnulus(player.transform.position, 20, 40);
+            Vector3 direction = transform.forward;
+            Vector3 sample = transform.position + direction * 40;
             
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(sample, out hit, 40, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(sample, out hit, 15, NavMesh.AllAreas))
             {
                 destination = hit.position;
             }
@@ -57,12 +60,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private async UniTask SkillExecute()
         {
-            // wait for turn head
-            Vector3 dir = (destination - transform.position).normalized;
-
-            float rotDuration = (transform.rotation.eulerAngles - dir).magnitude / 45f; // every 90 degree takes 1 second 
-            await transform.DORotate(dir, rotDuration)
-                .WithCancellation(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             agent.enabled = true;
             
             startTme = Time.time;
@@ -81,14 +78,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance &&
                    (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
-        }
-
-        private Vector3 RandomPointInAnnulus(Vector2 origin, float minRadius, float maxRadius){
-            var randomDirection = (Random.insideUnitCircle * origin).normalized;
-            var randomDistance = Random.Range(minRadius, maxRadius);
-            var point = origin + randomDirection * randomDistance;
-     
-            return new Vector3(point.x, 0, point.y);
         }
     }
 }
