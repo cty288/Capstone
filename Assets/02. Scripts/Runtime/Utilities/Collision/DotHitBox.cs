@@ -55,19 +55,12 @@ namespace Runtime.Utilities.Collision
             
         }
 
-        public virtual void TriggerCheckHit(Collider c)
-        {
-           
-
-        }
         private void OnTriggerStay(Collider other)
         {
             if (canDealDamage)
             {
-
                 if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
                 {
-                
                     IHurtbox hurtbox;
                     hurtbox = other.gameObject.GetComponent<IHurtbox>();
                     HurtboxModifier mod = other.GetComponent<HurtboxModifier>();
@@ -111,9 +104,6 @@ namespace Runtime.Utilities.Collision
                             hitData.HitDetector.HitResponder?.HitResponse(hitData);
                             hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                         }
-                          
-                    
-
                     }
                     else
                     {
@@ -131,7 +121,6 @@ namespace Runtime.Utilities.Collision
                         HitResponder?.HitResponse(hitData);
                     }
                 }
-                
             }
         }
         private void ResetTimer()

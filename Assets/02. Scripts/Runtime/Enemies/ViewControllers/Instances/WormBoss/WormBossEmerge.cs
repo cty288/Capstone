@@ -21,8 +21,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         // public SharedVector3 previousDivePosition;
         private Vector3 emergePosition;
-        public float minRadiusAroundPlayer;
-        public float maxRadiusAroundPlayer;
+        private float minRadiusAroundPlayer = 20f;
+        public SharedFloat maxRadiusAroundPlayer;
 
         private GameObject player;
 
@@ -62,10 +62,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private async UniTask SkillExecute()
         {
             Vector3 sample =
-                MathFunctions.RandomPointInAnnulus(player.transform.position, minRadiusAroundPlayer, maxRadiusAroundPlayer);
+                MathFunctions.RandomPointInAnnulus(player.transform.position, minRadiusAroundPlayer, maxRadiusAroundPlayer.Value);
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(sample, out hit, 10, NavMeshHelper.GetSpawnableAreaMask()))
+            if (NavMesh.SamplePosition(sample, out hit, 30, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 emergePosition = hit.position;
             }
@@ -75,9 +75,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 // emergePosition = previousDivePosition.Value;
             }
 
-            float height = 15f;
+            float height = 30f;
             Vector3 targetPosition = emergePosition - new Vector3(0, height, 0);
             transform.position = targetPosition;
+
+            await transform.DOMove(emergePosition - new Vector3(0, 10f, 0), 1f)
+                .WithCancellation(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
             await UniTask.WaitForSeconds(1f, 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());

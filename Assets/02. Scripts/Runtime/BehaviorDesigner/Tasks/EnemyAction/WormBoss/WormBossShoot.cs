@@ -29,6 +29,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float bulletSpeed;
         private float spawnInterval;
         private bool flag = false;
+        public bool willEnd = true;
 
         public List<GameObject> bulletSpawnPos;
 
@@ -104,7 +105,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
                 }
             }
-            ended = true;
+            
+            if(willEnd)
+                ended = true;
             
             yield return null;
         }

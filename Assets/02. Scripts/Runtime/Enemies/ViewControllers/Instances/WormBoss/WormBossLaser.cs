@@ -24,51 +24,15 @@ public class WormBossLaser : AbstractDotBulletViewController
     private float waitBeforeRotate = 1.5f;
     private float timer = 1.5f;
     private GameObject player;
-    //public GameObject particlePrefab;
     private GameObject particleInstance;
-
+    private Vector3 originalLocalScale = new (170f, 170f, 10f);
     
-    protected override void OnBulletReachesMaxRange()
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    protected override void OnBulletRecycled()
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    protected override void OnHitObject(Collider other)
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    protected override void OnHitResponse(HitData data)
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    // private SafeGameObjectPool pool;
     // Start is called before the first frame update
     void Start()
     {
         player = PlayerController.GetClosestPlayer(transform.position).transform.gameObject;
-        this.gameObject.GetComponent<DotHitBox>().dotTick = tick;
+        gameObject.GetComponent<DotHitBox>().dotTick = tick;
     }
-
-    // Update is called once per frame
-//      protected override void Update()
-//      {
-//          base.Update();
-//          transform.localScale += new Vector3(0, 0, 5.5f);
-//          /*
-//          if (this.gameObject.transform.localScale.z >= 30)
-//          {
-//              this.gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y, 30f);
-//
-//          }
-//          */
-//      }
     
     public void SetData(float tick, float damage)
     {
@@ -76,9 +40,26 @@ public class WormBossLaser : AbstractDotBulletViewController
         this.damage = damage;
         
         transform.localScale = new Vector3(
-            transform.localScale.x, 
-            transform.localScale.y, 
-            transform.localScale.z * maxRange);
+            originalLocalScale.x, 
+            originalLocalScale.y, 
+            originalLocalScale.z * maxRange);
+    }
+    
+    protected override void OnBulletReachesMaxRange()
+    {
+    }
+
+    protected override void OnBulletRecycled()
+    {
+        transform.localScale = originalLocalScale;
+    }
+
+    protected override void OnHitObject(Collider other)
+    {
+    }
+
+    protected override void OnHitResponse(HitData data)
+    {
     }
     
     protected override void OnTriggerEnter(Collider other)
@@ -102,42 +83,6 @@ public class WormBossLaser : AbstractDotBulletViewController
             }
 
             OnHitObject(other);
-            //RecycleToCache();
         }
     }
-    
-    /*
-    private void OnTriggerStay(Collider collision)
-    {
-
-        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
-        {
-            if (collision.gameObject.layer == 11)
-            {
-                if (particleInstance == null)
-                {
-                    // particleInstance = pool.Allocate();
-                }
-                Vector3 hitPoint = collision.ClosestPointOnBounds(transform.position);
-                Vector3 hitNormal = collision.ClosestPointOnBounds(transform.position + transform.forward) - transform.position;
-
-                // Instantiate the particle system at the hit point with the correct rotation
-
-                //particleInstance.transform.position = (hitPoint);
-                //particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
-            }
-
-
-           // pause = true;
-        }
-    }
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 11)
-        {
-
-            //pause = false;
-        }
-    }
-    */
 }

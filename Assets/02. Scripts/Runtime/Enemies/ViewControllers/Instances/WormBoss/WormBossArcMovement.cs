@@ -9,26 +9,36 @@ using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning;
 using System.Threading.Tasks;
 using DG.Tweening;
+using Runtime.Enemies;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class WormBossArcMovement : EnemyAction
+    public class WormBossArcMovement : EnemyAction<WormBossEntity>
     {
-        public SharedVector3 divePosition;
         private Vector3 start;
         private Vector3 end;
         private float progress = 0f;
         private float duration = 5f; // Duration in seconds
         private float speed; // Calculated speed based on the duration
-        public float jumpHeight = 50f; // Amplitude of the jump
         private bool endDive = false;
         private bool startEnd = false;
+        private float sampleMinRadius = 40f;
+        public SharedFloat sampleMaxRadius;
 
         private Vector3 direction;
+        private GameObject player;
+        
+        private float jumpHeight = 50f; // Amplitude of the jump
+
         
         public override void OnStart()
         {
+            base.OnStart();
+            player = GetPlayer();
+            
+            jumpHeight = enemyEntity.GetCustomDataValue<float>("arc", "jumpHeight");
+            
             endDive = false;
             startEnd = false;
             progress = 0;
@@ -38,20 +48,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             progress = 0;
             float minDistance = 40f; // Minimum distance between sample and sample2
 
-            // Generate the first random sample
-            Vector3 sample = transform.position;
-            Debug.Log(sample);
+            // Generate the first sample
+            Vector3 sample =  MathFunctions.RandomPointInAnnulus(player.transform.position, sampleMinRadius, sampleMaxRadius.Value);
             // Generate the second random sample, ensuring it is at least minDistance away from the first sample
-            Vector3 sample2 = MathFunctions.RandomPointInAnnulus(sample, minDistance, 70);
-            Debug.Log(sample2);
+            Vector3 sample2 = MathFunctions.RandomPointInAnnulus(sample, sampleMinRadius, sampleMaxRadius.Value);
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(sample, out hit, 20, NavMeshHelper.GetSpawnableAreaMask()))
+            if (NavMesh.SamplePosition(sample, out hit, 25, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 start = hit.position;
                 Debug.Log($"WORM BOSS start: {start}");
             }
-            if (NavMesh.SamplePosition(sample2, out hit, 40, NavMeshHelper.GetSpawnableAreaMask()))
+            if (NavMesh.SamplePosition(sample2, out hit, 25, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 end = hit.position;
                 Debug.Log($"WORM BOSS end: {end}");
@@ -85,7 +93,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             if (progress >= 1f && !startEnd)
             {
                 startEnd = true;
-                divePosition.SetValue(end);
                 MoveUnderGround();
             }
 

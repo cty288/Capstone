@@ -19,10 +19,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class WormBossFall : EnemyAction
     {
-        public SharedVector3 previousDivePosition;
         private Vector3 emergePosition;
-        public float minRadiusAroundPlayer = 40f;
-        public float maxRadiusAroundPlayer = 70f;
+        private float minRadiusAroundPlayer = 45f;
+        private float maxRadiusAroundPlayer = 55f; // 58f is around the length of the body
 
         private GameObject player;
 
@@ -65,14 +64,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 emergePosition = hit.position;
             }
-            else
-            {
-                emergePosition = previousDivePosition.Value;
-            }
 
             spineAnimator.GoBackSpeed = 1;
 
-            float height = 8f;
+            float height = 15f;
             Vector3 targetPosition = emergePosition - new Vector3(0, height, 0);
             transform.position = targetPosition;
             

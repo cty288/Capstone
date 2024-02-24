@@ -24,7 +24,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private GameObject player;
         private Vector3 destination;
         private float startTme;
-        public float duration = 5f; // Duration in seconds
+        public SharedFloat duration; // Duration in seconds
         
         public override void OnAwake()
         {
@@ -68,7 +68,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             //wait for movement
             await UniTask.WaitUntil(() =>
                 {
-                    return ReachedDestination() || Time.time - startTme > duration;
+                    return ReachedDestination() || Time.time - startTme > duration.Value;
                 },
                 PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             taskStatus = TaskStatus.Success;

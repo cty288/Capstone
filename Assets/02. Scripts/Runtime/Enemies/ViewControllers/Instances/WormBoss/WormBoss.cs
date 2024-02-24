@@ -1,3 +1,4 @@
+using System;
 using Framework;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -56,7 +57,8 @@ namespace Runtime.Enemies
                 new AutoConfigCustomProperty("acidAttack"),
                 new AutoConfigCustomProperty("rapidFire"),
                 new AutoConfigCustomProperty("entity"),
-                new AutoConfigCustomProperty("fallAttack")
+                new AutoConfigCustomProperty("fallAttack"),
+                new AutoConfigCustomProperty("arc"),
             };
         }
     }
@@ -77,10 +79,12 @@ namespace Runtime.Enemies
         [SerializeField] private HitBox fallHitBox;
 
         [SerializeField] private GameObject sandParticleVFX;
-        private GameObjectPool sandParticlePool;
+        public GameObjectPool sandParticlePool;
         
         private int fallAttackDamage;
         private float fallKnockbackForce;
+        public bool inited = false;
+
         
         protected override void Awake()
         {
@@ -102,6 +106,7 @@ namespace Runtime.Enemies
             {
                 fallHitBox.HitResponder = this;
             }
+            inited = true;
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
@@ -122,11 +127,10 @@ namespace Runtime.Enemies
         private void ClearHitObjects() {
             hitObjects.Clear();
         }
-        
+
         public override void HitResponse(HitData data)
         {
             base.HitResponse(data);
-            print($"WORM BOSS HIT RESPONSE: {data.Hurtbox}");
             
             if (fallHitBox.isActiveAndEnabled && data.Hurtbox != null && data.Hurtbox.Owner.CompareTag("Player"))
             {
@@ -168,7 +172,7 @@ namespace Runtime.Enemies
         
         protected override void OnEntityDie(ICanDealDamage damagedealer) {
             base.OnEntityDie(damagedealer);
-            model.gameObject.SetActive(true);
+            model.gameObject.SetActive(false);
             behaviorTree.enabled = false;
             // animator.SetBool("Die", true);
             // animator.CrossFadeInFixedTime("Die", 0.1f);
