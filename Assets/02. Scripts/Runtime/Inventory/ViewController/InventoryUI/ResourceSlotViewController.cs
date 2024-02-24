@@ -52,7 +52,7 @@ namespace Runtime.Inventory.ViewController {
 
         private Transform spawnPointOriginalParent;
         //private Image selectedBG;
-        protected bool isSelected = false;
+        protected bool isMouseOver;
         private float baseWidth;
         protected RectTransform rectTransform;
         protected bool isRightSide = false;
@@ -200,6 +200,10 @@ namespace Runtime.Inventory.ViewController {
             if (!allowDrag) {
                 return;
             }
+
+            if (currentDescriptionPanel) {
+                DespawnDescriptionPanel();
+            }
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
                 if (!startDragTriggered) {
                     startDragTriggered = true;
@@ -298,6 +302,7 @@ namespace Runtime.Inventory.ViewController {
             spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
             startDragTriggered = false;
             ShowCantThrowMessage(false);
+            ResourceSlot.currentDraggingSlot.Value = null;
         }
     
         protected virtual void Clear() {
@@ -546,16 +551,17 @@ namespace Runtime.Inventory.ViewController {
 
 
         public void OnPointerEnter(PointerEventData eventData) {
+            isMouseOver = true;
             if (slotHoverBG) {
                 slotHoverBG.DOFade(hoverBGAlpha, 0.2f).SetUpdate(true);
             }
             
             ResourceSlot.currentHoveredSlot.Value = this;
-            if (slot.GetQuantity() > 0) {
+            if (slot.GetQuantity() > 0 && !currentDescriptionPanel) {
                 IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
                 if(topItem == null) {
                     return;
-                }
+                } 
 
                 if (spawnDescriptionPanel) {
                     SpawnDescriptionPanel(topItem);
@@ -591,7 +597,11 @@ namespace Runtime.Inventory.ViewController {
         }
 
         public void OnPointerExit(PointerEventData eventData) {
-            PointerExit(false);
+            isMouseOver = false;
+            if (!currentDescriptionPanel) {
+                PointerExit(false);
+            }
+            //PointerExit(false);
         }
 
         protected void PointerExit(bool closeImmediately) {
@@ -616,8 +626,10 @@ namespace Runtime.Inventory.ViewController {
         }
 
         private void Update() {
-            if (ResourceSlot.currentHoveredSlot.Value == this) {
-                descriptionPanelFollowTr.position = Input.mousePosition;
+            if (currentDescriptionPanel) {
+               if(!isMouseOver && !currentDescriptionPanel.IsMouseOverThisPanel()) {
+                   PointerExit(false); 
+               }
             }
 
             if (rarityBar) {
@@ -654,7 +666,7 @@ namespace Runtime.Inventory.ViewController {
                 }
             }
 
-            isSelected = selected;
+            //isSelected = selected;
         }
 
     }
