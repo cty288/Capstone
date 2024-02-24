@@ -77,6 +77,8 @@ namespace Runtime.GameResources.Model.Base {
 		public void OnStopHold();*/
 		
 		public BindableProperty<bool> IsHolding { get; }
+		
+		public bool AddedToInventoryBefore { get; set; }
 	}
 	
 
@@ -103,7 +105,10 @@ namespace Runtime.GameResources.Model.Base {
 		
 		[field: ES3NonSerializable]
 		public BindableProperty<bool> IsHolding { get; private set; } = new BindableProperty<bool>(false);
-		
+
+		[field: ES3Serializable]
+		public bool AddedToInventoryBefore { get; set; } = false;
+
 		[field: ES3Serializable]
 		protected bool isInInventory = false;
 		public override void OnAwake() {
@@ -134,6 +139,7 @@ namespace Runtime.GameResources.Model.Base {
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
 			
 			isInInventory = false;
+			AddedToInventoryBefore = false;
 		}
 		
 		/// <summary>

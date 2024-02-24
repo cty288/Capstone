@@ -52,7 +52,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public int GetLevel();
 
-		public int GetMaxLevel();
+		
 
 
 		void Upgrade(int level);
@@ -60,12 +60,15 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public void RegisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback);
 		
 		public void UnregisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback);
+
+		public void OnGetSystems();
 	}
 
 	public struct OnSkillUsed {
 		public ISkillEntity skillEntity;
 	}
-	public abstract class SkillEntity<T>:  BuildableResourceEntity<T>, ISkillEntity  where T : SkillEntity<T>, new() {
+	public abstract class SkillEntity<T>:  BuildableResourceEntity<T>, ISkillEntity,
+		ICanGetSystem where T : SkillEntity<T>, new() {
 		protected ISkillCoolDown skillCooldownProperty;
 		protected ISkillUseCost skillUseCostProperty;
 		protected ISkillUpgradeCost skillUpgradeCostProperty;
@@ -80,7 +83,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		protected bool isWaitingForSwapInventoryCooldown = false;
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
-		protected virtual int levelRange { get; } = 4;
+		
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.SkillEntityConfigTable;
 		}
@@ -111,7 +114,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		}
 
 		public override int GetMaxRarity() {
-			return skillUpgradeCostProperty.GetMaxLevel();
+			return 4;
 		}
 		
 		public override int GetMinRarity() {
@@ -122,6 +125,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			maxCooldown = skillCooldownProperty.GetByLevel(GetRarity());
 			if (!isLoadedFromSave) {
 				remainingCooldown = maxCooldown;
+				OnGetSystems();
 			}
 
 			if (maxCooldown > 0 && HasCooldown()) {
@@ -272,9 +276,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return GetRarity();
 		}
 
-		public int GetMaxLevel() {
-			return levelRange;
-		}
+		
 
 		public void Upgrade(int level) {
 			int previousLevel = GetRarity();
@@ -289,6 +291,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public void UnregisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback) {
 			onSkillUpgradeCallback -= callback;
+		}
+
+		public virtual void OnGetSystems() {
+			
 		}
 
 		protected abstract void OnUpgrade(int previousLevel, int level);
@@ -318,8 +324,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		
 		
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
-			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[levelRange];
-			for (int i = 1; i <= levelRange; i++) {
+			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[GetMaxRarity()];
+			for (int i = 1; i <= GetMaxRarity(); i++) {
 				properties[i - 1] = new AutoConfigCustomProperty($"level{i}");
 			}
 			

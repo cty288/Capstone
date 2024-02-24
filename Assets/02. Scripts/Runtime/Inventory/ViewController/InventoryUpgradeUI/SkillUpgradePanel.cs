@@ -106,10 +106,10 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
         
         originalSkill = entity;
         
-        if (entity.GetLevel() >= entity.GetMaxLevel()) {
+        if (entity.GetLevel() >= entity.GetMaxRarity()) {
             fullyUpgradedText.SetActive(true);
         }
-        else {
+        else { 
             requiredCurrencyPanel.SetActive(true);
             levelNumText.gameObject.SetActive(true);
             upgradedDescriptionPanel.gameObject.SetActive(true);
