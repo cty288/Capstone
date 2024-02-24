@@ -1517,7 +1517,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6118021295109065182}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 21.783443, y: 27.925097, z: 27.925097}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5752510314789173687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,11 +1689,11 @@ GameObject:
   - component: {fileID: 7808782475727053591}
   - component: {fileID: 7808782475727053590}
   - component: {fileID: 7808782475727053599}
+  - component: {fileID: 7808782475727053576}
   - component: {fileID: 2714732034942196339}
   - component: {fileID: 7808782475628397454}
-  - component: {fileID: 3445865333607949485}
   m_Layer: 0
-  m_Name: WormBoss_0
+  m_Name: WormHead_rigged 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1715,9 +1715,6 @@ Transform:
   - {fileID: 5773739406374862004}
   - {fileID: 6072320005065281581}
   - {fileID: 1283536144542738016}
-  - {fileID: 6876048514309257784}
-  - {fileID: 2004389106991324386}
-  - {fileID: 5741200519413484680}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1766,14 +1763,14 @@ MonoBehaviour:
   _gizmosDrawMaxDist: 1
   gizmosAlpha: 0.85
   _editor_Title: Spine Animator 2
-  _gizmosEditorStartPreview: {fileID: 5620848318906853206}
+  _gizmosEditorStartPreview: {fileID: 872292841210961075}
   _gizmospesp: {fileID: 872292841210961075}
   _gizmosEditorEndPreview: {fileID: 7258910099222332856}
   _gizmospeep: {fileID: 7258910099222332856}
   SpineBones:
-  - transform: {fileID: 5620848318906853206}
-    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -17.72525}
-    ProceduralRotation: {x: 0, y: 1, z: 0, w: 0}
+  - transform: {fileID: 872292841210961075}
+    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -19.776323}
+    ProceduralRotation: {x: 0, y: 0, z: 0, w: 1}
     HelperDiffPosition: {x: 0, y: 0, z: 0}
     HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
     PreviousPosition: {x: 0, y: 0, z: 0}
@@ -1784,7 +1781,30 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
+    ReferencePosition: {x: 0, y: 0, z: 0}
+    PreviousReferencePosition: {x: 0, y: 0, z: 0}
+    ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
+    forward: {x: 0, y: 0, z: 0}
+    right: {x: 0, y: 0, z: 0}
+    up: {x: 0, y: 0, z: 0}
+    Collide: 1
+    CollisionRadius: 1
+    ColliderOffset: {x: 0, y: 0, z: 0}
+  - transform: {fileID: 5620848318906853206}
+    ProceduralPosition: {x: -13.373495, y: 4.801883, z: -17.72525}
+    ProceduralRotation: {x: 0, y: 0, z: 0, w: 1}
+    HelperDiffPosition: {x: 0, y: 0, z: 0}
+    HelperDiffRoation: {x: 0, y: 0, z: 0, w: 0}
+    PreviousPosition: {x: 0, y: 0, z: 0}
+    DefaultForward: {x: 0, y: 0, z: 0}
+    StraightenFactor: 0
+    TargetStraightenFactor: 0
+    MotionWeight: 1
+    FinalRotation: {x: 0, y: 0, z: 0, w: 0}
+    FinalPosition: {x: 0, y: 0, z: 0}
+    ManualPosOffset: {x: 0, y: 0, z: 0}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1807,7 +1827,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1830,7 +1850,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1853,7 +1873,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1876,7 +1896,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1899,7 +1919,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1922,7 +1942,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1945,7 +1965,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1968,7 +1988,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -1991,7 +2011,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2014,7 +2034,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2037,7 +2057,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2060,7 +2080,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2083,7 +2103,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2106,7 +2126,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2129,7 +2149,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2152,7 +2172,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2175,7 +2195,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2198,7 +2218,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2221,7 +2241,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2244,7 +2264,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2267,7 +2287,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2290,7 +2310,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2313,7 +2333,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2336,7 +2356,7 @@ MonoBehaviour:
     FinalRotation: {x: 0, y: 0, z: 0, w: 0}
     FinalPosition: {x: 0, y: 0, z: 0}
     ManualPosOffset: {x: 0, y: 0, z: 0}
-    ManualRotOffset: {x: 0, y: 0, z: 0, w: 1}
+    ManualRotOffset: {x: 0, y: 0, z: 0, w: 0}
     ReferencePosition: {x: 0, y: 0, z: 0}
     PreviousReferencePosition: {x: 0, y: 0, z: 0}
     ReferenceRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -2353,28 +2373,28 @@ MonoBehaviour:
   ReverseForward: 0
   AnimatePhysics: 0
   AnchorRoot: {fileID: 0}
-  HeadAnchor: {fileID: 5620848318906853206}
+  HeadAnchor: {fileID: 0}
   AnimateAnchor: 1
   LeadBoneRotationOffset: {x: 0, y: 0, z: 0}
   LeadBoneOffsetReference: 1
   BonesFixers: []
-  UpdateAsLast: 1
+  UpdateAsLast: 0
   QueueToLastUpdate: 0
-  ManualAffectChain: 1
+  ManualAffectChain: 0
   StartAfterTPose: 1
   OptimizeWithMesh: {fileID: 0}
   DeltaType: 4
   UpdateRate: 0
-  UseCorrections: 1
+  UseCorrections: 0
   MainPivotOffset: {x: 0, y: 0, z: 0}
   PivotOffsetOnStart: 1
-  PosSmoother: 0.108
+  PosSmoother: 0.18
   RotSmoother: 0
-  MaxStretching: 0.117
+  MaxStretching: 1
   Slithery: 1
-  AngleLimit: 45
+  AngleLimit: 35
   LimitSmoother: 0.233
-  StraightenSpeed: 0
+  StraightenSpeed: 7.5
   TurboStraighten: 0
   GoBackSpeed: 0
   Springiness: 0
@@ -2458,11 +2478,6 @@ MonoBehaviour:
   <SpawnSizeCollider>k__BackingField: {fileID: 0}
   healthBarPrefabName: UIHealthBar
   model: {fileID: 7020256153889011191}
-  fallHitBox: {fileID: 1390167072280228807}
-  sandParticleVFX: {fileID: 7366092293924787082, guid: a1135c7a3cdb1e34fba89ecb2cc3da2c,
-    type: 3}
-  sandParticlePool: {fileID: 0}
-  inited: 0
 --- !u!114 &313980576834515708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2505,10 +2520,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 520
+  m_Radius: 700
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 149.2, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &7808782475727053599
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2519,11 +2534,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 110.8
-  m_Speed: 10
+  m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -2531,6 +2546,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7808782475727053576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6962344675241428156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3697487b4e568834ebc5e5e95912df30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
 --- !u!136 &2714732034942196339
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2560,7 +2588,7 @@ MonoBehaviour:
   startWhenEnabled: 1
   asynchronousLoad: 0
   pauseWhenDisabled: 0
-  restartWhenComplete: 1
+  restartWhenComplete: 0
   logTaskChanges: 0
   group: 0
   resetValuesOnRestart: 0
@@ -2573,177 +2601,63 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(994.171,174.52179)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-9.125824,124.906525)"},"ID":1,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.SetPlayer","NodeData":{"Offset":"(-77.02051,133.85376)"},"ID":2,"Name":"Set
-        Player","Instant":true,"SharedGameObjectplayerToSet":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(90,130)"},"ID":3,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-2.319789,105.833359)"},"ID":4,"Name":"Sequence","Instant":true,"AbortTypeabortType":"Self","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Inverter","NodeData":{"Offset":"(-248.7779,112.555489)"},"ID":5,"Name":"Inverter","Instant":true,"Children":[{"Type":"Runtime.BehaviorDesigner.Conditional.IsEnemyHealthUnder","NodeData":{"Offset":"(4.662842,119.257996)"},"ID":6,"Name":"Is
-        Enemy Health Under","Instant":true,"SharedGameObjectEntityGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":0},"SharedFloathealthPercentage":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"SharedBoolcondition":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-86.69627,107.637024)"},"ID":7,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(112.172729,108.444519)"},"ID":8,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-100,120)"},"ID":9,"Name":"Close
-        Range","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.WithinDistance","NodeData":{"Offset":"(-130,120)"},"ID":10,"Name":"Within
-        Distance","Instant":true,"Booleanm_UsePhysics2D":false,"SharedDetectionModem_DetectionMode":{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.SharedDetectionMode","Name":null,"DetectionModemValue":"Object,
-        ObjectList, Tag, LayerMask"},"SharedGameObjectm_TargetObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true},"SharedGameObjectListm_TargetObjects":{"Type":"BehaviorDesigner.Runtime.SharedGameObjectList","Name":null,"List`1mValue":[]},"SharedStringm_TargetTag":{"Type":"BehaviorDesigner.Runtime.SharedString","Name":null,"StringmValue":""},"SharedLayerMaskm_TargetLayerMask":{"Type":"BehaviorDesigner.Runtime.SharedLayerMask","Name":null,"LayerMaskmValue":0},"Int32m_MaxCollisionCount":200,"SharedFloatm_Magnitude":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Close
-        Range","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/CloseRange","PropertyMappingOwner":1,"SinglemValue":30},"SharedBoolm_LineOfSight":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"LayerMaskm_IgnoreLayerMask":4,"SharedVector3m_Offset":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SharedVector3m_TargetOffset":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SharedBoolm_DrawDebugRay":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedGameObjectm_ReturnedObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null},"SharedBoolm_Use2DSpace":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.RotateTowards","NodeData":{"Offset":"(14.8774414,124.758911)"},"ID":11,"Name":"Rotate
-        Towards","Instant":true,"Booleanm_UsePhysics2D":false,"SharedFloatm_RotationEpsilon":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":360},"SharedFloatm_MaxLookAtRotationDelta":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolm_OnlyY":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedGameObjectm_Target":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true},"SharedVector3m_TargetRotation":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.RandomSelector","NodeData":{"Offset":"(145.888184,119.310242)"},"ID":12,"Name":"Random
-        Selector","Instant":true,"Int32seed":0,"BooleanuseSeed":false,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1110,120)"},"ID":13,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-103.006142,118.24971)","ColorIndex":7},"ID":14,"Name":"Laser
-        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-64.84849,110)"},"ID":15,"Name":"Worm
-        Boss Aim","Instant":true,"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"aimLiftHeadTime","IsShared":true,"SinglemValue":1},"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":3},"SharedVector3originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Aim
-        Original Pos","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":4}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadLaser","NodeData":{"Offset":"(80.00012,105.30336)"},"ID":16,"Name":"Worm
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(1229,223.666656)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(2.166626,202.333313)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1.166748,167.666687)"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-3.08703613,166.32196)","ColorIndex":7},"ID":3,"Name":"Laser
+        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80,110)"},"ID":4,"Name":"Worm
+        Boss Aim","Instant":true,"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":0},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":1},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadLaser","NodeData":{"Offset":"(80.00012,105.30336)"},"ID":5,"Name":"Worm
         Boss Head Laser","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
-        Fire Point","IsShared":true,"GameObjectmValue":5},"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":6},"GameObjectcharging":7,"GameObjectcharged":8,"GameObjectbeam":9}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEndAim","NodeData":{"Offset":"(36.64494,120.17099)"},"ID":17,"Name":"Worm
-        Boss End Aim","Instant":true,"SharedVector3_originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Aim
-        Original Pos","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"aimLiftHeadTime","IsShared":true,"SinglemValue":1},"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":10},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":11}}]}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(436.36322,120)"},"ID":18,"Name":"Far
-        Range","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Movement.RotateTowards","NodeData":{"Offset":"(-76.95654,124.57666)"},"ID":19,"Name":"Rotate
-        Towards","Instant":true,"Booleanm_UsePhysics2D":false,"SharedFloatm_RotationEpsilon":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":360},"SharedFloatm_MaxLookAtRotationDelta":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolm_OnlyY":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedGameObjectm_Target":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true},"SharedVector3m_TargetRotation":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"}},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.RandomFloat","NodeData":{"Offset":"(97.41235,149.0033)"},"ID":20,"Name":"Random
-        Move Duration","Instant":true,"SharedFloatmin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":4},"SharedFloatmax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":8},"Booleaninclusive":true,"SharedFloatstoreResult":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
-        Duration","IsShared":true,"SinglemValue":5}},{"Type":"BehaviorDesigner.Runtime.Tasks.RandomSelector","NodeData":{"Offset":"(285.640381,117.692322)"},"ID":21,"Name":"Random
-        Selector","Instant":true,"Int32seed":0,"BooleanuseSeed":false,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-290,250)","ColorIndex":3},"ID":22,"Name":"Move
-        and Shoot","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveNearPlayer","NodeData":{"Offset":"(-107.004761,121.511284)"},"ID":23,"Name":"Worm
-        Boss Move Near Player","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Worm
-        Speed","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/Speed","PropertyMappingOwner":12,"SinglemValue":10},"SharedFloatduration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
-        Duration","IsShared":true,"SinglemValue":5},"SharedFloatsampleMaxRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Close
-        Range","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/CloseRange","PropertyMappingOwner":13,"SinglemValue":30}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossShoot","NodeData":{"Offset":"(90.69757,124.60321)"},"ID":24,"Name":"Worm
-        Boss Shoot","Instant":true,"GameObjectmissilePrefab":14,"BooleanwillEnd":true,"List`1bulletSpawnPos":[15,16,17,18,19,20,21]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-61.4853058,382.167725)","ColorIndex":2},"ID":25,"Name":"Worm
-        Jump","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossDive","NodeData":{"Offset":"(-40.359745,122.3302)"},"ID":26,"Name":"Worm
-        Boss Dive","Instant":true,"TimelineAssetdiveAnimationTimeline":22},{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.RandomInt","NodeData":{"Offset":"(79.11923,136.125885)"},"ID":27,"Name":"Random
-        Jump","Instant":true,"SharedIntmin":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":2},"SharedIntmax":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":4},"Booleaninclusive":true,"SharedIntstoreResult":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"Times
-        To Jump","IsShared":true,"Int32mValue":3}},{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(199.214478,130.859741)"},"ID":28,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"Times
-        To Jump","IsShared":true,"Int32mValue":3},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-5.55001068,108.470947)","ColorIndex":3},"ID":29,"Name":"Move
-        and Shoot","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-69.41176,120)"},"ID":30,"Name":"Worm
-        Boss Arc Movement","Instant":true,"SharedFloatsampleMaxRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Close
-        Range","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/CloseRange","PropertyMappingOwner":23,"SinglemValue":30}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossShoot","NodeData":{"Offset":"(110.588379,121.176147)"},"ID":31,"Name":"Worm
-        Boss Shoot","Instant":true,"GameObjectmissilePrefab":24,"BooleanwillEnd":false,"List`1bulletSpawnPos":[25,26,27,28,29,30,31]}]}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(325.09198,132.3302)"},"ID":32,"Name":"Worm
-        Boss Emerge","Instant":true,"SharedFloatmaxRadiusAroundPlayer":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Close
-        Range","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/CloseRange","PropertyMappingOwner":32,"SinglemValue":30},"TimelineAssetemergeAnimationTimeline":33},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveForwards","NodeData":{"Offset":"(496.567749,130.663544)"},"ID":33,"Name":"Worm
-        Boss Move Forwards","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Worm
-        Speed","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/Speed","PropertyMappingOwner":34,"SinglemValue":10},"SharedFloatduration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
-        Duration","IsShared":true,"SinglemValue":5}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(669.067749,127.681068)"},"ID":34,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(60,260)","ColorIndex":8},"ID":35,"Name":"Worm
-        Fall","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossDive","NodeData":{"Offset":"(25.28438,122.802361)"},"ID":36,"Name":"Worm
-        Boss Dive","Instant":true,"TimelineAssetdiveAnimationTimeline":35},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossFall","NodeData":{"Offset":"(166.38884,132.133118)"},"ID":37,"Name":"Worm
-        Boss Fall","Instant":true,"TimelineAssetfallAnimationTimeline":36},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(270.854156,113.5081)"},"ID":38,"Name":"Worm
-        Boss Emerge","Instant":true,"SharedFloatmaxRadiusAroundPlayer":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Close
-        Range","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/CloseRange","PropertyMappingOwner":37,"SinglemValue":30},"TimelineAssetemergeAnimationTimeline":38},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveForwards","NodeData":{"Offset":"(439.5706,131.758774)"},"ID":39,"Name":"Worm
-        Boss Move Forwards","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Worm
-        Speed","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/Speed","PropertyMappingOwner":39,"SinglemValue":10},"SharedFloatduration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
-        Duration","IsShared":true,"SinglemValue":5}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(569.239,113.870972)"},"ID":40,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(460.3213,113.058167)"},"ID":41,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.Math.RandomFloat","NodeData":{"Offset":"(-13.095459,111.428528)"},"ID":42,"Name":"Random
-        Move Duration","Instant":true,"SharedFloatmin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedFloatmax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":4},"Booleaninclusive":true,"SharedFloatstoreResult":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
-        Duration","IsShared":true,"SinglemValue":5}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveNearPlayer","NodeData":{"Offset":"(197.152588,105.187866)"},"ID":43,"Name":"Worm
-        Boss Move Near Player","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Worm
-        Speed","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/Speed","PropertyMappingOwner":40,"SinglemValue":10},"SharedFloatduration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
-        Duration","IsShared":true,"SinglemValue":5},"SharedFloatsampleMaxRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Close
-        Range","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/CloseRange","PropertyMappingOwner":41,"SinglemValue":30}}]}]}]}]}]}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(510,1100)"},"ID":44,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(2.25878048,116.064835)","ColorIndex":6},"ID":45,"Name":"Acid
-        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-71.65471,113.382446)"},"ID":46,"Name":"Worm
-        Boss Aim","Instant":true,"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"aimLiftHeadTime","IsShared":true,"SinglemValue":1},"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":42},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":43},"SharedVector3originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Aim
-        Original Pos","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":44}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadAcid","NodeData":{"Offset":"(73.85889,114.90918)"},"ID":47,"Name":"Worm
-        Boss Head Acid","Instant":true,"SharedGameObject[]firePoints":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":45},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":46},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":47}],"SharedGameObjectacidChargePrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":48},"SharedGameObjectacidBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":49}}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEndAim","NodeData":{"Offset":"(144.773514,115.263641)"},"ID":48,"Name":"Worm
-        Boss End Aim","Instant":true,"SharedVector3_originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Aim
-        Original Pos","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"aimLiftHeadTime","IsShared":true,"SinglemValue":1},"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":50},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":51}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1030,1080)"},"ID":49,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-40,120)","ColorIndex":1},"ID":50,"Name":"Rapid
-        Fire Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-81.262,105.922134)"},"ID":51,"Name":"Worm
-        Boss Aim","Instant":true,"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"aimLiftHeadTime","IsShared":true,"SinglemValue":1},"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":52},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":53},"SharedVector3originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Aim
-        Original Pos","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":54}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadRapidFire","NodeData":{"Offset":"(80.1687,108.676285)"},"ID":52,"Name":"Worm
-        Boss Head Rapid Fire","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":55},"SharedGameObjectrapidFireBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":56}}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEndAim","NodeData":{"Offset":"(109.838287,118.333458)"},"ID":53,"Name":"Worm
-        Boss End Aim","Instant":true,"SharedVector3_originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Aim
-        Original Pos","IsShared":true,"Vector3mValue":"(0,0,0)"},"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"aimLiftHeadTime","IsShared":true,"SinglemValue":1},"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":57},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":58}}]}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
-        Fire Point","IsShared":true,"GameObjectmValue":59},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Player","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Close
-        Range","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/CloseRange","PropertyMappingOwner":60,"SinglemValue":30},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Worm
-        Speed","IsShared":true,"PropertyMapping":"Runtime.Enemies.WormBoss/Speed","PropertyMappingOwner":61,"SinglemValue":10},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"WormSphere","IsShared":true,"GameObjectmValue":62},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"WormPlatform","IsShared":true,"GameObjectmValue":63},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"aimLiftHeadTime","IsShared":true,"SinglemValue":1},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"Times
-        To Jump","IsShared":true,"Int32mValue":3},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Move
-        Duration","IsShared":true,"SinglemValue":5},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"Aim
-        Original Pos","IsShared":true,"Vector3mValue":"(0,0,0)"}]}'
+        Fire Point","IsShared":true,"GameObjectmValue":3},"SinglelaserDuration":5,"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":4},"GameObjectcharging":5,"GameObjectcharged":6,"GameObjectbeam":7}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(230,280)"},"ID":6,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(2122.34082,604.1963)","ColorIndex":8},"ID":7,"Name":"Worm
+        Jump","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossDive","NodeData":{"Offset":"(-504.3595,122.802368)"},"ID":8,"Name":"Worm
+        Boss Dive","Instant":true},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-368.269165,122.802368)"},"ID":9,"Name":"Worm
+        Boss Emerge","Instant":true,"SharedVector3previousDivePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SingleminRadiusAroundPlayer":40,"SinglemaxRadiusAroundPlayer":70},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-210.374512,122.802368)"},"ID":10,"Name":"Worm
+        Boss Arc Movement","Instant":true,"SharedVector3divePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SinglejumpHeight":50},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-52.4797363,122.802368)"},"ID":11,"Name":"Worm
+        Boss Emerge","Instant":true,"SharedVector3previousDivePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SingleminRadiusAroundPlayer":40,"SinglemaxRadiusAroundPlayer":70},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveForwards","NodeData":{"Offset":"(105.415039,122.802368)"},"ID":12,"Name":"Worm
+        Boss Move Forwards","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(1999.52161,912.4845)","ColorIndex":6},"ID":13,"Name":"Acid
+        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80.97986,114.90918)"},"ID":14,"Name":"Worm
+        Boss Aim","Instant":true,"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":8},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":9},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":10}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadAcid","NodeData":{"Offset":"(73.85889,114.90918)"},"ID":15,"Name":"Worm
+        Boss Head Acid","Instant":true,"SharedGameObject[]firePoints":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":11},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":12},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":13}],"SharedGameObjectacidChargePrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":14},"SharedGameObjectacidBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":15},"SinglebulletSpeed":10}]},{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(2313.679,911.217346)","ColorIndex":1},"ID":16,"Name":"Rapid
+        Fire Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80,110)"},"ID":17,"Name":"Worm
+        Boss Aim","Instant":true,"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":16},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":17},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":18}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadRapidFire","NodeData":{"Offset":"(80.1687,108.676285)"},"ID":18,"Name":"Worm
+        Boss Head Rapid Fire","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":19},"SharedGameObjectrapidFireBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":20},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5,"Singleduration":5}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1979.99927,1228.461)"},"ID":19,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-347.142578,122.857155)"},"ID":20,"Name":"Worm
+        Boss Emerge","Instant":true,"SharedVector3previousDivePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SingleminRadiusAroundPlayer":40,"SinglemaxRadiusAroundPlayer":70},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-198.386887,123.55365)"},"ID":21,"Name":"Worm
+        Boss Arc Movement","Instant":true,"SharedVector3divePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SinglejumpHeight":50},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-46.0060768,123.55365)"},"ID":22,"Name":"Worm
+        Boss Emerge","Instant":true,"SharedVector3previousDivePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SingleminRadiusAroundPlayer":40,"SinglemaxRadiusAroundPlayer":70},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveForwards","NodeData":{"Offset":"(101.613327,123.55365)"},"ID":23,"Name":"Worm
+        Boss Move Forwards","Instant":true},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossDive","NodeData":{"Offset":"(244.471,123.55365)"},"ID":24,"Name":"Worm
+        Boss Dive","Instant":true},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(345.714417,120)"},"ID":25,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossShoot","NodeData":{"Offset":"(921.0143,846.4187)","ColorIndex":2},"ID":26,"Name":"Worm
+        Boss Shoot","Instant":true,"List`1bulletSpawnPos":[]}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
+        Fire Point","IsShared":true,"GameObjectmValue":21}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
         startIndex: 
         dataPosition: 
         unityObjects:
-        - {fileID: 6962344675241428156}
-        - {fileID: 6962344675241428156}
-        - {fileID: 6876048514309257788}
-        - {fileID: 3059940698718598102}
+        - {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
+        - {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
         - {fileID: 7808782474424061144}
         - {fileID: 7808782474424061144}
         - {fileID: 2534608482763259814, guid: fd509476f9c923b4b82087df16444118, type: 3}
         - {fileID: 5991458527910054917}
         - {fileID: 7729133486732817200}
         - {fileID: 8810564007733899594}
-        - {fileID: 6876048514309257788}
-        - {fileID: 3059940698718598102}
-        - {fileID: 6962344675241428156}
-        - {fileID: 6962344675241428156}
-        - {fileID: 510573299129508542, guid: d9011468b58dfaa4385a8bccd3aab96b, type: 3}
-        - {fileID: 6180443658798880768}
-        - {fileID: 2742370181040690814}
-        - {fileID: 655942301721466540}
-        - {fileID: 8678701287449779324}
-        - {fileID: 5651501728426293590}
-        - {fileID: 9173644151562471802}
-        - {fileID: 3629840657174574653}
-        - {fileID: 11400000, guid: e0acce4c186697b48a2e07946a12c246, type: 2}
-        - {fileID: 6962344675241428156}
-        - {fileID: 510573299129508542, guid: d9011468b58dfaa4385a8bccd3aab96b, type: 3}
-        - {fileID: 6180443658798880768}
-        - {fileID: 2742370181040690814}
-        - {fileID: 655942301721466540}
-        - {fileID: 8678701287449779324}
-        - {fileID: 5651501728426293590}
-        - {fileID: 9173644151562471802}
-        - {fileID: 3629840657174574653}
-        - {fileID: 6962344675241428156}
-        - {fileID: 11400000, guid: 85268b4b1617ec847b397de703cbe112, type: 2}
-        - {fileID: 6962344675241428156}
-        - {fileID: 11400000, guid: e0acce4c186697b48a2e07946a12c246, type: 2}
-        - {fileID: 11400000, guid: eb4c629e183282043be39918661ba5f7, type: 2}
-        - {fileID: 6962344675241428156}
-        - {fileID: 11400000, guid: 85268b4b1617ec847b397de703cbe112, type: 2}
-        - {fileID: 6962344675241428156}
-        - {fileID: 6962344675241428156}
-        - {fileID: 6962344675241428156}
-        - {fileID: 6876048514309257788}
-        - {fileID: 3059940698718598102}
+        - {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
+        - {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
         - {fileID: 7808782474424061144}
         - {fileID: 1928203359801962746}
         - {fileID: 7155761172163080558}
         - {fileID: 5292181211495265240}
         - {fileID: 7043234790096801525, guid: d468f634683df4e418d449aa0f5fcf9c, type: 3}
         - {fileID: 7947353322020710246, guid: 32acaad28bff56a42be4a19bef32d0f1, type: 3}
-        - {fileID: 6876048514309257788}
-        - {fileID: 3059940698718598102}
-        - {fileID: 6876048514309257788}
-        - {fileID: 3059940698718598102}
+        - {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
+        - {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
         - {fileID: 7808782474424061144}
         - {fileID: 7808782474424061144}
         - {fileID: 1700704895486175575, guid: 6f0a4a23cc4f0f94aa8c60b675625e99, type: 3}
-        - {fileID: 6876048514309257788}
-        - {fileID: 3059940698718598102}
         - {fileID: 7808782474424061144}
-        - {fileID: 6962344675241428156}
-        - {fileID: 6962344675241428156}
-        - {fileID: 6876048514309257788}
-        - {fileID: 3059940698718598102}
         byteData: 
         byteDataArray: 
       Version: 1.7.7
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
---- !u!320 &3445865333607949485
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6962344675241428156}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: eb4c629e183282043be39918661ba5f7, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -455959555160915864, guid: e0acce4c186697b48a2e07946a12c246, type: 2}
-    value: {fileID: 7808782474623570059}
-  - key: {fileID: -2750560716906479877, guid: eb4c629e183282043be39918661ba5f7, type: 2}
-    value: {fileID: 7808782474623570059}
-  - key: {fileID: -455959555160915864, guid: 85268b4b1617ec847b397de703cbe112, type: 2}
-    value: {fileID: 7808782474623570059}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &7020256153889011191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3048,84 +2962,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 160.99991, y: -12.666016, z: 0}
     m_Extent: {x: 347.92496, y: 396.25647, z: 445.9671}
   m_DirtyAABB: 0
---- !u!1 &8666133040670604558
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5741200519413484680}
-  - component: {fileID: 6007477856653184792}
-  - component: {fileID: 1663218027420476801}
-  - component: {fileID: 1390167072280228807}
-  m_Layer: 0
-  m_Name: Fall Hitbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5741200519413484680
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8666133040670604558}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 141, z: -2421}
-  m_LocalScale: {x: 886.3, y: 3029, z: 886.3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7770089469946453510}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!136 &6007477856653184792
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8666133040670604558}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000007688999, y: 0, z: -0.00000008940697}
---- !u!114 &1663218027420476801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8666133040670604558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dc96957271f284483981eb18b94c4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetLayers:
-    serializedVersion: 2
-    m_Bits: 136
-  maxDistance: 100
-  detectTime: 1
---- !u!114 &1390167072280228807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8666133040670604558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showDamageNumber: 1
 --- !u!1 &8678701287449779324
 GameObject:
   m_ObjectHideFlags: 0
@@ -3276,7 +3112,7 @@ Transform:
   - {fileID: 1106664193886919986}
   m_Father: {fileID: 6118021295109065182}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -21.783442, y: 27.925097, z: 27.925097}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8749978204786106142
 GameObject:
   m_ObjectHideFlags: 0
@@ -3480,178 +3316,6 @@ Transform:
   m_Father: {fileID: 1283536144542738016}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &5037770737896290610
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 7770089469946453510}
-    m_Modifications:
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_Name
-      value: WormPlane
-      objectReference: {fileID: 0}
-    - target: {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
---- !u!4 &2004389106991324386 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6789392554938541520, guid: 5b0643305acaa1a49a7470e074c76a1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 5037770737896290610}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3059940698718598102 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 5037770737896290610}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &5047329917662147270
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 7770089469946453510}
-    m_Modifications:
-    - target: {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_Name
-      value: WormSphere
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
---- !u!4 &6876048514309257784 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1830456375519824126, guid: f98eb4791ff691344a82b53cb96e0ca4,
-    type: 3}
-  m_PrefabInstance: {fileID: 5047329917662147270}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6876048514309257788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4,
-    type: 3}
-  m_PrefabInstance: {fileID: 5047329917662147270}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5432642920429219181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4032,16 +3696,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594758769678698372, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248710226259015 stripped
@@ -4050,69 +3704,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7808782473925969585}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &376154563798630709 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7594758769678698372, guid: 0001343133cde804fb66e7b384f1f63f,
-    type: 3}
-  m_PrefabInstance: {fileID: 7808782473925969585}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &4134990407395779107
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376154563798630709}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!135 &2764153123402247223
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376154563798630709}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3404599730771108452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376154563798630709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
---- !u!114 &4972823489706443691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376154563798630709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
 --- !u!1 &2767132281703706430 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4146,36 +3737,24 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 505
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6128426294362810163
-MonoBehaviour:
+--- !u!208 &7808782475283398435
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132281703706430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
---- !u!114 &8394501255383176172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132281703706430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 300, y: 300, z: 300}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &4961779914082510580 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4283,11 +3862,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248710443910198 stripped
@@ -4329,36 +3903,24 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 505
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &187896306021725564
-MonoBehaviour:
+--- !u!208 &7808782474281355737
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132281451333455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
---- !u!114 &5347024253907969148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132281451333455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 300, y: 300, z: 300}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &4961779913864842885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4460,11 +4022,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248711195795206 stripped
@@ -4506,36 +4063,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 505
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8627441377420831560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132280861039743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
---- !u!114 &8699775775129483523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132280861039743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
 --- !u!4 &4961779914589361589 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4637,11 +4166,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248711149308767 stripped
@@ -4683,36 +4207,24 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 505
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1744082934656391615
-MonoBehaviour:
+--- !u!208 &7808782475305073531
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132280747509798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
---- !u!114 &3395814438844823439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132280747509798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 300, y: 300, z: 300}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &4961779914501095916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -4814,11 +4326,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248711064226412 stripped
@@ -4860,36 +4367,24 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 505
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &573025149853369994
-MonoBehaviour:
+--- !u!208 &7808782475509325741
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132280998234389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
---- !u!114 &4607930570521899629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132280998234389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 300, y: 300, z: 300}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &4961779914451960031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -5116,11 +4611,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248709440980718 stripped
@@ -5162,36 +4652,24 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 505
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2255236257407841368
-MonoBehaviour:
+--- !u!208 &7808782475383382158
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132282595952023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
---- !u!114 &7572882521223316051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132282595952023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 300, y: 300, z: 300}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &4961779915001990237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -5293,11 +4771,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248709985554146 stripped
@@ -5339,36 +4812,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 505
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1751345886607418678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132282062785947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
---- !u!114 &2605036041978159113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132282062785947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
 --- !u!4 &4961779915535352913 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,
@@ -5454,11 +4899,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormSegment_rigged Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5348176769932355983, guid: 0001343133cde804fb66e7b384f1f63f,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001343133cde804fb66e7b384f1f63f, type: 3}
 --- !u!4 &55248709948727852 stripped
@@ -5500,36 +4940,24 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 505
+  m_Radius: 500
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3908057394643541146
-MonoBehaviour:
+--- !u!208 &7808782475823542881
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2767132281962783061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 615e48555eb331b459589e7f0d1c706f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_active: 1
-  m_owner: {fileID: 6962344675241428156}
-  m_damageMultiplier: 1
---- !u!114 &7965288453934462101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2767132281962783061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01117bd05f09459dad76d68159acad7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormBossOwner: {fileID: 313980576834515698}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 300, y: 300, z: 300}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &4961779915433257119 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2919905696040951877, guid: 0001343133cde804fb66e7b384f1f63f,

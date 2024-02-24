@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IncreaseSize : MonoBehaviour
+public class VFXTransform : MonoBehaviour
 {
     public Vector3 targetSize; // The target size you want to reach
     public float duration; // The duration over which you want to increase the size
 
-    private Vector3 initialSize; // The initial size of the object
-    private float timer = 0f; // Timer to track the progress
-
+    public Vector3 initialSize; // The initial size of the object
+    public float timer = 0f; // Timer to track the progress
+    private float saveTime;
     // Start is called before the first frame update
     void Start()
     {
         initialSize = transform.localScale; // Record the initial size
+        saveTime = timer;
+    }
+
+    private void OnEnable()
+    {
+        
     }
 
     // Update is called once per frame
@@ -29,9 +35,10 @@ public class IncreaseSize : MonoBehaviour
         transform.localScale = Vector3.Lerp(initialSize, targetSize, progress);
 
         // If the target size is reached, reset the timer
-        if (progress >= 1f)
-        {
-            timer = 0f;
-        }
+        
+    }
+    private void OnDisable()
+    {
+        timer = saveTime;
     }
 }
