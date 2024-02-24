@@ -645,7 +645,7 @@ WormBoss,"{""maxHealth"":2000,
   ""entity"":{
     ""speed"": {
       ""type"": ""float"",
-      ""value"": 12,
+      ""value"": 20,
       ""useDefaultModifier"": true
     },
     ""closeRange"": {
@@ -758,6 +758,18 @@ WormBoss,"{""maxHealth"":2000,
     ""bulletRange"": {
       ""type"": ""float"",
       ""value"": 100,
+      ""useDefaultModifier"": true
+    }
+  },
+  ""fallAttack"": {
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""knockbackForce"": {
+      ""type"": ""float"",
+      ""value"": 40,
       ""useDefaultModifier"": true
     }
   }

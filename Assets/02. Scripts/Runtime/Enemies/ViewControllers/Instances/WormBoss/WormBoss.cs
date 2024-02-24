@@ -4,6 +4,7 @@ using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
+using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -54,7 +55,8 @@ namespace Runtime.Enemies
                 new AutoConfigCustomProperty("laserBeam"),
                 new AutoConfigCustomProperty("acidAttack"),
                 new AutoConfigCustomProperty("rapidFire"),
-                new AutoConfigCustomProperty("entity")
+                new AutoConfigCustomProperty("entity"),
+                new AutoConfigCustomProperty("fallAttack")
             };
         }
     }
@@ -72,6 +74,14 @@ namespace Runtime.Enemies
 
         [SerializeField] private GameObject model;
 
+        [SerializeField] private HitBox fallHitBox;
+
+        [SerializeField] private GameObject sandParticleVFX;
+        private GameObjectPool sandParticlePool;
+        
+        private int fallAttackDamage;
+        private float fallKnockbackForce;
+        
         protected override void Awake()
         {
             base.Awake();
@@ -83,6 +93,15 @@ namespace Runtime.Enemies
         protected override void OnEntityStart()
         {
             agent.speed = Speed;
+            fallAttackDamage = BoundEntity.GetCustomDataValue<int>("fallAttack", "damage").Value;
+            fallKnockbackForce = BoundEntity.GetCustomDataValue<float>("fallAttack", "knockbackForce").Value;
+
+            sandParticlePool = GameObjectPoolManager.Singleton.CreatePool(sandParticleVFX, 8, 16);
+            
+            if (fallHitBox)
+            {
+                fallHitBox.HitResponder = this;
+            }
         }
 
         protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer)
@@ -100,10 +119,41 @@ namespace Runtime.Enemies
                 .Build();
         }
         
+        private void ClearHitObjects() {
+            hitObjects.Clear();
+        }
+        
+        public override void HitResponse(HitData data)
+        {
+            base.HitResponse(data);
+            print($"WORM BOSS HIT RESPONSE: {data.Hurtbox}");
+            
+            if (fallHitBox.isActiveAndEnabled && data.Hurtbox != null && data.Hurtbox.Owner.CompareTag("Player"))
+            {
+                Vector3 dir = data.Hurtbox.Owner.transform.position - transform.position;
+                dir.y = 0;
+                //make it 45 degrees from the ground
+                dir = Quaternion.AngleAxis(45, Vector3.Cross(dir, Vector3.up)) * dir;
+                dir.Normalize();
+                data.Hurtbox.Owner.GetComponent<Rigidbody>().AddForce(dir * fallKnockbackForce, ForceMode.Impulse);
+            }
+        }
+        
         protected override void OnAnimationEvent(string eventName)
         {
             switch (eventName)
             {
+                case "EnableGravity":
+                    rb.useGravity = true;
+                    ClearHitObjects();
+                    fallHitBox.gameObject.SetActive(true);
+                    fallHitBox.StartCheckingHits(fallAttackDamage);
+                    break;
+                case "DisableGravity":
+                    rb.useGravity = false;
+                    fallHitBox.StopCheckingHits();
+                    fallHitBox.gameObject.SetActive(false);
+                    break;
                 default:
                     break;
             }

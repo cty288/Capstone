@@ -30,13 +30,15 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public TimelineAsset emergeAnimationTimeline;
         private PlayableDirector director;
+        private Rigidbody rb;
 
         private FSpineAnimator spineAnimator;
 
         public override void OnAwake()
         {
-            spineAnimator = GetComponent<FSpineAnimator>();
+            spineAnimator = gameObject.GetComponent<FSpineAnimator>();
             director = gameObject.GetComponent<PlayableDirector>();
+            rb = gameObject.GetComponent<Rigidbody>();
         }
 
         public override void OnStart()
@@ -47,6 +49,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
             taskStatus = TaskStatus.Running;
 
+            spineAnimator.GoBackSpeed = 0.65f;
+            
             SkillExecute();
         }
 
@@ -97,8 +101,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             await UniTask.WaitForSeconds((float)emergeAnimationTimeline.duration, 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             director.Stop();
-            await UniTask.WaitForSeconds(1f, 
+            rb.useGravity = true;
+            await UniTask.WaitForSeconds(0.5f, 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            rb.useGravity = false;
+            spineAnimator.GoBackSpeed = 0f;
 
             taskStatus = TaskStatus.Success;
         }

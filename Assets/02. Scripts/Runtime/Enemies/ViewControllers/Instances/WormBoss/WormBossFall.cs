@@ -44,7 +44,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             player = GetPlayer();
 
             //face upwards
-            Debug.Log("WORM BOSS ROTATE");
             transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
             taskStatus = TaskStatus.Running;
 
@@ -73,7 +72,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             spineAnimator.GoBackSpeed = 1;
 
-            float height = 30f;
+            float height = 8f;
             Vector3 targetPosition = emergePosition - new Vector3(0, height, 0);
             transform.position = targetPosition;
             
@@ -82,8 +81,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             await PlayAnimation();
         }
-
-    private async UniTask PlayAnimation()
+        
+        private async UniTask PlayAnimation()
         {
             //rotate y to face player
             Vector3 direction = player.transform.position - transform.position;
@@ -100,10 +99,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             director.Stop();
             spineAnimator.GoBackSpeed = 0;
+           
             await UniTask.WaitForSeconds(1f, 
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-            // float duration = 2f;
-            // await transform.DOMove(emergePosition, duration).ToUniTask(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+
             taskStatus = TaskStatus.Success;
         }
    }
