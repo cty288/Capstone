@@ -17,7 +17,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.BackpackSkill {
 			
 		}
 
-		public override bool Collectable { get; }
+		public override bool Collectable { get; } = true;
 		protected override string GetDescription(string defaultLocalizationKey) {
 			if (GetLevel() < 4) {
 				int count = GetCustomPropertyOfCurrentLevel<int>("count");

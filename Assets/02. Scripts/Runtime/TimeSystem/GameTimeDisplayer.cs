@@ -83,6 +83,7 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
          panel.SetActive(false);
          return;
       }
+      if(levelModel.CurrentLevel.Value == null) return;
       panel.SetActive(true);
       dayCountText.text = Localization.GetFormat("TIME_DISPLAY", levelModel.CurrentLevel.Value.DayStayed);
       DateTime globalTime = gameTimeModel.GlobalTime.Value;

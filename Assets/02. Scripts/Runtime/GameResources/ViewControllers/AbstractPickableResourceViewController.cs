@@ -131,6 +131,7 @@ namespace Runtime.GameResources.ViewControllers {
         /// <param name="entity"></param>
         /// <returns></returns>
         protected virtual bool AbsorbHandler(T entity) {
+            
             return inventorySystem.AddItem(entity);
         }
 

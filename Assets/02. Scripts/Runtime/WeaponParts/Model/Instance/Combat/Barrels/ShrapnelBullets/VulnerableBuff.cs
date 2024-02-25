@@ -28,7 +28,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.Shrapne
 				return;
 			}
 
-			damagableEntity.RegisterOnModifyDamage(OnModifyDamage);
+			damagableEntity.RegisterOnModifyReceivedDamage(OnModifyDamage);
 		}
 
 		private int OnModifyDamage(int damage, ICanDealDamage dealer) {
@@ -86,7 +86,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.Shrapne
 			if (damagableEntity == null) {
 				return;
 			}
-			damagableEntity.UnRegisterOnModifyDamage(OnModifyDamage);
+			damagableEntity.UnRegisterOnModifyReceivedDamage(OnModifyDamage);
 			damagableEntity = null;
 			base.OnRecycled();
 		}

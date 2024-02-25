@@ -36,8 +36,10 @@ public class TurretNameTag : GeneralNameTag {
 		turretEntity = entity as TurretEntity;
 		if (rarityIndicatorPrefab && entity.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarityProperty)) {
 			if (rarityProperty is IRarityProperty rarity) {
+				float height = rarityBar.GetComponent<RectTransform>().rect.height;
 				for (int i = 0; i < rarity.RealValue.Value; i++) {
-					Instantiate(rarityIndicatorPrefab, rarityBar);
+					GameObject spawnedRarity = Instantiate(rarityIndicatorPrefab, rarityBar);
+					spawnedRarity.GetComponent<RectTransform>().sizeDelta = new Vector2(height, height);
 				}
 			}
 		}

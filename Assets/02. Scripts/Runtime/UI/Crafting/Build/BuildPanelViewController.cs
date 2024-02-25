@@ -131,8 +131,11 @@ public class BuildPanelViewController : SwitchableSubPanel {
 
 		HashSet<PreparationSlot> buildableSlots = new HashSet<PreparationSlot>();
 		foreach (string resourceName in buildableResourceNames) {
-			IResourceEntity entity = ResourceTemplates.Singleton.GetResourceTemplates(resourceName).EntityCreater
-				.Invoke(false, 1);
+			ResourceTemplateInfo templateInfo = ResourceTemplates.Singleton.GetResourceTemplates(resourceName);
+			IBuildableResourceEntity templateEntity = templateInfo.TemplateEntity as IBuildableResourceEntity;
+
+			IResourceEntity entity = templateInfo.EntityCreater
+				.Invoke(true, templateEntity.GetMinRarity());
 			
 			entitiesToRemoveWhenClear.Add(entity);
 			PreparationSlot slot = new PreparationSlot();
@@ -189,13 +192,16 @@ public class BuildPanelViewController : SwitchableSubPanel {
 		}
 		
 		int maxRarity = templateEntity.GetMaxRarity();
+		int minRarity = templateEntity.GetMinRarity();
 		if (rarity > maxRarity) {
 			rarity = 1;
 		}else if (rarity < 1) {
 			rarity = maxRarity;
 		}
+		
+		rarity = Math.Max(minRarity, rarity);
 
-		previewSelectionObject.SetActive(maxRarity > 1);
+		previewSelectionObject.SetActive(maxRarity != minRarity);
 		selectedRarity = rarity;
 
 		currentPreviewEntity = ResourceTemplates.Singleton.GetResourceTemplates(templateEntity.EntityName)

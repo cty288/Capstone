@@ -18,6 +18,10 @@ public class ItemStackingInfo {
 	public float RemainingTime;
 }
 
+public struct OnAddItemPickIndicatorContent {
+	public string Content;
+}
+
 public class ItemPickIndicator : AbstractMikroController<MainGame> {
 	private SmoothScrollingVerticalLayoutGroup smoothScroller;
 	private ICurrencyModel currencyModel;
@@ -54,6 +58,13 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 		
 		this.RegisterEvent<OnMoneyAmountChangedEvent>(OnMoneyAmountChanged)
 			.UnRegisterWhenGameObjectDestroyed(gameObject);
+
+		this.RegisterEvent<OnAddItemPickIndicatorContent>(OnAddItemPickIndicatorContent)
+			.UnRegisterWhenGameObjectDestroyed(gameObject);
+	}
+
+	private void OnAddItemPickIndicatorContent(OnAddItemPickIndicatorContent obj) {
+		Show(obj.Content);
 	}
 
 	private void OnMoneyAmountChanged(OnMoneyAmountChangedEvent e) {

@@ -8,9 +8,7 @@ using Runtime.Inventory.Model;
 
 namespace _02._Scripts.Runtime.Skills {
 	public interface ISkillSystem : ISystem {
-		public void UnlockPurchaseableSkill(string skillName);
 		
-		//public void RemoveSlot(PreparationSlot slot);
 	}
 	public class SkillSystem : AbstractSystem, ISkillSystem {
 
@@ -19,23 +17,22 @@ namespace _02._Scripts.Runtime.Skills {
 		};
 		
 		protected IResourceBuildModel buildModel;
+		protected ISkillModel skillModel;
 		
 		protected override void OnInit() {
 			buildModel = this.GetModel<IResourceBuildModel>();
+			skillModel = this.GetModel<ISkillModel>();
 			if (buildModel.IsFirstTimeCreated) {
 				foreach (string skillName in initiallyPurchaseableSkillNames) {
 					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
 					buildModel.UnlockBuild(ResearchCategory.Skill, skillName, false);
 				}
 			}
+
+			foreach (var skillEntity in skillModel.GetAllResources()) {
+				skillEntity.OnGetSystems();
+			}
 		}
 		
-		protected ISkillEntity GetNewSkillEntity(string skillName) {
-			return ResourceVCFactory.Singleton.SpawnNewResourceEntity(skillName, true, 1) as ISkillEntity;
-		}
-
-		public void UnlockPurchaseableSkill(string skillName) {
-			buildModel.UnlockBuild(ResearchCategory.Skill, skillName, true);
-		}
 	}
 }
