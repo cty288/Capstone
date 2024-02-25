@@ -81,8 +81,14 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
 
     public async UniTask SkillExecute() {
 
+        if(enemyEntity.GetCurrentBladeCount() > 0) // remove remaining shield and blades if any
+        {
+            enemyEntity.RemoveBlades(enemyEntity.GetCurrentBladeCount());
+            await UniTask.WaitForSeconds(0.1f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+        }
+        
         anim.CrossFadeInFixedTime("Ultimate_Jump_Start", 0.2f);
-        await UniTask.WaitForSeconds(0.5f);
+        await UniTask.WaitForSeconds(0.5f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         anim.SetTrigger("Jump");
         await UniTask.WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Ultimate_Jump"),
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
@@ -157,7 +163,8 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
             swordList[i].GetComponent<BladeSentinalHoningBlade>().Activate();
             swordList[i+1].GetComponent<BladeSentinalHoningBlade>().Activate();
 
-            await UniTask.WaitForSeconds(bladeInterval, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            await UniTask.WaitForSeconds(bladeInterval, false, PlayerLoopTiming.Update, 
+                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         }
         await UniTask.WaitForSeconds(3f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());

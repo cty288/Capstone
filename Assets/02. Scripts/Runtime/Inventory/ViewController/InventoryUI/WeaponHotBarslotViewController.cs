@@ -26,6 +26,7 @@ public class WeaponHotBarslotViewController : ResourceSlotViewController {
 		base.OnShow(topItem);
 		if (currentWeapon != null && ammoText) {
 			currentWeapon.CurrentAmmo.UnRegisterOnValueChanged(OnCurrentWeaponAmmoChange);
+			currentWeapon.GetAmmoSize().RealValue.UnRegisterOnValueChanged(OnAmmoSizeChange);
 			currentWeapon = null;
 		}
 		if (weaponNameText) {
@@ -37,7 +38,15 @@ public class WeaponHotBarslotViewController : ResourceSlotViewController {
 			currentWeapon = weapon;
 			weapon.CurrentAmmo.RegisterWithInitValue(OnCurrentWeaponAmmoChange)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			weapon.GetAmmoSize().RealValue.RegisterOnValueChanged(OnAmmoSizeChange)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
+		}
+	}
+
+	private void OnAmmoSizeChange(int arg1, int ammoSize) {
+		if (ammoText && currentWeapon != null) {
+			ammoText.text = $"{currentWeapon.CurrentAmmo.Value}/{ammoSize}";
 		}
 	}
 

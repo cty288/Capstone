@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.Levels;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
@@ -17,7 +19,7 @@ using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.Model {
-	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage, ICanDealDamageRootEntity {
+	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
 		
@@ -35,6 +37,8 @@ namespace Runtime.Enemies.Model {
 		// public IDirectorEntity GetDirectorOwner();
 		
 		public int SpawnedAreaIndex { get; set; }
+		
+		public BindableProperty<bool> IsElite { get; }
 	}
 
 	public abstract class EnemyEntity<T> : AbstractCreature, IEnemyEntity, IHaveTags where T : EnemyEntity<T>, new() {
@@ -43,10 +47,15 @@ namespace Runtime.Enemies.Model {
 		protected ISpawnCostProperty spawnCostProperty;
 		protected ISpawnWeightProperty spawnWeightProperty;
 		protected ILevelNumberProperty levelNumberProperty;
+		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
 		// protected IDirectorEntity directorOwner;
 		public int SpawnedAreaIndex { get; set; }
 		
+		[field: ES3Serializable]
+		public BindableProperty<bool> IsElite { get; } = new BindableProperty<bool>(false);
+
 		protected override void OnEntityRegisterAdditionalProperties() {
 			base.OnEntityRegisterAdditionalProperties();
 			RegisterInitialProperty<IDangerProperty>(new Danger());
@@ -128,20 +137,37 @@ namespace Runtime.Enemies.Model {
 
 		public override void OnDoRecycle() {
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
+			IsElite.Value = false;
 		}
 
 
-		public void OnKillDamageable(IDamageable damageable) {
-			Debug.Log($"Kill Damageable: {damageable.EntityName}");
+		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
+			// Debug.Log($"Kill Damageable: {damageable.EntityName}");
 		}
 
-		public void OnDealDamage(IDamageable damageable, int damage) {
+		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
 			
 		}
-		
-		
 
-		public ICanDealDamageRootEntity RootDamageDealer => this;
-		public ICanDealDamageRootViewController RootViewController => null;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
+		public ICanDealDamage ParentDamageDealer { get; } = null;
+
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => this;
+		public ICanDealDamageRootViewController RootViewController => null;*/
 	}
 }

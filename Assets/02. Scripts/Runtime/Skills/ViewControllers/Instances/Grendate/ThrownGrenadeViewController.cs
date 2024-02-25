@@ -81,8 +81,14 @@ public class ThrownGrenadeViewController : MonoBehaviour
             null,
             owner);
 
+        OnExplosion(explosion.GetComponent<IExplosionViewController>());
+
         StopAllCoroutines();
         Destroy(gameObject);
+    }
+    
+    protected virtual void OnExplosion(IExplosionViewController explosionViewController) {
+        
     }
 
     public virtual void Init(Faction faction, int damage, float size, GameObject bulletOwner, ICanDealDamage owner,

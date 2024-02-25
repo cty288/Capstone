@@ -73,25 +73,8 @@ namespace Runtime.Weapons
 
         public override void OnItemStartUse()
         {
-            // For semi-auto gun
-            if (!isReloading) {
-                if (BoundEntity.CurrentAmmo > 0 &&
-                    Time.time > lastShootTime + BoundEntity.GetAttackSpeed().RealValue) {
-                    lastShootTime = Time.time;
-                    
-                    SetShoot(true);
-                    ShootEffects();
-
-                    BoundEntity.CurrentAmmo.Value--;
-                }
-                
-                if (autoReload && BoundEntity.CurrentAmmo <= 0)
-                {
-                    SetShoot(false);
-                    ChangeReloadStatus(true);
-                    StartCoroutine(ReloadAnimation());
-                }
-            }
+            //semi-auto
+            CheckShoot();
         }
         
         public override void OnItemUse()

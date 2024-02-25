@@ -22,7 +22,12 @@ namespace _02._Scripts.Runtime.ResourceCrafting.Models.Build {
 
 		[field: ES3Serializable]
 		private Dictionary<string, bool> isNewBuildableResources = new Dictionary<string, bool>();
-		
+
+		protected override void OnInit() {
+			base.OnInit();
+			//UnlockBuild(ResearchCategory.Skill, "TurretSkill", true);
+		}
+
 		public void UnlockBuild(ResearchCategory category, string entityName, bool isNew) {
 			if (buildableResources.TryGetValue(category, out var resources)) {
 				resources.Add(entityName);

@@ -31,9 +31,8 @@ namespace Runtime.Enemies.SmallEnemies
             
         }
 
-        public override void OnRecycle()
-        {
-
+        public override void OnRecycle() {
+            base.OnRecycle();
         }
 
   
@@ -70,12 +69,10 @@ namespace Runtime.Enemies.SmallEnemies
 
         protected override void OnEntityStart()
         {
-            Debug.Log("cactus created");
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer)
         {
-            Debug.Log($"cactus 1 Take damage: {damage}. cactus 1 current health: {currenthealth}");
         }
 
 

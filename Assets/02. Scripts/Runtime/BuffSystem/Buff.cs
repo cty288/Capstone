@@ -52,15 +52,26 @@ public interface IBuff: IPoolable {
     bool Validate();
     
     void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false);
-    void OnStacked(IBuff buff);
+    bool OnStacked(IBuff buff);
     
     void OnAwake();
     
     void OnStart();
     BuffStatus OnTick();
     void OnEnd();
+    
+    bool IsGoodBuff { get; }
 }
 
+public interface ILeveledBuff: IBuff {
+    public int Level { get; }
+    
+    public int MaxLevel { get; }
+    
+    string GetLevelDescription(int level);
+    
+    public void LevelUp(int level);
+}
 
 public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
     [field: ES3Serializable]
@@ -85,7 +96,7 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
 
     public BuffDisplayInfo OnGetBuffDisplayInfo() {
         if (!IsDisplayed()) {
-            return new BuffDisplayInfo();
+            return new BuffDisplayInfo(){Display = false};
         }
         else {
             string typeName = this.GetType().Name;
@@ -133,12 +144,13 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
     public abstract void OnInitialize();
     
 
-    public void OnStacked(IBuff buff) {
+    public bool OnStacked(IBuff buff) {
         if (buff is T tBuff) {
-            OnStacked(tBuff);
+            return OnStacked(tBuff);
         }
         else {
             Debug.LogError("Buff type mismatch for " + buff.GetType() + " and " + GetType() + " when stacking!");
+            return false;
         }
     }
 
@@ -149,7 +161,7 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
         buffOwner?.RegisterOnEntityRecycled(OnEntityRecycled);
     }
 
-    public abstract void OnStacked(T buff);
+    public abstract bool OnStacked(T buff);
 
 
     public abstract void OnStart();
@@ -165,7 +177,9 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
             RecycleToCache();
         }
     }
-    
+
+    public abstract bool IsGoodBuff { get; }
+
     public abstract void OnEnds();
     
 

@@ -1,16 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.GameEventSystem.Tests;
 using _02._Scripts.Runtime.Pillars.Commands;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
+using _02._Scripts.Runtime.TimeSystem;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using Framework;
 using MikroFramework.Architecture;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
+using Runtime.Player;
 using Runtime.Spawning;
 using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Weapons.Model.Base;
@@ -69,11 +73,43 @@ namespace Runtime.Temporary
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad1)) {
-                 IGameEventSystem gameEventSystem = this.GetSystem<IGameEventSystem>();
-                 gameEventSystem.AddEvent(new TestEvent1(), 24 * 60);
-                 gameEventSystem.AddEvent(new TestEvent2(), 5 * 60);
-                 gameEventSystem.AddEvent(new TestEvent3(), 60);
-                 Debug.Log("EVENT ADDED");
+                IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+                MotivatedBuff buff = BuffPool.FindBuffs((buff) => buff is MotivatedBuff).First()
+                    .Invoke(playerEntity, playerEntity, 4) as MotivatedBuff;
+                this.GetSystem<IBuffSystem>().AddBuff(playerEntity, playerEntity, buff);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Keypad2)) {
+                IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+                inventoryModel.RemoveSlots(2);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad3)) {
+                IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+                inventoryModel.MaxSlotCount = 100;
+                inventoryModel.AddSlots(100, out int addedCount);
+                
+                IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+                var resources = ResourceTemplates.Singleton.GetResourceTemplates((entity) => entity.GetResourceCategory() == ResourceCategory.WeaponParts
+                || entity.GetResourceCategory() == ResourceCategory.Skill);
+                foreach (var resource in resources) {
+                    int minRarity = resource.TemplateEntity is IBuildableResourceEntity resourceEntity      
+                        ? resourceEntity.GetMinRarity()
+                        : 1;
+                    
+                    IResourceEntity entity = resource.EntityCreater.Invoke(true, minRarity);
+                    inventorySystem.AddItem(entity);
+                }
+            }
+            
+            if(Input.GetKeyDown(KeyCode.KeypadPlus)) {
+                IGameTimeSystem gameTimeSystem = this.GetSystem<IGameTimeSystem>();
+                gameTimeSystem.speed_debug++;
+            }
+            
+            if(Input.GetKeyDown(KeyCode.KeypadMinus)){
+                IGameTimeSystem gameTimeSystem = this.GetSystem<IGameTimeSystem>();
+                gameTimeSystem.speed_debug--;
             }
         }
     }

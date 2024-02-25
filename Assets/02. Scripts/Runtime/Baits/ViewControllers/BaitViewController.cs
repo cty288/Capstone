@@ -87,5 +87,11 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 				this.SendCommand(SetDeployStatusHintCommand.Allocate("DEPLOY_ERROR_COMBAT"));
 			}
 		}
+
+		public override void OnDeploy() {
+			
+		}
+
+		public override bool RemoveAfterDeploy { get; set; } = true;
 	}
 }

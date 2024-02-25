@@ -5,6 +5,8 @@ namespace Runtime.GameResources.Model.Base {
 		public PurchaseCostInfo GetPurchaseCost();
 		
 		public int GetMaxRarity();
+		
+		public int GetMinRarity();
 	}
 
 	public abstract class BuildableResourceEntity<T> : ResourceEntity<T>, IBuildableResourceEntity
@@ -26,5 +28,6 @@ namespace Runtime.GameResources.Model.Base {
 		}
 
 		public abstract int GetMaxRarity();
+		public abstract int GetMinRarity();
 	}
 }

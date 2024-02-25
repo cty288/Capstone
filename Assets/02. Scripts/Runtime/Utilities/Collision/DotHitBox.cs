@@ -108,7 +108,6 @@ namespace Runtime.Utilities.Collision
 
                         if (hitData.Validate()) {
                             Debug.Log(hitData.Hurtbox.Owner.name);
-                            // Debug.Log("validate: ");
                             hitData.HitDetector.HitResponder?.HitResponse(hitData);
                             hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                         }
@@ -148,7 +147,7 @@ namespace Runtime.Utilities.Collision
             StopCheckingHits();
         }
 
-        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage, Collider[] ignoredColliders = null)
         {
             throw new NotImplementedException();
         }

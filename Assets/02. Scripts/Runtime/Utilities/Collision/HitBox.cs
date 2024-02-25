@@ -46,11 +46,8 @@ namespace Runtime.Utilities.Collision
         
         public void StopCheckingHits()
         {
-            // Debug.Log("stop checking hits");
             if (_triggerCheck != null) 
                 _triggerCheck.OnEnter -= TriggerCheckHit;
-            
-            
         }
         
         public virtual void TriggerCheckHit(Collider c)
@@ -139,7 +136,7 @@ namespace Runtime.Utilities.Collision
         /// Creates a HitData object that is sent to the HitResponder and HurtResponder, invoking their responses.
         /// </summary>
         /// <returns>Returns true if a hit is detected.</returns>
-        public void CheckHit(HitDetectorInfo hitDetectorInfo = new HitDetectorInfo(), int damage = 0)
+        public void CheckHit(HitDetectorInfo hitDetectorInfo = new HitDetectorInfo(), int damage = 0, Collider[] ignoredColliders = null)
         {
             Debug.Log("checkhit() is replaced for testing");
             

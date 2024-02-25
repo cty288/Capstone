@@ -13,33 +13,43 @@ using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
+public class SlotResourceDescriptionPanel : PoolableGameObject, IController, IPointerEnterHandler, IPointerExitHandler {
     private TMP_Text nameText;
     private TMP_Text descriptionText;
     private RectTransform rectTransform;
     private bool isShowing = false;
     private Image icon;
     
-    [SerializeField]
+    /*[SerializeField]
     private Vector2 leftPivot = new Vector2(-3.72529e-08f, 1f);
     
     [SerializeField]
-    private Vector2 rightPivot = new Vector2(1f, 1f);
+    private Vector2 rightPivot = new Vector2(1f, 1f);*/
 
     [SerializeField] private GameObject rarityIndicator;
     
     private Transform rarityIndicatorTransform;
     private List<GameObject> spawnedPropertyDescriptions = new List<GameObject>();
     private Transform itemPropertyDescriptionPanel;
+    
+    [SerializeField] protected RectTransform propertyDescriptionItemParent;
+    [SerializeField] protected RectTransform viewPort;
+    [SerializeField] protected float viewPortMaxHeight = 165f;
+    protected ContentSizeFitter viewPortSizeFitter;
+    
     private SafeGameObjectPool propertyDescriptionItemPool;
     private TMP_Text resourceDisplayedTypeText;
     private TMP_Text skillUseCostText;
     [SerializeField] private GameObject propertyDescriptionItemPrefab;
-    
+    [SerializeField] private RectTransform titleBar;
+    private ScrollRect scrollRect;
 
     public bool IsShowing => isShowing;
+    
+    private bool isMouseOver = false;
     public void Awake() {
         nameText = transform.Find("NameText").GetComponent<TMP_Text>();
         descriptionText = transform.Find("DescriptionText").GetComponent<TMP_Text>();
@@ -47,14 +57,22 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         icon = transform.Find("Icon").GetComponent<Image>();
         rarityIndicatorTransform = transform.Find("RarityBar");
         itemPropertyDescriptionPanel = transform.Find("ItemPropertyDescription");
+        scrollRect = itemPropertyDescriptionPanel.GetComponent<ScrollRect>();
         resourceDisplayedTypeText = transform.Find("ResourceDisplayedTypeText").GetComponent<TMP_Text>();
         propertyDescriptionItemPool = GameObjectPoolManager.Singleton.CreatePool(propertyDescriptionItemPrefab, 5, 8);
         skillUseCostText = transform.Find("SkillUseCostText").GetComponent<TMP_Text>();
+        viewPortSizeFitter = viewPort.GetComponent<ContentSizeFitter>();
     }
-    
+
+    public bool IsMouseOverThisPanel() {
+        //the mouse cant hover over title bar
+        return isMouseOver; //&& !RectTransformUtility.RectangleContainsScreenPoint(titleBar, Input.mousePosition);
+    }
+
     public void SetContent(string name, string description, Sprite sprite, bool isLeftPivot, int rarity,
-    string resourceDisplayedType, List<ResourcePropertyDescription> propertyDescriptions, Dictionary<CurrencyType, int> skillUseCosts) {
-        
+    string resourceDisplayedType, List<ResourcePropertyDescription> propertyDescriptions, Dictionary<CurrencyType, int> skillUseCosts,
+    CurrencyType? currencyType) {
+        scrollRect.verticalNormalizedPosition = 1;
         nameText.text = name;
         descriptionText.text = description;
         resourceDisplayedTypeText.text = resourceDisplayedType;
@@ -68,10 +86,10 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         }
         
         if (isLeftPivot) {
-            rectTransform.pivot = leftPivot;
+            //rectTransform.pivot = leftPivot;
         }
         else {
-            rectTransform.pivot = rightPivot;
+            //rectTransform.pivot = rightPivot;
         }
 
         //int rarityNumToSpawn = rarity - rarityIndicatorTransform.childCount;
@@ -79,7 +97,10 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
             Destroy(child.gameObject);
         }
         for (int i = 0; i < rarity; i++) {
-            Instantiate(rarityIndicator, rarityIndicatorTransform);
+            GameObject indicator = Instantiate(rarityIndicator, rarityIndicatorTransform);
+            if (currencyType != null) {
+                indicator.GetComponent<RarityIndicator>().SetCurrency(currencyType.Value);
+            }
         }
 
         if (propertyDescriptions is {Count: > 0} && propertyDescriptions.Any((propertyDescription => propertyDescription.display))) {
@@ -97,8 +118,9 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         if (skillUseCosts != null) {
             ShowSkillUseCost(skillUseCosts);
         }
-        
     }
+
+   
 
     private void ShowSkillUseCost(Dictionary<CurrencyType,int> skillUseCost) {
         StringBuilder sb = new StringBuilder();
@@ -132,7 +154,7 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
 
     private void SetPropertyDescriptions(List<ResourcePropertyDescription> propertyDescriptions) {
         spawnedPropertyDescriptions.Clear();
-        foreach (Transform child in itemPropertyDescriptionPanel.transform) {
+        foreach (Transform child in propertyDescriptionItemParent.transform) {
             propertyDescriptionItemPool.Recycle(child.gameObject);
         }
         
@@ -142,7 +164,7 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
                 continue;
             }
             GameObject propertyDescriptionItem = propertyDescriptionItemPool.Allocate();
-            propertyDescriptionItem.transform.SetParent(itemPropertyDescriptionPanel);
+            propertyDescriptionItem.transform.SetParent(propertyDescriptionItemParent);
             propertyDescriptionItem.transform.localScale = Vector3.one;
             propertyDescriptionItem.GetComponent<PropertyDescriptionItemViewController>()
                 .SetContent( propertyDescription.LocalizedPropertyName, propertyDescription.GetLocalizedDescription(), propertyDescription.iconName);
@@ -172,22 +194,57 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
         spawnedPropertyDescriptions.Clear();
         
         itemPropertyDescriptionPanel.gameObject.SetActive(false);
+        isMouseOver = false;
     }
 
-
+    private void AdjustPivot() {
+        float width = rectTransform.rect.width;
+        float height = rectTransform.rect.height;
+        
+        //check if off screen
+        if (rectTransform.position.x + width > Screen.width) {
+            rectTransform.pivot = new Vector2(1, rectTransform.pivot.y);
+        }
+        else {
+            rectTransform.pivot = new Vector2(0, rectTransform.pivot.y);
+        }
+        
+        if (rectTransform.position.y + height > Screen.height) {
+            rectTransform.pivot = new Vector2(rectTransform.pivot.x, 1);
+        }
+        else {
+            rectTransform.pivot = new Vector2(rectTransform.pivot.x, 0);
+        }
+    }
 
     private IEnumerator RebuildLayout() {
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        AdjustPivot();
+        UpdateViewPortSize();
         yield return null;
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        AdjustPivot();
+        UpdateViewPortSize();
+    }
+    
+    private void UpdateViewPortSize() {
+        if (propertyDescriptionItemParent.rect.height < viewPortMaxHeight) {
+            viewPortSizeFitter.enabled = true;
+        }else {
+            viewPortSizeFitter.enabled = false;
+            viewPort.sizeDelta = new Vector2(viewPort.sizeDelta.x, viewPortMaxHeight);
+        }
+        scrollRect.verticalScrollbar.value = 1;
+        scrollRect.verticalNormalizedPosition = 1;
+       
     }
 
     public void Clear() {
-        SetContent("", "", null, true, 0, "",null, null);
+        SetContent("", "", null, true, 0, "",null, null, null);
     }
     public override void OnRecycled() {
         base.OnRecycled();
-        
+        isMouseOver = false;
         Clear();
     }
     
@@ -195,5 +252,13 @@ public class SlotResourceDescriptionPanel : PoolableGameObject, IController {
 
     public IArchitecture GetArchitecture() {
         return MainGame.Interface;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        isMouseOver = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        isMouseOver = false;
     }
 }

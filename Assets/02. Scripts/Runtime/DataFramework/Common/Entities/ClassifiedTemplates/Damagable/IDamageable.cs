@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -72,16 +73,19 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// </summary>
 		
 		public int GetCurrentHealth();
-		
+
 		/// <summary>
 		/// Deal damage to the entity
 		/// </summary>
 		/// <param name="damage">the amount of damage</param>
 		/// <param name="damageDealer">the damage dealer entity</param>
+
+		public void TakeDamage(int damage, ICanDealDamage damageDealer, out bool isDie,
+			[CanBeNull] HitData hitData = null, bool nonlethal = false);
+
+
+		public void Kill(ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null);
 		
-		public void TakeDamage(int damage, ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null, bool nonlethal = false);
-
-
 		/// <summary>
 		/// Register the event when the entity takes damage
 		/// </summary>
@@ -96,13 +100,30 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		/// <param name="unRegister"></param>
 		public void UnRegisterOnTakeDamage(OnTakeDamage onTakeDamage);
 		
+		public void RegisterOnDie(Action<ICanDealDamage, IDamageable, HitData> onDie);
+		
+		public void UnRegisterOnDie(Action<ICanDealDamage, IDamageable, HitData> onDie);
+		
 		/// <summary>
 		/// Heal the entity
 		/// </summary>
 		/// <param name="healAmount">The amount of heal</param>
 		/// <param name="healer">Healer</param>
 		public void Heal(int healAmount, IBelongToFaction healer);
+
+		public void RegisterOnModifyReceivedHealAmount(Func<int, IBelongToFaction, IDamageable, int> onModifyHealAmount);
 		
+		public void UnRegisterOnModifyReceivedHealAmount(Func<int, IBelongToFaction, IDamageable, int> onModifyHealAmount);
+		
+		/// <summary>
+		/// Unlike to heal, set the health of the entity to a specific value, this will not trigger the heal event,
+		/// but if the health is below 0, it will trigger the die event.
+		/// Health will not exceed the max health
+		/// </summary>
+		/// <param name="health"></param>
+		public void SetHealth(int health);
+
+		public void ChangeMaxHealth(int amount);
 		
 		/// <summary>
 		/// Register the event when the entity is healed
@@ -125,5 +146,9 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		public BindableProperty<bool> IsInvincible { get; }
 		
 		public bool CheckCanTakeDamage([CanBeNull] ICanDealDamage damageDealer);
+
+		public void RegisterOnModifyReceivedDamage(Func<int, ICanDealDamage, int> onModifyDamage);
+
+		public void UnRegisterOnModifyReceivedDamage(Func<int, ICanDealDamage, int> onModifyDamage);
 	}
 }

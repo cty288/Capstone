@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Baits.Model.Property;
 using _02._Scripts.Runtime.Levels;
@@ -63,6 +64,9 @@ namespace Tests.Tests_Editor {
         }
         
         internal class TestFriendlyEntity : AbstractCreature, ICanDealDamage {
+            private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+            private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+
             [field: ES3Serializable]
             public override string EntityName { get; set; } = "TestEnemy2";
 
@@ -106,16 +110,30 @@ namespace Tests.Tests_Editor {
                 return Faction.Friendly;
             }
 
-            public void OnKillDamageable(IDamageable damageable) {
+            public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
                 
             }
 
-            public void OnDealDamage(IDamageable damageable, int damage) {
+            public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
                 
             }
 
-            public ICanDealDamageRootEntity RootDamageDealer { get; }
-            public ICanDealDamageRootViewController RootViewController { get; }
+            public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+
+            Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+                get => _onDealDamageCallback;
+                set => _onDealDamageCallback = value;
+            }
+
+            Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+                get => _onKillDamageableCallback;
+                set => _onKillDamageableCallback = value;
+            }
+
+            public ICanDealDamage ParentDamageDealer { get; }
+
+            /*public ICanDealDamageRootEntity RootDamageDealer { get; }
+            public ICanDealDamageRootViewController RootViewController { get; }*/
         }
     
         //===============================Start writing your tests here===============================
@@ -236,7 +254,7 @@ namespace Tests.Tests_Editor {
 
 
             ent1.RegisterOnTakeDamage(OnEnt1TakeDamage);
-            ent1.TakeDamage(200, ent2);
+            ent1.TakeDamage(200, ent2, out _);
             
             void OnEnt1TakeDamage(int damage, int currenthealth, IBelongToFaction damagedealer, [CanBeNull] HitData hitData) {
                 Assert.AreEqual(200, damage);
@@ -249,11 +267,11 @@ namespace Tests.Tests_Editor {
             
             //when invincible, damage taken will be 0
             ent1.IsInvincible.Value = true;
-            ent1.TakeDamage(200, ent2);
+            ent1.TakeDamage(200, ent2, out _);
             Assert.AreEqual(1298, ent1.GetCurrentHealth());
             
             //when the damage dealer has the same faction, damage will not be taken
-            ent1.TakeDamage(100, ent1);
+            ent1.TakeDamage(100, ent1, out _);
             Assert.AreEqual(1298, ent1.GetCurrentHealth());
             
             

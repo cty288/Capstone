@@ -2,6 +2,7 @@ using System;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Runtime.DataFramework.Entities;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies.Model;
 using Runtime.Player;
@@ -47,20 +48,17 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         //public void Init(string id, IEntity entity);
     }
 
-    public interface IEnemyViewController : ICreatureViewController, IBelongToFaction, IHitResponder {
+    public interface IEnemyViewController : ICreatureViewController, IBelongToFaction, IHitResponder, ICanDealDamageViewController {
         public IEnemyEntity EnemyEntity { get; }
 
         IEntity IEntityViewController.Entity => EnemyEntity;
         
   //      public IEnemyEntity OnInitEntity(int level, int rarity);
-        
+    }
+    
+    public interface INormalEnemyViewController : IEnemyViewController {
         
     }
 
-    public interface IWeaponViewController : IEntityViewController
-    {
-        public IWeaponEntity WeaponEntity { get; }
-
-        IEntity IEntityViewController.Entity => WeaponEntity;
-    }
+   
 }

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Utilities;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
+using JetBrains.Annotations;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.Event;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -14,6 +18,8 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 using Runtime.Inventory.Model;
+using Runtime.Player;
+using Runtime.Temporary;
 using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
@@ -31,7 +37,16 @@ namespace Runtime.Weapons.Model.Base
         public float returnSpeed;
     }
     
-    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage {
+    public abstract class ModifyValueEvent{}
+    public abstract class ModifyValueEvent<T> : ModifyValueEvent {
+        public T Value;
+		
+        public ModifyValueEvent(T value) {
+            Value = value;
+        }
+    }
+    
+    public interface IWeaponEntity : IResourceEntity, IHaveCustomProperties, IHaveTags, ICanDealDamage, IHitResponder {
         public IBaseDamage GetBaseDamage();
         public IAttackSpeed GetAttackSpeed();
         public IAdsFOV GetAdsFOV();
@@ -45,6 +60,8 @@ namespace Runtime.Weapons.Model.Base
         public IBulletSpeed GetBulletSpeed();
         public IChargeSpeed GetChargeSpeed();
         public IWeight GetWeight();
+
+        public int GetRarity();
         
         public string DisplayedModelPrefabName { get; }
         
@@ -57,25 +74,67 @@ namespace Runtime.Weapons.Model.Base
 
         public int GetRealDamageValue();
         
-        public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer);
+        //public void SetOwner(ICanDealDamage owner);
+        
+       // public void SetDamageDealer(ICanDealDamage damageDealer);
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType);
 
-        public void RegisterOnDealDamage(Action<IDamageable, int> callback);
+        public ReferenceCounter LockWeaponCounter { get; }
 
-        public void UnRegisterOnDealDamage(Action<IDamageable, int> callback);
+        public bool IsLocked { get; }
 
-        public HitData OnModifyHitData(HitData data);
-
-        public void RegisterOnModifyHitData(Func<HitData, HitData> callback);
+        public void RegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
         
-        public void UnRegisterOnModifyHitData(Func<HitData, HitData> callback);
+        public void UnRegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback);
+
+        public CurrencyType GetMainBuildType();
+        
+        public int GetTotalBuildRarity(CurrencyType currencyType);
+
+        public Type CurrentBuildBuffType { get; set; }
+
+        public int GetBuildBuffRarityFromBuildTotalRarity(int totalRarity);
+        
+        public void AddAmmo(int amount);
         // void RegisterOnWeaponPartsUpdate(Action<string, string> callback);
+        // void OnModifyHitData(Func<HitData, IWeaponEntity, HitData> onModifyHitData);
+
+        public TEventType SendModifyValueEvent<TEventType>(TEventType modifyValueEvent)
+            where TEventType : ModifyValueEvent;
+
+        public void RegisterOnModifyValueEvent<TEventType>(Func<TEventType, TEventType> callback)
+            where TEventType : ModifyValueEvent;
+        
+        public void UnRegisterOnModifyValueEvent<TEventType>(Func<TEventType, TEventType> callback)
+            where TEventType : ModifyValueEvent;
+
+        public void ShootUseAmmo(int count);
+        
+        public void RegisterOnUseAmmo(Action<int> callback);
+        
+        public void UnRegisterOnUseAmmo(Action<int> callback);
     }
 
     public struct OnWeaponPartsUpdate {
         public IWeaponEntity WeaponEntity;
         public string PreviousTopPartsUUID;
         public string CurrentTopPartsUUID;
+    }
+
+
+    public interface IFuncRegisterations {
+    }
+
+    public class FuncRegisterations<T> : IFuncRegisterations {
+        public HashSet<Func<T, T>> OnEvent = new HashSet<Func<T, T>>();
+        
+        public void Add(Func<T, T> callback) {
+            OnEvent.Add(callback);
+        }
+        
+        public void Remove(Func<T, T> callback) {
+            OnEvent.Remove(callback);
+        }
     }
     
     public abstract class WeaponEntity<T> :  BuildableResourceEntity<T>, IWeaponEntity  where T : WeaponEntity<T>, new() {
@@ -92,7 +151,13 @@ namespace Runtime.Weapons.Model.Base
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
         private IWeight weightProperty;
-        protected ICanDealDamageRootEntity rootDamageDealer;
+
+        private Dictionary<Type, IFuncRegisterations> onModifyValueEventCallbacks =
+            new Dictionary<Type, IFuncRegisterations>();
+        
+        
+        //protected ICanDealDamageRootEntity rootDamageDealer;
+       // protected ICanDealDamage damageDealer;
         
         [field: ES3Serializable]
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
@@ -103,7 +168,10 @@ namespace Runtime.Weapons.Model.Base
         //private Action<string, string> onWeaponPartsUpdate;
         private Action<IDamageable, int> onDealDamage;
 
-        private List<Func<HitData, HitData>> onModifyHitData = new List<Func<HitData, HitData>>();
+        private List<Func<HitData, IWeaponEntity, HitData>> onModifyHitData = new List<Func<HitData, IWeaponEntity, HitData>>();
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+        private Action<int> _onUseAmmoCallback;
         public abstract int Width { get; }
 
         protected override ConfigTable GetConfigTable() {
@@ -112,27 +180,31 @@ namespace Runtime.Weapons.Model.Base
         }
 
         public override int GetMaxRarity() {
-            return 1;
+            return GetRarity();
+        }
+
+        public override int GetMinRarity() {
+            return GetRarity();
         }
 
         public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
             base.OnRegisterResourcePropertyDescriptionGetters(ref list);
             
             list.Add(() => new ResourceBuffedPropertyDescription<Vector2Int>(baseDamageProperty,
-                "PropertyIconDamage", Localization.Get(
+                null, Localization.Get(
                     "PROPERTY_ICON_DAMAGE"),
                 (value) => value.x + " - " + value.y, (initial, real) => real.y - initial.y));
 
 
             list.Add(() => new ResourceBuffedPropertyDescription<float>(attackSpeedProperty,
-                "PropertyIconAttackSpeed",
+                null,
                 Localization.Get("PROPERTY_ICON_ATTACk_SPEED"),
                 (value) => Localization.GetFormat("PROPERTY_ICON_ATTACk_SPEED_DESC", value.ToString("f2")),
                 (initial, real) => (Math.Abs(real - initial) < 0.01f) ? 0 : (real > initial) ? -1 : 1));
 
             
             list.Add(() => new ResourceBuffedPropertyDescription<int>(ammoSizeProperty,
-                "PropertyIconAmmo",
+                null,
                 Localization.Get("PROPERTY_ICON_AMMO"),
                 (val) => val.ToString(),
                 (initial, real) => real - initial));
@@ -140,8 +212,10 @@ namespace Runtime.Weapons.Model.Base
         
 
         public override ResourceCategory GetResourceCategory() {
-            return ResourceCategory.Weapon;
+            return ResourceCategory.Weapon; 
         }
+        
+        
 
         protected override void OnEntityStart(bool isLoadedFromSave) {
             if (!isLoadedFromSave) { //otherwise it is managed by es3
@@ -159,6 +233,7 @@ namespace Runtime.Weapons.Model.Base
         }
 
         private void UpdateWeaponPartsOfType(WeaponPartsSlot weaponPartsSlot) {
+            
             foreach (WeaponPartsSlot s in weaponParts[weaponPartsSlot.WeaponPartType]) {
                 s.UpdateAllWeaponPartsOfThisType(weaponPartsSlot);
             }
@@ -190,7 +265,8 @@ namespace Runtime.Weapons.Model.Base
                 if(weaponParts.ContainsKey(weaponPartType)) continue;
                 weaponParts.Add(weaponPartType, new HashSet<WeaponPartsSlot>());
                 AddWeaponPartsSlot(weaponPartType, false);
-                //AddWeaponPartsSlot(weaponPartType, false);
+                /*AddWeaponPartsSlot(weaponPartType, false);
+                AddWeaponPartsSlot(weaponPartType, false);*/
             }
         }
 
@@ -224,7 +300,7 @@ namespace Runtime.Weapons.Model.Base
         }
 
         public override void OnRecycle() {
-            rootDamageDealer = null;
+            //damageDealer = null;
             CurrentAmmo.UnRegisterAll();
             foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
                 foreach (WeaponPartsSlot slot in part.Value) {
@@ -235,8 +311,20 @@ namespace Runtime.Weapons.Model.Base
             onModifyHitData.Clear();
             
             weaponParts.Clear();
-            
+            OnModifyDamageCountCallbackList.Clear();
+            _onDealDamageCallback = null;
+            _onKillDamageableCallback = null;
+            damageDealerUUID = null;
+            _onUseAmmoCallback = null;
+            LockWeaponCounter.Clear();
         }
+
+        public override void OnAddedToInventory(string playerUUID) {
+            base.OnAddedToInventory(playerUUID);
+            damageDealerUUID = playerUUID;
+        }
+        
+       
 
         protected override void OnEntityRegisterAdditionalProperties() {
             base.OnEntityRegisterAdditionalProperties();
@@ -326,10 +414,14 @@ namespace Runtime.Weapons.Model.Base
             return Random.Range(baseDamageProperty.RealValue.Value.x, baseDamageProperty.RealValue.Value.y + 1);
         }
 
-        public void SetRootDamageDealer(ICanDealDamageRootEntity rootDamageDealer) {
-            this.rootDamageDealer = rootDamageDealer;
-            CurrentFaction.Value = rootDamageDealer.CurrentFaction.Value;
-        }
+        /*public void SetOwner(ICanDealDamage owner) {
+            if (owner != null) {
+                ParentDamageDealer = owner;
+                CurrentFaction.Value = (this as ICanDealDamage).GetRootDamageDealer().CurrentFaction.Value;
+            }
+           
+        }*/
+        
 
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType) {
             if (!weaponParts.ContainsKey(weaponPartType)) {
@@ -338,55 +430,198 @@ namespace Runtime.Weapons.Model.Base
             return weaponParts[weaponPartType];
         }
 
-        public void RegisterOnDealDamage(Action<IDamageable, int> callback) {
-            onDealDamage += callback;
+        [field: ES3Serializable]
+        public ReferenceCounter LockWeaponCounter { get; } = new ReferenceCounter();
+
+        public bool IsLocked => LockWeaponCounter.Count > 0;
+
+
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
         }
 
-        public void UnRegisterOnDealDamage(Action<IDamageable, int> callback) {
-            onDealDamage -= callback;
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+
+        public bool CheckHit(HitData data) {
+            return true;
+        }
+
+        public void HitResponse(HitData data) {
+         
         }
 
         public HitData OnModifyHitData(HitData data) {
             HitData result = data;
-            foreach (Func<HitData, HitData> func in onModifyHitData) {
-                result = func(result);
+            foreach (Func<HitData, IWeaponEntity, HitData> func in onModifyHitData) {
+                result = func(result, this);
             }
             return result;
         }
 
-        public void RegisterOnModifyHitData(Func<HitData, HitData> callback) {
+        public void RegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback) {
             onModifyHitData.Add(callback);
         }
 
-        public void UnRegisterOnModifyHitData(Func<HitData, HitData> callback) {
+        public void UnRegisterOnModifyHitData(Func<HitData, IWeaponEntity, HitData> callback) {
             onModifyHitData.Remove(callback);
         }
 
+        public CurrencyType GetMainBuildType() {
+            if (!weaponParts.ContainsKey(WeaponPartType.Magazine)) {
+                return CurrencyType.Time;
+            }
 
-        /*public void AddToParts(IWeaponPartsEntity weaponPartsEntity) {
-            WeaponPartType weaponPartType = weaponPartsEntity.WeaponPartType;
-            HashSet<WeaponPartsSlot> parts = weaponParts[weaponPartType];
-            if (parts.Count < weaponPartsSize[weaponPartType]) {
-                parts.Add(new WeaponPartsSlot(weaponPartsEntity));
+
+            Dictionary<CurrencyType, int> currencyTypes = new Dictionary<CurrencyType, int>();
+            foreach (WeaponPartsSlot slot in weaponParts[WeaponPartType.Magazine]) {
+                if (slot.GetLastItemUUID() == null) {
+                    continue;
+                }
+
+                IWeaponPartsEntity weaponPartsEntity = GlobalEntities.GetEntityAndModel(slot.GetLastItemUUID()).Item1 as IWeaponPartsEntity;
+                if (weaponPartsEntity == null) {
+                    continue;
+                }
+                
+
+                CurrencyType buildType = weaponPartsEntity.GetBuildType();
+                
+                if (!currencyTypes.ContainsKey(buildType)) {
+                    currencyTypes.Add(buildType, 0);
+                }
+                currencyTypes[buildType]++;
+            }
+            
+            if (currencyTypes.Count == 0) {
+                return CurrencyType.Time;
+            }
+            
+            //get the currency type with the highest count
+            int maxCount = 0;
+            CurrencyType maxCurrencyType = CurrencyType.Time;
+            foreach (KeyValuePair<CurrencyType, int> currencyType in currencyTypes) {
+                if (currencyType.Value > maxCount) {
+                    maxCount = currencyType.Value;
+                    maxCurrencyType = currencyType.Key;
+                }
+            }
+
+            return maxCurrencyType;
+        }
+
+        public int GetBuildBuffRarityFromBuildTotalRarity(int totalRarity) {
+            if (totalRarity < 1) {
+                return 0;
+            }else if (totalRarity < 4) {
+                return 1;
+            }else if (totalRarity < 7) {
+                return 2;
+            }
+            return 3;
+        }
+
+        public void AddAmmo(int amount) {
+            int maxAmmo = ammoSizeProperty.RealValue.Value;
+            if (CurrentAmmo.Value + amount > maxAmmo) {
+                CurrentAmmo.Value = maxAmmo;
+            }
+            else {
+                CurrentAmmo.Value += amount;
             }
         }
 
-        public bool CanAddToParts(IWeaponPartsEntity weaponPartsEntity) {
-            if (weaponPartsEntity == null) {
-                return false;
+        public TEventType SendModifyValueEvent<TEventType>(TEventType modifyValueEvent) where TEventType: ModifyValueEvent {
+            Type type = modifyValueEvent.GetType();
+            if (!onModifyValueEventCallbacks.ContainsKey(type)) {
+                return modifyValueEvent;
             }
 
-            //check if the number of parts in the list is less than the capacity
-            HashSet<string> parts = weaponParts[weaponPartsEntity.WeaponPartType];
-            return parts.Count < weaponPartsSize[weaponPartsEntity.WeaponPartType];
+            FuncRegisterations<TEventType> registerations =
+                onModifyValueEventCallbacks[type] as FuncRegisterations<TEventType>;
+            
+            
+            TEventType result = modifyValueEvent;
+            foreach (Func<TEventType, TEventType> func in registerations.OnEvent) {
+                result = func(result);
+            }
+
+            return result;
+        }
+        
+
+        public void RegisterOnModifyValueEvent<TEventType>(Func<TEventType, TEventType> callback) where TEventType : ModifyValueEvent {
+            Type type = typeof(TEventType);
+            if (!onModifyValueEventCallbacks.ContainsKey(type)) {
+                onModifyValueEventCallbacks.Add(type, new FuncRegisterations<TEventType>());
+            }
+
+
+            FuncRegisterations<TEventType> registerations =
+                onModifyValueEventCallbacks[type] as FuncRegisterations<TEventType>;
+            
+            registerations.Add(callback);
         }
 
-        public void RemoveFromParts(string weaponPartID, WeaponPartType weaponPartType) {
-            HashSet<string> parts = weaponParts[weaponPartType];
-            if (parts.Contains(weaponPartID)) {
-                parts.Remove(weaponPartID);
+        public void UnRegisterOnModifyValueEvent<TEventType>(Func<TEventType, TEventType> callback) where TEventType : ModifyValueEvent {
+            Type type = typeof(TEventType);
+            if (!onModifyValueEventCallbacks.ContainsKey(type)) {
+                return;
             }
-        }*/
+
+            FuncRegisterations<TEventType> registerations =
+                onModifyValueEventCallbacks[type] as FuncRegisterations<TEventType>;
+
+            registerations.Remove(callback);
+        }
+
+        public void ShootUseAmmo(int count) {
+            int realCount = Mathf.Min(count, CurrentAmmo.Value);
+            CurrentAmmo.Value -= realCount;
+            _onUseAmmoCallback?.Invoke(realCount);
+        }
+
+        public void RegisterOnUseAmmo(Action<int> callback) {
+            _onUseAmmoCallback += callback;
+        }
+
+        public void UnRegisterOnUseAmmo(Action<int> callback) {
+            _onUseAmmoCallback -= callback;
+        }
+
+
+        public int GetTotalBuildRarity(CurrencyType currencyType) {
+            int totalRarity = 0;
+            foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
+                foreach (WeaponPartsSlot slot in part.Value) {
+                    if (slot.GetLastItemUUID() == null) {
+                        continue;
+                    }
+
+                    IWeaponPartsEntity weaponPartsEntity =
+                        GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID()) as IWeaponPartsEntity;
+                    
+                    if (weaponPartsEntity == null) {
+                        continue;
+                    }
+
+                    if (weaponPartsEntity.GetBuildType() != currencyType) {
+                        continue;
+                    }
+
+                    totalRarity += weaponPartsEntity.GetRarity();
+                }
+            }
+
+            return totalRarity;
+        }
+
+        [field: ES3Serializable] public Type CurrentBuildBuffType { get; set; } = null;
+
 
         public override bool OnValidateBuff(IBuff buff) {
             if (buff is IWeaponPartsBuff partsBuff) {
@@ -398,8 +633,7 @@ namespace Runtime.Weapons.Model.Base
                     return true;
                 }
             }
-
-            return false;
+            return true;
         }
 
         public void Reload() {
@@ -431,17 +665,36 @@ namespace Runtime.Weapons.Model.Base
         }
 
         [field: ES3Serializable] public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
-        public void OnKillDamageable(IDamageable damageable) {
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
             
         }
 
-        public void OnDealDamage(IDamageable damageable, int damage) {
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
             Debug.Log($"Dealt {damage} damage to {damageable}");
             onDealDamage?.Invoke(damageable, damage);
         }
 
-         ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
-         public ICanDealDamageRootViewController RootViewController => null;
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+       
+        public ICanDealDamage ParentDamageDealer{
+            get {
+                PlayerController player = PlayerController.GetPlayerByUUID(damageDealerUUID);
+                if (player) {
+                    return player;
+                }
+                
+                return GlobalEntities.GetEntityAndModel(damageDealerUUID).Item1 as ICanDealDamage;
+            }
+        }
+            
+        
+        
+        [field: ES3Serializable] private string damageDealerUUID { get; set; } = null;
+        
+
+        /*ICanDealDamageRootEntity ICanDealDamage.RootDamageDealer => rootDamageDealer;
+         public ICanDealDamageRootViewController RootViewController => null;*/
          public override IResourceEntity GetReturnToBaseEntity() {
              //remove all weapon parts
                 foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {

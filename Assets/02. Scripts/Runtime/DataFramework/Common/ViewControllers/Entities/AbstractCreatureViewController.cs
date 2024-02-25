@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using BehaviorDesigner.Runtime;
+using Cysharp.Threading.Tasks;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
@@ -12,6 +14,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
 using Runtime.DataFramework.Entities.Creatures;
 using Runtime.GameResources;
+using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -23,6 +26,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public BoxCollider SpawnSizeCollider { get; }
 		
 		public ICreature OnInitEntity(int level, int rarity);
+		CancellationToken GetCancellationTokenOnStunnedOrDie();
 	}
 
 	[Serializable]
@@ -51,7 +55,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature {
 		//[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
+
 		private static int combatCurrencyAmountPerItem = 5;
+		[Header("Rarity Base Value")]
 		[SerializeField] protected int rarityBaseValueBuiltFromInspector = 1;
 		protected NavMeshAgent navMeshAgent;
 		protected BehaviorTree behaviorTree;
@@ -62,6 +68,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Creature Recycle Settings")]
 		[SerializeField]
 		private bool autoRemoveEntityWhenDie = true;
+
+		private CancellationTokenSource ctsWhenDieOrStunned
+			= new CancellationTokenSource();
+		
+		private Rigidbody rb;
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
@@ -76,8 +87,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (behaviorTree) {
 				behaviorTree.enabled = false;
 			}
+			
+			rb = GetComponent<Rigidbody>();
 		}
-
+		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
 
 		protected override void OnStart() {
@@ -91,7 +104,43 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				behaviorTree.Start();
 			}
 
+			BoundEntity.StunnedCounter.Count.RegisterWithInitValue(OnStunnedCounterChanged)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+
+			//ctsWhenDieOrStunned = new CancellationTokenSource();
 		}
+
+		private void OnStunnedCounterChanged(int oldCount, int newCount) {
+			if (newCount <= 0) {
+				ctsWhenDieOrStunned.Cancel();
+				ctsWhenDieOrStunned = new CancellationTokenSource();
+			}
+			OnStunned(newCount > 0);
+		}
+
+		protected virtual void OnStunned(bool isStunned) {
+			if (behaviorTree) {
+				behaviorTree.enabled = !isStunned;
+			}
+			
+			
+			if (navMeshAgent) {
+				if (isStunned) {
+					navMeshAgent.velocity = Vector3.zero;
+				}
+				navMeshAgent.enabled = !isStunned;
+			}
+			
+			if(rb && isStunned) {
+				rb.velocity = Vector3.zero;
+			}
+
+			Animator animator = GetComponentInChildren<Animator>();
+			if (animator) {
+				animator.enabled = !isStunned;
+			}
+		}
+
 		protected abstract MikroAction WaitingForDeathCondition();
 		protected virtual void OnDieWaitEnd(ICanDealDamage damagedealer) {
 			SpawnDeathDroppedItemsAndCurrency(damagedealer);
@@ -101,9 +150,20 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 		}
 
+		protected override void Update() {
+			base.Update();
+			if (Input.GetKeyDown(KeyCode.O)) {
+				BoundEntity.StunnedCounter.Retain();
+			}
+			
+			if (Input.GetKeyDown(KeyCode.I)) {
+				BoundEntity.StunnedCounter.Release();
+			}
+		}
+
 		private void SpawnDeathDroppedItemsAndCurrency(ICanDealDamage damagedealer) {
-			if (damagedealer == null || damagedealer.RootDamageDealer == null ||
-			    damagedealer.RootDamageDealer.IsSameFaction(this)) {
+			if (damagedealer == null || damagedealer.GetRootDamageDealer() == null ||
+			    damagedealer.GetRootDamageDealer().IsSameFaction(this)) {
 				return;
 			}
 
@@ -141,7 +201,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				}
 			}
 
-			if (damagedealer.RootDamageDealer.CurrentFaction.Value == Faction.Friendly) { //killed by the player or friendly
+			if (damagedealer.GetRootDamageDealer().CurrentFaction.Value == Faction.Friendly) { //killed by the player or friendly
 				int combatCurrencyDropCount = GetSpawnedCombatCurrencyAmount();
 				if (combatCurrencyDropCount > 0) {
 					GeneratePickableCombatCurrency(combatCurrencyDropCount);
@@ -159,9 +219,15 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				action.Execute();
 			}
 			else {
-				OnDieWaitEnd(damagedealer);
+				OnEntityDieWithoutCallback(damagedealer);
 			}
-			
+			ctsWhenDieOrStunned.Cancel();
+			ctsWhenDieOrStunned = new CancellationTokenSource();
+		}
+
+		private async UniTask OnEntityDieWithoutCallback(ICanDealDamage damagedealer) {
+			await UniTask.Yield();
+			OnDieWaitEnd(damagedealer);
 		}
 		
 		protected abstract int GetSpawnedCombatCurrencyAmount();
@@ -261,5 +327,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		public BoxCollider SpawnSizeCollider { get; protected set; }
 
 		public abstract ICreature OnInitEntity(int level, int rarity);
+		public CancellationToken GetCancellationTokenOnStunnedOrDie() {
+			return ctsWhenDieOrStunned.Token;
+		}
 	}
 }

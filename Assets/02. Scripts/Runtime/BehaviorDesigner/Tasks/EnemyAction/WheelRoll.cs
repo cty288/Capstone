@@ -25,13 +25,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public float timer = 3f;
         public SharedGameObject player; // Reference to the player GameObject
         private NavMeshAgent agent;
-        private float extensionDistance = 5f;
+        private float extensionDistance = 10f;
         private bool moving;
         private Color startEmissionColor;
         public SharedGameObject e;
         private SafeGameObjectPool pool;
         // Start is called before the first frame update
         private float explosionTimer = 0.4f;
+        private float rollTime = 3f;
         public override void OnStart()
         {
             base.OnStart();
@@ -45,6 +46,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override TaskStatus OnUpdate()
         {
             explosionTimer -= Time.deltaTime;
+            rollTime -= Time.deltaTime;
             if(explosionTimer < 0)
             {
                 explosionTimer = 0.4f;
@@ -60,7 +62,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             if (player.Value != null && moving == false) // Check if the player reference is valid
             {
-                Debug.Log("rolling");
+                
                 // Calculate a vector from the enemy to the player
                 Vector3 toPlayer = player.Value.transform.position - transform.position;
 
@@ -68,12 +70,25 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 Vector3 targetPosition = player.Value.transform.position + toPlayer.normalized * extensionDistance;
 
                 // Move the enemy to the target position using NavMesh
-                agent.SetDestination(targetPosition);
+                Vector3 rollDestination = SetDestinationClosestToTarget(targetPosition);
+                if (rollDestination != targetPosition)
+                {
+                    Debug.Log("found place to roll");
+                    agent.SetDestination(targetPosition);
+                    
+                }
+                else
+                {
+                    Debug.Log("nah can't go shit");
+                    return TaskStatus.Success;
+                }
 
                 moving = true;
             }
-            if(agent.remainingDistance < 0.1f)
+            
+            if(rollTime < 0)
             {
+                
                 return TaskStatus.Success;
             }
             else
@@ -81,12 +96,25 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 return TaskStatus.Running;
             }
         }
+        Vector3 SetDestinationClosestToTarget(Vector3 target)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(target, out hit, 60f, NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+            else
+            {
+                return target;
+            }
+        }
         public override void OnEnd()
         {
             moving = false;
             agent.speed = 2f;
             explosionTimer = 0.4f;
-            
+            rollTime = 3f;
+
         }
     }
 

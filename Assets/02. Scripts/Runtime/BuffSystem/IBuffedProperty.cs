@@ -25,6 +25,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 		Weapon_AttackSpeed,
 		Weapon_BaseDamage,
 		Weapon_AmmoSize,
-		
+		Weapon_HipFireRecoil,
+		Weapon_ScopeRecoil,
 	}
 }

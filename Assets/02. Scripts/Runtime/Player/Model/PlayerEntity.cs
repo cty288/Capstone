@@ -1,5 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -16,7 +19,7 @@ using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace Runtime.Player {
-	public interface IPlayerEntity : ICreature, IEntity, ICanDealDamageRootEntity {
+	public interface IPlayerEntity : ICreature, IEntity, ICanDealDamage {
 		IAccelerationForce GetAccelerationForce();
 		IWalkSpeed GetWalkSpeed();
 		ISprintSpeed GetSprintSpeed();
@@ -30,8 +33,12 @@ namespace Runtime.Player {
 
 		IAirSpeedProperty GetAirSpeed();
 		
-		IArmorProperty GetArmor();
+		IArmorProperty GetMaxArmor();
+
+		IHealthRecoverSpeed GetHealthRecoverSpeed();
 		
+		BindableProperty<float> Armor { get; }
+
 		IArmorRecoverSpeedProperty GetArmorRecoverSpeed();
 		
 		IAirDrag GetAirDrag();
@@ -43,7 +50,24 @@ namespace Runtime.Player {
 		
 		void AddArmor(float amount);
 		
-		public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
+		/// <summary>
+		/// Unlike AddArmor, this will not trigger related events like RegisterOnModifyReceivedAddArmor
+		/// </summary>
+		/// <param name="amount"></param>
+		void SetArmor(float amount);
+		
+		void ChangeMaxArmor(float amount);
+		
+		/// <summary>
+		/// This is not dealing damage or healing, it's just changing the health value
+		/// </summary>
+		/// <param name="amount"></param>
+		void ChangeHealth(int amount);
+
+		public void RegisterOnModifyReceivedAddArmorAmount(Func<float, float> onModifyAddArmorAmount);
+		
+		public void UnRegisterOnModifyReceivedAddArmorAmount(Func<float, float> onModifyAddArmorAmount);
+		//public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
 	}
 
 	public struct OnPlayerKillEnemy {
@@ -73,9 +97,11 @@ namespace Runtime.Player {
 		public override string EntityName { get; set; } = "Player";
 		
 		private IAccelerationForce accelerationForce;
+		
 		private IWalkSpeed walkSpeed;
 		private ISprintSpeed sprintSpeed;
 		private ISlideSpeed slideSpeed;
+		
 		private IGroundDrag groundDrag;
 		private IJumpForce jumpForce;
 		private IAdditionalGravity additionalGravity;
@@ -84,12 +110,28 @@ namespace Runtime.Player {
 		private IWallRunForce wallRunForce;
 		private IAirDrag airDrag;
 		private IAirSpeedProperty airSpeed;
-		private IArmorProperty armor;
+		private IArmorProperty maxArmor;
 		private IArmorRecoverSpeedProperty armorRecoverSpeed;
+		private IHealthRecoverSpeed healthRecoverSpeed;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		
+
+		Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
 
 		private MovementState movementState;
 		private bool scopedIn;
-		
+		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+		private HashSet<Func<float, float>> OnModifyAddArmorAmountCallbackList { get; } = new HashSet<Func<float, float>>();
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.PlayerEntityConfigTable;
 		}
@@ -99,6 +141,11 @@ namespace Runtime.Player {
 		}
 
 		public override void OnRecycle() {
+			base.OnRecycle();
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
+			OnModifyAddArmorAmountCallbackList.Clear();
 			
 		}
 		protected override void OnInitModifiers(int rarity) {
@@ -128,11 +175,16 @@ namespace Runtime.Player {
 			
 			RegisterInitialProperty<IArmorProperty>(new ArmorProperty());
 			RegisterInitialProperty<IArmorRecoverSpeedProperty>(new ArmorRecoverSpeedProperty());
+
+			RegisterInitialProperty<IHealthRecoverSpeed>(new HealthRecoverSpeed());
 		}
 
 
 		protected override void OnEntityStart(bool isLoadedFromSave) {
-			
+			if (!isLoadedFromSave) {
+				Armor.Value =  maxArmor.RealValue.Value;
+			}
+		
 		}
 
 		public override void OnAwake() {
@@ -149,8 +201,9 @@ namespace Runtime.Player {
 			wallRunForce = GetProperty<IWallRunForce>();
 			airSpeed = GetProperty<IAirSpeedProperty>();
 			airDrag = GetProperty<IAirDrag>();
-			armor = GetProperty<IArmorProperty>();
+			maxArmor = GetProperty<IArmorProperty>();
 			armorRecoverSpeed = GetProperty<IArmorRecoverSpeedProperty>();
+			healthRecoverSpeed = GetProperty<IHealthRecoverSpeed>();
 		}
 
 		public IAccelerationForce GetAccelerationForce() {
@@ -198,10 +251,17 @@ namespace Runtime.Player {
 			return airSpeed;
 		}
 
-		public IArmorProperty GetArmor() {
-			return armor;
+		public IArmorProperty GetMaxArmor() {
+			return maxArmor;
 		}
-		
+
+		public IHealthRecoverSpeed GetHealthRecoverSpeed() {
+			return healthRecoverSpeed;
+		}
+
+		[field: ES3Serializable]
+		public BindableProperty<float> Armor { get; protected set; } = new BindableProperty<float>(0);
+
 		public IArmorRecoverSpeedProperty GetArmorRecoverSpeed() {
 			return armorRecoverSpeed;
 		}
@@ -231,16 +291,42 @@ namespace Runtime.Player {
 		}
 
 		public void AddArmor(float amount) {
-			float maxArmor = armor.InitialValue;
-			if (armor.RealValue.Value < maxArmor) {
-				float validAmount = Mathf.Min(maxArmor - armor.RealValue.Value, amount);
-				armor.RealValue.Value += validAmount;
+			foreach (var onModifyAddArmorAmount in OnModifyAddArmorAmountCallbackList) {
+				amount = onModifyAddArmorAmount(amount);
+			}
+			
+			float maxArmor = this.maxArmor.RealValue;
+			
+			if (Armor.Value < maxArmor) {
+				float validAmount = Mathf.Min(maxArmor - Armor.Value, amount);
+				this.Armor.Value +=  validAmount;
 			}
 		}
 
-		public void SetRootViewController(ICanDealDamageRootViewController rootViewController) {
-			RootViewController = rootViewController;
+		public void SetArmor(float amount) {
+			Armor.Value = Mathf.Clamp(amount, 0, maxArmor.RealValue.Value);
 		}
+
+		public void ChangeMaxArmor(float amount) {
+			if (amount > 0) {
+				maxArmor.RealValue.Value += amount;
+				Armor.Value +=  amount;
+			}
+			else {
+				maxArmor.RealValue.Value = Mathf.Max(0, maxArmor.RealValue.Value + amount);
+				Armor.Value = Mathf.Min(Armor.Value, maxArmor.RealValue.Value);
+			}
+		}
+
+		public void ChangeHealth(int amount) {
+			HealthInfo healthInfo = HealthProperty.RealValue.Value;
+			HealthProperty.RealValue.Value = new HealthInfo(healthInfo.MaxHealth,
+				Mathf.Clamp(healthInfo.CurrentHealth + amount, 0, healthInfo.MaxHealth));
+			if (amount < 0) {
+				Kill(null);
+			}
+		}
+
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
 			return null;
@@ -250,11 +336,11 @@ namespace Runtime.Player {
 			return Faction.Friendly;
 		}
 
-		public void OnKillDamageable(IDamageable damageable) {
+		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
 			
 		}
 
-		public void OnDealDamage(IDamageable damageable, int damage) {
+		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
 			if (damageable.GetCurrentHealth() <= 0) {
 				if (damageable is IBossEntity boss) {
 					this.SendEvent<OnPlayerKillEnemy>(new OnPlayerKillEnemy() {
@@ -274,6 +360,17 @@ namespace Runtime.Player {
 			Debug.Log("Player Deal Damage to " + damageable.EntityName + " with damage " + damage);
 		}
 
+		
+		public void RegisterOnModifyReceivedAddArmorAmount(Func<float, float> onModifyAddArmorAmount) {
+			OnModifyAddArmorAmountCallbackList.Add(onModifyAddArmorAmount);
+		}
+		
+		public void UnRegisterOnModifyReceivedAddArmorAmount(Func<float, float> onModifyAddArmorAmount) {
+			OnModifyAddArmorAmountCallbackList.Remove(onModifyAddArmorAmount);
+		}
+	
+		public ICanDealDamage ParentDamageDealer => null;
+
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {
 			base.OnTakeDamage(damage, damageDealer, hitData);
 			if (GetCurrentHealth() <= 0) {
@@ -286,15 +383,15 @@ namespace Runtime.Player {
 			//Debug.Log("Player Take Damage from " + damageDealer.RootDamageDealer.EntityName + " with damage " + damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => this;
+		/*public ICanDealDamageRootEntity RootDamageDealer => this;
 
-		public ICanDealDamageRootViewController RootViewController { get; protected set; } = null;
+		public ICanDealDamageRootViewController RootViewController { get; protected set; } = null;*/
 
 		protected override int DoTakeDamage(int actualDamage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData, 
 			bool nonlethal = false)  {
 			
 			HealthInfo healthInfo = HealthProperty.RealValue.Value;
-			float armorToTakeDamage = Mathf.Min(armor.RealValue.Value, actualDamage);
+			float armorToTakeDamage = Mathf.Min(Armor.Value, actualDamage);
 			int healthToTakeDamage = actualDamage - (int) armorToTakeDamage;
 			healthToTakeDamage = Mathf.Min(healthToTakeDamage, healthInfo.CurrentHealth);
 			if(nonlethal && healthToTakeDamage >= healthInfo.CurrentHealth) {
@@ -304,7 +401,7 @@ namespace Runtime.Player {
 			int totalDamage = (int) armorToTakeDamage + healthToTakeDamage;
 			
 			if (armorToTakeDamage > 0) {
-				armor.RealValue.Value -= armorToTakeDamage;
+				Armor.Value -= armorToTakeDamage;
 			}
 				
 
@@ -321,6 +418,7 @@ namespace Runtime.Player {
 				DamageToHealth = healthToTakeDamage
 			});
 			
+			
 			return totalDamage;
 			
 		}
@@ -331,6 +429,7 @@ namespace Runtime.Player {
 				Buff = buff,
 				EventType = eventType
 			});
+			
 		}
 	}
 }

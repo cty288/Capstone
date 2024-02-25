@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
+using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -40,7 +41,7 @@ namespace Runtime.Enemies
         }
 
         public override void OnRecycle() {
-
+            base.OnRecycle();
         }
         protected override void OnInitModifiers(int rarity, int level) {
             
@@ -75,7 +76,6 @@ namespace Runtime.Enemies
     }
     public class Boss1 : AbstractBossViewController<Boss1Entity>
     {
-        
         public int MaxShellHealth { get; }
         
         public int CurrentShellHealth { get; }
@@ -157,7 +157,7 @@ namespace Runtime.Enemies
 
         protected override void OnEntityStart()
         {
-            Debug.Log("start");
+            // Debug.Log("start");
             //binding
             BindCustomData<int>("CurrentShellHealth", "shellHealthInfo", "info",info=>info.CurrentHealth);
             BindCustomData<int>("MaxShellHealth", "shellHealthInfo", "info",info=>info.MaxHealth);
@@ -183,6 +183,8 @@ namespace Runtime.Enemies
             
            // BoundEntity.IsInvincible.Value = true;
             SpawnShellHealthBar();
+
+            AudioSystem.Singleton.Play3DSound("boss1-spawn", gameObject.transform.position, 0.5f);
         }
 
         protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
@@ -205,39 +207,24 @@ namespace Runtime.Enemies
         }
         
         protected void OnShellClosedChanged(bool oldValue,bool newValue) {
-            //GetComponent<>()
-            
-            Debug.Log("changed to" + newValue);
             shellCollider.enabled = newValue;
             hardCollider.enabled = newValue;
             if (CurrentShellHealth <= 0 && !newValue) {
+                AudioSystem.Singleton.Play3DSound("break-shield", gameObject.transform.position, 0.5f);
                 animator.CrossFade("OpenImmediately", 0.05f);
             }
             animator.SetBool("ShellClosed",newValue);
             _innerShellHurtboxModifier.IgnoreHurtboxCheck = !newValue;
-            /*foreach (var pedalHurbox in pedalHurboxes) {
-                pedalHurbox.DamageMultiplier = 1;
-            }*/
-           // shellHurbox.SetActive(newValue);
         }
-        
-        // private void Update()
-        // {
-        //
-        // }
 
         protected override void OnAnimationEvent(string eventName) {
             switch (eventName)
             {
                 case "ShellOpen":
-                    //BoundEntity.IsInvincible.Value = false;
                     UnSpawnShellHealthBar();
-                   // shellHurbox.SetActive(false);
                     break;
                 case "ShellClose":
-                    //BoundEntity.IsInvincible.Value = true;
                     SpawnShellHealthBar();
-                    //shellHurbox.SetActive(true);
                     break;
                 case "ClearHits":
                     hitObjects.Clear();
@@ -246,12 +233,6 @@ namespace Runtime.Enemies
                     ClearHitObjects();
                     slamHitBox.gameObject.SetActive(true);
                     slamHitBox.StartCheckingHits(BoundEntity.GetCustomDataValue<int>("damages","meleeDamage").Value);
-                   // shellHurbox.SetActive(false);
-                    /*foreach (var pedalHurbox in pedalHurboxes) {
-                        pedalHurbox.DamageMultiplier = 0;
-                    }*/
-
-                    //BoundEntity.ChangeShellStatus(false);
                     _innerShellHurtboxModifier.IgnoreHurtboxCheck = true;
                     break;
                 case "MeleeFinish":
@@ -272,7 +253,7 @@ namespace Runtime.Enemies
             HealthBar healthBar = SpawnCrosshairResponseHUDElement(shellHealthBarSpawnTransform, "Boss1ShellHealthBar",
                 HUDCategory.HealthBar, false).Item1.GetComponent<HealthBar>();
 
-            healthBar.OnSetEntity(BoundEntity.GetCustomDataValue<HealthInfo>("shellHealthInfo", "info"), BoundEntity);
+            healthBar.SetEntity(BoundEntity.GetCustomDataValue<HealthInfo>("shellHealthInfo", "info"), BoundEntity);
         }
         
         private void UnSpawnShellHealthBar() {
@@ -311,14 +292,14 @@ namespace Runtime.Enemies
                     }
                 }
                 else {
-                    BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
+                    BoundEntity.TakeDamage(data.Damage, data.Attacker,out _, data);
                 }
                 
                 
                
             }
             else {
-                BoundEntity.TakeDamage(data.Damage, data.Attacker, data);
+                BoundEntity.TakeDamage(data.Damage, data.Attacker,out _, data);
             }
 
            

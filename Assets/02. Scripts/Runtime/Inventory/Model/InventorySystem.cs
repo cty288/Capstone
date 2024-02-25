@@ -11,6 +11,7 @@ using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
+using Runtime.Player;
 using Runtime.Utilities;
 
 namespace Runtime.Inventory.Model {
@@ -36,6 +37,7 @@ namespace Runtime.Inventory.Model {
 		private int currentSelectedIndex = 0;
 		private ReferenceCounter lockSwitchCounter = new ReferenceCounter();
 		private ICurrencyModel currencyModel;
+		private IGamePlayerModel playerModel;
 		
 		
 		private Dictionary<ResourceSlot, HotBarCategory> slotToCategories = new Dictionary<ResourceSlot, HotBarCategory>();
@@ -43,6 +45,7 @@ namespace Runtime.Inventory.Model {
 		protected override void OnInit() {
 			base.OnInit();
 
+			playerModel = this.GetModel<IGamePlayerModel>();
 			currencyModel = this.GetModel<ICurrencyModel>();
 			//this.RegisterEvent<OnHotBarSlotSelectedEvent>(OnHotBarSlotSelected);
 			if (model.IsFirstTimeCreated) {
@@ -238,6 +241,10 @@ namespace Runtime.Inventory.Model {
 		}
 
 		public bool AddItem(IResourceEntity item, bool sendEvent = true) {
+			if (item == null) {
+				return false;
+			}
+
 			if (model.AddItem(item)) {
 				if (sendEvent) {
 					if (sendEvent) {
@@ -245,8 +252,11 @@ namespace Runtime.Inventory.Model {
 							Item = item
 						});
 					}
-					item.OnAddedToInventory();
+
+					
 				}
+				item.OnAddedToInventory(playerModel.GetPlayer().UUID);
+				item.AddedToInventoryBefore = true;
 				return true;
 			}
 
@@ -267,6 +277,7 @@ namespace Runtime.Inventory.Model {
 				foreach (string id in slot.GetUUIDList()) {
 					IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(id);
 					if (entity != null) {
+						entity.AddedToInventoryBefore = true;
 						AddItem(entity, false);
 					}
 				}
@@ -309,7 +320,7 @@ namespace Runtime.Inventory.Model {
 
 
 		private void AddInitialSlots() {
-			model.AddSlots(InitialSlotCount);
+			model.AddSlots(InitialSlotCount, out _);
 
 			model.AddHotBarSlots(HotBarCategory.Left, InitialHotBarSlotCount[HotBarCategory.Left],
 				()=>new LeftHotBarSlot());

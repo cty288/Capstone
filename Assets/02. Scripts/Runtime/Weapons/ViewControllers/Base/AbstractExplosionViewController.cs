@@ -30,18 +30,32 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected IEntity entity = null;
 		
 		
-		public void OnKillDamageable(IDamageable damageable) {
-			owner?.OnKillDamageable(damageable);
+		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
+			//owner?.OnKillDamageable(damageable);
 		}
 
-		public void OnDealDamage(IDamageable damageable, int damage) {
-			owner?.OnDealDamage(damageable, damage);
+		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
+			//owner?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
 
-		private HashSet<GameObject> hitObjects = new HashSet<GameObject>();
+		Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
+		public ICanDealDamage ParentDamageDealer => owner;
+
+		/*public ICanDealDamageRootEntity RootDamageDealer => owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => owner?.RootViewController;*/
+
+		protected HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 		public int Damage { get; protected set; }
 		
 		public float Size { get; protected set; }
@@ -51,6 +65,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected ExplosionHitBox hitBox = null;
 		protected GameObject bulletOwner = null;
 		protected ICanDealDamage owner = null;
+		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+
 		protected virtual void Awake() {
 			hitBox = GetComponent<ExplosionHitBox>();
 			particleSystems.AddRange(GetComponentsInChildren<ParticleSystem>(true));
@@ -89,9 +106,14 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 
-		public bool CheckHit(HitData data) {
+		public virtual bool CheckHit(HitData data) {
 
-			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || hitObjects.Contains(data.Hurtbox.Owner)) {
+			if (Damage == 0) {
+				return false;
+			}
+			
+			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || 
+			    data.Hurtbox.Owner == owner.GetRootDamageDealerTransform()?.gameObject || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;
 			}
 			else { return true; }
@@ -121,6 +143,9 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			entity?.ReleaseRecycleRC();
 			
 			particleSystems.ForEach(p => p.Stop());
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 		public HitData OnModifyHitData(HitData data) {
 			if (owner is IHitResponder hitResponder) {

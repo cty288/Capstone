@@ -23,6 +23,8 @@ Material:
   m_Name: phong3
   m_Shader: {fileID: 4800000, guid: eece14cf363229c41817c5e9958f3794, type: 3}
   m_ValidKeywords:
+  - _EMISSION
+  - _FRESNELGLOW
   - _METALLICSPECGLOSSMAP
   - _NORMALMAP
   m_InvalidKeywords: []
@@ -105,9 +107,11 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FresnelCutOffIn: 0.24
-    - _FresnelCutOffOut: 0.65
-    - _FresnelPower: 0.22
+    - _FresnelCutOffIn: 0.482
+    - _FresnelCutOffOut: 0.853
+    - _FresnelGlow: 1
+    - _FresnelOn: 1
+    - _FresnelPower: 0.21
     - _GlossMapScale: 1
     - _GlossToggle: 1
     - _Glossiness: 0.4472136
@@ -133,8 +137,8 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.6367157, g: 0.6324887, b: 0.6214319, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HighlightColor: {r: 0.8113207, g: 0.1072656, b: 0, a: 0.8039216}
+    - _EmissionColor: {r: 0.14509805, g: 0, b: 0, a: 1}
+    - _HighlightColor: {r: 86.548485, g: 18.25029, b: 18.885609, a: 1}
     - _ShadowRadianceRange: {r: 0.1, g: 0.5, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

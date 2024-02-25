@@ -67,9 +67,26 @@ namespace Runtime.Weapons
         public override void OnStartHold(GameObject ownerGameObject)
         {
             base.OnStartHold(ownerGameObject);
-            for(int i = 0; i < BoundEntity.CurrentAmmo - blades.Count; i++) {
+            isReloadingBlade = false;
+            blades.Clear();
+            
+            int bladeCount = blades.Count;
+            for(int i = 0; i < BoundEntity.CurrentAmmo - bladeCount; i++) {
                 InitializeBlade();
             }
+            
+            CheckReloadBlade();
+        }
+
+        public override void OnStopHold()
+        {
+            base.OnStopHold();
+            foreach (var blade in blades)
+            {
+                bladePool.Recycle(blade.gameObject);
+            }
+            
+            blades.Clear();
         }
 
         private void InitializeBlade()
@@ -109,7 +126,7 @@ namespace Runtime.Weapons
 
         public override void OnItemScopePressed()
         {
-            // TODO: use melee attack
+            // TODO: use melee attack (need animation)
             // check melee cooldown / avaliability
             // start melee animation
             // set melee cooldown
@@ -145,6 +162,7 @@ namespace Runtime.Weapons
                 gameObject, this, BoundEntity.GetRange().BaseValue, true);
             
             blade.Launch(shootDir, BoundEntity.GetBulletSpeed().RealValue);
+            BoundEntity.CurrentAmmo.Value--;
             CheckReloadBlade();
         }
 
@@ -163,6 +181,7 @@ namespace Runtime.Weapons
             
             yield return new WaitForSeconds(BoundEntity.GetReloadSpeed().RealValue);
             InitializeBlade();
+            BoundEntity.CurrentAmmo.Value++;
             
             isReloadingBlade = false;
             CheckReloadBlade();

@@ -14,6 +14,9 @@ public class TaskElementViewController : MonoBehaviour {
     }
 
     public void Init(string title) {
+        if (!titleText) {
+            Awake();
+        }
         titleText.text = title;
     }
     

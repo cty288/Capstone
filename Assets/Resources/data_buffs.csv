@@ -1,0 +1,200 @@
+EntityName / Property Names,max_level,level_properties,tags,,More Notes
+Types,int,dynamic,"Dictionary<TagName,int>",,
+Notes ->,,"Dict<string, CustomProperty>
+
+CustomProperty Structure:
+{""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
+If no levels, use negative numbers to represent",, Blue headers are inventory (resource) related properties
+,,,,,
+BEGIN,,,,,
+BleedingBuff,3,"{
+  ""level1"": { 
+    ""buff_damage"": {""type"": ""float"", ""value"": 1},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level2"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 5},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level3"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 0.005},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+    
+  }
+}",,,
+DustBuff,4,"{
+  ""level1"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 20}
+  },
+  ""level2"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 30}
+  },
+  ""level3"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 50}
+  },
+  ""level4"": {
+    ""layer_num"": {""type"": ""int"", ""value"": 10},
+    ""damage"": {""type"": ""int"", ""value"": 100}
+  }
+}",,,
+TimeBuff,3,"{
+  ""level1"": {
+   
+  },
+  ""level2"": {
+    ""reload"": {""type"": ""float"", ""value"": 0.25}
+  },
+  ""level3"": {
+    ""level_up_time"": {""type"": ""float"", ""value"": 5}
+  }
+}",,,
+MotivatedBuff,4,"{
+  ""level1"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.05},
+    ""time"": {""type"": ""float"", ""value"": 2}
+  },
+  ""level2"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.15},
+    ""time"": {""type"": ""float"", ""value"": 2},
+    ""shield"": {""type"": ""int"", ""value"": 10}
+  },
+  ""level3"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.25},
+    ""time"": {""type"": ""float"", ""value"": 5},
+    ""shield"": {""type"": ""int"", ""value"": 20}
+  },
+  ""level4"": {
+    ""damage"": {""type"": ""float"", ""value"": 0.4},
+    ""time"": {""type"": ""float"", ""value"": 5},
+    ""shield"": {""type"": ""int"", ""value"": 30}
+  }
+}",,,
+PlantBuff,3,"{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
+    ""time"": {""type"": ""float"", ""value"": 10}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
+    ""range"": {""type"": ""float"", ""value"": 10},
+    ""time"": {""type"": ""float"", ""value"": 10}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 2},
+    ""range"": {""type"": ""float"", ""value"": 10},
+    ""time"": {""type"": ""float"", ""value"": 20}
+
+  }
+}",,,
+MineralBuff,3,"{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 15},
+    ""range"": {""type"": ""float"", ""value"": 8},
+    ""buff_time"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 15},
+    ""range"": {""type"": ""float"", ""value"": 8},
+    ""buff_time"": {""type"": ""float"", ""value"": 5},
+    ""hit_buff_multiplier"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 1},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 15},
+    ""range"": {""type"": ""float"", ""value"": 8},
+    ""buff_time"": {""type"": ""float"", ""value"": 5},
+    ""hit_buff_multiplier"": {""type"": ""float"", ""value"": 0.2},
+    ""enemy_damage_decrease_multiplier"": {""type"": ""float"", ""value"": 0.2}
+  }
+}",,,
+PowerlessBuff,4,"{
+  ""level1"": { 
+    ""damage_multiplier"": {""type"": ""float"", ""value"": 0.15}
+  },
+  ""level2"": {
+     ""damage_multiplier"": {""type"": ""float"", ""value"": 0.2}
+  },
+  ""level3"": {
+     ""damage_multiplier"": {""type"": ""float"", ""value"": 0.25}
+  },
+  ""level4"": {
+     ""damage_multiplier"": {""type"": ""float"", ""value"": 0.4}
+  }
+}",,,
+CombatBuff,3,"{
+  ""level1"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 30},
+    ""range"": {""type"": ""float"", ""value"": 1}
+  },
+  ""level2"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 30},
+    ""range"": {""type"": ""float"", ""value"": 1},
+    ""health_kill"": {""type"": ""float"", ""value"": 0.1}
+  },
+  ""level3"": {
+    ""chance"": {""type"": ""float"", ""value"": 0.2},
+    ""damage_per_rarity"": {""type"": ""int"", ""value"": 30},
+    ""range"": {""type"": ""float"", ""value"": 1},
+    ""health_kill"": {""type"": ""float"", ""value"": 0.1},
+    ""ammo_recovery_base"": {""type"": ""int"", ""value"": 1},
+    ""ammo_recovery_kill"": {""type"": ""int"", ""value"": 3}
+  }
+}",,,
+StimulatedBuff,4,"{
+  ""level1"": {
+    ""time"": {""type"": ""float"", ""value"": 10},
+    ""damage"": {""type"": ""float"", ""value"": 0.1},
+    ""move_speed"": {""type"": ""float"", ""value"": 0.05},
+    ""temp_health"": {""type"": ""int"", ""value"": 20}
+  },
+  ""level2"": {
+    ""time"": {""type"": ""float"", ""value"": 10},
+    ""damage"": {""type"": ""float"", ""value"": 0.15},
+    ""move_speed"": {""type"": ""float"", ""value"": 0.05},
+    ""temp_health"": {""type"": ""int"", ""value"": 20}
+  },
+  ""level3"": {
+    ""time"": {""type"": ""float"", ""value"": 20},
+    ""damage"": {""type"": ""float"", ""value"": 0.2},
+    ""move_speed"": {""type"": ""float"", ""value"": 0.05},
+    ""temp_health"": {""type"": ""int"", ""value"": 40}
+  },
+  ""level4"": {
+    ""time"": {""type"": ""float"", ""value"": 20},
+    ""damage"": {""type"": ""float"", ""value"": 0.3},
+    ""move_speed"": {""type"": ""float"", ""value"": 0.05},
+    ""temp_health"": {""type"": ""int"", ""value"": 40}
+  }
+}",,,
+VulnerableBuff,4,"{
+  ""level1"": { 
+    ""buff_damage"": {""type"": ""float"", ""value"": 0.2},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level2"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 0.3},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  },
+  ""level3"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 0.5},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+    
+  },
+  ""level4"": {
+    ""buff_damage"": {""type"": ""float"", ""value"": 0.75},
+    ""buff_length"": {""type"": ""float"", ""value"": 5}
+  }
+}",,,

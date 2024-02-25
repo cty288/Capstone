@@ -40,7 +40,7 @@ namespace Runtime.RawMaterials.Model.Base {
 		}
 
 		protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
-			return "???";
+			return originalDisplayName;
 		}
 
 		[field: ES3Serializable] public override string OnGroundVCPrefabName { get; } = "RawMaterial_OnGround";

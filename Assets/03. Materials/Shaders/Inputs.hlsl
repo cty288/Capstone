@@ -135,7 +135,7 @@ void InitializeSurfaceData(float2 uv, out SurfaceData surfaceData){
 	surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
 	
 	surfaceData.normalTS = SampleNormal(uv * _BumpMap_ST.xy + _BumpMap_ST.zw, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
-	surfaceData.emission = SampleEmission(uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
+	surfaceData.emission = SampleEmission(uv, _EmissionColor, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
 	surfaceData.occlusion = SampleOcclusion(uv);
 		
 	half4 specGloss = SampleMetallicSpecGloss(uv, albedoAlpha.a);

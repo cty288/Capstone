@@ -59,7 +59,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[field: ES3Serializable]
 		public string ID { get; set; }
 
-		[field: SerializeField]
+		//[field: SerializeField]
 		public string PrefabID { get; set; }
 
 		[Header("Auto Create New Entity by OnBuildNewEntity() When Start")]
@@ -223,8 +223,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 
-		private void OnLevelChange(ILevelEntity oldLevel, ILevelEntity newLevel) {
-			if (CanAutoRemoveEntityWhenLevelEnd  && newLevel.UUID != oldLevel.UUID) {
+		protected virtual void OnLevelChange(ILevelEntity oldLevel, ILevelEntity newLevel) {
+			if (CanAutoRemoveEntityWhenLevelEnd  && oldLevel!=null && newLevel.UUID != oldLevel.UUID) {
 				transform.SetParent(null);
 				entityModel.RemoveEntity(BoundEntity.UUID, true);
 			}
@@ -884,7 +884,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					if (nameTag) {
 						INameTag nameTagComponent = nameTag.GetComponent<INameTag>();
 						if (nameTagComponent != null) {
-							nameTagComponent.SetName(BoundEntity.GetDisplayName());
+							nameTagComponent.SetEntity(BoundEntity);
 						}
 						nameTag.gameObject.SetActive(false);
 						StartCoroutine(ShowNameTagDelayed(nameTag,nameTagInfo.Item2));

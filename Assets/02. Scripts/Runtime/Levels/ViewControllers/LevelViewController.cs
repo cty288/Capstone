@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Levels.DayNight;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Sandstorm;
@@ -25,10 +27,12 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
+using Runtime.GameResources;
 using Runtime.Spawning;
 using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
 using Runtime.Utilities;
+using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Builders;
 using UnityEngine;
 using UnityEngine.AI;
@@ -47,9 +51,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		public void OnExitLevel();
 
-		public ISubAreaLevelEntity GetCurrentActiveSubArea();
+		public ISubAreaLevelEntity GetCurrentActiveSubAreaEntity();
 		
-		List<GameObject> Enemies { get; }
+		HashSet<GameObject> Enemies { get; }
 	}
 
 	public struct LevelSpawnCard : ICanGetModel {
@@ -112,15 +116,19 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			return MainGame.Interface;
 		}
 	}
+	
+	[Serializable]
+	public struct SpawnCardListConfig {
+		[FormerlySerializedAs("spawnCardList")] public EnemySpawnInfo[] enemySpawnInfos;
+	}
 
 	[Serializable]
-	public struct LevelEnemyPrefabConfig {
-		[FormerlySerializedAs("prefab")] public GameObject mainPrefab;
+	public struct EnemySpawnInfo {
+		public GameObject mainPrefab;
 		public List<GameObject> variants;
 		public int minRarity;
 		public int maxRarity;
 	}
-	
 	
 	[RequireComponent(typeof(NavMeshSurface))]
 	public abstract class LevelViewController<T> : AbstractBasicEntityViewController<T>, ILevelViewController
@@ -129,8 +137,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[Header("Player")] 
 		[SerializeField] protected List<Transform> playerSpawnPoints = new List<Transform>();
 		
+		[FormerlySerializedAs("enemySpawnCardConfig")]
+		[FormerlySerializedAs("enemies")]
 		[Header("Enemies")]
-		[SerializeField] protected List<LevelEnemyPrefabConfig> enemies = new List<LevelEnemyPrefabConfig>();
+		[SerializeField] protected List<SpawnCardListConfig> enemySpawnCardConfigs;
 		[SerializeField] 
 		[SerializedDictionary("Currency Type", "Costs")]
 		protected SerializedDictionary<CurrencyType, RewardCostInfo> bossSpawnCostInfo;
@@ -149,28 +159,35 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] protected GameObject playerSpawner;
 		[SerializeField] private float[] sandstormProbability = new[] {0, 0.33f, 1f};
 
+		[SerializeField] private int timeCurrencyLevel = 1;
+		[SerializeField] private bool spawnExitDoor = true;
+		
 		private IGameEventSystem gameEventSystem;
 
 		//mainPrefab + variants
-		public List<GameObject> Enemies {
+		public HashSet<GameObject> Enemies {
 			get {
-				List<GameObject> enemyPrefabs = new List<GameObject>();
+				HashSet<GameObject> enemyPrefabs = new HashSet<GameObject>();
 				
 				
 				ISubAreaLevelViewController[] subAreas = GetComponentsInChildren<ISubAreaLevelViewController>(true);
 				if (subAreas != null) {
 					foreach (var subArea in subAreas) {
-						enemyPrefabs.AddRange(subArea.Enemies);
+						enemyPrefabs.UnionWith(subArea.Enemies);
 					}
 				}
 				
-				foreach (var enemy in enemies) {
-					enemyPrefabs.Add(enemy.mainPrefab);
-					if (enemy.variants != null) {
-						enemyPrefabs.AddRange(enemy.variants);
+				foreach (SpawnCardListConfig spawnCardList in enemySpawnCardConfigs)
+				{
+					foreach (EnemySpawnInfo info in spawnCardList.enemySpawnInfos)
+					{
+						enemyPrefabs.Add(info.mainPrefab);
+						if (info.variants != null)
+						{
+							enemyPrefabs.UnionWith(info.variants);
+						}
 					}
 				}
-		
 				return enemyPrefabs;
 			}
 		}
@@ -236,27 +253,34 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			OnInitEnemy(e.Boss);
 		}
 
-		public List<LevelSpawnCard> CreateTemplateEnemies(int levelNumber) {
-			List<LevelSpawnCard> spawnCards = new List<LevelSpawnCard>();
-			
-			foreach (var enemy in enemies) {
-				GameObject prefab = enemy.mainPrefab;
-				ICreatureViewController enemyViewController = prefab.GetComponent<ICreatureViewController>();
-				IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
-				
-				
-				string[] prefabNames = new string[
-					(enemy.variants?.Count ?? 0) + 1];
-				prefabNames[0] = prefab.name;
-				for (int i = 0; i < enemy.variants.Count; i++) {
-					prefabNames[i + 1] = enemy.variants[i].name;
+		public List<LevelSpawnCard[]> CreateTemplateEnemies(int levelNumber) {
+			List<LevelSpawnCard[]> spawnCards = new List<LevelSpawnCard[]>();
+
+			foreach (var spawnCardList in enemySpawnCardConfigs)
+			{
+				LevelSpawnCard[] cards = new LevelSpawnCard[spawnCardList.enemySpawnInfos.Length];
+				for (int card_index = 0; card_index < cards.Length; card_index++)
+				{
+					EnemySpawnInfo enemyInfo = spawnCardList.enemySpawnInfos[card_index];
+					GameObject prefab = enemyInfo.mainPrefab;
+					ICreatureViewController enemyViewController = prefab.GetComponent<ICreatureViewController>();
+					IEnemyEntity enemyEntity = enemyViewController.OnInitEntity(levelNumber, 1) as IEnemyEntity;
+
+					string[] prefabNames = new string[(enemyInfo.variants?.Count ?? 0) + 1];
+					prefabNames[0] = prefab.name;
+					for (int i = 0; i < enemyInfo.variants.Count; i++)
+					{
+						prefabNames[i + 1] = enemyInfo.variants[i].name;
+					}
+
+					templateEnemies.Add(enemyEntity);
+					cards[card_index] = new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber),
+						prefabNames,
+						enemyInfo.minRarity, enemyInfo.maxRarity);
 				}
-				
-				 templateEnemies.Add(enemyEntity);
-				 spawnCards.Add(new LevelSpawnCard(enemyEntity, enemyEntity.GetRealSpawnWeight(levelNumber), prefabNames,
-					enemy.minRarity, enemy.maxRarity));
+				spawnCards.Add(cards);
 			}
-			
+
 			return spawnCards;
 		}
 		
@@ -282,13 +306,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 				subLevelVC.InitWithID(levelEntity.UUID);
 				subLevelVC.InitDirectors();
-				// print($"number of directors in playerSpawners: {playerSpawners.Count}");
-				// foreach (var director in playerSpawners)
-				// {
-				// 	print($"add director to {levelEntity.EntityName}: {director.Entity.EntityName}");
-				// 	subLevelVC.InitDirector(director);
-				// }
-				//templateEnemies.Add(enemyEntity);
 				subAreaLevels.Add(subLevelVC);
 				BoundEntity.AddSubArea(levelEntity.UUID);
 			}
@@ -301,14 +318,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			//navMeshSurface.navMeshData 
 			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 
-			if (BoundEntity.GetCurrentLevelCount() <= 1) {
+			this.RegisterEvent<OnNewDayStart>(OnNewDay).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
+			
+			/*if (BoundEntity.GetCurrentLevelCount() <= 1) {
 				gameTimeModel.DayCountThisRound.RegisterWithInitValue(OnNewDay)
 					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			}
 			else {
 				gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnNewDay)
 					.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-			}
+			}*/
 			
 			
 			subAreaLevels = CreateSubAreaLevels();
@@ -327,19 +347,27 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			UpdateWallMaterials();
 			await UniTask.Yield();
 			SpawningUtility.UpdateRefPointsKDTree();
+			if (spawnExitDoor) {
+				await SpawnLevelExitDoor();
+			}
+			
 			await SpawnPillars();
 			UpdatePreExistingDirectors();
 			SpawnCollectableResources();
 			
 			StartCoroutine(UpdateLevelSystemTime());
-			
-			
-			//Debug.Log("Bounds for level " + gameObject.name + " is " + maxExtent.bounds);
 		}
 
-		
+		private async UniTask SpawnLevelExitDoor() {
+			GameObject door = await SpawningUtility.SpawnExitDoor(gameObject, "LevelExitDoor", maxExtent.bounds);
+			door.transform.SetParent(transform);
+		}
+
+
 		private HashSet<int> triggeredNewDay = new HashSet<int>();
-		private void OnNewDay(int day) {
+		private void OnNewDay(OnNewDayStart e) {
+			int day = e.DayCount;
+			
 			if (levelModel.CurrentLevel.Value != BoundEntity) {
 				return;
 			}
@@ -349,7 +377,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 			triggeredNewDay.Add(day);
-			BoundEntity.DayStayed++; Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
+			BoundEntity.DayStayed++; 
+			Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
 			if (BoundEntity.DayStayed -1 >= sandstormProbability.Length) {
 				return;
 			}
@@ -361,6 +390,36 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 				int warningTime = sandstormHappenTime / 2;
 				gameEventSystem.AddEvent(new SandstormWarningEvent(), warningTime);
+			}
+			
+			// Add Night Events
+			// Night occurs at 8pm (20h)
+			int nightHappeningTime = (GameTimeModel.NightStartHour - GameTimeModel.NewDayStartHour) * 60;
+			gameEventSystem.AddEvent(new NightEvent(), nightHappeningTime);
+			
+			// Trigger warning 1 in-game hour before night time.
+			gameEventSystem.AddEvent(NightWarningEvent.Allocate(60), nightHappeningTime - 60);
+			
+			// New Day Event
+			gameEventSystem.AddEvent(new NewDayEvent(), 0);
+
+			int prevDay = day - 1;
+			if (prevDay > 0) {
+				int timePointsPerDay =
+					int.Parse(ConfigDatas.Singleton.GlobalDataTable.Get<string>("TIME_POINTS_PER_DAY", "Value1"));
+				
+				int timePointsCost = timePointsPerDay * prevDay;
+
+				string entityName = $"Time{timeCurrencyLevel}";
+
+				foreach (PlayerController controller in PlayerController.GetAllPlayers()) {
+					for (int i = 0; i < timePointsCost; i++) {
+						ResourceVCFactory.Singleton.AddToInventoryOrSpawnNewVc(entityName, true,
+							controller.transform.position,
+							true, timeCurrencyLevel);
+					}
+				}
+				
 			}
 		}
 
@@ -526,7 +585,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		public virtual ISubAreaLevelEntity GetCurrentActiveSubArea()
+		public virtual ISubAreaLevelEntity GetCurrentActiveSubAreaEntity()
 		{
 			int areaMask = this.GetModel<IPlayerModel>().CurrentSubAreaMask.Value;
 			
@@ -555,8 +614,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			ISubAreaLevelModel subAreaLevelModel = this.GetModel<ISubAreaLevelModel>();
 			
 			ISpawnCardsProperty spawnCardsProperty = BoundEntity.GetProperty<ISpawnCardsProperty>();
-			foreach (LevelSpawnCard spawnCard in spawnCardsProperty.RealValue.Value) {
-				enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
+			foreach (LevelSpawnCard[] spawnCards in spawnCardsProperty.RealValue.Value) {
+				foreach (LevelSpawnCard spawnCard in spawnCards) {
+					enemyModel.RemoveEntity(spawnCard.TemplateEntityUUID, true);
+				}
 			}
 
 
@@ -566,16 +627,16 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 					true);
 			}
 			
-			 while (currentEnemies.Count > 0) {
-			 	IEntity enemy = currentEnemies.First();
-			 	currentEnemies.Remove(enemy);
-			 	enemyModel.RemoveEntity(enemy.UUID, true);
-			 }
+			while (currentEnemies.Count > 0) {
+				IEntity enemy = currentEnemies.First();
+				currentEnemies.Remove(enemy);
+				enemyModel.RemoveEntity(enemy.UUID, true);
+			}
 
-			 foreach (IEnemyEntity enemyEntity in templateEnemies) {
-				 enemyModel.RemoveEntity(enemyEntity.UUID, true);
-			 }
-			 templateEnemies.Clear();
+			foreach (IEnemyEntity enemyEntity in templateEnemies) {
+				enemyModel.RemoveEntity(enemyEntity.UUID, true);
+			}
+			templateEnemies.Clear();
 
 			if (bossPillars != null) {
 				foreach (var directorViewController in bossPillars) {

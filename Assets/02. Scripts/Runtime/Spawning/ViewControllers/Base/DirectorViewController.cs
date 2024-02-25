@@ -74,31 +74,23 @@ namespace Runtime.Spawning
         [SerializeField] public float baseMaxActiveTime;
         [SerializeField] public float baseDirectorCooldown;
         [SerializeField] public int baseMaxDirectorEnemies;
-        
-        
         [SerializeField] public float minSpawnRange;
         [SerializeField] public float maxSpawnRange;
         [SerializeField] public float addCreditsInterval = 1f;
-        [SerializeField] public LayerMask spawnMask;
         
         [Header("Director Don't Edit")]
-        // [SerializeField] private int enemyCount;
         private HashSet<IEntity> currentEnemies = new HashSet<IEntity>();
-        // [SerializeField] private int totalSpawnsSinceOffCooldown;
         [SerializeField] private float currentCredits;
         [SerializeField] private float creditTimer = 0f;
         [SerializeField] private float directorSpawnTimer = 0f;
         [SerializeField] private AnimationCurve spawnCurve;
         [SerializeField] private float totalTimeElapsedInDirector = 0f;
-        // [SerializeField] private bool isOnCooldown;
+        [SerializeField] private int totalEliteEnemies = 0;
         protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
-        //protected Vector3[] insideArenaCheckPoints;
-
         
         protected override void Awake() {
             base.Awake();
             directorModel = this.GetModel<IDirectorModel>();
-            // playerModel = this.GetModel<IPlayerModel>();
         }
 
         protected override void OnEntityStart() {
@@ -139,22 +131,6 @@ namespace Runtime.Spawning
             base.Update();
             UpdateTimers();
             
-            // if (isOnCooldown)
-            // {
-            //     //get off cooldown
-            //     if (directorSpawnTimer <= 0f)
-            //     {
-            //         isOnCooldown = false;
-            //         totalTimeElapsedInDirector = 0f;
-            //         totalSpawnsSinceOffCooldown = enemyCount;
-            //         // print($"director OFF cooldown, enemies remaining: {totalSpawnsSinceOffCooldown}");
-            //     }
-            //     else
-            //     {
-            //         return;
-            //     }
-            // }
-
             if (creditTimer <= 0f)
             {
                 AddCredits();
@@ -206,70 +182,105 @@ namespace Runtime.Spawning
         
         protected virtual async void AttemptToSpawn()
         {
-            //pick card, store the card
+            // pick card, store the card
             // get subarea index where player is standing
             // int areaMask = playerModel.CurrentSubAreaMask.Value;
             
             // get subarea from level VC
-            ISubAreaLevelEntity subArea = LevelVC.GetCurrentActiveSubArea();
+            ISubAreaLevelEntity subArea = LevelVC.GetCurrentActiveSubAreaEntity();
             
             //get cards under cost from subarea
             if (subArea == null)
             {
-                print($"subarea is null");
+                // print($"subarea is null");
                 return;
             }
             
             //check if area is still active
             if (!subArea.IsActiveSpawner)
             {
-                print($"subarea is not actively spawning");
                 return;
             }
             
             //if over max, return to stop spawning in area
             // if(enemyCount >= subArea.GetMaxEnemyCount())
             //     return;
+            List<LevelSpawnCard[]> cards = subArea.GetAllNormalEnemiesUnderCost(currentCredits);
             
-            List<LevelSpawnCard> cards = subArea.GetAllNormalEnemiesUnderCost(currentCredits);
-            // print($"spawn cards in subarea {cards.Count}");
             if (cards.Count > 0)
             {
                 m_lottery.SetCards(cards);
-                LevelSpawnCard selectedCard = m_lottery.PickNextCard();
+                LevelSpawnCard[] selectedCard = m_lottery.PickNextCard();
 
                 if (default(LevelSpawnCard).Equals(selectedCard)) {
                     return;
                 }
 
-                bool success = true;
+                // bool success = true;
                 int maxPackSize = Random.Range(1, 5);
-                while (success && maxPackSize > 0)
+                // while (success && maxPackSize > 0)
+                while (maxPackSize > 0)
                 {
-                    success = await SpawnEnemy(selectedCard, subArea.GetSubAreaNavMeshModifier());
+                    // success = await SpawnEnemy(selectedCard, subArea.GetSubAreaNavMeshModifier());
+                    await SpawnEnemy(selectedCard, subArea.GetSubAreaNavMeshModifier());
                     maxPackSize--;
                 }
             }
         }
 
-        protected virtual async UniTask<bool> SpawnEnemy(LevelSpawnCard card, int areaMask)
+        protected virtual async UniTask<bool> SpawnEnemy(LevelSpawnCard[] cards, int areaMask)
         {
-            //determine level and cost
-            int rarity = card.MinRarity;
-            float cost = card.GetRealSpawnCost(levelNumber, card.MinRarity);
-            for (int i = card.MaxRarity; i >= card.MinRarity; i--)
+            int rarity = 0;
+            float[] costs = new float[cards.Length];
+            
+            // Check if can spawn elite
+            if (cards.Length == 1)
             {
-                float checkCost = card.GetRealSpawnCost(levelNumber, i);
+                // int[] rarity = {5};
+                // float[] cost = {cards[0].GetRealSpawnCost(levelNumber, rarity[0])};
+                rarity = Random.Range(5, 9);
+                costs[0] = cards[0].GetRealSpawnCost(levelNumber, rarity);
+                bool isElite = true;
+
+                if (currentCredits > costs[0]
+                    && totalEliteEnemies <= BoundEntity.GetMaxEliteEnemies().RealValue 
+                    && Random.Range(0, 100) < 50)
+                {
+                    return await SpawnHelper(cards[0], areaMask, rarity, costs[0], isElite);
+                }
+            }
+            
+            // NORMAL SPAWN
+            int maxRarity = cards.Select(c => c.MaxRarity).Max();
+            int minRarity = cards.Select(c => c.MinRarity).Min();
+            for(int r = maxRarity; r >= minRarity; r--)
+            {
+                float checkCost = cards.Sum(c => c.GetRealSpawnCost(levelNumber, r));
                 if (currentCredits > checkCost)
                 {
-                    cost = checkCost;
-                    rarity = i;
+                    rarity = r;
+                    for (int c = 0; c < cards.Length; c++)
+                    {
+                        costs[c] = cards[c].GetRealSpawnCost(levelNumber, r);
+                    }
                     break;
                 }
             }
-                        
+            
+            List<UniTask> tasks = new List<UniTask>();
+            for (int i = 0; i < cards.Length; i++)
+            {
+                tasks.Add(SpawnHelper(cards[i], areaMask, rarity, costs[i], false));
+            }
+            
+            await UniTask.WhenAll(tasks);
+            return true;
+        }
+
+        private async UniTask<bool> SpawnHelper(LevelSpawnCard card, int areaMask, int rarity, float cost, bool isElite)
+        {
             //raycast down from random point within min/max range
-            int spawnAttempts = 10;
+            int spawnAttempts = 5;
             while (currentCredits > cost && spawnAttempts > 0)
             {
                 float angle = Random.Range(0, 360); 
@@ -284,45 +295,38 @@ namespace Runtime.Spawning
                     z
                 );
                 
-                //if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hit, 600f, spawnMask))
-                //{
-                     //if (hit.collider.gameObject.layer ==  LayerMask.NameToLayer("Ground")){//PhysicsUtility.IsInLayerMask(hit.collider.gameObject, LayerMask.NameToLayer("Ground"))) {
-                        //spawnPos = hit.point;
-                        //spawnPos.y += 3f;
-                        NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
-                        spawnPos = hitNavMesh.position;
+                NavMesh.SamplePosition(spawnPos, out NavMeshHit hitNavMesh, Mathf.Infinity, NavMesh.AllAreas);
+                spawnPos = hitNavMesh.position;
 
-                        GameObject prefabToSpawn = card.Prefabs[Random.Range(0, card.Prefabs.Count)];
-                        NavMeshFindResult findResult =
-                            await SpawningUtility.FindNavMeshSuitablePosition(
-                                gameObject, () => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider,
-                                spawnPos, 90, NavMeshHelper.GetSpawnableAreaMask(), default, 1f, 3f,
-                                spawnAttempts);
-                
-                        spawnAttempts -= findResult.UsedAttempts;
-                       
-                        if (findResult.IsSuccess) {
-                            GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(prefabToSpawn, findResult.TargetPosition, 
-                                Quaternion.Euler(0, Random.Range(0, 360), 0),
-                                null, rarity,
-                                levelNumber, true, 5, 30);
-                            IEnemyViewController enemyVC = spawnedEnemy.GetComponent<IEnemyViewController>();
-                            IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
-                            enemyEntity.SpawnedAreaIndex = areaMask;
-                            onSpawnEnemy?.Invoke(spawnedEnemy, this);
-                            // Debug.Log($"Spawn Success: {enemyEntity.EntityName} in area {areaMask} with rarity {rarity} and cost {cost}");
-                            //currentEnemies.Add(enemyEntity);
-                            // totalSpawnsSinceOffCooldown++;
-                            currentCredits -= cost;
-                            return true;
-                        }
-                //}
-                //spawnAttempts--;
+                GameObject prefabToSpawn = card.Prefabs[Random.Range(0, card.Prefabs.Count)];
+                NavMeshFindResult findResult =
+                    await SpawningUtility.FindNavMeshSuitablePosition(
+                        gameObject, () => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider,
+                        spawnPos, 90, NavMeshHelper.GetSpawnableAreaMask(), default, 1f, 3f,
+                        spawnAttempts);
+        
+                spawnAttempts -= findResult.UsedAttempts;
+               
+                if (findResult.IsSuccess) {
+                    GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(prefabToSpawn, findResult.TargetPosition, 
+                        Quaternion.Euler(0, Random.Range(0, 360), 0),
+                        null, rarity,
+                        levelNumber, true, 5, 30);
+                    IEnemyViewController enemyVC = spawnedEnemy.GetComponent<IEnemyViewController>();
+                    IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
+                    enemyEntity.SpawnedAreaIndex = areaMask;
+                    if (isElite) {
+                        totalEliteEnemies++;
+                        enemyEntity.IsElite.Value = true;
+                    }
+                    onSpawnEnemy?.Invoke(spawnedEnemy, this);
+                    currentCredits -= cost;
+                    return true;
+                }
             }
-            // Debug.Log($"spawn in subarea {areaMask} failed");
             return false;
         }
-
+        
         protected virtual void AddCredits()
         {
             currentCredits += BoundEntity.GetCreditsPerSecond().RealValue;

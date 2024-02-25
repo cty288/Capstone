@@ -17,6 +17,7 @@ using MikroFramework.ActionKit;
 using Runtime.DataFramework.Properties.CustomProperties;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
+using MikroFramework.AudioKit;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 
 namespace Runtime.Enemies.SmallEnemies
@@ -34,7 +35,7 @@ namespace Runtime.Enemies.SmallEnemies
 
         public override void OnRecycle()
         {
-            
+            base.OnRecycle();
         }
         
 
@@ -64,7 +65,6 @@ namespace Runtime.Enemies.SmallEnemies
 
     public class QuadrupedCarrier : AbstractNormalEnemyViewController<QuadrupedCarrierEntity>
     {
-
         [SerializeField] private GameObject deathEffect;
         [SerializeField] private SafeGameObjectPool pool;
         [SerializeField] private GameObject hurtBox;
@@ -80,6 +80,7 @@ namespace Runtime.Enemies.SmallEnemies
         protected override void OnEntityStart()
         {
             pool = GameObjectPoolManager.Singleton.CreatePool(deathEffect, 10, 15);
+            AudioSystem.Singleton.Play3DSound("enemy-spawn", gameObject.transform.position, 0.5f);
         }
 
 
@@ -98,7 +99,6 @@ namespace Runtime.Enemies.SmallEnemies
                 a.transform.position = this.transform.position + new Vector3(0, 2, 0);
 
             }
-            Debug.Log($"carrier 1 Take damage: {damage}. carrier 1 current health: {currenthealth}");
         }
 
         protected override void OnAnimationEvent(string eventName)

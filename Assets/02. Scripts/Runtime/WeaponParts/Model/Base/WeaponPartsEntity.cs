@@ -1,4 +1,6 @@
 ﻿using System;
+using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.WeaponParts.Model.Properties;
 using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -18,7 +20,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		Attachment,
 	}
 	
-	public interface IWeaponPartsEntity : IResourceEntity, IHaveCustomProperties, IHaveTags {
+	public interface IWeaponPartsEntity : IBuildableResourceEntity, IHaveCustomProperties, IHaveTags {
 		public WeaponPartType WeaponPartType { get; }
 		
 		public IWeaponPartsBuff OnGetBuff(IWeaponEntity weaponEntity);
@@ -28,19 +30,41 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public BindableProperty<T> GetCustomDataValueOfCurrentLevel<T>(string propertyName);
 		
 		public Type BuffType { get;}
+
+		public CurrencyType GetBuildType();
+		
+		public int GetRarity();
 	}
 	
 	public abstract class WeaponPartsEntity<T, TBuffType> : BuildableResourceEntity<T>, IWeaponPartsEntity
 		where T : WeaponPartsEntity<T, TBuffType>, new()
 		where TBuffType : WeaponPartsBuff<T, TBuffType>, new() {
 		
-		protected virtual int levelRange => 4;
+		private IBuildType buildType;
+		
+		//protected virtual int levelRange => 4;
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.WeaponPartsConfigTable;
 		}
 
 		public override int GetMaxRarity() {
 			return 4;
+		}
+
+		public override int GetMinRarity() {
+			return 1;
+		}
+		
+		
+
+		public override void OnAwake() {
+			base.OnAwake();
+			buildType = GetProperty<IBuildType>();
+		}
+
+		protected override void OnEntityRegisterAdditionalProperties() {
+			base.OnEntityRegisterAdditionalProperties();
+			RegisterInitialProperty<IBuildType>(new BuildType());
 		}
 
 		protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
@@ -74,7 +98,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		
 
 		public Type BuffType { get; } = typeof(TBuffType);
-
+		public CurrencyType GetBuildType() {
+			return buildType.RealValue.Value;
+		}
 
 
 		public override void OnRecycle() {
@@ -105,8 +131,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
-			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[levelRange];
-			for (int i = 1; i <= levelRange; i++) {
+			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[GetMaxRarity()];
+			for (int i = 1; i <= GetMaxRarity(); i++) {
 				properties[i - 1] = new AutoConfigCustomProperty($"level{i}");
 			}
 			

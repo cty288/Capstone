@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Runtime.Controls;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using MikroFramework.BindableProperty;
@@ -57,6 +58,8 @@ namespace Runtime.Temporary.Weapon
 
         public int Damage => m_damage;
         private DPunkInputs.PlayerActions playerActions;
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
         private void Awake() {
             playerActions = ClientInput.Singleton.GetPlayerActions();
@@ -65,16 +68,30 @@ namespace Runtime.Temporary.Weapon
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
 
-        public void OnKillDamageable(IDamageable damageable) {
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
             
         }
 
-        public void OnDealDamage(IDamageable damageable, int damage) {
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
             
         }
 
-        public ICanDealDamageRootEntity RootDamageDealer { get; }
-        public ICanDealDamageRootViewController RootViewController { get; }
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer => null;
+
+        /*public ICanDealDamageRootEntity RootDamageDealer { get; }
+        public ICanDealDamageRootViewController RootViewController { get; }*/
 
         public void Start()
         {

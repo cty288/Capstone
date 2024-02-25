@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.TimeSystem {
 	public interface IGameTimeSystem : ISystem {
-		
+		public float speed_debug { get; set; }
 	}
 	public class GameTimeSystemUpdateExecutor : MonoMikroSingleton<GameTimeSystemUpdateExecutor> {
 		public Action OnUpdate = () => { };
@@ -22,6 +22,8 @@ namespace _02._Scripts.Runtime.TimeSystem {
 		private IGamePlayerModel playerModel;
 		private float realWorldSecondPerGameMinute = 1;
 		private float timer = 0;
+		
+		public float speed_debug { get; set; } = 1;
 		protected override void OnInit() {
 			gameTimeModel = this.GetModel<IGameTimeModel>();
 			levelModel = this.GetModel<ILevelModel>();
@@ -35,6 +37,9 @@ namespace _02._Scripts.Runtime.TimeSystem {
 
 		private void OnLevelCountChanged(int previousLevelNum, int currentLevelNum) {
 			if (previousLevelNum == 0) {
+				this.SendEvent<OnNewDayStart>(new OnNewDayStart() {
+					DayCount = 1
+				});
 				return; //do nothing when the change level from base
 			}
 
@@ -44,6 +49,8 @@ namespace _02._Scripts.Runtime.TimeSystem {
 			else {
 				gameTimeModel.NextDay();
 			}
+			
+			Debug.Log("GameTimeSystem.OnLevelCountChanged");
 		}
 
 		private void OnUpdate() {
@@ -53,7 +60,7 @@ namespace _02._Scripts.Runtime.TimeSystem {
 			}
 			
 			timer += Time.deltaTime;
-			if (timer >= realWorldSecondPerGameMinute) {
+			if (timer >= realWorldSecondPerGameMinute / speed_debug) {
 				timer = 0;
 				gameTimeModel.NextMinute();
 			}

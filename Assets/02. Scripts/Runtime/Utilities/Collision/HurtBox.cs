@@ -23,7 +23,11 @@ namespace Runtime.Utilities.Collision
         private void Awake() {
             if (m_owner == null)
                 m_owner = GetComponent<Collider>().attachedRigidbody.gameObject;
-
+        }
+        
+        public void SetOwner(GameObject owner)
+        {
+            m_owner = owner;
         }
 
         public bool CheckHit(HitData data)

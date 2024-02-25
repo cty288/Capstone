@@ -25,7 +25,7 @@ using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamageViewController, ICanDealDamageRootViewController {
+    public class PlayerController : AbstractCreatureViewController<PlayerEntity>, ISingleton, ICanDealDamage, ICanDealDamageViewController {
         private static HashSet<PlayerController> players = new HashSet<PlayerController>();
         private CameraShaker cameraShaker;
         private TriggerCheck triggerCheck;
@@ -41,6 +41,10 @@ namespace Runtime.Temporary
        
         private ILevelModel levelModel;
         private ICurrencySystem currencySystem;
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+        private float accumulatedHealthRecover = 0;
+
         protected override void Awake() {
             base.Awake();
             cameraShaker = GetComponentInChildren<CameraShaker>();
@@ -55,7 +59,7 @@ namespace Runtime.Temporary
         }
 
         private void OnSandStormKillPlayer(OnSandStormKillPlayer e) {
-            BoundEntity.TakeDamage(Int32.MaxValue, null, null);
+            BoundEntity.TakeDamage(Int32.MaxValue, null, out _,null);
         }
 
         private void OnCurrentLevelNumChanged(int arg1, int levelNum) {
@@ -93,6 +97,15 @@ namespace Runtime.Temporary
             triggerCheck.Clear();
         }
 
+        public static PlayerController GetPlayerByUUID(string uuid) {
+            foreach (var player in players) {
+                if (player.BoundEntity.UUID == uuid) {
+                    return player;
+                }
+            }
+
+            return null;
+        }
         public static PlayerController GetClosestPlayer(Vector3 position) {
             if (players.Count == 0) {
                 //try find gameobject of type playercontroller
@@ -132,10 +145,17 @@ namespace Runtime.Temporary
             if (recoverWaitTimer >= recoverWaitTime) {
                 float armorRecover = BoundEntity.GetArmorRecoverSpeed().RealValue.Value;
                 BoundEntity.AddArmor(armorRecover * Time.deltaTime);
+                
+                float healthRecover = BoundEntity.GetHealthRecoverSpeed().RealValue.Value;
+                float lastRecover = accumulatedHealthRecover;
+                accumulatedHealthRecover += healthRecover * Time.deltaTime;
+                if (Mathf.FloorToInt(accumulatedHealthRecover) > Mathf.FloorToInt(lastRecover)) {
+                    BoundEntity.Heal(1, null);
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.C)) {
-                ImageEffectController.Singleton.DisableAllFeatures();
+                //ImageEffectController.Singleton.DisableAllFeatures();
             }
 
             if (Input.GetKeyDown(KeyCode.F5)) {
@@ -166,7 +186,6 @@ namespace Runtime.Temporary
         protected override void OnEntityStart() {
             Debug.Log("PlayerController.OnEntityStart");
             players.Add(this);
-            BoundEntity.SetRootViewController(this);
         }
 
         protected override void OnBindEntityProperty() {
@@ -216,9 +235,31 @@ namespace Runtime.Temporary
         }
 
         public ICanDealDamage CanDealDamageEntity => BoundEntity;
-        public ICanDealDamageRootViewController RootViewController => this;
+      
         public Transform GetTransform() {
             return transform;
         }
+
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
+            
+        }
+
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
+            
+        }
+
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer => BoundEntity;
     }
 }

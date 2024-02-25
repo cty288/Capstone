@@ -19,7 +19,7 @@ public class Pitfall : AbstractMikroController<MainGame>
             Debug.Log("Respawn Hit!");
             this.SendCommand<TeleportPlayerCommand>(
                 TeleportPlayerCommand.Allocate(currentRespawn.transform.position));
-            this.GetModel<IGamePlayerModel>().GetPlayer().TakeDamage(50, null, null, nonlethal:true);
+            this.GetModel<IGamePlayerModel>().GetPlayer().TakeDamage(50, null, out _,null, nonlethal:true);
         }
     }
 

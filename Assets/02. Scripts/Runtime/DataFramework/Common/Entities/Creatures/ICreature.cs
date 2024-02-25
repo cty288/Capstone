@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Utilities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
@@ -94,6 +95,6 @@ namespace Runtime.DataFramework.Entities.Creatures {
 	
 		
 	public interface ICreature : IDamageable, IHaveCustomProperties, IHaveTags, IHaveItemDropCollection {
-	
+		ReferenceCounter StunnedCounter { get; }
 	}
 }

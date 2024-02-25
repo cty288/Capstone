@@ -43,6 +43,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override void OnStart() {
             base.OnStart();
             enemyEntity = enemyViewController.EnemyEntity as T;
+            enemyEntity.StunnedCounter.Count.RegisterWithInitValue(OnStunned);
+        }
+
+        private void OnStunned(int arg1, int count) {
+            if (count > 0) {
+                StopAllCoroutines();
+            }
+        }
+
+
+        public override void OnEnd() {
+            base.OnEnd();
+            enemyEntity?.StunnedCounter.Count.UnRegisterOnValueChanged(OnStunned);
         }
     }
     

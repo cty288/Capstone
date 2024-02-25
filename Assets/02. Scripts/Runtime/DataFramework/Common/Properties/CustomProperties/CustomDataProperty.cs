@@ -43,7 +43,7 @@ namespace Runtime.DataFramework.Properties.CustomProperties {
 			this.defaultDependencies = defaultDependencies;
 		}
 
-		protected dynamic ConvertJTokenToBaseValue(JToken token)
+		public static dynamic ConvertJTokenToBaseValue(JToken token)
 		{
 			if (token is JValue v)
 			{

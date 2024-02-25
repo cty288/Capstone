@@ -104,15 +104,22 @@ namespace Runtime.Utilities.ConfigSheet {
 	                Type targetType = headerTypes[headers[i]];
 
 	                dynamic value;
-	                if (targetType == typeof(string)) {
-		                value = rawVal;
+	                try {
+		                if (targetType == typeof(string)) {
+			                value = rawVal;
+		                }
+		                else if (targetType == typeof(object))  {
+			                value = JsonConvert.DeserializeObject<dynamic>(rawVal);
+		                }
+		                else {
+			                value = JsonConvert.DeserializeObject(rawVal, targetType);
+		                }
 	                }
-	                else if (targetType == typeof(object))  {
-		               value = JsonConvert.DeserializeObject<dynamic>(rawVal);
+	                catch (Exception e) {
+		                Debug.LogError("Error while parsing " + headers[i] + " with value " + rawVal);
+		                throw;
 	                }
-	                else {
-		                value = JsonConvert.DeserializeObject(rawVal, targetType);
-	                }
+	              
 	               
 	                if(value is null) {
 		                continue;
@@ -190,6 +197,12 @@ namespace Runtime.Utilities.ConfigSheet {
 				Debug.Log("Saved to Resources");
 			}
 			
+		}
+		
+		public string[] GetKeys() {
+			string[] keys = new string[data.Keys.Count];
+			data.Keys.CopyTo(keys, 0);
+			return keys;
 		}
 	}
 }

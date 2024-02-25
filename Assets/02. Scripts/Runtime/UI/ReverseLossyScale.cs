@@ -10,7 +10,6 @@ public class ReverseLossyScale : MonoBehaviour
     {
         if(_lossyScale.magnitude != transform.localScale.magnitude){
             _lossyScale = transform.lossyScale;
-            Debug.Log(_lossyScale.magnitude);
             if (Math.Abs(_lossyScale.x - 1.0f) > 0.01f)
             {
                 transform.localScale = new Vector3(1/_lossyScale.x, 1/_lossyScale.y, 1/_lossyScale.z);

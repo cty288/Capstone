@@ -7,6 +7,7 @@ using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Properties;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
@@ -36,7 +37,7 @@ namespace Runtime.GameResources.Model.Base {
 
 		public void OnAddedToSlot();
 
-		public void OnAddedToInventory();
+		public void OnAddedToInventory(string playerUUID);
 		
 		public void OnRemovedFromInventory();
 		
@@ -71,6 +72,16 @@ namespace Runtime.GameResources.Model.Base {
 		public void AddAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
 		
 		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list);
+		
+		/*public void OnStartHold();
+		
+		public void OnStopHold();*/
+		
+		public BindableProperty<bool> IsHolding { get; }
+		
+		public bool AddedToInventoryBefore { get; set; }
+		
+		public  IRarityProperty GetRarityProperty();
 	}
 	
 
@@ -94,7 +105,19 @@ namespace Runtime.GameResources.Model.Base {
 			new HashSet<List<GetResourcePropertyDescriptionGetter>>();
 
 		private List<ResourcePropertyDescription> resourcePropertyDescriptions = new List<ResourcePropertyDescription>();
+		
+		[field: ES3NonSerializable]
+		public BindableProperty<bool> IsHolding { get; private set; } = new BindableProperty<bool>(false);
 
+		[field: ES3Serializable]
+		public bool AddedToInventoryBefore { get; set; } = false;
+
+		public IRarityProperty GetRarityProperty() {
+			return GetProperty<IRarityProperty>();
+		}
+
+		[field: ES3Serializable]
+		protected bool isInInventory = false;
 		public override void OnAwake() {
 			base.OnAwake();
 			OnResourceAwake();
@@ -116,8 +139,14 @@ namespace Runtime.GameResources.Model.Base {
 
 
 		public override void OnDoRecycle() {
+			encounteredBefore = false;
 			resourcePropertyDescriptionGetters?.Clear();
+			IsHolding.Value = false;
+			
 			SafeObjectPool<T>.Singleton.Recycle(this as T);
+			
+			isInInventory = false;
+			AddedToInventoryBefore = false;
 		}
 		
 		/// <summary>
@@ -161,12 +190,12 @@ namespace Runtime.GameResources.Model.Base {
 			encounteredBefore = true;
 		}
 
-		public virtual void OnAddedToInventory() {
-			
+		public virtual void OnAddedToInventory(string playerUUID) {
+			isInInventory = true;
 		}
 
 		public virtual void OnRemovedFromInventory() {
-			
+			isInInventory = false;
 		}
 
 		public abstract ResourceCategory GetResourceCategory();
@@ -216,6 +245,17 @@ namespace Runtime.GameResources.Model.Base {
 		public void RemoveAdditionalResourcePropertyDescriptionGetters(List<GetResourcePropertyDescriptionGetter> list) {
 			additionalResourcePropertyDescriptionGetters.Remove(list);
 		}
+
+		/*public void OnStartHold() {
+			IsHolding.Value = true;
+		}
+
+		public void OnStopHold() {
+			IsHolding.Value = false;
+		}*/
+
+		
+	
 	}
 
 }

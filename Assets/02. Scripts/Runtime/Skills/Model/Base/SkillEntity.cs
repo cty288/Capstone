@@ -47,22 +47,32 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public Dictionary<CurrencyType, int> GetSkillUseCostOfCurrentLevel();
 		
 		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfCurrentLevel();
+		
+		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfLevel(int level);
 
 		public int GetLevel();
 
-		public int GetMaxLevel();
 		
+
+
+		void Upgrade(int level);
 		
+		public void RegisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback);
+		
+		public void UnregisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback);
+
+		public void OnGetSystems();
 	}
 
 	public struct OnSkillUsed {
 		public ISkillEntity skillEntity;
 	}
-	public abstract class SkillEntity<T>:  BuildableResourceEntity<T>, ISkillEntity  where T : SkillEntity<T>, new() {
+	public abstract class SkillEntity<T>:  BuildableResourceEntity<T>, ISkillEntity,
+		ICanGetSystem where T : SkillEntity<T>, new() {
 		protected ISkillCoolDown skillCooldownProperty;
 		protected ISkillUseCost skillUseCostProperty;
 		protected ISkillUpgradeCost skillUpgradeCostProperty;
-		
+		protected Action<ISkillEntity, int, int> onSkillUpgradeCallback;
 		protected ICanDealDamage owner;
 
 		public override string InHandVCPrefabName => EntityName;
@@ -71,7 +81,9 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		private float remainingCooldown = 0;
 		private float maxCooldown = 0;
 		protected bool isWaitingForSwapInventoryCooldown = false;
-		protected virtual int levelRange { get; } = 4;
+		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+		
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.SkillEntityConfigTable;
 		}
@@ -102,13 +114,18 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		}
 
 		public override int GetMaxRarity() {
-			return skillUpgradeCostProperty.GetMaxLevel();
+			return 4;
+		}
+		
+		public override int GetMinRarity() {
+			return 1;
 		}
 
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			maxCooldown = skillCooldownProperty.GetByLevel(GetRarity());
 			if (!isLoadedFromSave) {
 				remainingCooldown = maxCooldown;
+				OnGetSystems();
 			}
 
 			if (maxCooldown > 0 && HasCooldown()) {
@@ -132,6 +149,9 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public override void OnRecycle() {
 			CoroutineRunner.Singleton.UnregisterUpdate(OnUpdate);
 			owner = null;
+			OnModifyDamageCountCallbackList.Clear();
+			_onDealDamageCallback = null;
+			_onKillDamageableCallback = null;
 		}
 
 		public override string OnGroundVCPrefabName { get; } = null;
@@ -209,14 +229,15 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {
 			base.OnRegisterResourcePropertyDescriptionGetters(ref list);
 
-			int rarity = GetRarity();
-			float cooldown = skillCooldownProperty.GetByLevel(rarity);
-			list.Add(() => new ResourcePropertyDescription("PropertyIconRarity", Localization.Get(
-				"PROPERTY_ICON_LEVEL"), rarity.ToString()));
-
-			list.Add(() => new ResourcePropertyDescription("PropertyIconCooldown", Localization.Get(
-					"PROPERTY_ICON_COOLDOWN"),
-				Localization.GetFormat("PROPERTY_ICON_COOLDOWN_DESC", Mathf.RoundToInt(cooldown))));
+			
+			list.Add(() => {
+				int rarity = GetRarity();
+				float cooldown = skillCooldownProperty.GetByLevel(rarity);
+				return new ResourcePropertyDescription(null, Localization.Get(
+						"PROPERTY_ICON_COOLDOWN"),
+					Localization.GetFormat("PROPERTY_ICON_COOLDOWN_DESC", Mathf.RoundToInt(cooldown)),
+					HasCooldown());
+			});
 		}
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
@@ -247,15 +268,36 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return skillUpgradeCostProperty.GetByLevel(GetRarity());
 		}
 
+		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfLevel(int level) {
+			return skillUpgradeCostProperty.GetByLevel(level);
+		}
+
 		public int GetLevel() {
 			return GetRarity();
 		}
 
-		public int GetMaxLevel() {
-			return levelRange;
+		
+
+		public void Upgrade(int level) {
+			int previousLevel = GetRarity();
+			GetProperty<IRarityProperty>().RealValue.Value = level;
+			OnUpgrade(previousLevel, level);
+			onSkillUpgradeCallback?.Invoke(this, previousLevel, level);
 		}
 
-		
+		public void RegisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback) {
+			onSkillUpgradeCallback += callback;
+		}
+
+		public void UnregisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback) {
+			onSkillUpgradeCallback -= callback;
+		}
+
+		public virtual void OnGetSystems() {
+			
+		}
+
+		protected abstract void OnUpgrade(int previousLevel, int level);
 
 
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => GetInventorySwitchCondition;
@@ -282,8 +324,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		
 		
 		protected override ICustomProperty[] OnRegisterCustomProperties() {
-			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[levelRange];
-			for (int i = 1; i <= levelRange; i++) {
+			AutoConfigCustomProperty[] properties = new AutoConfigCustomProperty[GetMaxRarity()];
+			for (int i = 1; i <= GetMaxRarity(); i++) {
 				properties[i - 1] = new AutoConfigCustomProperty($"level{i}");
 			}
 			
@@ -306,19 +348,33 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		
 		[field: ES3Serializable]
 		public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Friendly);
-		public void OnKillDamageable(IDamageable damageable) {
-			owner?.OnKillDamageable(damageable);
+		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
+			//owner?.OnKillDamageable(damageable);
 		}
 
-		public void OnDealDamage(IDamageable damageable, int damage) {
-			owner?.OnDealDamage(damageable, damage);
+		public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
+			//owner?.OnDealDamage(damageable, damage);
 		}
 
-		public ICanDealDamageRootEntity RootDamageDealer=> owner?.RootDamageDealer;
-		public ICanDealDamageRootViewController RootViewController => null;
+		public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; } = new HashSet<Func<int, int>>();
+
+		Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+			get => _onDealDamageCallback;
+			set => _onDealDamageCallback = value;
+		}
+
+		Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+			get => _onKillDamageableCallback;
+			set => _onKillDamageableCallback = value;
+		}
+
+		public ICanDealDamage ParentDamageDealer => owner;
+
+		/*public ICanDealDamageRootEntity RootDamageDealer=> owner?.RootDamageDealer;
+		public ICanDealDamageRootViewController RootViewController => null;*/
 		
 		public override IResourceEntity GetReturnToBaseEntity() {
-			return ResourceVCFactory.Singleton.SpawnNewResourceEntity(EntityName, true, 1);
+			return ResourceVCFactory.Singleton.SpawnNewResourceEntity(EntityName, true, GetMinRarity());
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace Runtime.Utilities.ConfigSheet
 
 		private Dictionary<string, string> versionDict = new Dictionary<string, string>() {
 			{"develop", "11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE"},
-			{"current", "1gQFTY2zuD_P7t-xrYqOckwoYCPp-KAAjcwzcKFCN6jI"}
+			{"current", "1jOeVCo__f0QO5srfUjV0hIjfWPhWQEK947TeQjFnz2U"}
 		};
 		private ConfigDatas() { }
 
@@ -27,6 +27,7 @@ namespace Runtime.Utilities.ConfigSheet
 		private ConfigTable weaponPartsConfigTable;
 		private ConfigTable researchSkillsConfigTable;
 		private ConfigTable researchWeaponPartsConfigTable;
+		private ConfigTable buffConfigTable;
 
 		public ConfigTable BossEntityConfigTable => bossEntityConfigTable;
 		public ConfigTable EnemyEntityConfigTable_Test => enemyEntityConfigTable_test;
@@ -52,6 +53,8 @@ namespace Runtime.Utilities.ConfigSheet
 		public ConfigTable ResearchSkillsConfigTable => researchSkillsConfigTable;
 		
 		public ConfigTable ResearchWeaponPartsConfigTable => researchWeaponPartsConfigTable;
+		
+		public ConfigTable BuffConfigTable => buffConfigTable;
 
 		private string GetDocID() {
 			if (Application.isEditor) {
@@ -112,6 +115,9 @@ namespace Runtime.Utilities.ConfigSheet
 
 			researchWeaponPartsConfigTable = new ConfigTable(docID,
 				"1143344623", "data_research_weapon_parts", isDownload);
+			
+			buffConfigTable = new ConfigTable(docID,
+				"1585691106", "data_buffs", isDownload);
 		}
 
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

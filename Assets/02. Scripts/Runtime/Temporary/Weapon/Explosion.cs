@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -19,22 +20,40 @@ namespace Runtime.Temporary.Weapon
         // [SerializeField] private GameObject hitParticlePrefab;
 
         private List<GameObject> hitObjects = new List<GameObject>();
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
         public int Damage => m_damage;
         
         [field: ES3Serializable]
         public BindableProperty<Faction> CurrentFaction { get; protected set; } = new BindableProperty<Faction>(Faction.Explosion);
 
-        public void OnKillDamageable(IDamageable damageable) {
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
             
         }
 
-        public void OnDealDamage(IDamageable damageable, int damage) {
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
             
         }
 
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer => null;
+
+        /*
         public ICanDealDamageRootEntity RootDamageDealer { get; }
         public ICanDealDamageRootViewController RootViewController { get; }
+        */
 
 
         public void Start()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using DG.Tweening;
 using Framework;
 using MikroFramework;
@@ -51,7 +52,7 @@ namespace Runtime.Inventory.ViewController {
 
         private Transform spawnPointOriginalParent;
         //private Image selectedBG;
-        protected bool isSelected = false;
+        protected bool isMouseOver;
         private float baseWidth;
         protected RectTransform rectTransform;
         protected bool isRightSide = false;
@@ -59,6 +60,7 @@ namespace Runtime.Inventory.ViewController {
         public static GameObject pointerDownObject = null;
         private RectTransform rarityBar;
         private ResLoader resLoader;
+        private IResourceEntity topItem;
 
         [SerializeField] private Sprite filledSlotBG;
         [SerializeField] private Sprite unfilledSlotBG;
@@ -199,6 +201,10 @@ namespace Runtime.Inventory.ViewController {
             if (!allowDrag) {
                 return;
             }
+
+            if (currentDescriptionPanel) {
+                DespawnDescriptionPanel();
+            }
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
                 if (!startDragTriggered) {
                     startDragTriggered = true;
@@ -297,6 +303,7 @@ namespace Runtime.Inventory.ViewController {
             spawnPoint.offsetMax = spawnPointOriginalMaxOffset;
             startDragTriggered = false;
             ShowCantThrowMessage(false);
+            ResourceSlot.currentDraggingSlot.Value = null;
         }
     
         protected virtual void Clear() {
@@ -304,6 +311,10 @@ namespace Runtime.Inventory.ViewController {
             
             if (topVC) {
                 GameObjectPoolManager.Singleton.Recycle(topVC);
+            }
+
+            if (topItem != null) {
+                topItem.GetRarityProperty().RealValue.UnRegisterOnValueChanged(OnTopItemRarityChanged);
             }
 
             if (numberText) {
@@ -316,14 +327,12 @@ namespace Runtime.Inventory.ViewController {
             }
 
             if (currentDescriptionPanel) {
-                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null, null);
+                currentDescriptionPanel.SetContent("", "", null, true, 0, "", null, null,
+                    null);
             }
 
             if (showRarityIndicator) {
-                for (int i = 0; i < rarityBar.childCount; i++) {
-                    GameObject go = rarityBar.GetChild(i).gameObject;
-                    Destroy(go);
-                }
+                ClearRarityBar();
             }
             
             if (showTagDetailIcon) {
@@ -337,9 +346,14 @@ namespace Runtime.Inventory.ViewController {
             if (spawnDescriptionPanel) {
                 DespawnDescriptionPanel();  
             }
-           
             
-          
+        }
+        
+        private  void ClearRarityBar() {
+            for (int i = 0; i < rarityBar.childCount; i++) {
+                GameObject go = rarityBar.GetChild(i).gameObject;
+                Destroy(go);
+            }
         }
 
         public void SetSlot(ResourceSlot slot, bool isHUDSlot) {
@@ -351,7 +365,7 @@ namespace Runtime.Inventory.ViewController {
             Clear();
 
             
-            IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+            topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
             int totalCount = slot.GetQuantity();
             if (topItem == null || totalCount == 0) {
                 slotBG.sprite = unfilledSlotBG;
@@ -359,6 +373,7 @@ namespace Runtime.Inventory.ViewController {
                 StartCoroutine(RebuildLayout());
                 return;
             }
+            
 
             string invPrefabName = topItem.InventoryVCPrefabName;
         
@@ -366,6 +381,12 @@ namespace Runtime.Inventory.ViewController {
                 GameObjectPoolManager.Singleton.CreatePoolFromAB(invPrefabName, 
                     null, 5, 20, out GameObject prefab);
 
+            if (showRarityIndicator) {
+                topItem.GetRarityProperty().RealValue.RegisterWithInitValue(OnTopItemRarityChanged)
+                    .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            }
+           
+            
             topVC = pool.Allocate();
             IInventoryResourceViewController vc = topVC.GetComponent<IInventoryResourceViewController>();
             vc.InitWithID(topItem.UUID);
@@ -400,17 +421,8 @@ namespace Runtime.Inventory.ViewController {
             
 
             int rarityLevel = 0;
-            if (showRarityIndicator && topItem.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarity)) {
-                if (rarity is IRarityProperty rarityProperty) {
-                    rarityLevel = rarityProperty.RealValue.Value;
-                    for (int i = 0; i < rarityLevel; i++) {
-                        GameObject star = Instantiate(rarityIndicatorPrefab, rarityBar);
-                        RectTransform starRect = star.GetComponent<RectTransform>();
-                        //set height = rarityBar's height
-                        float height = rarityBar.rect.height;
-                        starRect.sizeDelta = new Vector2(height, height);
-                    }
-                }
+            if (showRarityIndicator) {
+                rarityLevel = topItem.GetRarityProperty().RealValue.Value;
             }
 
             if (showTagDetailIcon) {
@@ -443,10 +455,18 @@ namespace Runtime.Inventory.ViewController {
                 Dictionary<CurrencyType, int> useCost = topItem is ISkillEntity skillEntity
                     ? skillEntity.GetSkillUseCostOfCurrentLevel()
                     : null;
+                
+                
+                IWeaponPartsEntity weaponPartsEntity = topItem as IWeaponPartsEntity;
+                CurrencyType? currencyType = null;
+                if (weaponPartsEntity != null) {
+                    currencyType = weaponPartsEntity.GetBuildType();
+                }
+                
                 currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
                     InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
                     ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
-                topItem.GetResourcePropertyDescriptions(),useCost);
+                topItem.GetResourcePropertyDescriptions(),useCost,currencyType);
                 
                 if (ResourceSlot.currentHoveredSlot.Value == this) {
                     currentDescriptionPanel.Show();
@@ -460,6 +480,27 @@ namespace Runtime.Inventory.ViewController {
             }
 
             OnShow(topItem);
+        }
+
+        private void OnTopItemRarityChanged(int arg1, int rarity) {
+            ClearRarityBar();
+            
+            
+            if (showRarityIndicator) {
+                for (int i = 0; i < rarity; i++) {
+                    GameObject star = Instantiate(rarityIndicatorPrefab, rarityBar);
+
+                    if (topItem is IWeaponPartsEntity weaponPart) {
+                        RarityIndicator rarityIndicator = star.GetComponent<RarityIndicator>();
+                        rarityIndicator.SetCurrency(weaponPart.GetBuildType());
+                    }
+                        
+                    RectTransform starRect = star.GetComponent<RectTransform>();
+                        
+                    float height = rarityBar.rect.height;
+                    starRect.sizeDelta = new Vector2(height, height);
+                }
+            }
         }
 
         protected virtual void OnShow(IResourceEntity topItem) {
@@ -527,19 +568,19 @@ namespace Runtime.Inventory.ViewController {
             }
             
         }
-
-
+        
         public void OnPointerEnter(PointerEventData eventData) {
+            isMouseOver = true;
             if (slotHoverBG) {
                 slotHoverBG.DOFade(hoverBGAlpha, 0.2f).SetUpdate(true);
             }
             
             ResourceSlot.currentHoveredSlot.Value = this;
-            if (slot.GetQuantity() > 0) {
+            if (slot.GetQuantity() > 0 && !currentDescriptionPanel) {
                 IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
                 if(topItem == null) {
                     return;
-                }
+                } 
 
                 if (spawnDescriptionPanel) {
                     SpawnDescriptionPanel(topItem);
@@ -557,17 +598,29 @@ namespace Runtime.Inventory.ViewController {
                     Dictionary<CurrencyType, int> useCost = topItem is ISkillEntity skillEntity
                         ? skillEntity.GetSkillUseCostOfCurrentLevel()
                         : null;
+                    
+                    IWeaponPartsEntity weaponPartsEntity = topItem as IWeaponPartsEntity;
+                    CurrencyType? currencyType = null;
+                    if (weaponPartsEntity != null) {
+                        currencyType = weaponPartsEntity.GetBuildType();
+                    }
+                    
+                    
                     currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
                         InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
                         ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
-                        topItem.GetResourcePropertyDescriptions(), useCost);
+                        topItem.GetResourcePropertyDescriptions(), useCost, currencyType);
                     currentDescriptionPanel.Show();
                 }
             }
         }
 
         public void OnPointerExit(PointerEventData eventData) {
-            PointerExit(false);
+            isMouseOver = false;
+            if (!currentDescriptionPanel) {
+                PointerExit(false);
+            }
+            //PointerExit(false);
         }
 
         protected void PointerExit(bool closeImmediately) {
@@ -592,10 +645,19 @@ namespace Runtime.Inventory.ViewController {
         }
 
         private void Update() {
-            if (ResourceSlot.currentHoveredSlot.Value == this) {
-                descriptionPanelFollowTr.position = Input.mousePosition;
+            if (currentDescriptionPanel) {
+               if(!isMouseOver && !currentDescriptionPanel.IsMouseOverThisPanel()) {
+                   PointerExit(false); 
+               }
             }
-            
+
+            if (rarityBar) {
+                float height = rarityBar.rect.height;
+                for (int i = 0; i < rarityBar.childCount; i++) {
+                    RectTransform starRect = rarityBar.GetChild(i).GetComponent<RectTransform>();
+                    starRect.sizeDelta = new Vector2(height, height);
+                }
+            }
             
         }
 
@@ -623,7 +685,7 @@ namespace Runtime.Inventory.ViewController {
                 }
             }
 
-            isSelected = selected;
+            //isSelected = selected;
         }
 
     }

@@ -56,6 +56,7 @@ public class TestBuffSystem
     }
 
     public class BasicBuff : Buff<BasicBuff> {
+	    public override bool IsGoodBuff => false;
 	    public override float MaxDuration { get; protected set; } = 5;
 	    public override float TickInterval { get; protected set; } = 0.5f;
 	    public override int Priority { get; } = 10;
@@ -77,8 +78,8 @@ public class TestBuffSystem
 		    
 	    }
 
-	    public override void OnStacked(BasicBuff buff) {
-		    
+	    public override bool OnStacked(BasicBuff buff) {
+		    return true;
 	    }
 
 	    public override void OnStart() {
@@ -95,6 +96,7 @@ public class TestBuffSystem
     }
 
     public class PropertyBuffBasic1 : PropertyBuff<PropertyBuffBasic1> {
+	    public override bool IsGoodBuff => false;
 	    public override float MaxDuration { get; protected set; } = 5;
 	    public override float TickInterval { get; protected set; } = 0.5f;
 	    public override int Priority { get; } = 5;
@@ -116,8 +118,8 @@ public class TestBuffSystem
 
 	    
 
-	    public override void OnStacked(PropertyBuffBasic1 buff) {
-		    
+	    public override bool OnStacked(PropertyBuffBasic1 buff) {
+		    return true;
 	    }
 
 	    public override void OnStart() {
@@ -142,6 +144,7 @@ public class TestBuffSystem
     }
     
     public class PropertyBuffBasic2 : PropertyBuff<PropertyBuffBasic2> {
+	    public override bool IsGoodBuff => false;
 	    public override float MaxDuration { get; protected set; } = 5;
 	    public override float TickInterval { get; protected set; } = 0.5f;
 	    public override int Priority { get; } = 5;
@@ -159,8 +162,8 @@ public class TestBuffSystem
 		  
 	    }
 
-	    public override void OnStacked(PropertyBuffBasic2 buff) {
-		    
+	    public override bool OnStacked(PropertyBuffBasic2 buff) {
+		    return true;
 	    }
 
 	    public override void OnStart() {

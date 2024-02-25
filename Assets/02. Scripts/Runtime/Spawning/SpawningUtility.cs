@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using _02._Scripts.Runtime.Utilities;
 using Cysharp.Threading.Tasks;
 using DataStructures.ViliWonka.KDTree;
+using Framework;
 using JetBrains.Annotations;
 using MikroFramework;
+using MikroFramework.ResKit;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
@@ -237,9 +239,6 @@ namespace Runtime.Spawning {
 							//navHit.position;
 						}
 					}
-					// else {
-					// 	Debug.Log("Spawn failed: path not found. Attempt number: " + usedAttempts);
-					// }
 				}
 
 				currentSearchRadius += increment;
@@ -304,6 +303,61 @@ namespace Runtime.Spawning {
 			return Vector3.negativeInfinity; 
 		}
 
+		public static async UniTask<GameObject> SpawnExitDoor(GameObject spawner, string prefabName, Bounds bounds) {
+			GameObject prefab = MainGame.Interface.GetUtility<ResLoader>().LoadSync<GameObject>(prefabName);
+			
+			BoxCollider spawnSizeGetter() => prefab.GetComponent<LevelExitDoorController>().SpawnSizeCollider;
+			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
+			Bounds insideArenaBounds = default;
+			if (insideArenaBounds == default) {
+				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
+					.First(o => o.gameObject.activeInHierarchy)
+					.GetComponent<Collider>().bounds;
+			}
+			
+			
+
+			//create a new bounds, 20% smaller than the original
+			bounds = new Bounds(bounds.center, bounds.size * 0.8f);
+			
+			
+			GameObject doorInstance = null;
+
+			while (true) {
+				
+				Vector3 randomPoint = new Vector3(
+					UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+					UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
+					UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
+				);
+				
+				//sample the point on the navmesh
+				NavMeshHit navHit;
+				if (!NavMesh.SamplePosition(randomPoint, out navHit, 250.0f, areaMask)) {
+					continue;
+				}
+
+				NavMeshFindResult res = await FindNavMeshSuitablePosition(spawner, spawnSizeGetter,
+					navHit.position, 45, areaMask,
+					insideArenaBounds, 10, 10, 100, 500);
+					
+				//rotate y axis randomly
+				//res.RotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
+
+				if (!res.IsSuccess) {
+					continue;
+				}
+				
+				//ok to spawn
+				doorInstance = GameObject.Instantiate(prefab);
+				doorInstance.transform.position = res.TargetPosition;
+				doorInstance.transform.rotation = res.RotationWithSlope;
+				break;
+			}
+
+			return doorInstance;
+		}
+		
 		public static async UniTask<List<GameObject>> SpawnBossPillars(GameObject spawner, int targetNumber, string prefabName, Bounds bounds) {
 			var pillarPool =
 				GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 4, 10, out GameObject prefab);

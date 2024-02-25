@@ -36,11 +36,13 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
       gameTimeModel.GlobalTime.RegisterOnValueChanged(OnGlobalTimeChanged)
          .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
       
-      gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnDayCountChanged)
-         .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+      /*gameTimeModel.DayCountThisRound.RegisterOnValueChanged(OnDayCountChanged)
+         .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);*/
+      
+      this.RegisterEvent<OnNewDayStart>(OnNewDay).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
    }
 
-   private void OnDayCountChanged(int arg1, int dayCount) {
+   private void OnNewDay(OnNewDayStart e) {
       if(levelModel.CurrentLevelCount.Value == 0) {
          dayDisplayPanel.SetActive(false);
          return;
@@ -81,6 +83,7 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
          panel.SetActive(false);
          return;
       }
+      if(levelModel.CurrentLevel.Value == null) return;
       panel.SetActive(true);
       dayCountText.text = Localization.GetFormat("TIME_DISPLAY", levelModel.CurrentLevel.Value.DayStayed);
       DateTime globalTime = gameTimeModel.GlobalTime.Value;

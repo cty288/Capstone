@@ -79,6 +79,18 @@ namespace Runtime.Weapons
             if(maxAmmo) maxAmmo.text = _associatedWeapon.GetAmmoSize().RealValue.ToString();
             _associatedWeapon.CurrentAmmo.RegisterWithInitValue(OnAmmoChanged)
                 .UnRegisterWhenGameObjectDestroyedOrRecycled(transform.parent.gameObject);
+            _associatedWeapon.GetAmmoSize().RealValue.RegisterOnValueChanged(OnAmmoSizeChanged)
+                .UnRegisterWhenGameObjectDestroyedOrRecycled(transform.parent.gameObject);
+        }
+
+        private void OnAmmoSizeChanged(int arg1, int num) {
+            if(!updateIndicators) return;
+            foreach (var gunBarrelIndicator in _instanceGunBarrelIndicators)
+            {
+                gunBarrelIndicator.SetInteger(MaxAmmo, num);
+            }
+
+            if(maxAmmo) maxAmmo.text = num.ToString();
         }
 
         public void OnAmmoChanged(int num)

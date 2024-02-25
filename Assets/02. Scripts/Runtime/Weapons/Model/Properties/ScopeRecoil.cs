@@ -1,16 +1,18 @@
-﻿using Runtime.DataFramework.Properties;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.BuffSystem;
+using Runtime.DataFramework.Properties;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Weapons.Model.Properties
 {
-    public interface IScopeRecoil : IProperty<RecoilInfo>, ILoadFromConfigProperty
+    public interface IScopeRecoil : IBuffedProperty<RecoilInfo>, ILoadFromConfigProperty
     {
         public Vector3 GetRecoilVector();
         public float GetSnappiness();
         public float GetReturnSpeed();
     }
-    public class ScopeRecoil : AbstractLoadFromConfigProperty<RecoilInfo>, IScopeRecoil
+    public class ScopeRecoil : AbstractLoadFromConfigBuffedProperty<RecoilInfo>, IScopeRecoil
     {
         public Vector3 GetRecoilVector()
         {
@@ -40,6 +42,8 @@ namespace Runtime.Weapons.Model.Properties
         {
             return null;
         }
+
+        public override HashSet<BuffTag> BuffTags { get; } = new HashSet<BuffTag> {BuffTag.Weapon_ScopeRecoil};
     }
 
     public class ScopeRecoilDefaultModifier : PropertyDependencyModifierWithRarity<RecoilInfo>

@@ -35,7 +35,7 @@ namespace Runtime.Enemies.SmallEnemies
         }
 
         public override void OnRecycle() {
-         
+            base.OnRecycle();
         }
         
         
@@ -66,6 +66,8 @@ namespace Runtime.Enemies.SmallEnemies
         [SerializeField] private List<GameObject> waypoints;
         [SerializeField] private GameObject deathEffect;
         [SerializeField] private SafeGameObjectPool pool;
+        
+        private Rigidbody rb;
       
         
             //private bool spawned;
@@ -82,6 +84,7 @@ namespace Runtime.Enemies.SmallEnemies
             base.Awake();
            // behaviorTree = GetComponent<BehaviorTree>();
            // behaviorTree.enabled = false;
+           rb = GetComponent<Rigidbody>();
         }
 
 
@@ -96,7 +99,12 @@ namespace Runtime.Enemies.SmallEnemies
 
 
         }
-        
+
+        protected override void OnStunned(bool isStunned) {
+            base.OnStunned(isStunned);
+            rb.isKinematic = isStunned;
+        }
+
         private IEnumerator DelayedStart() {
             yield return null;
             yield return null;
@@ -137,7 +145,6 @@ namespace Runtime.Enemies.SmallEnemies
                 a.transform.position = this.transform.GetChild(0).position;
                 AudioSystem.Singleton.Play3DSound("SurveillanceDrone_Dead", this.gameObject.transform.position, 0.3f);
             }
-            Debug.Log($"bee 1 Take damage: {damage}. bee 1 current health: {currenthealth}");
         }
 
         protected override void OnAnimationEvent(string eventName) {

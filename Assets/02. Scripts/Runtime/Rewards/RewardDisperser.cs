@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.WeaponParts.Model;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using Cysharp.Threading.Tasks;
 using Framework;
 using MikroFramework.Architecture;
@@ -28,12 +30,13 @@ namespace _02._Scripts.Runtime.Rewards {
 		/// </summary>
 		/// <param name="rewardBatches"></param>
 		/// <param name="onRewardsDispersed"></param>
-		public async UniTask<List<GameObject>> DisperseRewards(List<RewardBatch> rewardBatches, IPanelContainer parentPanel) {
+		public async UniTask<List<GameObject>> DisperseRewards(List<RewardBatch> rewardBatches, IPanelContainer parentPanel,
+			CurrencyType buildType) {
 			
 			List<GameObject> spawnedGameObjects = new List<GameObject>();
 			
 			foreach (var rewardBatch in rewardBatches) {
-				List<GameObject> spawnedGameObjectsInBatch = await DisperseRewards(rewardBatch, parentPanel);
+				List<GameObject> spawnedGameObjectsInBatch = await DisperseRewards(rewardBatch, parentPanel, buildType);
 				if (spawnedGameObjectsInBatch != null) {
 					spawnedGameObjects.AddRange(spawnedGameObjectsInBatch);
 				}
@@ -44,17 +47,21 @@ namespace _02._Scripts.Runtime.Rewards {
 
 
 		
-		private async UniTask<List<GameObject>> DisperseRewards(RewardBatch rewardBatch, IPanelContainer parentPanel) {
+		private async UniTask<List<GameObject>> DisperseRewards(RewardBatch rewardBatch, IPanelContainer parentPanel,
+			CurrencyType buildType) {
 			
 			int count = Random.Range(rewardBatch.AmountRange.x, rewardBatch.AmountRange.y + 1);
 			List<GameObject> spawnedGameObjects = new List<GameObject>();
+
+			
+			
 			switch (rewardBatch.RewardType) {
 				case RewardType.Resource:
-					
+					int targetLevel = rewardBatch.PickLevel();
 					var resources = 
 						ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.RawMaterial, entity =>
 						((IRawMaterialEntity) entity).GetProperty<IRarityProperty>().RealValue.Value ==
-						rewardBatch.Level);
+						targetLevel);
 
 					var resourceTemplateInfos = resources as ResourceTemplateInfo[] ?? resources.ToArray();
 					if (resources == null || !resourceTemplateInfos.Any()) {
@@ -64,7 +71,7 @@ namespace _02._Scripts.Runtime.Rewards {
 					var targetResource = resourceTemplateInfos[Random.Range(0, resourceTemplateInfos.Length)];
 					
 					for (int i = 0; i < count; i++) {
-						IResourceEntity resource = targetResource.EntityCreater.Invoke(false, rewardBatch.Level);
+						IResourceEntity resource = targetResource.EntityCreater.Invoke(false, targetLevel);
 						GameObject spawnedVC = ResourceVCFactory.Singleton.SpawnPickableResourceVC(resource, true);
 						spawnedGameObjects.Add(spawnedVC);
 					}
@@ -74,33 +81,53 @@ namespace _02._Scripts.Runtime.Rewards {
 				case RewardType.WeaponParts_ChooseOne:
 					RewardSelectionPanel panel = null;
 					IWeaponPartsModel weaponPartsModel = this.GetModel<IWeaponPartsModel>();
-					for (int m = 0; m < count; m++) {
-						var weaponParts =
-							ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts,
-								(parts) => weaponPartsModel.IsUnlocked(parts.EntityName));
-
-						var weaponPartTemplateInfos = weaponParts.ToList();
-						if (weaponParts == null || !weaponPartTemplateInfos.Any()) {
-							return null;
-						}
 					
+					for (int m = 0; m < count; m++) {
+						
 					
 						//select 3 different weapon parts
-						List<ResourceTemplateInfo> selectedWeaponParts = new List<ResourceTemplateInfo>();
+						List<(ResourceTemplateInfo, int)> selectedWeaponParts = new List<(ResourceTemplateInfo, int)>();
+						HashSet<string> alreadySelectedWeaponParts = new HashSet<string>();
 						for (int i = 0; i < 3; i++) {
+							int level = rewardBatch.PickLevel();
+							var weaponParts =
+								ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts,
+									(parts) => {
+										IWeaponPartsEntity template = (IWeaponPartsEntity) parts;
+										return weaponPartsModel.IsUnlocked(parts.EntityName) &&
+										       template.GetMaxRarity() >= level &&
+										       template.GetMinRarity() <= level &&
+										       template.GetBuildType() == buildType &&
+										       !alreadySelectedWeaponParts.Contains(parts.EntityName);
+									});
+
+							var weaponPartTemplateInfos = weaponParts.ToList();
+							if (weaponParts == null || !weaponPartTemplateInfos.Any()) {
+								break;
+							}
+
+							
 							if (weaponPartTemplateInfos.Count == 0) {
 								break;
 							}
 						
 							int randomIndex = Random.Range(0, weaponPartTemplateInfos.Count);
 							ResourceTemplateInfo selectedWeaponPart = weaponPartTemplateInfos[randomIndex];
-							selectedWeaponParts.Add(selectedWeaponPart);
-							weaponPartTemplateInfos.RemoveAt(randomIndex);
+							selectedWeaponParts.Add((selectedWeaponPart, level));
+							alreadySelectedWeaponParts.Add(selectedWeaponPart.TemplateEntity.EntityName);
+
+							//weaponPartTemplateInfos.RemoveAt(randomIndex);
 						}
 					
 						List<IResourceEntity> spawnedWeaponParts = new List<IResourceEntity>();
-						foreach (var weaponPart in selectedWeaponParts) {
-							IResourceEntity resource = weaponPart.EntityCreater.Invoke(true, rewardBatch.Level);
+						foreach (var weaponPartTuple in selectedWeaponParts) {
+							
+							ResourceTemplateInfo weaponPart = weaponPartTuple.Item1;
+							int level = weaponPartTuple.Item2;
+
+							IResourceEntity resource =
+								weaponPart.EntityCreater.Invoke(true, level);
+							
 							spawnedWeaponParts.Add(resource);
 						}
 

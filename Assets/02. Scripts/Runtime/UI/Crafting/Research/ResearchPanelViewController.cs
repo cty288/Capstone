@@ -25,11 +25,15 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 	[SerializeField] private TMP_Text costText;
 	[SerializeField] private TMP_Text daysText;
 	[SerializeField] private GameObject[] rewardPreviewIcons;
+	[SerializeField] private GameObject[] rewardPreviewIcons_researching;
 	[SerializeField] private GameObject rewardMoreIcon;
+	[SerializeField] private GameObject rewardMoreIcon_researching;
 	[SerializeField] private Button researchButton;
 	[SerializeField] private GameObject researchAvailablePanel;
 	[SerializeField] private GameObject researchUnavailablePanel;
 	[SerializeField] private TMP_Text remainingDaysText;
+	[SerializeField] private  TMP_Text counterRemainingDaysText;
+	[SerializeField] private Image researchingFillBar;
 	[SerializeField] private GameObject noResourceHint;
 	
  	private ResearchLevelInfo[] researchResults;
@@ -143,7 +147,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 	}
 
 	private void OnOwnedSlotClicked(ResourceSlotViewController slotVC) {
-		if (slotVC.Slot.IsEmpty()) {
+		if (slotVC.Slot.IsEmpty() || researchSystem.IsResearching(category)) {
 			return;
 		}
 		
@@ -180,10 +184,33 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		if(researchEvent == null) {
 			return;
 		}
+
+		researchingFillBar.fillAmount = (float) (researchEvent.TotalMinutes - researchEvent.RemainingMinutesToTrigger) / researchEvent.TotalMinutes;
 		
 		float days = researchEvent.RemainingMinutesToTrigger / 60f / 24f;
+		counterRemainingDaysText.text = Mathf.CeilToInt(days).ToString();
 		remainingDaysText.text = Localization.GetFormat("RESEARCH_DOING_RESEARCH_REMAINING_DAY",
 			$"<color=#1D9F00>{Mathf.CeilToInt(days)}</color>", days > 1 ? "s" : "");
+		
+		foreach (GameObject rewardPreviewIcon in rewardPreviewIcons_researching) {
+			rewardPreviewIcon.SetActive(false);
+		}
+
+		rewardMoreIcon_researching.SetActive(false);
+		int potentialRewardCount = 0;
+		foreach (ResearchLevelInfo researchLevelInfo in researchEvent.ResearchResults) {
+			potentialRewardCount += researchLevelInfo.ResearchedEntityNames?.Length ?? 0;
+		}
+		
+		
+		for (int i = 0; i < potentialRewardCount; i++) {
+			if (i < rewardPreviewIcons_researching.Length) {
+				rewardPreviewIcons_researching[i].SetActive(true);
+			}else {
+				rewardMoreIcon_researching.SetActive(true);
+				break;
+			}
+		}
 	}
 
 	private void UpdateCost() {
@@ -211,8 +238,8 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 			out researchResults, out researchDays);
 
 		bool moneyEnough = currencyModel.Money >= totalCost;
-		string color = moneyEnough ? "#1D9F00" : "red";
-		costText.text = Localization.GetFormat("RESEARCH_COST", $"<color={color}>{totalCost}<sprite index=6></color>");
+		string color = moneyEnough ? "green" : "#FF4400";
+		costText.text = $"<color={color}>{totalCost}<sprite index=6></color>";
 		daysText.text = Localization.GetFormat("RESEARCH_DAYS", researchDays, researchDays > 1 ? "s" : "");
 
 		int potentialRewardCount = 0;

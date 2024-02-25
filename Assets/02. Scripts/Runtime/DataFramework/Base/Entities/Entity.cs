@@ -90,6 +90,9 @@ namespace Runtime.DataFramework.Entities {
 		public HashSet<IBuffedProperty<TDataType>> GetBuffedProperties<TDataType>(params BuffTag[] buffTags);
 
 		public void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType);
+		void RegisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback);
+		
+		void UnregisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback);
 		
 		public bool OnValidateBuff(IBuff buff);
 		
@@ -157,6 +160,11 @@ namespace Runtime.DataFramework.Entities {
 		public void RetainRecycleRC();
 		
 		public void ReleaseRecycleRC();
+		void OnDealtBuffUpdate(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType);
+		
+		public void RegisterOnDealtBuffUpdate(Action<IEntity, IBuff, BuffUpdateEventType> callback);
+		
+		public void UnRegisterOnDealtBuffUpdate(Action<IEntity, IBuff, BuffUpdateEventType> callback);
 	}
 	
 	
@@ -267,6 +275,10 @@ namespace Runtime.DataFramework.Entities {
 		protected Action<IEntity> onRecycleRCZeroRef = null;
 		
 		private bool readyToRecycle = false;
+		
+		private Action<IBuff, BuffUpdateEventType> onBuffUpdateCallback = null;
+		
+		private Action<IEntity, IBuff, BuffUpdateEventType> onDealtBuffUpdateCallback = null;
 		public Entity() {
 			//configTable = ConfigDatas.Singleton.EnemyEntityConfigTable;
 			originalEntityName = EntityName;
@@ -526,6 +538,18 @@ namespace Runtime.DataFramework.Entities {
 			recycleRC.Release();
 		}
 
+		public void OnDealtBuffUpdate(IEntity targetEntity, IBuff buff, BuffUpdateEventType eventType) {
+			onDealtBuffUpdateCallback?.Invoke(targetEntity, buff, eventType);
+		}
+
+		public void RegisterOnDealtBuffUpdate(Action<IEntity, IBuff, BuffUpdateEventType> callback) {
+			onDealtBuffUpdateCallback += callback;
+		}
+
+		public void UnRegisterOnDealtBuffUpdate(Action<IEntity, IBuff, BuffUpdateEventType> callback) {
+			onDealtBuffUpdateCallback -= callback;
+		}
+
 		/// <summary>
 		/// After the entity is built, or loaded from save, this will be called
 		/// </summary>
@@ -620,7 +644,7 @@ namespace Runtime.DataFramework.Entities {
 		}
 
 		public virtual void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType) {
-			
+			onBuffUpdateCallback?.Invoke(buff, eventType);
 		}
 
 		public virtual bool OnValidateBuff(IBuff buff) {
@@ -733,9 +757,15 @@ namespace Runtime.DataFramework.Entities {
 		}
 
 		protected abstract void OnInitModifiers();
+		public void RegisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback) {
+			onBuffUpdateCallback += callback;
+		}
 
+		public void UnregisterOnBuffUpdate(Action<IBuff, BuffUpdateEventType> callback) {
+			onBuffUpdateCallback -= callback;
+		}
 
-		public void OnRecycled() {
+		public virtual void OnRecycled() {
 			OnRecycle();
 			
 			onRecycleRCZeroRef = null;
@@ -762,6 +792,7 @@ namespace Runtime.DataFramework.Entities {
 			buffTagToProperties.Clear();
 			cachedBuffedPropertiesQuery.Clear();
 			buffedPropertiesToTags.Clear();
+			onBuffUpdateCallback = null;
 		}
 
 		[field: ES3Serializable]
@@ -777,7 +808,6 @@ namespace Runtime.DataFramework.Entities {
 		
 		
 		public string GetDescription() {
-			
 			return OnGetDescription($"{EntityName}_desc");
 		}
 

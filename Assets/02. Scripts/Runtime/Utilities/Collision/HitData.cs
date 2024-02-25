@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -22,6 +23,7 @@ namespace Runtime.Utilities.Collision
         public ICanDealDamage Attacker;
         public bool ShowDamageNumber = true;
         public bool IsCritical = false;
+        public string HitDataUUID;
 
         /// <summary>
         /// Sets the data of the hit. Used for HitScan.
@@ -31,8 +33,8 @@ namespace Runtime.Utilities.Collision
         /// <param name="hit"></param>
         /// <param name="hitDetector"></param>
         /// <returns>Returns HitData object.</returns>
-        public HitData SetHitScanData(IHitResponder hitResponder, IHurtbox hurtbox, RaycastHit hit, IHitDetector hitDetector, bool showDamageNumber)
-        {
+        public HitData SetHitScanData(IHitResponder hitResponder,  IHurtbox hurtbox, 
+            RaycastHit hit, IHitDetector hitDetector, bool showDamageNumber) {
             Damage = hitResponder == null ? 0 : Mathf.FloorToInt(hitDetector.Damage * hurtbox.DamageMultiplier);
             HitPoint = hit.point;
             HitNormal = hit.normal;
@@ -40,10 +42,13 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
+            HitDataUUID = Guid.NewGuid().ToString();
+
+
             return this;
         }
 
-        public HitData SetHitBoxData(IHitResponder hitResponder,int damage, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
+        public HitData SetHitBoxData(IHitResponder hitResponder, int damage, IHurtbox hurtbox, Vector3 hitpoint, Vector3 hitNormal,
             IHitDetector hitDetector, bool showDamageNumber) {
 
             Damage = hitResponder == null ? 0 : Mathf.FloorToInt(damage * hurtbox.DamageMultiplier);
@@ -54,6 +59,7 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
+            HitDataUUID = Guid.NewGuid().ToString();
             return this;
         }
         
@@ -67,6 +73,7 @@ namespace Runtime.Utilities.Collision
             HitDetector = hitDetector;
             Attacker = hitResponder;
             ShowDamageNumber = showDamageNumber;
+            HitDataUUID = Guid.NewGuid().ToString();
             return this;
         }
 
@@ -106,6 +113,7 @@ namespace Runtime.Utilities.Collision
             Hurtbox = null;
             HitDetector = null;
             Attacker = null;
+            HitDataUUID = null;
         }
 
         public bool IsRecycled { get; set; }
@@ -125,6 +133,8 @@ namespace Runtime.Utilities.Collision
         public void HitResponse(HitData data);
         
         public HitData OnModifyHitData(HitData data);
+        
+      
     }
 
     /// <summary>
@@ -136,6 +146,8 @@ namespace Runtime.Utilities.Collision
         public LayerMask layer;
         public Transform launchPoint;
         public IWeaponEntity weapon;
+        public Vector3 startPoint; // if do this, no camera :)
+        public Vector3 direction; // see above
     }
     
     /// <summary>
@@ -144,7 +156,7 @@ namespace Runtime.Utilities.Collision
     public interface IHitDetector
     {
         public IHitResponder HitResponder { get; set; }
-        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage); //CheckHit only required for HitScan right now.
+        public void CheckHit(HitDetectorInfo hitDetectorInfo, int damage, Collider[] ignoreColliders= null); //CheckHit only required for HitScan right now.
         
         public int Damage { get; }
     }

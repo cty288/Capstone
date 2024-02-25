@@ -23,7 +23,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
         public int MyPersistentButNotInherentData { get; set; } = 100;
     
         public override void OnRecycle() {
-        
+            base.OnRecycle();
         }
         protected override void OnInitModifiers(int rarity, int level) {
             
@@ -162,7 +162,7 @@ namespace Runtime.RunTimeTests.TestPropertyBehaviorTree {
             }
             
             if(Input.GetKeyDown(KeyCode.G)) {
-                BoundEntity.TakeDamage(10, null);
+                BoundEntity.TakeDamage(10, null, out _);
             }
             
             if(Input.GetKeyDown(KeyCode.H)) {

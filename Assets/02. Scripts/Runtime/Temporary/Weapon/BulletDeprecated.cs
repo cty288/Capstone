@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using MikroFramework.BindableProperty;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
@@ -19,7 +21,10 @@ namespace Runtime.Temporary.Weapon
         [Header("Hit Effects")]
         [SerializeField] private GameObject explosionPrefab;
 
-        
+        private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
+        private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+
+
         public int Damage { get; protected set; }
 
         private void Start()
@@ -54,15 +59,31 @@ namespace Runtime.Temporary.Weapon
         }
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
-        public void OnKillDamageable(IDamageable damageable) {
+        public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
             
         }
 
-        public void OnDealDamage(IDamageable damageable, int damage) {
+        public void OnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
             
         }
 
-        public ICanDealDamageRootEntity RootDamageDealer { get; }
-        public ICanDealDamageRootViewController RootViewController { get; }
+        public HashSet<Func<int, int>> OnModifyDamageCountCallbackList { get; }
+
+        Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            get => _onDealDamageCallback;
+            set => _onDealDamageCallback = value;
+        }
+
+        Action<ICanDealDamage, IDamageable> ICanDealDamage.OnKillDamageableCallback {
+            get => _onKillDamageableCallback;
+            set => _onKillDamageableCallback = value;
+        }
+
+        public ICanDealDamage ParentDamageDealer { get; }
+
+      
+
+        /*public ICanDealDamageRootEntity RootDamageDealer { get; }
+        public ICanDealDamageRootViewController RootViewController { get; }*/
     }
 }

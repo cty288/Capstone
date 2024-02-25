@@ -23,7 +23,7 @@ public class BossHealthBar : HealthBar {
 	private Material healthBGMaterial;
 	
 	private TMP_Text bossNameText;
-	private IDamageable entity;
+	
 	private BindableProperty<HealthInfo> boundHealthProperty;
 
 	private Transform rarityBar;
@@ -43,7 +43,7 @@ public class BossHealthBar : HealthBar {
 			Destroy(rarityBar.GetChild(i).gameObject);
 		}
 	}
-	public override void OnSetEntity(BindableProperty<HealthInfo> boundHealthProperty, IDamageable entity) {
+	protected override void OnSetEntity(BindableProperty<HealthInfo> boundHealthProperty, IDamageable entity) {
 		ClearRarityIndicator();
 		this.entity = entity;
 		this.boundHealthProperty = boundHealthProperty;
@@ -66,7 +66,7 @@ public class BossHealthBar : HealthBar {
 	
 	
 
-	public override void OnHealthBarDestroyed() {
+	protected override void OnHealthBarDestroyed() {
 		boundHealthProperty.UnRegisterOnValueChanged(OnHealthChanged);
 		ClearRarityIndicator();
 	}

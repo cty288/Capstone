@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.BuffSystem;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -15,6 +16,8 @@ using Runtime.Inventory.ViewController;
 using Runtime.Weapons.Model.Base;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ModificationSubPanel : SwitchableSubPanel {
     [SerializeField] private ModificationPanelSlotLayout weaponSlotLayout;
@@ -25,8 +28,17 @@ public class ModificationSubPanel : SwitchableSubPanel {
     [SerializeField] private RenderTexture weaponDisplayTexture;
     [SerializeField] private float weaponRotationSpeed = 50f;
     [SerializeField] private GameObject modificationPropertyDescriptionPrefab;
+    [SerializeField] private GameObject additionalPropertyDescriptionPrefab;
     [SerializeField] private Transform weaponDescriptionPanel;
+    [SerializeField] private Transform weaponAdditionalDescriptionPanel;
     [SerializeField] private TMP_Text weaponNameText;
+    [SerializeField] private GameObject rarityPrefab;
+    [SerializeField] private RectTransform rarityBar;
+    [SerializeField] private RectTransform weaponPartsRarityBar;
+    [SerializeField] private BuildInfoPanel buildInfoPanel;
+    
+    
+   // [SerializeField] private EventTrigger buildInfoDetectArea;
     
     private IInventoryModel inventoryModel;
     private IInventorySystem inventorySystem;
@@ -46,6 +58,7 @@ public class ModificationSubPanel : SwitchableSubPanel {
         buffSystem = this.GetSystem<IBuffSystem>();
         resLoader = this.GetUtility<ResLoader>();
         this.RegisterEvent<OnWeaponPartsUpdate>(OnWeaponPartsUpdate).UnRegisterWhenGameObjectDestroyed(gameObject);
+        
     }
 
    
@@ -91,7 +104,15 @@ public class ModificationSubPanel : SwitchableSubPanel {
     /// <param name="prev"></param>
     /// <param name="currentSlot"></param>
     private void OnCurrentHoveredSlotChanged(ResourceSlotViewController prev, ResourceSlotViewController currentSlot) {
+       // ClearSpawnedDescriptions();
         if(selectedWeapon == null) {
+            return;
+        }
+        if ((currentSlot != null && currentSlot.Slot is WeaponPartsSlot) || (prev != null && prev.Slot is WeaponPartsSlot)) {
+            return;
+        }
+        
+        if((currentSlot != null && currentSlot.Slot.GetQuantity() == 0) || (prev != null && prev.Slot.GetQuantity() == 0)) {
             return;
         }
         
@@ -254,6 +275,18 @@ public class ModificationSubPanel : SwitchableSubPanel {
         }
 
         spawnedPropertyDescriptions.Clear();
+        
+        for (int i = 0; i < rarityBar.childCount; i++) {
+            GameObject child = rarityBar.GetChild(i).gameObject;
+            Destroy(child);
+        }
+        
+        for (int i = 0; i < weaponPartsRarityBar.childCount; i++) {
+            GameObject child = weaponPartsRarityBar.GetChild(i).gameObject;
+            Destroy(child);
+        }
+        
+        CloseBuildInfoPanel();
     }
     private void RefreshWeaponDetails(IWeaponEntity weaponEntity) {
         ClearSpawnedDescriptions();
@@ -265,13 +298,40 @@ public class ModificationSubPanel : SwitchableSubPanel {
         
         weaponNameText.text = weaponEntity.GetDisplayName();
         List<ResourcePropertyDescription> propertyDescriptions = weaponEntity.GetResourcePropertyDescriptions();
+
+        int rarity = weaponEntity.GetRarity();
+        float height = rarityBar.rect.height;
+        for (int i = 0; i < rarity; i++) {
+            RectTransform tr = Instantiate(rarityPrefab, rarityBar).GetComponent<RectTransform>();
+            tr.sizeDelta = new Vector2(height, height);
+        }
+
+        CurrencyType mainBuildType = weaponEntity.GetMainBuildType();
+        int totalRarity = weaponEntity.GetTotalBuildRarity(mainBuildType);
+        float partRarityBarHeight = weaponPartsRarityBar.rect.height;
+        for (int i = 0; i < totalRarity; i++) {
+            RectTransform tr = Instantiate(rarityPrefab, weaponPartsRarityBar).GetComponent<RectTransform>();
+            tr.sizeDelta = new Vector2(partRarityBarHeight, partRarityBarHeight);
+            tr.GetComponent<RarityIndicator>().SetCurrency(mainBuildType);
+        }
+        
         
         if (propertyDescriptions is {Count: > 0}) {
             foreach (ResourcePropertyDescription propertyDescription in propertyDescriptions) {
                 if (!propertyDescription.display) {
                     continue;
                 }
-                GameObject propertyDescriptionItem = Instantiate(modificationPropertyDescriptionPrefab, weaponDescriptionPanel);
+
+                GameObject prefab = propertyDescription is WeaponBuffedAdditionalPropertyDescription
+                    ? additionalPropertyDescriptionPrefab
+                    : modificationPropertyDescriptionPrefab;
+
+                Transform parent = propertyDescription is WeaponBuffedAdditionalPropertyDescription
+                    ? weaponAdditionalDescriptionPanel
+                    : weaponDescriptionPanel;
+                
+                GameObject propertyDescriptionItem = Instantiate(prefab, parent);
+                
                 propertyDescriptionItem.transform.SetAsLastSibling();
 
                 ModificationPropertyDescriptionItemViewController propertyDescriptionItemViewController =
@@ -283,10 +343,18 @@ public class ModificationSubPanel : SwitchableSubPanel {
                 spawnedPropertyDescriptions.Add(propertyDescriptionItemViewController);
 
             }
+            
+            StartCoroutine(RefreshLayout(weaponDescriptionPanel.GetComponent<RectTransform>()));
+            StartCoroutine(RefreshLayout(weaponAdditionalDescriptionPanel.GetComponent<RectTransform>()));
         }
        
     }
 
+    private IEnumerator RefreshLayout(RectTransform rectTransform) {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        yield return null;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+    }
     public override void OnSwitchToOtherPanel() {
         base.OnSwitchToOtherPanel();
         weaponSlotLayout.OnClosePanel();
@@ -301,5 +369,32 @@ public class ModificationSubPanel : SwitchableSubPanel {
         weaponPartsPanel.OnClear();
         currentPreviewingSlot = null;
         currentPreviewingWeaponPartBufferType = null;
+    }
+
+    private void OpenBuildInfoPanel(IWeaponEntity weapon) {
+        buildInfoPanel.gameObject.SetActive(true);
+        buildInfoPanel.ShowWeapon(weapon);
+    }
+    
+    protected void CloseBuildInfoPanel() {
+        buildInfoPanel.gameObject.SetActive(false);
+    }
+    
+    public void OnBuildInfoDetectAreaPointerEnter(BaseEventData eventData) {
+        if (selectedWeapon == null) {
+            return;
+        }
+
+        int totalBuildRarity = selectedWeapon.GetTotalBuildRarity(selectedWeapon.GetMainBuildType());
+        if (totalBuildRarity == 0) {
+            return;
+        }
+
+        //buildInfoPanel.isMouseOver = true;
+        OpenBuildInfoPanel(selectedWeapon);
+    }
+    
+    public void OnBuildInfoDetectAreaPointerExit(BaseEventData eventData) {
+        CloseBuildInfoPanel();
     }
 }

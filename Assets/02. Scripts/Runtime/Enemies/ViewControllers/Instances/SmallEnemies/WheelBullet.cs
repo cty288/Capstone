@@ -65,7 +65,7 @@ namespace a
 
 						// Set the position and direction of the allocated bullet
 						bulletInstance.transform.position = transform.position;
-						bulletInstance.transform.forward = rotation * (target.position - transform.position).normalized;
+						bulletInstance.transform.forward = rotation * (target.position - followGameObject.position).normalized;
 					}
 				}
 

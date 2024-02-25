@@ -26,6 +26,8 @@ namespace Runtime.UI.Crafting.Research {
 		
 		[ES3Serializable]
 		private ResearchLevelInfo[] researchResults;
+
+		public ResearchLevelInfo[] ResearchResults => researchResults;
 		public override void OnInitialized() {
 			
 		}
@@ -53,6 +55,10 @@ namespace Runtime.UI.Crafting.Research {
 		
 		public static ResearchEvent Allocate(int exp, ResearchCategory category, ResearchLevelInfo[] researchResults) {
 			ResearchEvent researchEvent = ResearchEvent.Allocate();
+			
+			
+			
+			
 			researchEvent.exp = exp;
 			researchEvent.category = category;
 			researchEvent.researchResults = researchResults;
