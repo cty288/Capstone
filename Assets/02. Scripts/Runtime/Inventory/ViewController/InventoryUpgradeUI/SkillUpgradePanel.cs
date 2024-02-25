@@ -20,7 +20,15 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
 
     private SlotResourceDescriptionPanel originalDescriptionPanel;
     private SlotResourceDescriptionPanel upgradedDescriptionPanel;
-    private TMP_Text levelNumText;
+    
+    private TMP_Text levelNumText_From;
+    private TMP_Text levelNumText_To;
+    
+    private GameObject descriptionFrame_from;
+    private GameObject descriptionFrame_to;
+    private GameObject arrow;
+    
+    
     private GameObject fullyUpgradedText;
     private TMP_Text requiredCurrencyText;
     private Button upgradeButton;
@@ -32,10 +40,18 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
     private RectTransform upgradeGroup;
     
     public override void OnInit() {
-       originalDescriptionPanel = transform.Find("Mask/UpgradeGroup/DescriptionTag").GetComponent<SlotResourceDescriptionPanel>();
-       upgradedDescriptionPanel = transform.Find("Mask/UpgradeGroup/DescriptionTag_Upgraded").GetComponent<SlotResourceDescriptionPanel>();
-       levelNumText = transform.Find("Mask/UpgradeGroup/Arrow/LevelNum").GetComponent<TMP_Text>(); 
-       fullyUpgradedText = transform.Find("Mask/UpgradeGroup/FullyUpgradedText").gameObject;
+       originalDescriptionPanel = transform.Find("Mask/UpgradeGroup/DescriptionFrame/DescriptionTag").GetComponent<SlotResourceDescriptionPanel>();
+       upgradedDescriptionPanel = transform.Find("Mask/UpgradeGroup/DescriptionFrame_Upgraded/DescriptionTag").GetComponent<SlotResourceDescriptionPanel>();
+       descriptionFrame_from = transform.Find("Mask/UpgradeGroup/DescriptionFrame").gameObject;
+       descriptionFrame_to = transform.Find("Mask/UpgradeGroup/DescriptionFrame_Upgraded").gameObject;
+       arrow = transform.Find("Mask/UpgradeGroup/Arrow").gameObject;
+       
+       
+       levelNumText_From = transform.Find("Mask/UpgradeGroup/DescriptionFrame/LevelText").GetComponent<TMP_Text>();
+       levelNumText_To = transform.Find("Mask/UpgradeGroup/DescriptionFrame_Upgraded/LevelText")
+           .GetComponent<TMP_Text>();
+       
+       fullyUpgradedText = transform.Find("FullyUpgradedText").gameObject;
        requiredCurrencyText = transform.Find("RequiredCurrencyPanel/Content").GetComponent<TMP_Text>();
        upgradeButton = transform.Find("UpgradeButton").GetComponent<Button>();
        requiredCurrencyPanel = transform.Find("RequiredCurrencyPanel").gameObject;
@@ -72,9 +88,9 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
                 : $"<color=#FF0000>{currencyAmount}</color>");
             sb.Append("    ");
             i++;
-            if (i % 2 == 0 && i != requiredCurrency.Count) {
+            /*if (i % 2 == 0 && i != requiredCurrency.Count) {
                 sb.Append("\n");
-            }
+            }*/
         }
 
         requiredCurrencyText.text = sb.ToString();
@@ -97,29 +113,31 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
 
 
     protected void ShowSkillUpgradePanel(ISkillEntity entity) {
-        SetDescriptionPanel(entity, originalDescriptionPanel);
+        SetDescriptionPanel(entity, originalDescriptionPanel, levelNumText_From);
         requiredCurrencyPanel.SetActive(false);
         upgradeButton.interactable = false;
-        levelNumText.gameObject.SetActive(false);
-        upgradedDescriptionPanel.gameObject.SetActive(false);
+        upgradeButton.gameObject.SetActive(false);
+        descriptionFrame_to.SetActive(false);
         fullyUpgradedText.SetActive(false);
+        arrow.SetActive(false);
         
         originalSkill = entity;
         
         if (entity.GetLevel() >= entity.GetMaxRarity()) {
             fullyUpgradedText.SetActive(true);
         }
-        else { 
+        else {
+            upgradeButton.gameObject.SetActive(true);
+            arrow.SetActive(true);
+            descriptionFrame_to.SetActive(true);
             requiredCurrencyPanel.SetActive(true);
-            levelNumText.gameObject.SetActive(true);
-            upgradedDescriptionPanel.gameObject.SetActive(true);
-
-            levelNumText.text = Localization.GetFormat("PROPERTY_ICON_LEVEL", entity.GetLevel() + 1);
+            
+            levelNumText_To.text = Localization.GetFormat("PROPERTY_ICON_LEVEL", entity.GetLevel() + 1);
             spawnedUpgradedSkill =
                 ResourceVCFactory.Singleton.SpawnNewResourceEntity(entity.EntityName, true, entity.GetLevel() + 1) as
                     ISkillEntity;
             
-            SetDescriptionPanel(spawnedUpgradedSkill, upgradedDescriptionPanel);
+            SetDescriptionPanel(spawnedUpgradedSkill, upgradedDescriptionPanel, levelNumText_To);
             
             
             UpdateCurrency();
@@ -156,12 +174,20 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
         return requiredCurrency;
     }
 
-    protected void SetDescriptionPanel(ISkillEntity entity, SlotResourceDescriptionPanel panel) {
+    protected void SetDescriptionPanel(ISkillEntity entity, SlotResourceDescriptionPanel panel, TMP_Text levelText) {
         panel.Clear();
         panel.SetContent(entity.GetDisplayName(), entity.GetDescription(),
             InventorySpriteFactory.Singleton.GetSprite(entity.EntityName), true, entity.GetLevel(),
             ResourceVCFactory.GetLocalizedResourceCategory(entity.GetResourceCategory()),
             entity.GetResourcePropertyDescriptions(), entity.GetSkillUseCostOfCurrentLevel(), null);
+        levelText.text = Localization.GetFormat("PROPERTY_ICON_LEVEL", entity.GetLevel());
+        StartCoroutine(RebuildLayout(panel.transform as RectTransform));
+    }
+    
+    private IEnumerator RebuildLayout(RectTransform transform) {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(transform);
+        yield return new WaitForEndOfFrame();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(transform);
     }
 
     public override void OnClosed() {
