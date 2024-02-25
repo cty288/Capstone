@@ -15,6 +15,8 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
 
         private int acidTickDamage;
         private float acidExplosionRadius;
+        private float acidDuration;
+        private float acidTickInterval;
         
         [SerializeField] private Rigidbody rb;
         
@@ -30,10 +32,12 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
         }
 
 
-        public void SetData(float bulletSpeed, int acidTickDamage, float acidExplosionRadius)
+        public void SetData(float bulletSpeed, int acidTickDamage, float acidExplosionRadius, float acidDuration, float acidTickInterval)
         {
             this.acidTickDamage = acidTickDamage;
             this.acidExplosionRadius = acidExplosionRadius;
+            this.acidDuration = acidDuration;
+            this.acidTickInterval = acidTickInterval;
             rb.velocity = gameObject.transform.forward * bulletSpeed;
         }
 
@@ -52,7 +56,10 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
                 particleInstance.transform.position = hitPoint;
                 particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
                 
-                particleInstance.GetComponent<WormBossAcidExplosionViewController>().Init(Faction.Hostile, acidTickDamage, acidExplosionRadius, gameObject, owner);
+                var explosionVC = particleInstance.GetComponent<WormBossAcidExplosionViewController>();
+                print($"WORM BOSS: explosion radius {acidExplosionRadius}");
+                explosionVC.Init(Faction.Hostile, acidTickDamage, acidExplosionRadius, gameObject, owner);
+                explosionVC.SetData(acidDuration, acidTickInterval);
             }
         }
 

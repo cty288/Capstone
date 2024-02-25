@@ -39,6 +39,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float acidExplosionRadius;
         private float bulletRange;
         private int acidTickDamage;
+        private float acidDuration;
+        private float acidTickInterval;
         
         public override void OnStart()
         {
@@ -57,6 +59,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             acidExplosionRadius = enemyEntity.GetCustomDataValue<float>("acidAttack", "acidExplosionRadius");
             bulletRange = enemyEntity.GetCustomDataValue<float>("acidAttack", "bulletRange");
             acidTickDamage = enemyEntity.GetCustomDataValue<int>("acidAttack", "acidTickDamage");
+            acidDuration = enemyEntity.GetCustomDataValue<float>("acidAttack", "acidDuration");
+            acidTickInterval = enemyEntity.GetCustomDataValue<float>("acidAttack", "acidTickInterval");
             
             SkillExecute();
         }
@@ -118,6 +122,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 playerTrans.position.z + Random.Range(-spread, spread)
             );
             
+            destination = playerTrans.position;
+            
             Vector3 dir = destination - spawnTransform.position;
             b.transform.rotation = Quaternion.LookRotation(dir);
             
@@ -125,7 +131,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 bulletExplosionDamage,
                 gameObject, gameObject.GetComponent<ICanDealDamage>(), bulletRange);
 
-            b.GetComponent<WormBossBulletToxic>().SetData(bulletSpeed, acidTickDamage, acidExplosionRadius);
+            b.GetComponent<WormBossBulletToxic>().SetData(bulletSpeed, acidTickDamage, acidExplosionRadius, acidDuration, acidTickInterval);
             return b;
         }
         

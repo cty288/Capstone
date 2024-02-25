@@ -19,7 +19,6 @@ public class WormBossLaser : AbstractDotBulletViewController
     private float bulletSpeed = 34f;
     private Vector3 dir;
     private GameObject face;
-    private float tickrate = 0.1f;
     private float tick = 0.2f;
     private float waitBeforeRotate = 1.5f;
     private float timer = 1.5f;
