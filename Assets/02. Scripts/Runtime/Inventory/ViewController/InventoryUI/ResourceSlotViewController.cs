@@ -60,6 +60,7 @@ namespace Runtime.Inventory.ViewController {
         public static GameObject pointerDownObject = null;
         private RectTransform rarityBar;
         private ResLoader resLoader;
+        private IResourceEntity topItem;
 
         [SerializeField] private Sprite filledSlotBG;
         [SerializeField] private Sprite unfilledSlotBG;
@@ -312,6 +313,10 @@ namespace Runtime.Inventory.ViewController {
                 GameObjectPoolManager.Singleton.Recycle(topVC);
             }
 
+            if (topItem != null) {
+                topItem.GetRarityProperty().RealValue.UnRegisterOnValueChanged(OnTopItemRarityChanged);
+            }
+
             if (numberText) {
                 numberText.text = "";
             }
@@ -327,10 +332,7 @@ namespace Runtime.Inventory.ViewController {
             }
 
             if (showRarityIndicator) {
-                for (int i = 0; i < rarityBar.childCount; i++) {
-                    GameObject go = rarityBar.GetChild(i).gameObject;
-                    Destroy(go);
-                }
+                ClearRarityBar();
             }
             
             if (showTagDetailIcon) {
@@ -344,9 +346,14 @@ namespace Runtime.Inventory.ViewController {
             if (spawnDescriptionPanel) {
                 DespawnDescriptionPanel();  
             }
-           
             
-          
+        }
+        
+        private  void ClearRarityBar() {
+            for (int i = 0; i < rarityBar.childCount; i++) {
+                GameObject go = rarityBar.GetChild(i).gameObject;
+                Destroy(go);
+            }
         }
 
         public void SetSlot(ResourceSlot slot, bool isHUDSlot) {
@@ -358,7 +365,7 @@ namespace Runtime.Inventory.ViewController {
             Clear();
 
             
-            IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+            topItem = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
             int totalCount = slot.GetQuantity();
             if (topItem == null || totalCount == 0) {
                 slotBG.sprite = unfilledSlotBG;
@@ -366,6 +373,7 @@ namespace Runtime.Inventory.ViewController {
                 StartCoroutine(RebuildLayout());
                 return;
             }
+            
 
             string invPrefabName = topItem.InventoryVCPrefabName;
         
@@ -373,6 +381,12 @@ namespace Runtime.Inventory.ViewController {
                 GameObjectPoolManager.Singleton.CreatePoolFromAB(invPrefabName, 
                     null, 5, 20, out GameObject prefab);
 
+            if (showRarityIndicator) {
+                topItem.GetRarityProperty().RealValue.RegisterWithInitValue(OnTopItemRarityChanged)
+                    .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+            }
+           
+            
             topVC = pool.Allocate();
             IInventoryResourceViewController vc = topVC.GetComponent<IInventoryResourceViewController>();
             vc.InitWithID(topItem.UUID);
@@ -407,23 +421,8 @@ namespace Runtime.Inventory.ViewController {
             
 
             int rarityLevel = 0;
-            if (showRarityIndicator && topItem.TryGetProperty(new PropertyNameInfo(PropertyName.rarity), out var rarity)) {
-                if (rarity is IRarityProperty rarityProperty) {
-                    rarityLevel = rarityProperty.RealValue.Value;
-                    for (int i = 0; i < rarityLevel; i++) {
-                        GameObject star = Instantiate(rarityIndicatorPrefab, rarityBar);
-
-                        if (topItem is IWeaponPartsEntity weaponPart) {
-                            RarityIndicator rarityIndicator = star.GetComponent<RarityIndicator>();
-                            rarityIndicator.SetCurrency(weaponPart.GetBuildType());
-                        }
-                        
-                        RectTransform starRect = star.GetComponent<RectTransform>();
-                        
-                        float height = rarityBar.rect.height;
-                        starRect.sizeDelta = new Vector2(height, height);
-                    }
-                }
+            if (showRarityIndicator) {
+                rarityLevel = topItem.GetRarityProperty().RealValue.Value;
             }
 
             if (showTagDetailIcon) {
@@ -481,6 +480,27 @@ namespace Runtime.Inventory.ViewController {
             }
 
             OnShow(topItem);
+        }
+
+        private void OnTopItemRarityChanged(int arg1, int rarity) {
+            ClearRarityBar();
+            
+            
+            if (showRarityIndicator) {
+                for (int i = 0; i < rarity; i++) {
+                    GameObject star = Instantiate(rarityIndicatorPrefab, rarityBar);
+
+                    if (topItem is IWeaponPartsEntity weaponPart) {
+                        RarityIndicator rarityIndicator = star.GetComponent<RarityIndicator>();
+                        rarityIndicator.SetCurrency(weaponPart.GetBuildType());
+                    }
+                        
+                    RectTransform starRect = star.GetComponent<RectTransform>();
+                        
+                    float height = rarityBar.rect.height;
+                    starRect.sizeDelta = new Vector2(height, height);
+                }
+            }
         }
 
         protected virtual void OnShow(IResourceEntity topItem) {
@@ -548,8 +568,7 @@ namespace Runtime.Inventory.ViewController {
             }
             
         }
-
-
+        
         public void OnPointerEnter(PointerEventData eventData) {
             isMouseOver = true;
             if (slotHoverBG) {
