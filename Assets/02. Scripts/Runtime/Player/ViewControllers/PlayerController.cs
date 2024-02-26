@@ -43,6 +43,7 @@ namespace Runtime.Temporary
         private ICurrencySystem currencySystem;
         private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
         private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+        private float accumulatedHealthRecover = 0;
 
         protected override void Awake() {
             base.Awake();
@@ -144,6 +145,13 @@ namespace Runtime.Temporary
             if (recoverWaitTimer >= recoverWaitTime) {
                 float armorRecover = BoundEntity.GetArmorRecoverSpeed().RealValue.Value;
                 BoundEntity.AddArmor(armorRecover * Time.deltaTime);
+                
+                float healthRecover = BoundEntity.GetHealthRecoverSpeed().RealValue.Value;
+                float lastRecover = accumulatedHealthRecover;
+                accumulatedHealthRecover += healthRecover * Time.deltaTime;
+                if (Mathf.FloorToInt(accumulatedHealthRecover) > Mathf.FloorToInt(lastRecover)) {
+                    BoundEntity.Heal(1, null);
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.C)) {

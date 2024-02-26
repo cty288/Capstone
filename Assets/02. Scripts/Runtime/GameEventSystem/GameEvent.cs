@@ -13,6 +13,8 @@ public interface IGameEvent : IPoolable {
 	public string EventID { get; set; }
 	public int RemainingMinutesToTrigger { get; set; }
 	
+	public int TotalMinutes { get; set; }
+	
 	public int StartWithLevel { get; set; }
 	public EventElapseType ElapseType { get; }
 	
@@ -41,7 +43,11 @@ public abstract class GameEvent<T> : IGameEvent, ICanSendEvent, ICanGetUtility, 
 
 	[field: ES3Serializable]
 	public int RemainingMinutesToTrigger { get; set; }
-	
+
+	[field: ES3Serializable]
+	public int TotalMinutes { get; set; }
+
+
 	[field: ES3Serializable]
 
 	public int StartWithLevel { get; set; }
@@ -78,6 +84,7 @@ public abstract class GameEvent<T> : IGameEvent, ICanSendEvent, ICanGetUtility, 
 		OnEventRecycled();
 		RemainingMinutesToTrigger = 0;
 		StartWithLevel = 0;
+		TotalMinutes = 0;
 	}
 	
 	public abstract void OnEventRecycled();

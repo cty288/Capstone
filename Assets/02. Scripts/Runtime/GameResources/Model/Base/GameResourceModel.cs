@@ -13,6 +13,8 @@ namespace Runtime.GameResources.Model.Base {
 		/// <param name="id"></param>
 		/// <returns></returns>
 		public IResourceEntity GetAnyResource(string id);
+		
+		public HashSet<T> GetAllResources();
 	}
 	
 	public static class GlobalGameResourceEntities {
@@ -51,6 +53,10 @@ namespace Runtime.GameResources.Model.Base {
 
 		public IResourceEntity GetAnyResource(string id) {
 			return GlobalGameResourceEntities.GetAnyResource(id);
+		}
+
+		public HashSet<T> GetAllResources() {
+			return new HashSet<T>(entities.Values);
 		}
 
 		public override bool RemoveEntity(string id, bool force = false) {

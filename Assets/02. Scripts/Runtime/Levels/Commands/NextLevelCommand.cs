@@ -45,8 +45,8 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 			IGamePlayerModel playerModel = this.GetModel<IGamePlayerModel>();
 			IPlayerEntity playerEntity = playerModel.GetPlayer();
 			
-			playerEntity.Heal(playerEntity.GetMaxHealth(), null);
-			playerEntity.AddArmor(playerEntity.GetArmor().InitialValue);
+			playerEntity.SetHealth(playerEntity.GetMaxHealth());
+			playerEntity.SetArmor(playerEntity.GetMaxArmor().RealValue);
 			
 			this.SendEvent<OnReturnToBase>();
 			

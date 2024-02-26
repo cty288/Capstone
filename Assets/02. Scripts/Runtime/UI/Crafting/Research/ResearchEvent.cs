@@ -26,6 +26,8 @@ namespace Runtime.UI.Crafting.Research {
 		
 		[ES3Serializable]
 		private ResearchLevelInfo[] researchResults;
+
+		public ResearchLevelInfo[] ResearchResults => researchResults;
 		public override void OnInitialized() {
 			
 		}

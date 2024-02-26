@@ -16,6 +16,9 @@ public class CurrencySelectElement : AbstractMikroController<MainGame> {
     
     [SerializeField] private Sprite selectedIconSprite;
     [SerializeField] private Sprite unselectedIconSprite;
+    [SerializeField] private bool overrideSpriteColor;
+    [SerializeField] private Color selectedColor;
+    [SerializeField] private Color unselectedColor;
     
     
     private Image icon;
@@ -34,5 +37,8 @@ public class CurrencySelectElement : AbstractMikroController<MainGame> {
     private void OnToggleValueChanged(bool isOn) {
         icon.sprite = isOn ? selectedIconSprite : unselectedIconSprite;
         nameText.color = isOn ? Color.white : Color.black;
+        if (overrideSpriteColor) {
+            icon.color = isOn ? selectedColor : unselectedColor;
+        }
     }
 }

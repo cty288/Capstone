@@ -645,7 +645,7 @@ WormBoss,"{""maxHealth"":2000,
   ""entity"":{
     ""speed"": {
       ""type"": ""float"",
-      ""value"": 12,
+      ""value"": 20,
       ""useDefaultModifier"": true
     },
     ""closeRange"": {
@@ -716,12 +716,22 @@ WormBoss,"{""maxHealth"":2000,
     },
     ""acidExplosionRadius"": {
       ""type"": ""float"",
-      ""value"": 1,
+      ""value"": 2.13,
       ""useDefaultModifier"": true
     },
     ""acidTickDamage"": {
       ""type"": ""int"",
       ""value"": 1,
+      ""useDefaultModifier"": true
+    },
+    ""acidTickInterval"": {
+      ""type"": ""float"",
+      ""value"": 0.5,
+      ""useDefaultModifier"": true
+    },
+    ""acidDuration"": {
+      ""type"": ""float"",
+      ""value"": 5,
       ""useDefaultModifier"": true
     }
   },
@@ -758,6 +768,25 @@ WormBoss,"{""maxHealth"":2000,
     ""bulletRange"": {
       ""type"": ""float"",
       ""value"": 100,
+      ""useDefaultModifier"": true
+    }
+  },
+  ""fallAttack"": {
+    ""damage"": {
+      ""type"": ""int"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""knockbackForce"": {
+      ""type"": ""float"",
+      ""value"": 40,
+      ""useDefaultModifier"": true
+    }
+  },
+  ""arc"": {
+    ""jumpHeight"": {
+      ""type"": ""float"",
+      ""value"": 40,
       ""useDefaultModifier"": true
     }
   }
