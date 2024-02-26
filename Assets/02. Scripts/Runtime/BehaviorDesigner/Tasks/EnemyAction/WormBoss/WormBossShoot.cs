@@ -17,7 +17,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private TaskStatus taskStatus;
         private Transform playerTrans;
         
-        public List<GameObject> missileSpawnPos;
+        private List<GameObject> missileSpawnPos;
         public GameObject missilePrefab;
         private SafeGameObjectPool missilePool;
 
@@ -37,10 +37,13 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override void OnStart()
         {
             base.OnStart();
+            
             taskStatus = TaskStatus.Running;
+            
             missilePool = GameObjectPoolManager.Singleton.CreatePool(missilePrefab, 20, 50);
             playerTrans = GetPlayer().transform;
-            
+            missileSpawnPos = enemyEntity.missileFirePosList;
+
             iterations = enemyEntity.GetCustomDataValue<int>("missileAttack", "iterations");
             timeBetweenIterations = enemyEntity.GetCustomDataValue<float>("missileAttack", "timeBetweenIterations");
             timeBetweenMissiles = enemyEntity.GetCustomDataValue<float>("missileAttack", "timeBetweenMissiles");
@@ -74,6 +77,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 foreach (var spawnPos in missileSpawnPos)
                 {
+                    bool m_HitDetect = Physics.Raycast(
+                        spawnPos.transform.position, 
+                        spawnPos.transform.up, 
+                        0.1f, 
+                        LayerMask.GetMask("Ground", "Default", "Wall"));
+
+                    if (m_HitDetect)
+                    {
+                        Debug.Log($"WORM BOSS: missile spawn pos is blocked");
+                        continue;
+                    }
+                    
+                    Debug.Log($"WORM BOSS: missile spawn pos valid");
+                    
                     GameObject b = missilePool.Allocate();
                     
                     b.transform.position = spawnPos.transform.position;
