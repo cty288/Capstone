@@ -11,10 +11,11 @@ using UnityEngine.Serialization;
 public class WormBossMissile : AbstractBulletViewController
 {
     public Rigidbody rb;
-    public ParticleSystem trail;
+    public ParticleSystem streaksTrail;
+    public ParticleSystem smokeTrail;
 
     public GameObject particlePrefab;
-    [FormerlySerializedAs("explosion")] public GameObject explosionPrefab;
+    public GameObject explosionPrefab;
     private SafeGameObjectPool explosionPool;
     private GameObject particleInstance;
    
@@ -33,9 +34,8 @@ public class WormBossMissile : AbstractBulletViewController
     private void Start()
     {
         explosionPool = GameObjectPoolManager.Singleton.CreatePool(explosionPrefab, 10, 30);
-        trail = this.transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
-        trail.Play();
-        rb = this.gameObject.GetComponent<Rigidbody>();
+        streaksTrail.Play();
+        smokeTrail.Play();
     }
     
     public void SetData(float missileLifetime, Transform player, float maxAngle, float bulletSpeed, 
@@ -51,8 +51,10 @@ public class WormBossMissile : AbstractBulletViewController
         this.explosionSize = explosionSize;
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         missileLifetime -= Time.deltaTime;
         if (missileLifetime <= 0)
         {
@@ -104,7 +106,6 @@ public class WormBossMissile : AbstractBulletViewController
 
     protected override void OnBulletReachesMaxRange()
     {
-        // throw new System.NotImplementedException();
     }
 
     protected override void OnBulletRecycled()

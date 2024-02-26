@@ -1,37 +1,26 @@
-using System;
-using Framework;
 using System.Collections.Generic;
-using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
-using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
-using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.ViewControllers;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
-using Runtime.Enemies.Model.Properties;
 using Runtime.Enemies.ViewControllers.Base;
-using Runtime.Utilities.ConfigSheet;
-using Runtime.Enemies;
-using Runtime.UI.NameTags;
-using Runtime.Utilities;
-using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 using UnityEngine.AI;
 
-using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 namespace Runtime.Enemies
 {
     public class WormBossEntity : BossEntity<WormBossEntity>
     {
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "WormBoss";
+        public List<GameObject> missileFirePosList;
         
         protected override void OnEntityStart(bool isLoadedFromSave)
         {
@@ -41,6 +30,11 @@ namespace Runtime.Enemies
         public override void OnRecycle()
         {
             base.OnRecycle();
+        }
+        
+        public void InitializeMissileFirePosList(List<GameObject> missileFirePosList)
+        {
+            this.missileFirePosList = missileFirePosList;
         }
         
         protected override void OnInitModifiers(int rarity, int level) {}
@@ -81,6 +75,8 @@ namespace Runtime.Enemies
 
         [SerializeField] private GameObject sandParticleVFX;
         public GameObjectPool sandParticlePool;
+
+        public List<GameObject> missileFirePosList;
         
         private int fallAttackDamage;
         private float fallKnockbackForce;
@@ -102,6 +98,8 @@ namespace Runtime.Enemies
             fallKnockbackForce = BoundEntity.GetCustomDataValue<float>("fallAttack", "knockbackForce").Value;
 
             sandParticlePool = GameObjectPoolManager.Singleton.CreatePool(sandParticleVFX, 8, 16);
+            
+            BoundEntity.InitializeMissileFirePosList(missileFirePosList);
             
             if (fallHitBox)
             {

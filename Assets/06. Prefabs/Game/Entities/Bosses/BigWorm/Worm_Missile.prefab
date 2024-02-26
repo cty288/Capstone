@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2005391152605163274}
   - component: {fileID: 3721431502506654119}
   m_Layer: 0
-  m_Name: UKR ARROW (1)
+  m_Name: Worm_Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,8 +121,11 @@ MonoBehaviour:
   penetrateSameFaction: 0
   autoDestroyWhenOwnerDestroyed: 0
   autoRecycleWhenHit: 1
+  rb: {fileID: 1165915335426707906}
+  streaksTrail: {fileID: 4472605247307750676}
+  smokeTrail: {fileID: 937127415410071302}
   particlePrefab: {fileID: 0}
-  explosion: {fileID: 2049937806834680411, guid: faaef9f23cca6fc44ac3da246386ddf5,
+  explosionPrefab: {fileID: 2049937806834680411, guid: faaef9f23cca6fc44ac3da246386ddf5,
     type: 3}
 --- !u!1 &937127415410071300
 GameObject:
