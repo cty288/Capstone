@@ -223,8 +223,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 		}
 
-		private void OnLevelChange(ILevelEntity oldLevel, ILevelEntity newLevel) {
-			if (CanAutoRemoveEntityWhenLevelEnd  && newLevel.UUID != oldLevel.UUID) {
+		protected virtual void OnLevelChange(ILevelEntity oldLevel, ILevelEntity newLevel) {
+			if (CanAutoRemoveEntityWhenLevelEnd  && oldLevel!=null && newLevel.UUID != oldLevel.UUID) {
 				transform.SetParent(null);
 				entityModel.RemoveEntity(BoundEntity.UUID, true);
 			}

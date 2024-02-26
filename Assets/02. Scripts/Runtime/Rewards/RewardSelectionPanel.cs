@@ -7,6 +7,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
+using TMPro;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Rewards {
@@ -63,6 +64,7 @@ namespace _02._Scripts.Runtime.Rewards {
 			}
 			
 			slotLayout.DOAnchorPosY(0, 0.3f).SetUpdate(true);;
+			int i = 1;
 			foreach (IResourceEntity entity in rewardsToSelect) {
 				ResourceSlot slot = new ResourceSlot();
 				slot.TryAddItem(entity);
@@ -81,7 +83,8 @@ namespace _02._Scripts.Runtime.Rewards {
 				slotViewController.SpawnDescription = true;
 				slotViewControllers.Add(slotViewController);
 				slotViewController.Activate(true, false);
-
+				slotViewController.transform.Find("NumberBG/NumberText").GetComponent<TMP_Text>().text = i.ToString();
+				i++;
 				slotViewController.RegisterOnSlotClickedCallback(OnSlotClicked);
 			}
 

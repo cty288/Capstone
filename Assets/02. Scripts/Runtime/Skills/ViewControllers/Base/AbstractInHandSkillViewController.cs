@@ -57,7 +57,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 			
 		}
 
-		protected void UseSkill(Action onUseSuccess) {
+		protected void UseSkill(Action onUseSuccess, Action onUseFail = null) {
 			inventorySystem.ForceUpdateCurrentHotBarSlotCanSelect();
 			if (BoundEntity == null) {
 				return;

@@ -241,6 +241,10 @@ namespace Runtime.Inventory.Model {
 		}
 
 		public bool AddItem(IResourceEntity item, bool sendEvent = true) {
+			if (item == null) {
+				return false;
+			}
+
 			if (model.AddItem(item)) {
 				if (sendEvent) {
 					if (sendEvent) {
@@ -252,6 +256,7 @@ namespace Runtime.Inventory.Model {
 					
 				}
 				item.OnAddedToInventory(playerModel.GetPlayer().UUID);
+				item.AddedToInventoryBefore = true;
 				return true;
 			}
 
@@ -272,6 +277,7 @@ namespace Runtime.Inventory.Model {
 				foreach (string id in slot.GetUUIDList()) {
 					IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(id);
 					if (entity != null) {
+						entity.AddedToInventoryBefore = true;
 						AddItem(entity, false);
 					}
 				}

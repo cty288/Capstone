@@ -180,11 +180,11 @@ namespace Runtime.Weapons.Model.Base
         }
 
         public override int GetMaxRarity() {
-            return 1;
+            return GetRarity();
         }
 
         public override int GetMinRarity() {
-            return 1;
+            return GetRarity();
         }
 
         public override void OnRegisterResourcePropertyDescriptionGetters(ref List<GetResourcePropertyDescriptionGetter> list) {

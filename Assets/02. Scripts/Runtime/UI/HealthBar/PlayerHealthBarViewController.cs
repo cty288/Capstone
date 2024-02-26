@@ -68,16 +68,22 @@ public class PlayerHealthBarViewController : AbstractMikroController<MainGame> {
         playerModel.GetPlayer().HealthProperty.RealValue.RegisterWithInitValue(OnHealthChanged)
             .UnRegisterWhenGameObjectDestroyed(gameObject);
         
-        IArmorProperty armorProperty = playerModel.GetPlayer().GetArmor();
-        armorProperty.RealValue.RegisterWithInitValue(OnArmorChanged)
+        playerModel.GetPlayer().Armor.RegisterWithInitValue(OnArmorChanged)
             .UnRegisterWhenGameObjectDestroyed(gameObject);
-        totalArmor = armorProperty.InitialValue;
-        targetArmorNumber = armorProperty.RealValue.Value;
+        
+        IArmorProperty maxArmor = playerModel.GetPlayer().GetMaxArmor();
+        maxArmor.RealValue.RegisterWithInitValue(OnMaxArmorChanged)
+            .UnRegisterWhenGameObjectDestroyed(gameObject);
+       
+        targetArmorNumber = playerModel.GetPlayer().Armor.Value;
         displayedArmorNumber = targetHealthNumber;
     }
 
+    private void OnMaxArmorChanged(float arg1, float newTotalArmor) {
+        totalArmor = newTotalArmor;
+    }
+
     private void OnArmorChanged(float oldArmor, float newArmor) {
-     
         targetArmorNumber = newArmor;
         if (newArmor < oldArmor) {
             armorHurtSliderWaitTimer = armorHurtSliderWaitTime;

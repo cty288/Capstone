@@ -15,7 +15,8 @@ namespace Runtime.UI {
 		 [SerializedDictionary("Title Toggle", "Panel")] [SerializeField]
         private SerializedDictionary<Toggle, RectTransform> subPanelDictionary;
 
-     
+        private Color toggleOnColor = new Color(0.8313726f, 0.2627451f, 0.2196078f);
+        private Color toggleOffColor = new Color(0.4811321f, 0.4811321f, 0.4811321f);
 
         private RectTransform currentPanel;
 
@@ -85,6 +86,18 @@ namespace Runtime.UI {
             }
 
             tweenList.Clear();
+
+            foreach (KeyValuePair<Toggle,RectTransform> kvp in subPanelDictionary) {
+                Toggle toggle = kvp.Key;
+                RectTransform rectTransform = kvp.Value;
+                
+                if (rectTransform == panel) {
+                    toggle.targetGraphic.color = toggleOnColor;
+                }
+                else {
+                    toggle.targetGraphic.color = toggleOffColor;
+                }
+            }
             
             if (moveImmediately) {
                 if (currentPanel != null) {
