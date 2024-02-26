@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BehaviorDesigner.Runtime;
 using Cysharp.Threading.Tasks;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
@@ -72,6 +73,24 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private async UniTask SkillExecute()
         {
+            for (int i = 0; i < 2; i++)
+            {
+                await CreateEffects();
+                
+                await UniTask.WaitForSeconds(0.5f, false, PlayerLoopTiming.Update,
+                    gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+                
+                RecycleEffects();
+                
+                await UniTask.WaitForSeconds(0.5f, false, PlayerLoopTiming.Update,
+                    gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            }
+            
+            taskStatus = TaskStatus.Success;
+        }
+
+        private async UniTask CreateEffects()
+        {
             Shuffle(firePoints);
 
             // start charges
@@ -93,13 +112,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 await UniTask.WaitForSeconds(timeBetweenShots, false, PlayerLoopTiming.Update,
                     gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
-
-            await UniTask.WaitForSeconds(1f, false, PlayerLoopTiming.Update,
-                gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-
-            taskStatus = TaskStatus.Success;
         }
-        
+
         private GameObject SpawnChargeEffect(Transform spawnTransform)
         {
             GameObject c = acidChargePool.Allocate();
@@ -137,6 +151,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         public override void OnEnd()
         {
+            RecycleEffects();
+        }
+
+        private void RecycleEffects()
+        {
             foreach (var charge in chargeEffects)
                 acidChargePool.Recycle(charge);
 
@@ -146,7 +165,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             chargeEffects.Clear();
             bulletEffects.Clear();
         }
-        
+
         private void Shuffle<T>(T[] arr)
         {
             // Knuth shuffle algorithm :: courtesy of Wikipedia :)

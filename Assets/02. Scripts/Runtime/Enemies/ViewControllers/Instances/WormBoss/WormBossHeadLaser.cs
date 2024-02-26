@@ -39,7 +39,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public GameObject charging;
         public GameObject charged;
-        public GameObject beam;
+        public GameObject aura;
+        public GameObject burst;
 
         private ParticleSystem chargingVFX;
         private ParticleSystem chargedVFX;
@@ -69,17 +70,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private async UniTask SkillExecute()
         {
+            charging.SetActive(true);
+            
             await UniTask.WaitForSeconds(chargeUpTime,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-
+            
             await SpawnLazer();
             
             await UniTask.WaitForSeconds(laserDuration,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
             charged.SetActive(false);
-            beam.SetActive(false);
+            burst.SetActive(false);
             laserInstance.SetActive(false);
+            
             await disableVFX();
             
             await UniTask.WaitForSeconds(1f,
@@ -96,16 +100,18 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 laserInstance = null;
             }
             
-            charged.SetActive(true);
-            
-            Debug.Log($"Charge Start Lazer {Time.time}");
-
-            await UniTask.WaitForSeconds(3f,
+            aura.SetActive(true);
+            await UniTask.WaitForSeconds(1f,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
-            Debug.Log($"Fire Lazer {Time.time}");
             charging.SetActive(false);
-            beam.SetActive(true);
+            charged.SetActive(true);
+            
+            await UniTask.WaitForSeconds(1f,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
+            aura.SetActive(false);
+            burst.SetActive(true);
             laserInstance = pool.Allocate();
             laserInstance.SetActive(true);
             
@@ -127,13 +133,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             c.timer = 0f;
             c.targetSize = Vector3.zero;
             
-            var b = beam.gameObject.GetComponent<VFXTransform>();
+            var b = aura.gameObject.GetComponent<VFXTransform>();
             b.initialSize = new Vector3(300, 300, 300);
             b.timer = 0f;
             b.targetSize = Vector3.zero;
-           
-            
-            
         }
         
         public override void OnEnd()
@@ -149,11 +152,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             c.timer = 0f;
             c.targetSize = new Vector3(300, 300, 300);
             charged.SetActive(false);
-            var b = beam.gameObject.GetComponent<VFXTransform>();
+            var b = aura.gameObject.GetComponent<VFXTransform>();
             b.initialSize = new Vector3(0, 0, 0);
             b.timer = 0f;
             b.targetSize = new Vector3(300, 300, 300);
-            beam.SetActive(false);
+            aura.SetActive(false);
         }
     }
 }
