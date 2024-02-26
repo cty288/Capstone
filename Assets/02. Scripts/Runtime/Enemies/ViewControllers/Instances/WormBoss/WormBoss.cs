@@ -59,6 +59,7 @@ namespace Runtime.Enemies
                 new AutoConfigCustomProperty("entity"),
                 new AutoConfigCustomProperty("fallAttack"),
                 new AutoConfigCustomProperty("arc"),
+                new AutoConfigCustomProperty("missileAttack"),
             };
         }
     }

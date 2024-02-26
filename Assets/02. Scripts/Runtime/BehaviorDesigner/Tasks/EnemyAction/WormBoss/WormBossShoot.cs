@@ -1,117 +1,104 @@
-using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
-using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using Cysharp.Threading.Tasks;
 using MikroFramework;
 using MikroFramework.Pool;
-using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
-using Runtime.Spawning;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
-using UnityEngine.AI;
 using Runtime.Enemies;
-using FIMSpace.FSpine;
 
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
     public class WormBossShoot : EnemyAction<WormBossEntity>
     {
-        public GameObject missilePrefab;
-        private bool ended;
+        private TaskStatus taskStatus;
         private Transform playerTrans;
+        
+        public List<GameObject> missileSpawnPos;
+        public GameObject missilePrefab;
+        private SafeGameObjectPool missilePool;
 
-        private SafeGameObjectPool pool;
-        private int bulletCount;
-        private float bulletSpeed;
-        private float spawnInterval;
-        private bool flag = false;
+        private bool startedSpawning;
         public bool willEnd = true;
 
-        public List<GameObject> bulletSpawnPos;
-
-        public override void OnAwake()
-        {
-            base.OnAwake();
-            pool = GameObjectPoolManager.Singleton.CreatePool(missilePrefab, 20, 50);
-            playerTrans = GetPlayer().transform;
-            
-
-        }
+        private int iterations;
+        private float timeBetweenIterations;
+        private float timeBetweenMissiles;
+        private int missileDamage;
+        private float missileTimer;
+        private float missileSpeed;
+        private float missileMaxTurnAngle;
+        private int missileExplosionDamage;
+        private float missileExplosionSize;
+        
         public override void OnStart()
         {
             base.OnStart();
-            ended = false;
-            //StartCoroutine(RapidFire());
+            taskStatus = TaskStatus.Running;
+            missilePool = GameObjectPoolManager.Singleton.CreatePool(missilePrefab, 20, 50);
+            playerTrans = GetPlayer().transform;
+            
+            iterations = enemyEntity.GetCustomDataValue<int>("missileAttack", "iterations");
+            timeBetweenIterations = enemyEntity.GetCustomDataValue<float>("missileAttack", "timeBetweenIterations");
+            timeBetweenMissiles = enemyEntity.GetCustomDataValue<float>("missileAttack", "timeBetweenMissiles");
+            missileDamage = enemyEntity.GetCustomDataValue<int>("missileAttack", "missileDamage");
+            missileTimer = enemyEntity.GetCustomDataValue<float>("missileAttack", "missileLifetime");
+            missileSpeed = enemyEntity.GetCustomDataValue<float>("missileAttack", "missileSpeed");
+            missileMaxTurnAngle = enemyEntity.GetCustomDataValue<float>("missileAttack", "missileMaxTurnAngle");
+            missileExplosionDamage = enemyEntity.GetCustomDataValue<int>("missileAttack", "missileExplosionDamage");
+            missileExplosionSize = enemyEntity.GetCustomDataValue<float>("missileAttack", "missileExplosionSize");
         }
 
-        // Update is called once per frame
         public override TaskStatus OnUpdate()
         {
-            if (ended)
-            {
-                return TaskStatus.Success;
-
-            }
-            else
-            {
-                return TaskStatus.Running;
-            }
-            
+            return taskStatus;
         }
-        public override void OnEnd()
-        {
-            flag = false;
-        }
+        
         public override void OnLateUpdate()
         {
             base.OnLateUpdate();
-            if (flag == false)
-            {
-                flag = true;
-                StartCoroutine(RapidFire());
-            }
             
-        }
-        IEnumerator RapidFire()
-        {
-            StartCoroutine(SpawnMissile());
-            yield return null;
+            if (startedSpawning == false)
+            {
+                startedSpawning = true;
+                SkillExecute();
+            }
         }
         
-        IEnumerator SpawnMissile()
+        private async UniTask SkillExecute()
         {
-            
-           
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < iterations; i++)
             {
-
-                for (int j = 0; j < 7; j++)
+                foreach (var spawnPos in missileSpawnPos)
                 {
-                    GameObject b = pool.Allocate();
+                    GameObject b = missilePool.Allocate();
                     
+                    b.transform.position = spawnPos.transform.position;
                     
-                    b.transform.position = bulletSpawnPos[j].transform.position;
-                    
-                    //b.transform.position = bulletSpawnPos[j].transform.parent.GetComponent<SphereCollider>().center;
-                   // b.transform.position = b.transform.parent.GetComponent<SphereCollider>().center;
                     b.transform.rotation = Quaternion.Euler(-90, 0, 0);
-                    b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, 5, gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
-                    b.GetComponent<WormBossMissile>().Setup(10f, playerTrans , 30, 20);
-                    yield return new WaitForSeconds(0.3f);
+                    b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, missileDamage, gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
+                    b.GetComponent<WormBossMissile>().SetData(missileTimer, playerTrans, missileMaxTurnAngle, missileSpeed, missileExplosionDamage, missileExplosionSize);
 
+                    await UniTask.WaitForSeconds(timeBetweenMissiles,
+                        cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
                 }
+                await UniTask.WaitForSeconds(timeBetweenIterations,
+                    cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
             
             if(willEnd)
-                ended = true;
+                taskStatus = TaskStatus.Success;
             
-            yield return null;
+            startedSpawning = false;
         }
-        
+
+        public override void OnEnd()
+        {
+            startedSpawning = false;
+        }
     }
 }
 
