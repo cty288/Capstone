@@ -77,17 +77,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 foreach (var spawnPos in missileSpawnPos)
                 {
-                    bool m_HitDetect = Physics.Raycast(
-                        spawnPos.transform.position, 
-                        spawnPos.transform.up, 
-                        0.1f, 
-                        LayerMask.GetMask("Ground", "Default", "Wall"));
-
-                    if (m_HitDetect)
-                    {
-                        Debug.Log($"WORM BOSS: missile spawn pos is blocked");
+                    float angle = Vector3.Angle(transform.up, Vector3.up);
+                    if (angle > 20)
                         continue;
-                    }
                     
                     Debug.Log($"WORM BOSS: missile spawn pos valid");
                     
