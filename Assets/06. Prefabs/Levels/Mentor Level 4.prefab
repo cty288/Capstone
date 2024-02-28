@@ -15087,7 +15087,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.13333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 90e93d58204583846a06e76ed80e2549, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 61995f1ad22ebe347a162a451d6cc757, type: 2}
 --- !u!114 &8841471019466061308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15107,7 +15107,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 19ab2d1f-aab2-43a9-b695-57625965317d
   autoCreateNewEntityWhenStart: 0
   showNameTagWhenPointed: 0
   nameTagFollowTransform: {fileID: 0}
@@ -15124,17 +15123,9 @@ MonoBehaviour:
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   playerSpawnPoints:
   - {fileID: 5852216455221010440}
-  enemies:
-  - mainPrefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 3
-  - mainPrefab: {fileID: 53076124648127137, guid: c4c4d07d25d51ff45bd1e540ac4a68c4,
-      type: 3}
-    variants: []
-    minRarity: 1
-    maxRarity: 3
+  enemySpawnCardConfigs:
+  - enemySpawnInfos: []
+  - enemySpawnInfos: []
   bossSpawnCostInfo:
     _serializedList:
     - Key: 0
@@ -15191,40 +15182,50 @@ MonoBehaviour:
       - Key: 1
         Value:
         - RewardType: 0
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
       - Key: 2
         Value:
         - RewardType: 1
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
       - Key: 3
         Value:
         - RewardType: 1
-          Level: 2
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 2
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
       - Key: 4
         Value:
         - RewardType: 1
-          Level: 3
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 1
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 2
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
         - RewardType: 0
-          Level: 3
+          PossibleLevelWithWeights:
+            _serializedList: []
           AmountRange: {x: 1, y: 1}
   hasPillars: 1
   pillarPrefabName: BossPillar
@@ -15235,6 +15236,8 @@ MonoBehaviour:
   - 0
   - 0.33
   - 1
+  timeCurrencyLevel: 1
+  spawnExitDoor: 1
   subAreaLevelPrefabs: []
   autoUpdateNavMeshOnStart: 1
   ambientMusic: {fileID: 8300000, guid: da3ed51b963c68748a9d645c14752ec5, type: 3}
@@ -15243,7 +15246,6 @@ MonoBehaviour:
   bossExplorationMultiplier: 2
   normalEnemyExplorationMultiplier: 1
   explorationValuePerSecond: 1
-  killBossRequired: 1
 --- !u!1 &7914839933214384744
 GameObject:
   m_ObjectHideFlags: 0
