@@ -55,7 +55,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 
 
 		[SerializeField] private float autoRecycleTime = 5f;
-		[SerializeField] private bool penetrateSameFaction = false;
+		[SerializeField] protected bool penetrateSameFaction = false;
 		[SerializeField] private bool autoDestroyWhenOwnerDestroyed = false;
 		private Coroutine autoRecycleCoroutine = null;
 
