@@ -51,8 +51,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             pool = GameObjectPoolManager.Singleton.CreatePool(lazerPrefab.Value, 10, 20);
             playerTrans = GetPlayer().transform;
             player = GetPlayer();
-            
-           
         }
 
         public override void OnStart()

@@ -6,6 +6,9 @@ using UnityEngine;
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.TurretSkill {
 	public class DeployingTurretViewController : AbstractDeployableResourceViewController<TurretSkillEntity> {
 		[SerializeField] private GameObject turretPrefab;
+
+		public override bool DoesRotateToSlope { get; protected set; } = false;
+
 		protected override void OnEntityStart() {
 			
 		}

@@ -125,7 +125,6 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
     }
 
     protected override ICustomProperty[] OnRegisterCustomProperties() {
-
         return new[] {
             new AutoConfigCustomProperty("dash"),
             new AutoConfigCustomProperty("walk"),
@@ -246,7 +245,7 @@ public class BladeSentinel : AbstractBossViewController<BladeSentinelEntity>
 
     public override void OnRecycled() {
         base.OnRecycled();
-        transform.localScale = Vector3.one;
+       // transform.localScale = Vector3.one;
         animator.SetBool("Die", false);
         deathAnimationEnd = false;
         rb.isKinematic = true;

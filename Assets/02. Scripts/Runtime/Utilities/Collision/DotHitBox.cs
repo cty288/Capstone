@@ -16,7 +16,7 @@ namespace Runtime.Utilities.Collision
         public LayerMask TargetLayers;
         public float dotTick;
         private float timer;
-        private bool canDealDamage = false;
+        private bool canDealDamage = true;
         public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         [SerializeField] protected bool showDamageNumber = true;
 
@@ -28,7 +28,7 @@ namespace Runtime.Utilities.Collision
         }
         private void Update()
         {
-            if(canDealDamage == true)
+            if(canDealDamage)
             {
                 ResetTimer();
             }
@@ -55,19 +55,15 @@ namespace Runtime.Utilities.Collision
             
         }
 
-        public virtual void TriggerCheckHit(Collider c)
-        {
-           
-
-        }
         private void OnTriggerStay(Collider other)
         {
             if (canDealDamage)
             {
+                print($"WORM BOSS: dot can deal damage {other.gameObject.name}");
 
                 if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
                 {
-                
+                    print($"WORM BOSS: dot is in layer mask {other.gameObject.name}");
                     IHurtbox hurtbox;
                     hurtbox = other.gameObject.GetComponent<IHurtbox>();
                     HurtboxModifier mod = other.GetComponent<HurtboxModifier>();
@@ -111,9 +107,6 @@ namespace Runtime.Utilities.Collision
                             hitData.HitDetector.HitResponder?.HitResponse(hitData);
                             hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                         }
-                          
-                    
-
                     }
                     else
                     {
@@ -128,10 +121,11 @@ namespace Runtime.Utilities.Collision
                             ShowDamageNumber = showDamageNumber
                         };
 
+                        print($"WORM BOSS: dot pass all {other.gameObject.name}");
+
                         HitResponder?.HitResponse(hitData);
                     }
                 }
-                
             }
         }
         private void ResetTimer()
