@@ -75,17 +75,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         {
             for (int i = 0; i < iterations; i++)
             {
-                foreach (var spawnPos in missileSpawnPos)
+                for (int j = missileSpawnPos.Count - 1; j >= 0; j--)
                 {
-                    float angle = Vector3.Angle(transform.up, Vector3.up);
-                    if (angle > 20)
-                        continue;
+                    GameObject spawnPos = missileSpawnPos[j];
                     
-                    Debug.Log($"WORM BOSS: missile spawn pos valid");
+                    float angle = Vector3.Angle(spawnPos.transform.forward, Vector3.up);
+
+                    if (angle > 100)
+                    {
+                        continue;
+                    }
                     
                     GameObject b = missilePool.Allocate();
                     
-                    b.transform.position = spawnPos.transform.position;
+                    b.transform.position = spawnPos.transform.position + spawnPos.transform.forward * 1.2f;
                     
                     b.transform.rotation = Quaternion.Euler(-90, 0, 0);
                     b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value, missileDamage, gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);

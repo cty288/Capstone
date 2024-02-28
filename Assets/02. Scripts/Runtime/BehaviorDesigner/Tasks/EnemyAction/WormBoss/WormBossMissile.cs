@@ -100,8 +100,12 @@ public class WormBossMissile : AbstractBulletViewController
 
     protected override void OnHitObject(Collider other)
     {
-        Explode();
-        Debug.Log("Der");
+        if (!other.CompareTag("Enemy"))
+        {
+            Debug.Log($"Missile Hit Enemy: {other.name}");
+            Explode();
+        }
+        
     }
 
     protected override void OnBulletReachesMaxRange()
