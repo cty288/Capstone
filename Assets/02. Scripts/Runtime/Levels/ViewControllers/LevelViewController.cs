@@ -47,7 +47,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public void SetLevelNumber(int levelNumber);
 		public ILevelEntity OnBuildNewLevel(int levelNumber);
 
-		public void Init();
+		public UniTask Init();
 		
 		public void OnExitLevel();
 
@@ -313,7 +313,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			return subAreaLevels;
 		}
 
-		public async void Init() {
+		public async UniTask Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
 			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
@@ -359,7 +359,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 
 		private async UniTask SpawnLevelExitDoor() {
-			GameObject door = await SpawningUtility.SpawnExitDoor(gameObject, "LevelExitDoor", maxExtent.bounds);
+
+			GameObject door = await SpawningUtility.SpawnExitDoor(gameObject, "LevelExitDoor", maxExtent.bounds,
+				playerSpawnPoints.ToArray());
 			door.transform.SetParent(transform);
 		}
 
