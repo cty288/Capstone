@@ -20,7 +20,7 @@ public class PropertyDescriptionItemViewController : PoolableGameObject, IContro
     }
 
 
-    public void SetContent(string iconNameText, string descriptionText, string iconPrefabName) {
+    public virtual void SetContent(string iconNameText, string descriptionText, string iconPrefabName) {
         string colon = Localization.Get("COLON");
         if (string.IsNullOrEmpty(iconNameText)) {
             this.descriptionText.text = descriptionText;

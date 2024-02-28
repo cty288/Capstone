@@ -7,6 +7,7 @@ using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Tags;
+using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Properties;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
@@ -79,6 +80,8 @@ namespace Runtime.GameResources.Model.Base {
 		public BindableProperty<bool> IsHolding { get; }
 		
 		public bool AddedToInventoryBefore { get; set; }
+		
+		public  IRarityProperty GetRarityProperty();
 	}
 	
 
@@ -108,6 +111,10 @@ namespace Runtime.GameResources.Model.Base {
 
 		[field: ES3Serializable]
 		public bool AddedToInventoryBefore { get; set; } = false;
+
+		public IRarityProperty GetRarityProperty() {
+			return GetProperty<IRarityProperty>();
+		}
 
 		[field: ES3Serializable]
 		protected bool isInInventory = false;

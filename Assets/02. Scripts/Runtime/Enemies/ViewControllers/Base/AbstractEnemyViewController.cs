@@ -130,7 +130,6 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		}
 
 		public virtual bool CheckHit(HitData data) {
-			
 			if (data.Hurtbox.Owner == gameObject) { return false; }
 			else if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
 			else { return true; }
@@ -143,8 +142,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		public HitData OnModifyHitData(HitData data) {
 			return data;
 		}
-
-
+		
 		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
 			//BoundEntity?.OnKillDamageable(damageable);
 		}

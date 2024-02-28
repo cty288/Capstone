@@ -78,7 +78,7 @@ public class UppercutBlades : EnemyAction<BladeSentinelEntity> {
 			tasks.Add(task);
 			await UniTask.WaitForSeconds(bladeInterval, false, PlayerLoopTiming.Update,
 				gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-		}
+		}   
 
 		await UniTask.WhenAll(tasks);
 		anim.SetTrigger("SkillEnd");

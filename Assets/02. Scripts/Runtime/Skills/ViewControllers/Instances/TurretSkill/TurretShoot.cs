@@ -31,10 +31,13 @@ public class TurretShoot : Action {
     private HitScan hitScan;
     private TurretEntity turretEntity;
     public VisualEffect[] bulletVFX;
+    
+    private Animator animator;
     public override void OnAwake() {
         base.OnAwake();
         flashPool = GameObjectPoolManager.Singleton.CreatePool(muzzleFlash, 50, 100);
         layer = LayerMask.GetMask("Default", "Hurtbox", "Ground", "Wall");
+        animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     public override void OnStart() {
@@ -43,6 +46,8 @@ public class TurretShoot : Action {
         turretEntity = GetComponent<TurretViewController>().Entity;
 
         hitScan = new HitScan(turretEntity, Faction.Friendly, bulletVFX, null, true);
+        animator.SetBool("isShooting", true);
+
     }
 
     public override TaskStatus OnUpdate() {
@@ -88,6 +93,11 @@ public class TurretShoot : Action {
             new Collider[] {gameObject.GetComponent<Collider>()});
         
         turretEntity.UseAmmo();
+    }
+
+    public override void OnEnd() {
+        base.OnEnd();
+        animator.SetBool("isShooting", false);
     }
 }
 
