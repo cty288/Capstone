@@ -29,7 +29,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private Vector3 direction;
         private GameObject player;
         
-        private float jumpHeight = 50f; // Amplitude of the jump
+        private float jumpHeight;
+        private float jumpDistance;
 
         
         public override void OnStart()
@@ -38,6 +39,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             player = GetPlayer();
             
             jumpHeight = enemyEntity.GetCustomDataValue<float>("arc", "jumpHeight");
+            jumpDistance = enemyEntity.GetCustomDataValue<float>("arc", "jumpDistance");
             
             endDive = false;
             startEnd = false;
@@ -51,7 +53,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // Generate the first sample
             Vector3 sample =  MathFunctions.RandomPointInAnnulus(player.transform.position, sampleMinRadius, sampleMaxRadius.Value);
             // Generate the second random sample, ensuring it is at least minDistance away from the first sample
-            Vector3 sample2 = MathFunctions.RandomPointInAnnulus(sample, sampleMinRadius, sampleMaxRadius.Value);
+            Vector3 sample2 = MathFunctions.RandomPointInAnnulus(sample, sampleMinRadius, jumpDistance);
 
             NavMeshHit hit;
             if (NavMesh.SamplePosition(sample, out hit, 25, NavMeshHelper.GetSpawnableAreaMask()))
@@ -131,7 +133,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private void MoveUnderGround()
         {
-            Vector3 endPos = end + direction.normalized * 150f;
+            Vector3 endPos = end + direction.normalized * 100f;
             transform.DOMove(endPos, duration * 2).OnComplete(() =>
             {
                 // GameObject debug_obj = new GameObject("worm1 arc end position");

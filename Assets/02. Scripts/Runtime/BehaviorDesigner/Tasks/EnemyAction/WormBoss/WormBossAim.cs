@@ -148,17 +148,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             var targetRotation = Quaternion.LookRotation(lookVector, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 2f * Time.deltaTime);
             //transform.LookAt(_lookAt.position);
+
+            var moveDistance = moveRange;
+            var distancePivot = Vector3.Distance(_lookAt.position, _liftedPos);
+            if (distancePivot < moveRange)
+            {
+                moveDistance = distancePivot - 5f;
+            }
             
             if (lookVector.magnitude > 1)
             {
                 lookVector = lookVector.normalized;
             }
-            transform.position = Vector3.Lerp(transform.position, _liftedPos + lookVector * moveRange, 2f * Time.deltaTime);
-        }
-
-        public void ToggleAim(bool running = true)
-        {
-            _running = running;
+            transform.position = Vector3.Lerp(transform.position, _liftedPos + lookVector * moveDistance, 2f * Time.deltaTime);
         }
     }
 }
