@@ -324,7 +324,7 @@ namespace Runtime.Spawning {
 			GameObject doorInstance = null;
 
 			while (true) {
-				
+				await UniTask.Yield();
 				Vector3 randomPoint = new Vector3(
 					UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
 					UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
