@@ -234,7 +234,6 @@ namespace Runtime.Enemies
         {
             base.OnRecycled();
             
-            transform.localScale = Vector3.one;
             agent.enabled = true;
             behaviorTree.enabled = true;
             model.gameObject.SetActive(true);
