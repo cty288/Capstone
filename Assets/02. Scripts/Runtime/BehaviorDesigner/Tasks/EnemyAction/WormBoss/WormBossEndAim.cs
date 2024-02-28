@@ -8,7 +8,9 @@ using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning;
 using System.Threading.Tasks;
+using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
+using DG.Tweening;
 using FIMSpace.FSpine;
 using MikroFramework;
 using MoreMountains.Feedbacks;
@@ -33,6 +35,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private FSpineAnimator _spine;
         
         private NavMeshAgent agent;
+        
+        private TaskStatus taskStatus;
 
         public override void OnAwake()
         {
@@ -44,14 +48,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             supportPlatform = bodySupportPlatform.Value.transform;
         }
 
+        public override void OnStart()
+        {
+            base.OnStart();
+            taskStatus = TaskStatus.Running;
+
+            SkillExecute();
+        }
+
         public override TaskStatus OnUpdate()
         {
-            if (LowerHead())
-            {
-                return TaskStatus.Success;
-            }
-
-            return TaskStatus.Running;
+            return taskStatus;
         }
 
         public override void OnEnd()
@@ -69,20 +76,22 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         private float _t;
         private float _headY;
-        private bool LowerHead()
+        private async UniTask SkillExecute()
         {
-            _t += Time.deltaTime/liftTime.Value * 0.5f;
+            // _t += Time.deltaTime/liftTime.Value * 0.5f;
             var position = transform.position;
-            var headPos = new Vector3(position.x, _headY, position.z);
+            // var headPos = new Vector3(position.x, _headY, position.z);
             var originPos = new Vector3(position.x, _originPos.Value.y, position.z);
-            position = Vector3.Lerp(headPos,  originPos, _t);
-            transform.position = position;
-            if (_t >= 1)
-            {
-                return true;
-            }
+            // position = Vector3.Lerp(headPos,  originPos, _t);
+            // transform.position = position;
 
-            return false;
+            await transform.DOMove(originPos, liftTime.Value)
+                .WithCancellation(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
+            await UniTask.WaitForSeconds(1f, 
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+
+            taskStatus = TaskStatus.Success;
         }
     }
 }

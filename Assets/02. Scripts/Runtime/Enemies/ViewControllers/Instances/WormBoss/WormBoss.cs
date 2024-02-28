@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Pool;
@@ -13,6 +14,8 @@ using Runtime.Enemies.ViewControllers.Base;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 namespace Runtime.Enemies
 {
@@ -70,18 +73,29 @@ namespace Runtime.Enemies
         private Rigidbody rb;
 
         [SerializeField] private GameObject model;
+        [SerializeField] private GameObject rig;
+        [SerializeField] private GameObject vfx;
+        [SerializeField] private GameObject wormSphere;
+        [SerializeField] private GameObject wormPlane;
+        
 
         [SerializeField] private HitBox fallHitBox;
 
         [SerializeField] private GameObject sandParticleVFX;
-        public GameObjectPool sandParticlePool;
-
+        [HideInInspector] public GameObjectPool sandParticlePool;
+        [SerializeField] private GameObject deathExplosionVFX;
+        private GameObjectPool deathExplosionPool;
+        [SerializeField] private GameObject deathExplosion2VFX;
+        private GameObjectPool deathExplosion2Pool;
+        
         public List<GameObject> missileFirePosList;
+        public List<GameObject> segments;
         
         private int fallAttackDamage;
         private float fallKnockbackForce;
         public bool inited = false;
 
+        private bool finishDeathAnimation = false;
         
         protected override void Awake()
         {
@@ -89,6 +103,7 @@ namespace Runtime.Enemies
             animator = GetComponentInChildren<Animator>(true);
             rb = GetComponent<Rigidbody>();
             agent = GetComponent<NavMeshAgent>();
+            // director = gameObject.GetComponent<PlayableDirector>();
         }
         
         protected override void OnEntityStart()
@@ -97,7 +112,9 @@ namespace Runtime.Enemies
             fallAttackDamage = BoundEntity.GetCustomDataValue<int>("fallAttack", "damage").Value;
             fallKnockbackForce = BoundEntity.GetCustomDataValue<float>("fallAttack", "knockbackForce").Value;
 
-            sandParticlePool = GameObjectPoolManager.Singleton.CreatePool(sandParticleVFX, 8, 16);
+            sandParticlePool = GameObjectPoolManager.Singleton.CreatePool(sandParticleVFX, 8, 24);
+            deathExplosionPool = GameObjectPoolManager.Singleton.CreatePool(deathExplosionVFX, 30, 60);
+            deathExplosion2Pool = GameObjectPoolManager.Singleton.CreatePool(deathExplosion2VFX, 10, 20);
             
             BoundEntity.InitializeMissileFirePosList(missileFirePosList);
             
@@ -162,22 +179,55 @@ namespace Runtime.Enemies
             }
         }
         
-        protected override MikroAction WaitingForDeathCondition() {
-
-            return UntilAction.Allocate(() => !model.gameObject.activeInHierarchy ||
-                                              (animator.GetCurrentAnimatorStateInfo(0).IsName("Die") &&
-                                               animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f));
+        protected override MikroAction WaitingForDeathCondition()
+        {
+            return UntilAction.Allocate(() => !model.gameObject.activeInHierarchy || finishDeathAnimation);
         }
         
         protected override void OnEntityDie(ICanDealDamage damagedealer) {
             base.OnEntityDie(damagedealer);
-            model.gameObject.SetActive(false);
             behaviorTree.enabled = false;
-            // animator.SetBool("Die", true);
-            // animator.CrossFadeInFixedTime("Die", 0.1f);
-            // rb.isKinematic = false;
-            // rb.useGravity = true;
             agent.enabled = false;
+            rb.isKinematic = true;
+            
+            
+            PlayDeathAnimation();
+        }
+
+        private async UniTask PlayDeathAnimation()
+        {
+            await UniTask.WaitForSeconds(1f);
+
+            for (int j = missileFirePosList.Count - 1; j >= 0; j--)
+            {
+                // only spawn explosion every 3rd position
+                Transform spawnPos = missileFirePosList[j].transform;
+                var e = deathExplosionPool.Allocate();
+                e.transform.position = spawnPos.position + transform.forward * 1.2f;
+            
+                await UniTask.WaitForSeconds(0.1f);
+            }
+
+            await UniTask.WaitForSeconds(2f);
+
+            model.gameObject.SetActive(false);
+            rig.gameObject.SetActive(false);
+            vfx.gameObject.SetActive(false);
+            
+            wormSphere.transform.parent = gameObject.transform;
+            wormPlane.transform.parent = gameObject.transform;
+            wormSphere.gameObject.SetActive(false);
+            wormPlane.gameObject.SetActive(false);
+            
+            foreach (var segment in segments)
+            {
+                var e = deathExplosion2Pool.Allocate();
+                e.transform.position = segment.transform.position;
+            }
+            
+            await UniTask.WaitForSeconds(1f);
+            
+            finishDeathAnimation = true;
         }
 
         public override void OnRecycled()
@@ -188,6 +238,8 @@ namespace Runtime.Enemies
             agent.enabled = true;
             behaviorTree.enabled = true;
             model.gameObject.SetActive(true);
+            rig.gameObject.SetActive(true);
+            vfx.gameObject.SetActive(true);
         }
     }
 }

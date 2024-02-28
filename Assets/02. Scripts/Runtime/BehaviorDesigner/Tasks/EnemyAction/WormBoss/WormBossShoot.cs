@@ -22,6 +22,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private SafeGameObjectPool missilePool;
 
         private bool startedSpawning;
+        public bool shootAllMissiles;
         public bool willEnd = true;
 
         private int iterations;
@@ -78,12 +79,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 for (int j = missileSpawnPos.Count - 1; j >= 0; j--)
                 {
                     GameObject spawnPos = missileSpawnPos[j];
-                    
-                    float angle = Vector3.Angle(spawnPos.transform.forward, Vector3.up);
 
-                    if (angle > 100)
+                    if (!shootAllMissiles)
                     {
-                        continue;
+                        float angle = Vector3.Angle(spawnPos.transform.forward, Vector3.up);
+                        if (angle > 100)
+                            continue;
                     }
                     
                     GameObject b = missilePool.Allocate();
