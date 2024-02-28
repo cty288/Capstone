@@ -359,7 +359,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 
 		private async UniTask SpawnLevelExitDoor() {
-			GameObject door = await SpawningUtility.SpawnExitDoor(gameObject, "LevelExitDoor", maxExtent.bounds);
+
+			GameObject door = await SpawningUtility.SpawnExitDoor(gameObject, "LevelExitDoor", maxExtent.bounds,
+				playerSpawnPoints.ToArray());
 			door.transform.SetParent(transform);
 		}
 
