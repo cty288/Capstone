@@ -16,7 +16,7 @@ using UnityEngine.UI;
 
 
 public class BasePreparationUIViewController  : AbstractPanel, IController, IGameUIPanel {
-	private bool canClose = false;
+	private bool canClose = true;
 	private PreparationSlotLayoutViewController weaponSlotLayout;
 	private PreparationSlotLayoutViewController skillSlotLayout;
 	private IInventoryModel inventoryModel;
@@ -58,7 +58,7 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	
 
 	public override void OnOpen(UIMsg msg) {
-		canClose = false;
+		//canClose = false;
 		CalculateEmptySlotCount();
 
 		weaponSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Weapon));
@@ -151,6 +151,10 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	public override void OnClosed() {
 		weaponSlotLayout.UnRegisterOnSlotClicked(OnSlotClicked);
 		skillSlotLayout.UnRegisterOnSlotClicked(OnSlotClicked);
+
+		weaponSlotLayout.OnUIClosed();
+		skillSlotLayout.OnUIClosed();
+		
 		occupiedGeneralSlotCountDict[ResourceCategory.Weapon] = 0;
 		occupiedGeneralSlotCountDict[ResourceCategory.Skill] = 0;
 		emptyHotbarSlotCountDict[ResourceCategory.Weapon] = 0;

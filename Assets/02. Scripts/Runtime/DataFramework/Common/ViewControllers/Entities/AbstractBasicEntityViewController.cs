@@ -14,6 +14,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			Action<T, T?> callback = null) {
 			IBindableProperty dataProperty = BoundEntity.GetCustomDataValue(customPropertyName, customDataName);
 			if(dataProperty == null) {
+				
 				throw new Exception(
 					$"Custom data property {customDataName} doesn't exist in custom property {customPropertyName}");
 			}
