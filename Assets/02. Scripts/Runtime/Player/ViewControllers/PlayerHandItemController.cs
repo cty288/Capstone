@@ -162,11 +162,12 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 	
 
 	private void DeployCurrentHoldDeployableItem() {
-		currentHoldDeployableItemViewController.Item1.OnDeploy();
+		//currentHoldDeployableItemViewController.Item1.OnDeploy();
+		var holdDeployableItem = currentHoldDeployableItemViewController.Item1;
 		//currentHoldItemViewController = null;
 		currentHoldDeployableItemViewController = (null, null);
 		if (currentHoldItemViewController is IInHandDeployableResourceViewController vc) {
-			vc.OnDeploy();
+			vc.OnDeploy(holdDeployableItem);
 
 			if (vc.RemoveAfterDeploy) {
 				HotBarSlot currentHotBarSlot = inventoryModel.GetSelectedHotBarSlot(currentHand);
@@ -177,7 +178,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 			}
 			else {
 				if (currentHoldItemViewController is IInHandDeployableResourceViewController) {
-					SpawnCurrentHoldDeployableItem();
+					//SpawnCurrentHoldDeployableItem();
 				}
 				
 			}

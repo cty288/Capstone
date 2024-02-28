@@ -12,6 +12,7 @@ using UnityEngine;
 using Runtime.Temporary.Weapon;
 using Runtime.Weapons.ViewControllers.Base;
 using Runtime.Enemies.SmallEnemies;
+using Runtime.Weapons.ViewControllers.Instances.WormBoss;
 
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction

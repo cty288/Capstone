@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Runtime.GameResources.ViewControllers {
 	public interface IInHandDeployableResourceViewController : IInHandResourceViewController {
 		public void OnDeployFailureReasonChanged(DeployFailureReason lastReason, DeployFailureReason currentReason);
-		void OnDeploy();
+		void OnDeploy(IDeployableResourceViewController deployableResource);
 		bool RemoveAfterDeploy { get; set; }
 	}
 
@@ -46,7 +46,7 @@ namespace Runtime.GameResources.ViewControllers {
 			}
 		}
 
-		public abstract void OnDeploy();
+		public abstract void OnDeploy(IDeployableResourceViewController deployableResource);
 		public abstract bool RemoveAfterDeploy { get; set; }
 	}
 }

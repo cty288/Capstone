@@ -3,14 +3,36 @@ using _02._Scripts.Runtime.Skills.Model.Builders;
 using _02._Scripts.Runtime.Skills.Model.Instance.TurretSkill;
 using _02._Scripts.Runtime.Skills.ViewControllers.Base;
 using MikroFramework.Architecture;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
+using Runtime.Player.ViewControllers;
+using Runtime.Utilities;
+using Runtime.Utilities.AnimatorSystem;
 
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.TurretSkill {
 	public class TurretSkillInHandViewController : AbstractInHandSkillViewController<TurretSkillEntity>, IInHandDeployableResourceViewController {
+		private bool usedBefore = false;
+		private IDeployableResourceViewController deployableResourceViewController;
 		protected override void OnBindEntityProperty() {
 			
+		}
+
+		protected override void OnEntityStart() {
+			base.OnEntityStart();
+			this.RegisterEvent<OnPlayerAnimationEvent>(OnPlayerAnimationEvent)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
+			
+		}
+
+		
+
+		private void OnPlayerAnimationEvent(OnPlayerAnimationEvent e) {
+			if (e.AnimationName == "OnRemoteControllerUse") {
+				UseSkill(OnUseSuccess);
+			}
 		}
 
 		public override void OnItemStartUse() {
@@ -19,10 +41,12 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.TurretSkill {
 
 		public override void OnItemStopUse() {
 			//UseSkill(OnUseSuccess);
+			
 		}
 
 		private void OnUseSuccess() {
-			
+			deployableResourceViewController?.OnDeploy();
+			deployableResourceViewController = null;
 		}
 
 		public override void OnItemUse() {
@@ -50,9 +74,24 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.TurretSkill {
 			}
 		}
 
-		public void OnDeploy() {
-			UseSkill(OnUseSuccess);
+		public void OnDeploy(IDeployableResourceViewController deployableResource) {
+			if (usedBefore) {
+				return;
+			}
+			usedBefore = true;
+			this.SendCommand<PlayerAnimationCommand>
+				(PlayerAnimationCommand.Allocate("ItemUse", AnimationEventType.Trigger, 0));
+			
+			
+			deployableResourceViewController = deployableResource;
 		}
+
+		public override void OnRecycled() {
+			base.OnRecycled();
+			usedBefore = false;
+			deployableResourceViewController = null;
+		}
+
 
 		public bool RemoveAfterDeploy { get; set; } = false;
 	}
