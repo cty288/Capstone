@@ -41,7 +41,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		AbstractResourceViewController<T>, IDeployableResourceViewController where T : class, IResourceEntity, new()  {
 		[Header("Deploy Settings")]
 		[SerializeField] private float maxSlopeAngle = 45f;
-		[field: SerializeField] public bool DoesRotateToSlope { get; protected set; } = true;
+		[field: SerializeField] public virtual bool DoesRotateToSlope { get; protected set; } = true;
 		[SerializeField] private bool canDeployInAir = false;
 		[SerializeField] private BoxCollider heightDetectionCollider;
 
@@ -132,7 +132,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		protected abstract IResourceEntity OnBuildNewEntity(bool isPreview);
 		
 
-		public virtual bool CheckCanDeploy(Vector3 slopeNormal, Vector3 position, bool isAir, out DeployFailureReason failureReason, out Quaternion spawnedRotation) {
+		public virtual bool CheckCanDeploy(Vector3 slopeNormal, Vector3 position, bool isAir,
+			out DeployFailureReason failureReason, out Quaternion spawnedRotation) {
 			spawnedRotation = Quaternion.identity;
 			if(isAir && !canDeployInAir) {
 				failureReason = DeployFailureReason.InAir;
@@ -163,8 +164,11 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 					return false;
 				}
 			}
-			
-			spawnedRotation = Quaternion.FromToRotation(Vector3.up, slopeNormal);
+
+			spawnedRotation = DoesRotateToSlope
+				? Quaternion.FromToRotation(Vector3.up, slopeNormal)
+				: Quaternion.identity;
+				//Quaternion.FromToRotation(Vector3.up, slopeNormal);
 			failureReason = DeployFailureReason.NoFailure;
 			return true;
 		}

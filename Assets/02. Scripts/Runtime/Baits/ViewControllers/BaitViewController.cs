@@ -88,8 +88,8 @@ namespace _02._Scripts.Runtime.Baits.ViewControllers {
 			}
 		}
 
-		public override void OnDeploy() {
-			
+		public override void OnDeploy(IDeployableResourceViewController deployableResource) {
+			deployableResource.OnDeploy();
 		}
 
 		public override bool RemoveAfterDeploy { get; set; } = true;

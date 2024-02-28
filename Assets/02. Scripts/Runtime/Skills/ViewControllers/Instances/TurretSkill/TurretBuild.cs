@@ -7,26 +7,39 @@ using UnityEngine;
 
 public class TurretBuild : Action {
 	public SharedFloat installTime;
-	public Renderer turretRenderer;
+	public Renderer[] turretRenderers;
 	
-	private Material[] materials;
+	private List<Material> materials;
 	private bool finished = false;
-	
+	private Animator animator;
+
+	public override void OnAwake() {
+		base.OnAwake();
+		animator = gameObject.GetComponentInChildren<Animator>();
+	}
+
 	public override void OnStart() {
 		base.OnStart();
-		Material[] mat = turretRenderer.materials;
-		materials = new Material[mat.Length];
-		for (int i = 0; i < mat.Length; i++) {
-			materials[i] = Material.Instantiate(mat[i]);
-			Color color = materials[i].GetColor("_BaseColor");
-			color.a = 0;
-			materials[i].SetColor("_BaseColor", color);
+		materials = new List<Material>();
+		animator.SetBool("isShooting", false);
+		foreach (Renderer turretRenderer in turretRenderers) {
+			Material[] mat = turretRenderer.materials;
+			Material[] rendererMaterials = new Material[mat.Length];
+			for (int i = 0; i < mat.Length; i++) {
+				Material material = Material.Instantiate(mat[i]);
+				Color color = material.GetColor("_BaseColor");
+				color.a = 0;
+				material.SetColor("_BaseColor", color);
+				materials.Add(material);
+				rendererMaterials[i] = material;
+			}
+			turretRenderer.materials = rendererMaterials;
 		}
-		turretRenderer.materials = materials;
+		
 		finished = false;
 		
 		
-		for (int i = 0; i < materials.Length; i++) {
+		for (int i = 0; i < materials.Count; i++) {
 			Color color = materials[i].GetColor("_BaseColor");
 			color.a = 1;
 			materials[i].DOColor(color, "_BaseColor", installTime.Value).OnComplete(() => {
