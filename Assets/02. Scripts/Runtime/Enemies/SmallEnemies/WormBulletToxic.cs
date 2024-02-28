@@ -2,12 +2,10 @@ using Runtime.Utilities.Collision;
 using Runtime.Weapons.ViewControllers.Base;
 using MikroFramework.Pool;
 using MikroFramework;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using UnityEngine;
 
-
-
-namespace a
-{
+namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
     public class WormBulletToxic : AbstractBulletViewController
     {
         private float bulletSpeed;
@@ -22,13 +20,11 @@ namespace a
         protected override void Update()
         {
             base.Update();
-            this.gameObject.GetComponent<Rigidbody>().velocity = this.gameObject.transform.forward * bulletSpeed;
+            gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * bulletSpeed;
+            overrideExplosionFaction = true;
         }
 
-        protected override void OnBulletReachesMaxRange()
-        {
-
-        }
+        protected override void OnBulletReachesMaxRange() {}
 
 
         public void SetData(float bulletSpeed)
@@ -36,14 +32,10 @@ namespace a
             this.bulletSpeed = bulletSpeed;
         }
 
-        protected override void OnHitResponse(HitData data)
-        {
-
-        }
+        protected override void OnHitResponse(HitData data) {}
 
         protected override void OnHitObject(Collider other)
         {
-
             if (particlePrefab != null)
             {
                 // Get the hit point and normal
@@ -54,23 +46,17 @@ namespace a
                 particleInstance = pool.Allocate();
                 particleInstance.transform.position = (hitPoint);
                 particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
-
-
+                
+                particleInstance.GetComponent<IExplosionViewController>().Init(overrideExplosionFaction
+                        ? CurrentFaction.Value
+                        : Faction.Explosion, 20, 1, gameObject,
+                    this);
             }
-
-
         }
 
         protected override void OnBulletRecycled()
         {
-            //pool.Recycle(particleInstance);   
+            // pool.Recycle(particleInstance);   
         }
-
-
     }
-
-
-
-
-
 }
