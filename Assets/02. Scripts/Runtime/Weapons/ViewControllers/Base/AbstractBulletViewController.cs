@@ -97,7 +97,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		}
 
 		public virtual void Init(Faction faction, int damage, GameObject bulletOwner, ICanDealDamage owner, float maxRange,
-			 bool ownerTriggerHitResponse = false, bool overrideExplosionFaction = false) {
+			bool ownerTriggerHitResponse = false, bool overrideExplosionFaction = false) {
 			CurrentFaction.Value = faction;
 			Damage = damage;
 			hitBox.StartCheckingHits(damage);
@@ -188,25 +188,34 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected abstract void OnHitResponse(HitData data);
 
 		protected virtual void OnTriggerEnter(Collider other) {
+
 			if (!inited) {
 				return;
 			}
 
 			if (!other.isTrigger) {
+				// print($"{gameObject.name} OnTriggerEnter: {other.name}");
 				Rigidbody rootRigidbody = other.attachedRigidbody;
 				GameObject hitObj = rootRigidbody ? rootRigidbody.gameObject : other.gameObject;
 				
 				if (hitObj && (bulletOwner && hitObj.transform == bulletOwner.transform) || 
 				    (hitObj.transform == owner.GetRootDamageDealerTransform())) {
+					// print($"{gameObject.name} OnTriggerEnter: {other.name}, owner issues");
+					return;
+				}
+				
+				if(hitObj.layer == LayerMask.NameToLayer("CorrectiveCollider")){
+					// print($"{gameObject.name} OnTriggerEnter: {other.name}, layer issues");
 					return;
 				}
 				
 				if(hitObj.TryGetComponent<IBelongToFaction>(out var belongToFaction)){
 					if (belongToFaction.CurrentFaction.Value == CurrentFaction.Value && penetrateSameFaction) {
+						// print($"{gameObject.name} OnTriggerEnter: {other.name}, faction issues");
 						return;
 					}
 				}
-				
+				// print($"{gameObject.name} OnTriggerEnter: {other.name}, hit object success");
 				OnHitObject(other);
 				if (autoRecycleWhenHit) {
 					RecycleToCache();

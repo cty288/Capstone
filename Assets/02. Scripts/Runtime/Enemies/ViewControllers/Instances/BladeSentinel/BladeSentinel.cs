@@ -125,7 +125,6 @@ public class BladeSentinelEntity : BossEntity<BladeSentinelEntity>
     }
 
     protected override ICustomProperty[] OnRegisterCustomProperties() {
-
         return new[] {
             new AutoConfigCustomProperty("dash"),
             new AutoConfigCustomProperty("walk"),
