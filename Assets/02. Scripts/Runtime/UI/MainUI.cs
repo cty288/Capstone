@@ -90,6 +90,7 @@ namespace Runtime.UI {
 		
 			if (switchUIPlayerMap) {
 				ClientInput.Singleton.EnableUIMaps();
+				
 			}
 			
 			//Time.timeScale = 0;

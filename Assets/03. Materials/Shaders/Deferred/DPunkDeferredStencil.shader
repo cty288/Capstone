@@ -406,16 +406,16 @@ Shader "Hidden/Universal Render Pipeline/Custom/DPunkStencilDeferred"
         float scale = 0.002f;
         
         #if _RENDER_PASS_ENABLED
-        half4 gbuffer3 = LOAD_FRAMEBUFFER_INPUT(GBUFFER3, input.positionCS.xy)
+        half4 gbuffer3 = LOAD_FRAMEBUFFER_INPUT(GBUFFER3, input.positionCS.xy);
         float d        = gbuffer3.x;
         half4 gbuffer0 = LOAD_FRAMEBUFFER_INPUT(GBUFFER0, input.positionCS.xy);
         half4 gbuffer1 = LOAD_FRAMEBUFFER_INPUT(GBUFFER1, input.positionCS.xy);
         half4 gbuffer2 = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, input.positionCS.xy);
 
-        float2 TopRight = input.itionCS.xy - float2(-scale, scale);
-        float2 TopLeft = input.itionCS.xy - float2(scale, scale);
-        float2 BottomRight = input.itionCS.xy - float2(-scale, -scale);
-        float2 BottomLeft = input.itionCS.xy - float2(scale, -scale);
+        float2 TopRight = input.positionCS.xy - float2(-scale, scale);
+        float2 TopLeft = input.positionCS.xy - float2(scale, scale);
+        float2 BottomRight = input.positionCS.xy - float2(-scale, -scale);
+        float2 BottomLeft = input.positionCS.xy - float2(scale, -scale);
 
         half4 normalTR = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, TopRight);
         half4 normalTL = LOAD_FRAMEBUFFER_INPUT(GBUFFER2, TopLeft);

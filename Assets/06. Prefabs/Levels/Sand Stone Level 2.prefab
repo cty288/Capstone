@@ -45889,7 +45889,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2972
+  m_VersionIndex: 2978
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -57127,7 +57127,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 19872
+  m_VersionIndex: 19878
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -69676,7 +69676,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.13333334
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 44c5264dc8309c24a9780ff42cb335f8, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ba1c8da835fbebd499ab3b0287da37ef, type: 2}
 --- !u!114 &8841471019466061308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69718,6 +69718,12 @@ MonoBehaviour:
   enemySpawnCardConfigs:
   - enemySpawnInfos:
     - mainPrefab: {fileID: 6600030679709345653, guid: b50d32b78b53c4d4f9458c120ff0f9be,
+        type: 3}
+      variants: []
+      minRarity: 1
+      maxRarity: 2
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 6962344675241428156, guid: 95d6e14fdb535724e8ddea41df532dbe,
         type: 3}
       variants: []
       minRarity: 1
@@ -69888,7 +69894,8 @@ MonoBehaviour:
   - {fileID: 3802056313071061369}
   autoUpdateNavMeshOnStart: 1
   ambientMusic: {fileID: 8300000, guid: da3ed51b963c68748a9d645c14752ec5, type: 3}
-  relativeVolume: 1
+  bgm: {fileID: 8300000, guid: 5ea783bcc85047f4da44a72315994f9e, type: 3}
+  relativeVolume: 0.3
   totalExplortionValueRequired: 1500
   bossExplorationMultiplier: 2
   normalEnemyExplorationMultiplier: 1
