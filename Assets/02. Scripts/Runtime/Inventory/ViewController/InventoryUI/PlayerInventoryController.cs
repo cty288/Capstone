@@ -34,10 +34,13 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    private void Awake() {
       sharedActions = ClientInput.Singleton.GetSharedActions();
       this.RegisterEvent<OnPlayerThrowResource>(OnPlayerThrowResource).UnRegisterWhenGameObjectDestroyed(gameObject);
+     // this.RegisterEvent<OnInventorySlotRemovedEvent>(OnInventorySlotRemoved).UnRegisterWhenGameObjectDestroyed(gameObject);
       inventoryModel = this.GetModel<IInventoryModel>();
       inventorySystem = this.GetSystem<IInventorySystem>();
       playerModel = this.GetModel<IGamePlayerModel>();
    }
+
+
 
    private void Start() {
       if (inventoryModel.IsFirstTimeCreated) {
@@ -115,16 +118,41 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    private void OnPlayerThrowResource(OnPlayerThrowResource e) {
       List<IResourceEntity> resources = e.resources;
       foreach (IResourceEntity resourceEntity in resources) {
-         GameObject resourceVC = ResourceVCFactory.Singleton.SpawnPickableResourceVC(resourceEntity, true);
-         resourceVC.transform.position = throwPoint.transform.position;
+         SpawnThrownResource(resourceEntity);
+      }
+   }
+   
+   
+   private void SpawnThrownResource(IResourceEntity resourceEntity) {
+      GameObject resourceVC = ResourceVCFactory.Singleton.SpawnPickableResourceVC(resourceEntity, true);
+      resourceVC.transform.position = throwPoint.transform.position;
 
-         resourceVC.GetComponent<IPickableResourceViewController>().HoldAbsorb = true;
-         //add 3d force
-         Rigidbody rigidbody2D = resourceVC.GetComponent<Rigidbody>();
-         //face toward the blue axis of throw point
-         Vector3 direction = throwPoint.transform.forward;
-         rigidbody2D.AddForce(direction * throwForce);
-         
+      resourceVC.GetComponent<IPickableResourceViewController>().HoldAbsorb = true;
+      //add 3d force
+      Rigidbody rigidbody2D = resourceVC.GetComponent<Rigidbody>();
+      //face toward the blue axis of throw point
+      Vector3 direction = throwPoint.transform.forward;
+      rigidbody2D.AddForce(direction * throwForce);
+   }
+   private void OnInventorySlotRemoved(OnInventorySlotRemovedEvent e) {
+      if (!e.SpawnRemovedItems) {
+         return;
+      }
+
+      List<ResourceSlot> removedSlots = e.RemovedSlots;
+      foreach (ResourceSlot slot in removedSlots) {
+         if (slot.IsEmpty()) {
+            continue;
+         }
+
+         foreach (string id in slot.GetUUIDList()) {
+            IResourceEntity resourceEntity = GlobalGameResourceEntities.GetAnyResource(id);
+            if (resourceEntity == null) {
+               continue;
+            }
+            
+            SpawnThrownResource(resourceEntity);
+         }
       }
    }
 }

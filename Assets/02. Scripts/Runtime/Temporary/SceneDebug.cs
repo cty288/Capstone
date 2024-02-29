@@ -38,7 +38,7 @@ namespace Runtime.Temporary
             }
             
             if (!Application.isEditor) {
-                return;
+            //    return;
             }
 
 

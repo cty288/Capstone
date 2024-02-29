@@ -81,6 +81,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		[field: ES3Serializable]
 		public int MaxRarity { get; }
+		
+		
+		
 
 		public List<GameObject> Prefabs =>
 			PrefabNames.Select(n => GlobalLevelManager.Singleton.GetEnemyPrefab(n)).ToList();
@@ -214,11 +217,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		
 		[Header("Audio Settings")]
 		[SerializeField] private AudioClip ambientMusic;
+
+		[SerializeField] private AudioClip bgm;
 		[SerializeField] private float relativeVolume = 1f;
 		
 		
 		private ILevelSystem levelSystem;
- 
+		protected AudioSource ambientMusicSource;
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
 		protected IGameTimeModel gameTimeModel;
 
@@ -342,7 +347,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			UpdatePreExistingEnemies();
 			OnSpawnPlayer();
 			if (ambientMusic) {
-				AudioSystem.Singleton.PlayMusic(ambientMusic, relativeVolume);
+				 ambientMusicSource = AudioSystem.Singleton.Play2DSound(ambientMusic, relativeVolume, true);
+			}
+			
+			if (bgm) {
+				AudioSystem.Singleton.PlayMusic(bgm);
 			}
 			UpdateWallMaterials();
 			await UniTask.Yield();
@@ -600,8 +609,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			base.OnRecycled();
 			currentEnemies.Clear();
 			playerSpawners.Clear();
-			if (ambientMusic) {
-				//AudioSystem.Singleton.StopMusic();
+			if (ambientMusic && ambientMusicSource) {
+				AudioSystem.Singleton.StopSound(ambientMusicSource);
 			}
 			bossPillars = null;
 			subAreaLevels.Clear();
