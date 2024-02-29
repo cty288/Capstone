@@ -9,7 +9,7 @@ namespace Runtime.Utilities.ConfigSheet
 
 		private Dictionary<string, string> versionDict = new Dictionary<string, string>() {
 			{"develop", "11NQVroaWnwS4dTw0O7kHkJP-LuJmcF4TZFLSFrbjJYE"},
-			{"current", "1PMJ-7F1UiEn9bg2m1ibgcwXta0O-FqBgW_XGei-1kug"}
+			{"current", "1NqgdwQXAODznrX5OVPeksK9IzWhgCwTo9edJtKRIwEE"}
 		};
 		private ConfigDatas() { }
 

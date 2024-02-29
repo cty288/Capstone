@@ -25,6 +25,8 @@ public class NextLevelDoor : AbstractMikroController<MainGame> {
 			}
 			if (isBaseDoor) {
 				MainUI.Singleton.Open<BasePreparationUIViewController>(MainUI.Singleton, null, false);
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
 				return;
 			}
 			if (goToNextLevelByDefault) {
