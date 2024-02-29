@@ -8,6 +8,7 @@ using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning;
 using System.Threading.Tasks;
+using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using DG.Tweening;
 using Runtime.Enemies;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
@@ -59,19 +60,17 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             if (NavMesh.SamplePosition(sample, out hit, 25, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 start = hit.position;
-                Debug.Log($"WORM BOSS start: {start}");
             }
             if (NavMesh.SamplePosition(sample2, out hit, 25, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 end = hit.position;
-                Debug.Log($"WORM BOSS end: {end}");
             }
+            
+            Debug.Log("Worm Boss: Arc not undergound");
+            enemyEntity.isUnderground = false;
 
             // Calculate the speed based on the duration
             speed = 1f / duration;
-            
-            // GameObject debug_obj = new GameObject("worm1 arc start position");
-            // debug_obj.transform.position = start;
         }
 
         private void EnableColliders(bool enable)
@@ -94,7 +93,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // Check if the movement has reached the end
             if (progress >= 1f && !startEnd)
             {
+                Debug.Log("Worm Boss: Arc go undergound");
                 startEnd = true;
+                enemyEntity.isUnderground = true;
+                enemyEntity.lastDivePosition = end;
                 MoveUnderGround();
             }
 
@@ -131,15 +133,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // EnableColliders(false);
         }
 
-        private void MoveUnderGround()
+        private async UniTask MoveUnderGround()
         {
             Vector3 endPos = end + direction.normalized * 150f;
-            transform.DOMove(endPos, duration * 2).OnComplete(() =>
-            {
-                // GameObject debug_obj = new GameObject("worm1 arc end position");
-                // debug_obj.transform.position = end;
-                endDive = true;
-            });
+            await transform.DOMove(endPos, duration * 2).WithCancellation(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+
+            endDive = true;
         }
         
         // Bezier curve calculation with a jump in the y-axis

@@ -18,7 +18,7 @@ namespace Runtime.Enemies
             {
                 GameObject hitObj = other.gameObject;
 				
-                if(hitObj.layer == LayerMask.NameToLayer("Ground")
+                if(hitObj.layer == LayerMask.NameToLayer("Default")
                    && sandParticleInstance != null) 
                 {
                     GameObject s = wormBossOwner.sandParticlePool.Allocate();
