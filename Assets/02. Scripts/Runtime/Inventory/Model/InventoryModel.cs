@@ -101,6 +101,7 @@ namespace Runtime.Inventory.Model {
 	public struct OnInventorySlotRemovedEvent {
 		public int RemovedCount;
 		public List<ResourceSlot> RemovedSlots;
+		public bool SpawnRemovedItems;
 	}
 
 	public class InventoryModel: ResourceSlotsModel, IInventoryModel {
@@ -377,7 +378,8 @@ namespace Runtime.Inventory.Model {
 			
 			this.SendEvent<OnInventorySlotRemovedEvent>(new OnInventorySlotRemovedEvent() {
 				RemovedCount = actualCount,
-				RemovedSlots = removedSlots
+				RemovedSlots = removedSlots,
+				SpawnRemovedItems = true
 			});
 		}
 		

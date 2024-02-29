@@ -1,5 +1,5 @@
 {
-  "Version": "0.4.1",
+  "Version": "0.4.3",
   "ABMD5List": [
     {
       "AssetName": "audios",
@@ -33,6 +33,21 @@
         },
         {
           "Name": "WallRun_FootSteps",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "boss1-spawn",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "break-shield",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "enemy-spawn",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
         },
@@ -103,6 +118,31 @@
         },
         {
           "Name": "gun_click",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Shotgun_Equip",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Shotgun_Reload_Begin",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Shotgun_Reload_Bullets",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Shotgun_Reload_Finish",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Shotgun_Single_Shot",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
         },
@@ -997,6 +1037,11 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "MineralBotNameTag",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "TurretHealthBar",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.GameObject"
@@ -1199,6 +1244,11 @@
         },
         {
           "Name": "Explosion_CombatBuff",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Explosion_MineralBot",
           "OwnerBundleName": "others",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1579,6 +1629,11 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
+          "Name": "MagnetBlade_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
           "Name": "Rifle_Icon",
           "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
@@ -1763,12 +1818,27 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "BiologicalArmorSkill",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "GrenadeSkill",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "HighEndTechnologySkill",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "MedicalNeedleSkill",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "MineralRobotSkill",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1779,6 +1849,11 @@
         },
         {
           "Name": "StunGrenadeSkill",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TenaciousBodySkill",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1798,7 +1873,17 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "DangerousModification",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "KillCounter",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ShreddingAdaptedAttachment",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1823,6 +1908,11 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "ShreddingAdaptedBarrel",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "DoubleExplosionMagazine",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
@@ -1834,6 +1924,11 @@
         },
         {
           "Name": "ShrapnelBullets",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ShreddingAdaptedMagazine",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1878,7 +1973,22 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "DangerousModification_EMP",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "EMPAdaptedAttachment",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "IntenseEMP",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "CompressedCurrent",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1888,7 +1998,22 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "EMPAdaptedBarrel",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "ThundercrackBarrel",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ControlledEMP",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "EMPAdaptedMagazine",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1903,6 +2028,11 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "DangerousModification_Viral",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "Multivirus",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
@@ -1913,7 +2043,27 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "TransmissionAttachment",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ViralAdaptedAttachment",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "HackedAgain",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "HardCasesBarrel",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ViralAdaptedBarrel",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1929,6 +2079,26 @@
         },
         {
           "Name": "FierceVirus",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "FunctionalLimit",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ViralAdaptedMagazine",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ArtificialAdaptedAttachment",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "BerserkerAttachment",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -1949,6 +2119,11 @@
         },
         {
           "Name": "SelfLoadingAttachment",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "SunriseSurge",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -2013,7 +2188,17 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "MagnetBlade_Model",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "Rifle",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Rifle_Model",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -2044,6 +2229,11 @@
         },
         {
           "Name": "Shotgun",
+          "OwnerBundleName": "entities/resources",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Shotgun_Model",
           "OwnerBundleName": "entities/resources",
           "AssetType": "UnityEngine.GameObject"
         },
