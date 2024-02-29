@@ -133,7 +133,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private void MoveUnderGround()
         {
-            Vector3 endPos = end + direction.normalized * 100f;
+            Vector3 endPos = end + direction.normalized * 150f;
             transform.DOMove(endPos, duration * 2).OnComplete(() =>
             {
                 // GameObject debug_obj = new GameObject("worm1 arc end position");
