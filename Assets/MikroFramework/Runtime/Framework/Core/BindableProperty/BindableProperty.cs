@@ -70,6 +70,13 @@ namespace MikroFramework.BindableProperty
             }
         }
         
+        public void SetValueAndForceNotify(T value) {
+            T oldValue = this.value;
+            this.value = value;
+            this.onValueChanged2?.Invoke(oldValue, value);
+            this.onValueChanged?.Invoke(value);
+        }
+        
 
         private Action<T> onValueChanged = (v) => { };
         private Action<T, T> onValueChanged2 = (v, w) => { };

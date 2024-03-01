@@ -598,6 +598,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public virtual ISubAreaLevelEntity GetCurrentActiveSubAreaEntity()
 		{
+			if (BoundEntity == null) {
+				return null;
+			}
 			int areaMask = this.GetModel<IPlayerModel>().CurrentSubAreaMask.Value;
 			
 			// get subarea from level entity
