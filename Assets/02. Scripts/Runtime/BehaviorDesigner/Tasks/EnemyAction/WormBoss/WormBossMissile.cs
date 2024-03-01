@@ -55,11 +55,14 @@ public class WormBossMissile : AbstractBulletViewController
     {
         base.Update();
         
+        /*
         missileLifetime -= Time.deltaTime;
         if (missileLifetime <= 0)
         {
+            Debug.Log("died because of Lifetime");
             Explode();
         }
+        */
     }
 
     private void FixedUpdate()

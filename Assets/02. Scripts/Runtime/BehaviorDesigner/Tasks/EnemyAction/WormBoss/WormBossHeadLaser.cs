@@ -59,7 +59,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             maxRange = enemyEntity.GetCustomDataValue<float>("laserBeam", "maxRange");
             interval = enemyEntity.GetCustomDataValue<float>("laserBeam", "interval");
             laserDuration = enemyEntity.GetCustomDataValue<float>("laserBeam", "laserDuration");
-
+            Debug.Log(chargeUpTime);
             SkillExecute();
         }
         
@@ -70,6 +70,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private async UniTask SkillExecute()
         {
+            Debug.Log("charging");
             charging.SetActive(true);
             
             await UniTask.WaitForSeconds(chargeUpTime,
@@ -94,6 +95,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         private async UniTask SpawnLazer()
         {
+            Debug.Log("spawning laser");
+
             if (laserInstance != null)
             {
                 pool.Recycle(laserInstance);

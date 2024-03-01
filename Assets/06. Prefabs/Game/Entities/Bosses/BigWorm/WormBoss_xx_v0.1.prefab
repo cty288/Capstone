@@ -2478,9 +2478,18 @@ MonoBehaviour:
   <SpawnSizeCollider>k__BackingField: {fileID: 0}
   healthBarPrefabName: UIHealthBar
   model: {fileID: 7020256153889011191}
+  rig: {fileID: 0}
+  vfx: {fileID: 0}
+  wormSphere: {fileID: 0}
+  wormPlane: {fileID: 0}
   fallHitBox: {fileID: 0}
   sandParticleVFX: {fileID: 0}
   sandParticlePool: {fileID: 0}
+  deathExplosionVFX: {fileID: 0}
+  deathExplosion2VFX: {fileID: 0}
+  missileFirePosList: []
+  segments: []
+  director: {fileID: 0}
   inited: 0
 --- !u!114 &313980576834515708
 MonoBehaviour:
@@ -2605,44 +2614,37 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(1229,223.666656)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(2.166626,202.333313)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1.166748,167.666687)"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(-3.08703613,166.32196)","ColorIndex":7},"ID":3,"Name":"Laser
-        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80,110)"},"ID":4,"Name":"Worm
-        Boss Aim","Instant":true,"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":0},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":1},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadLaser","NodeData":{"Offset":"(80.00012,105.30336)"},"ID":5,"Name":"Worm
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(1229,223.666656)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(2.166626,202.333313)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1.166748,167.666687)"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossShoot","NodeData":{"Offset":"(-308.985718,256.4187)","ColorIndex":2},"ID":3,"Name":"Worm
+        Boss Shoot","Instant":true,"GameObjectmissilePrefab":0,"BooleanshootAllMissiles":false,"BooleanwillEnd":true,"SharedBoolcanShoot":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(230,280)"},"ID":4,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(2122.34082,604.1963)","ColorIndex":8},"ID":5,"Name":"Worm
+        Jump","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossDive","NodeData":{"Offset":"(-504.3595,122.802368)"},"ID":6,"Name":"Worm
+        Boss Dive","Instant":true},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-368.269165,122.802368)"},"ID":7,"Name":"Worm
+        Boss Emerge","Instant":true,"SharedFloatmaxRadiusAroundPlayer":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-210.374512,122.802368)"},"ID":8,"Name":"Worm
+        Boss Arc Movement","Instant":true,"SharedFloatsampleMaxRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-52.4797363,122.802368)"},"ID":9,"Name":"Worm
+        Boss Emerge","Instant":true,"SharedFloatmaxRadiusAroundPlayer":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveForwards","NodeData":{"Offset":"(105.415039,122.802368)"},"ID":10,"Name":"Worm
+        Boss Move Forwards","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"SharedFloatduration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(1999.52161,912.4845)","ColorIndex":6},"ID":11,"Name":"Acid
+        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80.97986,114.90918)"},"ID":12,"Name":"Worm
+        Boss Aim","Instant":true,"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":1},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":2},"SharedVector3originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":3}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadAcid","NodeData":{"Offset":"(73.85889,114.90918)"},"ID":13,"Name":"Worm
+        Boss Head Acid","Instant":true,"SharedGameObject[]firePoints":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":4},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":5},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":6}],"SharedGameObjectacidChargePrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":7},"SharedGameObjectacidBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":8}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(2313.679,911.217346)","ColorIndex":1},"ID":14,"Name":"Rapid
+        Fire Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80,110)"},"ID":15,"Name":"Worm
+        Boss Aim","Instant":true,"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":9},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":10},"SharedVector3originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":11}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadRapidFire","NodeData":{"Offset":"(80.1687,108.676285)"},"ID":16,"Name":"Worm
+        Boss Head Rapid Fire","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":12},"SharedGameObjectrapidFireBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":13}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1979.99927,1228.461)"},"ID":17,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-347.142578,122.857155)"},"ID":18,"Name":"Worm
+        Boss Emerge","Instant":true,"SharedFloatmaxRadiusAroundPlayer":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-198.386887,123.55365)"},"ID":19,"Name":"Worm
+        Boss Arc Movement","Instant":true,"SharedFloatsampleMaxRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-46.0060768,123.55365)"},"ID":20,"Name":"Worm
+        Boss Emerge","Instant":true,"SharedFloatmaxRadiusAroundPlayer":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveForwards","NodeData":{"Offset":"(101.613327,123.55365)"},"ID":21,"Name":"Worm
+        Boss Move Forwards","Instant":true,"SharedFloatspeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"SharedFloatduration":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossDive","NodeData":{"Offset":"(244.471,123.55365)"},"ID":22,"Name":"Worm
+        Boss Dive","Instant":true},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(345.714417,120)"},"ID":23,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(1230,890)","ColorIndex":7},"ID":24,"Name":"Laser
+        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80,110)"},"ID":25,"Name":"Worm
+        Boss Aim","Instant":true,"SharedFloatliftTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0},"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":14},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":15},"SharedVector3originPos":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":16}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadLaser","NodeData":{"Offset":"(80.00012,105.30336)"},"ID":26,"Name":"Worm
         Boss Head Laser","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
-        Fire Point","IsShared":true,"GameObjectmValue":3},"SinglelaserDuration":5,"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":4},"GameObjectcharging":5,"GameObjectcharged":6,"GameObjectbeam":7}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(230,280)"},"ID":6,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]},"DetachedTasks":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(2122.34082,604.1963)","ColorIndex":8},"ID":7,"Name":"Worm
-        Jump","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossDive","NodeData":{"Offset":"(-504.3595,122.802368)"},"ID":8,"Name":"Worm
-        Boss Dive","Instant":true},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-368.269165,122.802368)"},"ID":9,"Name":"Worm
-        Boss Emerge","Instant":true,"SharedVector3previousDivePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SingleminRadiusAroundPlayer":40,"SinglemaxRadiusAroundPlayer":70},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-210.374512,122.802368)"},"ID":10,"Name":"Worm
-        Boss Arc Movement","Instant":true,"SharedVector3divePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SinglejumpHeight":50},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-52.4797363,122.802368)"},"ID":11,"Name":"Worm
-        Boss Emerge","Instant":true,"SharedVector3previousDivePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SingleminRadiusAroundPlayer":40,"SinglemaxRadiusAroundPlayer":70},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveForwards","NodeData":{"Offset":"(105.415039,122.802368)"},"ID":12,"Name":"Worm
-        Boss Move Forwards","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(1999.52161,912.4845)","ColorIndex":6},"ID":13,"Name":"Acid
-        Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80.97986,114.90918)"},"ID":14,"Name":"Worm
-        Boss Aim","Instant":true,"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":8},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":9},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":10}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadAcid","NodeData":{"Offset":"(73.85889,114.90918)"},"ID":15,"Name":"Worm
-        Boss Head Acid","Instant":true,"SharedGameObject[]firePoints":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":11},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":12},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":13}],"SharedGameObjectacidChargePrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":14},"SharedGameObjectacidBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":15},"SinglebulletSpeed":10}]},{"Type":"BehaviorDesigner.Runtime.Tasks.ParallelComplete","NodeData":{"Offset":"(2313.679,911.217346)","ColorIndex":1},"ID":16,"Name":"Rapid
-        Fire Aim Attack","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossAim","NodeData":{"Offset":"(-80,110)"},"ID":17,"Name":"Worm
-        Boss Aim","Instant":true,"Singleduration":100,"SharedGameObjectneckSupportSphere":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":16},"SharedGameObjectbodySupportPlatform":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":17},"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":18}},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossHeadRapidFire","NodeData":{"Offset":"(80.1687,108.676285)"},"ID":18,"Name":"Worm
-        Boss Head Rapid Fire","Instant":true,"SharedGameObjectfirePoint":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":19},"SharedGameObjectrapidFireBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":20},"SinglebulletInterval":1,"SinglebulletSpeed":10,"Int32bulletCount":5,"Singleduration":5}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(1979.99927,1228.461)"},"ID":19,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-347.142578,122.857155)"},"ID":20,"Name":"Worm
-        Boss Emerge","Instant":true,"SharedVector3previousDivePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SingleminRadiusAroundPlayer":40,"SinglemaxRadiusAroundPlayer":70},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossArcMovement","NodeData":{"Offset":"(-198.386887,123.55365)"},"ID":21,"Name":"Worm
-        Boss Arc Movement","Instant":true,"SharedVector3divePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SinglejumpHeight":50},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossEmerge","NodeData":{"Offset":"(-46.0060768,123.55365)"},"ID":22,"Name":"Worm
-        Boss Emerge","Instant":true,"SharedVector3previousDivePosition":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"},"SingleminRadiusAroundPlayer":40,"SinglemaxRadiusAroundPlayer":70},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossMoveForwards","NodeData":{"Offset":"(101.613327,123.55365)"},"ID":23,"Name":"Worm
-        Boss Move Forwards","Instant":true},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossDive","NodeData":{"Offset":"(244.471,123.55365)"},"ID":24,"Name":"Worm
-        Boss Dive","Instant":true},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(345.714417,120)"},"ID":25,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.WormBossShoot","NodeData":{"Offset":"(921.0143,846.4187)","ColorIndex":2},"ID":26,"Name":"Worm
-        Boss Shoot","Instant":true,"List`1bulletSpawnPos":[]}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
-        Fire Point","IsShared":true,"GameObjectmValue":21}]}'
+        Fire Point","IsShared":true,"GameObjectmValue":17},"SharedGameObjectlazerPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":18},"GameObjectcharging":19,"GameObjectcharged":20,"GameObjectaura":21,"GameObjectburst":22}]}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Head
+        Fire Point","IsShared":true,"GameObjectmValue":23}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
         startIndex: 
         dataPosition: 
         unityObjects:
-        - {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
-        - {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
-        - {fileID: 7808782474424061144}
-        - {fileID: 7808782474424061144}
-        - {fileID: 2534608482763259814, guid: fd509476f9c923b4b82087df16444118, type: 3}
-        - {fileID: 5991458527910054917}
-        - {fileID: 7729133486732817200}
-        - {fileID: 8810564007733899594}
+        - {fileID: 510573299129508542, guid: d9011468b58dfaa4385a8bccd3aab96b, type: 3}
         - {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
         - {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
         - {fileID: 7808782474424061144}
@@ -2656,6 +2658,15 @@ MonoBehaviour:
         - {fileID: 7808782474424061144}
         - {fileID: 7808782474424061144}
         - {fileID: 1700704895486175575, guid: 6f0a4a23cc4f0f94aa8c60b675625e99, type: 3}
+        - {fileID: 1830456375519824122, guid: f98eb4791ff691344a82b53cb96e0ca4, type: 3}
+        - {fileID: 8043101353314847460, guid: 5b0643305acaa1a49a7470e074c76a1e, type: 3}
+        - {fileID: 7808782474424061144}
+        - {fileID: 7808782474424061144}
+        - {fileID: 2534608482763259814, guid: fd509476f9c923b4b82087df16444118, type: 3}
+        - {fileID: 5991458527910054917}
+        - {fileID: 7729133486732817200}
+        - {fileID: 8810564007733899594}
+        - {fileID: 5263084121023038750}
         - {fileID: 7808782474424061144}
         byteData: 
         byteDataArray: 
@@ -4547,6 +4558,12 @@ PrefabInstance:
 --- !u!4 &5263084121023038749 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2689886298701938284, guid: 0a396b2d94f079a48b371561eade8286,
+    type: 3}
+  m_PrefabInstance: {fileID: 7808782474900831089}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5263084121023038750 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2689886298701938287, guid: 0a396b2d94f079a48b371561eade8286,
     type: 3}
   m_PrefabInstance: {fileID: 7808782474900831089}
   m_PrefabAsset: {fileID: 0}

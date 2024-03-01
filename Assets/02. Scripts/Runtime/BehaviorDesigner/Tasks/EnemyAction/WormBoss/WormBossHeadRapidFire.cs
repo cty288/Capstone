@@ -44,7 +44,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             base.OnStart(); 
             
             taskStatus = TaskStatus.Running;
-            pool = GameObjectPoolManager.Singleton.CreatePool(rapidFireBulletPrefab.Value, 1, 3);
+            pool = GameObjectPoolManager.Singleton.CreatePool(rapidFireBulletPrefab.Value, 30, 50);
             
             player = GetPlayer();
             
@@ -66,7 +66,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         private async UniTask SkillExecute()
         {
-            await UniTask.WaitForSeconds(1f,
+            await UniTask.WaitForSeconds(3f,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
             for (int i = 0; i < bulletWaves; i++)
@@ -103,24 +103,29 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // Calculate a random rotation offset within a specified range
             float randomAngle = Random.Range(-10, 10);
             Quaternion randomRotation = Quaternion.Euler(randomAngle, randomAngle, 0);
-            
+            Vector3 randomPointAroundPlayer = player.transform.position + Random.insideUnitSphere * 10;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPointAroundPlayer + Random.insideUnitSphere * 10, out hit, 100f, NavMesh.AllAreas))
+            {
+                randomPointAroundPlayer = hit.position + new Vector3(0,1,0);
+            }
             b.transform.position = firePoint.Value.transform.position;
-            b.transform.rotation = firePoint.Value.transform.rotation * randomRotation;
+            b.transform.LookAt(randomPointAroundPlayer);
             
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                 bulletDamage,
                 gameObject, gameObject.GetComponent<ICanDealDamage>() , bulletRange);
 
-            b.GetComponent<WormBullet>().SetData(bulletSpeed, player, bulletAccuracy);
+            b.GetComponent<WormBossHeadMine>().SetData(bulletSpeed, player, randomPointAroundPlayer);
         }
         
         private async UniTask RapidFire()
         {
-            for (int i = 0; i < bulletCountPerWave; i++)
+            for (int i = 0; i < 10; i++)
             {
                 SpawnBullet();
             }
-            await UniTask.WaitForSeconds(bulletWaveInterval,
+            await UniTask.WaitForSeconds(0,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         }
     }
