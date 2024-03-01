@@ -18,6 +18,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Enemies;
 using Runtime.Weapons.ViewControllers.Base;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
+using System.Collections.Generic;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -25,11 +26,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         private TaskStatus taskStatus;
         public SharedGameObject firePoint;
-        
+        public GameObject trail;
         public SharedGameObject rapidFireBulletPrefab;
         private SafeGameObjectPool pool;
-
+        private SafeGameObjectPool trailPool;
         private GameObject player;
+        private List<GameObject> trailList = new List<GameObject>();
         
         private float bulletSpeed;
         private int bulletCountPerWave;
@@ -45,6 +47,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             taskStatus = TaskStatus.Running;
             pool = GameObjectPoolManager.Singleton.CreatePool(rapidFireBulletPrefab.Value, 30, 50);
+            trailPool = GameObjectPoolManager.Singleton.CreatePool(trail, 30, 50);
             
             player = GetPlayer();
             
@@ -73,7 +76,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 await RapidFire();
             }
-            
+
+            await UniTask.WaitForSeconds(2f, cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            foreach(GameObject go in trailList)
+            {
+                trailPool.Recycle(go);
+            }
             // float timer = duration;
             // float lastShootTime = 0f;
             // while (timer > 0)
@@ -99,6 +107,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         void SpawnBullet()
         {
             GameObject b = pool.Allocate();
+            GameObject trail = trailPool.Allocate();
+            trailList.Add(trail);
+            trail.GetComponent<LineRenderer>().SetPosition(0, firePoint.Value.transform.position);
             
             // Calculate a random rotation offset within a specified range
             float randomAngle = Random.Range(-10, 10);
@@ -111,6 +122,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             }
             b.transform.position = firePoint.Value.transform.position;
             b.transform.LookAt(randomPointAroundPlayer);
+            trail.GetComponent<LineRenderer>().SetPosition(1, randomPointAroundPlayer);
             
             b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                 bulletDamage,
