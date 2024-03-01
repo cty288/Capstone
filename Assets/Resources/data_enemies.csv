@@ -361,10 +361,10 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     ]
   }
 }","{
-  ""Combat"": {""x"": 0, ""y"": 1},
-  ""Time"": {""x"": 0, ""y"": 1},
-  ""Plant"": {""x"": 0, ""y"": 1},
-  ""Mineral"": {""x"": 0, ""y"": 1}
+""Combat"": {""x"": 0.35, ""y"": 1},
+""Time"": {""x"": 0, ""y"": 0.2},
+""Plant"": {""x"": 0, ""y"": 1},
+""Mineral"": {""x"": 0, ""y"": 1}
 }",456,"{
   ""ranges"":{
     ""closeRange"": {
@@ -637,10 +637,10 @@ WormBoss,"{""maxHealth"":2000,
     ]
   }
 }","{
-  ""Combat"": {""x"": 0, ""y"": 1},
-  ""Time"": {""x"": 0, ""y"": 1},
-  ""Plant"": {""x"": 0, ""y"": 1},
-  ""Mineral"": {""x"": 0, ""y"": 1}
+""Combat"": {""x"": 0, ""y"": 1},
+""Time"": {""x"": 0, ""y"": 0.2},
+""Plant"": {""x"": 0.25, ""y"": 1},
+""Mineral"": {""x"": 0.25, ""y"": 1}
 }",456,"{
   ""entity"":{
     ""speed"": {
@@ -650,7 +650,7 @@ WormBoss,"{""maxHealth"":2000,
     },
     ""closeRange"": {
       ""type"": ""float"",
-      ""value"": 30
+      ""value"": 45
     }
   },
   ""laserBeam"": {
@@ -677,7 +677,7 @@ WormBoss,"{""maxHealth"":2000,
     },
     ""interval"": {
       ""type"": ""float"",
-      ""value"": 0.5,
+      ""value"": 0.75,
       ""useDefaultModifier"": true,
       ""inverse"": true
     },
@@ -798,17 +798,17 @@ WormBoss,"{""maxHealth"":2000,
   ""missileAttack"": {
     ""missileDamage"": {
       ""type"": ""int"",
-      ""value"": 5,
+      ""value"": 3,
       ""useDefaultModifier"": true
     },
     ""missileLifetime"": {
       ""type"": ""float"",
-      ""value"": 3,
+      ""value"": 2.5,
       ""useDefaultModifier"": true
     },
     ""missileSpeed"": {
       ""type"": ""float"",
-      ""value"": 30,
+      ""value"": 25,
       ""useDefaultModifier"": true
     },
     ""missileMaxTurnAngle"": {
@@ -818,7 +818,7 @@ WormBoss,"{""maxHealth"":2000,
     },
     ""missileExplosionDamage"": {
       ""type"": ""int"",
-      ""value"": 5,
+      ""value"": 2,
       ""useDefaultModifier"": true
     },
     ""missileExplosionSize"": {
@@ -838,7 +838,7 @@ WormBoss,"{""maxHealth"":2000,
     },
     ""timeBetweenMissiles"": {
       ""type"": ""float"",
-      ""value"": 0.2,
+      ""value"": 0.35,
       ""useDefaultModifier"": true
     }
   }

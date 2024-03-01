@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Utilities;
 using Cysharp.Threading.Tasks;
 using MikroFramework;
 using MikroFramework.ActionKit;
@@ -11,6 +12,7 @@ using Runtime.DataFramework.ViewControllers;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.ViewControllers.Base;
+using Runtime.Spawning;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,15 +26,18 @@ namespace Runtime.Enemies
         [field: ES3Serializable]
         public override string EntityName { get; set; } = "WormBoss";
         public List<GameObject> missileFirePosList;
+        public bool isUnderground = false;
+        public Vector3 lastDivePosition;
         
         protected override void OnEntityStart(bool isLoadedFromSave)
         {
-            Debug.Log("worm start");
         }
 
         public override void OnRecycle()
         {
             base.OnRecycle();
+            isUnderground = false;
+            lastDivePosition = Vector3.zero;
         }
         
         public void InitializeMissileFirePosList(List<GameObject> missileFirePosList)
@@ -90,6 +95,7 @@ namespace Runtime.Enemies
         
         public List<GameObject> missileFirePosList;
         public List<GameObject> segments;
+        [SerializeField] private PlayableDirector director;
         
         private int fallAttackDamage;
         private float fallKnockbackForce;
@@ -186,17 +192,23 @@ namespace Runtime.Enemies
         
         protected override void OnEntityDie(ICanDealDamage damagedealer) {
             base.OnEntityDie(damagedealer);
-            behaviorTree.enabled = false;
-            agent.enabled = false;
+            director.Stop();
             rb.isKinematic = true;
-            
-            
+            behaviorTree.enabled = false;
+
+            if (BoundEntity.isUnderground)
+            {
+                transform.position = BoundEntity.lastDivePosition;
+            }
             PlayDeathAnimation();
         }
 
         private async UniTask PlayDeathAnimation()
         {
-            await UniTask.WaitForSeconds(1f);
+            agent.enabled = false;
+            
+            
+            await UniTask.WaitForSeconds(0.5f);
 
             for (int j = missileFirePosList.Count - 1; j >= 0; j--)
             {
@@ -205,10 +217,10 @@ namespace Runtime.Enemies
                 var e = deathExplosionPool.Allocate();
                 e.transform.position = spawnPos.position + transform.forward * 1.2f;
             
-                await UniTask.WaitForSeconds(0.1f);
+                await UniTask.WaitForSeconds(0.05f);
             }
 
-            await UniTask.WaitForSeconds(2f);
+            await UniTask.WaitForSeconds(0.5f);
 
             model.gameObject.SetActive(false);
             rig.gameObject.SetActive(false);
