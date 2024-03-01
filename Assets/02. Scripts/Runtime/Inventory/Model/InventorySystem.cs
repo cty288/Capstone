@@ -245,7 +245,7 @@ namespace Runtime.Inventory.Model {
 				return false;
 			}
 
-			if (model.AddItem(item)) {
+			if (model.AddItem(item, out ResourceSlot slot)) {
 				if (sendEvent) {
 					if (sendEvent) {
 						this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
@@ -256,6 +256,7 @@ namespace Runtime.Inventory.Model {
 					
 				}
 				item.OnAddedToInventory(playerModel.GetPlayer().UUID);
+				item.OnInventorySlotUpdate(null, slot);
 				item.AddedToInventoryBefore = true;
 				return true;
 			}

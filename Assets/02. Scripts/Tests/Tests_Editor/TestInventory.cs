@@ -231,7 +231,7 @@ namespace Tests.Tests_Editor {
 		public void RemoveAndCheckForEmptySlot() {
 			for (int i = 0; i < 20; i++) {
 				IResourceEntity item = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-				inventoryModel.AddItem(item);
+				inventoryModel.AddItem(item, out _);
 			}
 			
 			for (int i = 0; i < 20; i++) {
@@ -247,11 +247,11 @@ namespace Tests.Tests_Editor {
 		[Test]
 		public void CrossRemoveItems() {
 			IResourceEntity itemA = rawMaterialModel.GetRawMaterialBuilder<TestBasicRawMaterial>().FromConfig().Build();
-			inventoryModel.AddItem(itemA);
+			inventoryModel.AddItem(itemA, out _);
 
 			
 			IResourceEntity itemB = rawMaterialModel.GetRawMaterialBuilder<TestEmptyRawMaterial>().FromConfig().Build();
-			inventoryModel.AddItem(itemB);
+			inventoryModel.AddItem(itemB, out _);
     
 			
 			bool resultB = inventorySystem.RemoveItem(itemB);

@@ -33,6 +33,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.HighEndTechnologySkill {
 		}
 
 		private void OnInventoryItemAdded(OnInventoryItemAddedEvent e) {
+			if(!isInHotBarSlot) return;
 			if(e.Item.AddedToInventoryBefore) return;
 			
 			if (e.Item is IWeaponPartsEntity weaponPartsEntity) {
@@ -57,6 +58,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.HighEndTechnologySkill {
 		protected override string GetDescription(string defaultLocalizationKey) {
 			int level = GetCustomPropertyOfCurrentLevel<int>("level");
 			return Localization.GetFormat(defaultLocalizationKey, level);
+		}
+
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
 		}
 
 		protected override void OnUpgrade(int previousLevel, int level) {

@@ -12,6 +12,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Properties;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
 using Runtime.GameResources.Others;
+using Runtime.Inventory.Model;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 
@@ -82,6 +83,7 @@ namespace Runtime.GameResources.Model.Base {
 		public bool AddedToInventoryBefore { get; set; }
 		
 		public  IRarityProperty GetRarityProperty();
+		void OnInventorySlotUpdate(ResourceSlot previousSlot, ResourceSlot newSlot);
 	}
 	
 
@@ -114,6 +116,10 @@ namespace Runtime.GameResources.Model.Base {
 
 		public IRarityProperty GetRarityProperty() {
 			return GetProperty<IRarityProperty>();
+		}
+
+		public virtual void OnInventorySlotUpdate(ResourceSlot previousSlot, ResourceSlot newSlot) {
+			
 		}
 
 		[field: ES3Serializable]

@@ -57,7 +57,7 @@ namespace Runtime.Inventory.Model {
 		bool HasEntityInBaseStockByName(ResourceCategory category, string entityName);
 		
 		List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate);
-		void RemoveSlots(int slots);
+		void RemoveSlots(int slots, bool spawnRemovedItems);
 		
 		int MaxSlotCount { get; set; }
 	}
@@ -102,6 +102,7 @@ namespace Runtime.Inventory.Model {
 		public int RemovedCount;
 		public List<ResourceSlot> RemovedSlots;
 		public bool SpawnRemovedItems;
+		public List<string> RemovedUUIDs;
 	}
 
 	public class InventoryModel: ResourceSlotsModel, IInventoryModel {
@@ -164,23 +165,28 @@ namespace Runtime.Inventory.Model {
 			return actualAddedCount == slotCount;
 		}
 
-		public override bool AddItem(IResourceEntity item) {
+		public override bool AddItem(IResourceEntity item, out ResourceSlot addedSlot) {
 			//check each hot bar first
 			foreach (var hotBarSlot in hotBarSlots) {
 				foreach (var slot in hotBarSlot.Value.Slots) {
 					if (!slot.IsEmpty() && slot.CanPlaceItem(item)) {
+						addedSlot = slot;
 						return AddItemAt(item, slot);
 					}
 				}
 				
 				foreach (var slot in hotBarSlot.Value.Slots) {
 					if (slot.CanPlaceItem(item)) {
+						addedSlot = slot;
 						return AddItemAt(item, slot);
 					}
 				}
 			}
-			return base.AddItem(item);
+
+			return base.AddItem(item, out addedSlot);
 		}
+		
+		
 		
 		public void ReplenishHotBarSlot(HotBarCategory category, HotBarSlot targetSlotToReplenish) {
 			if (!targetSlotToReplenish.IsEmpty()) {
@@ -360,26 +366,27 @@ namespace Runtime.Inventory.Model {
 		}
 		
 		
-		public void RemoveSlots(int slots) {
+		public void RemoveSlots(int slots, bool spawnRemovedItems) {
 			int actualCount = Mathf.Min(slots, GetSlotCount());
 			List<ResourceSlot> removedSlots = new List<ResourceSlot>();
+			List<string> removedUUIDs = new List<string>();
 			for (int i = 0; i < actualCount; i++) {
 				ResourceSlot slot = this.slots[^1];
 				List<string> uuids = new List<string>(slot.GetUUIDList());
-				
 				this.slots.RemoveAt(this.slots.Count - 1);
 				removedSlots.Add(slot);
 				foreach (string uuid in uuids) {
-					RemoveItemFromSlot(uuid, slot);
+					if (RemoveItemFromSlot(uuid, slot)) {
+						removedUUIDs.AddRange(uuids);
+					}
 				}
-
-				
 			}
 			
 			this.SendEvent<OnInventorySlotRemovedEvent>(new OnInventorySlotRemovedEvent() {
 				RemovedCount = actualCount,
 				RemovedSlots = removedSlots,
-				SpawnRemovedItems = true
+				SpawnRemovedItems = spawnRemovedItems,
+				RemovedUUIDs = removedUUIDs
 			});
 		}
 		

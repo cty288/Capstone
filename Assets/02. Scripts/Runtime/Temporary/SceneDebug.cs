@@ -81,7 +81,7 @@ namespace Runtime.Temporary
             
             if (Input.GetKeyDown(KeyCode.Keypad2)) {
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
-                inventoryModel.RemoveSlots(2);
+                inventoryModel.RemoveSlots(2, true);
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad3)) {
