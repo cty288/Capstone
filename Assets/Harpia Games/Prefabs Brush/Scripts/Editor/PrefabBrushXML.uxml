@@ -1,0 +1,248 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:Template name="PrefabBrushPrefab" src="project://database/Assets/Harpia%20Games/Prefabs%20Brush/Scripts/Editor/PrefabBrushPrefabXML.uxml?fileID=9197481963319205126&amp;guid=6f2e7232978cd44b391f1fb445897e88&amp;type=3#PrefabBrushPrefabXML" />
+    <ui:VisualElement name="status-section" style="flex-grow: 1; background-color: rgba(255, 0, 0, 0.39); position: absolute; flex-direction: column; top: 0; left: 0; align-items: stretch; justify-content: space-around; width: 100%; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+        <ui:VisualElement name="brush" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+            <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="status" style="-unity-text-align: middle-left; flex-grow: 1; -unity-font-style: bold;" />
+            <ui:Button text="Start Brush" display-tooltip-when-elided="true" name="start-brush" style="padding-left: 10px; padding-right: 10px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="status-physics-section" style="flex-grow: 1; background-color: rgba(102, 255, 0, 0.39); position: absolute; flex-direction: row; top: 41px; left: 0; align-items: stretch; justify-content: space-around; width: 100%; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+        <ui:Label tabindex="-1" text="Physics Is Running" display-tooltip-when-elided="true" name="status" style="-unity-text-align: middle-left; flex-grow: 1; -unity-font-style: bold;" />
+        <ui:Button text="Stop Physics" display-tooltip-when-elided="true" name="stop-physics-button" style="padding-left: 10px; padding-right: 10px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="spacer" style="margin-top: 90px;" />
+    <ui:ScrollView>
+        <ui:VisualElement name="top-menu" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: center; justify-content: center;">
+            <ui:Button text="✎ &lt;b&gt;Paint Mode&lt;/b&gt;" display-tooltip-when-elided="true" name="paint-mode-button" style="font-size: 12px; -unity-font-style: normal; width: 130px; height: 20px;" />
+            <ui:Button text="⌫ &lt;b&gt;Erase Mode&lt;/b&gt;" display-tooltip-when-elided="true" name="erase-mode-button" style="font-size: 12px; width: 130px; height: 20px;" />
+            <ui:Button text="✷ &lt;b&gt;Settings&lt;/b&gt;" display-tooltip-when-elided="true" name="settings-button" style="font-size: 12px; width: 130px; height: 20px;" />
+            <ui:Button text="☰ &lt;b&gt;Documentation&lt;/b&gt;" display-tooltip-when-elided="true" name="documentation-button" style="font-size: 12px; width: 130px; height: 20px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="paint-mode" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); display: flex;">
+            <ui:Foldout text="&lt;b&gt;Template&lt;/b&gt;" name="template-section">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                    <ui:DropdownField label="Load Template" index="-1" name="select-template" style="flex-grow: 1;" />
+                    <ui:Button text="Reveal In Project" display-tooltip-when-elided="true" name="reveal-template" style="width: 120px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row-reverse;">
+                    <ui:Button text="Save Template" display-tooltip-when-elided="true" name="save-template" style="width: 120px;" />
+                </ui:VisualElement>
+            </ui:Foldout>
+            <ui:VisualElement name="prefabs-section" class="section" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-top: 15px; padding-left: 4px;">
+                <ui:VisualElement name="prefab-buttons" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: center; flex-direction: row; justify-content: space-between;">
+                    <ui:Label tabindex="-1" text="Prefabs" display-tooltip-when-elided="true" picking-mode="Ignore" class="h1" style="font-size: 14px; -unity-font-style: bold;" />
+                    <ui:Button text="Clear List" display-tooltip-when-elided="true" name="clear-list" tooltip="Clear Prefab List" style="width: 120px;" />
+                </ui:VisualElement>
+                <ui:Label tabindex="-1" text="&lt;i&gt;Right Click the prefabs buttons for more options&lt;/i&gt;" display-tooltip-when-elided="false" enable-rich-text="true" picking-mode="Ignore" style="margin-bottom: 10px; font-size: 10px;" />
+                <ui:VisualElement name="prefabs-holder" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; flex-wrap: wrap; justify-content: flex-start;">
+                    <ui:Instance template="PrefabBrushPrefab" name="PrefabBrushPrefab" style="transition-duration: 1s;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="drag-drop-section" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.17); margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
+                <ui:Label tabindex="-1" text="Drag and Drop Prefabs Here" display-tooltip-when-elided="true" name="drag-drop-text" style="-unity-text-align: middle-center; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="add-selected-objects" style="flex-grow: 1; background-color: rgba(0, 255, 112, 0.39); padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; flex-direction: row; justify-content: space-between; align-self: center; align-items: flex-end;">
+                <ui:Label tabindex="-1" text="12 Prefabs roots selected" display-tooltip-when-elided="true" name="add-selected-objects-label" style="margin-bottom: 5px; padding-left: 4px; -unity-text-align: middle-left; flex-grow: 1;" />
+                <ui:Button text="Add To Prefab List" display-tooltip-when-elided="true" name="add-selected-objects-button" style="width: 150px;" />
+            </ui:VisualElement>
+            <ui:Foldout text="&lt;b&gt;Main Settings&lt;/b&gt;" name="main-settings-foldout" style="margin-bottom: 10px; margin-top: 10px; transition-duration: 0.5s; transition-property: visibility;">
+                <uie:EnumField label="Use Mode" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" name="mode-dropdown" focusable="false" tooltip="Precision Mode: Place one prefab at a time with each click.&#10;&#10;Multiple Mode: Place multiple prefabs within the brush area with each click." />
+                <uie:EnumField label="Raycast Mode" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" name="raycast-mode" tooltip="Mesh Mode: Prefabs will be placed according to the shape of the mesh surface&#10;&#10;Physical Collider Mode: Prefabs will be placed based on the boundaries of the collider.&#10;&#10;Attention: Terrains only work with Physical collider mode" />
+                <ui:Slider picking-mode="Ignore" label="Eraser Radius" value="2" high-value="15" name="eraser-radius-slider" low-value="0.1" show-input-field="true" tooltip="Eraser Radius: Adjusts the size of the area where prefabs will be removed. Increase for larger deletion areas, or decrease for more precise erasing." />
+            </ui:Foldout>
+            <ui:Foldout text="&lt;b&gt;Precision Mode&lt;/b&gt;" name="single-section" style="margin-bottom: 10px;">
+                <ui:Toggle label="Change Prefab after placing  " name="single-mode-change-prefab" tooltip="The selected prefab will change after placing the object. This can be useful for creating nature environments." />
+                <ui:Toggle label="Add Painted to Raycast Mesh" name="single-mode-add-mesh" tooltip="&quot;Add Painted to Raycast Mesh: If checked, newly placed prefabs will be included in the mesh used for raycast placements. This allows subsequently placed prefabs to be positioned on top of previously placed ones." />
+                <ui:Toggle label="Force Placing On Y Zero If No HIt" name="no-hit-y-pos-toggle" tooltip="If there&apos;s no raycast hit the tool will use a Imaginary Plane at Y = 0 to raycast the hit. This is useful for placing Tiles. " />
+                <uie:FloatField label="Shortcut Rotation Angle" value="15" tooltip="Shortcut Rotation Angle: Specify the rotation angle (in degrees) applied to the prefab when using the rotation shortcut key. This value determines how much the prefab will rotate with each press of the shortcut." name="shortcut-rotation-angle" />
+            </ui:Foldout>
+            <ui:Foldout text="&lt;b&gt;Parenting&lt;/b&gt;" name="parent-section" style="-unity-font-style: normal; margin-bottom: 10px;">
+                <uie:EnumField label="Parent Mode" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" name="parenting-mode" tooltip="No Parent: Placed prefabs will not have a parent object and will be independent in the hierarchy.&#10;&#10;Fixed Parent: All prefabs placed will be parented to a specified object.&#10;&#10;Hit Surface Parent: Prefabs will be parented to the object they are placed on." />
+                <ui:Label tabindex="-1" text="⚠ Required Parent" display-tooltip-when-elided="true" name="required-parent-label" style="background-color: rgba(255, 0, 0, 0.39); padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-top: 10px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;" />
+                <uie:ObjectField label="Parent" name="parent" allow-scene-objects="true" type="UnityEngine.Transform, UnityEngine.CoreModule" tooltip="Parent: Assign a transform here to set it as the parent for the painted prefabs. This helps in organizing and grouping painted objects within the hierarchy." />
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                    <ui:TextField picking-mode="Ignore" label="New Parent" name="parent-name" tooltip="New Parent: Input a name to create and set a new default parent for painted prefabs." style="flex-grow: 1;" />
+                    <ui:Button text="Create and use" display-tooltip-when-elided="true" name="create-parent" />
+                </ui:VisualElement>
+            </ui:Foldout>
+            <ui:Foldout text="&lt;b&gt;Brush Multiple Mode&lt;/b&gt;" name="brush-section" style="margin-bottom: 10px;">
+                <ui:Slider label="Size" value="1" high-value="10" name="size" show-input-field="true" tooltip="Brush Size: Adjust to increase or decrease the area of effect for prefab placement." />
+                <ui:Slider label="Strength" value="0.3" high-value="1" name="strength" show-input-field="true" tooltip="Brush Strength: Adjust to increase or decrease the density of prefabs placed within the brush area." />
+                <ui:Slider picking-mode="Ignore" label="Clipping Tolerance" value="0.5" high-value="1" name="clipping-strength" show-input-field="true" tooltip="Adjusts the allowed degree of mesh overlap. Higher values permit more overlapping, while lower values are stricter in preventing mesh clipping." />
+            </ui:Foldout>
+            <ui:Foldout text="&lt;b&gt;Placement&lt;/b&gt;" name="placement-section" value="true" style="margin-bottom: 10px;">
+                <uie:LayerMaskField label="Raycast Layers" name="layer" tooltip="Select the layers on which the brush is allowed to place prefabs.">
+                    <ui:Button text="Physics Debugger" display-tooltip-when-elided="true" name="physics-debbuger-btn" />
+                </uie:LayerMaskField>
+                <uie:MaskField label="Allowed Tags" choices="System.Collections.Generic.List`1[System.String]" name="tags" tooltip="Select the tags of objects on which the brush is allowed to place prefabs." style="margin-bottom: 10px;" />
+                <ui:Toggle label="Use Texture Mask" name="use-texture-mask-toggle" tooltip="Texture Mask: Enable to paint objects on terrain areas matching the selected texture." />
+                <ui:VisualElement name="allowed-textures-section" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; margin-bottom: 10px;">
+                    <ui:Label tabindex="-1" text="Allowed Textures" display-tooltip-when-elided="true" tooltip="Allowed Textures: Specify which terrain textures permit object painting. Objects will only be painted on these designated areas." style="width: 140px; -unity-text-align: middle-left; padding-left: 4px;" />
+                    <ui:ScrollView mode="Horizontal" name="allowed-textures-holder">
+                        <ui:VisualElement style="flex-grow: 1; background-color: rgb(255, 0, 0); height: 20px; width: 20px; margin-right: 2px; margin-left: 2px;" />
+                    </ui:ScrollView>
+                </ui:VisualElement>
+                <ui:Toggle label="Grid Snapping" name="grid-snapping-toggle" tooltip="Grid Snapping: Toggle to align objects to a grid, ensuring uniform placement and spacing." />
+                <ui:VisualElement name="grid-snap-section" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <uie:FloatField label="Snap Size" value="1" name="grid-snap-value" is-delayed="true" tooltip="Snap Size: Set the grid&apos;s spacing for object placement when Grid Snapping is enabled. Increase for wider spacing, or decrease for tighter alignment." />
+                    <uie:Vector2Field label="Grid Offset" y="-0.03" name="grid-offset" tooltip="Grid Offset: Control the grid&apos;s starting point for better synchronization with existing scene structures." />
+                </ui:VisualElement>
+                <ui:Toggle label="Use Angle Limits" name="use-angle-limits" tooltip="Use Angle Limits: If checked, you can specify a range of angles at which the prefab can be placed. Helps to prevent placement on steep slopes" style="border-top-width: 10px; margin-top: 10px;" />
+                <ui:VisualElement>
+                    <uie:FloatField value="0" name="min-slope" label="Min Angle" tooltip="Min Angle: Set the minimum allowable angle (in degrees) between the surface normal and the up direction for prefab placement." />
+                    <uie:FloatField value="180" name="max-slope" label="Max angle" tooltip="Max Angle: Set the maximum allowable angle (in degrees) between the surface normal and the up direction for prefab placement." />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; padding-left: 2px; padding-right: 2px;">
+                    <ui:Label tabindex="-1" text="Min " display-tooltip-when-elided="false" picking-mode="Ignore" enable-rich-text="false" style="-unity-text-align: lower-left;" />
+                    <ui:MinMaxSlider low-limit="0" high-limit="180" name="slope-limits" value="0,90" style="flex-grow: 1;" />
+                    <ui:Label tabindex="-1" text="Max" display-tooltip-when-elided="false" picking-mode="Ignore" enable-rich-text="false" style="-unity-text-align: lower-left;" />
+                </ui:VisualElement>
+            </ui:Foldout>
+            <ui:Foldout text="&lt;b&gt;Transforms&lt;/b&gt;" name="transform-section" value="true" style="margin-bottom: 10px;">
+                <uie:EnumField label="Pivot Mode" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" name="pivot-mode" tooltip="Mesh Pivot: The prefab will be placed with its original pivot point at the placement point.&#10;&#10;Bounds Center: The prefab will be placed with the center of its bounding box at the placement point." />
+                <ui:Toggle label="Align to Hit" name="align-with-ground" tooltip="Align to Hit: If checked, the prefab will align with the surface normal of the hit point." style="margin-bottom: 5px; margin-top: 5px;" />
+                <ui:VisualElement name="rotation-transform" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-height: 70px; margin-bottom: 5px;">
+                    <uie:EnumField label="Rotation Type" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="rotation-type" tooltip="Rotation Type: Choose between &apos;Random&apos; for varied object orientations or &apos;Fixed&apos; for a consistent rotation angle during placement." />
+                    <uie:Vector3Field label="Fixed Rotation" name="rotation-fixed" />
+                    <uie:Vector3Field label="Max Rotation" name="rotation-max" y="360" />
+                    <uie:Vector3Field label="Min Rotation" name="rotation-min" />
+                </ui:VisualElement>
+                <ui:VisualElement name="scale-transform" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-height: 70px; margin-bottom: 5px;">
+                    <uie:EnumField label="Scale Type" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="scale-type" tooltip="Scale Type: Select &apos;Random&apos; for varied object sizes or &apos;Fixed&apos; for a consistent scale during placement." />
+                    <uie:Vector3Field label="Fixed Scale" name="scale-fixed" x="1" y="1" z="1">
+                        <ui:VisualElement name="scale-proportions-toggle-fixed" style="background-color: rgba(0, 0, 0, 0); width: 20px;" />
+                    </uie:Vector3Field>
+                    <uie:Vector3Field label="Max Scale" name="scale-max">
+                        <ui:VisualElement name="scale-proportions-toggle-max" tooltip="enable constraint" style="background-color: rgba(0, 0, 0, 0); width: 20px;" />
+                    </uie:Vector3Field>
+                    <uie:Vector3Field label="Min Scale" name="scale-min">
+                        <ui:VisualElement name="scale-proportions-toggle-min" style="background-color: rgba(0, 0, 0, 0); width: 20px;" />
+                    </uie:Vector3Field>
+                    <uie:Vector3Field label="Max Scale Uniform" name="scale-max-uniform" x="1" y="1" z="1" />
+                    <uie:Vector3Field label="Min Scale Uniform" name="scale-min-uniform" />
+                </ui:VisualElement>
+                <ui:VisualElement name="offset-transform" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-height: 70px;">
+                    <uie:EnumField label="Offset Type" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="offset-type" tooltip="Offset Type: Choose &apos;Random&apos; for unpredictable object positioning offsets or &apos;Fixed&apos; for a uniform offset during placement." />
+                    <uie:Vector3Field label="Fixed Offset" name="offset-fixed" />
+                    <uie:Vector3Field label="Max Offset" name="offset-max" y="0.5" />
+                    <uie:Vector3Field label="Min Offset" name="offset-min" y="0.1" />
+                </ui:VisualElement>
+            </ui:Foldout>
+            <ui:Foldout text="&lt;b&gt;Physics&lt;/b&gt;" name="physics-secttion" style="margin-bottom: 10px;">
+                <ui:Label tabindex="-1" text="⚠ No Physical Complatible GameObject In Your List" display-tooltip-when-elided="true" name="no-rigidbody-selected" tooltip="We could not find any object with a Non Kinematic Rigidbody and a Non Trigger Collider in your obejcts list" style="background-color: rgba(255, 236, 0, 0.11); padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-top: 0; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; margin-bottom: 5px;" />
+                <ui:Toggle value="false" text=" Simulate Physics" display-tooltip-when-elided="true" name="simulate-physics-toggle" tooltip="Simulate Physics: Toggle to activate real-time physics interactions for painted objects. When off, physics will remain static." style="margin-bottom: 10px;" />
+                <uie:EnumField label="Simulation Mode" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="physics-simulation-mode" tooltip="Physics Simulation Mode: Choose &apos;Automatic&apos; for continuous physics interactions or &apos;Step&apos; for controlled, incremental simulations.">
+                    <ui:Button text="Physics Settings" display-tooltip-when-elided="true" enable-rich-text="false" name="btn-physics-settings" />
+                </uie:EnumField>
+                <uie:EnumField label="Affect Objects" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="physics-affect-objects" tooltip="Affect Objects: Choose the objects affected by operations. &apos;All&apos; targets every object, &apos;Only New Spawned&apos; affects recently added objects, and &apos;Only Selected&apos; operates on your current selections." />
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                    <ui:Slider picking-mode="Ignore" label="Step Value" value="0.02" high-value="0.15" low-value="0.01" name="physics-step-slider" show-input-field="true" tooltip="Step Value: Adjust the increment for step-by-step physics simulations. A higher value results in larger simulation jumps per step." style="margin-bottom: 10px; flex-grow: 1;" />
+                    <ui:Button text="Step Physics" display-tooltip-when-elided="true" name="step-physics-button" />
+                </ui:VisualElement>
+                <ui:VisualElement name="add-force" style="background-color: rgba(0, 0, 0, 0); margin-top: 10px;">
+                    <ui:Toggle name="custom-props-impulse-toggle" text=" Impulse on Spawn" tooltip="Impulse on Spawn: Toggle to apply an initial force to objects as they&apos;re placed, simulating dynamic entry into the scene." />
+                    <uie:EnumField label="Force" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="custom-props-impulse-type" style="flex-grow: 1;" />
+                    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                        <uie:Vector3Field label="Fixed Direction" name="custom-props-impulse-fixed" x="1" z="1" y="1" style="flex-grow: 1;" />
+                        <ui:Button text="Align With Scene View" display-tooltip-when-elided="true" name="align-with-scene-view-fixed-impulse" />
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                        <uie:Vector3Field label="Max Direction" name="custom-props-impulse-max" x="1" y="1" z="1" style="flex-grow: 1;" />
+                        <ui:Button text="Align With Scene View" display-tooltip-when-elided="true" name="align-with-scene-view-max-impulse" />
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                        <uie:Vector3Field label="Min Direction" name="custom-props-impulse-min" x="-1" z="-1" style="flex-grow: 1;" />
+                        <ui:Button text="Align With Scene View" display-tooltip-when-elided="true" name="align-with-scene-view-min-impulse" />
+                    </ui:VisualElement>
+                    <ui:Slider picking-mode="Ignore" label="Impulse force" value="5" high-value="15" name="impulse-force-slider" show-input-field="true" tooltip="Impulse Force: Adjust the magnitude of the initial force applied to objects when &apos;Impulse on Spawn&apos; is enabled. Higher values result in stronger forces upon placement." />
+                </ui:VisualElement>
+                <ui:Button text="Reset Rigidbodies Physics" display-tooltip-when-elided="true" name="physics-reset-bodies" style="margin-top: 10px; display: none;" />
+            </ui:Foldout>
+            <ui:Foldout text="&lt;b&gt;Advanced Settings&lt;/b&gt;" name="advanced-options-section" style="margin-bottom: 10px;">
+                <ui:Toggle label="Make New Objects Static" name="objects-static-toggle" tooltip="Make New Objects Static: Toggle to ensure newly placed objects remain stationary, preventing them from being affected by physics or other dynamic forces." style="margin-bottom: 10px;" />
+                <ui:Toggle label="Show Clipping Bounds" name="show-bounds" />
+                <uie:ColorField label="Clipping Bounds Color" value="#F4FF0096" name="clipping-bounds-color" />
+                <ui:Toggle label="Show Brush WorldLines" name="show-brush-world-lines" style="margin-top: 10px;" />
+                <uie:FloatField label="Guide Lines Distance" value="10" name="guide-lines-distance" />
+            </ui:Foldout>
+            <ui:VisualElement name="shortcuts-section" style="margin-top: 5px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; border-left-color: rgb(156, 156, 156); border-right-color: rgb(156, 156, 156); border-top-color: rgb(156, 156, 156); border-bottom-color: rgb(156, 156, 156); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; margin-left: 5px; margin-right: 5px; margin-bottom: 5px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <ui:Label tabindex="-1" text="Shortcuts" display-tooltip-when-elided="true" picking-mode="Ignore" style="-unity-font-style: bold;" />
+                <ui:Label tabindex="-1" display-tooltip-when-elided="true" name="shortcuts-label" style="margin-top: 10px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="erase-mode" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+        <ui:VisualElement name="custom-props-section" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column; margin-top: 10px; margin-bottom: 10px; padding-left: 4px;">
+            <ui:Label tabindex="-1" text="Prefab name" display-tooltip-when-elided="true" name="custom-props-prefab-name" style="-unity-font-style: bold; margin-bottom: 10px; -unity-text-align: middle-left; font-size: 14px;" />
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; margin-bottom: 10px;">
+                <ui:VisualElement picking-mode="Ignore" name="custom-props-icon" style="background-color: rgba(0, 0, 0, 0); background-image: none; -unity-background-scale-mode: scale-to-fit; min-width: 140px; min-height: 250px; margin-right: 10px;" />
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: flex-start; align-items: stretch; align-self: flex-start;">
+                    <ui:VisualElement name="pivot" style="background-color: rgba(0, 0, 0, 0); margin-bottom: 10px;">
+                        <ui:Toggle name="custom-props-pivot-toggle" text=" Use Custom Pivot" />
+                        <uie:EnumField label="Custom Pivot Mode" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="custom-props-pivot-type" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="offset" style="background-color: rgba(0, 0, 0, 0);">
+                        <ui:Toggle name="custom-props-offset-toggle" text=" Use custom Offset" />
+                        <uie:EnumField label="Offset type" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="custom-props-offset-type" />
+                        <uie:Vector3Field label="Fixed Offset" name="custom-props-offset-fixed" />
+                        <uie:Vector3Field label="Max Offset" name="custom-props-offset-max" />
+                        <uie:Vector3Field label="Min Offset" name="custom-props-offset-min" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="rotation" style="background-color: rgba(0, 0, 0, 0); margin-top: 10px;">
+                        <ui:Toggle name="custom-props-rotation-toggle" text=" Use Custom Rotation" />
+                        <uie:EnumField label="Rotation type" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="custom-props-rotation-type" />
+                        <uie:Vector3Field label="Fixed Rotation" name="custom-props-rotation-fixed">
+                            <ui:Button text="Use prefab Rotation" display-tooltip-when-elided="true" name="custom-prop-rot-use-prefab" />
+                        </uie:Vector3Field>
+                        <uie:Vector3Field label="Max Rotation" name="custom-props-rotation-max" />
+                        <uie:Vector3Field label="Min rotation" name="custom-props-rotation-min" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="scale" style="background-color: rgba(0, 0, 0, 0); margin-top: 10px;">
+                        <ui:Toggle name="custom-props-scale-toggle" text=" Use Custom Scale" />
+                        <uie:EnumField label="Scale type" type="UnityEngine.TextAlignment, UnityEngine.TextRenderingModule" value="Center" name="custom-props-scale-type" />
+                        <uie:Vector3Field label="Fixed Scale" name="custom-props-scale-fixed">
+                            <ui:Button text="Use Prefab Scale" display-tooltip-when-elided="true" name="custom-prop-scale-use-prefab" />
+                        </uie:Vector3Field>
+                        <uie:Vector3Field label="Max Scale" name="custom-props-scale-max">
+                            <ui:Button text="Multiply by Prefab Scale" display-tooltip-when-elided="true" name="custom-props-scale-multiply-max" />
+                        </uie:Vector3Field>
+                        <uie:Vector3Field label="Min Scale" name="custom-props-scale-min">
+                            <ui:Button text="Multiply by Prefab Scale" display-tooltip-when-elided="true" name="custom-props-scale-multiply-min" />
+                        </uie:Vector3Field>
+                        <uie:Vector3Field label="Max Scale Uniform" name="custom-props-scale-max-uniform" x="1" y="1" z="1" />
+                        <uie:Vector3Field label="Min Scale Uniform" name="custom-props-scale-min-uniform" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="custom-props-back" />
+        </ui:VisualElement>
+        <ui:VisualElement name="settings-section" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Label tabindex="-1" text="&lt;b&gt;Global Settings&lt;/b&gt;" display-tooltip-when-elided="true" style="margin-bottom: 10px;" />
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-bottom: 10px;">
+                <ui:Label tabindex="-1" text="&lt;b&gt;Pen Pressure&lt;/b&gt;" display-tooltip-when-elided="true" style="margin-left: 3px; margin-bottom: 5px;" />
+                <ui:Label text="Unfortunely Pen Pressure only works with  Unity 2022.1 or newer." display-tooltip-when-elided="true" name="pen-pressure-message" />
+                <ui:Toggle label="Use Pen Pressure" name="use-pressure-toggle" tooltip="Toggle to enable pressure sensitivity when using a compatible stylus or tablet. Adjust brush strength or radius based on how hard you press for dynamic and precise control." />
+                <uie:EnumField label="Pen Pressure Mode" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="pen-pressure-mode" tooltip="Select how the pen&apos;s pressure affects the brush:&#10;&#10;Strengt: for varying intensity based on pressure.&#10;&#10;Radius: to dynamically adjust the brush size with pressure." />
+            </ui:VisualElement>
+            <uie:ColorField label="Brush Color" value="#6CFF001E" name="settings-brush-color" />
+            <uie:ColorField label="Border Color" value="#FFFFFF46" name="settings-brush-border-color" />
+            <uie:ColorField label="Eraser Brush Color" value="#FF000032" name="settings-eraser-color" />
+            <uie:ColorField label="Grid Color" value="#FF000032" name="settings-grid-color" />
+            <uie:ColorField label="Invalid Location" value="#FF000032" name="settings-invalid-location-color" />
+            <uie:FloatField label="Max Brush Slider Radius" value="42.2" name="settings-max-brush-radius" />
+            <uie:FloatField label="Max Eraser Slider Radius" value="42.2" name="settings-max-eraser-radius" />
+            <uie:FloatField label="Max Impulse Slider Force" value="42.2" name="settings-max-impulse" />
+            <uie:FloatField label="Scroll Rotation Speed" value="1" name="settings-scroll-rotation" />
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row-reverse;">
+                <ui:Button text="Reset Settings" display-tooltip-when-elided="true" name="settings-reset" style="-unity-text-align: middle-center;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="shortcuts">
+                <ui:Label tabindex="-1" text="&lt;b&gt;Shortcuts&lt;b&gt;" display-tooltip-when-elided="true" style="margin-left: 3px; margin-bottom: 5px;" />
+                <ui:VisualElement name="modular-shortcuts-holder" />
+                <ui:VisualElement style="flex-direction: row-reverse;">
+                    <ui:Button text="Reset Shortcuts" display-tooltip-when-elided="true" name="reset-shortcuts" />
+                    <ui:Button text="Keycodes On Docs" display-tooltip-when-elided="true" name="keycode-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>
