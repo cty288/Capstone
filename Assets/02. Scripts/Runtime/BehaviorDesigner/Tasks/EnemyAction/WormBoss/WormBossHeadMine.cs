@@ -29,6 +29,11 @@ public class WormBossHeadMine : AbstractBulletViewController
     private float currentFrequency;
     public AnimationCurve curve;
     private float timer = 0f;
+    private float evaluator = 0f;
+    private bool isPulsing;
+
+    private float timeUntilExplosion = 9;
+    public GameObject explosion;
 
     protected override void OnBulletReachesMaxRange()
     {
@@ -53,6 +58,8 @@ public class WormBossHeadMine : AbstractBulletViewController
     // Start is called before the first frame update
     void Start()
     {
+        evaluator = 0;
+        timer = 0;
         onGround = false;
         arrived = false;
         rb = GetComponent<Rigidbody>();
@@ -68,16 +75,39 @@ public class WormBossHeadMine : AbstractBulletViewController
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+
         if (onGround)
         {
-            onGround = false;
-            StartCoroutine(ActivateMine());
-            
+            evaluator += Time.deltaTime;
+            timer += Time.deltaTime;
+            if (evaluator > timeUntilExplosion)
+            {
+                Explode();
+                GameObjectPoolManager.Singleton.Recycle(this.gameObject);
+            }
+            else
+            {
+
+                var pulse = curve.Evaluate(evaluator / timeUntilExplosion) * 3;
+                if (timer > pulse)
+                {
+                    if (!isPulsing)
+                    {
+
+                        timer = 0;
+                        isPulsing = true;
+                        transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f, 1).OnComplete(() =>
+                        {
+                            isPulsing = false;
+                        });
+                    }
+                }
+            }
+
             // Cancel the previous InvokeRepeating and set a new one with updated frequency
-            
+
         }
-        if (!arrived)
+        if (!arrived && !onGround)
         {
 
             Vector3 direction = (target - transform.position).normalized;
@@ -98,30 +128,11 @@ public class WormBossHeadMine : AbstractBulletViewController
         }
         else
         {
-            transform.Rotate(randomSpinDir, 15 * Time.deltaTime);
+            transform.Rotate(randomSpinDir, 25 * Time.deltaTime);
         }
 
     }
-    IEnumerator ActivateMine()
-    {
-        
-        float t = 0f;
-        float ct = 0f;
-        while(t < 9f)
-        {
-            var val = curve.Evaluate(0.1f) * 3;
-            Debug.Log(val);
-            if(ct > val)
-            {
-                Debug.Log("hi");
-                ct = 0;
-                transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 1f , 1, 1);
-            }
-            t += Time.deltaTime;
-            ct += Time.deltaTime;
-        }
-        yield return null;
-    }
+
 
     internal void SetData(float bulletSpeed, GameObject player, Vector3 target)
     {
@@ -129,12 +140,25 @@ public class WormBossHeadMine : AbstractBulletViewController
         dir = player.transform.position - this.transform.position;
         this.target = target;
     }
-    void PunchScale()
+
+
+    void Explode()
     {
-        transform.DOPunchScale(punchAmount, duration);
+        SafeGameObjectPool explosionPool = GameObjectPoolManager.Singleton.CreatePool(explosion, 30,50);
+
+        GameObject exp = explosionPool.Allocate();
+
+        //Instantiate(explosion,transform.position,Quaternion.identity);
+        exp.transform.position = transform.position;
+        exp.transform.rotation = Quaternion.identity;
+        
+        if (!bulletOwner)
+        {
+            Debug.Log("BulletOwner is null");
+        }
+        exp.GetComponent<IExplosionViewController>().Init(Faction.Explosion, 5, 0.3f, bulletOwner,
+            bulletOwner.GetComponent<ICanDealDamage>());
     }
-
-
 
 
 }

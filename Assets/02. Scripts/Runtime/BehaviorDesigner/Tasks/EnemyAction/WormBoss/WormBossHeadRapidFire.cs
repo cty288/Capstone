@@ -72,35 +72,19 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             await UniTask.WaitForSeconds(3f,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
-            for (int i = 0; i < bulletWaves; i++)
+            for (int i = 0; i < 1; i++)
             {
-                await RapidFire();
+                RapidFire();
+                
             }
-
-            await UniTask.WaitForSeconds(2f, cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+          
+            Debug.Log("here");
+            await UniTask.WaitForSeconds(2f);
             foreach(GameObject go in trailList)
             {
                 trailPool.Recycle(go);
             }
-            // float timer = duration;
-            // float lastShootTime = 0f;
-            // while (timer > 0)
-            // {
-            //     timer -= Time.deltaTime;
-            //     
-            //     if(lastShootTime + bulletWaveInterval < Time.time)
-            //     {
-            //         lastShootTime = Time.time;
-            //         for (int i = 0; i < bulletCountPerWave; i++)
-            //         {
-            //             SpawnBullet();
-            //         }
-            //     }
-            //     await UniTask.Yield(PlayerLoopTiming.Update,
-            //         cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-            // }
-            // await UniTask.WaitForSeconds(1f,
-            //     cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
             taskStatus = TaskStatus.Success;
         }
         
@@ -131,14 +115,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             b.GetComponent<WormBossHeadMine>().SetData(bulletSpeed, player, randomPointAroundPlayer);
         }
         
-        private async UniTask RapidFire()
+        private void  RapidFire()
         {
             for (int i = 0; i < 10; i++)
             {
                 SpawnBullet();
+                
             }
-            await UniTask.WaitForSeconds(0,
-                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
         }
     }
 }
