@@ -643,6 +643,7 @@ namespace Runtime.Inventory.ViewController {
                 }
               
             }
+            isMouseOver = false;
         }
 
         private void Update() {

@@ -86,6 +86,10 @@ namespace Runtime.Temporary
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
                 inventoryModel.RemoveSlots(2, true);
             }
+            if (Input.GetKeyDown(KeyCode.Keypad5)) {
+                IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+                inventoryModel.AddSlots(2, out int addedCount);
+            }
 
             if (Input.GetKeyDown(KeyCode.Keypad3)) {
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
