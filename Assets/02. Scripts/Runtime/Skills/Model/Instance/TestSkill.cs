@@ -15,6 +15,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance {
 			return null;
 		}
 
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
+		}
+
 		protected override void OnInitModifiers(int rarity) {
 		
 		}

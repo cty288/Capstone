@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
+using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using Cysharp.Threading.Tasks;
 using MikroFramework;
@@ -24,6 +25,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private bool startedSpawning;
         public bool shootAllMissiles;
         public bool willEnd = true;
+        public SharedBool canShoot;
 
         private int iterations;
         private float timeBetweenIterations;
@@ -78,12 +80,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 for (int j = missileSpawnPos.Count - 1; j >= 0; j--)
                 {
+                    if(canShoot.Value == false)
+                        return;
+                    
                     GameObject spawnPos = missileSpawnPos[j];
 
                     if (!shootAllMissiles)
                     {
                         float angle = Vector3.Angle(spawnPos.transform.forward, Vector3.up);
                         if (angle > 100)
+                            continue;
+                    }
+                    else
+                    {
+                        if (j % 4 != 0) // spawn every 4th point
                             continue;
                     }
                     
@@ -101,9 +111,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 await UniTask.WaitForSeconds(timeBetweenIterations,
                     cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
-            
-            if(willEnd)
-                taskStatus = TaskStatus.Success;
+
+            if (willEnd)
+                return;
             
             startedSpawning = false;
         }

@@ -26,12 +26,13 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TenaciousBodySkill {
 
 		public override void OnAddedToInventory(string playerUUID) {
 			base.OnAddedToInventory(playerUUID);
-			AddHealthOfLevel(GetLevel());
+			
 			IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
 			playerEntity.RegisterOnModifyReceivedAddArmorAmount(OnModifyArmorAmount);
 		}
 
-		private float OnModifyArmorAmount(float arg) {
+		private float OnModifyArmorAmount(float n) {
+			if (!isInHotBarSlot) return n;
 			return 0;
 		}
 
@@ -47,8 +48,22 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TenaciousBodySkill {
 			return Localization.GetFormat(defaultLocalizationKey, addAmount, additionalDesc);
 		}
 
+		protected override void OnAddedToHotBar() {
+			AddHealthOfLevel(GetRarity());
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+			playerEntity.ChangeMaxHealth(-alreadyAddedHealth);
+			playerEntity.GetHealthRecoverSpeed().RealValue.Value -= alreadyAddedHealthRecoverSpeed;
+			alreadyAddedHealth = 0;
+			alreadyAddedHealthRecoverSpeed = 0;
+		}
+
 		protected override void OnUpgrade(int previousLevel, int level) {
-			AddHealthOfLevel(level);
+			if (!isInHotBarSlot) {
+				AddHealthOfLevel(level);
+			}
 		}
 		
 		private void AddHealthOfLevel(int level) {
@@ -73,8 +88,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TenaciousBodySkill {
 		public override void OnRemovedFromInventory() {
 			base.OnRemovedFromInventory();
 			IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
-			playerEntity.ChangeMaxHealth(-alreadyAddedHealth);
-			playerEntity.GetHealthRecoverSpeed().RealValue.Value -= alreadyAddedHealthRecoverSpeed;
+			OnRemovedFromHotBar();
 			playerEntity.UnRegisterOnModifyReceivedAddArmorAmount(OnModifyArmorAmount);
 		}
 		

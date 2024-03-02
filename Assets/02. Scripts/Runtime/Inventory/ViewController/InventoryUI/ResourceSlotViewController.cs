@@ -620,6 +620,7 @@ namespace Runtime.Inventory.ViewController {
             if (!currentDescriptionPanel) {
                 PointerExit(false);
             }
+            ResourceSlot.currentHoveredSlot.Value = null;
             //PointerExit(false);
         }
 
@@ -634,7 +635,7 @@ namespace Runtime.Inventory.ViewController {
                 
             }
             
-            ResourceSlot.currentHoveredSlot.Value = null;
+            
             if (currentDescriptionPanel) {
                 currentDescriptionPanel.Hide();
                 if (spawnDescriptionPanel) {

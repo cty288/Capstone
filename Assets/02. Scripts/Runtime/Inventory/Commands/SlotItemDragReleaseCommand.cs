@@ -45,7 +45,8 @@ namespace Runtime.Inventory.Commands {
 					else {
 						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
 						
-						if ( currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem)) {
+						if (currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem)) {
+							topItem.OnInventorySlotUpdate(fromSlot, currentHoveredSlot);
 							if (topItem != null && currentHoveredSlot is LeftHotBarSlot slot && topItem is ISkillEntity skill) {
 								//skill cooldown reset
 								skill.StartSwapInventoryCooldown(swapInventoryCooldown);

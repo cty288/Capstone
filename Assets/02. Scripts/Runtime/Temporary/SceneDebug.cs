@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
@@ -11,6 +12,7 @@ using _02._Scripts.Runtime.TimeSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using Framework;
 using MikroFramework.Architecture;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
@@ -38,7 +40,7 @@ namespace Runtime.Temporary
             }
             
             if (!Application.isEditor) {
-                return;
+            //    return;
             }
 
 
@@ -81,7 +83,7 @@ namespace Runtime.Temporary
             
             if (Input.GetKeyDown(KeyCode.Keypad2)) {
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
-                inventoryModel.RemoveSlots(2);
+                inventoryModel.RemoveSlots(2, true);
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad3)) {
@@ -110,6 +112,15 @@ namespace Runtime.Temporary
             if(Input.GetKeyDown(KeyCode.KeypadMinus)){
                 IGameTimeSystem gameTimeSystem = this.GetSystem<IGameTimeSystem>();
                 gameTimeSystem.speed_debug--;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad4)) {
+                var allEntities =GlobalEntities.GetAllEntities();
+                StringBuilder sb = new StringBuilder();
+                foreach (var entity in allEntities) {
+                    sb.AppendLine($"Entity Name: {entity.EntityName}, Display Name: {entity.GetDisplayName()}");
+                }
+                Debug.Log(sb.ToString());
             }
         }
     }

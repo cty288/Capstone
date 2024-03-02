@@ -314,7 +314,7 @@ namespace Runtime.Player {
 			}
 			else {
 				maxArmor.RealValue.Value = Mathf.Max(0, maxArmor.RealValue.Value + amount);
-				Armor.Value = Mathf.Min(Armor.Value, maxArmor.RealValue.Value);
+				Armor.Value = Mathf.Max(0, Armor.Value + amount);
 			}
 		}
 

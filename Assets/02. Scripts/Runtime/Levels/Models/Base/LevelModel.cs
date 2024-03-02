@@ -23,9 +23,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		void SwitchToLevel(int levelNumber);
 		
 		ILevelEntity GetLevel(int levelNumber);
-		
-	
-		
+
+		public bool StartWithTutorial { get; set; }
+
 	}
 
 	public struct OnTryToSwitchUnSpawnedLevel {
@@ -45,7 +45,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return builder;
 		}
 
-		public static int MAX_LEVEL = 2;
+		public static int MAX_LEVEL = 3;
 
 		protected override void OnInit() {
 			base.OnInit();
@@ -56,7 +56,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		public BindableProperty<ILevelEntity> CurrentLevel { get; set; } = new BindableProperty<ILevelEntity>();
 		public void AddLevel(ILevelEntity level) {
-			levelEntities.Add(level.GetCurrentLevelCount(), level);
+			levelEntities.TryAdd(level.GetCurrentLevelCount(), level);
 		}
 
 		public bool IsLevelSpawned(int levelNumber) {
@@ -64,6 +64,22 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 
 		public void SwitchToLevel(int levelNumber) {
+			//TODO: if levelnum > 0 && tutorial lev = true, then back to base.
+			HashSet<ILevelEntity> removedLevels = new HashSet<ILevelEntity>();
+			if (levelNumber > 0 && StartWithTutorial) {
+				StartWithTutorial = false;
+				foreach (var level in levelEntities) {
+					if (level.Key > 0) {
+						removedLevels.Add(level.Value);
+					}
+				}
+
+				levelEntities.Clear();
+				levelNumber = 0;
+				CurrentLevelCount.Value = 0;
+			}
+			
+
 			if (!IsLevelSpawned(levelNumber)) {
 				this.SendEvent<OnTryToSwitchUnSpawnedLevel>(new OnTryToSwitchUnSpawnedLevel() {
 					LevelNumber = levelNumber
@@ -76,7 +92,11 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			
 			
 			CurrentLevel.Value = levelEntities[levelNumber];
-			CurrentLevelCount.Value = levelNumber;
+			CurrentLevelCount.SetValueAndForceNotify(levelNumber);
+			
+			foreach (var level in removedLevels) {
+				RemoveEntity(level.UUID);
+			}
 			
 			if (levelNumber == 0) {
 				HashSet<int> toRemove = new HashSet<int>();
@@ -93,9 +113,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 					levelEntities.Remove(key);
 				}
 			}
-			
-			
 		}
+		
+		
 
 		public ILevelEntity GetLevel(int levelNumber) {
 			if (!IsLevelSpawned(levelNumber)) {
@@ -106,6 +126,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return levelEntities[levelNumber];
 		}
 
-		
+		[field: ES3Serializable]
+		public bool StartWithTutorial { get; set; } = true;
 	}
 }

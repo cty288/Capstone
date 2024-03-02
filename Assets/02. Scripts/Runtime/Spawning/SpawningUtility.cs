@@ -303,7 +303,8 @@ namespace Runtime.Spawning {
 			return Vector3.negativeInfinity; 
 		}
 
-		public static async UniTask<GameObject> SpawnExitDoor(GameObject spawner, string prefabName, Bounds bounds) {
+		public static async UniTask<GameObject> SpawnExitDoor(GameObject spawner, string prefabName, Bounds bounds,
+			Transform[] playerSpawnPoints) {
 			GameObject prefab = MainGame.Interface.GetUtility<ResLoader>().LoadSync<GameObject>(prefabName);
 			
 			BoxCollider spawnSizeGetter() => prefab.GetComponent<LevelExitDoorController>().SpawnSizeCollider;
@@ -324,12 +325,18 @@ namespace Runtime.Spawning {
 			GameObject doorInstance = null;
 
 			while (true) {
-				
+				await UniTask.Yield();
 				Vector3 randomPoint = new Vector3(
 					UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
 					UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
 					UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
 				);
+
+				foreach (Transform playerSpawnPoint in playerSpawnPoints) {
+					if (Vector3.Distance(randomPoint, playerSpawnPoint.position) < 20) {
+						continue;
+					}
+				}
 				
 				//sample the point on the navmesh
 				NavMeshHit navHit;
