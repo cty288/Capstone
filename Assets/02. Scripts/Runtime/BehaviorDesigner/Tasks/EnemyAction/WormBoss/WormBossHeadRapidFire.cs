@@ -74,12 +74,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             for (int i = 0; i < 1; i++)
             {
-                RapidFire();
-                
+                await RapidFire();
             }
           
-            Debug.Log("here");
-            await UniTask.WaitForSeconds(2f);
+            await UniTask.WaitForSeconds(2f,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            
             foreach(GameObject go in trailList)
             {
                 trailPool.Recycle(go);
@@ -90,39 +90,50 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         void SpawnBullet()
         {
+            // Calculate a random rotation offset within a specified range
+            Vector3 randomPointAroundPlayer = player.transform.position + Random.insideUnitSphere * 10;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPointAroundPlayer, out hit, 20f, NavMesh.AllAreas))
+            {
+                randomPointAroundPlayer = hit.position + new Vector3(0,1f,0);
+            }
+            else
+            {
+                return;
+            }
+            
             GameObject b = pool.Allocate();
             GameObject trail = trailPool.Allocate();
             trailList.Add(trail);
-            trail.GetComponent<LineRenderer>().SetPosition(0, firePoint.Value.transform.position);
-            
-            // Calculate a random rotation offset within a specified range
-            float randomAngle = Random.Range(-10, 10);
-            Quaternion randomRotation = Quaternion.Euler(randomAngle, randomAngle, 0);
-            Vector3 randomPointAroundPlayer = player.transform.position + Random.insideUnitSphere * 10;
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPointAroundPlayer + Random.insideUnitSphere * 10, out hit, 100f, NavMesh.AllAreas))
-            {
-                randomPointAroundPlayer = hit.position + new Vector3(0,1,0);
-            }
             b.transform.position = firePoint.Value.transform.position;
             b.transform.LookAt(randomPointAroundPlayer);
-            trail.GetComponent<LineRenderer>().SetPosition(1, randomPointAroundPlayer);
-            
-            b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-                bulletDamage,
-                gameObject, gameObject.GetComponent<ICanDealDamage>() , bulletRange);
+            // b.name = $"bullet {i}";
 
-            b.GetComponent<WormBossHeadMine>().SetData(bulletSpeed, player, randomPointAroundPlayer);
+            var lineRenderer = trail.GetComponent<LineRenderer>();
+            lineRenderer.SetPosition(0, firePoint.Value.transform.position);
+            lineRenderer.SetPosition(1, randomPointAroundPlayer);
+
+            // new GameObject($"bullet end {i}").transform.position = randomPointAroundPlayer;
+            
+            b.GetComponent<IBulletViewController>().Init(
+                enemyEntity.CurrentFaction.Value,
+                bulletDamage,
+                gameObject, 
+                gameObject.GetComponent<ICanDealDamage>(), 
+                bulletRange
+            );
+
+            b.GetComponent<WormBossHeadMine>().SetData(bulletSpeed, randomPointAroundPlayer);
         }
         
-        private void  RapidFire()
+        private async UniTask  RapidFire()
         {
             for (int i = 0; i < 10; i++)
             {
                 SpawnBullet();
-                
+                await UniTask.WaitForSeconds(1f,
+                    cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
-            
         }
     }
 }
