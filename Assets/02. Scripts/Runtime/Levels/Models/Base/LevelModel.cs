@@ -127,6 +127,6 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 
 		[field: ES3Serializable]
-		public bool StartWithTutorial { get; set; } = true;
+		public bool StartWithTutorial { get; set; } = false;
 	}
 }
