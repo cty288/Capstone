@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.GameEventSystem.Tests;
+using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Pillars.Commands;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
@@ -121,6 +122,10 @@ namespace Runtime.Temporary
                     sb.AppendLine($"Entity Name: {entity.EntityName}, Display Name: {entity.GetDisplayName()}");
                 }
                 Debug.Log(sb.ToString());
+            }
+
+            if (Input.GetKeyDown(KeyCode.N)) {
+                this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
             }
         }
     }

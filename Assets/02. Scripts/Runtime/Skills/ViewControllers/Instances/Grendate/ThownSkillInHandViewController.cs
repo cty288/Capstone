@@ -40,7 +40,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		
 		protected abstract float range { get; }
 		
-		private LayerMask groundWallLayer;
+		
 		protected bool usedBefore = false;
 		
 		protected override void Awake() {
@@ -54,7 +54,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 				previewPool = GameObjectPoolManager.Singleton.CreatePool(hitRangePreviewPrefab, 1, 5);
 			}
 			
-			groundWallLayer = LayerMask.GetMask("Ground", "Wall");
+			
 			
 		}
 

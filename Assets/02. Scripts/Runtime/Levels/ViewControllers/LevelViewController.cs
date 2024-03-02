@@ -353,7 +353,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (bgm) {
 				AudioSystem.Singleton.PlayMusic(bgm);
 			}
-			UpdateWallMaterials();
+			//UpdateWallMaterials();
 			await UniTask.Yield();
 			SpawningUtility.UpdateRefPointsKDTree();
 			if (spawnExitDoor) {

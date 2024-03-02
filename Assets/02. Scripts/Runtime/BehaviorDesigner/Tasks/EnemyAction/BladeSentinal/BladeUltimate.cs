@@ -101,8 +101,10 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
         //raycast up 
         RaycastHit hit;
             
-        LayerMask mask = LayerMask.GetMask("Ground", "Wall");
-        if (Physics.Raycast(transform.position, Vector3.up, out hit, jumpHeight, mask, QueryTriggerInteraction.Ignore)) {
+        LayerMask mask = LayerMask.GetMask("Ground", "Wall", "Default");
+        if (Physics.Raycast(transform.position + new Vector3(0, enemyViewController.SpawnSizeCollider.bounds.size.y, 0),
+                Vector3.up, out hit, jumpHeight 
+                , mask, QueryTriggerInteraction.Ignore)) {
             jumpHeight = hit.point.y - transform.position.y - enemyViewController.SpawnSizeCollider.bounds.size.y;
         }
 
@@ -175,7 +177,7 @@ public class BladeUltimate : EnemyAction<BladeSentinelEntity> {
         startPosition = transform.position;
         
             
-         mask = LayerMask.GetMask("Ground", "Wall");
+         mask = LayerMask.GetMask("Ground", "Wall", "Default");
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, mask, QueryTriggerInteraction.Ignore)) {
             targetPosition = hit.point;
         }
