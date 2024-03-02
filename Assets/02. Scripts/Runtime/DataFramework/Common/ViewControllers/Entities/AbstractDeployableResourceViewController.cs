@@ -155,14 +155,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			//use box cast instead
 			//because the object is pivoted at the bottom, we need to move the position up by half the height
 			position += normal * height / 2f;
-			var size = Physics.BoxCastNonAlloc(position, heightDetectionCollider.bounds.extents, normal, results,
-				Quaternion.identity, height, obstructionLayer);
-			for (int i = 0; i < size; i++) {
-				var hit = results[i];
-				if (hit.collider != null && !selfColliders.ContainsKey(hit.collider) && !hit.collider.isTrigger) {
-					failureReason = DeployFailureReason.Obstructed;
-					return false;
-				}
+			if(!CheckIsValidSpawnPos(position, heightDetectionCollider.bounds.size)) {
+				failureReason = DeployFailureReason.Obstructed;
+				return false;
 			}
 
 			spawnedRotation = DoesRotateToSlope
@@ -170,6 +165,48 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				: Quaternion.identity;
 				//Quaternion.FromToRotation(Vector3.up, slopeNormal);
 			failureReason = DeployFailureReason.NoFailure;
+			return true;
+		}
+		
+		private bool CheckIsValidSpawnPos(Vector3 position, Vector3 size) {
+			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Ground", "Wall");
+			//raycast up, left, right, forward, backward
+			Vector3[] directions = {Vector3.up, Vector3.left, Vector3.right, Vector3.forward, Vector3.back};
+			//use line cast instead
+			
+			foreach (var direction in directions) {
+				Vector3 start = position + new Vector3(0, size.y / 2, 0);
+				Vector3 addedVector = Vector3.zero;
+				
+				if (direction == Vector3.up) {
+					addedVector = new Vector3(0, size.y / 2, 0);
+				}
+				else if (direction == Vector3.left) {
+					addedVector = new Vector3(-size.x / 2, 0, 0);
+				}
+				else if (direction == Vector3.right) {
+					addedVector = new Vector3(size.x / 2, 0, 0);
+				}
+				else if (direction == Vector3.forward) {
+					addedVector = new Vector3(0, 0, size.z / 2);
+				}
+				else if (direction == Vector3.back) {
+					addedVector = new Vector3(0, 0, -size.z / 2);
+				}
+				
+				Vector3 end = start + addedVector;
+				if (Physics.Linecast(start, end, out RaycastHit hit, obstructionLayer, QueryTriggerInteraction.Ignore)) {
+					if (hit.collider.gameObject == gameObject) {
+						continue;
+					}
+					Vector3 normal = hit.normal;
+					float angle = Vector3.Angle(normal, Vector3.up);
+					if (angle >= 80) {
+						return false;
+					}
+				}
+			}
+
 			return true;
 		}
 
