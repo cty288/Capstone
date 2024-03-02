@@ -41,7 +41,7 @@ namespace Runtime.Spawning {
 	
 	
 	public static class SpawningUtility {
-		private static Collider[] results = new Collider[10];
+		private static RaycastHit[] results = new RaycastHit[10];
 		private static KDTree refPointsKDTree = null;
 
 		private static bool GetNormalAtPoint(Vector3 point, int layerMask, out Vector3 normal, out Vector3 hitPos) {
@@ -79,9 +79,11 @@ namespace Runtime.Spawning {
 			refPointsKDTree = new KDTree(insideArenaRefPoints, 8);
 		}
 
+		
+		
 
 		public static async UniTask<NavMeshFindResult> FindNavMeshSuitablePosition(
-			GameObject finder,
+			[CanBeNull] GameObject finder,
 			Func<BoxCollider> spawnSizeGetter,
 			Vector3 desiredPosition,
 			int maxAngle,
@@ -113,7 +115,7 @@ namespace Runtime.Spawning {
 			
 			
 			
-			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
+			//LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
 
 			int usedAttempts = 0;
 			Quaternion rotationWithSlope = Quaternion.identity;
@@ -124,10 +126,11 @@ namespace Runtime.Spawning {
 
 			//ICreatureViewController creatureViewController = prefab.GetComponent<ICreatureViewController>();
 			BoxCollider boxCollider = spawnSizeGetter();
-			Vector3 prefabSize = boxCollider.size;
+			Vector3 prefabSize = boxCollider.bounds.size;
 
 			
-			
+
+
 			KDQuery query = new KDQuery();
 			List<int> resultIndices = new List<int>();
 			query.KNearest(refPointsKDTree, desiredPosition, refPointsKDTree.Count, resultIndices);
@@ -173,16 +176,10 @@ namespace Runtime.Spawning {
 
 			//await UniTask.Yield();
 			
+			
 			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
 				if (!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope, out _)) {
-					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
-						prefabSize / 2, results, Quaternion.identity,
-						obstructionLayer);
-					if (size == 0) {
-						res = navHit.position;
-					}
-
-					if (CheckColliders(size)) {
+					if (CheckIsValidSpawnPos(navHit.position, prefabSize)) {
 						res = navHit.position;
 					}
 				}
@@ -225,16 +222,7 @@ namespace Runtime.Spawning {
 					NavMeshPath path = new NavMeshPath();
 					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, path);
 					if (path.status == NavMeshPathStatus.PathComplete) {
-						var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
-							prefabSize / 2, results, Quaternion.identity,
-							obstructionLayer);
-
-						if (size == 0) {
-							return new NavMeshFindResult(true, navHit.position, usedAttempts, rotationWithSlope);
-							//navHit.position;
-						}
-
-						if (CheckColliders(size)) {
+						if (CheckIsValidSpawnPos(navHit.position, prefabSize)) {
 							return new NavMeshFindResult(true, navHit.position, usedAttempts, rotationWithSlope);
 							//navHit.position;
 						}
@@ -281,15 +269,8 @@ namespace Runtime.Spawning {
 						currentSearchRadius += increment;
 						continue;
 					}
-					LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
-					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
-						obstructionLayer);
-
-					if (size == 0) {
-						return navHit.position; 
-					}
 					
-					if (CheckColliders(size)) {
+					if (CheckIsValidSpawnPos(navHit.position, prefabSize)) {
 						return navHit.position;
 					}
 					
@@ -450,11 +431,40 @@ namespace Runtime.Spawning {
 		}
 
 
-		private static bool CheckColliders(int size) {
-			for (int i = 0; i < size; i++) {
-				var hit = results[i];
-				if (hit && (!hit.isTrigger || hit.gameObject.CompareTag("SpawnSizeCollider"))) {
-					return false;
+		private static bool CheckIsValidSpawnPos(Vector3 position, Vector3 size) {
+			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Ground", "Wall");
+			//raycast up, left, right, forward, backward
+			Vector3[] directions = {Vector3.up, Vector3.left, Vector3.right, Vector3.forward, Vector3.back};
+			//use line cast instead
+			
+			foreach (var direction in directions) {
+				Vector3 start = position + new Vector3(0, size.y / 2, 0);
+				Vector3 addedVector = Vector3.zero;
+				
+				if (direction == Vector3.up) {
+					addedVector = new Vector3(0, size.y / 2, 0);
+				}
+				else if (direction == Vector3.left) {
+					addedVector = new Vector3(-size.x / 2, 0, 0);
+				}
+				else if (direction == Vector3.right) {
+					addedVector = new Vector3(size.x / 2, 0, 0);
+				}
+				else if (direction == Vector3.forward) {
+					addedVector = new Vector3(0, 0, size.z / 2);
+				}
+				else if (direction == Vector3.back) {
+					addedVector = new Vector3(0, 0, -size.z / 2);
+				}
+				
+				Vector3 end = start + addedVector;
+				if (Physics.Linecast(start, end, out RaycastHit hit, obstructionLayer, QueryTriggerInteraction.Ignore)) {
+					Vector3 normal = hit.normal;
+					float angle = Vector3.Angle(normal, Vector3.up);
+					Debug.Log("Angle: " + angle +" Hit obj: " + hit.collider.gameObject.name + " Hit Point: " + hit.point);
+					if (angle >= 80) {
+						return false;
+					}
 				}
 			}
 
