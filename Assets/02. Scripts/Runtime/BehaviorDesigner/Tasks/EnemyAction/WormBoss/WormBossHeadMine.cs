@@ -87,7 +87,7 @@ public class WormBossHeadMine : AbstractBulletViewController
             }
             else
             {
-
+                transform.position += Vector3.up * 0.3f * Time.deltaTime;
                 var pulse = curve.Evaluate(evaluator / timeUntilExplosion) * 3;
                 if (timer > pulse)
                 {
@@ -96,7 +96,7 @@ public class WormBossHeadMine : AbstractBulletViewController
 
                         timer = 0;
                         isPulsing = true;
-                        transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0.2f), 0.2f, 1).OnComplete(() =>
+                        transform.DOPunchScale(new Vector3(0.3f, 0.3f, 0.3f), 0.2f, 1).OnComplete(() =>
                         {
                             isPulsing = false;
                         });
