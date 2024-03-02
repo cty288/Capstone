@@ -160,7 +160,7 @@ namespace Runtime.Weapons.ViewControllers {
                 GameObject hitObj = sortedHits[i].collider.gameObject;
                 ICrossHairDetectable entityViewController = hitObj.GetComponentInParent<ICrossHairDetectable>();
                 
-                if (PhysicsUtility.IsInLayerMask(hitObj, wallLayerMask) && entityViewController == null) {
+                if (!sortedHits[i].collider.isTrigger && PhysicsUtility.IsInLayerMask(hitObj, wallLayerMask) && entityViewController == null) {
                     //add ground & wall hit info
                     //GroundWallHitInfo.Set(sortedHits[i], ray.direction.normalized, hitObj);
                     break;

@@ -45,7 +45,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 			return builder;
 		}
 
-		public static int MAX_LEVEL = 3;
+		public static int MAX_LEVEL = 4;
 
 		protected override void OnInit() {
 			base.OnInit();

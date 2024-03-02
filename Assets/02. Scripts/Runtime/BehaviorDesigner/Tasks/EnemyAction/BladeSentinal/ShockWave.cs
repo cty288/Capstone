@@ -65,8 +65,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             //raycast up 
             RaycastHit hit;
             
-            LayerMask mask = LayerMask.GetMask("Ground", "Wall");
-            if (Physics.Raycast(transform.position, Vector3.up, out hit, jumpHeight + enemyViewController.SpawnSizeCollider.bounds.size.y
+            LayerMask mask = LayerMask.GetMask("Ground", "Wall", "Default");
+            if (Physics.Raycast(transform.position + new Vector3(0, enemyViewController.SpawnSizeCollider.bounds.size.y, 0),
+                    Vector3.up, out hit, jumpHeight 
                     , mask, QueryTriggerInteraction.Ignore)) {
                 jumpHeight = hit.point.y - transform.position.y - enemyViewController.SpawnSizeCollider.bounds.size.y;
             }
