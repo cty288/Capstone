@@ -37,6 +37,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance {
 			return Localization.Get(defaultLocalizationKey);
 		}
 
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
+		}
+
 		protected override void OnUpgrade(int previousLevel, int level) {
 			
 		}

@@ -24,6 +24,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.AdrenalineSkill {
 			return Localization.GetFormat(defaultLocalizationKey, buffLevel, buffDescription);
 		}
 
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
+		}
+
 
 		protected override void OnUpgrade(int previousLevel, int level) {
 			

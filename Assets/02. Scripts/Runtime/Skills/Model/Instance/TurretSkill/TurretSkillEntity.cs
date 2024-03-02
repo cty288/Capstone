@@ -27,6 +27,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.TurretSkill {
 			return Localization.GetFormat(defaultLocalizationKey, displayTime);
 		}
 
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
+		}
+
 		protected override ICustomProperty[] OnRegisterAdditionalCustomProperties() {
 			return null;
 		}

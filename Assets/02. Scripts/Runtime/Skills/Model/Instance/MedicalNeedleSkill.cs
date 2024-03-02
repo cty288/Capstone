@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
@@ -14,6 +15,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance {
 		public override bool Collectable { get; } = true;
 		protected override string GetDescription(string defaultLocalizationKey) {
 			return Localization.Get(defaultLocalizationKey);
+		}
+
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
 		}
 
 		protected override void OnUpgrade(int previousLevel, int level) {

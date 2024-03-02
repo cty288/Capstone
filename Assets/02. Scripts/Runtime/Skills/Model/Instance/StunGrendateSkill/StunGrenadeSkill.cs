@@ -76,6 +76,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.StunGrendateSkill {
 				malfunctionBuff.OnGetDescription("MulfunctionBuff_Desc"), powerLessBuffDesc, displayedPowerlessLevel);
 		}
 
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
+		}
+
 		protected override void OnUpgrade(int previousLevel, int level) {
 			
 		}

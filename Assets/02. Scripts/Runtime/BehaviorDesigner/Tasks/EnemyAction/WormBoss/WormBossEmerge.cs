@@ -11,13 +11,14 @@ using System.Threading.Tasks;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using DG.Tweening;
 using FIMSpace.FSpine;
+using Runtime.Enemies;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class WormBossEmerge : EnemyAction
+    public class WormBossEmerge : EnemyAction<WormBossEntity>
     {
         // public SharedVector3 previousDivePosition;
         private Vector3 emergePosition;
@@ -36,6 +37,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override void OnAwake()
         {
+            base.OnAwake();
             spineAnimator = gameObject.GetComponent<FSpineAnimator>();
             director = gameObject.GetComponent<PlayableDirector>();
             rb = gameObject.GetComponent<Rigidbody>();
@@ -43,6 +45,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override void OnStart()
         {
+            base.OnStart();
+            
             player = GetPlayer();
 
             //face upwards
@@ -68,6 +72,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             if (NavMesh.SamplePosition(sample, out hit, 30, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 emergePosition = hit.position;
+                Debug.Log($"WORM BOSS: EMERGE {emergePosition}");
             }
             else
             {
@@ -109,7 +114,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             rb.useGravity = false;
             spineAnimator.GoBackSpeed = 0f;
+            
 
+            Debug.Log("Worm Boss: emerge not undergound");
+            enemyEntity.isUnderground = false;
+            
             taskStatus = TaskStatus.Success;
         }
     }

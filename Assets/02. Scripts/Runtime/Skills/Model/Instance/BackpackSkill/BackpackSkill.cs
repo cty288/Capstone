@@ -27,6 +27,14 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.BackpackSkill {
 			return Localization.Get("BackpackSkill_desc2");
 		}
 
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
+		}
+
 		protected override void OnUpgrade(int previousLevel, int level) {
 			int addedSlots = GetCustomPropertyOfCurrentLevel<int>("count");
 			IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
@@ -36,9 +44,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.BackpackSkill {
 
 		public override void OnRemovedFromInventory() {
 			base.OnRemovedFromInventory();
-			
 			IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
-			inventoryModel.RemoveSlots(actualAddedSlots);
+			inventoryModel.RemoveSlots(actualAddedSlots, false);
 		}
 
 		protected override void OnEntityStart(bool isLoadedFromSave) {

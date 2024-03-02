@@ -36,19 +36,35 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.BiologicalArmorSkill {
 			return Localization.GetFormat(defaultLocalizationKey, addAmount, healthLimit, additionalDesc);
 		}
 
+		protected override void OnAddedToHotBar() {
+			AddArmorOfLevel(GetLevel());
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+			playerEntity.ChangeMaxArmor(-alreadyAddedArmor);
+			playerEntity.GetArmorRecoverSpeed().RealValue.Value -= alreadyAddedArmorRecoverSpeed;
+			alreadyAddedArmor = 0;
+			alreadyAddedArmorRecoverSpeed = 0;
+		}
+
 		protected override void OnUpgrade(int previousLevel, int level) {
-			AddArmorOfLevel(level);
+			if (isInHotBarSlot) {
+				AddArmorOfLevel(level);
+			}
 		}
 
 		public override void OnRemovedFromInventory() {
 			base.OnRemovedFromInventory();
+			OnRemovedFromHotBar();
 			IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
-			playerEntity.ChangeMaxArmor(-alreadyAddedArmor);
-			playerEntity.GetArmorRecoverSpeed().RealValue.Value -= alreadyAddedArmorRecoverSpeed;
 			playerEntity.UnRegisterOnModifyReceivedHealAmount(OnModifyHealAmount);
+
 		}
 
 		private int OnModifyHealAmount(int amount, IBelongToFaction arg2, IDamageable target) {
+			if (!isInHotBarSlot) return amount;
+			
 			int healthLimit = GetCustomPropertyOfCurrentLevel<int>("health_limit");
 			int targetCurrentHealth = target.GetCurrentHealth();
 			if (targetCurrentHealth + amount > healthLimit) {
@@ -67,7 +83,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.BiologicalArmorSkill {
 
 		public override void OnAddedToInventory(string playerUUID) {
 			base.OnAddedToInventory(playerUUID);
-			AddArmorOfLevel(GetLevel());
+			
 			IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
 			playerEntity.RegisterOnModifyReceivedHealAmount(OnModifyHealAmount); 
 		}
