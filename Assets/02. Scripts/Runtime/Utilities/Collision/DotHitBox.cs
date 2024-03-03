@@ -100,7 +100,6 @@ namespace Runtime.Utilities.Collision
                         };
 
                         if (hitData.Validate()) {
-                            Debug.Log(hitData.Hurtbox.Owner.name);
                             hitData.HitDetector.HitResponder?.HitResponse(hitData);
                             hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                         }
