@@ -82,7 +82,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 {
                     if (canShoot.Value == false)
                     {
-                        Debug.Log("WORM BOSS: CANNOT SHOOT");
                         return;
                     }
                     
