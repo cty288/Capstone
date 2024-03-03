@@ -1,3 +1,4 @@
+using _02._Scripts.Runtime.Levels.Models;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Singletons;
@@ -15,12 +16,14 @@ namespace Runtime.UI {
 	public class MainUI : UIRoot, IController, ISingleton {
 		DPunkInputs.SharedActions controlActions;
 		private IGamePlayerModel playerModel;
+		private ILevelModel levelModel;
 		protected override void Awake() {
 			base.Awake();
 			controlActions = ClientInput.Singleton.GetSharedActions();
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 			playerModel = this.GetModel<IGamePlayerModel>();
+			levelModel = this.GetModel<ILevelModel>();
 			ClientInput.Singleton.EnablePlayerMaps();
 			this.RegisterEvent<OnOpenPillarUI>(OnOpenPillarUI)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
@@ -48,7 +51,7 @@ namespace Runtime.UI {
 				return;
 			}
 			
-			if (controlActions.Inventory.WasPressedThisFrame() && (currentMainPanel == null || UIManager.Singleton.GetPanel<InventoryUIViewController>(true))) {
+			if (!levelModel.IsInBase() && controlActions.Inventory.WasPressedThisFrame() && (currentMainPanel == null || UIManager.Singleton.GetPanel<InventoryUIViewController>(true))) {
 				OpenOrGetClose<InventoryUIViewController>(this, null, true);
 			}
 

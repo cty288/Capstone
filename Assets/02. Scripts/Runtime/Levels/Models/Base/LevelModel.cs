@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -26,6 +27,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		public bool StartWithTutorial { get; set; }
 
+
+		public bool IsInBase();
 	}
 
 	public struct OnTryToSwitchUnSpawnedLevel {
@@ -128,5 +131,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		[field: ES3Serializable]
 		public bool StartWithTutorial { get; set; } = false;
+
+		public bool IsInBase() {
+			return  CurrentLevel.Value is BaseLevelEntity;
+		}
 	}
 }
