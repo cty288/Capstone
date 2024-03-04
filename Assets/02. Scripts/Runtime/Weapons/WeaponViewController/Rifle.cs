@@ -60,6 +60,7 @@ namespace Runtime.Weapons
 
         public override void OnItemUse()
         {
+            
             if (isFullyAutomatic)
             {
                 CheckShoot();

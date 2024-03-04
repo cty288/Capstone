@@ -55,9 +55,15 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.EMPCha
 
 		public override void OnStart() {
 			base.OnStart();
+			GameObject gameObject = weaponEntity.GetBoundGameObject();
+			if (gameObject) {
+				Debug.Log("EMPChainBuff bind to " + gameObject.name);
+			}
 		}
 
 		public override BuffStatus OnTick() {
+
+			
 			return BuffStatus.Running;
 		}
 

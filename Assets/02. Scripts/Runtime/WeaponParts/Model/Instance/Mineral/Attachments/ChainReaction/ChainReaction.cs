@@ -2,7 +2,9 @@
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
+using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -53,6 +55,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Ch
 					continue;
 				}
 
+				
 				buff.RemainingDuration = buff.MaxDuration;
 				if(buff is ILeveledBuff leveledBuff) {
 					leveledBuff.LevelUp(1);

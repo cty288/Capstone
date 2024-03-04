@@ -95,9 +95,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			if (weaponEntity == null) {
 				return;
 			}
+			
+				
+				
 			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
 			weaponEntity.RegisterOnKillDamageable(OnKillDamageable);
 			weaponEntity.RegisterOnDealDamage(OnDealDamage);
+			
 			//weaponEntity.RegisterOnDealDamage();
 			
 			resLoader = this.GetUtility<ResLoader>();
@@ -186,6 +190,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		}
 
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
+			
+			
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			chance = weaponEntity.SendModifyValueEvent(new OnCombatBuffModifyExplosionChance(chance)).Value;
 			

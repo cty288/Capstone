@@ -50,6 +50,8 @@ namespace Runtime.Weapons.ViewControllers.Base
     public interface IWeaponViewController : IResourceViewController,  IPickableResourceViewController, IInHandResourceViewController {
         IWeaponEntity WeaponEntity { get; }
         IEntity IEntityViewController.Entity => WeaponEntity;
+        
+        GameObject gameObject { get; }
     }
     
     /// <summary>
@@ -156,6 +158,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.OnEntityStart();
             _isScopedIn = false;
             cameraShaker = FindObjectOfType<CameraShaker>();
+            WeaponEntity.SetBoundViewController(this);
         }
 
        
@@ -439,6 +442,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         public override void OnRecycled() {
+            WeaponEntity.SetBoundViewController(null);
             base.OnRecycled();
             fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
             fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
