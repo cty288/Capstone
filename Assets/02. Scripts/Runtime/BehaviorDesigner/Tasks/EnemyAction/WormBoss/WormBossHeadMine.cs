@@ -70,6 +70,18 @@ public class WormBossHeadMine : AbstractBulletViewController
 
 
     }
+    private void OnEnable()
+    {
+        evaluator = 0;
+        timer = 0;
+        onGround = false;
+        arrived = false;
+        dir = target - this.transform.position;
+        randomSpinDir = UnityEngine.Random.insideUnitSphere;
+        randomSpinDir.Normalize();
+        currentFrequency = initialFrequency;
+
+    }
 
 
     // Update is called once per frame
