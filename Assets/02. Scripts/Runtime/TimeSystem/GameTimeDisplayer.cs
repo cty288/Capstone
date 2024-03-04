@@ -49,8 +49,18 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
       }
 
       this.Delay(0.1f, () => {
-         ShowDayDisplayPanel(levelModel.CurrentLevel.Value.DayStayed);
+         int dayCount = levelModel.CurrentLevel.Value.DayStayed;
+         if (dayCount <=1) {
+            this.Delay(4f, () => {
+               ShowDayDisplayPanel(levelModel.CurrentLevel.Value.DayStayed);
+            });
+         }
+         else {
+            ShowDayDisplayPanel(levelModel.CurrentLevel.Value.DayStayed);
+         }
       });
+      
+     
      
    }
    
@@ -73,7 +83,7 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
    private void OnLevelCountChanged(int level) {
       UpdateTime();
       if (level == 1) {
-         ShowDayDisplayPanel(1);
+         //ShowDayDisplayPanel(1);
       }
    }
 

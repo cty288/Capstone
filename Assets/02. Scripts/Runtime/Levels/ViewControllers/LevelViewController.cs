@@ -28,6 +28,7 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources;
+using Runtime.Player;
 using Runtime.Spawning;
 using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
@@ -365,6 +366,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			SpawnCollectableResources();
 			
 			StartCoroutine(UpdateLevelSystemTime());
+			
+			this.Delay(5f, () => {
+				LoadingCanvas.Singleton.Hide();
+
+			});
+			
+			//this.GetModel<IGamePlayerModel>().GetPlayer().Armor.RegisterOnValueChanged()
 		}
 
 		private async UniTask SpawnLevelExitDoor() {
