@@ -192,6 +192,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
 			
 			
+			
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			chance = weaponEntity.SendModifyValueEvent(new OnCombatBuffModifyExplosionChance(chance)).Value;
 			
@@ -203,8 +204,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 				
 				int damage = Mathf.RoundToInt(explosionDamagePerRarity * weaponEntity.GetRarity());
 				GameObject owner = hit.Hurtbox?.Owner;
-
-
+				
+				
 				GenerateExplosion(damage, owner, hit.HitPoint, hit.Attacker);
 
 				SendWeaponBuildBuffEvent<OnCombatBuffGenerateExplostion>
