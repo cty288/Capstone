@@ -122,6 +122,12 @@ namespace Runtime.Weapons.Model.Base
         public IWeaponViewController GetBoundViewController();
         
         public void SetBoundViewController(IWeaponViewController viewController);
+        
+        /// <summary>
+        /// This can return null
+        /// </summary>
+        /// <returns></returns>
+        public GameObject GetBoundGameObject();
     }
 
     public struct OnWeaponPartsUpdate {
@@ -611,6 +617,10 @@ namespace Runtime.Weapons.Model.Base
 
         public void SetBoundViewController(IWeaponViewController viewController) {
             this.boundViewController = viewController;
+        }
+
+        public GameObject GetBoundGameObject() {
+            return boundViewController?.gameObject;
         }
 
 
