@@ -23,6 +23,7 @@ using Runtime.Temporary;
 using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -113,6 +114,14 @@ namespace Runtime.Weapons.Model.Base
         public void RegisterOnUseAmmo(Action<int> callback);
         
         public void UnRegisterOnUseAmmo(Action<int> callback);
+
+        /// <summary>
+        /// This can return null
+        /// </summary>
+        /// <returns></returns>
+        public IWeaponViewController GetBoundViewController();
+        
+        public void SetBoundViewController(IWeaponViewController viewController);
     }
 
     public struct OnWeaponPartsUpdate {
@@ -151,6 +160,7 @@ namespace Runtime.Weapons.Model.Base
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
         private IWeight weightProperty;
+        
 
         private Dictionary<Type, IFuncRegisterations> onModifyValueEventCallbacks =
             new Dictionary<Type, IFuncRegisterations>();
@@ -173,6 +183,8 @@ namespace Runtime.Weapons.Model.Base
         private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
         private Action<int> _onUseAmmoCallback;
         public abstract int Width { get; }
+        
+        private IWeaponViewController boundViewController;
 
         protected override ConfigTable GetConfigTable() {
             
@@ -591,6 +603,14 @@ namespace Runtime.Weapons.Model.Base
 
         public void UnRegisterOnUseAmmo(Action<int> callback) {
             _onUseAmmoCallback -= callback;
+        }
+
+        public IWeaponViewController GetBoundViewController() {
+            return boundViewController;
+        }
+
+        public void SetBoundViewController(IWeaponViewController viewController) {
+            this.boundViewController = viewController;
         }
 
 

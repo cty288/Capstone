@@ -69,6 +69,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			if (owner == null) {
 				return;
 			}
+			
 			owner.UnregisterOnModifyDamageCount(OnModifyDamageCount);
 			owner.UnregisterOnKillDamageable(OnKillDamageable);
 			owner = null;
