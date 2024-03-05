@@ -92,13 +92,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 	public class CombatBuff : WeaponBuildBuff<CombatBuff>, ICanGetUtility {
 		[field: ES3Serializable]
 		public override float TickInterval { get; protected set; } = -1;
-
-		private SafeGameObjectPool bulletInVFXPool;
-		private SafeGameObjectPool bulletOutVFXPool;
-		private SafeGameObjectPool bulletHitVFXPool;
-		private GameObject pooledBulletIn;
-		private GameObject pooledBulletOut;
-		private GameObject pooledBulletHit;
 		
 		private ResLoader resLoader;
 		
@@ -107,6 +100,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 				return;
 			}
 
+			// Initialize Pool
 			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXIn", null, 3, 10, out GameObject prefab0);
 			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXOut", null, 3, 10, out GameObject prefab2);
 			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("TestExplode", null, 3, 10, out GameObject prefab1);
@@ -245,8 +239,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			return hit;
 		}
 
-		
-
 		public override void OnStart()
 		{
 		}
@@ -269,43 +261,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			}
 			base.OnRecycled();
 		}
-
-		private IWeaponVFX _weaponVFX;
-		private IHitScanWeaponVFX _hitScanWeaponVFX;
-		private bool allocated = false;
-		public void AllocateBuffVFX(IWeaponVFX weaponVFX, IHitScanWeaponVFX hitScanWeaponVFX)
-		{
-			if (allocated)
-			{
-				return;
-			}
-			
-			pooledBulletIn = bulletInVFXPool.Allocate();
-			pooledBulletOut = bulletOutVFXPool.Allocate();
-			pooledBulletHit = bulletHitVFXPool.Allocate();
-			_weaponVFX = weaponVFX;
-			_hitScanWeaponVFX = hitScanWeaponVFX;
-			_weaponVFX.SetVFX(pooledBulletHit.GetComponent<VisualEffect>());
-			_hitScanWeaponVFX.SetBulletVFX(new[]{pooledBulletIn.GetComponent<VisualEffect>()}, 
-				new[]{pooledBulletOut.GetComponent<VisualEffect>()});
-			allocated = true;
-		}
-
-		public void DeallocateBuffVFX()
-		{
-			allocated = false;
-			_weaponVFX.ResetVFX();
-			_hitScanWeaponVFX.ResetBulletVFX();
-			
-			pooledBulletIn.transform.parent = bulletInVFXPool.transform;
-			bulletInVFXPool.Recycle(pooledBulletIn);
-			
-			pooledBulletOut.transform.parent = bulletOutVFXPool.transform;
-			bulletOutVFXPool.Recycle(pooledBulletOut);
-
-			pooledBulletHit.transform.parent = bulletHitVFXPool.transform;
-			bulletHitVFXPool.Recycle(pooledBulletHit);
-		}
+		
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
 			return null;

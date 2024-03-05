@@ -3,12 +3,14 @@ using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Player;
 using Runtime.Weapons.Model.Properties;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
@@ -28,6 +30,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			if (weaponEntity == null) {
 				return;
 			}
+			
+			// Initialize Pool
+			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXIn", null, 3, 10, out GameObject prefab0);
+			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXOut", null, 3, 10, out GameObject prefab2);
+			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("TestExplode", null, 3, 10, out GameObject prefab1);
+			
+			var vc = weaponEntity.GetBoundViewController();
+			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
 			
 			
 			IEntity weaponRootOwner = weaponEntity.GetRootDamageDealer() as IEntity;
@@ -140,6 +150,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 
 		public override void OnRecycled() {
 			if (weaponEntity != null) {
+				DeallocateBuffVFX();
 				weaponEntity.UnregisterOnDealDamage(OnDealDamage);
 			}
 			
