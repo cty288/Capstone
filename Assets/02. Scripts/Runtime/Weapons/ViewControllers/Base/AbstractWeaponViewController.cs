@@ -54,11 +54,19 @@ namespace Runtime.Weapons.ViewControllers.Base
         GameObject gameObject { get; }
     }
     
+    public interface IWeaponVFX
+    {
+        public VisualEffect HitVFX { get; }
+
+        public void SetVFX(VisualEffect vfx);
+        public void ResetVFX();
+    }
+    
     /// <summary>
     /// For both 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IWeaponViewController, IBelongToFaction, IHitResponder
+    public abstract class AbstractWeaponViewController<T> : AbstractPickableInHandResourceViewController<T>, IWeaponViewController, IWeaponVFX, IBelongToFaction, IHitResponder
         where T : class, IWeaponEntity, new() {
         public GameObject model;
         [Header("Gun Options")]
@@ -79,14 +87,17 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected Camera fpsCamera;
         protected DPunkInputs.PlayerActions playerActions;
         protected IGamePlayerModel playerModel;
-        public GameObject hitParticlePrefab;
+        //public GameObject hitParticlePrefab;
         public VisualEffect hitVFXSystem;
+        protected VisualEffect originalHitVFXSystem;
         protected bool isHitVFX;
         protected CameraShaker cameraShaker;
         [SerializeField] protected Animator animator;
         [SerializeField] protected float reloadAnimationLength;
         protected AnimationSMBManager animationSMBManager;
-        
+
+        public VisualEffect HitVFX => hitVFXSystem;
+
         //timers & status
         //protected bool isLocked = false;
         protected bool isReloading = false;
@@ -126,6 +137,8 @@ namespace Runtime.Weapons.ViewControllers.Base
             playerActions = ClientInput.Singleton.GetPlayerActions();
             animationSMBManager = GetComponent<AnimationSMBManager>();
             animationSMBManager.Event.AddListener(OnAnimationEvent);
+
+            originalHitVFXSystem = hitVFXSystem;
             
             SetSoundNames();
         }
@@ -452,6 +465,26 @@ namespace Runtime.Weapons.ViewControllers.Base
             _onDealDamageCallback = null;
             _onKillDamageableCallback = null;
         }
+        #endregion
+
+        #region VFX
+
+        public void SetVFX(VisualEffect vfx)
+        {
+            var t = vfx.transform;
+            t.parent = hitVFXSystem.transform;
+            t.position = Vector3.zero;
+            t.rotation = Quaternion.identity;
+            t.localScale = Vector3.one;
+
+            hitVFXSystem = vfx;
+        }
+
+        public void ResetVFX()
+        {
+            hitVFXSystem = originalHitVFXSystem;
+        }
+
         #endregion
     }
 }

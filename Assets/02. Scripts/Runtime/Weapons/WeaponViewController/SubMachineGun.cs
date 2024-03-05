@@ -1,4 +1,5 @@
-﻿using Polyglot;
+﻿using System.Collections.Generic;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Utilities.Collision;
@@ -6,6 +7,7 @@ using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Runtime.Weapons
 {
@@ -47,7 +49,7 @@ namespace Runtime.Weapons
         }
         protected override IHitDetector OnCreateHitDetector()
         {
-            return new HitScan(this, CurrentFaction.Value, bulletVFX, fpsCamera);
+            return new HitScan(this, CurrentFaction.Value, new List<VisualEffect>(bulletVFX), fpsCamera);
         }
 
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<SubMachineGunEntity> builder) {

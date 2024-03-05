@@ -4,8 +4,10 @@ using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.Pool;
 using MikroFramework.ResKit;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -16,6 +18,7 @@ using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
@@ -90,13 +93,24 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		[field: ES3Serializable]
 		public override float TickInterval { get; protected set; } = -1;
 
+		private SafeGameObjectPool bulletInVFXPool;
+		private SafeGameObjectPool bulletOutVFXPool;
+		private SafeGameObjectPool bulletHitVFXPool;
+		private GameObject pooledBulletIn;
+		private GameObject pooledBulletOut;
+		private GameObject pooledBulletHit;
 		private ResLoader resLoader;
+		
 		public override void OnInitialize() {
 			if (weaponEntity == null) {
 				return;
 			}
+
+			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXIn", null, 3, 10, out GameObject prefab0);
+			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("TestExplode", null, 3, 10, out GameObject prefab1);
 			
-				
+			var vc = weaponEntity.GetBoundViewController();
+			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
 				
 			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
 			weaponEntity.RegisterOnKillDamageable(OnKillDamageable);
@@ -105,6 +119,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			//weaponEntity.RegisterOnDealDamage();
 			
 			resLoader = this.GetUtility<ResLoader>();
+			
 		}
 
 		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
@@ -189,8 +204,15 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			}
 		}
 
-		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
-			
+		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon)
+		{
+
+			var hitscan = (hit.HitDetector as HitScan);
+			if (hitscan != null)
+			{
+				var vc = weaponEntity.GetBoundViewController();
+				AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
+			}
 			
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
 			chance = weaponEntity.SendModifyValueEvent(new OnCombatBuffModifyExplosionChance(chance)).Value;
@@ -223,8 +245,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 
 		
 
-		public override void OnStart() {
-			
+		public override void OnStart()
+		{
 		}
 
 		public override BuffStatus OnTick() {
@@ -236,12 +258,44 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		}
 
 		public override void OnRecycled() {
-			if (weaponEntity != null) {
+			if (weaponEntity != null)
+			{
+				DeallocateBuffVFX();
 				weaponEntity.UnRegisterOnModifyHitData(OnWeaponModifyHitData);
 				weaponEntity.UnregisterOnKillDamageable(OnKillDamageable);
 				weaponEntity.UnregisterOnDealDamage(OnDealDamage);
 			}
 			base.OnRecycled();
+		}
+
+		private IWeaponVFX _weaponVFX;
+		private IHitScanWeaponVFX _hitScanWeaponVFX;
+		private bool allocated = false;
+		public void AllocateBuffVFX(IWeaponVFX weaponVFX, IHitScanWeaponVFX hitScanWeaponVFX)
+		{
+			if (allocated)
+			{
+				return;
+			}
+			
+			//pooledBulletIn = bulletInVFXPool.Allocate();
+			pooledBulletHit = bulletHitVFXPool.Allocate();
+			_weaponVFX = weaponVFX;
+			_hitScanWeaponVFX = hitScanWeaponVFX;
+			_weaponVFX.SetVFX(pooledBulletHit.GetComponent<VisualEffect>());
+			allocated = true;
+		}
+
+		public void DeallocateBuffVFX()
+		{
+			allocated = false;
+			_weaponVFX.ResetVFX();
+			//_hitScanWeaponVFX.ResetHitVFX();
+			//pooledBulletIn.transform.parent = bulletInVFXPool.transform;
+			//bulletInVFXPool.Recycle(pooledBulletIn);
+
+			pooledBulletHit.transform.parent = bulletHitVFXPool.transform;
+			bulletHitVFXPool.Recycle(pooledBulletHit);
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

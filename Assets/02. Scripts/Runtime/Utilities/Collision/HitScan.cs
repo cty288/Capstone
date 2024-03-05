@@ -7,9 +7,11 @@ using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.Temporary.Weapon;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -29,7 +31,7 @@ namespace Runtime.Utilities.Collision
         private TrailRenderer _tr;
         private ObjectPool<TrailRenderer> trailPool;
 
-        private VisualEffect[] _vfx;
+        private List<VisualEffect> _vfx;
         
         
         public GameObject bulletHoleDecal;
@@ -66,7 +68,7 @@ namespace Runtime.Utilities.Collision
             bulletHoleDecal = this.GetUtility<ResLoader>().LoadSync<GameObject>("BulletHoleDecal");
         }
         
-        public HitScan(IHitResponder hitResponder, Faction faction, VisualEffect[] vfx, Camera fpsCam, bool showDamageNumber = true)
+        public HitScan(IHitResponder hitResponder, Faction faction, List<VisualEffect> vfx, Camera fpsCam, bool showDamageNumber = true)
         {
             this.hitResponder = hitResponder;
             CurrentFaction.Value = faction;
@@ -342,6 +344,23 @@ namespace Runtime.Utilities.Collision
         private GameObject CreateBulletHole()
         {
             return GameObject.Instantiate(bulletHoleDecal);;
+        }
+
+        public bool SetVFXAssets(VisualEffect[] vfxs)
+        {
+            // Validate VFX list is consistent with assumed count
+            if (_vfx.Count < IHitScanWeaponVFX.BULLET_VFX_COUNT)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < IHitScanWeaponVFX.BULLET_VFX_COUNT; i++)
+            {
+                //TODO
+                _vfx[i] = vfxs[i];
+            }
+            
+            return true;
         }
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
