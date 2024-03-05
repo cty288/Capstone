@@ -145,6 +145,11 @@ namespace Runtime.Temporary
             if (Input.GetKeyDown(KeyCode.N)) {
                 this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
             }
+
+            if (Input.GetKey(KeyCode.O)) {
+                //ES3.dele
+                ((MainGame)MainGame.Interface).ClearSave();
+            }
         }
     }
 }

@@ -40,6 +40,12 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
          .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);*/
       
       this.RegisterEvent<OnNewDayStart>(OnNewDay).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+      this.Delay(0.1f, () => {
+
+         OnNewDay(new OnNewDayStart() {
+            DayCount = 0
+         });
+      });
    }
 
    private void OnNewDay(OnNewDayStart e) {

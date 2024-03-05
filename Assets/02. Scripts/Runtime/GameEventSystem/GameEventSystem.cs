@@ -24,6 +24,9 @@ public class GameEventSystem : AbstractSystem, IGameEventSystem {
 	}
 
 	private void OnLevelCountChanged(int oldLevel, int newLevel) {
+		if (oldLevel == newLevel) {
+			return;
+		}
 		eventsToRemoved.Clear();
 		
 		foreach (IGameEvent gameEvent in gameEventModel.GameEvents.Values) {
