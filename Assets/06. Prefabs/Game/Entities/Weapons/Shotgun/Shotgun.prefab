@@ -1586,8 +1586,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
-    type: 3}
   hitVFXSystem: {fileID: 7570269908101100327}
   animator: {fileID: 4616379250365421006}
   reloadAnimationLength: 3
@@ -1597,8 +1595,9 @@ MonoBehaviour:
     adsCameraPosition: {x: -0.01, y: -0.102, z: 0.2}
     adsCameraRotation: {x: 0, y: -3.65, z: 0.08000492}
   bulletVFX:
-  - {fileID: 1287861412996858552}
   - {fileID: 864970247027404768}
+  bulletVFXInHand:
+  - {fileID: 1287861412996858552}
   overrideName: Shotgun
 --- !u!2083052967 &7570269908101100327 stripped
 VisualEffect:

@@ -1515,8 +1515,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
-    type: 3}
   hitVFXSystem: {fileID: 7570269908101100327}
   animator: {fileID: 4898352156591280616}
   reloadAnimationLength: 3
@@ -1526,8 +1524,9 @@ MonoBehaviour:
     adsCameraPosition: {x: 0.00485, y: -0.1, z: 0.27500004}
     adsCameraRotation: {x: 360, y: 357.04, z: 0.08000492}
   bulletVFX:
-  - {fileID: 1287861412996858552}
   - {fileID: 864970247027404768}
+  bulletVFXInHand:
+  - {fileID: 1287861412996858552}
   overrideName: UniversalPistol
 --- !u!4 &2389551386228969467 stripped
 Transform:

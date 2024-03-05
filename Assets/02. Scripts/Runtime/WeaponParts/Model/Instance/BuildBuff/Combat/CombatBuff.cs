@@ -99,6 +99,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		private GameObject pooledBulletIn;
 		private GameObject pooledBulletOut;
 		private GameObject pooledBulletHit;
+		
 		private ResLoader resLoader;
 		
 		public override void OnInitialize() {
@@ -107,6 +108,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			}
 
 			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXIn", null, 3, 10, out GameObject prefab0);
+			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXOut", null, 3, 10, out GameObject prefab2);
 			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("TestExplode", null, 3, 10, out GameObject prefab1);
 			
 			var vc = weaponEntity.GetBoundViewController();
@@ -278,11 +280,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 				return;
 			}
 			
-			//pooledBulletIn = bulletInVFXPool.Allocate();
+			pooledBulletIn = bulletInVFXPool.Allocate();
+			pooledBulletOut = bulletOutVFXPool.Allocate();
 			pooledBulletHit = bulletHitVFXPool.Allocate();
 			_weaponVFX = weaponVFX;
 			_hitScanWeaponVFX = hitScanWeaponVFX;
 			_weaponVFX.SetVFX(pooledBulletHit.GetComponent<VisualEffect>());
+			_hitScanWeaponVFX.SetBulletVFX(new[]{pooledBulletIn.GetComponent<VisualEffect>()}, 
+				new[]{pooledBulletOut.GetComponent<VisualEffect>()});
 			allocated = true;
 		}
 
@@ -290,9 +295,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		{
 			allocated = false;
 			_weaponVFX.ResetVFX();
-			//_hitScanWeaponVFX.ResetHitVFX();
-			//pooledBulletIn.transform.parent = bulletInVFXPool.transform;
-			//bulletInVFXPool.Recycle(pooledBulletIn);
+			_hitScanWeaponVFX.ResetBulletVFX();
+			
+			pooledBulletIn.transform.parent = bulletInVFXPool.transform;
+			bulletInVFXPool.Recycle(pooledBulletIn);
+			
+			pooledBulletOut.transform.parent = bulletOutVFXPool.transform;
+			bulletOutVFXPool.Recycle(pooledBulletOut);
 
 			pooledBulletHit.transform.parent = bulletHitVFXPool.transform;
 			bulletHitVFXPool.Recycle(pooledBulletHit);

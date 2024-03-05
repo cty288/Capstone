@@ -31,7 +31,12 @@ namespace Runtime.Utilities.Collision
         private TrailRenderer _tr;
         private ObjectPool<TrailRenderer> trailPool;
 
-        private List<VisualEffect> _vfx;
+        public VisualEffect[] VFX
+        {
+            get => _vfx;
+            set => _vfx = value;
+        }
+        private VisualEffect[] _vfx;
         
         
         public GameObject bulletHoleDecal;
@@ -68,7 +73,7 @@ namespace Runtime.Utilities.Collision
             bulletHoleDecal = this.GetUtility<ResLoader>().LoadSync<GameObject>("BulletHoleDecal");
         }
         
-        public HitScan(IHitResponder hitResponder, Faction faction, List<VisualEffect> vfx, Camera fpsCam, bool showDamageNumber = true)
+        public HitScan(IHitResponder hitResponder, Faction faction, VisualEffect[] vfx, Camera fpsCam, bool showDamageNumber = true)
         {
             this.hitResponder = hitResponder;
             CurrentFaction.Value = faction;
@@ -346,20 +351,9 @@ namespace Runtime.Utilities.Collision
             return GameObject.Instantiate(bulletHoleDecal);;
         }
 
-        public bool SetVFXAssets(VisualEffect[] vfxs)
+        public bool SetVFX(VisualEffect vfx, int i)
         {
-            // Validate VFX list is consistent with assumed count
-            if (_vfx.Count < IHitScanWeaponVFX.BULLET_VFX_COUNT)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < IHitScanWeaponVFX.BULLET_VFX_COUNT; i++)
-            {
-                //TODO
-                _vfx[i] = vfxs[i];
-            }
-            
+            _vfx[i] = vfx;
             return true;
         }
 

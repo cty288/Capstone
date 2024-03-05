@@ -473,10 +473,10 @@ namespace Runtime.Weapons.ViewControllers.Base
         {
             var t = vfx.transform;
             t.parent = hitVFXSystem.transform;
-            t.position = Vector3.zero;
-            t.rotation = Quaternion.identity;
+            t.localPosition = Vector3.zero;
+            t.localRotation = Quaternion.identity;
             t.localScale = Vector3.one;
-
+            
             hitVFXSystem = vfx;
         }
 

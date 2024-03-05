@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: eb2e3c7d414bb3042b9542a93ae08cc1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eb2e3c7d414bb3042b9542a93ae08cc1,
         type: 3}
@@ -1333,12 +1333,6 @@ PrefabInstance:
     - {fileID: 7346266419895321896, guid: c6400bebfea407e45af2aa63a341365f, type: 3}
     - {fileID: 2784581043173634225, guid: c6400bebfea407e45af2aa63a341365f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c6400bebfea407e45af2aa63a341365f, type: 3}
---- !u!2083052967 &864970247027404768 stripped
-VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 4786992204249495899, guid: c6400bebfea407e45af2aa63a341365f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5651504985171777211}
-  m_PrefabAsset: {fileID: 0}
 --- !u!2083052967 &1287861412996858552 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 6895374929032582147, guid: c6400bebfea407e45af2aa63a341365f,
@@ -1400,17 +1394,17 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
   - includeChildren: 1
-    ownerGameObject: {fileID: 5813153945547683118}
+    ownerGameObject: {fileID: 0}
     originalLayer:
       serializedVersion: 2
       m_Bits: 0
   - includeChildren: 1
-    ownerGameObject: {fileID: 7628581825884564576}
+    ownerGameObject: {fileID: 0}
     originalLayer:
       serializedVersion: 2
       m_Bits: 0
   - includeChildren: 1
-    ownerGameObject: {fileID: 2794142419374327900}
+    ownerGameObject: {fileID: 0}
     originalLayer:
       serializedVersion: 2
       m_Bits: 0
@@ -1437,11 +1431,10 @@ MonoBehaviour:
   crossHairPrefabName: DefaultCrossHair
   model: {fileID: 8398458644937393783}
   autoReload: 1
+  canScope: 1
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
-    type: 3}
   hitVFXSystem: {fileID: 7570269908101100327}
   animator: {fileID: 4898352156591280616}
   reloadAnimationLength: 3
@@ -1452,29 +1445,12 @@ MonoBehaviour:
     adsCameraRotation: {x: 358.99002, y: 357.04, z: 0.08000492}
   bulletVFX:
   - {fileID: 1287861412996858552}
-  - {fileID: 864970247027404768}
+  bulletVFXInHand:
+  - {fileID: 1287861412996858552}
   overrideName: Rifle
---- !u!1 &2794142419374327900 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7541528740236041959, guid: c6400bebfea407e45af2aa63a341365f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5651504985171777211}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5813153945547683118 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2216427843909641109, guid: c6400bebfea407e45af2aa63a341365f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5651504985171777211}
-  m_PrefabAsset: {fileID: 0}
 --- !u!2083052967 &7570269908101100327 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5651504985171777211}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7628581825884564576 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2859793562509966043, guid: c6400bebfea407e45af2aa63a341365f,
     type: 3}
   m_PrefabInstance: {fileID: 5651504985171777211}
   m_PrefabAsset: {fileID: 0}

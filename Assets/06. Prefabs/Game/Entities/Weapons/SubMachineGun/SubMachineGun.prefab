@@ -171,8 +171,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
-    type: 3}
   hitVFXSystem: {fileID: 7570269908101100327}
   animator: {fileID: 7593380422757932526}
   reloadAnimationLength: 3
@@ -182,8 +180,9 @@ MonoBehaviour:
     adsCameraPosition: {x: 0.004, y: -0.098, z: 0.2}
     adsCameraRotation: {x: 2, y: -2, z: 0}
   bulletVFX:
-  - {fileID: 1287861412996858552}
   - {fileID: 864970247027404768}
+  bulletVFXInHand:
+  - {fileID: 1287861412996858552}
   overrideName: SubMachineGun
 --- !u!54 &6403576476045910971
 Rigidbody:

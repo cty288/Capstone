@@ -45,7 +45,7 @@ public class TurretShoot : Action {
         shootLastTimer = 0;
         turretEntity = GetComponent<TurretViewController>().Entity;
 
-        hitScan = new HitScan(turretEntity, Faction.Friendly, new List<VisualEffect>(bulletVFX), null, true);
+        hitScan = new HitScan(turretEntity, Faction.Friendly, bulletVFX, null, true);
         animator.SetBool("isShooting", true);
 
     }
