@@ -8,6 +8,7 @@ using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -18,6 +19,7 @@ using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
@@ -133,6 +135,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 	
 	public class MineralBuff : WeaponBuildBuff<MineralBuff>, ICanGetSystem {
 		[field: ES3Serializable] public override float TickInterval { get; protected set; } = -1;
+
+		protected SafeGameObjectPool empAOEVFXPool;
+		
 		public override void OnInitialize() {
 			if (weaponEntity == null) {
 				return;
@@ -142,9 +147,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPIn", null, 3, 10, out GameObject prefab0);
 			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPOut", null, 3, 10, out GameObject prefab2);
 			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPExplode", null, 3, 10, out GameObject prefab1);
+			empAOEVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPAOE", null, 3, 10, out GameObject prefab3);
+
 			
 			var vc = weaponEntity.GetBoundViewController();
 			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
+			AllocateAOE();
 			
 			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
 			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
@@ -237,6 +245,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			
 			LayerMask mask = LayerMask.GetMask("Default");
 			Collider[] colliders = Physics.OverlapSphere(transform.position, range, mask);
+
+			if (EMPAOE != null)
+			{
+				//DO AOE
+				EMPAOE.SetFloat("Range", range);
+				EMPAOE.SetVector3("StartPosition", transform.position);
+				EMPAOE.Play();
+			}
 			
 			foreach (var collider in colliders) {
 				if(!collider.attachedRigidbody) continue;
@@ -333,8 +349,25 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			
 			return hit;
 		}
+
+		protected GameObject pooledEMPAOE;
+		private VisualEffect EMPAOE;
 		
-		
+		public void AllocateAOE()
+		{
+			if (EMPAOE == null)
+			{
+				pooledEMPAOE = empAOEVFXPool.Allocate();
+				EMPAOE = pooledEMPAOE.GetComponent<VisualEffect>();
+			}
+		}
+
+		public void DeallocateAOE()
+		{
+			pooledEMPAOE.transform.parent = empAOEVFXPool.transform;
+			empAOEVFXPool.Recycle(pooledEMPAOE);
+			EMPAOE = null;
+		}
 
 		public override void OnStart() {
 			
@@ -360,6 +393,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			base.OnRecycled();
 			if (weaponEntity != null) {
 				DeallocateBuffVFX();
+				DeallocateAOE();
 				weaponEntity.UnRegisterOnModifyHitData(OnWeaponModifyHitData);
 				weaponEntity.UnRegisterOnModifyHitData(OnModifyHitData);
 			}
