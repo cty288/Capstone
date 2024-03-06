@@ -99,6 +99,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 			{
 				return;
 			}
+
+			if (weaponVFX == null || hitScanWeaponVFX == null)
+			{
+				return;
+			}
 			
 			pooledBulletIn = bulletInVFXPool.Allocate();
 			pooledBulletOut = bulletOutVFXPool.Allocate();

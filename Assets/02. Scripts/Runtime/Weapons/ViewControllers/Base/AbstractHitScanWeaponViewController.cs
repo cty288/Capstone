@@ -106,6 +106,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             //Debug.Log("AbstractHitScanWeaponViewController HitResponse");
             hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
             hitVFXSystem.SetVector3("HitNormal", data.HitNormal);
+            hitVFXSystem.SetVector3("HitDir", data.HitDirectionNormalized);
             hitVFXSystem.Play();
         }
     }
