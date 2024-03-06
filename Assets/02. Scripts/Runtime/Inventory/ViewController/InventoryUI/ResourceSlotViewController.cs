@@ -464,7 +464,7 @@ namespace Runtime.Inventory.ViewController {
                 }
                 
                 currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                    InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
+                    InventorySpriteFactory.Singleton.GetSprite(topItem), !isRightSide, rarityLevel,
                     ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
                 topItem.GetResourcePropertyDescriptions(),useCost,currencyType);
                 
@@ -607,7 +607,7 @@ namespace Runtime.Inventory.ViewController {
                     
                     
                     currentDescriptionPanel.SetContent(topItem.GetDisplayName(), topItem.GetDescription(),
-                        InventorySpriteFactory.Singleton.GetSprite(topItem.EntityName), !isRightSide, rarityLevel,
+                        InventorySpriteFactory.Singleton.GetSprite(topItem), !isRightSide, rarityLevel,
                         ResourceVCFactory.GetLocalizedResourceCategory(topItem.GetResourceCategory()),
                         topItem.GetResourcePropertyDescriptions(), useCost, currencyType);
                     currentDescriptionPanel.Show();

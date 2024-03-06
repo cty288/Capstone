@@ -264,7 +264,7 @@ public class ResourcePreviewPanel : AbstractMikroController<MainGame>
 	private void SetDescriptionPanel(IResourceEntity resourceEntity, 
 		int rarity, Dictionary<CurrencyType,int> skillUseCost, CurrencyType? currencyType) {
 		
-		descriptionIcon.sprite = InventorySpriteFactory.Singleton.GetSprite(resourceEntity.EntityName);
+		descriptionIcon.sprite = InventorySpriteFactory.Singleton.GetSprite(resourceEntity);
 		itemNameText.text = resourceEntity.GetDisplayName();
 		descriptionText.text = resourceEntity.GetDescription();
 		
