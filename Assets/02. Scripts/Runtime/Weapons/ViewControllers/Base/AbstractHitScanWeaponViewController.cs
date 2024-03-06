@@ -103,7 +103,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         public override void HitResponse(HitData data) {
-            Debug.Log("AbstractHitScanWeaponViewController HitResponse");
+            //Debug.Log("AbstractHitScanWeaponViewController HitResponse");
             hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
             hitVFXSystem.SetVector3("HitNormal", data.HitNormal);
             hitVFXSystem.Play();

@@ -218,6 +218,19 @@ namespace Runtime.Utilities.Collision
                         CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, new RaycastHit()));
                     else 
                         PlayBulletVFX(_launchPoint.position, hit.point);
+                    
+                    // Bullet VFX
+                    hitData = new HitData();
+                    hitData.HitNormal = hit.normal;
+                    hitData.HitPoint = hit.point;
+                    if (overridenDirection != default) {
+                        hitData.HitDirectionNormalized = Vector3.Normalize(overridenDirection + offset);
+                    }
+                    else {
+                        hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
+                    }
+                    hitResponder.HitResponse(hitData);
+                    
                     float positionMultiplier = 0.2f;
                     float spawnX = hit.point.x - hit.normal.x * positionMultiplier;
                     float spawnY = hit.point.y - hit.normal.y * positionMultiplier;
