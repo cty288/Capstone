@@ -171,20 +171,23 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	}
 	
 	private void OnEnterButtonClicked() {
-		canClose = true;
-		List<PreparationSlot> slots = weaponSlotLayout.OnUIClosed();
-		foreach (PreparationSlot slot in slots) {
-			inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Weapon, slot);
-		}
+		LoadingCanvas.Singleton.Show(() => {
+			canClose = true;
+			List<PreparationSlot> slots = weaponSlotLayout.OnUIClosed();
+			foreach (PreparationSlot slot in slots) {
+				inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Weapon, slot);
+			}
 
-		slots = skillSlotLayout.OnUIClosed();
-		foreach (PreparationSlot slot in slots) {
-			inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Skill, slot);
-		}
+			slots = skillSlotLayout.OnUIClosed();
+			foreach (PreparationSlot slot in slots) {
+				inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Skill, slot);
+			}
 
-		MainUI.Singleton.GetAndClose(this);
-
-		this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
+			
+			MainUI.Singleton.GetAndClose(this);
+			this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
+		});
+		
 	}
 
 	public IPanel GetClosePanel() {

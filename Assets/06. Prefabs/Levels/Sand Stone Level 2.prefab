@@ -12196,12 +12196,62 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  maxEnemiesPerArea: 20
+  maxEnemiesPerArea: 25
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 1533547333141084678}
-  enemySpawnCardConfigs: []
+  enemySpawnCardConfigs:
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
+        type: 3}
+      variants:
+      - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
+      - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
   maxSpawnPerEnemy:
-    _serializedList: []
+    _serializedList:
+    - Key: HunterWorm
+      Value: 8
+    - Key: SurveillanceDrone
+      Value: 5
+    - Key: QuadrupedCarrier
+      Value: 3
+    - Key: SpineWheel
+      Value: 4
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -26639,12 +26689,53 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  maxEnemiesPerArea: 20
+  maxEnemiesPerArea: 25
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 7518815705803485129}
-  enemySpawnCardConfigs: []
+  enemySpawnCardConfigs:
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+        type: 3}
+      variants: []
+      minRarity: 3
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
   maxSpawnPerEnemy:
-    _serializedList: []
+    _serializedList:
+    - Key: SurveillanceDrone
+      Value: 8
+    - Key: QuadrupedCarrier
+      Value: 7
+    - Key: HunterWorm
+      Value: 5
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -31433,12 +31524,58 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  maxEnemiesPerArea: 20
+  maxEnemiesPerArea: 25
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 1150315226522254986}
-  enemySpawnCardConfigs: []
+  enemySpawnCardConfigs:
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
   maxSpawnPerEnemy:
-    _serializedList: []
+    _serializedList:
+    - Key: SpineWheel
+      Value: 9
+    - Key: SurveillanceDrone
+      Value: 7
+    - Key: QuadrupedCarrier
+      Value: 4
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -34175,9 +34312,51 @@ MonoBehaviour:
   maxEnemiesPerArea: 20
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 3040550545555058686}
-  enemySpawnCardConfigs: []
+  enemySpawnCardConfigs:
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
+        type: 3}
+      variants:
+      - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
+      - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
+      minRarity: 3
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 6967187042783065215, guid: 47b5a224e7ebd4344a17feca51dd4809,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
   maxSpawnPerEnemy:
-    _serializedList: []
+    _serializedList:
+    - Key: HunterWorm
+      Value: 7
+    - Key: SurveillanceDrone
+      Value: 4
+    - Key: SpineWheel
+      Value: 4
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -45897,7 +46076,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3038
+  m_VersionIndex: 3119
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -57056,12 +57235,72 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  maxEnemiesPerArea: 20
+  maxEnemiesPerArea: 25
   areaSpawningCooldown: 360
   subAreaLevelModifier: {fileID: 5729297349475455337}
-  enemySpawnCardConfigs: []
+  enemySpawnCardConfigs:
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4375213961583378700, guid: b046f414c85bd88468a08e36eb8e06d1,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 3
+      maxRarity: 3
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+        type: 3}
+      variants:
+      - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
+      - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
+      minRarity: 2
+      maxRarity: 2
+  - enemySpawnInfos:
+    - mainPrefab: {fileID: 8049880895992306662, guid: 4294a4df553aa9c4d81443b91b164d45,
+        type: 3}
+      variants: []
+      minRarity: 2
+      maxRarity: 2
+    - mainPrefab: {fileID: 4365253178528624396, guid: 2f44617f6f212e64cbe0099b26f12444,
+        type: 3}
+      variants:
+      - {fileID: 6967187042783065215, guid: 58aa7654fc364e644bef4f03c8f7cbf0, type: 3}
+      - {fileID: 6967187042783065215, guid: 3be0063985b19da4ab9356b9b991e00b, type: 3}
+      minRarity: 2
+      maxRarity: 2
   maxSpawnPerEnemy:
-    _serializedList: []
+    _serializedList:
+    - Key: SpineWheel
+      Value: 6
+    - Key: SurveillanceDrone
+      Value: 10
+    - Key: QuadrupedCarrier
+      Value: 4
   totalEnemyCount: 0
   totalEnemiesSpawned: 0
   isActive: 1
@@ -57147,7 +57386,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 19938
+  m_VersionIndex: 20019
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

@@ -14,6 +14,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
 using Runtime.Inventory;
 using Runtime.Inventory.Model;
+using Runtime.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -116,6 +117,7 @@ public class ResourcePreviewPanel : AbstractMikroController<MainGame>
 	    if (!inited) {
 		    Awake();
 	    }
+	   
 	    detailPanel.gameObject.SetActive(true);
 	    ClearDescriptionPanel();
 	    foreach (Transform obj in previewRarityBar) {

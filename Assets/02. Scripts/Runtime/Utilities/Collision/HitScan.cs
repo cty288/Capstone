@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.ResKit;
@@ -20,6 +21,8 @@ using UnityEngine.VFX;
 
 namespace Runtime.Utilities.Collision
 {
+
+    
     /// <summary>
     /// HitScan checks for collision using Raycast.
     /// </summary>

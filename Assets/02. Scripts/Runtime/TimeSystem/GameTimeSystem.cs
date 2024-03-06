@@ -36,6 +36,9 @@ namespace _02._Scripts.Runtime.TimeSystem {
 		}
 
 		private void OnLevelCountChanged(int previousLevelNum, int currentLevelNum) {
+			if (previousLevelNum == currentLevelNum) {
+				return;
+			}
 			if (previousLevelNum == 0) {
 				this.SendEvent<OnNewDayStart>(new OnNewDayStart() {
 					DayCount = 1

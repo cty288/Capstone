@@ -30,7 +30,10 @@ public class NextLevelDoor : AbstractMikroController<MainGame> {
 				return;
 			}
 			if (goToNextLevelByDefault) {
-				this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
+				LoadingCanvas.Singleton.Show(() => {
+					this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
+				});
+				
 			}
 			else {
 				MainUI.Singleton.OpenOrGetClose<ExitDoorUI>(MainUI.Singleton, null, false);

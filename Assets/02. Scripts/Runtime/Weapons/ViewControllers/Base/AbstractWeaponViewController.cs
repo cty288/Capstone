@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
@@ -125,6 +126,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected string shootSoundName;
         protected string reloadStartSoundName;
         protected string reloadFinishSoundName;
+        protected float adsChangeDuration = 0.167f; //time is from arms animation
         
         #region Initialization
         protected override void Awake() {
@@ -197,6 +199,8 @@ namespace Runtime.Weapons.ViewControllers.Base
                     if (IsScopedIn)
                     {
                         ChangeScopeStatus(false);
+                        fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+                        fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
                     }
                     
                     StartCoroutine(ReloadAnimation());
@@ -205,8 +209,8 @@ namespace Runtime.Weapons.ViewControllers.Base
                 if(playerActions.SprintHold.WasPerformedThisFrame() && IsScopedIn)
                 {
                     ChangeScopeStatus(false);
-                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
+                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
                 }
             }
         }
@@ -259,10 +263,17 @@ namespace Runtime.Weapons.ViewControllers.Base
                 BoundEntity.SetOwner(damageDealer);
             }*/
             
-            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
+            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
             
             if(BoundEntity.CurrentAmmo == 0 && autoReload && !WeaponEntity.IsLocked) {
+                if (IsScopedIn)
+                {
+                    ChangeScopeStatus(false);
+                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+                }
+                
                 StartCoroutine(ReloadAnimation());
             }
         }
@@ -273,6 +284,8 @@ namespace Runtime.Weapons.ViewControllers.Base
            // BoundEntity.SetOwner(null);
             base.OnStopHold();
             ChangeScopeStatus(false);
+            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
         }
         #endregion
 
@@ -373,7 +386,14 @@ namespace Runtime.Weapons.ViewControllers.Base
                 if (autoReload && BoundEntity.CurrentAmmo <= 0 && !WeaponEntity.IsLocked)
                 {
                     SetShoot(false);
-                    ChangeReloadStatus(true);
+                    
+                    if (IsScopedIn)
+                    {
+                        ChangeScopeStatus(false);
+                        fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+                        fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+                    }
+                    
                     StartCoroutine(ReloadAnimation());
                 }
             }
@@ -387,16 +407,16 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (isReloading || playerModel.IsPlayerSprinting()) {
                 return;
             }
+            
             if (IsScopedIn) {
                 ChangeScopeStatus(false);
-                //time is from animation
-                fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-                fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
+                fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+                fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
             }
             else {
                 ChangeScopeStatus(true);
-                fpsCamera.transform.DOLocalMove(cameraPlacementData.adsCameraPosition, 0.167f);
-                fpsCamera.transform.DOLocalRotate(cameraPlacementData.adsCameraRotation, 0.167f);
+                fpsCamera.transform.DOLocalMove(cameraPlacementData.adsCameraPosition, adsChangeDuration);
+                fpsCamera.transform.DOLocalRotate(cameraPlacementData.adsCameraRotation, adsChangeDuration);
             }
         }
         
@@ -457,8 +477,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         public override void OnRecycled() {
             WeaponEntity.SetBoundViewController(null);
             base.OnRecycled();
-            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, 0.167f);
-            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, 0.167f);
+            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);
             OnModifyDamageCountCallbackList.Clear();

@@ -135,7 +135,7 @@ namespace Runtime.UI {
 		}
 		
 		protected IPanel GetToClosePanel(IPanel panel) {
-			if (panel == null) {
+			if (panel == null || LoadingCanvas.Singleton.IsLoading) {
 				return null;
 			}
 			

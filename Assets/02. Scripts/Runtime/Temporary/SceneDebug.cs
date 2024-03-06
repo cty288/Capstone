@@ -12,7 +12,10 @@ using _02._Scripts.Runtime.Skills.Model.Instance;
 using _02._Scripts.Runtime.TimeSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using Framework;
+using MikroFramework;
+using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using Runtime.DataFramework.Entities;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
@@ -103,6 +106,17 @@ namespace Runtime.Temporary
                     int minRarity = resource.TemplateEntity is IBuildableResourceEntity resourceEntity      
                         ? resourceEntity.GetMinRarity()
                         : 1;
+
+
+                    AudioSource source = null;
+                    
+                    Sequence.Allocate().AddAction(CallbackAction.Allocate(() => {
+                        source = AudioSystem.Singleton.Play2DSound("ddd");
+                    })).AddAction(UntilAction.Allocate((() => !source.isPlaying))).AddAction(CallbackAction.Allocate(
+                        () => {
+                            AudioSystem.Singleton.Play2DSound("ddd");
+                        })).Execute();
+                   
                     
                     IResourceEntity entity = resource.EntityCreater.Invoke(true, minRarity);
                     inventorySystem.AddItem(entity);
@@ -130,6 +144,11 @@ namespace Runtime.Temporary
 
             if (Input.GetKeyDown(KeyCode.N)) {
                 this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
+            }
+
+            if (Input.GetKey(KeyCode.O)) {
+                //ES3.dele
+                ((MainGame)MainGame.Interface).ClearSave();
             }
         }
     }
