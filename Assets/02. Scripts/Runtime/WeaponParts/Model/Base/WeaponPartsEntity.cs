@@ -90,6 +90,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 
 		public abstract WeaponPartType WeaponPartType { get; }
 
+		public override string GetIconName() {
+			return $"{WeaponPartType.ToString()}_{buildType.RealValue.Value.ToString()}_Icon";
+		}
+
 
 		public IWeaponPartsBuff OnGetBuff(IWeaponEntity weaponEntity) {
 			return WeaponPartsBuff<T, TBuffType>.CreateBuff(this, weaponEntity);

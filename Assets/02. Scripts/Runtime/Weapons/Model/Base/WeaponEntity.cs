@@ -179,7 +179,7 @@ namespace Runtime.Weapons.Model.Base
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
 
         [field: ES3Serializable]
-        private Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>> weaponParts = new Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>>();
+        protected Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>> weaponParts = new Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>>();
 
         //private Action<string, string> onWeaponPartsUpdate;
         private Action<IDamageable, int> onDealDamage;
@@ -577,7 +577,7 @@ namespace Runtime.Weapons.Model.Base
             if (!onModifyValueEventCallbacks.ContainsKey(type)) {
                 onModifyValueEventCallbacks.Add(type, new FuncRegisterations<TEventType>());
             }
-
+            
 
             FuncRegisterations<TEventType> registerations =
                 onModifyValueEventCallbacks[type] as FuncRegisterations<TEventType>;
@@ -605,6 +605,7 @@ namespace Runtime.Weapons.Model.Base
 
         public void RegisterOnUseAmmo(Action<int> callback) {
             _onUseAmmoCallback += callback;
+            
         }
 
         public void UnRegisterOnUseAmmo(Action<int> callback) {

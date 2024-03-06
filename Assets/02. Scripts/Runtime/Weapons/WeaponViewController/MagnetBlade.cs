@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using DG.Tweening;
 using MikroFramework;
 using MikroFramework.AudioKit;
@@ -9,6 +11,7 @@ using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.Inventory.Model;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -30,7 +33,16 @@ namespace Runtime.Weapons
         public override void OnRecycle()
         {
         }
-        
+
+        protected override void InitWeaponPartsSlots() {
+            foreach (var t in Enum.GetValues(typeof(WeaponPartType))) {
+                WeaponPartType weaponPartType = (WeaponPartType) t;
+                if(weaponParts.ContainsKey(weaponPartType)) continue;
+                weaponParts.Add(weaponPartType, new HashSet<WeaponPartsSlot>());
+                
+            }
+        }
+
         protected override string OnGetDescription(string defaultLocalizationKey) {
             return Localization.Get(defaultLocalizationKey);
         }

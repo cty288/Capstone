@@ -52,7 +52,11 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		protected override void OnInit() {
 			base.OnInit();
+			
 			foreach (ILevelEntity levelEntity in entities.Values) {
+				if (levelEntity.GetCurrentLevelCount() == 0 && levelEntity is not BaseLevelEntity) {
+					continue;
+				}
 				levelEntities.Add(levelEntity.GetCurrentLevelCount(), levelEntity);
 			}
 		}
@@ -130,7 +134,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 
 		[field: ES3Serializable]
-		public bool StartWithTutorial { get; set; } = false;
+		public bool StartWithTutorial { get; set; } = true;
 
 		public bool IsInBase() {
 			return  CurrentLevel.Value is BaseLevelEntity;

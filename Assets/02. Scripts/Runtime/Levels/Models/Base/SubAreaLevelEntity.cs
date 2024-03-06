@@ -121,12 +121,22 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		public void IncrementEnemyCountDictionary(string name)
 		{
-			enemyCount[name]++;
+			if (enemyCount.ContainsKey(name)) {
+				enemyCount[name]++;
+			}
+			else {
+				enemyCount.TryAdd(name, 1);
+			}
+				
 		}
 
-		public void DecrementEnemyCountDictionary(string name)
-		{
-			enemyCount[name]--;
+		public void DecrementEnemyCountDictionary(string name) {
+			if (enemyCount.ContainsKey(name)) {
+				enemyCount[name]--;
+			}
+			else {
+				enemyCount.TryAdd(name, 0);
+			}
 		}
 
 		public void ClearEnemyCountDictionary()
