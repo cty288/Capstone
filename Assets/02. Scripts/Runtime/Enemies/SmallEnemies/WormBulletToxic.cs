@@ -47,10 +47,7 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
                 particleInstance.transform.position = (hitPoint);
                 particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
                 
-                particleInstance.GetComponent<IExplosionViewController>().Init(overrideExplosionFaction
-                        ? CurrentFaction.Value
-                        : Faction.Explosion, 20, 1, gameObject,
-                    this);
+             
             }
         }
 
