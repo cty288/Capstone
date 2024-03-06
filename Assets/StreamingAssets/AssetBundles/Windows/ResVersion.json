@@ -3,26 +3,46 @@
   "ABMD5List": [
     {
       "AssetName": "audios",
-      "MD5": "749949f62446cc99de731174c734ec59",
-      "FileSize": 4418.25,
+      "MD5": "daa305a4ee0d7dc17ccb63a723a5c184",
+      "FileSize": 5455.091,
       "assetDatas": [
         {
-          "Name": "Player_Land",
+          "Name": "death",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
         },
         {
-          "Name": "slide (1)",
+          "Name": "jump_land",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
         },
         {
-          "Name": "slide (2)",
+          "Name": "low_health",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
         },
         {
-          "Name": "slide_3",
+          "Name": "slide_end",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "slide_loop",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "slide_start",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "take_damage_armor",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "take_damage_flesh",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
         },
@@ -87,12 +107,67 @@
           "AssetType": "UnityEngine.AudioClip"
         },
         {
+          "Name": "activate_pillar",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
           "Name": "Default_Ambient",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
         },
         {
           "Name": "Sandstorm Ambient",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "arrow_click",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "close_menu",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "discard",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "interact_button",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "item_deselect",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "item_hover",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "item_select",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "no_interact_button",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "open_menu",
+          "OwnerBundleName": "audios",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "slot_item",
           "OwnerBundleName": "audios",
           "AssetType": "UnityEngine.AudioClip"
         },
@@ -1516,9 +1591,96 @@
       ]
     },
     {
+      "AssetName": "vfx",
+      "MD5": "3120d53cde0d60c38a0b657109c0d7b4",
+      "FileSize": 2052.6377,
+      "assetDatas": [
+        {
+          "Name": "EMPAOE",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "EMPExplode",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "EMPIn",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "EMPOut",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ShreddingExplode",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ShreddingIn",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ShreddingOut",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestExplode",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "testGunVFXIn",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "testGunVFXOut",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TimeExplode",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TimeIn",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TimeOut",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ViralExplode",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ViralIn",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "ViralOut",
+          "OwnerBundleName": "vfx",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
       "AssetName": "Windows",
-      "MD5": "9062a5da3dfb737c45e560d0b0584cad",
-      "FileSize": 2.131836,
+      "MD5": "de99a63e1ce6e8864e459c65d006b46f",
+      "FileSize": 2.16015625,
       "assetDatas": []
     },
     {
@@ -1590,8 +1752,8 @@
     },
     {
       "AssetName": "assets/goods_inventory",
-      "MD5": "b255150d2e0cf7ed3dea583811b3ce96",
-      "FileSize": 29.796875,
+      "MD5": "abf3cd285f8c86dcce00da1e2138a447",
+      "FileSize": 34.5039063,
       "assetDatas": [
         {
           "Name": "Combat1_Icon",
@@ -1674,6 +1836,66 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
+          "Name": "Attachment_Combat_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Attachment_Mineral_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Attachment_Plant_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Attachment_Time_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Barrel_Combat_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Barrel_Mineral_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Barrel_Plant_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Barrel_Time_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Magazine_Combat_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Magazine_Mineral_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Magazine_Plant_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Magazine_Time_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
           "Name": "MagnetBlade_Icon",
           "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
@@ -1734,8 +1956,8 @@
     },
     {
       "AssetName": "entities/resources",
-      "MD5": "f386508b60447a3323d992a899f3884c",
-      "FileSize": 65399.4727,
+      "MD5": "eecaaaac362aa271fcec7612109c4ff3",
+      "FileSize": 65399.6875,
       "assetDatas": [
         {
           "Name": "Bait",
@@ -2321,8 +2543,8 @@
     },
     {
       "AssetName": "entities/resources_inventory",
-      "MD5": "497ea8da727c9a91a63750c0575c3a8c",
-      "FileSize": 1465.03418,
+      "MD5": "ef0c1913b04c268a918a9890c8329511",
+      "FileSize": 1595.98926,
       "assetDatas": [
         {
           "Name": "ResourceInvAtlas",
