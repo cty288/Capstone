@@ -36,7 +36,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			
 			buildModel = this.GetModel<IResourceBuildModel>();
 			if (buildModel.IsFirstTimeCreated) {
-				buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "Shotgun", false);
+				/*buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "Shotgun", false);
 				buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "Multivirus", false);
 				buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "FatesEdgeBarrel", false);
 				buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "LongBarrel", false);
@@ -44,7 +44,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 				buildModel.UnlockBuild(ResearchCategory.Skill, "TenaciousBodySkill", false);
 				buildModel.UnlockBuild(ResearchCategory.Skill, "HighEndTechnologySkill", false);
 				buildModel.UnlockBuild(ResearchCategory.Skill, "AdrenalineSkill", false);
-				buildModel.UnlockBuild(ResearchCategory.Skill, "TurretSkill", false);
+				buildModel.UnlockBuild(ResearchCategory.Skill, "TurretSkill", false);*/
 				//buildModel.UnlockBuild(ResearchCategory.Skill, "MedicalNeedleSkill", false);
 				foreach (string skillName in initiallyUnlockedPartsNames) {
 					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
