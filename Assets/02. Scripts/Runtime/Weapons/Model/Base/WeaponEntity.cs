@@ -179,7 +179,7 @@ namespace Runtime.Weapons.Model.Base
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
 
         [field: ES3Serializable]
-        private Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>> weaponParts = new Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>>();
+        protected Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>> weaponParts = new Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>>();
 
         //private Action<string, string> onWeaponPartsUpdate;
         private Action<IDamageable, int> onDealDamage;

@@ -100,24 +100,12 @@ namespace Runtime.Temporary
                 inventoryModel.AddSlots(100, out int addedCount);
                 
                 IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
-                var resources = ResourceTemplates.Singleton.GetResourceTemplates((entity) => entity.GetResourceCategory() == ResourceCategory.WeaponParts
-                || entity.GetResourceCategory() == ResourceCategory.Skill);
+                var resources = ResourceTemplates.Singleton.GetResourceTemplates((entity) =>
+                    entity.GetResourceCategory() == ResourceCategory.WeaponParts && entity.Collectable);
                 foreach (var resource in resources) {
                     int minRarity = resource.TemplateEntity is IBuildableResourceEntity resourceEntity      
                         ? resourceEntity.GetMinRarity()
                         : 1;
-
-
-                    AudioSource source = null;
-                    
-                    Sequence.Allocate().AddAction(CallbackAction.Allocate(() => {
-                        source = AudioSystem.Singleton.Play2DSound("ddd");
-                    })).AddAction(UntilAction.Allocate((() => !source.isPlaying))).AddAction(CallbackAction.Allocate(
-                        () => {
-                            AudioSystem.Singleton.Play2DSound("ddd");
-                        })).Execute();
-                   
-                    
                     IResourceEntity entity = resource.EntityCreater.Invoke(true, minRarity);
                     inventorySystem.AddItem(entity);
                 }
@@ -140,6 +128,53 @@ namespace Runtime.Temporary
                     sb.AppendLine($"Entity Name: {entity.EntityName}, Display Name: {entity.GetDisplayName()}");
                 }
                 Debug.Log(sb.ToString());
+            }
+            
+            
+            if (Input.GetKeyDown(KeyCode.Keypad6)) {
+                var weapons = 
+                    ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.Weapon,
+                         (r)=> r.Collectable);
+                
+                
+                IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+                
+                
+                foreach (var weapon in weapons) {
+                    IResourceEntity entity = weapon.EntityCreater.Invoke(true, 1);
+                    inventorySystem.AddItem(entity);
+                }
+            }
+            
+            
+            if (Input.GetKeyDown(KeyCode.Keypad7)) {
+                var weapons = 
+                    ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.Skill,
+                        (r)=> r.Collectable);
+                
+                
+                IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+                
+                
+                foreach (var weapon in weapons) {
+                    IResourceEntity entity = weapon.EntityCreater.Invoke(true, 1);
+                    inventorySystem.AddItem(entity);
+                }
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Keypad8)) {
+                var weapons = 
+                    ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.RawMaterial,
+                        (r)=> r.Collectable);
+                
+                
+                IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+                
+                
+                foreach (var weapon in weapons) {
+                    IResourceEntity entity = weapon.EntityCreater.Invoke(true, 1);
+                    inventorySystem.AddItem(entity);
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.N)) {

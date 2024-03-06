@@ -84,6 +84,8 @@ namespace Runtime.GameResources.Model.Base {
 		
 		public  IRarityProperty GetRarityProperty();
 		void OnInventorySlotUpdate(ResourceSlot previousSlot, ResourceSlot newSlot);
+
+		public string GetIconName();
 	}
 	
 
@@ -120,6 +122,10 @@ namespace Runtime.GameResources.Model.Base {
 
 		public virtual void OnInventorySlotUpdate(ResourceSlot previousSlot, ResourceSlot newSlot) {
 			
+		}
+
+		public virtual string GetIconName() {
+			return $"{EntityName}_Icon";
 		}
 
 		[field: ES3Serializable]

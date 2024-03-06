@@ -101,7 +101,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Base {
 		}
 
 		protected override void OnEntityStart() {
-			icon.sprite = InventorySpriteFactory.Singleton.GetSprite(BoundEntity.EntityName);
+			icon.sprite = InventorySpriteFactory.Singleton.GetSprite(BoundEntity);
 			inventoryAllSwitchCondition = BoundEntity.CanInventorySwitchToCondition;
 			useCurrencySatisfiedCondition = BoundEntity.GetUseCurrencySatisfiedCondition;
 			currencyModel = this.GetModel<ICurrencyModel>();
