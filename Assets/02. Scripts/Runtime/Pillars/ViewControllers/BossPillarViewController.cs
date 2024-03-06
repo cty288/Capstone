@@ -16,6 +16,7 @@ using AYellowpaper.SerializedCollections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Event;
 using MikroFramework.UIKit;
 using Polyglot;
@@ -260,7 +261,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 
 		protected override void OnPlayerPressInteract() {
 			base.OnPlayerPressInteract();
-			
+			AudioSystem.Singleton.Play2DSound("activate_pillar");
 			if(levelModel.CurrentLevel.Value.IsInBossFight.Value 
 			   || UIManager.Singleton.GetPanel<PillarUIViewController>(true) != null
 			   || BoundEntity.Status.Value != PillarStatus.Idle) {

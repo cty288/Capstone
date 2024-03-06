@@ -209,7 +209,7 @@ namespace Runtime.Player.ViewControllers
             
             playerActions = ClientInput.Singleton.GetPlayerActions();
             groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
-            groundCheck.OnEnter += OnLandGround;
+            // groundCheck.OnEnter += OnLandGround;
         }
 
         private void OnLandGround(Collider other)
@@ -677,6 +677,7 @@ namespace Runtime.Player.ViewControllers
         
         private void Jump()
         {
+            AudioSystem.Singleton.Play2DSound("jump_land");
             exitingSlope = true;
             // reset y velocity
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -769,6 +770,9 @@ namespace Runtime.Player.ViewControllers
             if (slideTimer <= 0)
             {
                 sliding = false;
+                
+                AudioSystem.Singleton.StopSound("slide_loop");
+                AudioSystem.Singleton.Play2DSound("slide_end");
 
                 model.localScale = new Vector3(model.localScale.x, startYScale, model.localScale.z);
                 
