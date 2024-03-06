@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
 using DG.Tweening;
 using MikroFramework.Architecture;
@@ -18,6 +19,7 @@ using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Runtime.Weapons
 {
@@ -62,7 +64,7 @@ namespace Runtime.Weapons
 
         protected override IHitDetector OnCreateHitDetector()
         {
-            return new HitScan(this, CurrentFaction.Value, bulletVFX, fpsCamera);
+            return new HitScan(this, CurrentFaction.Value, BulletVFXAll, fpsCamera);
         }
 
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<RustyPistolEntity> builder) {

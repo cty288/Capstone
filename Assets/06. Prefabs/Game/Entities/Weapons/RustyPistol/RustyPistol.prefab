@@ -677,8 +677,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
-    type: 3}
   hitVFXSystem: {fileID: 2837599302790063516}
   animator: {fileID: 9011050510399414913}
   reloadAnimationLength: 3
@@ -689,7 +687,8 @@ MonoBehaviour:
     adsCameraRotation: {x: 2.2, y: 359.26, z: 1.67}
   bulletVFX:
   - {fileID: 6895374929032582147}
-  - {fileID: 4786992204249495899}
+  bulletVFXInHand:
+  - {fileID: 6895374929032582147}
   overrideName: RustyPistol
 --- !u!54 &1634876173769045248
 Rigidbody:

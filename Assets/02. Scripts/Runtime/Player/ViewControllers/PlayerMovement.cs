@@ -6,6 +6,8 @@ using Cinemachine;
 using DG.Tweening;
 using Framework;
 using DG.Tweening;
+using MikroFramework;
+using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.Utilities;
@@ -21,6 +23,7 @@ using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Sequence = MikroFramework.ActionKit.Sequence;
 
 namespace Runtime.Player.ViewControllers
 {
@@ -197,8 +200,6 @@ namespace Runtime.Player.ViewControllers
         private float runningAudioTime = 0.35f;
         private float runningAudioTimer = 0f;
         
-        
-        private AudioSource slidingAudioSource = null;
 
         private void Awake()
         {
@@ -208,10 +209,14 @@ namespace Runtime.Player.ViewControllers
             
             playerActions = ClientInput.Singleton.GetPlayerActions();
             groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
+            // groundCheck.OnEnter += OnLandGround;
         }
 
-       
-
+        private void OnLandGround(Collider other)
+        {
+            AudioSystem.Singleton.Play2DSound("jump_land");
+        }
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -302,20 +307,13 @@ namespace Runtime.Player.ViewControllers
                 }
             }
             
-            if (state == MovementState.sliding)
-            {
-                if (slidingAudioSource == null)
-                {
-                    slidingAudioSource = AudioSystem.Singleton.Play2DSound("slide_3", 1f, false);
-                }
-            }
-            else
-            {
-                if (slidingAudioSource != null) {
-                    slidingAudioSource = null;
-                    AudioSystem.Singleton.StopSound("slide_3");
-                }
-            }
+            // if (state == MovementState.sliding)
+            // {
+            //     if (slidingAudioSource == null)
+            //     {
+            //         slidingAudioSource = AudioSystem.Singleton.Play2DSound("slide_loop", 1f, true);
+            //     }
+            // }
             
             // JUMP
         }
@@ -551,7 +549,7 @@ namespace Runtime.Player.ViewControllers
 
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
-            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump &&!grounded)
+            if (playerActions.Jump.WasPressedThisFrame() && readyToDoubleJump && !grounded)
             {
                 readyToDoubleJump = false;
 
@@ -592,16 +590,28 @@ namespace Runtime.Player.ViewControllers
             if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
             {
                 sliding = true;
+
+                AudioSource source = null;
+                Sequence.Allocate().AddAction(CallbackAction.Allocate(() => {
+                    source = AudioSystem.Singleton.Play2DSound("slide_start");
+                })).AddAction(UntilAction.Allocate((() => !source.isPlaying))).AddAction(CallbackAction.Allocate(
+                    () =>
+                    {
+                        AudioSystem.Singleton.Play2DSound("slide_loop", loop: true);
+                    })).Execute();
+                
                 model.localScale = new Vector3(model.localScale.x, slideYScale, model.localScale.z);
                 rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
                 rb.AddForce(moveDirection*10f,ForceMode.Impulse);
                 slideTimer = playerEntity.GetMaxSlideTime().RealValue;
-
             }
 
             if (playerActions.Slide.WasReleasedThisFrame() && sliding)
             {
                 sliding = false;
+                
+                AudioSystem.Singleton.StopSound("slide_loop");
+                AudioSystem.Singleton.Play2DSound("slide_end");
 
                 model.localScale = new Vector3(model.localScale.x, startYScale, model.localScale.z);
                 
@@ -667,6 +677,7 @@ namespace Runtime.Player.ViewControllers
         
         private void Jump()
         {
+            AudioSystem.Singleton.Play2DSound("jump_land");
             exitingSlope = true;
             // reset y velocity
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -759,6 +770,9 @@ namespace Runtime.Player.ViewControllers
             if (slideTimer <= 0)
             {
                 sliding = false;
+                
+                AudioSystem.Singleton.StopSound("slide_loop");
+                AudioSystem.Singleton.Play2DSound("slide_end");
 
                 model.localScale = new Vector3(model.localScale.x, startYScale, model.localScale.z);
                 

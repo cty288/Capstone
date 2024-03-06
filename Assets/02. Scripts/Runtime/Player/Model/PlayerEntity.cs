@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
@@ -373,7 +374,12 @@ namespace Runtime.Player {
 
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {
 			base.OnTakeDamage(damage, damageDealer, hitData);
-			if (GetCurrentHealth() <= 0) {
+			AudioSystem.Singleton.Play2DSound("take_damage_flesh");
+
+			if (GetCurrentHealth() <= 0)
+			{
+				AudioSystem.Singleton.Play2DSound("death");
+				
 				this.SendEvent<OnPlayerDie>(new OnPlayerDie() {
 					damageDealer = damageDealer,
 					hitData = hitData
@@ -402,6 +408,13 @@ namespace Runtime.Player {
 			
 			if (armorToTakeDamage > 0) {
 				Armor.Value -= armorToTakeDamage;
+				
+				AudioSystem.Singleton.Play2DSound("armor_take_damage");
+				
+				if (Armor.Value == 0)
+				{
+					AudioSystem.Singleton.Play2DSound("armor_break");
+				}
 			}
 				
 

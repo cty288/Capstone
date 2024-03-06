@@ -4,6 +4,7 @@ using System.Linq;
 using _02._Scripts.Runtime.Levels.Commands;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.UIKit;
 using Polyglot;
 using Runtime.GameResources.Model.Base;
@@ -98,7 +99,9 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	private void OnSlotClicked(ResourceSlotViewController slotVC, PreparationSlotLayoutViewController layout, bool originallySelected) {
 		ResourceSlot slot = slotVC.Slot;
 
-		if (originallySelected) {
+		if (originallySelected)
+		{
+			AudioSystem.Singleton.Play2DSound("item_deselect");
 			layout.SetSelected(slotVC, false);
 			ResourceCategory category = layout == weaponSlotLayout ? ResourceCategory.Weapon : ResourceCategory.Skill;
 			
@@ -121,6 +124,8 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 			else {
 				occupiedGeneralSlotCountDict[category]++;
 			}
+			
+			AudioSystem.Singleton.Play2DSound("item_select");
 			layout.SetSelected(slotVC, true);
 		}
 		
@@ -171,6 +176,8 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	}
 	
 	private void OnEnterButtonClicked() {
+		AudioSystem.Singleton.Play2DSound("interact_button");
+
 		LoadingCanvas.Singleton.Show(() => {
 			canClose = true;
 			List<PreparationSlot> slots = weaponSlotLayout.OnUIClosed();

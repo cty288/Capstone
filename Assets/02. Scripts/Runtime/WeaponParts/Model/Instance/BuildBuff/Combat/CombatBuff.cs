@@ -4,8 +4,10 @@ using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.Pool;
 using MikroFramework.ResKit;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -16,6 +18,7 @@ using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
@@ -89,14 +92,21 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 	public class CombatBuff : WeaponBuildBuff<CombatBuff>, ICanGetUtility {
 		[field: ES3Serializable]
 		public override float TickInterval { get; protected set; } = -1;
-
+		
 		private ResLoader resLoader;
+		
 		public override void OnInitialize() {
 			if (weaponEntity == null) {
 				return;
 			}
+
+			// Initialize Pool
+			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("ShreddingIn", null, 3, 10, out GameObject prefab0);
+			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("ShreddingOut", null, 3, 10, out GameObject prefab2);
+			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("ShreddingExplode", null, 3, 10, out GameObject prefab1);
 			
-				
+			var vc = weaponEntity.GetBoundViewController();
+			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
 				
 			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
 			weaponEntity.RegisterOnKillDamageable(OnKillDamageable);
@@ -105,6 +115,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			//weaponEntity.RegisterOnDealDamage();
 			
 			resLoader = this.GetUtility<ResLoader>();
+			
 		}
 
 		private void OnDealDamage(ICanDealDamage source, IDamageable target, int damage) {
@@ -189,8 +200,15 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			}
 		}
 
-		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon) {
-			
+		private HitData OnWeaponModifyHitData(HitData hit, IWeaponEntity weapon)
+		{
+
+			var hitscan = (hit.HitDetector as HitScan);
+			if (hitscan != null)
+			{
+				var vc = weaponEntity.GetBoundViewController();
+				AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
+			}
 			
 			
 			float chance = GetBuffPropertyAtCurrentLevel<float>("chance");
@@ -222,10 +240,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			return hit;
 		}
 
-		
-
-		public override void OnStart() {
-			
+		public override void OnStart()
+		{
 		}
 
 		public override BuffStatus OnTick() {
@@ -237,13 +253,16 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		}
 
 		public override void OnRecycled() {
-			if (weaponEntity != null) {
+			if (weaponEntity != null)
+			{
+				DeallocateBuffVFX();
 				weaponEntity.UnRegisterOnModifyHitData(OnWeaponModifyHitData);
 				weaponEntity.UnregisterOnKillDamageable(OnKillDamageable);
 				weaponEntity.UnregisterOnDealDamage(OnDealDamage);
 			}
 			base.OnRecycled();
 		}
+		
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {
 			return null;
