@@ -139,9 +139,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			}
 			
 			// Initialize Pool
-			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXIn", null, 3, 10, out GameObject prefab0);
-			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("testGunVFXOut", null, 3, 10, out GameObject prefab2);
-			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("TestExplode", null, 3, 10, out GameObject prefab1);
+			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPIn", null, 3, 10, out GameObject prefab0);
+			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPOut", null, 3, 10, out GameObject prefab2);
+			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPExplode", null, 3, 10, out GameObject prefab1);
 			
 			var vc = weaponEntity.GetBoundViewController();
 			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
