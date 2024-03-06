@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.Player.Commands;
 using DG.Tweening;
 using Mikrocosmos;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Event;
 using Runtime.Player;
 using Runtime.Utilities;
@@ -31,6 +32,7 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 	private float additioanlHurtEffectSize = 0f;
 	private float currentInitialHurtEffectSize = 0f;
 
+	private bool isLowHealth = false;
 	
 
 	[SerializeField]
@@ -102,7 +104,16 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 			additioanlHurtEffectSize = Mathf.Min(additioanlHurtEffectSize, 2f);
 			hurtEffectSize += additioanlHurtEffectSize;
 		
-		
+			if(hurtPercentage > 0.2f && isLowHealth) {
+				isLowHealth = false;
+				AudioSystem.Singleton.StopSound("low_health");
+			}
+			
+			if(hurtPercentage <= 0.2f && !isLowHealth) {
+				isLowHealth = true;
+				AudioSystem.Singleton.Play2DSound("low_health", 1f, true);
+			}
+			
 		
 		
 			currentInitialHurtEffectSize = Mathf.Lerp(currentInitialHurtEffectSize, hurtEffectSize, Time.deltaTime * animSpeed);

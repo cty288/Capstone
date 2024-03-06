@@ -11,6 +11,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using Cysharp.Threading.Tasks;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Event;
 using MikroFramework.UIKit;
 using Polyglot;
@@ -189,6 +190,8 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 		}else if (currency > maxCurrencyPossible) {
 			currency = maxCurrencyPossible;
 		}
+
+		AudioSystem.Singleton.Play2DSound("arrow_click");
 
 		CurrencyType currencyType = currentSelectedCurrencyType;
 		currentSelectedCurrency = currency;
