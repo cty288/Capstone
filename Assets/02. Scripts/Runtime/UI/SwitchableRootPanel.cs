@@ -6,6 +6,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.UIKit;
 using Runtime.Inventory.Commands;
+using Runtime.Inventory.Model;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,6 +61,7 @@ namespace Runtime.UI {
        
         public override void OnClosed() {
             if (currentPanel != null) {
+                ResourceSlot.currentHoveredSlot.Value = null;
                 currentPanel.GetComponent<SwitchableSubPanel>().OnSwitchToOtherPanel();
             }
            
@@ -114,6 +116,7 @@ namespace Runtime.UI {
                     //set panel left to -1920, right to 1920
                     currentPanel.offsetMin = new Vector2(-1920, 0);
                     currentPanel.offsetMax = new Vector2(-1920, 0);
+                    ResourceSlot.currentHoveredSlot.Value = null;
                     currentPanel.GetComponent<SwitchableSubPanel>().OnSwitchToOtherPanel();
                 }
                 panel.offsetMin = Vector2.zero;
@@ -133,6 +136,7 @@ namespace Runtime.UI {
                     tweenList.Add(DOTween.To(() => targetPanel.offsetMax, x => targetPanel.offsetMax = x,
                         new Vector2(-1920, 0),
                         0.5f).SetUpdate(true).OnKill(() => {
+                        ResourceSlot.currentHoveredSlot.Value = null;
                         targetPanel.GetComponent<SwitchableSubPanel>().OnSwitchToOtherPanel();
 
                     }));

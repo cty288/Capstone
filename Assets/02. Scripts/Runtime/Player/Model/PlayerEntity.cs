@@ -409,7 +409,7 @@ namespace Runtime.Player {
 			if (armorToTakeDamage > 0) {
 				Armor.Value -= armorToTakeDamage;
 				
-				AudioSystem.Singleton.Play2DSound("armor_take_damage");
+				//AudioSystem.Singleton.Play2DSound("armor_take_damage");
 				
 				if (Armor.Value == 0)
 				{
