@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.VFX;
 using BehaviorDesigner.Runtime;
 using Cysharp.Threading.Tasks;
 using MikroFramework.ActionKit;
@@ -52,7 +53,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TEntityModel"></typeparam>
-	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
+	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController, IBuffableVFXViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature {
 		//[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
 
@@ -68,6 +69,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Creature Recycle Settings")]
 		[SerializeField]
 		private bool autoRemoveEntityWhenDie = true;
+		
+		[SerializeField]public Transform[] VFXFramer { get; }
 
 		private CancellationTokenSource ctsWhenDieOrStunned
 			= new CancellationTokenSource();
