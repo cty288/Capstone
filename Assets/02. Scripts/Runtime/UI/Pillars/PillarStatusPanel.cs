@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel;
+using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
 using AYellowpaper.SerializedCollections;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityParticleSystem;
@@ -17,8 +19,8 @@ using UnityEngine.UI;
 
 public class PillarStatusPanel : AbstractMikroController<MainGame> {
 	private Transform layoutGroup;
-	private Dictionary<IPillarEntity, PillarStatusElement> 
-		spawnedPillarStatusElements = new Dictionary<IPillarEntity, PillarStatusElement>();
+	private Dictionary<string, PillarStatusElement> 
+		spawnedPillarStatusElements = new Dictionary<string, PillarStatusElement>();
 	
 	private ILevelModel levelModel;
 	
@@ -31,9 +33,12 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 	[SerializeField]
 	private Image skullImage;
 	private Color skullColor;
+	
+	private IPillarModel pillarModel;
 	private void Awake() {
 		layoutGroup = transform.Find("LayoutGroup");
 		levelModel = this.GetModel<ILevelModel>();
+		pillarModel = this.GetModel<IPillarModel>();
 		levelModel.CurrentLevel.RegisterOnValueChanged(OnCurrentLevelChanged)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		this.RegisterEvent<OnPillarActivated>(OnPillarActivated)
@@ -44,6 +49,16 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 		ClearLayoutGroup();
 	}
 
+	private void Start() {
+		var info = pillarModel.ActivatedPillarCurrencyAmount;
+		if (info.Count > 0) {
+			OnPillarActivated(new OnPillarActivated() {
+				Info = info,
+				isAllPillarsActivated = false
+			});
+		}
+	}
+
 	private void OnPillarCurrencyReset(OnPillarCurrencyReset e) {
 		ClearLayoutGroup();
 	}
@@ -52,6 +67,7 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 		if (spawnedPillarStatusElements.Count == 0) {
 			layoutGroup.gameObject.SetActive(true);
 		}
+		
 		SpawnPillarStatusElements(e.Info);
 		
 		foreach (var info in e.Info) {
@@ -81,7 +97,7 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 		LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
 	}
 
-	private void SpawnPillarStatusElements(Dictionary<IPillarEntity,PillarActivateInfo> currencyInfo) {
+	private void SpawnPillarStatusElements(Dictionary<string,PillarActivateInfo> currencyInfo) {
 		//find all entries in currencyInfo that are not in spawnedPillarStatusElements
 		//spawn them
 		foreach (var info in currencyInfo) {
@@ -131,6 +147,9 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 	
 	
 	private void OnCurrentLevelChanged(ILevelEntity e) {
-		ClearLayoutGroup();
+		if (e is BaseLevelEntity) {
+			ClearLayoutGroup();
+		}
+		
 	}
 }

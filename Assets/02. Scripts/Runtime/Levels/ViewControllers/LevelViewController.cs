@@ -477,7 +477,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				//RegisterOnSpawnEnemy(pillarViewController);
 			}
 			bossPillars = pillars.Select(p => p.GetComponent<IBossPillarViewController>()).ToArray();
-			pillarModel.SetCurrentLevelPillars(ids);
+			pillarModel.SetCurrentLevelPillars(ids, levelNumber);
 			
 		}
 		private void UpdateWallMaterials() {

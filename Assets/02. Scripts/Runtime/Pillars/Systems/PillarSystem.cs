@@ -30,6 +30,8 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 	public struct OnPillarCurrencyReset {
 		
 	}
+	
+	[ES3Serializable]
 	public class PillarActivateInfo {
 		public CurrencyType pillarCurrencyType;
 		public float currencyPercentage;
@@ -45,15 +47,19 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 	}
 	public struct OnPillarActivated {
 		[FormerlySerializedAs("currencyPercentage")]
-		public Dictionary<IPillarEntity, PillarActivateInfo> Info;
+		public Dictionary<string, PillarActivateInfo> Info;
 		public bool isAllPillarsActivated;
 	}
 	public class PillarSystem : AbstractSystem, IPillarSystem {
 
 		private List<IPillarEntity> allPillars = new List<IPillarEntity>();
 
-		private Dictionary<IPillarEntity, PillarActivateInfo>
-			activatedPillarCurrencyAmount = new Dictionary<IPillarEntity, PillarActivateInfo>();
+		
+		private IPillarModel model;
+		private bool isSpawning = false;
+
+		[field: ES3Serializable]
+		private int summonCount = 4;
 		
 		private ILevelModel levelModel;
 		private ILevelSystem levelSystem;
@@ -63,10 +69,11 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 			this.RegisterEvent<OnRequestActivatePillar>(OnRequestActivatePillar);
 			levelModel = this.GetModel<ILevelModel>();
 			levelSystem = this.GetSystem<ILevelSystem>();
+			model = this.GetModel<IPillarModel>();
 		}
 
 		private void OnRequestActivatePillar(OnRequestActivatePillar e) {
-			if (!activatedPillarCurrencyAmount.ContainsKey(e.pillarEntity)) {
+			if (!model.ActivatedPillarCurrencyAmount.ContainsKey(e.pillarEntity.UUID)) {
 				if (e.pillarEntity.Status.Value == PillarStatus.Idle) {
 					ActivatePillar(e.pillarEntity, e.pillarCurrencyType, e.CurrencyAmount, e.level);
 				}
@@ -76,8 +83,10 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 		private void ActivatePillar(IPillarEntity pillarEntity, CurrencyType currencyType,  float currencyAmount, int level) {
 			pillarEntity.Status.Value = PillarStatus.Activated;
 
-			activatedPillarCurrencyAmount[pillarEntity] =
-				new PillarActivateInfo(currencyType, currencyAmount, 0, level);
+			model.ActivatedPillarCurrencyAmount.Add(pillarEntity.UUID,
+				new PillarActivateInfo(currencyType, currencyAmount, 0, level));
+			
+			//[pillarEntity] =new PillarActivateInfo(currencyType, currencyAmount, 0, level);
 			
 			CalculateCurrencyPercentage();
 			
@@ -85,15 +94,10 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 			
 
 			//check if all pillars are activated
-			bool allPillarsActivated = true;
-			foreach (var pillar in allPillars) {
-				if (pillar.Status.Value != PillarStatus.Activated) {
-					allPillarsActivated = false;
-					break;
-				}
-			}
+			bool allPillarsActivated = model.ActivatedPillarCurrencyAmount.Count == allPillars.Count;
+			
 			this.SendEvent<OnPillarActivated>(new OnPillarActivated() {
-				Info = activatedPillarCurrencyAmount,
+				Info = model.ActivatedPillarCurrencyAmount,
 				isAllPillarsActivated = allPillarsActivated
 			});
 			if (allPillarsActivated) {
@@ -103,29 +107,35 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 
 		//TODO: temporarily close the exit door
 		private async UniTask SummonBoss() {
+			if(allPillars == null || allPillars.Count == 0) {
+				return;
+			}
 			string levelID = levelModel.CurrentLevel.Value.UUID;
-			foreach (IPillarEntity pillarEntity in activatedPillarCurrencyAmount.Keys) {
+			foreach (IPillarEntity pillarEntity in allPillars) {
 				pillarEntity.Status.Value = PillarStatus.Spawning;
 			}
 			
 			
+			isSpawning = true;
 			await UniTask.WaitForSeconds(Random.Range(8f, 15f));
+			isSpawning = false;
 			//make sure the level is not changed
 			if (levelModel.CurrentLevel.Value.UUID != levelID) {
 				return;
 			}
 			
-			foreach (IPillarEntity pillarEntity in activatedPillarCurrencyAmount.Keys) {
+			foreach (IPillarEntity pillarEntity in allPillars) {
 				pillarEntity.Status.Value = PillarStatus.Idle;
 			}
 			
 			ILevelEntity levelEntity = levelModel.CurrentLevel.Value;
 			if (levelEntity.IsInBossFight) {
+				ClearPillarCurrency();
 				return;
 			}
 			
 			Dictionary<CurrencyType, float> currencyPercentage = new Dictionary<CurrencyType, float>();
-			foreach (var pillarCurrencyAmount in activatedPillarCurrencyAmount) {
+			foreach (var pillarCurrencyAmount in model.ActivatedPillarCurrencyAmount) {
 				currencyPercentage.TryAdd(pillarCurrencyAmount.Value.pillarCurrencyType, 0);
 				currencyPercentage[pillarCurrencyAmount.Value.pillarCurrencyType] +=
 					pillarCurrencyAmount.Value.currencyPercentage;
@@ -185,11 +195,11 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 		
 		private void CalculateCurrencyPercentage() {
 			float totalCurrencyAmount = 0;
-			foreach (var pillarCurrencyAmount in activatedPillarCurrencyAmount) {
+			foreach (var pillarCurrencyAmount in model.ActivatedPillarCurrencyAmount) {
 				totalCurrencyAmount += pillarCurrencyAmount.Value.currencyAmount;
 			}
 			
-			foreach (var pillarCurrencyAmount in activatedPillarCurrencyAmount) {
+			foreach (var pillarCurrencyAmount in model.ActivatedPillarCurrencyAmount) {
 				pillarCurrencyAmount.Value.currencyPercentage =
 					pillarCurrencyAmount.Value.currencyAmount / totalCurrencyAmount;
 			}
@@ -198,22 +208,35 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 
 		private int GetRarity() {
 			int totalRarity = 0;
-			foreach (var pillarCurrencyAmount in activatedPillarCurrencyAmount) {
+			foreach (var pillarCurrencyAmount in model.ActivatedPillarCurrencyAmount) {
 				totalRarity += pillarCurrencyAmount.Value.level;
 			}
 
-			return Mathf.RoundToInt((float) totalRarity / activatedPillarCurrencyAmount.Count);
+			return Mathf.RoundToInt((float) totalRarity / model.ActivatedPillarCurrencyAmount.Count);
 		}
 
 		private void OnSetCurrentLevelPillars(OnSetCurrentLevelPillars e) {
 			//new level, reset
 			this.allPillars.Clear();
 			allPillars = new List<IPillarEntity>(e.pillars);
-			ClearPillarCurrency();
+			//ClearPillarCurrency();
+			if (e.levelCount == 0 || isSpawning) {
+				isSpawning = false;
+				ClearPillarCurrency();
+			}
+			else {
+				foreach (KeyValuePair<string,PillarActivateInfo> activateInfo in model.ActivatedPillarCurrencyAmount) {
+					activateInfo.Value.level = Mathf.Max(activateInfo.Value.level, e.levelCount);
+				}
+				this.SendEvent<OnPillarActivated>(new OnPillarActivated() {
+					Info = model.ActivatedPillarCurrencyAmount,
+					isAllPillarsActivated = false
+				});
+			}
 		}
 
 		private void ClearPillarCurrency() {
-			activatedPillarCurrencyAmount.Clear();
+			model.ActivatedPillarCurrencyAmount.Clear();
 			this.SendEvent<OnPillarCurrencyReset>(new OnPillarCurrencyReset());
 		}
 	}
