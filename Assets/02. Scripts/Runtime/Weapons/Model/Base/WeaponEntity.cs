@@ -198,6 +198,7 @@ namespace Runtime.Weapons.Model.Base
         }
 
         public override int GetMaxRarity() {
+            
             return GetRarity();
         }
 
