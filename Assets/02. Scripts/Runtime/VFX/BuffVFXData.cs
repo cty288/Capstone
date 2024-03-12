@@ -94,10 +94,13 @@ namespace _02._Scripts.Runtime.VFX
         // Recycle the buff (implementation might differ)
         public virtual void RecycleBuff()
         {
-            foreach (var o in _vfxObjects)
+            if(_vfxObjects != null)
             {
-                o.transform.parent = _vfxPool.transform;
-                _vfxPool.Recycle(o);
+                foreach (var o in _vfxObjects)
+                {
+                    o.transform.parent = _vfxPool.transform;
+                    _vfxPool.Recycle(o);
+                }
             }
         }
         
