@@ -69,8 +69,34 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[Header("Creature Recycle Settings")]
 		[SerializeField]
 		private bool autoRemoveEntityWhenDie = true;
-		
-		[SerializeField]public Transform[] VFXFramer { get; }
+
+		[SerializeField]
+		public Transform[] VFXFramer
+		{
+			get
+			{
+				if (_vfxFramer.Length != 0)
+				{
+					return _vfxFramer;
+				}
+
+				// Create a frame using the spawn collider if no frame is manually set.
+				var defaultFrameBox = new GameObject("Default VFX Frame");
+				defaultFrameBox.transform.parent = transform;
+				defaultFrameBox.transform.position = SpawnSizeCollider.transform.position + SpawnSizeCollider.center;
+				var size = SpawnSizeCollider.size;
+				var volume = size.x * size.y * size.z;
+				var length = Mathf.Pow(volume, 1.0f / 3.0f);
+				defaultFrameBox.transform.localScale = Vector3.one * length;
+				
+				_vfxFramer = new[] { defaultFrameBox.transform};
+
+				return _vfxFramer;
+			}
+		}
+
+		private Transform[] _vfxFramer;
+		private GenericBuffableVFX _testBuff;
 
 		private CancellationTokenSource ctsWhenDieOrStunned
 			= new CancellationTokenSource();
@@ -92,6 +118,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			
 			rb = GetComponent<Rigidbody>();
+
+			_testBuff = new GenericBuffableVFX(() => VFXFramer);
+			BoundEntity.RegisterOnBuffUpdate(_testBuff.OnBuffUpdate);
 		}
 		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
@@ -325,6 +354,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				behaviorTree.enabled = false;
 			}
 			
+			// Make sure all buff frameworks are recycled here:
+			_testBuff.RecycleBuff();
 		}
 
 		[field: SerializeField]

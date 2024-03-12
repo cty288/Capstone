@@ -2,6 +2,7 @@
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using MikroFramework;
 using MikroFramework.Pool;
+using Runtime.DataFramework.Entities;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.VFX
@@ -27,7 +28,7 @@ namespace _02._Scripts.Runtime.VFX
         public Transform[] VFXFramer { get; } // List of transforms to apply the VFx on to cover the entity.
     }
     
-    public abstract class AbstractBuffableVFX
+    public abstract class AbstractBuffableVFX<T> where T : class, IBuff
     {
         public static Vector3 CorrectiveBaseScale = new Vector3(1, 1, 1); // This is used as the default value over which our buffs are scaled.
 
@@ -47,7 +48,15 @@ namespace _02._Scripts.Runtime.VFX
         }
         
         // Check the buff played is the correct buff for this event.
-        public abstract bool ValidateBuff(IBuff buff);
+        public virtual bool ValidateBuff(IBuff buff)
+        {
+            if (buff is T)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         public virtual void PoolBuff()
         {
@@ -90,10 +99,35 @@ namespace _02._Scripts.Runtime.VFX
                 _vfxPool.Recycle(o);
             }
         }
+        
+        public void OnBuffUpdate(IBuff buff, BuffUpdateEventType eventType){
+            if (!ValidateBuff(buff))
+            {
+                return;
+            }
+
+            if (eventType == BuffUpdateEventType.OnStart)
+            {
+                AllocateBuff();
+                return;
+            }
+
+            if (eventType == BuffUpdateEventType.OnUpdate)
+            {
+                TriggerBuff(buff);
+                return;
+            }
+
+            if (eventType == BuffUpdateEventType.OnEnd)
+            {
+                RecycleBuff();
+                return;
+            }
+        }
     }
 
     // Using EMP for Testing Purposes
-    public class GenericBuffableVFX : AbstractBuffableVFX
+    public class GenericBuffableVFX : AbstractBuffableVFX<MalfunctionBuff>
     {
         public override BuffVFXSpace VFXSpace { get; } = BuffVFXSpace.Local3D;
         public override BuffVFXType VFXType { get; } = BuffVFXType.Continuous;
@@ -104,19 +138,10 @@ namespace _02._Scripts.Runtime.VFX
         {
         }
 
-        public override bool ValidateBuff(IBuff buff)
-        {
-            if (buff is MalfunctionBuff)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public override bool TriggerBuff(IBuff buff)
         {
-            throw new NotImplementedException();
+            // nothing
+            return false;
         }
     }
 }
