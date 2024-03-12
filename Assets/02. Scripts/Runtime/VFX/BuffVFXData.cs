@@ -76,6 +76,7 @@ namespace _02._Scripts.Runtime.VFX
                 for(int i = 0; i < _vfxObjects.Length; i++)
                 {
                     var o = _vfxPool.Allocate();
+                    _vfxObjects[i] = o;
                     
                     var oTransform = o.transform;
                     oTransform.parent = framer[i];

@@ -53,7 +53,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TEntityModel"></typeparam>
-	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController, IBuffableVFXViewController
+	public abstract class AbstractCreatureViewController<T> : AbstractDamagableViewController<T>, ICreatureViewController
 		where T : class, IHaveCustomProperties, IHaveTags, IDamageable, ICreature {
 		//[SerializeField] protected List<ItemDropCollection> baseItemDropCollections;
 
@@ -75,7 +75,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		{
 			get
 			{
-				if (_vfxFramer.Length != 0)
+				if (_vfxFramer != null && _vfxFramer.Length != 0)
 				{
 					return _vfxFramer;
 				}
@@ -120,7 +120,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			rb = GetComponent<Rigidbody>();
 
 			_testBuff = new GenericBuffableVFX(() => VFXFramer);
-			BoundEntity.RegisterOnBuffUpdate(_testBuff.OnBuffUpdate);
 		}
 		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
@@ -139,6 +138,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 			BoundEntity.StunnedCounter.Count.RegisterWithInitValue(OnStunnedCounterChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
+			BoundEntity.RegisterOnBuffUpdate(_testBuff.OnBuffUpdate);
 
 			//ctsWhenDieOrStunned = new CancellationTokenSource();
 		}
@@ -345,6 +346,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 
 		public override void OnRecycled() {
+			
+			// Make sure all buff frameworks are recycled here:
+			if (BoundEntity != null)
+			{
+				BoundEntity.UnregisterOnBuffUpdate(_testBuff.OnBuffUpdate);
+				_testBuff.RecycleBuff();
+			}
+			
 			base.OnRecycled();
 			if (navMeshAgent) {
 				navMeshAgent.enabled = false;
@@ -353,9 +362,6 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (behaviorTree) {
 				behaviorTree.enabled = false;
 			}
-			
-			// Make sure all buff frameworks are recycled here:
-			_testBuff.RecycleBuff();
 		}
 
 		[field: SerializeField]
