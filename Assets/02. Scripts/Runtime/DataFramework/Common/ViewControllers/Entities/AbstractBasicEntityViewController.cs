@@ -48,23 +48,4 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			UpdateBinding<TargetType,dynamic>(dataProperty, bindedProperty, getter, callback);
 		}
 	}
-
-	class AbstractBasicEntityViewControllerImpl<T> : AbstractBasicEntityViewController<T> where T : class, IHaveCustomProperties, IHaveTags
-	{
-		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; }
-		protected override IEntity OnBuildNewEntity()
-		{
-			throw new NotImplementedException();
-		}
-
-		protected override void OnEntityStart()
-		{
-			throw new NotImplementedException();
-		}
-
-		protected override void OnBindEntityProperty()
-		{
-			throw new NotImplementedException();
-		}
-	}
 }
