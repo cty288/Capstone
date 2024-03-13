@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using MikroFramework.Architecture;
 using UnityEngine;
@@ -46,7 +47,10 @@ public class GameEventSystem : AbstractSystem, IGameEventSystem {
 	private void OnGlobalTimeChanged(DateTime oldTime, DateTime newTime) {
 		eventsToRemoved.Clear();
 		int minuteElapsed = (int) (newTime - oldTime).TotalMinutes;
-		foreach (IGameEvent gameEvent in gameEventModel.GameEvents.Values) {
+
+		IGameEvent[] events = gameEventModel.GameEvents.Values.ToArray();
+		
+		foreach (IGameEvent gameEvent in events) {
 			Debug.LogWarning(gameEvent);
 			int realMinuteElapsed = gameEvent.ElapseType == EventElapseType.Predetermined
 				? minuteElapsed

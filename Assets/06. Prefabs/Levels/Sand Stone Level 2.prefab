@@ -46076,7 +46076,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3125
+  m_VersionIndex: 3128
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -57386,7 +57386,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 20025
+  m_VersionIndex: 20028
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -70143,10 +70143,6 @@ MonoBehaviour:
   maxExtent: {fileID: 1595554011}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
-  sandstormProbability:
-  - 0
-  - 0.33
-  - 1
   timeCurrencyLevel: 1
   spawnExitDoor: 1
   subAreaLevelPrefabs:
@@ -70159,10 +70155,15 @@ MonoBehaviour:
   ambientMusic: {fileID: 8300000, guid: da3ed51b963c68748a9d645c14752ec5, type: 3}
   bgm: {fileID: 8300000, guid: 5ea783bcc85047f4da44a72315994f9e, type: 3}
   relativeVolume: 0.3
+  hasRandomBossEncounter: 1
   totalExplortionValueRequired: 1500
   bossExplorationMultiplier: 2
   normalEnemyExplorationMultiplier: 1
   explorationValuePerSecond: 1
+  sandstormProbability:
+  - 0
+  - 0.33
+  - 1
 --- !u!1 &8135004668214376100
 GameObject:
   m_ObjectHideFlags: 0
