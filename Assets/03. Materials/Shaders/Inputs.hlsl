@@ -40,6 +40,8 @@ float4 _RippleMap0_ST;
 float4 _RippleMap1_ST;
 float _RippleStrength;
 float _SteepnessPower;
+
+float3 _TileScaling;
     
 CBUFFER_END
 
@@ -149,3 +151,50 @@ void InitializeSurfaceData(float2 uv, out SurfaceData surfaceData){
 	surfaceData.smoothness = specGloss.a;
 }
 
+
+// World Space SurfaceData
+void InitializeWorldSurfaceData(float3 normalWS, float3 positionWS, out SurfaceData surfaceData){
+	surfaceData = (SurfaceData)0; // avoids "not completely initalized" errors
+
+	#ifdef _WORLD_TILE
+		float2 uv0 = (positionWS.zy * _TileScaling.zy);
+		float2 uv1 = (positionWS.xz * _TileScaling.xz);
+		float2 uv2 = (positionWS.xy * _TileScaling.xy);
+
+		float weightX = abs(normalWS.x);
+		float weightY = abs(normalWS.y);
+		float weightZ = abs(normalWS.z);
+
+		half4 albedoAlpha0 = SampleAlbedoAlpha(uv0, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+		half4 albedoAlpha1 = SampleAlbedoAlpha(uv1, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+		half4 albedoAlpha2 = SampleAlbedoAlpha(uv2, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+		half4 albedoAlpha =  (weightX * albedoAlpha0 + weightY * albedoAlpha1 + weightZ * albedoAlpha2);
+		surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
+		surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
+		
+		half3 normalTS0 = SampleNormal(uv0 * _BumpMap_ST.xy + _BumpMap_ST.zw, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
+		half3 normalTS1 = SampleNormal(uv1 * _BumpMap_ST.xy + _BumpMap_ST.zw, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
+		half3 normalTS2 = SampleNormal(uv2 * _BumpMap_ST.xy + _BumpMap_ST.zw, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
+		//normalTS0.x = -sign(normalWS.x)*normalTS0.x;
+		//normalTS1.x = sign(normalWS.y)*normalTS1.x;
+		//normalTS2.x = -sign(normalWS.z)*normalTS2.x;
+		//normalTS0.z = -sign(normalWS.x)*normalTS0.z; 
+		//normalTS1.z = sign(normalWS.y)*normalTS1.z; 
+		//normalTS2.z = -sign(normalWS.z)*normalTS2.z;
+		//normalTS0 = normalTS0.zyx;
+		//normalTS1 = normalTS1.xzy;
+		surfaceData.normalTS = (weightX * normalTS0 + weightY * normalTS1.xyz + weightZ * normalTS2);
+		surfaceData.emission = SampleEmission(uv0, _EmissionColor, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
+		surfaceData.occlusion = SampleOcclusion(uv0);
+			
+		half4 specGloss = SampleMetallicSpecGloss(uv0, albedoAlpha.a);
+		#if _SPECULAR_SETUP
+		surfaceData.metallic = 1.0h;
+		surfaceData.specular = specGloss.rgb;
+		#else	
+		surfaceData.metallic = specGloss.r;
+		surfaceData.specular = half3(0.0h, 0.0h, 0.0h);
+		#endif
+		surfaceData.smoothness = specGloss.a;
+	#endif
+}

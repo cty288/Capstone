@@ -57,7 +57,7 @@ Varyings LitGBufferPassVertex(Attributes IN)
     UNITY_SETUP_INSTANCE_ID(IN);
     UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-
+	
     VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
 	#ifdef _NORMALMAP
 		VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS, IN.tangentOS);
@@ -110,7 +110,11 @@ FragmentOutput LitGBufferPassFragment(Varyings IN) : SV_TARGET
 	UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 	
     SurfaceData surfaceData;
-    InitializeSurfaceData(IN.uv, surfaceData);
+	#ifdef _WORLD_TILE
+		InitializeWorldSurfaceData(IN.normalWS, IN.positionWS, surfaceData);
+	#else
+		InitializeSurfaceData(IN.uv, surfaceData);
+	#endif
 
     InputData inputData;
     InitializeInputData(IN, surfaceData.normalTS, inputData);

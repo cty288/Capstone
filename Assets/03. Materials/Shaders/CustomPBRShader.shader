@@ -79,6 +79,11 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
         [ToggleUI] _ReceiveShadows("Receive Shadows", Float) = 1.0
         // Editmode props
         _QueueOffset("Queue offset", Float) = 0.0
+    	
+    	[Space(20)]
+    	[Header(World Tiling)]
+    	[Toggle(_WORLD_TILE)] _WorldTile("Use World Tiling", Float) = 0
+    	_TileScaling ("Tile Scaling", Vector) = (1,1,1) // Meters
     }
     SubShader
     {
@@ -131,7 +136,6 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             #pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
             #pragma shader_feature_local_fragment _EMISSION
-            #pragma shader_feature_local_fragment _FRESNELGLOW
             #pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
             #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -162,6 +166,8 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma multi_compile _ DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fog
             #pragma multi_compile_fragment _ DEBUG_DISPLAY
+            #pragma multi_compile_fragment _ _FRESNELGLOW
+            #pragma multi_compile _ _WORLD_TILE
 
             //--------------------------------------
             // GPU Instancing
@@ -286,7 +292,6 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             //#pragma shader_feature_local_fragment _ALPHAPREMULTIPLY_ON
             #pragma shader_feature_local_fragment _EMISSION
-            #pragma shader_feature_local_fragment _FRESNELGLOW
             #pragma shader_feature_local_fragment _METALLICSPECGLOSSMAP
             #pragma shader_feature_local_fragment _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
             #pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -318,7 +323,9 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
             #pragma multi_compile _ LIGHTMAP_ON
             #pragma multi_compile _ DYNAMICLIGHTMAP_ON
             #pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
-
+            #pragma multi_compile_fragment _ _FRESNELGLOW
+            #pragma multi_compile _ _WORLD_TILE
+            
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
