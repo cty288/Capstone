@@ -9,14 +9,16 @@ using MikroFramework.AudioKit;
 using MikroFramework.Event;
 using MikroFramework.Pool;
 using MikroFramework.ResKit;
-
+using MikroFramework.UIKit;
 using Runtime.Controls;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
+using Runtime.Inventory.ViewController;
 using Runtime.Player;
+using Runtime.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -73,7 +75,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
 
 
    private void Update() {
-      if (playerModel.IsPlayerDead()) {
+      if (playerModel.IsPlayerDead() || UIManager.Singleton.GetPanel<InventoryUIViewController>(true)) {
          return;
       }
       //Alpha1 -> 49, Alpha9 -> 57

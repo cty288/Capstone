@@ -7,6 +7,9 @@ namespace Runtime.Enemies.ViewControllers.Base {
 	public abstract class AbstractBossViewController<T> : AbstractEnemyViewController<T> where T : class, IEnemyEntity, new()  {
 		
 		[SerializeField] private string healthBarPrefabName = "UIHealthBar";
+
+		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = true;
+
 		protected override HealthBar OnSpawnHealthBar() {
 			GameObjectPool pool =
 				GameObjectPoolManager.Singleton.CreatePoolFromAB(healthBarPrefabName, null, 1, 10,

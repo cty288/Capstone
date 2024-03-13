@@ -13,6 +13,8 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		public void OnOneSecondPassed();
 		
 		public BindableProperty<bool> IsLevelExitSatisfied { get; }
+		
+		public bool IsInBossFight();
 	}
 
 	public struct OnCurrentLevelExitContitionSatisfied {
@@ -63,6 +65,9 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		}
 
 		public BindableProperty<bool> IsLevelExitSatisfied { get; } = new BindableProperty<bool>(false);
+		public bool IsInBossFight() {
+			return levelModel.CurrentLevel.Value.IsInBossFight.Value;
+		}
 
 		private void OnBossRecycled(IEntity e) {
 			levelModel.CurrentLevel.Value.IsInBossFight.Value = false;

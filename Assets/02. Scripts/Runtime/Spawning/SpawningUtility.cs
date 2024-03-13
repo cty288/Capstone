@@ -314,6 +314,9 @@ namespace Runtime.Spawning {
 				);
 
 				foreach (Transform playerSpawnPoint in playerSpawnPoints) {
+					if (!playerSpawnPoint) {
+						continue;
+					}
 					if (Vector3.Distance(randomPoint, playerSpawnPoint.position) < 20) {
 						continue;
 					}

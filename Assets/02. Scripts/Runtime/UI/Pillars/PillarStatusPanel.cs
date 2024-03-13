@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel;
@@ -50,6 +51,7 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 	}
 
 	private void Start() {
+		
 		var info = pillarModel.ActivatedPillarCurrencyAmount;
 		if (info.Count > 0) {
 			OnPillarActivated(new OnPillarActivated() {
