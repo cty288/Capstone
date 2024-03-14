@@ -1,4 +1,5 @@
-﻿using _02._Scripts.Runtime.Scraps.Model.Base;
+﻿using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
+using _02._Scripts.Runtime.Scraps.Model.Base;
 using MikroFramework.Architecture;
 using Polyglot;
 using Runtime.DataFramework.Entities;
@@ -14,7 +15,7 @@ using UnityEngine.InputSystem;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace _02._Scripts.Runtime.Scraps.ViewControllers {
-	public interface IScrapViewController : IResourceViewController {
+	public interface IScrapViewController : IResourceViewController, IHaveSpawnSizeCollider {
 		public void Freeze();
 	}
 	public class ScrapViewController : AbstractPickableResourceViewController<ScrapEntity>, IScrapViewController {
@@ -22,12 +23,14 @@ namespace _02._Scripts.Runtime.Scraps.ViewControllers {
 		[SerializeField] private string entityName;
 		private Rigidbody rb;
 
+		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = true;
 
 		protected override void Awake() {
 			base.Awake();
 			entityModel = this.GetModel<IScrapModel>();
 			rb = GetComponent<Rigidbody>();
+			
 		}
 
 		protected override void OnBindEntityProperty() {
@@ -82,6 +85,12 @@ namespace _02._Scripts.Runtime.Scraps.ViewControllers {
 		public void Freeze() {
 			rb.isKinematic = true;
 			rb.constraints = RigidbodyConstraints.FreezeAll;
+		}
+
+		public BoxCollider SpawnSizeCollider {
+			get {
+				return 	transform.Find("SelfSizeCollider").GetComponent<BoxCollider>();
+			}
 		}
 	}
 }

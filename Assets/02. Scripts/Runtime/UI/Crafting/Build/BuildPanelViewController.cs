@@ -180,7 +180,8 @@ public class BuildPanelViewController : SwitchableSubPanel {
 		}
 		
 		PurchaseCostInfo costInfo = entity.GetPurchaseCost();
-		HashSet<PreparationSlot> ownedResources = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
+		HashSet<PreparationSlot> ownedResources =
+			inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
 		bool isAllEnough = ResourcePreviewPanel.CheckIsAllEnough(costInfo, ownedResources);
 
 		if (isAllEnough) {

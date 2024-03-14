@@ -27,7 +27,7 @@ public class BaseInventorySubPanel : SwitchableSubPanel
 	private ResourceSlot currentPreviewSlot;
 	
 	
-	private ResourceCategory category;
+	private ResourceCategory[] categories;
 	private IResourceBuildModel resourceBuildModel;
 	private IWeaponPartsModel weaponPartsModel;
 	
@@ -80,30 +80,35 @@ public class BaseInventorySubPanel : SwitchableSubPanel
 
 		//for materials, skills, weapons -> get from base stock
 		HashSet<PreparationSlot> slots = new HashSet<PreparationSlot>();
-		if (category != ResourceCategory.WeaponParts) {
-			slots = inventoryModel.GetBaseStock(category);
-		}else {
-			HashSet<string> unlockedParts = weaponPartsModel.GetUnlockedParts();
-			if (unlockedParts == null || unlockedParts.Count == 0) {
+
+		foreach (ResourceCategory category in categories) {
+			if (category != ResourceCategory.WeaponParts) {
+				slots.UnionWith(inventoryModel.GetBaseStock(category));
+			}else {
+				HashSet<string> unlockedParts = weaponPartsModel.GetUnlockedParts();
+				if (unlockedParts == null || unlockedParts.Count == 0) {
+					return;
+				}
+			
+				foreach (string resourceName in unlockedParts) {
+					ResourceTemplateInfo templateInfo = ResourceTemplates.Singleton.GetResourceTemplates(resourceName);
+					IBuildableResourceEntity templateEntity = templateInfo.TemplateEntity as IBuildableResourceEntity;
+
+					IResourceEntity entity = templateInfo.EntityCreater
+						.Invoke(true, templateEntity.GetMinRarity());
+			
+					entitiesToRemoveWhenClear.Add(entity);
+					PreparationSlot slot = new PreparationSlot();
+					slot.TryAddItem(entity);
+					slots.Add(slot);
+				}
+			}
+			if (slots == null || slots.Count == 0) {
 				return;
 			}
-			
-			foreach (string resourceName in unlockedParts) {
-				ResourceTemplateInfo templateInfo = ResourceTemplates.Singleton.GetResourceTemplates(resourceName);
-				IBuildableResourceEntity templateEntity = templateInfo.TemplateEntity as IBuildableResourceEntity;
-
-				IResourceEntity entity = templateInfo.EntityCreater
-					.Invoke(true, templateEntity.GetMinRarity());
-			
-				entitiesToRemoveWhenClear.Add(entity);
-				PreparationSlot slot = new PreparationSlot();
-				slot.TryAddItem(entity);
-				slots.Add(slot);
-			}
 		}
-		if (slots == null || slots.Count == 0) {
-			return;
-		}
+		
+		
 		ownedResourcePanel.OnShowItems(slots);
 		ownedResourcePanel.RegisterOnSlotClicked(OnSlotClicked);
 	}
@@ -134,7 +139,7 @@ public class BaseInventorySubPanel : SwitchableSubPanel
 		Clear();
 	}
 
-	public void OnSetResourceCategory(ResourceCategory msgCategory) {
-		category = msgCategory;
+	public void OnSetResourceCategory(ResourceCategory[] msgCategory) {
+		categories = msgCategory;
 	}
 }

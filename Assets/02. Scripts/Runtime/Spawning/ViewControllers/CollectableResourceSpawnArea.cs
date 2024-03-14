@@ -155,7 +155,7 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 spawnedInstance.transform.Rotate(Vector3.up, Random.Range(0, 360));
                 spawnedInstance.transform.SetParent(transform.parent);
 
-                Bounds spawnBounds = spawnedInstance.GetComponent<ICollectableResourceViewController>()
+                Bounds spawnBounds = spawnedInstance.GetComponent<IHaveSpawnSizeCollider>()
                     .SpawnSizeCollider.bounds;
                 //move them a little down, randomize between 0.2 to 0.6 extent y
                 spawnedInstance.transform.position -= Vector3.up * (Random.Range(0.2f, 0.6f) * spawnBounds.extents.y);
@@ -172,15 +172,20 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
         }
         
         if (count < minSpawnCount) {
+            
             //randomly sample a position
             for (int i = 0; i < minSpawnCount - count; i++) {
+                spawnedAttemptCount++;
+                if (spawnedAttemptCount % numSpawnPerFrame == 0) {
+                    await UniTask.Yield();
+                }
                 Vector3 randomPos = new Vector3(Random.Range(xMin, xMax), y, Random.Range(zMin, zMax));
                 CollectableResourceSpawnGroup spawnGroup = GetRandomSpawnGroup(out int groupIndex);
                 
                 int prefabIndex = Random.Range(0, spawnGroup.prefabVariants.Count);
                 GameObject prefab = spawnGroup.prefabVariants[prefabIndex];
-                ICollectableResourceViewController collectableResourceViewController =
-                    prefab.GetComponent<ICollectableResourceViewController>();
+                IHaveSpawnSizeCollider collectableResourceViewController =
+                    prefab.GetComponent<IHaveSpawnSizeCollider>();
                 
                 /*Vector3 spawnPos = SpawningUtility.FindNavMeshSuitablePosition(
                     () => collectableResourceViewController.SpawnSizeCollider,
@@ -206,6 +211,7 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 );
                 
                 if (float.IsInfinity(spawnPos.magnitude)) {
+                    i--;
                     continue;
                 }
                 
