@@ -14,7 +14,7 @@ public class BaseInventoryPanel : SwitchableRootPanel {
 
 	[SerializedDictionary("index", "category")] 
 	[SerializeField]
-	private SerializedDictionary<int, ResourceCategory> categoryToIndex;
+	private SerializedDictionary<int, ResourceCategory[]> categoryToIndex;
 
 	[SerializeField] private BaseInventorySubPanel subPanel;
 

@@ -21,9 +21,12 @@ using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
-	public interface ICollectableResourceViewController : IEntityViewController {
+	public interface ICollectableResourceViewController : IEntityViewController, IHaveSpawnSizeCollider {
 		public IEntity OnBuildNewEntity(int level);
 		
+	}
+	
+	public interface IHaveSpawnSizeCollider {
 		public BoxCollider SpawnSizeCollider { get; }
 	}
 	public abstract class CollectableResourceViewController<T> : AbstractBasicEntityViewController<T>

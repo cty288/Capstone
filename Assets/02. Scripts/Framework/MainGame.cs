@@ -8,6 +8,7 @@ using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
 using _02._Scripts.Runtime.ResourceCrafting.Models;
 using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
+using _02._Scripts.Runtime.Scraps.Model.Base;
 using _02._Scripts.Runtime.Skills;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.TimeSystem;
@@ -65,6 +66,7 @@ namespace Framework {
 			this.RegisterModel<IGameEventModel>(new GameEventModel());
 			this.RegisterModel<IResourceResearchModel>(new ResourceResearchModel());
 			this.RegisterModel<IResourceBuildModel>(new ResourceBuildModel());
+			this.RegisterModel<IScrapModel>(new ScrapModel());
 			
 			
 			//???

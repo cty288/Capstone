@@ -111,8 +111,8 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 
                 int prefabIndex = Random.Range(0, spawnGroup.prefabVariants.Count);
                 GameObject prefab = spawnGroup.prefabVariants[prefabIndex];
-                ICollectableResourceViewController collectableResourceViewController =
-                    prefab.GetComponent<ICollectableResourceViewController>();
+                IHaveSpawnSizeCollider collectableResourceViewController =
+                    prefab.GetComponent<IHaveSpawnSizeCollider>();
                 
 
                 Vector3 spawnPos = SpawningUtility.FindNavMeshSuitablePositionFast(
