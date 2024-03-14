@@ -46,6 +46,12 @@ public class WormBossHeadMine : AbstractBulletViewController
         explosionPool = GameObjectPoolManager.Singleton.CreatePool(explosionPrefab, 10,30);
     }
 
+    private void OnEnable()
+    {
+        isExploding = false;
+        onGround = false;
+    }
+
     protected override void Update()
     {
         //travel to ground
