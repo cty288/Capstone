@@ -28,6 +28,8 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 	
 	public interface IHaveSpawnSizeCollider {
 		public BoxCollider SpawnSizeCollider { get; }
+
+		public void OnSpawnInWorld();
 	}
 	public abstract class CollectableResourceViewController<T> : AbstractBasicEntityViewController<T>
 		, ICollectableResourceViewController, IHurtResponder where T : class, IHaveCustomProperties, IHaveTags, ICollectableEntity, new() {
@@ -233,6 +235,10 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
+
+		public void OnSpawnInWorld() {
+			
+		}
 
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Neutral);
 		public bool CheckHurt(HitData data) {

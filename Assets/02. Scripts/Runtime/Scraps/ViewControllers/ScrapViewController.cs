@@ -92,5 +92,9 @@ namespace _02._Scripts.Runtime.Scraps.ViewControllers {
 				return 	transform.Find("SelfSizeCollider").GetComponent<BoxCollider>();
 			}
 		}
+
+		public void OnSpawnInWorld() {
+			Freeze();
+		}
 	}
 }

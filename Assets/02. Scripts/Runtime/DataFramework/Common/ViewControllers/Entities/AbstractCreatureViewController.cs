@@ -366,6 +366,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
 
+		public void OnSpawnInWorld() {
+			
+		}
+
 		public abstract ICreature OnInitEntity(int level, int rarity);
 		public CancellationToken GetCancellationTokenOnStunnedOrDie() {
 			return ctsWhenDieOrStunned.Token;
