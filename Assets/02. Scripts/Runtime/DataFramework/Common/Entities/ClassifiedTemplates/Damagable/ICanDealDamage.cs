@@ -20,8 +20,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		void DoOnDealDamage(ICanDealDamage sourceDealer, IDamageable damageable, int damage) {
 			OnDealDamage(sourceDealer, damageable, damage);
 			OnDealDamageCallback?.Invoke(sourceDealer, damageable, damage);
-			Debug.Log("[ICanDealDamageDebug]" +this.GetType().Name + "deal damage to " + damageable.GetType().Name + " with " + damage +
-			          " damage.");
+			// Debug.Log("[ICanDealDamageDebug]" +this.GetType().Name + "deal damage to " + damageable.GetType().Name + " with " + damage +
+			//           " damage.");
 			ParentDamageDealer?.DoOnDealDamage(sourceDealer, damageable, damage);
 		}
 		

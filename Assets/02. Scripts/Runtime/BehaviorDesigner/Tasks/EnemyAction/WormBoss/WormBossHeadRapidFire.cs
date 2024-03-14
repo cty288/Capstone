@@ -18,6 +18,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Enemies;
 using Runtime.Weapons.ViewControllers.Base;
 using TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus;
+using System.Collections.Generic;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -25,11 +26,12 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     {
         private TaskStatus taskStatus;
         public SharedGameObject firePoint;
-        
+        public GameObject trail;
         public SharedGameObject rapidFireBulletPrefab;
         private SafeGameObjectPool pool;
-
+        private SafeGameObjectPool trailPool;
         private GameObject player;
+        private List<GameObject> trailList = new List<GameObject>();
         
         private float bulletSpeed;
         private int bulletCountPerWave;
@@ -44,7 +46,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             base.OnStart(); 
             
             taskStatus = TaskStatus.Running;
-            pool = GameObjectPoolManager.Singleton.CreatePool(rapidFireBulletPrefab.Value, 1, 3);
+            pool = GameObjectPoolManager.Singleton.CreatePool(rapidFireBulletPrefab.Value, 30, 50);
+            trailPool = GameObjectPoolManager.Singleton.CreatePool(trail, 30, 50);
             
             player = GetPlayer();
             
@@ -66,62 +69,71 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         
         private async UniTask SkillExecute()
         {
-            await UniTask.WaitForSeconds(1f,
+            await UniTask.WaitForSeconds(3f,
                 cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
-            for (int i = 0; i < bulletWaves; i++)
+            for (int i = 0; i < 1; i++)
             {
                 await RapidFire();
             }
+          
+            await UniTask.WaitForSeconds(2f,
+                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
-            // float timer = duration;
-            // float lastShootTime = 0f;
-            // while (timer > 0)
-            // {
-            //     timer -= Time.deltaTime;
-            //     
-            //     if(lastShootTime + bulletWaveInterval < Time.time)
-            //     {
-            //         lastShootTime = Time.time;
-            //         for (int i = 0; i < bulletCountPerWave; i++)
-            //         {
-            //             SpawnBullet();
-            //         }
-            //     }
-            //     await UniTask.Yield(PlayerLoopTiming.Update,
-            //         cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
-            // }
-            // await UniTask.WaitForSeconds(1f,
-            //     cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            foreach(GameObject go in trailList)
+            {
+                trailPool.Recycle(go);
+            }
+            
             taskStatus = TaskStatus.Success;
         }
         
         void SpawnBullet()
         {
-            GameObject b = pool.Allocate();
-            
             // Calculate a random rotation offset within a specified range
-            float randomAngle = Random.Range(-10, 10);
-            Quaternion randomRotation = Quaternion.Euler(randomAngle, randomAngle, 0);
+            Vector3 randomPointAroundPlayer = player.transform.position + Random.insideUnitSphere * 10;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPointAroundPlayer, out hit, 20f, NavMesh.AllAreas))
+            {
+                randomPointAroundPlayer = hit.position + new Vector3(0,1f,0);
+            }
+            else
+            {
+                return;
+            }
             
+            GameObject b = pool.Allocate();
+            GameObject trail = trailPool.Allocate();
+            trailList.Add(trail);
             b.transform.position = firePoint.Value.transform.position;
-            b.transform.rotation = firePoint.Value.transform.rotation * randomRotation;
-            
-            b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
-                bulletDamage,
-                gameObject, gameObject.GetComponent<ICanDealDamage>() , bulletRange);
+            b.transform.LookAt(randomPointAroundPlayer);
+            // b.name = $"bullet {i}";
 
-            b.GetComponent<WormBullet>().SetData(bulletSpeed, player, bulletAccuracy);
+            var lineRenderer = trail.GetComponent<LineRenderer>();
+            lineRenderer.SetPosition(0, firePoint.Value.transform.position);
+            lineRenderer.SetPosition(1, randomPointAroundPlayer);
+
+            // new GameObject($"bullet end {i}").transform.position = randomPointAroundPlayer;
+            
+            b.GetComponent<IBulletViewController>().Init(
+                enemyEntity.CurrentFaction.Value,
+                bulletDamage,
+                gameObject, 
+                gameObject.GetComponent<ICanDealDamage>(), 
+                bulletRange
+            );
+
+            b.GetComponent<WormBossHeadMine>().SetData(bulletSpeed, randomPointAroundPlayer);
         }
         
-        private async UniTask RapidFire()
+        private async UniTask  RapidFire()
         {
-            for (int i = 0; i < bulletCountPerWave; i++)
+            for (int i = 0; i < 10; i++)
             {
                 SpawnBullet();
+                await UniTask.WaitForSeconds(0.2f,
+                    cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
-            await UniTask.WaitForSeconds(bulletWaveInterval,
-                cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
         }
     }
 }

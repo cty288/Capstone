@@ -59,7 +59,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             maxRange = enemyEntity.GetCustomDataValue<float>("laserBeam", "maxRange");
             interval = enemyEntity.GetCustomDataValue<float>("laserBeam", "interval");
             laserDuration = enemyEntity.GetCustomDataValue<float>("laserBeam", "laserDuration");
-
             SkillExecute();
         }
         

@@ -72,12 +72,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             if (NavMesh.SamplePosition(sample, out hit, 30, NavMeshHelper.GetSpawnableAreaMask()))
             {
                 emergePosition = hit.position;
-                Debug.Log($"WORM BOSS: EMERGE {emergePosition}");
-            }
-            else
-            {
-                Debug.Log("WORM BOSS: EMERGE NO POSITION FOUND");
-                // emergePosition = previousDivePosition.Value;
             }
 
             float height = 30f;
@@ -115,8 +109,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             rb.useGravity = false;
             spineAnimator.GoBackSpeed = 0f;
             
-
-            Debug.Log("Worm Boss: emerge not undergound");
             enemyEntity.isUnderground = false;
             
             taskStatus = TaskStatus.Success;
