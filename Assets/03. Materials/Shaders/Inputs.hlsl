@@ -42,6 +42,9 @@ float _RippleStrength;
 float _SteepnessPower;
 
 float3 _TileScaling;
+float _WorldHeightLow;
+float _WorldHeightHigh;
+float4 _WorldNoise_ST;
     
 CBUFFER_END
 
@@ -87,6 +90,8 @@ TEXTURE2D(_DetailNormalMap);    SAMPLER(sampler_DetailNormalMap);
 TEXTURE2D(_MetallicGlossMap);   SAMPLER(sampler_MetallicGlossMap);
 TEXTURE2D(_SpecGlossMap);       SAMPLER(sampler_SpecGlossMap);
 TEXTURE2D(_ClearCoatMap);       SAMPLER(sampler_ClearCoatMap);
+TEXTURE2D(_WorldHeightGradient);       SAMPLER(sampler_WorldHeightGradient);
+TEXTURE2D(_WorldNoise);       SAMPLER(sampler_WorldNoise);
 
 #ifdef _SPECULAR_SETUP
 	#define SAMPLE_METALLICSPECULAR(uv) SAMPLE_TEXTURE2D(_SpecGlossMap, sampler_SpecGlossMap, uv)
@@ -132,7 +137,7 @@ half SampleOcclusion(float2 uv) {
 void InitializeSurfaceData(float2 uv, out SurfaceData surfaceData){
     surfaceData = (SurfaceData)0; // avoids "not completely initalized" errors
 
-	half4 albedoAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+	half4 albedoAlpha = SampleAlbedoAlpha(uv * _BaseMap_ST.xy + _BaseMap_ST.zw, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
 	surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
 	surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
 	
@@ -165,9 +170,9 @@ void InitializeWorldSurfaceData(float3 normalWS, float3 positionWS, out SurfaceD
 		float weightY = abs(normalWS.y);
 		float weightZ = abs(normalWS.z);
 
-		half4 albedoAlpha0 = SampleAlbedoAlpha(uv0, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
-		half4 albedoAlpha1 = SampleAlbedoAlpha(uv1, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
-		half4 albedoAlpha2 = SampleAlbedoAlpha(uv2, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+		half4 albedoAlpha0 = SampleAlbedoAlpha(uv0 * _BaseMap_ST.xy + _BaseMap_ST.zw, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+		half4 albedoAlpha1 = SampleAlbedoAlpha(uv1 * _BaseMap_ST.xy + _BaseMap_ST.zw, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+		half4 albedoAlpha2 = SampleAlbedoAlpha(uv2 * _BaseMap_ST.xy + _BaseMap_ST.zw, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
 		half4 albedoAlpha =  (weightX * albedoAlpha0 + weightY * albedoAlpha1 + weightZ * albedoAlpha2);
 		surfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
 		surfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;

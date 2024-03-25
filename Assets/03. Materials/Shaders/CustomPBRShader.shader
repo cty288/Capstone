@@ -84,6 +84,10 @@ Shader "Universal Render Pipeline/Custom/CustomPBRShader"
     	[Header(World Tiling)]
     	[Toggle(_WORLD_TILE)] _WorldTile("Use World Tiling", Float) = 0
     	_TileScaling ("Tile Scaling", Vector) = (1,1,1) // Meters
+    	_WorldHeightGradient ("World Height Gradient", 2D) = "white" {}
+    	_WorldHeightLow("Lowest Height", Float) = -30
+    	_WorldHeightHigh("Highest Height", Float) = 120
+    	_WorldNoise("World Noise Map", 2D) = "black" {}
     }
     SubShader
     {

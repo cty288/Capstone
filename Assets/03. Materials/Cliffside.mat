@@ -23,8 +23,8 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: e3adc16eb3921de48a178ce82c92cbd1, type: 3}
+        m_Scale: {x: 0.33, y: 0.33}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: eec9431de361b3c449e65eeb49fc2239, type: 3}
@@ -65,6 +65,14 @@ Material:
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WorldHeightGradient:
+        m_Texture: {fileID: 2800000, guid: a27901127b0c7ca43b6044924c830887, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WorldNoise:
+        m_Texture: {fileID: 2800000, guid: c2a562a43536c014eb7626718a6b60ba, type: 3}
+        m_Scale: {x: 0.05, y: 0.05}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
@@ -118,14 +126,16 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1
+    - _WorldHeightHigh: 120
+    - _WorldHeightLow: -30
     - _WorldTile: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.4245283, g: 0.3190637, b: 0.3190637, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _HighlightColor: {r: 0.6509434, g: 0.52414453, b: 0.52414453, a: 1}
     - _ShadowRadianceRange: {r: 0.4, g: 0.55, b: 0, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TileScaling: {r: 1, g: 1, b: 1, a: 1}
+    - _TileScaling: {r: 0.56, g: 0.6, b: 0.76, a: 0.79}
   m_BuildTextureStacks: []
