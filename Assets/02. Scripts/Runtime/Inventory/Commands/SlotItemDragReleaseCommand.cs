@@ -1,6 +1,7 @@
 ﻿
 using _02._Scripts.Runtime.Skills.Model.Base;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Pool;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
@@ -21,7 +22,9 @@ namespace Runtime.Inventory.Commands {
 		
 		
 		protected override void OnExecute() {
-			if (!ResourceSlot.currentHoveredSlot.Value) {
+			if (!ResourceSlot.currentHoveredSlot.Value)
+			{
+				AudioSystem.Singleton.Play2DSound("item_invalid");
 				return;
 			}
 			ResourceSlot currentHoveredSlot = ResourceSlot.currentHoveredSlot.Value.Slot;
@@ -32,27 +35,46 @@ namespace Runtime.Inventory.Commands {
 					if (currentHoveredSlot is RubbishSlot) {
 						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
 						if (fromSlot.GetCanThrow(topItem)) {
+							AudioSystem.Singleton.Play2DSound("discard");
 							this.SendCommand<PlayerThrowAllSlotResourceCommand>(
 								PlayerThrowAllSlotResourceCommand.Allocate(fromSlot));
+						}
+						else
+						{
+							AudioSystem.Singleton.Play2DSound("item_invalid");
 						}
 					}else if (currentHoveredSlot is UpgradeSlot) {
 						ISkillEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID()) as ISkillEntity;
 						if (ResourceSlot.currentHoveredSlot.Value.CanPlaceItem(topItem, false)) {
+							AudioSystem.Singleton.Play2DSound("slot_item");
 							this.SendCommand<OpenSkillUpgradePanelCommand>(OpenSkillUpgradePanelCommand.Allocate(topItem));
+						}
+						else
+						{
+							AudioSystem.Singleton.Play2DSound("item_invalid");
 						}
 						
 					}
 					else {
 						IResourceEntity topItem = GlobalGameResourceEntities.GetAnyResource(fromSlot.GetLastItemUUID());
 						
-						if (currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem)) {
+						if (currentHoveredSlot.TryMoveAllItemFromSlot(fromSlot, topItem))
+						{
+							AudioSystem.Singleton.Play2DSound("slot_item");
 							topItem.OnInventorySlotUpdate(fromSlot, currentHoveredSlot);
-							if (topItem != null && currentHoveredSlot is LeftHotBarSlot slot && topItem is ISkillEntity skill) {
+							if (topItem != null && currentHoveredSlot is LeftHotBarSlot slot &&
+							    topItem is ISkillEntity skill)
+							{
 								//skill cooldown reset
 								skill.StartSwapInventoryCooldown(swapInventoryCooldown);
 							}
+
 							inventorySystem.ForceUpdateCurrentHotBarSlotCanSelect();
-							
+
+						}
+						else
+						{
+							AudioSystem.Singleton.Play2DSound("item_invalid");
 						}
 					}
 				}

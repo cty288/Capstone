@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Pool;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
@@ -17,7 +18,8 @@ namespace Runtime.Inventory.Commands {
 		public PlayerThrowAllSlotResourceCommand() {
 			
 		}
-		protected override void OnExecute() {
+		protected override void OnExecute()
+		{
 			List<string> uuids = fromSlot.GetUUIDList().Select(item => item).ToList();
 			fromSlot.Clear();
 			List<IResourceEntity> entities = new List<IResourceEntity>();

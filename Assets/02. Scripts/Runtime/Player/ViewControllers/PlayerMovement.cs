@@ -143,6 +143,7 @@ namespace Runtime.Player.ViewControllers
         }
 
         private bool onSlope;
+        private float jumpStartTime;
    
         
 
@@ -209,13 +210,22 @@ namespace Runtime.Player.ViewControllers
             
             playerActions = ClientInput.Singleton.GetPlayerActions();
             groundCheck = transform.Find("GroundCheck").GetComponent<TriggerCheck>();
-            // groundCheck.OnEnter += OnLandGround;
+            groundCheck.OnEnter += OnLandGround;
+            groundCheck.OnExit += OnLeaveGround;
         }
 
         private void OnLandGround(Collider other)
         {
-            AudioSystem.Singleton.Play2DSound("jump_land");
+            float difference = Time.time - jumpStartTime;
+            if (difference > 0.3f) 
+                AudioSystem.Singleton.Play2DSound("jump_land");
         }
+        
+        private void OnLeaveGround(Collider other)
+        {
+            jumpStartTime = Time.time;
+        }
+
         
         // Start is called before the first frame update
         void Start()
@@ -677,7 +687,7 @@ namespace Runtime.Player.ViewControllers
         
         private void Jump()
         {
-            AudioSystem.Singleton.Play2DSound("jump_land");
+            AudioSystem.Singleton.Play2DSound("jump");
             exitingSlope = true;
             // reset y velocity
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);

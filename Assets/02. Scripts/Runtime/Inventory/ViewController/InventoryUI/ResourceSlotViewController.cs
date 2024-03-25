@@ -189,11 +189,13 @@ namespace Runtime.Inventory.ViewController {
         
         public void OnPointerDown(PointerEventData eventData) {
             pointerDownObject = gameObject;
-            AudioSystem.Singleton.Play2DSound("item_deselect");
+            if(slot != null && !slot.IsEmpty())
+                AudioSystem.Singleton.Play2DSound("item_select");
         }
 
         public void OnPointerUp(PointerEventData eventData) {
-            AudioSystem.Singleton.Play2DSound("item_select");
+            // if(slot != null && !slot.IsEmpty())
+            //     AudioSystem.Singleton.Play2DSound("item_deselect");
             if (topVC && !startDragTriggered && pointerDownObject == gameObject) {
                 OnPointerClick();
             }
@@ -279,7 +281,6 @@ namespace Runtime.Inventory.ViewController {
                 return;
             }
             ShowCantThrowMessage(false);
-            AudioSystem.Singleton.Play2DSound("slot_item");
             //check if pointer is on self
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
                 this.SendCommand<SlotItemDragReleaseCommand>(

@@ -101,7 +101,7 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 
 		if (originallySelected)
 		{
-			AudioSystem.Singleton.Play2DSound("item_deselect");
+			// AudioSystem.Singleton.Play2DSound("item_deselect");
 			layout.SetSelected(slotVC, false);
 			ResourceCategory category = layout == weaponSlotLayout ? ResourceCategory.Weapon : ResourceCategory.Skill;
 			

@@ -104,12 +104,12 @@ public class PlayerImageEffectController : EntityAttachedViewController<PlayerEn
 			additioanlHurtEffectSize = Mathf.Min(additioanlHurtEffectSize, 2f);
 			hurtEffectSize += additioanlHurtEffectSize;
 		
-			if(hurtPercentage > 0.2f && isLowHealth) {
+			if(healthPercentage > 0.2f && isLowHealth) {
 				isLowHealth = false;
 				AudioSystem.Singleton.StopSound("low_health");
 			}
 			
-			if(hurtPercentage <= 0.2f && !isLowHealth) {
+			if(healthPercentage <= 0.2f && !isLowHealth) {
 				isLowHealth = true;
 				AudioSystem.Singleton.Play2DSound("low_health", 1f, true);
 			}
