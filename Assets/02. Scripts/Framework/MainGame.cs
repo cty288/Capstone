@@ -51,6 +51,7 @@ namespace Framework {
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());
 			this.RegisterModel<IRawMaterialModel>(new RawMaterialModel());
 			this.RegisterModel<IInventoryModel>(new InventoryModel());
+			this.RegisterModel<IWeaponPartsModel>(new WeaponPartsModel());
 			this.RegisterModel<IWeaponModel>(new WeaponModel());
 			this.RegisterModel<IGamePlayerModel>(new GamePlayerModel());
 			this.RegisterModel<ILevelModel>(new LevelModel());
@@ -60,7 +61,7 @@ namespace Framework {
 			this.RegisterModel<ICurrencyModel>(new CurrencyModel());
 			this.RegisterModel<ISkillModel>(new SkillModel());
 			this.RegisterModel<IBuffModel>(new BuffModel());
-			this.RegisterModel<IWeaponPartsModel>(new WeaponPartsModel());
+			
 			this.RegisterModel<IPillarModel>(new PillarModel());
 			this.RegisterModel<IGameTimeModel>(new GameTimeModel());
 			this.RegisterModel<IGameEventModel>(new GameEventModel());

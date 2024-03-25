@@ -31,7 +31,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 		
 		protected override void OnInit() {
 			buffSystem = this.GetSystem<IBuffSystem>();
-			this.RegisterEvent<OnWeaponPartsUpdate>(OnWeaponPartsUpdate);
+			this.RegisterEvent<OnEquippedWeaponPartsUpdate>(OnWeaponPartsUpdate);
 			weaponPartsModel = this.GetModel<IWeaponPartsModel>();
 			
 			buildModel = this.GetModel<IResourceBuildModel>();
@@ -91,7 +91,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			}
 		}
 
-		private void OnWeaponPartsUpdate(OnWeaponPartsUpdate e) {
+		private void OnWeaponPartsUpdate(OnEquippedWeaponPartsUpdate e) {
 			IWeaponPartsEntity previousWeaponParts =
 				GlobalGameResourceEntities.GetAnyResource(e.PreviousTopPartsUUID) as IWeaponPartsEntity;
             
@@ -110,9 +110,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 					buff.RecycleToCache();
 				}
 			}
-
-			
-
 		}
 	}
 }

@@ -34,6 +34,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public CurrencyType GetBuildType();
 		
 		public int GetRarity();
+		
+		public void Upgrade(int count);
 	}
 	
 	public abstract class WeaponPartsEntity<T, TBuffType> : BuildableResourceEntity<T>, IWeaponPartsEntity
@@ -104,6 +106,16 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public Type BuffType { get; } = typeof(TBuffType);
 		public CurrencyType GetBuildType() {
 			return buildType.RealValue.Value;
+		}
+
+		public void Upgrade(int count) {
+			int currentLevel = GetRarity();
+			int newLevel = currentLevel + count;
+			if (newLevel > GetMaxRarity()) {
+				newLevel = GetMaxRarity();
+			}
+
+			GetRarityProperty().RealValue.Value = newLevel;
 		}
 
 
