@@ -404,9 +404,8 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
 #endif
 
 #ifdef TERRAIN_GBUFFER
-
     BRDFData brdfData;
-    InitializeBRDFData(albedo, metallic, /* specular */ half3(0.0h, 0.0h, 0.0h), smoothness, alpha, brdfData);
+    InitializeBRDFData(albedo, (1-CalculateFresnel(inputData, 4, 0.5, 0.9)) * metallic, /* specular */ half3(0, 0, 0), smoothness, alpha, brdfData);
 
     // Baked lighting.
     half4 color;
@@ -425,6 +424,7 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
     // Blending of smoothness and normals is also not correct but close enough?
     brdfData.albedo.rgb *= alpha;
     brdfData.diffuse.rgb *= alpha;
+    brdfData.specular =CalculateFresnel(inputData, 4, 0.5, 0.9);
     brdfData.specular.rgb *= alpha;
     brdfData.reflectivity *= alpha;
     inputData.normalWS = inputData.normalWS * alpha;
