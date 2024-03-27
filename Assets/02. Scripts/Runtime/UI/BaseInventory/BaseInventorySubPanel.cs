@@ -60,7 +60,7 @@ public class BaseInventorySubPanel : SwitchableSubPanel
 		}
 		entitiesToRemoveWhenClear.Clear();
 		
-		ownedResourcePanel.OnUIClosed();
+		ownedResourcePanel.ClearLayout();
 		ownedResourcePanel.UnRegisterOnSlotClicked(OnSlotClicked);
 		ClearPreview();
 		

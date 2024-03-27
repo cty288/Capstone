@@ -84,9 +84,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			//generate new in-game purchasable parts
 			List<(ResourceTemplateInfo, int)> selectedWeaponParts = new List<(ResourceTemplateInfo, int)>();
 			HashSet<string> alreadySelectedWeaponParts = new HashSet<string>();
-			
-			for (int i = 0; i < 5; i++) {
-				int level = Random.Range(newLevel, newLevel + 2);
+
+			int[] levels = new[] {1, 1, 1, 2, 3};
+			for (int i = 0; i < levels.Length; i++) {
+				int level = levels[i];
 				level = Mathf.Clamp(level, 1, LevelModel.MAX_LEVEL);
 				
 				var weaponParts =
