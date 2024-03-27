@@ -5,6 +5,7 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl"
+#include "DesertLighting.hlsl"
 
 struct Attributes
 {
@@ -377,6 +378,18 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
 
     InputData inputData;
     InitializeInputData(IN, normalTS, inputData);
+    SurfaceData surfaceData;
+    surfaceData.albedo = albedo;
+    surfaceData.specular = half3(0.h, 0.h, 0.h);
+    surfaceData.metallic = metallic;
+    surfaceData.smoothness = smoothness;
+    surfaceData.normalTS = half3(0, 0, 1);
+    surfaceData.emission = half3(0, 0, 0);
+    surfaceData.occlusion = occlusion;
+    surfaceData.alpha = alpha;
+    surfaceData.clearCoatMask = 0;
+    surfaceData.clearCoatSmoothness = 1;
+    
     SETUP_DEBUG_TEXTURE_DATA(inputData, IN.uvMainAndLM.xy, _BaseMap);
 
 #if defined(_DBUFFER)
@@ -403,6 +416,10 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
     color.a = alpha;
     SplatmapFinalColor(color, inputData.fogCoord);
 
+    half radiance = CalculateRadiance(mainLight.direction, mainLight.shadowAttenuation, half3(inputData.normalWS.x, inputData.normalWS.y * 0.3h, inputData.normalWS.z), 0.3f, 0.95f);
+    radiance = saturate(4 * radiance);
+    color = lerp(color, color*2, radiance);
+
     // Dynamic lighting: emulate SplatmapFinalColor() by scaling gbuffer material properties. This will not give the same results
     // as forward renderer because we apply blending pre-lighting instead of post-lighting.
     // Blending of smoothness and normals is also not correct but close enough?
@@ -417,8 +434,13 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
 
 #else
 
-    half4 color = UniversalFragmentPBR(inputData, albedo, metallic, /* specular */ half3(0.0h, 0.0h, 0.0h), smoothness, occlusion, /* emission */ half3(0, 0, 0), alpha);
+    half4 color = DesertFragmentPBR(inputData, surfaceData, inputData.normalWS);
 
+    //float fresnel = CalculateFresnel(inputData, _FresnelPower, _FresnelCutOffOut, _FresnelCutOffIn);
+
+    //float4 highlightColor = color <= 0.5 ? 2 * color * _HighlightColor : 1 - 2 * (1 - color) * (1 - _HighlightColor);
+
+    //color = lerp(color, highlightColor, fresnel);
     SplatmapFinalColor(color, inputData.fogCoord);
 
     return half4(color.rgb, 1.0h);
