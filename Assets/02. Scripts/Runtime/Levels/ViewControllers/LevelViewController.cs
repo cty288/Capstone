@@ -320,7 +320,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			return subAreaLevels;
 		}
 
-		public async UniTask Init() {
+		public virtual async UniTask Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
 			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);

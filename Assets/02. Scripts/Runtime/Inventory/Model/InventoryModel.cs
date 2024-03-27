@@ -251,7 +251,7 @@ namespace Runtime.Inventory.Model {
 
 		public HashSet<PreparationSlot> GetBaseStock(ResourceCategory category) {
 			if (!baseStockedItems.ContainsKey(category)) {
-				return null;
+				return new HashSet<PreparationSlot>();
 			}
 
 			return baseStockedItems[category];

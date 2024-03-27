@@ -9,7 +9,7 @@ using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
 using UnityEngine;
 
-public class PreparationSlotLayoutViewController : AbstractMikroController<MainGame>
+public class BasicSlotLayoutViewController : AbstractMikroController<MainGame>
 {
 		protected RectTransform slotLayout;
 		[SerializeField] private GameObject slotPrefab;
@@ -23,7 +23,7 @@ public class PreparationSlotLayoutViewController : AbstractMikroController<MainG
 		[SerializeField] private bool isRightSide = false;
 		
 		
-		private Action<ResourceSlotViewController, PreparationSlotLayoutViewController, bool> onSlotClicked;
+		private Action<ResourceSlotViewController, BasicSlotLayoutViewController, bool> onSlotClicked;
 		private HashSet<ResourceSlotViewController> selectedSlots = new HashSet<ResourceSlotViewController>();
 		
 		
@@ -58,19 +58,19 @@ public class PreparationSlotLayoutViewController : AbstractMikroController<MainG
 			return slots;
 		}
 
-		public void OnShowItems(HashSet<PreparationSlot> slots) {
+		public void OnShowItems(HashSet<ResourceSlot> slots, bool allowDrag = false) {
 			if(slots == null)
 				return;
 			
-			OnShowItems(slots.ToList());
+			OnShowItems(slots.ToList(), allowDrag);
 		}
 
-		public void OnShowItems(List<PreparationSlot> slots) {
+		public void OnShowItems(List<ResourceSlot> slots, bool allowDrag = false) {
 			if(slots == null)
 				return;
 			
 			Awake();
-			foreach (PreparationSlot slot in slots) {
+			foreach (ResourceSlot slot in slots) {
 				if (slot.GetQuantity() == 0) {
 					continue;
 				}
@@ -80,7 +80,7 @@ public class PreparationSlotLayoutViewController : AbstractMikroController<MainG
 
 				ResourceSlotViewController slotViewController = slotObject.GetComponent<ResourceSlotViewController>();
 				slotViewController.SetSlot(slot, false);
-				slotViewController.AllowDrag = false;
+				slotViewController.AllowDrag = allowDrag;
 				slotViewControllers.Add(slotViewController);
 				slotViewController.Activate(true, isRightSide);
 
@@ -92,11 +92,11 @@ public class PreparationSlotLayoutViewController : AbstractMikroController<MainG
 			onSlotClicked?.Invoke(vc, this, selectedSlots.Contains(vc));
 		}
 		
-		public void RegisterOnSlotClicked(Action<ResourceSlotViewController,PreparationSlotLayoutViewController, bool> callback) {
+		public void RegisterOnSlotClicked(Action<ResourceSlotViewController,BasicSlotLayoutViewController, bool> callback) {
 			onSlotClicked += callback;
 		}
 		
-		public void UnRegisterOnSlotClicked(Action<ResourceSlotViewController, PreparationSlotLayoutViewController, bool> callback) {
+		public void UnRegisterOnSlotClicked(Action<ResourceSlotViewController, BasicSlotLayoutViewController, bool> callback) {
 			onSlotClicked -= callback;
 		}
 		

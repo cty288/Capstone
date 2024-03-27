@@ -486,7 +486,7 @@ namespace Runtime.Weapons.Model.Base
 
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType) {
             if (!weaponParts.ContainsKey(weaponPartType)) {
-                return null;
+                return new HashSet<WeaponPartsSlot>();
             }
             return weaponParts[weaponPartType];
         }

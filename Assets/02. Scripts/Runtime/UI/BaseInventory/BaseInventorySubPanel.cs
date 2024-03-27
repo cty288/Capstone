@@ -17,7 +17,7 @@ using UnityEngine.UI;
 
 public class BaseInventorySubPanel : SwitchableSubPanel
 {
-	private PreparationSlotLayoutViewController ownedResourcePanel;
+	private BasicSlotLayoutViewController ownedResourcePanel;
 	
 	//private GameObject previewPanel;
 	//private ISkillModel skillModel;
@@ -42,7 +42,7 @@ public class BaseInventorySubPanel : SwitchableSubPanel
 
 	private void Awake() {
 		
-		ownedResourcePanel = transform.Find("OwnedMaterialPanel").GetComponent<PreparationSlotLayoutViewController>();
+		ownedResourcePanel = transform.Find("OwnedMaterialPanel").GetComponent<BasicSlotLayoutViewController>();
 		resourceBuildModel = this.GetModel<IResourceBuildModel>();
 		inventoryModel = this.GetModel<IInventoryModel>();
 		weaponPartsModel = this.GetModel<IWeaponPartsModel>();
@@ -79,7 +79,7 @@ public class BaseInventorySubPanel : SwitchableSubPanel
 		Clear();
 
 		//for materials, skills, weapons -> get from base stock
-		HashSet<PreparationSlot> slots = new HashSet<PreparationSlot>();
+		HashSet<ResourceSlot> slots = new HashSet<ResourceSlot>();
 
 		foreach (ResourceCategory category in categories) {
 			if (category != ResourceCategory.WeaponParts) {
@@ -115,7 +115,7 @@ public class BaseInventorySubPanel : SwitchableSubPanel
 	
 	
 
-	private void OnSlotClicked(ResourceSlotViewController slotVC, PreparationSlotLayoutViewController layout, bool isSelectedAlready) {
+	private void OnSlotClicked(ResourceSlotViewController slotVC, BasicSlotLayoutViewController layout, bool isSelectedAlready) {
 		currentPreviewSlot = slotVC.Slot;
 
 		if (currentPreviewSlot != null && !currentPreviewSlot.IsEmpty()) {

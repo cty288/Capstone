@@ -31,8 +31,8 @@ using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
 
 public class BuildPanelViewController : SwitchableSubPanel {
-    private  PreparationSlotLayoutViewController buildableResourcePanel;
-	private PreparationSlotLayoutViewController materialPanel;
+    private  BasicSlotLayoutViewController buildableResourcePanel;
+	private BasicSlotLayoutViewController materialPanel;
 	//private GameObject previewPanel;
 	//private ISkillModel skillModel;
 	private IInventoryModel inventoryModel;
@@ -60,8 +60,8 @@ public class BuildPanelViewController : SwitchableSubPanel {
 
 
 	private void Awake() {
-		buildableResourcePanel = transform.Find("BuildableResourcePanel").GetComponent<PreparationSlotLayoutViewController>();
-		materialPanel = transform.Find("OwnedMaterialPanel").GetComponent<PreparationSlotLayoutViewController>();
+		buildableResourcePanel = transform.Find("BuildableResourcePanel").GetComponent<BasicSlotLayoutViewController>();
+		materialPanel = transform.Find("OwnedMaterialPanel").GetComponent<BasicSlotLayoutViewController>();
 		
 		resourceBuildModel = this.GetModel<IResourceBuildModel>();
 		
@@ -104,7 +104,9 @@ public class BuildPanelViewController : SwitchableSubPanel {
 
 	private void Refresh() {
 		Clear();
-		var materials = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
+		List<ResourceSlot> materials = new HashSet<ResourceSlot>()
+			.Union(inventoryModel.GetBaseStock(ResourceCategory.RawMaterial)).ToList();
+		
 		
 		noBuildableResourceHint.SetActive(false);
 		noResourceHint.SetActive(materials == null || materials.Count == 0);
@@ -115,7 +117,7 @@ public class BuildPanelViewController : SwitchableSubPanel {
 			return;
 		}
 
-		HashSet<PreparationSlot> buildableSlots = new HashSet<PreparationSlot>();
+		HashSet<ResourceSlot> buildableSlots = new HashSet<ResourceSlot>();
 		foreach (string resourceName in buildableResourceNames) {
 			ResourceTemplateInfo templateInfo = ResourceTemplates.Singleton.GetResourceTemplates(resourceName);
 			IBuildableResourceEntity templateEntity = templateInfo.TemplateEntity as IBuildableResourceEntity;
@@ -149,7 +151,7 @@ public class BuildPanelViewController : SwitchableSubPanel {
 		return isNew;
 	}
 
-	private void OnSlotClicked(ResourceSlotViewController slotVC, PreparationSlotLayoutViewController layout, bool isSelectedAlready) {
+	private void OnSlotClicked(ResourceSlotViewController slotVC, BasicSlotLayoutViewController layout, bool isSelectedAlready) {
 		currentPreviewSlot = slotVC.Slot;
 
 		if (currentPreviewSlot != null && !currentPreviewSlot.IsEmpty()) {
