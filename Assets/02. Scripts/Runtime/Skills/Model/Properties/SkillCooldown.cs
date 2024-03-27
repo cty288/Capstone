@@ -5,16 +5,16 @@ using Runtime.DataFramework.Properties;
 using Runtime.Utilities;
 
 namespace _02._Scripts.Runtime.Skills.Model.Properties {
-	public interface ISkillLevelProperty<T> : IDictionaryProperty<int, T>, ILoadFromConfigProperty {
+	public interface ILeveledProperty<T> : IDictionaryProperty<int, T>, ILoadFromConfigProperty {
 		public T GetByLevel(int level);
 		public int GetMaxLevel();
 	}
 
-	public interface ISkillCoolDown : ISkillLevelProperty<float>, ILoadFromConfigProperty {
+	public interface ISkillCoolDown : ILeveledProperty<float>, ILoadFromConfigProperty {
 		
 	}
 	
-	public abstract class SkillLevelProperty<T> : LoadFromConfigDictProperty<int, T>, ISkillLevelProperty<T> {
+	public abstract class LeveledProperty<T> : LoadFromConfigDictProperty<int, T>, ILeveledProperty<T> {
 		protected T GetByLevel(int level, Dictionary<int, T> target) {
 			if (target.TryGetValue(level, out var byLevel)) {
 				return byLevel;
@@ -47,7 +47,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Properties {
 		}
 	}
 	
-	public class SkillCooldown : SkillLevelProperty<float>, ISkillCoolDown {
+	public class SkillCooldown : LeveledProperty<float>, ISkillCoolDown {
 		protected override PropertyName GetPropertyName() {
 			return PropertyName.skill_cooldown;
 		}

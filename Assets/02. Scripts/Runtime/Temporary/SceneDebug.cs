@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using _02._Scripts.Runtime.Pillars.Commands;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using _02._Scripts.Runtime.TimeSystem;
+using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using Framework;
 using MikroFramework;
@@ -181,9 +183,35 @@ namespace Runtime.Temporary
                 this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
             }
 
-            if (Input.GetKey(KeyCode.O)) {
+            if (Input.GetKeyDown(KeyCode.O)) {
                 //ES3.dele
                 ((MainGame)MainGame.Interface).ClearSave();
+            }
+
+            if (Input.GetKeyDown(KeyCode.U)) {
+                IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+                var uuids = inventoryModel.GetAllItemUUIDs();
+                foreach (var uuid in uuids) {
+                    IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid);
+                    if (entity is IWeaponPartsEntity weaponPartsEntity) {
+                        weaponPartsEntity.Upgrade(1);
+                        continue;
+                    }
+                    
+                    if(entity is IWeaponEntity weaponEntity) {
+                        foreach (var weaponPartType in Enum.GetValues(typeof(WeaponPartType))) {
+                            var slots = weaponEntity.GetWeaponPartsSlots((WeaponPartType) weaponPartType);
+                            foreach (var slot in slots) {
+                                if (slot.GetLastItemUUID() != null) {
+                                    IResourceEntity weaponPart = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+                                    if (weaponPart is IWeaponPartsEntity weaponParts) {
+                                        weaponParts.Upgrade(1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

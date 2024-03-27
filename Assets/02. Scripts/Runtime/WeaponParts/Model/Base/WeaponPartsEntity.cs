@@ -34,6 +34,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public CurrencyType GetBuildType();
 		
 		public int GetRarity();
+		
+		public void Upgrade(int count);
+		
+		public int GetUpgradeCostOfLevel(int level);
+		
+		public int GetInGamePurchaseCostOfLevel(int level);
 	}
 	
 	public abstract class WeaponPartsEntity<T, TBuffType> : BuildableResourceEntity<T>, IWeaponPartsEntity
@@ -41,6 +47,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		where TBuffType : WeaponPartsBuff<T, TBuffType>, new() {
 		
 		private IBuildType buildType;
+		private IWeaponPartsUpgradeCostProperty upgradeCostProperty;
+		private IWeaponPartsInGamePurchaseCostProperty inGamePurchaseCostProperty;
 		
 		//protected virtual int levelRange => 4;
 		protected override ConfigTable GetConfigTable() {
@@ -60,11 +68,16 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public override void OnAwake() {
 			base.OnAwake();
 			buildType = GetProperty<IBuildType>();
+			upgradeCostProperty = GetProperty<IWeaponPartsUpgradeCostProperty>();
+			inGamePurchaseCostProperty = GetProperty<IWeaponPartsInGamePurchaseCostProperty>();
 		}
 
 		protected override void OnEntityRegisterAdditionalProperties() {
 			base.OnEntityRegisterAdditionalProperties();
 			RegisterInitialProperty<IBuildType>(new BuildType());
+			RegisterInitialProperty<IWeaponPartsUpgradeCostProperty>(new WeaponPartsUpgradeCostProperty());
+			RegisterInitialProperty<IWeaponPartsInGamePurchaseCostProperty>(
+				new WeaponPartsInGamePurchaseCostProperty());
 		}
 
 		protected override string OnGetDisplayNameBeforeFirstPicked(string originalDisplayName) {
@@ -104,6 +117,30 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public Type BuffType { get; } = typeof(TBuffType);
 		public CurrencyType GetBuildType() {
 			return buildType.RealValue.Value;
+		}
+
+		public void Upgrade(int count) {
+			int currentLevel = GetRarity();
+			int newLevel = currentLevel + count;
+			if (newLevel > GetMaxRarity()) {
+				newLevel = GetMaxRarity();
+			}
+
+			GetRarityProperty().RealValue.Value = newLevel;
+		}
+
+		public int GetUpgradeCostOfLevel(int level) {
+			if (level > GetMaxRarity() || level < 1) {
+				throw new ArgumentOutOfRangeException();
+			}
+			return upgradeCostProperty.GetByLevel(level);
+		}
+
+		public int GetInGamePurchaseCostOfLevel(int level) {
+			if (level > GetMaxRarity() || level < 1) {
+				throw new ArgumentOutOfRangeException();
+			}
+			return inGamePurchaseCostProperty.GetByLevel(level);
 		}
 
 

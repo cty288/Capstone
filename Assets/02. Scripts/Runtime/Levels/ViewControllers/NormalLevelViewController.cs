@@ -4,7 +4,9 @@ using _02._Scripts.Runtime.Levels.Events;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
 using _02._Scripts.Runtime.Levels.Sandstorm;
+using Cysharp.Threading.Tasks;
 using Runtime.DataFramework.Entities;
+using Runtime.Spawning;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
@@ -18,9 +20,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] private float explorationValuePerSecond = 1f;
 		//[SerializeField] private int killBossRequired = 1;
 		[SerializeField] private float[] sandstormProbability = new[] {0, 0.33f, 1f};
-		
+		[SerializeField] private bool spawnWeaponPartsTrader = true;
 
 		public override ILevelEntity OnBuildNewLevel(int levelNumber) {
+			//SpawningUtility.SpawnExitDoor()
 			ILevelEntity levelEntity = base.OnBuildNewLevel(levelNumber);
 			//levelEntity?.AddLevelExitCondition(new KillBossCondition(killBossRequired));
 			levelEntity?.AddLevelExitCondition(new LevelExplorationCondition(totalExplortionValueRequired,
@@ -34,6 +37,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			base.OnNewDay(e);
 			HandleSandstormEvent();
 			HandleRandomBossEncounterEvent();
+		}
+
+		public override async UniTask Init() {
+			 await base.Init();
+			 GameObject npc = await SpawningUtility.SpawnWeaponPartsNPC(gameObject, "WeaponPartsUpgradeNPC", maxExtent.bounds);
+			 npc.transform.SetParent(transform);
 		}
 
 		private void HandleRandomBossEncounterEvent() {

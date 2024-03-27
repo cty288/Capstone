@@ -4,7 +4,7 @@ using _02._Scripts.Runtime.Skills.Model.Base;
 using Runtime.DataFramework.Properties;
 
 namespace _02._Scripts.Runtime.Skills.Model.Properties {
-	public interface ISkillCostProperty : ISkillLevelProperty<Dictionary<CurrencyType, int>>, ILoadFromConfigProperty {
+	public interface ISkillCostProperty : ILeveledProperty<Dictionary<CurrencyType, int>>, ILoadFromConfigProperty {
 		int GetByLevel(int level, CurrencyType currencyType);
 	}
 
@@ -12,7 +12,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Properties {
 		
 	}
 	
-	public abstract class SkillCostProperty : SkillLevelProperty<Dictionary<CurrencyType, int>>, ISkillCostProperty {
+	public abstract class SkillCostProperty : LeveledProperty<Dictionary<CurrencyType, int>>, ISkillCostProperty {
 		public int GetByLevel(int level, CurrencyType currencyType) {
 			Dictionary<CurrencyType, int> costByLevel = GetByLevel(level, RealValue.Value);
 			if (costByLevel.TryGetValue(currencyType, out var cost)) {

@@ -1,10 +1,14 @@
-﻿using _02._Scripts.Runtime.BuffSystem;
+﻿using System.Collections.Generic;
+using System.Linq;
+using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.ResourceCrafting.Models;
 using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
 using _02._Scripts.Runtime.WeaponParts.Model;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using MikroFramework.Architecture;
+using Runtime.DataFramework.Entities;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Weapons.Model.Base;
@@ -12,11 +16,14 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.WeaponParts.Systems {
 	public interface IWeaponPartsSystem : ISystem {
+		public HashSet<IWeaponPartsEntity> GetCurrentLevelPurchaseableParts();
 		
+		public void RemoveCurrentLevelPurchaseableParts(IWeaponPartsEntity resourceEntity);
 	}
 	public class WeaponPartsSystem : AbstractSystem, IWeaponPartsSystem{
 		private IBuffSystem buffSystem;	
 		private IWeaponPartsModel weaponPartsModel;
+		private  ILevelModel levelModel;
 
 		private static string[] initiallyUnlockedPartsNames = new string[] {
 			"ShreddingAdaptedBarrel", "ShreddingAdaptedMagazine", "ShreddingAdaptedAttachment", "ExecutorBarrel",
@@ -28,11 +35,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 		
 		protected IResourceBuildModel buildModel;
 		 
-		
+		private HashSet<IWeaponPartsEntity> currentLevelPurchaseableParts = new HashSet<IWeaponPartsEntity>();
+
 		protected override void OnInit() {
 			buffSystem = this.GetSystem<IBuffSystem>();
-			this.RegisterEvent<OnWeaponPartsUpdate>(OnWeaponPartsUpdate);
+			this.RegisterEvent<OnEquippedWeaponPartsUpdate>(OnWeaponPartsUpdate);
 			weaponPartsModel = this.GetModel<IWeaponPartsModel>();
+			levelModel = this.GetModel<ILevelModel>();
 			
 			buildModel = this.GetModel<IResourceBuildModel>();
 			if (buildModel.IsFirstTimeCreated) {
@@ -44,8 +53,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 				buildModel.UnlockBuild(ResearchCategory.Skill, "TenaciousBodySkill", false);
 				buildModel.UnlockBuild(ResearchCategory.Skill, "HighEndTechnologySkill", false);
 				buildModel.UnlockBuild(ResearchCategory.Skill, "AdrenalineSkill", false);
-				buildModel.UnlockBuild(ResearchCategory.Skill, "TurretSkill", false);*/
-				//buildModel.UnlockBuild(ResearchCategory.Skill, "MedicalNeedleSkill", false);
+				buildModel.UnlockBuild(ResearchCategory.Skill, "TurretSkill", false);
+				buildModel.UnlockBuild(ResearchCategory.Skill, "MedicalNeedleSkill", false);*/
 				foreach (string skillName in initiallyUnlockedPartsNames) {
 					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
 					//buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, skillName, false);
@@ -57,6 +66,72 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 					}
 				}
 			}
+			levelModel.CurrentLevelCount.RegisterWithInitValue(OnLevelUpdate);
+			
+		}
+
+		private void OnLevelUpdate(int oldLevel, int newLevel) {
+			if (newLevel < 1 || newLevel > LevelModel.MAX_LEVEL) {
+				return;
+			}
+			
+			RemoveCurrentLevelPurchaseableParts();
+			GenerateCurrentLevelPurchaseableParts(newLevel);
+
+		}
+
+		private void GenerateCurrentLevelPurchaseableParts(int newLevel) {
+			//generate new in-game purchasable parts
+			List<(ResourceTemplateInfo, int)> selectedWeaponParts = new List<(ResourceTemplateInfo, int)>();
+			HashSet<string> alreadySelectedWeaponParts = new HashSet<string>();
+			
+			for (int i = 0; i < 5; i++) {
+				int level = Random.Range(newLevel, newLevel + 2);
+				level = Mathf.Clamp(level, 1, LevelModel.MAX_LEVEL);
+				
+				var weaponParts =
+					ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts,
+						(parts) => {
+							IWeaponPartsEntity template = (IWeaponPartsEntity) parts;
+							return weaponPartsModel.IsUnlocked(parts.EntityName) &&
+							       template.GetMaxRarity() >= level &&
+							       template.GetMinRarity() <= level &&
+							       !alreadySelectedWeaponParts.Contains(parts.EntityName);
+						});
+
+				var weaponPartTemplateInfos = weaponParts.ToList();
+				if (weaponParts == null || !weaponPartTemplateInfos.Any()) {
+					break;
+				}
+
+							
+				if (weaponPartTemplateInfos.Count == 0) {
+					break;
+				}
+						
+				int randomIndex = Random.Range(0, weaponPartTemplateInfos.Count);
+				ResourceTemplateInfo selectedWeaponPart = weaponPartTemplateInfos[randomIndex];
+				
+				selectedWeaponParts.Add((selectedWeaponPart, level));
+				alreadySelectedWeaponParts.Add(selectedWeaponPart.TemplateEntity.EntityName);
+			}
+			
+			
+			foreach (var weaponPartTuple in selectedWeaponParts) {
+				ResourceTemplateInfo weaponPart = weaponPartTuple.Item1;
+				int level = weaponPartTuple.Item2;
+				IResourceEntity resource =
+					weaponPart.EntityCreater.Invoke(true, level);
+				
+				currentLevelPurchaseableParts.Add(resource as IWeaponPartsEntity);
+			}
+		}
+
+		private void RemoveCurrentLevelPurchaseableParts() {
+			foreach (IResourceEntity resourceEntity in currentLevelPurchaseableParts) {
+				GlobalEntities.GetEntityAndModel(resourceEntity.UUID).Item2.RemoveEntity(resourceEntity.UUID);
+			}
+			currentLevelPurchaseableParts.Clear();
 		}
 
 		private void UpdateBuildBuff(IWeaponEntity weaponEntity) {
@@ -91,7 +166,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			}
 		}
 
-		private void OnWeaponPartsUpdate(OnWeaponPartsUpdate e) {
+		private void OnWeaponPartsUpdate(OnEquippedWeaponPartsUpdate e) {
 			IWeaponPartsEntity previousWeaponParts =
 				GlobalGameResourceEntities.GetAnyResource(e.PreviousTopPartsUUID) as IWeaponPartsEntity;
             
@@ -110,9 +185,14 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 					buff.RecycleToCache();
 				}
 			}
+		}
 
-			
+		public HashSet<IWeaponPartsEntity> GetCurrentLevelPurchaseableParts() {
+			return new HashSet<IWeaponPartsEntity>(currentLevelPurchaseableParts);
+		}
 
+		public void RemoveCurrentLevelPurchaseableParts(IWeaponPartsEntity resourceEntity) {
+			currentLevelPurchaseableParts.Remove(resourceEntity);
 		}
 	}
 }

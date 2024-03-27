@@ -57,7 +57,7 @@ public class ModificationSubPanel : SwitchableSubPanel {
         inventorySystem = this.GetSystem<IInventorySystem>();
         buffSystem = this.GetSystem<IBuffSystem>();
         resLoader = this.GetUtility<ResLoader>();
-        this.RegisterEvent<OnWeaponPartsUpdate>(OnWeaponPartsUpdate).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<OnEquippedWeaponPartsUpdate>(OnWeaponPartsUpdate).UnRegisterWhenGameObjectDestroyed(gameObject);
         
     }
 
@@ -239,7 +239,7 @@ public class ModificationSubPanel : SwitchableSubPanel {
         selectedWeapon = GlobalGameResourceEntities.GetAnyResource(vc.Slot.GetLastItemUUID()) as IWeaponEntity;
         UpdateSelectedWeapon();
     }
-    private void OnWeaponPartsUpdate(OnWeaponPartsUpdate e) {
+    private void OnWeaponPartsUpdate(OnEquippedWeaponPartsUpdate e) {
         if (e.WeaponEntity == selectedWeapon) {
             RefreshWeaponDetails(selectedWeapon);
         }

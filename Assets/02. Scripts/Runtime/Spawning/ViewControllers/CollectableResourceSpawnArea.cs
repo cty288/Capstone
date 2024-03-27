@@ -111,8 +111,8 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 
                 int prefabIndex = Random.Range(0, spawnGroup.prefabVariants.Count);
                 GameObject prefab = spawnGroup.prefabVariants[prefabIndex];
-                ICollectableResourceViewController collectableResourceViewController =
-                    prefab.GetComponent<ICollectableResourceViewController>();
+                IHaveSpawnSizeCollider collectableResourceViewController =
+                    prefab.GetComponent<IHaveSpawnSizeCollider>();
                 
 
                 Vector3 spawnPos = SpawningUtility.FindNavMeshSuitablePositionFast(
@@ -155,10 +155,13 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 spawnedInstance.transform.Rotate(Vector3.up, Random.Range(0, 360));
                 spawnedInstance.transform.SetParent(transform.parent);
 
-                Bounds spawnBounds = spawnedInstance.GetComponent<ICollectableResourceViewController>()
-                    .SpawnSizeCollider.bounds;
+                IHaveSpawnSizeCollider spawnSizeCollider =
+                    spawnedInstance.GetComponent<IHaveSpawnSizeCollider>();
+                
+                Bounds spawnBounds = spawnSizeCollider.SpawnSizeCollider.bounds;
                 //move them a little down, randomize between 0.2 to 0.6 extent y
                 spawnedInstance.transform.position -= Vector3.up * (Random.Range(0.2f, 0.6f) * spawnBounds.extents.y);
+                spawnSizeCollider.OnSpawnInWorld();
                 
                 xStep = Random.Range(spawnBounds.extents.x, spawnBounds.extents.x * 2);
                 zStep = Random.Range(spawnBounds.extents.z, spawnBounds.extents.z * 2);
@@ -172,15 +175,20 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
         }
         
         if (count < minSpawnCount) {
+            
             //randomly sample a position
             for (int i = 0; i < minSpawnCount - count; i++) {
+                spawnedAttemptCount++;
+                if (spawnedAttemptCount % numSpawnPerFrame == 0) {
+                    await UniTask.Yield();
+                }
                 Vector3 randomPos = new Vector3(Random.Range(xMin, xMax), y, Random.Range(zMin, zMax));
                 CollectableResourceSpawnGroup spawnGroup = GetRandomSpawnGroup(out int groupIndex);
                 
                 int prefabIndex = Random.Range(0, spawnGroup.prefabVariants.Count);
                 GameObject prefab = spawnGroup.prefabVariants[prefabIndex];
-                ICollectableResourceViewController collectableResourceViewController =
-                    prefab.GetComponent<ICollectableResourceViewController>();
+                IHaveSpawnSizeCollider collectableResourceViewController =
+                    prefab.GetComponent<IHaveSpawnSizeCollider>();
                 
                 /*Vector3 spawnPos = SpawningUtility.FindNavMeshSuitablePosition(
                     () => collectableResourceViewController.SpawnSizeCollider,
@@ -206,6 +214,7 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 );
                 
                 if (float.IsInfinity(spawnPos.magnitude)) {
+                    i--;
                     continue;
                 }
                 
@@ -218,6 +227,9 @@ public class CollectableResourceSpawnArea : MonoBehaviour {
                 //random rotate around y axis
                 spawnedInstance.transform.Rotate(Vector3.up, Random.Range(0, 360));
                 spawnedInstance.transform.SetParent(transform.parent);
+                IHaveSpawnSizeCollider spawnSizeCollider =
+                    spawnedInstance.GetComponent<IHaveSpawnSizeCollider>();
+                spawnSizeCollider.OnSpawnInWorld();
             }
         }
     }

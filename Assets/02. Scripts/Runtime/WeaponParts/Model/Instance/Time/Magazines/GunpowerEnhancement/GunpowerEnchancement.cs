@@ -60,7 +60,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		
 
 		private void OnWeaponDealDamage(ICanDealDamage source, IDamageable target, int damage) {
-			buffSystem = this.GetSystem<IBuffSystem>();
+			 buffSystem = this.GetSystem<IBuffSystem>();
 			IEntity damageDealer = weaponEntity.GetRootDamageDealer() as IEntity;
 			buffSystem.AddBuff(target, damageDealer, DustBuff.Allocate(
 				damageDealer, target, weaponPartsEntity.GetRarity()));

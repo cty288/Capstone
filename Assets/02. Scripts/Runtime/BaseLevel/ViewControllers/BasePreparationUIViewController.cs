@@ -18,8 +18,8 @@ using UnityEngine.UI;
 
 public class BasePreparationUIViewController  : AbstractPanel, IController, IGameUIPanel {
 	private bool canClose = true;
-	private PreparationSlotLayoutViewController weaponSlotLayout;
-	private PreparationSlotLayoutViewController skillSlotLayout;
+	private BasicSlotLayoutViewController weaponSlotLayout;
+	private BasicSlotLayoutViewController skillSlotLayout;
 	private IInventoryModel inventoryModel;
 	
 	private Dictionary<ResourceCategory, int> occupiedGeneralSlotCountDict = new Dictionary<ResourceCategory, int>();
@@ -37,8 +37,8 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 
 	public override void OnInit() {
 		inventoryModel = this.GetModel<IInventoryModel>();
-		weaponSlotLayout = transform.Find("WeaponPanel").GetComponent<PreparationSlotLayoutViewController>();
-		skillSlotLayout = transform.Find("SkillPanel").GetComponent<PreparationSlotLayoutViewController>();
+		weaponSlotLayout = transform.Find("WeaponPanel").GetComponent<BasicSlotLayoutViewController>();
+		skillSlotLayout = transform.Find("SkillPanel").GetComponent<BasicSlotLayoutViewController>();
 		emptyHotbarSlotCountDict.Add(ResourceCategory.Weapon, 0);
 		emptyHotbarSlotCountDict.Add(ResourceCategory.Skill, 0);
 		occupiedGeneralSlotCountDict.Add(ResourceCategory.Weapon, 0);
@@ -61,9 +61,11 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	public override void OnOpen(UIMsg msg) {
 		//canClose = false;
 		CalculateEmptySlotCount();
-
-		weaponSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Weapon));
-		skillSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Skill));
+		
+		
+		weaponSlotLayout.OnShowItems(new HashSet<ResourceSlot>().Union(inventoryModel.GetBaseStock(ResourceCategory.Weapon)).ToList());
+		skillSlotLayout.OnShowItems(new HashSet<ResourceSlot>()
+			.Union(inventoryModel.GetBaseStock(ResourceCategory.Skill)).ToList());
 		
 		weaponSlotLayout.RegisterOnSlotClicked(OnSlotClicked);
 		skillSlotLayout.RegisterOnSlotClicked(OnSlotClicked);
@@ -96,7 +98,7 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 			}
 		}
 	}
-	private void OnSlotClicked(ResourceSlotViewController slotVC, PreparationSlotLayoutViewController layout, bool originallySelected) {
+	private void OnSlotClicked(ResourceSlotViewController slotVC, BasicSlotLayoutViewController layout, bool originallySelected) {
 		ResourceSlot slot = slotVC.Slot;
 
 		if (originallySelected)
