@@ -72,7 +72,9 @@ public class WeaponPartsTradingPanel  : AbstractPanelContainer, IController, IGa
 		if (e.IsExchange) { 
 			Refresh();
 		}else {
-			
+			currentlySelectedSlot.SetValueAndForceNotify(currentlySelectedSlot.Value);
+			WeaponPartsTradingAllocatePanel panel = UIManager.Singleton.GetPanel<WeaponPartsTradingAllocatePanel>(true);
+			panel.OnRefresh(e.TradedPart, e.PreviewedPart, e.IsExchange);
 		}
 	}
 

@@ -44,7 +44,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Trading {
 				weaponPartsSystem.RemoveCurrentLevelPurchaseableParts(tradedPart);
 				inventorySystem.AddItem(tradedPart);
 			}else {
-				
+				tradedPart.Upgrade(1);
 			}
 			
 			foreach (KeyValuePair<CurrencyType, int> cost in paidCost) {
