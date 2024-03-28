@@ -41,8 +41,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public override async UniTask Init() {
 			 await base.Init();
-			 GameObject npc = await SpawningUtility.SpawnWeaponPartsNPC(gameObject, "WeaponPartsUpgradeNPC", maxExtent.bounds);
-			 npc.transform.SetParent(transform);
+			 if (spawnWeaponPartsTrader) {
+				 GameObject npc = await SpawningUtility.SpawnWeaponPartsNPC(gameObject, "WeaponPartsUpgradeNPC", maxExtent.bounds);
+				 npc.transform.SetParent(transform);
+			 }
+			
 		}
 
 		private void HandleRandomBossEncounterEvent() {
