@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Systems;
+using _02._Scripts.Runtime.WeaponParts.Trading;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -18,6 +19,7 @@ using Runtime.GameResources.Model.Base;
 using Runtime.Inventory;
 using Runtime.Inventory.Model;
 using Runtime.Inventory.ViewController;
+using Runtime.UI;
 using Runtime.Weapons.Model.Base;
 using TMPro;
 using UnityEngine;
@@ -25,8 +27,8 @@ using UnityEngine.UI;
 
 public class WeaponPartsTradingPanel  : AbstractPanelContainer, IController, IGameUIPanel {
 	//TODO: after successfully purchase, set lastSelectedSlot to null
-	//TODO: after successfully upgrade, refresh upgrade panel and preview panel
-	//TODO: after successfully purchase, refresh exchange panel and purchase panel
+	//TODO: after successfully upgrade, refresh upgrade panel and preview panel (force reselect current slot)
+	//TODO: after successfully purchase, refresh exchange panel and purchase panel, and preview panel (everything)
 	
 	[SerializeField]
 	private BasicSlotLayoutViewController upgradeSlotLayout;
@@ -34,21 +36,11 @@ public class WeaponPartsTradingPanel  : AbstractPanelContainer, IController, IGa
 	private BasicSlotLayoutViewController exchangeSlotLayout;
 	[SerializeField] private Transform exchangeSlotSpawnParent;
 	[SerializeField] private Transform previewPanelSpawnParent;
-	
-	[Header("Preview Panel")]
-	[SerializeField] private RectTransform rarityBar;
-	[SerializeField] private GameObject rarityIconPrefab;
-	[SerializeField] private GameObject nextLevelText;
-	[SerializeField] private Image itemIconImage;
-	[SerializeField] private TMP_Text itemNameText;
-	[SerializeField] private TMP_Text descriptionText;
-	[SerializeField] private TMP_Text itemCostText;
-	[SerializeField] private Button purchaseButton;
-	[SerializeField] private TMP_Text purchaseButtonText;
 	[SerializeField] private GameObject fullyUpgradedText;
-	
-	
-	
+	[SerializeField] private WeaponPartsTradingPreviewPanel previewPanel;
+	[SerializeField] private Button purchaseButton;
+	[SerializeField] private GameObject fullInventoryHint;
+
 	private IInventoryModel inventoryModel;
 	private IWeaponPartsSystem weaponPartsSystem;
 	private BindableProperty<ResourceSlotViewController> currentlySelectedSlot =
@@ -62,13 +54,36 @@ public class WeaponPartsTradingPanel  : AbstractPanelContainer, IController, IGa
 	
 	private ICurrencySystem currencySystem;
 	private ICurrencyModel currencyModel;
+	private IInventorySystem inventorySystem;
 	public override void OnInit() {
 		inventoryModel = this.GetModel<IInventoryModel>();
 		currencyModel = this.GetModel<ICurrencyModel>();
 		weaponPartsSystem = this.GetSystem<IWeaponPartsSystem>();
 		currencySystem = this.GetSystem<ICurrencySystem>();
+		inventorySystem = this.GetSystem<IInventorySystem>();
 		currentlySelectedSlot.RegisterOnValueChanged(OnLastSelectedSlotChanged)
 			.UnRegisterWhenGameObjectDestroyed(gameObject);
+		
+		purchaseButton.onClick.AddListener(OnPurchaseButtonClicked);
+		this.RegisterEvent<OnTradeWeaponPart>(OnTradeWeaponPart).UnRegisterWhenGameObjectDestroyed(gameObject);
+	}
+
+	private void OnTradeWeaponPart(OnTradeWeaponPart e) {
+		if (e.IsExchange) { 
+			Refresh();
+		}else {
+			
+		}
+	}
+
+	private void OnPurchaseButtonClicked() {
+		if(!currentlySelectedSlot.Value || currentlySelectedSlot.Value.Slot == null || currentPreviewingWeaponPartsEntity == null) return;
+		string uuid = currentlySelectedSlot.Value.Slot.GetLastItemUUID();
+		IWeaponPartsEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid) as IWeaponPartsEntity;
+		if (entity == null) return;
+
+		WeaponPartsTradingAllocatePanel allocatePanel = MainUI.Singleton.Open<WeaponPartsTradingAllocatePanel>(this, null);
+		allocatePanel.OnRefresh(entity, currentPreviewingWeaponPartsEntity, isExchange);
 	}
 
 	private void OnLastSelectedSlotChanged(ResourceSlotViewController previousSlot, ResourceSlotViewController currentSlot)
@@ -93,17 +108,28 @@ public class WeaponPartsTradingPanel  : AbstractPanelContainer, IController, IGa
 		string uuid = currentSlot.Slot?.GetLastItemUUID();
 		IWeaponPartsEntity entity = GlobalGameResourceEntities.GetAnyResource(uuid) as IWeaponPartsEntity;
 		if (entity == null) return;
-
+		
+		fullInventoryHint.gameObject.SetActive(false);
+		fullyUpgradedText.gameObject.SetActive(false);
+		previewPanelSpawnParent.gameObject.SetActive(true);
+		
 		if (entity.GetRarity() == entity.GetMaxRarity() && !isExchange) {
 			fullyUpgradedText.gameObject.SetActive(true);
 			previewPanelSpawnParent.gameObject.SetActive(false);
 			return;
 		}
-		
+
+		if (isExchange && !inventorySystem.CanPlaceItem(entity)) {
+			fullInventoryHint.gameObject.SetActive(true);
+			previewPanelSpawnParent.gameObject.SetActive(false);
+			return;
+		}
+
 		int targetRarity = isExchange ? entity.GetRarity() : entity.GetRarity() + 1;
 		ResourceTemplateInfo templateInfo = ResourceTemplates.Singleton.GetResourceTemplates(entity.EntityName);
 		IWeaponPartsEntity previewEntity = templateInfo.EntityCreater.Invoke(true, targetRarity) as IWeaponPartsEntity;
-		ShowPreviewPanel(previewEntity, isExchange);
+		currentPreviewingWeaponPartsEntity = previewEntity;
+		previewPanel.ShowPreviewPanel(previewEntity, isExchange, true);
 	}
 
 
@@ -117,7 +143,9 @@ public class WeaponPartsTradingPanel  : AbstractPanelContainer, IController, IGa
 	}
 
 	private void Refresh() {
-		ResetPreviewPanel();
+		fullInventoryHint.gameObject.SetActive(false);
+		currentlySelectedSlot.Value = null;
+		previewPanel.ResetPreviewPanel();
 		
 		
 		upgradeSlotLayout.ClearLayout();
@@ -137,54 +165,7 @@ public class WeaponPartsTradingPanel  : AbstractPanelContainer, IController, IGa
 		
 	}
 
-	private void ResetPreviewPanel() {
-		previewPanelSpawnParent.gameObject.SetActive(false);
-		fullyUpgradedText.gameObject.SetActive(false);
-		foreach (Transform child in rarityBar) {
-			if (child.GetSiblingIndex() == 0) continue;
-			Destroy(child.gameObject);
-		}
-	}
 	
-	private void ShowPreviewPanel(IWeaponPartsEntity entity, bool isExchange) {
-		ResetPreviewPanel();
-		previewPanelSpawnParent.gameObject.SetActive(true);
-		nextLevelText.gameObject.SetActive(!isExchange);
-		currentPreviewingWeaponPartsEntity = entity;
-
-		itemNameText.text = entity.GetDisplayName();
-		
-		//rarity bar
-		float height = rarityBar.rect.height;
-		for (int i = 0; i < entity.GetRarity(); i++) {
-			GameObject star = Instantiate(rarityIconPrefab, rarityBar);
-			RarityIndicator rarityIndicator = star.GetComponent<RarityIndicator>();
-			rarityIndicator.SetCurrency(entity.GetBuildType());
-			RectTransform starRect = star.GetComponent<RectTransform>();
-			starRect.sizeDelta = new Vector2(height, height);
-		}
-
-		itemIconImage.sprite = InventorySpriteFactory.Singleton.GetSprite(entity);
-		descriptionText.text = entity.GetDescription();
-
-		int cost = this.isExchange
-			? entity.GetInGamePurchaseCostOfLevel(entity.GetRarity())
-			: entity.GetUpgradeCostOfLevel(entity.GetRarity());
-
-		int totalMoney = 0;
-		foreach (var val in Enum.GetValues(typeof(CurrencyType))) {
-			totalMoney += currencyModel.GetCurrencyAmountProperty((CurrencyType) val);
-		}
-		bool canPurchase = totalMoney >= cost;
-		string color = canPurchase ? "<color=#00C612>" : "<color=red>";
-
-		itemCostText.text = Localization.GetFormat("PARTS_PREVIEW_COST", $"{color}{cost}</color>");
-		purchaseButton.gameObject.SetActive(canPurchase);
-		purchaseButtonText.text = isExchange
-			? Localization.Get("PARTS_TRADING_TITLE_EXCHANGE")
-			: Localization.Get("PARTS_TRADING_TITLE_UPGRADE");
-	}
-
 	private HashSet<ResourceSlot> GetOwnedWeaponParts() {
 		HashSet<ResourceSlot> slots = new HashSet<ResourceSlot>();
 		slots.UnionWith(inventoryModel.GetAllSlots((slot => {
