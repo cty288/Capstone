@@ -284,6 +284,62 @@ namespace Runtime.Spawning {
 			return Vector3.negativeInfinity; 
 		}
 
+		public static async UniTask<GameObject> SpawnWeaponPartsNPC(GameObject spawner, string prefabName,
+			Bounds bounds) {
+			GameObject prefab = MainGame.Interface.GetUtility<ResLoader>().LoadSync<GameObject>(prefabName);
+			BoxCollider spawnSizeGetter() => prefab.GetComponent<WeaponPartsTradingNPC>().GetSelfSizeCollider();
+			
+			
+			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
+			Bounds insideArenaBounds = default;
+			if (insideArenaBounds == default) {
+				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
+					.First(o => o.gameObject.activeInHierarchy)
+					.GetComponent<Collider>().bounds;
+			}
+			
+			
+
+			//create a new bounds, 20% smaller than the original
+			bounds = new Bounds(bounds.center, bounds.size * 0.8f);
+			
+			
+			GameObject doorInstance = null;
+
+			while (true) {
+				await UniTask.Yield();
+				Vector3 randomPoint = new Vector3(
+					UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+					UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
+					UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
+				);
+				
+				
+				NavMeshHit navHit;
+				if (!NavMesh.SamplePosition(randomPoint, out navHit, 250.0f, areaMask)) {
+					continue;
+				}
+
+				NavMeshFindResult res = await FindNavMeshSuitablePosition(spawner, spawnSizeGetter,
+					navHit.position, 45, areaMask,
+					insideArenaBounds, 10, 10, 100, 500);
+					
+				//rotate y axis randomly
+				//res.RotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
+
+				if (!res.IsSuccess) {
+					continue;
+				}
+				
+				//ok to spawn
+				doorInstance = GameObject.Instantiate(prefab);
+				doorInstance.transform.position = res.TargetPosition;
+				doorInstance.transform.rotation = res.RotationWithSlope;
+				break;
+			}
+
+			return doorInstance;
+		}
 		public static async UniTask<GameObject> SpawnExitDoor(GameObject spawner, string prefabName, Bounds bounds,
 			Transform[] playerSpawnPoints) {
 			GameObject prefab = MainGame.Interface.GetUtility<ResLoader>().LoadSync<GameObject>(prefabName);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.VFX;
@@ -23,9 +24,7 @@ using Random = UnityEngine.Random;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
 
-	public interface ICreatureViewController : IDamageableViewController {
-		public BoxCollider SpawnSizeCollider { get; }
-		
+	public interface ICreatureViewController : IDamageableViewController, IHaveSpawnSizeCollider {
 		public ICreature OnInitEntity(int level, int rarity);
 		CancellationToken GetCancellationTokenOnStunnedOrDie();
 	}
@@ -366,6 +365,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
+
+		public void OnSpawnInWorld() {
+			
+		}
 
 		public abstract ICreature OnInitEntity(int level, int rarity);
 		public CancellationToken GetCancellationTokenOnStunnedOrDie() {

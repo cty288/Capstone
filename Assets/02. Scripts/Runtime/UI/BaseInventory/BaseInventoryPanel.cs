@@ -14,7 +14,7 @@ public class BaseInventoryPanel : SwitchableRootPanel {
 
 	[SerializedDictionary("index", "category")] 
 	[SerializeField]
-	private SerializedDictionary<int, ResourceCategory> categoryToIndex;
+	private SerializedDictionary<int, ResourceCategory[]> categoryToIndex;
 
 	[SerializeField] private BaseInventorySubPanel subPanel;
 
@@ -26,7 +26,7 @@ public class BaseInventoryPanel : SwitchableRootPanel {
 
 	protected override void OnSubpanelSelected(SwitchableSubPanel panel, int index) {
 		base.OnSubpanelSelected(panel, index);
-		ResourceCategory category = categoryToIndex[index];
+		ResourceCategory[] category = categoryToIndex[index];
 		subPanel.OnSetResourceCategory(category);
 	}
 }

@@ -244,6 +244,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 
 				//onSpawnEnemy?.Invoke(spawnedEnemy, this);
 				Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity}");
+
+				levelModel.RandomBossEncounterEventChance = 0;
 			}
 			else {
 				UpdateInteractHint();

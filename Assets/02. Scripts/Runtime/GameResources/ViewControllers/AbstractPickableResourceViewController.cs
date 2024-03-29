@@ -38,12 +38,16 @@ namespace Runtime.GameResources.ViewControllers {
         protected bool isAbsorbWaiting = false;
         protected Dictionary<Collider, bool> selfColliders = new Dictionary<Collider, bool>();
         
+        [SerializeField]
+        private bool autoAbsorbWhenPlayerReach = true;
+        
         [FormerlySerializedAs("entityAutoRemovalTimeWhenNoAbsorb")]
         [Header("Entity Recycle Logic")]
         [Tooltip("The time when the entity will be recycled when it is not absorbed by the player")]
         [SerializeField] [ES3Serializable]
         protected float autoRecycleTimeWhenNoAbsorb = 120f;
         [SerializeField] private bool alsoRemoveEntityWhenNoAbsorb = true;
+        
         
         private Coroutine entityRemovalTimerCoroutine;
         protected override void Awake() {
@@ -68,7 +72,8 @@ namespace Runtime.GameResources.ViewControllers {
 
         public override void OnPlayerInteractiveZoneReachable(GameObject player, PlayerInteractiveZone zone) {
             base.OnPlayerInteractiveZoneReachable(player, zone);
-            if (!HoldAbsorb) {
+            
+            if (!HoldAbsorb && autoAbsorbWhenPlayerReach) {
                 HandleAbsorb(player, zone);
             }
         }
@@ -80,7 +85,10 @@ namespace Runtime.GameResources.ViewControllers {
 
         public override void OnPlayerExitInteractiveZone(GameObject player, PlayerInteractiveZone zone) {
             base.OnPlayerExitInteractiveZone(player, zone);
-            HoldAbsorb = false;
+            if (autoAbsorbWhenPlayerReach) {
+                HoldAbsorb = false;
+            }
+         
         }
 
         protected virtual void HandleAbsorb(GameObject player, PlayerInteractiveZone zone) {
