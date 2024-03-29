@@ -239,8 +239,11 @@ Varyings SplatmapVert(Attributes v)
 {
     Varyings o = (Varyings)0;
 
+    v.texcoord += _Time.x * 0.03f;
+
     UNITY_SETUP_INSTANCE_ID(v);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+    
     TerrainInstancing(v.positionOS, v.normalOS, v.texcoord);
 
     VertexPositionInputs Attributes = GetVertexPositionInputs(v.positionOS.xyz);
@@ -405,8 +408,11 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
 
 #ifdef TERRAIN_GBUFFER
     BRDFData brdfData;
-    InitializeBRDFData(albedo, (1-CalculateFresnel(inputData, 4, 0.5, 0.9)) * metallic, /* specular */ half3(0, 0, 0), smoothness, alpha, brdfData);
-
+    float fresnel = CalculateFresnel(inputData, 4, 0.5, 0.9);
+    InitializeBRDFData(albedo, (1-fresnel) * metallic, /* specular */ half3(0, 0, 0), smoothness*distance(_WorldSpaceCameraPos.xyz, IN.positionWS.xyz), alpha, brdfData);
+    
+    //brdfData.perceptualRoughness /= distance(_WorldSpaceCameraPos.xyz, IN.positionWS.xyz);
+    //brdfData.reflectivity /= distance(_WorldSpaceCameraPos.xyz, IN.positionWS.xyz);
     // Baked lighting.
     half4 color;
     Light mainLight = GetMainLight(inputData.shadowCoord, inputData.positionWS, inputData.shadowMask);
@@ -419,12 +425,14 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
     radiance = saturate(4 * radiance);
     color = lerp(color, color*2, radiance);
 
+    
+
     // Dynamic lighting: emulate SplatmapFinalColor() by scaling gbuffer material properties. This will not give the same results
     // as forward renderer because we apply blending pre-lighting instead of post-lighting.
     // Blending of smoothness and normals is also not correct but close enough?
     brdfData.albedo.rgb *= alpha;
     brdfData.diffuse.rgb *= alpha;
-    brdfData.specular =CalculateFresnel(inputData, 4, 0.5, 0.9);
+    //brdfData.specular = fresnel;
     brdfData.specular.rgb *= alpha;
     brdfData.reflectivity *= alpha;
     inputData.normalWS = inputData.normalWS * alpha;
@@ -449,7 +457,7 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
 
 // Shadow pass
 
-// Shadow Casting Light geometric parameters. These variables are used when applying the shadow Normal Bias and are set by UnityEngine.Rendering.Universal.ShadowUtils.SetupShadowCasterConstantBuffer in com.unity.render-pipelines.universal/Runtime/ShadowUtils.cs
+// Shadow Casting Light geonmetric parameters. These variables are used when applying the shadow Normal Bias and are set by UnityEngine.Rendering.Universal.ShadowUtils.SetupShadowCasterConstantBuffer in com.unity.render-pipelines.universal/Runtime/ShadowUtils.cs
 // For Directional lights, _LightDirection is used when applying shadow Normal Bias.
 // For Spot lights and Point lights, _LightPosition is used to compute the actual light direction because it is different at each shadow caster geometry vertex.
 float3 _LightDirection;
