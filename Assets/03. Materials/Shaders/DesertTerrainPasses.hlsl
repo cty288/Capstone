@@ -239,7 +239,7 @@ Varyings SplatmapVert(Attributes v)
 {
     Varyings o = (Varyings)0;
 
-    v.texcoord += _Time.x * 0.03f;
+    //v.texcoord += _Time.x * 0.03f;
 
     UNITY_SETUP_INSTANCE_ID(v);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
@@ -409,7 +409,7 @@ half4 SplatmapFragment(Varyings IN) : SV_TARGET
 #ifdef TERRAIN_GBUFFER
     BRDFData brdfData;
     float fresnel = CalculateFresnel(inputData, 4, 0.5, 0.9);
-    InitializeBRDFData(albedo, (1-fresnel) * metallic, /* specular */ half3(0, 0, 0), smoothness*distance(_WorldSpaceCameraPos.xyz, IN.positionWS.xyz), alpha, brdfData);
+    InitializeBRDFData(albedo, (1-fresnel) * metallic, /* specular */ half3(0, 0, 0), smoothness, alpha, brdfData);
     
     //brdfData.perceptualRoughness /= distance(_WorldSpaceCameraPos.xyz, IN.positionWS.xyz);
     //brdfData.reflectivity /= distance(_WorldSpaceCameraPos.xyz, IN.positionWS.xyz);
