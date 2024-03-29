@@ -34,7 +34,7 @@ public class BasicSlotLayoutViewController : AbstractMikroController<MainGame>
 			
 		}
 
-		public List<PreparationSlot> OnUIClosed() {
+		public List<PreparationSlot> ClearLayout() {
 			slotViewControllers.ForEach(slot => {
 				slot.UnRegisterOnSlotClickedCallback(OnSlotClicked);
 				slot.OnInventoryUIClosed();
@@ -63,6 +63,13 @@ public class BasicSlotLayoutViewController : AbstractMikroController<MainGame>
 				return;
 			
 			OnShowItems(slots.ToList(), allowDrag);
+		}
+		
+		public void RemoveSlot(ResourceSlotViewController slotViewController) {
+			slotViewController.UnRegisterOnSlotClickedCallback(OnSlotClicked);
+			slotViewController.OnInventoryUIClosed();
+			slotViewControllers.Remove(slotViewController);
+			Destroy(slotViewController.gameObject);
 		}
 
 		public void OnShowItems(List<ResourceSlot> slots, bool allowDrag = false) {

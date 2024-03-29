@@ -86,8 +86,8 @@ public class BuildPanelViewController : SwitchableSubPanel {
 		}
 
 		entitiesToRemoveWhenClear.Clear();
-		buildableResourcePanel.OnUIClosed();
-		materialPanel.OnUIClosed();
+		buildableResourcePanel.ClearLayout();
+		materialPanel.ClearLayout();
 		buildableResourcePanel.UnRegisterOnSlotClicked(OnSlotClicked);
 		ClearPreview();
 		

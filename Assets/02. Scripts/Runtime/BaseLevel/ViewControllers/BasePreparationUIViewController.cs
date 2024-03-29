@@ -159,8 +159,8 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 		weaponSlotLayout.UnRegisterOnSlotClicked(OnSlotClicked);
 		skillSlotLayout.UnRegisterOnSlotClicked(OnSlotClicked);
 
-		weaponSlotLayout.OnUIClosed();
-		skillSlotLayout.OnUIClosed();
+		weaponSlotLayout.ClearLayout();
+		skillSlotLayout.ClearLayout();
 		
 		occupiedGeneralSlotCountDict[ResourceCategory.Weapon] = 0;
 		occupiedGeneralSlotCountDict[ResourceCategory.Skill] = 0;
@@ -182,12 +182,12 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 
 		LoadingCanvas.Singleton.Show(() => {
 			canClose = true;
-			List<PreparationSlot> slots = weaponSlotLayout.OnUIClosed();
+			List<PreparationSlot> slots = weaponSlotLayout.ClearLayout();
 			foreach (PreparationSlot slot in slots) {
 				inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Weapon, slot);
 			}
 
-			slots = skillSlotLayout.OnUIClosed();
+			slots = skillSlotLayout.ClearLayout();
 			foreach (PreparationSlot slot in slots) {
 				inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Skill, slot);
 			}
