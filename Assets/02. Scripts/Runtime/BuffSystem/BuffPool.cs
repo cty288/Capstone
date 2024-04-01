@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill;
 using _02._Scripts.Runtime.Skills.ViewControllers.Instances.AdrenalineSkill;
+using _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Mineral;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
@@ -29,6 +30,7 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			RegisterGeneralBuff(((dealer, owner, level) => MalfunctionBuff.Allocate(dealer, owner, 5)));
 			RegisterGeneralBuff(((dealer, owner, level) => PowerlessBuff.Allocate(dealer, owner, level, 10)));
 			RegisterGeneralBuff((StimulatedBuff.Allocate));
+			RegisterGeneralBuff((dealer, owner, level) => RecoveryBuff.Allocate(dealer, owner, 20, 1));
 			RegisterGeneralBuff(((dealer, owner, level) => VulnerableBuff.Allocate(level, dealer, owner)));
 
 
@@ -58,6 +60,16 @@ namespace _02._Scripts.Runtime.BuffSystem {
 			}
 
 			return result;
+		}
+		
+		public static T GetTemplateBuff<T>() where T : IBuff {
+			foreach (var pair in buffPool) {
+				if (pair.Key is T) {
+					return (T) pair.Key;
+				}
+			}
+
+			return default;
 		}
 
 		public static BuffBuilder GetWeaponBuildBuff(CurrencyType currencyType) {

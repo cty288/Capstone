@@ -161,5 +161,23 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 			buff.MaxLevel = ConfigDatas.Singleton.BuffConfigTable.Get<int>(buff.GetType().Name, "max_level");
 			return buff;
 		}
+
+		public override string GetDisplayName() {
+			return GetDisplayName(Level);
+		}
+
+
+		public string GetDisplayName(int level) {
+			string name = base.GetDisplayName();
+			if(String.IsNullOrEmpty(name)) {
+				return null;
+			}
+
+			if (level > 0) {
+				return $"{name} {level.ToString()}";
+			}
+
+			return name;
+		}
 	}
 }
