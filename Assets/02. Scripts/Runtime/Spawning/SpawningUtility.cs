@@ -448,6 +448,10 @@ namespace Runtime.Spawning {
 						pillarInstance.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
 						
 						secondary.position = point1;
+						RaycastHit hit;
+						if (Physics.Raycast (point1+Vector3.up, -Vector3.up, out hit, 10)) {
+							secondary.rotation = Quaternion.FromToRotation (Vector3.up, hit.normal);
+						}
 						//secondary.rotation = Quaternion.FromToRotation(secondary.up, navHit1.normal);
 					}
 				}
