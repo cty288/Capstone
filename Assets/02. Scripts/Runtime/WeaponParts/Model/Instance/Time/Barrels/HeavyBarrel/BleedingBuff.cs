@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.Enemies.Model.Properties;
@@ -24,7 +25,18 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 			return true;
 		}
 		public override string GetLevelDescription(int level) {
-			return null;
+			float damage = GetBuffPropertyAtLevel<float>("buff_damage", level);
+			float duration = GetBuffPropertyAtLevel<float>("buff_length", level);
+
+			
+			if (level <= 2) {
+				return Localization.GetFormat($"BUFF_BLEEDING_{level}", damage, duration);
+			}
+			else {
+				float buffDamage = damage * 100;
+				return Localization.GetFormat($"BUFF_BLEEDING_{level}", 
+					buffDamage.ToString("f2"), duration);
+			}
 		}
 		public override bool Validate() {
 			return base.Validate() && buffOwner is IDamageable;

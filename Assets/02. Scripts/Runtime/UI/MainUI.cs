@@ -1,6 +1,7 @@
 using _02._Scripts.Runtime.Levels.Models;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Singletons;
 using MikroFramework.UIKit;
 using Runtime.Controls;
@@ -71,6 +72,9 @@ namespace Runtime.UI {
 				Cursor.visible = true;
 				Time.timeScale = 0;
 			}
+
+			AudioSystem.Singleton.Play2DSound("open_menu");
+			
 			//ClientInput.Singleton.EnableUIMaps();
 			return panel;
 		}
@@ -87,15 +91,21 @@ namespace Runtime.UI {
 		/// <returns></returns>
 		public T Open<T>(IPanelContainer parent, UIMsg message, bool isPopup, bool switchUIPlayerMap = true,
 			bool createNewIfNotExist = true, string assetNameIfNotExist = "") where T : class, IPanel {
+			bool closedOtherPanel = false;
 			if (currentMainPanel != null && !isPopup) {
 				ClosePanel(currentMainPanel);
+				closedOtherPanel = true;
 			}
 		
 			if (switchUIPlayerMap) {
 				ClientInput.Singleton.EnableUIMaps();
-				
 			}
 			
+			if(!switchUIPlayerMap && closedOtherPanel) {
+				ClientInput.Singleton.EnablePlayerMaps();
+			}
+			
+			AudioSystem.Singleton.Play2DSound("open_menu");
 			//Time.timeScale = 0;
 			return Open<T>(parent, message, createNewIfNotExist, assetNameIfNotExist);
 		}
@@ -131,6 +141,8 @@ namespace Runtime.UI {
 				Cursor.visible = false;
 				Time.timeScale = 1;
 			}
+			
+			AudioSystem.Singleton.Play2DSound("close_menu");
 			//ClientInput.Singleton.EnablePlayerMaps();
 		}
 		

@@ -52,6 +52,8 @@ namespace Runtime.Inventory.Model {
 		
 		HashSet<PreparationSlot> GetBaseStock(ResourceCategory category);
 		
+		HashSet<PreparationSlot> GetBaseStock(params ResourceCategory[] categories);
+
 		void RemoveFromBaseStock(ResourceCategory category, PreparationSlot slot);
 		
 		bool HasEntityInBaseStockByName(ResourceCategory category, string entityName);
@@ -249,10 +251,21 @@ namespace Runtime.Inventory.Model {
 
 		public HashSet<PreparationSlot> GetBaseStock(ResourceCategory category) {
 			if (!baseStockedItems.ContainsKey(category)) {
-				return null;
+				return new HashSet<PreparationSlot>();
 			}
 
 			return baseStockedItems[category];
+		}
+
+		public HashSet<PreparationSlot> GetBaseStock(params ResourceCategory[] categories) {
+			HashSet<PreparationSlot> result = new HashSet<PreparationSlot>();
+			foreach (ResourceCategory category in categories) {
+				if (baseStockedItems.ContainsKey(category)) {
+					result.UnionWith(baseStockedItems[category]);
+				}
+			}
+
+			return result;
 		}
 
 		public void RemoveFromBaseStock(ResourceCategory category, PreparationSlot slot) {

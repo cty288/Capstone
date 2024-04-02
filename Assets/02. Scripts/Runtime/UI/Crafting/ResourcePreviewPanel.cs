@@ -220,7 +220,8 @@ public class ResourcePreviewPanel : AbstractMikroController<MainGame>
 		
 		if (costInfo != null && currentPreviewPurchaseable) {
 			requiredResourcePanel.SetActive(true);
-			HashSet<PreparationSlot> ownedResources = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
+			HashSet<PreparationSlot> ownedResources =
+				inventoryModel.GetBaseStock(ResourceCategory.RawMaterial, ResourceCategory.Scrap);
 
 
 			//previewLevelText.text = Localization.GetFormat("BUILD_PREVIEW_LEVEL_TEXT", rarity);

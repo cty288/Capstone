@@ -25,6 +25,7 @@ namespace Runtime.GameResources.Model.Base {
 		Currency,
 		Skill,
 		WeaponParts,
+		Scrap,
 		All // do not use this
 	}
 

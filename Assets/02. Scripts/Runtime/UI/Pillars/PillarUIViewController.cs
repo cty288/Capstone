@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
+using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Pillars.Commands;
 using _02._Scripts.Runtime.Rewards;
 using AYellowpaper.SerializedCollections;
@@ -11,6 +12,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using Cysharp.Threading.Tasks;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Event;
 using MikroFramework.UIKit;
 using Polyglot;
@@ -54,10 +56,12 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 	private CurrencyType currentSelectedCurrencyType;
 	private int maxCurrencyPossible = 200;
 	private ICurrencySystem currencySystem;
+	private ILevelModel levelModel;
 	public override void OnInit() {
 		
 		currencyModel = this.GetModel<ICurrencyModel>();
 		currencySystem = this.GetSystem<ICurrencySystem>();
+		levelModel = this.GetModel<ILevelModel>();
 		addCurrencyButton.RegisterCallback(OnAddCurrencyButtonClicked);
 		minusCurrencyButton.RegisterCallback(OnMinusCurrencyButtonClicked);
 		//nextCurrencyButton.onClick.AddListener(OnNextCurrencyButtonClicked);
@@ -136,10 +140,10 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 				//rb.AddForce(Quaternion.Euler(45, Random.Range(0, 360), 0) * Vector3.up * 5, ForceMode.Impulse);
 			}
 		}
-		
+
+		//level = levelModel.
 		this.SendCommand(ActivatePillarCommand.Allocate(data.pillar, currentSelectedCurrencyType,
-			currentSelectedCurrency,
-			level));
+			currentSelectedCurrency, level));
 
 		MainUI.Singleton.GetAndClose(this);
 	}
@@ -189,6 +193,8 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 		}else if (currency > maxCurrencyPossible) {
 			currency = maxCurrencyPossible;
 		}
+
+		AudioSystem.Singleton.Play2DSound("arrow_click");
 
 		CurrencyType currencyType = currentSelectedCurrencyType;
 		currentSelectedCurrency = currency;

@@ -99,9 +99,9 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 
 		
 		List<ResourceSlot> resourceSlots  = new List<ResourceSlot>();
-	
-		
-		var rawMaterials = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial);
+
+
+		var rawMaterials = inventoryModel.GetBaseStock(ResourceCategory.RawMaterial, ResourceCategory.Scrap);
 		noResourceHint.SetActive(rawMaterials == null || rawMaterials.Count == 0);
 		
 		if (rawMaterials != null) {

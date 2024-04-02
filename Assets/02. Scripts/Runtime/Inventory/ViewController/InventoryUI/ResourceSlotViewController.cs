@@ -9,6 +9,7 @@ using DG.Tweening;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Extensions;
 using MikroFramework.Pool;
 using MikroFramework.ResKit;
@@ -188,9 +189,11 @@ namespace Runtime.Inventory.ViewController {
         
         public void OnPointerDown(PointerEventData eventData) {
             pointerDownObject = gameObject;
+            AudioSystem.Singleton.Play2DSound("item_deselect");
         }
 
         public void OnPointerUp(PointerEventData eventData) {
+            AudioSystem.Singleton.Play2DSound("item_select");
             if (topVC && !startDragTriggered && pointerDownObject == gameObject) {
                 OnPointerClick();
             }
@@ -222,7 +225,9 @@ namespace Runtime.Inventory.ViewController {
         }
 
         private void CheckCanThrow() {
-            if (!ResourceSlot.currentHoveredSlot.Value) {
+            if (!ResourceSlot.currentHoveredSlot.Value)
+            {
+                // AudioSystem.Singleton.Play2DSound("slot_item");
                 ShowCantThrowMessage(false);
                 return;
             }
@@ -239,6 +244,7 @@ namespace Runtime.Inventory.ViewController {
                 }
             }
             
+            // AudioSystem.Singleton.Play2DSound("slot_item");
             ShowCantThrowMessage(false);
         }
         
@@ -273,6 +279,7 @@ namespace Runtime.Inventory.ViewController {
                 return;
             }
             ShowCantThrowMessage(false);
+            AudioSystem.Singleton.Play2DSound("slot_item");
             //check if pointer is on self
             if (topVC && Vector2.Distance(eventData.position, dragStartPos) > 10) {
                 this.SendCommand<SlotItemDragReleaseCommand>(
@@ -571,6 +578,9 @@ namespace Runtime.Inventory.ViewController {
         
         public void OnPointerEnter(PointerEventData eventData) {
             isMouseOver = true;
+
+            AudioSystem.Singleton.Play2DSound("item_hover");
+            
             if (slotHoverBG) {
                 slotHoverBG.DOFade(hoverBGAlpha, 0.2f).SetUpdate(true);
             }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using _02._Scripts.Runtime.CollectableResources.ViewControllers.Base;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.VFX;
 using BehaviorDesigner.Runtime;
 using Cysharp.Threading.Tasks;
 using MikroFramework.ActionKit;
@@ -22,9 +24,7 @@ using Random = UnityEngine.Random;
 
 namespace Runtime.DataFramework.ViewControllers.Entities {
 
-	public interface ICreatureViewController : IDamageableViewController {
-		public BoxCollider SpawnSizeCollider { get; }
-		
+	public interface ICreatureViewController : IDamageableViewController, IHaveSpawnSizeCollider {
 		public ICreature OnInitEntity(int level, int rarity);
 		CancellationToken GetCancellationTokenOnStunnedOrDie();
 	}
@@ -69,6 +69,34 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		[SerializeField]
 		private bool autoRemoveEntityWhenDie = true;
 
+		[SerializeField]
+		public Transform[] VFXFramer
+		{
+			get
+			{
+				if (_vfxFramer != null && _vfxFramer.Length != 0)
+				{
+					return _vfxFramer;
+				}
+
+				// Create a frame using the spawn collider if no frame is manually set.
+				var defaultFrameBox = new GameObject("Default VFX Frame");
+				defaultFrameBox.transform.parent = transform;
+				defaultFrameBox.transform.position = SpawnSizeCollider.transform.position + SpawnSizeCollider.center;
+				var size = SpawnSizeCollider.size;
+				var volume = size.x * size.y * size.z;
+				var length = Mathf.Pow(volume, 1.0f / 3.0f);
+				defaultFrameBox.transform.localScale = Vector3.one * length;
+				
+				_vfxFramer = new[] { defaultFrameBox.transform};
+
+				return _vfxFramer;
+			}
+		}
+
+		private Transform[] _vfxFramer;
+		private GenericBuffableVFX _testBuff;
+
 		private CancellationTokenSource ctsWhenDieOrStunned
 			= new CancellationTokenSource();
 		
@@ -89,6 +117,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			}
 			
 			rb = GetComponent<Rigidbody>();
+
+			_testBuff = new GenericBuffableVFX(() => VFXFramer);
 		}
 		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
@@ -107,6 +137,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 
 			BoundEntity.StunnedCounter.Count.RegisterWithInitValue(OnStunnedCounterChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
+			BoundEntity.RegisterOnBuffUpdate(_testBuff.OnBuffUpdate);
 
 			//ctsWhenDieOrStunned = new CancellationTokenSource();
 		}
@@ -313,6 +345,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		
 
 		public override void OnRecycled() {
+			
+			// Make sure all buff frameworks are recycled here:
+			if (BoundEntity != null)
+			{
+				BoundEntity.UnregisterOnBuffUpdate(_testBuff.OnBuffUpdate);
+				_testBuff.RecycleBuff();
+			}
+			
 			base.OnRecycled();
 			if (navMeshAgent) {
 				navMeshAgent.enabled = false;
@@ -321,11 +361,14 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			if (behaviorTree) {
 				behaviorTree.enabled = false;
 			}
-			
 		}
 
 		[field: SerializeField]
 		public BoxCollider SpawnSizeCollider { get; protected set; }
+
+		public void OnSpawnInWorld() {
+			
+		}
 
 		public abstract ICreature OnInitEntity(int level, int rarity);
 		public CancellationToken GetCancellationTokenOnStunnedOrDie() {
