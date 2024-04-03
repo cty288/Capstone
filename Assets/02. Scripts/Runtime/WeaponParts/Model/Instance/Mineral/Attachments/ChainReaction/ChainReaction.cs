@@ -90,8 +90,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Ch
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
+					MalfunctionBuff malfunctionBuff = BuffPool.GetTemplateBuff<MalfunctionBuff>();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.Get("ChainReaction_desc"));
+						Localization.GetFormat("ChainReaction_desc", malfunctionBuff.GetDisplayName()));
 				})
 			};
 		}

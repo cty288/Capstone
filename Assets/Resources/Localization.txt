@@ -906,21 +906,25 @@ BUILD_PANEL_TITLE_Time,,<color=#4259A5>Artifical</color>,,,,,,,,,,,,,,,,,<color=
 BUILD_BUFF_COMBAT_1,,Your bullets have a {0}% chance of creating an explosion that deals an additional 30 x Gun Level ({1}) damage to the target.,,,,,,,,,,,,,,,,,你的子弹有{0}%概率产生爆炸，该爆炸会对目标造成30×枪支等级（{1}）的额外伤害。,你的子彈有{0}%概率産生爆炸，該爆炸會對目標造成30×槍支等級（{1}）的額外傷害。,,,,,,,,,
 BUILD_BUFF_COMBAT_2,,The explosion created by the bullet will directly kill normal monsters with less than {0}% health.,,,,,,,,,,,,,,,,,子弹产生的爆炸将直接击杀血量{0}%以下的普通怪物。,子彈産生的爆炸將直接擊殺血量{0}%以下的普通怪物。,,,,,,,,,
 BUILD_BUFF_COMBAT_3,,"When a bullet explodes, it returns {0} rounds of ammo; if the explosion kills an enemy, it returns an additional {1} round of ammo.",,,,,,,,,,,,,,,,,子弹爆炸后，回复{0}发弹药；如果爆炸将敌人杀死，额外回复{1}发弹药,子彈爆炸後，回複{0}髮彈藥；如果爆炸將敵人殺死，額外回複{1}髮彈藥,,,,,,,,,
-MulfunctionBuff_Desc,,"<b>Mulfunction</b>: If the target is a normal monster, disable it (unable to move and attack).",,,,,,,,,,,,,,,,,<b>故障</b>：如果目标是普通怪物，使其无法行动(无法移动及攻击）。,<b>故障</b>：如果目標是普通怪物，使其無法行動(無法移動及攻擊）。,,,,,,,,,
-BUILD_BUFF_MINERAL_1,,"When the weapon deals damage to an enemy, there is a {0}% chance that it will apply a <b>Malfunction</b> effect to the target for {1} seconds, as well as deal 15 x Gun Level ({2}) damage to all other monsters within a moderate distance of the target monster.
+MalfunctionBuff_Name,,Malfunction,,,,,,,,,,,,,,,,,故障,故障,,,,,,,,,
+MalfunctionBuff_Desc,,"If the target is a normal monster, disable it (unable to move and attack).",,,,,,,,,,,,,,,,,如果目标是普通怪物，使其无法行动(无法移动及攻击）。,如果目標是普通怪物，使其無法行動(無法移動及攻擊）。,,,,,,,,,
+BUILD_BUFF_MINERAL_1,,"When the weapon deals damage to an enemy, there is a {0}% chance that it will apply a <b>{4}</b> effect to the target for {1} seconds, as well as deal 15 x Gun Level ({2}) damage to all other monsters within a moderate distance of the target monster.
 
-{3}",,,,,,,,,,,,,,,,,"当武器对一个敌人造成伤害后，有{0}%的概率为目标施加一个{1}秒的<b>故障</b>效果，同时对目标怪物周围中等距离内的所有其他怪物造成15×枪支等级（{2}）的伤害。
+<b>{4}</b>: {3}",,,,,,,,,,,,,,,,,"当武器对一个敌人造成伤害后，有{0}%的概率为目标施加一个{1}秒的<b>{4}</b>效果，同时对目标怪物周围中等距离内的所有其他怪物造成15×枪支等级（{2}）的伤害。
 
-{3}","當武器對一個敵人造成傷害後，有{0}%的概率爲目標施加一個{1}秒的<b>故障</b>效果，同時對目標怪物週圍中等距離內的所有其他怪物造成15×槍支等級（{2}）的傷害。
+<b>{4}</b>：{3}","當武器對一個敵人造成傷害後，有{0}%的概率爲目標施加一個{1}秒的<b>{4}</b>效果，同時對目標怪物週圍中等距離內的所有其他怪物造成15×槍支等級（{2}）的傷害。
 
-{3}",,,,,,,,,
-BUILD_BUFF_MINERAL_2,,Bullets deal {0}% extra damage when hitting enemies in <b>Malfunction</b> effect.,,,,,,,,,,,,,,,,,子弹击中处于<b>故障</b>效果的敌人时造成{0}%额外伤害。,子彈擊中處於<b>故障</b>效果的敵人時造成{0}%額外傷害。,,,,,,,,,
-BUILD_BUFF_MINERAL_3,,"When the weapon causes a <b>Malfunction</b> effect on an enemy, the enemy will also receive a Level 2 <b>Powerless</b> effect.
+<b>{4}</b>：{3}",,,,,,,,,
+BUILD_BUFF_MINERAL_2,,Bullets deal {0}% extra damage when hitting enemies in <b>{1}</b> effect.,,,,,,,,,,,,,,,,,子弹击中处于<b>{1}</b>效果的敌人时造成{0}%额外伤害。,子彈擊中處於<b>{1}</b>效果的敵人時造成{0}%額外傷害。,,,,,,,,,
+BUILD_BUFF_MINERAL_3,,"When the weapon causes a <b>{1}</b> effect on an enemy, the enemy will also receive a <b>{2}</b> effect.
 
-{0}",,,,,,,,,,,,,,,,,"当武器对一个敌人造成<b>故障</b>效果后，该敌人还会同时获得等级2的<b>无力</b>效果。
+<b>{2}</b>: {0}",,,,,,,,,,,,,,,,,"当武器对一个敌人造成<b>{1}</b>效果后，该敌人还会同时获得<b>{2}</b>效果。
 
-{1}",當武器對一個敵人造成<b>故障</b>效果後，該敵人還會同時獲得等級2的<b>無力</b>效果。,,,,,,,,,
-PowerlessBuff_Desc,,<b>Powerless {0}</b>: All damage dealt is reduced by {1}%.,,,,,,,,,,,,,,,,,<b>无力{0}</b>：造成的所有伤害减少{1}%。,<b>無力{0}</b>：造成的所有傷害減少{1}%。,,,,,,,,,
+<b>{2}</b>：{0}","當武器對一個敵人造成<b>{1}</b>效果後，該敵人還會同時獲得<b>{2}</b>效果。
+
+<b>{2}</b>：{0}",,,,,,,,,
+PowerlessBuff_Name,,Powerless,,,,,,,,,,,,,,,,,无力,無力,,,,,,,,,
+PowerlessBuff_Desc,,All damage dealt is reduced by {0}%.,,,,,,,,,,,,,,,,,造成的所有伤害减少{0}%。,造成的所有傷害減少{0}%。,,,,,,,,,
 BUILD_BUFF_PLANT_1,,"When the weapon inflicts damage, there is a {0}% chance to apply a <b>Hacked</b> effect on the target for {1} seconds, which causes damage to the target every second equal to 2 × Gun Level ({2}).",,,,,,,,,,,,,,,,,当武器造成伤害时，有{0}%概率为目标施加持续{1}秒的<b>病毒</b>效果，该效果每秒会对目标造成2×枪支等级（{2}）的伤害,當武器造成傷害時，有{0}%機率為目標施加持續{1}秒的<b>病毒</b>效果，該效果每秒會對目標造成2×槍支等級（{2}）的傷害。,,,,,,,,,
 BUILD_BUFF_PLANT_2,,"When the weapon successfully applies a <b>Hacked</b> effect to a target, all other monsters within a small range around the monster also receive the effect.",,,,,,,,,,,,,,,,,当武器成功为一个目标施加<b>病毒</b>效果后，使怪物周围小范围内的所有其他怪物也获得该效果。,當武器成功為一個目標施加<b>病毒</b>效果後，使怪物周圍小範圍內的所有其他怪物也獲得該效果。,,,,,,,,,
 BUILD_BUFF_PLANT_3,,"The damage caused by the <b>Hacked</b> effect inflicted by the weapon is doubled, and the duration of the effect is also doubled.",,,,,,,,,,,,,,,,,武器造成的<b>病毒</b>效果造成的伤害翻倍，且持续时间翻倍。,武器造成的<b>病毒</b>效果造成的傷害翻倍，且持續時間翻倍。,,,,,,,,,
@@ -944,7 +948,7 @@ VerticalForegrip_desc,,Reduce the hipfire recoil of the weapon by {0}%.,,,,,,,,,
 ThundercrackBarrel_name,,Thundercrack Barrel,,,,,,,,,,,,,,,,,雷霆枪管,雷霆槍管,,,,,,,,,
 ThundercrackBarrel_desc,,Your magazine's <color=#E2AF3F>EMP</color> area damage is increased by {0}%.,,,,,,,,,,,,,,,,,你的弹匣的<color=#E2AF3F>电磁脉冲</color>所造成的范围伤害提高{0}%,您的彈匣的<color=#E2AF3F>電磁脈衝</color>所造成的範圍傷害提高{0}%,,,,,,,,,
 EMPChain_name,,EMP Chain,,,,,,,,,,,,,,,,,电磁连锁,電磁連鎖,,,,,,,,,
-EMPChain_desc,,The area damage caused by the <color=#E2AF3F>EMP</color> also has a {0}% chance to apply a <b>Malfunction</b> effect to the target.,,,,,,,,,,,,,,,,,<color=#E2AF3F>电磁脉冲</color>所造成的范围伤害也有{0}%的几率为目标施加<b>故障</b>效果,<color=#E2AF3F>電磁脈衝</color>所造成的範圍傷害也有{0}%的機率為目標施加<b>故障</b>效果,,,,,,,,,
+EMPChain_desc,,The area damage caused by the <color=#E2AF3F>EMP</color> also has a {0}% chance to apply a <b>{1}</b> effect to the target.,,,,,,,,,,,,,,,,,<color=#E2AF3F>电磁脉冲</color>所造成的范围伤害也有{0}%的几率为目标施加<b>{1}</b>效果,<color=#E2AF3F>電磁脈衝</color>所造成的範圍傷害也有{0}%的機率為目標施加<b>{1}</b>效果,,,,,,,,,
 IntenseEMP_name,,Intense EMP,,,,,,,,,,,,,,,,,强烈电磁,強烈電磁,,,,,,,,,
 IntenseEMP_desc,,"If a target is killed by the area damage caused by the <color=#E2AF3F>EMP</color>, it will deal damage to all enemies within a medium range centered on the deceased target, with the damage being {0}% of the weapon damage.",,,,,,,,,,,,,,,,,如果目标被<color=#E2AF3F>电磁脉冲</color>所造成的范围伤害杀死，会以死亡目标为中心的中等范围内的所有敌人造成伤害，伤害为武器伤害的{0}%,如果目標被<color=#E2AF3F>電磁脈衝</color>所造成的範圍傷害殺死，會以死亡目標為中心的中等範圍內的所有敵人造成傷害，傷害為武器傷害的{0}%,,,,,,,,,
 IntenseEMP_desc_2,,"If a target is killed by the area damage caused by the <color=#E2AF3F>EMP</color>, it will deal damage to all enemies within a <color=red><b>large</b></color> range centered on the deceased target, with the damage being {0}% of the weapon damage.",,,,,,,,,,,,,,,,,如果目标被<color=#E2AF3F>电磁脉冲</color>所造成的范围伤害杀死，会以死亡目标为中心的<color=red><b>大</b></color>范围内的所有敌人造成伤害，伤害为武器伤害的{0}%,如果目標被<color=#E2AF3F>電磁脈衝</color>所造成的範圍傷害殺死，會以死亡目標為中心的<color=red><b>大</b></color>範圍內的所有敵人造成傷害，傷害為武器傷害的{0}%,,,,,,,,,
@@ -971,25 +975,25 @@ TurretSkill_EXPLODE,,"After the turret self-destructs, it will create an explosi
 DEPLOY_ERROR_TURRET_MAX_COUNT,,You can't deploy more turrets at this time!,,,,,,,,,,,,,,,,,你现在无法部署更多机枪了！,你現在無法部署更多機槍了！,,,,,,,,,
 TurretEntity_name,,Turret,,,,,,,,,,,,,,,,,机枪,機槍,,,,,,,,,
 StunGrenadeSkill_name,,Tactical Stun Grenade,,,,,,,,,,,,,,,,,战术震撼弹,戰術震撼彈,,,,,,,,,
-StunGrenadeSkill_desc,,"After use, a stun grenade will be thrown, and its explosion will cause all surrounding enemies to receive a <b>Malfunction</b> effect.{2}
+StunGrenadeSkill_desc,,"After use, a stun grenade will be thrown, and its explosion will cause all surrounding enemies to receive a <b>{3}</b> effect.{2}
 
-{0}{1}",,,,,,,,,,,,,,,,,"使用后将会向前方投掷一颗震撼弹，其爆炸后会使所有周围的敌人获得<b>故障</b>效果。
+{0}{1}",,,,,,,,,,,,,,,,,"使用后将会向前方投掷一颗震撼弹，其爆炸后会使所有周围的敌人获得<b>{3}</b>效果。
 
-{0}{1}","使用後將會向前方投擲一顆震撼彈，其爆炸後會使所有週圍的敵人獲得<b>故障</b>效果。
-
-{0}{1}",,,,,,,,,
-StunGrenadeSkill_desc2,,"After use, a stun grenade will be thrown, and its explosion will cause all surrounding enemies to receive a <b>Malfunction</b>effect. After the effect ends, the enemies will receive a <b>Powerless{2}</b> effect.  
-
-{0}{1}",,,,,,,,,,,,,,,,,"使用后将会向前方投掷一颗震撼弹，其爆炸后会使所有周围的敌人获得<b>故障</b>效果。在效果结束后，敌人将获得<b>无力{2}</b>效果。
-
-{0}{1}","使用後將會向前方投擲一顆震撼彈，其爆炸後會使所有週圍的敵人獲得<b>故障</b>效果。在效果結束後，敵人將獲得<b>無力{2}</b>效果。
+{0}{1}","使用後將會向前方投擲一顆震撼彈，其爆炸後會使所有週圍的敵人獲得<b>{3}</b>效果。
 
 {0}{1}",,,,,,,,,
-StunGrenadeSkill_BUFF1_TIME,,<b>Malfunction</b> Effect Time,,,,,,,,,,,,,,,,,<b>故障</b>效果持续时间,<b>故障</b>效果持續時間,,,,,,,,,
+StunGrenadeSkill_desc2,,"After use, a stun grenade will be thrown, and its explosion will cause all surrounding enemies to receive a <b>{3}</b> effect. After the effect ends, the enemies will receive a <b>{2}</b> effect.  
+
+{0}{1}",,,,,,,,,,,,,,,,,"使用后将会向前方投掷一颗震撼弹，其爆炸后会使所有周围的敌人获得<b>{3}</b>效果。在效果结束后，敌人将获得<b>{2}</b>效果。
+
+{0}{1}","使用後將會向前方投擲一顆震撼彈，其爆炸後會使所有週圍的敵人獲得<b>{3}</b>效果。在效果結束後，敵人將獲得<b>{2}</b>效果。
+
+{0}{1}",,,,,,,,,
+StunGrenadeSkill_BUFF1_TIME,,<b>{0}</b> Effect Time,,,,,,,,,,,,,,,,,<b>{0}</b>效果持续时间,<b>{0}</b>效果持續時間,,,,,,,,,
 StunGrenadeSkill_BUFF_TIME_VALUE,,{0} seconds,,,,,,,,,,,,,,,,,{0}秒,{0}秒,,,,,,,,,
 StunGrenadeSkill_RANGE,,Range,,,,,,,,,,,,,,,,,范围,範圍,,,,,,,,,
 StunGrenadeSkill_RANGE_VALUE,,{0} meters,,,,,,,,,,,,,,,,,{0}米,{0}米,,,,,,,,,
-StunGrenadeSkill_BUFF2_TIME,,<b>Powerless</b> Effect Time,,,,,,,,,,,,,,,,,<b>无力</b>效果持续时间,<b>無力</b>效果持續時間,,,,,,,,,
+StunGrenadeSkill_BUFF2_TIME,,<b>{0}</b> Effect Time,,,,,,,,,,,,,,,,,<b>{0}</b>效果持续时间,<b>{0}</b>效果持續時間,,,,,,,,,
 AdrenalineSkill_name,,Adrenaline,,,,,,,,,,,,,,,,,肾上腺素,腎上腺素,,,,,,,,,
 AdrenalineSkill_desc,,"Gain level {0} <b>Stimulated</b> effect.
 
@@ -1026,7 +1030,7 @@ ConcentratedCurrent_desc,,"The area damage of your <color=#E2AF3F>EMP</color> is
 InterferenceAmplification_name,,Interference Amplification,,,,,,,,,,,,,,,,,干扰扩大,幹擾擴大,,,,,,,,,
 InterferenceAmplification_desc,,The range of your <color=#E2AF3F>EMP</color> is increased by {0} meters.,,,,,,,,,,,,,,,,,你的<color=#E2AF3F>电磁脉冲</color>的范围增加{0}米。,你的<color=#E2AF3F>電磁脈衝</color>的範圍增加{0}米。,,,,,,,,,
 ChainReaction_name,,Chain Reaction,,,,,,,,,,,,,,,,,连锁反应,連鎖反應,,,,,,,,,
-ChainReaction_desc,,"The <b>Malfunction</b> effect caused by your <color=#E2AF3F>EMP</color> will reset the remaining time of other negative effects on the target. For negative effects with levels, it additionally increases one level.",,,,,,,,,,,,,,,,,你的<color=#E2AF3F>电磁脉冲</color>所造成的<b>故障</b>效果会重置目标身上的其他负面效果的剩余时间。对于有等级的负面效果，额外提升一级。,你的<color=#E2AF3F>電磁脈衝</color>所造成的<b>故障</b>效果會重置目標身上的其他負麵效果的剩餘時間。對於有等級的負麵效果，額外提昇一級。,,,,,,,,,
+ChainReaction_desc,,"The <b>{0}</b> effect caused by your <color=#E2AF3F>EMP</color> will reset the remaining time of other negative effects on the target. For negative effects with levels, it additionally increases one level.",,,,,,,,,,,,,,,,,你的<color=#E2AF3F>电磁脉冲</color>所造成的<b>{0}</b>效果会重置目标身上的其他负面效果的剩余时间。对于有等级的负面效果，额外提升一级。,你的<color=#E2AF3F>電磁脈衝</color>所造成的<b>{0}</b>效果會重置目標身上的其他負麵效果的剩餘時間。對於有等級的負麵效果，額外提昇一級。,,,,,,,,,
 HardCasesBarrel_name,,Hard Cases,,,,,,,,,,,,,,,,,疑难杂症,疑難雜症,,,,,,,,,
 HardCasesBarrel_desc,,"After your <b>Hacked</b> effect ends, it deals damage to the target equal to {0}×Gun Level.",,,,,,,,,,,,,,,,,你的<b>病毒</b>效果结束后，对目标造成{0}×枪支等级的伤害。,你的<b>病毒</b>效果結束後，對目標造成{0}×槍支等級的傷害。,,,,,,,,,
 HardCasesBarrel_desc2,,"After your <b>Hacked</b> effect ends, it deals damage to the target equal to {0}×Gun Level ({1}).",,,,,,,,,,,,,,,,,你的<b>病毒</b>效果结束后，对目标造成{0}×枪支等级（{1}）的伤害。,你的<b>病毒</b>效果結束後，對目標造成{0}×槍支等級（{1}）的傷害。,,,,,,,,,
@@ -1065,11 +1069,11 @@ CompressedCurrent_desc,,"The damage of your <color=#E2AF3F>EMP</color> is increa
 ControlledEMP_name,,Controlled EMP,,,,,,,,,,,,,,,,,可控干扰,可控干擾,,,,,,,,,
 ControlledEMP_desc,,"When your <color=#E2AF3F>EMP</color> is generated, it no longer causes immediate area damage, but instead occurs when the weapon hits the next target.",,,,,,,,,,,,,,,,,你的<color=#E2AF3F>电磁脉冲</color>产生时，不再立刻产生范围伤害，而是在武器击中下一个目标时产生。,你的<color=#E2AF3F>電磁脈衝</color>產生時，不再立刻產生範圍傷害，而是在武器擊中下一個目標時產生。,,,,,,,,,
 DangerousModification_EMP_name,,Dangerous Modification,,,,,,,,,,,,,,,,,危险改装,危險改裝,,,,,,,,,
-DangerousModification_EMP_desc,,"The chance of your <color=#E2AF3F>EMP</color> creating a <b>Malfunction</b> effect is doubled, but there is a {0}% chance of locking the weapon for {1} seconds after successfully applying the effect.",,,,,,,,,,,,,,,,,你的<color=#E2AF3F>电磁脉冲</color>产生<b>故障</b>效果的概率翻倍，但在成功赋予效果后有{0}%概率让锁住武器{1}秒。,你的<color=#E2AF3F>電磁脈衝</color>產生<b>故障</b>效果的概率翻倍，但在成功賦予效果後有{0}%概率讓鎖住武器{1}秒。,,,,,,,,,
+DangerousModification_EMP_desc,,"The chance of your <color=#E2AF3F>EMP</color> creating a <b>{2}</b> effect is doubled, but there is a {0}% chance of locking the weapon for {1} seconds after successfully applying the effect.",,,,,,,,,,,,,,,,,你的<color=#E2AF3F>电磁脉冲</color>产生<b>{2}</b>效果的概率翻倍，但在成功赋予效果后有{0}%概率让锁住武器{1}秒。,你的<color=#E2AF3F>電磁脈衝</color>產生<b>{2}</b>效果的概率翻倍，但在成功賦予效果後有{0}%概率讓鎖住武器{1}秒。,,,,,,,,,
 HackedAgain_name,,Hacked Again,,,,,,,,,,,,,,,,,毒上加毒,毒上加毒,,,,,,,,,
 HackedAgain_desc,,"When your weapon applies a <b>Hacked</b> effect to a target already under a <b>Hacked</b> effect,the damage caused by the <b>Hacked</b> per second for the remaining duration increases by {0}.",,,,,,,,,,,,,,,,,当武器为已经处于<b>病毒</b>效果的目标施加<b>病毒</b>效果时，使<b>病毒</b>接下来每秒造成的伤害+{0}。,當武器為已經處於<b>病毒</b>效果的目標施加<b>病毒</b>效果時，使<b>病毒</b>接下來每秒造成的傷害+{0}。,,,,,,,,,
 FunctionalLimit_name,,Functional Limit,,,,,,,,,,,,,,,,,机能限制,機能限制,,,,,,,,,
-FunctionalLimit_desc,,"When the weapon applies a <b>Hacked</b> effect, it also inflicts a level {0} <b>Powerless</b> effect on the target.",,,,,,,,,,,,,,,,,当武器施加<b>病毒</b>效果时，使目标也获得等级{0}的<b>无力</b>效果。,當武器施加<b>病毒</b>效果時，使目標也獲得等級{0}的<b>無力</b>效果。,,,,,,,,,
+FunctionalLimit_desc,,"When the weapon applies a <b>Hacked</b> effect, it also inflicts a <b>{0}</b> effect on the target.",,,,,,,,,,,,,,,,,当武器施加<b>病毒</b>效果时，使目标也获得<b>{0}</b>效果。,當武器施加<b>病毒</b>效果時，使目標也獲得<b>{0}</b>效果。,,,,,,,,,
 DangerousModification_Viral_name,,Dangerous Modification,,,,,,,,,,,,,,,,,危险改装,危險改裝,,,,,,,,,
 DangerousModification_Viral_desc,,"The chance of your <color=#3B896D>Virus Magazine</color> producing a <b>Hacked</b> effect is doubled, but there is a {0}% chance of it causing {1} damage to you after successfully applying the <b>Hacked</b> effect.",,,,,,,,,,,,,,,,,你的<color=#3B896D>病毒弹匣</color>产生<b>病毒</b>效果的概率翻倍，但成功赋予<b>病毒</b>效果后有{0}%的概率对你造成{1}点伤害。,你的<color=#3B896D>病毒彈匣</color>產生<b>病毒</b>效果的概率翻倍，但成功賦予<b>病毒</b>效果後有{0}%的概率對你造成{1}點傷害。,,,,,,,,,
 TransmissionAttachment_name,,Transmission,,,,,,,,,,,,,,,,,传播,傳播,,,,,,,,,
