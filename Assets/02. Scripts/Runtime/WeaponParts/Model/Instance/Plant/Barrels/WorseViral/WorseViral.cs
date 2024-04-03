@@ -2,6 +2,7 @@
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -23,7 +24,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.WorseVi
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			int damage = GetCustomDataValueOfCurrentLevel<int>("damage");
-			return Localization.GetFormat(defaultLocalizationKey, damage);
+			string HackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, damage, HackedBuffName);
 		}
 		
 
@@ -76,9 +78,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.WorseVi
 				new GetResourcePropertyDescriptionGetter(() => {
 					
 					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
-
+					string HackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("WorseViral_desc", damage));
+						Localization.GetFormat("WorseViral_desc", damage, HackedBuffName));
 				})
 			};
 		}

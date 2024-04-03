@@ -132,9 +132,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Attachments.Dan
 					float chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
 					int displayChance = (int) (chance * 100);
 					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
-					
+					string displayName = BuffPool.GetTemplateBuff<MalfunctionBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("DangerousModification_desc", displayChance, damage));
+						Localization.GetFormat("DangerousModification_desc", displayChance, damage, displayName));
 				})
 			};
 		}
