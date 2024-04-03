@@ -39111,6 +39111,7 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  autoAbsorbWhenPlayerReach: 1
   autoRecycleTimeWhenNoAbsorb: 120
   alsoRemoveEntityWhenNoAbsorb: 1
   <InHandLocalPosition>k__BackingField: {x: 0, y: 0, z: 0}
@@ -39128,7 +39129,7 @@ MonoBehaviour:
       m_Bits: 0
   <InHandLocalScale>k__BackingField: {x: 1, y: 1, z: 1}
   <AnimLayerInfos>k__BackingField:
-  - LayerName: Universal Pistol
+  - LayerName: Blade
     LayerWeight: 1
   <PlayerAnimStateToWaitWhenStopHold>k__BackingField: []
   crossHairPrefabName: 
@@ -39138,7 +39139,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hitParticlePrefab: {fileID: 0}
   hitVFXSystem: {fileID: 0}
   animator: {fileID: 0}
   reloadAnimationLength: 0
@@ -39365,6 +39365,7 @@ MonoBehaviour:
     m_Bits: 0
   maxDistance: 100
   detectTime: 1
+  checkCollidersOnly: 0
 --- !u!4 &8770727317033070678 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 924734558d81d6042b1fb6f02b62f5e4,
