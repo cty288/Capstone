@@ -10,12 +10,14 @@ using Framework;
 using JetBrains.Annotations;
 using MikroFramework;
 using MikroFramework.ResKit;
+using MoreMountains.Tools;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Spawning {
 	public struct NavMeshFindResult {
@@ -340,150 +342,80 @@ namespace Runtime.Spawning {
 
 			return doorInstance;
 		}
-		public static async UniTask<GameObject> SpawnExitDoor(GameObject spawner, string prefabName, Bounds bounds,
+		public static async UniTask<GameObject> SpawnExitDoor(string prefabName, Bounds bounds,
 			Transform[] playerSpawnPoints) {
 			GameObject prefab = MainGame.Interface.GetUtility<ResLoader>().LoadSync<GameObject>(prefabName);
 			
-			BoxCollider spawnSizeGetter() => prefab.GetComponent<LevelExitDoorController>().SpawnSizeCollider;
+			
 			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
-			Bounds insideArenaBounds = default;
-			if (insideArenaBounds == default) {
-				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
-					.First(o => o.gameObject.activeInHierarchy)
-					.GetComponent<Collider>().bounds;
-			}
-			
-			
 
-			//create a new bounds, 20% smaller than the original
-			bounds = new Bounds(bounds.center, bounds.size * 0.8f);
-			
+			Transform[] exitDoorSpawnPoints = GameObject.FindGameObjectsWithTag("ExitDoorSpawnPoint")
+				.Select(x => x.transform).ToArray();
+			if (exitDoorSpawnPoints.Length == 0) {
+				return null;
+			}
+			exitDoorSpawnPoints.MMShuffle();
 			
 			GameObject doorInstance = null;
-
 			while (true) {
 				await UniTask.Yield();
-				Vector3 randomPoint = new Vector3(
-					UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
-					UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
-					UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
-				);
+				Transform randomPoint = exitDoorSpawnPoints[Random.Range(0, exitDoorSpawnPoints.Length)];
 
 				foreach (Transform playerSpawnPoint in playerSpawnPoints) {
 					if (!playerSpawnPoint) {
 						continue;
 					}
-					if (Vector3.Distance(randomPoint, playerSpawnPoint.position) < 20) {
+					if (Vector3.Distance(randomPoint.position, playerSpawnPoint.position) < 20) {
 						continue;
 					}
 				}
 				
 				//sample the point on the navmesh
 				NavMeshHit navHit;
-				if (!NavMesh.SamplePosition(randomPoint, out navHit, 250.0f, areaMask)) {
-					continue;
-				}
-
-				NavMeshFindResult res = await FindNavMeshSuitablePosition(spawner, spawnSizeGetter,
-					navHit.position, 45, areaMask,
-					insideArenaBounds, 10, 10, 100, 500);
-					
-				//rotate y axis randomly
-				//res.RotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
-
-				if (!res.IsSuccess) {
+				if (!NavMesh.SamplePosition(randomPoint.position, out navHit, 250.0f, areaMask)) {
 					continue;
 				}
 				
+				
 				//ok to spawn
 				doorInstance = GameObject.Instantiate(prefab);
-				doorInstance.transform.position = res.TargetPosition;
-				doorInstance.transform.rotation = res.RotationWithSlope;
+				doorInstance.transform.position = navHit.position;
+				doorInstance.transform.rotation = randomPoint.rotation;
 				break;
 			}
 
 			return doorInstance;
 		}
 		
-		public static async UniTask<List<GameObject>> SpawnBossPillars(GameObject spawner, int targetNumber, string prefabName, Bounds bounds) {
+		public static List<GameObject> SpawnBossPillars(int targetNumber, string prefabName) {
 			var pillarPool =
 				GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 4, 10, out GameObject prefab);
-			BoxCollider pillarSpawnSizeGetter() => prefab.GetComponent<IBossPillarViewController>().SpawnSizeCollider;
+			
 			
 			List<GameObject> pillars = new List<GameObject>();
 
 			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
 			
-			/*var insideArenaCheckPoints =
-				GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();*/
-
-			Bounds insideArenaBounds = default;
-			if (insideArenaBounds == default) {
-				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
-					.First(o => o.gameObject.activeInHierarchy)
-					.GetComponent<Collider>().bounds;
-			}
-			
-			
-
-			//create a new bounds, 20% smaller than the original
-			bounds = new Bounds(bounds.center, bounds.size * 0.8f);
-			float minDistance = bounds.size.x * 0.2f;
+			Transform[] spawnPoints = GameObject.FindGameObjectsWithTag("BossPillarSpawnPoint")
+				.Select(x => x.transform).ToArray();
+			spawnPoints.MMShuffle();
 			
 			for (int i = 0; i < targetNumber; i++) {
-				int remainingRetry = 1000;
-
-				while (remainingRetry > 0) {
-					remainingRetry--;
-					//get a random point in the bounds
-					Vector3 randomPoint = new Vector3(
-						UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
-						UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
-						UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
-					);
-				
-					//sample the point on the navmesh
-					NavMeshHit navHit;
-					if (!NavMesh.SamplePosition(randomPoint, out navHit, 250.0f, areaMask)) {
-						continue;
-					}
-
-					NavMeshFindResult res = await FindNavMeshSuitablePosition(spawner, pillarSpawnSizeGetter,
-						navHit.position, 45, areaMask,
-						insideArenaBounds, 10, 10, remainingRetry, 500);
-					
-					//rotate y axis randomly
-					res.RotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
-
-					if (!res.IsSuccess) {
-						remainingRetry -= res.UsedAttempts;
-						continue;
-					}
-					
-					//if the distance to any other pillar is too small, retry
-					bool tooClose = false;
-					foreach (var pillar in pillars) {
-						if (Vector3.Distance(pillar.transform.position, res.TargetPosition) < minDistance) {
-							//remainingRetry--;
-							tooClose = true;
-							break;
-						}
-					}
-					if (tooClose) {
-						continue;
-					}
-					
-					
-					
-					//ok to spawn
-					GameObject pillarInstance = pillarPool.Allocate();
-					pillarInstance.transform.position = res.TargetPosition;
-					pillarInstance.transform.rotation = res.RotationWithSlope;
-					pillars.Add(pillarInstance);
+				if (i >= spawnPoints.Length) {
 					break;
 				}
+				Transform spawnPoint = spawnPoints[i];
+				Vector3 point = spawnPoint.position;
+				if (NavMesh.SamplePosition(spawnPoint.position, out NavMeshHit navHit, 250.0f, areaMask)) {
+					point = navHit.position;
+				}
+
+				GameObject pillarInstance = pillarPool.Allocate();
+				pillarInstance.transform.position = point;
 				
-				
+				//random y rotation
+				pillarInstance.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
+				pillars.Add(pillarInstance);
 			}
 			
 			return pillars;
