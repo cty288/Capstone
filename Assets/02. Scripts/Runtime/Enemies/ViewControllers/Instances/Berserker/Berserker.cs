@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.BindableProperty;
@@ -16,6 +17,9 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 	{
 		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "Berserker";
+
+		public List<GameObject> Nodes;
+		
 		protected override void OnEntityStart(bool isLoadedFromSave) {
             
 		}
@@ -48,8 +52,12 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 	
 	public class Berserker : AbstractBossViewController<BerserkerEntity>{
 		private bool deathAnimationEnd = false;
-		protected override void OnEntityStart() {
-			
+
+		[SerializeField] private List<GameObject> nodes;
+		
+		protected override void OnEntityStart()
+		{
+			BoundEntity.Nodes = nodes;
 		}
 
 		protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
