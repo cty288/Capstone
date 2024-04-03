@@ -39,7 +39,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill {
 			int tempHealth = GetBuffPropertyAtLevel<int>("temp_health", level);
 			int displayedDuration = (int) GetBuffPropertyAtLevel<float>("time", level);
 
-			return Localization.GetFormat("StimulatedBuff_Desc", level, displayedDamage,
+			return Localization.GetFormat("StimulatedBuff_Desc", displayedDamage,
 				displayedMovementSpeed, tempHealth, displayedDuration);
 		}
 

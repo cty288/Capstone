@@ -995,14 +995,15 @@ StunGrenadeSkill_RANGE,,Range,,,,,,,,,,,,,,,,,范围,範圍,,,,,,,,,
 StunGrenadeSkill_RANGE_VALUE,,{0} meters,,,,,,,,,,,,,,,,,{0}米,{0}米,,,,,,,,,
 StunGrenadeSkill_BUFF2_TIME,,<b>{0}</b> Effect Time,,,,,,,,,,,,,,,,,<b>{0}</b>效果持续时间,<b>{0}</b>效果持續時間,,,,,,,,,
 AdrenalineSkill_name,,Adrenaline,,,,,,,,,,,,,,,,,肾上腺素,腎上腺素,,,,,,,,,
-AdrenalineSkill_desc,,"Gain level {0} <b>Stimulated</b> effect.
+AdrenalineSkill_desc,,"Gain <b>{0}</b> effect.
 
-{1}",,,,,,,,,,,,,,,,,"获得等级 {0} 的<b>亢奋</b>效果。
+<b>{0}</b>: {1}",,,,,,,,,,,,,,,,,"获得<b>{0}</b>效果。
 
-{1}","獲得等級 {0} 的<b>亢奮</b>效果。
+<b>{0}</b>：{1}","獲得<b>{0}</b>效果。
 
-{1}",,,,,,,,,
-StimulatedBuff_Desc,,"<b>Stimulated {0}</b>: All the damage you deal is increased by {1}%, your movement speed is increased by {2}%, and get {3} temporary health. This effect lasts for {4} seconds.",,,,,,,,,,,,,,,,,<b>亢奋{0}</b>:你造成的所有伤害增加{1}%，你的移动速度增加{2}%，获得{3}点临时血量。持续{4}秒。,<b>亢奮{0}</b>:你造成的所有傷害增加{1}%，你的移動速度增加{2}%，獲得{3}點臨時血量。持續{4}秒。,,,,,,,,,
+<b>{0}</b>：{1}",,,,,,,,,
+StimulatedBuff_Name,,Stimulated,,,,,,,,,,,,,,,,,亢奋,亢奮,,,,,,,,,
+StimulatedBuff_Desc,,"All the damage you deal is increased by {0}%, your movement speed is increased by {1}%, and get {2} temporary health. This effect lasts for {3} seconds.",,,,,,,,,,,,,,,,,你造成的所有伤害增加{0}%，你的移动速度增加{1}%，获得{2}点临时血量。持续{3}秒。,你造成的所有傷害增加{0}%，你的移動速度增加{1}%，獲得{2}點臨時血量。持續{3}秒。,,,,,,,,,
 BackpackSkill_name,,Expansion Backpack,,,,,,,,,,,,,,,,,扩容背包,擴容背包,,,,,,,,,
 BackpackSkill_desc,,Unlock {0} additional backpack slots. This skill is still effective even when not in the skill bar.,,,,,,,,,,,,,,,,,解锁额外{0}个背包栏位。该技能在非技能栏中依然生效。,解鎖額外{0}個背包欄位。該技能在非技能欄中依然生效。,,,,,,,,,
 BackpackSkill_desc2,,Unlock all backpack slots. This skill is still effective even when not in the skill bar.,,,,,,,,,,,,,,,,,解锁所有背包栏位。该技能在非技能栏中依然生效。,解鎖所有背包欄位。該技能在非技能欄中依然生效。,,,,,,,,,
@@ -1011,15 +1012,16 @@ PILLAR_INFO_CURRENCY,,Select an energy to transfer to the pillar,,,,,,,,,,,,,,,,
 DawnbreakerBlast_name,,Dawnbreaker Blast,,,,,,,,,,,,,,,,,破晓轰鸣,破曉轟鳴,,,,,,,,,
 DawnbreakerBlast_desc,,The explosion damage from your <color=#E54160>Shredding</color> is increased to {0} × Gun Level.,,,,,,,,,,,,,,,,,你的<color=#E54160>爆破弹</color>产生的爆炸伤害提升到{0}×枪支等级。,你的<color=#E54160>爆破彈</color>産生的爆炸傷害提昇到{0}×槍支等级。,,,,,,,,,
 DawnbreakerBlast_PROPERTY_desc,,The explosion damage from your <color=#E54160>Shredding</color> is increased to {0} × Gun Level ({1}).,,,,,,,,,,,,,,,,,你的<color=#E54160>爆破弹</color>产生的爆炸伤害提升到{0}×枪支等级（{1}）。,你的<color=#E54160>爆破彈</color>産生的爆炸傷害提昇到{0}×槍支等級（{1}）。,,,,,,,,,
-VulnerableBuff_Desc,,"<b>Vulnerable {0}</b>: Receive an additional {1}% damage, lasting for {2} seconds.",,,,,,,,,,,,,,,,,<b>易伤{0}</b>：受到额外{1}%伤害，持续{2}秒。,<b>易傷{0}</b>：受到額外{1}%傷害，持續{2}秒。,,,,,,,,,
+VulnerableBuff_Name,,Vulnerable,,,,,,,,,,,,,,,,,易伤,易傷,,,,,,,,,
+VulnerableBuff_Desc,,"Receive an additional {0}% damage, lasting for {1} seconds.",,,,,,,,,,,,,,,,,受到额外{0}%伤害，持续{1}秒。,受到額外{0}%傷害，持續{1}秒。,,,,,,,,,
 ShrapnelBullets_name,,Shrapnel Bullets,,,,,,,,,,,,,,,,,弹片子弹,彈片子彈,,,,,,,,,
-ShrapnelBullets_desc,,"The explosion from your <color=#E54160>Shredding</color> will also apply a level {0} ""<b>Vulnerable</b>"" effect to the target.
+ShrapnelBullets_desc,,"The explosion from your <color=#E54160>Shredding</color> will also apply a <b>{0}</b> effect to the target.
 
-{1}",,,,,,,,,,,,,,,,,"你的<color=#E54160>爆破弹</color>产生的爆炸会同时为目标施加{0}级的“<b>易伤</b>""效果。
+<b>{0}</b>: {1}",,,,,,,,,,,,,,,,,"你的<color=#E54160>爆破弹</color>产生的爆炸会同时为目标施加<b>{0}</b>效果。
 
-{1}","你的<color=#E54160>爆破彈</color>産生的爆炸會同時爲目標施加{0}級的“<b>易傷</b>""效果。
+<b>{0}</b>：{1}","你的<color=#E54160>爆破彈</color>産生的爆炸會同時爲目標施加<b>{0}</b>效果。
 
-{1}",,,,,,,,,
+<b>{0}</b>：{1}",,,,,,,,,
 KillCounter_name,,Kill Counter,,,,,,,,,,,,,,,,,击杀计数器,擊殺計數器,,,,,,,,,
 KillCounter_desc,,"After equipping, killing an enemy with the weapon will add a count, and every {0} counts will increase the weapon damage by {1} points. Removing this part will reset the count and damage.",,,,,,,,,,,,,,,,,"装备后，用武器击杀敌人会增加一个计数，每{0}个计数将增加武器伤害{1}点。卸下该部件后将重置计数与伤害。
 ","裝備後，用武器擊殺敵人會增加一個計數，每{0}個計數將增加武器傷害{1}點。卸下該部件後將重置計數與傷害。
@@ -1077,7 +1079,7 @@ FunctionalLimit_desc,,"When the weapon applies a <b>{1}</b> effect, it also infl
 DangerousModification_Viral_name,,Dangerous Modification,,,,,,,,,,,,,,,,,危险改装,危險改裝,,,,,,,,,
 DangerousModification_Viral_desc,,"The chance of your <color=#3B896D>Virus Magazine</color> producing a <b>{2}</b> effect is doubled, but there is a {0}% chance of it causing {1} damage to you after successfully applying the <b>{2}</b> effect.",,,,,,,,,,,,,,,,,你的<color=#3B896D>病毒弹匣</color>产生<b>{2}</b>效果的概率翻倍，但成功赋予<b>{2}</b>效果后有{0}%的概率对你造成{1}点伤害。,你的<color=#3B896D>病毒彈匣</color>產生<b>{2}</b>效果的概率翻倍，但成功賦予<b>{2}</b>效果後有{0}%的概率對你造成{1}點傷害。,,,,,,,,,
 TransmissionAttachment_name,,Transmission,,,,,,,,,,,,,,,,,传播,傳播,,,,,,,,,
-TransmissionAttachment_desc,,"When a target affected by the <b>{0}</b> effect from your <color=#E54160>Virus Magazine</color> dies, the <b>{0}</b> is spread to another enemy within medium range, retaining all properties of the original <b>{0}</b> effect.",,,,,,,,,,,,,,,,,当你的<color=#E54160>病毒弹匣</color>施加<b>{0}</b>效果的目标死亡后，将<b>{0}</b>传播给中等范围中的另一名敌人，保留原<b>{0}</b>效果的所有属性。,當你的<color=#E54160>病毒彈匣</color>施加<b>{0}</b>效果的目標死亡後，將<b>{0}</b>傳播給中等範圍中的另一名敵人，保留原<b>{0}</b>效果的所有屬性。,,,,,,,,,
+TransmissionAttachment_desc,,"When a target affected by the <b>{0}</b> effect from your <color=#3B896D>Virus Magazine</color> dies, the <b>{0}</b> is spread to another enemy within medium range, retaining all properties of the original <b>{0}</b> effect.",,,,,,,,,,,,,,,,,当你的<color=#3B896D>病毒弹匣</color>施加<b>{0}</b>效果的目标死亡后，将<b>{0}</b>传播给中等范围中的另一名敌人，保留原<b>{0}</b>效果的所有属性。,當你的<color=#3B896D>病毒彈匣</color>施加<b>{0}</b>效果的目標死亡後，將<b>{0}</b>傳播給中等範圍中的另一名敵人，保留原<b>{0}</b>效果的所有屬性。,,,,,,,,,
 BerserkerAttachment_name,,Berserker,,,,,,,,,,,,,,,,,狂战士,狂戰士,,,,,,,,,
 BerserkerAttachment_desc,,"After equipping this weapon part, when your health decreases, you gain a <b>{0}</b> effect.
 

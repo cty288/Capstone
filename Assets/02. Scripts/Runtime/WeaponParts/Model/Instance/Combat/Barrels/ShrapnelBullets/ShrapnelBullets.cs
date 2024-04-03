@@ -32,7 +32,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.Shrapne
 			VulnerableBuff buff =
 				BuffPool.GetTemplateBuffs((b => b is VulnerableBuff)).FirstOrDefault() as VulnerableBuff;
 
-			return Localization.GetFormat(defaultLocalizationKey, buffLevel, buff?.GetLevelDescription(buffLevel));
+			return Localization.GetFormat(defaultLocalizationKey, buff.GetDisplayName(buffLevel),
+				buff?.GetLevelDescription(buffLevel));
 		}
 		
 
@@ -93,14 +94,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.Shrapne
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-
-					int level = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("buff_level");
-					string buffDesc =
-						(BuffPool.GetTemplateBuffs((b => b is VulnerableBuff)).FirstOrDefault() as VulnerableBuff)
-						?.GetLevelDescription(level);
-
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("ShrapnelBullets_desc", level, buffDesc));
+						weaponPartsEntity.GetDescription());
 				})
 			};
 		}
