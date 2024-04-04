@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Attachments.DangerousModification;
 using MikroFramework.BindableProperty;
@@ -62,8 +63,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.Dang
 			int displayChance = (int) (chance * 100);
 
 			int damage = GetCustomDataValueOfCurrentLevel<int>("damage");
-			
-			return Localization.GetFormat(defaultLocalizationKey, displayChance, damage);
+			string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, displayChance, damage, hackedBuffName);
 		}
 
 		public override WeaponPartType WeaponPartType => WeaponPartType.Attachment;
@@ -125,13 +126,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.Dang
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					
-					float chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
-					int displayChance = (int) (chance * 100);
-					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
-					
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("DangerousModification_Viral_desc", displayChance, damage));
+						weaponPartsEntity.GetDescription());
 				})
 			};
 		}

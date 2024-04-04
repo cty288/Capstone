@@ -215,7 +215,7 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
 
 
     public string GetDescription() {
-        return OnGetDescription(GetType().Name + "_Description");
+        return OnGetDescription(GetType().Name + "_Desc");
     }
 
     public virtual string GetDisplayName() {

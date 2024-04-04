@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -27,7 +28,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.Fierce
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			float time = GetCustomDataValueOfCurrentLevel<float>("time");
 			int displayedTime = (int) (time * 100);
-			return Localization.GetFormat(defaultLocalizationKey, displayedTime);
+			string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, displayedTime, hackedBuffName);
 		}
 		
 
@@ -81,9 +83,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.Fierce
 					
 					float time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("time");
 					int displayedTime = (int) (time * 100);
-
+					string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("FierceVirus_desc", displayedTime));
+						Localization.GetFormat("FierceVirus_desc", displayedTime, hackedBuffName));
 				})
 			};
 		}
