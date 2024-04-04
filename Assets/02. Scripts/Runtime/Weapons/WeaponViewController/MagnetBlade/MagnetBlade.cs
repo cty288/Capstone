@@ -5,6 +5,7 @@ using System.Numerics;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using DG.Tweening;
 using MikroFramework;
+using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.Pool;
 using Polyglot;
@@ -12,6 +13,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Inventory.Model;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -53,7 +55,10 @@ namespace Runtime.Weapons
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
-            return null;
+            return new[]
+            {
+                new AutoConfigCustomProperty("melee")
+            };
         }
 
 
@@ -70,10 +75,23 @@ namespace Runtime.Weapons
         private bool isReloadingBlade;
 
         private bool isMelee = false;
+        private float meleeCooldown;
+        private float lastMeleeTime;
+        private int meleeDamage;
+        
+        [SerializeField] private HitBox bladeHitbox;
         
         protected override void Awake() {
             base.Awake();
             bladePool = GameObjectPoolManager.Singleton.CreatePool(bladePrefab, 20, 50);
+        }
+
+        protected override void OnEntityStart()
+        {
+            base.OnEntityStart();
+            meleeCooldown = BoundEntity.GetCustomDataValue<float>("melee", "cooldown");
+            lastMeleeTime = -meleeCooldown;
+            meleeDamage = BoundEntity.GetCustomDataValue<int>("melee", "damage");
         }
 
         public override void OnStartHold(GameObject ownerGameObject)
@@ -88,6 +106,7 @@ namespace Runtime.Weapons
             }
             
             CheckReloadBlade();
+            bladeHitbox.StopCheckingHits();
         }
 
         public override void OnStopHold()
@@ -97,8 +116,8 @@ namespace Runtime.Weapons
             {
                 bladePool.Recycle(blade.gameObject);
             }
-            
             blades.Clear();
+            bladeHitbox.StopCheckingHits();
         }
 
         private void InitializeBlade()
@@ -138,13 +157,12 @@ namespace Runtime.Weapons
 
         public override void OnItemScopePressed()
         {
-            // TODO: use melee attack (need animation)
-            // check melee cooldown / avaliability
-            // start melee animation
-            // set melee cooldown
-                // turn on collider using animation events
-                // turn off collider using animation events
-                // toggle melee attack finished
+            if (lastMeleeTime + meleeCooldown < Time.time)
+            {
+                lastMeleeTime = Time.time;
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
+                animator.SetTrigger("Shoot");
+            }
         }
         
         public override void OnItemUse() {}
@@ -159,6 +177,29 @@ namespace Runtime.Weapons
                     SetShoot(true);
                     ShootEffects();
                 }
+            }
+        }
+        
+        protected override void OnAnimationEvent(string eventName)
+        {
+            switch (eventName)
+            {
+                case "ReloadStart":
+                    OnReloadAnimationStart();
+                    break;
+                case "ReloadEnd":
+                    OnReloadAnimationEnd();
+                    break;
+                case "MeleeStart":
+                    print("BLADES: start");
+                    bladeHitbox.StartCheckingHits(meleeDamage);
+                    break;
+                case "MeleeEnd":
+                    print("BLADES: end");
+                    bladeHitbox.StopCheckingHits();
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -199,10 +240,11 @@ namespace Runtime.Weapons
             CheckReloadBlade();
         }
         
-        public override bool CheckHit(HitData data)
-        {
-            return data.Hurtbox.Owner != gameObject;
-        }
+        public override bool CheckHit(HitData data) {
+            if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == ownerGameObject) {
+                return false;
+            } else { return true; }
+        }       
         
         public override void HitResponse(HitData data) {
         }
