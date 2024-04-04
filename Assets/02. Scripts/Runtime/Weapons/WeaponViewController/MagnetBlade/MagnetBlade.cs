@@ -160,7 +160,7 @@ namespace Runtime.Weapons
             if (lastMeleeTime + meleeCooldown < Time.time)
             {
                 lastMeleeTime = Time.time;
-                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Strike", AnimationEventType.Trigger,2));
                 animator.SetTrigger("Shoot");
             }
         }
