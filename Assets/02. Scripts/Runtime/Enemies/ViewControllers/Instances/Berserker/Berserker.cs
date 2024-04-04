@@ -43,8 +43,12 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 
 		protected override ICustomProperty[] OnRegisterCustomProperties()
 		{
-            
-			return new ICustomProperty[0];
+
+			return new[] {
+				new AutoConfigCustomProperty("entity"),
+				new AutoConfigCustomProperty("simpleShoot")
+
+			};
 		}
 
 	}
