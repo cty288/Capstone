@@ -251,11 +251,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 			int displayedChance = Mathf.RoundToInt(GetBuffPropertyAtCurrentLevel<float>("chance") * 100);
 			int time = Mathf.RoundToInt(GetBuffPropertyAtCurrentLevel<float>("time"));
 			int calculatedDamage = 2 * weaponEntity.GetRarity();
+			string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
 			
 			return new string[] {
-				Localization.GetFormat("BUILD_BUFF_PLANT_1", displayedChance, time, calculatedDamage),
-				Localization.Get("BUILD_BUFF_PLANT_2"),
-				Localization.Get("BUILD_BUFF_PLANT_3")
+				Localization.GetFormat("BUILD_BUFF_PLANT_1", displayedChance, time, calculatedDamage, hackedBuffName),
+				Localization.GetFormat("BUILD_BUFF_PLANT_2", hackedBuffName),
+				Localization.GetFormat("BUILD_BUFF_PLANT_3", hackedBuffName)
 			};
 		}
 

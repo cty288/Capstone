@@ -40,7 +40,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 
 			int displayedDamage = (int) (damage * 100);
 
-			return Localization.GetFormat(localizationKey, level, displayedDamage, time, additionalDescription);
+			return Localization.GetFormat(localizationKey, displayedDamage, time, additionalDescription);
 		}
 
 		public override bool IsDisplayed() {
