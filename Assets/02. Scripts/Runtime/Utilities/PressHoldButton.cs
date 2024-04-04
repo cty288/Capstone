@@ -64,11 +64,4 @@ public class PressHoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             currentHoldCallbackInterval = initialHoldCallbackInterval;
         }
     }
-
-    private void OnDisable() {
-        isHolding = false;
-        holdTimer = 0f;
-        holdCallbackTimer = 0f;
-        currentHoldCallbackInterval = initialHoldCallbackInterval;
-    }
 }
