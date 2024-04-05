@@ -18,7 +18,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
     public class BerserkerSimpleShoot : EnemyAction<BerserkerEntity>
     {
         public SharedGameObject simpleShootBulletPrefab;
-
+        public Transform shootPoint;
         private Transform playerTrans;
         private SafeGameObjectPool pool;
         private float bulletSpeed;
@@ -37,6 +37,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         public override void OnStart()
         {
             base.OnStart();
+            ended = false;
             bulletCount = enemyEntity.GetCustomDataValue<int>("simpleShoot", "bulletCount");
             bulletSpeed = enemyEntity.GetCustomDataValue<float>("simpleShoot", "bulletSpeed");
             spawnInterval = enemyEntity.GetCustomDataValue<float>("simpleShoot", "spawnInterval");
@@ -64,19 +65,20 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             for (int j = 0; j < bulletCount; j++)
             {
+                Debug.Log("shooting");
                 // Debug.Log(j);
                 UnityEngine.GameObject b = pool.Allocate();
                 //float angle = j * 60; // Angle between each bullet
                 //b.transform.position = this.gameObject.transform.position + new Vector3(0,4,0);
                 // b.transform.Rotate(new Vector3(0, angle, 0));
                 //b.transform.Translate(new Vector3(0,0,1));
-                b.transform.position = this.gameObject.transform.position;
+                b.transform.position = shootPoint.position;
                 //b.transform.rotation = Quaternion.LookRotation(playerTrans.position - (this.transform.position + new Vector3(0, 4, 0)));
 
                 b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                     5,
                     gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
-              
+                b.GetComponent<BerserkerBullet>().SetData(bulletSpeed, playerTrans);
                 yield return new WaitForSeconds(spawnInterval);
                
 
