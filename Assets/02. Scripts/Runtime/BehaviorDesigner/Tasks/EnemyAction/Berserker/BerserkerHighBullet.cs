@@ -16,22 +16,32 @@ namespace a
         public GameObject vfx;
         private SafeGameObjectPool pool;
         private GameObject particleInstance;
+        private float homingTime;
+        private GameObject target;
 
         // Start is called before the first frame update
         void Start()
         {
+            homingTime = Random.Range(1.5f, 2.5f);
             //pool = GameObjectPoolManager.Singleton.CreatePool(vfx, 50, 100);
             timer = Random.Range(0.5f, 2f);
             //Debug.Log(transform.forward);
         }
 
+        private void OnEnable()
+        {
+            //homingTime = Random.Range(1.5f, 2.5f);
+        }
         // Update is called once per frame
         void Update()
         {
-            var dir = (playerTrans.position - this.gameObject.transform.position).normalized;
-            var rotation = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 2f * Time.deltaTime);
-            transform.Translate(transform.forward * bulletSpeed * Time.deltaTime, Space.World);
+            
+
+                var dir = (target.transform.position - this.gameObject.transform.position).normalized;
+                var rotation = Quaternion.LookRotation(dir);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 2f * Time.deltaTime);
+                transform.Translate(transform.forward * 18 * Time.deltaTime, Space.World);
+           
             
         }
         protected override void OnHitResponse(HitData data)
@@ -59,13 +69,15 @@ namespace a
         {
             //vfx.SetActive(false);
             timer = Random.Range(0.5f, 2f);
+            //homingTime = 0;
 
 
         }
-        public void SetData(float bulletSpeed, Transform playerTrans)
+        public void SetData(float bulletSpeed, Transform playerTrans, GameObject gameObject)
         {
             this.bulletSpeed = bulletSpeed;
             this.playerTrans = playerTrans;
+            this.target = gameObject;
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 // b.transform.Rotate(new Vector3(0, angle, 0));
                 //b.transform.Translate(new Vector3(0,0,1));
                 b.transform.position = shootPoint.position;
-                //b.transform.rotation = Quaternion.LookRotation(playerTrans.position - (this.transform.position + new Vector3(0, 4, 0)));
+                b.transform.rotation = Quaternion.LookRotation(playerTrans.position - (shootPoint.transform.position ));
 
                 b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                     5,

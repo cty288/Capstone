@@ -28,7 +28,7 @@ namespace a
         // Update is called once per frame
         void Update()
         {
-            transform.Translate(this.transform.forward * bulletSpeed * Time.deltaTime);
+            transform.Translate(this.transform.forward * bulletSpeed * Time.deltaTime , Space.World);
         }
         protected override void OnHitResponse(HitData data)
         {

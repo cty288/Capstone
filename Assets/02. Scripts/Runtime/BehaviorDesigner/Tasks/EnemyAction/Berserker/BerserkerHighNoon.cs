@@ -12,6 +12,8 @@ using Runtime.Temporary.Weapon;
 using Runtime.Weapons.ViewControllers.Base;
 using Runtime.Enemies.ViewControllers.Instances.Berserker;
 using a;
+using System.Collections.Generic;
+using UnityEngine.AI;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -25,11 +27,14 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         private float spawnInterval;
         private int bulletCount;
         private bool ended;
+        public GameObject indicator;
+        private SafeGameObjectPool indicatorPool;
 
         public override void OnAwake()
         {
             base.OnAwake();
             pool = GameObjectPoolManager.Singleton.CreatePool(simpleShootBulletPrefab.Value, 30, 50);
+            indicatorPool = GameObjectPoolManager.Singleton.CreatePool(indicator, 30, 50);
             playerTrans = GetPlayer().transform;
         }
         // Start is called before the first frame update
@@ -62,8 +67,32 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         IEnumerator SpawnBullet()
         {
+            List<GameObject> indicatorList = new List<GameObject>();
+            for(int i = 0; i < 10; i++)
+            {
+                GameObject go = indicatorPool.Allocate();
+                go.transform.position = Vector3.zero;
+                Vector3 randomPos = Random.insideUnitSphere * 10;
+                randomPos += playerTrans.position;
+                randomPos.y = playerTrans.position.y;
+                go.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
+                  0,
+                  gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
+                NavMeshHit hit;
+                // Attempt to find the nearest point on the NavMesh within a specified range
+                if (NavMesh.SamplePosition(randomPos, out hit, 30, NavMesh.AllAreas))
+                {
+                    go.transform.position = hit.position;
+                    indicatorList.Add(go);
+                }
+                else
+                {
+                    
+                }
+                // valid ground around the player
+            }
 
-            for (int j = 0; j < 20; j++)
+            for (int j = 0; j < indicatorList.Count; j++)
             {
                 Debug.Log("shooting");
                 // Debug.Log(j);
@@ -81,8 +110,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 b.GetComponent<IBulletViewController>().Init(enemyEntity.CurrentFaction.Value,
                     5,
                     gameObject, gameObject.GetComponent<ICanDealDamage>(), -1);
-                b.GetComponent<BerserkerHighBullet>().SetData(bulletSpeed, playerTrans);
-                yield return new WaitForSeconds(0.1f);
+                b.GetComponent<BerserkerHighBullet>().SetData(bulletSpeed, playerTrans, indicatorList[j]);
+                yield return new WaitForSeconds(0.2f);
 
 
             }
