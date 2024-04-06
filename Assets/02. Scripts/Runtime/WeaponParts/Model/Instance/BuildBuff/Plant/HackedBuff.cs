@@ -34,7 +34,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 
 
 		public override string OnGetDescription(string defaultLocalizationKey) {
-			return Localization.GetFormat(defaultLocalizationKey, damage * damageMultiplier);
+			return Localization.GetFormat(defaultLocalizationKey, Mathf.RoundToInt(damage * damageMultiplier));
 		}
 
 		public override bool IsDisplayed() {

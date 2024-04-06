@@ -27,7 +27,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Attachments.Mul
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			int times = GetCustomDataValueOfCurrentLevel<int>("number");
-			return Localization.GetFormat(defaultLocalizationKey, times);
+			string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, times, hackedBuffName);
 		}
 
 		public override int GetMaxRarity() {
@@ -96,9 +97,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Attachments.Mul
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					int times = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("number");
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("Multivirus_desc", times));
+						weaponPartsEntity.GetDescription());
 				})
 			};
 		}

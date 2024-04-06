@@ -397,7 +397,7 @@ namespace Runtime.Spawning {
 			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
 			
 			Transform[] spawnPoints = GameObject.FindGameObjectsWithTag("BossPillarSpawnPoint")
-				.Select(x => x.transform).ToArray();
+					.Select(x => x.transform).ToArray();
 			spawnPoints.MMShuffle();
 			
 			for (int i = 0; i < targetNumber; i++) {
@@ -413,9 +413,48 @@ namespace Runtime.Spawning {
 				GameObject pillarInstance = pillarPool.Allocate();
 				pillarInstance.transform.position = point;
 				
-				//random y rotation
-				pillarInstance.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
+				
 				pillars.Add(pillarInstance);
+				
+				// Check for a secondary spawn point for the terminal
+				int count = spawnPoint.childCount;
+				if (count > 0)
+				{
+					var secondary = spawnPoint.GetChild(0);
+					var station = pillarInstance.transform.Find("Station");
+					if (station != null)
+					{ 
+						Vector3 point1 = secondary.position;
+						if (NavMesh.SamplePosition(secondary.position, out NavMeshHit navHit1, 250.0f, areaMask)) {
+							point1 = navHit1.position;
+						}
+
+						station.position = point1;
+						//station.rotation = Quaternion.FromToRotation(Vector3.up, navHit1.normal);
+						station.rotation = secondary.rotation;
+					}
+				}
+				else
+				{
+					var secondary = pillarInstance.transform.Find("Station");
+					if (secondary != null)
+					{ 
+						Vector3 point1 = secondary.position;
+						if (NavMesh.SamplePosition(secondary.position, out NavMeshHit navHit1, 250.0f, areaMask)) {
+							point1 = navHit1.position;
+						}
+
+						//random y rotation
+						pillarInstance.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
+						
+						secondary.position = point1;
+						RaycastHit hit;
+						if (Physics.Raycast (point1+Vector3.up, -Vector3.up, out hit, 10)) {
+							secondary.rotation = Quaternion.FromToRotation (Vector3.up, hit.normal);
+						}
+						//secondary.rotation = Quaternion.FromToRotation(secondary.up, navHit1.normal);
+					}
+				}
 			}
 			
 			return pillars;

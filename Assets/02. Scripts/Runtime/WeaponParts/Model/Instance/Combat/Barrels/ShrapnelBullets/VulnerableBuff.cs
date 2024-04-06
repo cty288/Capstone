@@ -62,7 +62,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Barrels.Shrapne
 			int displayedDamage = Mathf.RoundToInt(damage * 100);
 
 			int time = GetBuffPropertyAtLevel<int>("buff_length", level);
-			return Localization.GetFormat("VulnerableBuff_Desc", level, displayedDamage, time);
+			return Localization.GetFormat("VulnerableBuff_Desc", displayedDamage, time);
 		}
 
 		protected override void OnLevelUp() {

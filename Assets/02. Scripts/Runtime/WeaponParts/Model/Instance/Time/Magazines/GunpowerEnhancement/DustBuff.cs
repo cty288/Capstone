@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.BuffSystem.ConfigurableBuff;
+using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using UnityEngine;
@@ -43,7 +44,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 
 
 		public override string GetLevelDescription(int level) {
-			return null;
+			int LayerNumber = GetBuffPropertyAtLevel<int>( "layer_num", level);
+			int Damage = GetBuffPropertyAtLevel<int>("damage", level);
+			return Localization.GetFormat($"DustBuff_Desc", LayerNumber, Damage);
 		}
 
 		protected override void OnLevelUp() {

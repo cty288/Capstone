@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using MikroFramework.BindableProperty;
 using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -63,8 +64,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Attachments.Dan
 			int displayChance = (int) (chance * 100);
 
 			int damage = GetCustomDataValueOfCurrentLevel<int>("damage");
-			
-			return Localization.GetFormat(defaultLocalizationKey, displayChance, damage);
+			string displayName = BuffPool.GetTemplateBuff<MalfunctionBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, displayChance, damage, displayName);
 		}
 
 		public override WeaponPartType WeaponPartType => WeaponPartType.Attachment;
@@ -131,9 +132,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Attachments.Dan
 					float chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
 					int displayChance = (int) (chance * 100);
 					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
-					
+					string displayName = BuffPool.GetTemplateBuff<MalfunctionBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("DangerousModification_desc", displayChance, damage));
+						Localization.GetFormat("DangerousModification_desc", displayChance, damage, displayName));
 				})
 			};
 		}
