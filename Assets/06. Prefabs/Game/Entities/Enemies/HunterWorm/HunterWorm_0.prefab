@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93b869d41e139de459039868b5acec1a, type: 2}
+  - {fileID: 2100000, guid: 338fd6e3f82f0084c8a7f48004e5c6af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -161,7 +161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93b869d41e139de459039868b5acec1a, type: 2}
+  - {fileID: 2100000, guid: 338fd6e3f82f0084c8a7f48004e5c6af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -259,7 +259,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93b869d41e139de459039868b5acec1a, type: 2}
+  - {fileID: 2100000, guid: 338fd6e3f82f0084c8a7f48004e5c6af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -357,7 +357,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93b869d41e139de459039868b5acec1a, type: 2}
+  - {fileID: 2100000, guid: 338fd6e3f82f0084c8a7f48004e5c6af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -499,7 +499,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93b869d41e139de459039868b5acec1a, type: 2}
+  - {fileID: 2100000, guid: 338fd6e3f82f0084c8a7f48004e5c6af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -597,7 +597,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93b869d41e139de459039868b5acec1a, type: 2}
+  - {fileID: 2100000, guid: 338fd6e3f82f0084c8a7f48004e5c6af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1130,6 +1130,7 @@ MonoBehaviour:
   autoRecycleTimeAfterFarAwayFromPlayer: 10
   autoRecycleDistanceFromPlayer: 150
   autoRecycleCheckTimeInterval: 5
+  eliteScaleMultiplier: 1.5
   deathEffect: {fileID: 8429527730738994522, guid: 282cd848851e7cd41ab77c93b586dd9e,
     type: 3}
   pool: {fileID: 0}
@@ -1231,8 +1232,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.7
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!195 &4259918608324512022
 NavMeshAgent:
   m_ObjectHideFlags: 0
