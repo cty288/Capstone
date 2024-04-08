@@ -29,9 +29,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.StunGrendateSkill {
 			
 			
 			list.Add(() => {
+				MalfunctionBuff malfunctionBuff = BuffPool.GetTemplateBuff<MalfunctionBuff>();
 				float buff1Time = GetCustomPropertyOfCurrentLevel<float>("malfunction_time");
-				return new ResourcePropertyDescription(null, Localization.Get(
-						"StunGrenadeSkill_BUFF1_TIME"),
+				return new ResourcePropertyDescription(null, Localization.GetFormat(
+						"StunGrenadeSkill_BUFF1_TIME", malfunctionBuff.GetDisplayName()),
 					Localization.GetFormat("StunGrenadeSkill_BUFF_TIME_VALUE", buff1Time));
 			});
 
@@ -40,8 +41,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.StunGrendateSkill {
 			list.Add(() => {
 				if (GetLevel() >= 3) {
 					float buff2Time = GetCustomPropertyOfCurrentLevel<float>("powerless_time");
-					return new ResourcePropertyDescription(null, Localization.Get(
-							"StunGrenadeSkill_BUFF2_TIME"),
+					PowerlessBuff powerlessBuff = BuffPool.GetTemplateBuff<PowerlessBuff>();
+					
+					return new ResourcePropertyDescription(null, Localization.GetFormat(
+							"StunGrenadeSkill_BUFF2_TIME", powerlessBuff.GetDisplayName(-1)),
 						Localization.GetFormat("StunGrenadeSkill_BUFF_TIME_VALUE", buff2Time));
 				}
 				else {
@@ -56,24 +59,29 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.StunGrendateSkill {
 		protected override string GetDescription(string defaultLocalizationKey) {
 			MalfunctionBuff malfunctionBuff = BuffPool.GetTemplateBuffs((buff => buff is MalfunctionBuff)).FirstOrDefault() as MalfunctionBuff;
 			int powerlessBuffLevel = GetCustomPropertyOfCurrentLevel<int>("powerless_level");
-			string displayedPowerlessLevel = powerlessBuffLevel.ToString();
+			PowerlessBuff powerlessBuff = BuffPool.GetTemplateBuff<PowerlessBuff>();
+			string displayedPowerlessName = powerlessBuff.GetDisplayName(powerlessBuffLevel);
 			
 			string key = defaultLocalizationKey;
 			string powerLessBuffDesc = "";
+
+			string malfunctionBuffDescription =
+				$"<b>{malfunctionBuff.GetDisplayName()}: </b>{malfunctionBuff.GetDescription()}";
 			
 			if (GetLevel() >= 3) {
 				key = "StunGrenadeSkill_desc2";
-				PowerlessBuff powerlessBuff =
-					BuffPool.GetTemplateBuffs((buff => buff is PowerlessBuff)).FirstOrDefault() as PowerlessBuff;
+				
 				
 				powerLessBuffDesc += "\n\n" + powerlessBuff.GetLevelDescription(powerlessBuffLevel);
 			}
 			else {
-				displayedPowerlessLevel = "";
+				displayedPowerlessName = "";
 			}
 
 			return Localization.GetFormat(key,
-				malfunctionBuff.OnGetDescription("MulfunctionBuff_Desc"), powerLessBuffDesc, displayedPowerlessLevel);
+				malfunctionBuffDescription, powerLessBuffDesc, displayedPowerlessName,
+				malfunctionBuff.GetDisplayName());
+			
 		}
 
 		protected override void OnAddedToHotBar() {

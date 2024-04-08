@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using MikroFramework.Pool;
 using Polyglot;
+using Runtime.DataFramework.Description;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using UnityEngine;
@@ -35,7 +36,7 @@ public struct BuffDisplayInfo {
 }
 
 
-public interface IBuff: IPoolable {
+public interface IBuff: IPoolable, IHaveDescription, IHaveDisplayName {
     public bool AutoRecycleWhenEnd { get; set; }
     public float MaxDuration { get; }
     public float RemainingDuration { get; set; }
@@ -101,8 +102,8 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
         else {
             string typeName = this.GetType().Name;
             return new BuffDisplayInfo(true, $"{typeName}_Icon",
-                Localization.Get($"{typeName}_Name"),
-                OnGetDescription($"{typeName}_Desc"));
+                GetDisplayName(),
+                GetDescription());
         }
     }
     
@@ -213,4 +214,19 @@ public abstract class Buff<T> : IBuff where T : Buff<T>, new() {
     }
 
 
+    public string GetDescription() {
+        return OnGetDescription(GetType().Name + "_Desc");
+    }
+
+    public virtual string GetDisplayName() {
+        string key = $"{GetType().Name}_Name";
+        string localized = Localization.Get(key);
+        if(Localization.KeyNotFound == localized) {
+            return null;
+        }
+
+        return localized;
+    }
+    
+    
 }

@@ -24,9 +24,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.EMPCha
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			float chance = GetCustomDataValueOfCurrentLevel<float>("chance");
 			int displayChance = (int) (chance * 100);
+			MalfunctionBuff malfunctionBuff = BuffPool.GetTemplateBuff<MalfunctionBuff>();
 			
-			
-			return Localization.GetFormat(defaultLocalizationKey, displayChance);
+			return Localization.GetFormat(defaultLocalizationKey, displayChance, malfunctionBuff.GetDisplayName());
 		}
 		
 
@@ -88,9 +88,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.EMPCha
 					
 					float chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
 					int displayChance = (int) (chance * 100);
-
+					string malfunctionBuffName = BuffPool.GetTemplateBuff<MalfunctionBuff>().GetDisplayName();
+					
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("EMPChain_desc", displayChance));
+						Localization.GetFormat("EMPChain_desc", displayChance, malfunctionBuffName));
 				})
 			};
 		}

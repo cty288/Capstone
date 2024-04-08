@@ -29,9 +29,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Da
 			float chance = GetCustomDataValueOfCurrentLevel<float>("chance");
 			int displayChance = (int) (chance * 100);
 
+			string MalfunctionBuffName = BuffPool.GetTemplateBuff<MalfunctionBuff>().GetDisplayName();
 			float time = GetCustomDataValueOfCurrentLevel<float>("time");
 
-			return Localization.GetFormat(defaultLocalizationKey, displayChance, time);
+			return Localization.GetFormat(defaultLocalizationKey, displayChance, time, MalfunctionBuffName);
 		}
 
 		public override WeaponPartType WeaponPartType => WeaponPartType.Attachment;
@@ -110,9 +111,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Da
 					int displayChance = (int) (chance * 100);
 					
 					float time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("time");
-					
+					string malfunctionBuffName = BuffPool.GetTemplateBuff<MalfunctionBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("DangerousModification_EMP_desc", displayChance, time));
+						Localization.GetFormat("DangerousModification_EMP_desc", displayChance, time,
+							malfunctionBuffName));
 				})
 			};
 		}

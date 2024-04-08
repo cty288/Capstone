@@ -52,14 +52,17 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			levelUpTime = GetBuffPropertyAtLevel<float>("level_up_time", 3);
 		}
 		public override string[] GetAllLevelDescriptions() {
+			string motivatedBuffName = BuffPool.GetTemplateBuff<MotivatedBuff>().GetDisplayName(1);
+			string motivatedBuffRawName = BuffPool.GetTemplateBuff<MotivatedBuff>().GetDisplayName(-1);
+			
 			string motivatedBuffDesc = MotivatedBuff.GetDescription(1, "MotivatedBuff_Desc");
 			string reloadSpeedSubtraction = GetBuffPropertyAtLevel<float>("reload", 2).ToString("f2");
 			int time = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("level_up_time", 3));
 
 			return new[] {
-				Localization.GetFormat("BUILD_BUFF_Time_1", 1, motivatedBuffDesc),
-				Localization.GetFormat("BUILD_BUFF_Time_2", reloadSpeedSubtraction),
-				Localization.GetFormat("BUILD_BUFF_Time_3", time)
+				Localization.GetFormat("BUILD_BUFF_Time_1", motivatedBuffName, motivatedBuffDesc),
+				Localization.GetFormat("BUILD_BUFF_Time_2", reloadSpeedSubtraction, motivatedBuffRawName),
+				Localization.GetFormat("BUILD_BUFF_Time_3", time, motivatedBuffRawName)
 			};
 		}
 		private void OnBuffUpdate(IBuff buff, BuffUpdateEventType updateType) {

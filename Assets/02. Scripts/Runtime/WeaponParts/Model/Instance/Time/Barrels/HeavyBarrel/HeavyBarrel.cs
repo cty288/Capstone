@@ -20,21 +20,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		public int BuffLevel => GetCustomDataValueOfCurrentLevel<int>("buff_level");
 		
 
-		public string GetBleedingBuffDescription() {
-			int buffLevel = BuffLevel;
-			float damage  = BleedingBuff.GetBuffPropertyAtLevel<float>("BleedingBuff", "buff_damage", buffLevel);
-			float duration = BleedingBuff.GetBuffPropertyAtLevel<float>("BleedingBuff", "buff_length", buffLevel);
-			
-			
-			if (buffLevel <= 2) {
-				return Localization.GetFormat($"BUFF_BLEEDING_{buffLevel}", damage, duration);
-			}
-			else {
-				float buffDamage = damage * 100;
-				return Localization.GetFormat($"BUFF_BLEEDING_{buffLevel}", buffDamage.ToString("f2"),
-					duration);
-			}
-		}
 		
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -48,7 +33,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			int chance = (int) (BuffChance * 100);
 			int buffLevel = BuffLevel;
-			return Localization.GetFormat(defaultLocalizationKey, chance + "%", buffLevel, GetBleedingBuffDescription());
+			return Localization.GetFormat(defaultLocalizationKey, chance + "%",
+				BuffPool.GetTemplateBuff<BleedingBuff>().GetDisplayName(buffLevel),
+				BuffPool.GetTemplateBuff<BleedingBuff>().GetLevelDescription(buffLevel));
 		}
 		
 
@@ -111,7 +98,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 					int chance = (int) (weaponPartsEntity.BuffChance * 100);
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("HeavyBarrel_BUFF_PROPERTY", chance + "%",
-							weaponPartsEntity.BuffLevel));
+							BuffPool.GetTemplateBuff<BleedingBuff>().GetDisplayName(weaponPartsEntity.BuffLevel)));
 				})
 			};
 		}

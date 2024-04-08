@@ -25,7 +25,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels.HardCase
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			int damage = GetCustomDataValueOfCurrentLevel<int>("damage");
-			return Localization.GetFormat(defaultLocalizationKey, damage);
+			string HackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, damage, HackedBuffName);
 		}
 		
 
@@ -86,9 +87,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels.HardCase
 					
 					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
 					int calculatedDamage = damage * weaponEntity.GetRarity();
-
+					string HackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("HardCasesBarrel_desc2", damage, calculatedDamage));
+						Localization.GetFormat("HardCasesBarrel_desc2", damage, calculatedDamage, HackedBuffName));
 				})
 			};
 		}
