@@ -18,7 +18,7 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "Berserker";
 
-		public List<GameObject> Nodes;
+		public List<BerserkerNode> Nodes;
 		
 		protected override void OnEntityStart(bool isLoadedFromSave) {
             
@@ -44,7 +44,10 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 		protected override ICustomProperty[] OnRegisterCustomProperties()
 		{
             
-			return new ICustomProperty[0];
+			return new[]
+			{
+				new AutoConfigCustomProperty("entity")
+			};
 		}
 
 	}
@@ -53,7 +56,7 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 	public class Berserker : AbstractBossViewController<BerserkerEntity>{
 		private bool deathAnimationEnd = false;
 
-		[SerializeField] private List<GameObject> nodes;
+		[SerializeField] private List<BerserkerNode> nodes;
 		
 		protected override void OnEntityStart()
 		{
