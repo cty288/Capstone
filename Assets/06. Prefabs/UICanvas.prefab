@@ -14805,7 +14805,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1275721930}
   - component: {fileID: 1275721929}
-  - component: {fileID: 1275721931}
+  - component: {fileID: 2479809897984675823}
   m_Layer: 5
   m_Name: BuffPanel
   m_TagString: Untagged
@@ -14828,10 +14828,10 @@ RectTransform:
   m_Father: {fileID: 2050369692}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -211.52, y: -19}
-  m_SizeDelta: {x: 423.05, y: 403.0196}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 604.435, y: 150.30252}
+  m_SizeDelta: {x: 1159.9199, y: 60.4006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1275721929
 CanvasRenderer:
@@ -14841,7 +14841,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275721928}
   m_CullTransparentMesh: 1
---- !u!114 &1275721931
+--- !u!114 &2479809897984675823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14850,21 +14850,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1275721928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
-    m_Right: 30
+    m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 5
-  m_StartCorner: 0
-  m_StartAxis: 1
-  m_CellSize: {x: 40, y: 40}
-  m_Spacing: {x: 10, y: 10}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_ChildAlignment: 3
+  m_Spacing: 26.11
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1282888441
 GameObject:
   m_ObjectHideFlags: 0
@@ -21410,6 +21412,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b251018a17950a54f848089ec6848529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryLayout: {fileID: 4261493540261150038}
+  inventoryLayoutPosYNoBuff: 228
+  inventoryLayoutPosYHasBuff: 287
 --- !u!1 &2057477988
 GameObject:
   m_ObjectHideFlags: 0
@@ -45889,7 +45894,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 275.07257, y: 235}
+  m_AnchoredPosition: {x: 275.07, y: 228}
   m_SizeDelta: {x: 550.145, y: 192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4261493540261150036

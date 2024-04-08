@@ -15,6 +15,9 @@ public class PlayerBuffPanelViewController : AbstractMikroController<MainGame> {
    
    private Dictionary<IBuff, BuffIconViewController> buffToGameObject = new Dictionary<IBuff, BuffIconViewController>();
 
+   [SerializeField] private RectTransform inventoryLayout;
+   [SerializeField] private float inventoryLayoutPosYNoBuff = 228;
+   [SerializeField] private float inventoryLayoutPosYHasBuff = 287;
    private void Awake() {
       resLoader = this.GetUtility<ResLoader>();
       buffSpawnParent = transform.Find("BuffPanel");
@@ -46,6 +49,13 @@ public class PlayerBuffPanelViewController : AbstractMikroController<MainGame> {
                Destroy(buffIconViewController.gameObject);
             }
             break;
+      }
+      
+      if (buffToGameObject.Count > 0) {
+         inventoryLayout.anchoredPosition = new Vector2(inventoryLayout.anchoredPosition.x, inventoryLayoutPosYHasBuff);
+      }
+      else {
+         inventoryLayout.anchoredPosition = new Vector2(inventoryLayout.anchoredPosition.x, inventoryLayoutPosYNoBuff);
       }
    }
 }
