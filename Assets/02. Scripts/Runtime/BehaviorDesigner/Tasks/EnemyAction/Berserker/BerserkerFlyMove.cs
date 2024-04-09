@@ -116,6 +116,7 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
                 nodePath[idx + 2].transform.position, 
                 currentTime % 1.0f);
             
+            transform.rotation = Quaternion.LookRotation(position - transform.position);
             transform.position = position;
             
             if(Vector3.Distance(nodePath[^1].transform.position, transform.position) < 0.1f)

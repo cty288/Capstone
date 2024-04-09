@@ -58,7 +58,11 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
             BerserkerNode node = enemyEntity.Nodes[Random.Range(0, enemyEntity.Nodes.Count)];
             finalPosition.Value = node.gameObject;
             duration = Vector3.Distance(node.transform.position, transform.position) / speed;
-            await transform.DOMove(node.transform.position, duration)
+            
+            Quaternion direction = Quaternion.LookRotation(node.transform.position - transform.position);
+            
+            transform.DORotateQuaternion(direction, 0.2f).WithCancellation(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+            await transform.DOMove(node.transform.position, duration).SetEase(Ease.Linear)
                 .WithCancellation(cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             
             await UniTask.WaitForSeconds(2f,
