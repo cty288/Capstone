@@ -32,7 +32,6 @@ namespace Runtime.UI {
 
 		private void OnOpenPillarUI(OnOpenPillarUI e) {
 			OpenOrGetClose<PillarUIViewController>(this, e, false);
-			
 		}
 
 		private void Update() {
@@ -44,6 +43,9 @@ namespace Runtime.UI {
 					//Time = 1;
 					GetAndClose(currentMainPanel);
 					//ClientInput.Singleton.EnablePlayerMaps();
+				}
+				else {
+					OpenOrGetClose<GamePausePanel>(null, null, false);
 				}
 			}
 			

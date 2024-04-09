@@ -66,7 +66,7 @@ namespace Runtime.Controls
             if (!string.IsNullOrEmpty(rebinds))
                 Inputs.asset.LoadBindingOverridesFromJson(rebinds);
             
-            EnablePlayerMaps();
+            EnablePlayerMaps(false);
             
         }
 
@@ -87,33 +87,39 @@ namespace Runtime.Controls
             return  Inputs.Debug;
         }
 
-        public void EnablePlayerMaps() {
+        public void EnablePlayerMaps(bool sendEvents = true) {
             Inputs.UI.Disable();
             Inputs.Debug.Enable();
             Inputs.Player.Enable();
             Inputs.Shared.Enable();
             if (playerInput) {
                 playerInput.SwitchCurrentActionMap("Player");
-                this.SendEvent<OnControlMapSwitched>(new OnControlMapSwitched()
-                {
-                    MapName = "Player"
-                });
+                if (sendEvents) {
+                    this.SendEvent<OnControlMapSwitched>(new OnControlMapSwitched()
+                    {
+                        MapName = "Player"
+                    });
+                }
+               
             }
 
         }
 
         
-        public void EnableUIMaps() {
+        public void EnableUIMaps(bool sendEvents = true) {
             Inputs.Player.Disable();
             Inputs.Debug.Enable();
             Inputs.UI.Enable();
             Inputs.Shared.Enable();
             if (playerInput) {
                 playerInput.SwitchCurrentActionMap("UI");
-                this.SendEvent<OnControlMapSwitched>(new OnControlMapSwitched()
-                {
-                    MapName = "UI"
-                });
+                if (sendEvents) {
+                    this.SendEvent<OnControlMapSwitched>(new OnControlMapSwitched()
+                    {
+                        MapName = "UI"
+                    });
+                }
+               
             }
 
         }
