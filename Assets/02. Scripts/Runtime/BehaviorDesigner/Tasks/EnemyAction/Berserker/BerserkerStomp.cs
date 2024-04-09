@@ -11,6 +11,7 @@ using Runtime.Enemies.ViewControllers.Instances.Berserker;
 using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.VFX;
 
 namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -39,6 +40,8 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
         private LayerMask mask = LayerMask.GetMask("Default", "Ground", "Wall");
         private SafeGameObjectPool pool;
         public SharedGameObject stompImpact;
+        public SharedGameObject burnVFX;
+        private VisualEffect vfx;
         
         // **** Values to add to spreadsheet.
         private float _stompHeight = 50f;
@@ -62,6 +65,8 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
             taskStatus = TaskStatus.Running;
             
             pool = GameObjectPoolManager.Singleton.CreatePool(stompImpact.Value, 2, 5);
+            vfx = burnVFX.Value.GetComponent<VisualEffect>();
+            vfx.Stop();
         }
         
         public override TaskStatus OnUpdate()
@@ -99,6 +104,7 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
                 if (Physics.Raycast(aboveTargetPos + Vector3.down * 5f, Vector3.down, out hit, _stompHeight * 2, mask, QueryTriggerInteraction.Ignore))
                 {
                     _targetPos = hit.point;
+                    vfx.Play();
                     
                     // Cast indicator
                     
@@ -126,6 +132,7 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
                         _damage,4, gameObject,
                         gameObject.GetComponent<ICanDealDamage>());
                 _progress = 0;
+                vfx.Stop();
                 _phase = Phase.Complete;
             }
         }
