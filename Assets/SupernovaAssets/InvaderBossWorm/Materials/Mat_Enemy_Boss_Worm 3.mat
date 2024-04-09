@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1232721002389996326
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,15 +7,16 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_RoboDog1
+  m_Name: Mat_Enemy_Boss_Worm 3
   m_Shader: {fileID: 4800000, guid: eece14cf363229c41817c5e9958f3794, type: 3}
   m_ValidKeywords:
+  - _EMISSION
+  - _FRESNELGLOW
   - _METALLICSPECGLOSSMAP
   - _NORMALMAP
   - _OCCLUSIONMAP
-  m_InvalidKeywords:
-  - _METALLICGLOSSMAP
-  m_LightmapFlags: 4
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -38,11 +26,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: b623f0c2aff76c7459e7fc896d033f58, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5b74808b1dae7a24faa3d8967936a77f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 9f66c597802c4254c95dfb4bae4a31b0, type: 3}
+        m_Texture: {fileID: 2800000, guid: e54ed2a51f924fb4c841b3c82505adcd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -58,19 +46,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 90f30b3aa5d99864c9255a9439f75d01, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b623f0c2aff76c7459e7fc896d033f58, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5b74808b1dae7a24faa3d8967936a77f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: d483a79fa39d4c743b6544d382889e39, type: 3}
+        m_Texture: {fileID: 2800000, guid: f2c1a9057de71604f96397b641555213, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 5cb9c8fd956ae6a46979455eb07574a0, type: 3}
+        m_Texture: {fileID: 2800000, guid: f2c1a9057de71604f96397b641555213, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -78,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: f2c1a9057de71604f96397b641555213, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _WorldHeightGradient:
@@ -115,31 +103,29 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FresnelCutOffIn: 0.1
-    - _FresnelCutOffOut: 0.9
-    - _FresnelGlow: 0
-    - _FresnelOn: 0
-    - _FresnelPower: 1
+    - _FresnelCutOffIn: 0.747
+    - _FresnelCutOffOut: 0.098
+    - _FresnelGlow: 1
+    - _FresnelOn: 1
+    - _FresnelPower: 0
     - _GlossMapScale: 0
     - _GlossToggle: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
+    - _Glossiness: 0
+    - _GlossyReflections: 0
     - _MetSpecToggle: 0
-    - _Metallic: 0.201
-    - _Mode: 0
+    - _Metallic: 0.07
     - _NormalMapToggle: 1
     - _OcclusionStrength: 1
-    - _Parallax: 0.02
+    - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ShadowEdgePower: 3
     - _ShadowEdgeSaturation: 0.25
-    - _Smoothness: 0
+    - _Smoothness: 0.815
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _UVSec: 0
     - _WorkflowMode: 1
     - _WorldHeightHigh: 120
     - _WorldHeightLow: -30
@@ -147,10 +133,23 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HighlightColor: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.5471698, g: 0.10668082, b: 0.147026, a: 1}
+    - _EmissionColor: {r: 15.999998, g: 0, b: 0.25130886, a: 1}
+    - _HighlightColor: {r: 63.999992, g: 18.209091, b: 0, a: 1}
     - _ShadowRadianceRange: {r: 0.1, g: 0.5, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _TileScaling: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &8449360768237107809
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

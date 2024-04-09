@@ -34,7 +34,19 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		private float invincibleTime = 2f;
 		protected Dictionary<HurtBox, bool> initialHurtBoxActiveState = new Dictionary<HurtBox, bool>();
 
+		[Header("Elite Visuals")]
+		[ColorUsage(true, true), SerializeField] private Color eliteColor;
+		[SerializeField] private float eliteFresnel;
+		[SerializeField] private float eliteCutIn;
+		[SerializeField] private float eliteCutOut;
+		
+
 		[SerializeField] private float eliteScaleMultiplier = 1.5f;
+		private static readonly int HighlightColor = Shader.PropertyToID("_HighlightColor");
+		private static readonly int FresnelPower = Shader.PropertyToID("_FresnelPower");
+		private static readonly int FresnelCutOffIn = Shader.PropertyToID("_FresnelCutOffIn");
+		private static readonly int FresnelCutOffOut = Shader.PropertyToID("_FresnelCutOffOut");
+
 		protected override void Awake() {
 			base.Awake();
 			HurtBox[] hurtBoxes = GetComponentsInChildren<HurtBox>(true);
@@ -60,6 +72,21 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		private void OnEliteChanged(bool arg1, bool isElite) {
 			if (isElite) {
 				transform.localScale *= eliteScaleMultiplier;
+				var renderers = GetComponentsInChildren<Renderer>();
+				foreach (var renderer in renderers)
+				{
+					foreach (var mat in renderer.materials)
+					{
+						if (mat.HasProperty("_FresnelOn"))
+						{
+							mat.EnableKeyword("_FRESNELGLOW");
+							mat.SetColor(HighlightColor, eliteColor);
+							mat.SetFloat(FresnelPower, eliteFresnel);
+							mat.SetFloat(FresnelCutOffIn, eliteCutIn);
+							mat.SetFloat(FresnelCutOffOut, eliteCutOut);
+						}
+					}
+				}
 			}
 			else {
 				transform.localScale = Vector3.one;
