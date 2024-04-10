@@ -862,6 +862,20 @@ Berserker,"{""maxHealth"":2100,
       ""value"": 43
     }
   },
+  ""stagger"": {
+    ""staggerThreshold"": {
+      ""type"": ""int"",
+      ""value"": 100
+    },
+    ""staggerDelay"": {
+      ""type"": ""float"",
+      ""value"": 5
+    },
+    ""staggerTick"": {
+      ""type"": ""float"",
+      ""value"": 0.5
+    }
+  },
   ""simpleShoot"": {
     ""bulletCount"": {
       ""type"": ""int"",
@@ -877,6 +891,6 @@ Berserker,"{""maxHealth"":2100,
       ""type"": ""float"",
       ""value"": 0.5,
       ""useDefaultModifier"": true
-    },
+    }
   }
 }",,,
