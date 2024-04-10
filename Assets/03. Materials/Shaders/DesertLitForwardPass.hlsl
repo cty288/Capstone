@@ -72,6 +72,8 @@ half4 LitPassFragment(Varyings IN) : SV_TARGET
     InitializeInputData(IN, surfaceData.normalTS, inputData);
 	
     half4 color = DesertFragmentPBR(inputData, surfaceData, IN.normalWS);
+	//half4 color = half4(0.5, 0.5, 0.5, 1);
+
 
 	#ifdef _FRESNELGLOW
 
