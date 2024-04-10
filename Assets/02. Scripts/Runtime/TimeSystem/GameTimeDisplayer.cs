@@ -19,7 +19,16 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
    [SerializeField] private TMP_Text timeText;
    [SerializeField] private int updateIntervalInMinutes = 5;
    
+   [Header("Day Display Panel")]
    [SerializeField] private TMP_Text dayDisplayPanelDayCountText;
+
+   [SerializeField] private TMP_Text levelNameText;
+   [SerializeField] private TMP_Text coordinateText;
+   [SerializeField] private TMP_Text signalStrengthText;
+   [SerializeField] private TMP_Text sandstormProbText;
+   [SerializeField] private GameObject probGroup;
+   
+   
    private DateTime lastUpdateTime;
 
    private IGameTimeModel gameTimeModel;
@@ -58,15 +67,18 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
          return;
       }
 
+      
       this.Delay(0.1f, () => {
          int dayCount = levelModel.CurrentLevel.Value.DayStayed;
+         float spawnRandomBossChance = levelModel.RandomBossEncounterEventChance;
+         float sandstormProb = levelModel.CurrentLevel.Value.GetSandstormProb();
          if (dayCount <=1) {
             this.Delay(4f, () => {
-               ShowDayDisplayPanel(levelModel.CurrentLevel.Value.DayStayed);
+               ShowDayDisplayPanel(levelModel.CurrentLevel.Value, spawnRandomBossChance, sandstormProb);
             });
          }
          else {
-            ShowDayDisplayPanel(levelModel.CurrentLevel.Value.DayStayed);
+            ShowDayDisplayPanel(levelModel.CurrentLevel.Value, spawnRandomBossChance, sandstormProb);
          }
       });
       
@@ -75,9 +87,24 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
    }
    
    
-   private void ShowDayDisplayPanel(int dayCount) {
+   private void ShowDayDisplayPanel(ILevelEntity levelEntity, float spawnRandomBossChance,
+      float sandstormProb) {
+      probGroup.gameObject.SetActive(levelModel.CurrentLevelCount.Value < LevelModel.MAX_LEVEL);
+      
       dayDisplayPanel.SetActive(true);
-      dayDisplayPanelDayCountText.text = Localization.GetFormat("TIME_DISPLAY", dayCount);
+      dayDisplayPanelDayCountText.text = Localization.GetFormat("TIME_DISPLAY", levelEntity.DayStayed);
+      levelNameText.text = Localization.Get(levelEntity.DisplayNameLocalizedKey);
+      coordinateText.text =
+         $"X.{levelEntity.GetDisplayedCoordinates().Item1} Y.{levelEntity.GetDisplayedCoordinates().Item2}";
+
+      int signalStrength = (Mathf.RoundToInt(spawnRandomBossChance * 100));
+      sandstormProb = (Mathf.RoundToInt(sandstormProb * 100));
+      signalStrengthText.text = Localization.GetFormat("DAY_INDICATOR_SIGNAL",
+         signalStrength >= 100 ? $"<color=red>{signalStrength}%</color>" : $"{signalStrength}%");
+
+      sandstormProbText.text = Localization.GetFormat("DAY_INDICATOR_SANDSTORM",
+         sandstormProb >= 100 ? $"<color=red>{sandstormProb}%</color>" : $"{sandstormProb}%");
+      
       this.Delay(4f, () => {
          dayDisplayPanel.SetActive(false);
       });
@@ -105,7 +132,7 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
       }
       if(levelModel.CurrentLevel.Value == null) return;
       panel.SetActive(true);
-      dayCountText.text = Localization.GetFormat("TIME_DISPLAY", levelModel.CurrentLevel.Value.DayStayed);
+      dayCountText.text = Localization.GetFormat("TIME_DISPLAY2", levelModel.CurrentLevel.Value.DayStayed);
       DateTime globalTime = gameTimeModel.GlobalTime.Value;
       timeText.text = $"{globalTime.ToString("HH:mm")}";
    }

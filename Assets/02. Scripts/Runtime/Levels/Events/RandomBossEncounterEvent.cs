@@ -94,7 +94,8 @@ namespace _02._Scripts.Runtime.Levels.Events {
 
 			//onSpawnEnemy?.Invoke(spawnedEnemy, this);
 			Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity}");
-			
+
+			levelModel.RandomBossEncounterEventChance = 0;
 			this.SendEvent<RandomBossEncounterEventTriggered>(new RandomBossEncounterEventTriggered() {
 				BossEntity = enemyEntity
 			});

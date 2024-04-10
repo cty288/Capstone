@@ -75,6 +75,16 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public HashSet<ISubAreaLevelEntity> GetAllSubAreaLevels();
 
 		public void AddSubArea(string uuid);
+
+		public float GetSandstormProb();
+		
+		public bool HasRandomBossEncounter { get; }
+
+		public (string, string) GetDisplayedCoordinates();
+		
+		public string DisplayNameLocalizedKey { get; set; }
+		
+		public void SetDisplayedCoordinates(string x, string y);
 	}
 	
 	public abstract class LevelEntity<T> : AbstractBasicEntity, ILevelEntity where T : LevelEntity<T>, new() {
@@ -90,9 +100,11 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		private HashSet<ISubAreaLevelEntity> subAreaLevelEntities = new HashSet<ISubAreaLevelEntity>();
 		
-		// [field: ES3Serializable]
-		// public int CurrentEnemyCount { get; set; }
+		[field: ES3Serializable]
+		private float[] sandstormProbability = new[] {0, 0.33f, 1f};
 
+		[field: ES3Serializable] private string[] displayedCoordinate = new string[2] {"???", "???"};
+		
 		public void OnLevelExit() {
 			onLevelExit?.Invoke(this);
 		}
@@ -206,6 +218,28 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public void AddSubArea(string uuid) {
 			SubAreaUUIDs.Add(uuid);
 			subAreaLevelEntities.Add(GlobalEntities.GetEntityAndModel(uuid).Item1 as ISubAreaLevelEntity);
+		}
+
+		public float GetSandstormProb() {
+			if (DayStayed -1 >= sandstormProbability.Length) {
+				return 0;
+			}
+			float sandstormProb = sandstormProbability[DayStayed - 1];
+			return sandstormProb;
+		}
+
+		public virtual bool HasRandomBossEncounter => true;
+		
+		
+		public (string, string) GetDisplayedCoordinates() {
+			return (displayedCoordinate[0], displayedCoordinate[1]);
+		}
+
+		[field: ES3Serializable] public string DisplayNameLocalizedKey { get; set; } = "";
+
+		public void SetDisplayedCoordinates(string x, string y) {
+			displayedCoordinate[0] = x;
+			displayedCoordinate[1] = y;
 		}
 
 
