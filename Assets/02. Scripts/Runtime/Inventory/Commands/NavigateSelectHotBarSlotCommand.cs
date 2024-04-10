@@ -26,7 +26,7 @@ namespace Runtime.Inventory.Commands {
 			IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
 			IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
 			
-			if (category != HotBarCategory.Right) {
+			if (true) {
 				ICurrencyModel currencyModel = this.GetModel<ICurrencyModel>();
 				IResourceEntity topItem = null;
 				
@@ -51,7 +51,7 @@ namespace Runtime.Inventory.Commands {
 				}
 				
 			}
-			else {
+			/*else {
 				List<HotBarSlot> slots = inventoryModel.GetHotBarSlots(HotBarCategory.Right);
 				if (isNext) {
 					for (int i = slots.Count - 1; i > 0; i--) {
@@ -66,7 +66,7 @@ namespace Runtime.Inventory.Commands {
 
 				inventorySystem.SelectHotBarSlot(HotBarCategory.Right,
 					inventoryModel.GetSelectedHotBarSlotIndex(HotBarCategory.Right));
-			}
+			}*/
 
 		}
 	}
