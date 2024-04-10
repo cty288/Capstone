@@ -1130,6 +1130,10 @@ MonoBehaviour:
   autoRecycleTimeAfterFarAwayFromPlayer: 10
   autoRecycleDistanceFromPlayer: 150
   autoRecycleCheckTimeInterval: 5
+  eliteColor: {r: 63.999992, g: 18.209091, b: 0, a: 1}
+  eliteFresnel: 0
+  eliteCutIn: 0.747
+  eliteCutOut: 0.098
   eliteScaleMultiplier: 1.5
   deathEffect: {fileID: 8429527730738994522, guid: 282cd848851e7cd41ab77c93b586dd9e,
     type: 3}
@@ -1232,8 +1236,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!195 &4259918608324512022
 NavMeshAgent:
   m_ObjectHideFlags: 0

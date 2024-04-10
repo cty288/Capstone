@@ -206,7 +206,7 @@ Shader "Hidden/CustomOutline"
 				
 				lineColor = lerp(lineColorD, lineColor, aoD);
 				lineColor = lerp(lineColorD, lineColor, ao.directAmbientOcclusion);
-				lineColor.a *= _LineAlpha * depth;
+				lineColor.a *= _LineAlpha * smoothstep(0.f, 0.1f, depth);
 				float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
 				
 				return alphaBlend(lineColor, color);
