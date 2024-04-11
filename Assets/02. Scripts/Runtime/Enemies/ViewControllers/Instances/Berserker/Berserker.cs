@@ -7,6 +7,7 @@ using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.DataFramework.ViewControllers;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.ViewControllers.Base;
@@ -22,6 +23,7 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 		public List<BerserkerNode> Nodes;
 		public int StaggerThreshold;
 		public int StaggerDamage = 0;
+		public bool IsStaggered = false;
 		
 		protected override void OnEntityStart(bool isLoadedFromSave) {
             
@@ -34,7 +36,14 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
             
 		}
         
-
+		public void SetStaggerStatus(bool status)
+		{
+			IsStaggered = status;
+			if (status)
+			{
+				StaggerDamage = 0;
+			}
+		}
         
 		protected override void OnEnemyRegisterAdditionalProperties() {
             
@@ -49,7 +58,8 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
             
 			return new[]
 			{
-				new AutoConfigCustomProperty("entity")
+				new AutoConfigCustomProperty("entity"),
+				new AutoConfigCustomProperty("stagger"),
 			};
 		}
 
@@ -66,7 +76,12 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 		private float StaggerDelay = 0f;
 		private float lastHitTime = 0f;
 		private float StaggerTick = 0f;
+		
+		[BindCustomData("stagger","staggerTime")]
+		public float StaggerTime { get; }
+		
 		private float staggerTimer = 0f;
+
 		
 		protected override void Awake()
 		{
@@ -83,6 +98,7 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 			BoundEntity.StaggerThreshold = BoundEntity.GetCustomDataValue<int>("stagger", "staggerThreshold");
 			StaggerDelay = BoundEntity.GetCustomDataValue<float>("stagger", "staggerDelay");
 			StaggerTick = BoundEntity.GetCustomDataValue<float>("stagger", "staggerTick");
+
 		}
 
 		protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
@@ -97,11 +113,13 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 		{
 			base.Update();
 			
-			if(Time.time - lastHitTime >= StaggerDelay) {
+			if(Time.time - lastHitTime >= StaggerDelay && BoundEntity.StaggerDamage > 0) {
 				staggerTimer += Time.deltaTime;
-				if (staggerTimer >= StaggerTick)
+				if (staggerTimer >= StaggerTick)	
 				{
-					BoundEntity.StaggerDamage--;
+					BoundEntity.StaggerDamage = Mathf.Max(0, BoundEntity.StaggerDamage - 1);
+					print($"BERSERKER: stagger damage decrease - {BoundEntity.StaggerDamage}");
+
 					staggerTimer = 0f;
 				}
 			}
@@ -128,10 +146,13 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 			if(hashedVulerableHurboxes.Contains(data.Hurtbox)) {
 				BoundEntity.StaggerDamage += data.Damage;
 				lastHitTime = Time.time;
-				if(BoundEntity.StaggerDamage >= BoundEntity.StaggerThreshold) {
-					BoundEntity.StaggerDamage = 0;
-					// Stagger();
-				}
+				
+				print($"BERSERKER: stagger damage - {BoundEntity.StaggerDamage}");
+
+				// if(BoundEntity.StaggerDamage >= BoundEntity.StaggerThreshold) {
+				// 	BoundEntity.StaggerDamage = 0;
+				// Stagger();
+				// }
 			}
 			BoundEntity.TakeDamage(data.Damage, data.Attacker,out _, data);
 		}
