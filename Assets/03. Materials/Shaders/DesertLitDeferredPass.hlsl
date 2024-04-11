@@ -57,7 +57,7 @@ Varyings LitGBufferPassVertex(Attributes IN)
     UNITY_SETUP_INSTANCE_ID(IN);
     UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-	
+
     VertexPositionInputs positionInputs = GetVertexPositionInputs(IN.positionOS.xyz);
 	#ifdef _NORMALMAP
 		VertexNormalInputs normalInputs = GetVertexNormalInputs(IN.normalOS, IN.tangentOS);
@@ -110,14 +110,7 @@ FragmentOutput LitGBufferPassFragment(Varyings IN) : SV_TARGET
 	UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 	
     SurfaceData surfaceData;
-	#ifdef _WORLD_TILE
-		float3 noiseZ = SampleAlbedoAlpha(IN.positionWS.xy * _WorldNoise_ST.xy + _WorldNoise_ST.zw, TEXTURE2D_ARGS(_WorldNoise, sampler_WorldNoise));
-		float3 noiseY = SampleAlbedoAlpha(float2(IN.positionWS.x + IN.positionWS.z, IN.positionWS.y) * _WorldNoise_ST.xy + _WorldNoise_ST.zw, TEXTURE2D_ARGS(_WorldNoise, sampler_WorldNoise));
-		float3 noiseX = SampleAlbedoAlpha(IN.positionWS.zy * _WorldNoise_ST.xy + _WorldNoise_ST.zw, TEXTURE2D_ARGS(_WorldNoise, sampler_WorldNoise));
-		InitializeWorldSurfaceData(IN.normalWS, IN.positionWS + float3(noiseX.r, noiseY.b, noiseZ.r) * 0.1f, surfaceData);
-	#else
-		InitializeSurfaceData(IN.uv, surfaceData);
-	#endif
+    InitializeSurfaceData(IN.uv, surfaceData);
 
     InputData inputData;
     InitializeInputData(IN, surfaceData.normalTS, inputData);
@@ -136,11 +129,6 @@ FragmentOutput LitGBufferPassFragment(Varyings IN) : SV_TARGET
 
 		float3 highlightColor = color <= 0.5 ? 2 * color * _HighlightColor : 1 - 2 * (1 - color) * (1 - _HighlightColor);
 		color = lerp(color, highlightColor, fresnel * _HighlightColor.a);
-	#endif
-
-	#ifdef _WORLD_TILE
-		float4 gradient = SampleAlbedoAlpha(float2(clamp(((IN.positionWS.y) - _WorldHeightLow)/(_WorldHeightHigh - _WorldHeightLow) + noiseY.b * 0.5f, 0.001f, 0.999f), 0), TEXTURE2D_ARGS(_WorldHeightGradient, sampler_WorldHeightGradient));
-		color = (color * 0.8f) + (gradient/(1-color)) * 0.2f;
 	#endif
 
 	return BRDFDataToGbuffer(brdfData, inputData, surfaceData.smoothness, surfaceData.emission + color);

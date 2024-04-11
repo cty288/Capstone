@@ -366,7 +366,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				await SpawnLevelExitDoor();
 			}
 			
-			SpawnPillars();
+			await SpawnPillars();
 			UpdatePreExistingDirectors();
 			SpawnCollectableResources();
 			
@@ -385,7 +385,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (exitDoor) {
 				return;
 			}
-			exitDoor = await SpawningUtility.SpawnExitDoor( "LevelExitDoor", maxExtent.bounds,
+			exitDoor = await SpawningUtility.SpawnExitDoor(gameObject, "LevelExitDoor", maxExtent.bounds,
 				playerSpawnPoints.ToArray());
 		}
 
@@ -438,14 +438,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		private  void  SpawnPillars() {
+		private async UniTask SpawnPillars() {
 			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			if (!hasPillars) {
 				return;
 			}
 
 			int pillarCount = CurrencyType.GetValues(typeof(CurrencyType)).Length;
-			List<GameObject> pillars = SpawningUtility.SpawnBossPillars(pillarCount, pillarPrefabName);
+			List<GameObject> pillars = await SpawningUtility.SpawnBossPillars(gameObject, pillarCount, pillarPrefabName, maxExtent.bounds);
 			if (pillars == null) {
 				return;
 			}
