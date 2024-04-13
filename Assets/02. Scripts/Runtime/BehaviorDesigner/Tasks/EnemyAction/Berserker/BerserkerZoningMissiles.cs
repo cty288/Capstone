@@ -17,7 +17,7 @@ using UnityEngine.AI;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
-    public class BerserkerHighNoon : EnemyAction<BerserkerEntity>
+    public class BerserkerZoningMissiles : EnemyAction<BerserkerEntity>
     {
         public SharedGameObject simpleShootBulletPrefab;
         public Transform shootPoint;

@@ -45,18 +45,18 @@ public class WormBossHeadMine : AbstractBulletViewController
         cancellationToken = new CancellationTokenSource();
         explosionPool = GameObjectPoolManager.Singleton.CreatePool(explosionPrefab, 10,30);
     }
-    private void OnEnable()
-    {
-        evaluator = 0;
-        timer = 0;
-        onGround = false;
-        arrived = false;
-        dir = target - this.transform.position;
-        randomSpinDir = UnityEngine.Random.insideUnitSphere;
-        randomSpinDir.Normalize();
-        currentFrequency = initialFrequency;
-
-    }
+    
+    // private void OnEnable()
+    // {
+    //     evaluator = 0;
+    //     timer = 0;
+    //     onGround = false;
+    //     arrived = false;
+    //     dir = target - this.transform.position;
+    //     randomSpinDir = UnityEngine.Random.insideUnitSphere;
+    //     randomSpinDir.Normalize();
+    //     currentFrequency = initialFrequency;
+    // }
 
     private void OnEnable()
     {
