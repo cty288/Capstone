@@ -165,6 +165,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		[SerializeField] private int timeCurrencyLevel = 1;
 		[SerializeField] private bool spawnExitDoor = true;
+		[SerializeField] private string[] displayedCoordinates = new[] {"", ""};
+		[SerializeField] private string diaplsyedNameLocalizedKey = "";
 		
 		protected IGameEventSystem gameEventSystem;
 		protected GameObject exitDoor;
@@ -301,6 +303,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				//.SetProperty(new PropertyNameInfo(PropertyName.sub_area_levels), CreateSubAreaLevels());
 
 			ILevelEntity levelEnity = OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
+			levelEnity.SetDisplayedCoordinates(displayedCoordinates[0], displayedCoordinates[1]);
+			levelEnity.DisplayNameLocalizedKey = diaplsyedNameLocalizedKey;
 			return levelEnity;
 		}
 		

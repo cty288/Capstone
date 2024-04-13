@@ -134,6 +134,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -174.25049
       objectReference: {fileID: 0}
+    - target: {fileID: 2891772103503763007, guid: c28945592f6df474b8543e821ed393a8,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2891772103633003202, guid: c28945592f6df474b8543e821ed393a8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -143,6 +148,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -138.00049
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891772103633003203, guid: c28945592f6df474b8543e821ed393a8,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 2891772104296810361, guid: c28945592f6df474b8543e821ed393a8,
         type: 3}
@@ -1458,6 +1468,7 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  autoAbsorbWhenPlayerReach: 1
   autoRecycleTimeWhenNoAbsorb: 120
   alsoRemoveEntityWhenNoAbsorb: 1
   <InHandLocalPosition>k__BackingField: {x: 0.005, y: -0.03, z: 0}

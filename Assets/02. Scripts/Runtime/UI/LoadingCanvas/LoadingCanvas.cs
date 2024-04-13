@@ -6,7 +6,7 @@ using Polyglot;
 using TMPro;
 using UnityEngine;
 
-public class LoadingCanvas : MonoMikroSingleton<LoadingCanvas> {
+public class LoadingCanvas : MonoPersistentMikroSingleton<LoadingCanvas> {
     [SerializeField] protected GameObject loadingPanel;
     [SerializeField] protected TMP_Text loadingText;
 
@@ -39,19 +39,35 @@ public class LoadingCanvas : MonoMikroSingleton<LoadingCanvas> {
     }
 
     public void Show(Action onScreenBlack) {
+	    Show(onScreenBlack, -1);
+    }
+    
+    public void Show(Action onScreenBlack, float screenRecoverWaitTime) {
 	    if (IsLoading) {
 		    return;
 	    }
 	    IsLoading = true;
 	    StopAllCoroutines();
 	    loadingPanel.SetActive(true);
-	    StartCoroutine(OnScreenBlack(onScreenBlack));
+	    if (screenRecoverWaitTime >= 0) {
+		    StartCoroutine(OnScreenBlack(onScreenBlack, screenRecoverWaitTime));
+	    }
+	    else {
+		    StartCoroutine(OnScreenBlack(onScreenBlack));
+	    }
+	   
     }
     
     private IEnumerator OnScreenBlack(Action onScreenBlack) {
 	    yield return new WaitForSecondsRealtime(1f);
 	    IsLoading = false;
 	    onScreenBlack?.Invoke();
+    }
+    
+    private IEnumerator OnScreenBlack(Action onScreenBlack, float screenRecoverWaitTime) {
+	    yield return StartCoroutine(OnScreenBlack(onScreenBlack));
+	    yield return new WaitForSecondsRealtime(screenRecoverWaitTime);
+	    Hide();
     }
     
     public void ShowUntil(Action onScreenBlack, Func<bool> condition) {

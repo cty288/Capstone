@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
 using _02._Scripts.Runtime.Levels.Sandstorm;
 using Cysharp.Threading.Tasks;
+using MikroFramework;
 using Runtime.DataFramework.Entities;
 using Runtime.Spawning;
 using UnityEngine;
@@ -12,14 +13,14 @@ using UnityEngine;
 namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	public abstract class NormalLevelViewController<T> : LevelViewController<T>, ILevelViewController
 		where T : class, ILevelEntity, new() {
-		[SerializeField] private bool hasRandomBossEncounter = true;
+		
 		[Header("Exit Conditions")] 
 		[SerializeField] private float totalExplortionValueRequired = 2000; 
 		[SerializeField] private float bossExplorationMultiplier = 2f;
 		[SerializeField] private float normalEnemyExplorationMultiplier = 1f;
 		[SerializeField] private float explorationValuePerSecond = 1f;
 		//[SerializeField] private int killBossRequired = 1;
-		[SerializeField] private float[] sandstormProbability = new[] {0, 0.33f, 1f};
+		
 		//[SerializeField] private bool spawnWeaponPartsTrader = true;
 
 		public override ILevelEntity OnBuildNewLevel(int levelNumber) {
@@ -35,7 +36,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		protected override void OnNewDay(OnNewDayStart e) {
 			base.OnNewDay(e);
+			if (levelModel.CurrentLevel.Value != BoundEntity) {
+				return;
+			}
 			HandleSandstormEvent();
+			
 			HandleRandomBossEncounterEvent();
 		}
 
@@ -49,28 +54,31 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 
 		private void HandleRandomBossEncounterEvent() {
-			if(!hasRandomBossEncounter) return;
-			
-			if (Random.Range(0f, 1f) <= levelModel.RandomBossEncounterEventChance) {
-				//spawn a random boss today
-				int spawnTime = Random.Range(60, 180);
-				int rarity = BoundEntity.GetCurrentLevelCount();
-				rarity = Random.Range(rarity - 1, rarity + 1);
-				rarity = Mathf.Clamp(rarity, 1, 4);
-
-				gameEventSystem.AddEvent(RandomBossEncounterEvent.Allocate(rarity), spawnTime);
+			if(!BoundEntity.HasRandomBossEncounter || levelModel.CurrentLevelCount.Value <= 0) return;
+			if (BoundEntity.IsInBossFight) {
 				levelModel.RandomBossEncounterEventChance = 0;
-			}else {
-				levelModel.RandomBossEncounterEventChance += 0.3f;
 			}
+			this.Delay(0.2f, () => {
+				
+				if (Random.Range(0f, 1f) <= levelModel.RandomBossEncounterEventChance) {
+					//spawn a random boss today
+					int spawnTime = Random.Range(60, 180);
+					int rarity = BoundEntity.GetCurrentLevelCount();
+					rarity = Random.Range(rarity - 1, rarity + 1);
+					rarity = Mathf.Clamp(rarity, 1, 4);
+
+					gameEventSystem.AddEvent(RandomBossEncounterEvent.Allocate(rarity), spawnTime);
+					//levelModel.RandomBossEncounterEventChance = 0;
+				}else {
+					levelModel.RandomBossEncounterEventChance += 0.3f;
+				}
+			});
+			
 		}
 
 
 		protected void HandleSandstormEvent() {
-			if (BoundEntity.DayStayed -1 >= sandstormProbability.Length) {
-				return;
-			}
-			float sandstormProb = sandstormProbability[BoundEntity.DayStayed - 1];
+			float sandstormProb = BoundEntity.GetSandstormProb();
 			if (Random.Range(0f, 1f) <= sandstormProb) {
 				//spawn sandstorm
 				int sandstormHappenTime = 23 * 60;

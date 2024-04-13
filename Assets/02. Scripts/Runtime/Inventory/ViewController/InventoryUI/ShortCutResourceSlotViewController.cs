@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Base;
+using Runtime.Controls;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.ViewController;
 using TMPro;
@@ -19,6 +20,7 @@ public class ShortCutResourceSlotViewController : ResourceSlotViewController {
       shortCutText = shortCutTransform.Find("ShortCutText").GetComponent<TMP_Text>();
       currencyTexts = transform.Find("CurrencyList").GetComponentsInChildren<TMP_Text>(true);
       shortCutTransform.gameObject.SetActive(false);
+  
    }
    
    public void SetShortCutText(string text) {

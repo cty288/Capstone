@@ -160,11 +160,10 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 
 		public override string OnGroundVCPrefabName { get; } = null;
 
-		[field: ES3Serializable]
-		public string InventoryVCPrefabName { get; } = "SkillInventoryVC";
+		/*[field: ES3Serializable]
+		public string InventoryVCPrefabName { get; protected set; } = "SkillInventoryVC";*/
+		public override string InventoryVCPrefabName => "SkillInventoryVC";
 
-
-		
 
 		public float GetRemainingCooldown() {
 			return remainingCooldown;
