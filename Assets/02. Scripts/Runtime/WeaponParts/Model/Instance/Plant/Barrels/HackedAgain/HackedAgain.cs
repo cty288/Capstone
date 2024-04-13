@@ -25,7 +25,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels.HackedAg
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			int damage = GetCustomDataValueOfCurrentLevel<int>("damage");
-			return Localization.GetFormat(defaultLocalizationKey, damage);
+			string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, damage,hackedBuffName);
 		}
 		
 
@@ -75,9 +76,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Barrels.HackedAg
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					int damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("damage");
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("HackedAgain_desc", damage));
+						weaponPartsEntity.GetDescription());
 				})
 			};
 		}

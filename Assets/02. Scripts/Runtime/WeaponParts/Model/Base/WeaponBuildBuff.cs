@@ -119,17 +119,24 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		public void DeallocateBuffVFX()
 		{
 			allocated = false;
-			_weaponVFX.ResetVFX();
-			_hitScanWeaponVFX.ResetBulletVFX();
-			
-			pooledBulletIn.transform.parent = bulletInVFXPool.transform;
-			bulletInVFXPool.Recycle(pooledBulletIn);
-			
-			pooledBulletOut.transform.parent = bulletOutVFXPool.transform;
-			bulletOutVFXPool.Recycle(pooledBulletOut);
+			_weaponVFX?.ResetVFX();
+			_hitScanWeaponVFX?.ResetBulletVFX();
 
-			pooledBulletHit.transform.parent = bulletHitVFXPool.transform;
-			bulletHitVFXPool.Recycle(pooledBulletHit);
+			if (pooledBulletIn && bulletInVFXPool) {
+				pooledBulletIn.transform.parent = bulletInVFXPool.transform;
+				bulletInVFXPool.Recycle(pooledBulletIn);
+			}
+
+			if (pooledBulletOut && bulletOutVFXPool) {
+				pooledBulletOut.transform.parent = bulletOutVFXPool.transform;
+				bulletOutVFXPool.Recycle(pooledBulletOut);
+			}
+
+			if (pooledBulletHit && bulletHitVFXPool) {
+				pooledBulletHit.transform.parent = bulletHitVFXPool.transform;
+				bulletHitVFXPool.Recycle(pooledBulletHit);
+			}
+			
 		}
 
 		public IArchitecture GetArchitecture() {

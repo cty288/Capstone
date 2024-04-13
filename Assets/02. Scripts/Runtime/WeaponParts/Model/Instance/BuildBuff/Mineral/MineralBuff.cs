@@ -164,19 +164,23 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			int displayedChance = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("chance", 1) * 100);
 			int time = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("buff_time", 1));
 			int additionalDamage = weaponEntity.GetRarity() * GetBuffPropertyAtLevel<int>("damage_per_rarity", 1);
-			string malfunctionBuffDesc = Localization.Get("MulfunctionBuff_Desc");
+
+			MalfunctionBuff malfunctionTemplate = BuffPool.GetTemplateBuff<MalfunctionBuff>();
+			
 
 			int displayedPercentage = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("hit_buff_multiplier", 2) * 100);
 			
 			PowerlessBuff powerlessBuff =
 				BuffPool.GetTemplateBuffs((buff => buff is PowerlessBuff)).FirstOrDefault() as PowerlessBuff;
 			string powerlessBuffDesc = powerlessBuff?.GetLevelDescription(2);
-			
-			
+
+
 			return new string[] {
-                Localization.GetFormat("BUILD_BUFF_MINERAL_1", displayedChance, time, additionalDamage, malfunctionBuffDesc),
-                Localization.GetFormat("BUILD_BUFF_MINERAL_2", displayedPercentage),
-                Localization.GetFormat("BUILD_BUFF_MINERAL_3", powerlessBuffDesc)
+				Localization.GetFormat("BUILD_BUFF_MINERAL_1", displayedChance, time, additionalDamage,
+					malfunctionTemplate.GetDescription(), malfunctionTemplate.GetDisplayName()),
+				Localization.GetFormat("BUILD_BUFF_MINERAL_2", displayedPercentage, malfunctionTemplate.GetDisplayName()),
+				Localization.GetFormat("BUILD_BUFF_MINERAL_3", powerlessBuffDesc, malfunctionTemplate.GetDisplayName(),
+					powerlessBuff?.GetDisplayName())
 			};
 
 		}
