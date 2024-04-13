@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using DG.Tweening;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Polyglot;
@@ -73,16 +74,19 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 	}
 
 	private void OnCurrencyAmountChanged(OnCurrencyAmountChangedEvent e) {
-		if (!e.IsTransferToMoney) {
-			string currencyTypeLocalized = $"<sprite index={(int) e.CurrencyType}>";
-			StackItem(currencyTypeLocalized, e.Amount);
-		}
-		else {
-			//Show();
-			Show(Localization.GetFormat("HINT_CURRENCY_TRANSFER",
-				$"{e.Amount} <sprite index={(int) e.CurrencyType}>",
-				$"{e.TransferAmount} <sprite index=6>"));
-		}
+		this.Delay(5f, () => {
+			if (!e.IsTransferToMoney) {
+				string currencyTypeLocalized = $"<sprite index={(int) e.CurrencyType}>";
+				StackItem(currencyTypeLocalized, e.Amount);
+			}
+			else {
+				//Show();
+				Show(Localization.GetFormat("HINT_CURRENCY_TRANSFER",
+					$"{e.Amount} <sprite index={(int) e.CurrencyType}>",
+					$"{e.TransferAmount} <sprite index=6>"));
+			}
+		});
+		
 		
 	}
 

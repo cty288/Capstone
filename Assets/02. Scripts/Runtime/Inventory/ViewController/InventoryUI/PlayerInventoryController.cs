@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
@@ -8,14 +9,16 @@ using MikroFramework.AudioKit;
 using MikroFramework.Event;
 using MikroFramework.Pool;
 using MikroFramework.ResKit;
-
+using MikroFramework.UIKit;
 using Runtime.Controls;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.ViewControllers;
 using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
+using Runtime.Inventory.ViewController;
 using Runtime.Player;
+using Runtime.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,7 +37,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    private void Awake() {
       sharedActions = ClientInput.Singleton.GetSharedActions();
       this.RegisterEvent<OnPlayerThrowResource>(OnPlayerThrowResource).UnRegisterWhenGameObjectDestroyed(gameObject);
-     // this.RegisterEvent<OnInventorySlotRemovedEvent>(OnInventorySlotRemoved).UnRegisterWhenGameObjectDestroyed(gameObject);
+      this.RegisterEvent<OnInventorySlotRemovedEvent>(OnInventorySlotRemoved).UnRegisterWhenGameObjectDestroyed(gameObject);
       inventoryModel = this.GetModel<IInventoryModel>();
       inventorySystem = this.GetSystem<IInventorySystem>();
       playerModel = this.GetModel<IGamePlayerModel>();
@@ -72,7 +75,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
 
 
    private void Update() {
-      if (playerModel.IsPlayerDead()) {
+      if (playerModel.IsPlayerDead() || UIManager.Singleton.GetPanel<InventoryUIViewController>(true)) {
          return;
       }
       //Alpha1 -> 49, Alpha9 -> 57
@@ -125,6 +128,9 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
    
    private void SpawnThrownResource(IResourceEntity resourceEntity) {
       GameObject resourceVC = ResourceVCFactory.Singleton.SpawnPickableResourceVC(resourceEntity, true);
+      if (resourceVC == null) {
+         return;
+      }
       resourceVC.transform.position = throwPoint.transform.position;
 
       resourceVC.GetComponent<IPickableResourceViewController>().HoldAbsorb = true;
@@ -139,20 +145,21 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
          return;
       }
 
-      List<ResourceSlot> removedSlots = e.RemovedSlots;
-      foreach (ResourceSlot slot in removedSlots) {
-         if (slot.IsEmpty()) {
+      List<string> removedIds = e.RemovedUUIDs;
+      foreach (string id in removedIds) {
+         IResourceEntity resourceEntity = GlobalGameResourceEntities.GetAnyResource(id);
+         if (resourceEntity == null) {
             continue;
          }
 
-         foreach (string id in slot.GetUUIDList()) {
-            IResourceEntity resourceEntity = GlobalGameResourceEntities.GetAnyResource(id);
-            if (resourceEntity == null) {
-               continue;
-            }
-            
+         if (resourceEntity is ISkillEntity skillEntity) {
+            IResourceEntity returnToBaseEntity = skillEntity.GetReturnToBaseEntity();
+            inventoryModel.AddToBaseStock(returnToBaseEntity);
+         }
+         else {
             SpawnThrownResource(resourceEntity);
          }
+        
       }
    }
 }

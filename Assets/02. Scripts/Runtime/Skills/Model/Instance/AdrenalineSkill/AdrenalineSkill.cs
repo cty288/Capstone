@@ -21,7 +21,15 @@ namespace _02._Scripts.Runtime.Skills.Model.Instance.AdrenalineSkill {
 			StimulatedBuff buff = BuffPool.GetTemplateBuffs((buff => buff is StimulatedBuff)).FirstOrDefault() as StimulatedBuff;
 			string buffDescription = buff.GetLevelDescription(buffLevel);
 
-			return Localization.GetFormat(defaultLocalizationKey, buffLevel, buffDescription);
+			return Localization.GetFormat(defaultLocalizationKey, buff.GetDisplayName(buffLevel), buffDescription);
+		}
+
+		protected override void OnAddedToHotBar() {
+			
+		}
+
+		protected override void OnRemovedFromHotBar() {
+			
 		}
 
 

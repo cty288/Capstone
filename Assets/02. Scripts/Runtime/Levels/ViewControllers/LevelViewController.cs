@@ -28,6 +28,7 @@ using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.GameResources;
+using Runtime.Player;
 using Runtime.Spawning;
 using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
@@ -160,12 +161,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		//[SerializeField] protected List<LevelEnemyPrefabConfig> bosses = new List<LevelEnemyPrefabConfig>();
 
 		[SerializeField] protected GameObject playerSpawner;
-		[SerializeField] private float[] sandstormProbability = new[] {0, 0.33f, 1f};
+		
 
 		[SerializeField] private int timeCurrencyLevel = 1;
 		[SerializeField] private bool spawnExitDoor = true;
 		
-		private IGameEventSystem gameEventSystem;
+		protected IGameEventSystem gameEventSystem;
+		protected GameObject exitDoor;
 
 		//mainPrefab + variants
 		public HashSet<GameObject> Enemies {
@@ -204,7 +206,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		// [SerializeField] protected int maxEnemiesBaseValue = 50;
 
 		private List<IEnemyEntity> templateEnemies = new List<IEnemyEntity>();
-		private ILevelModel levelModel;
+		protected ILevelModel levelModel;
         
 		private int levelNumber;
 		private NavMeshSurface navMeshSurface;
@@ -318,7 +320,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			return subAreaLevels;
 		}
 
-		public async UniTask Init() {
+		public virtual async UniTask Init() {
 			//navMeshSurface.BuildNavMesh();
 			//navMeshSurface.navMeshData 
 			this.RegisterEvent<OnBossSpawned>(OnBossSpawned).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
@@ -353,30 +355,39 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (bgm) {
 				AudioSystem.Singleton.PlayMusic(bgm);
 			}
-			UpdateWallMaterials();
+			//UpdateWallMaterials();
 			await UniTask.Yield();
 			SpawningUtility.UpdateRefPointsKDTree();
 			if (spawnExitDoor) {
 				await SpawnLevelExitDoor();
 			}
 			
-			await SpawnPillars();
+			SpawnPillars();
 			UpdatePreExistingDirectors();
 			SpawnCollectableResources();
 			
 			StartCoroutine(UpdateLevelSystemTime());
+			
+			this.Delay(5f, () => {
+				LoadingCanvas.Singleton.Hide();
+
+			});
+			
+			//this.GetModel<IGamePlayerModel>().GetPlayer().Armor.RegisterOnValueChanged()
 		}
 
 		private async UniTask SpawnLevelExitDoor() {
 
-			GameObject door = await SpawningUtility.SpawnExitDoor(gameObject, "LevelExitDoor", maxExtent.bounds,
+			if (exitDoor) {
+				return;
+			}
+			exitDoor = await SpawningUtility.SpawnExitDoor( "LevelExitDoor", maxExtent.bounds,
 				playerSpawnPoints.ToArray());
-			door.transform.SetParent(transform);
 		}
 
 
 		private HashSet<int> triggeredNewDay = new HashSet<int>();
-		private void OnNewDay(OnNewDayStart e) {
+		protected virtual void OnNewDay(OnNewDayStart e) {
 			int day = e.DayCount;
 			
 			if (levelModel.CurrentLevel.Value != BoundEntity) {
@@ -390,29 +401,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			triggeredNewDay.Add(day);
 			BoundEntity.DayStayed++; 
 			Debug.Log($"This is the {BoundEntity.DayStayed} day in this level");
-			if (BoundEntity.DayStayed -1 >= sandstormProbability.Length) {
-				return;
-			}
-			float sandstormProb = sandstormProbability[BoundEntity.DayStayed - 1];
-			if (Random.Range(0f, 1f) <= sandstormProb) {
-				//spawn sandstorm
-				int sandstormHappenTime = 23 * 60;
-				gameEventSystem.AddEvent(new SandstormEvent(), sandstormHappenTime);
+			
+			
+			
 
-				int warningTime = sandstormHappenTime / 2;
-				gameEventSystem.AddEvent(new SandstormWarningEvent(), warningTime);
-			}
-			
-			// Add Night Events
-			// Night occurs at 8pm (20h)
-			int nightHappeningTime = (GameTimeModel.NightStartHour - GameTimeModel.NewDayStartHour) * 60;
-			gameEventSystem.AddEvent(new NightEvent(), nightHappeningTime);
-			
-			// Trigger warning 1 in-game hour before night time.
-			gameEventSystem.AddEvent(NightWarningEvent.Allocate(60), nightHappeningTime - 60);
-			
-			// New Day Event
-			gameEventSystem.AddEvent(new NewDayEvent(), 0);
 
 			int prevDay = day - 1;
 			if (prevDay > 0) {
@@ -442,14 +434,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		private async UniTask SpawnPillars() {
+		private  void  SpawnPillars() {
 			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			if (!hasPillars) {
 				return;
 			}
 
 			int pillarCount = CurrencyType.GetValues(typeof(CurrencyType)).Length;
-			List<GameObject> pillars = await SpawningUtility.SpawnBossPillars(gameObject, pillarCount, pillarPrefabName, maxExtent.bounds);
+			List<GameObject> pillars = SpawningUtility.SpawnBossPillars(pillarCount, pillarPrefabName);
 			if (pillars == null) {
 				return;
 			}
@@ -469,7 +461,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				//RegisterOnSpawnEnemy(pillarViewController);
 			}
 			bossPillars = pillars.Select(p => p.GetComponent<IBossPillarViewController>()).ToArray();
-			pillarModel.SetCurrentLevelPillars(ids);
+			pillarModel.SetCurrentLevelPillars(ids, levelNumber);
 			
 		}
 		private void UpdateWallMaterials() {
@@ -598,6 +590,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public virtual ISubAreaLevelEntity GetCurrentActiveSubAreaEntity()
 		{
+			if (BoundEntity == null) {
+				return null;
+			}
 			int areaMask = this.GetModel<IPlayerModel>().CurrentSubAreaMask.Value;
 			
 			// get subarea from level entity
@@ -662,7 +657,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				directorModel.RemoveEntity(spawner.Entity.UUID, true);
 			}
 			
-			
+			if (exitDoor) {
+				Destroy(exitDoor);
+			}
 			StopAllCoroutines();
 		}
 

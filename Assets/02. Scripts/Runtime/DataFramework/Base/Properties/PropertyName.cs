@@ -80,6 +80,8 @@ namespace Runtime.DataFramework.Properties
 		research_point,
 		exp,
 		build_type,
-		health_recover_speed
+		health_recover_speed,
+		parts_upgrade_cost,
+		parts_ingame_purchase_cost,
 	}
 }

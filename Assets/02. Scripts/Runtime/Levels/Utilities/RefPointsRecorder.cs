@@ -18,10 +18,16 @@ public class RefPointsRecorder : AbstractMikroController<MainGame> {
    [SerializeField] private GameObject tempRefPointPrefab;
    private float recordTimer = 0;
    
+  
    private List<Vector3> refPoints = new List<Vector3>();
 
+   [SerializeField] private Transform[] preRecordedRefPoints;
+   
    private void Awake(){
       playerGoundCheck.OnEnter += OnPlayerEnter;
+      foreach (Transform preRecordedRefPoint in preRecordedRefPoints) {
+         refPoints.Add(preRecordedRefPoint.position);
+      }
    }
 
    private void Update() {

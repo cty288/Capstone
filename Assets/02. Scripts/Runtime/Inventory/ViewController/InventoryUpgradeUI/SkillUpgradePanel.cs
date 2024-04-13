@@ -177,7 +177,7 @@ public class SkillUpgradePanel : AbstractPanel, IController, IGameUIPanel {
     protected void SetDescriptionPanel(ISkillEntity entity, SlotResourceDescriptionPanel panel, TMP_Text levelText) {
         panel.Clear();
         panel.SetContent(entity.GetDisplayName(), entity.GetDescription(),
-            InventorySpriteFactory.Singleton.GetSprite(entity.EntityName), true, entity.GetLevel(),
+            InventorySpriteFactory.Singleton.GetSprite(entity), true, entity.GetLevel(),
             ResourceVCFactory.GetLocalizedResourceCategory(entity.GetResourceCategory()),
             entity.GetResourcePropertyDescriptions(), entity.GetSkillUseCostOfCurrentLevel(), null);
         levelText.text = Localization.GetFormat("PROPERTY_ICON_LEVEL", entity.GetLevel());

@@ -1,5 +1,7 @@
+using _02._Scripts.Runtime.Levels.Models;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Singletons;
 using MikroFramework.UIKit;
 using Runtime.Controls;
@@ -15,12 +17,14 @@ namespace Runtime.UI {
 	public class MainUI : UIRoot, IController, ISingleton {
 		DPunkInputs.SharedActions controlActions;
 		private IGamePlayerModel playerModel;
+		private ILevelModel levelModel;
 		protected override void Awake() {
 			base.Awake();
 			controlActions = ClientInput.Singleton.GetSharedActions();
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 			playerModel = this.GetModel<IGamePlayerModel>();
+			levelModel = this.GetModel<ILevelModel>();
 			ClientInput.Singleton.EnablePlayerMaps();
 			this.RegisterEvent<OnOpenPillarUI>(OnOpenPillarUI)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
@@ -48,7 +52,7 @@ namespace Runtime.UI {
 				return;
 			}
 			
-			if (controlActions.Inventory.WasPressedThisFrame() && (currentMainPanel == null || UIManager.Singleton.GetPanel<InventoryUIViewController>(true))) {
+			if (!levelModel.IsInBase() && controlActions.Inventory.WasPressedThisFrame() && (currentMainPanel == null || UIManager.Singleton.GetPanel<InventoryUIViewController>(true))) {
 				OpenOrGetClose<InventoryUIViewController>(this, null, true);
 			}
 
@@ -68,6 +72,9 @@ namespace Runtime.UI {
 				Cursor.visible = true;
 				Time.timeScale = 0;
 			}
+
+			AudioSystem.Singleton.Play2DSound("open_menu");
+			
 			//ClientInput.Singleton.EnableUIMaps();
 			return panel;
 		}
@@ -84,15 +91,21 @@ namespace Runtime.UI {
 		/// <returns></returns>
 		public T Open<T>(IPanelContainer parent, UIMsg message, bool isPopup, bool switchUIPlayerMap = true,
 			bool createNewIfNotExist = true, string assetNameIfNotExist = "") where T : class, IPanel {
+			bool closedOtherPanel = false;
 			if (currentMainPanel != null && !isPopup) {
 				ClosePanel(currentMainPanel);
+				closedOtherPanel = true;
 			}
 		
 			if (switchUIPlayerMap) {
 				ClientInput.Singleton.EnableUIMaps();
-				
 			}
 			
+			if(!switchUIPlayerMap && closedOtherPanel) {
+				ClientInput.Singleton.EnablePlayerMaps();
+			}
+			
+			AudioSystem.Singleton.Play2DSound("open_menu");
 			//Time.timeScale = 0;
 			return Open<T>(parent, message, createNewIfNotExist, assetNameIfNotExist);
 		}
@@ -128,11 +141,13 @@ namespace Runtime.UI {
 				Cursor.visible = false;
 				Time.timeScale = 1;
 			}
+			
+			AudioSystem.Singleton.Play2DSound("close_menu");
 			//ClientInput.Singleton.EnablePlayerMaps();
 		}
 		
 		protected IPanel GetToClosePanel(IPanel panel) {
-			if (panel == null) {
+			if (panel == null || LoadingCanvas.Singleton.IsLoading) {
 				return null;
 			}
 			

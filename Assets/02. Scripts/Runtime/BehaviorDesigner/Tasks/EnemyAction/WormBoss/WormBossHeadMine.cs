@@ -58,6 +58,12 @@ public class WormBossHeadMine : AbstractBulletViewController
 
     }
 
+    private void OnEnable()
+    {
+        isExploding = false;
+        onGround = false;
+    }
+
     protected override void Update()
     {
         //travel to ground

@@ -135,7 +135,8 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.4.3
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -146,7 +147,7 @@ PlayerSettings:
   isWsaHolographicRemotingEnabled: 0
   enableFrameTimingStats: 0
   enableOpenGLProfilerGPURecorders: 1
-  useHDRDisplay: 1
+  useHDRDisplay: 0
   D3DHDRBitDepth: 0
   m_ColorGamuts: 00000000
   targetPixelDensity: 30
@@ -786,9 +787,9 @@ PlayerSettings:
     LinuxHeadlessSimulation: UNITY_VISUAL_SCRIPTING
     Nintendo Switch: UNITY_VISUAL_SCRIPTING
     PS4: UNITY_VISUAL_SCRIPTING
-    Server: UNITY_VISUAL_SCRIPTING
+    Server: UNITY_VISUAL_SCRIPTING;PROBUILDER_EXPERIMENTAL_FEATURES
     Stadia: UNITY_VISUAL_SCRIPTING
-    Standalone: ES3GLOBAL_DISABLED;UNITY_VISUAL_SCRIPTING;MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED;UNITASK_DOTWEEN_SUPPORT
+    Standalone: ES3GLOBAL_DISABLED;UNITY_VISUAL_SCRIPTING;MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED;UNITASK_DOTWEEN_SUPPORT;PROBUILDER_EXPERIMENTAL_FEATURES
     WebGL: UNITY_VISUAL_SCRIPTING
     Windows Store Apps: UNITY_VISUAL_SCRIPTING
     XboxOne: UNITY_VISUAL_SCRIPTING

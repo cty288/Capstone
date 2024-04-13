@@ -22,7 +22,7 @@ namespace Runtime.RawMaterials.Model.Instances {
 		}
 
 		protected override string OnGetDescription(string defaultLocalizationKey) {
-			return Localization.Get(defaultLocalizationKey);
+			return null; //Localization.Get(defaultLocalizationKey);
 		}
 
 		protected override ICustomProperty[] OnRegisterCustomProperties() {

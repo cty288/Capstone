@@ -23,7 +23,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		
 		public override string GetLevelDescription(int level) {
 			int displayedPercentage = Mathf.RoundToInt(GetBuffPropertyAtLevel<float>("damage_multiplier", level) * 100);
-			return Localization.GetFormat("PowerlessBuff_Desc", level, displayedPercentage);
+			return Localization.GetFormat("PowerlessBuff_Desc", displayedPercentage);
 		}
 		
 		

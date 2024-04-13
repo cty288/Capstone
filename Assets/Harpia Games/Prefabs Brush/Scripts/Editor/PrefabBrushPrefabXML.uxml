@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="prefab" class="prefab" style="flex-grow: 1; align-items: center; justify-content: space-between; width: 75px;">
+        <ui:VisualElement name="icon" picking-mode="Ignore" class="prefab-icon" style="max-width: 100%; width: 100%; flex-grow: 1; -unity-background-scale-mode: scale-to-fit; flex-direction: row-reverse; align-self: flex-end; transition-duration: 1s; height: 100px;">
+            <ui:Button text="X" display-tooltip-when-elided="true" name="remove" class="prefab-remove" style="width: 20px; height: 20px; position: absolute;" />
+            <ui:VisualElement name="Icons" picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); position: absolute; height: 62px; left: 0; width: 20px; align-items: flex-start; justify-content: flex-start;">
+                <ui:VisualElement tabindex="-1" display-tooltip-when-elided="true" name="custom-props-icon-pencil" picking-mode="Ignore" style="font-size: 16px; -unity-text-align: middle-center; height: 12px; width: 12px; position: relative; color: rgb(255, 255, 255);" />
+                <ui:VisualElement tabindex="-1" display-tooltip-when-elided="true" name="rigidbody-icon" picking-mode="Ignore" style="font-size: 16px; -unity-text-align: middle-center; height: 12px; width: 12px; position: relative; color: rgb(255, 255, 255);" />
+                <ui:VisualElement tabindex="-1" display-tooltip-when-elided="true" name="icon-collider" picking-mode="Ignore" style="font-size: 16px; -unity-text-align: middle-center; height: 12px; width: 12px; position: relative; color: rgb(255, 255, 255);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label tabindex="-1" text="Battery BatteryBattery" display-tooltip-when-elided="true" name="name" picking-mode="Ignore" class="prefab-name" style="width: 100%; -unity-text-align: upper-center; font-size: 12px; white-space: normal; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; text-overflow: clip;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -92,7 +92,7 @@ namespace Runtime.Player {
                     bool hitWall = false;
                     bool hitTarget = false;
                     for (int i = 0; i < sortedHits.Length; i++) {
-                        if (!sortedHits[i].collider) {
+                        if (!sortedHits[i].collider || sortedHits[i].collider.isTrigger) {
                             continue;
                         }
 

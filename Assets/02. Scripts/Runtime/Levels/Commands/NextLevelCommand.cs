@@ -19,6 +19,7 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 			}
 			else {
 				levelModel.SwitchToLevel(levelModel.CurrentLevelCount.Value + 1);
+				((MainGame) MainGame.Interface).SaveGame();
 			}
 
 
@@ -50,7 +51,7 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 			
 			this.SendEvent<OnReturnToBase>();
 			
-			//((MainGame) MainGame.Interface).SaveGame();
+			((MainGame) MainGame.Interface).SaveGame();
 		}
 		
 		

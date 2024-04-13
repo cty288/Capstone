@@ -214,8 +214,8 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 			}
 			else {
 				int targetMaxHealth = Mathf.Max(0, health.MaxHealth + amount);
-				HealthProperty.RealValue.Value = new HealthInfo(targetMaxHealth, 
-					Mathf.Min(health.CurrentHealth, targetMaxHealth));
+				HealthProperty.RealValue.Value =
+					new HealthInfo(targetMaxHealth, Mathf.Max(1, health.CurrentHealth + amount));
 			}
 			
 			if (HealthProperty.RealValue.Value.CurrentHealth <= 0) {

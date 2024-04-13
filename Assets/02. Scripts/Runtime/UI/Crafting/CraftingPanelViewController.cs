@@ -21,9 +21,9 @@ public class CraftingPanelViewController : SwitchableRootPanel {
 		base.OnOpen(msg);
 	}
 
-	protected override void OnSubpanelSelected(SwitchableSubPanel panel) {
+	protected override void OnSubpanelSelected(SwitchableSubPanel panel, int index) {
 		
-		base.OnSubpanelSelected(panel);
+		base.OnSubpanelSelected(panel, index);
 		if (panel == researchPanelViewController) {
 			researchPanelViewController.OnSetResourceCategory(this.msg.category);
 		}else if (panel == buildPanelViewController) {

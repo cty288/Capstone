@@ -12,6 +12,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources.Model.Properties;
 using Runtime.GameResources.Model.Properties.BaitAdjectives;
 using Runtime.GameResources.Others;
+using Runtime.Inventory.Model;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 
@@ -24,6 +25,7 @@ namespace Runtime.GameResources.Model.Base {
 		Currency,
 		Skill,
 		WeaponParts,
+		Scrap,
 		All // do not use this
 	}
 
@@ -82,6 +84,9 @@ namespace Runtime.GameResources.Model.Base {
 		public bool AddedToInventoryBefore { get; set; }
 		
 		public  IRarityProperty GetRarityProperty();
+		void OnInventorySlotUpdate(ResourceSlot previousSlot, ResourceSlot newSlot);
+
+		public string GetIconName();
 	}
 	
 
@@ -114,6 +119,14 @@ namespace Runtime.GameResources.Model.Base {
 
 		public IRarityProperty GetRarityProperty() {
 			return GetProperty<IRarityProperty>();
+		}
+
+		public virtual void OnInventorySlotUpdate(ResourceSlot previousSlot, ResourceSlot newSlot) {
+			
+		}
+
+		public virtual string GetIconName() {
+			return $"{EntityName}_Icon";
 		}
 
 		[field: ES3Serializable]

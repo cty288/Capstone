@@ -19,12 +19,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		public override string EntityName { get; set; } = "GunpowerEnchancement";
 		
 
-		public string GetBuffDescription() {
-			int LayerNumber = DustBuff.GetBuffPropertyAtLevel<int>("DustBuff", "layer_num", GetRarity());
-			int Damage = DustBuff.GetBuffPropertyAtLevel<int>("DustBuff", "damage", GetRarity());
-			
-			return Localization.GetFormat($"BUFF_DUST_desc", LayerNumber, Damage);
-		}
+		
 		
 		protected override void OnEntityStart(bool isLoadedFromSave) {
 			
@@ -36,7 +31,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			return Localization.GetFormat(defaultLocalizationKey, GetRarity(), GetBuffDescription());
+			return Localization.GetFormat(defaultLocalizationKey, BuffPool.GetTemplateBuff<DustBuff>().GetDisplayName(GetRarity()),
+				BuffPool.GetTemplateBuff<DustBuff>().GetLevelDescription(GetRarity()));
 		}
 		
 
@@ -60,7 +56,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		
 
 		private void OnWeaponDealDamage(ICanDealDamage source, IDamageable target, int damage) {
-			buffSystem = this.GetSystem<IBuffSystem>();
+			 buffSystem = this.GetSystem<IBuffSystem>();
 			IEntity damageDealer = weaponEntity.GetRootDamageDealer() as IEntity;
 			buffSystem.AddBuff(target, damageDealer, DustBuff.Allocate(
 				damageDealer, target, weaponPartsEntity.GetRarity()));
@@ -92,7 +88,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					return new WeaponBuffedAdditionalPropertyDescription(null, null,
-						Localization.GetFormat("GunpowerEnhancement_PROPERTY_desc", weaponPartsEntity.GetRarity()));
+						Localization.GetFormat("GunpowerEnhancement_PROPERTY_desc",
+							BuffPool.GetTemplateBuff<DustBuff>().GetDisplayName(weaponPartsEntity.GetRarity())));
 				})
 			};
 		}

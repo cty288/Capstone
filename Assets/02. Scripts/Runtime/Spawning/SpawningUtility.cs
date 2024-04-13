@@ -10,12 +10,14 @@ using Framework;
 using JetBrains.Annotations;
 using MikroFramework;
 using MikroFramework.ResKit;
+using MoreMountains.Tools;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Temporary;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Spawning {
 	public struct NavMeshFindResult {
@@ -41,7 +43,7 @@ namespace Runtime.Spawning {
 	
 	
 	public static class SpawningUtility {
-		private static Collider[] results = new Collider[10];
+		private static RaycastHit[] results = new RaycastHit[10];
 		private static KDTree refPointsKDTree = null;
 
 		private static bool GetNormalAtPoint(Vector3 point, int layerMask, out Vector3 normal, out Vector3 hitPos) {
@@ -79,9 +81,11 @@ namespace Runtime.Spawning {
 			refPointsKDTree = new KDTree(insideArenaRefPoints, 8);
 		}
 
+		
+		
 
 		public static async UniTask<NavMeshFindResult> FindNavMeshSuitablePosition(
-			GameObject finder,
+			[CanBeNull] GameObject finder,
 			Func<BoxCollider> spawnSizeGetter,
 			Vector3 desiredPosition,
 			int maxAngle,
@@ -113,7 +117,7 @@ namespace Runtime.Spawning {
 			
 			
 			
-			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
+			//LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
 
 			int usedAttempts = 0;
 			Quaternion rotationWithSlope = Quaternion.identity;
@@ -124,10 +128,11 @@ namespace Runtime.Spawning {
 
 			//ICreatureViewController creatureViewController = prefab.GetComponent<ICreatureViewController>();
 			BoxCollider boxCollider = spawnSizeGetter();
-			Vector3 prefabSize = boxCollider.size;
+			Vector3 prefabSize = boxCollider.bounds.size;
 
 			
-			
+
+
 			KDQuery query = new KDQuery();
 			List<int> resultIndices = new List<int>();
 			query.KNearest(refPointsKDTree, desiredPosition, refPointsKDTree.Count, resultIndices);
@@ -173,16 +178,10 @@ namespace Runtime.Spawning {
 
 			//await UniTask.Yield();
 			
+			
 			if (NavMesh.SamplePosition(desiredPosition, out navHit, 1.0f, areaMask)) {
 				if (!IsSlopeTooSteepAtPoint(navHit.position, maxAngle, out rotationWithSlope, out _)) {
-					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
-						prefabSize / 2, results, Quaternion.identity,
-						obstructionLayer);
-					if (size == 0) {
-						res = navHit.position;
-					}
-
-					if (CheckColliders(size)) {
+					if (CheckIsValidSpawnPos(navHit.position, prefabSize)) {
 						res = navHit.position;
 					}
 				}
@@ -225,16 +224,7 @@ namespace Runtime.Spawning {
 					NavMeshPath path = new NavMeshPath();
 					NavMesh.CalculatePath(desiredPosition, navHit.position, areaMask, path);
 					if (path.status == NavMeshPathStatus.PathComplete) {
-						var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0),
-							prefabSize / 2, results, Quaternion.identity,
-							obstructionLayer);
-
-						if (size == 0) {
-							return new NavMeshFindResult(true, navHit.position, usedAttempts, rotationWithSlope);
-							//navHit.position;
-						}
-
-						if (CheckColliders(size)) {
+						if (CheckIsValidSpawnPos(navHit.position, prefabSize)) {
 							return new NavMeshFindResult(true, navHit.position, usedAttempts, rotationWithSlope);
 							//navHit.position;
 						}
@@ -281,15 +271,8 @@ namespace Runtime.Spawning {
 						currentSearchRadius += increment;
 						continue;
 					}
-					LayerMask obstructionLayer = LayerMask.GetMask("Default", "Wall");
-					var size = Physics.OverlapBoxNonAlloc(navHit.position + new Vector3(0, prefabSize.y / 2, 0), prefabSize / 2, results, Quaternion.identity,
-						obstructionLayer);
-
-					if (size == 0) {
-						return navHit.position; 
-					}
 					
-					if (CheckColliders(size)) {
+					if (CheckIsValidSpawnPos(navHit.position, prefabSize)) {
 						return navHit.position;
 					}
 					
@@ -303,11 +286,12 @@ namespace Runtime.Spawning {
 			return Vector3.negativeInfinity; 
 		}
 
-		public static async UniTask<GameObject> SpawnExitDoor(GameObject spawner, string prefabName, Bounds bounds,
-			Transform[] playerSpawnPoints) {
+		public static async UniTask<GameObject> SpawnWeaponPartsNPC(GameObject spawner, string prefabName,
+			Bounds bounds) {
 			GameObject prefab = MainGame.Interface.GetUtility<ResLoader>().LoadSync<GameObject>(prefabName);
+			BoxCollider spawnSizeGetter() => prefab.GetComponent<WeaponPartsTradingNPC>().GetSelfSizeCollider();
 			
-			BoxCollider spawnSizeGetter() => prefab.GetComponent<LevelExitDoorController>().SpawnSizeCollider;
+			
 			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
 			Bounds insideArenaBounds = default;
 			if (insideArenaBounds == default) {
@@ -331,14 +315,8 @@ namespace Runtime.Spawning {
 					UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
 					UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
 				);
-
-				foreach (Transform playerSpawnPoint in playerSpawnPoints) {
-					if (Vector3.Distance(randomPoint, playerSpawnPoint.position) < 20) {
-						continue;
-					}
-				}
 				
-				//sample the point on the navmesh
+				
 				NavMeshHit navHit;
 				if (!NavMesh.SamplePosition(randomPoint, out navHit, 250.0f, areaMask)) {
 					continue;
@@ -364,97 +342,159 @@ namespace Runtime.Spawning {
 
 			return doorInstance;
 		}
+		public static async UniTask<GameObject> SpawnExitDoor(string prefabName, Bounds bounds,
+			Transform[] playerSpawnPoints) {
+			GameObject prefab = MainGame.Interface.GetUtility<ResLoader>().LoadSync<GameObject>(prefabName);
+			
+			
+			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
+
+			Transform[] exitDoorSpawnPoints = GameObject.FindGameObjectsWithTag("ExitDoorSpawnPoint")
+				.Select(x => x.transform).ToArray();
+			if (exitDoorSpawnPoints.Length == 0) {
+				return null;
+			}
+			exitDoorSpawnPoints.MMShuffle();
+			
+			GameObject doorInstance = null;
+			while (true) {
+				await UniTask.Yield();
+				Transform randomPoint = exitDoorSpawnPoints[Random.Range(0, exitDoorSpawnPoints.Length)];
+
+				foreach (Transform playerSpawnPoint in playerSpawnPoints) {
+					if (!playerSpawnPoint) {
+						continue;
+					}
+					if (Vector3.Distance(randomPoint.position, playerSpawnPoint.position) < 20) {
+						continue;
+					}
+				}
+				
+				//sample the point on the navmesh
+				NavMeshHit navHit;
+				if (!NavMesh.SamplePosition(randomPoint.position, out navHit, 250.0f, areaMask)) {
+					continue;
+				}
+				
+				
+				//ok to spawn
+				doorInstance = GameObject.Instantiate(prefab);
+				doorInstance.transform.position = navHit.position;
+				doorInstance.transform.rotation = randomPoint.rotation;
+				break;
+			}
+
+			return doorInstance;
+		}
 		
-		public static async UniTask<List<GameObject>> SpawnBossPillars(GameObject spawner, int targetNumber, string prefabName, Bounds bounds) {
+		public static List<GameObject> SpawnBossPillars(int targetNumber, string prefabName) {
 			var pillarPool =
 				GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 4, 10, out GameObject prefab);
-			BoxCollider pillarSpawnSizeGetter() => prefab.GetComponent<IBossPillarViewController>().SpawnSizeCollider;
+			
 			
 			List<GameObject> pillars = new List<GameObject>();
 
 			int areaMask = NavMeshHelper.GetSpawnableAreaMask();
 			
-			/*var insideArenaCheckPoints =
-				GameObject.FindGameObjectsWithTag("ArenaRefPoint").Select(x => x.transform.position).ToArray();*/
-
-			Bounds insideArenaBounds = default;
-			if (insideArenaBounds == default) {
-				insideArenaBounds = GameObject.FindGameObjectsWithTag("MapExtent")
-					.First(o => o.gameObject.activeInHierarchy)
-					.GetComponent<Collider>().bounds;
-			}
-			
-			
-
-			//create a new bounds, 20% smaller than the original
-			bounds = new Bounds(bounds.center, bounds.size * 0.8f);
-			float minDistance = bounds.size.x * 0.2f;
+			Transform[] spawnPoints = GameObject.FindGameObjectsWithTag("BossPillarSpawnPoint")
+					.Select(x => x.transform).ToArray();
+			spawnPoints.MMShuffle();
 			
 			for (int i = 0; i < targetNumber; i++) {
-				int remainingRetry = 1000;
-
-				while (remainingRetry > 0) {
-					remainingRetry--;
-					//get a random point in the bounds
-					Vector3 randomPoint = new Vector3(
-						UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
-						UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
-						UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
-					);
-				
-					//sample the point on the navmesh
-					NavMeshHit navHit;
-					if (!NavMesh.SamplePosition(randomPoint, out navHit, 250.0f, areaMask)) {
-						continue;
-					}
-
-					NavMeshFindResult res = await FindNavMeshSuitablePosition(spawner, pillarSpawnSizeGetter,
-						navHit.position, 45, areaMask,
-						insideArenaBounds, 10, 10, remainingRetry, 500);
-					
-					//rotate y axis randomly
-					res.RotationWithSlope *= Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
-
-					if (!res.IsSuccess) {
-						remainingRetry -= res.UsedAttempts;
-						continue;
-					}
-					
-					//if the distance to any other pillar is too small, retry
-					bool tooClose = false;
-					foreach (var pillar in pillars) {
-						if (Vector3.Distance(pillar.transform.position, res.TargetPosition) < minDistance) {
-							//remainingRetry--;
-							tooClose = true;
-							break;
-						}
-					}
-					if (tooClose) {
-						continue;
-					}
-					
-					
-					
-					//ok to spawn
-					GameObject pillarInstance = pillarPool.Allocate();
-					pillarInstance.transform.position = res.TargetPosition;
-					pillarInstance.transform.rotation = res.RotationWithSlope;
-					pillars.Add(pillarInstance);
+				if (i >= spawnPoints.Length) {
 					break;
 				}
+				Transform spawnPoint = spawnPoints[i];
+				Vector3 point = spawnPoint.position;
+				if (NavMesh.SamplePosition(spawnPoint.position, out NavMeshHit navHit, 250.0f, areaMask)) {
+					point = navHit.position;
+				}
+
+				GameObject pillarInstance = pillarPool.Allocate();
+				pillarInstance.transform.position = point;
 				
 				
+				pillars.Add(pillarInstance);
+				
+				// Check for a secondary spawn point for the terminal
+				int count = spawnPoint.childCount;
+				if (count > 0)
+				{
+					var secondary = spawnPoint.GetChild(0);
+					var station = pillarInstance.transform.Find("Station");
+					if (station != null)
+					{ 
+						Vector3 point1 = secondary.position;
+						if (NavMesh.SamplePosition(secondary.position, out NavMeshHit navHit1, 250.0f, areaMask)) {
+							point1 = navHit1.position;
+						}
+
+						station.position = point1;
+						//station.rotation = Quaternion.FromToRotation(Vector3.up, navHit1.normal);
+						station.rotation = secondary.rotation;
+					}
+				}
+				else
+				{
+					var secondary = pillarInstance.transform.Find("Station");
+					if (secondary != null)
+					{ 
+						Vector3 point1 = secondary.position;
+						if (NavMesh.SamplePosition(secondary.position, out NavMeshHit navHit1, 250.0f, areaMask)) {
+							point1 = navHit1.position;
+						}
+
+						//random y rotation
+						pillarInstance.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 360), 0);
+						
+						secondary.position = point1;
+						RaycastHit hit;
+						if (Physics.Raycast (point1+Vector3.up, -Vector3.up, out hit, 10)) {
+							secondary.rotation = Quaternion.FromToRotation (Vector3.up, hit.normal);
+						}
+						//secondary.rotation = Quaternion.FromToRotation(secondary.up, navHit1.normal);
+					}
+				}
 			}
 			
 			return pillars;
 		}
 
 
-		private static bool CheckColliders(int size) {
-			for (int i = 0; i < size; i++) {
-				var hit = results[i];
-				if (hit && (!hit.isTrigger || hit.gameObject.CompareTag("SpawnSizeCollider"))) {
-					return false;
+		private static bool CheckIsValidSpawnPos(Vector3 position, Vector3 size) {
+			LayerMask obstructionLayer = LayerMask.GetMask("Default", "Ground", "Wall");
+			//raycast up, left, right, forward, backward
+			Vector3[] directions = {Vector3.up, Vector3.left, Vector3.right, Vector3.forward, Vector3.back};
+			//use line cast instead
+			
+			foreach (var direction in directions) {
+				Vector3 start = position + new Vector3(0, size.y / 2, 0);
+				Vector3 addedVector = Vector3.zero;
+				
+				if (direction == Vector3.up) {
+					addedVector = new Vector3(0, size.y / 2, 0);
+				}
+				else if (direction == Vector3.left) {
+					addedVector = new Vector3(-size.x / 2, 0, 0);
+				}
+				else if (direction == Vector3.right) {
+					addedVector = new Vector3(size.x / 2, 0, 0);
+				}
+				else if (direction == Vector3.forward) {
+					addedVector = new Vector3(0, 0, size.z / 2);
+				}
+				else if (direction == Vector3.back) {
+					addedVector = new Vector3(0, 0, -size.z / 2);
+				}
+				
+				Vector3 end = start + addedVector;
+				if (Physics.Linecast(start, end, out RaycastHit hit, obstructionLayer, QueryTriggerInteraction.Ignore)) {
+					Vector3 normal = hit.normal;
+					float angle = Vector3.Angle(normal, Vector3.up);
+					Debug.Log("Angle: " + angle +" Hit obj: " + hit.collider.gameObject.name + " Hit Point: " + hit.point);
+					if (angle >= 80) {
+						return false;
+					}
 				}
 			}
 

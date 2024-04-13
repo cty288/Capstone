@@ -461,7 +461,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     },
     ""honingDuration"": {
       ""type"": ""float"",
-      ""value"": 2
+      ""value"": 0.5
     },
     ""jumpHeight"": {
       ""type"": ""float"",
@@ -818,7 +818,7 @@ WormBoss,"{""maxHealth"":2100,
     },
     ""missileExplosionDamage"": {
       ""type"": ""int"",
-      ""value"": 2,
+      ""value"": 5,
       ""useDefaultModifier"": true
     },
     ""missileExplosionSize"": {
@@ -844,3 +844,39 @@ WormBoss,"{""maxHealth"":2100,
   }
 }",,,
 WormBossSegment,,,,,,,,,
+Berserker,"{""maxHealth"":2100,
+""currentHealth"":2100}",30,,"{
+  ""Combat"": {""x"": 0, ""y"": 1},
+  ""Time"": {""x"": 0, ""y"": 1},
+  ""Plant"": {""x"": 0, ""y"": 1},
+  ""Mineral"": {""x"": 0, ""y"": 1}
+}",456,"{
+  ""entity"": {
+    ""speed"": {
+      ""type"": ""float"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""closeRange"": {
+      ""type"": ""float"",
+      ""value"": 43
+    }
+  },
+  ""simpleShoot"": {
+    ""bulletCount"": {
+      ""type"": ""int"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""bulletSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""spawnInterval"": {
+      ""type"": ""float"",
+      ""value"": 0.5,
+      ""useDefaultModifier"": true
+    },
+  }
+}",,,

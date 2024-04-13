@@ -4,6 +4,7 @@ using System.Linq;
 using _02._Scripts.Runtime.Levels.Commands;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.UIKit;
 using Polyglot;
 using Runtime.GameResources.Model.Base;
@@ -17,8 +18,8 @@ using UnityEngine.UI;
 
 public class BasePreparationUIViewController  : AbstractPanel, IController, IGameUIPanel {
 	private bool canClose = true;
-	private PreparationSlotLayoutViewController weaponSlotLayout;
-	private PreparationSlotLayoutViewController skillSlotLayout;
+	private BasicSlotLayoutViewController weaponSlotLayout;
+	private BasicSlotLayoutViewController skillSlotLayout;
 	private IInventoryModel inventoryModel;
 	
 	private Dictionary<ResourceCategory, int> occupiedGeneralSlotCountDict = new Dictionary<ResourceCategory, int>();
@@ -36,8 +37,8 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 
 	public override void OnInit() {
 		inventoryModel = this.GetModel<IInventoryModel>();
-		weaponSlotLayout = transform.Find("WeaponPanel").GetComponent<PreparationSlotLayoutViewController>();
-		skillSlotLayout = transform.Find("SkillPanel").GetComponent<PreparationSlotLayoutViewController>();
+		weaponSlotLayout = transform.Find("WeaponPanel").GetComponent<BasicSlotLayoutViewController>();
+		skillSlotLayout = transform.Find("SkillPanel").GetComponent<BasicSlotLayoutViewController>();
 		emptyHotbarSlotCountDict.Add(ResourceCategory.Weapon, 0);
 		emptyHotbarSlotCountDict.Add(ResourceCategory.Skill, 0);
 		occupiedGeneralSlotCountDict.Add(ResourceCategory.Weapon, 0);
@@ -60,9 +61,11 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	public override void OnOpen(UIMsg msg) {
 		//canClose = false;
 		CalculateEmptySlotCount();
-
-		weaponSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Weapon));
-		skillSlotLayout.OnShowItems(inventoryModel.GetBaseStock(ResourceCategory.Skill));
+		
+		
+		weaponSlotLayout.OnShowItems(new HashSet<ResourceSlot>().Union(inventoryModel.GetBaseStock(ResourceCategory.Weapon)).ToList());
+		skillSlotLayout.OnShowItems(new HashSet<ResourceSlot>()
+			.Union(inventoryModel.GetBaseStock(ResourceCategory.Skill)).ToList());
 		
 		weaponSlotLayout.RegisterOnSlotClicked(OnSlotClicked);
 		skillSlotLayout.RegisterOnSlotClicked(OnSlotClicked);
@@ -95,10 +98,12 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 			}
 		}
 	}
-	private void OnSlotClicked(ResourceSlotViewController slotVC, PreparationSlotLayoutViewController layout, bool originallySelected) {
+	private void OnSlotClicked(ResourceSlotViewController slotVC, BasicSlotLayoutViewController layout, bool originallySelected) {
 		ResourceSlot slot = slotVC.Slot;
 
-		if (originallySelected) {
+		if (originallySelected)
+		{
+			AudioSystem.Singleton.Play2DSound("item_deselect");
 			layout.SetSelected(slotVC, false);
 			ResourceCategory category = layout == weaponSlotLayout ? ResourceCategory.Weapon : ResourceCategory.Skill;
 			
@@ -121,6 +126,8 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 			else {
 				occupiedGeneralSlotCountDict[category]++;
 			}
+			
+			AudioSystem.Singleton.Play2DSound("item_select");
 			layout.SetSelected(slotVC, true);
 		}
 		
@@ -152,8 +159,8 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 		weaponSlotLayout.UnRegisterOnSlotClicked(OnSlotClicked);
 		skillSlotLayout.UnRegisterOnSlotClicked(OnSlotClicked);
 
-		weaponSlotLayout.OnUIClosed();
-		skillSlotLayout.OnUIClosed();
+		weaponSlotLayout.ClearLayout();
+		skillSlotLayout.ClearLayout();
 		
 		occupiedGeneralSlotCountDict[ResourceCategory.Weapon] = 0;
 		occupiedGeneralSlotCountDict[ResourceCategory.Skill] = 0;
@@ -171,20 +178,25 @@ public class BasePreparationUIViewController  : AbstractPanel, IController, IGam
 	}
 	
 	private void OnEnterButtonClicked() {
-		canClose = true;
-		List<PreparationSlot> slots = weaponSlotLayout.OnUIClosed();
-		foreach (PreparationSlot slot in slots) {
-			inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Weapon, slot);
-		}
+		AudioSystem.Singleton.Play2DSound("interact_button");
 
-		slots = skillSlotLayout.OnUIClosed();
-		foreach (PreparationSlot slot in slots) {
-			inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Skill, slot);
-		}
+		LoadingCanvas.Singleton.Show(() => {
+			canClose = true;
+			List<PreparationSlot> slots = weaponSlotLayout.ClearLayout();
+			foreach (PreparationSlot slot in slots) {
+				inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Weapon, slot);
+			}
 
-		MainUI.Singleton.GetAndClose(this);
+			slots = skillSlotLayout.ClearLayout();
+			foreach (PreparationSlot slot in slots) {
+				inventorySystem.MoveItemFromBaseStockToInventory(ResourceCategory.Skill, slot);
+			}
 
-		this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
+			
+			MainUI.Singleton.GetAndClose(this);
+			this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
+		});
+		
 	}
 
 	public IPanel GetClosePanel() {

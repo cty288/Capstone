@@ -131,7 +131,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             for (int i = 0; i < 10; i++)
             {
                 SpawnBullet();
-                await UniTask.WaitForSeconds(1f,
+                await UniTask.WaitForSeconds(0.2f,
                     cancellationToken: gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
             }
         }

@@ -18,6 +18,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model {
 		void AddToUnlockedParts(string weaponEntityTypeName);
 		
 		bool IsUnlocked(string weaponEntityTypeName);
+		
+		HashSet<string> GetUnlockedParts();
 	}
 	
 	public class WeaponPartsModel  : GameResourceModel<IWeaponPartsEntity>, IWeaponPartsModel {
@@ -75,6 +77,10 @@ namespace _02._Scripts.Runtime.WeaponParts.Model {
 
 		public bool IsUnlocked(string weaponEntityTypeName) {
 			return unlockedParts.Contains(weaponEntityTypeName);
+		}
+
+		public HashSet<string> GetUnlockedParts() {
+			return unlockedParts;
 		}
 	}
 }

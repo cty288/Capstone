@@ -1,0 +1,70 @@
+#pragma kernel MeshRaycastCS
+
+RWStructuredBuffer<float> resultHits;
+RWStructuredBuffer<float3> resultNormals;
+
+StructuredBuffer<float3> vertexBuffer;
+StructuredBuffer<int> triangleBuffer;
+
+float4 rayOrigin;
+float4 rayDirection;
+float4x4 worldToLocalMatrix;
+
+float epsilon;
+
+[numthreads(512,2,1)]
+void MeshRaycastCS(uint id : SV_DispatchThreadID)
+{
+    resultHits[id] = 1000000;
+
+    const float3 vert0 = vertexBuffer[triangleBuffer[3 * id]];
+    const float3 vert1 = vertexBuffer[triangleBuffer[3 * id + 1]];
+    const float3 vert2 = vertexBuffer[triangleBuffer[3 * id + 2]];
+
+    // vert0 = mul(worldToLocalMatrix, float4(vert0, 1.0f)).xyz;
+    // vert1 = mul(worldToLocalMatrix, float4(vert1, 1.0f)).xyz;
+    // vert2 = mul(worldToLocalMatrix, float4(vert2, 1.0f)).xyz;
+
+    const float3 origin = rayOrigin.xyz;
+    const float3 direction = rayDirection.xyz;
+    
+    //Compute intersection with triangle
+    const float3 tmp1 = vert1 - vert0;
+    const float3 tmp2 = vert2 - vert0;
+    float3 tmp4 = cross(direction, tmp2);
+
+    //Check if origin can see triangue
+    float3 check1 = origin - vert0;
+    float3 check2 = cross(tmp1, tmp2);
+    if(dot(check1,(check2)) < 0) return;
+        
+    
+
+    float det = dot(tmp1, tmp4);
+
+    if (det < 1.401298E-45f)
+    {
+        return;
+    }
+
+    float3 tmp3 = origin - vert0;
+    float u = dot(tmp3, tmp4);
+
+    if (u < 0.0f || u > det)
+    {
+        return;
+    }
+
+    tmp4 = cross(tmp3, tmp1);
+
+    float v = dot(direction, tmp4);
+
+    if (v < 0.0f || u + v > det)
+    {
+        return;
+    }
+
+
+    resultNormals[id] = cross(tmp1, tmp2);
+    resultHits[id] = dot(tmp2, tmp4) * (1.0f / det);
+}

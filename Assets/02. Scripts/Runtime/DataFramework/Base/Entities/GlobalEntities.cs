@@ -12,6 +12,17 @@ namespace Runtime.DataFramework.Entities {
 		public static void UnregisterEntity(string uuid) {
 			globalEntities.Remove(uuid);
 		}
+		
+		public static IEntity[] GetAllEntities() {
+			var entities = new IEntity[globalEntities.Count];
+			var i = 0;
+			foreach (var entity in globalEntities.Values) {
+				entities[i] = entity.Item1;
+				i++;
+			}
+
+			return entities;
+		}
 
 		public static (IEntity, IEntityModel) GetEntityAndModel(string uuid) {
 			if(string.IsNullOrEmpty(uuid)) {

@@ -6,6 +6,7 @@ using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.UIKit;
 using Runtime.Inventory.Commands;
+using Runtime.Inventory.Model;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +20,12 @@ namespace Runtime.UI {
         private Color toggleOffColor = new Color(0.4811321f, 0.4811321f, 0.4811321f);
 
         private RectTransform currentPanel;
+        private int currentPanelIndex = -1;
 
         private List<Tween> tweenList = new List<Tween>();
+        
+        [SerializeField] private  bool moveImmediately = false;
+       // [SerializeField] private bool canSelectSamePanel = false;
         public override void OnInit() {
             gameObject.SetActive(true);
 
@@ -29,13 +34,16 @@ namespace Runtime.UI {
         }
 
         private void RegisterSubPanelToggleEvents() {
+            int index = 0;
             foreach (KeyValuePair<Toggle, RectTransform> pair in subPanelDictionary) {
                 pair.Value.gameObject.SetActive(true);
+                var index1 = index;
                 pair.Key.onValueChanged.AddListener(isOn => {
                     if (isOn) {
-                        SelectPanel(pair.Value);
+                        SelectPanel(pair.Value, index1, moveImmediately);
                     }
                 });
+                index++;
             } 
         }
 
@@ -46,18 +54,20 @@ namespace Runtime.UI {
             SwitchableSubPanel firstSubPanel =
                 subPanelDictionary.First().Value.GetComponent<SwitchableSubPanel>();
             subPanelDictionary.First().Key.SetIsOnWithoutNotify(true);
-            SelectPanel(firstSubPanel.gameObject.GetComponent<RectTransform>(), true);
+            SelectPanel(firstSubPanel.gameObject.GetComponent<RectTransform>(), 0, true);
         }
         
         
        
         public override void OnClosed() {
             if (currentPanel != null) {
+                ResourceSlot.currentHoveredSlot.Value = null;
                 currentPanel.GetComponent<SwitchableSubPanel>().OnSwitchToOtherPanel();
             }
            
             
             currentPanel = null;
+            currentPanelIndex = -1;
             foreach (Tween tween in tweenList) {
                 tween.Kill();
             }
@@ -78,9 +88,11 @@ namespace Runtime.UI {
             return this;
         }
 
-        private void SelectPanel(RectTransform panel, bool moveImmediately = false) {
-            if(panel == currentPanel)
+        private void SelectPanel(RectTransform panel, int index, bool moveImmediately = false) {
+            if(currentPanelIndex == index)
                 return;
+            
+            currentPanelIndex = index;
             foreach (Tween tween in tweenList) {
                 tween.Kill();
             }
@@ -104,11 +116,12 @@ namespace Runtime.UI {
                     //set panel left to -1920, right to 1920
                     currentPanel.offsetMin = new Vector2(-1920, 0);
                     currentPanel.offsetMax = new Vector2(-1920, 0);
+                    ResourceSlot.currentHoveredSlot.Value = null;
                     currentPanel.GetComponent<SwitchableSubPanel>().OnSwitchToOtherPanel();
                 }
                 panel.offsetMin = Vector2.zero;
                 panel.offsetMax = Vector2.zero;
-                OnSubpanelSelected(panel.GetComponent<SwitchableSubPanel>());
+                OnSubpanelSelected(panel.GetComponent<SwitchableSubPanel>(), index);
                 panel.GetComponent<SwitchableSubPanel>().OnSwitchToPanel();
             }
             else {
@@ -123,7 +136,9 @@ namespace Runtime.UI {
                     tweenList.Add(DOTween.To(() => targetPanel.offsetMax, x => targetPanel.offsetMax = x,
                         new Vector2(-1920, 0),
                         0.5f).SetUpdate(true).OnKill(() => {
+                        ResourceSlot.currentHoveredSlot.Value = null;
                         targetPanel.GetComponent<SwitchableSubPanel>().OnSwitchToOtherPanel();
+
                     }));
                 }
 
@@ -133,7 +148,7 @@ namespace Runtime.UI {
                 tweenList.Add(DOTween.To(() => panel.offsetMin, x => panel.offsetMin = x, Vector2.zero, 0.5f).SetUpdate(true));
                 tweenList.Add(DOTween.To(() => panel.offsetMax, x => panel.offsetMax = x, Vector2.zero, 0.5f)
                     .SetUpdate(true));
-                OnSubpanelSelected(panel.GetComponent<SwitchableSubPanel>());
+                OnSubpanelSelected(panel.GetComponent<SwitchableSubPanel>(), index);
                 panel.GetComponent<SwitchableSubPanel>()?.OnSwitchToPanel();
                 
                 tweenList[0].OnComplete(() => {
@@ -156,7 +171,7 @@ namespace Runtime.UI {
             currentPanel = panel;
         }
 
-        protected virtual void OnSubpanelSelected(SwitchableSubPanel panel) {
+        protected virtual void OnSubpanelSelected(SwitchableSubPanel panel, int index) {
             
         }
     }

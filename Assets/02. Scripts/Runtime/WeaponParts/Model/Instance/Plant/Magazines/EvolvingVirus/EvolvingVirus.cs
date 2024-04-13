@@ -24,7 +24,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			int time = GetCustomDataValueOfCurrentLevel<int>("time");
-			return Localization.GetFormat(defaultLocalizationKey, time);
+			string HackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, time, HackedBuffName);
 		}
 		
 
@@ -77,9 +78,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Combat.Magazines.Evolv
 				new GetResourcePropertyDescriptionGetter(() => {
 					
 					int time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("time");
-
+					string HackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("EvolvingVirus_desc", time));
+						Localization.GetFormat("EvolvingVirus_desc", time, HackedBuffName));
 				})
 			};
 		}

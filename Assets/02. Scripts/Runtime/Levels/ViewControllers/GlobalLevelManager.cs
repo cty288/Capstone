@@ -17,6 +17,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		[SerializeField] protected GameObject baseLevel;
 		[SerializeField] private GameObject directStartContainer;
 		[SerializeField] private int directStartLevelNumber = 1;
+		[SerializeField] private GameObject tutorialLevelPrefab;
+		
 		
 
 		private Dictionary<string, GameObject> globalPrefabList = null;
@@ -27,6 +29,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 		public ILevelViewController CurrentLevelViewController => currentLevelViewController;
 		private ILevelModel levelModel;
+		
 		private void Awake() {
 			
 			levelModel = this.GetModel<ILevelModel>();
@@ -82,7 +85,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 
 			int levelCount = newLevel.GetCurrentLevelCount();
-			GameObject level = levels[levelCount];
+
+			GameObject prefab = levelModel.StartWithTutorial && levelCount == 0
+				? tutorialLevelPrefab
+				: levels[levelCount];
+
+			GameObject level = prefab;
 			GameObject spawnedLevel = null;
 			if (directStartLevel != null && directStartLevel == newLevel) {
 				spawnedLevel = directStartContainer.transform.GetChild(0).gameObject;
@@ -107,14 +115,19 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (levelCount >= levels.Count) {
 				return;
 			}
-			AddLevel(levels[levelCount], levelCount);
+
+			GameObject prefab = levelModel.StartWithTutorial && levelCount == 0
+				? tutorialLevelPrefab
+				: levels[levelCount];
+			
+			AddLevel(prefab, levelCount);
 		}
 		
 		private ILevelEntity AddLevel(GameObject levelPrefab, int levelCount) {
-			
 			GameObject level = levelPrefab;
 			ILevelViewController levelViewController = level.GetComponent<ILevelViewController>();
-			ILevelEntity entity = levelViewController.OnBuildNewLevel(levelCount);
+			int rarity = levelCount;
+			ILevelEntity entity = levelViewController.OnBuildNewLevel(rarity);
 			levelModel.AddLevel(entity);
 			return entity;
 		}

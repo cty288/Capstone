@@ -14,6 +14,7 @@ namespace MikroFramework.Utilities
         [SerializeField] private float maxDistance = 100;
         [SerializeField] private float detectTime = 1f;
 
+        [SerializeField] private bool checkCollidersOnly = false;
         [SerializeField] private HashSet<Collider> colliders = new HashSet<Collider>();
         /// <summary>
         /// Get all 2D colliders that are in the current trigger of this object
@@ -70,6 +71,7 @@ namespace MikroFramework.Utilities
         
         private void OnTriggerStay(Collider other)
         {
+            if(checkCollidersOnly && other.isTrigger) return;
             if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
             {
                  
@@ -87,6 +89,7 @@ namespace MikroFramework.Utilities
 
         private void OnTriggerEnter(Collider other)
         {
+            if(checkCollidersOnly && other.isTrigger) return;
             if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
             {
                 // Debug.Log("enter, layer");
@@ -99,6 +102,7 @@ namespace MikroFramework.Utilities
 
         private void OnTriggerExit(Collider other)
         {
+            if(checkCollidersOnly && other.isTrigger) return;
             if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
             {
                 // Debug.Log("exit, layer");

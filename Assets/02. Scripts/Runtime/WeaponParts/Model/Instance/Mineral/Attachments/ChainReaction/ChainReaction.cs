@@ -2,7 +2,9 @@
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
+using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.Pool;
 using Polyglot;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -25,7 +27,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Ch
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			return Localization.Get(defaultLocalizationKey);
+			MalfunctionBuff malfunctionBuff = BuffPool.GetTemplateBuff<MalfunctionBuff>();
+			return Localization.GetFormat(defaultLocalizationKey, malfunctionBuff.GetDisplayName());
 		}
 		
 
@@ -53,6 +56,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Ch
 					continue;
 				}
 
+				
 				buff.RemainingDuration = buff.MaxDuration;
 				if(buff is ILeveledBuff leveledBuff) {
 					leveledBuff.LevelUp(1);
@@ -87,8 +91,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Ch
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
+					MalfunctionBuff malfunctionBuff = BuffPool.GetTemplateBuff<MalfunctionBuff>();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.Get("ChainReaction_desc"));
+						weaponPartsEntity.GetDescription());
 				})
 			};
 		}

@@ -18,6 +18,7 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     private Transform hudSpawnPoint;
     private INameTag spawnedNameTag;
     private GameObject spawnedNameTagGameObject;
+    [SerializeField] private bool alwaysOpen = false;
 
     public BoxCollider SpawnSizeCollider => transform.Find("SpawnSizeCollider").GetComponent<BoxCollider>();
     
@@ -57,7 +58,11 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     }
 
     private void OnLevelExitSatisfied(bool oldVal, bool newVal) {
-     
+
+        if (alwaysOpen) {
+            newVal = true;
+        }
+        
         if(newVal) { 
             exitDoorGameObject.SetActive(true);
             SetExitDoorName(true, "EXIT_DOOR_STATE_1");

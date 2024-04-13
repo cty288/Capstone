@@ -15,6 +15,7 @@ using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.GameResources.Others;
+using Runtime.Inventory.Model;
 using Runtime.Utilities;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Base;
@@ -83,6 +84,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		protected bool isWaitingForSwapInventoryCooldown = false;
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+		[ES3Serializable]
+		protected bool isInHotBarSlot = false;
 		
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.SkillEntityConfigTable;
@@ -152,6 +155,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			OnModifyDamageCountCallbackList.Clear();
 			_onDealDamageCallback = null;
 			_onKillDamageableCallback = null;
+			isInHotBarSlot = false;
 		}
 
 		public override string OnGroundVCPrefabName { get; } = null;
@@ -276,7 +280,21 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			return GetRarity();
 		}
 
-		
+		public override void OnInventorySlotUpdate(ResourceSlot previousSlot, ResourceSlot newSlot) {
+			base.OnInventorySlotUpdate(previousSlot, newSlot);
+			if ((previousSlot == null || previousSlot is not LeftHotBarSlot) && newSlot is LeftHotBarSlot) {
+				isInHotBarSlot = true;
+				OnAddedToHotBar();
+			}else if(previousSlot is LeftHotBarSlot && newSlot is not LeftHotBarSlot) {
+				isInHotBarSlot = false;
+				OnRemovedFromHotBar();
+			}
+			
+		}
+
+		protected abstract void OnAddedToHotBar();
+
+		protected abstract void OnRemovedFromHotBar();
 
 		public void Upgrade(int level) {
 			int previousLevel = GetRarity();

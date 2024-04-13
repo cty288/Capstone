@@ -3944,6 +3944,81 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &1723753255394282727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6758239672438532494}
+  - component: {fileID: 1278673411790774357}
+  - component: {fileID: 4939713720663271353}
+  - component: {fileID: 889996064453414096}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6758239672438532494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723753255394282727}
+  m_LocalRotation: {x: -0, y: -0.3165009, z: -0, w: 0.94859225}
+  m_LocalPosition: {x: 122.66667, y: 1.3333333, z: 44}
+  m_LocalScale: {x: 8.015, y: 7.3591, z: 76.9815}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7905501659469829108}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: -36.903, z: 0}
+--- !u!33 &1278673411790774357
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723753255394282727}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &4939713720663271353
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723753255394282727}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &889996064453414096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723753255394282727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ccafb7a33f29b343aead8fb2ee63fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageGroup:
+  - messageType: 2
+    messages:
+    - message: Fuck you
+      title: 
+      icon: {fileID: 21300000, guid: f6324512da6a9ca4185df6cf892b2b22, type: 3}
+      duration: 3
+  canTriggerMultipleTimes: 0
 --- !u!1 &1892020026521604822
 GameObject:
   m_ObjectHideFlags: 0
@@ -6470,7 +6545,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 4204
+  m_VersionIndex: 4210
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -12989,7 +13064,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 4262
+  m_VersionIndex: 4268
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -13811,7 +13886,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 4346
+  m_VersionIndex: 4352
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -13951,6 +14026,7 @@ Transform:
   - {fileID: 3053443431668639574}
   - {fileID: 6478464157760738026}
   - {fileID: 8194952428622825382}
+  - {fileID: 6758239672438532494}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14127,21 +14203,23 @@ MonoBehaviour:
   maxExtent: {fileID: 1595554011}
   playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
     type: 3}
-  sandstormProbability:
-  - 0
-  - 0.33
-  - 1
   timeCurrencyLevel: 1
-  spawnExitDoor: 1
+  spawnExitDoor: 0
   subAreaLevelPrefabs: []
   autoUpdateNavMeshOnStart: 1
   ambientMusic: {fileID: 8300000, guid: da3ed51b963c68748a9d645c14752ec5, type: 3}
   bgm: {fileID: 0}
   relativeVolume: 1
+  hasRandomBossEncounter: 1
   totalExplortionValueRequired: 1500
   bossExplorationMultiplier: 2
   normalEnemyExplorationMultiplier: 1
   explorationValuePerSecond: 1
+  sandstormProbability:
+  - 0
+  - 0.33
+  - 1
+  spawnWeaponPartsTrader: 0
 --- !u!1 &8068748267770875503
 GameObject:
   m_ObjectHideFlags: 0
@@ -15414,7 +15492,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 4100
+  m_VersionIndex: 4106
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -16167,6 +16245,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3241500215691581123, guid: 6b653df11b1c1db458df001de6c45e48,
+        type: 3}
+      propertyPath: alwaysOpen
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4078986691216956233, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_Layer
@@ -16180,7 +16263,7 @@ PrefabInstance:
     - target: {fileID: 6050772319452204082, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_Name
-      value: LevelExitDoor233
+      value: LevelExitDoor
       objectReference: {fileID: 0}
     - target: {fileID: 6050772319452204082, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
@@ -16207,14 +16290,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8255744411417982052, guid: 6b653df11b1c1db458df001de6c45e48,
+        type: 3}
+      propertyPath: goToNextLevelByDefault
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8925778565199459235, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3241500215691581123, guid: 6b653df11b1c1db458df001de6c45e48, type: 3}
-    - {fileID: 8255744411417982052, guid: 6b653df11b1c1db458df001de6c45e48, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b653df11b1c1db458df001de6c45e48, type: 3}
 --- !u!4 &4933182705976680388 stripped
 Transform:
@@ -16502,6 +16588,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6195014196022416758}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9063348768592901901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6323503328930094469, guid: a0e2abfd19e3a8a41b011e05b7c453cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 6195014196022416758}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6840671214327804138
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9063348768592901901}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3166542195810288756, guid: a0e2abfd19e3a8a41b011e05b7c453cd, type: 3}
 --- !u!1001 &6218067977185546578
 PrefabInstance:
   m_ObjectHideFlags: 0

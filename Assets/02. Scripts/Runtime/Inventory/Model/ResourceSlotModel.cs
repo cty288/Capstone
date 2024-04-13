@@ -12,7 +12,7 @@ namespace Runtime.Inventory.Model {
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		bool AddItem(IResourceEntity item);
+		bool AddItem(IResourceEntity item, out ResourceSlot slot);
 		
 		
 		/// <summary>
@@ -86,21 +86,26 @@ namespace Runtime.Inventory.Model {
 		}
 		
 		//need to register to item recycle event. If the item is recycled, remove it from the slot.
-		public virtual bool AddItem(IResourceEntity item) {
+		public virtual bool AddItem(IResourceEntity item, out ResourceSlot slot) {
+			slot = null;
 			for (int i = 0; i < GetSlotCount(); i++) {
 				if (!slots[i].IsEmpty() && CanPlaceItem(item, i)) {
+					slot = slots[i];
 					return AddItemAt(item, slots[i]);
 				}
 			}
 			
 			for (int i = 0; i < GetSlotCount(); i++) {
 				if (CanPlaceItem(item, i)) {
+					slot = slots[i];
 					return AddItemAt(item, slots[i]);
 				}
 			}
 
 			return false;
 		}
+		
+		
 
 		protected void OnEntityRecycled(IEntity entity) {
 			entity.UnRegisterOnEntityRecycled(OnEntityRecycled);

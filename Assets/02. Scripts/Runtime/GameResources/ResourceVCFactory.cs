@@ -128,6 +128,9 @@ namespace Runtime.GameResources {
 
 		private GameObject SpawnResourceVC(IResourceEntity resourceEntity, bool usePool, 
 			string prefabName, int poolInitCount, int poolMaxCount) {
+			if(String.IsNullOrEmpty(prefabName)) {
+				return null;
+			}
 			GameObject vc = null;
 			if (usePool) {
 				SafeGameObjectPool pool = GameObjectPoolManager.Singleton.CreatePoolFromAB(

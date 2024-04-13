@@ -23,6 +23,7 @@ using Runtime.Temporary;
 using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using Runtime.Weapons.Model.Properties;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -113,9 +114,23 @@ namespace Runtime.Weapons.Model.Base
         public void RegisterOnUseAmmo(Action<int> callback);
         
         public void UnRegisterOnUseAmmo(Action<int> callback);
+
+        /// <summary>
+        /// This can return null
+        /// </summary>
+        /// <returns></returns>
+        public IWeaponViewController GetBoundViewController();
+        
+        public void SetBoundViewController(IWeaponViewController viewController);
+        
+        /// <summary>
+        /// This can return null
+        /// </summary>
+        /// <returns></returns>
+        public GameObject GetBoundGameObject();
     }
 
-    public struct OnWeaponPartsUpdate {
+    public struct OnEquippedWeaponPartsUpdate {
         public IWeaponEntity WeaponEntity;
         public string PreviousTopPartsUUID;
         public string CurrentTopPartsUUID;
@@ -151,11 +166,15 @@ namespace Runtime.Weapons.Model.Base
         private IBulletSpeed bulletSpeedProperty;
         private IChargeSpeed chargeSpeedProperty;
         private IWeight weightProperty;
+        
 
         private Dictionary<Type, IFuncRegisterations> onModifyValueEventCallbacks =
             new Dictionary<Type, IFuncRegisterations>();
-        
-        
+
+        private Dictionary<IResourceEntity, Action<int, int>> onWeaponPartsUpdateCallbacks =
+            new Dictionary<IResourceEntity, Action<int, int>>();
+
+
         //protected ICanDealDamageRootEntity rootDamageDealer;
        // protected ICanDealDamage damageDealer;
         
@@ -163,7 +182,7 @@ namespace Runtime.Weapons.Model.Base
         public BindableProperty<int> CurrentAmmo { get; set; } = new BindableProperty<int>(0);
 
         [field: ES3Serializable]
-        private Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>> weaponParts = new Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>>();
+        protected Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>> weaponParts = new Dictionary<WeaponPartType, HashSet<WeaponPartsSlot>>();
 
         //private Action<string, string> onWeaponPartsUpdate;
         private Action<IDamageable, int> onDealDamage;
@@ -173,6 +192,8 @@ namespace Runtime.Weapons.Model.Base
         private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
         private Action<int> _onUseAmmoCallback;
         public abstract int Width { get; }
+        
+        private IWeaponViewController boundViewController;
 
         protected override ConfigTable GetConfigTable() {
             
@@ -180,6 +201,7 @@ namespace Runtime.Weapons.Model.Base
         }
 
         public override int GetMaxRarity() {
+            
             return GetRarity();
         }
 
@@ -228,9 +250,28 @@ namespace Runtime.Weapons.Model.Base
                 foreach (WeaponPartsSlot slot in part.Value) {
                     slot.RegisterOnSlotUpdateCallback(OnWeaponPartSlotUpdate);
                     UpdateWeaponPartsOfType(slot);
+                    
+                    string lastItemUUID = slot.GetLastItemUUID();
+                    if (lastItemUUID != null) {
+                        IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(lastItemUUID);
+                        
+                        
+                        Action<int,int> onRarityChange = (previousRarity, currentRarity) => {
+                            if (previousRarity != currentRarity) {
+                                string lastItemUUID = slot.GetLastItemUUID();
+                                SendOnEquippedWeaponPartsUpdateEvent(lastItemUUID, lastItemUUID);
+                            }
+                        };
+                        
+                        onWeaponPartsUpdateCallbacks.TryAdd(entity, onRarityChange);
+                        
+                        entity.GetRarityProperty().RealValue.RegisterOnValueChanged(onRarityChange);
+                    }
                 }
             }
         }
+
+        
 
         private void UpdateWeaponPartsOfType(WeaponPartsSlot weaponPartsSlot) {
             
@@ -246,15 +287,35 @@ namespace Runtime.Weapons.Model.Base
             if (weaponPartsSlot == null) {
                 return;
             }
-
             
             UpdateWeaponPartsOfType(weaponPartsSlot);
+            SendOnEquippedWeaponPartsUpdateEvent(previousTopPartsUUID, currentTopPartsUUID);
             
-            this.SendEvent<OnWeaponPartsUpdate>(new OnWeaponPartsUpdate() {
-               WeaponEntity = this,
+            IResourceEntity lastItem = GlobalGameResourceEntities.GetAnyResource(previousTopPartsUUID);
+            if(lastItem != null && onWeaponPartsUpdateCallbacks.TryGetValue(lastItem, out var callback)) {
+                lastItem.GetRarityProperty().RealValue.UnRegisterOnValueChanged(callback);
+            }
+            
+            IResourceEntity newLastItem = GlobalGameResourceEntities.GetAnyResource(currentTopPartsUUID);
+            if (newLastItem != null) {
+                Action<int, int> onRarityChange = (previousRarity, currentRarity) => {
+                    if (previousRarity != currentRarity) {
+                        string previousTopPartsUUID = weaponPartsSlot.GetLastItemUUID();
+                        SendOnEquippedWeaponPartsUpdateEvent(previousTopPartsUUID, previousTopPartsUUID);
+                    }
+                };
+                onWeaponPartsUpdateCallbacks.TryAdd(newLastItem, onRarityChange);
+                newLastItem.GetRarityProperty().RealValue.RegisterOnValueChanged(onRarityChange);
+            }
+        }
+        
+        private void SendOnEquippedWeaponPartsUpdateEvent(string previousTopPartsUUID, string currentTopPartsUUID) {
+            this.SendEvent<OnEquippedWeaponPartsUpdate>(new OnEquippedWeaponPartsUpdate() {
+                WeaponEntity = this,
                 PreviousTopPartsUUID = previousTopPartsUUID,
                 CurrentTopPartsUUID = currentTopPartsUUID
-           });
+            });
+            
         }
         
        
@@ -425,7 +486,7 @@ namespace Runtime.Weapons.Model.Base
 
         public HashSet<WeaponPartsSlot> GetWeaponPartsSlots(WeaponPartType weaponPartType) {
             if (!weaponParts.ContainsKey(weaponPartType)) {
-                return null;
+                return new HashSet<WeaponPartsSlot>();
             }
             return weaponParts[weaponPartType];
         }
@@ -559,7 +620,7 @@ namespace Runtime.Weapons.Model.Base
             if (!onModifyValueEventCallbacks.ContainsKey(type)) {
                 onModifyValueEventCallbacks.Add(type, new FuncRegisterations<TEventType>());
             }
-
+            
 
             FuncRegisterations<TEventType> registerations =
                 onModifyValueEventCallbacks[type] as FuncRegisterations<TEventType>;
@@ -587,10 +648,23 @@ namespace Runtime.Weapons.Model.Base
 
         public void RegisterOnUseAmmo(Action<int> callback) {
             _onUseAmmoCallback += callback;
+            
         }
 
         public void UnRegisterOnUseAmmo(Action<int> callback) {
             _onUseAmmoCallback -= callback;
+        }
+
+        public IWeaponViewController GetBoundViewController() {
+            return boundViewController;
+        }
+
+        public void SetBoundViewController(IWeaponViewController viewController) {
+            this.boundViewController = viewController;
+        }
+
+        public GameObject GetBoundGameObject() {
+            return boundViewController?.gameObject;
         }
 
 

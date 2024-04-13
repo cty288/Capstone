@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using Framework;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.ResKit;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
+using Runtime.Temporary.Weapon;
 using Runtime.Weapons;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.ViewControllers;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -18,6 +21,8 @@ using UnityEngine.VFX;
 
 namespace Runtime.Utilities.Collision
 {
+
+    
     /// <summary>
     /// HitScan checks for collision using Raycast.
     /// </summary>
@@ -29,6 +34,11 @@ namespace Runtime.Utilities.Collision
         private TrailRenderer _tr;
         private ObjectPool<TrailRenderer> trailPool;
 
+        public VisualEffect[] VFX
+        {
+            get => _vfx;
+            set => _vfx = value;
+        }
         private VisualEffect[] _vfx;
         
         
@@ -208,6 +218,19 @@ namespace Runtime.Utilities.Collision
                         CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, new RaycastHit()));
                     else 
                         PlayBulletVFX(_launchPoint.position, hit.point);
+                    
+                    // Bullet VFX
+                    hitData = new HitData();
+                    hitData.HitNormal = hit.normal;
+                    hitData.HitPoint = hit.point;
+                    if (overridenDirection != default) {
+                        hitData.HitDirectionNormalized = Vector3.Normalize(overridenDirection + offset);
+                    }
+                    else {
+                        hitData.HitDirectionNormalized = Vector3.Normalize(_camera.transform.forward + offset);
+                    }
+                    hitResponder.HitResponse(hitData);
+                    
                     float positionMultiplier = 0.2f;
                     float spawnX = hit.point.x - hit.normal.x * positionMultiplier;
                     float spawnY = hit.point.y - hit.normal.y * positionMultiplier;
@@ -342,6 +365,12 @@ namespace Runtime.Utilities.Collision
         private GameObject CreateBulletHole()
         {
             return GameObject.Instantiate(bulletHoleDecal);;
+        }
+
+        public bool SetVFX(VisualEffect vfx, int i)
+        {
+            _vfx[i] = vfx;
+            return true;
         }
 
         public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);

@@ -28,8 +28,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Attachments {
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			int buffLevel = GetCustomDataValueOfCurrentLevel<int>("buff_level");
+			string motivatedBuffName = BuffPool.GetTemplateBuff<MotivatedBuff>().GetDisplayName(buffLevel);
 			string motivatedBuffDesc = MotivatedBuff.GetDescription(buffLevel, "MotivatedBuff_Desc");
-			return Localization.GetFormat(defaultLocalizationKey, buffLevel, motivatedBuffDesc);
+			return Localization.GetFormat(defaultLocalizationKey, motivatedBuffName, motivatedBuffDesc);
 		}
 		
 
@@ -117,7 +118,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Attachments {
 				new GetResourcePropertyDescriptionGetter(() => {
 					int buffLevel = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("buff_level");
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("BerserkerAttachment_PROPERTY_desc", buffLevel));
+						Localization.GetFormat("BerserkerAttachment_PROPERTY_desc",
+							BuffPool.GetTemplateBuff<MotivatedBuff>().GetDisplayName(buffLevel)));
 				})
 			};
 		}
