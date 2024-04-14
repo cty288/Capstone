@@ -192,6 +192,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         {
             if (isHolding && !playerModel.IsPlayerDead())
             {
+                
                 //Reload
                 if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && !WeaponEntity.IsLocked &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)

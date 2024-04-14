@@ -19,6 +19,7 @@ using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using Runtime.DataFramework.Entities;
+using Runtime.Enemies.ViewControllers.Instances.Berserker;
 using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
@@ -177,6 +178,21 @@ namespace Runtime.Temporary
                     IResourceEntity entity = weapon.EntityCreater.Invoke(true, 1);
                     inventorySystem.AddItem(entity);
                 }
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Keypad9)) {
+                IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+                IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
+                buffSystem.AddBuff(playerEntity, playerEntity, LockWeaponsBuff.Allocate(playerEntity, playerEntity));
+                buffSystem.AddBuff(playerEntity, playerEntity,
+                    LockActiveSkillsBuff.Allocate(playerEntity, playerEntity));
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Keypad0)) {
+                IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+                IBuffSystem buffSystem = this.GetSystem<IBuffSystem>();
+                buffSystem.RemoveBuff<LockWeaponsBuff>(playerEntity);
+                buffSystem.RemoveBuff<LockActiveSkillsBuff>(playerEntity);
             }
 
             if (Input.GetKeyDown(KeyCode.N)) {
