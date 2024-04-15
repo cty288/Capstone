@@ -14,6 +14,8 @@ Shader "Hidden/PostSandstorm"
     	_NoiseStrengths ("Noise Strengths", Vector) = (0.1, 0.1, 0.01, 0.8)
     	_SandstormAlpha ("Sandstorm Alpha", Float) = 1
     	_NightDaySlide ("Night (0) and Day (1) Slider", Range(0, 1)) = 1
+    	_CameraWorldDir ("World Space Dir of the Camera View", Vector) = (0, 0, 0, 0)
+    	_WindDir ("World Space Dir of Wind", Vector) = (1, 0, 0, 0)
     }
     SubShader 
 	{
@@ -55,6 +57,8 @@ Shader "Hidden/PostSandstorm"
             float4 _NoiseStrengths;
             float _SandstormAlpha;
             float _NightDaySlide;
+            float3 _CameraWorldDir;
+            float3 _WindDir;
             
             struct Attributes
             {
@@ -103,10 +107,12 @@ Shader "Hidden/PostSandstorm"
 				float fogDepth0 = fogDepth;
 				float sandstormDepth = saturate(depth0/_SandstormDepthDistance);
 
+				half windStrength = dot(_CameraWorldDir, _WindDir);
+
 				float3 noise = SAMPLE_TEXTURE2D(_NoiseMap, sampler_NoiseMap, float2(frac(i.uv.x + _Time.x), frac(i.uv.y - _Time.x)));
 				float noise0 = noise.x * _NoiseStrengths.x;
 
-				float4 alphas = SAMPLE_TEXTURE2D(_AlphaMap, sampler_AlphaMap, float2(frac(i.uv.x - _Time.y*2 + noise0), frac(i.uv.y*(1+sandstormDepth) + _Time.y + noise0)));
+				float4 alphas = SAMPLE_TEXTURE2D(_AlphaMap, sampler_AlphaMap, float2(frac(i.uv.x - windStrength*_Time.y*2 + _WorldSpaceCameraPos.x + noise0), frac(i.uv.y*(1+sandstormDepth) + windStrength*_Time.y + _WorldSpaceCameraPos.z + noise0)));
 				fogDepth += alphas.r*_NoiseStrengths.y;
 
 				fogDepth0 = 1-pow(1-saturate(fogDepth0 + noise.y*_NoiseStrengths.z), 2);
