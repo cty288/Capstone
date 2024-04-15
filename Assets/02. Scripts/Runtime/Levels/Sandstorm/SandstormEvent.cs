@@ -8,6 +8,7 @@ namespace _02._Scripts.Runtime.Levels.Sandstorm {
 	}
 	
 	public class SandstormEvent : GameEvent<SandstormEvent> {
+		[field: ES3Serializable]
 		public override EventElapseType ElapseType { get; } = EventElapseType.Predetermined;
 		public override void OnInitialized() {
 			Debug.Log($"A sandstorm is coming in {RemainingMinutesToTrigger} minutes!");
@@ -22,6 +23,7 @@ namespace _02._Scripts.Runtime.Levels.Sandstorm {
 			
 		}
 
+		[field: ES3Serializable]
 		public override bool CanPersistToOtherLevels { get; } = false;
 		public override void OnEventRecycled() {
 			

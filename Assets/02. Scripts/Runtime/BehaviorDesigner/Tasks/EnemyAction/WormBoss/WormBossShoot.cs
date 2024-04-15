@@ -80,8 +80,10 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             {
                 for (int j = missileSpawnPos.Count - 1; j >= 0; j--)
                 {
-                    if(canShoot.Value == false)
+                    if (canShoot.Value == false)
+                    {
                         return;
+                    }
                     
                     GameObject spawnPos = missileSpawnPos[j];
 

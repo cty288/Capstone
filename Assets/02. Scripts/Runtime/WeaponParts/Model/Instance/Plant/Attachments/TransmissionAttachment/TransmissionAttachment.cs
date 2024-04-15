@@ -31,7 +31,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.Tran
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			return Localization.Get(defaultLocalizationKey);
+			string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, hackedBuffName);
 		}
 		
 		public override WeaponPartType WeaponPartType => WeaponPartType.Attachment;
@@ -133,7 +134,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.Tran
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.Get("TransmissionAttachment_desc"));
+						weaponPartsEntity.GetDescription());
 				})
 			};
 		}

@@ -8,6 +8,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel {
 	public class BaseLevelEntity : LevelEntity<BaseLevelEntity> {
 		[field: ES3Serializable] public override string EntityName { get; set; } = "BaseLevelEntity";
 
+		public override bool HasRandomBossEncounter => false;
+
 		public override void OnRecycle() {
 			base.OnRecycle();
 		}

@@ -27,7 +27,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Ch
 
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
-			return Localization.Get(defaultLocalizationKey);
+			MalfunctionBuff malfunctionBuff = BuffPool.GetTemplateBuff<MalfunctionBuff>();
+			return Localization.GetFormat(defaultLocalizationKey, malfunctionBuff.GetDisplayName());
 		}
 		
 
@@ -92,7 +93,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Attachments.Ch
 				new GetResourcePropertyDescriptionGetter(() => {
 					MalfunctionBuff malfunctionBuff = BuffPool.GetTemplateBuff<MalfunctionBuff>();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("ChainReaction_desc", malfunctionBuff.GetDisplayName()));
+						weaponPartsEntity.GetDescription());
 				})
 			};
 		}

@@ -89,6 +89,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.EMPCha
 					float chance = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("chance");
 					int displayChance = (int) (chance * 100);
 					string malfunctionBuffName = BuffPool.GetTemplateBuff<MalfunctionBuff>().GetDisplayName();
+					
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
 						Localization.GetFormat("EMPChain_desc", displayChance, malfunctionBuffName));
 				})

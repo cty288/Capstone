@@ -27,8 +27,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.Functi
 		public override bool Collectable => true;
 		protected override string OnGetWeaponPartDescription(string defaultLocalizationKey) {
 			int buffLevel = GetCustomDataValueOfCurrentLevel<int>("buff_level");
-			string powerlessBuffName = BuffPool.GetTemplateBuff<PowerlessBuff>().GetDisplayName(buffLevel);
-			return Localization.GetFormat(defaultLocalizationKey, powerlessBuffName);
+			string powerlessBuffName = BuffPool.GetTemplateBuff<PowerlessBuff>().GetDisplayName(-1);
+			string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
+			return Localization.GetFormat(defaultLocalizationKey, powerlessBuffName, hackedBuffName);
 		}
 
 		
@@ -87,9 +88,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Magazines.Functi
 			string iconName, string title) {
 			return new List<GetResourcePropertyDescriptionGetter>() {
 				new GetResourcePropertyDescriptionGetter(() => {
-					int buffLevel = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<int>("buff_level");
+					
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("FunctionalLimit_desc", buffLevel));
+						weaponPartsEntity.GetDescription());
 				})
 			};
 		}
