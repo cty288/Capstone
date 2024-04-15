@@ -128,8 +128,8 @@ Shader "Hidden/PostSandstorm"
 				float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
 				float4 lineColor0 = float4(lineColor.rgb <= 0.5 ? color.rgb * (lineColor.rgb + 0.5) : 1 - (1 - color) * (1 - (lineColor.rgb - 0.5)), fogDepth0); // Soft Light
 				lineColor = float4(lineColor.rgb, lineColor.a * fogDepth);
-				lineColor = lerp(lineColor, lineColor0, fogDepth);
-				lineColor = float4(1 - (1 - alphas.g) * (1 - lineColor.rgb), pow(max(lineColor.a*(_NoiseStrengths.w), alphas.g*_SandstormAlpha), 1.f)); // Screen
+				lineColor = lerp(lineColor0, lineColor * 0.95f, pow(fogDepth, 2));
+				//lineColor = float4(1 - (1 - alphas.g) * (1 - lineColor.rgb), pow(max(lineColor.a*(_NoiseStrengths.w), alphas.g*_SandstormAlpha), 1.f)); // Screen
 				
 				//return float4(fogDepth.rrr, 1);
 				color = alphaBlend(lineColor, color);
