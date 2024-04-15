@@ -216,8 +216,8 @@ namespace Runtime.Weapons
             // set to main camera game object
             bladeHitbox.gameObject.transform.parent = mainCamera.gameObject.transform;
             // set rotation and transform to 0 (set transform z to 0.8)
-            bladeHitbox.gameObject.transform.position = new Vector3(0, 0, 0.8f);
-            bladeHitbox.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            bladeHitbox.gameObject.transform.localPosition = new Vector3(0, 0, 0.8f);
+            bladeHitbox.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
             // set active
             bladeHitbox.gameObject.SetActive(true);
             
@@ -231,8 +231,8 @@ namespace Runtime.Weapons
             // set to game object
             bladeHitbox.gameObject.transform.parent = gameObject.transform;
             // set rotation and transform to 0 
-            bladeHitbox.gameObject.transform.position = Vector3.zero;
-            bladeHitbox.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            bladeHitbox.gameObject.transform.localPosition = Vector3.zero;
+            bladeHitbox.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
             
             bladeHitbox.StopCheckingHits();
             bladeHitbox.gameObject.SetActive(false);

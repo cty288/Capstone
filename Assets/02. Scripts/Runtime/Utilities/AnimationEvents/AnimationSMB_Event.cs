@@ -150,12 +150,21 @@ namespace Runtime.Utilities.AnimationEvents
 
         private int GetTotalFrames(Animator animator, int layerIndex)
         {
+            bool noClip = false;
             AnimatorClipInfo[] clipInfo = animator.GetNextAnimatorClipInfo(layerIndex);
             if (clipInfo.Length == 0)
             {
                 clipInfo = animator.GetCurrentAnimatorClipInfo(layerIndex);
+                // Debug.Log($"animation_smb: no next clip. Current: {clipInfo.Length}");
+                // noClip = true;
+                if (clipInfo.Length == 0)
+                    return 0;
             }
-
+            
+            foreach (var c in clipInfo)
+            {
+                Debug.Log($"animation_smb: {c.clip.name}, no length: {noClip}");
+            }
             AnimationClip clip = clipInfo[0].clip;
             return Mathf.RoundToInt(clip.length * clip.frameRate);
         }
