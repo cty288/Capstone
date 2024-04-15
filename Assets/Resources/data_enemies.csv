@@ -850,4 +850,51 @@ Berserker,"{""maxHealth"":2100,
   ""Time"": {""x"": 0, ""y"": 1},
   ""Plant"": {""x"": 0, ""y"": 1},
   ""Mineral"": {""x"": 0, ""y"": 1}
-}",456,,,,
+}",456,"{
+  ""entity"": {
+    ""speed"": {
+      ""type"": ""float"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""closeRange"": {
+      ""type"": ""float"",
+      ""value"": 43
+    }
+  },
+  ""stagger"": {
+    ""staggerThreshold"": {
+      ""type"": ""int"",
+      ""value"": 40
+    },
+    ""staggerDelay"": {
+      ""type"": ""float"",
+      ""value"": 5
+    },
+    ""staggerTick"": {
+      ""type"": ""float"",
+      ""value"": 0.5
+    }, 
+    ""staggerTime"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  },
+  ""simpleShoot"": {
+    ""bulletCount"": {
+      ""type"": ""int"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""bulletSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""spawnInterval"": {
+      ""type"": ""float"",
+      ""value"": 0.5,
+      ""useDefaultModifier"": true
+    }
+  }
+}",,,

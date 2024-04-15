@@ -80,6 +80,7 @@ namespace Runtime.Weapons
         private int meleeDamage;
         
         [SerializeField] private HitBox bladeHitbox;
+        private List<GameObject> hitObjects = new List<GameObject>();
         
         protected override void Awake() {
             base.Awake();
@@ -89,6 +90,10 @@ namespace Runtime.Weapons
         protected override void OnEntityStart()
         {
             base.OnEntityStart();
+            
+            bladeHitbox.HitResponder = this;
+            bladeHitbox.gameObject.SetActive(false);
+            
             meleeCooldown = BoundEntity.GetCustomDataValue<float>("melee", "cooldown");
             lastMeleeTime = -meleeCooldown;
             meleeDamage = BoundEntity.GetCustomDataValue<int>("melee", "damage");
@@ -129,6 +134,7 @@ namespace Runtime.Weapons
             blade.transform.SetParent(parent);
             blade.transform.localPosition = GetCurrentBladeLocalPos();
             blade.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            blade.hitBox.enabled = false;
             // blade.gameObject.SetActive(true);
             blades.Push(blade);
         }
@@ -191,20 +197,51 @@ namespace Runtime.Weapons
                     OnReloadAnimationEnd();
                     break;
                 case "MeleeStart":
-                    print("BLADES: start");
-                    bladeHitbox.StartCheckingHits(meleeDamage);
+                    BladeStartCheckHit();
                     break;
                 case "MeleeEnd":
-                    print("BLADES: end");
-                    bladeHitbox.StopCheckingHits();
+                    BladeStopCheckHit();
                     break;
                 default:
                     break;
             }
         }
 
-        protected override void WeaponUpdate() {}
+        private void BladeStartCheckHit()
+        {
+            print("BLADES: start");
+            hitObjects.Clear();
+            isMelee = true;
+            
+            // set to main camera game object
+            bladeHitbox.gameObject.transform.parent = mainCamera.gameObject.transform;
+            // set rotation and transform to 0 (set transform z to 0.8)
+            bladeHitbox.gameObject.transform.position = new Vector3(0, 0, 0.8f);
+            bladeHitbox.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            // set active
+            bladeHitbox.gameObject.SetActive(true);
+            
+            bladeHitbox.StartCheckingHits(meleeDamage);
+        }
+        
+        private void BladeStopCheckHit()
+        {
+            print("BLADES: end");
+            isMelee = false;
+            // set to game object
+            bladeHitbox.gameObject.transform.parent = gameObject.transform;
+            // set rotation and transform to 0 
+            bladeHitbox.gameObject.transform.position = Vector3.zero;
+            bladeHitbox.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            
+            bladeHitbox.StopCheckingHits();
+            bladeHitbox.gameObject.SetActive(false);
 
+        }
+
+        protected override void WeaponUpdate() {}
+        
+        
         protected override void Shoot()
         {
             Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
@@ -215,6 +252,7 @@ namespace Runtime.Weapons
                 gameObject, this, BoundEntity.GetRange().BaseValue, true);
             
             blade.Launch(shootDir, BoundEntity.GetBulletSpeed().RealValue);
+            blade.hitBox.enabled = true;
             BoundEntity.CurrentAmmo.Value--;
             CheckReloadBlade();
         }
@@ -241,12 +279,13 @@ namespace Runtime.Weapons
         }
         
         public override bool CheckHit(HitData data) {
-            if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == ownerGameObject) {
-                return false;
-            } else { return true; }
-        }       
+            if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == ownerGameObject) { return false; } 
+            if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
+            return true;
+        }
         
         public override void HitResponse(HitData data) {
+            hitObjects.Add(data.Hurtbox.Owner);
         }
     }
 }

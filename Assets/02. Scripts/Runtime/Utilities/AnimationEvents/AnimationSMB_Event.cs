@@ -29,6 +29,8 @@ namespace Runtime.Utilities.AnimationEvents
             public float onUpdateFrame;
         }
 
+        [SerializeField] private bool canRestart;
+        
         [SerializeField] private int totalFrames; //frames in animation clip
         [SerializeField] private int currentFrame; //current frame in animation
         [SerializeField] private float normalizedTime; //progress of animation clip between 0-1
@@ -38,7 +40,7 @@ namespace Runtime.Utilities.AnimationEvents
         public List<AnimationSMB_EventData> events = new List<AnimationSMB_EventData>();
         private bool hasMotionTimeParam; //check if has motionTime parameter
         private AnimationSMBManager animationSMBManager; //reference to manager
-
+        
         /// <summary>
         /// Called when the animation state is starts, frame=0.
         /// </summary>
