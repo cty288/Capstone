@@ -187,7 +187,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.Update();
             WeaponUpdate();
         }
-
+        
         protected virtual void WeaponUpdate()
         {
             if (isHolding && !playerModel.IsPlayerDead())
