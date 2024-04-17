@@ -71,7 +71,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected TrailRenderer[] trailRenderers = null;
 		protected HitData hitData;
 		protected bool ownerTriggerHitResponse = true;
-		[SerializeField] private bool autoRecycleWhenHit = true;
+		[SerializeField] protected bool autoRecycleWhenHit = true;
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 		protected bool overrideExplosionFaction = false;
