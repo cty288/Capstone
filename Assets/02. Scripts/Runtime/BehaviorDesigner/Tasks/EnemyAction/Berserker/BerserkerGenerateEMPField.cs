@@ -17,6 +17,7 @@ public class BerserkerGenerateEMPField : EnemyAction<BerserkerEntity> {
 	public override void OnAwake() {
 		base.OnAwake();
 		generatedEMPField = (SharedGameObject) GetComponent<BehaviorTree>().GetVariable("GeneratedEMPField");
+		
 	}
 
 	public override void OnStart() {

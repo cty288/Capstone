@@ -7,10 +7,10 @@ namespace Runtime.Utilities.Collision
     /// <summary>
     /// Checks for collision using BoxCast. 
     /// </summary>
-    [RequireComponent(typeof(Collider))]
+    //[RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(TriggerCheck))]
-    public class HitBox : MonoBehaviour, IHitDetector
-    {
+    public class HitBox : MonoBehaviour, IHitDetector {
+        [SerializeField] private Collider overrideCollider;
         protected Collider _collider;
         protected TriggerCheck _triggerCheck;
         private IHitResponder m_hitResponder;
@@ -26,10 +26,20 @@ namespace Runtime.Utilities.Collision
 
         private void Initialize()
         {
+            
             _triggerCheck = gameObject.GetComponent<TriggerCheck>();
             if (_triggerCheck.TargetLayers ==0)
-                _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox"); 
-            _collider = gameObject.GetComponent<Collider>();
+                _triggerCheck.TargetLayers = LayerMask.GetMask("Hurtbox");
+            if (!overrideCollider) {
+                _collider = gameObject.GetComponent<Collider>();
+            }
+            else {
+                _collider = overrideCollider;
+            }
+            if (_collider == null) {
+                Debug.LogError("HitBox: No collider found on object: " + gameObject.name);
+            }
+            
         }
         
         public void StartCheckingHits(int damage) {

@@ -12,14 +12,17 @@ using UnityEngine;
 
 public class BerserkerEMPField : AbstractMikroController<MainGame> {
    [SerializeField] private Transform followTarget;
+   [SerializeField] private float maxTime = 10;
    
    private float followSpeed = 5f;
    private IPlayerEntity playerEntity;
    private IBuffSystem buffSystem;
    private bool isPlayerInField = false;
+   private bool isDestroying = false;
 
    private void Awake() {
       buffSystem = this.GetSystem<IBuffSystem>();
+      this.Delay(maxTime, DestroyField);
    }
 
    public void SetFollowTarget(Transform target, float speed, float scaleMultiplier) {
@@ -65,6 +68,7 @@ public class BerserkerEMPField : AbstractMikroController<MainGame> {
    }
 
    public void DestroyField() {
+      isDestroying = true;
       ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
       foreach (var particle in particles) {
          var module = particle.main; 

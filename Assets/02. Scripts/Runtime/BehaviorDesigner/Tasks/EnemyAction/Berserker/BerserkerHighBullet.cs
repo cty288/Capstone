@@ -32,18 +32,15 @@ namespace a
         {
             //homingTime = Random.Range(1.5f, 2.5f);
         }
-        // Update is called once per frame
-        void Update()
-        {
-            
 
-                var dir = (target.transform.position - this.gameObject.transform.position).normalized;
-                var rotation = Quaternion.LookRotation(dir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 2f * Time.deltaTime);
-                transform.Translate(transform.forward * 18 * Time.deltaTime, Space.World);
-           
-            
+        protected override void Update() {
+            base.Update();
+            var dir = (target.transform.position - this.gameObject.transform.position).normalized;
+            var rotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 2f * Time.deltaTime);
+            transform.Translate(transform.forward * 18 * Time.deltaTime, Space.World);
         }
+
         protected override void OnHitResponse(HitData data)
         {
 

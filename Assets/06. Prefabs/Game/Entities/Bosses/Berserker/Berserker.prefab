@@ -160,29 +160,30 @@ MonoBehaviour:
       variableStartIndex: 
       JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(-1451.87988,-294.6831)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1.87988281,115.316895)"},"ID":1,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerFlyUp","NodeData":{"Offset":"(-130,190)"},"ID":2,"Name":"Berserker
         Fly Up","Instant":true,"SharedBoolisFlying":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedGameObjectfinalPosition":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Last
-        Node","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(-4.15698242,198.381989)"},"ID":3,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-3.41174316,105.212769)"},"ID":4,"Name":"Sequence","Instant":true,"AbortTypeabortType":"Self","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(0,131.7391)"},"ID":5,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-130,118.571426)"},"ID":6,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerCheckIsStagger","NodeData":{"Offset":"(-577.3972,119.728241)"},"ID":7,"Name":"Berserker
-        Check Is Stagger","Instant":true,"SharedBoolcondition":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerStaggerStart","NodeData":{"Offset":"(-400,260)"},"ID":8,"Name":"Berserker
-        Stagger Start","Instant":true,"SharedBoolisFlying":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-270,260)"},"ID":9,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerStaggerEnd","NodeData":{"Offset":"(-140,260)"},"ID":10,"Name":"Berserker
-        Stagger End","Instant":true},{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerFlyUp","NodeData":{"Offset":"(0,260)"},"ID":11,"Name":"Berserker
+        Node","IsShared":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(-4.15698242,198.381989)"},"ID":3,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-3.41174316,105.212769)"},"ID":4,"Name":"Sequence","Instant":true,"AbortTypeabortType":"Self","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(0,131.7391)"},"ID":5,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BerserkerSlashAttack","NodeData":{"Offset":"(-1071.89233,216.155823)"},"ID":6,"Name":"Berserker
+        Slash Attack","Instant":true,"GameObjectslashPrefab":0},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-130,118.571426)"},"ID":7,"Name":"Sequence","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerCheckIsStagger","NodeData":{"Offset":"(-577.3972,119.728241)"},"ID":8,"Name":"Berserker
+        Check Is Stagger","Instant":true,"SharedBoolcondition":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerStaggerStart","NodeData":{"Offset":"(-400,260)"},"ID":9,"Name":"Berserker
+        Stagger Start","Instant":true,"SharedBoolisFlying":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-270,260)"},"ID":10,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerStaggerEnd","NodeData":{"Offset":"(-140,260)"},"ID":11,"Name":"Berserker
+        Stagger End","Instant":true},{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerFlyUp","NodeData":{"Offset":"(0,260)"},"ID":12,"Name":"Berserker
         Fly Up","Instant":true,"SharedBoolisFlying":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsFlying","IsShared":true,"BooleanmValue":false},"SharedGameObjectfinalPosition":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Last
-        Node","IsShared":true}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(110,118.571426)"},"ID":12,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerFlyMove","NodeData":{"Offset":"(-81.5669556,117.851395)"},"ID":13,"Name":"Berserker
+        Node","IsShared":true}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(110,118.571426)"},"ID":13,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerFlyMove","NodeData":{"Offset":"(-81.5669556,117.851395)"},"ID":14,"Name":"Berserker
         Fly Move","Instant":true,"SharedGameObjectfinalPosition":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Last
-        Node","IsShared":true},"List`1nodePath":[]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(53.36884,120.767654)"},"ID":14,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BerserkerGenerateEMPField","NodeData":{"Offset":"(185.7985,309.368958)"},"ID":15,"Name":"Berserker
-        Generate EMP Field","Instant":true,"GameObjectempFieldPrefab":0}]}]}]}]}]},"DetachedTasks":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerSimpleShoot","NodeData":{"Offset":"(-846.4297,384.0559)"},"ID":16,"Name":"Berserker
+        Node","IsShared":true},"List`1nodePath":[]},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(53.36884,120.767654)"},"ID":15,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}}]}]}]}]}]},"DetachedTasks":[{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerSimpleShoot","NodeData":{"Offset":"(-846.4297,384.0559)"},"ID":16,"Name":"Berserker
         Small Shoot","Instant":true,"SharedGameObjectsimpleShootBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":1},"TransformshootPoint":2},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerSimpleShoot","NodeData":{"Offset":"(-805.413757,483.690552)"},"ID":17,"Name":"Berserker
         Big Shoot","Instant":true,"SharedGameObjectsimpleShootBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":3},"TransformshootPoint":4},{"Type":"Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerZoningMissiles","NodeData":{"Offset":"(-642.2156,483.888123)"},"ID":18,"Name":"Berserker
-        Zoning Missiles","Instant":true,"SharedGameObjectsimpleShootBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":5},"TransformshootPoint":6,"GameObjectindicator":7},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-1110,260)"},"ID":19,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerStomp","NodeData":{"Offset":"(-1270,260)"},"ID":20,"Name":"Berserker
-        Stomp","Instant":true,"SharedGameObjectstompImpact":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":8},"SharedGameObjectburnVFX":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Stomp
-        VFX","IsShared":true,"GameObjectmValue":9}}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Last
-        Node","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsFlying","IsShared":true,"BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"StaggerTime","IsShared":true,"PropertyMapping":"Runtime.Enemies.ViewControllers.Instances.Berserker.Berserker/StaggerTime","PropertyMappingOwner":10,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Stomp
-        VFX","IsShared":true,"GameObjectmValue":11},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"GeneratedEMPField","IsShared":true}]}'
+        Zoning Missiles","Instant":true,"SharedGameObjectsimpleShootBulletPrefab":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":5},"TransformshootPoint":6,"GameObjectindicator":7},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(-1110,260)"},"ID":19,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":2},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1}},{"Type":"BerserkerGenerateEMPField","NodeData":{"Offset":"(-1195.45459,836.3636)"},"ID":20,"Name":"Berserker
+        Generate EMP Field","Instant":true,"GameObjectempFieldPrefab":8},{"Type":"_02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction.BerserkerStomp","NodeData":{"Offset":"(-963.6362,804.0911)"},"ID":21,"Name":"Berserker
+        Stomp","Instant":true,"SharedGameObjectstompImpact":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null,"GameObjectmValue":9},"SharedGameObjectburnVFX":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Stomp
+        VFX","IsShared":true,"GameObjectmValue":10}}],"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Last
+        Node","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"IsFlying","IsShared":true,"BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"StaggerTime","IsShared":true,"PropertyMapping":"Runtime.Enemies.ViewControllers.Instances.Berserker.Berserker/StaggerTime","PropertyMappingOwner":11,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Stomp
+        VFX","IsShared":true,"GameObjectmValue":12},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"GeneratedEMPField","IsShared":true}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
         startIndex: 
         dataPosition: 
         unityObjects:
-        - {fileID: 1665850913098638418, guid: 13e7ebd179af697488eafc24ead3d37f, type: 3}
+        - {fileID: 251466755242282907, guid: c75f321bb3891fe48825c41890ce90e0, type: 3}
         - {fileID: 1700704895486175575, guid: 46af3d90e32a64f4a8598701da8ecc1a, type: 3}
         - {fileID: 9067781184155408553}
         - {fileID: 1700704895486175575, guid: 46af3d90e32a64f4a8598701da8ecc1a, type: 3}
@@ -190,6 +191,7 @@ MonoBehaviour:
         - {fileID: 4609945513484962036, guid: 52263dd3a543aef458348e976fd0cbe2, type: 3}
         - {fileID: 7388367788691779323}
         - {fileID: 8429602591049814769, guid: ed404f0876592694285743de9b8d3823, type: 3}
+        - {fileID: 1665850913098638418, guid: 13e7ebd179af697488eafc24ead3d37f, type: 3}
         - {fileID: 2049937806834680411, guid: faaef9f23cca6fc44ac3da246386ddf5, type: 3}
         - {fileID: 5384848706907230977}
         - {fileID: 53076124648127137}
@@ -238,8 +240,38 @@ MonoBehaviour:
   autoRemoveEntityWhenDie: 1
   <SpawnSizeCollider>k__BackingField: {fileID: 8076686000186218928}
   healthBarPrefabName: UIHealthBar
-  nodes: []
-  vulerableHurboxes: []
+  nodes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  vulerableHurboxes:
+  - {fileID: 5049399856496460822}
+  - {fileID: 7969478264723848793}
 --- !u!1 &197825665675326143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,6 +1189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!1001 &9045955922466101362
 PrefabInstance:

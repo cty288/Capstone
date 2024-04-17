@@ -63,6 +63,7 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 				new AutoConfigCustomProperty("stagger"),
 				new AutoConfigCustomProperty("simpleShoot"),
 				new AutoConfigCustomProperty("emp"),
+				new AutoConfigCustomProperty("slash")
 			};
 		}
 
