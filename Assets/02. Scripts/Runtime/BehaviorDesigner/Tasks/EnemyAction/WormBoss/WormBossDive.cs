@@ -52,7 +52,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         private async UniTask SkillExecute()
         {
-            Debug.Log("Worm Boss: dive go undergound");
             enemyEntity.isUnderground = true;
             enemyEntity.lastDivePosition = transform.position;
             

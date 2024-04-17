@@ -12,6 +12,8 @@ namespace Runtime.Weapons
     {
         private bool isShooting = false;
         public Rigidbody rigidbody;
+        public HitBox hitBox;
+        
         protected override void Update() {
             if (!inited) {
                 return;

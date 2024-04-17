@@ -25,8 +25,11 @@ class SandstormRenderPass : ScriptableRenderPass
     readonly int _noiseStrengthsID = Shader.PropertyToID("_NoiseStrengths");
     readonly int _sandstormAlphaID = Shader.PropertyToID("_SandstormAlpha");
     readonly int _nightDaySliderID = Shader.PropertyToID("_NightDaySlide");
+    private static readonly int _cameraWorldDir = Shader.PropertyToID("_CameraWorldDir");
+    private static readonly int _windDir = Shader.PropertyToID("_WindDir");
 
     private Material material;
+    
 
     public SandstormRenderPass(Material material)
     {
@@ -104,6 +107,8 @@ class SandstormRenderPass : ScriptableRenderPass
             material.SetVector(_noiseStrengthsID, customEffect.noiseStrengths.value);
             material.SetFloat(_sandstormAlphaID, customEffect.sandstormAlpha.value);
             material.SetFloat(_nightDaySliderID, customEffect.nightDaySlide.value);
+            material.SetVector(_cameraWorldDir, customEffect.cameraDirectionUtility.value);
+            material.SetVector(_windDir, customEffect.windDirectionUtility.value);
             
             BlitTo(material);
         }
