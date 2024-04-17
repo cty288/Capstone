@@ -50,7 +50,7 @@ public class BerserkerSlashBullet : AbstractBulletViewController {
 	}
 
 	private IEnumerator AutoRecycle() {
-		yield return new WaitForSeconds(5f);
+		yield return new WaitForSeconds(10f);
 		RecycleToCache();
 	}
 

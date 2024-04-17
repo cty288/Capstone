@@ -36,11 +36,14 @@ public class BerserkerEMPField : AbstractMikroController<MainGame> {
 
    private void Update() {
       if (followTarget) {
-         transform.position = Vector3.Lerp(transform.position, followTarget.position, followSpeed * Time.deltaTime);
+         transform.position = Vector3.Slerp(transform.position, followTarget.position, followSpeed * Time.deltaTime);
       }
    }
 
    private void OnTriggerEnter(Collider other) {
+      if (isDestroying) {
+         return;
+      }
       if (followTarget && other.attachedRigidbody.gameObject == followTarget.gameObject) {
          AddBuff();
          isPlayerInField = true;
@@ -55,6 +58,7 @@ public class BerserkerEMPField : AbstractMikroController<MainGame> {
    }
    
    public void AddBuff() {
+      Debug.Log("Buff Added");
       buffSystem.AddBuff(playerEntity, playerEntity,
          LockWeaponsBuff.Allocate(playerEntity, playerEntity));
          
@@ -68,6 +72,7 @@ public class BerserkerEMPField : AbstractMikroController<MainGame> {
    }
 
    public void DestroyField() {
+      if(isDestroying || !this) return;
       isDestroying = true;
       ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
       foreach (var particle in particles) {
@@ -75,11 +80,12 @@ public class BerserkerEMPField : AbstractMikroController<MainGame> {
          module.loop = false;
       }
       this.Delay(3f, () => {
-         Destroy(gameObject);
+         if (this) {
+            Destroy(gameObject);
+         }
+         
       });
-      
-      if (isPlayerInField) {
-         RemoveBuff();
-      }
+
+      RemoveBuff();
    }
 }

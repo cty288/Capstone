@@ -32,6 +32,11 @@ public class BerserkerGenerateEMPField : EnemyAction<BerserkerEntity> {
 	}
 	public async UniTask SkillExecute() {
 
+		Vector3 targetPos = transform.position + Vector3.up * 10;
+		while (Vector3.Distance(transform.position, targetPos) > 0.1f) {
+			transform.position = Vector3.MoveTowards(transform.position, targetPos, 10 * Time.deltaTime);
+			await UniTask.NextFrame(PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
+		}
 		/*await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Skill_SingleHand_Hold"),
 			PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());*/
 
