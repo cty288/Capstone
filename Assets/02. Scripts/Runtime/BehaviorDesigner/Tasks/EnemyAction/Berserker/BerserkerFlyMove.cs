@@ -14,32 +14,62 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
         private TaskStatus taskStatus;
 
         public SharedGameObject finalPosition;
+        private BerserkerNode currentNode;
         
-        private List<GameObject> movementNodes;
-        private List<GameObject> points = new List<GameObject>();
+        private List<BerserkerNode> movementNodes;
+        public List<BerserkerNode> nodePath = new List<BerserkerNode>();
         private float startTime;
         
-        private float speed = 1.0f;
+        private float speed;
+
+        private int minNodes = 3;
+        private int maxNodes = 6;
         
         public override void OnStart()
         {
             base.OnStart();
+            speed = enemyEntity.GetCustomDataValue<float>("entity", "speed");
+
             movementNodes = enemyEntity.Nodes;
-            GenerateRandomNodes(Random.Range(2, 4));
+            currentNode = finalPosition.Value.GetComponent<BerserkerNode>();
+            GenerateNodePath();
+            
             startTime = Time.time;
 
             taskStatus = TaskStatus.Running;
-            // SkillExecute();
+        }
+
+        private void GenerateNodePath()
+        {
+            int amountOfNodes = Random.Range(minNodes, maxNodes) - 1; // account for pre-processing a node
+            nodePath.Clear();
+
+            BerserkerNode prevNode = null;
+            BerserkerNode currNode = currentNode;
+            nodePath.Add(currNode);
+            while(amountOfNodes > 0)
+            {
+                BerserkerNode temp = currNode.GetRandomNode(prevNode);
+                prevNode = currNode;
+                currNode = temp;
+                
+                nodePath.Add(currNode);
+                amountOfNodes--;
+            }
+            
+            // duplicate first and last nodes for Catmull-Rom spline
+            nodePath.Insert(0, nodePath[0]);
+            nodePath.Add(nodePath[^1]);
         }
         
         private void GenerateRandomNodes(int amountOfNodes)
         {
-            points.Clear();
+            nodePath.Clear();
             
             HashSet<int> selectedIndices = new HashSet<int>();
             if(finalPosition.Value != null)
             {
-                points.Add(finalPosition.Value);
+                nodePath.Add(finalPosition.Value.GetComponent<BerserkerNode>());
             }
             
             while (selectedIndices.Count < amountOfNodes)
@@ -47,13 +77,13 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
                 int randomIndex = Random.Range(0, movementNodes.Count - 1);
                 if (selectedIndices.Add(randomIndex))
                 {
-                    points.Add(movementNodes[randomIndex]);
+                    nodePath.Add(movementNodes[randomIndex]);
                 }
 
                 if (selectedIndices.Count == amountOfNodes)
                 {
-                    points.Insert(0, points[0]);
-                    points.Add(points[^1]);
+                    nodePath.Insert(0, nodePath[0]);
+                    nodePath.Add(nodePath[^1]);
                 }
             }
         }
@@ -64,22 +94,34 @@ namespace _02._Scripts.Runtime.BehaviorDesigner.Tasks.EnemyAction
             return taskStatus;
         }
 
-        // public async UniTask SkillExecute()
-        // {
-        // }
-
         public void Flying()
         {
-            int pointsCnt = points.Count - 3;
-            float currentTime = ((Time.time - startTime) * speed) % pointsCnt;
-            int idx = Mathf.FloorToInt(currentTime) + 1;
-            Vector3 position = MathFunctions.CatmullRomSplineInterp(points[idx - 1].transform.position, points[idx].transform.position, points[idx + 1].transform.position, points[idx + 2].transform.position, currentTime % 1.0f);
+            float length = 0f;
+            for(int i = 0; i < nodePath.Count - 1; i++)
+            {
+                length += Vector3.Distance(nodePath[i].transform.position, nodePath[i + 1].transform.position);
+            }
+
+            length *= 0.9f;
             
+            float duration = length / speed;
+            
+            int pointsCnt = nodePath.Count - 3;
+            float currentTime = ((Time.time - startTime) / duration) % pointsCnt;
+            int idx = Mathf.FloorToInt(currentTime) + 1;
+            Vector3 position = MathFunctions.CatmullRomSplineInterp(
+                nodePath[idx - 1].transform.position, 
+                nodePath[idx].transform.position, 
+                nodePath[idx + 1].transform.position, 
+                nodePath[idx + 2].transform.position, 
+                currentTime % 1.0f);
+            
+            transform.rotation = Quaternion.LookRotation(position - transform.position);
             transform.position = position;
             
-            if(Vector3.Distance(points[^1].transform.position, transform.position) < 0.1f)
+            if(Vector3.Distance(nodePath[^1].transform.position, transform.position) < 0.1f)
             {
-                finalPosition.Value = points[^1];
+                finalPosition.Value = nodePath[^1].gameObject;
                 taskStatus = TaskStatus.Success;
             }
         }

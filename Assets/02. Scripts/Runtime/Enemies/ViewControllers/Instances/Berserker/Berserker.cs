@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
 using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
@@ -7,9 +8,11 @@ using Polyglot;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.Properties.CustomProperties;
+using Runtime.DataFramework.ViewControllers;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.ViewControllers.Base;
+using Runtime.Utilities.Collision;
 using UnityEngine;
 
 namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
@@ -18,7 +21,10 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 		[field: ES3Serializable]
 		public override string EntityName { get; set; } = "Berserker";
 
-		public List<GameObject> Nodes;
+		public List<BerserkerNode> Nodes;
+		public int StaggerThreshold;
+		public int StaggerDamage = 0;
+		public bool IsStaggered = false;
 		
 		protected override void OnEntityStart(bool isLoadedFromSave) {
             
@@ -31,7 +37,14 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
             
 		}
         
-
+		public void SetStaggerStatus(bool status)
+		{
+			IsStaggered = status;
+			if (status)
+			{
+				StaggerDamage = 0;
+			}
+		}
         
 		protected override void OnEnemyRegisterAdditionalProperties() {
             
@@ -43,11 +56,14 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 
 		protected override ICustomProperty[] OnRegisterCustomProperties()
 		{
-
-			return new[] {
+            
+			return new[]
+			{
 				new AutoConfigCustomProperty("entity"),
-				new AutoConfigCustomProperty("simpleShoot")
-
+				new AutoConfigCustomProperty("stagger"),
+				new AutoConfigCustomProperty("simpleShoot"),
+				new AutoConfigCustomProperty("emp"),
+				new AutoConfigCustomProperty("slash")
 			};
 		}
 
@@ -57,11 +73,38 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 	public class Berserker : AbstractBossViewController<BerserkerEntity>{
 		private bool deathAnimationEnd = false;
 
-		[SerializeField] private List<GameObject> nodes;
+		[SerializeField] private List<BerserkerNode> nodes;
+		[SerializeField] private HurtBox[] vulerableHurboxes;
+		private HashSet<IHurtbox> hashedVulerableHurboxes = new HashSet<IHurtbox>();
+
+		private float StaggerDelay = 0f;
+		private float lastHitTime = 0f;
+		private float StaggerTick = 0f;
+		private SharedGameObject generatedEMPField;
+		[BindCustomData("stagger","staggerTime")]
+		public float StaggerTime { get; }
 		
+		private float staggerTimer = 0f;
+
+		
+		protected override void Awake()
+		{
+			base.Awake();
+			hashedVulerableHurboxes.Clear();
+			foreach (var hurtbox in vulerableHurboxes) {
+				hashedVulerableHurboxes.Add(hurtbox);
+			}
+
+			generatedEMPField = (SharedGameObject) GetComponent<BehaviorTree>().GetVariable("GeneratedEMPField");
+		}
+
 		protected override void OnEntityStart()
 		{
 			BoundEntity.Nodes = nodes;
+			BoundEntity.StaggerThreshold = BoundEntity.GetCustomDataValue<int>("stagger", "staggerThreshold");
+			StaggerDelay = BoundEntity.GetCustomDataValue<float>("stagger", "staggerDelay");
+			StaggerTick = BoundEntity.GetCustomDataValue<float>("stagger", "staggerTick");
+
 		}
 
 		protected override void OnEntityTakeDamage(int damage, int currenthealth, ICanDealDamage damagedealer) {
@@ -70,6 +113,22 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 
 		protected override void OnEntityHeal(int heal, int currenthealth, IBelongToFaction healer) {
 			
+		}
+
+		protected override void Update()
+		{
+			base.Update();
+			
+			if(Time.time - lastHitTime >= StaggerDelay && BoundEntity.StaggerDamage > 0) {
+				staggerTimer += Time.deltaTime;
+				if (staggerTimer >= StaggerTick)	
+				{
+					BoundEntity.StaggerDamage = Mathf.Max(0, BoundEntity.StaggerDamage - 1);
+					print($"BERSERKER: stagger damage decrease - {BoundEntity.StaggerDamage}");
+
+					staggerTimer = 0f;
+				}
+			}
 		}
 
 		protected override MikroAction WaitingForDeathCondition() {
@@ -88,9 +147,33 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 			return builder.FromConfig().Build();
 		}
 
+		public override void HurtResponse(HitData data)
+		{
+			if(hashedVulerableHurboxes.Contains(data.Hurtbox)) {
+				BoundEntity.StaggerDamage += data.Damage;
+				lastHitTime = Time.time;
+				
+				print($"BERSERKER: stagger damage - {BoundEntity.StaggerDamage}");
+
+				// if(BoundEntity.StaggerDamage >= BoundEntity.StaggerThreshold) {
+				// 	BoundEntity.StaggerDamage = 0;
+				// Stagger();
+				// }
+			}
+			BoundEntity.TakeDamage(data.Damage, data.Attacker,out _, data);
+		}
+
 		public override void OnRecycled() {
 			base.OnRecycled();
 			deathAnimationEnd = false;
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
+			if (generatedEMPField.Value) {
+				generatedEMPField.Value.GetComponent<BerserkerEMPField>().DestroyField();
+				generatedEMPField.Value = null;
+			}
 		}
 	}
 }

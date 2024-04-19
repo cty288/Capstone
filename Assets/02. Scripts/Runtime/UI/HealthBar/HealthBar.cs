@@ -16,6 +16,7 @@ public abstract class HealthBar : AbstractMikroController<MainGame> {
    protected IDamageable entity;
    private Dictionary<IBuff, BuffIconViewController> buffToGameObject = new Dictionary<IBuff, BuffIconViewController>();
    private ResLoader resLoader;
+   [SerializeField] private Vector2 buffFrameSize = new Vector2(92, 20);
    protected virtual void Awake() {
       buffSpawnParent = transform.Find("BuffPanel");
       resLoader = this.GetUtility<ResLoader>();
@@ -43,10 +44,8 @@ public abstract class HealthBar : AbstractMikroController<MainGame> {
             buffIcon.transform.SetParent(buffSpawnParent);
             buffIcon.transform.localScale = Vector3.one;
 					
-            //get height of the spawn parent
-            float height = buffSpawnParent.GetComponent<RectTransform>().rect.height;
-            //set width/height of the buff icon
-            buffIcon.GetComponent<RectTransform>().sizeDelta = new Vector2(height, height);
+          
+            buffIcon.GetComponent<RectTransform>().sizeDelta = buffFrameSize;
 					
             buffIcon.SetBuff(buff);
             if (!buffToGameObject.TryAdd(buff, buffIcon)) {

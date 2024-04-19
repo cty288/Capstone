@@ -61,6 +61,10 @@ namespace Runtime.Temporary
         private void OnSandStormKillPlayer(OnSandStormKillPlayer e) {
             BoundEntity.TakeDamage(Int32.MaxValue, null, out _,null);
         }
+        
+        public IPlayerEntity GetPlayerEntity() {
+            return BoundEntity;
+        }
 
         private void OnCurrentLevelNumChanged(int arg1, int levelNum) {
             if (levelTimerCoroutine != null) {

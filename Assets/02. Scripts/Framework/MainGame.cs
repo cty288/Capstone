@@ -32,7 +32,7 @@ namespace Framework {
 	public class MainGame : SavableArchitecture<MainGame> {
 		
 		protected override void Init() {
-			//ES3AutoSaveMgr.Current.Load();
+			ES3AutoSaveMgr.Current.Load();
 			GlobalEntities.Reset();
 			GlobalGameResourceEntities.Reset();
 			
@@ -94,5 +94,9 @@ namespace Framework {
 		}
 
 		protected override string saveFileSuffix { get; } = "main";
+
+		public static void ClearAllSaves() {
+			ClearSave("main");
+		}
 	}
 }

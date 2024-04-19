@@ -187,11 +187,12 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.Update();
             WeaponUpdate();
         }
-
+        
         protected virtual void WeaponUpdate()
         {
             if (isHolding && !playerModel.IsPlayerDead())
             {
+                
                 //Reload
                 if (playerActions.Reload.WasPerformedThisFrame() && !isReloading && !WeaponEntity.IsLocked &&
                     BoundEntity.CurrentAmmo < BoundEntity.GetAmmoSize().RealValue)

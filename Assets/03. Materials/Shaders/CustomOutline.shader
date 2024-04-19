@@ -32,6 +32,8 @@ Shader "Hidden/CustomOutline"
             float _DepthNormalThreshold;
 			float _DepthNormalThresholdScale;
 			float _LineAlpha;
+
+            #define _SCREEN_SPACE_OCCLUSION
             
             struct Attributes
             {
@@ -58,6 +60,8 @@ Shader "Hidden/CustomOutline"
 
 				return o;
 			}
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             
 			// Combines the top and bottom colors using normal blending.
 			// https://en.wikipedia.org/wiki/Blend_modes#Normal_blend_mode
@@ -77,11 +81,15 @@ Shader "Hidden/CustomOutline"
 				
 				float halfScaleFloor = floor(_Scale * 0.5);
 				float halfScaleCeil = ceil(_Scale * 0.5);
+				float depth = 1-Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, i.uv).r, _ZBufferParams);
+				depth = pow(depth, 3) + 0.2f;
 
-				float2 bottomLeftUV = i.uv - float2(_MainTex_TexelSize.x, _MainTex_TexelSize.y) * halfScaleFloor;
-				float2 topRightUV = i.uv - float2(_MainTex_TexelSize.x, _MainTex_TexelSize.y) * halfScaleCeil;
-				float2 bottomRightUV = i.uv - float2(_MainTex_TexelSize.x * halfScaleCeil, -_MainTex_TexelSize.y * halfScaleFloor);
-				float2 topLeftUV = i.uv - float2(-_MainTex_TexelSize.x * halfScaleFloor, _MainTex_TexelSize.y * halfScaleCeil);
+				//return depth.rrrr;
+
+				float2 bottomLeftUV = i.uv - float2(_MainTex_TexelSize.x, _MainTex_TexelSize.y) * halfScaleFloor * (depth);
+				float2 topRightUV = i.uv - float2(_MainTex_TexelSize.x, _MainTex_TexelSize.y) * halfScaleCeil * (depth);
+				float2 bottomRightUV = i.uv - float2(_MainTex_TexelSize.x * halfScaleCeil, -_MainTex_TexelSize.y * halfScaleFloor) * (depth);
+				float2 topLeftUV = i.uv - float2(-_MainTex_TexelSize.x * halfScaleFloor, _MainTex_TexelSize.y * halfScaleCeil) * (depth);
 
 				float depth0 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, bottomLeftUV).r;
 				float depth1 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, sampler_CameraDepthTexture, topRightUV).r;
@@ -157,11 +165,15 @@ Shader "Hidden/CustomOutline"
 
 				#ifndef _HigherFidelity
 					float edgeNormal = sqrt(dot(normalFiniteDiff0, normalFiniteDiff0) + dot(normalFiniteDiff1, normalFiniteDiff1));
-					edgeNormal = edgeNormal > _NormalThreshold ? 1 : 0;
 				#else
 					float edgeNormal = sqrt(dot(normalFiniteDiff0, normalFiniteDiff0) + dot(normalFiniteDiff1, normalFiniteDiff1) + dot(normalFiniteDiff2, normalFiniteDiff2) + dot(normalFiniteDiff3, normalFiniteDiff3));
 					edgeNormal = edgeNormal > _NormalThreshold ? 1 : 0;
 				#endif
+
+				half3 curve = normalFiniteDiff0 + normalFiniteDiff1 > 0 ? 0 : 1;
+				float curveVal = curve.r * curve.g * curve.b;
+				edgeNormal = edgeNormal * _NormalThreshold;
+				//return half4((curveVal).rrr, 1);
 
 				float3 viewNormal = normal0 * 2 - 1;
 				float NdotV = 1 - dot(viewNormal, -i.viewSpaceDir);
@@ -170,7 +182,8 @@ Shader "Hidden/CustomOutline"
 				float normalThreshold = normalThreshold01 * _DepthNormalThresholdScale + 1;
 
 				float depthThreshold = _DepthThreshold * depth0 * normalThreshold;
-				edgeDepth = edgeDepth > depthThreshold ? 1 : 0;
+				edgeDepth = smoothstep(0, depthThreshold, edgeDepth);
+				//edgeDepth = edgeDepth > depthThreshold ? 1 : 0;
 
 				float edge = max(edgeDepth, edgeNormal);
 
@@ -178,13 +191,22 @@ Shader "Hidden/CustomOutline"
 				//lineColor = float4(lineColor.rgb * 2.f - 1.f, lineColor.a * edge); // Linear Burn
 				//lineColor = float4(lineColor.rgb <= 0.5 ? 2 * lineColor.rgb * lineColor.rgb : 1 - 2 * (1 - lineColor.rgb) * (1 - lineColor.rgb), lineColor.a * edge); // Overlay
 				//lineColor = float4(lineColor.rgb * 1.25f, lineColor.a * edge); // Multiply against value greater than 1
-				//lineColor = float4(lineColor.rgb * lineColor.rgb, lineColor.a * edge); // Multiply against self
+				float4 lineColorD = float4(lineColor.rgb * lineColor.rgb * 1.5f, lineColor.a * edge); // Multiply against self
 				//lineColor = float4(lineColor.rgb <= 0.5 ? lineColor.rgb * (lineColor.rgb + 0.5) : 1 - (1 - lineColor.rgb) * (1 - (lineColor.rgb - 0.5)), lineColor.a * edge); // Soft Light
 				//lineColor = float4(max(lineColor.rgb, 0.6f), lineColor.a * edge); // Lighten
 				//lineColor = float4(lineColor.rgb <= 0.5 ? lineColor.rgb * (lineColor.rgb * 2) : 1 - (1 - lineColor.rgb) * (1 - 2 * (lineColor.rgb - 0.5)), lineColor.a * edge); // Soft Light
 				//lineColor = float4(lineColor.rgb / (1.0001 - lineColor.rgb), lineColor.a * edge); // Color Dodge
 				lineColor = float4(1 - (1 - lineColor.rgb) * (1 - lineColor.rgb), lineColor.a * edge); // Screen
-				lineColor.a *= _LineAlpha;
+
+				
+				AmbientOcclusionFactor ao =  GetScreenSpaceAmbientOcclusion(i.uv);
+
+				float aoD = smoothstep(0.6h, 1.0h, ao.directAmbientOcclusion);
+				//return float4(aoD.rrr, 1);
+				
+				lineColor = lerp(lineColorD, lineColor, aoD);
+				lineColor = lerp(lineColorD, lineColor, ao.directAmbientOcclusion);
+				lineColor.a *= _LineAlpha * smoothstep(0.f, 0.1f, depth);
 				float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
 				
 				return alphaBlend(lineColor, color);
