@@ -209,11 +209,11 @@ namespace MikroFramework.AudioKit
         {
             get {
                
-                return PlayerPrefs.GetFloat(MasterVolumeStorageKey, 1f);
+                return ES3.Load<float>(MasterVolumeStorageKey, 1f);
             }
             set {
                 value = Mathf.Clamp01(value);
-                PlayerPrefs.SetFloat(MasterVolumeStorageKey, value);
+                ES3.Save<float>(MasterVolumeStorageKey, value);
                 UpdateAudios();
                 //bgm.volume = MusicVolume;
                 //sound2D.volume = SoundVolume;
@@ -223,26 +223,26 @@ namespace MikroFramework.AudioKit
 
         public float MusicVolume {
             get {
-                return PlayerPrefs.GetFloat(MusicVolumeStorageKey, 1f);
+                return ES3.Load<float>(MusicVolumeStorageKey, 1f);
             }
             set
             {
                 value = Mathf.Clamp01(value);
                 //bgm.volume = value * MasterVolume;
-                PlayerPrefs.SetFloat(MusicVolumeStorageKey, value);
+                ES3.Save<float>(MusicVolumeStorageKey, value);
                 UpdateAudios();
             }
         }
         public float SoundVolume {
             get
             {
-                return PlayerPrefs.GetFloat(SoundVolumeStorageKey, 1f);
+                return ES3.Load<float>(SoundVolumeStorageKey, 1f);
             }
             set
             {
                 value = Mathf.Clamp01(value);
                // sound2D.volume = value * 0.5f * MasterVolume;
-                PlayerPrefs.SetFloat(SoundVolumeStorageKey, value);
+               ES3.Save<float>(SoundVolumeStorageKey, value);
                 UpdateAudios();
             }
         }

@@ -34,12 +34,12 @@ public class PillarStatusElement : AbstractMikroController<MainGame> {
       progressText.text = $"<sprite index={(int) currencyType}>{Mathf.RoundToInt(displayedProgress * 100)}%";
    }
 
-   public void SetProgress(int rarity, CurrencyType currencyType, Color color, float progress) {
+   public void SetProgress(int rarity, CurrencyType currencyType, Sprite sprite, float progress) {
       if (rarity > spawnedRarityIndicators.Count) {
          SpawnRarityIndicators(rarity);
       }
-      
-      sliderFillImage.DOColor(color, 0.3f);
+
+      sliderFillImage.sprite = sprite;
       //progressBar.DOValue(progress, 0.3f);
       float targetWidth = Mathf.Lerp(widthRange.x, widthRange.y, progress);
       rectTransform.DOKill();

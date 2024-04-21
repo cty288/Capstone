@@ -24,7 +24,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
         //public float spawnInterval;
         private bool ended;
         //public int bulletSpeed;
-        
+        public Transform shootPoint;
 
 
         private Transform playerTrans;
@@ -128,9 +128,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
 
             UnityEngine.GameObject b = pool.Allocate();
-            var body = this.gameObject.transform.GetChild(0);
-            b.transform.position = body.transform.position;
-            b.transform.rotation = Quaternion.LookRotation(playerTrans.position - body.transform.position
+            var body = shootPoint.position;
+            b.transform.position = body;
+            b.transform.rotation = Quaternion.LookRotation(playerTrans.position - body
                                                            );
 
 

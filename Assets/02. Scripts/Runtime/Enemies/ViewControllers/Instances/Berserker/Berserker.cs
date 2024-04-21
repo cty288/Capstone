@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
 using DG.Tweening;
 using MikroFramework;
 using MikroFramework.ActionKit;
@@ -60,7 +61,9 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 			{
 				new AutoConfigCustomProperty("entity"),
 				new AutoConfigCustomProperty("stagger"),
-				new AutoConfigCustomProperty("simpleShoot")
+				new AutoConfigCustomProperty("simpleShoot"),
+				new AutoConfigCustomProperty("emp"),
+				new AutoConfigCustomProperty("slash")
 			};
 		}
 
@@ -77,7 +80,7 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 		private float StaggerDelay = 0f;
 		private float lastHitTime = 0f;
 		private float StaggerTick = 0f;
-		
+		private SharedGameObject generatedEMPField;
 		[BindCustomData("stagger","staggerTime")]
 		public float StaggerTime { get; }
 		
@@ -91,6 +94,8 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 			foreach (var hurtbox in vulerableHurboxes) {
 				hashedVulerableHurboxes.Add(hurtbox);
 			}
+
+			generatedEMPField = (SharedGameObject) GetComponent<BehaviorTree>().GetVariable("GeneratedEMPField");
 		}
 
 		protected override void OnEntityStart()
@@ -161,6 +166,14 @@ namespace Runtime.Enemies.ViewControllers.Instances.Berserker {
 		public override void OnRecycled() {
 			base.OnRecycled();
 			deathAnimationEnd = false;
+		}
+
+		protected override void OnReadyToRecycle() {
+			base.OnReadyToRecycle();
+			if (generatedEMPField.Value) {
+				generatedEMPField.Value.GetComponent<BerserkerEMPField>().DestroyField();
+				generatedEMPField.Value = null;
+			}
 		}
 	}
 }

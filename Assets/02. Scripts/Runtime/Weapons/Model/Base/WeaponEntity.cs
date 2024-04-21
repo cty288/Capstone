@@ -494,10 +494,12 @@ namespace Runtime.Weapons.Model.Base
         [field: ES3Serializable]
         public ReferenceCounter LockWeaponCounter { get; } = new ReferenceCounter();
 
-        public bool IsLocked => LockWeaponCounter.Count > 0;
+        public bool IsLocked => LockWeaponCounter.Count > 0 || (ParentDamageDealer?.GetRootDamageDealer() is IPlayerEntity playerEntity &&
+                                                                playerEntity.WeaponLockCounter.Count > 0);
 
 
         Action<ICanDealDamage, IDamageable, int> ICanDealDamage.OnDealDamageCallback {
+            
             get => _onDealDamageCallback;
             set => _onDealDamageCallback = value;
         }
