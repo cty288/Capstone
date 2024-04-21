@@ -1627,8 +1627,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.91
+  m_Center: {x: 0, y: -0.22, z: 0}
 --- !u!114 &8049880895972565084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1750,6 +1750,10 @@ MonoBehaviour:
   autoRecycleTimeAfterFarAwayFromPlayer: 10
   autoRecycleDistanceFromPlayer: 150
   autoRecycleCheckTimeInterval: 5
+  eliteColor: {r: 0, g: 0, b: 0, a: 0}
+  eliteFresnel: 0
+  eliteCutIn: 0
+  eliteCutOut: 0
   eliteScaleMultiplier: 1.5
   waypoints: []
   deathEffect: {fileID: 5619386021293234911, guid: 30ec2f6411d74614eb7cd3f48cbcd870,
