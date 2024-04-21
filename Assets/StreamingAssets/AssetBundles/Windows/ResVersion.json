@@ -300,8 +300,8 @@
     },
     {
       "AssetName": "buff_icons",
-      "MD5": "9b565ab61bc69d8c4488df05a77cb411",
-      "FileSize": 9013.547,
+      "MD5": "7c25256ad83417698b5d1c03d2b6d987",
+      "FileSize": 10156.5332,
       "assetDatas": [
         {
           "Name": "buff frame",
@@ -335,6 +335,16 @@
         },
         {
           "Name": "HackedBuff_Icon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "LockActiveSkillsBuff_Icon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "LockWeaponsBuff_Icon",
           "OwnerBundleName": "buff_icons",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -422,9 +432,31 @@
       ]
     },
     {
+      "AssetName": "general",
+      "MD5": "8ac7f784f5ac6a01b32ab0d6936fd22a",
+      "FileSize": 16.2929688,
+      "assetDatas": [
+        {
+          "Name": "scroll bar icon",
+          "OwnerBundleName": "general",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "background color",
+          "OwnerBundleName": "general",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "button",
+          "OwnerBundleName": "general",
+          "AssetType": "UnityEngine.Texture2D"
+        }
+      ]
+    },
+    {
       "AssetName": "info",
-      "MD5": "515dab7a8463789eab7f7cbe585698de",
-      "FileSize": 10857.5635,
+      "MD5": "df4cc1a48724e448ca698aef0f057074",
+      "FileSize": 12014.415,
       "assetDatas": [
         {
           "Name": "Crosshair Instruction + Reference",
@@ -1097,16 +1129,6 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
-          "Name": "Mouse",
-          "OwnerBundleName": "info",
-          "AssetType": "UnityEngine.AnimationClip"
-        },
-        {
-          "Name": "Mouse",
-          "OwnerBundleName": "info",
-          "AssetType": "UnityEditor.Animations.AnimatorController"
-        },
-        {
           "Name": "DefaultCrossHair",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.GameObject"
@@ -1212,6 +1234,11 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "RarityIndicatorPillarBar",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "DamageNumber",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.GameObject"
@@ -1240,6 +1267,21 @@
           "Name": "NameTag_General",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "inventory full-01",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Mouse",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.AnimationClip"
+        },
+        {
+          "Name": "Mouse",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEditor.Animations.AnimatorController"
         }
       ]
     },
@@ -1294,8 +1336,8 @@
     },
     {
       "AssetName": "others",
-      "MD5": "a82544bb9312d3a2d1f06e798054d228",
-      "FileSize": 771.78125,
+      "MD5": "ce30f8afa4eb8e66cbabb0beb3db5cfc",
+      "FileSize": 7251.249,
       "assetDatas": [
         {
           "Name": "PooledCube",
@@ -1388,8 +1430,8 @@
     },
     {
       "AssetName": "settings",
-      "MD5": "f0ae60e21ae813a58b08ff1fe4fda89c",
-      "FileSize": 7588.05469,
+      "MD5": "2ec775ae9cc21665443f4ef7e6e7053f",
+      "FileSize": 10009.6572,
       "assetDatas": [
         {
           "Name": "PS4_Circle",
@@ -1585,6 +1627,56 @@
           "Name": "tab icon",
           "OwnerBundleName": "settings",
           "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings -  screen overlay",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings - Back to Default Button",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings - Button 1",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings - Button 2",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings - Cross",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings - Full Cross",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings - Main Base",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings - scrollbar 2",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings - Tick",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Settings -Horizontal Row",
+          "OwnerBundleName": "settings",
+          "AssetType": "UnityEngine.Texture2D"
         }
       ]
     },
@@ -1694,15 +1786,25 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "a6091e509843ad35a22dcccdca371339",
-      "FileSize": 2.16015625,
+      "MD5": "f60d1066d2e2a265577642d33b43b3d2",
+      "FileSize": 2.22460938,
       "assetDatas": []
     },
     {
       "AssetName": "assets/fonts",
-      "MD5": "bdb2bb56e11473806a0c7c5573fc759f",
-      "FileSize": 940.1299,
+      "MD5": "196e2828e959e057bf9ec558195cdaa5",
+      "FileSize": 30760.64,
       "assetDatas": [
+        {
+          "Name": "SourceHanSansHW-VF",
+          "OwnerBundleName": "assets/fonts",
+          "AssetType": "TMPro.TMP_FontAsset"
+        },
+        {
+          "Name": "SourceHanSansHW-VF",
+          "OwnerBundleName": "assets/fonts",
+          "AssetType": "UnityEngine.Font"
+        },
         {
           "Name": "Orbitron-Black SDF",
           "OwnerBundleName": "assets/fonts",
@@ -1767,8 +1869,8 @@
     },
     {
       "AssetName": "assets/goods_inventory",
-      "MD5": "abf3cd285f8c86dcce00da1e2138a447",
-      "FileSize": 34.5039063,
+      "MD5": "ae0fefb68957977bd2e4c258544ab4ee",
+      "FileSize": 37.6210938,
       "assetDatas": [
         {
           "Name": "Combat1_Icon",
@@ -1847,6 +1949,26 @@
         },
         {
           "Name": "Time4_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "AdrenalineSkill_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "GrenadeSkill_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "MedicalNeedleSkill_Icon",
+          "OwnerBundleName": "assets/goods_inventory",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "StunGrenadeSkill_Icon",
           "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
@@ -1958,6 +2080,23 @@
       ]
     },
     {
+      "AssetName": "audio/general",
+      "MD5": "5407e2ce461b0a0cbd0fd613620f4be9",
+      "FileSize": 5.98828125,
+      "assetDatas": [
+        {
+          "Name": "error_2",
+          "OwnerBundleName": "audio/general",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "uIclick",
+          "OwnerBundleName": "audio/general",
+          "AssetType": "UnityEngine.AudioClip"
+        }
+      ]
+    },
+    {
       "AssetName": "entities/pillars",
       "MD5": "d74615edd04c7506b6e25902892256be",
       "FileSize": 6648.93848,
@@ -1971,8 +2110,8 @@
     },
     {
       "AssetName": "entities/resources",
-      "MD5": "366c8998fa750524857b60ed439e8aec",
-      "FileSize": 69360.0,
+      "MD5": "a722c5fe21e8fcd52afdac6cc9ff3aa7",
+      "FileSize": 64414.42,
       "assetDatas": [
         {
           "Name": "Bait",
@@ -2578,8 +2717,8 @@
     },
     {
       "AssetName": "entities/resources_inventory",
-      "MD5": "ef0c1913b04c268a918a9890c8329511",
-      "FileSize": 1595.98926,
+      "MD5": "11752d7be8d338a14f1cf6c25c8c1c03",
+      "FileSize": 1459.63281,
       "assetDatas": [
         {
           "Name": "ResourceInvAtlas",
@@ -2588,16 +2727,6 @@
         },
         {
           "Name": "Bait_Icon",
-          "OwnerBundleName": "entities/resources_inventory",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "GrenadeSkill_Icon",
-          "OwnerBundleName": "entities/resources_inventory",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "MedicalNeedleSkill_Icon",
           "OwnerBundleName": "entities/resources_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
