@@ -67,6 +67,9 @@ public class SanctuaryShieldViewController : AbstractMikroController<MainGame>, 
 		{
 			FlashAndBreak();
 		}
+
+		
+
 	}
 
 	private async UniTask FlashAndBreak()
