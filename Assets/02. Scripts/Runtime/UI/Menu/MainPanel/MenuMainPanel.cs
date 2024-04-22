@@ -16,6 +16,7 @@ public class MenuMainPanel : AbstractPanelContainer {
 	[SerializeField] private Button optionsButton;
 	//[SerializeField] private Button creditsButton;
 	[SerializeField] private Button exitGameButton;
+	[SerializeField] private Button discordButton;
 
 	private void Awake() {
 		AudioSystem.Singleton.Initialize(null);
@@ -31,6 +32,11 @@ public class MenuMainPanel : AbstractPanelContainer {
 		optionsButton.onClick.AddListener(OnOptionsButtonClicked);
 		//creditsButton.onClick.AddListener(OnCreditsButtonClicked);
 		exitGameButton.onClick.AddListener(OnExitGameButtonClicked);
+		discordButton.onClick.AddListener(OnDiscordButtonClicked);
+	}
+
+	private void OnDiscordButtonClicked() {
+		Application.OpenURL("https://discord.gg/Bx7EprBP6H");
 	}
 
 	private void OnExitGameButtonClicked() {
