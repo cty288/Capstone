@@ -32,7 +32,6 @@ namespace Runtime.UI {
 
 		private void OnOpenPillarUI(OnOpenPillarUI e) {
 			OpenOrGetClose<PillarUIViewController>(this, e, false);
-			
 		}
 
 		private void Update() {
@@ -44,6 +43,9 @@ namespace Runtime.UI {
 					//Time = 1;
 					GetAndClose(currentMainPanel);
 					//ClientInput.Singleton.EnablePlayerMaps();
+				}
+				else {
+					OpenOrGetClose<GamePausePanel>(null, null, false);
 				}
 			}
 			
@@ -91,14 +93,20 @@ namespace Runtime.UI {
 		/// <returns></returns>
 		public T Open<T>(IPanelContainer parent, UIMsg message, bool isPopup, bool switchUIPlayerMap = true,
 			bool createNewIfNotExist = true, string assetNameIfNotExist = "") where T : class, IPanel {
+			bool closedOtherPanel = false;
 			if (currentMainPanel != null && !isPopup) {
 				ClosePanel(currentMainPanel);
+				closedOtherPanel = true;
 			}
 		
 			if (switchUIPlayerMap) {
 				ClientInput.Singleton.EnableUIMaps();
-				
 			}
+			
+			if(!switchUIPlayerMap && closedOtherPanel) {
+				ClientInput.Singleton.EnablePlayerMaps();
+			}
+			
 			AudioSystem.Singleton.Play2DSound("open_menu");
 			//Time.timeScale = 0;
 			return Open<T>(parent, message, createNewIfNotExist, assetNameIfNotExist);

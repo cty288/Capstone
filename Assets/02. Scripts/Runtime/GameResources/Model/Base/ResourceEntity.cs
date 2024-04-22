@@ -25,6 +25,7 @@ namespace Runtime.GameResources.Model.Base {
 		Currency,
 		Skill,
 		WeaponParts,
+		Scrap,
 		All // do not use this
 	}
 
@@ -212,8 +213,8 @@ namespace Runtime.GameResources.Model.Base {
 
 		public abstract ResourceCategory GetResourceCategory();
 		
-		[field: ES3Serializable]
-		public string InventoryVCPrefabName { get; } = "EntityInventoryVC_Common";
+		
+		public virtual string InventoryVCPrefabName => "EntityInventoryVC_Common";
 
 		//public string IconSpriteName => $"{EntityName}_Icon";
 

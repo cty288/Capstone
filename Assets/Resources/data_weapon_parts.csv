@@ -1,19 +1,19 @@
-EntityName / Property Names,ID,max_stack,build_type,purchase_cost,custom_properties,tags,More Notes
-Types,int,int,CurrencyType,SkillPurchaseCostInfo,dynamic,"Dictionary<TagName,int>",
-Notes ->,,int,,,"Dict<string, CustomProperty>
+EntityName / Property Names,ID,max_stack,build_type,purchase_cost,parts_upgrade_cost,parts_ingame_purchase_cost,custom_properties,tags,More Notes
+Types,int,int,CurrencyType,SkillPurchaseCostInfo,"Dictionary<int, int>","Dictionary<int, int>",dynamic,"Dictionary<TagName,int>",
+Notes ->,,int,,,,,"Dict<string, CustomProperty>
 
 CustomProperty Structure:
 {""type"": ""xxx"", ""value"": json}","Dict<string,int>, 
 If no levels, use negative numbers to represent", Blue headers are inventory (resource) related properties
-,,,,,,,
-BEGIN,,,,,,,
+,,,,,,,,,
+BEGIN,,,,,,,,,
 TestWeaponParts,,1,"""Time""","{
         ""ResourceCost"": {
             ""Combat1"": 3,
             ""Plant1"": 1
         },
         ""MoneyCost"": 4
-}","{
+}",,,"{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -39,7 +39,7 @@ TestWeaponParts2,,1,"""Time""","{
             ""Plant1"": 5
         },
         ""MoneyCost"": 100
-}","{
+}",,,"{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -65,7 +65,7 @@ TestWeaponParts3,,1,"""Time""","{
             ""Plant1"": 5
         },
         ""MoneyCost"": 100
-}","{
+}",,,"{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -91,7 +91,7 @@ TestWeaponParts4,,1,"""Time""","{
             ""Plant1"": 1
         },
         ""MoneyCost"": 4
-}","{
+}",,,"{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -117,7 +117,7 @@ TestWeaponParts5,,1,"""Time""","{
             ""Plant1"": 1
         },
         ""MoneyCost"": 4
-}","{
+}",,,"{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -143,7 +143,7 @@ TestWeaponParts6,,1,"""Time""","{
             ""Plant1"": 1
         },
         ""MoneyCost"": 4
-}","{
+}",,,"{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -169,7 +169,7 @@ TestWeaponParts7,,1,"""Time""","{
             ""Plant1"": 1
         },
         ""MoneyCost"": 4
-}","{
+}",,,"{
   ""level1"": {
     ""attackSpeed"": {
       ""type"": ""float"",
@@ -190,6 +190,15 @@ TestWeaponParts7,,1,"""Time""","{
   }
 }",,
 SpecialBarrel,1,1,"""Time""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -204,6 +213,15 @@ SpecialBarrel,1,1,"""Time""",,"{
   }
 }",,
 HeavyBarrel,2,1,"""Time""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.1},
     ""buff_level"": {""type"": ""int"", ""value"": 1}
@@ -227,6 +245,15 @@ AdaptedCompensator,3,1,"""Combat""","{
         },
         ""MoneyCost"": 25
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.15}
   },
@@ -245,6 +272,15 @@ SpecialCompensator,4,1,"""Mineral""","{
             ""Time1"": 10
         },
         ""MoneyCost"": 25
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 2},
@@ -268,6 +304,15 @@ ShortBarrel,5,1,"""Time""","{
             ""Time1"": 10
         },
         ""MoneyCost"": 25
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.1},
@@ -293,6 +338,15 @@ LongBarrel,6,1,"""Time""","{
         },
         ""MoneyCost"": 150
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.1},
     ""distance"" : {""type"": ""float"", ""value"": 10}
@@ -315,14 +369,41 @@ CustomizedMagazine,7,1,"""Time""","{
             ""Time1"": 5
         },
         ""MoneyCost"": 10
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{ ""level1"": { ""multiplier"": {""type"": ""float"", ""value"": 2} }, ""level2"": { ""multiplier"": {""type"": ""float"", ""value"": 3} }, ""level3"": { ""multiplier"": {""type"": ""float"", ""value"": 5} }, ""level4"": { ""multiplier"": {""type"": ""float"", ""value"": 10} } }",,
-GunpowerEnchancement,8,1,"""Time""",,,,
+GunpowerEnchancement,8,1,"""Time""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}",,,
 VampireMagazine,9,1,"""Time""","{
         ""ResourceCost"": {
             ""Time2"": 10,
             ""Time1"": 15
         },
         ""MoneyCost"": 75
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.1},
@@ -349,6 +430,15 @@ RageDetector,10,1,"""Combat""","{
         },
         ""MoneyCost"": 225
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplayer"": {""type"": ""float"", ""value"": 0.2},
     ""health_bound"": {""type"": ""float"", ""value"": 0.5}
@@ -372,6 +462,15 @@ KineticDevice,11,1,"""Time""","{
         },
         ""MoneyCost"": 25
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplayer"": {""type"": ""float"", ""value"": 0.05}
   },
@@ -391,6 +490,15 @@ FactoryNewAttachment,12,1,"""Time""","{
             ""Time1"": 15
         },
         ""MoneyCost"": 75
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""multiplayer"": {""type"": ""float"", ""value"": 0.25},
@@ -415,6 +523,15 @@ SelfLoadingAttachment,13,1,"""Time""","{
             ""Time2"": 15
         },
         ""MoneyCost"": 75
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }",,,
 FatesEdgeBarrel,14,1,"""Combat""","{
         ""ResourceCost"": {
@@ -423,6 +540,15 @@ FatesEdgeBarrel,14,1,"""Combat""","{
             ""Time3"": 5
         },
         ""MoneyCost"": 150
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.15},
@@ -448,6 +574,15 @@ DoubleExplosionMagazine,15,1,"""Combat""","{
         },
         ""MoneyCost"": 25
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.5}
   },
@@ -468,6 +603,15 @@ VerticalForegrip,16,1,"""Combat""","{
         },
         ""MoneyCost"": 25
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.25}
   }
@@ -477,6 +621,15 @@ ThundercrackBarrel,17,1,"""Mineral""","{
             ""Mineral1"": 5
         },
         ""MoneyCost"": 10
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.2}
@@ -499,6 +652,15 @@ EMPChain,18,1,"""Mineral""","{
         },
         ""MoneyCost"": 75
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2}
   },
@@ -518,6 +680,15 @@ IntenseEMP,19,1,"""Mineral""","{
             ""Time1"": 5
         },
         ""MoneyCost"": 25
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 1.5},
@@ -542,6 +713,15 @@ WorseViral,20,1,"""Plant""","{
         },
         ""MoneyCost"": 10
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""damage"": {""type"": ""int"", ""value"": 1}
   },
@@ -556,6 +736,15 @@ WorseViral,20,1,"""Plant""","{
   }
 }",,
 EvolvingVirus,21,1,"""Plant""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""time"": {""type"": ""int"", ""value"": 5}
   },
@@ -577,6 +766,15 @@ Multivirus,22,1,"""Plant""","{
         },
         ""MoneyCost"": 225
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""number"": {""type"": ""int"", ""value"": 1}
   },
@@ -593,6 +791,15 @@ ChargedMagazine,23,1,"""Time""","{
             ""Time3"": 15
         },
         ""MoneyCost"": 225
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""multiplayer"": {""type"": ""float"", ""value"": 0.25},
@@ -616,6 +823,15 @@ ChargedMagazine,23,1,"""Time""","{
   }
 }",,
 ExecutorBarrel,24,1,"""Combat""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.15},
     ""health"": {""type"": ""float"", ""value"": 0.25}
@@ -641,6 +857,15 @@ InfiniteChainMagazine,25,1,"""Combat""","{
         },
         ""MoneyCost"": 150
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level2"": {
    ""number"": {""type"": ""int"", ""value"": 1}
   },
@@ -653,6 +878,15 @@ DawnbreakerBlast,26,1,"""Combat""","{
             ""Combat1"": 5
         },
         ""MoneyCost"": 10
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""damage"": {""type"": ""int"", ""value"": 35}
@@ -668,6 +902,15 @@ DawnbreakerBlast,26,1,"""Combat""","{
   }
 }",,
 ShrapnelBullets,27,1,"""Combat""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""buff_level"": {""type"": ""int"", ""value"": 1}
   },
@@ -688,6 +931,15 @@ KillCounter,28,1,"""Combat""","{
             ""Time4"": 5
         },
         ""MoneyCost"": 225
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""counter"": {""type"": ""int"", ""value"": 5},
@@ -710,6 +962,15 @@ ConcentratedCurrent,29,1,"""Mineral""","{
         },
         ""MoneyCost"": 225
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""range"": {""type"": ""float"", ""value"": 0.5},
     ""damage"": {""type"": ""float"", ""value"": 0.25}
@@ -728,6 +989,15 @@ ConcentratedCurrent,29,1,"""Mineral""","{
   }
 }",,
 InterferenceAmplification,30,1,"""Mineral""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""range"": {""type"": ""int"", ""value"": 2}
   },
@@ -748,8 +1018,26 @@ ChainReaction,31,1,"""Mineral""","{
         ""Time4"": 5
     },
     ""MoneyCost"": 225
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }",,,
 HardCasesBarrel,32,1,"""Plant""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""damage"": {""type"": ""int"", ""value"": 5}
   },
@@ -771,6 +1059,15 @@ FierceVirus,33,1,"""Plant""","{
     },
     ""MoneyCost"": 225
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""time"": {""type"": ""float"", ""value"": 0.25}
   },
@@ -789,6 +1086,15 @@ SuddenDeath,34,1,"""Plant""","{
     },
     ""MoneyCost"": 150
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level2"": {
     ""time"": {""type"": ""float"", ""value"": 10},
     ""damage"": {""type"": ""float"", ""value"": 0.5}
@@ -803,6 +1109,15 @@ SuddenDeath,34,1,"""Plant""","{
   }
 }",,
 ArtificialAdaptedMagazine,35,1,"""Time""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""ammo"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -823,6 +1138,15 @@ SunriseSurge,36,1,"""Time""","{
     },
     ""MoneyCost"": 150
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.25}
   },
@@ -837,11 +1161,29 @@ SunriseSurge,36,1,"""Time""","{
   }
 }",,
 ArtificialAdaptedAttachment,37,1,"""Time""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.25}
   }
 }",,
 ShreddingAdaptedBarrel,38,1,"""Combat""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -856,6 +1198,15 @@ ShreddingAdaptedBarrel,38,1,"""Combat""",,"{
   }
 }",,
 EMPAdaptedBarrel,39,1,"""Mineral""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -870,6 +1221,15 @@ EMPAdaptedBarrel,39,1,"""Mineral""",,"{
   }
 }",,
 ViralAdaptedBarrel,40,1,"""Plant""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -884,6 +1244,15 @@ ViralAdaptedBarrel,40,1,"""Plant""",,"{
   }
 }",,
 ShreddingAdaptedMagazine,41,1,"""Combat""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""ammo"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -898,6 +1267,15 @@ ShreddingAdaptedMagazine,41,1,"""Combat""",,"{
   }
 }",,
 EMPAdaptedMagazine,42,1,"""Mineral""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""ammo"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -912,6 +1290,15 @@ EMPAdaptedMagazine,42,1,"""Mineral""",,"{
   }
 }",,
 ViralAdaptedMagazine,43,1,"""Plant""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""ammo"": {""type"": ""float"", ""value"": 0.1}
   },
@@ -926,16 +1313,43 @@ ViralAdaptedMagazine,43,1,"""Plant""",,"{
   }
 }",,
 ShreddingAdaptedAttachment,44,1,"""Combat""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.25}
   }
 }",,
 EMPAdaptedAttachment,45,1,"""Mineral""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.25}
   }
 }",,
 ViralAdaptedAttachment,46,1,"""Plant""",,"{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""multiplier"": {""type"": ""float"", ""value"": 0.25}
   }
@@ -948,6 +1362,15 @@ DangerousModification,47,1,"""Combat""","{
     },
     ""MoneyCost"": 150
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2},
     ""damage"": {""type"": ""int"", ""value"": 10}
@@ -959,6 +1382,15 @@ CompressedCurrent,48,1,"""Mineral""","{
         ""Time1"": 5
     },
     ""MoneyCost"": 25
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""damage"": {""type"": ""float"", ""value"": 0.2}
@@ -980,6 +1412,15 @@ ControlledEMP,49,1,"""Mineral""","{
         ""Time3"": 5
     },
     ""MoneyCost"": 150
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }",,,
 DangerousModification_EMP,50,1,"""Mineral""","{
     ""ResourceCost"": {
@@ -988,6 +1429,15 @@ DangerousModification_EMP,50,1,"""Mineral""","{
         ""Time3"": 5
     },
     ""MoneyCost"": 150
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2},
@@ -1002,6 +1452,15 @@ HackedAgain,51,1,"""Plant""","{
     },
     ""MoneyCost"": 75
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""damage"": {""type"": ""int"", ""value"": 1}
   }
@@ -1013,6 +1472,15 @@ FunctionalLimit,52,1,"""Plant""","{
         ""Time3"": 5
     },
     ""MoneyCost"": 150
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""buff_level"": {""type"": ""int"", ""value"": 1}
@@ -1035,6 +1503,15 @@ DangerousModification_Viral,53,1,"""Plant""","{
     },
     ""MoneyCost"": 150
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""chance"": {""type"": ""float"", ""value"": 0.2},
     ""damage"": {""type"": ""int"", ""value"": 5}
@@ -1047,6 +1524,15 @@ TransmissionAttachment,54,1,"""Plant""","{
     },
     ""MoneyCost"": 25
 }","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
+}","{
   ""level1"": {
     ""range"": {""type"": ""float"", ""value"": 10}
   }
@@ -1057,6 +1543,15 @@ BerserkerAttachment,55,1,"""Time""","{
         ""Time3"": 15
     },
     ""MoneyCost"": 225
+}","{
+    ""2"": 20,
+    ""3"": 20,
+    ""4"": 20
+}","{
+    ""1"": 20,  
+    ""2"": 40,
+    ""3"": 60,
+    ""4"": 80
 }","{
   ""level1"": {
     ""buff_level"": {""type"": ""int"", ""value"": 1}

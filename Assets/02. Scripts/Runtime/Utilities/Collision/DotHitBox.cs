@@ -59,11 +59,8 @@ namespace Runtime.Utilities.Collision
         {
             if (canDealDamage)
             {
-                print($"WORM BOSS: dot can deal damage {other.gameObject.name}");
-
                 if (PhysicsUtility.IsInLayerMask(other.gameObject, TargetLayers))
                 {
-                    print($"WORM BOSS: dot is in layer mask {other.gameObject.name}");
                     IHurtbox hurtbox;
                     hurtbox = other.gameObject.GetComponent<IHurtbox>();
                     HurtboxModifier mod = other.GetComponent<HurtboxModifier>();
@@ -103,7 +100,6 @@ namespace Runtime.Utilities.Collision
                         };
 
                         if (hitData.Validate()) {
-                            Debug.Log(hitData.Hurtbox.Owner.name);
                             hitData.HitDetector.HitResponder?.HitResponse(hitData);
                             hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
                         }
@@ -120,8 +116,6 @@ namespace Runtime.Utilities.Collision
                             Attacker = m_hitResponder,
                             ShowDamageNumber = showDamageNumber
                         };
-
-                        print($"WORM BOSS: dot pass all {other.gameObject.name}");
 
                         HitResponder?.HitResponse(hitData);
                     }

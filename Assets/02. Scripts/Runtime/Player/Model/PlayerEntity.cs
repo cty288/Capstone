@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Utilities;
 using JetBrains.Annotations;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
@@ -69,6 +70,8 @@ namespace Runtime.Player {
 		
 		public void UnRegisterOnModifyReceivedAddArmorAmount(Func<float, float> onModifyAddArmorAmount);
 		//public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
+		
+		public ReferenceCounter WeaponLockCounter { get; }
 	}
 
 	public struct OnPlayerKillEnemy {
@@ -147,6 +150,7 @@ namespace Runtime.Player {
 			_onDealDamageCallback = null;
 			_onKillDamageableCallback = null;
 			OnModifyAddArmorAmountCallbackList.Clear();
+			WeaponLockCounter.Clear();
 			
 		}
 		protected override void OnInitModifiers(int rarity) {
@@ -369,7 +373,10 @@ namespace Runtime.Player {
 		public void UnRegisterOnModifyReceivedAddArmorAmount(Func<float, float> onModifyAddArmorAmount) {
 			OnModifyAddArmorAmountCallbackList.Remove(onModifyAddArmorAmount);
 		}
-	
+
+		[field: ES3Serializable]
+		public ReferenceCounter WeaponLockCounter { get; } = new ReferenceCounter();
+
 		public ICanDealDamage ParentDamageDealer => null;
 
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {

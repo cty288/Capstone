@@ -8,7 +8,7 @@ namespace Runtime.Inventory.ViewController {
 	public class MainInventorySlotLayoutViewController : InventorySlotLayoutViewController {
 		
 		protected RectTransform slotLayout;
-		[SerializeField] private GameObject slotPrefab;
+		[SerializeField] protected GameObject slotPrefab;
 		protected List<ResourceSlotViewController> slotViewControllers = new List<ResourceSlotViewController>();
 		
 		private IInventoryModel inventoryModel;

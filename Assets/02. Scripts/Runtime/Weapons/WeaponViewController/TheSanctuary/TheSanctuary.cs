@@ -53,10 +53,7 @@ namespace Runtime.Weapons
         public override bool Collectable  => true;
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
-            return new[]
-            {
-                new AutoConfigCustomProperty("shield")
-            };
+            return null;
         }
 
 

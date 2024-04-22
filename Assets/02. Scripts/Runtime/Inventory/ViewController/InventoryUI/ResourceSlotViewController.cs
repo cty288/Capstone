@@ -59,6 +59,7 @@ namespace Runtime.Inventory.ViewController {
         protected bool isRightSide = false;
         protected Image slotBG;
         public static GameObject pointerDownObject = null;
+        [SerializeField]
         private RectTransform rarityBar;
         private ResLoader resLoader;
         private IResourceEntity topItem;
@@ -113,7 +114,10 @@ namespace Runtime.Inventory.ViewController {
                 spawnPoint = transform.Find("InventoryItemSpawnPos")?.GetComponent<RectTransform>();
             }
 
-            rarityBar = transform.Find("RarityBar")?.GetComponent<RectTransform>();
+            if (!rarityBar) {
+                rarityBar = transform.Find("RarityBar")?.GetComponent<RectTransform>();
+            }
+           
             tagDetailIconSpawnPoint = transform.Find("TagIcon")?.GetComponent<RectTransform>();
             resLoader = this.GetUtility<ResLoader>();
             if (spawnPoint) {

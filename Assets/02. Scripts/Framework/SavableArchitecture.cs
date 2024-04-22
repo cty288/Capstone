@@ -60,9 +60,13 @@ namespace Framework {
 		}
     
 		public void ClearSave() {
+			ClearSave(saveFileSuffix);
+		}
+
+		public static void ClearSave(string saveFileSuffix) {
 			ES3.DeleteFile($"models_{saveFileSuffix}.es3");
 			ES3.DeleteFile($"systems_{saveFileSuffix}.es3");
-			ES3.DeleteFile("SaveFile.es3");
+			ES3.DeleteFile("SaveFile_Scene.es3");
 		}
 		
 		public void Reset() {

@@ -461,7 +461,7 @@ BladeSentinel,"{""maxHealth"": 1400, ""currentHealth"": 1400}",10,"{
     },
     ""honingDuration"": {
       ""type"": ""float"",
-      ""value"": 2
+      ""value"": 0.5
     },
     ""jumpHeight"": {
       ""type"": ""float"",
@@ -844,3 +844,94 @@ WormBoss,"{""maxHealth"":2100,
   }
 }",,,
 WormBossSegment,,,,,,,,,
+Berserker,"{""maxHealth"":2100,
+""currentHealth"":2100}",30,,"{
+  ""Combat"": {""x"": 0, ""y"": 1},
+  ""Time"": {""x"": 0, ""y"": 1},
+  ""Plant"": {""x"": 0, ""y"": 1},
+  ""Mineral"": {""x"": 0, ""y"": 1}
+}",456,"{
+  ""entity"": {
+    ""speed"": {
+      ""type"": ""float"",
+      ""value"": 20,
+      ""useDefaultModifier"": true
+    },
+    ""closeRange"": {
+      ""type"": ""float"",
+      ""value"": 43
+    }
+  },
+  ""stagger"": {
+    ""staggerThreshold"": {
+      ""type"": ""int"",
+      ""value"": 40
+    },
+    ""staggerDelay"": {
+      ""type"": ""float"",
+      ""value"": 5
+    },
+    ""staggerTick"": {
+      ""type"": ""float"",
+      ""value"": 0.5
+    }, 
+    ""staggerTime"": {
+      ""type"": ""float"",
+      ""value"": 10
+    }
+  },
+  ""simpleShoot"": {
+    ""bulletCount"": {
+      ""type"": ""int"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""bulletSpeed"": {
+      ""type"": ""float"",
+      ""value"": 10,
+      ""useDefaultModifier"": true
+    },
+    ""spawnInterval"": {
+      ""type"": ""float"",
+      ""value"": 0.5,
+      ""useDefaultModifier"": true,
+      ""inverse"": true
+    }
+  },
+  ""emp"": {
+    ""speed"": {
+      ""type"": ""float"",
+      ""value"": 1.1
+    },
+    ""scaleMultiplier"": {
+      ""type"": ""float"",
+      ""value"": 1
+    }
+  },
+  ""slash"": {
+    ""slash_speed"": {
+      ""type"": ""float"",
+      ""value"": 40
+    },
+    ""scale_multiplier"": {
+      ""type"": ""float"",
+      ""value"": 1
+    },
+     ""slash_interval"": {
+      ""type"": ""float"",
+      ""value"": 2
+    },
+    ""slash_damage"": {
+      ""type"": ""int"",
+      ""value"": 30
+    },
+    ""slash_time"": {
+      ""type"": ""int"",
+      ""value"": 2
+    },
+    ""melee_damage"": {
+      ""type"": ""int"",
+      ""value"": 30
+    }
+  }
+}",,,

@@ -437,6 +437,7 @@ MonoBehaviour:
     m_Bits: 0
   maxDistance: 100
   detectTime: 1
+  checkCollidersOnly: 0
 --- !u!114 &3504731819116113772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2965,21 +2966,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: d1a259df-9191-4518-b235-9f53be2597aa
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
   nameTagPrefabName: NameTag_General
+  nameTagAutoAdjustHeight: 1
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
+  interactiveHintToleranceMaxTime: 0.3
+  interactiveHintFollowTransform: {fileID: 0}
+  interactiveHintHoldTime: -1
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   showDamageNumber: 1
-  itemDropCollections: []
-  <SpawnSizeCollider>k__BackingField: {fileID: 0}
   rarityBaseValueBuiltFromInspector: 1
+  randomizeNavMeshPriority: 1
+  autoRemoveEntityWhenDie: 1
+  <SpawnSizeCollider>k__BackingField: {fileID: 0}
   healthBarPrefabName: UIHealthBar
   animator: {fileID: 6252099545276795312}
   agent: {fileID: 6408930018750179676}
@@ -2988,6 +2993,8 @@ MonoBehaviour:
   shellCollider: {fileID: 0}
   shellHealthBarSpawnTransform: {fileID: 0}
   slamHitBox: {fileID: 0}
+  meleeKnockbackForce: 0
+  pedalHurboxes: []
 --- !u!1 &6585585101497395172
 GameObject:
   m_ObjectHideFlags: 0

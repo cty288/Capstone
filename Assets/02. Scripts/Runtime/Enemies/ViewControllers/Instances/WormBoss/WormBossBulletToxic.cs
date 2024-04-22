@@ -57,7 +57,6 @@ namespace Runtime.Weapons.ViewControllers.Instances.WormBoss {
                 particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
                 
                 var explosionVC = particleInstance.GetComponent<WormBossAcidExplosionViewController>();
-                print($"WORM BOSS: explosion radius {acidExplosionRadius}");
                 explosionVC.Init(Faction.Hostile, acidTickDamage, acidExplosionRadius, gameObject, owner);
                 explosionVC.SetData(acidDuration, acidTickInterval);
             }

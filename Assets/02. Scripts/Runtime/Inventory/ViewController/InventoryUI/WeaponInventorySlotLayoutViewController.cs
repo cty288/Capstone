@@ -12,8 +12,7 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
     //[SerializeField] private TMP_Text ammoText;
     //[SerializeField] private GameObject ammoTextContainer;
 
-    [SerializeField] private GameObject bigSlotPrefab;
-    [SerializeField] private GameObject smallSlotPrefab;
+  
     
     private ResourceSlot currentSlot;
     private IWeaponEntity currentWeapon;
@@ -22,6 +21,9 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
     
     public override void OnSelected(int slotIndex) {
         base.OnSelected(slotIndex);
+        for (int i = 0; i < slotViewControllers.Count; i++) {
+            slotViewControllers[i].SetSelected(i == slotIndex);
+        }
         /*for (int i = 0; i < slotViewControllers.Count; i++) {
             slotViewControllers[i].SetSelected(i == slotIndex);
         }*/
@@ -48,14 +50,7 @@ public class WeaponInventorySlotLayoutViewController : MainInventorySlotLayoutVi
 			
         for (int i = 0; i < addedCount; i++) {
             RectTransform targetLayout = slotLayout;
-            GameObject slot = null;// Instantiate(slotPrefab, targetLayout);
-            if (slotViewControllers.Count == 0) {
-                slot = Instantiate(bigSlotPrefab, targetLayout);
-            }
-            else {
-                slot = Instantiate(smallSlotPrefab, targetLayout);
-                slot.transform.SetAsLastSibling();
-            }
+            GameObject slot = Instantiate(slotPrefab, targetLayout);
 
             ResourceSlotViewController slotViewController = slot.GetComponent<ResourceSlotViewController>();
            // slotViewController.Awake();

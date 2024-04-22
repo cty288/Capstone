@@ -32,7 +32,6 @@ namespace Runtime.Enemies
         
         protected override void OnHitResponse(HitData data)
         {
-            print("WORM BOSS: acid hit response");
             var acidGO = pool.Allocate();
             acidGO.transform.position = data.HitPoint;
             acidGO.transform.rotation = Quaternion.Euler(data.HitNormal);

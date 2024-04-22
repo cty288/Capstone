@@ -29,6 +29,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 
 		public bool IsInBase();
+		
+		public float RandomBossEncounterEventChance { get; set; }
 	}
 
 	public struct OnTryToSwitchUnSpawnedLevel {
@@ -139,5 +141,7 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public bool IsInBase() {
 			return  CurrentLevel.Value is BaseLevelEntity;
 		}
+
+		[field: ES3Serializable] public float RandomBossEncounterEventChance { get; set; } = 0;
 	}
 }

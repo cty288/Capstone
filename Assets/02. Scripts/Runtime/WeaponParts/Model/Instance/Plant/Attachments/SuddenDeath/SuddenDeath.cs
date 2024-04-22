@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
+using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff;
 using Polyglot;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -24,8 +25,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.Sudd
 			float time = GetCustomDataValueOfCurrentLevel<float>("time");
 			float damage = GetCustomDataValueOfCurrentLevel<float>("damage");
 			int displayedDamage = (int) (damage * 100);
+			string hackedBuffName = BuffPool.GetTemplateBuff<HackedBuff>().GetDisplayName();
 
-			return Localization.GetFormat(defaultLocalizationKey, time, displayedDamage);
+			return Localization.GetFormat(defaultLocalizationKey, time, displayedDamage, hackedBuffName);
 		}
 
 
@@ -104,9 +106,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.Sudd
 					float time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("time");
 					float damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("damage");
 					int displayedDamage = (int) (damage * 100);
-
+					string hackedBuffName = BuffPool.GetTemplateBuff<SuddenDeathBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("SuddenDeath_desc", time, displayedDamage));
+						Localization.GetFormat("SuddenDeath_desc", time, displayedDamage, hackedBuffName));
 				})
 			};
 		}

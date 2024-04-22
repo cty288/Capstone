@@ -51,7 +51,6 @@ namespace Runtime.Enemies
         
         protected override void OnTriggerEnter(Collider other)
         {
-            print($"WORM BOSS: acid area hit {other.gameObject.name}");
             if (!other.isTrigger)
             {
                 Rigidbody rootRigidbody = other.attachedRigidbody;
@@ -70,8 +69,6 @@ namespace Runtime.Enemies
                     }
                 }
 
-                print($"WORM BOSS: acid area hit pass checks {other.gameObject.name}");
-
                 OnHitObject(other);
             }
         }
@@ -82,9 +79,7 @@ namespace Runtime.Enemies
         
             dotHitBox.enabled = true;
             dotHitBox.StartCheckingHits(Damage);
-            print($"WORM BOSS: acid area start checking hits {Time.time}");
             await UniTask.WaitForSeconds(acidDuration);
-            print($"WORM BOSS: acid area recycle {Time.time}");
 
             GameObjectPoolManager.Singleton.Recycle(gameObject);
         }

@@ -57,7 +57,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		[SerializeField] private float autoRecycleTime = 5f;
 		[SerializeField] private bool penetrateSameFaction = false;
 		[SerializeField] private bool autoDestroyWhenOwnerDestroyed = false;
-		private Coroutine autoRecycleCoroutine = null;
+		protected Coroutine autoRecycleCoroutine = null;
 		
 		protected HitBox hitBox = null;
 		protected GameObject bulletOwner = null;
@@ -71,14 +71,19 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected TrailRenderer[] trailRenderers = null;
 		protected HitData hitData;
 		protected bool ownerTriggerHitResponse = true;
-		[SerializeField] private bool autoRecycleWhenHit = true;
+		[SerializeField] protected bool autoRecycleWhenHit = true;
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 		protected bool overrideExplosionFaction = false;
+		[SerializeField]
+		private Collider selfCollider;
 
 		protected virtual void Awake() {
 			hitBox = GetComponent<HitBox>();
 			trailRenderers = GetComponentsInChildren<TrailRenderer>(true);
+			if (!selfCollider) {
+				selfCollider = GetComponent<Collider>();
+			}
 		}
 		
 		
@@ -111,7 +116,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			if (bulletOwnerColliders != null) {
 				//Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
 				foreach (Collider bulletOwnerCollider in bulletOwnerColliders) {
-					Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwnerCollider);
+					Physics.IgnoreCollision(selfCollider, bulletOwnerCollider);
 				}
 			}
 			this.owner = owner;
@@ -255,7 +260,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 				if (bulletOwnerColliders != null) {
 					//Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwner.GetComponent<Collider>());
 					foreach (Collider bulletOwnerCollider in bulletOwnerColliders) {
-						Physics.IgnoreCollision(GetComponent<Collider>(), bulletOwnerCollider, false);
+						Physics.IgnoreCollision(selfCollider, bulletOwnerCollider, false);
 					}
 				}
 			}

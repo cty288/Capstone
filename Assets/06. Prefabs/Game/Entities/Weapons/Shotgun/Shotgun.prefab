@@ -1539,6 +1539,7 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  autoAbsorbWhenPlayerReach: 1
   autoRecycleTimeWhenNoAbsorb: 120
   alsoRemoveEntityWhenNoAbsorb: 1
   <InHandLocalPosition>k__BackingField: {x: 0.005, y: -0.03, z: 0}
@@ -1586,19 +1587,18 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
-    type: 3}
   hitVFXSystem: {fileID: 7570269908101100327}
   animator: {fileID: 4616379250365421006}
   reloadAnimationLength: 3
   cameraPlacementData:
-    hipFireCameraPosition: {x: 0.01, y: -0.23, z: -0.03}
+    hipFireCameraPosition: {x: 0, y: -0.06, z: -0.44}
     hipFireCameraRotation: {x: 3.5799987, y: 358.91998, z: 359.68}
     adsCameraPosition: {x: -0.006, y: -0.102, z: 0.18}
     adsCameraRotation: {x: 1.7999982, y: 356.22, z: 0.76999795}
   bulletVFX:
-  - {fileID: 1287861412996858552}
   - {fileID: 864970247027404768}
+  bulletVFXInHand:
+  - {fileID: 1287861412996858552}
   overrideName: Shotgun
 --- !u!2083052967 &7570269908101100327 stripped
 VisualEffect:

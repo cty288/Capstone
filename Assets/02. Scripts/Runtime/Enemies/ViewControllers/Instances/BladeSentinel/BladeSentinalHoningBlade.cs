@@ -25,7 +25,7 @@ public class BladeSentinalHoningBlade : AbstractBulletViewController
     private bool activated = false;
     private bool tracking;
     private Action onBulletRecycled;
-
+    private float timer = 0f;
     private float honingDuration;
     protected override void OnBulletReachesMaxRange()
     {
@@ -73,6 +73,7 @@ public class BladeSentinalHoningBlade : AbstractBulletViewController
     // Update is called once per frame
     protected override void Update()
     {
+        
         base.Update();
         if (activated)
         {
@@ -104,13 +105,18 @@ public class BladeSentinalHoningBlade : AbstractBulletViewController
         {
             if (tracking)
             {
-                Vector3 directionToPlayer = playerTrans.position - transform.position;
+                
+                
+                    timer -= Time.deltaTime;
+                    Vector3 directionToPlayer = playerTrans.position - transform.position;
 
-                // Create a rotation that points in the calculated direction
-                Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+                    // Create a rotation that points in the calculated direction
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
-                // Smoothly interpolate between the current rotation and the target rotation
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
+                    // Smoothly interpolate between the current rotation and the target rotation
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
+                
+               
             }
         }
         else
@@ -140,6 +146,7 @@ public class BladeSentinalHoningBlade : AbstractBulletViewController
         base.OnRecycled();
         onBulletRecycled?.Invoke();
         onBulletRecycled = null;
+        timer = 1f;
     }
 
 

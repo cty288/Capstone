@@ -134,6 +134,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -174.25049
       objectReference: {fileID: 0}
+    - target: {fileID: 2891772103503763007, guid: c28945592f6df474b8543e821ed393a8,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2891772103633003202, guid: c28945592f6df474b8543e821ed393a8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -143,6 +148,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -138.00049
+      objectReference: {fileID: 0}
+    - target: {fileID: 2891772103633003203, guid: c28945592f6df474b8543e821ed393a8,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 2891772104296810361, guid: c28945592f6df474b8543e821ed393a8,
         type: 3}
@@ -536,7 +546,7 @@ PrefabInstance:
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.ctime1
-      value: 42188
+      value: 41418
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
@@ -551,42 +561,42 @@ PrefabInstance:
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key0.g
-      value: 1.2439183
+      value: 0.082173936
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key0.r
-      value: 19.317196
+      value: 1.2073247
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key1.b
-      value: 0.87361556
+      value: 0.4732084
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key1.g
-      value: 4.465453
+      value: 2.2386396
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key1.r
-      value: 6.952523
+      value: 3.4762616
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key2.b
-      value: 3.6695323
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key2.g
-      value: 3.6695323
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key2.r
-      value: 3.6695323
+      value: 0.93333334
       objectReference: {fileID: 0}
     - target: {fileID: 2837599302790063516, guid: c6400bebfea407e45af2aa63a341365f,
         type: 3}
@@ -1458,6 +1468,7 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  autoAbsorbWhenPlayerReach: 1
   autoRecycleTimeWhenNoAbsorb: 120
   alsoRemoveEntityWhenNoAbsorb: 1
   <InHandLocalPosition>k__BackingField: {x: 0.005, y: -0.03, z: 0}
@@ -1515,8 +1526,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 2433
-  hitParticlePrefab: {fileID: 2692501306406283861, guid: ed4f336cf4215534c911738af5a31b3f,
-    type: 3}
   hitVFXSystem: {fileID: 7570269908101100327}
   animator: {fileID: 4898352156591280616}
   reloadAnimationLength: 3
@@ -1526,8 +1535,9 @@ MonoBehaviour:
     adsCameraPosition: {x: 0.00485, y: -0.1, z: 0.27500004}
     adsCameraRotation: {x: 360, y: 357.04, z: 0.08000492}
   bulletVFX:
-  - {fileID: 1287861412996858552}
   - {fileID: 864970247027404768}
+  bulletVFXInHand:
+  - {fileID: 1287861412996858552}
   overrideName: UniversalPistol
 --- !u!4 &2389551386228969467 stripped
 Transform:
