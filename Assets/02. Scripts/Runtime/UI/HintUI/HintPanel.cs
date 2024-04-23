@@ -6,6 +6,7 @@ using MikroFramework.Architecture;
 using MikroFramework.UIKit;
 using Runtime.UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public enum HintMessageType {
@@ -21,12 +22,13 @@ public class HintMessageGroup {
 }
 
 [Serializable]
-public struct HintMessage {
+public class HintMessage {
 	[TextArea]
 	public string message;
 	public string title;
 	public Sprite icon;
 	public float duration;
+	[SerializeField] public UnityEvent callback;
 }
 public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPanel {
 	protected HintMessageGroup currentMessageGroup = null;
@@ -72,6 +74,9 @@ public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPa
 		if (currentMessageGroup == null) {
 			return;
 		}
+		HintMessageGroup messageGroupTemp = this.currentMessageGroup;
+		int lastIndex = currentMessageIndex;
+		
 		if (currentMessageIndex < currentMessageGroup.messages.Length - 1) {
 			currentMessageIndex++;
 			OnShowMessage();
@@ -79,6 +84,11 @@ public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPa
 		else {
 			canClose = true;
 			MainUI.Singleton.GetAndClose(this);
+		}
+
+		var lastHintMessage = lastIndex >= 0 ? messageGroupTemp.messages[lastIndex] : null;
+		if (lastHintMessage != null && lastHintMessage.callback != null) {
+			lastHintMessage.callback.Invoke();
 		}
 	}
 	
