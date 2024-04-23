@@ -10465,10 +10465,28 @@ MonoBehaviour:
       title: ADWEe  eaw
       icon: {fileID: 21300000, guid: f6324512da6a9ca4185df6cf892b2b22, type: 3}
       duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
     - message: ewa wae waeawe
       title: ' WAe wa wae '
       icon: {fileID: 21300000, guid: f6324512da6a9ca4185df6cf892b2b22, type: 3}
       duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 9063348768592901901}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   canTriggerMultipleTimes: 0
 --- !u!1 &1892020026521604822
 GameObject:
@@ -32475,6 +32493,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6323503328930094469, guid: a0e2abfd19e3a8a41b011e05b7c453cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -118698318381003821, guid: a0e2abfd19e3a8a41b011e05b7c453cd,
         type: 3}
       propertyPath: m_LocalScale.y
@@ -32489,6 +32512,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a0e2abfd19e3a8a41b011e05b7c453cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1683573003231238968, guid: a0e2abfd19e3a8a41b011e05b7c453cd,
         type: 3}
