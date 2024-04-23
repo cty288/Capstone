@@ -33,6 +33,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		private bool spawned;
 		private float invincibleTime = 2f;
 		protected Dictionary<HurtBox, bool> initialHurtBoxActiveState = new Dictionary<HurtBox, bool>();
+		[SerializeField] private GameObject spawnVFX;
 
 		[Header("Elite Visuals")]
 		[ColorUsage(true, true), SerializeField] private Color eliteColor;
@@ -64,6 +65,8 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			foreach (var hurtBox in initialHurtBoxActiveState.Keys) {
 				hurtBox.gameObject.SetActive(false);
 			}
+			
+			spawnVFX.SetActive(true);
 
 			BoundEntity.IsElite.RegisterWithInitValue(OnEliteChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
@@ -107,6 +110,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 						hurtBox.gameObject.SetActive(initialHurtBoxActiveState[hurtBox]);
 					}
 					spawned = true;
+					spawnVFX.SetActive(false);
 				}
 			}
 		}
