@@ -10474,20 +10474,77 @@ MonoBehaviour:
       duration: 3
       callback:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 9063348768592901901}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
   canTriggerMultipleTimes: 0
+--- !u!1 &1761287828531015590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5608920274251038110}
+  - component: {fileID: 4221103900269978889}
+  - component: {fileID: 9020044248137905282}
+  - component: {fileID: 1021518262125810515}
+  m_Layer: 0
+  m_Name: SlideDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5608920274251038110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761287828531015590}
+  m_LocalRotation: {x: -0, y: 0.2503499, z: -0, w: 0.9681555}
+  m_LocalPosition: {x: 18.3679, y: 19.4116, z: 37.8146}
+  m_LocalScale: {x: 8.015, y: 25.381357, z: 51.439323}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7905501659469829108}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 28.996, z: 0}
+--- !u!33 &4221103900269978889
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761287828531015590}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &9020044248137905282
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761287828531015590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1021518262125810515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761287828531015590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b572558837658640a7d5477e9f0f7ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barrier: {fileID: 5460297576077454911}
+  minSlideTime: 2
 --- !u!1 &1892020026521604822
 GameObject:
   m_ObjectHideFlags: 0
@@ -15656,6 +15713,120 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5460297576077454911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5836742426425481593}
+  - component: {fileID: 129648056755415080}
+  - component: {fileID: 6041847517995581021}
+  - component: {fileID: 2075022644117026048}
+  - component: {fileID: 2955947003347696393}
+  m_Layer: 0
+  m_Name: SlideWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5836742426425481593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460297576077454911}
+  m_LocalRotation: {x: -0, y: 0.28376704, z: -0, w: 0.95889324}
+  m_LocalPosition: {x: -54.1609, y: 0.71, z: 83.4569}
+  m_LocalScale: {x: 1, y: 47.945183, z: 59.620163}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7905501659469829108}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 32.97, z: 0}
+--- !u!33 &129648056755415080
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460297576077454911}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6041847517995581021
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460297576077454911}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b7702c8ad8b49e641a33a31cd63c6363, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2075022644117026048
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460297576077454911}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2955947003347696393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460297576077454911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d46de99d7f93be47ab3106762fbc138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintLocalizeKey: TUTORIAL_SLIDE_FAIL
+  duration: 3
+  keyParameters:
+  - Slide
 --- !u!1 &5613383573247314582
 GameObject:
   m_ObjectHideFlags: 0
@@ -17140,7 +17311,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2049
+  m_VersionIndex: 2052
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -20522,7 +20693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7905501659469829108}
   - component: {fileID: 7943161577578222100}
-  - component: {fileID: 8841471019466061308}
+  - component: {fileID: 361133883086396366}
   m_Layer: 0
   m_Name: Tutorial Level 0
   m_TagString: Untagged
@@ -20564,6 +20735,8 @@ Transform:
   - {fileID: 543450651636152875}
   - {fileID: 543450653198339358}
   - {fileID: 241843127}
+  - {fileID: 5608920274251038110}
+  - {fileID: 5836742426425481593}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20596,7 +20769,7 @@ MonoBehaviour:
   m_VoxelSize: 0.13333334
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: a8dbe6af9009fe147bcfe58f3b688339, type: 2}
---- !u!114 &8841471019466061308
+--- !u!114 &361133883086396366
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20605,7 +20778,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7905501659469829109}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee3cda635eef41459b45fdd01488a4f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 24361b583572e474bb9eebfda0ff1b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onRecycledEvent:
@@ -20615,11 +20788,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  autoCreateNewEntityWhenStart: 0
+  autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 0
   nameTagFollowTransform: {fileID: 0}
   nameTagPrefabName: NameTag_General
-  nameTagAutoAdjustHeight: 1
+  nameTagAutoAdjustHeight: 0
   hasInteractiveHint: 0
   interactiveHintPrefabName: InteractHint_General
   interactiveHintLocalizedKey: interact
@@ -20631,130 +20804,25 @@ MonoBehaviour:
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   playerSpawnPoints:
   - {fileID: 5852216455221010440}
-  enemySpawnCardConfigs:
-  - enemySpawnInfos: []
-  - enemySpawnInfos: []
+  enemySpawnCardConfigs: []
   bossSpawnCostInfo:
-    _serializedList:
-    - Key: 0
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 10
-          - Key: 2
-            Value: 20
-          - Key: 3
-            Value: 35
-          - Key: 4
-            Value: 50
-    - Key: 1
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 15
-          - Key: 2
-            Value: 25
-          - Key: 3
-            Value: 35
-          - Key: 4
-            Value: 50
-    - Key: 2
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 5
-          - Key: 2
-            Value: 15
-          - Key: 3
-            Value: 30
-          - Key: 4
-            Value: 50
-    - Key: 3
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 5
-          - Key: 2
-            Value: 20
-          - Key: 3
-            Value: 35
-          - Key: 4
-            Value: 50
+    _serializedList: []
   pillarRewardsInfo:
     RewardsInfo:
-      _serializedList:
-      - Key: 1
-        Value:
-        - RewardType: 0
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-      - Key: 2
-        Value:
-        - RewardType: 1
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-      - Key: 3
-        Value:
-        - RewardType: 1
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-      - Key: 4
-        Value:
-        - RewardType: 1
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-        - RewardType: 0
-          PossibleLevelWithWeights:
-            _serializedList: []
-          AmountRange: {x: 1, y: 1}
-  hasPillars: 1
+      _serializedList: []
+  hasPillars: 0
   pillarPrefabName: BossPillar
-  maxExtent: {fileID: 1595554011}
-  playerSpawner: {fileID: 8663397865611678531, guid: cb3ba4f823f15d247ad7b52d72d0a9a1,
-    type: 3}
+  maxExtent: {fileID: 0}
+  playerSpawner: {fileID: 0}
   timeCurrencyLevel: 1
   spawnExitDoor: 0
-  displayedCoordinates:
-  - 
-  - 
+  displayedCoordinates: []
   diaplsyedNameLocalizedKey: 
   subAreaLevelPrefabs: []
-  autoUpdateNavMeshOnStart: 1
-  ambientMusic: {fileID: 8300000, guid: da3ed51b963c68748a9d645c14752ec5, type: 3}
+  autoUpdateNavMeshOnStart: 0
+  ambientMusic: {fileID: 0}
   bgm: {fileID: 0}
   relativeVolume: 1
-  totalExplortionValueRequired: 1500
-  bossExplorationMultiplier: 2
-  normalEnemyExplorationMultiplier: 1
-  explorationValuePerSecond: 1
 --- !u!1 &8068748267770875503
 GameObject:
   m_ObjectHideFlags: 0
