@@ -19,7 +19,7 @@ public class FollowCamera : MonoBehaviour {
 	}
 
 	private void LateUpdate() {
-		cinemachineBrain.ManualUpdate();
+		//cinemachineBrain.ManualUpdate();
 		if (!noLerp) {
 			//lerp the position of the camera to the player's position
 			transform.position = Vector3.Lerp(transform.position, mainCamera.transform.position, lerpSpeed * Time.deltaTime);

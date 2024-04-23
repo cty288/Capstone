@@ -2352,8 +2352,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.7
-  gizmoViewMode: 0
-  showBehaviorDesignerGizmo: 0
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!114 &4733347168707273630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2398,6 +2398,7 @@ MonoBehaviour:
   autoRecycleTimeAfterFarAwayFromPlayer: 10
   autoRecycleDistanceFromPlayer: 150
   autoRecycleCheckTimeInterval: 5
+  spawnVFX: {fileID: 7238775057803409971}
   eliteColor: {r: 63.999992, g: 18.209091, b: 0, a: 1}
   eliteFresnel: 0.65
   eliteCutIn: 0.282
@@ -5226,6 +5227,12 @@ PrefabInstance:
 --- !u!4 &7238775057803409934 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 160310376962735172, guid: 388f271b03b75e344878d4159c3f036c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7371481093691164234}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7238775057803409971 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 160310376962735225, guid: 388f271b03b75e344878d4159c3f036c,
     type: 3}
   m_PrefabInstance: {fileID: 7371481093691164234}
   m_PrefabAsset: {fileID: 0}
