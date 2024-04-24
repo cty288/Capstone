@@ -133,7 +133,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             base.Awake();
             weaponModel = this.GetModel<IWeaponModel>();
             playerModel = this.GetModel<IGamePlayerModel>();
-            fpsCamera = mainCamera.GetUniversalAdditionalCameraData().cameraStack[0];
+            fpsCamera = mainCamera.GetUniversalAdditionalCameraData().cameraStack[1];
             buffSystem = this.GetSystem<IBuffSystem>();
             cam = Camera.main;
             playerActions = ClientInput.Singleton.GetPlayerActions();
