@@ -392,7 +392,7 @@ namespace Runtime.Player.ViewControllers
             cameraPitch -= mouseDelta.y * sensitivity;
             cameraPitch = Mathf.Clamp(cameraPitch, fpsBotClamp, fpsTopClamp);
             camHolder.localEulerAngles = Vector3.right * cameraPitch;
-            transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
+            transform.Rotate(Vector3.up * (mouseDelta.x * sensitivity));
             
             if (state == MovementState.walking)
             {
@@ -509,7 +509,8 @@ namespace Runtime.Player.ViewControllers
             IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
             if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
             {
-                SetFOV(e.isScopedIn ? heldEntity.GetProperty<IAdsFOV>().RealValue : currentFOV);
+                float adsFOV = e.isScopedIn ? heldEntity.GetProperty<IAdsFOV>().RealValue : defaultFOV;
+                SetFOV(adsFOV);
             }
         }
 
