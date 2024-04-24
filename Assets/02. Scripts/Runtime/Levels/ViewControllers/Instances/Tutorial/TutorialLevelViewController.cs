@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
+using _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial;
+using _02._Scripts.Runtime.PlayerTasks;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using Cysharp.Threading.Tasks;
 using MikroFramework;
@@ -39,10 +41,12 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
     private int currentConditionalDialogueIndex = -1;
     private IInventorySystem inventorySystem;
     private IInventoryModel inventoryModel;
+    private IPlayerTaskSystem playerTaskSystem;
     
     protected override void OnEntityStart() {
         inventorySystem = this.GetSystem<IInventorySystem>();
         inventoryModel = this.GetModel<IInventoryModel>();
+        playerTaskSystem = this.GetSystem<IPlayerTaskSystem>();
     }
 
     protected override void OnBindEntityProperty() {
@@ -73,9 +77,11 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
         inventorySystem.AddItemToNonHotBarSlot(weaponEntity);
 
         player.AlwaysNonLethal = true;
+        
+        NextConditionalDialogue();
     }
 
-    private void NextConditionalDialogue() {
+    public void NextConditionalDialogue() {
         currentConditionalDialogueIndex++;
         if (currentConditionalDialogueIndex >= conditionalDialogueGroups.Length) {
             return;
@@ -83,7 +89,21 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
         HintManager.Singleton.ShowHint(conditionalDialogueGroups[currentConditionalDialogueIndex]);
     }
 
-
+    public void Step2MoveTask() {
+        playerTaskSystem.AddTask(new Step2MoveTask());
+    }
+    
+    public void Step3Task() {
+        playerTaskSystem.AddTask(new Step3Task());
+    }
+    public void Step5Task() {
+        playerTaskSystem.AddTask(new Step5Task());
+    }
+    
+    public void Step6Task() {
+        playerTaskSystem.AddTask(new Step6Task());
+    }
+    
     public void OnStep8Finish() {
         BoundEntity.CanOpenInventory = true;
         UntilAction action = UntilAction.Allocate(() => inventoryModel.GetSelectedHotBarSlot(HotBarCategory.Right).GetQuantity() > 0);

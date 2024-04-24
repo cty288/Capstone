@@ -7,6 +7,7 @@ using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.PlayerTasks;
 using DG.Tweening;
 using Framework;
+using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Runtime.Utilities;
@@ -36,6 +37,19 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 
 		levelModel.CurrentLevel.RegisterWithInitValue(OnLevelChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
 		playerTaskSystem = this.GetSystem<IPlayerTaskSystem>();
+
+		this.RegisterEvent<OnAddPlayerTask>(OnAddPlayerTask).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		this.RegisterEvent<OnTaskCompleted>(OnTaskCompleted).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+	}
+
+	private void OnTaskCompleted(OnTaskCompleted e) {
+		if (taskElements.TryGetValue(e.Task, out TaskElementViewController taskElementViewController)) {
+			taskElementViewController.SetCompleted(true);
+		}
+	}
+
+	private void OnAddPlayerTask(OnAddPlayerTask e) {
+		SpawnTask(e.Task);
 	}
 
 	private void OnLevelExitSatisfied(bool arg1, bool condition) {
@@ -112,9 +126,15 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 		explorationProgressSlider.value = 0;
 		
 
+		/*for (int i = 0; i < taskPanel.childCount; i++) {
+			Destroy(taskPanel.GetChild(i).gameObject);
+		}
+		*/
+	}
+
+	public void ClearTasks() {
 		for (int i = 0; i < taskPanel.childCount; i++) {
 			Destroy(taskPanel.GetChild(i).gameObject);
 		}
-		
 	}
 }
