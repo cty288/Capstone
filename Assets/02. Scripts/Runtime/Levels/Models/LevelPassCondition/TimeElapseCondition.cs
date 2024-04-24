@@ -1,7 +1,7 @@
 ﻿using Polyglot;
 
 namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
-	public class TimeElapseCondition : LevelExitCondition {
+	public class TimeElapseCondition : PlayerTask {
 		
 		[field: ES3Serializable]
 		public int TotalTime { get; protected set; }
@@ -25,6 +25,10 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 
 		public override bool IsSatisfied() {
 			return ElapsedTime >= TotalTime;
+		}
+
+		public override void OnFinish() {
+			
 		}
 	}
 }

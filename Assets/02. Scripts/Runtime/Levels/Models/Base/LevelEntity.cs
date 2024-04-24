@@ -69,9 +69,9 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		
 		public void UnRegisterOnLevelExit(Action<ILevelEntity> onLevelExit);
 		
-		public Dictionary<Type, LevelExitCondition> LevelExitConditions { get;}
+		public Dictionary<Type, PlayerTask> LevelExitConditions { get;}
 		
-		public void AddLevelExitCondition(LevelExitCondition levelExitCondition);
+		public void AddLevelExitCondition(PlayerTask playerTask);
 		public HashSet<ISubAreaLevelEntity> GetAllSubAreaLevels();
 
 		public void AddSubArea(string uuid);
@@ -119,11 +119,11 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 
 		[field: ES3Serializable]
-		public Dictionary<Type, LevelExitCondition> LevelExitConditions { get; protected set; } 
-			= new Dictionary<Type, LevelExitCondition>();
+		public Dictionary<Type, PlayerTask> LevelExitConditions { get; protected set; } 
+			= new Dictionary<Type, PlayerTask>();
 
-		public void AddLevelExitCondition(LevelExitCondition levelExitCondition) {
-			LevelExitConditions.TryAdd(levelExitCondition.GetType(), levelExitCondition);
+		public void AddLevelExitCondition(PlayerTask playerTask) {
+			LevelExitConditions.TryAdd(playerTask.GetType(), playerTask);
 		}
 
 		protected Action<ILevelEntity> onLevelExit;

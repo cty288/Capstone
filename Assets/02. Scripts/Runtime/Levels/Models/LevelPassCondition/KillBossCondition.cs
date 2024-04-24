@@ -1,7 +1,7 @@
 ﻿using Polyglot;
 
 namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
-	public class KillBossCondition : LevelExitCondition {
+	public class KillBossCondition : PlayerTask {
 		[field: ES3Serializable]
 		public int RequiredNumber { get; protected set; }
 		
@@ -23,6 +23,10 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 
 		public override bool IsSatisfied() {
 			return KilledNumber >= RequiredNumber;
+		}
+
+		public override void OnFinish() {
+			
 		}
 	}
 }

@@ -264,6 +264,30 @@ namespace Runtime.Inventory.Model {
 			return false;
 		}
 
+		public bool AddItemToNonHotBarSlot(IResourceEntity item, bool sendEvent = true) {
+			if (item == null) {
+				return false;
+			}
+
+			if (model.AddItemToNonHotBarSlot(item, out ResourceSlot slot)) {
+				if (sendEvent) {
+					if (sendEvent) {
+						this.SendEvent<OnInventoryItemAddedEvent>(new OnInventoryItemAddedEvent() {
+							Item = item
+						});
+					}
+
+					
+				}
+				item.OnAddedToInventory(playerModel.GetPlayer().UUID);
+				item.OnInventorySlotUpdate(null, slot);
+				item.AddedToInventoryBefore = true;
+				return true;
+			}
+			
+			return false;
+		}
+
 		public bool CanPlaceItem(IResourceEntity item) {
 			return model.CanPlaceItem(item);
 		}

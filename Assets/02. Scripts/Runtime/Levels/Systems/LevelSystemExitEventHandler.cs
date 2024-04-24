@@ -16,8 +16,8 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 		private ILevelEntity levelEntity;
 		private bool levelSatisfiedTriggeredBefore = false;
 		private Action onCurrentLevelExitSatisfied;
-		private HashSet<LevelExitCondition> satisfiedConditions = new HashSet<LevelExitCondition>();
-		private Action<LevelExitCondition> onLevelExitConditionSatisfied;
+		private HashSet<PlayerTask> satisfiedConditions = new HashSet<PlayerTask>();
+		private Action<PlayerTask> onLevelExitConditionSatisfied;
 
 		public void Init() {
 			this.RegisterEvent<OnPlayerKillEnemy>(OnPlayerKillEnemy);
@@ -59,7 +59,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 
 		}
 		
-		private bool TryGetLevelExitCondition<T>(out T levelExitCondition) where T : LevelExitCondition {
+		private bool TryGetLevelExitCondition<T>(out T levelExitCondition) where T : PlayerTask {
 			levelExitCondition = null;
 			
 			if (levelEntity == null) {
@@ -88,13 +88,14 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 			}
 
 			bool allSatisfied = true;
-			foreach (LevelExitCondition exitCondition in levelEntity.LevelExitConditions.Values) {
+			foreach (PlayerTask exitCondition in levelEntity.LevelExitConditions.Values) {
 				if (!exitCondition.IsSatisfied()) {
 					allSatisfied = false;
 				}
 				else {
 					if(!satisfiedConditions.Contains(exitCondition)) {
 						satisfiedConditions.Add(exitCondition);
+						exitCondition.OnFinish();
 						onLevelExitConditionSatisfied?.Invoke(exitCondition);
 					}
 				}
@@ -112,7 +113,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 			this.onCurrentLevelExitSatisfied += onCurrentLevelExitSatisfied;
 		}
 		
-		public void RegisterOnCurrentLevelConditionSatisfied(Action<LevelExitCondition> onCurrentLevelConditionSatisfied) {
+		public void RegisterOnCurrentLevelConditionSatisfied(Action<PlayerTask> onCurrentLevelConditionSatisfied) {
 			onLevelExitConditionSatisfied += onCurrentLevelConditionSatisfied;
 		}
 		

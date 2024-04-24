@@ -12,8 +12,9 @@ public class SubtitleHint : HintPanel {
 
 	protected override void OnShowMessage() {
 		HintMessage message = currentMessageGroup.messages[currentMessageIndex];
-		subtitleText.text = message.message;
+		subtitleText.text = GetLocalizedText(message);
 		float duration = message.duration;
+		
 		StartCoroutine(SubtitleWait(duration));
 		StartCoroutine(RebuildLayout());
 	}

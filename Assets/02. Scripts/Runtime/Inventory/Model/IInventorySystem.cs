@@ -37,6 +37,8 @@ namespace Runtime.Inventory.Model {
 
 		public bool AddItem(IResourceEntity item, bool sendEvent = true);
 		
+		public bool AddItemToNonHotBarSlot(IResourceEntity item, bool sendEvent = true);
+		
 		bool CanPlaceItem(IResourceEntity item);
 		
 		bool RemoveItem(IResourceEntity entity);

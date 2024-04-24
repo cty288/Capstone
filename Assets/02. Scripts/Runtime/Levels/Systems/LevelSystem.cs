@@ -18,7 +18,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 	}
 
 	public struct OnCurrentLevelExitContitionSatisfied {
-		public LevelExitCondition Condition;
+		public PlayerTask Condition;
 	}
 	
 	public class LevelSystem : AbstractSystem, ILevelSystem {
@@ -36,7 +36,7 @@ namespace _02._Scripts.Runtime.Levels.Systems {
 			//CoroutineRunner.Singleton
 		}
 
-		private void OnCurrentLevelConditionSatisfied(LevelExitCondition condition) {
+		private void OnCurrentLevelConditionSatisfied(PlayerTask condition) {
 			this.SendEvent<OnCurrentLevelExitContitionSatisfied>(new OnCurrentLevelExitContitionSatisfied() {
 				Condition = condition
 			});
