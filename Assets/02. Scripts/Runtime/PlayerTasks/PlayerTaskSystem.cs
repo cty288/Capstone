@@ -64,7 +64,7 @@ namespace _02._Scripts.Runtime.PlayerTasks {
 		}
 
 		public HashSet<PlayerTask> GetAllTasks() {
-			return playerTaskModel.GetAllTasks();
+			return new HashSet<PlayerTask>(playerTaskModel.GetAllTasks());
 		}
 
 		public void AddTask(PlayerTask task) {
