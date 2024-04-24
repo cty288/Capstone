@@ -54,6 +54,7 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 			playerEntity.SetArmor(playerEntity.GetMaxArmor().RealValue);
 
 			playerEntity.AlwaysNonLethal = false;
+			levelModel.RandomBossEncounterEventChance = 0;
 			
 			this.SendEvent<OnReturnToBase>();
 			

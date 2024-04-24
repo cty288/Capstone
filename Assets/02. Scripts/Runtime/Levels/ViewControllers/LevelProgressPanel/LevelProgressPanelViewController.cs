@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
 using _02._Scripts.Runtime.Levels.Systems;
+using _02._Scripts.Runtime.PlayerTasks;
 using DG.Tweening;
 using Framework;
 using MikroFramework.Architecture;
@@ -18,6 +19,7 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 	private Slider explorationProgressSlider;
 	private RectTransform taskPanel;
 	private float totalExplorationValue;
+	private IPlayerTaskSystem playerTaskSystem;
 
 	private Dictionary<PlayerTask, TaskElementViewController> taskElements =
 		new Dictionary<PlayerTask, TaskElementViewController>();
@@ -33,6 +35,7 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 		taskPanel = transform.Find("TaskPanel").GetComponent<RectTransform>();
 
 		levelModel.CurrentLevel.RegisterWithInitValue(OnLevelChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+		playerTaskSystem = this.GetSystem<IPlayerTaskSystem>();
 	}
 
 	private void OnLevelExitSatisfied(bool arg1, bool condition) {
