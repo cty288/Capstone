@@ -19,7 +19,8 @@ public class HintMessageTrigger : MonoBehaviour {
       if (panel == null) {
          return;
       }
-      if (panel.CurrentMessageGroup == messageGroup[currentMessageGroupIndex]) {
+      
+      if (currentMessageGroupIndex < messageGroup?.Length && panel.CurrentMessageGroup == messageGroup[currentMessageGroupIndex]) {
          currentMessageGroupIndex++;
          if (currentMessageGroupIndex < messageGroup.Length) {
             HintManager.Singleton.ShowHint(messageGroup[currentMessageGroupIndex]);

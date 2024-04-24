@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using Cysharp.Threading.Tasks;
+using MikroFramework;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
@@ -17,6 +18,8 @@ using UnityEngine;
 
 public class TutorialLevelEntity : LevelEntity<TutorialLevelEntity> {
     [field: ES3Serializable] public override string EntityName { get; set; } = "TutorialLevelEntity";
+
+    public bool CanOpenInventory { get; set; } = false;
 
     public override void OnRecycle() {
         base.OnRecycle();
@@ -34,9 +37,12 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
 
     [SerializeField] private HintMessageGroup[] conditionalDialogueGroups;
     private int currentConditionalDialogueIndex = -1;
+    private IInventorySystem inventorySystem;
+    private IInventoryModel inventoryModel;
     
     protected override void OnEntityStart() {
-			
+        inventorySystem = this.GetSystem<IInventorySystem>();
+        inventoryModel = this.GetModel<IInventoryModel>();
     }
 
     protected override void OnBindEntityProperty() {
@@ -61,7 +67,7 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
         
         
         var weapon = ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.Weapon,
-            (r) => r.Collectable && r is RustyPistolEntity).FirstOrDefault();
+            (r) => r.Collectable && r is SubMachineGunEntity).FirstOrDefault();
         
         IResourceEntity weaponEntity = weapon.EntityCreater.Invoke(true, 1);
         inventorySystem.AddItemToNonHotBarSlot(weaponEntity);
@@ -75,5 +81,13 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
             return;
         }
         HintManager.Singleton.ShowHint(conditionalDialogueGroups[currentConditionalDialogueIndex]);
+    }
+
+
+    public void OnStep8Finish() {
+        BoundEntity.CanOpenInventory = true;
+        UntilAction action = UntilAction.Allocate(() => inventoryModel.GetSelectedHotBarSlot(HotBarCategory.Right).GetQuantity() > 0);
+        action.OnEndedCallback += NextConditionalDialogue;
+        action.Execute();
     }
 }

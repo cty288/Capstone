@@ -14,6 +14,9 @@ public class BarrierWall : MonoBehaviour, ICanSendEvent {
     [SerializeField] private string[] keyParameters;
 
     private void OnCollisionEnter(Collision other) {
+        if (string.IsNullOrEmpty(hintLocalizeKey)) {
+            return;
+        }
         if (other.collider.attachedRigidbody && other.collider.attachedRigidbody.gameObject.CompareTag("Player")) {
             string text = Localization.Get(hintLocalizeKey);
             

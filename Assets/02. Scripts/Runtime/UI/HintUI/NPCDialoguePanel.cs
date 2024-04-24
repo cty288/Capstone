@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Polyglot;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,9 +22,9 @@ public class NPCDialoguePanel : HintPanel, IPointerClickHandler {
 
 	protected override void OnShowMessage() {
 		HintMessage message = currentMessageGroup.messages[currentMessageIndex];
-		dialogueText.text = message.message;
+		dialogueText.text = GetLocalizedText(message);
 		icon.sprite = message.icon;
-		titleText.text = message.title;
+		titleText.text = Localization.Get(message.titleLocalizedKey);
 	}
 
 	public void OnPointerClick(PointerEventData eventData) {
