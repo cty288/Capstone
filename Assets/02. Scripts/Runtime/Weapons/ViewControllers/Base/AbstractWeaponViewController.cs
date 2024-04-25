@@ -291,7 +291,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (previsScope != _isScopedIn) {
                 playerModel.GetPlayer().SetScopedIn(_isScopedIn);
                 crossHairViewController?.OnScope(_isScopedIn);
-                print("Scope changed to " + _isScopedIn); 
+                // print("Scope changed to " + _isScopedIn); 
                 this.SendCommand(ScopeCommand.Allocate(_isScopedIn));
                 
                 AudioSystem.Singleton.Play2DSound("Pistol_Aim");

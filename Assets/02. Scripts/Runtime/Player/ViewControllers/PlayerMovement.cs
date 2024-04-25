@@ -414,11 +414,15 @@ namespace Runtime.Player.ViewControllers
             {
                 if (currentFOV != slidingFOV && !playerEntity.IsScopedIn())
                 {
+                    print($"player sliding: set fov ${slidingFOV}");
                     SetFOV(slidingFOV);
                 }
-                
-                if(fpsCamera.fieldOfView != fpsFOV - 10)
+
+                if (fpsCamera.fieldOfView != fpsFOV - 10)
+                {
+                    print($"player sliding: do fov ${fpsFOV - 10}");
                     fpsCamera.DOFieldOfView(fpsFOV - 5, 0.1f);
+                }
 
                 ChangeBobVars(0,0);
             }

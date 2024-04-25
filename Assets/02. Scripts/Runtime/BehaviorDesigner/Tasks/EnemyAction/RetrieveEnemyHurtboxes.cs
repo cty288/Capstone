@@ -12,7 +12,7 @@ public class RetrieveEnemyHurtboxes : Action
     public SharedGameObjectList returnedHurtboxes;
 
     public override void OnStart() {
-        Debug.Log("GetEnemyHurtboxesWithinRange OnStart");
+        // Debug.Log("GetEnemyHurtboxesWithinRange OnStart");
         base.OnStart();
     }
 
