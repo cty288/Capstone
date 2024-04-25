@@ -112,8 +112,10 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		}
 
 		public void Kill(ICanDealDamage damageDealer, HitData hitData = null) {
+			OnDie(damageDealer, hitData);
 			damageDealer?.DoOnKillDamageable(damageDealer, this);
 			onDie?.Invoke(damageDealer, this, hitData);
+			
 		}
 
 		/// <summary>
@@ -132,6 +134,10 @@ namespace Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable {
 		
 		
 		public virtual void OnTakeDamage(int damage, [CanBeNull] ICanDealDamage damageDealer, [CanBeNull] HitData hitData = null) {
+			
+		}
+		
+		public virtual void OnDie(ICanDealDamage damageDealer, HitData hitData) {
 			
 		}
 		

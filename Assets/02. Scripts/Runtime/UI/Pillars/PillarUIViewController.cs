@@ -30,6 +30,8 @@ using Random = UnityEngine.Random;
 
 public interface IGameUIPanel {
 	public IPanel GetClosePanel();
+
+	public bool CanCloseByEscButton => true;
 }
 public class PillarUIViewController : AbstractPanelContainer, IController, IGameUIPanel {
 	private OnOpenPillarUI data;

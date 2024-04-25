@@ -7,6 +7,10 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 		public abstract bool IsSatisfied();
 
 		public abstract void OnFinish();
+
+		public virtual void OnInit() {
+			
+		}
 		public IArchitecture GetArchitecture() {
 			return MainGame.Interface;
 		}

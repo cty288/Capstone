@@ -38,10 +38,17 @@ namespace Runtime.UI {
 			
 			if (controlActions.Close.WasPressedThisFrame()) {
 				if (currentMainPanel != null) {
+					if (currentMainPanel is IGameUIPanel gameUIPanel) {
+						if (gameUIPanel.CanCloseByEscButton) {
+							GetAndClose(currentMainPanel);
+						}
+					}else {
+						GetAndClose(currentMainPanel);
+					}
 					//ClosePanel(currentMainPanel);
 					//OpenOrGetClose(currentMainPanel, null);
 					//Time = 1;
-					GetAndClose(currentMainPanel);
+					
 					//ClientInput.Singleton.EnablePlayerMaps();
 				}
 				else {

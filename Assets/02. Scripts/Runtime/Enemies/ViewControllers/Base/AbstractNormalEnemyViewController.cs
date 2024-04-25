@@ -117,14 +117,16 @@ namespace Runtime.Enemies.ViewControllers.Base {
 
 		private IEnumerator EntityRemovalTimer() {
 			while (true) {
-				
-				if (Vector3.Distance(GetPlayer().position, transform.position) > autoRecycleDistanceFromPlayer) {
-					yield return new WaitForSeconds(autoRecycleTimeAfterFarAwayFromPlayer);
-					
+				if (autoRecycleTimeAfterFarAwayFromPlayer >= 0) {
 					if (Vector3.Distance(GetPlayer().position, transform.position) > autoRecycleDistanceFromPlayer) {
-						enemyModel.RemoveEntity(BoundEntity.UUID);
-						yield break;
+						yield return new WaitForSeconds(autoRecycleTimeAfterFarAwayFromPlayer);
+					
+						if (Vector3.Distance(GetPlayer().position, transform.position) > autoRecycleDistanceFromPlayer) {
+							enemyModel.RemoveEntity(BoundEntity.UUID);
+							yield break;
+						}
 					}
+
 				}
 				
 				yield return new WaitForSeconds(autoRecycleCheckTimeInterval);

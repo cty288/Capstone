@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
 using _02._Scripts.Runtime.Levels.Systems;
+using _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial;
 using _02._Scripts.Runtime.PlayerTasks;
 using DG.Tweening;
 using Framework;
@@ -40,6 +42,15 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 
 		this.RegisterEvent<OnAddPlayerTask>(OnAddPlayerTask).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		this.RegisterEvent<OnTaskCompleted>(OnTaskCompleted).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+		this.RegisterEvent<OnClearTaskPanel>(OnClearTaskPanel).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+
+		foreach (PlayerTask playerTask in playerTaskSystem.GetAllTasks()) {
+			SpawnTask(playerTask);
+		}
+	}
+
+	private void OnClearTaskPanel(OnClearTaskPanel obj) {
+		ClearTasks();
 	}
 
 	private void OnTaskCompleted(OnTaskCompleted e) {
@@ -78,7 +89,15 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 		StartCoroutine(RebuildLayout());
 		return taskElementViewController;
 	}
-	
+
+	private void Update() {
+		List<PlayerTask> tasks = taskElements.Keys.ToList();
+		foreach (PlayerTask task in tasks) {
+			TaskElementViewController taskElementViewController = taskElements[task];
+			taskElementViewController.SetDescription(task.GetDescription());
+		}
+	}
+
 	private IEnumerator RebuildLayout() {
 		LayoutRebuilder.ForceRebuildLayoutImmediate(taskPanel);
 		yield return new WaitForEndOfFrame();
@@ -121,7 +140,7 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 	}
 
 	private void DisableExplorationUIs() {
-		taskElements.Clear();
+		
 		explorationProgressSlider.gameObject.SetActive(false);
 		explorationProgressSlider.value = 0;
 		
@@ -136,5 +155,6 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 		for (int i = 0; i < taskPanel.childCount; i++) {
 			Destroy(taskPanel.GetChild(i).gameObject);
 		}
+		taskElements.Clear();
 	}
 }

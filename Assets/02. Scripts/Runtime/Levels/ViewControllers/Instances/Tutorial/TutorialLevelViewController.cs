@@ -5,6 +5,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial;
 using _02._Scripts.Runtime.PlayerTasks;
+using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using Cysharp.Threading.Tasks;
 using MikroFramework;
@@ -15,6 +16,7 @@ using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Player;
+using Runtime.Utilities;
 using Runtime.Weapons;
 using UnityEngine;
 
@@ -38,6 +40,7 @@ public class TutorialLevelEntity : LevelEntity<TutorialLevelEntity> {
 public class TutorialLevelViewController : LevelViewController<TutorialLevelEntity> {
 
     [SerializeField] private HintMessageGroup[] conditionalDialogueGroups;
+    [SerializeField] private GameObject[] enemyGroups;
     private int currentConditionalDialogueIndex = -1;
     private IInventorySystem inventorySystem;
     private IInventoryModel inventoryModel;
@@ -47,6 +50,18 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
         inventorySystem = this.GetSystem<IInventorySystem>();
         inventoryModel = this.GetModel<IInventoryModel>();
         playerTaskSystem = this.GetSystem<IPlayerTaskSystem>();
+        this.RegisterEvent<OnTutorialTaskFinish>(OnTutorialTaskFinish)
+            .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        this.RegisterEvent<OnSpawnEnemyGroup>(OnSpawnEnemyGroup)
+            .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+    }
+
+    private void OnSpawnEnemyGroup(OnSpawnEnemyGroup e) {
+        enemyGroups[e.Index].SetActive(true);
+    }
+
+    private void OnTutorialTaskFinish(OnTutorialTaskFinish e) {
+        NextConditionalDialogue();
     }
 
     protected override void OnBindEntityProperty() {
@@ -66,7 +81,8 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
                 (r) => r.Collectable && r is MedicalNeedleSkill).FirstOrDefault();
         
         IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
-        IResourceEntity entity = skill.EntityCreater.Invoke(true, 1);
+        ISkillEntity entity = skill.EntityCreater.Invoke(true, 1) as ISkillEntity;
+        entity.AdditionalSkillSwitchLocker.Retain();
         inventorySystem.AddItem(entity);
         
         
@@ -106,8 +122,21 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
     
     public void OnStep8Finish() {
         BoundEntity.CanOpenInventory = true;
-        UntilAction action = UntilAction.Allocate(() => inventoryModel.GetSelectedHotBarSlot(HotBarCategory.Right).GetQuantity() > 0);
+        /*UntilAction action = UntilAction.Allocate(() => inventoryModel.GetSelectedHotBarSlot(HotBarCategory.Right).GetQuantity() > 0);
         action.OnEndedCallback += NextConditionalDialogue;
-        action.Execute();
+        action.Execute();*/
+        playerTaskSystem.AddTask(new Step8Task());
+    }
+    
+    public void Step9Task() {
+        playerTaskSystem.AddTask(new Step9Task());
+    }
+    
+    public void Step11Task() {
+        playerTaskSystem.AddTask(new Step11Task());
+    }
+    
+    public void Step12Task() {
+        playerTaskSystem.AddTask(new Step12Task(5));
     }
 }

@@ -32,6 +32,10 @@ namespace _02._Scripts.Runtime.PlayerTasks {
 		protected override void OnInit() {
 			playerTaskModel = this.GetModel<IPlayerTaskModel>();
 			PlayerTaskSystemUpdateExecutor.Singleton.OnUpdate += OnUpdate;
+			HashSet<PlayerTask> tasks = playerTaskModel.GetAllTasks();
+			foreach (PlayerTask task in tasks) {
+				task.OnInit();
+			}
 		}
 
 		private void OnUpdate() {
@@ -55,6 +59,7 @@ namespace _02._Scripts.Runtime.PlayerTasks {
 			if (addedTasks.Count > 0) {
 				foreach (PlayerTask task in addedTasks) {
 					tasks.Add(task);
+					task.OnInit();
 					this.SendEvent<OnAddPlayerTask>(new OnAddPlayerTask() {
 						Task = task
 					});
@@ -69,6 +74,7 @@ namespace _02._Scripts.Runtime.PlayerTasks {
 
 		public void AddTask(PlayerTask task) {
 			addedTasks.Add(task);
+			
 		}
 	}
 }
