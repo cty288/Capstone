@@ -206,7 +206,9 @@ namespace Runtime.Weapons.ViewControllers.Base
                     StartCoroutine(ReloadAnimation());
                 }
                 
-                if(playerActions.SprintHold.WasPerformedThisFrame() && IsScopedIn)
+                if((playerActions.SprintHold.WasPerformedThisFrame() 
+                    || playerActions.Slide.WasPerformedThisFrame())
+                       && IsScopedIn)
                 {
                     ChangeScopeStatus(false);
                     ChangeCameraFOV();

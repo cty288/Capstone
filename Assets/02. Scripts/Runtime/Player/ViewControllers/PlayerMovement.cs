@@ -565,7 +565,6 @@ namespace Runtime.Player.ViewControllers
             //while sprinting
             if (sprinting)
             {
-                //TODO: if ads, stop sprinting
                 IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
                 if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
                 {
@@ -611,6 +610,19 @@ namespace Runtime.Player.ViewControllers
                 slideTimer = playerEntity.GetMaxSlideTime().RealValue;
             }
 
+            if (sliding)
+            {
+                // cancel slide if ads
+                IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
+                if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
+                {
+                    if (playerActions.Scope.WasPressedThisFrame())
+                    {
+                        sliding = false;
+                    }
+                }
+            }
+            
             if (playerActions.Slide.WasReleasedThisFrame() && sliding)
             {
                 sliding = false;
