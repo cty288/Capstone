@@ -303,8 +303,11 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				//.SetProperty(new PropertyNameInfo(PropertyName.sub_area_levels), CreateSubAreaLevels());
 
 			ILevelEntity levelEnity = OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
-			levelEnity.SetDisplayedCoordinates(displayedCoordinates[0], displayedCoordinates[1]);
-			levelEnity.DisplayNameLocalizedKey = diaplsyedNameLocalizedKey;
+			if (displayedCoordinates != null && displayedCoordinates.Length >= 2) {
+				levelEnity.SetDisplayedCoordinates(displayedCoordinates[0], displayedCoordinates[1]);
+				levelEnity.DisplayNameLocalizedKey = diaplsyedNameLocalizedKey;
+			}
+			
 			return levelEnity;
 		}
 		
@@ -343,7 +346,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			
 			subAreaLevels = CreateSubAreaLevels();
-			if (autoCreateNewEntityWhenStart) {
+			if (autoCreateNewEntityWhenStart && autoUpdateNavMeshOnStart) {
 				UpdateNavMesh();
 			}
 			foreach (var subarea in subAreaLevels) {

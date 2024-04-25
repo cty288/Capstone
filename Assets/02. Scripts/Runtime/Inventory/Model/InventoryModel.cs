@@ -60,6 +60,8 @@ namespace Runtime.Inventory.Model {
 		
 		List<ResourceSlot> GetAllSlots(Predicate<ResourceSlot> predicate);
 		void RemoveSlots(int slots, bool spawnRemovedItems);
+
+		public bool AddItemToNonHotBarSlot(IResourceEntity item, out ResourceSlot addedSlot);
 		
 		int MaxSlotCount { get; set; }
 	}
@@ -118,8 +120,10 @@ namespace Runtime.Inventory.Model {
 			new Dictionary<ResourceCategory, HashSet<PreparationSlot>>();
 
 		//[ES3Serializable]
-		
-		
+
+
+
+
 		[field: ES3Serializable]
 		public int MaxSlotCount { get; set; } = 32;
 		
@@ -188,7 +192,9 @@ namespace Runtime.Inventory.Model {
 			return base.AddItem(item, out addedSlot);
 		}
 		
-		
+		public bool AddItemToNonHotBarSlot(IResourceEntity item, out ResourceSlot addedSlot) {
+			return base.AddItem(item, out addedSlot);
+		}
 		
 		public void ReplenishHotBarSlot(HotBarCategory category, HotBarSlot targetSlotToReplenish) {
 			if (!targetSlotToReplenish.IsEmpty()) {

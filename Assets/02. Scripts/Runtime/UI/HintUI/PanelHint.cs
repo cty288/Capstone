@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Polyglot;
 using Runtime.UI;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,11 @@ public class PanelHint : HintPanel {
 		base.OnInit();
 		nextPageButton.onClick.AddListener(ShowNextMessage);
 		closeButton.onClick.AddListener(() => {
+			var lastHintMessage = currentMessageGroup.messages[^1];
+			if (lastHintMessage != null && lastHintMessage.callback != null) {
+				lastHintMessage.callback.Invoke();
+			}
+			
 			MainUI.Singleton.GetAndClose(this);
 		});
 		lastPageButton.onClick.AddListener(ShowLastMessage);
@@ -28,8 +34,8 @@ public class PanelHint : HintPanel {
 
 	protected override void OnShowMessage() {
 		HintMessage message = currentMessageGroup.messages[currentMessageIndex];
-		titleText.text = message.title;
-		messageText.text = message.message;
+		titleText.text = Localization.Get(message.titleLocalizedKey);
+		messageText.text = GetLocalizedText(message);
 		icon.sprite = message.icon;
 		lastPageButton.gameObject.SetActive(currentMessageIndex > 0);
 	}

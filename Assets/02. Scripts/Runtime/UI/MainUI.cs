@@ -54,7 +54,12 @@ namespace Runtime.UI {
 				return;
 			}
 			
-			if (!levelModel.IsInBase() && controlActions.Inventory.WasPressedThisFrame() && (currentMainPanel == null || UIManager.Singleton.GetPanel<InventoryUIViewController>(true))) {
+			if (!levelModel.IsInBase() && controlActions.Inventory.WasPressedThisFrame() 
+			                           && (currentMainPanel == null || UIManager.Singleton.GetPanel<InventoryUIViewController>(true))) {
+				if (levelModel.CurrentLevel.Value is TutorialLevelEntity tutorial && !tutorial.CanOpenInventory) {
+					return;
+				}
+				
 				OpenOrGetClose<InventoryUIViewController>(this, null, true);
 			}
 

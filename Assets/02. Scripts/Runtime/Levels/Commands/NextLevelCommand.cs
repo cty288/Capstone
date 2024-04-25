@@ -18,6 +18,10 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 				this.SendCommand<BackToBaseCommand>();
 			}
 			else {
+				IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+				playerEntity.AlwaysNonLethal = false;
+				
+				
 				levelModel.SwitchToLevel(levelModel.CurrentLevelCount.Value + 1);
 				((MainGame) MainGame.Interface).SaveGame();
 			}
@@ -48,6 +52,9 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 			
 			playerEntity.SetHealth(playerEntity.GetMaxHealth());
 			playerEntity.SetArmor(playerEntity.GetMaxArmor().RealValue);
+
+			playerEntity.AlwaysNonLethal = false;
+			levelModel.RandomBossEncounterEventChance = 0;
 			
 			this.SendEvent<OnReturnToBase>();
 			

@@ -72,6 +72,8 @@ namespace Runtime.Player {
 		//public void SetRootViewController(ICanDealDamageRootViewController rootViewController);
 		
 		public ReferenceCounter WeaponLockCounter { get; }
+		
+		public bool AlwaysNonLethal { get; set; }
 	}
 
 	public struct OnPlayerKillEnemy {
@@ -377,6 +379,8 @@ namespace Runtime.Player {
 		[field: ES3Serializable]
 		public ReferenceCounter WeaponLockCounter { get; } = new ReferenceCounter();
 
+		[field: ES3Serializable] public bool AlwaysNonLethal { get; set; } = false;
+
 		public ICanDealDamage ParentDamageDealer => null;
 
 		public override void OnTakeDamage(int damage, ICanDealDamage damageDealer, HitData hitData = null) {
@@ -407,8 +411,9 @@ namespace Runtime.Player {
 			float armorToTakeDamage = Mathf.Min(Armor.Value, actualDamage);
 			int healthToTakeDamage = actualDamage - (int) armorToTakeDamage;
 			healthToTakeDamage = Mathf.Min(healthToTakeDamage, healthInfo.CurrentHealth);
-			if(nonlethal && healthToTakeDamage >= healthInfo.CurrentHealth) {
-				healthToTakeDamage = healthInfo.CurrentHealth - 1;
+			if(nonlethal || AlwaysNonLethal) {
+				healthToTakeDamage = Mathf.Min(healthToTakeDamage, healthInfo.CurrentHealth - 1);
+                         //healthInfo.CurrentHealth - 1;
 			}
 
 			int totalDamage = (int) armorToTakeDamage + healthToTakeDamage;
@@ -428,6 +433,7 @@ namespace Runtime.Player {
 			if (healthToTakeDamage > 0) {
 				HealthProperty.RealValue.Value =
 					new HealthInfo(healthInfo.MaxHealth, healthInfo.CurrentHealth - healthToTakeDamage);
+				
 				
 			}
 			
