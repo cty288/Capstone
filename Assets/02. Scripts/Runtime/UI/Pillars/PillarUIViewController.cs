@@ -145,7 +145,7 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 
 		//level = levelModel.
 		this.SendCommand(ActivatePillarCommand.Allocate(data.pillar, currentSelectedCurrencyType,
-			currentSelectedCurrency, level));
+			currentSelectedCurrency, level, data.IsTutorialPillar));
 
 		MainUI.Singleton.GetAndClose(this);
 	}

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
 using _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial;
+using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.PlayerTasks;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
@@ -16,6 +18,8 @@ using Runtime.GameResources;
 using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Player;
+using Runtime.Spawning;
+using Runtime.Spawning.ViewControllers.Instances;
 using Runtime.Utilities;
 using Runtime.Weapons;
 using UnityEngine;
@@ -41,6 +45,8 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
 
     [SerializeField] private HintMessageGroup[] conditionalDialogueGroups;
     [SerializeField] private GameObject[] enemyGroups;
+    [SerializeField] private Collider pillarTrigger;
+    [SerializeField] private GameObject tutorialPillar;
     private int currentConditionalDialogueIndex = -1;
     private IInventorySystem inventorySystem;
     private IInventoryModel inventoryModel;
@@ -61,11 +67,24 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
     }
 
     private void OnTutorialTaskFinish(OnTutorialTaskFinish e) {
-        NextConditionalDialogue();
+       
+        if (e.TaskID == 12) {
+            pillarTrigger.enabled = true;
+            pillarTrigger.gameObject.GetComponent<BossPillarViewController>().SetCanInteract(true);
+        }
+        else {
+            NextConditionalDialogue();
+        }
     }
 
     protected override void OnBindEntityProperty() {
 			
+    }
+
+    protected override void SpawnPillars() {
+        GameObject pillar = tutorialPillar;
+        IBossPillarViewController pillarViewController = pillar.GetComponent<IBossPillarViewController>();
+        string id = pillarViewController.InitPillar(BoundEntity, bossSpawnCostInfo, pillarRewardsInfo);
     }
 
     protected override IEntity OnInitLevelEntity(LevelBuilder<TutorialLevelEntity> builder, int levelNumber) {
@@ -138,5 +157,13 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
     
     public void Step12Task() {
         playerTaskSystem.AddTask(new Step12Task(5));
+    }
+    
+    public void Step13Task() {
+        playerTaskSystem.AddTask(new Step13Task());
+    }
+    
+    public void Step14Task() {
+        playerTaskSystem.AddTask(new Step14Task());
     }
 }

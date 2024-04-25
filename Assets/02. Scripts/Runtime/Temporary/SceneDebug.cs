@@ -76,7 +76,8 @@ namespace Runtime.Temporary
                          pillarEntity = entity,
                          level = 1,
                          CurrencyAmount = 999,
-                         pillarCurrencyType = CurrencyType.Combat
+                         pillarCurrencyType = CurrencyType.Combat,
+                         IsTutorialPillar = false
                     });
                 }
             }
