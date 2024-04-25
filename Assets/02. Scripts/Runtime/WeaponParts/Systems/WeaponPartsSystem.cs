@@ -59,11 +59,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 					//ISkillEntity skillEntity = GetNewSkillEntity(skillName);
 					//buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, skillName, false);
 					weaponPartsModel.AddToUnlockedParts(skillName);
-					var template = ResourceTemplates.Singleton.GetResourceTemplates(skillName);
-					if (template == null) {
-						Debug.LogError("Template not found for " + skillName);
-						continue;
-					}
+					
 				}
 			}
 			levelModel.CurrentLevelCount.RegisterWithInitValue(OnLevelUpdate);

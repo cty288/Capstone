@@ -11,6 +11,7 @@ using _02._Scripts.Runtime.Pillars.Commands;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Instance;
 using _02._Scripts.Runtime.TimeSystem;
+using _02._Scripts.Runtime.WeaponParts.Model;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time;
 using Framework;
@@ -205,6 +206,20 @@ namespace Runtime.Temporary
                 ((MainGame)MainGame.Interface).ClearSave();
             }
 
+
+            if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                var parts = ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts)
+                    .Select((info => info.TemplateEntity.EntityName));
+                
+                IWeaponPartsModel weaponPartsModel = this.GetModel<IWeaponPartsModel>();
+                foreach (string skillName in parts) {
+                    weaponPartsModel.AddToUnlockedParts(skillName);
+					
+                }
+
+                Debug.Log("All parts unlocked");
+            }
+            
             if (Input.GetKeyDown(KeyCode.U)) {
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
                 var uuids = inventoryModel.GetAllItemUUIDs();
