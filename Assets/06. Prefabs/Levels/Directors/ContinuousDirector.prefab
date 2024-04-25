@@ -51,7 +51,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 59fccc16-cb5b-4315-a8b9-adf2cf78af81
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 0}
@@ -69,16 +68,13 @@ MonoBehaviour:
   baseMinSpawnTimer: 5
   baseMaxSpawnTimer: 25
   baseStartingCredits: 0
-  baseCreditsPerSecond: 0.2
+  baseCreditsPerSecond: 0.05
   baseMaxActiveTime: 360
   baseDirectorCooldown: 600
   baseMaxDirectorEnemies: 20
   minSpawnRange: 15
   maxSpawnRange: 30
   addCreditsInterval: 1
-  spawnMask:
-    serializedVersion: 2
-    m_Bits: 2305
   currentCredits: 0
   creditTimer: 0
   directorSpawnTimer: 0
@@ -107,3 +103,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   totalTimeElapsedInDirector: 0
+  totalEliteEnemies: 0

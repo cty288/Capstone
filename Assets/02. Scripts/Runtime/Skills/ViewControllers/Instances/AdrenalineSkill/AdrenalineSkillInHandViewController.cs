@@ -54,13 +54,18 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.AdrenalineSkill 
 			
 		}
 
-		public override void OnItemStopUse() {
+		public override void OnStartHold(GameObject ownerGameObject)
+		{
+			base.OnStartHold(ownerGameObject);
 			if (usedBefore) {
 				return;
 			}
 			
 			usedBefore = true;
 			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ItemUse", AnimationEventType.Trigger, 0));
+		}
+
+		public override void OnItemStopUse() {
 		}
 
 		public override void OnItemUse() {

@@ -200,18 +200,18 @@ namespace Runtime.Weapons.ViewControllers.Base
                     if (IsScopedIn)
                     {
                         ChangeScopeStatus(false);
-                        fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
-                        fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+                        ChangeCameraFOV();
                     }
                     
                     StartCoroutine(ReloadAnimation());
                 }
                 
-                if(playerActions.SprintHold.WasPerformedThisFrame() && IsScopedIn)
+                if((playerActions.SprintHold.WasPerformedThisFrame() 
+                    || playerActions.Slide.WasPerformedThisFrame())
+                       && IsScopedIn)
                 {
                     ChangeScopeStatus(false);
-                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
-                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+                    ChangeCameraFOV();
                 }
             }
         }
@@ -260,19 +260,14 @@ namespace Runtime.Weapons.ViewControllers.Base
         #region Holding
         public override void OnStartHold(GameObject ownerGameObject) {
             base.OnStartHold(ownerGameObject);
-            /*if(ownerGameObject.TryGetComponent<ICanDealDamage>(out var damageDealer)) {
-                BoundEntity.SetOwner(damageDealer);
-            }*/
             
-            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
-            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+            ChangeCameraFOV();
             
             if(BoundEntity.CurrentAmmo == 0 && autoReload && !WeaponEntity.IsLocked) {
                 if (IsScopedIn)
                 {
                     ChangeScopeStatus(false);
-                    fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
-                    fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+                    ChangeCameraFOV();
                 }
                 
                 StartCoroutine(ReloadAnimation());
@@ -285,8 +280,8 @@ namespace Runtime.Weapons.ViewControllers.Base
            // BoundEntity.SetOwner(null);
             base.OnStopHold();
             ChangeScopeStatus(false);
-            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
-            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+            print($"STOP ITEM {gameObject.name}");
+            ChangeCameraFOV();
         }
         #endregion
 
@@ -298,7 +293,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             if (previsScope != _isScopedIn) {
                 playerModel.GetPlayer().SetScopedIn(_isScopedIn);
                 crossHairViewController?.OnScope(_isScopedIn);
-
+                // print("Scope changed to " + _isScopedIn); 
                 this.SendCommand(ScopeCommand.Allocate(_isScopedIn));
                 
                 AudioSystem.Singleton.Play2DSound("Pistol_Aim");
@@ -391,12 +386,25 @@ namespace Runtime.Weapons.ViewControllers.Base
                     if (IsScopedIn)
                     {
                         ChangeScopeStatus(false);
-                        fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
-                        fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+                        ChangeCameraFOV();
                     }
                     
                     StartCoroutine(ReloadAnimation());
                 }
+            }
+        }
+
+        private void ChangeCameraFOV(bool isADS = false)
+        {
+            if (isADS)
+            {
+                fpsCamera.transform.DOLocalMove(cameraPlacementData.adsCameraPosition, adsChangeDuration);
+                fpsCamera.transform.DOLocalRotate(cameraPlacementData.adsCameraRotation, adsChangeDuration);
+            }
+            else
+            {
+                fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
+                fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
             }
         }
 
@@ -411,13 +419,11 @@ namespace Runtime.Weapons.ViewControllers.Base
             
             if (IsScopedIn) {
                 ChangeScopeStatus(false);
-                fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
-                fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
+                ChangeCameraFOV();
             }
             else {
                 ChangeScopeStatus(true);
-                fpsCamera.transform.DOLocalMove(cameraPlacementData.adsCameraPosition, adsChangeDuration);
-                fpsCamera.transform.DOLocalRotate(cameraPlacementData.adsCameraRotation, adsChangeDuration);
+                ChangeCameraFOV(true);
             }
         }
         
@@ -476,10 +482,12 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         public override void OnRecycled() {
+            if(isHolding) {
+                ChangeCameraFOV();
+            }
+            
             WeaponEntity.SetBoundViewController(null);
             base.OnRecycled();
-            fpsCamera.transform.DOLocalMove(cameraPlacementData.hipFireCameraPosition, adsChangeDuration);
-            fpsCamera.transform.DOLocalRotate(cameraPlacementData.hipFireCameraRotation, adsChangeDuration);
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);
             OnModifyDamageCountCallbackList.Clear();

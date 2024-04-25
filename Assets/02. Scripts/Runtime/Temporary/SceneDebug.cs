@@ -92,12 +92,12 @@ namespace Runtime.Temporary
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
                 inventoryModel.RemoveSlots(2, true);
             }
-            if (Input.GetKeyDown(KeyCode.Keypad5)) {
+            if (Input.GetKeyDown(KeyCode.Minus)) {
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
                 inventoryModel.AddSlots(2, out int addedCount);
             }
 
-            if (Input.GetKeyDown(KeyCode.Keypad3)) {
+            if (Input.GetKeyDown(KeyCode.Plus)) {
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
                 inventoryModel.MaxSlotCount = 100;
                 inventoryModel.AddSlots(100, out int addedCount);
@@ -134,7 +134,7 @@ namespace Runtime.Temporary
             }
             
             
-            if (Input.GetKeyDown(KeyCode.Keypad6)) {
+            if (Input.GetKeyDown(KeyCode.Alpha9)) {
                 var weapons = 
                     ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.Weapon,
                          (r)=> r.Collectable);
@@ -150,7 +150,7 @@ namespace Runtime.Temporary
             }
             
             
-            if (Input.GetKeyDown(KeyCode.Keypad7)) {
+            if (Input.GetKeyDown(KeyCode.Alpha7)) {
                 var weapons = 
                     ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.Skill,
                         (r)=> r.Collectable);
@@ -165,7 +165,7 @@ namespace Runtime.Temporary
                 }
             }
             
-            if (Input.GetKeyDown(KeyCode.Keypad8)) {
+            if (Input.GetKeyDown(KeyCode.Alpha8)) {
                 var weapons = 
                     ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.RawMaterial,
                         (r)=> r.Collectable);
