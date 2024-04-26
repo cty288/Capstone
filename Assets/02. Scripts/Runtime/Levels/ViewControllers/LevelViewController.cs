@@ -441,7 +441,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		private  void  SpawnPillars() {
+		protected virtual void  SpawnPillars() {
 			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			if (!hasPillars) {
 				return;

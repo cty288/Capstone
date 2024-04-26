@@ -68,6 +68,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		[SerializeField] private GameObject normalTrail;
 		[SerializeField] private GameObject activatedTrail;
 		[SerializeField] private Transform rewardSpawnPos;
+		[SerializeField] private bool isTutorialPillar = false;
 		protected override void Awake() {
 			base.Awake();
 			pillarModel = this.GetModel<IPillarModel>();
@@ -271,11 +272,16 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			}
 
 			this.SendCommand(OpenPillarUICommand.Allocate(BoundEntity,
-				BoundEntity.RewardCost, rewardSpawnPos));
+				BoundEntity.RewardCost, rewardSpawnPos, isTutorialPillar));
 		}
 
 		public override void OnRecycled() {
 			base.OnRecycled();
+		}
+
+
+		public void SetCanInteract(bool canInteract) {
+			hasInteractiveHint = canInteract;
 		}
 	}
 }

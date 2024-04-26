@@ -41,10 +41,12 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MineralRobotSkil
 		}
 
 		private void OnUseFail(MineralRobotEntity entity) {
+			print("mineral robot use fail");
 			entity?.RecycleToCache();
 		}
 
 		private void OnUseSuccess(MineralRobotEntity entity) {
+			print("mineral robot use success");
 			BoundEntity.OnSpawnRobot(entity);
 		}
 

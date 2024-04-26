@@ -12,6 +12,7 @@ namespace _02._Scripts.Runtime.Pillars.Commands {
 		public float CurrencyAmount;
 		public int level;
 		public IPillarEntity pillarEntity;
+		public bool IsTutorialPillar;
 	}
 	public class ActivatePillarCommand : AbstractCommand<ActivatePillarCommand> {
 	
@@ -19,13 +20,15 @@ namespace _02._Scripts.Runtime.Pillars.Commands {
 		private float currencyAmount;
 		private int level;
 		private IPillarEntity pillarEntity;
+		private bool isTutorialPillar;
 		
 		protected override void OnExecute() {
 			this.SendEvent<OnRequestActivatePillar>(new OnRequestActivatePillar() {
 				pillarCurrencyType = pillarCurrencyType,
 				CurrencyAmount = currencyAmount,
 				level = level,
-				pillarEntity = pillarEntity
+				pillarEntity = pillarEntity,
+				IsTutorialPillar = isTutorialPillar
 			});
 		}
 		
@@ -34,12 +37,13 @@ namespace _02._Scripts.Runtime.Pillars.Commands {
 			
 		}
 		
-		public static ActivatePillarCommand Allocate(IPillarEntity pillarEntity, CurrencyType pillarCurrencyType, float currencyAmount, int level) {
+		public static ActivatePillarCommand Allocate(IPillarEntity pillarEntity, CurrencyType pillarCurrencyType, float currencyAmount, int level, bool isTutorialPillar = false) {
 			ActivatePillarCommand command = SafeObjectPool<ActivatePillarCommand>.Singleton.Allocate();
 			command.pillarCurrencyType = pillarCurrencyType;
 			command.currencyAmount = currencyAmount;
 			command.level = level;
 			command.pillarEntity = pillarEntity;
+			command.isTutorialPillar = isTutorialPillar;
 			return command;
 		}
 	}
