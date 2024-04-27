@@ -72,7 +72,7 @@ namespace Runtime.Temporary
             }
 
             levelTimerCoroutine = null;
-            if (levelNum > 0) {
+            if (!levelModel.IsInBase()) {
                 levelTimerCoroutine = StartCoroutine(LevelTimer());
             }
         }

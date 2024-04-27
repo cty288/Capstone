@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _02._Scripts.Runtime.Currency;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.ViewControllers;
@@ -51,11 +52,14 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
     private IInventorySystem inventorySystem;
     private IInventoryModel inventoryModel;
     private IPlayerTaskSystem playerTaskSystem;
+    private ISkillEntity initialSkill = null;
+    private ICurrencySystem currencySystem;
     
     protected override void OnEntityStart() {
         inventorySystem = this.GetSystem<IInventorySystem>();
         inventoryModel = this.GetModel<IInventoryModel>();
         playerTaskSystem = this.GetSystem<IPlayerTaskSystem>();
+        currencySystem = this.GetSystem<ICurrencySystem>();
         this.RegisterEvent<OnTutorialTaskFinish>(OnTutorialTaskFinish)
             .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         this.RegisterEvent<OnSpawnEnemyGroup>(OnSpawnEnemyGroup)
@@ -100,16 +104,16 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
                 (r) => r.Collectable && r is MedicalNeedleSkill).FirstOrDefault();
         
         IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
-        ISkillEntity entity = skill.EntityCreater.Invoke(true, 1) as ISkillEntity;
-        entity.AdditionalSkillSwitchLocker.Retain();
-        inventorySystem.AddItem(entity);
+        initialSkill = skill.EntityCreater.Invoke(true, 1) as ISkillEntity;
+        initialSkill.AdditionalSkillSwitchLocker.Retain();
+        inventorySystem.AddItem(initialSkill, false);
         
         
         var weapon = ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.Weapon,
             (r) => r.Collectable && r is SubMachineGunEntity).FirstOrDefault();
         
         IResourceEntity weaponEntity = weapon.EntityCreater.Invoke(true, 1);
-        inventorySystem.AddItemToNonHotBarSlot(weaponEntity);
+        inventorySystem.AddItemToNonHotBarSlot(weaponEntity, false);
 
         player.AlwaysNonLethal = true;
         
@@ -165,5 +169,30 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
     
     public void Step14Task() {
         playerTaskSystem.AddTask(new Step14Task());
+    }
+
+    public void AllowUseSkill(bool allow) {
+        if (allow) {
+            initialSkill.AdditionalSkillSwitchLocker.Release(); 
+        }
+        else {
+            initialSkill.AdditionalSkillSwitchLocker.Retain();
+        }
+        
+    }
+    
+    public void Step16Task() {
+        currencySystem.AddCurrency(CurrencyType.Plant, 5);
+        playerTaskSystem.AddTask(new Step16Task());
+    }
+    
+    public void Step17Task() {
+        currencySystem.AddCurrency(CurrencyType.Plant, 20);
+        currencySystem.AddCurrency(CurrencyType.Time, 20);
+        playerTaskSystem.AddTask(new Step17Task());
+    }
+    
+    public void Step18Task() {
+        playerTaskSystem.AddTask(new Step18Task());
     }
 }
