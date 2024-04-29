@@ -9,6 +9,17 @@ public class GunsmithNPC : BaseNPC
 {
 	protected override void OnInteract() {
 		base.OnInteract();
+		if (!levelModel.BaseTutorialStatus.TalkedToGunsmith) {
+			levelModel.BaseTutorialStatus.TalkedToGunsmith = true;
+			NextConditionalDialogue();
+		}
+		else {
+			OpenPanel();
+		}
+	}
+
+
+	public void OpenPanel() {
 		MainUI.Singleton.OpenOrGetClose
 			<CraftingPanelViewController>(MainUI.Singleton, new CraftingPanelMsg() {
 				category = ResearchCategory.WeaponAndParts

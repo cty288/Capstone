@@ -4,6 +4,7 @@ using UnityEngine;
 namespace _02._Scripts.Runtime.Levels.Sandstorm {
 	public struct OnSandStormWarning {
 		public int RemainingMinutes;
+		public bool IsTutorialWarning;
 	}
 
 
@@ -18,6 +19,7 @@ namespace _02._Scripts.Runtime.Levels.Sandstorm {
 		public override void OnTriggered() {
 			this.SendEvent<OnSandStormWarning>(new OnSandStormWarning() {
 				RemainingMinutes = timeToTrigger,
+				IsTutorialWarning = false
 			});
 		}
 

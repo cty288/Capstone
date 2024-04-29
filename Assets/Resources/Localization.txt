@@ -766,13 +766,13 @@ BladeSentinel_name,,Blade Sentinel,,,,,,,,,,,,,,,,,刀锋哨兵,刀鋒哨兵,,,,
 SpineWheel_name,,Spine Wheel,,,,,,,,,,,,,,,,,刺轮,刺輪,,,,,,,,,
 CURRENCY_Combat_name,,Warpath Shards,,,,,,,,,,,,,,,,,战路碎片,戰路碎片,,,,,,,,,
 CURRENCY_Time_name,,Atmospheric Shards,,,,,,,,,,,,,,,,,大气碎片,大氣碎片,,,,,,,,,
-CURRENCY_Plant_name,,Gas Shard,,,,,,,,,,,,,,,,,燃气碎片,燃气碎片,,,,,,,,,
+CURRENCY_Plant_name,,Gas Shard,,,,,,,,,,,,,,,,,瓦斯碎片,瓦斯碎片,,,,,,,,,
 CURRENCY_Mineral_name,,Mineral Shards,,,,,,,,,,,,,,,,,矿物碎片,礦物碎片,,,,,,,,,
 BossPillar_name,,Transponder,,,,,,,,,,,,,,,,,应答机,應答機,,,,,,,,,
 Pillar_name,,Transponder,,,,,,,,,,,,,,,,,应答机,應答機,,,,,,,,,
-Plant_name,,Gas,,,,,,,,,,,,,,,,,燃气,燃气碎片,,,,,,,,,
+Plant_name,,Gas,,,,,,,,,,,,,,,,,瓦斯,瓦斯,,,,,,,,,
 Collect,,Collect,,,,,,,,,,,,,,,,,采集,采集,,,,,,,,,
-Mineral_name,,Mineral,,,,,,,,,,,,,,,,,矿石,礦石,,,,,,,,,
+Mineral_name,,Collect,,,,,,,,,,,,,,,,,矿石,礦石,,,,,,,,,
 Mine,,Collect,,,,,,,,,,,,,,,,,采集,采集,,,,,,,,,
 INVENTORY_CANT_THROW,,You can't discard this item!,,,,,,,,,,,,,,,,,你不能丢弃该物品！,你不能丟棄該物品！,,,,,,,,,
 SKILL_PASSIVE,,<b>Passive Skill</b>,,,,,,,,,,,,,,,,,<b>被动技能</b>,<b>被動技能</b>,,,,,,,,,
@@ -827,7 +827,7 @@ SANDSTORM_HINT,,Sandstorm Approaching!,,,,,,,,,,,,,,,,,沙暴即将来临！,沙
 RESEARCH_PANEL_TITLE1,,Owned Resource,,,,,,,,,,,,,,,,,我的原材料,我的原料,,,,,,,,,
 RESEARCH_PANEL_TITLE2,,Selected Resource,,,,,,,,,,,,,,,,,已选择材料,已選擇材料,,,,,,,,,
 RESEARCH_PANEL_RESEARCH,,Research,,,,,,,,,,,,,,,,,研究,研究,,,,,,,,,
-RESEARCH_PANEL_Build,,Build & Unlock,,,,,,,,,,,,,,,,,制造 & 解锁,製造 & 解鎖,,,,,,,,,
+RESEARCH_PANEL_Build,,Build,,,,,,,,,,,,,,,,,打造,打造,,,,,,,,,
 RESEARCH_ALL_FINISHED,,You have completed all researches!,,,,,,,,,,,,,,,,,你已完成所有研究项目！,你已完成所有研究項目！,,,,,,,,,
 RESEARCH_NO_SELECTED,,Please select resources to be researched!,,,,,,,,,,,,,,,,,请选择要被研究的资源！,請選擇要被研究的資源！,,,,,,,,,
 RESEARCH_COST,,Cost: {0},,,,,,,,,,,,,,,,,费用：{0},費用：{0},,,,,,,,,
@@ -844,6 +844,7 @@ Go back to the Gunsmith to check them out!",,,,,,,,,,,,,,,,,"枪匠刚刚完成�
 回到槍匠處以查看研究！",,,,,,,,,
 BUILD_PREVIEW_LEVEL_TEXT,,Preview Level: {0},,,,,,,,,,,,,,,,,预览等级：{0},預覽等級：{0},,,,,,,,,
 RESEARCH_NO_RESOURCE_HINT,,You don't have any resources! Gather some resources from the desert to research!,,,,,,,,,,,,,,,,,你没有任何材料！在沙漠中收集材料来进行研究！,你沒有任何材料！在沙漠中收集材料來進行研究！,,,,,,,,,
+RESEARCH_RESOURCE_NOT_ENOUGH,,You dont't have enough resources for this research!,,,,,,,,,,,,,,,,,你没有足够的材料进行这项研究！,你沒有足夠的材料進行這項研究！,,,,,,,,,
 BUILD_NO_BUILD_HINT,,No items can be built! Start a research to unlock more!,,,,,,,,,,,,,,,,,没有可以制造的项目！进行研究以解锁更多！,沒有可以製造的項目！進行研究以解鎖更多！,,,,,,,,,
 NPC_SKILL,,Merchant,,,,,,,,,,,,,,,,,商人,商人,,,,,,,,,
 NPC_GUNSMITH,,Gunsmith,,,,,,,,,,,,,,,,,枪匠,槍匠,,,,,,,,,
@@ -1219,7 +1220,7 @@ MENU_SETTINGS_CONTROL_SLIDE,,Slide,,,,,,,,,,,,,,,,,滑行,滑行,,,,,,,,,
 MENU_SETTINGS_CONTROL_SPRINT,,Sprint,,,,,,,,,,,,,,,,,冲刺,衝刺,,,,,,,,,
 MENU_SETTINGS_CONTROL_UICLOSE,,Menu / Close Panel,,,,,,,,,,,,,,,,,菜单/关闭界面,選單/關閉介面,,,,,,,,,
 MENU_SETTINGS_CONTROL_INTERACT,,Interact,,,,,,,,,,,,,,,,,交互,互動,,,,,,,,,
-MENU_SETTINGS_CONTROL_INVENTORY,,Open Backpack,,,,,,,,,,,,,,,,,打开背包,打開背包,,,,,,,,,
+MENU_SETTINGS_CONTROL_INVENTORY,,Open Inventory,,,,,,,,,,,,,,,,,打开背包,打開背包,,,,,,,,,
 MENU_SETTINGS_CONTROL_GAMEPAD_LAST_INVENTORY,,Inventory: Last Item,,,,,,,,,,,,,,,,,物品栏：前一个物品,物品欄：前一個物品,,,,,,,,,
 MENU_SETTINGS_CONTROL_GAMEPAD_NEXT_INVENTORY,,Inventory: Next Item,,,,,,,,,,,,,,,,,物品栏：后一个物品,物品欄：後一個物品,,,,,,,,,
 MENU_SETTINGS_CONTROL_GAMEPAD_BUFF_UP,,Enchantment Panel: Select Last Item,,,,,,,,,,,,,,,,,增益效果面板：选择上一个,增益效果面板：選擇上一個,,,,,,,,,
@@ -1287,7 +1288,111 @@ AAA
 ",,,,,,,,,
 TUTORIAL_SLIDE_FAIL,,Please Slide Down the Slope by Holding {0}.,,,,,,,,,,,,,,,,,请使用{0}键滑行！,請使用{0}鍵滑行！,,,,,,,,,
 TUTORIAL_INSTRUCTOR,,Instructor,,,,,,,,,,,,,,,,,指导员,指導員,,,,,,,,,
+TUTORIAL_STEP1,,"Welcome to the training grounds, Recruit. Here you will learn all you need to become a Runner.",,,,,,,,,,,,,,,,,欢迎来到训练场地，新兵。在这里你将会学到所有成为一名“Runner”需要知道的知识。,歡迎來到訓練場地，新兵。在這裡你將會學到所有成爲一名“Runner”需要知道的知識。,,,,,,,,,
+TUTORIAL_STEP2,,"Use W/S/A/D to move around, and hold {0} for sprinting.",,,,,,,,,,,,,,,,,使用W/S/A/D来移动，按住{0}冲刺。,使用W/S/A/D來移動，按住{0}衝刺。,,,,,,,,,
+TUTORIAL_STEP3,,Press {0} to jump.,,,,,,,,,,,,,,,,,使用{0}跳跃。,使用{0}跳躍。,,,,,,,,,
+TUTORIAL_STEP3_TITLE,,Jump,,,,,,,,,,,,,,,,,跳跃,跳躍,,,,,,,,,
+TUTORIAL_STEP2_TITLE,,Moving,,,,,,,,,,,,,,,,,移动,移動,,,,,,,,,
+TUTORIAL_STEP4,,"As “Runners”, we collect resources that only exist in the desert and recycle scraps we find. By researching and processing these resources, we are able to build stronger equipment and enhance our understanding of ancient technology.",,,,,,,,,,,,,,,,,"作为 ""Runner""，我们收集只存在于沙漠中的资源，并回收我们找到的废料。通过研究和加工这些资源，我们能够制造出更强大的装备，并增强我们对古代科技的了解。","作爲 ""Runner""，我們收集隻存在於沙漠中的資源，並回收我們找到的廢料。通過研究和加工這些資源，我們能夠製造出更強大的裝備，並增強我們對古代科技的了解。",,,,,,,,,
+TUTORIAL_STEP5,,Press {0} twice to double jump.,,,,,,,,,,,,,,,,,你可以连续两次使用{0}来跳跃两次。,你可以連續兩次使用{0}來跳躍兩次。,,,,,,,,,
+TUTORIAL_STEP5_TITLE,,Double Jump,,,,,,,,,,,,,,,,,连续跳跃,連續跳躍,,,,,,,,,
+TUTORIAL_STEP6,,Hold {0} to slide down slopes.,,,,,,,,,,,,,,,,,使用{0}在斜坡上滑行。,使用{0}在斜坡上滑行。,,,,,,,,,
+TUTORIAL_STEP6_TITLE,,Slide,,,,,,,,,,,,,,,,,滑行,滑行,,,,,,,,,
 TUTORIAL_STEP7,,You see that “Transponder” shooting beam into the sky? Enter the cave ahead!,,,,,,,,,,,,,,,,,你看到那个朝天空射出激光的“应答机”了吗，进入前面的洞穴吧。,你看到那個朝天空射出激光的“應答機”了嗎，進入前麵的洞穴吧。,,,,,,,,,
-TUTORIAL_STEP8,,"Minerals and Gas, these are two kinds of resources you look for in the Desert. To collect them, you simply shoot them until they break. <color=orange>Open your inventory with {0} and drag the “UF23 MPD” into the weapon slot on the right.</color>",,,,,,,,,,,,,,,,,"矿物和瓦斯是您在沙漠中寻找的两种资源。要收集它们，只需射击它们，直到它们破碎。<color=orange>用{0}键打开背包，将 ""UF23 MPD ""拖到右侧的武器槽中。</color>","礦物和瓦斯是您在沙漠中尋找的兩種資源。要收集它們，隻需射擊它們，直到它們破碎。<color=orange>用{0}鍵打開背包，將 ""UF23 MPD ""拖到右側的武器槽中。</color>",,,,,,,,,
+TUTORIAL_STEP8,,"Minerals and Gas, these are two kinds of resources you look for in the Desert. To collect them, you simply shoot them until they break. <color=yellow>Open your inventory with {0} and drag the “UF23 MPD” into the weapon slot on the right.</color>",,,,,,,,,,,,,,,,,"矿物和瓦斯是您在沙漠中寻找的两种资源。要收集它们，只需射击它们，直到它们破碎。<color=yellow>用{0}键打开背包，将 ""UF23 MPD ""拖到右侧的武器槽中。</color>","礦物和瓦斯是您在沙漠中尋找的兩種資源。要收集它們，隻需射擊它們，直到它們破碎。<color=yellow>用{0}鍵打開背包，將 ""UF23 MPD ""拖到右側的武器槽中。</color>",,,,,,,,,
+TUTORIAL_STEP8_TASK,,Open your inventory with {0} and drag the “UF23 MPD” into the weapon slot on the right.,,,,,,,,,,,,,,,,,"用{0}键打开背包，将 ""UF23 MPD ""拖到右侧的武器槽中。","用{0}鍵打開背包，將 ""UF23 MPD ""拖到右側的武器槽中。",,,,,,,,,
 TUTORIAL_STEP9,,"Press {0} to shoot, and you can scope in and scope out using {1}.",,,,,,,,,,,,,,,,,按{0}射击，使用{1}可以切换瞄准和腰射。,按{0}射擊，使用{1}可以切換瞄準和腰射。,,,,,,,,,
 TUTORIAL_STEP9_TITLE,,Shooting,,,,,,,,,,,,,,,,,射击,射擊,,,,,,,,,
+TUTORIAL_STEP9_TASK,,Shoot and break at least one <color=yellow>Mineral</color> or <color=yellow>Gas</color> with {0},,,,,,,,,,,,,,,,,使用{0}射击并破坏至少一个<color=yellow>矿物</color>或<color=yellow>瓦斯</color>,使用{0}射擊並破壞至少一個<color=yellow>礦物</color>或<color=yellow>瓦斯</color>,,,,,,,,,
+TUTORIAL_STEP10,,"Some pieces of energy are also dropped during the mining process , which can't be used for processing and research, but you are equipped with special gear on your back that lets you store them temporarily. They can help your adventures while you're out exploring and make you stronger.",,,,,,,,,,,,,,,,,在开采过程中也会掉落一些资源的碎片，虽然不能用来加工，研究，但你背后装有特殊的装备让你将他们暂时储存起来。它们可以在你外出探险的时候帮助你的冒险，让你变得更强。,在開採過程中也會掉落一些資源的碎片，雖然不能用來加工，研究，但你背後裝有特殊的裝備讓你將他們暫時儲存起來。它們可以在你外出探險的時候幫助你的冒險，讓你變得更強。,,,,,,,,,
+TUTORIAL_STEP11,,"There are four types of resource fragments that can be collected: <color=yellow>“Warpath shard”</color> for defeating enemies, <color=yellow>“Mineral shard”</color> for collecting minerals,<color=yellow>“Gas shard”</color> for collecting gas, and <color=yellow>“Atmosphere shard”</color> that you slowly collect over time.",,,,,,,,,,,,,,,,,一共有四种资源碎片可以被收集：击败敌人可以获得<color=yellow>”战路碎片“</color>，收集矿物可以获得<color=yellow>“矿物碎片”</color>，收集瓦斯可以获得<color=yellow>“瓦斯碎片”</color>，而随着时间你会从大气中慢慢收集<color=yellow>“大气碎片”</color>。,一共有四種資源碎片可以被收集：擊敗敵人可以獲得<color=yellow>”戰路碎片“</color>，收集礦物可以獲得<color=yellow>“礦物碎片”</color>，收集瓦斯可以獲得<color=yellow>“瓦斯碎片”</color>，而隨着時間你會從大氣中慢慢收集<color=yellow>“大氣碎片”</color>。,,,,,,,,,
+TUTORIAL_STEP11_2,,Try collecting 10 <color=yellow>“Mineral shard”</color> and <color=yellow>“Gas shard”</color>!,,,,,,,,,,,,,,,,,试着收集10个<color=yellow>“矿物碎片”</color>和<color=yellow>“大气碎片”</color>！,試着收集10個<color=yellow>“礦物碎片”</color>和<color=yellow>“大氣碎片”</color>！,,,,,,,,,
+TUTORIAL_STEP11_TITLE,,Resource Shards,,,,,,,,,,,,,,,,,资源碎片,資源碎片,,,,,,,,,
+TUTORIAL_STEP11_TASK,,Collect 10 <color=yellow>“Mineral shard”</color> ({0}/10) and <color=yellow>“Gas shard”</color> ({1}/10).,,,,,,,,,,,,,,,,,收集10个<color=yellow>“矿物碎片”</color>（{0}/10）和<color=yellow>“大气碎片”</color>（{1}/10）。,收集10個<color=yellow>“礦物碎片”</color>（{0}/10）和<color=yellow>“大氣碎片”</color>（{1}/10）。,,,,,,,,,
+TUTORIAL_STEP12,,"Ancient machines! Quick, repel them!",,,,,,,,,,,,,,,,,是古代的机械！快，击退他们！,是古代的機械！快，擊退他們！,,,,,,,,,
+TUTORIAL_STEP12_2,,"As you can see, most of the ancient machines were damaged after the incident, and the ones that remain are no longer under human control. Our guess is that they are controlled by “the Tower”, and they are the most dangerous thing in the desert.",,,,,,,,,,,,,,,,,如你所见，在那次事件后，大部分古代机械都损坏了，而保留下来的都不再受人控制。我们猜测他们受“高塔”的控制，是沙漠里最危险的东西。,如你所見，在那次事件後，大部分古代機械都損壞了，而保留下來的都不再受人控製。我們猜測他們受“高塔”的控製，是沙漠裡最危險的東西。,,,,,,,,,
+TUTORIAL_STEP12_3,,"In the desert, you'll often face multiple enemies at once, so keep moving and use jumps, double jumps, or slides to avoid attacks using movements and accelerations.",,,,,,,,,,,,,,,,,在沙漠中，你时常会同时面对多个敌人，保持运动，多使用跳跃，二段跳跃，或者滑行来利用位移和加速来躲避攻击。,在沙漠中，你時常會同時麵對多個敵人，保持運動，多使用跳躍，二段跳躍，或者滑行來利用位移和加速來躲避攻擊。,,,,,,,,,
+TUTORIAL_STEP12_3_TITLE,,Enemies,,,,,,,,,,,,,,,,,敌人,敵人,,,,,,,,,
+TUTORIAL_STEP12_TASK,,Kill all enemies.,,,,,,,,,,,,,,,,,消灭所有敌人。,消滅所有敵人。,,,,,,,,,
+TUTORIAL_STEP13_1,,"This is a <color=yellow>""Transponder""</color>, a remnant of ancient technology. ",,,,,,,,,,,,,,,,,这就是<color=yellow>“应答机”</color>，是古代科技的遗留物。,這就是<color=yellow>“應答機”</color>，是古代科技的遺留物。,,,,,,,,,
+TUTORIAL_STEP13_2,,Each transponder can accept one type of shard. You can channel your collected shards into them in exchange for resources and powerful weapon parts. Try to channel them once.,,,,,,,,,,,,,,,,,每个“应答机”可以接受一种类型的碎片。你可以将收集到的能力碎片输送进去来换取资源和科技造物。尝试输送一次吧。,每個“應答機”可以接受一種類型的碎片。你可以將收集到的能力碎片輸送進去來換取資源和科技造物。嚐試輸送一次吧。,,,,,,,,,
+TUTORIAL_STEP13_TASK,,"Interact with the <color=yellow>""Transponder""</color>, and transfer enough <color=yellow>“Shards”</color> you own.",,,,,,,,,,,,,,,,,与<color=yellow>“应答机”</color>交互，并输送你所拥有的足够多的<color=yellow>“碎片”</color>。,與<color=yellow>“應答機”</color>交互，並輸送你所擁有的足夠多的<color=yellow>“碎片”</color>。,,,,,,,,,
+TUTORIAL_PICK_PARTS_TASK,,Pick up all the 3 Weapon Parts ({0}/3).,,,,,,,,,,,,,,,,,捡起所有3个武器配件（{0}/3）。,撿起所有3個武器配件（{0}/3）。,,,,,,,,,
+TUTORIAL_STEP14_1,,"Depending on the type of shard you channel, you gain different resources and weapon parts. 
+
+Different <color=yellow>Weapon Parts</color> can empower your weapons in different ways, but can only be used when you are out exploring. Weapon parts have different categories, and the <color=yellow>Magazine Part </color> will determine the weapon's category.",,,,,,,,,,,,,,,,,"根据你输送的能量类型和量，你会获得不同的资源和武器配件。
+
+不同的<color=yellow>武器配件</color>能为你的武器提供不同强化效果，但只能在外出探险时使用。<color=yellow>武器配件</color>有着不同的分类，而装备于<color=yellow>弹匣</color>位置的配件将决定武器的分类。","根據你輸送的能量類型和量，你會獲得不同的資源和武器配件。
+
+不同的<color=yellow>武器配件</color>能爲你的武器提供不同強化效果，但隻能在外出探險時使用。<color=yellow>武器配件</color>有着不同的分類，而裝備於<color=yellow>彈匣</color>位置的配件將決定武器的分類。",,,,,,,,,
+TUTORIAL_STEP14_2,,"You can install your weapon parts in the <color=yellow>""Modification""</color> section of your Inventory.
+
+Use {0} to open the Inventory, and install your weapon parts in the <color=yellow>""Modification""</color> section!",,,,,,,,,,,,,,,,,"你可以在物品栏的<color=yellow>“武器改造”</color>部分安装武器配件。
+
+使用{0}打开物品栏，然后在<color=yellow>“武器改造”</color>部分安装你的武器配件！","你可以在物品欄的<color=yellow>“武器改造”</color>部分安裝武器配件。
+
+使用{0}打開物品欄，然後在<color=yellow>“武器改造”</color>部分安裝你的武器配件！",,,,,,,,,
+TUTORIAL_STEP14_TITLE,,Weapon Parts,,,,,,,,,,,,,,,,,武器配件,武器配件,,,,,,,,,
+TUTORIAL_STEP14_TASK,,"Use {0} to open the Inventory, and install your weapon parts in the <color=yellow>""Modification""</color> section.",,,,,,,,,,,,,,,,,使用{0}打开物品栏，然后在<color=yellow>“武器改造”</color>部分安装你的武器配件。,使用{0}打開物品欄，然後在<color=yellow>“武器改造”</color>部分安裝你的武器配件。,,,,,,,,,
+TUTORIAL_STEP15_1,,"Be aware that every time you transfer shards to <color=yellow>""Transponders""</color>, they will send signals. ",,,,,,,,,,,,,,,,,要注意的是，每当你输送碎片后，<color=yellow>“应答机”</color>会发送信号。,要注意的是，每當你輸送碎片後，<color=yellow>“應答機”</color>會髮送信號。,,,,,,,,,
+TUTORIAL_STEP15_2,,"So when you've channeled shards several times, you should get ready to fight against a powerful boss that is here to kill you!",,,,,,,,,,,,,,,,,所以当你输送了多次碎片后，就要准备好和前来消灭你的强大敌人作战！,所以當你輸送了多次碎片後，就要準備好和前來消滅你的強大敵人作戰！,,,,,,,,,
+TUTORIAL_STEP16_1,,"You seem to be hurt. Fortunately, you have a <color=yellow>Medical Needle</color> to help you recover. 
+
+Give it a try! I gave you some resource fragments needed to use it.",,,,,,,,,,,,,,,,,"你似乎收到了伤害。好在，你有<color=yellow>医疗针</color>可以帮你恢复。
+
+试着使用一下它吧！我给你了一些使用它所需要的资源碎片。","你似乎收到了傷害。好在，你有<color=yellow>醫療針</color>可以幫你恢復。
+
+試著使用一下它吧！我給你了一些使用它所需的資源碎片。",,,,,,,,,
+TUTORIAL_STEP16_2,,"The slots in your lower left corner is your shortcut skill column. You can use shortcut keys 1, 2, and 3 to consume Resource Shards and use the skills.",,,,,,,,,,,,,,,,,你的左下角的栏位为你的快捷技能栏。你可以使用快捷键1、2、3来消耗资源碎片使用你佩戴的技能。,你的左下角的欄位為你的快速技能欄。你可以使用快捷鍵1、2、3來消耗資源碎片來使用你所穿戴的技能。,,,,,,,,,
+TUTORIAL_STEP16_2_TITLE,,Using Skills,,,,,,,,,,,,,,,,,使用技能,使用技能,,,,,,,,,
+TUTORIAL_STEP16_TASK,,"Use shortcut keys (1, 2, and 3) to consume Resource Shards and use the <color=yellow>Medical Needle</color>.",,,,,,,,,,,,,,,,,使用快捷键（1、2、3）来消耗资源碎片使用<color=yellow>医疗针</color>。,使用快捷鍵（1、2、3）來消耗資源碎片使用<color=yellow>醫療針</color>。,,,,,,,,,
+TUTORIAL_STEP17,,"In your Inventory, you can drag skills into the ""Skill Upgrade"" slot to use Resource Shards to upgrade skills.
+
+Upgraded skills will become more powerful, but these upgrades will reset when you return to base.",,,,,,,,,,,,,,,,,"在物品栏中，你可以将技能拖进“技能升级”栏位中来使用资源碎片升级技能。
+
+升级后的技能会变得更强大，但这些升级会在你会到基地后重置。","在物品欄中，你可以將技能拖進「技能升級」欄位中來使用資源碎片升級技能。
+
+升級後的技能會變得更強大，但這些升級會在你會到基地後重置。",,,,,,,,,
+TUTORIAL_STEP17_TITLE,,Skill Upgrade,,,,,,,,,,,,,,,,,技能升级,技能升級,,,,,,,,,
+TUTORIAL_STEP17_TASK,,"Upgrade your <color=yellow>Medical Needle</color> by dragging it to the ""Skill Upgrade"" slot in your Inventory.",,,,,,,,,,,,,,,,,在物品栏中，将<color=yellow>医疗针</color>拖进“技能升级”栏位中升级。,在物品欄中，將<color=yellow>醫療針</color>拖進「技能升級」欄位中升級。,,,,,,,,,
+TUTORIAL_STEP18_1,,"Did you hear that? It's a sandstorm warning. You've got to get out of here fast. Go back to base through the door to the right of the cave entrance.",,,,,,,,,,,,,,,,,你听到了吗，是沙尘暴的预警。你得快点离开这里了，从洞穴外右侧的门回到基地吧。,你聽到了嗎，是沙塵暴的預警。你得快點離開這裡了，從洞穴外右側的門回到基地吧。,,,,,,,,,
+TUTORIAL_STEP18_2,,"Time passes while exploring the desert, and every 2-3 days a <color=red>sandstorm</color> will move in and the area you are currently exploring will be completely engulfed. 
+
+You need to find the exit door to the next level or return to the base before the sandstorm arrives.
+",,,,,,,,,,,,,,,,,"在沙漠探险时时间会流逝，而每2-3天<color=red>沙尘暴</color>就会移动，而你现在探索的区域将会完全被吞没。
+
+你需要在沙尘暴到来之前找到出口，以前往下一关或者回到基地。","在沙漠探險時時間會流逝，而每2-3天<color=red>沙塵暴</color>就會移動，而你現在探索的區域將會完全被吞沒。
+
+你需要在沙塵暴到來之前找到出口，以前往下一關或回到基地。",,,,,,,,,
+TUTORIAL_STEP18_TITLE,,Sandstorm,,,,,,,,,,,,,,,,,沙尘暴,沙塵暴,,,,,,,,,
+TUTORIAL_STEP18_TASK,,Find and enter the exit door,,,,,,,,,,,,,,,,,找到并进入出口,找到並進入出口,,,,,,,,,
+TUTORIAL_STEP20,,"Another group of stronger enemies! Just in time for you to test out the weapon with new parts! Repel them!
+",,,,,,,,,,,,,,,,,又来了一批更强的敌人！正好，你来体验一下装上配件的武器吧！击退他们！,又來了一批更強的敵人！正好，你來體驗裝上配件的武器吧！擊退他們！,,,,,,,,,
+TUTORIAL_STEP21,,"Enemies have rarities to reflect their strength, with higher rarity meaning stronger enemies. In order to explore the desert longer, pair your weapons with suitable parts and gather multiple parts of the same category to give your weapons powerful, special classification attributes, enhancing your strength.
+",,,,,,,,,,,,,,,,,敌人都有着相对应的稀有度来反映他们的强度，越高的稀有度意味着更强的敌人。为了能够在沙漠中探索地更久，搭配好武器配件，并凑齐同种分类的多个配件将为武器赋予强大的特殊的分类特性来让自己变强。,敵人都有相對應的稀有度來反映他們的強度，越高的稀有度意味著更強的敵人。為了能夠在沙漠中探索地更久，搭配好武器配件，並湊齊同種分類的多個配件將為武器賦予強大的特殊的分類特性來讓自己變強。,,,,,,,,,
+TUTORIAL_STEP21_TITLE,,Rarity,,,,,,,,,,,,,,,,,稀有度,稀有度,,,,,,,,,
+OPENING_1,,"I knew it…",,,,,,,,,,,,,,,,,我一直...,我一直...,,,,,,,,,
+OPENING_2,,I always believed you were alive.,,,,,,,,,,,,,,,,,相信你还活着。,相信你還活着。,,,,,,,,,
+OPENING_3,,My mentor... I will...,,,,,,,,,,,,,,,,,导师...我会...,導師...我會...,,,,,,,,,
+OPENING_4,,"I will find you.",,,,,,,,,,,,,,,,,我会找到你。,我會找到你。,,,,,,,,,
+TUTORIAL_STEP22,,"You're ready, recruit. Go deeper into the desert. I hope you can find us the ""Big Oasis""... Maybe you can become a Runner like your mentor.",,,,,,,,,,,,,,,,,你已经准备好了，新兵，往更深的沙漠去吧。我希望你能为我们找到“大绿洲”...有可能你也能成为像你导师一样的“Runner”。,你已經準備好了，新兵，往更深的沙漠去吧。我希望你能爲我們找到“大綠洲”...有可能你也能成爲像你導師一樣的“Runner”。,,,,,,,,,
+BASE_TUTORIAL_1,,"This is your base, your sanctuary. During the adventure, you can return to base through the exit, recover health and regroup.",,,,,,,,,,,,,,,,,这是你的基地，你的庇护所。在探险过程中你可以从出口回到基地，恢复生命值并重整旗鼓。,這是你的基地，你的庇護所。在探險過程中你可以從出口回到基地，恢複生命值並重整旗鼓。,,,,,,,,,
+BASE_TUTORIAL_2,,"In addition, after you return to the Base, the various items and weapons you carried and collected during your adventure will be stored in the safe. However, collected Weapon Parts cannot be brought back, and all skills will return to level 1.",,,,,,,,,,,,,,,,,此外，在你回到基地后，你在探险中携带和收集的各种物品、武器都会被存储到保险柜中。然而，收集的武器配件无法被带回，且所有技能会回到1级。,此外，在你回到基地後，你在探險中攜帶和收集的各種物品、武器都會被存儲到保險櫃中。然而，收集的武器配件無法被帶回，且所有技能會回到1級。,,,,,,,,,
+BASE_TUTORIAL_3,,All the Shards you obtain during your adventure will be converted into a certain amount of <color=yellow>Money</color> when you return to the Base. You can use <color=yellow>Money</color> and collected resources to trade with <color=yellow>Gunsmith</color> and <color=yellow>Merchant</color> in the Base.,,,,,,,,,,,,,,,,,你在探险中获得到的所有碎片都会在回到基地后被转化为一定数量的<color=yellow>金钱</color>。你可以使用<color=yellow>金钱</color>和收集到的资源在基地中与<color=yellow>枪匠</color>和<color=yellow>商人</color>交易。,你在探險中獲得到的所有碎片都會在回到基地後被轉化爲一定數量的<color=yellow>金錢</color>。你可以使用<color=yellow>金錢</color>和收集到的資源在基地中與<color=yellow>槍匠</color>和<color=yellow>商人</color>交易。,,,,,,,,,
+BASE_TUTORIAL_4,,"Therefore, before you go out for adventure, you should contact the <color=yellow>Gunsmith</color> and <color=yellow>Merchant</color> through the window. They are very important to ""Runner"". How to go deeper It just depends on their equipment and research on ancient technology.",,,,,,,,,,,,,,,,,因此，在你外出探险之前，你应该通过窗口与<color=yellow>枪匠</color>和<color=yellow>商人</color>联系一下，他们对”Runner”很重要，如何走的更深就靠他们的装备和对古代科技的研究了。,因此，在你外出探險之前，你應該通過窗口與<color=yellow>槍匠</color>和<color=yellow>商人</color>聯繫一下，他們對”Runner”很重要，如何走的更深就靠他們的裝備和對古代科技的研究了。,,,,,,,,,
+BASE_TUTORIAL_TASK_NPC_GUNSMITH,,Talk to the Gunsmith in the Base.,,,,,,,,,,,,,,,,,与基地中的枪匠交谈。,與基地中的槍匠交談。,,,,,,,,,
+BASE_TUTORIAL_TASK_NPC_SKILL,,Talk to the Merchant in the Base.,,,,,,,,,,,,,,,,,与基地中的商人交谈。,與基地中的商人交談。,,,,,,,,,
+GUNSMITH_TUTORIAL_1,,"You're the new ”Runner”. Okay, theVet told me. I did deal with your mentor... She's strong.",,,,,,,,,,,,,,,,,你是新的”Runner”，好的，老兵告诉我了。我和你导师做过交易...她很强。,你是新的”Runner”，好的，老兵告訴我了。我和你導師做過交易...她很強。,,,,,,,,,
+DIALOGUE_SLIENCE,,...,,,,,,,,,,,,,,,,,...,...,,,,,,,,,
+GUNSMITH_TUTORIAL_2,,Give me the gun you're carrying and I'll fix it for you.,,,,,,,,,,,,,,,,,把你身上的枪给我，我来帮你修理。,把你身上的槍給我，我來幫你修理。,,,,,,,,,
+GUNSMITH_TUTORIAL_3,,"Okay, you have a great weapon...",,,,,,,,,,,,,,,,,好了，你有一把很好的武器了...,好了，你有一把很好的武器了...,,,,,,,,,
+GUNSMITH_TUTORIAL_4,,Bring me resources and I can help you build more weapons and teach you more about ancient technology.,,,,,,,,,,,,,,,,,带给我资源，我能帮你打造更多武器，教会你使用更多的古代科技。,帶給我資源，我能幫你打造更多武器，教會你使用更多的古代科技。,,,,,,,,,
+GUNSMITH_TUTORIAL_5,,You can trade resources and Money with the Gunsmith. Give him resources or parts in the <color=yellow>Research Panel</color> to unlock the recipes of new Weapon Parts and Weapons.,,,,,,,,,,,,,,,,,你可以和Gunsmith用资源和钱币交易。在<color=yellow>研究界面</color>中给予他资源或者零件来解锁更多武器配件和武器的配方。,你可以和Gunsmith用資源和錢幣交易。在<color=yellow>研究界麵</color>中給予他資源或者零件來解鎖更多武器配件和武器的配方。,,,,,,,,,
+GUNSMITH_TUTORIAL_6,,"After the research is completed, you can <b>build</b> your research results in the <color=yellow>Build Panel</color>. Building Weapon Parts allows you to obtain new Weapon Parts at the Transponder; the built Weapons will go into the Safe at the Base, and you can choose the Weapons you want to carry from the Safe during the preparation stage before the adventure.",,,,,,,,,,,,,,,,,研究结束后，你可以在<color=yellow>打造界面</color>中<b>打造</b>你的研究成果。打造武器配件可以使你在应答机处获得新的武器配件；而打造的武器则会进入基地的保险箱，你可以在探险前的准备阶段中从保险箱中选择你所要携带的武器。,研究結束後，你可以在<color=yellow>打造界麵</color>中<b>打造</b>你的研究成果。打造武器配件可以使你在應答機處獲得新的武器配件；而打造的武器則會進入基地的保險箱，你可以在探險前的準備階段中從保險箱中選擇你所要攜帶的武器。,,,,,,,,,
+GUNSMITH_TUTORIAL_5_TITLE,,Research,,,,,,,,,,,,,,,,,研究,研究,,,,,,,,,
+GUNSMITH_TUTORIAL_6_TITLE,,Build,,,,,,,,,,,,,,,,,打造,打造,,,,,,,,,
+MERCHANT_TUTORIAL_1,,I know you ”Runner”.,,,,,,,,,,,,,,,,,我认识你，“Runner”。,我認識你，“Runner”。,,,,,,,,,
+MERCHANT_TUTORIAL_2,,"If you want to buy all kinds of props, armor, modifications. Just come to me, heh heh.",,,,,,,,,,,,,,,,,如果想买各种各样的道具，护甲，改装...来找我就行了，嘻嘻。,如果想買各種各樣的道具，護甲，改裝...來找我就行了，嘻嘻。,,,,,,,,,
+MERCHANT_TUTORIAL_3,,You can trade Resources and Money with the Merchant. Give him Resources or Money in the <color=yellow>Research Panel</color> to obtain more recipes for active and passive Skills.,,,,,,,,,,,,,,,,,你可以和商人用资源和钱币交易。在<color=yellow>研究界面</color>中给予他资源或者零件，来获得更多主动和被动技能的配方。,你可以和商人用資源和錢幣交易。在<color=yellow>研究界麵</color>中給予他資源或者零件，來獲得更多主動和被動技能的配方。,,,,,,,,,
+MERCHANT_TUTORIAL_4,,"After the research is completed, you can <b>build</b> the Skills you have researched in the <color=yellow>Build Panel</color>. The Skills after being built will be <b>permanently</b> entered into the Safe at the base. You can choose the Skills you want to bring with you from the Safe during the preparation stage before the adventure.
+",,,,,,,,,,,,,,,,,研究结束后，你可以在<color=yellow>打造界面</color>中<b>打造</b>你所研究出的技能。打造后的技能会<b>永久</b>进入基地的保险箱，你可以在探险前的准备阶段中从保险箱中选择你所要携带的技能。,研究結束後，你可以在<color=yellow>打造界麵</color>中<b>打造</b>你所研究出的技能。打造後的技能會<b>永久</b>進入基地的保險箱，你可以在探險前的準備階段中從保險箱中選擇你所要攜帶的技能。,,,,,,,,,

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Levels;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
@@ -14,11 +15,18 @@ using Runtime.Enemies.Model.Properties;
 using Runtime.Spawning;
 using Runtime.Spawning.Models.Properties;
 using Runtime.Utilities;
+using Runtime.Utilities.Collision;
 using Runtime.Utilities.ConfigSheet;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 
 namespace Runtime.Enemies.Model {
+	public struct OnEnemyDie {
+		public IEnemyEntity EnemyEntity;
+		public ICanDealDamage DamageDealer;
+		public HitData HitData;
+	
+	}
 	public interface IEnemyEntity : ICreature, IHaveCustomProperties, IHaveTags, ICanDealDamage {
 		public BindableProperty<int> GetDanger();
 		public BindableProperty<HealthInfo> GetHealth();
@@ -166,6 +174,15 @@ namespace Runtime.Enemies.Model {
 
 		public ICanDealDamage ParentDamageDealer { get; } = null;
 
+
+		public override void OnDie(ICanDealDamage damageDealer, HitData hitData) {
+			base.OnDie(damageDealer, hitData);
+			this.SendEvent(new OnEnemyDie() {
+				EnemyEntity = this,
+				DamageDealer = damageDealer,
+				HitData = hitData
+			});
+		}
 
 		/*public ICanDealDamageRootEntity RootDamageDealer => this;
 		public ICanDealDamageRootViewController RootViewController => null;*/

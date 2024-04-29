@@ -140,6 +140,8 @@ public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPa
 		canClose = false;
 	}
 
+	public bool CanCloseByEscButton { get; } = false;
+
 	public IArchitecture GetArchitecture() {
 		return MainGame.Interface;
 	}

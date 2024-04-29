@@ -23,8 +23,6 @@ public class ItemDisplayer : MonoBehaviour
     private void Update() {
         spawnPos.Rotate(Vector3.up, rotationSpeed * Time.unscaledDeltaTime);
     }
-    
-    
 
     public static ItemDisplayer Create(GameObject displayedObjectPrefab, RenderTexture outputTexture,
         float rotationSpeed = 10f, float fov = 20) {

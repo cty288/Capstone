@@ -20,6 +20,10 @@ public class TaskElementViewController : MonoBehaviour {
         titleText.text = title;
     }
     
+    public void SetDescription(string description) {
+        titleText.text = description;
+    }
+    
     public void SetCompleted(bool completed) {
         completedToggle.isOn = completed;
     }

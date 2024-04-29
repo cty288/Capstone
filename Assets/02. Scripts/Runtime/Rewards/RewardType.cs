@@ -8,7 +8,8 @@ using UnityEngine;
 namespace _02._Scripts.Runtime.Rewards {
 	public enum RewardType {
 		Resource,
-		WeaponParts_ChooseOne
+		WeaponParts_ChooseOne,
+		Tutorial_WeaponParts,
 	}
 
 	[Serializable]

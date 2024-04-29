@@ -25,10 +25,12 @@ public class ThrownGrenadeViewController : MonoBehaviour
     [SerializeField] private float explosionDelay = 2f;
     [SerializeField] private LayerMask detectionLayer;
     [SerializeField] private GameObject explosion;
-    
+
+    private Rigidbody rb;
     private bool explosionDelayStarted = false;
     private SafeGameObjectPool pool;
     private void Awake() {
+        rb = GetComponent<Rigidbody>();
         selfColliders = GetComponentsInChildren<Collider>(true);
        // explosionCollider = GetComponent<SphereCollider>();
         pool = GameObjectPoolManager.Singleton.CreatePool(explosion, 20, 50);
@@ -41,6 +43,7 @@ public class ThrownGrenadeViewController : MonoBehaviour
         }
         if(PhysicsUtility.IsInLayerMask(other.collider.gameObject, detectionLayer) && !explosionDelayStarted) {
             explosionDelayStarted = true;
+            rb.velocity *= 0.2f;
             StartCoroutine(ExplosionDelay(explosionDelay));
         }
         
