@@ -6851,6 +6851,58 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  conditionalDialogueGroups:
+  - messageType: 0
+    messages:
+    - messageLocalizedKey: BASE_TUTORIAL_1
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: BASE_TUTORIAL_2
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: BASE_TUTORIAL_3
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: BASE_TUTORIAL_4
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 7611776287456309304}
+            m_TargetAssemblyTypeName: _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel.BaseLevelController,
+              MainGame
+            m_MethodName: OnBaseIntroFinish
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   playerSpawnPoints:
   - {fileID: 554314296457167679}
   enemySpawnCardConfigs:

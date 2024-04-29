@@ -13,6 +13,7 @@ using _02._Scripts.Runtime.Skills.Model.Instance;
 using Cysharp.Threading.Tasks;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.UIKit;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.GameResources;
@@ -21,6 +22,7 @@ using Runtime.Inventory.Model;
 using Runtime.Player;
 using Runtime.Spawning;
 using Runtime.Spawning.ViewControllers.Instances;
+using Runtime.UI;
 using Runtime.Utilities;
 using Runtime.Weapons;
 using UnityEngine;
@@ -44,11 +46,11 @@ public class TutorialLevelEntity : LevelEntity<TutorialLevelEntity> {
 }
 public class TutorialLevelViewController : LevelViewController<TutorialLevelEntity> {
 
-    [SerializeField] private HintMessageGroup[] conditionalDialogueGroups;
+   
     [SerializeField] private GameObject[] enemyGroups;
     [SerializeField] private Collider pillarTrigger;
     [SerializeField] private GameObject tutorialPillar;
-    private int currentConditionalDialogueIndex = -1;
+    
     private IInventorySystem inventorySystem;
     private IInventoryModel inventoryModel;
     private IPlayerTaskSystem playerTaskSystem;
@@ -64,6 +66,7 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
             .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
         this.RegisterEvent<OnSpawnEnemyGroup>(OnSpawnEnemyGroup)
             .UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+        MainUI.Singleton.ShowBlackScreen(true);
     }
 
     private void OnSpawnEnemyGroup(OnSpawnEnemyGroup e) {
@@ -117,17 +120,23 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
 
         player.AlwaysNonLethal = true;
         
+        await UniTask.WaitForSeconds(3);
+        
         NextConditionalDialogue();
     }
 
-    public void NextConditionalDialogue() {
-        currentConditionalDialogueIndex++;
-        if (currentConditionalDialogueIndex >= conditionalDialogueGroups.Length) {
-            return;
-        }
-        HintManager.Singleton.ShowHint(conditionalDialogueGroups[currentConditionalDialogueIndex]);
+   
+
+    public void OnOpeningDone() {
+        OpeningDone();
     }
 
+    private async UniTask OpeningDone() {
+        await UniTask.WaitForSeconds(1f);
+        MainUI.Singleton.HideBlackScreen();
+        await UniTask.WaitForSeconds(1f);
+        NextConditionalDialogue();
+    }
     public void Step2MoveTask() {
         playerTaskSystem.AddTask(new Step2MoveTask());
     }

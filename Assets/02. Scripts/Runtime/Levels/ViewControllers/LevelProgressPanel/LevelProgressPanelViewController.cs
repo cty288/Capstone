@@ -16,6 +16,10 @@ using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
+public struct OnClearTask {
+	public PlayerTask Task;
+}
+
 public class LevelProgressPanelViewController : AbstractMikroController<MainGame> {
 	private ILevelSystem levelSystem;
 	private ILevelModel levelModel;
@@ -43,11 +47,13 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 		this.RegisterEvent<OnAddPlayerTask>(OnAddPlayerTask).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		this.RegisterEvent<OnTaskCompleted>(OnTaskCompleted).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		this.RegisterEvent<OnClearTaskPanel>(OnClearTaskPanel).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
-
+		this.RegisterEvent<OnClearTask>(OnClearTask).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		foreach (PlayerTask playerTask in playerTaskSystem.GetAllTasks()) {
 			SpawnTask(playerTask);
 		}
 	}
+
+
 
 	private void OnClearTaskPanel(OnClearTaskPanel obj) {
 		ClearTasks();
@@ -156,5 +162,13 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 			Destroy(taskPanel.GetChild(i).gameObject);
 		}
 		taskElements.Clear();
+	}
+	
+	private void OnClearTask(OnClearTask e) {
+		PlayerTask task = e.Task;
+		if (taskElements.TryGetValue(task, out TaskElementViewController taskElementViewController)) {
+			taskElements.Remove(task);
+			Destroy(taskElementViewController.gameObject);
+		}
 	}
 }
