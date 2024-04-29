@@ -1787,6 +1787,7 @@ MonoBehaviour:
   nameTagSpawnPoint: {fileID: 3091517804977071663}
   localizedNameKey: NPC_SAFE
   interactHintSpawnPoint: {fileID: 2644312215810344621}
+  conditionalDialogueGroups: []
 --- !u!1 &1349954605341194521
 GameObject:
   m_ObjectHideFlags: 0
@@ -5818,8 +5819,8 @@ GameObject:
   - component: {fileID: 7805946383510667516}
   - component: {fileID: 13339763248302360}
   - component: {fileID: 7422166981486172279}
-  - component: {fileID: 6947413243206499285}
   - component: {fileID: 4965181713413859581}
+  - component: {fileID: 8657520004999772964}
   m_Layer: 8
   m_Name: SkillPurchase
   m_TagString: Untagged
@@ -5906,19 +5907,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &6947413243206499285
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4881101286432067011}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.55
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4965181713413859581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5934,6 +5922,84 @@ MonoBehaviour:
   nameTagSpawnPoint: {fileID: 4948300908515352563}
   localizedNameKey: NPC_SKILL
   interactHintSpawnPoint: {fileID: 9044970130340968138}
+  conditionalDialogueGroups:
+  - messageType: 0
+    messages:
+    - messageLocalizedKey: MERCHANT_TUTORIAL_1
+      keyParameters: []
+      titleLocalizedKey: NPC_SKILL
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: MERCHANT_TUTORIAL_2
+      keyParameters: []
+      titleLocalizedKey: NPC_SKILL
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4965181713413859581}
+            m_TargetAssemblyTypeName: BaseNPC, MainGame
+            m_MethodName: NextConditionalDialogue
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - messageType: 1
+    messages:
+    - messageLocalizedKey: MERCHANT_TUTORIAL_3
+      keyParameters: []
+      titleLocalizedKey: GUNSMITH_TUTORIAL_5_TITLE
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: MERCHANT_TUTORIAL_4
+      keyParameters: []
+      titleLocalizedKey: GUNSMITH_TUTORIAL_6_TITLE
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 4965181713413859581}
+            m_TargetAssemblyTypeName: SkillPurchaseNPC, MainGame
+            m_MethodName: OpenPanel
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+--- !u!65 &8657520004999772964
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881101286432067011}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.65, y: 1, z: 2.27}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5168897600108828995
 GameObject:
   m_ObjectHideFlags: 0
@@ -6634,8 +6700,8 @@ GameObject:
   - component: {fileID: 4789932744676021065}
   - component: {fileID: 7476286966691130323}
   - component: {fileID: 1180911039705570891}
-  - component: {fileID: 1660069305892568700}
   - component: {fileID: 874482114234790012}
+  - component: {fileID: 1153914387833336365}
   m_Layer: 8
   m_Name: GunsmithNPC
   m_TagString: Untagged
@@ -6722,19 +6788,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &1660069305892568700
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5975980078661494653}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.55
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &874482114234790012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6750,6 +6803,120 @@ MonoBehaviour:
   nameTagSpawnPoint: {fileID: 2610337463216972997}
   localizedNameKey: NPC_GUNSMITH
   interactHintSpawnPoint: {fileID: 7210381086686380954}
+  conditionalDialogueGroups:
+  - messageType: 0
+    messages:
+    - messageLocalizedKey: GUNSMITH_TUTORIAL_1
+      keyParameters: []
+      titleLocalizedKey: NPC_GUNSMITH
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: DIALOGUE_SLIENCE
+      keyParameters: []
+      titleLocalizedKey: NPC_GUNSMITH
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: GUNSMITH_TUTORIAL_2
+      keyParameters: []
+      titleLocalizedKey: NPC_GUNSMITH
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: DIALOGUE_SLIENCE
+      keyParameters: []
+      titleLocalizedKey: NPC_GUNSMITH
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: GUNSMITH_TUTORIAL_3
+      keyParameters: []
+      titleLocalizedKey: NPC_GUNSMITH
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: GUNSMITH_TUTORIAL_4
+      keyParameters: []
+      titleLocalizedKey: NPC_GUNSMITH
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 874482114234790012}
+            m_TargetAssemblyTypeName: BaseNPC, MainGame
+            m_MethodName: NextConditionalDialogue
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - messageType: 1
+    messages:
+    - messageLocalizedKey: GUNSMITH_TUTORIAL_5
+      keyParameters: []
+      titleLocalizedKey: GUNSMITH_TUTORIAL_5_TITLE
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: GUNSMITH_TUTORIAL_6
+      keyParameters: []
+      titleLocalizedKey: GUNSMITH_TUTORIAL_6_TITLE
+      icon: {fileID: -2520759210819888809, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      duration: 0
+      callback:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 874482114234790012}
+            m_TargetAssemblyTypeName: GunsmithNPC, MainGame
+            m_MethodName: OpenPanel
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+--- !u!65 &1153914387833336365
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5975980078661494653}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.65, y: 1, z: 2.27}
+  m_Center: {x: 0, y: 0, z: -0.0000038146973}
 --- !u!1 &5997115202316876741
 GameObject:
   m_ObjectHideFlags: 0

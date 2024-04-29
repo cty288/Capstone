@@ -16,7 +16,16 @@ using UnityEngine.InputSystem;
 public class SkillPurchaseNPC : BaseNPC {
 	protected override void OnInteract() {
 		base.OnInteract();
-		//MainUI.Singleton.OpenOrGetClose<SkillPurchaseUI>(MainUI.Singleton, null, false);
+		if (!levelModel.BaseTutorialStatus.TalkedToMerchant) {
+			levelModel.BaseTutorialStatus.TalkedToMerchant = true;
+			NextConditionalDialogue();
+		}
+		else {
+			OpenPanel();
+		}
+	}
+	
+	public void OpenPanel() {
 		MainUI.Singleton.OpenOrGetClose
 			<CraftingPanelViewController>(MainUI.Singleton, new CraftingPanelMsg() {
 				category = ResearchCategory.Skill

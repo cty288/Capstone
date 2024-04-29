@@ -55,9 +55,15 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
 		
 		public override void OnFinish() {
 			levelModel.CurrentLevel.UnRegisterOnValueChanged(OnLevelChanged);
+			CoroutineRunner.Singleton.StartCoroutine(ClearPanel());
 		}
 
-		
+		private IEnumerator ClearPanel() {
+			yield return new WaitForSeconds(2f);
+			this.SendEvent<OnClearTask>(new OnClearTask() {
+				Task = this
+			});
+		}
 
 		
 	}
