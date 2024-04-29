@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Player;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
@@ -104,6 +105,9 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         public override void HitResponse(HitData data) {
             //Debug.Log("AbstractHitScanWeaponViewController HitResponse");
+            if(data.Hurtbox.HurtResponder.CurrentFaction == Faction.Hostile)
+                AudioSystem.Singleton.Play2DSound("shot_hit_enemy");
+            
             hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
             hitVFXSystem.SetVector3("HitNormal", data.HitNormal);
             hitVFXSystem.SetVector3("HitDir", data.HitDirectionNormalized);
