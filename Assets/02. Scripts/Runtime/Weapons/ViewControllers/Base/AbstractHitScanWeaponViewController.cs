@@ -105,7 +105,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         public override void HitResponse(HitData data) {
             //Debug.Log("AbstractHitScanWeaponViewController HitResponse");
-            if(data.Hurtbox.HurtResponder.CurrentFaction == Faction.Hostile)
+            if(data?.Hurtbox?.HurtResponder?.CurrentFaction == Faction.Hostile)
                 AudioSystem.Singleton.Play2DSound("shot_hit_enemy");
             
             hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
