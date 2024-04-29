@@ -95,8 +95,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected abstract IHitDetector OnCreateHitDetector();
 
-        protected override void Shoot()
-        {
+        protected override void Shoot() {
             base.Shoot();
             crossHairViewController?.OnShoot();
             BoundEntity.OnRecoil(IsScopedIn);
@@ -104,8 +103,8 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         public override void HitResponse(HitData data) {
-            //Debug.Log("AbstractHitScanWeaponViewController HitResponse");
-            if(data?.Hurtbox?.HurtResponder?.CurrentFaction == Faction.Hostile)
+            //Debug.Log("AbstractHitScanWeaponViewController HitResPILLAR_HINT_ERROR_2ponse");
+            if(data?.Hurtbox?.HurtResponder?.CurrentFaction?.Value == Faction.Hostile)
                 AudioSystem.Singleton.Play2DSound("shot_hit_enemy");
             
             hitVFXSystem.SetVector3("StartPosition", data.HitPoint);

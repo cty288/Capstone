@@ -144,7 +144,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			
 		}*/
 
-		private void GenerateResources() {
+		protected virtual void GenerateResources() {
 			ItemDropCollection itemDropCollection = BoundEntity.GetItemDropCollection();
 			
 			if (itemDropCollection.ItemDropInfos == null) {
