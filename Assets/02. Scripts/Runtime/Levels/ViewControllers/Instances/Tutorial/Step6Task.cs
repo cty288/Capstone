@@ -1,9 +1,15 @@
-﻿using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
+﻿using System.Collections;
+using _02._Scripts.Runtime.Levels.Models.LevelPassCondition;
+using MikroFramework.Architecture;
 using Polyglot;
 using Runtime.Controls;
+using Runtime.Utilities;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
+	public struct OnClearTaskPanel {
+		
+	}
 	public class Step6Task : PlayerTask {
 		
 		private float timer;
@@ -22,7 +28,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
 		}
 
 		public override void OnFinish() {
-			
+			CoroutineRunner.Singleton.StartCoroutine(ClearPanel());
+		}
+
+		private IEnumerator ClearPanel() {
+			yield return new WaitForSeconds(1f);
+			this.SendEvent<OnClearTaskPanel>();
 		}
 	}
 }

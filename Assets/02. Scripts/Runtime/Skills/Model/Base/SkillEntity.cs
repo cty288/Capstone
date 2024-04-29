@@ -68,6 +68,12 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 	public struct OnSkillUsed {
 		public ISkillEntity skillEntity;
 	}
+
+	public struct OnSkillUpgrade {
+		public ISkillEntity SkillEntity;
+		public int PreviousLevel;
+		public int CurrentLevel;
+	}
 	public abstract class SkillEntity<T>:  BuildableResourceEntity<T>, ISkillEntity,
 		ICanGetSystem where T : SkillEntity<T>, new() {
 		protected ISkillCoolDown skillCooldownProperty;
@@ -301,6 +307,11 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			GetProperty<IRarityProperty>().RealValue.Value = level;
 			OnUpgrade(previousLevel, level);
 			onSkillUpgradeCallback?.Invoke(this, previousLevel, level);
+			this.SendEvent<OnSkillUpgrade>(new OnSkillUpgrade() {
+				SkillEntity = this,
+				PreviousLevel = previousLevel,
+				CurrentLevel = level
+			});
 		}
 
 		public void RegisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback) {

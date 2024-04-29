@@ -2,6 +2,7 @@
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Runtime.Inventory.Model;
 using Runtime.Player;
 
 namespace _02._Scripts.Runtime.Levels.Commands {
@@ -14,14 +15,30 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 		protected override void OnExecute() {
 			ILevelModel levelModel = this.GetModel<ILevelModel>();
 
+			if (levelModel.CurrentLevel.Value is TutorialLevelEntity) {
+				levelModel.BaseTutorialStatus.Reset();
+				
+				IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+				playerEntity.AlwaysNonLethal = false;
+				
+				IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+				inventoryModel.Clear();
+				
+				playerEntity.SetHealth(playerEntity.GetMaxHealth());
+				playerEntity.SetArmor(playerEntity.GetMaxArmor().RealValue);
+
+				playerEntity.AlwaysNonLethal = false;
+				levelModel.RandomBossEncounterEventChance = 0;
+			
+				this.SendEvent<OnReturnToBase>();
+				
+			}
+			
+			
 			if (levelModel.CurrentLevelCount.Value >= LevelModel.MAX_LEVEL) {
 				this.SendCommand<BackToBaseCommand>();
 			}
 			else {
-				IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
-				playerEntity.AlwaysNonLethal = false;
-				
-				
 				levelModel.SwitchToLevel(levelModel.CurrentLevelCount.Value + 1);
 				((MainGame) MainGame.Interface).SaveGame();
 			}

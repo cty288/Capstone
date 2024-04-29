@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -260,14 +261,19 @@ namespace Runtime.Inventory.Model {
 				return new HashSet<PreparationSlot>();
 			}
 
-			return baseStockedItems[category];
+			return baseStockedItems[category].Where((slot) => !slot.IsEmpty()).ToHashSet();
 		}
 
 		public HashSet<PreparationSlot> GetBaseStock(params ResourceCategory[] categories) {
 			HashSet<PreparationSlot> result = new HashSet<PreparationSlot>();
 			foreach (ResourceCategory category in categories) {
-				if (baseStockedItems.ContainsKey(category)) {
-					result.UnionWith(baseStockedItems[category]);
+				if (baseStockedItems.TryGetValue(category, out var item)) {
+					foreach (PreparationSlot slot in item) {
+						if (slot.IsEmpty()) {
+							continue;
+						}
+						result.Add(slot);
+					}
 				}
 			}
 
@@ -288,7 +294,7 @@ namespace Runtime.Inventory.Model {
 			}
 
 			foreach (PreparationSlot slot in baseStockedItems[category]) {
-				if (slot.EntityKey == entityName) {
+				if (slot.EntityKey == entityName && !slot.IsEmpty()) {
 					return true;
 				}
 			}

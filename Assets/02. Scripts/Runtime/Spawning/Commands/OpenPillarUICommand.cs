@@ -13,17 +13,20 @@ namespace Runtime.Spawning.Commands {
 		public IPillarEntity pillar;
 		public Dictionary<CurrencyType, RewardCostInfo> rewardCosts;
 		public Transform rewardSpawnPos;
+		public bool IsTutorialPillar;
 	}
 	public class OpenPillarUICommand : AbstractCommand<OpenPillarUICommand> {
 		private PillarEntity pillar;
 		private Dictionary<CurrencyType, RewardCostInfo> rewardCosts;
 		private CurrencyType pillarCurrencyType;
 		private Transform rewardSpawnPos;
+		private bool isTutorialPillar;
 		protected override void OnExecute() {
 			this.SendEvent<OnOpenPillarUI>(new OnOpenPillarUI() {
 				pillar = pillar,
 				rewardCosts = rewardCosts,
-				rewardSpawnPos = rewardSpawnPos
+				rewardSpawnPos = rewardSpawnPos,
+				IsTutorialPillar = isTutorialPillar
 			});
 		}
 		
@@ -33,11 +36,12 @@ namespace Runtime.Spawning.Commands {
 		}
 		
 		public static OpenPillarUICommand Allocate(PillarEntity pillar, Dictionary<CurrencyType, RewardCostInfo> rewardCosts,
-			Transform rewardSpawnPos) {
+			Transform rewardSpawnPos, bool isTutorialPillar) {
 			OpenPillarUICommand command = SafeObjectPool<OpenPillarUICommand>.Singleton.Allocate();
 			command.pillar = pillar;
 			command.rewardSpawnPos = rewardSpawnPos;
 			command.rewardCosts = rewardCosts;
+			command.isTutorialPillar = isTutorialPillar;
 			return command;
 		}
 	}

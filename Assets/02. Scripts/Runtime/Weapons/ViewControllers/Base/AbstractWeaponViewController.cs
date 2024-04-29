@@ -486,7 +486,7 @@ namespace Runtime.Weapons.ViewControllers.Base
                 ChangeCameraFOV();
             }
             
-            WeaponEntity.SetBoundViewController(null);
+            WeaponEntity?.SetBoundViewController(null);
             base.OnRecycled();
             ChangeScopeStatus(false);
             ChangeReloadStatus(false);

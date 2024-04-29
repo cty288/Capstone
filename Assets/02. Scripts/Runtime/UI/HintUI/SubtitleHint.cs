@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 
 public class SubtitleHint : HintPanel {
 	[SerializeField] private TMP_Text subtitleText;
+	
+
 	protected override void OnTerminateCurrentMessageGroup(bool isLastMessage) {
 		
 	}
@@ -33,4 +36,6 @@ public class SubtitleHint : HintPanel {
 		}
 		ShowNextMessage();
 	}
+
+	
 }

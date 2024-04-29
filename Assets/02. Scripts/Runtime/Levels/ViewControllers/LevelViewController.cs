@@ -137,7 +137,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	[RequireComponent(typeof(NavMeshSurface))]
 	public abstract class LevelViewController<T> : AbstractBasicEntityViewController<T>, ILevelViewController
 		where  T : class, ILevelEntity, new() {
-
+		[SerializeField] private HintMessageGroup[] conditionalDialogueGroups;
+		private int currentConditionalDialogueIndex = -1;
+		
+		
 		[Header("Player")] 
 		[SerializeField] protected List<Transform> playerSpawnPoints = new List<Transform>();
 		
@@ -246,7 +249,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	
 		
 		protected abstract IEntity OnInitLevelEntity(LevelBuilder<T> builder, int levelNumber);
-
+		public void NextConditionalDialogue() {
+			currentConditionalDialogueIndex++;
+			if (currentConditionalDialogueIndex >= conditionalDialogueGroups.Length) {
+				return;
+			}
+			HintManager.Singleton.ShowHint(conditionalDialogueGroups[currentConditionalDialogueIndex]);
+		}
 		public int GetLevelNumber() {
 			return levelNumber;
 		}
@@ -377,10 +386,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			this.Delay(5f, () => {
 				LoadingCanvas.Singleton.Hide();
-
+				this.Delay(1f, OnLoadingScreenHide);
 			});
 			
 			//this.GetModel<IGamePlayerModel>().GetPlayer().Armor.RegisterOnValueChanged()
+		}
+
+		protected virtual void OnLoadingScreenHide() {
+			
 		}
 
 		private async UniTask SpawnLevelExitDoor() {
@@ -441,7 +454,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		private  void  SpawnPillars() {
+		protected virtual void  SpawnPillars() {
 			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			if (!hasPillars) {
 				return;

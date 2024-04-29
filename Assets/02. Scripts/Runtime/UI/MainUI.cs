@@ -1,4 +1,5 @@
 using _02._Scripts.Runtime.Levels.Models;
+using DG.Tweening;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
@@ -12,12 +13,16 @@ using Runtime.Spawning.Commands;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace Runtime.UI {
 	public class MainUI : UIRoot, IController, ISingleton {
 		DPunkInputs.SharedActions controlActions;
 		private IGamePlayerModel playerModel;
 		private ILevelModel levelModel;
+
+		private Image blackScreenImage;
+		
 		protected override void Awake() {
 			base.Awake();
 			controlActions = ClientInput.Singleton.GetSharedActions();
@@ -26,6 +31,7 @@ namespace Runtime.UI {
 			playerModel = this.GetModel<IGamePlayerModel>();
 			levelModel = this.GetModel<ILevelModel>();
 			ClientInput.Singleton.EnablePlayerMaps();
+			blackScreenImage = transform.Find("StartBlackScreen").GetComponent<Image>();
 			this.RegisterEvent<OnOpenPillarUI>(OnOpenPillarUI)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		}
@@ -38,10 +44,17 @@ namespace Runtime.UI {
 			
 			if (controlActions.Close.WasPressedThisFrame()) {
 				if (currentMainPanel != null) {
+					if (currentMainPanel is IGameUIPanel gameUIPanel) {
+						if (gameUIPanel.CanCloseByEscButton) {
+							GetAndClose(currentMainPanel);
+						}
+					}else {
+						GetAndClose(currentMainPanel);
+					}
 					//ClosePanel(currentMainPanel);
 					//OpenOrGetClose(currentMainPanel, null);
 					//Time = 1;
-					GetAndClose(currentMainPanel);
+					
 					//ClientInput.Singleton.EnablePlayerMaps();
 				}
 				else {
@@ -172,7 +185,19 @@ namespace Runtime.UI {
 		public void OnSingletonInit() {
 			
 		}
+		public void ShowBlackScreen(bool instant = false) {
+			if (instant) {
+				blackScreenImage.color = new Color(0, 0, 0, 1);
+			}
+			else {
+				blackScreenImage.DOFade(1f, 1f);
+			}
+			
+		}
 		
+		public void HideBlackScreen() {
+			blackScreenImage.DOFade(0f, 1f);
+		}
 		public static MainUI Singleton => SingletonProperty<MainUI>.Singleton;
 	}
 }

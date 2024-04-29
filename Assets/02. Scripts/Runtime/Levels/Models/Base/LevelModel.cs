@@ -9,6 +9,17 @@ using Runtime.Utilities;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.Models {
+	public class BaseTutorialStatus {
+		public bool IntroTriggered = true;
+		public bool TalkedToGunsmith = true;
+		public bool TalkedToMerchant = true;
+		
+		public void Reset() {
+			IntroTriggered = false;
+			TalkedToGunsmith = false;
+			TalkedToMerchant = false;
+		}
+	}
 	public interface ILevelModel : IEntityModel, IModel {
 		BindableProperty<int> CurrentLevelCount { get; }
 		
@@ -31,6 +42,8 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		public bool IsInBase();
 		
 		public float RandomBossEncounterEventChance { get; set; }
+		
+		public BaseTutorialStatus BaseTutorialStatus { get; }
 	}
 
 	public struct OnTryToSwitchUnSpawnedLevel {
@@ -143,5 +156,6 @@ namespace _02._Scripts.Runtime.Levels.Models {
 		}
 
 		[field: ES3Serializable] public float RandomBossEncounterEventChance { get; set; } = 0;
+		[field: ES3Serializable] public BaseTutorialStatus BaseTutorialStatus { get; } = new BaseTutorialStatus();
 	}
 }
