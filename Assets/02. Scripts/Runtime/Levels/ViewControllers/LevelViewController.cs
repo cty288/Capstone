@@ -386,10 +386,14 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			this.Delay(5f, () => {
 				LoadingCanvas.Singleton.Hide();
-
+				this.Delay(1f, OnLoadingScreenHide);
 			});
 			
 			//this.GetModel<IGamePlayerModel>().GetPlayer().Armor.RegisterOnValueChanged()
+		}
+
+		protected virtual void OnLoadingScreenHide() {
+			
 		}
 
 		private async UniTask SpawnLevelExitDoor() {

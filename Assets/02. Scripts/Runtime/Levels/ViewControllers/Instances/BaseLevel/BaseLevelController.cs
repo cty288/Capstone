@@ -47,8 +47,16 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel {
 
 		public override async UniTask Init() {
 			await base.Init();
-			NextConditionalDialogue();
-			levelModel.BaseTutorialStatus.IntroTriggered = true;
+			
+		}
+
+		protected override void OnLoadingScreenHide() {
+			base.OnLoadingScreenHide();
+			if (!levelModel.BaseTutorialStatus.IntroTriggered) {
+				NextConditionalDialogue();
+				levelModel.BaseTutorialStatus.IntroTriggered = true;
+			}
+
 		}
 
 		public void OnBaseIntroFinish() {
