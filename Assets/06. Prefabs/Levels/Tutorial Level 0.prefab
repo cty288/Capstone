@@ -16743,115 +16743,6 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
-  playerSpawnPoints:
-  - {fileID: 5852216455221010440}
-  enemySpawnCardConfigs: []
-  bossSpawnCostInfo:
-    _serializedList:
-    - Key: 0
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 10
-          - Key: 2
-            Value: 20
-          - Key: 3
-            Value: 50
-          - Key: 4
-            Value: 100
-    - Key: 1
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 10
-          - Key: 2
-            Value: 20
-          - Key: 3
-            Value: 50
-          - Key: 4
-            Value: 100
-    - Key: 2
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 10
-          - Key: 2
-            Value: 20
-          - Key: 3
-            Value: 50
-          - Key: 4
-            Value: 100
-    - Key: 3
-      Value:
-        Costs:
-          _serializedList:
-          - Key: 1
-            Value: 10
-          - Key: 2
-            Value: 20
-          - Key: 3
-            Value: 50
-          - Key: 4
-            Value: 100
-  pillarRewardsInfo:
-    RewardsInfo:
-      _serializedList:
-      - Key: 1
-        Value:
-        - RewardType: 2
-          PossibleLevelWithWeights:
-            _serializedList:
-            - Key: 1
-              Value: 5
-            - Key: 2
-              Value: 5
-          AmountRange: {x: 1, y: 1}
-      - Key: 2
-        Value:
-        - RewardType: 2
-          PossibleLevelWithWeights:
-            _serializedList:
-            - Key: 1
-              Value: 5
-            - Key: 2
-              Value: 5
-          AmountRange: {x: 1, y: 1}
-      - Key: 3
-        Value:
-        - RewardType: 2
-          PossibleLevelWithWeights:
-            _serializedList:
-            - Key: 1
-              Value: 5
-            - Key: 2
-              Value: 5
-          AmountRange: {x: 1, y: 1}
-      - Key: 4
-        Value:
-        - RewardType: 2
-          PossibleLevelWithWeights:
-            _serializedList:
-            - Key: 1
-              Value: 5
-            - Key: 2
-              Value: 5
-          AmountRange: {x: 1, y: 1}
-  hasPillars: 0
-  pillarPrefabName: BossPillar
-  maxExtent: {fileID: 0}
-  playerSpawner: {fileID: 0}
-  timeCurrencyLevel: 1
-  spawnExitDoor: 0
-  displayedCoordinates: []
-  diaplsyedNameLocalizedKey: 
-  subAreaLevelPrefabs: []
-  autoUpdateNavMeshOnStart: 0
-  ambientMusic: {fileID: 0}
-  bgm: {fileID: 0}
-  relativeVolume: 1
   conditionalDialogueGroups:
   - messageType: 2
     messages:
@@ -17361,6 +17252,115 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
+  playerSpawnPoints:
+  - {fileID: 5852216455221010440}
+  enemySpawnCardConfigs: []
+  bossSpawnCostInfo:
+    _serializedList:
+    - Key: 0
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 10
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 50
+          - Key: 4
+            Value: 100
+    - Key: 1
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 10
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 50
+          - Key: 4
+            Value: 100
+    - Key: 2
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 10
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 50
+          - Key: 4
+            Value: 100
+    - Key: 3
+      Value:
+        Costs:
+          _serializedList:
+          - Key: 1
+            Value: 10
+          - Key: 2
+            Value: 20
+          - Key: 3
+            Value: 50
+          - Key: 4
+            Value: 100
+  pillarRewardsInfo:
+    RewardsInfo:
+      _serializedList:
+      - Key: 1
+        Value:
+        - RewardType: 2
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 5
+            - Key: 2
+              Value: 5
+          AmountRange: {x: 1, y: 1}
+      - Key: 2
+        Value:
+        - RewardType: 2
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 5
+            - Key: 2
+              Value: 5
+          AmountRange: {x: 1, y: 1}
+      - Key: 3
+        Value:
+        - RewardType: 2
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 5
+            - Key: 2
+              Value: 5
+          AmountRange: {x: 1, y: 1}
+      - Key: 4
+        Value:
+        - RewardType: 2
+          PossibleLevelWithWeights:
+            _serializedList:
+            - Key: 1
+              Value: 5
+            - Key: 2
+              Value: 5
+          AmountRange: {x: 1, y: 1}
+  hasPillars: 0
+  pillarPrefabName: BossPillar
+  maxExtent: {fileID: 0}
+  playerSpawner: {fileID: 0}
+  timeCurrencyLevel: 1
+  spawnExitDoor: 0
+  displayedCoordinates: []
+  diaplsyedNameLocalizedKey: 
+  subAreaLevelPrefabs: []
+  autoUpdateNavMeshOnStart: 0
+  ambientMusic: {fileID: 0}
+  bgm: {fileID: 0}
+  relativeVolume: 1
   enemyGroups:
   - {fileID: 8815171045003983528}
   - {fileID: 7405854556630063542}
@@ -19407,11 +19407,31 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
+    - target: {fileID: -2221070354654873960, guid: f56ce2b4ffd2f424b8addc81dd4de225,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
+    - target: {fileID: -2214681742849018795, guid: f56ce2b4ffd2f424b8addc81dd4de225,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: 919132149155446097, guid: f56ce2b4ffd2f424b8addc81dd4de225,
         type: 3}
       propertyPath: m_Name
       value: En_En_1_001LODs (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2020437445718349574, guid: f56ce2b4ffd2f424b8addc81dd4de225,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
+    - target: {fileID: 3667185041749537530, guid: f56ce2b4ffd2f424b8addc81dd4de225,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f56ce2b4ffd2f424b8addc81dd4de225, type: 3}
 --- !u!4 &543450653641612156 stripped
@@ -20462,6 +20482,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1611092283}
     m_Modifications:
+    - target: {fileID: -8944415278158603883, guid: e09cab557854f7c4b8715fb87559a6d0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: -8679921383154817045, guid: e09cab557854f7c4b8715fb87559a6d0,
         type: 3}
       propertyPath: m_RootOrder
@@ -20537,6 +20562,16 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8109145865176734200, guid: e09cab557854f7c4b8715fb87559a6d0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
+    - target: {fileID: -8058713451258363174, guid: e09cab557854f7c4b8715fb87559a6d0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: -7734009659329636194, guid: e09cab557854f7c4b8715fb87559a6d0,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -20592,6 +20627,11 @@ PrefabInstance:
       propertyPath: m_LODs.Array.data[3].screenRelativeHeight
       value: 0.0625
       objectReference: {fileID: 0}
+    - target: {fileID: 5127175628732812454, guid: e09cab557854f7c4b8715fb87559a6d0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: 5591056900721240641, guid: e09cab557854f7c4b8715fb87559a6d0,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -23081,11 +23121,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
+    - target: {fileID: -4817687888289773779, guid: 28dd7da87203f3945bdf2702e0067a59,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: -2625119920619412333, guid: 28dd7da87203f3945bdf2702e0067a59,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -794394424147034928, guid: 28dd7da87203f3945bdf2702e0067a59,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: 919132149155446097, guid: 28dd7da87203f3945bdf2702e0067a59,
         type: 3}
       propertyPath: m_Name
@@ -23101,6 +23151,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 2655559710616388929, guid: 28dd7da87203f3945bdf2702e0067a59,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: 4742473837712756890, guid: 28dd7da87203f3945bdf2702e0067a59,
         type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
@@ -23121,6 +23176,11 @@ PrefabInstance:
       propertyPath: m_LODs.Array.data[3].screenRelativeHeight
       value: 0.0625
       objectReference: {fileID: 0}
+    - target: {fileID: 7823202549590505119, guid: 28dd7da87203f3945bdf2702e0067a59,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28dd7da87203f3945bdf2702e0067a59, type: 3}
 --- !u!4 &543450652776754244 stripped
@@ -25905,6 +25965,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
+    - target: {fileID: 547265858824229798, guid: 1b35e85896bcb4446a41e9ed05bd927d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: 919132149155446097, guid: 1b35e85896bcb4446a41e9ed05bd927d,
         type: 3}
       propertyPath: m_Name
@@ -25915,6 +25980,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1780553594371476923, guid: 1b35e85896bcb4446a41e9ed05bd927d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     - target: {fileID: 2948994084503591436, guid: 1b35e85896bcb4446a41e9ed05bd927d,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -25950,6 +26020,16 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 5942014302442124706, guid: 1b35e85896bcb4446a41e9ed05bd927d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
+    - target: {fileID: 7402619402177139992, guid: 1b35e85896bcb4446a41e9ed05bd927d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23e91ba19b1c66418b3734a3e5745ad, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b35e85896bcb4446a41e9ed05bd927d, type: 3}
 --- !u!4 &543450652268535619 stripped
