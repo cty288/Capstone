@@ -1,8 +1,12 @@
-﻿using _02._Scripts.Runtime.Levels.Models;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Runtime.GameResources.Model.Base;
+using Runtime.Inventory.Model;
 using Runtime.Player;
+using Runtime.RawMaterials.Model.Base;
 
 namespace _02._Scripts.Runtime.Levels.Commands {
 
@@ -14,14 +18,39 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 		protected override void OnExecute() {
 			ILevelModel levelModel = this.GetModel<ILevelModel>();
 
+			if (levelModel.CurrentLevel.Value is TutorialLevelEntity) {
+				levelModel.BaseTutorialStatus.Reset();
+				
+				IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+				playerEntity.AlwaysNonLethal = false;
+				
+				IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
+				var slots = inventoryModel.GetAllSlots((slot => !slot.IsEmpty()));
+				HashSet<ResourceSlot> removedSlots = new HashSet<ResourceSlot>();
+				foreach (ResourceSlot slot in slots) {
+					IResourceEntity resource = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+					if (resource is not IRawMaterialEntity) {
+						removedSlots.Add(slot);
+					}
+				}
+				inventoryModel.ClearSlots(removedSlots);
+				
+				
+				playerEntity.SetHealth(playerEntity.GetMaxHealth());
+				playerEntity.SetArmor(playerEntity.GetMaxArmor().RealValue);
+
+				playerEntity.AlwaysNonLethal = false;
+				levelModel.RandomBossEncounterEventChance = 0;
+			
+				this.SendEvent<OnReturnToBase>();
+				inventoryModel.Clear();
+			}
+			
+			
 			if (levelModel.CurrentLevelCount.Value >= LevelModel.MAX_LEVEL) {
 				this.SendCommand<BackToBaseCommand>();
 			}
 			else {
-				IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
-				playerEntity.AlwaysNonLethal = false;
-				
-				
 				levelModel.SwitchToLevel(levelModel.CurrentLevelCount.Value + 1);
 				((MainGame) MainGame.Interface).SaveGame();
 			}

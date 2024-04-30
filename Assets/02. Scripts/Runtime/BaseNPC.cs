@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel;
 using Framework;
 using MikroFramework.Architecture;
 using Polyglot;
@@ -12,20 +14,35 @@ using Runtime.Weapons.ViewControllers.CrossHairs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BaseNPC :  AbstractMikroController<MainGame>, ICrossHairDetectable {
+public class BaseNPC :  AbstractMikroController<MainGame>, ICrossHairDetectable, ICanSendEvent {
 	[field: SerializeField] private Transform nameTagSpawnPoint;
 	[field: SerializeField] private string localizedNameKey;
 	[field: SerializeField] private Transform interactHintSpawnPoint;
+
+	[SerializeField] private HintMessageGroup[] conditionalDialogueGroups;
+	private int currentConditionalDialogueIndex = -1;
+	
 	
 	private InteractiveHint currentInteractiveHint;
 	private bool inZone = false;
+	protected ILevelModel levelModel;
 
 	private void Awake() {
 		if (nameTagSpawnPoint == null) {
 			nameTagSpawnPoint = transform;
 		}
-	}
 
+		levelModel = this.GetModel<ILevelModel>();
+	}
+	public void NextConditionalDialogue() {
+		currentConditionalDialogueIndex++;
+		if (currentConditionalDialogueIndex >= conditionalDialogueGroups.Length) {
+			return;
+		}
+		HintManager.Singleton.ShowHint(conditionalDialogueGroups[currentConditionalDialogueIndex]);
+	}
+	
+	
 	private void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag("Player")) {
 			inZone = true;
@@ -50,7 +67,9 @@ public class BaseNPC :  AbstractMikroController<MainGame>, ICrossHairDetectable 
 	}
 	
 	protected virtual void OnInteract() {
-		
+		this.SendEvent<OnTalkToNPC>(new OnTalkToNPC() {
+			NPCName = localizedNameKey
+		});
 	}
 
 	protected virtual (InputAction, string, string) GetInteractHintInfo() {

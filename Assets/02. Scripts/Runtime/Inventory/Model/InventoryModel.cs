@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -64,6 +65,8 @@ namespace Runtime.Inventory.Model {
 		public bool AddItemToNonHotBarSlot(IResourceEntity item, out ResourceSlot addedSlot);
 		
 		int MaxSlotCount { get; set; }
+		
+		public void ClearSlots(IEnumerable<ResourceSlot> slots);
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -126,7 +129,9 @@ namespace Runtime.Inventory.Model {
 
 		[field: ES3Serializable]
 		public int MaxSlotCount { get; set; } = 32;
-		
+
+
+
 		public static Dictionary<HotBarCategory, int> MaxHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
 			{HotBarCategory.Right, 3},
 			{HotBarCategory.Left, 5}
@@ -260,14 +265,19 @@ namespace Runtime.Inventory.Model {
 				return new HashSet<PreparationSlot>();
 			}
 
-			return baseStockedItems[category];
+			return baseStockedItems[category].Where((slot) => !slot.IsEmpty()).ToHashSet();
 		}
 
 		public HashSet<PreparationSlot> GetBaseStock(params ResourceCategory[] categories) {
 			HashSet<PreparationSlot> result = new HashSet<PreparationSlot>();
 			foreach (ResourceCategory category in categories) {
-				if (baseStockedItems.ContainsKey(category)) {
-					result.UnionWith(baseStockedItems[category]);
+				if (baseStockedItems.TryGetValue(category, out var item)) {
+					foreach (PreparationSlot slot in item) {
+						if (slot.IsEmpty()) {
+							continue;
+						}
+						result.Add(slot);
+					}
 				}
 			}
 
@@ -288,7 +298,7 @@ namespace Runtime.Inventory.Model {
 			}
 
 			foreach (PreparationSlot slot in baseStockedItems[category]) {
-				if (slot.EntityKey == entityName) {
+				if (slot.EntityKey == entityName && !slot.IsEmpty()) {
 					return true;
 				}
 			}
@@ -479,7 +489,21 @@ namespace Runtime.Inventory.Model {
 		}
 
 
-
+		public void ClearSlots(IEnumerable<ResourceSlot> slots) {
+			if (slots == null) {
+				return;
+			}
+			
+			foreach (var resourceSlot in slots) {
+				while (!resourceSlot.IsEmpty()) {
+					string uuid = resourceSlot.GetLastItemUUID();
+					GlobalEntities.GetEntityAndModel(uuid).Item2.RemoveEntity(uuid);
+				}
+			}
+		}
+		
+		
+		
 		public override void Clear() {
 			if (slots == null) {
 				return;

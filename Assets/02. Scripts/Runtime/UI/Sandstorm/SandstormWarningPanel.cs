@@ -71,11 +71,16 @@ public class SandstormWarningPanel : AbstractMikroController<MainGame> {
     }
 
     private void OnSandStormWarning(OnSandStormWarning e) {
-        mainPanel.gameObject.SetActive(true);
+        mainPanel.gameObject.SetActive(false);
         approachingPanel.gameObject.SetActive(true);
         this.Delay(4f, () => {
             approachingPanel.gameObject.SetActive(false);
         });
+        if (e.IsTutorialWarning) {
+            return;
+        }
+        
+        mainPanel.gameObject.SetActive(true);
         remainingSandstormTime = TimeSpan.FromMinutes(e.RemainingMinutes);
     }
 
