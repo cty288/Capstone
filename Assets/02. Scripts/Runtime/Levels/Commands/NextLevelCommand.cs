@@ -1,9 +1,12 @@
-﻿using _02._Scripts.Runtime.Levels.Models;
+﻿using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Models;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Pool;
+using Runtime.GameResources.Model.Base;
 using Runtime.Inventory.Model;
 using Runtime.Player;
+using Runtime.RawMaterials.Model.Base;
 
 namespace _02._Scripts.Runtime.Levels.Commands {
 
@@ -22,7 +25,16 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 				playerEntity.AlwaysNonLethal = false;
 				
 				IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
-				inventoryModel.Clear();
+				var slots = inventoryModel.GetAllSlots((slot => !slot.IsEmpty()));
+				HashSet<ResourceSlot> removedSlots = new HashSet<ResourceSlot>();
+				foreach (ResourceSlot slot in slots) {
+					IResourceEntity resource = GlobalGameResourceEntities.GetAnyResource(slot.GetLastItemUUID());
+					if (resource is not IRawMaterialEntity) {
+						removedSlots.Add(slot);
+					}
+				}
+				inventoryModel.ClearSlots(removedSlots);
+				
 				
 				playerEntity.SetHealth(playerEntity.GetMaxHealth());
 				playerEntity.SetArmor(playerEntity.GetMaxArmor().RealValue);
@@ -31,7 +43,7 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 				levelModel.RandomBossEncounterEventChance = 0;
 			
 				this.SendEvent<OnReturnToBase>();
-				
+				inventoryModel.Clear();
 			}
 			
 			

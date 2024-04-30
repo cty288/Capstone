@@ -65,6 +65,8 @@ namespace Runtime.Inventory.Model {
 		public bool AddItemToNonHotBarSlot(IResourceEntity item, out ResourceSlot addedSlot);
 		
 		int MaxSlotCount { get; set; }
+		
+		public void ClearSlots(IEnumerable<ResourceSlot> slots);
 	}
 	
 	public struct OnInventorySlotAddedEvent {
@@ -127,7 +129,9 @@ namespace Runtime.Inventory.Model {
 
 		[field: ES3Serializable]
 		public int MaxSlotCount { get; set; } = 32;
-		
+
+
+
 		public static Dictionary<HotBarCategory, int> MaxHotBarSlotCount = new Dictionary<HotBarCategory, int>() {
 			{HotBarCategory.Right, 3},
 			{HotBarCategory.Left, 5}
@@ -485,7 +489,21 @@ namespace Runtime.Inventory.Model {
 		}
 
 
-
+		public void ClearSlots(IEnumerable<ResourceSlot> slots) {
+			if (slots == null) {
+				return;
+			}
+			
+			foreach (var resourceSlot in slots) {
+				while (!resourceSlot.IsEmpty()) {
+					string uuid = resourceSlot.GetLastItemUUID();
+					GlobalEntities.GetEntityAndModel(uuid).Item2.RemoveEntity(uuid);
+				}
+			}
+		}
+		
+		
+		
 		public override void Clear() {
 			if (slots == null) {
 				return;

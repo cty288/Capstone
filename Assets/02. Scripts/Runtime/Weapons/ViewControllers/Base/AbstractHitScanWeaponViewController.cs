@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
+using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Player;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
@@ -94,8 +95,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         protected abstract IHitDetector OnCreateHitDetector();
 
-        protected override void Shoot()
-        {
+        protected override void Shoot() {
             base.Shoot();
             crossHairViewController?.OnShoot();
             BoundEntity.OnRecoil(IsScopedIn);
@@ -103,7 +103,10 @@ namespace Runtime.Weapons.ViewControllers.Base
         }
         
         public override void HitResponse(HitData data) {
-            //Debug.Log("AbstractHitScanWeaponViewController HitResponse");
+            //Debug.Log("AbstractHitScanWeaponViewController HitResPILLAR_HINT_ERROR_2ponse");
+            if(data?.Hurtbox?.HurtResponder?.CurrentFaction?.Value == Faction.Hostile)
+                AudioSystem.Singleton.Play2DSound("shot_hit_enemy");
+            
             hitVFXSystem.SetVector3("StartPosition", data.HitPoint);
             hitVFXSystem.SetVector3("HitNormal", data.HitNormal);
             hitVFXSystem.SetVector3("HitDir", data.HitDirectionNormalized);
