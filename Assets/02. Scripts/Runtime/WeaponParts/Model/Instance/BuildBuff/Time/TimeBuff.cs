@@ -36,9 +36,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("TimeOut", null, 3, 10, out GameObject prefab2);
 			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("TimeExplode", null, 3, 10, out GameObject prefab1);
 			
-			var vc = weaponEntity.GetBoundViewController();
-			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
-			
 			
 			IEntity weaponRootOwner = weaponEntity.GetRootDamageDealer() as IEntity;
 			if (weaponRootOwner == null || weaponRootOwner is not IPlayerEntity) {
@@ -108,7 +105,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		}
 
 		public override void OnStart() {
-			
+			var vc = weaponEntity.GetBoundViewController();
+			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
 		}
 
 		public override BuffStatus OnTick() {

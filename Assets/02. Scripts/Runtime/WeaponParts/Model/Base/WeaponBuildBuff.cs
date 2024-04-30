@@ -66,6 +66,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 
 		public override void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false) {
 			weaponEntity = entity as IWeaponEntity;
+			weaponEntity.RegisterOnSetBoundEntity(AllocateBuffVFX);
 			base.OnInitialize(buffDealer, entity, force);
 		}
 
@@ -93,6 +94,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		private IWeaponVFX _weaponVFX;
 		private IHitScanWeaponVFX _hitScanWeaponVFX;
 		private bool allocated = false;
+
+		public void AllocateBuffVFX(int i)
+		{
+			var vc = weaponEntity.GetBoundViewController();
+			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
+		}
 		public void AllocateBuffVFX(IWeaponVFX weaponVFX, IHitScanWeaponVFX hitScanWeaponVFX)
 		{
 			if (allocated)
@@ -137,6 +144,12 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 				bulletHitVFXPool.Recycle(pooledBulletHit);
 			}
 			
+		}
+
+		public override void OnRecycled()
+		{
+			base.OnRecycled();
+			weaponEntity.UnRegisterOnSetBoundEntity(AllocateBuffVFX);
 		}
 
 		public IArchitecture GetArchitecture() {

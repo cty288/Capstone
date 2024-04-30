@@ -148,11 +148,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPOut", null, 3, 10, out GameObject prefab2);
 			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPExplode", null, 3, 10, out GameObject prefab1);
 			empAOEVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("EMPAOE", null, 3, 10, out GameObject prefab3);
-
-			
-			var vc = weaponEntity.GetBoundViewController();
-			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
-			AllocateAOE();
 			
 			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
 			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
@@ -374,7 +369,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		}
 
 		public override void OnStart() {
-			
+			var vc = weaponEntity.GetBoundViewController();
+			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
+			AllocateAOE();
 		}
 
 		public override BuffStatus OnTick() {
