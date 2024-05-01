@@ -99,7 +99,7 @@ namespace Runtime.Temporary
                 inventoryModel.AddSlots(2, out int addedCount);
             }
 
-            if (Input.GetKeyDown(KeyCode.Plus)) {
+            if (Input.GetKeyDown(KeyCode.Keypad3)) {
                 IInventoryModel inventoryModel = this.GetModel<IInventoryModel>();
                 inventoryModel.MaxSlotCount = 100;
                 inventoryModel.AddSlots(100, out int addedCount);
