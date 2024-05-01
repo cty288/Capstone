@@ -104,9 +104,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 			bulletInVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("ShreddingIn", null, 3, 10, out GameObject prefab0);
 			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("ShreddingOut", null, 3, 10, out GameObject prefab2);
 			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("ShreddingExplode", null, 3, 10, out GameObject prefab1);
-			
-			var vc = weaponEntity.GetBoundViewController();
-			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
 				
 			weaponEntity.RegisterOnModifyHitData(OnWeaponModifyHitData);
 			weaponEntity.RegisterOnKillDamageable(OnKillDamageable);
@@ -242,6 +239,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 
 		public override void OnStart()
 		{
+			var vc = weaponEntity.GetBoundViewController();
+			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
 		}
 
 		public override BuffStatus OnTick() {

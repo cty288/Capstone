@@ -47,8 +47,28 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
 
+        public VisualEffect[] BulletVFXCurr
+        {
+            get
+            {
+                if (_bulletVFXCurr == null)
+                {
+                    _bulletVFXCurr = BulletVFXAll;
+                }
+                return _bulletVFXCurr;
+            }
+
+            set
+            {
+                _bulletVFXCurr = value;
+            }
+        }
+        
+        private VisualEffect[] _bulletVFXCurr;
+
         public void ResetBulletVFX()
         {
+            BulletVFXCurr = bulletVFXAll;
             if (hitDetector is HitScan hs) hs.VFX = bulletVFXAll;
         }
 
@@ -71,6 +91,7 @@ namespace Runtime.Weapons.ViewControllers.Base
                 t.localScale = Vector3.one;
             }
             var vfx = vfxIn.Concat(vfxOut).ToArray();
+            BulletVFXCurr = vfx;
             if (hitDetector is HitScan hs) hs.VFX = vfx;
         }
 

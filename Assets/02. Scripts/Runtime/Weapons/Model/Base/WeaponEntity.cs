@@ -114,6 +114,10 @@ namespace Runtime.Weapons.Model.Base
         public void RegisterOnUseAmmo(Action<int> callback);
         
         public void UnRegisterOnUseAmmo(Action<int> callback);
+        
+        public void RegisterOnSetBoundEntity(Action<int> callback);
+        
+        public void UnRegisterOnSetBoundEntity(Action<int> callback);
 
         /// <summary>
         /// This can return null
@@ -191,6 +195,7 @@ namespace Runtime.Weapons.Model.Base
         private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
         private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
         private Action<int> _onUseAmmoCallback;
+        private Action<int> _onSetBoundEntityCallback;
         public abstract int Width { get; }
         
         private IWeaponViewController boundViewController;
@@ -238,12 +243,19 @@ namespace Runtime.Weapons.Model.Base
         }
         
         
+        public void RegisterOnSetBoundEntity(Action<int> callback) {
+            _onSetBoundEntityCallback += callback;
+            
+        }
+
+        public void UnRegisterOnSetBoundEntity(Action<int> callback) {
+            _onSetBoundEntityCallback -= callback;
+        }
 
         protected override void OnEntityStart(bool isLoadedFromSave) {
             if (!isLoadedFromSave) { //otherwise it is managed by es3
                 CurrentAmmo.Value = ammoSizeProperty.RealValue.Value;
                 InitWeaponPartsSlots();
-               
                 
             }
             foreach (KeyValuePair<WeaponPartType,HashSet<WeaponPartsSlot>> part in weaponParts) {
@@ -377,6 +389,7 @@ namespace Runtime.Weapons.Model.Base
             _onKillDamageableCallback = null;
             damageDealerUUID = null;
             _onUseAmmoCallback = null;
+            _onSetBoundEntityCallback = null;
             LockWeaponCounter.Clear();
         }
 
@@ -663,6 +676,10 @@ namespace Runtime.Weapons.Model.Base
 
         public void SetBoundViewController(IWeaponViewController viewController) {
             this.boundViewController = viewController;
+            if (boundViewController != null)
+            {
+                _onSetBoundEntityCallback?.Invoke(0);
+            }
         }
 
         public GameObject GetBoundGameObject() {
