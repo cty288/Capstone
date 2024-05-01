@@ -51,11 +51,12 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
 		}
 
 		private IEnumerator ClearPanel() {
-			this.SendEvent<OnTutorialTaskFinish>(new OnTutorialTaskFinish() {
-				TaskID = 12
-			});
+
 			yield return new WaitForSeconds(2f);
-			this.SendEvent<OnClearTaskPanel>();
+			//this.SendEvent<OnClearTaskPanel>();
+			this.SendEvent<OnTutorialTaskFinish>(new OnTutorialTaskFinish() {
+            	TaskID = 12
+            });
 		}
 
 		
