@@ -97,7 +97,8 @@ namespace Runtime.Temporary
         }
 
         private void OnPlayerTeleport(OnPlayerTeleport e) {
-            transform.position = e.targetPos;
+            transform.position = e.targetTransform.position;
+            transform.rotation = e.targetTransform.rotation;
             triggerCheck.Clear();
         }
 

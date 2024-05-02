@@ -389,7 +389,7 @@ namespace Runtime.Spawning {
 		
 		public static List<GameObject> SpawnBossPillars(int targetNumber, string prefabName) {
 			var pillarPool =
-				GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 4, 10, out GameObject prefab);
+				GameObjectPoolManager.Singleton.CreatePoolFromAB(prefabName, null, 4, 4, out GameObject prefab);
 			
 			
 			List<GameObject> pillars = new List<GameObject>();
