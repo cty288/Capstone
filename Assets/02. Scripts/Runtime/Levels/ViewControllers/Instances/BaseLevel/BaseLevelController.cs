@@ -1,4 +1,5 @@
-﻿using _02._Scripts.Runtime.Levels.Models;
+﻿using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.PlayerTasks;
 using Cysharp.Threading.Tasks;
 using MikroFramework.Architecture;
@@ -47,7 +48,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel {
 
 		public override async UniTask Init() {
 			await base.Init();
-			
 		}
 
 		protected override void OnLoadingScreenHide() {
@@ -56,7 +56,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel {
 				NextConditionalDialogue();
 				levelModel.BaseTutorialStatus.IntroTriggered = true;
 			}
-
 		}
 
 		public void OnBaseIntroFinish() {
