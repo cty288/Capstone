@@ -53,7 +53,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public void OnExitLevel();
 
 		public ISubAreaLevelEntity GetCurrentActiveSubAreaEntity();
-		
+
 		HashSet<GameObject> Enemies { get; }
 	}
 
@@ -393,11 +393,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		}
 
 		protected virtual void OnLoadingScreenHide() {
-			
+			this.SendCommand<LoadingScreenHideCommand>(LoadingScreenHideCommand.Allocate());
 		}
 
 		private async UniTask SpawnLevelExitDoor() {
-
 			if (exitDoor) {
 				return;
 			}

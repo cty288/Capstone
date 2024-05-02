@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Levels.Commands;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Systems;
 using Framework;
@@ -9,6 +10,7 @@ using MikroFramework.AudioKit;
 using MikroFramework.Event;
 using Polyglot;
 using Runtime.UI.NameTags;
+using Runtime.Utilities;
 using Runtime.Weapons.ViewControllers.CrossHairs;
 using UnityEngine;
 
@@ -29,31 +31,20 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     private static readonly int raise = Animator.StringToHash("Raise");
 
     private void Awake() {
-        // exitDoorGameObject = transform.Find("ExitDoor").gameObject;
-        // hudSpawnPoint = transform.Find("HUDSpawnPoint");
-        // exitDoorGameObject.SetActive(false);
         levelSystem = this.GetSystem<ILevelSystem>();
         levelModel = this.GetModel<ILevelModel>();
+        
         spawnedNameTagGameObject =
             HUDManager.Singleton.SpawnHUDElement(hudSpawnPoint, "NameTag_General", HUDCategory.Exit, true);
-        
         spawnedNameTag = spawnedNameTagGameObject.GetComponent<INameTag>();
-        
+        spawnedNameTagGameObject.SetActive(false);
         
         levelSystem.IsLevelExitSatisfied.RegisterWithInitValue(OnLevelExitSatisfied)
             .UnRegisterWhenGameObjectDestroyed(gameObject);
-      
-
-
-       spawnedNameTagGameObject.SetActive(false);
-
+        this.RegisterEvent<OnLoadingScreenHide>(LowerDoor).UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
     }
 
-    private void Start() {
-        LowerDoor();
-    }
-
-    private void LowerDoor()
+    private void LowerDoor(OnLoadingScreenHide e)
     {
         animator.SetTrigger(lower);
         print("LOWER DOOR");
