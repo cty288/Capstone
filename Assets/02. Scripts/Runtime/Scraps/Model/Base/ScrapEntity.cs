@@ -13,7 +13,7 @@ namespace _02._Scripts.Runtime.Scraps.Model.Base {
 	public class ScrapEntity : ResourceEntity<ScrapEntity>, IScrapEntity, IHaveExpResourceEntity {
 		
 		[field: ES3Serializable]
-		public override string EntityName { get; set; }
+		public override string EntityName { get; set; } = "Scrap";
 
 		[ES3Serializable] private bool pickedBefore;
 		
@@ -21,6 +21,10 @@ namespace _02._Scripts.Runtime.Scraps.Model.Base {
 		protected override ConfigTable GetConfigTable() {
 			return ConfigDatas.Singleton.RawMaterialEntityConfigTable;
 		}
+		
+		
+		
+		
 		public override void OnResourceAwake() {
 			base.OnResourceAwake();
 			expProperty = GetProperty<IExp>();
@@ -85,7 +89,7 @@ namespace _02._Scripts.Runtime.Scraps.Model.Base {
 
 		public bool PickedBefore => pickedBefore;
 		public override string GetIconName() {
-			return base.GetIconName();
+			return "Scrap_Icon";
 		}
 	}
 }

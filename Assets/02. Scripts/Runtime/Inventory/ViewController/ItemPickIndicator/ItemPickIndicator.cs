@@ -69,7 +69,7 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 	}
 
 	private void OnMoneyAmountChanged(OnMoneyAmountChangedEvent e) {
-		string currencyTypeLocalized = $"<sprite index=6>";
+		string currencyTypeLocalized = $"<sprite name=crystal>";
 		StackItem(currencyTypeLocalized, e.Amount);
 	}
 
@@ -83,7 +83,7 @@ public class ItemPickIndicator : AbstractMikroController<MainGame> {
 				//Show();
 				Show(Localization.GetFormat("HINT_CURRENCY_TRANSFER",
 					$"{e.Amount} <sprite index={(int) e.CurrencyType}>",
-					$"{e.TransferAmount} <sprite index=6>"));
+					$"{e.TransferAmount} <sprite name=crystal>"));
 			}
 		});
 		
