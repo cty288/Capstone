@@ -47,13 +47,11 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     private void LowerDoor(OnLoadingScreenHide e)
     {
         animator.SetTrigger(lower);
-        print("LOWER DOOR");
     }
     
     private void RaiseDoor()
     {
         animator.SetTrigger(raise);
-        print("RAISE DOOR");
     }
     
     public void PlayRiseAudio()
