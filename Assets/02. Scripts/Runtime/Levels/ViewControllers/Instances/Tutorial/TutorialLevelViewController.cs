@@ -80,8 +80,9 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
             pillarTrigger.gameObject.GetComponent<BossPillarViewController>().SetCanInteract(true);
         }
         else {
-            NextConditionalDialogue();
+            
         }
+        NextConditionalDialogue();
     }
 
     protected override void OnBindEntityProperty() {
