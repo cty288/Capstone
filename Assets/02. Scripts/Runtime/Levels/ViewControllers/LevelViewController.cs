@@ -363,7 +363,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 			UpdatePreExistingEnemies();
-			OnSpawnPlayer();
 			if (ambientMusic) {
 				 ambientMusicSource = AudioSystem.Singleton.Play2DSound(ambientMusic, relativeVolume, true);
 			}
@@ -377,6 +376,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (spawnExitDoor) {
 				await SpawnLevelExitDoor();
 			}
+			OnSpawnPlayer();
 			
 			SpawnPillars();
 			UpdatePreExistingDirectors();
@@ -582,8 +582,19 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				throw new Exception("No player spawn points found for level {gameObject.name}");
 				return;
 			}
+
+			Transform spawnTransform;
+			if (exitDoor && exitDoor.TryGetComponent<LevelExitDoorController>(out var doorController))
+			{
+				spawnTransform = doorController.playerSpawnPoint;
+			}
+			else
+			{
+				spawnTransform = playerSpawnPoints.GetRandomElement();
+			}
+			
 			this.SendCommand<TeleportPlayerCommand>(
-				TeleportPlayerCommand.Allocate(playerSpawnPoints.GetRandomElement().position));
+				TeleportPlayerCommand.Allocate(spawnTransform));
 
 			if (playerSpawner) {
 				HashSet<PlayerController> players = PlayerController.GetAllPlayers();

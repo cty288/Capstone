@@ -22,6 +22,7 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     [SerializeField] private bool alwaysOpen = false;
 
     [SerializeField] private BoxCollider SpawnSizeCollider;
+    public Transform playerSpawnPoint;
     
     [SerializeField] private Animator animator;
     private static readonly int lower = Animator.StringToHash("Lower");
@@ -30,7 +31,7 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     private void Awake() {
         // exitDoorGameObject = transform.Find("ExitDoor").gameObject;
         // hudSpawnPoint = transform.Find("HUDSpawnPoint");
-        exitDoorGameObject.SetActive(false);
+        // exitDoorGameObject.SetActive(false);
         levelSystem = this.GetSystem<ILevelSystem>();
         levelModel = this.GetModel<ILevelModel>();
         spawnedNameTagGameObject =
@@ -55,33 +56,36 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
     private void LowerDoor()
     {
         animator.SetTrigger(lower);
+        print("LOWER DOOR");
     }
     
     private void RaiseDoor()
     {
         animator.SetTrigger(raise);
+        print("RAISE DOOR");
     }
     
     public void PlayRiseAudio()
     {
-        AudioSystem.Singleton.Play3DSound("door_rise", transform.position);
+        var source = AudioSystem.Singleton.Play3DSound("door_rise", transform.position);
+        source.spatialBlend = 0.5f;
     }
 
     public void PlayLowerAudio()
     {
-        AudioSystem.Singleton.Play3DSound("door_lower", transform.position);
+        var source = AudioSystem.Singleton.Play3DSound("door_lower", transform.position);
+        source.spatialBlend = 0.5f;
     }
     
     private void SetExitDoorName(bool isOpen, string localizationName) {
         spawnedNameTag.SetName(Localization.Get(localizationName));
         
-        
-        if (isOpen) {
+        // if (isOpen) {
             //spawnedNameTag.SetName("Enter Next Level \n(will return to the Base in this version)");
-        }
-        else {
+        // }
+        // else {
             //spawnedNameTag.SetName("Exit : Deactivated");
-        }
+        // }
     }
 
     private void OnLevelExitSatisfied(bool oldVal, bool newVal) {
@@ -92,7 +96,7 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
         
         if(newVal) { 
             RaiseDoor();
-            exitDoorGameObject.SetActive(true);
+            // exitDoorGameObject.SetActive(true);
             SetExitDoorName(true, "EXIT_DOOR_STATE_1");
         }
         else {
