@@ -384,14 +384,22 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			StartCoroutine(UpdateLevelSystemTime());
 			
-			this.Delay(5f, () => {
+			/*this.Delay(5f, () => {
 				LoadingCanvas.Singleton.Hide();
 				this.Delay(1f, OnLoadingScreenHide);
-			});
-			
+			});*/
+			StartCoroutine(BlackScreenAnim());
+
 			//this.GetModel<IGamePlayerModel>().GetPlayer().Armor.RegisterOnValueChanged()
 		}
 
+		private IEnumerator BlackScreenAnim() {
+			yield return new WaitForSecondsRealtime(5f);
+			LoadingCanvas.Singleton.Hide();
+			yield return new WaitForSecondsRealtime(1f);
+			OnLoadingScreenHide();
+		}
+		
 		protected virtual void OnLoadingScreenHide() {
 			this.SendCommand<LoadingScreenHideCommand>(LoadingScreenHideCommand.Allocate());
 		}
