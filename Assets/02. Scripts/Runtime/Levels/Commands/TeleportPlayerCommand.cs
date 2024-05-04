@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace _02._Scripts.Runtime.Levels.Commands {
 	public struct OnPlayerTeleport {
-		public Vector3 targetPos;
+		public Transform targetTransform;
 	}
 	public class TeleportPlayerCommand : AbstractCommand<TeleportPlayerCommand> {
-		private Vector3 targetPos;
+		private Transform targetTransform;
 		protected override void OnExecute() {
 			this.SendEvent<OnPlayerTeleport>(new OnPlayerTeleport() {
-				targetPos = this.targetPos
+				targetTransform = this.targetTransform
 			});
 		}
 		
@@ -20,9 +20,9 @@ namespace _02._Scripts.Runtime.Levels.Commands {
 			
 		}
 		
-		public static TeleportPlayerCommand Allocate(Vector3 targetPos) {
+		public static TeleportPlayerCommand Allocate(Transform targetTransform) {
 			TeleportPlayerCommand command = SafeObjectPool<TeleportPlayerCommand>.Singleton.Allocate();
-			command.targetPos = targetPos;
+			command.targetTransform = targetTransform;
 			return command;
 		}
 	}

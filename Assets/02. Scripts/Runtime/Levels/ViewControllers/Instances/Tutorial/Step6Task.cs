@@ -14,7 +14,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
 		
 		private float timer;
 		public override string GetDescription() {
-			var action = ClientInput.Singleton.FindActionInPlayerActionMap("Slide");
+			var action = ClientInput.Singleton.FindActionInMaps("Slide");
 			string localizedKey  = ControlInfoFactory.Singleton.GetBindingKeyLocalizedName(action);
 			return Localization.GetFormat("TUTORIAL_STEP6", localizedKey);
 		}

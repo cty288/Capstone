@@ -7,7 +7,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
 		private int counter = 0;
 		
 		public override string GetDescription() {
-			var action = ClientInput.Singleton.FindActionInPlayerActionMap("Jump");
+			var action = ClientInput.Singleton.FindActionInMaps("Jump");
 			string localizedKey  = ControlInfoFactory.Singleton.GetBindingKeyLocalizedName(action);
 			return Localization.GetFormat("TUTORIAL_STEP5", localizedKey);
 		}

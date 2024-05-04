@@ -56,7 +56,7 @@ public class WeaponHotBarslotViewController : ResourceSlotViewController {
 		}
 		
 		if(reloadHintText) {
-			InputAction act = ClientInput.Singleton.FindActionInPlayerActionMap("Reload");
+			InputAction act = ClientInput.Singleton.FindActionInMaps("Reload");
 			reloadHintText.text = ControlInfoFactory.Singleton.GetBindingKeyLocalizedName(act);
 		}
 	}

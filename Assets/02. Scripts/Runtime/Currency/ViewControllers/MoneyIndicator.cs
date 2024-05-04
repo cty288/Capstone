@@ -11,16 +11,18 @@ using UnityEngine;
 
 public class MoneyIndicator : AbstractMikroController<MainGame> {
 	private ILevelModel levelModel;
-	private TMP_Text currencyText;
+	//private TMP_Text currencyText;
 	private ICurrencyModel currencyModel;
 	
 	private float targetAmount;
 	private float displayAmount;
 
 	[SerializeField] private Color normalColor = Color.white;
+	[SerializeField] private TMP_Text currencyText;
+	[SerializeField] protected bool onlyDisplayText = false;
 	private void Awake() {
 		levelModel = this.GetModel<ILevelModel>();
-		currencyText = transform.Find("CurrencyText").GetComponent<TMP_Text>();
+		//currencyText = transform.Find("CurrencyText").GetComponent<TMP_Text>();
 		levelModel.CurrentLevelCount.RegisterWithInitValue(OnCurrentLevelCountChanged)
 			.UnRegisterWhenGameObjectDestroyed(gameObject);
 		currencyModel = this.GetModel<ICurrencyModel>();
@@ -36,8 +38,12 @@ public class MoneyIndicator : AbstractMikroController<MainGame> {
 	private void Update() {
 		if (Mathf.Abs(displayAmount - targetAmount) > 0.1f) {
 			displayAmount = Mathf.Lerp(displayAmount, targetAmount, Time.unscaledDeltaTime * 5f);
-			currencyText.text = $"<sprite index=6> " + Mathf.RoundToInt(displayAmount).ToString();
-            
+			currencyText.text = $"<sprite name=crystal> " + Mathf.RoundToInt(displayAmount).ToString();
+
+			if (onlyDisplayText) {
+				currencyText.text = Mathf.RoundToInt(displayAmount).ToString();
+			}
+			
 			if (displayAmount > targetAmount) {
 				currencyText.color = Color.Lerp(currencyText.color, Color.red, Time.unscaledDeltaTime * 5f);
 			}
@@ -52,12 +58,15 @@ public class MoneyIndicator : AbstractMikroController<MainGame> {
 
 
 	private void OnCurrentLevelCountChanged(int level) {
-		currencyText.gameObject.SetActive(level == 0);
+		transform.GetChild(0).gameObject.SetActive(level == 0);
 	}
 	
 	private void OnEnable() {
 		displayAmount = targetAmount;
-		currencyText.text =  $"<sprite index=6> " + Mathf.RoundToInt(displayAmount).ToString();
+		currencyText.text =  $"<sprite name=crystal> " + Mathf.RoundToInt(displayAmount).ToString();
+		if (onlyDisplayText) {
+			currencyText.text = Mathf.RoundToInt(displayAmount).ToString();
+		}
 		currencyText.color = normalColor;
 	}
 }

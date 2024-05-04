@@ -25,7 +25,7 @@ namespace Runtime.Controls {
                 foreach (var action in inputAction) {
                     InputAction act = ClientInput.Singleton.PlayerInput.currentActionMap[action.mainInputAction];
                     if (act.GetBindingIndex(ClientInput.Singleton.PlayerInput.currentControlScheme) < 0) {
-                        act = ClientInput.Singleton.FindActionInPlayerActionMap(action.fallbackInputAction);
+                        act = ClientInput.Singleton.FindActionInMaps(action.fallbackInputAction);
                     }
 
                     localizedText.AddParameter(ControlInfoFactory.Singleton.GetBindingKeyLocalizedName(act));
@@ -36,7 +36,7 @@ namespace Runtime.Controls {
                     InputAction act = ClientInput.Singleton.PlayerInput.currentActionMap[action.mainInputAction];
                     if (act.GetBindingIndex(ClientInput.Singleton.PlayerInput.currentControlScheme) < 0)
                     {
-                        act = ClientInput.Singleton.FindActionInPlayerActionMap(action.fallbackInputAction);
+                        act = ClientInput.Singleton.FindActionInMaps(action.fallbackInputAction);
                     }
 
                     localizedTextMesh.AddParameter(ControlInfoFactory.Singleton.GetBindingKeyLocalizedName(act));

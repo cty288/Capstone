@@ -16,6 +16,18 @@ public class HueValue: MonoBehaviour
     public int colorNumber = 1;
 
     public float hue = 0;
+    private Renderer _renderer;
+    private ParticleSystemRenderer _particleSystemRenderer;
+    private Light _light;
+    private ParticleSystem _particleSystem;
+
+    private void Start()
+    {
+        _renderer = transform.GetComponent<Renderer>();
+        _particleSystemRenderer = transform.GetComponent<ParticleSystemRenderer>();
+        _light = transform.GetComponent<Light>();
+        _particleSystem = transform.GetComponent<ParticleSystem>();
+    }
 
     void Update()
     {
@@ -23,8 +35,8 @@ public class HueValue: MonoBehaviour
         {
             for (int i = 0; i < colorNumber; i++)
             {
-                Color color = transform.GetComponent<Renderer>().material.GetColor("_Color"+(i+1));
-                transform.GetComponent<Renderer>().material.SetColor("_Color"+(i+1), Hue(color, hue));
+                Color color = _renderer.material.GetColor("_Color"+(i+1));
+                _renderer.material.SetColor("_Color"+(i+1), Hue(color, hue));
             }
         }
 
@@ -32,22 +44,22 @@ public class HueValue: MonoBehaviour
         {
             for (int i = 0; i < colorNumber; i++)
             {
-                Color color = transform.GetComponent<ParticleSystemRenderer>().trailMaterial.GetColor("_Color" + (i + 1));
-                transform.GetComponent<ParticleSystemRenderer>().trailMaterial.SetColor("_Color" + (i + 1), Hue(color, hue));
+                Color color = _particleSystemRenderer.trailMaterial.GetColor("_Color" + (i + 1));
+                _particleSystemRenderer.trailMaterial.SetColor("_Color" + (i + 1), Hue(color, hue));
             }
         }
 
         if (type == ColorType.Light)
         {
-            Color color = transform.GetComponent<Light>().color;
-            transform.GetComponent<Light>().color = Hue(color, hue);
+            Color color = _light.color;
+            _light.color = Hue(color, hue);
         }
         
         if (type == ColorType.ParticleColor)
         {
-            Color color = transform.GetComponent<ParticleSystem>().main.startColor.color;
+            Color color = _particleSystem.main.startColor.color;
 
-            ParticleSystem.MainModule m = transform.GetComponent<ParticleSystem>().main;
+            ParticleSystem.MainModule m = _particleSystem.main;
             m.startColor = Hue(color, hue);
         }
     }

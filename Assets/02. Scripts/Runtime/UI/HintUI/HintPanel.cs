@@ -57,7 +57,7 @@ public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPa
 		if(message.keyParameters != null && message.keyParameters.Length > 0) {
 			InputAction[] acts = new InputAction[message.keyParameters.Length];
 			for (int i = 0; i < message.keyParameters.Length; i++) {
-				acts[i] = ClientInput.Singleton.FindActionInPlayerActionMap(message.keyParameters[i]);
+				acts[i] = ClientInput.Singleton.FindActionInMaps(message.keyParameters[i]);
 			}
 			object[] localizedKeys = new object[message.keyParameters.Length];
 			for (int i = 0; i < message.keyParameters.Length; i++) {
