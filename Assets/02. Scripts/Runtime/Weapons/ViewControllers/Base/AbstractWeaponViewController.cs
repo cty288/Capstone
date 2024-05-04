@@ -324,7 +324,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         
         #region Shooting
         
-        protected void SetShootStatus(bool isShooting) {
+        protected virtual void SetShootStatus(bool isShooting) {
             if (isShooting) {
                 AudioSystem.Singleton.Play2DSound(shootSoundName, 1f);
                 this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Shoot", AnimationEventType.Trigger,0));
