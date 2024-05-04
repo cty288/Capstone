@@ -32,7 +32,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
 		}
 		
 		public override string GetDescription() {
-			var action = ClientInput.Singleton.FindActionInPlayerActionMap("Inventory");
+			var action = ClientInput.Singleton.FindActionInMaps("Inventory");
 			string localizedKey  = ControlInfoFactory.Singleton.GetBindingKeyLocalizedName(action);
 			return Localization.GetFormat("TUTORIAL_STEP14_TASK", localizedKey);
 		}

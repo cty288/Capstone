@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.Singletons;
@@ -34,6 +36,24 @@ namespace Runtime.Controls
             InputActionMap map = PlayerInput.currentActionMap;
             InputAction action = map.FindAction(name, false);
             return action;
+        }
+
+        public InputAction FindActionInMaps(string name) {
+            List<Func<string,InputAction>> funcs = new List<Func<string, InputAction>>()
+            {
+                FindActionInPlayerActionMap,
+                FindActionInUIActionMap,
+                FindActionInSharedActionMap
+            };
+            
+            foreach (var func in funcs) {
+                InputAction action = func(name);
+                if (action != null) {
+                    return action;
+                }
+            }
+
+            return null;
         }
 
         public InputAction FindActionInPlayerActionMap(string name) {

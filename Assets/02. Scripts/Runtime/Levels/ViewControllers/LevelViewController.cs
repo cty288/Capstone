@@ -313,7 +313,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 
 			ILevelEntity levelEnity = OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
 			if (displayedCoordinates != null && displayedCoordinates.Length >= 2) {
-				levelEnity.SetDisplayedCoordinates(displayedCoordinates[0], displayedCoordinates[1]);
+				if (displayedCoordinates.Length >= 4) {
+					levelEnity.SetDisplayedCoordinates(
+						(Random.Range(int.Parse(displayedCoordinates[0]), int.Parse(displayedCoordinates[1]) + 1))
+						.ToString(),
+						(Random.Range(int.Parse(displayedCoordinates[2]), int.Parse(displayedCoordinates[3]) + 1))
+						.ToString());
+				}
+				else {
+					levelEnity.SetDisplayedCoordinates(displayedCoordinates[0], displayedCoordinates[1]);
+				}
+				
 				levelEnity.DisplayNameLocalizedKey = diaplsyedNameLocalizedKey;
 			}
 			

@@ -23,7 +23,7 @@ public class BarrierWall : MonoBehaviour, ICanSendEvent {
             if(keyParameters != null && keyParameters.Length > 0) {
                 InputAction[] acts = new InputAction[keyParameters.Length];
                 for (int i = 0; i < keyParameters.Length; i++) {
-                    acts[i] = ClientInput.Singleton.FindActionInPlayerActionMap(keyParameters[i]);
+                    acts[i] = ClientInput.Singleton.FindActionInMaps(keyParameters[i]);
                 }
                 object[] localizedKeys = new object[keyParameters.Length];
                 for (int i = 0; i < keyParameters.Length; i++) {

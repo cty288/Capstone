@@ -23,7 +23,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
 		}
 
 		public override string GetDescription() {
-			var action = ClientInput.Singleton.FindActionInPlayerActionMap("Shoot");
+			var action = ClientInput.Singleton.FindActionInMaps("Shoot");
 			string localizedKey  = ControlInfoFactory.Singleton.GetBindingKeyLocalizedName(action);
 			return Localization.GetFormat("TUTORIAL_STEP9_TASK", localizedKey);
 		}
