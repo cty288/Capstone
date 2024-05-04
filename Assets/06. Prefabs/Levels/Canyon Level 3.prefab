@@ -45880,49 +45880,49 @@ MonoBehaviour:
         Costs:
           _serializedList:
           - Key: 1
-            Value: 10
-          - Key: 2
             Value: 20
+          - Key: 2
+            Value: 40
           - Key: 3
-            Value: 35
+            Value: 70
           - Key: 4
-            Value: 50
+            Value: 100
     - Key: 1
       Value:
         Costs:
           _serializedList:
           - Key: 1
-            Value: 15
+            Value: 20
           - Key: 2
-            Value: 25
+            Value: 40
           - Key: 3
-            Value: 35
+            Value: 70
           - Key: 4
-            Value: 50
+            Value: 100
     - Key: 2
       Value:
         Costs:
           _serializedList:
           - Key: 1
-            Value: 5
+            Value: 20
           - Key: 2
-            Value: 15
+            Value: 40
           - Key: 3
-            Value: 30
+            Value: 70
           - Key: 4
-            Value: 50
+            Value: 100
     - Key: 3
       Value:
         Costs:
           _serializedList:
           - Key: 1
-            Value: 5
-          - Key: 2
             Value: 20
+          - Key: 2
+            Value: 40
           - Key: 3
-            Value: 35
+            Value: 70
           - Key: 4
-            Value: 50
+            Value: 100
   pillarRewardsInfo:
     RewardsInfo:
       _serializedList:
@@ -46022,9 +46022,11 @@ MonoBehaviour:
   timeCurrencyLevel: 3
   spawnExitDoor: 1
   displayedCoordinates:
-  - 
-  - 
-  diaplsyedNameLocalizedKey: 
+  - 45
+  - 50
+  - 35
+  - 40
+  diaplsyedNameLocalizedKey: LEVEL_NAME_CANYON
   subAreaLevelPrefabs:
   - {fileID: 1834213726257962673}
   - {fileID: 8809766578698263469}
@@ -103562,6 +103564,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 171740945397884803, guid: 6b653df11b1c1db458df001de6c45e48,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 196561964600125270, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_Size.x
@@ -103595,17 +103602,37 @@ PrefabInstance:
     - target: {fileID: 648768645766482990, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 843653960079295428, guid: 6b653df11b1c1db458df001de6c45e48,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442256820272596368, guid: 6b653df11b1c1db458df001de6c45e48,
+        type: 3}
+      propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2547629783427841982, guid: 6b653df11b1c1db458df001de6c45e48,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2814719265491632951, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3035804142192433187, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3776470501066761155, guid: 6b653df11b1c1db458df001de6c45e48,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4078986691216956233, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
@@ -103640,7 +103667,7 @@ PrefabInstance:
     - target: {fileID: 6399156189735941618, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6684946928528408523, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
@@ -103675,7 +103702,7 @@ PrefabInstance:
     - target: {fileID: 8480485970265746457, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8480485970265746457, guid: 6b653df11b1c1db458df001de6c45e48,
         type: 3}
