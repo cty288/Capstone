@@ -5,6 +5,7 @@ using System.Numerics;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using DG.Tweening;
 using MikroFramework;
+using MikroFramework.Architecture;
 using MikroFramework.AudioKit;
 using MikroFramework.Pool;
 using Polyglot;
@@ -12,6 +13,7 @@ using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.Inventory.Model;
+using Runtime.Utilities.AnimatorSystem;
 using Runtime.Utilities.Collision;
 using Runtime.Weapons.Model.Base;
 using Runtime.Weapons.Model.Builders;
@@ -53,7 +55,10 @@ namespace Runtime.Weapons
 
         protected override ICustomProperty[] OnRegisterCustomProperties()
         {
-            return null;
+            return new[]
+            {
+                new AutoConfigCustomProperty("melee")
+            };
         }
 
 
@@ -70,10 +75,28 @@ namespace Runtime.Weapons
         private bool isReloadingBlade;
 
         private bool isMelee = false;
+        private float meleeCooldown;
+        private float lastMeleeTime;
+        private int meleeDamage;
+        
+        [SerializeField] private HitBox bladeHitbox;
+        private List<GameObject> hitObjects = new List<GameObject>();
         
         protected override void Awake() {
             base.Awake();
             bladePool = GameObjectPoolManager.Singleton.CreatePool(bladePrefab, 20, 50);
+        }
+
+        protected override void OnEntityStart()
+        {
+            base.OnEntityStart();
+            
+            bladeHitbox.HitResponder = this;
+            bladeHitbox.gameObject.SetActive(false);
+            
+            meleeCooldown = BoundEntity.GetCustomDataValue<float>("melee", "cooldown");
+            lastMeleeTime = -meleeCooldown;
+            meleeDamage = BoundEntity.GetCustomDataValue<int>("melee", "damage");
         }
 
         public override void OnStartHold(GameObject ownerGameObject)
@@ -88,6 +111,7 @@ namespace Runtime.Weapons
             }
             
             CheckReloadBlade();
+            bladeHitbox.StopCheckingHits();
         }
 
         public override void OnStopHold()
@@ -97,8 +121,8 @@ namespace Runtime.Weapons
             {
                 bladePool.Recycle(blade.gameObject);
             }
-            
             blades.Clear();
+            bladeHitbox.StopCheckingHits();
         }
 
         private void InitializeBlade()
@@ -110,6 +134,7 @@ namespace Runtime.Weapons
             blade.transform.SetParent(parent);
             blade.transform.localPosition = GetCurrentBladeLocalPos();
             blade.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            blade.hitBox.enabled = false;
             // blade.gameObject.SetActive(true);
             blades.Push(blade);
         }
@@ -138,13 +163,12 @@ namespace Runtime.Weapons
 
         public override void OnItemScopePressed()
         {
-            // TODO: use melee attack (need animation)
-            // check melee cooldown / avaliability
-            // start melee animation
-            // set melee cooldown
-                // turn on collider using animation events
-                // turn off collider using animation events
-                // toggle melee attack finished
+            if (lastMeleeTime + meleeCooldown < Time.time)
+            {
+                lastMeleeTime = Time.time;
+                this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("Strike", AnimationEventType.Trigger,2));
+                animator.SetTrigger("Shoot");
+            }
         }
         
         public override void OnItemUse() {}
@@ -161,9 +185,63 @@ namespace Runtime.Weapons
                 }
             }
         }
+        
+        protected override void OnAnimationEvent(string eventName)
+        {
+            switch (eventName)
+            {
+                case "ReloadStart":
+                    OnReloadAnimationStart();
+                    break;
+                case "ReloadEnd":
+                    OnReloadAnimationEnd();
+                    break;
+                case "MeleeStart":
+                    BladeStartCheckHit();
+                    break;
+                case "MeleeEnd":
+                    BladeStopCheckHit();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BladeStartCheckHit()
+        {
+            print("BLADES: start");
+            hitObjects.Clear();
+            isMelee = true;
+            
+            // set to main camera game object
+            bladeHitbox.gameObject.transform.parent = mainCamera.gameObject.transform;
+            // set rotation and transform to 0 (set transform z to 0.8)
+            bladeHitbox.gameObject.transform.localPosition = new Vector3(0, 0, 0.8f);
+            bladeHitbox.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            // set active
+            bladeHitbox.gameObject.SetActive(true);
+            
+            bladeHitbox.StartCheckingHits(meleeDamage);
+        }
+        
+        private void BladeStopCheckHit()
+        {
+            print("BLADES: end");
+            isMelee = false;
+            // set to game object
+            bladeHitbox.gameObject.transform.parent = gameObject.transform;
+            // set rotation and transform to 0 
+            bladeHitbox.gameObject.transform.localPosition = Vector3.zero;
+            bladeHitbox.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            
+            bladeHitbox.StopCheckingHits();
+            bladeHitbox.gameObject.SetActive(false);
+
+        }
 
         protected override void WeaponUpdate() {}
-
+        
+        
         protected override void Shoot()
         {
             Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
@@ -174,6 +252,7 @@ namespace Runtime.Weapons
                 gameObject, this, BoundEntity.GetRange().BaseValue, true);
             
             blade.Launch(shootDir, BoundEntity.GetBulletSpeed().RealValue);
+            blade.hitBox.enabled = true;
             BoundEntity.CurrentAmmo.Value--;
             CheckReloadBlade();
         }
@@ -199,12 +278,14 @@ namespace Runtime.Weapons
             CheckReloadBlade();
         }
         
-        public override bool CheckHit(HitData data)
-        {
-            return data.Hurtbox.Owner != gameObject;
+        public override bool CheckHit(HitData data) {
+            if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == ownerGameObject) { return false; } 
+            if (hitObjects.Contains(data.Hurtbox.Owner)) { return false; }
+            return true;
         }
         
         public override void HitResponse(HitData data) {
+            hitObjects.Add(data.Hurtbox.Owner);
         }
     }
 }

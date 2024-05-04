@@ -28,7 +28,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.Vira
 		}
 
 		public override int GetMaxRarity() {
-			return 1;
+			return 2;
 		}
 		
 		

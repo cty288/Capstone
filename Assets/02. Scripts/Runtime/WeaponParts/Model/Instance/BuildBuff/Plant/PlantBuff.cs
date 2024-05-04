@@ -78,9 +78,6 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 			bulletOutVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("ViralOut", null, 3, 10, out GameObject prefab2);
 			bulletHitVFXPool = GameObjectPoolManager.Singleton.CreatePoolFromAB("ViralExplode", null, 3, 10, out GameObject prefab1);
 			
-			var vc = weaponEntity.GetBoundViewController();
-			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
-			
 			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
 		}
 
@@ -220,8 +217,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.PlantBuff {
 		}
 
 		public override void OnStart() {
-			
+			var vc = weaponEntity.GetBoundViewController();
+			AllocateBuffVFX(vc as IWeaponVFX, vc as IHitScanWeaponVFX);
 		}
+
+		private bool _hasBuffActive = false;
 
 		public override BuffStatus OnTick() {
 			return BuffStatus.Running;

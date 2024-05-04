@@ -66,7 +66,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
                 end = hit.position;
             }
             
-            Debug.Log("Worm Boss: Arc not undergound");
             enemyEntity.isUnderground = false;
 
             // Calculate the speed based on the duration
@@ -93,7 +92,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             // Check if the movement has reached the end
             if (progress >= 1f && !startEnd)
             {
-                Debug.Log("Worm Boss: Arc go undergound");
                 startEnd = true;
                 enemyEntity.isUnderground = true;
                 enemyEntity.lastDivePosition = end;

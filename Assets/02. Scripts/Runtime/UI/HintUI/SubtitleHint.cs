@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,14 +7,17 @@ using UnityEngine.UI;
 
 public class SubtitleHint : HintPanel {
 	[SerializeField] private TMP_Text subtitleText;
+	
+
 	protected override void OnTerminateCurrentMessageGroup(bool isLastMessage) {
 		
 	}
 
 	protected override void OnShowMessage() {
 		HintMessage message = currentMessageGroup.messages[currentMessageIndex];
-		subtitleText.text = message.message;
+		subtitleText.text = GetLocalizedText(message);
 		float duration = message.duration;
+		
 		StartCoroutine(SubtitleWait(duration));
 		StartCoroutine(RebuildLayout());
 	}
@@ -32,4 +36,6 @@ public class SubtitleHint : HintPanel {
 		}
 		ShowNextMessage();
 	}
+
+	
 }

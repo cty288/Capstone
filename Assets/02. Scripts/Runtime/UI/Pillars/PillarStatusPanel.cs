@@ -28,8 +28,8 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 	[SerializeField]
 	private GameObject pillarStatusElementPrefab;
 
-	[SerializedDictionary("CurrencyType", "Color")] [SerializeField]
-	private SerializedDictionary<CurrencyType, Color> currencyColors;
+	[SerializedDictionary("CurrencyType", "Sprite")] [SerializeField]
+	private SerializedDictionary<CurrencyType, Sprite> currencySprites;
 	
 	[SerializeField]
 	private Image skullImage;
@@ -74,7 +74,7 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 		
 		foreach (var info in e.Info) {
 			spawnedPillarStatusElements[info.Key].SetProgress(info.Value.level, info.Value.pillarCurrencyType,
-				currencyColors[info.Value.pillarCurrencyType], info.Value.currencyPercentage);
+				currencySprites[info.Value.pillarCurrencyType], info.Value.currencyPercentage);
 		}
 
 
@@ -123,7 +123,7 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 
 				pillarStatusElement.GetComponent<PillarStatusElement>().SetProgress(info.Value.level,
 					info.Value.pillarCurrencyType,
-					currencyColors[info.Value.pillarCurrencyType], info.Value.currencyPercentage);
+					currencySprites[info.Value.pillarCurrencyType], info.Value.currencyPercentage);
 
 				spawnedPillarStatusElements.Add(info.Key,
 					pillarStatusElement.GetComponent<PillarStatusElement>());

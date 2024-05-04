@@ -392,7 +392,7 @@ namespace Runtime.Player.ViewControllers
             cameraPitch -= mouseDelta.y * sensitivity;
             cameraPitch = Mathf.Clamp(cameraPitch, fpsBotClamp, fpsTopClamp);
             camHolder.localEulerAngles = Vector3.right * cameraPitch;
-            transform.Rotate(Vector3.up * mouseDelta.x * sensitivity);
+            transform.Rotate(Vector3.up * (mouseDelta.x * sensitivity));
             
             if (state == MovementState.walking)
             {
@@ -414,11 +414,15 @@ namespace Runtime.Player.ViewControllers
             {
                 if (currentFOV != slidingFOV && !playerEntity.IsScopedIn())
                 {
+                    print($"player sliding: set fov ${slidingFOV}");
                     SetFOV(slidingFOV);
                 }
-                
-                if(fpsCamera.fieldOfView != fpsFOV - 10)
+
+                if (fpsCamera.fieldOfView != fpsFOV - 10)
+                {
+                    print($"player sliding: do fov ${fpsFOV - 10}");
                     fpsCamera.DOFieldOfView(fpsFOV - 5, 0.1f);
+                }
 
                 ChangeBobVars(0,0);
             }
@@ -509,7 +513,8 @@ namespace Runtime.Player.ViewControllers
             IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
             if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
             {
-                SetFOV(e.isScopedIn ? heldEntity.GetProperty<IAdsFOV>().RealValue : currentFOV);
+                float adsFOV = e.isScopedIn ? heldEntity.GetProperty<IAdsFOV>().RealValue : defaultFOV;
+                SetFOV(adsFOV);
             }
         }
 
@@ -560,7 +565,6 @@ namespace Runtime.Player.ViewControllers
             //while sprinting
             if (sprinting)
             {
-                //TODO: if ads, stop sprinting
                 IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
                 if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
                 {
@@ -606,6 +610,19 @@ namespace Runtime.Player.ViewControllers
                 slideTimer = playerEntity.GetMaxSlideTime().RealValue;
             }
 
+            if (sliding)
+            {
+                // cancel slide if ads
+                IResourceEntity heldEntity = inventorySystem.GetCurrentlySelectedEntity();
+                if (heldEntity != null && heldEntity.GetResourceCategory() == ResourceCategory.Weapon)
+                {
+                    if (playerActions.Scope.WasPressedThisFrame())
+                    {
+                        sliding = false;
+                    }
+                }
+            }
+            
             if (playerActions.Slide.WasReleasedThisFrame() && sliding)
             {
                 sliding = false;

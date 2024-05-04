@@ -3,7 +3,7 @@ using Polyglot;
 using Runtime.Utilities;
 
 namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
-	public class LevelExplorationCondition : LevelExitCondition {
+	public class LevelExplorationCondition : PlayerTask {
 		
 		[field: ES3Serializable]
 		public float TotalValue { get; protected set; }
@@ -37,6 +37,10 @@ namespace _02._Scripts.Runtime.Levels.Models.LevelPassCondition {
 
 		public override bool IsSatisfied() {
 			return  CurrentValue >= TotalValue;
+		}
+
+		public override void OnFinish() {
+			
 		}
 	}
 }

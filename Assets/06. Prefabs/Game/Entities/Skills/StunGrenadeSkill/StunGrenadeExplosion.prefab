@@ -39115,6 +39115,7 @@ MonoBehaviour:
     m_Bits: 128
   maxDistance: 100
   detectTime: 1
+  checkCollidersOnly: 0
 --- !u!114 &6199482402503642732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39127,6 +39128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371e3b2bd345e2948944dd2a99f67d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!114 &6757989867100758609
 MonoBehaviour:
@@ -39147,6 +39149,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
+  explosionDetectTime: 1
   autoRecycleTime: 2
 --- !u!1 &6328738552747578892
 GameObject:

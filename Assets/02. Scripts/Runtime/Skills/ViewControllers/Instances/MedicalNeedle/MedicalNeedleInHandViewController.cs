@@ -57,13 +57,26 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 		}
 
 		public override void OnItemStopUse() {
+			// if (usedBefore) {
+			// 	return;
+			// }
+			//
+			// Debug.Log("Medical Needle ItemStopUse");
+			// usedBefore = true;
+			// this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ItemUse", AnimationEventType.Trigger, 0));
+		}
+
+		public override void OnStartHold(GameObject ownerGameObject)
+		{
+			base.OnStartHold(ownerGameObject);
 			if (usedBefore) {
 				return;
 			}
 
-			Debug.Log("Medical Needle ItemStopUse");
+			Debug.Log("Medical Needle start hold");
 			usedBefore = true;
 			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("ItemUse", AnimationEventType.Trigger, 0));
+
 		}
 
 		public override void OnItemUse() {

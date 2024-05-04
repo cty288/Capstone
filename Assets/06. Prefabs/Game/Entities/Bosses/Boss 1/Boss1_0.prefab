@@ -515,6 +515,7 @@ MonoBehaviour:
     m_Bits: 0
   maxDistance: 100
   detectTime: 1
+  checkCollidersOnly: 0
 --- !u!114 &5785136736150145293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,6 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!1 &5889875120581412018
 GameObject:
@@ -867,6 +869,8 @@ MonoBehaviour:
   randomizeNavMeshPriority: 1
   autoRemoveEntityWhenDie: 1
   <SpawnSizeCollider>k__BackingField: {fileID: 3112747908375348324}
+  weaponPartsDropChance: 1
+  weaponPartsDropCountRange: {x: 1, y: 2}
   healthBarPrefabName: UIHealthBar
   animator: {fileID: 8721195750811281289}
   agent: {fileID: 8103186103428055003}
@@ -1869,6 +1873,7 @@ MonoBehaviour:
     m_Bits: 0
   maxDistance: 100
   detectTime: 1
+  checkCollidersOnly: 0
 --- !u!114 &7778785521151382937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1881,6 +1886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!4 &4947887984219518074 stripped
 Transform:

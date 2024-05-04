@@ -8,7 +8,9 @@ using UnityEngine;
 namespace _02._Scripts.Runtime.Rewards {
 	public enum RewardType {
 		Resource,
-		WeaponParts_ChooseOne
+		WeaponParts_ChooseOne,
+		Tutorial_WeaponParts,
+		Random_WeaponParts
 	}
 
 	[Serializable]
@@ -16,6 +18,12 @@ namespace _02._Scripts.Runtime.Rewards {
 		public RewardType RewardType;
 		public SerializedDictionary<int, int> PossibleLevelWithWeights;
 		public Vector2Int AmountRange;
+
+		public RewardBatch(RewardType rewardType, Dictionary<int,int> possibleLevelWithWeights, Vector2Int amountRange) {
+			RewardType = rewardType;
+			PossibleLevelWithWeights = new SerializedDictionary<int, int>(possibleLevelWithWeights);
+			AmountRange = amountRange;
+		}
 		
 		public int PickLevel() {
 			if (PossibleLevelWithWeights.Count == 0) {

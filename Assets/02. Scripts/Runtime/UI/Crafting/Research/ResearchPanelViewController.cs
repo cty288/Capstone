@@ -35,6 +35,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 	[SerializeField] private  TMP_Text counterRemainingDaysText;
 	[SerializeField] private Image researchingFillBar;
 	[SerializeField] private GameObject noResourceHint;
+	[SerializeField] private GameObject resourceNotEnoughHint;
 	
  	private ResearchLevelInfo[] researchResults;
 	
@@ -217,7 +218,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		costPanel.SetActive(false);
 		noResourceSelectedHint.SetActive(false);
 		noResourceHint.SetActive(false);
-
+		resourceNotEnoughHint.gameObject.SetActive(false);
 		noResourceHint.SetActive(ownedSlotLayoutViewController.IsAllEmpty());
 		
 		if (selectedSlotLayoutViewController.IsAllEmpty()) {
@@ -239,7 +240,7 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 
 		bool moneyEnough = currencyModel.Money >= totalCost;
 		string color = moneyEnough ? "green" : "#FF4400";
-		costText.text = $"<color={color}>{totalCost}<sprite index=6></color>";
+		costText.text = $"<color={color}><sprite name=crystal> {totalCost}</color>";
 		daysText.text = Localization.GetFormat("RESEARCH_DAYS", researchDays, researchDays > 1 ? "s" : "");
 
 		int potentialRewardCount = 0;
@@ -265,6 +266,8 @@ public class ResearchPanelViewController : SwitchableSubPanel {
 		}
 
 		researchButton.interactable = moneyEnough;
+		researchButton.gameObject.SetActive(moneyEnough);
+		resourceNotEnoughHint.gameObject.SetActive(!moneyEnough);
 
 	}
 

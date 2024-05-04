@@ -188,6 +188,9 @@ namespace _02._Scripts.Runtime.TimeSystem
 
         private void OnSandStormWarning(OnSandStormWarning e)
         {
+            if (e.IsTutorialWarning) {
+                return;
+            }
             //_extraFactor = sandstormFogFactor;
             sandstormCountDown = e.RemainingMinutes;
             _firstSandstormTick = _dayTime;

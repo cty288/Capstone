@@ -57,7 +57,6 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             
             _bodyJoint = _spine.SpineBones[bodyJointIndex];
             _neckJoint = _spine.SpineBones[neckJointIndex];
-            Debug.Log($"WORM BOSS: awake {_bodyJoint} at {bodyJointIndex}");
             
             supportSphere = neckSupportSphere.Value.transform;
             supportPlatform = bodySupportPlatform.Value.transform;

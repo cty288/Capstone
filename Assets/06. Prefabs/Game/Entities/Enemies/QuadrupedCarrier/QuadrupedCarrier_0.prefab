@@ -1973,7 +1973,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4365253178528624396}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.81, y: 1.69, z: 1.8}
@@ -2136,10 +2136,11 @@ MonoBehaviour:
   autoRecycleTimeAfterFarAwayFromPlayer: 10
   autoRecycleDistanceFromPlayer: 150
   autoRecycleCheckTimeInterval: 5
-  eliteColor: {r: 63.999992, g: 18.209091, b: 0, a: 1}
-  eliteFresnel: 0.57
-  eliteCutIn: 0.289
-  eliteCutOut: 0.544
+  spawnVFX: {fileID: 7643763157619843150}
+  eliteColor: {r: 0, g: 0, b: 0, a: 0}
+  eliteFresnel: 0
+  eliteCutIn: 0
+  eliteCutOut: 0
   eliteScaleMultiplier: 1.5
   deathEffect: {fileID: 5619386021293234911, guid: 68aa25e3ce319d744a71708f1dc4d4fd,
     type: 3}
@@ -4382,6 +4383,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08716eaa79bc32545a37cd2c48154503, type: 3}
+--- !u!1 &7643763157619843150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1139077376442928571, guid: 08716eaa79bc32545a37cd2c48154503,
+    type: 3}
+  m_PrefabInstance: {fileID: 7339401474502733301}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7643763157619843187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1139077376442928518, guid: 08716eaa79bc32545a37cd2c48154503,

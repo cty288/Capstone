@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Skills.Model.Properties;
+using _02._Scripts.Runtime.Utilities;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using Polyglot;
@@ -52,10 +53,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public Dictionary<CurrencyType, int> GetSkillUpgradeCostOfLevel(int level);
 
 		public int GetLevel();
-
 		
-
-
 		void Upgrade(int level);
 		
 		public void RegisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback);
@@ -63,10 +61,18 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 		public void UnregisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback);
 
 		public void OnGetSystems();
+		
+		public ReferenceCounter AdditionalSkillSwitchLocker { get; }
 	}
 
 	public struct OnSkillUsed {
 		public ISkillEntity skillEntity;
+	}
+
+	public struct OnSkillUpgrade {
+		public ISkillEntity SkillEntity;
+		public int PreviousLevel;
+		public int CurrentLevel;
 	}
 	public abstract class SkillEntity<T>:  BuildableResourceEntity<T>, ISkillEntity,
 		ICanGetSystem where T : SkillEntity<T>, new() {
@@ -156,6 +162,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			_onDealDamageCallback = null;
 			_onKillDamageableCallback = null;
 			isInHotBarSlot = false;
+			AdditionalSkillSwitchLocker.Clear();
 		}
 
 		public override string OnGroundVCPrefabName { get; } = null;
@@ -300,6 +307,11 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			GetProperty<IRarityProperty>().RealValue.Value = level;
 			OnUpgrade(previousLevel, level);
 			onSkillUpgradeCallback?.Invoke(this, previousLevel, level);
+			this.SendEvent<OnSkillUpgrade>(new OnSkillUpgrade() {
+				SkillEntity = this,
+				PreviousLevel = previousLevel,
+				CurrentLevel = level
+			});
 		}
 
 		public void RegisterOnSkillUpgrade(Action<ISkillEntity, int, int> callback) {
@@ -314,13 +326,16 @@ namespace _02._Scripts.Runtime.Skills.Model.Base {
 			
 		}
 
+		[field: ES3Serializable]
+		public ReferenceCounter AdditionalSkillSwitchLocker { get; } = new ReferenceCounter();
+
 		protected abstract void OnUpgrade(int previousLevel, int level);
 
 
 		public Func<Dictionary<CurrencyType, int>, bool> CanInventorySwitchToCondition => GetInventorySwitchCondition;
 
 		protected virtual bool GetInventorySwitchCondition(Dictionary<CurrencyType, int> currency) {
-			if(remainingCooldown > 0) {
+			if(remainingCooldown > 0 || AdditionalSkillSwitchLocker.Count > 0) {
 				return false;
 			}
 

@@ -53,7 +53,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		public void OnExitLevel();
 
 		public ISubAreaLevelEntity GetCurrentActiveSubAreaEntity();
-		
+
 		HashSet<GameObject> Enemies { get; }
 	}
 
@@ -137,7 +137,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	[RequireComponent(typeof(NavMeshSurface))]
 	public abstract class LevelViewController<T> : AbstractBasicEntityViewController<T>, ILevelViewController
 		where  T : class, ILevelEntity, new() {
-
+		[SerializeField] private HintMessageGroup[] conditionalDialogueGroups;
+		private int currentConditionalDialogueIndex = -1;
+		
+		
 		[Header("Player")] 
 		[SerializeField] protected List<Transform> playerSpawnPoints = new List<Transform>();
 		
@@ -246,7 +249,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 	
 		
 		protected abstract IEntity OnInitLevelEntity(LevelBuilder<T> builder, int levelNumber);
-
+		public void NextConditionalDialogue() {
+			currentConditionalDialogueIndex++;
+			if (currentConditionalDialogueIndex >= conditionalDialogueGroups.Length) {
+				return;
+			}
+			HintManager.Singleton.ShowHint(conditionalDialogueGroups[currentConditionalDialogueIndex]);
+		}
 		public int GetLevelNumber() {
 			return levelNumber;
 		}
@@ -303,8 +312,21 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				//.SetProperty(new PropertyNameInfo(PropertyName.sub_area_levels), CreateSubAreaLevels());
 
 			ILevelEntity levelEnity = OnInitLevelEntity(builder, levelNumber) as ILevelEntity;
-			levelEnity.SetDisplayedCoordinates(displayedCoordinates[0], displayedCoordinates[1]);
-			levelEnity.DisplayNameLocalizedKey = diaplsyedNameLocalizedKey;
+			if (displayedCoordinates != null && displayedCoordinates.Length >= 2) {
+				if (displayedCoordinates.Length >= 4) {
+					levelEnity.SetDisplayedCoordinates(
+						(Random.Range(int.Parse(displayedCoordinates[0]), int.Parse(displayedCoordinates[1]) + 1))
+						.ToString(),
+						(Random.Range(int.Parse(displayedCoordinates[2]), int.Parse(displayedCoordinates[3]) + 1))
+						.ToString());
+				}
+				else {
+					levelEnity.SetDisplayedCoordinates(displayedCoordinates[0], displayedCoordinates[1]);
+				}
+				
+				levelEnity.DisplayNameLocalizedKey = diaplsyedNameLocalizedKey;
+			}
+			
 			return levelEnity;
 		}
 		
@@ -343,7 +365,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			
 			subAreaLevels = CreateSubAreaLevels();
-			if (autoCreateNewEntityWhenStart) {
+			if (autoCreateNewEntityWhenStart && autoUpdateNavMeshOnStart) {
 				UpdateNavMesh();
 			}
 			foreach (var subarea in subAreaLevels) {
@@ -351,7 +373,6 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 			
 			UpdatePreExistingEnemies();
-			OnSpawnPlayer();
 			if (ambientMusic) {
 				 ambientMusicSource = AudioSystem.Singleton.Play2DSound(ambientMusic, relativeVolume, true);
 			}
@@ -365,6 +386,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (spawnExitDoor) {
 				await SpawnLevelExitDoor();
 			}
+			OnSpawnPlayer();
 			
 			SpawnPillars();
 			UpdatePreExistingDirectors();
@@ -372,16 +394,27 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			
 			StartCoroutine(UpdateLevelSystemTime());
 			
-			this.Delay(5f, () => {
+			/*this.Delay(5f, () => {
 				LoadingCanvas.Singleton.Hide();
+				this.Delay(1f, OnLoadingScreenHide);
+			});*/
+			StartCoroutine(BlackScreenAnim());
 
-			});
-			
 			//this.GetModel<IGamePlayerModel>().GetPlayer().Armor.RegisterOnValueChanged()
 		}
 
-		private async UniTask SpawnLevelExitDoor() {
+		private IEnumerator BlackScreenAnim() {
+			yield return new WaitForSecondsRealtime(5f);
+			LoadingCanvas.Singleton.Hide();
+			yield return new WaitForSecondsRealtime(1f);
+			OnLoadingScreenHide();
+		}
+		
+		protected virtual void OnLoadingScreenHide() {
+			this.SendCommand<LoadingScreenHideCommand>(LoadingScreenHideCommand.Allocate());
+		}
 
+		private async UniTask SpawnLevelExitDoor() {
 			if (exitDoor) {
 				return;
 			}
@@ -438,7 +471,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			}
 		}
 
-		private  void  SpawnPillars() {
+		protected virtual void  SpawnPillars() {
 			IPillarModel pillarModel = this.GetModel<IPillarModel>();
 			if (!hasPillars) {
 				return;
@@ -566,8 +599,19 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				throw new Exception("No player spawn points found for level {gameObject.name}");
 				return;
 			}
+
+			Transform spawnTransform;
+			if (exitDoor && exitDoor.TryGetComponent<LevelExitDoorController>(out var doorController))
+			{
+				spawnTransform = doorController.playerSpawnPoint;
+			}
+			else
+			{
+				spawnTransform = playerSpawnPoints.GetRandomElement();
+			}
+			
 			this.SendCommand<TeleportPlayerCommand>(
-				TeleportPlayerCommand.Allocate(playerSpawnPoints.GetRandomElement().position));
+				TeleportPlayerCommand.Allocate(spawnTransform));
 
 			if (playerSpawner) {
 				HashSet<PlayerController> players = PlayerController.GetAllPlayers();

@@ -31,8 +31,12 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 
 		public void OnSpawnInWorld();
 	}
+
+	public struct OnCollectableResourceDestroyed {
+		
+	}
 	public abstract class CollectableResourceViewController<T> : AbstractBasicEntityViewController<T>
-		, ICollectableResourceViewController, IHurtResponder where T : class, IHaveCustomProperties, IHaveTags, ICollectableEntity, new() {
+		, ICollectableResourceViewController, IHurtResponder, ICanSendEvent where T : class, IHaveCustomProperties, IHaveTags, ICollectableEntity, new() {
 		protected override bool CanAutoRemoveEntityWhenLevelEnd => true;
 		protected ICommonEntityModel commonEntityModel;
 
@@ -140,7 +144,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			
 		}*/
 
-		private void GenerateResources() {
+		protected virtual void GenerateResources() {
 			ItemDropCollection itemDropCollection = BoundEntity.GetItemDropCollection();
 			
 			if (itemDropCollection.ItemDropInfos == null) {
@@ -271,6 +275,7 @@ namespace _02._Scripts.Runtime.CollectableResources.ViewControllers.Base {
 			
 			if(spawnedTimeAfter == realTotalShootTime) {
 				GenerateResources();
+				this.SendEvent<OnCollectableResourceDestroyed>();
 				commonEntityModel.RemoveEntity(BoundEntity.UUID);
 			}
 			

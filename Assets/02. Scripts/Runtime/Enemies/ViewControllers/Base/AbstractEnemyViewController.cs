@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Rewards;
+using Cysharp.Threading.Tasks;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
@@ -14,10 +17,12 @@ using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Enemies.Model;
 using Runtime.Enemies.Model.Builders;
 using Runtime.Enemies.Model.Properties;
+using Runtime.Temporary;
 using Runtime.Utilities.AnimationEvents;
 using Runtime.Utilities.Collision;
 using UnityEngine;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Enemies.ViewControllers.Base {
 	[RequireComponent(typeof(AnimationSMBManager))]
@@ -25,8 +30,6 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		where T : class, IEnemyEntity, new() {
 		IEnemyEntity IEnemyViewController.EnemyEntity => BoundEntity;
 		
-
-
 		public int Danger {  get; }
 	
 		public int MaxHealth { get; }
@@ -47,6 +50,13 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 
+
+		[Header("(Temporary) Weapon Parts Drops")] [SerializeField]
+		private float weaponPartsDropChance = 0.1f;
+		[SerializeField]
+		private Vector2Int weaponPartsDropCountRange = new Vector2Int(1, 1);
+		
+		
 		protected override void Awake() {
 			base.Awake();
 			
@@ -105,7 +115,70 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			// Debug.Log("CurrentHealth changed from " + oldValue + " to " + newValue);
 		}
 
-	
+
+		protected override void OnEntityDie(ICanDealDamage damagedealer) {
+			base.OnEntityDie(damagedealer);
+
+			SpawnWeaponParts(damagedealer);
+		}
+
+		protected async UniTask SpawnWeaponParts(ICanDealDamage damagedealer) {
+			if (damagedealer == null || !damagedealer.GetRootDamageDealer().IsSameFaction(BoundEntity)) {
+				bool spawnWeaponParts = UnityEngine.Random.value < weaponPartsDropChance;
+
+				if (!spawnWeaponParts) {
+					return;
+				}
+				int minLevel = Mathf.Max(levelModel.CurrentLevelCount.Value, 1);
+				int maxLevel = Mathf.Min(levelModel.CurrentLevelCount.Value + 1, LevelModel.MAX_LEVEL);
+				RewardBatch batch = default;
+				if (minLevel != maxLevel) {
+					batch = new RewardBatch(RewardType.Random_WeaponParts,
+						new Dictionary<int, int>() {
+							{minLevel, weaponPartsDropCountRange.x},
+							{maxLevel, weaponPartsDropCountRange.y}
+						}, weaponPartsDropCountRange);
+
+				}
+				else {
+					batch = new RewardBatch(RewardType.Random_WeaponParts,
+						new Dictionary<int, int>() {
+							{minLevel, weaponPartsDropCountRange.x}
+						}, weaponPartsDropCountRange);
+				}
+
+				
+				
+
+
+				List<GameObject> spawnedResources = await RewardDisperser.Singleton.DisperseRewards(
+					new List<RewardBatch>() {batch}, null, CurrencyType.Time);
+
+
+				Transform spawnTr = gameObject.transform;
+				Vector3 spawnPos = spawnTr.position;
+				
+				if(Physics.Raycast(spawnTr.position, spawnTr.forward, out RaycastHit hit, 10,
+					   LayerMask.GetMask("Ground", "Default", "Wall"))) {
+
+					spawnPos = hit.point;
+				}
+
+				foreach (var resource in spawnedResources) {
+					resource.transform.position = spawnPos;
+					resource.transform.rotation = Quaternion.identity;
+					Rigidbody rb = resource.GetComponent<Rigidbody>();
+					if (rb) {
+						//45 degree upword, random direction
+						//rb.AddForce(Quaternion.Euler(45, Random.Range(0, 360), 0) * Vector3.up * 5, ForceMode.Impulse);
+					}
+				}
+			}
+			
+			
+
+		}
+
 
 		protected override void OnReadyToRecycle() {
 			base.OnReadyToRecycle();

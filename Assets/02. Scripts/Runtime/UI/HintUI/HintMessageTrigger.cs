@@ -6,20 +6,22 @@ using UnityEngine;
 public class HintMessageTrigger : MonoBehaviour {
    [SerializeField] private HintMessageGroup[] messageGroup;
    [SerializeField] private bool canTriggerMultipleTimes = false;
-   
-   
+
+   private Collider collider;
    private int currentMessageGroupIndex = 0;
    private bool hasTriggered = false;
 
    private void Awake() {
       HintManager.Singleton.RegisterOnPanelClose(OnPanelClose);
+      collider = GetComponent<Collider>();
    }
 
    private void OnPanelClose(HintPanel panel) {
       if (panel == null) {
          return;
       }
-      if (panel.CurrentMessageGroup == messageGroup[currentMessageGroupIndex]) {
+      
+      if (currentMessageGroupIndex < messageGroup?.Length && panel.CurrentMessageGroup == messageGroup[currentMessageGroupIndex]) {
          currentMessageGroupIndex++;
          if (currentMessageGroupIndex < messageGroup.Length) {
             HintManager.Singleton.ShowHint(messageGroup[currentMessageGroupIndex]);
@@ -32,6 +34,9 @@ public class HintMessageTrigger : MonoBehaviour {
    }
 
    private void OnTriggerEnter(Collider other) {
+      if (!collider.enabled) {
+         return;
+      }
       if (!other.gameObject.CompareTag("Player")) {
          return;
       }

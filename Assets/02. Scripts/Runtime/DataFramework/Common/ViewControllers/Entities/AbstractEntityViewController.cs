@@ -472,11 +472,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			//Vector3.Lerp(hudInfo.realSpawnPositionOffset.PositionOffset, hudInfo.targetPos, 3 * Time.fixedDeltaTime);
 		}
 		
-		protected virtual void FixedUpdate() {
-			//if (true) {
-			
-			//}
-		}
+		protected virtual void FixedUpdate() { }
 
 		private void ReadyToRecycle() {
 			if (!this) {

@@ -17,6 +17,7 @@ using MikroFramework.Event;
 using MikroFramework.UIKit;
 using Polyglot;
 using Runtime.Controls;
+using Runtime.Spawning;
 using Runtime.Spawning.Commands;
 using Runtime.Temporary;
 using Runtime.UI;
@@ -30,6 +31,8 @@ using Random = UnityEngine.Random;
 
 public interface IGameUIPanel {
 	public IPanel GetClosePanel();
+
+	public bool CanCloseByEscButton => true;
 }
 public class PillarUIViewController : AbstractPanelContainer, IController, IGameUIPanel {
 	private OnOpenPillarUI data;
@@ -143,7 +146,7 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 
 		//level = levelModel.
 		this.SendCommand(ActivatePillarCommand.Allocate(data.pillar, currentSelectedCurrencyType,
-			currentSelectedCurrency, level));
+			currentSelectedCurrency, level, data.IsTutorialPillar));
 
 		MainUI.Singleton.GetAndClose(this);
 	}
@@ -188,8 +191,17 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 		//MainUI.Singleton.OpenOrGetClose<PillarUIViewController>(MainUI.Singleton, null);
 	}
 	public void SelectCurrency(int currency) {
+		//addCurrencyButton.gameObject.SetActive(false);
+		//minusCurrencyButton.gameObject.SetActive(false);
+		
+		//if less than the min of current selected energy, set to min
+		RewardCostInfo rewardCostInfo = data.pillar.RewardCost[currentSelectedCurrencyType];
+		int lowestCost = rewardCostInfo.GetCostOfLevel(1);
+		currency = Mathf.Max(currency, lowestCost);
+		 
+		confirmButton.gameObject.SetActive(false);
 		if (currency < 0) {
-			currency = 0;
+			currency = lowestCost;
 		}else if (currency > maxCurrencyPossible) {
 			currency = maxCurrencyPossible;
 		}
@@ -203,8 +215,13 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 		float ratio = (float) currency / maxCurrencyPossible;
 		currencySlider.value = ratio;
 
-		
-		bool isEnough = currencyModel.GetCurrencyAmountProperty(currencyType) >= currency;
+
+		int ownedCurrency = currencyModel.GetCurrencyAmountProperty(currencyType);
+		bool isEnough = ownedCurrency >= currency;
+		bool canShowAddCurrencyButton = ownedCurrency > currency;
+		addCurrencyButton.gameObject.SetActive(canShowAddCurrencyButton);
+		bool canShowMinusCurrencyButton = currency > lowestCost;
+		minusCurrencyButton.gameObject.SetActive(canShowMinusCurrencyButton);
 		
 		int levelNumber = data.rewardCosts[currencyType].GetLevel(currency);
 		levelText.text = Localization.GetFormat("PILLAR_LEVEL_TEXT", levelNumber);
@@ -226,13 +243,14 @@ public class PillarUIViewController : AbstractPanelContainer, IController, IGame
 			
 		}
 
-		if (currencyModel.GetCurrencyAmountProperty(currencyType) < currency) {
+		if (!isEnough) {
 			requiredEnergyText.gameObject.SetActive(true);
 			requiredEnergyText.text = Localization.GetFormat("PILLAR_HINT_ERROR_2", (int) currencyType);
 		}
 
 		currencySliderText.color = isEnough ? Color.black : Color.red;
 		confirmButton.interactable = canSummon;
+		confirmButton.gameObject.SetActive(canSummon);
 	}
 	
 

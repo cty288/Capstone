@@ -6,6 +6,7 @@ using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
+using _02._Scripts.Runtime.PlayerTasks;
 using _02._Scripts.Runtime.ResourceCrafting.Models;
 using _02._Scripts.Runtime.ResourceCrafting.Models.Build;
 using _02._Scripts.Runtime.Scraps.Model.Base;
@@ -46,6 +47,7 @@ namespace Framework {
 			this.RegisterSystem<IGameTimeSystem>(new GameTimeSystem());
 			this.RegisterSystem<IGameEventSystem>(new GameEventSystem());
 			this.RegisterSystem<IResearchSystem>(new ResearchSystem());
+			this.RegisterSystem<IPlayerTaskSystem>(new PlayerTaskSystem());
 			
 			this.RegisterModel<ICommonEntityModel>(new CommonEntityModel());
 			this.RegisterModel<IEnemyEntityModel>(new EnemyEntityModel());
@@ -61,13 +63,13 @@ namespace Framework {
 			this.RegisterModel<ICurrencyModel>(new CurrencyModel());
 			this.RegisterModel<ISkillModel>(new SkillModel());
 			this.RegisterModel<IBuffModel>(new BuffModel());
-			
 			this.RegisterModel<IPillarModel>(new PillarModel());
 			this.RegisterModel<IGameTimeModel>(new GameTimeModel());
 			this.RegisterModel<IGameEventModel>(new GameEventModel());
 			this.RegisterModel<IResourceResearchModel>(new ResourceResearchModel());
 			this.RegisterModel<IResourceBuildModel>(new ResourceBuildModel());
 			this.RegisterModel<IScrapModel>(new ScrapModel());
+			this.RegisterModel<IPlayerTaskModel>(new PlayerTasksModel());
 			
 			
 			//???

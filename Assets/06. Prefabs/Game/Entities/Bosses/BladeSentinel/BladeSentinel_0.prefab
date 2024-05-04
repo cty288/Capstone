@@ -329,6 +329,8 @@ MonoBehaviour:
   randomizeNavMeshPriority: 1
   autoRemoveEntityWhenDie: 1
   <SpawnSizeCollider>k__BackingField: {fileID: 8076686000186218928}
+  weaponPartsDropChance: 1
+  weaponPartsDropCountRange: {x: 1, y: 2}
   healthBarPrefabName: UIHealthBar
   model: {fileID: 4710081241928864838}
   bladeSpawnPositions:
@@ -2382,6 +2384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!114 &8455001067942620366
 MonoBehaviour:
@@ -2656,6 +2659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!114 &4397895214558569280
 MonoBehaviour:
@@ -2825,6 +2829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!1001 &5748916079186116465
 PrefabInstance:
@@ -3248,6 +3253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!1001 &6747763552524211806
 PrefabInstance:
@@ -3369,6 +3375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!114 &7453166470512110917
 MonoBehaviour:
@@ -3921,6 +3928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!4 &7817177863467602274 stripped
 Transform:
@@ -4048,6 +4056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!114 &8901495163571129271
 MonoBehaviour:
@@ -4193,6 +4202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!114 &7730616502010579895
 MonoBehaviour:
@@ -4485,6 +4495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f25c91b8b7d1974e9362b2a6cf134fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overrideCollider: {fileID: 0}
   showDamageNumber: 1
 --- !u!4 &8909983429626150460 stripped
 Transform:

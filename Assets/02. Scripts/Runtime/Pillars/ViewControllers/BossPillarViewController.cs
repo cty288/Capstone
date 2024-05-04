@@ -8,6 +8,7 @@ using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Levels.Models.Properties;
 using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers;
+using _02._Scripts.Runtime.Pillars.Commands;
 using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Rewards;
 using _02._Scripts.Runtime.Utilities;
@@ -34,6 +35,7 @@ using Runtime.Utilities;
 using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.SocialPlatforms;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
 using Random = UnityEngine.Random;
@@ -65,9 +67,16 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		//protected bool isActivating = false;
 		protected ILevelSystem levelSystem;
 		[SerializeField] private Vector2 waitTimeRange = new Vector2(10, 20);
-		[SerializeField] private GameObject normalTrail;
-		[SerializeField] private GameObject activatedTrail;
 		[SerializeField] private Transform rewardSpawnPos;
+		[SerializeField] private bool isTutorialPillar = false;
+		
+		[FormerlySerializedAs("normalTrail")] [SerializeField] private GameObject laser;
+		private Material laserMaterial;
+		private Color laserTintColorOriginal = Color.white;
+		private Color laserRimColorOriginal = Color.white;
+		private static readonly int tintColorShaderID = Shader.PropertyToID("_TintColor");
+		private static readonly int rimColorShaderID = Shader.PropertyToID("_RimColor");
+
 		protected override void Awake() {
 			base.Awake();
 			pillarModel = this.GetModel<IPillarModel>();
@@ -76,6 +85,14 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			particleSystems = GetComponentsInChildren<ParticleSystem>(true);
 		}
 
+		protected virtual void Start()
+		{
+			laser.gameObject.SetActive(true);
+			laserMaterial = laser.GetComponent<Renderer>().material;
+			laserRimColorOriginal = laserMaterial.GetColor(rimColorShaderID);
+			laserTintColorOriginal = laserMaterial.GetColor(tintColorShaderID);
+		}
+		
 		protected override IEntity OnBuildNewEntity() {
 			return OnBuildNewEntity(1, new Dictionary<CurrencyType, RewardCostInfo>(), default);
 		}
@@ -95,20 +112,20 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			this.RegisterEvent<OnRequestPillarSpawnBoss>(OnRequestPillarSpawnBoss)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			this.RegisterEvent<OnRequestActivatePillar>(OnRequestActivatePillar)
+				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			BoundEntity.Status.RegisterWithInitValue(OnPillarStatusChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
 			foreach (var system in particleSystems) {
 				system.Stop();
 			}
-			
-			normalTrail.gameObject.SetActive(true);
 		}
 
 		private void OnPillarStatusChanged(PillarStatus oldStatus, PillarStatus newStatus) {
 			UpdateInteractHint();
-			normalTrail.gameObject.SetActive(newStatus == PillarStatus.Idle);
-			activatedTrail.gameObject.SetActive(newStatus == PillarStatus.Activated);
+			// normalTrail.gameObject.SetActive(newStatus == PillarStatus.Idle);
+			// activatedTrail.gameObject.SetActive(newStatus == PillarStatus.Activated);
 
 			if (newStatus == PillarStatus.Spawning) {
 				PlaySpawningParticles();
@@ -117,11 +134,10 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				StopSpawningParticles();
 			}
 		}
-
-
+		
 		private void OnBossFightStatusChanged(bool arg1, bool status) {
 			UpdateInteractHint();
-			normalTrail.gameObject.SetActive(!status);
+			laser.gameObject.SetActive(!status);
 		}
 
 		protected override (InputAction, string, string) GetInteractHintInfo() {
@@ -190,9 +206,8 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 		public IPillarEntity Entity => BoundEntity;
 
 		protected async UniTask SpawnBoss(int rarity) {
-			Debug.Log("Spawn boss");
 			PlaySpawningParticles();
-			normalTrail.gameObject.SetActive(false);
+			laser.gameObject.SetActive(false);
 			BoundEntity.Status.Value = PillarStatus.Spawning;
 			UpdateInteractHint();
 
@@ -221,10 +236,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 					SpawningUtility.FindNavMeshSuitablePosition(gameObject,
 						() => prefabToSpawn.GetComponent<ICreatureViewController>().SpawnSizeCollider, transform.position, 90,
 						NavMeshHelper.GetSpawnableAreaMask(), default, 5, 5, 200);
-			
 				 
-				
-				
 				Vector3 spawnPos = res.TargetPosition;
 				
 				if (float.IsInfinity(spawnPos.magnitude)) {
@@ -243,7 +255,7 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 				spawnedEnemy.transform.DOScale(spawnScale, 1f).SetEase(Ease.OutBack);
 
 				//onSpawnEnemy?.Invoke(spawnedEnemy, this);
-				Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity}");
+				// Debug.Log($"Spawn Success: {enemyEntity.EntityName} at {spawnPos} with rarity {rarity}");
 
 				levelModel.RandomBossEncounterEventChance = 0;
 			}
@@ -252,9 +264,31 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			}
 		}
 		
+		private void OnRequestActivatePillar(OnRequestActivatePillar e) {
+            if (e.pillarEntity == BoundEntity) {
+	            switch (e.pillarCurrencyType)
+	            {
+		            case CurrencyType.Combat:
+			            ChangePillarColor(Color.red, Color.red);
+			            break;
+		            case CurrencyType.Time:
+			            ChangePillarColor(Color.blue, Color.blue);
+			            break;
+		            case CurrencyType.Mineral:
+			            ChangePillarColor(Color.yellow, Color.yellow);
+			            break;
+		            case CurrencyType.Plant:
+			            ChangePillarColor(Color.green, Color.green);
+			            break;
+	            }
+			}
+		}
 		
-		
-		
+		private void ChangePillarColor(Color tintColor, Color rimColor) {
+			laserMaterial.SetColor(tintColorShaderID, tintColor * 18f);
+			laserMaterial.SetColor(rimColorShaderID, rimColor * 7f);
+		}
+
 		private void OnRequestPillarSpawnBoss(OnRequestPillarSpawnBoss e) {
 			if (e.Pillar == gameObject) {
 				SpawnBoss(e.Rarity);
@@ -271,11 +305,20 @@ namespace Runtime.Spawning.ViewControllers.Instances {
 			}
 
 			this.SendCommand(OpenPillarUICommand.Allocate(BoundEntity,
-				BoundEntity.RewardCost, rewardSpawnPos));
+				BoundEntity.RewardCost, rewardSpawnPos, isTutorialPillar));
 		}
 
 		public override void OnRecycled() {
 			base.OnRecycled();
+			if (laserMaterial)
+			{
+				ChangePillarColor(laserTintColorOriginal, laserRimColorOriginal);
+			}
+		}
+
+
+		public void SetCanInteract(bool canInteract) {
+			hasInteractiveHint = canInteract;
 		}
 	}
 }

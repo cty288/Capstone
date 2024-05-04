@@ -28,7 +28,8 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		public BindableProperty<Faction> CurrentFaction { get; } = new BindableProperty<Faction>(Faction.Friendly);
 		protected List<ParticleSystem> particleSystems = new List<ParticleSystem>();
 		protected IEntity entity = null;
-		
+
+		[SerializeField] private float explosionDetectTime = 1f;
 		
 		public void OnKillDamageable(ICanDealDamage sourceDealer, IDamageable damageable) {
 			//owner?.OnKillDamageable(damageable);
@@ -61,6 +62,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		public float Size { get; protected set; }
 		[SerializeField] private float autoRecycleTime = 2f;
 		private Coroutine autoRecycleCoroutine = null;
+		private Coroutine explosionDetectCoroutine = null;
 		
 		protected ExplosionHitBox hitBox = null;
 		protected GameObject bulletOwner = null;
@@ -82,6 +84,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			hitBox.StartCheckingHits(damage);
 			hitBox.HitResponder = this;
 			autoRecycleCoroutine = StartCoroutine(AutoRecycle());
+			explosionDetectCoroutine = StartCoroutine(ExplosionDetect());
 			this.bulletOwner = bulletOwner;
 			this.owner = owner;
 
@@ -105,15 +108,19 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			}
 		}
 
+		private IEnumerator ExplosionDetect() {
+			yield return new WaitForSeconds(explosionDetectTime);
+			hitBox.StopCheckingHits();
+		}
 
 		public virtual bool CheckHit(HitData data) {
-
+			
 			if (Damage == 0) {
 				return false;
 			}
 			
 			if (data.Hurtbox.Owner == gameObject || data.Hurtbox.Owner == bulletOwner || 
-			    data.Hurtbox.Owner == owner.GetRootDamageDealerTransform()?.gameObject || hitObjects.Contains(data.Hurtbox.Owner)) {
+			    data.Hurtbox.Owner == owner?.GetRootDamageDealerTransform()?.gameObject || hitObjects.Contains(data.Hurtbox.Owner)) {
 				return false;
 			}
 			else { return true; }

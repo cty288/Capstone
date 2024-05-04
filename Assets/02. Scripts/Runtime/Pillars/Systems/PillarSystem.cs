@@ -75,14 +75,22 @@ namespace _02._Scripts.Runtime.Pillars.Systems {
 		private void OnRequestActivatePillar(OnRequestActivatePillar e) {
 			if (!model.ActivatedPillarCurrencyAmount.ContainsKey(e.pillarEntity.UUID)) {
 				if (e.pillarEntity.Status.Value == PillarStatus.Idle) {
-					ActivatePillar(e.pillarEntity, e.pillarCurrencyType, e.CurrencyAmount, e.level);
+					ActivatePillar(e.pillarEntity, e.pillarCurrencyType, e.CurrencyAmount, e.level, e.IsTutorialPillar);
 				}
 			}
 		}
 		
-		private void ActivatePillar(IPillarEntity pillarEntity, CurrencyType currencyType,  float currencyAmount, int level) {
+		private void ActivatePillar(IPillarEntity pillarEntity, CurrencyType currencyType,  float currencyAmount, int level, bool isTutorialPillar) {
 			pillarEntity.Status.Value = PillarStatus.Activated;
 
+			if (isTutorialPillar) {
+				this.SendEvent<OnPillarActivated>(new OnPillarActivated() {
+					Info = model.ActivatedPillarCurrencyAmount,
+					isAllPillarsActivated = false
+				});
+				return;
+			}
+			
 			model.ActivatedPillarCurrencyAmount.Add(pillarEntity.UUID,
 				new PillarActivateInfo(currencyType, currencyAmount, 0, level));
 			

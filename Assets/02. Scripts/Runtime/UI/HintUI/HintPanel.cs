@@ -4,8 +4,12 @@ using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
 using MikroFramework.UIKit;
+using Polyglot;
+using Runtime.Controls;
 using Runtime.UI;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 
 public enum HintMessageType {
@@ -21,12 +25,13 @@ public class HintMessageGroup {
 }
 
 [Serializable]
-public struct HintMessage {
-	[TextArea]
-	public string message;
-	public string title;
+public class HintMessage {
+	public string messageLocalizedKey;
+	public string[] keyParameters;
+	public string titleLocalizedKey;
 	public Sprite icon;
 	public float duration;
+	[SerializeField] public UnityEvent callback;
 }
 public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPanel {
 	protected HintMessageGroup currentMessageGroup = null;
@@ -45,6 +50,24 @@ public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPa
 		currentMessageGroup = messageGroup;
 		currentMessageIndex = 0;
 		OnShowMessage();
+	}
+
+	protected string GetLocalizedText(HintMessage message) {
+		string text = Localization.Get(message.messageLocalizedKey);
+		if(message.keyParameters != null && message.keyParameters.Length > 0) {
+			InputAction[] acts = new InputAction[message.keyParameters.Length];
+			for (int i = 0; i < message.keyParameters.Length; i++) {
+				acts[i] = ClientInput.Singleton.FindActionInMaps(message.keyParameters[i]);
+			}
+			object[] localizedKeys = new object[message.keyParameters.Length];
+			for (int i = 0; i < message.keyParameters.Length; i++) {
+				localizedKeys[i] = ControlInfoFactory.Singleton.GetBindingKeyLocalizedName(acts[i]);
+			}
+
+			text = Localization.GetFormat(message.messageLocalizedKey, localizedKeys);
+		}
+
+		return text;
 	}
 	
 	public void RegisterOnPanelClose(Action<HintPanel> action) {
@@ -72,6 +95,9 @@ public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPa
 		if (currentMessageGroup == null) {
 			return;
 		}
+		HintMessageGroup messageGroupTemp = this.currentMessageGroup;
+		int lastIndex = currentMessageIndex;
+		
 		if (currentMessageIndex < currentMessageGroup.messages.Length - 1) {
 			currentMessageIndex++;
 			OnShowMessage();
@@ -79,6 +105,11 @@ public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPa
 		else {
 			canClose = true;
 			MainUI.Singleton.GetAndClose(this);
+		}
+
+		var lastHintMessage = lastIndex >= 0 ? messageGroupTemp.messages[lastIndex] : null;
+		if (lastHintMessage != null && lastHintMessage.callback != null) {
+			lastHintMessage.callback.Invoke();
 		}
 	}
 	
@@ -108,6 +139,8 @@ public abstract class HintPanel : AbstractPanelContainer, IController, IGameUIPa
 		TerminateCurrentMessageGroup();
 		canClose = false;
 	}
+
+	public bool CanCloseByEscButton { get; } = false;
 
 	public IArchitecture GetArchitecture() {
 		return MainGame.Interface;

@@ -49,7 +49,7 @@ namespace Runtime.Weapons
         }
         protected override IHitDetector OnCreateHitDetector()
         {
-            return new HitScan(this, CurrentFaction.Value, BulletVFXAll, fpsCamera);
+            return new HitScan(this, CurrentFaction.Value, BulletVFXCurr, fpsCamera);
         }
 
         protected override IEntity OnInitWeaponEntity(WeaponBuilder<SubMachineGunEntity> builder) {

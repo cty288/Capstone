@@ -2,20 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework;
+using MikroFramework.AudioKit;
 using MikroFramework.UIKit;
 using Runtime.Controls;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using SettingsPanel = Mikrocosmos.SettingsPanel;
 
 public class MenuMainPanel : AbstractPanelContainer {
 	[SerializeField] private Button continueGameButton;
 	[SerializeField] private Button newGameButton;
 	[SerializeField] private Button optionsButton;
-	[SerializeField] private Button creditsButton;
+	//[SerializeField] private Button creditsButton;
 	[SerializeField] private Button exitGameButton;
+	[SerializeField] private Button discordButton;
 
 	private void Awake() {
+		AudioSystem.Singleton.Initialize(null);
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
 		Time.timeScale = 1;
@@ -26,20 +30,23 @@ public class MenuMainPanel : AbstractPanelContainer {
 		continueGameButton.onClick.AddListener(OnContinueGameButtonClicked);
 		newGameButton.onClick.AddListener(OnNewGameButtonClicked);
 		optionsButton.onClick.AddListener(OnOptionsButtonClicked);
-		creditsButton.onClick.AddListener(OnCreditsButtonClicked);
+		//creditsButton.onClick.AddListener(OnCreditsButtonClicked);
 		exitGameButton.onClick.AddListener(OnExitGameButtonClicked);
+		discordButton.onClick.AddListener(OnDiscordButtonClicked);
+	}
+
+	private void OnDiscordButtonClicked() {
+		Application.OpenURL("https://discord.gg/Bx7EprBP6H");
 	}
 
 	private void OnExitGameButtonClicked() {
 		Application.Quit();
 	}
 
-	private void OnCreditsButtonClicked() {
-		
-	}
+
 
 	private void OnOptionsButtonClicked() {
-		
+		UIManager.Singleton.Open<SettingsPanel>(this, null);
 	}
 
 	private void OnNewGameButtonClicked() {
