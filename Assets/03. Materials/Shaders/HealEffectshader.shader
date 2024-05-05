@@ -28,6 +28,9 @@ Shader "Hidden/HealEffectShader"
             
 			float4 _MainTex_TexelSize;
             float4x4 _ClipToView;
+
+            float4 _ColorHeal;
+            float _HealToggle;
             
             struct Attributes
             {
@@ -72,6 +75,14 @@ Shader "Hidden/HealEffectShader"
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 				
 				float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+
+				float2 uv = (i.uv - 0.5f) * 2;
+				float dist = max(abs(uv.x), abs(uv.y));
+				//float dist = sqrt(uv.x * uv.x + uv.y * uv.y);
+				dist = pow(dist - 0.2f, 3);
+				
+				color = alphaBlend(float4(_ColorHeal.rgb, dist * _HealToggle), color);
+				
 				return color;
 			}
 			

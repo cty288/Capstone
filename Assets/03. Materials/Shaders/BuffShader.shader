@@ -30,6 +30,11 @@ Shader "Hidden/BuffShader"
             
 			float4 _MainTex_TexelSize;
             float4x4 _ClipToView;
+
+            float4 _Color1;
+    		float4 _Color2;
+    		float _Color1Toggle;
+    		float _Color2Toggle;
             
             struct Attributes
             {

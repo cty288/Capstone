@@ -7,6 +7,8 @@ using UnityEngine.VFX;
 
 public class ScreenSpaceVFXManager : MonoBehaviour
 {
+    [SerializeField] private float instantBuffSpeed = 3f;
+    [SerializeField] private float instantBuffLingerSpeed = 0.5f;
     [SerializeField] private BuffEffect buffEffect;
 
     private List<BuffEffect> _buffEffectStack;
@@ -56,10 +58,10 @@ public class ScreenSpaceVFXManager : MonoBehaviour
 
         while (progress < 1)
         {
-            progress += Time.deltaTime;
+            progress += Time.deltaTime * instantBuffSpeed;
             var t = easeInOutQuint(progress);
             //Do something with t
-            
+            buffEffect.healToggle.value = t;
             
             yield return null;
         }
@@ -67,13 +69,15 @@ public class ScreenSpaceVFXManager : MonoBehaviour
         progress = 0f;
         while (progress < 1)
         {
-            progress += Time.deltaTime;
+            progress += Time.deltaTime * instantBuffLingerSpeed;
             var t = easeOutSine(progress);
             //Do something with t
-            
+            buffEffect.healToggle.value = 1-t;
             
             yield return null;
         }
+        
+        buffEffect.healToggle.value = 0;
         
         StopCoroutine(Heal());
     }
