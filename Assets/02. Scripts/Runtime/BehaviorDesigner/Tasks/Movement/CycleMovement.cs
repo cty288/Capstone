@@ -17,6 +17,7 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
 
         private Vector3 originalPosition;
         private float elapsedTime = 0f;
+        private Vector3 tempVector;
 
         public override void OnStart()
         {
@@ -27,10 +28,10 @@ namespace Runtime.BehaviorDesigner.Tasks.Movement
 
         public override TaskStatus OnUpdate()
         {
-            Vector3 newPosition = originalPosition +
-                                  new Vector3(Mathf.Cos(elapsedTime * speed.Value) * radius.Value,
-                                              0f,
-                                              Mathf.Sin(elapsedTime * speed.Value) * radius.Value);
+            tempVector.Set(Mathf.Cos(elapsedTime * speed.Value) * radius.Value,
+                0f,
+                Mathf.Sin(elapsedTime * speed.Value) * radius.Value);
+            Vector3 newPosition = originalPosition + tempVector;
 
             SetDestination(newPosition);
 

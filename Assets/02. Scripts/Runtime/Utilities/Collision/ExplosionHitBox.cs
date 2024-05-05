@@ -15,11 +15,13 @@ namespace Runtime.Utilities.Collision
         //private TriggerCheck _triggerCheck;
         private IHitResponder m_hitResponder;
         public override IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
-        
+
+        private HitData hitData;
         //[SerializeField] private bool showDamageNumber = true;
         private void Start()
         {
             Initialize();
+            hitData = new HitData();
         }
 
         private void Initialize()
@@ -34,9 +36,9 @@ namespace Runtime.Utilities.Collision
         
 
         
-        public override void TriggerCheckHit(Collider c)
+        protected override void TriggerCheckHit(Collider c)
         {
-            HitData hitData = null;
+            // HitData hitData = null;
             IHurtbox hurtbox;
             Vector3 center = _collider.transform.position;
             Vector3 hitPoint = c.ClosestPoint(transform.position);
@@ -48,7 +50,8 @@ namespace Runtime.Utilities.Collision
 
                 float explosionMultiplier = 0.7f* (1-Vector3.Distance(hitPoint,center)/_sphereCollider.radius)+0.3f;
                 
-                hitData = new HitData().SetHitBoxData(m_hitResponder, 
+                hitData.ResetHitData();
+                hitData.SetHitBoxData(m_hitResponder, 
                     m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier*explosionMultiplier),
                     hurtbox.DamageMultiplier > 1,
                     hurtbox,

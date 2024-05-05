@@ -179,19 +179,19 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				Vector3 addedVector = Vector3.zero;
 				
 				if (direction == Vector3.up) {
-					addedVector = new Vector3(0, size.y / 2, 0);
+					addedVector.Set(0, size.y / 2, 0);
 				}
 				else if (direction == Vector3.left) {
-					addedVector = new Vector3(-size.x / 2, 0, 0);
+					addedVector.Set(-size.x / 2, 0, 0);
 				}
 				else if (direction == Vector3.right) {
-					addedVector = new Vector3(size.x / 2, 0, 0);
+					addedVector.Set(size.x / 2, 0, 0);
 				}
 				else if (direction == Vector3.forward) {
-					addedVector = new Vector3(0, 0, size.z / 2);
+					addedVector.Set(0, 0, size.z / 2);
 				}
 				else if (direction == Vector3.back) {
-					addedVector = new Vector3(0, 0, -size.z / 2);
+					addedVector.Set(0, 0, -size.z / 2);
 				}
 				
 				Vector3 end = start + addedVector;

@@ -73,10 +73,13 @@ namespace Runtime.Weapons.ViewControllers.Base
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
 		private bool overrideExplosionFaction = false;
 
+		private WaitForSeconds waitForSeconds;
+
 		private void Awake()
 		{
 			hitBox = GetComponent<DotHitBox>();
 			trailRenderers = GetComponentsInChildren<TrailRenderer>(true);
+			waitForSeconds = new WaitForSeconds(autoRecycleTime);
 		}
 
 
@@ -153,7 +156,7 @@ namespace Runtime.Weapons.ViewControllers.Base
 
 		private IEnumerator AutoRecycle()
 		{
-			yield return new WaitForSeconds(autoRecycleTime);
+			yield return waitForSeconds;
 			if (this)
 			{
 				RecycleToCache();
@@ -173,28 +176,20 @@ namespace Runtime.Weapons.ViewControllers.Base
 
 		public void HitResponse(HitData data)
 		{
-			// if (gameObject.name == "GunBullet") {
-			// 	Debug.Log("HitResponse");
-			// }
 			if (data.Hurtbox != null)
 			{
 				if (data.Hurtbox.Owner == bulletOwner)
 				{
 					return;
 				}
-				//hitObjects.Add(data.Hurtbox.Owner);
 			}
 			OnHitResponse(data);
-			//RecycleToCache();
 		}
 
 		protected abstract void OnHitResponse(HitData data);
 
 		protected virtual void OnTriggerEnter(Collider other)
 		{
-			// if (gameObject.name == "GunBullet") {
-			// 	Debug.Log("HitResponse");
-			// }
 			if (!other.isTrigger)
 			{
 				Rigidbody rootRigidbody = other.attachedRigidbody;

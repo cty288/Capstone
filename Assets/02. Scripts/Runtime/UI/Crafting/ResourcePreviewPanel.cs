@@ -53,6 +53,7 @@ public class ResourcePreviewPanel : AbstractMikroController<MainGame>
     private bool currentPreviewPurchaseable;
     private ICurrencyModel currencyModel;
     private bool inited = false;
+    private Color notEnoughColor =  new Color(0.8274511f, 0.2666667f, 0.2196079f, 1);
     private void Awake() {
 	    if (inited) {
 		    return;
@@ -366,7 +367,7 @@ public class ResourcePreviewPanel : AbstractMikroController<MainGame>
 		obj.transform.Find("Image").GetComponent<Image>().sprite = sprite;
 		obj.transform.Find("Text").GetComponent<TMP_Text>().text = count.ToString();
 		obj.transform.Find("Text").GetComponent<TMP_Text>().color =
-			isEnough ? Color.black : new Color(0.8274511f, 0.2666667f, 0.2196079f);
+			isEnough ? Color.black : notEnoughColor;
 		RectTransform rarityBar = obj.transform.Find("RarityBar").GetComponent<RectTransform>();
 		float height = rarityBar.rect.height;
 		for (int i = 0; i < rarity; i++) {

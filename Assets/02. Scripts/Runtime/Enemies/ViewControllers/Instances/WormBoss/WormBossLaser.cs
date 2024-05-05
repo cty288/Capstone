@@ -65,6 +65,7 @@ public class WormBossLaser : AbstractDotBulletViewController
     {
         if (!other.isTrigger)
         {
+            print("Worm Boss Laser: " + other.name);
             Rigidbody rootRigidbody = other.attachedRigidbody;
             GameObject hitObj =
                 rootRigidbody ? rootRigidbody.gameObject : other.gameObject;

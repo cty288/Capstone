@@ -56,13 +56,12 @@ namespace Runtime.Utilities.Collision
         
         private Vector3 overridenDirection = Vector3.zero;
         private Vector3 overridenOrigin = Vector3.zero;
-        
-        
-        
 
         private bool _useVFX = true;
 
         private RaycastHit[] _hits = new RaycastHit[10];
+        private HitData hitData = new HitData();
+
         public HitScan(IHitResponder hitResponder, Faction faction, TrailRenderer tr, bool showDamageNumber = true)
         {
             this.hitResponder = hitResponder;
@@ -118,8 +117,6 @@ namespace Runtime.Utilities.Collision
                 spreadValue = _weapon.GetSpread().RealValue.Value;
             }
             
-
-            Vector3 dir = new Vector3(0.5f, 0.5f, 0);
             Ray shootRay;
             if (overridenDirection == default) {
                 Vector3 startPoint = _camera.ViewportToWorldPoint(
@@ -181,12 +178,13 @@ namespace Runtime.Utilities.Collision
                 }
                 
 
-                HitData hitData = null;
+                // HitData hitData = null;
                 hitAnything = true;
                 if (hurtbox != null)
                 {
-                    Debug.Log("hurtbox make hitdata: " + hurtbox);
-                    hitData = new HitData().SetHitScanData(hitResponder, hurtbox, hit, this, showDamageNumber);
+                    // Debug.Log("hurtbox make hitdata: " + hurtbox);
+                    hitData.ResetHitData();
+                    hitData.SetHitScanData(hitResponder, hurtbox, hit, this, showDamageNumber);
                     if (overridenDirection != default) {
                         hitData.HitDirectionNormalized = Vector3.Normalize(overridenDirection + offset);
                     }
@@ -199,7 +197,7 @@ namespace Runtime.Utilities.Collision
                 if (hurtbox != null && hitData.Validate())
                 {
                     
-                    Debug.Log("hurtbox respond: " + hurtbox);
+                    // Debug.Log("hurtbox respond: " + hurtbox);
                     // hit something with hurtbox
                     if (hitData.HitDetector.HitResponder != null) {
                         hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
@@ -212,7 +210,7 @@ namespace Runtime.Utilities.Collision
                 }
                 else
                 {
-                    Debug.Log("no hurtbox");
+                    // Debug.Log("no hurtbox");
                     // hit something without hurtbox, e.g. wall
                     if(!_useVFX)
                         CoroutineRunner.Singleton.StartCoroutine(PlayTrail(_launchPoint.position, hit.point, new RaycastHit()));
@@ -220,7 +218,7 @@ namespace Runtime.Utilities.Collision
                         PlayBulletVFX(_launchPoint.position, hit.point);
                     
                     // Bullet VFX
-                    hitData = new HitData();
+                    hitData.ResetHitData();
                     hitData.HitNormal = hit.normal;
                     hitData.HitPoint = hit.point;
                     if (overridenDirection != default) {
@@ -339,7 +337,7 @@ namespace Runtime.Utilities.Collision
 
             instance.transform.position = endPoint;
 
-            yield return new WaitForSeconds(0.01f);
+            // yield return new WaitForSeconds(0.01f);
             yield return null;
             instance.emitting = false;
             instance.gameObject.SetActive(false);

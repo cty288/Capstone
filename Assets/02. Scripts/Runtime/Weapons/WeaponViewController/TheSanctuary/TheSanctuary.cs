@@ -70,6 +70,7 @@ namespace Runtime.Weapons
         public GameObject spawnedShieldObject;
         
         private SafeGameObjectPool pool;
+        private Vector3 viewportShootPoint = new Vector3(0.5f, 0.5f, 0);
         
         protected override void Awake() {
             base.Awake();
@@ -117,7 +118,7 @@ namespace Runtime.Weapons
         
         protected override void Shoot()
         {
-            Vector3 shootDir = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)).direction;
+            Vector3 shootDir = cam.ViewportPointToRay(viewportShootPoint).direction;
             
             GameObject b = pool.Allocate();
             b.transform.position = bulletSpawnPos.position;
