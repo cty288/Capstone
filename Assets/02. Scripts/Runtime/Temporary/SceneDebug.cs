@@ -127,12 +127,8 @@ namespace Runtime.Temporary
             }
 
             if (Input.GetKeyDown(KeyCode.Keypad4)) {
-                var allEntities =GlobalEntities.GetAllEntities();
-                StringBuilder sb = new StringBuilder();
-                foreach (var entity in allEntities) {
-                    sb.AppendLine($"Entity Name: {entity.EntityName}, Display Name: {entity.GetDisplayName()}");
-                }
-                Debug.Log(sb.ToString());
+                IPlayerEntity playerEntity = this.GetModel<IGamePlayerModel>().GetPlayer();
+                playerEntity.IsInvincible.Value = !playerEntity.IsInvincible.Value;
             }
             
             
