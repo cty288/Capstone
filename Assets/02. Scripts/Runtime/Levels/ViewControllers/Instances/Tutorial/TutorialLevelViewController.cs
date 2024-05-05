@@ -171,7 +171,7 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
     }
     
     public void Step12Task() {
-        playerTaskSystem.AddTask(new Step12Task(5));
+        playerTaskSystem.AddTask(new Step12Task(3));
     }
     
     public void Step13Task() {

@@ -8496,6 +8496,17 @@ MonoBehaviour:
       callback:
         m_PersistentCalls:
           m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP20_2
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: 4153240674832713612, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
   - messageType: 1
     messages:
     - messageLocalizedKey: TUTORIAL_STEP21
@@ -16690,6 +16701,28 @@ MonoBehaviour:
       callback:
         m_PersistentCalls:
           m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP22_2
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: 4153240674832713612, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP22_3
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: 4153240674832713612, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
   canTriggerMultipleTimes: 0
 --- !u!1 &7905501659469829109
 GameObject:
@@ -16968,7 +17001,7 @@ MonoBehaviour:
           m_Calls: []
     - messageLocalizedKey: TUTORIAL_STEP10_3
       keyParameters: []
-      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      titleLocalizedKey: TUTORIAL_STEP11_TITLE
       icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
         type: 3}
       panelImage: {fileID: 0}
@@ -16992,29 +17025,6 @@ MonoBehaviour:
   - messageType: 1
     messages:
     - messageLocalizedKey: TUTORIAL_STEP11
-      keyParameters: []
-      titleLocalizedKey: TUTORIAL_STEP11_TITLE
-      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
-        type: 3}
-      panelImage: {fileID: 0}
-      panelVideo: {fileID: 0}
-      duration: 3
-      callback:
-        m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: TutorialLevelViewController, MainGame
-            m_MethodName: 
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-    - messageLocalizedKey: TUTORIAL_STEP11_2
       keyParameters: []
       titleLocalizedKey: TUTORIAL_STEP11_TITLE
       icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
@@ -17064,9 +17074,20 @@ MonoBehaviour:
             m_CallState: 2
   - messageType: 1
     messages:
-    - messageLocalizedKey: TUTORIAL_STEP12_3
+    - messageLocalizedKey: TUTORIAL_STEP12_5
       keyParameters: []
-      titleLocalizedKey: TUTORIAL_STEP12_3_TITLE
+      titleLocalizedKey: TUTORIAL_STEP12_5_TITLE
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP12_6
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_STEP12_6_TITLE
       icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
         type: 3}
       panelImage: {fileID: 0}
@@ -17100,6 +17121,28 @@ MonoBehaviour:
       callback:
         m_PersistentCalls:
           m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP12_3
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP12_4
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
   - messageType: 1
     messages:
     - messageLocalizedKey: TUTORIAL_STEP14_1
@@ -17114,6 +17157,18 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - messageLocalizedKey: TUTORIAL_STEP14_2
+      keyParameters:
+      - Inventory
+      titleLocalizedKey: TUTORIAL_STEP14_TITLE
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP14_3
       keyParameters:
       - Inventory
       titleLocalizedKey: TUTORIAL_STEP14_TITLE
@@ -17151,6 +17206,17 @@ MonoBehaviour:
         m_PersistentCalls:
           m_Calls: []
     - messageLocalizedKey: TUTORIAL_STEP15_2
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP15_3
       keyParameters: []
       titleLocalizedKey: TUTORIAL_INSTRUCTOR
       icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
@@ -17284,6 +17350,17 @@ MonoBehaviour:
       duration: 3
       callback:
         m_PersistentCalls:
+          m_Calls: []
+    - messageLocalizedKey: TUTORIAL_STEP18_2
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
           m_Calls:
           - m_Target: {fileID: 361133883086396366}
             m_TargetAssemblyTypeName: TutorialLevelViewController, MainGame
@@ -17335,7 +17412,7 @@ MonoBehaviour:
             m_CallState: 2
   - messageType: 1
     messages:
-    - messageLocalizedKey: TUTORIAL_STEP18_2
+    - messageLocalizedKey: TUTORIAL_STEP18_3
       keyParameters: []
       titleLocalizedKey: TUTORIAL_STEP18_TITLE
       icon: {fileID: -3763894057934510291, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
@@ -31616,6 +31693,19 @@ MonoBehaviour:
     - messageLocalizedKey: TUTORIAL_STEP13_2
       keyParameters: []
       titleLocalizedKey: TUTORIAL_INSTRUCTOR
+      icon: {fileID: 4153240674832713612, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
+        type: 3}
+      panelImage: {fileID: 0}
+      panelVideo: {fileID: 0}
+      duration: 3
+      callback:
+        m_PersistentCalls:
+          m_Calls: []
+  - messageType: 1
+    messages:
+    - messageLocalizedKey: TUTORIAL_STEP13_3
+      keyParameters: []
+      titleLocalizedKey: TUTORIAL_STEP13_3_TITLE
       icon: {fileID: 4153240674832713612, guid: 8a1f96c93a153e34a98b5f6dd6bbfebd,
         type: 3}
       panelImage: {fileID: 0}
