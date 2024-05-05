@@ -22,7 +22,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers.Instances.Tutorial {
 		[ES3Serializable]
 		private int killCount;
 		[ES3Serializable]
-		private int targetKillCount = 5;
+		private int targetKillCount = 3;
 
 		public Step12Task(int targetKillCount) {
 			this.targetKillCount = targetKillCount;
