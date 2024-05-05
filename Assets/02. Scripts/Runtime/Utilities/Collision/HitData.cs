@@ -106,6 +106,11 @@ namespace Runtime.Utilities.Collision
 
         public void OnRecycled()
         {
+            ResetHitData();
+        }
+
+        public void ResetHitData()
+        {
             Damage = 0;
             HitPoint = Vector3.zero;
             HitNormal = Vector3.zero;
