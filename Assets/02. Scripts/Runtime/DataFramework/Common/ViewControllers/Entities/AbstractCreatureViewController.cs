@@ -82,11 +82,16 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 				// Create a frame using the spawn collider if no frame is manually set.
 				var defaultFrameBox = new GameObject("Default VFX Frame");
 				defaultFrameBox.transform.parent = transform;
-				defaultFrameBox.transform.position = SpawnSizeCollider.transform.position + SpawnSizeCollider.center;
+				var spawnTransform = SpawnSizeCollider.transform;
+				defaultFrameBox.transform.position = spawnTransform.position + SpawnSizeCollider.center;
 				var size = SpawnSizeCollider.size;
+				var spawnScale = spawnTransform.lossyScale;
+				var entityScale = transform.lossyScale;
+				var scaleRatio = new Vector3(spawnScale.x / entityScale.x,
+					spawnScale.y / entityScale.y, spawnScale.z / entityScale.z);
 				var volume = size.x * size.y * size.z;
 				var length = Mathf.Pow(volume, 1.0f / 3.0f);
-				defaultFrameBox.transform.localScale = Vector3.one * length;
+				defaultFrameBox.transform.localScale = scaleRatio * length;
 				
 				_vfxFramer = new[] { defaultFrameBox.transform};
 
