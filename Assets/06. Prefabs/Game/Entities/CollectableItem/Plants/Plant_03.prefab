@@ -169,7 +169,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Pool: {fileID: 0}
-  <PrefabID>k__BackingField: 51f35b16-890b-4f18-9e3e-67d4a1589de7
   autoCreateNewEntityWhenStart: 1
   showNameTagWhenPointed: 1
   nameTagFollowTransform: {fileID: 5024733578064893104}
@@ -186,7 +185,13 @@ MonoBehaviour:
   crossHairHUDToleranceScreenDistanceFactor: 0.5
   overriddenName: Plant
   currencyAmountPerItem: 2
+  totalShootTime: 2
+  damageRequiredPerShoot: 10
+  overriddenItemDropCollections:
+    _serializedList: []
+  overriddenCollectableResourceCurrencyInfos: []
   <SpawnSizeCollider>k__BackingField: {fileID: 1311681576522637441}
+  explosionPrefab: {fileID: 0}
 --- !u!54 &1939408952615453107
 Rigidbody:
   m_ObjectHideFlags: 0
