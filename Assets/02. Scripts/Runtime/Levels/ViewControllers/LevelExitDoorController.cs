@@ -46,6 +46,8 @@ public class LevelExitDoorController : AbstractMikroController<MainGame>, ICross
 
     private void LowerDoor(OnLoadingScreenHide e)
     {
+        if(alwaysOpen) return;
+        
         animator.SetTrigger(lower);
     }
     
