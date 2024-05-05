@@ -941,6 +941,7 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  autoAbsorbWhenPlayerReach: 1
   autoRecycleTimeWhenNoAbsorb: 120
   alsoRemoveEntityWhenNoAbsorb: 1
   <InHandLocalPosition>k__BackingField: {x: 0, y: 0, z: 0}
@@ -964,11 +965,10 @@ MonoBehaviour:
   crossHairPrefabName: DefaultCrossHair
   model: {fileID: 4148560624591913091}
   autoReload: 1
+  canScope: 1
   layer:
     serializedVersion: 2
     m_Bits: 2177
-  hitParticlePrefab: {fileID: 8833649071567523099, guid: 3ca9e3ac23d4eff4f968c25e87a681c2,
-    type: 3}
   hitVFXSystem: {fileID: 8158266824902675728}
   animator: {fileID: 3922767138946212442}
   reloadAnimationLength: 3
@@ -1282,12 +1282,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 178f68e5a651f66469f4bc6159cb7213, type: 2}
+      objectReference: {fileID: 2100000, guid: 0b75dec93df1d7c4092ad5443e94303d, type: 2}
     - target: {fileID: -5515774848409821170, guid: 45ad3489be993c341ad9d44c34494cdc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 722a22cb2e9aea644b7625041f1dcc2b, type: 2}
+      objectReference: {fileID: 2100000, guid: 0b75dec93df1d7c4092ad5443e94303d, type: 2}
+    - target: {fileID: -5515774848409821170, guid: 45ad3489be993c341ad9d44c34494cdc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e14ef1cc722334847980bad2ac351ba0, type: 2}
     - target: {fileID: -4844424944054762204, guid: 45ad3489be993c341ad9d44c34494cdc,
         type: 3}
       propertyPath: m_Layer
@@ -1298,6 +1303,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2041172602963269797, guid: 45ad3489be993c341ad9d44c34494cdc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0b75dec93df1d7c4092ad5443e94303d, type: 2}
     - target: {fileID: -1435165498334114326, guid: 45ad3489be993c341ad9d44c34494cdc,
         type: 3}
       propertyPath: m_Layer
@@ -1343,6 +1353,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 0b75dec93df1d7c4092ad5443e94303d, type: 2}
+    - target: {fileID: 3393128459756519149, guid: 45ad3489be993c341ad9d44c34494cdc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e14ef1cc722334847980bad2ac351ba0, type: 2}
     - target: {fileID: 5332809968238436118, guid: 45ad3489be993c341ad9d44c34494cdc,
         type: 3}
       propertyPath: m_Layer
@@ -1363,6 +1378,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8166260857885819379, guid: 45ad3489be993c341ad9d44c34494cdc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0b75dec93df1d7c4092ad5443e94303d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45ad3489be993c341ad9d44c34494cdc, type: 3}
 --- !u!137 &877187855226469795 stripped
