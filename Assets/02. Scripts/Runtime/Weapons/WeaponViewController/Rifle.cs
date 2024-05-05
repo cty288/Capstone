@@ -17,7 +17,7 @@ namespace Runtime.Weapons
         [field: ES3Serializable] public override string EntityName { get; set; } = "Rifle";
 
         public override bool Collectable => true;
-        [field: ES3Serializable] public override int Width { get; } = 1;
+        [field: ES3Serializable] public override int Width { get; } = 2;
         
         protected override string OnGetDescription(string defaultLocalizationKey) {
             return Localization.Get(defaultLocalizationKey);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.AudioKit;
 using Polyglot;
 using Runtime.UI;
 using TMPro;
@@ -20,10 +21,13 @@ public class PanelHint : HintPanel {
 	[SerializeField] private Button nextPageButton;
 	[SerializeField] private Button closeButton;
 	[SerializeField] private Button lastPageButton;
+
+	private VideoClip lastVideoClip = null;
 	public override void OnInit() {
 		base.OnInit();
 		nextPageButton.onClick.AddListener(ShowNextMessage);
 		closeButton.onClick.AddListener(() => {
+			AudioSystem.Singleton.Play2DSound("interact_button");
 			var lastHintMessage = currentMessageGroup.messages[^1];
 			if (lastHintMessage != null && lastHintMessage.callback != null) {
 				lastHintMessage.callback.Invoke();
@@ -39,18 +43,27 @@ public class PanelHint : HintPanel {
 	}
 
 	protected override void OnShowMessage() {
+		AudioSystem.Singleton.Play2DSound("arrow_click");
 		HintMessage message = currentMessageGroup.messages[currentMessageIndex];
 		titleText.text = Localization.Get(message.titleLocalizedKey);
 		messageText.text = GetLocalizedText(message);
 		//icon.sprite = message.icon;
-		panelVideoPlayer.Stop();
+		
 
 		if (message.panelImage != null) {
+			panelVideoPlayer.Stop();
 			panelRawImage.texture = message.panelImage;
 		}else if (message.panelVideo != null) {
 			panelRawImage.texture = panelRenderTexture;
 			panelVideoPlayer.clip = message.panelVideo;
-			panelVideoPlayer.Play();
+			
+			if(message.panelVideo != lastVideoClip) {
+				panelVideoPlayer.Stop();
+				panelVideoPlayer.Play();
+			}
+		
+			lastVideoClip = message.panelVideo;
+			
 		}
 		lastPageButton.gameObject.SetActive(currentMessageIndex > 0);
 	}

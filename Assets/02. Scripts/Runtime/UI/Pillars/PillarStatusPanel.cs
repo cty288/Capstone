@@ -13,7 +13,9 @@ using DG.Tweening;
 using Framework;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.UIKit;
 using Runtime.Spawning;
+using Runtime.UI;
 using Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,7 +53,6 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 	}
 
 	private void Start() {
-		
 		var info = pillarModel.ActivatedPillarCurrencyAmount;
 		if (info.Count > 0) {
 			OnPillarActivated(new OnPillarActivated() {

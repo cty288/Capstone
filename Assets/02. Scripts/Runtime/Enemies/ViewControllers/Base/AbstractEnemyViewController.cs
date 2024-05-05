@@ -129,14 +129,15 @@ namespace Runtime.Enemies.ViewControllers.Base {
 				if (!spawnWeaponParts) {
 					return;
 				}
-				int minLevel = Mathf.Max(levelModel.CurrentLevelCount.Value, 1);
-				int maxLevel = Mathf.Min(levelModel.CurrentLevelCount.Value + 1, LevelModel.MAX_LEVEL);
+				int minLevel = Mathf.Max(levelModel.CurrentLevelCount.Value - 1, 1);
+				int maxLevel = Mathf.Min(levelModel.CurrentLevelCount.Value, LevelModel.MAX_LEVEL);
+				
 				RewardBatch batch = default;
 				if (minLevel != maxLevel) {
 					batch = new RewardBatch(RewardType.Random_WeaponParts,
 						new Dictionary<int, int>() {
-							{minLevel, weaponPartsDropCountRange.x},
-							{maxLevel, weaponPartsDropCountRange.y}
+							{minLevel, 8},
+							{maxLevel, 2}
 						}, weaponPartsDropCountRange);
 
 				}
