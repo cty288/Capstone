@@ -41,6 +41,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.MedicalNeedle {
 			int amount = BoundEntity.GetCustomPropertyOfCurrentLevel<int>("healing_amount");
 			IPlayerEntity player = playerModel.GetPlayer();
 			player.Heal(amount, player);
+			ScreenSpaceVFXManager.Instance.PlayHeal(new Color(0.2f,1 ,0.5f));
 
 			if (BoundEntity.GetLevel() >= 3) {
 				float buffDuration = BoundEntity.GetCustomPropertyOfCurrentLevel<float>("buff_duration");

@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.VFX;
 
 public class ScreenSpaceVFXManager : MonoBehaviour
 {
-    [SerializeField] private BuffEffect healEffect;
     [SerializeField] private BuffEffect buffEffect;
 
     private List<BuffEffect> _buffEffectStack;
@@ -22,22 +23,29 @@ public class ScreenSpaceVFXManager : MonoBehaviour
             var obj = FindObjectOfType<ScreenSpaceVFXManager>();
             if (obj == null)
             {
-                GameObject go = new GameObject();
-                obj = go.AddComponent<ScreenSpaceVFXManager>();
+                return null;
             }
             
-            
-
             _instance = obj;
             return obj;
         }
     }
     private static ScreenSpaceVFXManager _instance;
 
+
+    [SerializeField] private Volume vol;
+    public void Start()
+    {
+        UnityEngine.Rendering.VolumeProfile volumeProfile = GetComponent<UnityEngine.Rendering.Volume>()?.profile;
+        if(!volumeProfile) throw new System.NullReferenceException(nameof(UnityEngine.Rendering.VolumeProfile));
+ 
+        if(!volumeProfile.TryGet(out buffEffect)) throw new System.NullReferenceException(nameof(buffEffect));
+    }
+
     public bool PlayHeal(Color color)
     {
-        healEffect.colorHeal.value = color;
-        healEffect.healToggle.value = 1;
+        buffEffect.colorHeal.value = color;
+        buffEffect.healToggle.value = 1;
         StartCoroutine(Heal());
         return true;
     }
