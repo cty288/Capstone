@@ -106,9 +106,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Plant.Attachments.Sudd
 					float time = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("time");
 					float damage = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("damage");
 					int displayedDamage = (int) (damage * 100);
-					string hackedBuffName = BuffPool.GetTemplateBuff<SuddenDeathBuff>().GetDisplayName();
+					//string hackedBuffName = BuffPool.GetTemplateBuff<SuddenDeathBuff>().GetDisplayName();
 					return new WeaponBuffedAdditionalPropertyDescription(iconName, title,
-						Localization.GetFormat("SuddenDeath_desc", time, displayedDamage, hackedBuffName));
+						Localization.GetFormat("SuddenDeath_desc", time, displayedDamage));
 				})
 			};
 		}
