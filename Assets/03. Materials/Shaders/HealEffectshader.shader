@@ -3,8 +3,8 @@ Shader "Hidden/HealEffectShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-    	_Color1 ("EffecT Color 1", Color) = "white" {}
-    	_Color1Toggle ("Effect 1 Toggle", Range(0, 1)) = 0
+    	_ColorHeal ("Heal Color", Color) = (1, 1, 1, 1)
+    	_HealToggle ("Heal Toggle", Range(0, 1)) = 0
     	
     }
     SubShader 

@@ -1,18 +1,141 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class ScreenSpaceVFXManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private BuffEffect healEffect;
+    [SerializeField] private BuffEffect buffEffect;
+
+    private List<BuffEffect> _buffEffectStack;
+
+    public static ScreenSpaceVFXManager Instance
     {
-        
+        get
+        {
+            if (_instance != null)
+            {
+                return _instance;
+            }
+
+            var obj = FindObjectOfType<ScreenSpaceVFXManager>();
+            if (obj == null)
+            {
+                GameObject go = new GameObject();
+                obj = go.AddComponent<ScreenSpaceVFXManager>();
+            }
+            
+            
+
+            _instance = obj;
+            return obj;
+        }
+    }
+    private static ScreenSpaceVFXManager _instance;
+
+    public bool PlayHeal(Color color)
+    {
+        healEffect.colorHeal.value = color;
+        healEffect.healToggle.value = 1;
+        StartCoroutine(Heal());
+        return true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator Heal()
     {
+        float progress = 0f;
+
+        while (progress < 1)
+        {
+            progress += Time.deltaTime;
+            var t = easeInOutQuint(progress);
+            //Do something with t
+            
+            
+            yield return null;
+        }
+
+        progress = 0f;
+        while (progress < 1)
+        {
+            progress += Time.deltaTime;
+            var t = easeOutSine(progress);
+            //Do something with t
+            
+            
+            yield return null;
+        }
         
+        StopCoroutine(Heal());
+    }
+    
+    
+    public bool SetBuff(Color color, bool toggle, int buffIndex){
+        if (buffIndex == 0)
+        {
+            return true;
+        }
+        else if(buffIndex == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public IEnumerator Buff(bool toggle)
+    {
+        float progress = 0f;
+
+        if (toggle)
+        {
+            while (progress < 1)
+            {
+                progress += Time.deltaTime;
+                var t = easeOutElastic(progress);
+                //Do something with t
+            
+            
+                yield return null;
+            }
+        }
+        else
+        {
+
+            while (progress < 1)
+            {
+                progress += Time.deltaTime;
+                var t = easeOutSine(progress);
+                //Do something with t
+
+
+                yield return null;
+            }
+        }
+
+        StopCoroutine(Buff(toggle));
+    }
+    
+    private float easeInOutQuint(float x) {
+        return x < 0.5 ? 16 * x * x * x * x * x : 1 - Mathf.Pow(-2 * x + 2, 5) / 2;
+    }
+    
+    private float easeOutSine(float x) {
+        return Mathf.Sin((x * Mathf.PI) / 2);
+
+    }
+    
+    private float easeOutElastic(float x){
+        const float c4 = (2 * Mathf.PI) / 3;
+
+        return x <= 0
+            ? 0
+            : x >= 1
+                ? 1
+                : Mathf.Pow(2, -10 * x) * Mathf.Sin((x * 10 - 0.75f) * c4) + 1;
+
     }
 }

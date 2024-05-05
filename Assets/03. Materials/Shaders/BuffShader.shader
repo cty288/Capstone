@@ -3,8 +3,8 @@ Shader "Hidden/BuffShader"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-    	_Color1 ("EffecT Color 1", Color) = "white" {}
-    	_Color2 ("Effect Color 2", Color) = "gray" {}
+    	_Color1 ("EffecT Color 1", Color) = (1, 1, 1, 1)
+    	_Color2 ("Effect Color 2", Color) = (1, 1, 1, 1)
     	_Color1Toggle ("Effect 1 Toggle", Range(0, 1)) = 0
     	_Color2Toggle ("Effect 2 Toggle", Range(0, 1)) = 0
     	
