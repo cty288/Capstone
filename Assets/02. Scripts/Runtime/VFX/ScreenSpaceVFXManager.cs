@@ -82,10 +82,12 @@ public class ScreenSpaceVFXManager : MonoBehaviour
     public bool SetBuff(Color color, bool toggle, int buffIndex){
         if (buffIndex == 0)
         {
+            Buff(toggle, buffIndex);
             return true;
         }
         else if(buffIndex == 1)
         {
+            Buff(toggle, buffIndex);
             return true;
         }
         else
@@ -94,7 +96,7 @@ public class ScreenSpaceVFXManager : MonoBehaviour
         }
     }
 
-    public IEnumerator Buff(bool toggle)
+    public IEnumerator Buff(bool toggle, int i)
     {
         float progress = 0f;
 
@@ -124,7 +126,7 @@ public class ScreenSpaceVFXManager : MonoBehaviour
             }
         }
 
-        StopCoroutine(Buff(toggle));
+        StopCoroutine(Buff(toggle, i));
     }
     
     private float easeInOutQuint(float x) {
