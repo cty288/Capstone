@@ -35,6 +35,13 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected Dictionary<HurtBox, bool> initialHurtBoxActiveState = new Dictionary<HurtBox, bool>();
 		[SerializeField] private GameObject spawnVFX;
 
+		
+		[Header("Normal Visuals")]
+		[ColorUsage(true, true), SerializeField] private Color normalColor;
+		[SerializeField] private float normalFresnel;
+		[SerializeField] private float normalCutIn;
+		[SerializeField] private float normalCutOut;
+		
 		[Header("Elite Visuals")]
 		[ColorUsage(true, true), SerializeField] private Color eliteColor;
 		[SerializeField] private float eliteFresnel;
@@ -93,6 +100,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			}
 			else {
 				transform.localScale = Vector3.one;
+				
 			}
 		}
 
@@ -141,6 +149,24 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			}
 			invincibleTime = 2f;
 			spawned = false;
+
+			if (BoundEntity.IsElite)
+			{
+				var renderers = GetComponentsInChildren<Renderer>();
+				foreach (var renderer in renderers)
+				{
+					foreach (var mat in renderer.materials)
+					{
+						if (mat.HasProperty("_FresnelOn"))
+						{
+							mat.SetColor(HighlightColor, normalColor);
+							mat.SetFloat(FresnelPower, normalFresnel);
+							mat.SetFloat(FresnelCutOffIn, normalCutIn);
+							mat.SetFloat(FresnelCutOffOut, normalCutOut);
+						}
+					}
+				}
+			}
 		}
 
 
