@@ -79,6 +79,22 @@ Shader "Hidden/BuffShader"
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
 				
 				float4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+				float2 uv = i.uv;
+				float dist1 = pow(1.f - uv.y, 3) * (1 - (uv.y + 0.1 * sin((uv.x + 1 + _Time.x) * 80) - 0.1f));
+				dist1 = pow(dist1, 3);
+
+				float dist2 = saturate(pow(0.95f - uv.y  + 0.1f * _Color1Toggle, 3) *
+					(1 - (uv.y + 0.1 * cos((uv.x + 1.49 + _Time.x) * 80) - 0.1f) + 0.1f * _Color1Toggle));
+				dist2 = pow(dist2, 3); 
+
+				//float4 buffColor = alphaBlend(float4(_Color1.rgb, saturate(dist1 * _Color1Toggle)), float4(_Color2.rgb, saturate(dist2 * _Color2Toggle)));
+				//color = alphaBlend(float4(buffColor.rgb, max(dist2 * _Color2Toggle, dist1 * _Color1Toggle)), color);
+				//color = alphaBlend(buffColor, color);
+
+				float a1 = dist1 * _Color1Toggle;
+				color = alphaBlend(float4(_Color2.rgb, clamp(dist2 * _Color2Toggle - a1, 0, 10)), color);	
+				color = alphaBlend(float4(_Color1.rgb, a1), color);
+				
 				return color;
 			}
 			

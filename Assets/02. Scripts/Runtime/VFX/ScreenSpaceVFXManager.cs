@@ -44,15 +44,15 @@ public class ScreenSpaceVFXManager : MonoBehaviour
         if(!volumeProfile.TryGet(out buffEffect)) throw new System.NullReferenceException(nameof(buffEffect));
     }
 
-    public bool PlayHeal(Color color)
+    public bool PlayHeal(Color color, float strength = 1f)
     {
         buffEffect.colorHeal.value = color;
         buffEffect.healToggle.value = 1;
-        StartCoroutine(Heal());
+        StartCoroutine(Heal(strength));
         return true;
     }
 
-    public IEnumerator Heal()
+    public IEnumerator Heal(float strength)
     {
         float progress = 0f;
 
@@ -61,7 +61,7 @@ public class ScreenSpaceVFXManager : MonoBehaviour
             progress += Time.deltaTime * instantBuffSpeed;
             var t = easeInOutQuint(progress);
             //Do something with t
-            buffEffect.healToggle.value = t;
+            buffEffect.healToggle.value = t * strength;
             
             yield return null;
         }
@@ -69,29 +69,31 @@ public class ScreenSpaceVFXManager : MonoBehaviour
         progress = 0f;
         while (progress < 1)
         {
-            progress += Time.deltaTime * instantBuffLingerSpeed;
+            progress += Time.deltaTime * instantBuffLingerSpeed /strength;
             var t = easeOutSine(progress);
             //Do something with t
-            buffEffect.healToggle.value = 1-t;
+            buffEffect.healToggle.value = (1-t) * strength;
             
             yield return null;
         }
         
         buffEffect.healToggle.value = 0;
         
-        StopCoroutine(Heal());
+        StopCoroutine(Heal(strength));
     }
     
     
     public bool SetBuff(Color color, bool toggle, int buffIndex){
         if (buffIndex == 0)
         {
-            Buff(toggle, buffIndex);
+            buffEffect.color1.value = color;
+            StartCoroutine(Buff(toggle, buffIndex));
             return true;
         }
         else if(buffIndex == 1)
         {
-            Buff(toggle, buffIndex);
+            buffEffect.color2.value = color;
+            StartCoroutine(Buff(toggle, buffIndex));
             return true;
         }
         else
@@ -103,6 +105,16 @@ public class ScreenSpaceVFXManager : MonoBehaviour
     public IEnumerator Buff(bool toggle, int i)
     {
         float progress = 0f;
+        
+        while (progress < 1)
+        {
+            progress += Time.deltaTime * instantBuffSpeed * 2.0f;
+            var t = easeOutElastic(progress);
+            //Do something with t
+            yield return null;
+        }
+        
+        progress = 0f;
 
         if (toggle)
         {
@@ -111,7 +123,16 @@ public class ScreenSpaceVFXManager : MonoBehaviour
                 progress += Time.deltaTime;
                 var t = easeOutElastic(progress);
                 //Do something with t
-            
+                switch (i)
+                {
+                    case 0:
+                        buffEffect.color1Toggle.value = t;
+                        break;
+                    
+                    case 1:
+                        buffEffect.color2Toggle.value = t;
+                        break;
+                }
             
                 yield return null;
             }
@@ -124,7 +145,16 @@ public class ScreenSpaceVFXManager : MonoBehaviour
                 progress += Time.deltaTime;
                 var t = easeOutSine(progress);
                 //Do something with t
-
+                switch (i)
+                {
+                    case 0:
+                        buffEffect.color1Toggle.value = 1-t;
+                        break;
+                    
+                    case 1:
+                        buffEffect.color2Toggle.value = 1-t;
+                        break;
+                }
 
                 yield return null;
             }

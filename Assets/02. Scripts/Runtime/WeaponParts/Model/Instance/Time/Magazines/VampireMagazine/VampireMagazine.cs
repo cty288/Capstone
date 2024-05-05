@@ -49,8 +49,8 @@ public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazin
 	public class VampireMagazineBuff : WeaponPartsBuff<VampireMagazine, VampireMagazineBuff>, ICanGetSystem {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
-		
-		
+
+		private Color _color = new Color(0.1f, 0.7f, 0.9f);
 		public override void OnInitialize() {
 			weaponEntity.RegisterOnDealDamage(OnWeaponDealDamage);
 		}
@@ -63,7 +63,9 @@ public class VampireMagazine : WeaponPartsEntity<VampireMagazine, VampireMagazin
 				}
 
 				if (rootEntity is IDamageable damageable) {
-					if (Random.value < weaponPartsEntity.Chance) {
+					if (Random.value < weaponPartsEntity.Chance)
+					{
+						ScreenSpaceVFXManager.Instance.PlayHeal(_color, strength: 0.1f);
 						damageable.Heal(weaponPartsEntity.Health, rootEntity as IBelongToFaction);
 					}
 				}
