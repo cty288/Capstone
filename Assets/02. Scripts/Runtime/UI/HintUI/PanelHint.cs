@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.AudioKit;
 using Polyglot;
 using Runtime.UI;
 using TMPro;
@@ -24,6 +25,7 @@ public class PanelHint : HintPanel {
 		base.OnInit();
 		nextPageButton.onClick.AddListener(ShowNextMessage);
 		closeButton.onClick.AddListener(() => {
+			AudioSystem.Singleton.Play2DSound("interact_button");
 			var lastHintMessage = currentMessageGroup.messages[^1];
 			if (lastHintMessage != null && lastHintMessage.callback != null) {
 				lastHintMessage.callback.Invoke();
@@ -39,6 +41,7 @@ public class PanelHint : HintPanel {
 	}
 
 	protected override void OnShowMessage() {
+		AudioSystem.Singleton.Play2DSound("arrow_click");
 		HintMessage message = currentMessageGroup.messages[currentMessageIndex];
 		titleText.text = Localization.Get(message.titleLocalizedKey);
 		messageText.text = GetLocalizedText(message);
