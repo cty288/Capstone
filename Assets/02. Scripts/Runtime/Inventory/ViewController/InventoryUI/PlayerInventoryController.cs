@@ -75,7 +75,7 @@ public class PlayerInventoryController : AbstractMikroController<MainGame> {
 
 
    private void Update() {
-      if (playerModel.IsPlayerDead() || UIManager.Singleton.GetPanel<InventoryUIViewController>(true)) {
+      if (playerModel.IsPlayerDead() || UIManager.Singleton.GetPanel<AbstractPanel>(true)) {
          return;
       }
       //Alpha1 -> 49, Alpha9 -> 57

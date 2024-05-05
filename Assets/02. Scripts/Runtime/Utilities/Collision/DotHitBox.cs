@@ -20,11 +20,13 @@ namespace Runtime.Utilities.Collision
         public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         [SerializeField] protected bool showDamageNumber = true;
 
-
+        private HitData hitData;
+        
         private void Start()
         {
             Initialize();
             timer = dotTick;
+            hitData = new HitData();
         }
         private void Update()
         {
@@ -81,23 +83,27 @@ namespace Runtime.Utilities.Collision
                         return;
                     }
                 
-                    HitData hitData = null;
+                    // HitData hitData = null;
                     Vector3 center = _collider.transform.position;
                     Vector3 hitPoint = other.ClosestPoint(transform.position);
                     Vector3 hitNormal = transform.position - hitPoint;
 
                     if(hurtbox != null)
                     {
-                        hitData = new HitData()
-                        {
-                            Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier),
-                            HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
-                            HitNormal = hitNormal,
-                            Hurtbox = hurtbox,
-                            HitDetector = this,
-                            Attacker = m_hitResponder,
-                            ShowDamageNumber = showDamageNumber
-                        };
+                        hitData.ResetHitData();
+                        var damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier);
+                        hitData.SetHitBoxData(m_hitResponder, damage, hurtbox, hitPoint, hitNormal, this, showDamageNumber);
+                        
+                        // hitData = new HitData()
+                        // {
+                        //     Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier),
+                        //     HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
+                        //     HitNormal = hitNormal,
+                        //     Hurtbox = hurtbox,
+                        //     HitDetector = this,
+                        //     Attacker = m_hitResponder,
+                        //     ShowDamageNumber = showDamageNumber
+                        // };
 
                         if (hitData.Validate()) {
                             hitData.HitDetector.HitResponder?.HitResponse(hitData);
@@ -106,16 +112,20 @@ namespace Runtime.Utilities.Collision
                     }
                     else
                     {
-                        hitData = new HitData()
-                        {
-                            Damage = Damage,
-                            HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
-                            HitNormal = hitNormal,
-                            Hurtbox = null,
-                            HitDetector = this,
-                            Attacker = m_hitResponder,
-                            ShowDamageNumber = showDamageNumber
-                        };
+                        hitData.ResetHitData();
+                        var point = hitPoint == Vector3.zero ? center : hitPoint;
+                        hitData.SetHitBoxData(m_hitResponder, Damage, false, null, point, hitNormal, this, showDamageNumber);
+                        
+                        // hitData = new HitData()
+                        // {
+                        //     Damage = Damage,
+                        //     HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
+                        //     HitNormal = hitNormal,
+                        //     Hurtbox = null,
+                        //     HitDetector = this,
+                        //     Attacker = m_hitResponder,
+                        //     ShowDamageNumber = showDamageNumber
+                        // };
 
                         HitResponder?.HitResponse(hitData);
                     }

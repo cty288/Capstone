@@ -29,6 +29,7 @@ public class SanctuaryShieldViewController : AbstractMikroController<MainGame>, 
 	protected int currentHealth;
 	public Material shieldMaterial;
 	private Color originalColor;
+	private Color flashColor = new Color(1,1,1,0.5f);
 	
 	protected virtual void Awake() {
 		hurtbox = GetComponentInChildren<HurtBox>();
@@ -75,7 +76,6 @@ public class SanctuaryShieldViewController : AbstractMikroController<MainGame>, 
 	private async UniTask FlashAndBreak()
 	{
 		//flash
-		Color flashColor = new Color(1,1,1,0.5f);
 		shieldMaterial.DOColor(flashColor, "_DamageColor", 0.2f).SetLoops(3);
 		
 		await UniTask.WaitForSeconds(0.65f);

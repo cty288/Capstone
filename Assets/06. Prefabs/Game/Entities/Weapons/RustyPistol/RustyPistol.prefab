@@ -625,6 +625,7 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  autoAbsorbWhenPlayerReach: 1
   autoRecycleTimeWhenNoAbsorb: 120
   alsoRemoveEntityWhenNoAbsorb: 1
   <InHandLocalPosition>k__BackingField: {x: 0, y: 0, z: 0}
@@ -686,9 +687,10 @@ MonoBehaviour:
     adsCameraPosition: {x: 0, y: -0.1, z: 0}
     adsCameraRotation: {x: 2.2, y: 359.26, z: 1.67}
   bulletVFX:
-  - {fileID: 6895374929032582147}
+  - {fileID: 4786992204249495899}
   bulletVFXInHand:
   - {fileID: 6895374929032582147}
+  _bulletVFXCurr: []
   overrideName: RustyPistol
 --- !u!54 &1634876173769045248
 Rigidbody:

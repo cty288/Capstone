@@ -379,7 +379,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant {
 		}
 
 		public override void OnBuffEnd() {
-			
+			DeallocateBuffVFX();
 		}
 
 		protected override IEnumerable<BuffedProperties> GetBuffedPropertyGroups() {

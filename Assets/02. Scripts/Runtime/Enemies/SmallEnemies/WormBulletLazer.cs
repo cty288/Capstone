@@ -40,7 +40,7 @@ namespace a
         {
 
             
-            transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            transform.localScale = Vector3.one * 0.3f;
            // pool = GameObjectPoolManager.Singleton.CreatePool(particlePrefab, 10, 20);
 
            player = PlayerController.GetClosestPlayer(transform.position).transform.gameObject;
