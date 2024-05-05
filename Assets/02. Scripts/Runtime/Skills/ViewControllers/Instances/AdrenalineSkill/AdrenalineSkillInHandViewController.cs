@@ -42,6 +42,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances.AdrenalineSkill 
 		private void OnUseSuccess() {
 			int buffLevel = BoundEntity.GetCustomPropertyOfCurrentLevel<int>("buff_level");
 			IPlayerEntity player = playerModel.GetPlayer();
+			ScreenSpaceVFXManager.Instance.PlayHeal(new Color(0.95f,0.6f ,0.1f));
 			StimulatedBuff buff = StimulatedBuff.Allocate(player,player, buffLevel);
 			if(!buffSystem.AddBuff(player, player, buff)) {
 				buff.RecycleToCache();
