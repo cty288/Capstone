@@ -6,11 +6,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class PanelHint : HintPanel {
 	[SerializeField] private TMP_Text titleText;
 	[SerializeField] private TMP_Text messageText;
-	[SerializeField] private Image icon;
+	//[SerializeField] private Image icon;
+	
+	[SerializeField] private RenderTexture panelRenderTexture;
+	[SerializeField] private VideoPlayer panelVideoPlayer;
+	[SerializeField] private RawImage panelRawImage;
+	
 	[SerializeField] private Button nextPageButton;
 	[SerializeField] private Button closeButton;
 	[SerializeField] private Button lastPageButton;
@@ -36,7 +42,16 @@ public class PanelHint : HintPanel {
 		HintMessage message = currentMessageGroup.messages[currentMessageIndex];
 		titleText.text = Localization.Get(message.titleLocalizedKey);
 		messageText.text = GetLocalizedText(message);
-		icon.sprite = message.icon;
+		//icon.sprite = message.icon;
+		panelVideoPlayer.Stop();
+
+		if (message.panelImage != null) {
+			panelRawImage.texture = message.panelImage;
+		}else if (message.panelVideo != null) {
+			panelRawImage.texture = panelRenderTexture;
+			panelVideoPlayer.clip = message.panelVideo;
+			panelVideoPlayer.Play();
+		}
 		lastPageButton.gameObject.SetActive(currentMessageIndex > 0);
 	}
 	
