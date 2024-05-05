@@ -16627,6 +16627,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40b4bd046fceb449948f839956f7cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameTagSpawnPoint: {fileID: 0}
+  localizedNameKey: 
+  interactHintSpawnPoint: {fileID: 0}
+  conditionalDialogueGroups: []
 --- !u!1 &4886624117785774387
 GameObject:
   m_ObjectHideFlags: 0
@@ -24527,6 +24531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4442e324fe3ef41438033501bfe88824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameTagSpawnPoint: {fileID: 0}
+  localizedNameKey: 
+  interactHintSpawnPoint: {fileID: 0}
+  conditionalDialogueGroups: []
 --- !u!1 &5997115202316876741
 GameObject:
   m_ObjectHideFlags: 0
@@ -24662,6 +24670,7 @@ MonoBehaviour:
   autoDestroyWhenEntityRemoved: 1
   crossHairHUDToleranceMaxTime: 0.3
   crossHairHUDToleranceScreenDistanceFactor: 0.5
+  conditionalDialogueGroups: []
   playerSpawnPoints:
   - {fileID: 554314296457167679}
   enemySpawnCardConfigs:
@@ -24677,12 +24686,12 @@ MonoBehaviour:
   pillarPrefabName: BossPillar
   maxExtent: {fileID: 0}
   playerSpawner: {fileID: 0}
-  sandstormProbability:
-  - 0
-  - 0.33
-  - 1
   timeCurrencyLevel: 1
   spawnExitDoor: 0
+  displayedCoordinates:
+  - 
+  - 
+  diaplsyedNameLocalizedKey: 
   subAreaLevelPrefabs: []
   autoUpdateNavMeshOnStart: 1
   ambientMusic: {fileID: 8300000, guid: 40c173f020bb645448cede9fae874c2d, type: 3}

@@ -10,6 +10,7 @@ using Runtime.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.Video;
 
 
 public enum HintMessageType {
@@ -30,6 +31,8 @@ public class HintMessage {
 	public string[] keyParameters;
 	public string titleLocalizedKey;
 	public Sprite icon;
+	public Texture2D panelImage;
+	public VideoClip panelVideo;
 	public float duration;
 	[SerializeField] public UnityEvent callback;
 }

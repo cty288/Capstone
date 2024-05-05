@@ -106,7 +106,8 @@ public class TutorialLevelViewController : LevelViewController<TutorialLevelEnti
         
         var skill = ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.Skill,
                 (r) => r.Collectable && r is MedicalNeedleSkill).FirstOrDefault();
-        
+
+        player.SetHealth(80);
         IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
         initialSkill = skill.EntityCreater.Invoke(true, 1) as ISkillEntity;
         initialSkill.AdditionalSkillSwitchLocker.Retain();
