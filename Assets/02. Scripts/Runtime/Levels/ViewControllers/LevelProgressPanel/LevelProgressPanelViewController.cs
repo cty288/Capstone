@@ -11,6 +11,7 @@ using DG.Tweening;
 using Framework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.Event;
 using Runtime.Utilities;
 using UnityEngine;
@@ -61,6 +62,7 @@ public class LevelProgressPanelViewController : AbstractMikroController<MainGame
 
 	private void OnTaskCompleted(OnTaskCompleted e) {
 		if (taskElements.TryGetValue(e.Task, out TaskElementViewController taskElementViewController)) {
+			AudioSystem.Singleton.Play2DSound("checkmark");
 			taskElementViewController.SetCompleted(true);
 		}
 	}

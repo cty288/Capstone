@@ -93,7 +93,7 @@ namespace Runtime.UI {
 				Time.timeScale = 0;
 			}
 
-			AudioSystem.Singleton.Play2DSound("open_menu");
+			// AudioSystem.Singleton.Play2DSound("open_menu");
 			
 			//ClientInput.Singleton.EnableUIMaps();
 			return panel;
@@ -125,7 +125,7 @@ namespace Runtime.UI {
 				ClientInput.Singleton.EnablePlayerMaps();
 			}
 			
-			AudioSystem.Singleton.Play2DSound("open_menu");
+			// AudioSystem.Singleton.Play2DSound("open_menu");
 			//Time.timeScale = 0;
 			return Open<T>(parent, message, createNewIfNotExist, assetNameIfNotExist);
 		}
@@ -162,7 +162,7 @@ namespace Runtime.UI {
 				Time.timeScale = 1;
 			}
 			
-			AudioSystem.Singleton.Play2DSound("close_menu");
+			// AudioSystem.Singleton.Play2DSound("close_menu");
 			//ClientInput.Singleton.EnablePlayerMaps();
 		}
 		
