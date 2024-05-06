@@ -64,7 +64,7 @@ namespace Runtime.Weapons.ViewControllers.Base
             }
         }
         
-        [SerializeField] private VisualEffect[] _bulletVFXCurr;
+        private VisualEffect[] _bulletVFXCurr;
 
         public void ResetBulletVFX()
         {

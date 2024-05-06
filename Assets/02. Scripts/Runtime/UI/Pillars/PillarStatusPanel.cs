@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
+using _02._Scripts.Runtime.Levels.Systems;
 using _02._Scripts.Runtime.Levels.ViewControllers.Instances.BaseLevel;
 using _02._Scripts.Runtime.Pillars.Models;
 using _02._Scripts.Runtime.Pillars.Systems;
@@ -36,12 +37,13 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 	[SerializeField]
 	private Image skullImage;
 	private Color skullColor;
-	
+	private ILevelSystem levelSystem;
 	private IPillarModel pillarModel;
 	private void Awake() {
 		layoutGroup = transform.Find("LayoutGroup");
 		levelModel = this.GetModel<ILevelModel>();
 		pillarModel = this.GetModel<IPillarModel>();
+		levelSystem = this.GetSystem<ILevelSystem>();
 		levelModel.CurrentLevel.RegisterOnValueChanged(OnCurrentLevelChanged)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		this.RegisterEvent<OnPillarActivated>(OnPillarActivated)
@@ -49,7 +51,18 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 		this.RegisterEvent<OnPillarCurrencyReset>(OnPillarCurrencyReset)
 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		skullColor = skullImage.color;
+		
 		ClearLayoutGroup();
+	}
+
+
+	private void Update() {
+		if (levelSystem.IsInBossFight()) {
+			DisableLayoutGroup();
+		}
+		else {
+			layoutGroup.gameObject.SetActive(true);
+		}
 	}
 
 	private void Start() {
@@ -145,6 +158,11 @@ public class PillarStatusPanel : AbstractMikroController<MainGame> {
 		spawnedPillarStatusElements.Clear();
 		skullImage.DOKill();
 		skullImage.color = skullColor;
+		DisableLayoutGroup();
+	}
+
+	private void DisableLayoutGroup() {
+		skullImage.transform.parent.gameObject.SetActive(false);
 		layoutGroup.gameObject.SetActive(false);
 	}
 	
