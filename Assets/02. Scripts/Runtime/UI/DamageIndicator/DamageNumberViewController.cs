@@ -27,22 +27,21 @@ public class DamageNumberViewController : DefaultPoolableGameObject {
 	}
 	
 	public void StartAnimateDamage(float damage, float minSizeDamage, float maxSizeDamage, float minSize, float maxSize, bool isCriticalDamage,
-		string overrideText = null, Color? overrideColor = null) {
+		string overrideText = null, Color? overrideColor = null, bool special = false) {
 		Color targetColor = greyColor;
 		
 
 		damage = Mathf.Max(damage, 0);
 		float damageNormalized = Mathf.Clamp((damage - minSizeDamage) / (maxSizeDamage - minSizeDamage), 0, 1);
-		targetColor = new Color(1, 1f - damageNormalized, 1f- damageNormalized,1);
-
-		if (special)
-		{
-			targetColor = new Color(1, 0.7f, 0f, 1);
-		}
 		
 		tempColor.g = 1f - damageNormalized;
 		tempColor.b = 1f - damageNormalized;
 		targetColor = tempColor;
+		
+		if (special)
+		{
+			targetColor = new Color(1, 0.7f, 0f, 1);
+		}
 		
 		if (isCriticalDamage) {
 			targetColor = Color.red;
