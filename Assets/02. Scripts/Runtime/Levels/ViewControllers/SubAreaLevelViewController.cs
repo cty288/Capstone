@@ -296,7 +296,9 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
                 enemyVC.EnableBehaviorTree(false);
                 await UniTask.Yield();
                 enemyVC.EnableBehaviorTree(true);
-                enemyEntity.RecycleToCache();
+                //enemyEntity.RecycleToCache();
+
+                GlobalEntities.GetEntityAndModel(enemyEntity.UUID).Item2.RemoveEntity(enemyEntity.UUID);
             }
         }
         
