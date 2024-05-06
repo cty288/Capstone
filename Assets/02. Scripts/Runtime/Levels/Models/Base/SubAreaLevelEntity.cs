@@ -147,8 +147,12 @@ namespace _02._Scripts.Runtime.Levels.Models {
 
 		public SubAreaDangerLevel GetSpawnStatus()
 		{
-			if(IsActiveSpawner)
+			if(IsActiveSpawner && CurrentEnemyCount >= GetMaxEnemyCount() / 2)
+				return SubAreaDangerLevel.High;
+			else if(IsActiveSpawner || CurrentEnemyCount >= GetMaxEnemyCount() / 2)
 				return SubAreaDangerLevel.Medium;
+			else if(CurrentEnemyCount > 0)
+				return SubAreaDangerLevel.Low;
 			else
 				return SubAreaDangerLevel.Safe;
 		}

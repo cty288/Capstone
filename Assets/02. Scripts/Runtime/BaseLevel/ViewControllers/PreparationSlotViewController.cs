@@ -8,9 +8,14 @@ using UnityEngine.UI;
 public class PreparationSlotViewController : MonoBehaviour {
    [SerializeField] private Image[] tickedImages;
    private GameObject newIemHint;
+   private Color color = new Color(1, 1, 1, 0);
    private void Awake() {
-      foreach (Image tickedImage in tickedImages) {
-         tickedImage.color = new Color(tickedImage.color.r, tickedImage.color.g, tickedImage.color.b, 0);
+      foreach (Image tickedImage in tickedImages)
+      {
+         color.r = tickedImage.color.r;
+         color.g = tickedImage.color.g;
+         color.b = tickedImage.color.b;
+         tickedImage.color = color;
       }
       newIemHint = transform.Find("NewItemHint").gameObject;
    }

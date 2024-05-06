@@ -16,15 +16,19 @@ public class DamageNumberViewController : DefaultPoolableGameObject {
 	
 	private RectTransform rectTransform;
 	public Action<DamageNumberViewController> OnRecycledAction;
+	
+	private Color greyColor = new Color(0.6226415f, 0.6226415f, 0.6226415f,1);
+	private Color tempColor = new Color(1,1,1,1);
+	private Vector3 tempVector;
+	
 	private void Awake() {
 		text = GetComponentInChildren<TMP_Text>();
 		rectTransform = text.GetComponent<RectTransform>();
-		
 	}
 	
 	public void StartAnimateDamage(float damage, float minSizeDamage, float maxSizeDamage, float minSize, float maxSize, bool isCriticalDamage,
-		string overrideText = null, Color? overrideColor = null, bool special = false) {
-		Color targetColor = new Color(0.6226415f, 0.6226415f, 0.6226415f,1);
+		string overrideText = null, Color? overrideColor = null) {
+		Color targetColor = greyColor;
 		
 
 		damage = Mathf.Max(damage, 0);
@@ -36,8 +40,12 @@ public class DamageNumberViewController : DefaultPoolableGameObject {
 			targetColor = new Color(1, 0.7f, 0f, 1);
 		}
 		
+		tempColor.g = 1f - damageNormalized;
+		tempColor.b = 1f - damageNormalized;
+		targetColor = tempColor;
+		
 		if (isCriticalDamage) {
-			targetColor = new Color(1, 0, 0,1);
+			targetColor = Color.red;
 		}
 		
 		if (overrideColor != null) {
@@ -57,9 +65,9 @@ public class DamageNumberViewController : DefaultPoolableGameObject {
 		Vector3 pos = rectTransform.anchoredPosition;
 		
 		
-		Vector2 targetPos = pos + new Vector3(Random.Range(screenXPosRange.x, screenXPosRange.y),
+		tempVector.Set(Random.Range(screenXPosRange.x, screenXPosRange.y),
 			Random.Range(screenYPosRange.x, screenYPosRange.y), 0);
-		
+		Vector2 targetPos = pos + tempVector;
 		
 		float targetTime = duration * (Mathf.Clamp((damage / maxSizeDamage),0,1f) + 1);
 		if(!string.IsNullOrEmpty(overrideText))
@@ -69,8 +77,8 @@ public class DamageNumberViewController : DefaultPoolableGameObject {
 		text.color = targetColor;
 		text.DOFade(0, targetTime).OnComplete(RecycleToCache);
 
-		rectTransform.localScale = new Vector3(targetSize, targetSize, targetSize);
-		rectTransform.DOScale(new Vector3(0.3f, 0.3f, 0.3f), targetTime);
+		rectTransform.localScale = Vector3.one * targetSize;
+		rectTransform.DOScale(Vector3.one * 0.3f, targetTime);
 
 		//transform.DOLocalMove(targetPos, targetTime);
 		rectTransform.DOAnchorPos(targetPos, targetTime);

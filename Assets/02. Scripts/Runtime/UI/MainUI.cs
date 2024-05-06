@@ -187,7 +187,7 @@ namespace Runtime.UI {
 		}
 		public void ShowBlackScreen(bool instant = false) {
 			if (instant) {
-				blackScreenImage.color = new Color(0, 0, 0, 1);
+				blackScreenImage.color = Color.black;
 			}
 			else {
 				blackScreenImage.DOFade(1f, 1f);

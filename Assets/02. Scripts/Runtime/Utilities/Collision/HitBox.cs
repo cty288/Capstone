@@ -18,10 +18,12 @@ namespace Runtime.Utilities.Collision
         public virtual IHitResponder HitResponder { get => m_hitResponder; set => m_hitResponder = value; }
         [SerializeField] protected bool showDamageNumber = true;
         
+        private HitData hitData;
         
         private void Start()
         {
             Initialize();
+            hitData = new HitData();
         }
 
         private void Initialize()
@@ -60,7 +62,7 @@ namespace Runtime.Utilities.Collision
                 _triggerCheck.OnEnter -= TriggerCheckHit;
         }
         
-        public virtual void TriggerCheckHit(Collider c)
+        protected virtual void TriggerCheckHit(Collider c)
         {
             IHurtbox hurtbox;
             hurtbox = c.GetComponent<IHurtbox>();
@@ -76,37 +78,21 @@ namespace Runtime.Utilities.Collision
                 }
             }
             
-            
             if (c.isTrigger && hurtbox == null) {
                 return;
             }
-           
-            
              
-            HitData hitData = null;
-            
             Vector3 center = _collider.transform.position;
             Vector3 hitPoint = c.ClosestPoint(transform.position);
             Vector3 hitNormal = transform.position - hitPoint;
             
-           
-            // Debug.Log("hurtbox: " + hurtbox);
             if (hurtbox != null)
             {
-                // Debug.Log("make hitdata");
-                hitData = new HitData().SetHitBoxData(m_hitResponder, Damage, hurtbox,
+                hitData.ResetHitData();
+                hitData.SetHitBoxData(m_hitResponder, Damage, hurtbox,
                     hitPoint == Vector3.zero ? center : hitPoint, hitNormal,
                     this, showDamageNumber);
                 
-                    /*{
-                        Damage = m_hitResponder == null ? 0 : Mathf.FloorToInt(Damage * hurtbox.DamageMultiplier),
-                        HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
-                        HitNormal = hitNormal,
-                        Hurtbox = hurtbox,
-                        HitDetector = this,
-                        Attacker = m_hitResponder,
-                        ShowDamageNumber = showDamageNumber
-                    };*/
                 if (hitData.Validate())
                 {
                     // Debug.Log("validate: ");
@@ -118,27 +104,16 @@ namespace Runtime.Utilities.Collision
                 }
             }
             else {
-                hitData = new HitData().SetHitBoxData(m_hitResponder, Damage, false,null,
+                hitData.ResetHitData();
+                hitData.SetHitBoxData(m_hitResponder, Damage, false,null,
                     hitPoint == Vector3.zero ? center : hitPoint, hitNormal,
                     this, showDamageNumber);
                 
-                /*= new HitData()
-                {
-                    Damage = Damage,
-                    HitPoint = hitPoint == Vector3.zero ? center : hitPoint,
-                    HitNormal = hitNormal,
-                    Hurtbox = null,
-                    HitDetector = this,
-                    Attacker = m_hitResponder,
-                    ShowDamageNumber = showDamageNumber
-                };*/
                 if (hitData.HitDetector.HitResponder != null) {
                     hitData = hitData.HitDetector.HitResponder.OnModifyHitData(hitData);
                 }
                 HitResponder?.HitResponse(hitData);
             }
-            // Debug.Log("validate: " + (hitData.Validate()));
-
         }
         
         /// <summary>
@@ -148,39 +123,6 @@ namespace Runtime.Utilities.Collision
         /// <returns>Returns true if a hit is detected.</returns>
         public void CheckHit(HitDetectorInfo hitDetectorInfo = new HitDetectorInfo(), int damage = 0, Collider[] ignoredColliders = null)
         {
-            Debug.Log("checkhit() is replaced for testing");
-            
-            
-            // Vector3 scaledSize = new Vector3(
-            //     m_collider.size.x * transform.lossyScale.x,
-            //     m_collider.size.y * transform.lossyScale.y,
-            //     m_collider.size.z * transform.lossyScale.z
-            // );
-            // float distance = scaledSize.y - thickness;
-            // Vector3 direction = transform.up;
-            // Vector3 center = transform.TransformPoint(m_collider.center);
-            // Vector3 start = center + direction * (distance * 0.5f);
-            // Vector3 halfExtents = new Vector3(scaledSize.x, thickness, scaledSize.z) / 2;
-            // Quaternion orientation = transform.rotation;
-            //
-            // HitData hitData = null;
-            // IHurtbox hurtbox = null;
-            // RaycastHit[] hits = Physics.BoxCastAll(start, halfExtents, direction, orientation, distance, hitDetectorInfo.layer);
-            // foreach (RaycastHit hit in hits)
-            // {
-            //     hurtbox = hit.collider.GetComponent<IHurtbox>();
-            //     if (hurtbox != null)
-            //     {
-            //         hitData = new HitData().SetHitBoxData(m_hitResponder, hurtbox, hit, this, center);
-            //     }
-            //
-            //     if (hitData.Validate())
-            //     {
-            //         // Debug.Log("validate");
-            //         hitData.HitDetector.HitResponder?.HitResponse(hitData);
-            //         hitData.Hurtbox.HurtResponder?.HurtResponse(hitData);
-            //     }
-            // }
         }
 
         public int Damage { get; protected set; }
