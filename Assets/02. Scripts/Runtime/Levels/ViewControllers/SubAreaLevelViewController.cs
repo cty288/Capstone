@@ -4,12 +4,14 @@ using System.Linq;
 using _02._Scripts.Runtime.Levels.Models;
 using AYellowpaper.SerializedCollections;
 using BehaviorDesigner.Runtime.Tasks;
+using Cysharp.Threading.Tasks;
 using MikroFramework.Architecture;
 using Runtime.DataFramework.Description;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Properties;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.DataFramework.Properties;
+using Runtime.Enemies;
 using Runtime.Enemies.Model;
 using Runtime.Spawning;
 using Runtime.Utilities;
@@ -18,6 +20,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using PropertyName = Runtime.DataFramework.Properties.PropertyName;
+using Random = UnityEngine.Random;
 
 namespace _02._Scripts.Runtime.Levels.ViewControllers
 {
@@ -39,6 +42,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         public void StartSpawningCooldown();
 
         public void InitDirector(IDirectorViewController director);
+        
+        public UniTask SpawnOneOfEachEnemy();
 
         public void InitDirectors();
 
@@ -70,6 +75,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
         public int totalEnemiesSpawned;
         public bool isActive = true;
 
+        private Vector3 loadingSpawnPosition = new Vector3(6000, 6000, 6000);
         
         public HashSet<GameObject> Enemies {
             get {
@@ -276,6 +282,22 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             BoundEntity.DecrementEnemyCountDictionary(enemy.EntityName);
         	BoundEntity.CurrentEnemyCount = Mathf.Max(0, BoundEntity.CurrentEnemyCount - 1);
         	currentEnemies.Remove(enemy);
+        }
+        
+        public async UniTask SpawnOneOfEachEnemy() {
+            foreach (var enemyPrefab in Enemies)
+            {
+                GameObject spawnedEnemy = CreatureVCFactory.Singleton.SpawnCreatureVC(enemyPrefab, loadingSpawnPosition, 
+                    enemyPrefab.transform.rotation,
+                    null, 1,
+                    levelNumber, true, 10, 30);
+                IEnemyViewController enemyVC = spawnedEnemy.GetComponent<IEnemyViewController>();
+                IEnemyEntity enemyEntity = enemyVC.EnemyEntity;
+                enemyVC.EnableBehaviorTree(false);
+                await UniTask.Yield();
+                enemyVC.EnableBehaviorTree(true);
+                enemyEntity.RecycleToCache();
+            }
         }
         
         public void OnExitLevel() {

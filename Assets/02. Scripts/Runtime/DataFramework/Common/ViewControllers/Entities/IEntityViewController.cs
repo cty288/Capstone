@@ -52,8 +52,10 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
         public IEnemyEntity EnemyEntity { get; }
 
         IEntity IEntityViewController.Entity => EnemyEntity;
-        
-  //      public IEnemyEntity OnInitEntity(int level, int rarity);
+
+        public void EnableBehaviorTree(bool enable);
+
+        //      public IEnemyEntity OnInitEntity(int level, int rarity);
     }
     
     public interface INormalEnemyViewController : IEnemyViewController {
