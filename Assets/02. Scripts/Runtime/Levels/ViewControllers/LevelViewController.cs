@@ -372,7 +372,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				subarea.SetLevelNumber(levelNumber);
 			}
 			
-			IEnemyViewController[] existingEnemies = UpdatePreExistingEnemies();
+			UpdatePreExistingEnemies();
 			
 			if (ambientMusic) {
 				 ambientMusicSource = AudioSystem.Singleton.Play2DSound(ambientMusic, relativeVolume, true);
@@ -381,6 +381,7 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			if (bgm) {
 				AudioSystem.Singleton.PlayMusic(bgm);
 			}
+			
 			//UpdateWallMaterials();
 			await UniTask.Yield();
 			SpawningUtility.UpdateRefPointsKDTree();
