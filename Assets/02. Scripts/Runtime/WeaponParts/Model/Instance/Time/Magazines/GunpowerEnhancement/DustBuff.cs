@@ -58,7 +58,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 		}
 
 		public override void OnStart() {
-			
+			this.currentLayer++;
 		}
 
 		public override BuffStatus OnTick() {
@@ -88,6 +88,13 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Magazines.GunpowerEnha
 			currentLayer = 0;
 		}
 
-		
+		public override string GetDisplayName(int level) {
+			string name = base.GetDisplayName(level);
+			if(currentLayer > 0) {
+				return $"{name} ({currentLayer.ToString()})";
+			}
+
+			return name;
+		}
 	}
 }

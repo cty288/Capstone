@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class BuffIconViewController : MonoBehaviour {
-	private IBuff buff;
+	private IBuff buff = null;
 	[SerializeField]
 	private Image progressBar;
 
@@ -38,6 +38,8 @@ public class BuffIconViewController : MonoBehaviour {
 	}
 
 	private void Update() {
+		if (buff == null) return;
+		this.buffNameText.text = buff?.GetDisplayName();
 		UpdateProgress();
 		if (buff.MaxDuration > 0) {
 			float progress = buff.RemainingDuration / buff.MaxDuration;

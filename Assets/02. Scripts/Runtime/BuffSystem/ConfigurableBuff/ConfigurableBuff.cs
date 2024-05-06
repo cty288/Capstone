@@ -167,7 +167,7 @@ namespace _02._Scripts.Runtime.BuffSystem.ConfigurableBuff {
 		}
 
 
-		public string GetDisplayName(int level) {
+		public virtual string GetDisplayName(int level) {
 			string name = base.GetDisplayName();
 			if(String.IsNullOrEmpty(name)) {
 				return null;
