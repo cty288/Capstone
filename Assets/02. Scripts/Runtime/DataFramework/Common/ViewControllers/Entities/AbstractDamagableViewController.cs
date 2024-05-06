@@ -70,7 +70,7 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			OnEntityTakeDamage(damage, currenthealth, damagedealer);
 			if (showDamageNumber && (hitData == null || hitData.ShowDamageNumber)) {
 				DamageNumberHUD.Singleton.SpawnHUD(hitData?.HitPoint ?? transform.position, damage,
-					hitData != null && hitData.IsCritical);
+					hitData != null && hitData.IsCritical, special: hitData.isSpecial);
 			}
 		}
 

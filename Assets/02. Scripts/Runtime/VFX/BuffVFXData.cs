@@ -130,15 +130,34 @@ namespace _02._Scripts.Runtime.VFX
         }
     }
 
-    // Using EMP for Testing Purposes
-    public class GenericBuffableVFX : AbstractBuffableVFX<MalfunctionBuff>
+    // EMP Malfunction
+    public class StunBuffableVFX : AbstractBuffableVFX<MalfunctionBuff>
     {
         public override BuffVFXSpace VFXSpace { get; } = BuffVFXSpace.Local3D;
         public override BuffVFXType VFXType { get; } = BuffVFXType.Continuous;
-        public override string resourceName { get; } = "HCFX_Stun";
+        public override string resourceName { get; } = "Stun";
 
 
-        public GenericBuffableVFX(Func<Transform[]> framer) : base(framer)
+        public StunBuffableVFX(Func<Transform[]> framer) : base(framer)
+        {
+        }
+
+        public override bool TriggerBuff(IBuff buff)
+        {
+            // nothing
+            return false;
+        }
+    }
+    
+    // Viral
+    public class ViralBuffableVFX : AbstractBuffableVFX<HackedBuff>
+    {
+        public override BuffVFXSpace VFXSpace { get; } = BuffVFXSpace.Local3D;
+        public override BuffVFXType VFXType { get; } = BuffVFXType.Continuous;
+        public override string resourceName { get; } = "Viral";
+
+
+        public ViralBuffableVFX(Func<Transform[]> framer) : base(framer)
         {
         }
 

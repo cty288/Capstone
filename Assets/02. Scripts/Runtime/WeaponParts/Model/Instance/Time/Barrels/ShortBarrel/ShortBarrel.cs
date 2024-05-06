@@ -70,6 +70,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.ShortBarrel {
 			}
 
 			data.Damage = Mathf.RoundToInt(data.Damage * (1 + multiplier));
+			data.isSpecial = true;
 			return data;
 		}
 

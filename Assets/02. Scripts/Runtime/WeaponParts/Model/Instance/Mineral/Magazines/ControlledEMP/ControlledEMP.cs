@@ -3,7 +3,9 @@ using System.Linq;
 using _02._Scripts.Runtime.BuffSystem;
 using _02._Scripts.Runtime.WeaponParts.Model.Base;
 using _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Plant;
+using MikroFramework.Architecture;
 using Polyglot;
+using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
 using Runtime.DataFramework.Properties.CustomProperties;
 using Runtime.DataFramework.ViewControllers.Entities;
@@ -38,15 +40,18 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Cont
 		}
 	}
 
-	public class ControlledEMPBuff : WeaponPartsBuff<ControlledEMP, ControlledEMPBuff> {
+	public class ControlledEMPBuff : WeaponPartsBuff<ControlledEMP, ControlledEMPBuff>, ICanGetSystem {
 		[field: ES3Serializable]	
 		public override float TickInterval { get; protected set; } = -1;
 
 		private Dictionary<string, MineralBuffModifyTriggerAOEEvent> storedAOEs = new Dictionary<string, MineralBuffModifyTriggerAOEEvent>();
 
+		private IBuffSystem buffSystem;
+		
 		public override void OnInitialize() {
 			weaponEntity.RegisterOnModifyValueEvent<MineralBuffModifyTriggerAOEEvent>(OnModifyTriggerAOE);
 			weaponEntity.RegisterOnModifyHitData(OnModifyHitData);
+			buffSystem = this.GetSystem<IBuffSystem>();
 		}
 
 		private HitData OnModifyHitData(HitData hit, IWeaponEntity weapon) {
@@ -64,7 +69,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Cont
 			foreach (var id in ids) {
 				MineralBuffModifyTriggerAOEEvent e = storedAOEs[id];
 				storedAOEs.Remove(id);
-				
+				_isStored = false;
+				//buffOwner.OnBuffUpdate(this, BuffUpdateEventType.OnEnd);
 				if(e.MineralBuff.IsRecycled) continue;
 				e.MineralBuff.RangeAOE(e.Range, e.Damage, e.Duration, hit.Hurtbox.Owner.transform, target,
 					new MineralBuffAOE(weaponEntity), true);
@@ -77,8 +83,20 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Cont
 
 		private MineralBuffModifyTriggerAOEEvent OnModifyTriggerAOE(MineralBuffModifyTriggerAOEEvent e) {
 			e.Value = false;
-			storedAOEs.TryAdd(e.HitID, e);
+			bool success = storedAOEs.TryAdd(e.HitID, e);
+			if (success)
+			{
+				_isStored = true;
+				ScreenSpaceVFXManager.Instance.PlayHeal(new Color(0.6f, 0.6f, 0, 1));
+				//buffSystem.SendBuffUpdateEvent(buffOwner, buffDealer, this, BuffUpdateEventType.OnStart);
+			}
 			return e;
+		}
+
+		private bool _isStored;
+		public override bool IsDisplayed()
+		{
+			return _isStored;
 		}
 
 
@@ -91,7 +109,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Magazines.Cont
 		}
 
 		public override void OnBuffEnd() {
-		
+			
 		}
 
 

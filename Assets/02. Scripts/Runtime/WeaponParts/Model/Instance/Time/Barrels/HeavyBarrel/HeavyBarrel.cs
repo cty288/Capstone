@@ -64,7 +64,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.SpecialBarrel {
 				return;
 			}
 
-			IEntity rootEntity = weaponEntity.GetRootDamageDealer() as IEntity;
+			IEntity rootEntity = weaponEntity.GetRootDamageDealer() as IEntity; 
 			buffSystem.AddBuff(target,rootEntity, BleedingBuff.Allocate(
 				1, weaponPartsEntity.BuffLevel, rootEntity, target));
 		}
