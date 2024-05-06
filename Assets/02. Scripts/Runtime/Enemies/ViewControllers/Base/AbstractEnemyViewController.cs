@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Models;
 using _02._Scripts.Runtime.Rewards;
+using BehaviorDesigner.Runtime;
 using Cysharp.Threading.Tasks;
 using MikroFramework;
 using MikroFramework.ActionKit;
@@ -49,7 +50,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 		protected AnimationSMBManager animationSMBManager;
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
-
+		protected BehaviorTree _behaviorTree;
 
 		[Header("(Temporary) Weapon Parts Drops")] [SerializeField]
 		private float weaponPartsDropChance = 0.1f;
@@ -64,6 +65,7 @@ namespace Runtime.Enemies.ViewControllers.Base {
 			animationSMBManager = GetComponent<AnimationSMBManager>();
 			animationSMBManager.Event.AddListener(OnAnimationEvent);
 			levelModel = this.GetModel<ILevelModel>();
+			_behaviorTree = GetComponent<BehaviorTree>();
 		}
 
 		protected abstract void OnAnimationEvent(string eventName);
@@ -79,6 +81,11 @@ namespace Runtime.Enemies.ViewControllers.Base {
 				currentHealthBar.SetEntity(BoundEntity.HealthProperty.RealValue, BoundEntity);
 			}
 			
+		}
+
+		public void EnableBehaviorTree(bool enable)
+		{
+			_behaviorTree.enabled = enable;
 		}
 
 		protected override void OnBindEntityProperty() {

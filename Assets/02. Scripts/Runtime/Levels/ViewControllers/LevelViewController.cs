@@ -372,7 +372,8 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 				subarea.SetLevelNumber(levelNumber);
 			}
 			
-			UpdatePreExistingEnemies();
+			IEnemyViewController[] existingEnemies = UpdatePreExistingEnemies();
+			
 			if (ambientMusic) {
 				 ambientMusicSource = AudioSystem.Singleton.Play2DSound(ambientMusic, relativeVolume, true);
 			}
@@ -391,6 +392,17 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 			SpawnPillars();
 			UpdatePreExistingDirectors();
 			SpawnCollectableResources();
+			
+			// for each sub area level, loop through all possible enemies
+			// if enemy doesn't exist already, spawn each enemy far away
+			// kill the enemy
+			// spawn enemy projectiles??
+			// continue
+
+			foreach (var subarea in subAreaLevels)
+			{
+				await subarea.SpawnOneOfEachEnemy();
+			}
 			
 			StartCoroutine(UpdateLevelSystemTime());
 			
@@ -553,12 +565,13 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers {
 		 	OnInitEnemy(enemyObject.GetComponent<IEnemyViewController>());
 		 }
 		
-		 private void UpdatePreExistingEnemies() {
+		 private IEnemyViewController[] UpdatePreExistingEnemies() {
 		 	IEnemyViewController[] enemies = GetComponentsInChildren<IEnemyViewController>(true);
 		 	foreach (var enemy in enemies) {
 		 		enemy.RegisterOnEntityViewControllerInit(OnExistingEnemyInit)
 		 			.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 		 	}
+		    return enemies;
 		 }
 
 		 private void OnExistingEnemyInit(IEntityViewController entity) {
