@@ -4,6 +4,7 @@ using AYellowpaper.SerializedCollections;
 using DG.Tweening;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.UIKit;
 using Runtime.Inventory.Commands;
 using Runtime.Inventory.Model;
@@ -154,6 +155,8 @@ namespace Runtime.UI {
                 tweenList[0].OnComplete(() => {
                     tweenList.Clear();
                 });
+
+                AudioSystem.Singleton.Play2DSound("subpanel_switch");
             }
             
             

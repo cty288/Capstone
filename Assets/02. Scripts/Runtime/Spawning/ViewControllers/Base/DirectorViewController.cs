@@ -267,6 +267,8 @@ namespace Runtime.Spawning
                 }
             }
             
+            
+            
             List<UniTask> tasks = new List<UniTask>();
             for (int i = 0; i < cards.Length; i++)
             {
