@@ -593,16 +593,7 @@ namespace Runtime.Player.ViewControllers
 
             if (playerActions.Slide.WasPressedThisFrame() &&(horizontalInput != 0 || verticalInput != 0))
             {
-                sliding = true;
-
-                AudioSource source = null;
-                Sequence.Allocate().AddAction(CallbackAction.Allocate(() => {
-                    source = AudioSystem.Singleton.Play2DSound("slide_start");
-                })).AddAction(UntilAction.Allocate((() => !source.isPlaying))).AddAction(CallbackAction.Allocate(
-                    () =>
-                    {
-                        AudioSystem.Singleton.Play2DSound("slide_loop", loop: true);
-                    })).Execute();
+                SetSliding(true);
                 
                 model.localScale = new Vector3(model.localScale.x, slideYScale, model.localScale.z);
                 rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
@@ -618,17 +609,17 @@ namespace Runtime.Player.ViewControllers
                 {
                     if (playerActions.Scope.WasPressedThisFrame())
                     {
-                        sliding = false;
+                        SetSliding(false);
                     }
                 }
             }
             
             if (playerActions.Slide.WasReleasedThisFrame() && sliding)
             {
-                sliding = false;
+                SetSliding(false);
                 
-                AudioSystem.Singleton.StopSound("slide_loop");
-                AudioSystem.Singleton.Play2DSound("slide_end");
+                // AudioSystem.Singleton.StopSound("slide_loop");
+                // AudioSystem.Singleton.Play2DSound("slide_end");
 
                 model.localScale = new Vector3(model.localScale.x, startYScale, model.localScale.z);
                 
@@ -636,6 +627,27 @@ namespace Runtime.Player.ViewControllers
                 DoCamTilt(0f);
             }
             
+        }
+
+        private void SetSliding(bool value)
+        {
+            sliding = value;
+            
+            if (value)
+            {
+                AudioSource source = null;
+                Sequence.Allocate().AddAction(CallbackAction.Allocate(() => {
+                    source = AudioSystem.Singleton.Play2DSound("slide_start");
+                })).AddAction(UntilAction.Allocate((() => !source.isPlaying))).AddAction(CallbackAction.Allocate(
+                    () =>
+                    {
+                        AudioSystem.Singleton.Play2DSound("slide_loop", loop: true);
+                    })).Execute();
+            } else
+            {
+                AudioSystem.Singleton.StopSound("slide_loop");
+                AudioSystem.Singleton.Play2DSound("slide_end");
+            }
         }
 
         private void MovePlayer()
@@ -786,10 +798,7 @@ namespace Runtime.Player.ViewControllers
 
             if (slideTimer <= 0)
             {
-                sliding = false;
-                
-                AudioSystem.Singleton.StopSound("slide_loop");
-                AudioSystem.Singleton.Play2DSound("slide_end");
+                SetSliding(false);
 
                 model.localScale = new Vector3(model.localScale.x, startYScale, model.localScale.z);
                 
