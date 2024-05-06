@@ -100,7 +100,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 		}
 
 		private Transform[] _vfxFramer;
-		private GenericBuffableVFX _testBuff;
+		private StunBuffableVFX _stunBuff;
+		private ViralBuffableVFX _viralBuff;
 
 		private CancellationTokenSource ctsWhenDieOrStunned
 			= new CancellationTokenSource();
@@ -123,7 +124,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			
 			rb = GetComponent<Rigidbody>();
 
-			_testBuff = new GenericBuffableVFX(() => VFXFramer);
+			_stunBuff = new StunBuffableVFX(() => VFXFramer);
+			_viralBuff = new ViralBuffableVFX(() => VFXFramer);
 		}
 		
 		protected override bool CanAutoRemoveEntityWhenLevelEnd { get; } = false;
@@ -143,7 +145,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			BoundEntity.StunnedCounter.Count.RegisterWithInitValue(OnStunnedCounterChanged)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
 			
-			BoundEntity.RegisterOnBuffUpdate(_testBuff.OnBuffUpdate);
+			BoundEntity.RegisterOnBuffUpdate(_stunBuff.OnBuffUpdate);
+			BoundEntity.RegisterOnBuffUpdate(_viralBuff.OnBuffUpdate);
 
 			//ctsWhenDieOrStunned = new CancellationTokenSource();
 		}
@@ -354,8 +357,8 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			// Make sure all buff frameworks are recycled here:
 			if (BoundEntity != null)
 			{
-				BoundEntity.UnregisterOnBuffUpdate(_testBuff.OnBuffUpdate);
-				_testBuff.RecycleBuff();
+				BoundEntity.UnregisterOnBuffUpdate(_stunBuff.OnBuffUpdate);
+				_stunBuff.RecycleBuff();
 			}
 			
 			base.OnRecycled();
