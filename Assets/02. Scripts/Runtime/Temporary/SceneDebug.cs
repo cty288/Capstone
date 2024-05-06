@@ -32,12 +32,25 @@ using UnityEngine;
 
 namespace Runtime.Temporary
 {
-    public class SceneDebug : AbstractMikroController<MainGame>
-    {
-        
+    public class SceneDebug : AbstractMikroController<MainGame>, ICanSendEvent {
 
+        private bool debugEnabled = false;
         private void Update()
         {
+
+            if (Input.GetKeyDown(KeyCode.F2)) {
+                 debugEnabled = !debugEnabled;
+                 string s = debugEnabled ? "Enabled" : "Disabled";
+                 this.SendEvent<OnShowGameHint>(new OnShowGameHint() {
+                     duration = 1f,
+                     text = $"Cheat Button {s}"
+                 });
+            }
+            
+            if (!debugEnabled) {
+                return;
+            }
+            
             if (Input.GetKeyDown(KeyCode.M)) {
                 ICurrencySystem currencySystem = this.GetSystem<ICurrencySystem>();
                 currencySystem.AddCurrency(CurrencyType.Combat, 10);
