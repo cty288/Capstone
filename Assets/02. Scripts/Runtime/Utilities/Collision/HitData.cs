@@ -24,6 +24,7 @@ namespace Runtime.Utilities.Collision
         public bool ShowDamageNumber = true;
         public bool IsCritical = false;
         public string HitDataUUID;
+        public bool isSpecial = false;
 
         /// <summary>
         /// Sets the data of the hit. Used for HitScan.
@@ -114,6 +115,7 @@ namespace Runtime.Utilities.Collision
             HitDetector = null;
             Attacker = null;
             HitDataUUID = null;
+            isSpecial = false;
         }
 
         public bool IsRecycled { get; set; }

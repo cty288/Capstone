@@ -68,6 +68,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.Mineral.Barrels.FatesE
 				if (healthPercentage >= healthThreshold) {
 					float multiplier = weaponPartsEntity.GetCustomDataValueOfCurrentLevel<float>("multiplier");
 					data.Damage = Mathf.CeilToInt(data.Damage * (1 + multiplier));
+					data.isSpecial = true;
+					
 				}
 			}
 
