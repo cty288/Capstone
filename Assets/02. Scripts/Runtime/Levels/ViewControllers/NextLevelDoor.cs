@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _02._Scripts.Runtime.Currency.Model;
 using _02._Scripts.Runtime.Levels.Commands;
+using _02._Scripts.Runtime.Levels.Models;
 using Framework;
 using MikroFramework.Architecture;
 using Runtime.Player;
@@ -15,6 +16,13 @@ public class NextLevelDoor : AbstractMikroController<MainGame> {
 	
 	[SerializeField]
 	private bool isBaseDoor = false;
+
+	private ILevelModel levelModel;
+
+	private void Awake() {
+		levelModel = this.GetModel<ILevelModel>();
+	}
+
 	private void OnTriggerEnter(Collider other) {
 		
 		if (other.gameObject.CompareTag("Player")) {
@@ -29,13 +37,12 @@ public class NextLevelDoor : AbstractMikroController<MainGame> {
 				Cursor.visible = true;
 				return;
 			}
-			if (goToNextLevelByDefault) {
+			if (goToNextLevelByDefault || levelModel.CurrentLevelCount.Value == LevelModel.MAX_LEVEL) {
 				LoadingCanvas.Singleton.Show(() => {
 					this.SendCommand<NextLevelCommand>(NextLevelCommand.Allocate());
 				});
-				
-			}
-			else {
+
+			}else{
 				MainUI.Singleton.OpenOrGetClose<ExitDoorUI>(MainUI.Singleton, null, false);
 			}
 		}

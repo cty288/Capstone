@@ -52,7 +52,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		}
 
 		public override void OnStart() {
-			
+			ScreenSpaceVFXManager.Instance.SetBuff(new Color(0.2f, 0.8f, 1.0f), true, 1);
 		}
 
 		public override BuffStatus OnTick() {
@@ -62,7 +62,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		public override bool IsGoodBuff => true;
 		
 		public override void OnBuffEnd() {
-		
+			ScreenSpaceVFXManager.Instance.SetBuff(new Color(0.2f, 0.8f, 1.0f), false, 1);
 		}
 
 		public override void OnRecycled() {

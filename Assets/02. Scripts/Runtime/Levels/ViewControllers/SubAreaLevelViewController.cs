@@ -316,7 +316,10 @@ namespace _02._Scripts.Runtime.Levels.ViewControllers
             base.OnRecycled();
             totalEnemyCount = 0;
             isActive = true;
-            BoundEntity.IsActiveSpawner = true;
+            if (BoundEntity != null) {
+                 BoundEntity.IsActiveSpawner = true;
+            }
+           
             cooldownTimer = 0f;
             BoundEntity?.ClearEnemyCountDictionary();
             currentEnemies.Clear();

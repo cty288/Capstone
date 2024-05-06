@@ -248,7 +248,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Combat {
 		}
 
 		public override void OnBuffEnd() {
-			
+			DeallocateBuffVFX();
 		}
 
 		public override void OnRecycled() {

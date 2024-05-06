@@ -66,7 +66,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 
 		public override void OnInitialize(IEntity buffDealer, IEntity entity, bool force = false) {
 			weaponEntity = entity as IWeaponEntity;
-			weaponEntity.RegisterOnSetBoundEntity(AllocateBuffVFX);
+			//weaponEntity.RegisterOnSetBoundEntity(AllocateBuffVFX);
 			base.OnInitialize(buffDealer, entity, force);
 		}
 
@@ -150,6 +150,11 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Base {
 		{
 			base.OnRecycled();
 			weaponEntity.UnRegisterOnSetBoundEntity(AllocateBuffVFX);
+		}
+
+		public override void OnBuffEnd()
+		{
+			
 		}
 
 		public IArchitecture GetArchitecture() {

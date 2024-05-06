@@ -71,6 +71,8 @@ namespace _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill {
 			int currentHealth = playerEntity.GetCurrentHealth();
 			int maxHealth = playerEntity.GetMaxHealth();
 
+			ScreenSpaceVFXManager.Instance.SetBuff(new Color(0.95f, 0.6f, 0.1f), true, 0);
+
 			addedTempHealth = Mathf.Min(maxHealth - currentHealth, tempHealth);
 			playerEntity.Heal(addedTempHealth, playerEntity);
 		}
@@ -83,6 +85,7 @@ namespace _02._Scripts.Runtime.Skills.Model.Instances.AdrenalineSkill {
 
 		public override bool IsGoodBuff => true;
 		public override void OnBuffEnd() {
+			ScreenSpaceVFXManager.Instance.SetBuff(new Color(0.95f, 0.6f, 0.1f), false, 0);
 			RecoverSpeed();
 			if (addedTempHealth > 0) {
 				playerEntity.ChangeHealth(-addedTempHealth);

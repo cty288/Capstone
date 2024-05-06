@@ -89,7 +89,7 @@ public class GameTimeDisplayer : AbstractMikroController<MainGame> {
    
    private void ShowDayDisplayPanel(ILevelEntity levelEntity, float spawnRandomBossChance,
       float sandstormProb) {
-      probGroup.gameObject.SetActive(levelModel.CurrentLevelCount.Value < LevelModel.MAX_LEVEL);
+      probGroup.gameObject.SetActive(levelModel.CurrentLevelCount.Value != LevelModel.FINAL_LEVEL);
       
       dayDisplayPanel.SetActive(true);
       dayDisplayPanelDayCountText.text = Localization.GetFormat("TIME_DISPLAY", levelEntity.DayStayed);
