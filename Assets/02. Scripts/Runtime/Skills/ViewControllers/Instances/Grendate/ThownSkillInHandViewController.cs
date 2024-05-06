@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _02._Scripts.Runtime.Skills.Model.Base;
 using _02._Scripts.Runtime.Skills.Model.Builders;
 using _02._Scripts.Runtime.Skills.Model.Instance;
@@ -12,9 +13,20 @@ using Runtime.Player.ViewControllers;
 using Runtime.Utilities;
 using Runtime.Utilities.AnimatorSystem;
 using Runtime.Weapons.ViewControllers;
+using Runtime.Weapons.ViewControllers.Base;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
+	
+	[Serializable]
+	public struct SkillInHandCameraPlacementData
+	{
+		public Vector3 cameraPosition;
+		public Vector3 cameraRotation;
+	}
+	
 	public abstract class ThownSkillInHandViewController<T>  : AbstractInHandSkillViewController<T> where T : class, ISkillEntity, new() {
 		[SerializeField]
 		private GameObject grenadePrefab;
@@ -43,22 +55,27 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 		
 		protected bool usedBefore = false;
 		
+		protected Camera cam;
+		protected Camera fpsCamera;
+		[SerializeField] protected SkillInHandCameraPlacementData cameraPlacementData;
+		[SerializeField] protected SkillInHandCameraPlacementData originalCameraPlacementData;
+		[SerializeField] protected float lerpCameraPlacementTime = 0.2f;
+		
 		protected override void Awake() {
 			base.Awake();
 			throwPoint = transform.Find("ThrowPoint");
 			//trajectoryLine = GetComponent<LineRenderer>();
 			trajectoryLineMaterial = Instantiate(trajectoryLine.material);
 			trajectoryLine.material = trajectoryLineMaterial;
+			
+			cam = Camera.main;
+			fpsCamera = mainCamera.GetUniversalAdditionalCameraData().cameraStack[1];
+			
 			materialOriginalAlpha = trajectoryLineMaterial.color.a;
 			if (hitRangePreviewPrefab) {
 				previewPool = GameObjectPoolManager.Singleton.CreatePool(hitRangePreviewPrefab, 1, 5);
 			}
-			
-			
-			
 		}
-
-		
 
 		protected override void OnEntityStart() {
 			base.OnEntityStart();
@@ -68,6 +85,13 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 			materialTween?.Kill();
 			this.RegisterEvent<OnPlayerAnimationEvent>(OnPlayerAnimationEvent)
 				.UnRegisterWhenGameObjectDestroyedOrRecycled(gameObject);
+			
+			originalCameraPlacementData = new SkillInHandCameraPlacementData()
+			{
+				cameraPosition = fpsCamera.transform.localPosition,
+				cameraRotation = fpsCamera.transform.localEulerAngles
+			};
+			ChangeCameraFOV();
 		}
 
 		private void OnPlayerAnimationEvent(OnPlayerAnimationEvent e) {
@@ -85,7 +109,7 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 				return;
 			}
 			
-			//transform.forward
+			// ChangeCameraFOV();
 			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool,1));
 
 			DestroySpawnedHitRangePreview();
@@ -243,13 +267,25 @@ namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
 			ShowTrajectory();
 		}
 
-		// public override void OnItemAltUse() { }
+		private void ChangeCameraFOV()
+		{
+			fpsCamera.transform.DOLocalMove(cameraPlacementData.cameraPosition, lerpCameraPlacementTime);
+			fpsCamera.transform.DOLocalRotate(cameraPlacementData.cameraRotation, lerpCameraPlacementTime);
+		}
+		
+		private void ResetCameraFOV()
+		{
+			fpsCamera.transform.DOLocalMove(originalCameraPlacementData.cameraPosition, lerpCameraPlacementTime);
+			fpsCamera.transform.DOLocalRotate(originalCameraPlacementData.cameraRotation, lerpCameraPlacementTime);
+		}
 		
 		protected override IResourceEntity OnInitSkillEntity(SkillBuilder<T> builder) {
 			return builder.FromConfig().Build();
 		}
+		
 		public override void OnRecycled() {
 			base.OnRecycled();
+			ResetCameraFOV();
 			this.SendCommand<PlayerAnimationCommand>(PlayerAnimationCommand.Allocate("HoldUse", AnimationEventType.Bool, 0));
 			trajectoryLine.positionCount = 0;
 			DestroySpawnedHitRangePreview();

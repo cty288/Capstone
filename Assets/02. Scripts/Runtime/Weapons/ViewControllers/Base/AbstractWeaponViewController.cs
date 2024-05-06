@@ -39,7 +39,7 @@ namespace Runtime.Weapons.ViewControllers.Base
     }
     
     [Serializable]
-    public struct CameraPlacementData
+    public struct WeaponCameraPlacementData
     {
         public Vector3 hipFireCameraPosition;
         public Vector3 hipFireCameraRotation;
@@ -106,7 +106,7 @@ namespace Runtime.Weapons.ViewControllers.Base
         protected float reloadTimer = 0f;
         
         //scoping
-        [SerializeField] protected CameraPlacementData cameraPlacementData;
+        [SerializeField] protected WeaponCameraPlacementData cameraPlacementData;
 
         //protected ICanDealDamageViewController ownerVc;
         public IWeaponEntity WeaponEntity => BoundEntity;

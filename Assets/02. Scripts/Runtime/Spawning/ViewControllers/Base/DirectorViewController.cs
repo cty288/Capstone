@@ -216,13 +216,13 @@ namespace Runtime.Spawning
                     return;
                 }
 
-                // bool success = true;
+                bool success = true;
                 int maxPackSize = Random.Range(1, 5);
                 // while (success && maxPackSize > 0)
-                while (maxPackSize > 0)
+                while (maxPackSize > 0 && success)
                 {
                     // success = await SpawnEnemy(selectedCard, subArea.GetSubAreaNavMeshModifier());
-                    await SpawnEnemy(selectedCard, subArea.GetSubAreaNavMeshModifier());
+                    success = await SpawnEnemy(selectedCard, subArea.GetSubAreaNavMeshModifier());
                     maxPackSize--;
                 }
             }
@@ -265,6 +265,11 @@ namespace Runtime.Spawning
                     }
                     break;
                 }
+            }
+
+            if (rarity == 0)
+            {
+                return false;
             }
             
             
