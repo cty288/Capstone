@@ -16,7 +16,7 @@ using Runtime.Weapons.ViewControllers;
 using UnityEngine;
 
 namespace _02._Scripts.Runtime.Skills.ViewControllers.Instances {
-	public class GrendateSkillInHandViewController : ThownSkillInHandViewController<GrenadeSkill> {
+	public class GrenadeSkillInHandViewController : ThownSkillInHandViewController<GrenadeSkill> {
 		protected override float range => BoundEntity.GetCustomPropertyOfCurrentLevel<float>("explosion_radius");
 		protected override void OnInitThrownGrenade(GameObject obj, params Collider[] ignoredColliders) {
 			ThrownGrenadeViewController grenadeViewController = obj.GetComponent<ThrownGrenadeViewController>();
