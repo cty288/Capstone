@@ -15,6 +15,8 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		[field: ES3Serializable] public override float MaxDuration { get; protected set; } = 1;
 		[field: ES3Serializable] public override float TickInterval { get; protected set; } = -1;
 		public override int Priority => 1;
+
+		public bool stackedBuff = false;
 		 
 		private ICanDealDamage owner;
 		public override string GetLevelDescription(int level) {
@@ -62,7 +64,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		public override bool IsGoodBuff => true;
 		
 		public override void OnBuffEnd() {
-			ScreenSpaceVFXManager.Instance.SetBuff(new Color(0.2f, 0.8f, 1.0f), false, 1);
+			if(!stackedBuff) ScreenSpaceVFXManager.Instance.SetBuff(new Color(0.2f, 0.8f, 1.0f), false, 1);
 		}
 
 		public override void OnRecycled() {
@@ -110,7 +112,9 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 			this.RemainingDuration = MaxDuration;
 		}
 
-		protected override void OnBuffStacked(MotivatedBuff buff) {
+		protected override void OnBuffStacked(MotivatedBuff buff)
+		{
+			buff.stackedBuff = true;
 			this.MaxDuration = Mathf.Max(buff.MaxDuration, this.MaxDuration);
 			this.RemainingDuration = MaxDuration;
 		}
@@ -118,6 +122,7 @@ namespace _02._Scripts.Runtime.WeaponParts.Model.Instance.BuildBuff.Time {
 		public new static MotivatedBuff Allocate(IEntity buffDealer, IEntity entity, int level) {
 			MotivatedBuff buff = ConfigurableBuff<MotivatedBuff>.Allocate(buffDealer, entity, level);
 			buff.MaxDuration = buff.GetBuffPropertyAtLevel<float>("time", level);
+			buff.stackedBuff = false;
 			return buff;
 		}
 
