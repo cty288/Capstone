@@ -12,7 +12,9 @@ namespace Runtime.Utilities.ConfigSheet {
 		private string sheetID;
 		private string localBackupName;
 		private bool isDownload = true;
-		
+
+		public bool IsDownload => isDownload;
+
 		public ConfigTable(string docID, string sheetID, string localBackupName, bool isDownload) {
 			this.docID = docID;
 			this.sheetID = sheetID;
@@ -23,8 +25,9 @@ namespace Runtime.Utilities.ConfigSheet {
 
 		private void Init() {
 			string result = "";
-			var enumerator = LoadOrDownload(docID, sheetID, localBackupName, isDownload, s => {
+			var enumerator = LoadOrDownload(docID, sheetID, localBackupName, isDownload, (s, downloadSuccess) => {
 				result = s;
+				this.isDownload = downloadSuccess;
 			});
 			while (enumerator.MoveNext()) {
 				
@@ -159,17 +162,17 @@ namespace Runtime.Utilities.ConfigSheet {
 			       || currentString.Length == 2 && currentString.Equals(Environment.NewLine);
 		}
 
-		private static IEnumerator LoadOrDownload(string docID, string sheetID, string localBackupName, bool isDownload, Action<string> onDone) {
+		private static IEnumerator LoadOrDownload(string docID, string sheetID, string localBackupName, bool isDownload, Action<string, bool> onDone) {
 			TextAsset asset = Resources.Load<TextAsset>(localBackupName);
 			if (!isDownload) {
-				onDone(asset.text);
+				onDone(asset.text, false);
 				yield break;
 			}
 			
 			//check if we have access to the internet and the url
 			if (Application.internetReachability == NetworkReachability.NotReachable && asset) {
 				Debug.Log("No internet connection, loading local backup");
-				onDone(asset.text);
+				onDone(asset.text, false);
 				yield break;
 			}
 
@@ -184,12 +187,12 @@ namespace Runtime.Utilities.ConfigSheet {
 			
 			if (string.IsNullOrEmpty(result) && asset) {
 				Debug.Log("No internet connection, loading local backup");
-				onDone(asset.text);
+				onDone(asset.text, false);
 				yield break;
 			}
 
 			Debug.Log("Sheet loaded from Google Successfully! Sheet ID: " + sheetID);
-			onDone(result);
+			onDone(result, true);
 			//ping the url to see if it exists
 			if (Application.isEditor) {
 				//save the file to Resources

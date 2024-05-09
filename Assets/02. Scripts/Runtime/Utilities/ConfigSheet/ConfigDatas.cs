@@ -72,7 +72,9 @@ namespace Runtime.Utilities.ConfigSheet
 			globalDataTable = new ConfigTable(docID,
 				"1266085510", "data_global", true);
 
-			bool isDownload = (globalDataTable.Get<string>("LOCK_CONFIG_TABLE", "Value1") != "1");
+			bool isDownload = (globalDataTable.Get<string>("LOCK_CONFIG_TABLE", "Value1") != "1") &&
+			                  globalDataTable.IsDownload;
+			
 			
 			//Debug.Log("ConfigDatas Singleton Init");
 			bossEntityConfigTable = new ConfigTable(docID,
