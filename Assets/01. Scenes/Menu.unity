@@ -26608,7 +26608,7 @@ RectTransform:
   m_GameObject: {fileID: 1703846826}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2069708247}
@@ -26913,6 +26913,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base
       objectReference: {fileID: 0}
+    - target: {fileID: 6988587383878441940, guid: a5d9c937ac0b01e46b09dbebd1be8737,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d8cb2746d92a3cc4db212aebe7616ca1, type: 2}
     - target: {fileID: 7210381086686380954, guid: a5d9c937ac0b01e46b09dbebd1be8737,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -47839,7 +47844,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 15
   m_Viewport: {fileID: 246486306578446675}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -55709,7 +55714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.007846079, g: 0, b: 0.066037714, a: 0.8627451}
+  m_Color: {r: 0.007846079, g: 0, b: 0.066037714, a: 0.98039216}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

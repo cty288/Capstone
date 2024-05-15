@@ -14,10 +14,10 @@ public class ExitDoorUI : AbstractPanelContainer, IController, IGameUIPanel {
 	
 	public override void OnInit() {
 		baseButton = transform.Find("BaseButton").GetComponent<Button>();
-		nextLevelButton = transform.Find("NextLevelButton").GetComponent<Button>();
+		// nextLevelButton = transform.Find("NextLevelButton").GetComponent<Button>();
 		
 		baseButton.onClick.AddListener(OnBaseButtonClicked);
-		nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
+		// nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
 	}
 
 	private void OnNextLevelButtonClicked() {
