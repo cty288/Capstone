@@ -13,10 +13,10 @@ namespace Mikrocosmos
         }
 
         private void Update() {
-            if (IsOpening) {
-                ScrollContent.verticalNormalizedPosition -= autoScrollSpeed * Time.deltaTime;
-                ScrollContent.verticalNormalizedPosition = Mathf.Clamp01(ScrollContent.verticalNormalizedPosition);
-            }
+            // if (IsOpening) {
+            //     ScrollContent.verticalNormalizedPosition -= autoScrollSpeed * Time.deltaTime;
+            //     ScrollContent.verticalNormalizedPosition = Mathf.Clamp01(ScrollContent.verticalNormalizedPosition);
+            // }
             
         }
 
