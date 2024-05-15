@@ -45,7 +45,16 @@ namespace _02._Scripts.Runtime.WeaponParts.Systems {
 			
 			buildModel = this.GetModel<IResourceBuildModel>();
 			if (buildModel.IsFirstTimeCreated) {
-				
+				var parts = ResourceTemplates.Singleton.GetResourceTemplates(ResourceCategory.WeaponParts)
+					.Select((info => info.TemplateEntity.EntityName));
+                
+				IWeaponPartsModel weaponPartsModel = this.GetModel<IWeaponPartsModel>();
+				foreach (string skillName in parts) {
+					weaponPartsModel.AddToUnlockedParts(skillName);
+					
+				}
+
+				Debug.Log("All parts unlocked");
 				/*buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "Shotgun", false);
 				buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "Multivirus", false);
 				buildModel.UnlockBuild(ResearchCategory.WeaponAndParts, "FatesEdgeBarrel", false);

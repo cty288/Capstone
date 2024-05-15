@@ -358,9 +358,15 @@ namespace Runtime.Inventory.Model {
 			bool hasDefaultWeapon = false;
 			foreach (string item in allItems) {
 				IResourceEntity entity = GlobalGameResourceEntities.GetAnyResource(item);
+				
 				if (entity.GetResourceCategory() == ResourceCategory.Skill) { //skills are preserved; other items are removed
 					IResourceEntity returnToBaseEntity = entity.GetReturnToBaseEntity();
 					model.AddToBaseStock(returnToBaseEntity);
+				}else if(entity.GetResourceCategory() == ResourceCategory.Weapon){
+					IResourceEntity returnToBaseEntity = entity.GetReturnToBaseEntity();
+					model.AddToBaseStock(returnToBaseEntity);
+					model.RemoveItem(item);
+					continue;
 				}
 				
 				model.RemoveItem(item);
@@ -372,8 +378,8 @@ namespace Runtime.Inventory.Model {
 			}
 
 			if (hasDefaultWeapon) {
-				IResourceEntity defaultWeapon = ResourceVCFactory.Singleton.SpawnNewResourceEntity("RustyPistol");
-				model.AddToBaseStock(defaultWeapon);
+				//IResourceEntity defaultWeapon = ResourceVCFactory.Singleton.SpawnNewResourceEntity("RustyPistol");
+				//model.AddToBaseStock(defaultWeapon);
 			}
 		}
 		
