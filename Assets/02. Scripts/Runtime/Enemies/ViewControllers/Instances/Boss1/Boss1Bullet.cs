@@ -3,7 +3,7 @@ using Runtime.Weapons.ViewControllers.Base;
 using MikroFramework.Pool;
 using MikroFramework;
 using UnityEngine;
-
+using MikroFramework.AudioKit;
 namespace a {
 	public class Boss1Bullet : AbstractBulletViewController {
 
@@ -86,6 +86,7 @@ namespace a {
             particleInstance = pool.Allocate();
             particleInstance.transform.position = (hitPoint);
             particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
+            AudioSource audio = AudioSystem.Singleton.Play3DSound("shooting070", this.gameObject.transform.position);
         }
 
         protected override void OnBulletReachesMaxRange() {

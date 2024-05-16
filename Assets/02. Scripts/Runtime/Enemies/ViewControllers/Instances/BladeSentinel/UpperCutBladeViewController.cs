@@ -5,7 +5,7 @@ using System.Threading;
 using _02._Scripts.Runtime.Utilities.AsyncTriggerExtension;
 using Cysharp.Threading.Tasks;
 using Framework;
-using MikroFramework;
+using MikroFramework.AudioKit;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
@@ -102,6 +102,7 @@ public class UpperCutBladeViewController : PoolableGameObject, IHitResponder, IC
 	}
 
 	private async UniTask BladeStay(float time) {
+		AudioSource audio = AudioSystem.Singleton.Play3DSound("Melee Pre", this.gameObject.transform.position , 0.7f);
 		await UniTask.WaitForSeconds(time, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 		animator.SetTrigger("Finish");
 		await UniTask.WaitForSeconds(0.3f, false, PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());

@@ -11,6 +11,7 @@ using UnityEngine;
 using Runtime.Temporary.Weapon;
 using Runtime.Weapons.ViewControllers.Base;
 using a;
+using MikroFramework.AudioKit;
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 {
@@ -66,6 +67,11 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
             for(int j = 0; j < bulletCount; j++)
             {
+                if(Random.Range(0.0f, 1.0f) < 0.5f)
+                {
+                    var source = AudioSystem.Singleton.Play3DSound("Buddah Shot", transform.position);
+                    source.spatialBlend = 0.5f;
+                }
                 // Debug.Log(j);
                 UnityEngine.GameObject b = pool.Allocate();
                 //float angle = j * 60; // Angle between each bullet
