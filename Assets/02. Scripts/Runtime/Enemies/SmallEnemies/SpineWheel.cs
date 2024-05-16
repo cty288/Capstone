@@ -85,6 +85,16 @@ namespace Runtime.Enemies.SmallEnemies
         }
 
 
+        public void PlayWheelOpenSound()
+        {
+            AudioSystem.Singleton.Play3DSound("wheel_open", gameObject.transform.position, 0.5f);
+        }
+        
+        public void PlayWheelCloseSound()
+        {
+            AudioSystem.Singleton.Play3DSound("wheel_close", gameObject.transform.position, 0.5f);
+        }
+        
         protected override void OnEntityStart()
         {
             AudioSystem.Singleton.Play3DSound("enemy-spawn", gameObject.transform.position, 0.5f);

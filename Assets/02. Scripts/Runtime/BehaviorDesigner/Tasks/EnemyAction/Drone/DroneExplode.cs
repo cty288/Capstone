@@ -31,8 +31,8 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
 
         public override TaskStatus OnUpdate()
         {
-            AudioSource audio = AudioSystem.Singleton.Play3DSound("Drone_Explosion", this.gameObject.transform.position);
-            audio.volume = 0.5f;
+            // AudioSource audio = AudioSystem.Singleton.Play3DSound("Drone_Explosion", this.gameObject.transform.position);
+            // audio.volume = 0.5f;
             // Debug.Log(audio.volume);
             GameObject explosion = pool.Allocate();
             explosion.transform.position = this.gameObject.transform.position;

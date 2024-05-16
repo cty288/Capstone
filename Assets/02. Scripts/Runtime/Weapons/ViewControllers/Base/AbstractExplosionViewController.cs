@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Framework;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using MikroFramework.BindableProperty;
 using MikroFramework.Pool;
 using Runtime.DataFramework.Entities;
@@ -11,6 +12,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.DataFramework.ViewControllers.Entities;
 using Runtime.Utilities.Collision;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Runtime.Weapons.ViewControllers.Base {
 	
@@ -69,6 +71,7 @@ namespace Runtime.Weapons.ViewControllers.Base {
 		protected ICanDealDamage owner = null;
 		private Action<ICanDealDamage, IDamageable, int> _onDealDamageCallback;
 		private Action<ICanDealDamage, IDamageable> _onKillDamageableCallback;
+		[SerializeField] private string explosionSoundName = "";
 
 		protected virtual void Awake() {
 			hitBox = GetComponent<ExplosionHitBox>();
@@ -94,6 +97,11 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			
 			entity?.RetainRecycleRC();
 			particleSystems.ForEach(p => p.Play());
+
+			if (AudioSystem.Singleton.Play3DSound(explosionSoundName, gameObject.transform.position, 0.3f) == null)
+			{
+				AudioSystem.Singleton.Play3DSound("Drone_Explosion", gameObject.transform.position, 0.3f);
+			}
 		}
 
 		public override void OnStartOrAllocate() {

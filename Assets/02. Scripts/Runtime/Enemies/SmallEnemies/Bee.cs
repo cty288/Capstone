@@ -96,8 +96,6 @@ namespace Runtime.Enemies.SmallEnemies
             }
             AudioSystem.Singleton.Play3DSound("Surveillance Drone_Spawn", this.gameObject.transform.position, 0.3f);
             //StartCoroutine(DelayedStart());
-
-
         }
 
         protected override void OnStunned(bool isStunned) {
