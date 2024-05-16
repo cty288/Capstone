@@ -8,6 +8,7 @@ using Runtime.DataFramework.Entities.ClassifiedTemplates.Factions;
 using Runtime.Enemies;
 using UnityEngine;
 using UnityEngine.AI;
+using MikroFramework.AudioKit;
 
 
 namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
@@ -107,6 +108,7 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             shock.transform.position = transform.position;
             shock.GetComponent<BasicExplosion>().Init(Faction.Explosion, explosionDamage, explosionSize,gameObject,
                 gameObject.GetComponent<ICanDealDamage>());
+            AudioSource audio = AudioSystem.Singleton.Play3DSound("Explosion 05", this.gameObject.transform.position);
             anim.SetTrigger("SlamAttackEnd");
             yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
             taskStatus = TaskStatus.Success;

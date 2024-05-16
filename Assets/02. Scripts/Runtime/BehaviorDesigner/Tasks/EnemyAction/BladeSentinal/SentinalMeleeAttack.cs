@@ -10,6 +10,7 @@ using Runtime.BehaviorDesigner.Tasks.EnemyAction;
 using Runtime.Spawning;
 using UnityEngine;
 using UnityEngine.AI;
+using MikroFramework.AudioKit;
 
 public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
     [SerializeField] private GameObject meleeBlade;
@@ -137,8 +138,8 @@ public class SentinalMeleeAttack : EnemyAction<BladeSentinelEntity> {
             gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 
         animator.CrossFadeInFixedTime("Melee_Release", 0.1f);
-       
-        
+        AudioSource audio = AudioSystem.Singleton.Play3DSound("Melee Slash", this.gameObject.transform.position);
+
         await UniTask.WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"),
             PlayerLoopTiming.Update, gameObject.GetCancellationTokenOnDestroyOrRecycleOrDie());
 

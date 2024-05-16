@@ -9,6 +9,7 @@ using BehaviorDesigner.Runtime;
 using Cysharp.Threading.Tasks;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
+using MikroFramework.AudioKit;
 using Runtime.DataFramework.Entities;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.CustomProperties;
 using Runtime.DataFramework.Entities.ClassifiedTemplates.Damagable;
@@ -107,6 +108,9 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			= new CancellationTokenSource();
 		
 		private Rigidbody rb;
+		
+		[SerializeField] private string stunnedSFXName = "";
+		
 		protected override void Awake() {
 			base.Awake();
 			navMeshAgent = GetComponent<NavMeshAgent>();
@@ -179,6 +183,13 @@ namespace Runtime.DataFramework.ViewControllers.Entities {
 			Animator animator = GetComponentInChildren<Animator>();
 			if (animator) {
 				animator.enabled = !isStunned;
+			}
+			
+			if(isStunned) {
+				if (AudioSystem.Singleton.Play3DSound(stunnedSFXName, transform.position, 0.5f) == null)
+				{
+					AudioSystem.Singleton.Play3DSound("machine_stunned", transform.position, 0.5f);
+				}
 			}
 		}
 

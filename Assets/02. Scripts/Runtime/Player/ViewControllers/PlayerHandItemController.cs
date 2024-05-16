@@ -7,6 +7,7 @@ using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using MikroFramework.UIKit;
 using Newtonsoft.Json;
 using Runtime.Controls;
 using Runtime.DataFramework.ViewControllers.Entities;
@@ -113,7 +114,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 	}
 
 	private void LateUpdate() {
-		if (playerModel.IsPlayerDead()) {
+		if (playerModel.IsPlayerDead() || UIManager.Singleton.GetPanel<LoadPanel>(true)) {
 			return;
 		}
 
@@ -151,7 +152,7 @@ public class PlayerHandItemController : EntityAttachedViewController<PlayerEntit
 				}
 			}
 			
-			if (playerActions.Scope.WasPressedThisFrame()) {
+			if (playerActions.Scope.WasPressedThisFrame() ) {
 				currentHoldItemViewController.OnItemScopePressed();
 			}
 

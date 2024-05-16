@@ -50,9 +50,9 @@ namespace Runtime.BehaviorDesigner.Tasks.EnemyAction
             if(explosionTimer < 0)
             {
                 explosionTimer = 0.4f;
-                AudioSource audio = AudioSystem.Singleton.Play3DSound("Drone_Explosion", this.gameObject.transform.position);
-                audio.volume = 0.5f;
-           
+                // AudioSource audio = AudioSystem.Singleton.Play3DSound("Drone_Explosion", this.gameObject.transform.position);
+                // audio.volume = 0.5f;
+                
                 GameObject explosion = pool.Allocate();
                 explosion.transform.position = this.gameObject.transform.position;
                 explosion.GetComponent<IExplosionViewController>().
