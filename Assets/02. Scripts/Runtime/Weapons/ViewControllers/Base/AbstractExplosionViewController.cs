@@ -98,9 +98,13 @@ namespace Runtime.Weapons.ViewControllers.Base {
 			entity?.RetainRecycleRC();
 			particleSystems.ForEach(p => p.Play());
 
-			if (AudioSystem.Singleton.Play3DSound(explosionSoundName, gameObject.transform.position, 0.3f) == null)
+			if (explosionSoundName == "")
 			{
 				AudioSystem.Singleton.Play3DSound("Drone_Explosion", gameObject.transform.position, 0.3f);
+			}
+			else
+			{
+				AudioSystem.Singleton.Play3DSound(explosionSoundName, gameObject.transform.position, 0.3f);
 			}
 		}
 
